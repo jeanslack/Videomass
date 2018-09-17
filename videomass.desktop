@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Videomass2
-GenericName=Graphical interface for ffmpeg
-Comment=
-Exec=/usr/bin/videomass %F
-Icon=/usr/share/pixmaps/videomass.png
-Terminal=false
-Type=Application
-Categories=AudioVideo;

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="ntsc dvd good q FS" type="NTSC DVD Fullscreen">
+        <parameters>-f dvd -vcodec mpeg2video -r 30000/1001 -vf scale=352:480 -aspect 4:3 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="ntsc dvd good q WS" type="NTSC DVD Widescreen">
+        <parameters>-f dvd -vcodec mpeg2video -r 30000/1001 -vf scale=352:480 -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="ntsc dvd hq FS" type="NTSC DVD HQ Fullscreen">
+        <parameters>-f dvd -target ntsc-dvd -r 30000/1001 -vf scale=720:480 -aspect 4:3 -vb 8000k -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="ntsc dvd hq WS" type="NTSC DVD HQ Widescreen">
+        <parameters>-f dvd -target ntsc-dvd -r 30000/1001 -vf scale=720:480 -aspect 16:9 -vb 8000k -g 12 -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="ntsc dvd lq" type="NTSC DVD LQ">
+        <parameters>-f dvd -target ntsc-dvd -b:v 5000k -r 30000/1001 -vf scale=720:480 -ar 48000 -b:a 384k</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+ 
+    <label name="pal dvd good q FS" type="PAL DVD Fullscreen">
+        <parameters>-f dvd -vcodec mpeg2video -r 25.00 -vf scale=352:576 -aspect 4:3 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="pal dvd good q WS" type="PAL DVD Widescreen">
+        <parameters>-f dvd -vcodec mpeg2video -r 25.00 -vf scale=352:576 -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="pal dvd hq FS" type="PAL DVD HQ Fullscreen">
+        <parameters>-f dvd -target pal-dvd -aspect 4:3 -vb 8000k -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="pal dvd hq WS" type="PAL DVD HQ Widescreen">
+        <parameters>-f dvd -target pal-dvd -aspect 16:9 -vb 8000k -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="pal dvd lq" type="PAL DVD LQ">
+        <parameters>-f dvd -target pal-dvd -b:v 5000k -r 25 -vf scale=720:576 -ar 48000 -b:a 384k</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>   
+</presets>  

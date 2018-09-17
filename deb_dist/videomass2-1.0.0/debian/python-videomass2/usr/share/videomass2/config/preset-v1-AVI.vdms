@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="From VOB to avi de-interlaced" type="Convert a VOB file from DVD to avi format de-interlaced">
+        <parameters>-f avi -vcodec mpeg4 -b 800k -r 25 -g 300 -bf 2 -vf w3fdif -acodec libmp3lame -ab 128k -ar 44100</parameters>
+        <filesupport>VOB vob</filesupport>
+        <extension>avi</extension>
+    </label>
+
+    <label name="From VOB to avi" type="Convert a VOB file from DVD to avi format">
+        <parameters>-f avi -vcodec mpeg4 -b 800k -r 25 -g 300 -bf 2 -acodec libmp3lame -ab 128k -ar 44100</parameters>
+        <filesupport>VOB vob</filesupport>
+        <extension>avi</extension>
+    </label>
+</presets>

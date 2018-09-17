@@ -1,0 +1,14 @@
+Package: python-videomass2
+Source: videomass2
+Version: 1.0.0-1
+Architecture: all
+Maintainer: Gianluca Pernigotto (aka jeanslack) <<jeanlucperni@gmail.com>>
+Installed-Size: 732
+Depends: python, python-wxgtk3.0, python:any (<< 2.8), python:any (>= 2.7.5-5~)
+Section: python
+Priority: optional
+Homepage: http://jeanslack.github.io/Videomass2/
+Description: Videomass2 is a cross-platform GUI for FFmpeg.
+ -Videomass2- provides a graphical interface for
+  managing audio and video streams through
+  FFmpeg even in batch mode.

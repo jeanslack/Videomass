@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="google android webm" type="Google WebM for Andriod 2.3.3+">
+        <parameters>-f webm -aspect 3:2 -vcodec libvpx -vf scale=480:320 -r 13 -g 120 -level 216 -profile:v 0 -qmax 42 -qmin 10 -rc_buf_aggressivity 0.95 -vb 480k -acodec libvorbis -b:a 96000 -aq 90 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>webm</extension>
+    </label>
+
+    <label name="google android webm FS" type="Google WebM for Andriod 2.3.3+ Fullscreen">
+        <parameters>-f webm -aspect 4:3 -vcodec libvpx -vf scale=432:320 -r 13 -g 120 -level 216 -profile:v 0 -qmax 42 -qmin 10 -rc_buf_aggressivity 0.95 -vb 480k -acodec libvorbis -b:a 96k -aq 90 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>webm</extension>
+    </label>
+
+    <label name="google android webm WS" type="Google WebM for Andriod 2.3.3+ Widescreen">
+        <parameters>-f webm -aspect 16:9 -vcodec libvpx -vf scale=480:272 -r 13 -g 120 -level 216 -profile:v 0 -qmax 42 -qmin 10 -rc_buf_aggressivity 0.95 -vb 480k -acodec libvorbis -b:a 96k -aq 90 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>webm</extension>
+    </label>
+
+    <label name="google webm FS" type="Google WebM Generic Fullscreen">
+        <parameters>-f webm -aspect 4:3 -vcodec libvpx -g 120 -level 216 -profile:v 0 -qmax 42 -qmin 10 -rc_buf_aggressivity 0.95 -vb 2M -acodec libvorbis -aq 90 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>webm</extension>
+    </label>
+-------------------------
+    <label name="google webm WS" type="Google WebM Generic Widescreen">
+        <parameters>-f webm -aspect 16:9 -vcodec libvpx -g 120 -level 216 -profile:v 0 -qmax 42 -qmin 10 -rc_buf_aggressivity 0.95 -vb 2M -acodec libvorbis -aq 90 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>webm</extension>
+    </label>
+</presets>  

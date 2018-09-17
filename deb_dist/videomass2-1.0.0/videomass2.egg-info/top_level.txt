@@ -1,0 +1,6 @@
+vdms_DIALOGS
+vdms_IO
+vdms_MAIN
+vdms_PANELS
+vdms_PROCESS
+vdms_SYS

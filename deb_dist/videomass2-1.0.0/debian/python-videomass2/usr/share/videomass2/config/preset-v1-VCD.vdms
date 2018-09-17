@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="VCD PAL" type="PAL VCD (HQ)">
+        <parameters>-f vcd -target pal-vcd -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+
+    <label name="VCD NTSC" type="NTSC VCD (HQ)">
+        <parameters>-f vcd -target ntsc-vcd -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mpg</extension>
+    </label>
+</presets>

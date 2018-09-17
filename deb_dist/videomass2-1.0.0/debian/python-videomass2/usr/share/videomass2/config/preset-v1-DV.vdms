@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="dv ntsc" type="Raw DV for NTSC Fullscreen">
+        <parameters>-target ntsc-dv -aspect 4:3 -f dv</parameters>
+        <filesupport> </filesupport>
+        <extension>dv</extension>
+    </label>
+
+    <label name="dv pal" type="Raw DV for PAL Fullscreen">
+        <parameters>-target pal-dv -aspect 4:3 -f dv</parameters>
+        <filesupport> </filesupport>
+        <extension>dv</extension>
+    </label>
+</presets>  

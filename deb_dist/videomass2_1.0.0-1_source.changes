@@ -1,0 +1,31 @@
+Format: 1.8
+Date: Mon, 17 Sep 2018 23:26:02 +0200
+Source: videomass2
+Binary: python-videomass2
+Architecture: source
+Version: 1.0.0-1
+Distribution: unstable
+Urgency: low
+Maintainer: Gianluca Pernigotto (aka jeanslack) <<jeanlucperni@gmail.com>>
+Changed-By: Gianluca Pernigotto (aka jeanslack) <<jeanlucperni@gmail.com>>
+Description:
+ python-videomass2 - Videomass2 is a cross-platform GUI for FFmpeg.
+Changes:
+ videomass2 (1.0.0-1) unstable; urgency=low
+ .
+   * source package automatically created by stdeb 0.8.5
+Checksums-Sha1:
+ ab89363beda415309f10b598c7b8e6876fb8b80c 953 videomass2_1.0.0-1.dsc
+ af960a128bf137b47972cddfa6901e3e55d2a814 226027 videomass2_1.0.0.orig.tar.gz
+ 39dcda50bd4c8a81b1b454355a5f589f48feec9b 988 videomass2_1.0.0-1.debian.tar.xz
+ 0afa3f0c63fc2b90306fb13ec450b752ec53dc79 5367 videomass2_1.0.0-1_source.buildinfo
+Checksums-Sha256:
+ e6e3c8fd18d0d46d2665ab2c311205e433740abbaec37a19cfb8ac25a26d4d24 953 videomass2_1.0.0-1.dsc
+ ba85e6c50b004527e33d521cc0b7c68f1addaafd5b0361756d2d5c61fe2bf8d8 226027 videomass2_1.0.0.orig.tar.gz
+ 9fd4f4d0cc42a423eb5c9f2f967fa4893779f2eaf93b759c7b98d911aa842ade 988 videomass2_1.0.0-1.debian.tar.xz
+ 20ceee29fbab75db716a90744c12989ed08e4243a04c35095d4de83502fd06d3 5367 videomass2_1.0.0-1_source.buildinfo
+Files:
+ f2a55596dabac0a9e2e62810990f929f 953 python optional videomass2_1.0.0-1.dsc
+ 14272151142b25f52047ba0b5ae293b6 226027 python optional videomass2_1.0.0.orig.tar.gz
+ 0d71ce30a1a8dc12db2dc17f331a59ae 988 python optional videomass2_1.0.0-1.debian.tar.xz
+ e1a6792b427070ca03c193dc7b6085c5 5367 python optional videomass2_1.0.0-1_source.buildinfo
