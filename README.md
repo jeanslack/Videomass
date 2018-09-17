@@ -1,6 +1,6 @@
 <div align="center">
 <h1>
-<img width="64" height="64" src="https://github.com/jeanslack/Videomass2/blob/master/art/data/images/com.github.jeanslack.videomass2.png" alt="Icon">  Videomass</h1>
+<img width="64" height="64" src="https://github.com/jeanslack/Videomass2/blob/master/art/data/images/com.github.jeanslack.videomass2.png" alt="Icon">  Videomass2</h1>
 <h3 align="center">A open-source and cross-platform GUI for FFmpeg.</h3>
 </div>
 
