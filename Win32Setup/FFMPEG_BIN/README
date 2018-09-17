@@ -1,0 +1,40 @@
+============================================
+NOTE for FFMPEG_BIN/bin directory on MS Windows
+============================================
+
+This folder may contain the binaries files of ffmpeg.exe, ffprobe.exe and ffplay.exe
+statically compiled for Windows 64 bit, or symbolic links to binaries installed 
+round the system. Remember, if you want to use the static binaries of FFmpeg on this folder,
+you need to create a directory named 'bin' and then copy the files into it.
+
+The statically compiled distributable binaries for MS Windows can be downloaded at:
+    
+    https://ffmpeg.zeranoe.com/builds/
+
+Important NOTE:
+---------------
+on Windows 7 64-bit I have encountered some problems with the latest 
+versions of FFmpeg. After some research and field tests I can confirm that 
+version 3.1.5 of FFmpeg works well on Videomass.
+All Old versions of FFmpeg for Windows can be found here:
+    
+    https://www.videohelp.com/software/ffmpeg/old-versions
+
+For legal reasons (for example: including FAAC for AAC support) it is illegal to distribute
+the FFmpeg binary compiled in some countries of the world, for example, with the FAAC codec
+for AAC support. The distributable binary of FFmpeg does not include faac support, which,
+however, can be obtained from compiling the source code. If you need the faac codec (or other
+codecs with special restrictions) in FFmpeg, you should compile yourself from the source with
+the faac codec support.
+More Infos about the legal issues can be found here:
+    
+    http://www.ffmpeg.org/legal.html
+
+Building options and steps can be found here:
+    
+    https://trac.ffmpeg.org/wiki/CompilationGuide
+
+Others resources:
+    
+    http://www.ffmpeg.org/documentation.html
+

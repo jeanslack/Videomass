@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="flvwebFS" type="Flash Video (flv) for Web use Fullscreen">
+        <parameters>-vcodec libx264 -crf 25 -preset:v medium -vf scale=320:240 -aspect 4:3 -acodec libmp3lame -ab 128k -ar 44100 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>flv</extension>
+    </label>
+
+    <label name="flvwebWS" type="Flash Video (flv) for Web use Widescreen">
+        <parameters>-vcodec libx264 -crf 25 -preset:v medium -vf 320:180 -aspect 16:9 -r 25 -acodec libmp3lame -ab 128k -ar 44100 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>flv</extension>
+    </label>
+</presets> 

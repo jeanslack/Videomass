@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="From DVD to WEBM for youtube" type="Convert a .VOB file from DVD to webm format with de-interlace (youtube compatible)">
+        <parameters>-vcodec libvpx -vb 800k -vf w3fdif -s 640x360 -r 25 -acodec libvorbis -aq 3 -ar 44100</parameters>
+        <filesupport>VOB vob</filesupport>
+        <extension>webm</extension>
+    </label>
+
+    <label name="From VOB to WMV" type="Convert a .VOB file from DVD to wmv (window movie) format with de-interlace">
+        <parameters>-vcodec wmv2 -acodec wmav2 -qscale:v 0 -qscale:a 0 -s 720x576</parameters>
+        <filesupport>VOB</filesupport>
+        <extension>wmv</extension>
+    </label>
+
+     <label name="From VOB to AVI" type="Convert a .VOB file from DVD to avi format de-interlaced">
+        <parameters>-f avi -vcodec mpeg4 -b 800k -r 25 -g 300 -bf 2 -vf w3fdif -acodec libmp3lame -ab 128k -ar 44100</parameters>
+        <filesupport>VOB vob</filesupport>
+        <extension>avi</extension>
+    </label>
+</presets>

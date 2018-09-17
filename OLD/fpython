@@ -1,0 +1,27 @@
+#!/bin/bash
+#HOW TO SET LINK:
+#For others, here is what worked for me:
+
+#On Mac OSX, I installed wxpython with Homebrew using:
+
+#brew install wxpython
+#Change into your virtualenv site-packages directory:
+
+#cd /venv/lib/python2.7/site-packages
+#then link the wx.pth
+# ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/wx.pth wx.pth
+# ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/wx-3.0-osx_cocoa wx-3.0-osx_cocoa
+# URL:
+# https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/
+# https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies
+# url: https://wiki.wxpython.org/wxPythonVirtualenvOnMac
+# what real Python executable to use
+PYVER=2.7
+PYTHON=/usr/local/Frameworks/Python.framework/Versions/$PYVER/bin/python$PYVER
+
+# find the root of the virtualenv, it should be the parent of the dir this script is in
+ENV=`$PYTHON -c "import os; print os.path.abspath(os.path.join(os.path.dirname(\"$0\"), '..'))"`
+
+# now run Python with the virtualenv set as Python's HOME
+export PYTHONHOME=$ENV 
+exec $PYTHON "$@"

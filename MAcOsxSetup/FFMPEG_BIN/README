@@ -1,0 +1,35 @@
+=======================================
+NOTE for FFMPEG_BIN/ directory on macOS
+=======================================
+
+This folder may contain the binaries files of ffmpeg, ffprobe and ffplay
+statically compiled for macOS with Intel 64 bit, or symbolic links to 
+binaries installed in the system or round in your user space.
+Remember, if you want to use the static binaries of FFmpeg on this folder,
+you need to create a directory named 'bin' and then copy the files into it
+
+The statically compiled distributable binaries for macOS with Intel 64bit 
+can be downloaded at:
+    
+    http://www.evermeet.cx/ffmpeg/
+
+For legal reasons (for example: including FAAC for AAC support) it is illegal
+to distribute the FFmpeg binary compiled in some countries of the world, for example,
+with the FAAC codec for AAC support. The distributable binary of FFmpeg does not
+include faac support, which, however, can be obtained from compiling the source code.
+If you need the faac codec (or other codecs with special restrictions) in FFmpeg, you
+should compile yourself from the source with the faac codec support.
+More Infos about the legal issues can be found here:
+    
+    http://www.ffmpeg.org/legal.html
+
+Remember that Homebrew tool can do it automatically for you.
+Building options and steps can be found here:
+    
+    https://gist.github.com/clayton/6196167
+    https://trac.ffmpeg.org/wiki/CompilationGuide/macOS
+
+Others resources:
+    
+    http://www.ffmpeg.org/documentation.html
+
