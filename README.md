@@ -1,6 +1,6 @@
 <div align="center">
 <h1>
-<img width="64" height="64" src="https://github.com/jeanslack/Videomass2/blob/master/art/data/images/com.github.jeanslack.videomass2.png" alt="Icon">  Videomass2</h1>
+<img width="64" height="64" src="https://github.com/jeanslack/Videomass2/blob/master/art/data/images/com.github.jeanslack.Videomass2.png" alt="Icon">  Videomass2</h1>
 <h3 align="center">A open-source and cross-platform GUI for FFmpeg.</h3>
 </div>
 
@@ -12,13 +12,13 @@
 <h1 align="center"> Overview </h1>
 </div>
 
-**Videomass** is a cross-platform GUI for FFmpeg, It provides a graphical 
+**Videomass2** is a cross-platform GUI for FFmpeg, It provides a graphical 
 interface for managing audio and video streams through FFmpeg.
 
 * [Important Note!](#important-note)
 * [Features](#features)
-* [Official WebPage](http://jeanslack.github.io/Videomass)
-* [Downloads](https://github.com/jeanslack/Videomass/releases)
+* [Official WebPage](http://jeanslack.github.io/Videomass2)
+* [Downloads](https://github.com/jeanslack/Videomass2/releases)
 * [System Requirements](#system-requirements)
 * [Essential Dependencies](#essential-dependencies)
 * [Use](#use)
@@ -31,12 +31,12 @@ interface for managing audio and video streams through FFmpeg.
 
 ## Important Note!
 
-Videomass do not include binaries/executables of the FFmpeg.
-If FFmpeg is not yet installed on your system please, install it. Videomass will not work without the essential FFmpeg
+Videomass2 do not include binaries/executables of the FFmpeg.
+If FFmpeg is not yet installed on your system please, install it. Videomass2 will not work without the essential FFmpeg
 
 ## Features
 
-Videomass presents itself with an interface completely renewed and enhanced by many features
+Videomass2 presents itself with an interface completely renewed and enhanced by many features
 
 - Drag n Drop interface 
 - Presets manager interface with fully customizable profiles ready to use
@@ -79,13 +79,13 @@ Videomass presents itself with an interface completely renewed and enhanced by m
 
 ## Use
 
-- ***nix**: To start **videomass** without installing in the system, simply run the "videomass" file into 
-unzipped sources folder, like this: `~$ python videomass` or `~$ ./videomass`. 
+- ***nix**: To start **videomass2** without installing in the system, simply run the "videomass2" file into 
+unzipped sources folder, like this: `~$ python videomass2` or `~$ ./videomass2`. 
 Be sure to check the execution permissions first.
 
-- **Windows**: To start **videomass** without installing in the system, unzip the Videomass sources 
+- **Windows**: To start **videomass2** without installing in the system, unzip the Videomass2 sources 
 folder that you just download, open a dos window and position you in the folder you just 
-unzipped, then type: `python videomass`
+unzipped, then type: `python videomass2`
 
 
 ## Build Package
@@ -109,33 +109,33 @@ compatible with others debian-based systems, you need install those following to
 `~# apt-get update && apt-get install python-all python-stdeb fakeroot`. 
 This installs all the need dependencies, including python-setuptools.   
 
-Then, go into Videomass unzipped folder with your user (not root) and type:   
+Then, go into Videomass2 unzipped folder with your user (not root) and type:   
 `~$ python setup.py --command-packages=stdeb.command bdist_deb`   
-This should create a *python-videomass_version_all.deb* in the new deb_dist directory, 
-installable with `~# dpkg -i python-videomass_version_all.deb` command.
+This should create a *python-videomass2_version_all.deb* in the new deb_dist directory, 
+installable with `~# dpkg -i python-videomass2_version_all.deb` command.
 
-See also [setup.py](https://github.com/jeanslack/Videomass/blob/master/setup.py) 
+See also [setup.py](https://github.com/jeanslack/Videomass2/blob/master/setup.py) 
 script for insights.
 
 ## Make a Slackware package
 
 Is available a SlackBuild script to build a package *.tgz* for Slackware and Slackware based 
 distributions. 
-See here [videomass.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/Videomass)
+See here [videomass.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/Videomass2)
 
 ## MacOs
 
 **As portable application (Run from sources code):**
 
-You can run Videomass without install it, but make sure you have installed the following requests:
+You can run Videomass2 without install it, but make sure you have installed the following requests:
 
 * WxPthon 3.0 (from homebrew)
 * FFmpeg >= 3.2 (from hombrew)
 * git
 
-Then, clone the latest sources with git: `~$ git clone https://github.com/jeanslack/Videomass`
+Then, clone the latest sources with git: `~$ git clone https://github.com/jeanslack/Videomass2`
 
-or download Videomass sources at github site: <https://github.com/jeanslack/Videomass>
+or download Videomass2 sources at github site: <https://github.com/jeanslack/Videomass2>
 and see [Use](#use)   
 
 However, ffmpeg, ffprobe and ffplay must be installed in your system. 
@@ -152,8 +152,8 @@ Note, however, that they may have limitations for reasons related to distributio
 
 **Build a OSX App**
 
-If you have successfully performed the points described above, then you can try do the Videomass App for macOs.
-For build the Videomass.app there you need Xcode and command-line-tools available to the app store. 
+If you have successfully performed the points described above, then you can try do the Videomass2 App for macOs.
+For build the Videomass2.app there you need Xcode and command-line-tools available to the app store. 
 Anyway, need following requirements:
 
 * Xcode 
@@ -178,17 +178,17 @@ If you get errors, probably  you need to create a virtual environment:
 <https://wiki.wxpython.org/wxPythonVirtualenvOnMac>   
 And then buld the standalone application for MacOs, here's something useful to read:   
 <https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>   
-Note that on Videomass sources already exists a setup.py, then activate your virtual env and run setup.py:   
+Note that on Videomass2 sources already exists a setup.py, then activate your virtual env and run setup.py:   
     
     `~$ python setup.py py2app` 
 
 ## Windows
 
 **Notice!**:
-Videomass do not include binaries/executables of the ffmpeg, ffprobe and ffplay.
+Videomass2 do not include binaries/executables of the ffmpeg, ffprobe and ffplay.
 If ffmpeg is not yet installed on your system please, download the compatible executable
-of the FFmpeg for your Windows OS and set the pathname with Videomass setup dialog, otherwise
-Videomass will not work.
+of the FFmpeg for your Windows OS and set the pathname with Videomass2 setup dialog, otherwise
+Videomass2 will not work.
 You may be interested the following explanation:
 <https://video.stackexchange.com/questions/20495/how-do-i-set-up-and-use-ffmpeg-in-windows>
 
@@ -202,9 +202,9 @@ You may be interested the following explanation:
 
 <https://sourceforge.net/projects/wxpython/files/wxPython/3.0.2.0/> and install it.
 
-- Download the Videomass sources from:
+- Download the Videomass2 sources from:
 
-<https://github.com/jeanslack/Videomass>
+<https://github.com/jeanslack/Videomass2>
 
 and see [Use](#use)   
 
@@ -218,11 +218,11 @@ if need update it and follow this how-to:
 
 <https://www.blog.pythonlibrary.org/2010/07/31/a-py2exe-tutorial-build-a-binary-series/>
 
-Then open a dos window and position you in the Videomass folder you just unzipped and type:
+Then open a dos window and position you in the Videomass2 folder you just unzipped and type:
 
 `python setup.py py2exe`
 
-A folder named 'dist' will be created where there will be the magic executable of Videomass.exe
+A folder named 'dist' will be created where there will be the magic executable of Videomass2.exe
 
 ## License
 

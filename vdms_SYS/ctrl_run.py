@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 17/01/2015
 # Rev (02) 17/july/2018
@@ -89,28 +89,28 @@ def system_check():
         """
         This paths are for installable mode
         """
-        path_srcShare = '/usr/share/videomass/config'
+        path_srcShare = '/usr/share/videomass2/config'
 
         """
         assignment path at the used icons:
         """
-        videomass_icon = "/usr/share/pixmaps/videomass.png"
-        icon_presets = '/usr/share/videomass/icons/icon_presets.png'
-        #icon_eyes = '/usr/share/videomass/icons/tecnoeyes.png'
-        icon_switchvideomass = '/usr/share/videomass/icons/icon_switchvideomass.png'
-        icon_process = '/usr/share/videomass/icons/icon_process.png'
-        icon_help = '/usr/share/videomass/icons/icon_help.png'
-        icon_headphones = '/usr/share/videomass/icons/icon_headphones.png'
-        icon_import = '/usr/share/videomass/icons/icon_import.png'
+        videomass_icon = "/usr/share/pixmaps/videomass2.png"
+        icon_presets = '/usr/share/videomass2/icons/icon_presets.png'
+        #icon_eyes = '/usr/share/videomass2/icons/tecnoeyes.png'
+        icon_switchvideomass = '/usr/share/videomass2/icons/icon_switchvideomass.png'
+        icon_process = '/usr/share/videomass2/icons/icon_process.png'
+        icon_help = '/usr/share/videomass2/icons/icon_help.png'
+        icon_headphones = '/usr/share/videomass2/icons/icon_headphones.png'
+        icon_import = '/usr/share/videomass2/icons/icon_import.png'
         """
         assignment path at the contestual help for helping.
         This change if Slackware, debian, etc.
         """
-        if os.path.exists('/usr/doc/videomass/HTML'): # Slackware
-            help_html = 'file:///usr/doc/videomass/HTML'
+        if os.path.exists('/usr/doc/videomass2/HTML'): # Slackware
+            help_html = 'file:///usr/doc/videomass2/HTML'
             
-        elif os.path.exists('/usr/share/doc/python-videomass/HTML'):# debian
-            help_html = 'file:///usr/share/doc/python-videomass/HTML'
+        elif os.path.exists('/usr/share/doc/python-videomass2/HTML'):# debian
+            help_html = 'file:///usr/share/doc/python-videomass2/HTML'
             
         else:
             print 'ERROR LOAD HTML PAGE: path not found'
@@ -136,23 +136,23 @@ def system_check():
         help_html = "file://%s/docs/HTML" % PWD
         
     #### check videomass.conf and config directory
-    if os.path.exists('%s/.videomass' % DIRNAME):#if exist folder ~/.videomass
-        if os.path.isfile('%s/.videomass/videomass.conf' % DIRNAME):
+    if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
+        if os.path.isfile('%s/.videomass2/videomass2.conf' % DIRNAME):
             pass
         else:
             if OS == ('Linux') or OS == ('Darwin'):
-                shutil.copyfile('%s/videomass.conf' % path_srcShare, 
-                                '%s/.videomass/videomass.conf' % DIRNAME)
+                shutil.copyfile('%s/videomass2.conf' % path_srcShare, 
+                                '%s/.videomass2/videomass2.conf' % DIRNAME)
             elif OS == ('Windows'):
                 shutil.copyfile('%s/videomassWin32.conf' % path_srcShare, 
-                                '%s/.videomass/videomass.conf' % DIRNAME)
+                                '%s/.videomass2/videomass2.conf' % DIRNAME)
     else:
         try:
-            shutil.copytree(path_srcShare, '%s/.videomass' % DIRNAME)
+            shutil.copytree(path_srcShare, '%s/.videomass2' % DIRNAME)
             if OS == ('Windows'):
-                os.remove("%s/.videomass/videomass.conf" % (DIRNAME))
-                os.rename("%s/.videomass/videomassWin32.conf" % (DIRNAME),
-                          "%s/.videomass/videomass.conf" % (DIRNAME))
+                os.remove("%s/.videomass2/videomass2.conf" % (DIRNAME))
+                os.rename("%s/.videomass2/videomassWin32.conf" % (DIRNAME),
+                          "%s/.videomass2/videomass2.conf" % (DIRNAME))
         except OSError:
             copyerr = True
 
@@ -167,7 +167,7 @@ def parsing_fileconf():
     configuration file localized on '~/.videomass/videomass.conf' 
     and return values list of the current program settings.
     """
-    filename = '%s/.videomass/videomass.conf' % (DIRNAME)
+    filename = '%s/.videomass2/videomass2.conf' % (DIRNAME)
 
     with open (filename, 'r') as f:
         fconf = f.readlines()

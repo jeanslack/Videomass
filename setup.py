@@ -5,26 +5,26 @@
 # 
 #########################################################
 # Name: setup.py
-# Porpose: script for building Videomass executable.
+# Porpose: script for building Videomass2 executable.
 # Platform: Mac OsX, Gnu/Linux, Microsoft Windows
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) September 24 2014
 # Rev (02) January 21 2015
@@ -89,7 +89,7 @@ def LINUX_SLACKWARE(id_distro, id_version):
         platforms = ['Gnu/Linux (%s %s)' % (id_distro, id_version)],
         packages = ['vdms_DIALOGS','vdms_IO','vdms_MAIN',
                     'vdms_PANELS','vdms_PROCESS','vdms_SYS'],
-        scripts = ['videomass']
+        scripts = ['videomass2']
         )
 #-----------------------------------------------------------------------#
 def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
@@ -119,12 +119,12 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
     # ('dir/file destination of the data', ['dir/file on current place sources']
     # even path must be relative-path
     DATA_FILES = [
-        ('share/videomass/config', glob_files('share/*.vdms')),
-        ('share/videomass/config', ['share/videomass.conf', 'share/README']),
-        ('share/videomass/icons', glob_files('art/*.png')),
+        ('share/videomass2/config', glob_files('share/*.vdms')),
+        ('share/videomass2/config', ['share/videomass2.conf', 'share/README']),
+        ('share/videomass2/icons', glob_files('art/*.png')),
         ('share/applications', ['videomass.desktop']),
         ('share/pixmaps', ['art/videomass.png']),
-        ('share/doc/python-videomass/HTML', glob_files('docs/HTML/*.html')),
+        ('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
                 ]
     
     DEPENDENCIES = ['python', 'wxpython']
@@ -141,7 +141,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         platforms = ['Gnu/Linux (%s %s)' % (id_distro, id_version)],
         packages = ['vdms_DIALOGS','vdms_IO','vdms_MAIN',
                     'vdms_PANELS','vdms_PROCESS','vdms_SYS'],
-        scripts = ['videomass'],
+        scripts = ['videomass2'],
         data_files = DATA_FILES,
         install_requires = DEPENDENCIES,
         extras_require = EXTRA_DEPEND
@@ -151,7 +151,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
 def OSX():
     """
     ------------------------------------------------
-    py2app build script for videomass
+    py2app build script for videomass2
     ------------------------------------------------
     -Usage:
         python setup.py py2app --help
@@ -159,7 +159,7 @@ def OSX():
     -Usage for development and debug:
         python setup.py py2app -A
     and debug with terminal: 
-        ./dist/Videomass.app/Contents/MacOS/videomass
+        ./dist/Videomass2.app/Contents/MacOS/videomass2
 
     -Usage for building a redistributable version standalone:
         python setup.py py2app
@@ -199,7 +199,7 @@ def OSX():
     # ('dir/file') > destination of the data, ['dir/file'] > on current 
     # place sources even path must be relative-path
     DATA_FILES = [('share', glob_files('share/*.vdms')),
-            ('share', ['share/videomass.conf']), 
+            ('share', ['share/videomass2.conf']), 
             ('docs/HTML', glob_files('docs/HTML/*.html')), 
             ('art', glob_files('art/*.png')), 
             ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING','TODO',
@@ -215,8 +215,8 @@ def OSX():
                #'LSEnvironment':'$0',
                'CFBundleName': RLS_NAME,
                'CFBundleDisplayName': RLS_NAME,
-               'CFBundleGetInfoString': "Making Videomass",
-               'CFBundleIdentifier': "com.jeanslack.videomass",
+               'CFBundleGetInfoString': "Making Videomass2",
+               'CFBundleIdentifier': "com.jeanslack.videomass2",
                'CFBundleVersion': "19.1.1",
                'CFBundleShortVersionString': "19.1.1",
                'NSHumanReadableCopyright': u"Copyright © 2018, "
@@ -225,13 +225,13 @@ def OSX():
                }
 
     #--------------- This is setup: --------------------#
-    if os.path.exists('%s/Videomass.py' % PWD):
+    if os.path.exists('%s/Videomass2.py' % PWD):
         pass
     else:
-        os.rename("videomass","Videomass.py")
-        #shutil.copyfile('%s/videomass' % PWD, '%s/Videomass.py' % PWD)
+        os.rename("videomass2","Videomass2.py")
+        #shutil.copyfile('%s/videomass2' % PWD, '%s/Videomass2.py' % PWD)
     
-    setup(app = ['Videomass.py'],
+    setup(app = ['Videomass2.py'],
         packages = ['vdms_DIALOGS','vdms_IO','vdms_MAIN',
                     'vdms_PANELS','vdms_PROCESS','vdms_SYS'],
         include = ['python', 'wx',],
@@ -253,7 +253,7 @@ def OSX():
 def WIN32():
     """
     ------------------------------------------------
-    py2exe build script for videomass
+    py2exe build script for videomass2
     ------------------------------------------------
     -Usage:
         python setup.py py2exe --help
@@ -261,8 +261,8 @@ def WIN32():
     import py2exe
     
     PWD = os.getcwd() # current work directory path
-    if not os.path.exists('%s/Videomass.py' % PWD):
-        os.rename("videomass","Videomass.py")
+    if not os.path.exists('%s/Videomass2.py' % PWD):
+        os.rename("videomass2","Videomass2.py")
         
     if not os.path.exists('%s/Win32Setup/ORIG' % PWD):
         shutil.copytree('%s/vdms_PROCESS' % PWD, '%s/Win32Setup/ORIG' % PWD)
@@ -308,7 +308,7 @@ def WIN32():
                                 }
                     },
     console = [],
-    windows = ['Videomass.py'],
+    windows = ['Videomass2.py'],
     data_files = DATA_FILES,
     icon_resources = [(1, "videomass.ico")],
     name = RLS_NAME,

@@ -15,7 +15,7 @@ Important NOTE:
 ---------------
 on Windows 7 64-bit I have encountered some problems with the latest 
 versions of FFmpeg. After some research and field tests I can confirm that 
-version 3.1.5 of FFmpeg works well on Videomass.
+version 3.1.5 of FFmpeg works well on Videomass2.
 All Old versions of FFmpeg for Windows can be found here:
     
     https://www.videohelp.com/software/ffmpeg/old-versions
