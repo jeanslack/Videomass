@@ -1,4 +1,0 @@
-# please also check http://pypi.debian.net/videomass2/watch
-version=3
-opts=uversionmangle=s/(rc|a|b|c)/~$1/ \
-http://pypi.debian.net/videomass2/videomass2-(.+)\.(?:zip|tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))
