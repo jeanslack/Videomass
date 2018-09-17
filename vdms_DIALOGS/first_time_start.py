@@ -7,20 +7,20 @@
 # Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GNU GENERAL PUBLIC LICENSE (see LICENSE)
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (00) Sett 15 2018
 #########################################################
@@ -32,7 +32,7 @@ import platform
 from vdms_SYS.whichcraft import which
 
 dirname = os.path.expanduser('~/') # /home/user/
-filename = '%s/.videomass/videomass.conf' % (dirname)
+filename = '%s/.videomass2/videomass2.conf' % (dirname)
 PWD = os.getcwd()
 OS = platform.system()
 
@@ -55,7 +55,7 @@ class FirstStart(wx.Dialog):
                                         img,wx.BITMAP_TYPE_ANY))
         lab_welc2 = wx.StaticText(self, wx.ID_ANY, (msg))
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
-                                              "Welcome on Videomass Wizard!"))
+                                              "Welcome on Videomass2 Wizard!"))
         self.searchBtn = wx.Button(self, wx.ID_ANY, ("Search"))
         self.ckbx_paths = wx.CheckBox(self, wx.ID_ANY, ("Enable Custom Paths"))
         self.customBtn = wx.Button(self, wx.ID_ANY, ("Confirm"))
@@ -69,7 +69,7 @@ class FirstStart(wx.Dialog):
         close_btn = wx.Button(self, wx.ID_EXIT, "")
         
         # properties
-        self.SetTitle("Wizard - Videomass")
+        self.SetTitle("Wizard - Videomass2")
         lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL,wx.BOLD, 0, ""))
         # layout:
         grd_base = wx.FlexGridSizer(2, 1, 0, 0)
@@ -238,10 +238,10 @@ class FirstStart(wx.Dialog):
                           % required, 'Warning', wx.ICON_EXCLAMATION, self)
                 return
             else:
-                if wx.MessageBox("The Videomass system folder already "
+                if wx.MessageBox("The Videomass2 system folder already "
                         "includes the binary executables of FFmpeg, "
                         "FFprobe and FFplay.\n\nDo you want to use them?", 
-                        'Please Confirm - Videomass',
+                        'Please Confirm - Videomass2',
                         wx.ICON_QUESTION |
                         wx.YES_NO, 
                         None) == wx.YES:
@@ -284,7 +284,7 @@ class FirstStart(wx.Dialog):
                 fileconf.write('%s' % i)
             
         wx.MessageBox(u"\nThe procedure wizard has been completed.\n"
-                       "Restart Videomass now.\n\nThank You!", 
-                       "Message - Videomass")   
+                       "Restart Videomass2 now.\n\nThank You!", 
+                       "Message - Videomass2")   
         self.Destroy()
         

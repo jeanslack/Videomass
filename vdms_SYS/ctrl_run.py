@@ -41,9 +41,9 @@ DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
 
 def system_check():
     """
-    -This function check existing of the '/home/user/.videomass' configuration 
-    folder with videomass.conf and vdms files content.
-    It is called from videomass bootstrap. If these files do not 
+    -This function check existing of the '/home/user/.videomass2' configuration 
+    folder with videomass2.conf and vdms files content.
+    It is called from videomass2 bootstrap. If these files do not 
     exist or are deleted in, this function restore them from assign paths
     established below. 
     -Check which oprative system is used to make the necessary adjustments
@@ -62,7 +62,7 @@ def system_check():
     OS = platform.system()
 
     """
-    Assignment path where there is av_profile.xml and videomass.conf
+    Assignment path where there is av_profile.xml and videomass2.conf
     This depends if portable mode or installable mode:
     """
     if os.path.exists('%s/vdms_MAIN' % (PWD)) or OS == ('Darwin'):
@@ -164,7 +164,7 @@ def system_check():
 def parsing_fileconf():
     """
     This function is called by videomass on_init. It make a parsing of the
-    configuration file localized on '~/.videomass/videomass.conf' 
+    configuration file localized on '~/.videomass2/videomass2.conf' 
     and return values list of the current program settings.
     """
     filename = '%s/.videomass2/videomass2.conf' % (DIRNAME)

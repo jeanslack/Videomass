@@ -7,20 +7,20 @@
 # Copyright: (c) 2018/2019) Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 09/july/2018
 #########################################################
@@ -50,8 +50,8 @@ class MainFrame(wx.Frame):
                  ffmpeg_link, ffprobe_link, ffplay_link
                  ):
         """
-        NOTE: 'path_srcShare' is a current work directory of Videomass 
-               program. How it can be localized depend if Videomass is 
+        NOTE: 'path_srcShare' is a current work directory of Videomass2 
+               program. How it can be localized depend if Videomass2 is 
                run as portable program or installated program.
         """
 
@@ -123,7 +123,7 @@ class MainFrame(wx.Frame):
         self.DnDsizer.Add(self.AconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         
         #----------------------Set Properties----------------------#
-        self.SetTitle("Videomass")
+        self.SetTitle("Videomass2")
         icon = wx.EmptyIcon()
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
@@ -351,7 +351,7 @@ class MainFrame(wx.Frame):
               "It is not necessary to use this function, but sometimes it can "
               "be useful")
         fileButton.AppendSeparator()
-        exitItem = fileButton.Append(wx.ID_EXIT, "Exit", "Close Videomass")
+        exitItem = fileButton.Append(wx.ID_EXIT, "Exit", "Close Videomass2")
         self.menuBar.Append(fileButton,"File")
         
         ####------------------- editButton
@@ -421,7 +421,7 @@ class MainFrame(wx.Frame):
         ####------------------ help buton
         helpButton = wx.Menu()
         helpItem = helpButton.Append( wx.ID_HELP, "User Guide", "Guide")
-        infoItem = helpButton.Append(wx.ID_ABOUT, "About Videomass", "About")
+        infoItem = helpButton.Append(wx.ID_ABOUT, "About Videomass2", "About")
         self.menuBar.Append(helpButton,"Help")
 
         self.SetMenuBar(self.menuBar)
@@ -551,7 +551,7 @@ class MainFrame(wx.Frame):
         """
         data = ''
 
-        title = 'Set a time Range - Videomass'
+        title = 'Set a time Range - Videomass2'
         dial = dialog_tools.Cut_Range(self, title, self.time_seq)
         retcode = dial.ShowModal()
         if retcode == wx.ID_OK:
@@ -575,7 +575,7 @@ class MainFrame(wx.Frame):
         """
         Redirect input file clicked at stream_info for metadata display
         """
-        title = 'File Input Metadata Display - Videomass'
+        title = 'File Input Metadata Display - Videomass2'
         filepath = self.import_clicked
         IO_tools.stream_info(title, filepath , self.helping, 
                              self.ffprobe_link)
@@ -596,7 +596,7 @@ class MainFrame(wx.Frame):
 
         else:
             dialfile = wx.FileDialog(self, "Choice a file stream for "
-                    "reproduction - Videomass", "%s" % (filename), "", 
+                    "reproduction - Videomass2", "%s" % (filename), "", 
                     wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
                                      )
             if dialfile.ShowModal() == wx.ID_OK:
@@ -614,7 +614,7 @@ class MainFrame(wx.Frame):
         However, the first path export will always be open.
         All this one is valutate from wildcard element: if None or not. 
         """
-        title = 'File Output Metadata Display - Videomass'
+        title = 'File Output Metadata Display - Videomass2'
         wildcard, filename = self.post_process[1], self.post_process[0]
         if wildcard == None:
             IO_tools.stream_info(title, filename , self.helping, 
@@ -622,7 +622,7 @@ class MainFrame(wx.Frame):
 
         else:
             dialfile = wx.FileDialog(self, "Choice a file for get "
-                    "metadata info - Videomass", "%s" % (filename), "", 
+                    "metadata info - Videomass2", "%s" % (filename), "", 
                     wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
                                      )
             if dialfile.ShowModal() == wx.ID_OK:
@@ -835,7 +835,7 @@ class MainFrame(wx.Frame):
         #Show the panel:
         self.ProcessPanel.Show()
         self.Layout()
-        self.SetTitle('..Processing, be patient - Videomass')
+        self.SetTitle('..Processing, be patient - Videomass2')
 
         self.Setup_items_bar()# call set default layout method
     #------------------------------------------------------------------#
@@ -871,7 +871,7 @@ class MainFrame(wx.Frame):
             self.switch_audio_conv(self)
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0,6)]
-        self.SetTitle("Videomass")
+        self.SetTitle("Videomass2")
 
     #------------------------------------------------------------------#
     #def Help_Contest(self, event):

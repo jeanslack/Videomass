@@ -7,20 +7,20 @@
 # Copyright: (c) 2014-2018/19 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (06) 24/08/2014
 # Rev (07) 12/01/2015
@@ -172,7 +172,7 @@ class GeneralProcess(wx.Panel):
             if self.STATUS_ERROR == 1:
                 self.OutText.AppendText('\n%s' % output)
                 # write a row error into file log:
-                with open("%s/.videomass/%s" % (DIRNAME, self.logname), 
+                with open("%s/.videomass2/%s" % (DIRNAME, self.logname), 
                                                         "a") as logerr:
                     logerr.write("[FFMPEG] ERRORS:\n%s" % (output))
 
@@ -193,7 +193,7 @@ class GeneralProcess(wx.Panel):
         print '%s' % textlog
         self.OutText.AppendText("%s" % textlog)
         # write all ffmpeg commands
-        with open("%s/.videomass/%s" % (DIRNAME, 
+        with open("%s/.videomass2/%s" % (DIRNAME, 
                                         self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
 
@@ -247,7 +247,7 @@ class GeneralProcess(wx.Panel):
 
         #if user want file log in a specified path
         if not 'none' in self.path_log : 
-            copy_restore("%s/.videomass/%s" % (DIRNAME, self.logname),
+            copy_restore("%s/.videomass2/%s" % (DIRNAME, self.logname),
                             "%s/%s" % (self.path_log, self.logname))
 
 #------------------------------ THREADS -------------------------------#
@@ -613,7 +613,7 @@ class GrabAudioProc(Thread):
         self.codec = varargs[5] # codec type list (items)
         self.cmd_2 = varargs[6] # command 2
         self.ext = varargs[7] # format/extension list (items)
-        self.logname = varargs[8] #  ~/.videomass/self.logname
+        self.logname = varargs[8] #  ~/.videomass2/self.logname
         self.duration = duration # duration values list (items)
         self.OS = OS
         

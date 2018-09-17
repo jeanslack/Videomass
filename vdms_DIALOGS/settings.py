@@ -2,25 +2,25 @@
 
 #########################################################
 # Name: settings.py
-# Porpose: videomass setup dialog
+# Porpose: videomass2 setup dialog
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (03) 20/07/2014
 # Rev (04) 12/01/2015
@@ -31,19 +31,19 @@ import wx
 import os
 
 dirname = os.path.expanduser('~/') # /home/user/
-filename = '%s/.videomass/videomass.conf' % (dirname)
+filename = '%s/.videomass2/videomass2.conf' % (dirname)
 PWD = os.getcwd()
 
 class Setup(wx.Dialog):
     """
-    Main settings of the videomass program and configuration storing.
+    Main settings of the videomass2 program and configuration storing.
     """
     def __init__(self, parent, threads, save_log, path_log, 
                  ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
                  ffplay_link, ffplay_check, writeline_exec, OS):
         """
         NOTE 0): self.rowsNum attribute is a sorted list with a exatly number 
-                 index corresponding to each read line of the videomass.conf.
+                 index corresponding to each read line of the videomass2.conf.
         NOTE 1): The code block (USEFUL FOR DEBUGGING) prints in console a 
                  convenient representation of the parsing, which can also be 
                  efforting consulted for future implementations.
@@ -208,7 +208,7 @@ class Setup(wx.Dialog):
         self.Layout()
         
         #----------------------Properties----------------------#
-        self.SetTitle("Setup - Videomass")
+        self.SetTitle("Setup - Videomass2")
         btn_threads.SetMinSize((40, 30))
         btn_threads.SetForegroundColour(wx.Colour(255, 63, 21))
         self.spinctrl_threads.SetMinSize((50,30))
@@ -346,7 +346,7 @@ class Setup(wx.Dialog):
             "Set the number of cpu used (from 0 to INT_MAX) (default 0).\n"
             "If you set on 'Set autodected cpu-used', FFmpeg autodetect\n"
             "a suitable number of cpu to use. ",
-                "CPU option info - Videomass", wx.ICON_INFORMATION, self)
+                "CPU option info - Videomass2", wx.ICON_INFORMATION, self)
     
     #--------------------------------------------------------------------#
     def on_threads(self, event):
@@ -554,7 +554,7 @@ class Setup(wx.Dialog):
 
         if self.check_cmdlog.IsChecked() and self.txt_pathlog.GetValue() == "":
             wx.MessageBox("Warning, The log command has no set path name ", 
-                            "WARNING - Videomass", wx.ICON_WARNING)
+                            "WARNING - Videomass2", wx.ICON_WARNING)
         else:
             with open (filename, 'w') as fileconf:
                 for i in self.full_list:

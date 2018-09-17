@@ -2,25 +2,25 @@
 
 #########################################################
 # Name: infoprog.py
-# Porpose: about videomass dialog
+# Porpose: about videomass2 dialog
 # resource: <http://zetcode.com/wxpython/dialogs/>
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (00) 10/Nov/2017
 #########################################################
@@ -55,9 +55,9 @@ def info(videomass_icon):
 
         info.SetIcon(wx.Icon(videomass_icon, wx.BITMAP_TYPE_PNG))
         
-        info.SetName(Name)
+        info.SetName("%s - " % Name)
         
-        info.SetVersion(Version)
+        info.SetVersion("v%s" % Version)
         
         info.SetDescription(u'%s\n\n%s' %(Short_Dscrp,Long_Dscrp))
         

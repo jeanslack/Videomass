@@ -7,20 +7,20 @@
 # Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (08) 04/08/2014
 # Rev (09) 01/18/2015
@@ -39,7 +39,7 @@ from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS import presets_addnew
 
 array = []# all parameters of the selected profile
-# this dictionary content all presets in ~/.videomass:
+# this dictionary content all presets in ~/.videomass2:
 dict_presets = {
 "Audio Conversions" : ("preset-v1-Audio", "Audio Conversions"), 
 "Extract audio from video": ("preset-v1-VideoAudio", "Extract audio from video"),
@@ -405,7 +405,7 @@ class PresetsPanel(wx.Panel):
         filedir = '%s%s.vdms' % (self.path_confdir, filename)
 
         wildcard = "Source (*.vdms)|*.vdms| All files (*.*)|*.*"
-        dialfile = wx.FileDialog(self, "Preset restore (%s.vdms) - Videomass "
+        dialfile = wx.FileDialog(self, "Preset restore (%s.vdms) - Videomass2 "
                                  % (filename), "%s" % (filename), "", 
                                  wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
                                      )
@@ -418,13 +418,13 @@ class PresetsPanel(wx.Panel):
                 wx.MessageBox("'%s' \n\ndoes not match with the one in use:\n\n"
                               "'%s'\n\nPlease, select a corresponding preset "
                               "in the \ncombobox, first" % (dirname, filename), 
-                              "WARNING ! - Videomass",  wx.ICON_WARNING, self
+                              "WARNING ! - Videomass2",  wx.ICON_WARNING, self
                                 )
                 return
             
             if wx.MessageBox(u'The preset "%s" will be imported and will '
                     u'overwrite the one in use ! Proceed ?' % (tail), 
-                    'Please confirm - Videomass', wx.ICON_QUESTION | 
+                    'Please confirm - Videomass2', wx.ICON_QUESTION | 
                                                   wx.YES_NO, 
                                                   self) == wx.NO:
                 return
@@ -441,7 +441,7 @@ class PresetsPanel(wx.Panel):
         #copy_restore('%s/share/av_presets.xml' % (self.PWD), '%s' % (self.dirconf))
         if wx.MessageBox("The current preset will be overwritten to "
                          "default values! proceed?", 
-                         "Please confirm - Videomass", wx.ICON_QUESTION | 
+                         "Please confirm - Videomass2", wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
         
@@ -458,7 +458,7 @@ class PresetsPanel(wx.Panel):
         restore all preset files in the path presets of the program
         """
         if wx.MessageBox(u"WARNING: you are going to restore all default "
-                         "presets from videomass! Proceed?", 
+                         "presets from videomass2! Proceed?", 
                          "Please confirm - Videoamss", 
                          wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:

@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (02) 14/03/2015
 # Rev (02) 20/04/2015
@@ -37,8 +37,8 @@ class Mediainfo(wx.Dialog):
     Show dialog for display metadata info. 
     """
     def __init__(self, title, path, helping, ffprobe_link):
-        # with 'None' not depend from videomass. With 'parent, -1' if close
-        # videomass also close mediainfo window:
+        # with 'None' not depend from videomass2. With 'parent, -1' if close
+        # videomass2 also close mediainfo window:
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         self.helping = helping
@@ -112,7 +112,7 @@ class Mediainfo(wx.Dialog):
         # execute a control for errors:
         if metadata.ERROR():
             wx.MessageBox("[FFprobe] Error:  %s" % (metadata.error), 
-                    "FFprobe - Videomass", wx.ICON_ERROR, self)
+                    "FFprobe - Videomass2", wx.ICON_ERROR, self)
             self.Destroy()
             return
         

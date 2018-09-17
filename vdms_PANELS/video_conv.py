@@ -7,20 +7,20 @@
 # Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass.
+# This file is part of Videomass2.
 
-#    Videomass is free software: you can redistribute it and/or modify
+#    Videomass2 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
+#    Videomass2 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (08) 04/08/2014
 # Rev (09) 14/01/2015
@@ -1145,7 +1145,7 @@ class Video_Conv(wx.Panel):
         data = volumeDetectProcess(self.ffmpeg_link, file_sources)
 
         if data[1]:
-            wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
+            wx.MessageBox(data[1], "ERROR! -Videomass2", wx.ICON_ERROR)
             return
         else:
             volume = list()
@@ -1271,7 +1271,7 @@ class Video_Conv(wx.Panel):
         if self.ckbx_a_normalize.IsChecked():
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox("Press the analyze button before proceeding.",
-                              "Missing volume dectect -Videomass")
+                              "Missing volume dectect -Videomass2")
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]
@@ -1540,10 +1540,10 @@ class Video_Conv(wx.Panel):
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
-        full_pathname = '%s/.videomass/preset-v1-Personal.vdms' % dirname
+        full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                  filename, list, 'Create a new profile on '
-                                 '"%s" preset - Videomass' % (
+                                 '"%s" preset - Videomass2' % (
                                  name_preset))
         prstdlg.ShowModal()
