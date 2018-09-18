@@ -1,5 +1,0 @@
-include Videomass.py README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
-recursive-include docs *
-recursive-include art *
-recursive-include HTML *
-recursive-include share *
