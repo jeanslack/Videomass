@@ -1,5 +1,5 @@
 # Welcome to Videomass2
-![](https://github.com/jeanslack/Videomass2/blob/gh-pages/images/videomass2.png)
+![Videomass Logo](https://github.com/jeanslack/Videomass2/blob/gh-pages/images/videomass2.png)
 
 Videomass is a open source front-end GUI (graphical user interface) for FFmpeg. It is cross-platform and work on Linux, MacOs and Windows. In this summer (of 2018), during a new development cycle, a completely new interface was created with a lot functional implementations.
 
