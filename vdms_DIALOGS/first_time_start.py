@@ -249,7 +249,7 @@ class FirstStart(wx.Dialog):
                         None) == wx.YES:
                     ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (PWD, biname[0])
                     ffprobe = "%s/FFMPEG_BIN/bin/%s" % (PWD, biname[1])
-                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (PWD, bineme[2])
+                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (PWD, biname[2])
                 else:
                     return
         else:
