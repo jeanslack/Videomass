@@ -206,7 +206,6 @@ def OSX():
                   'README.md']),]
     
     OPTIONS = {'argv_emulation' : False,
-               'emulate_shell_environment' : True,
                'resources' : RESOURCES,
                'iconfile' : PATH_ICON, 
                'site_packages': True,

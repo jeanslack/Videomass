@@ -96,7 +96,7 @@ class Videomass(wx.App):
             return False
 
         if setui[6] == 'Darwin':
-            #os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+            os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
             for link in [fileconf[7],fileconf[9],fileconf[11]]:
                 if os.path.isfile("%s" % link):
                     binaries = False

@@ -218,11 +218,13 @@ class FirstStart(wx.Dialog):
                 if OS == 'Darwin':
                     if os.path.isfile("/usr/local/bin/%s" % required):
                         local = True
-                    else:
-                        local = True
                         no_which = False
                         break
-                else:
+                    else:
+                        local = False
+                        no_which = True
+                        break
+                elif OS == 'Windows':
                     no_which = True
                     break
         if no_which:
@@ -259,7 +261,7 @@ class FirstStart(wx.Dialog):
                 ffmpeg = which(biname[0])
                 ffprobe = which(biname[1])
                 ffplay = which(biname[2])
-
+        
         self.completion(ffmpeg, ffprobe, ffplay)
     #-------------------------------------------------------------------#
     
