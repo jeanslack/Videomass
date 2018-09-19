@@ -6,16 +6,13 @@ Videomass2 is a open source front-end GUI (graphical user interface) for FFmpeg.
 ## Overview
 A completely new interface was created with many functional implementations.
 
-### Download Debian/Ubuntu Packeges
-[python-videomass2_1.0.0-1_all.deb](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/python-videomass2_1.0.0-1_all.deb)
-### Download Windows x64 Installer
-[Videomass-v1.0.0-x64-Setup.exe](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/Videomass-v1.0.0-x64-Setup.exe)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Downloads Windows 7/10 Installer](#downloads-Win)
+* [Download Debian/Ubuntu Packege](#downloads-deb)
+* [License](#license)
 
-### Screenshots
-[Screenshot](https://github.com/jeanslack/Videomass2/blob/gh-pages/Screenshots.md)
-
-
-### Features:   
+## Features:   
 - Drag n Drop interface   
 - Presets manager interface with fully customizable profiles ready to use   
 - Data streams information interface with details section   
@@ -26,6 +23,23 @@ A completely new interface was created with many functional implementations.
 - Grabbing audio streams from video with multilingual selection   
 - Batch processors   
 - Log management   
-..and more   
+..and more 
+
+## Screenshots
+# Windows 7 x64
+![Image](/images/Windows1.png)
+![Image](/images/Windows2.png)
+# Debian KDE5
+![Image](/images/Linux1.png)
+![Image](/images/Linux2.png)
+![Image](/images/Linux3.png)
+# MacOs High Sierra
+![Image](/images/MacOsHighSierra.png)
+
+## Download Debian/Ubuntu Packeges   
+[python-videomass2_1.0.0-1_all.deb](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/python-videomass2_1.0.0-1_all.deb)
+
+## Downloads Windows 7/10 Installer
+[Videomass-v1.0.0-x64-Setup.exe](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/Videomass-v1.0.0-x64-Setup.exe)
 
 
