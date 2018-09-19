@@ -11,6 +11,9 @@ A completely new interface was created with many functional implementations.
 ### Download Windows x64 Installer
 [Videomass-v1.0.0-x64-Setup.exe](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/Videomass-v1.0.0-x64-Setup.exe)
 
+### Screenshots
+[Screenshot](https://github.com/jeanslack/Videomass2/blob/gh-pages/Screenshots.md)
+
 
 ### Features:   
 - Drag n Drop interface   
