@@ -9,8 +9,8 @@ A completely new interface was created with many functional implementations.
 
 * [Features](#features)
 * [Screenshots](#screenshots)
-* [Downloads Windows 7/10 Installer](#downloads-Win)
-* [Download Debian/Ubuntu Packege](#downloads-deb)
+* [Download Debian/Ubuntu Packege](#download-debian/ubuntu-packeges)
+* [Downloads Windows 7/10 Installer](#downloads-windows-7/10-installer)
 * [License](#license)
 
 ## Features:   
