@@ -39,11 +39,13 @@ A completely new interface was created with many functional implementations.
 ### MacOs High Sierra
 ![Image](/images/MacOsHighSierra.png)
 
-## Download Debian/Ubuntu Packeges   
+## Download Debian/Ubuntu Packeges
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
 [python-videomass2_1.0.0-1_all.deb](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/python-videomass2_1.0.0-1_all.deb)
 
 ## Downloads Windows 7/10 Installer
+[![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
 [Videomass-v1.0.0-x64-Setup.exe](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/Videomass-v1.0.0-x64-Setup.exe)
 
