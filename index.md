@@ -40,12 +40,12 @@ A completely new interface was created with many functional implementations.
 
 ## Downloads
 
-### Debian and Ubuntu .deb
+**Debian and Ubuntu .deb**   
 [python-videomass2_1.0.0-1_all.deb](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/python-videomass2_1.0.0-1_all.deb)
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/gianlucapernigotto)
 
-### Windows x64 Installer
+**Windows 64-bit Installer (Windows 7 and higher)**   
 [Videomass-v1.0.0-x64-Setup.exe](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/Videomass-v1.0.0-x64-Setup.exe)
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/gianlucapernigotto)
