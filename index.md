@@ -4,6 +4,7 @@
 Videomass2 is a open source front-end GUI (graphical user interface) for FFmpeg. It is cross-platform and work on **Linux**, **MacOs** and **Windows**.   
 
 ## Overview
+
 A completely new interface was created with many functional implementations.
 
 * [Features](#features)
@@ -13,6 +14,7 @@ A completely new interface was created with many functional implementations.
 * [License](#license)
 
 ## Features:   
+
 - Drag n Drop interface   
 - Presets manager interface with fully customizable profiles ready to use   
 - Data streams information interface with details section   
@@ -26,6 +28,7 @@ A completely new interface was created with many functional implementations.
 ..and more 
 
 ## Screenshots
+
 # Windows 7 x64
 ![Image](/images/Windows1.png)
 ![Image](/images/Windows2.png)
@@ -37,9 +40,18 @@ A completely new interface was created with many functional implementations.
 ![Image](/images/MacOsHighSierra.png)
 
 ## Download Debian/Ubuntu Packeges   
+
 [python-videomass2_1.0.0-1_all.deb](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/python-videomass2_1.0.0-1_all.deb)
 
 ## Downloads Windows 7/10 Installer
+
 [Videomass-v1.0.0-x64-Setup.exe](https://github.com/jeanslack/Videomass2/releases/download/v1.0.0/Videomass-v1.0.0-x64-Setup.exe)
+
+## License
+
+Copyright © 2013 - 2018 by jeanslack   
+Author and Developer: Gianluca Pernigotto   
+Mail: <jeanlucperni@gmail.com>   
+License: GPL3 (see LICENSE file in the docs folder)
 
 
