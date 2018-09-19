@@ -13,13 +13,7 @@ URGENCY: high
   pannello drag n drop (???).
   
 - Rivedere meglio il thread per play reproduction 
-  
-- Se setto l'opzione -threads -auto escono stranezze nell'output di ffmpeg:
-    [AVFilterGraph @ 0x55c0141ecb00] [Eval @ 0x7ffc46f8d0b0] Undefined constant or missing '(' in 'auto'
-    [AVFilterGraph @ 0x55c0141ecb00] Unable to parse option value "auto"
-    [AVFilterGraph @ 0x55c0141ecb00] [Eval @ 0x7ffc46f8d0b0] Undefined constant or missing '(' in 'auto'
-    [AVFilterGraph @ 0x55c0141ecb00] Unable to parse option value "auto"
-    
+
 --------------------------------------------------------------------------------
 URGENCY: low
 --------------------------------------------------------------------------------
