@@ -1,0 +1,11 @@
+#Files mentioned in this file will be ignored by git
+*.pyc
+dist
+build
+deb_dist
+*.egg-info
+Pipfile
+Pipfile.lock
+*.DS_Store
+*.directory
+*~
