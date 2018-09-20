@@ -348,6 +348,7 @@ class ProcThread(Thread):
                          cmd=cmd, 
                          duration=duration
                          )
+            # < https://stackoverflow.com/questions/1388753/how-to-get-output-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1 >
             with p.stderr:
                 for line in iter(p.stderr.readline, b''):
                     print line,
