@@ -226,7 +226,7 @@ If you like Videomass2 and you want to support its development, consider donatin
 
 ## License
 
-Copyright © 2013 - 2018 by jeanslack   
+Copyright © 2013 - 2018 by Gianluca Pernigotto
 Author and Developer: Gianluca Pernigotto   
 Mail: <jeanlucperni@gmail.com>   
 License: GPL3 (see LICENSE file in the docs folder)

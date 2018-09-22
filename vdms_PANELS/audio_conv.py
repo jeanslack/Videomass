@@ -67,13 +67,14 @@ class Audio_Conv(wx.Panel):
     Interface panel for audio conversions and volume normalizations,
     with preset storing feature (TODO)
     """
-    def __init__(self, parent, helping, ffmpeg_link, threads,
-                loglevel_type, ffprobe_link,):
+    def __init__(self, parent, helping, ffmpeg_link, threads, 
+                 cpu_used, loglevel_type, ffprobe_link,):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
         self.helping = helping
         self.threads = threads
+        self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
         self.ffprobe_link = ffprobe_link
         # others attributes:
@@ -582,9 +583,10 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch mode processing.
         """
         if self.ckb_onlynorm.IsChecked():
-            cmd = ("-loglevel %s %s -vn %s -y" % (self.loglevel_type, 
+            cmd = ("-loglevel %s %s -vn %s %s -y" % (self.loglevel_type, 
                                                   self.time_seq, 
-                                                  self.threads)
+                                                  self.threads,
+                                                  self.cpu_used,)
                                                   )
             command = " ".join(cmd.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
@@ -605,7 +607,7 @@ class Audio_Conv(wx.Panel):
                 #used for play preview and mediainfo:
                 self.exportStreams(dir_destin)#call function more above
         else:
-            command = ("-loglevel %s %s -vn %s %s %s %s %s %s -y" % (
+            command = ("-loglevel %s %s -vn %s %s %s %s %s %s %s -y" % (
                                                 self.loglevel_type, 
                                                 self.time_seq,
                                                 cmd_opt["AudioCodec"],
@@ -613,7 +615,8 @@ class Audio_Conv(wx.Panel):
                                                 cmd_opt["AudioDepth"][1], 
                                                 cmd_opt["AudioRate"][1], 
                                                 cmd_opt["AudioChannel"][1], 
-                                                self.threads)
+                                                self.threads,
+                                                self.cpu_used,)
                                                                     )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
@@ -643,7 +646,7 @@ class Audio_Conv(wx.Panel):
         cmdsplit1 = ("-loglevel %s %s -vn" % (self.loglevel_type, 
                                               self.time_seq)
                                               )
-        cmdsplit2 = ("%s -y" % (self.threads))
+        cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 
         valupdate = self.update_dict(lenghmax)
         ending = Formula(self, valupdate[0], valupdate[1])

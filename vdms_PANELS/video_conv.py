@@ -85,7 +85,8 @@ class Video_Conv(wx.Panel):
     Interface panel for video conversions with audio volume normalizations
     and preset storing feature
     """
-    def __init__(self, parent, helping, ffmpeg_link, threads, loglevel_type, OS):
+    def __init__(self, parent, helping, ffmpeg_link, 
+                 threads, cpu_used, loglevel_type, OS):
 
         wx.Panel.__init__(self, parent)
         """ constructor """
@@ -94,6 +95,7 @@ class Video_Conv(wx.Panel):
         self.ffmpeg_link = ffmpeg_link
         self.helping = helping
         self.threads = threads
+        self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
         # others attributes;
         self.file_sources = []
@@ -1302,7 +1304,7 @@ class Video_Conv(wx.Panel):
         at proc_batch_thread Class(Thread).
         """
         if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
-            command = ('-loglevel %s %s %s %s %s %s %s %s %s %s -y' % (
+            command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s -y' % (
                        self.loglevel_type, 
                        self.time_seq, 
                        cmd_opt["VideoCodec"], 
@@ -1312,6 +1314,7 @@ class Video_Conv(wx.Panel):
                        cmd_opt["AudioChannel"][1], 
                        cmd_opt["AudioDepth"][1], 
                        self.threads, 
+                       self.cpu_used,
                        cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
@@ -1335,7 +1338,7 @@ class Video_Conv(wx.Panel):
                 
         elif cmd_opt["Passing"] == "double":
             cmd1 = ('-loglevel %s %s -pass 1 -an %s %s %s %s %s %s '
-                     '%s %s %s %s %s %s -f rawvideo -y %s' % (
+                     '%s %s %s %s %s %s %s -f rawvideo -y %s' % (
                       self.loglevel_type, self.time_seq, 
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
@@ -1343,11 +1346,11 @@ class Video_Conv(wx.Panel):
                       cmd_opt["deinterlace"], cmd_opt["VideoSize"], 
                       cmd_opt["VideoAspect"], cmd_opt["VideoRate"],
                       cmd_opt["Orientation"][0], self.threads,
-                      null),
+                      self.cpu_used, null),
                     )
             pass1 = " ".join(cmd1[0].split())# mi formatta la stringa
             cmd2= ('-loglevel %s %s -pass 2 %s %s %s %s %s %s '
-                     '%s %s %s %s %s %s %s %s %s %s %s %s -y' % (
+                     '%s %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
                      self.loglevel_type, self.time_seq, 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
@@ -1357,7 +1360,7 @@ class Video_Conv(wx.Panel):
                      cmd_opt["Orientation"][0], cmd_opt["AudioCodec"], 
                      cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
                      cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                     self.threads, cmd_opt["Map"])
+                     self.threads, self.cpu_used, cmd_opt["Map"])
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
@@ -1381,7 +1384,7 @@ class Video_Conv(wx.Panel):
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
             command = ("-loglevel %s %s %s %s %s %s %s %s %s "
-                       "%s %s %s %s %s %s %s %s %s %s %s -y" % (
+                       "%s %s %s %s %s %s %s %s %s %s %s %s -y" % (
                         self.loglevel_type, self.time_seq, 
                         cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                         cmd_opt["Presets"], cmd_opt["Profile"],
@@ -1391,7 +1394,7 @@ class Video_Conv(wx.Panel):
                         cmd_opt["Orientation"][0], cmd_opt["AudioCodec"], 
                         cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
                         cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                        self.threads, cmd_opt["Map"])
+                        self.threads, self.cpu_used, cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
@@ -1421,13 +1424,14 @@ class Video_Conv(wx.Panel):
               voglio controllare solo l'uscita degli errori, se ci sono.
         """
         fileout = "image%d.jpg"
-        cmd = ('%s -i "%s" -loglevel %s %s %s -an %s -y "%s/%s"' % (
+        cmd = ('%s -i "%s" -loglevel %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
                file_sources[0], 
                'error', # non imposto l'opzione -stats
                self.time_seq, 
                cmd_opt["VideoRate"], 
                self.threads, 
+               self.cpu_used,
                dir_destin[0], 
                fileout)
                )

@@ -38,7 +38,7 @@ class Setup(wx.Dialog):
     """
     Main settings of the videomass2 program and configuration storing.
     """
-    def __init__(self, parent, threads, save_log, path_log, 
+    def __init__(self, parent, threads, cpu_used, save_log, path_log, 
                  ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
                  ffplay_link, ffplay_check, writeline_exec, OS):
         """
@@ -72,6 +72,7 @@ class Setup(wx.Dialog):
             #print n, ' -------> ', k, ' --> ', dic[k]
 
         self.threads = threads
+        self.cpu_used = cpu_used
         self.save_log = save_log
         self.path_log = path_log
         self.ffmpeg_link = ffmpeg_link
@@ -111,28 +112,32 @@ class Setup(wx.Dialog):
         gridGeneral = wx.FlexGridSizer(3, 1, 0, 0)
         tabOne.SetSizer(gridGeneral)#aggiungo il sizer su tab 1
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    "Settings CPU used:")), wx.VERTICAL)
+                                    "Settings CPU:")), wx.VERTICAL)
         gridGeneral.Add(boxLabThreads, 1, wx.ALL|wx.EXPAND, 15)
         gridThreads = wx.FlexGridSizer(4, 1, 0, 0)
         boxLabThreads.Add(gridThreads, 1, wx.ALL|wx.EXPAND, 15)
-        #lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,(
-                               # "More info:"))
-        #gridThreads.Add(lab1_pane1, 0, wx.ALL, 5)
-        btn_threads = wx.Button(tabOne, wx.ID_ANY, "?")
-        gridThreads.Add(btn_threads, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,(
+                               "Set the number of threads (from 0 to 32):"))
+        gridThreads.Add(lab1_pane1, 0, wx.ALL, 5)
+        self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY, 
+                                            "%s" % threads[9:],
+                                            size=(50,-1), min=0, max=32, 
+                                            style=wx.TE_PROCESS_ENTER
+                                             )
+        gridThreads.Add(self.spinctrl_threads, 0, wx.ALL |
+                                                  wx.ALIGN_CENTER_VERTICAL, 
+                                                  5)
         lab2_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (
-                                         "FFmpeg CPU used settings:"))
+                            "Quality/Speed ratio modifier (from -16 to 16):"))
         gridThreads.Add(lab2_pane1, 0, wx.ALL, 5)
         gridctrl = wx.FlexGridSizer(1, 2, 0, 0)
         gridThreads.Add(gridctrl)
-        self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY, 
-                                            "%s" % threads[9:], min=1, max=32, 
-                                            style=wx.TE_PROCESS_ENTER
+        self.spinctrl_cpu = wx.SpinCtrl(tabOne, wx.ID_ANY, 
+                                        "%s" % cpu_used[9:], min=-16, max=16, 
+                                        size=(50,-1), style=wx.TE_PROCESS_ENTER
                                              )
-        self.ckbx_autoThreads = wx.CheckBox(tabOne, wx.ID_ANY, 
-                                           ("Set autodected CPU"))
-        gridctrl.Add(self.spinctrl_threads, 0, wx.ALL, 5)
-        gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        gridctrl.Add(self.spinctrl_cpu, 0, wx.ALL, 5)
+        #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
         boxLabOthers = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                     "Other Settings:")), wx.VERTICAL)
@@ -209,11 +214,8 @@ class Setup(wx.Dialog):
         
         #----------------------Properties----------------------#
         self.SetTitle("Setup - Videomass2")
-        btn_threads.SetMinSize((40, -1))
-        btn_threads.SetForegroundColour(wx.Colour(255, 63, 21))
-        self.spinctrl_threads.SetMinSize((50,-1))
-        self.spinctrl_threads.SetToolTipString("Set here a new number of CPU threads"
-                                               )
+        self.spinctrl_cpu.SetToolTipString("Quality/Speed ratio modifier "
+                                            "(from -16 to 16) (default 1)")
         self.check_cmdline.SetToolTipString("Allows the text writing to "
                                             "performs your custom parameters."
                                             )
@@ -266,13 +268,12 @@ class Setup(wx.Dialog):
                                      "path to executable binary FFplay")
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_direct_cmd, self.check_cmdline)
-        self.Bind(wx.EVT_BUTTON, self.push_threads, btn_threads)
-        self.Bind(wx.EVT_CHECKBOX, self.auto_Threads, self.ckbx_autoThreads)
         #self.Bind(wx.EVT_CHECKBOX, self.log_ffmpeg, self.check_ffmpeglog)
         self.Bind(wx.EVT_CHECKBOX, self.log_command, self.check_cmdlog)
         self.Bind(wx.EVT_BUTTON, self.save_path_log, self.btn_log)
         #self.Bind(wx.EVT_TEXT, self.text_save, self.txt_pathlog)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
+        self.Bind(wx.EVT_SPINCTRL, self.on_cpu_used, self.spinctrl_cpu)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffmpeg, self.txtctrl_ffmpeg)
@@ -293,9 +294,6 @@ class Setup(wx.Dialog):
         Setto l'abilitazione/disabilitazione in funzione del file di conf.
         Setting enable/disable on according to the configuration file
         """
-        if self.threads == '-cpu-used auto':
-            self.spinctrl_threads.Disable()
-            self.ckbx_autoThreads.SetValue(True)
             
         if self.save_log == 'true':
             self.check_cmdlog.SetValue(True) # set on
@@ -336,51 +334,29 @@ class Setup(wx.Dialog):
             
         if self.writeline_exec == 'true':
             self.check_cmdline.SetValue(True)
-
-    #----------------------Event handler (callback)----------------------#
-    def push_threads(self, event):
-        """
-        Show a dialog with number threads
-        """
-        wx.MessageBox(
-            "Set the number of cpu used (from 0 to INT_MAX) (default 0).\n"
-            "If you set on 'Set autodected cpu-used', FFmpeg autodetect\n"
-            "a suitable number of cpu to use. ",
-                "CPU option info - Videomass2", wx.ICON_INFORMATION, self)
     
     #--------------------------------------------------------------------#
     def on_threads(self, event):
         """set cpu number threads used as option on ffmpeg"""
         sett = self.spinctrl_threads.GetValue()
-        self.full_list[self.rowsNum[2]] = '-cpu-used %s\n' % sett
+        self.full_list[self.rowsNum[2]] = '-threads %s\n' % sett
     #--------------------------------------------------------------------#
-    def auto_Threads(self, event):
-        """Set auto threads detect"""
-        if self.ckbx_autoThreads.IsChecked():
-            self.spinctrl_threads.Disable()
-            self.full_list[self.rowsNum[2]] = '-cpu-used auto\n'
-        else:
-            self.spinctrl_threads.Enable()
-            self.on_threads(self)
+    def on_cpu_used(self, event):
+        """set cpu number threads used as option on ffmpeg"""
+        sett = self.spinctrl_cpu.GetValue()
+        self.full_list[self.rowsNum[3]] = '-cpu-used %s\n' % sett
     #--------------------------------------------------------------------#
-    #def log_ffmpeg(self, event):
-        #"""if true, also write FFmpeg output into log_command"""
-        #if self.check_ffmpeglog.IsChecked():
-            #self.full_list[self.rowsNum[3]] = 'true\n'
-            
-        #else:
-            #self.full_list[self.rowsNum[3]] = 'false\n'
     #--------------------------------------------------------------------#
     def log_command(self, event):
         """if true, it allow set a specified save of the log."""
         if self.check_cmdlog.IsChecked():
-            self.full_list[self.rowsNum[3]] = 'true\n'
+            self.full_list[self.rowsNum[4]] = 'true\n'
             self.btn_log.Enable(), self.txt_pathlog.Enable()
             
         else:
-            self.full_list[self.rowsNum[3]] = 'false\n'
+            self.full_list[self.rowsNum[4]] = 'false\n'
             self.txt_pathlog.SetValue("")
-            self.full_list[self.rowsNum[4]] = 'none'
+            self.full_list[self.rowsNum[5]] = 'none'
             self.btn_log.Disable(), self.txt_pathlog.Disable()
 
     #--------------------------------------------------------------------#
@@ -391,7 +367,7 @@ class Setup(wx.Dialog):
         if dialdir.ShowModal() == wx.ID_OK:
             self.txt_pathlog.SetValue("")
             self.txt_pathlog.AppendText(dialdir.GetPath())
-            self.full_list[self.rowsNum[4]] = '%s\n' % (dialdir.GetPath())
+            self.full_list[self.rowsNum[5]] = '%s\n' % (dialdir.GetPath())
             dialdir.Destroy()
 
     #--------------------------------------------------------------------#
@@ -408,14 +384,14 @@ class Setup(wx.Dialog):
             self.btn_pathFFmpeg.Enable()
             self.txtctrl_ffmpeg.Enable()
             self.txtctrl_ffmpeg.SetValue("")
-            self.full_list[self.rowsNum[6]] = 'true\n'
+            self.full_list[self.rowsNum[7]] = 'true\n'
 
         else:
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.SetValue("")
-            self.full_list[self.rowsNum[6]] = 'false\n'
-            self.full_list[self.rowsNum[7]] = '%s\n' % self.ffmpeg
+            self.full_list[self.rowsNum[7]] = 'false\n'
+            self.full_list[self.rowsNum[8]] = '%s\n' % self.ffmpeg
 
     #----------------------ffmpeg path open dialog----------------------#
     def open_path_ffmpeg(self, event):
@@ -429,13 +405,13 @@ class Setup(wx.Dialog):
         if dialogfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffmpeg.SetValue("")
             self.txtctrl_ffmpeg.AppendText(dialogfile.GetPath())
-            self.full_list[self.rowsNum[7]] = '%s\n' % (dialogfile.GetPath())
+            self.full_list[self.rowsNum[8]] = '%s\n' % (dialogfile.GetPath())
             dialogfile.Destroy()
     #---------------------------------------------------------------------#
     def txtffmpeg(self, event):
         """write ffmpeg pathname"""
         t = self.txtctrl_ffmpeg.GetValue()
-        self.full_list[self.rowsNum[7]] = '%s\n' % (t)
+        self.full_list[self.rowsNum[8]] = '%s\n' % (t)
 
     #----------------------ffprobe path checkbox--------------------------#
     def exeFFprobe(self, event):
@@ -444,14 +420,14 @@ class Setup(wx.Dialog):
             self.btn_pathFFprobe.Enable()
             self.txtctrl_ffprobe.Enable()
             self.txtctrl_ffprobe.SetValue("")
-            self.full_list[self.rowsNum[8]] = 'true\n'
+            self.full_list[self.rowsNum[9]] = 'true\n'
 
         else:
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.SetValue("")
-            self.full_list[self.rowsNum[8]] = 'false\n'
-            self.full_list[self.rowsNum[9]] = '%s\n' % self.ffprobe
+            self.full_list[self.rowsNum[9]] = 'false\n'
+            self.full_list[self.rowsNum[10]] = '%s\n' % self.ffprobe
 
     #----------------------ffprobe path open dialog----------------------#
     def open_path_ffprobe(self, event):
@@ -465,13 +441,13 @@ class Setup(wx.Dialog):
         if dialfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffprobe.SetValue("")
             self.txtctrl_ffprobe.AppendText(dialfile.GetPath())
-            self.full_list[self.rowsNum[9]] = '%s\n' % (dialfile.GetPath())
+            self.full_list[self.rowsNum[10]] = '%s\n' % (dialfile.GetPath())
             dialfile.Destroy()
     #---------------------------------------------------------------------#
     def txtffprobe(self, event):
         """write ffprobe pathname"""
         t = self.txtctrl_ffprobe.GetValue()
-        self.full_list[self.rowsNum[9]] = '%s\n' % (t)
+        self.full_list[self.rowsNum[10]] = '%s\n' % (t)
 
     #----------------------ffplay path checkbox--------------------------#
     def exeFFplay(self, event):
@@ -480,14 +456,14 @@ class Setup(wx.Dialog):
             self.btn_pathFFplay.Enable()
             self.txtctrl_ffplay.Enable()
             self.txtctrl_ffplay.SetValue("")
-            self.full_list[self.rowsNum[10]] = 'true\n'
+            self.full_list[self.rowsNum[11]] = 'true\n'
 
         else:
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.SetValue("")
-            self.full_list[self.rowsNum[10]] = 'false\n'
-            self.full_list[self.rowsNum[11]] = '%s\n' % self.ffplay
+            self.full_list[self.rowsNum[11]] = 'false\n'
+            self.full_list[self.rowsNum[12]] = '%s\n' % self.ffplay
 
     #----------------------ffplay path open dialog----------------------#
     def open_path_ffplay(self, event):
@@ -501,14 +477,14 @@ class Setup(wx.Dialog):
         if dialfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffplay.SetValue("")
             self.txtctrl_ffplay.AppendText(dialfile.GetPath())
-            self.full_list[self.rowsNum[11]] = '%s\n' % (dialfile.GetPath())
+            self.full_list[self.rowsNum[12]] = '%s\n' % (dialfile.GetPath())
             
             dialfile.Destroy()
     #---------------------------------------------------------------------#
     def txtffplay(self, event):
         """write ffplay pathname"""
         t = self.txtctrl_ffplay.GetValue()
-        self.full_list[self.rowsNum[11]] = '%s\n' % (t)
+        self.full_list[self.rowsNum[12]] = '%s\n' % (t)
             
     #--------------------------------------------------------------------#
     def on_direct_cmd(self, event):
@@ -516,10 +492,10 @@ class Setup(wx.Dialog):
         enable or disable direct text command editable
         """
         if self.check_cmdline.IsChecked():
-            self.full_list[self.rowsNum[12]] = 'true\n'
+            self.full_list[self.rowsNum[13]] = 'true\n'
     
         else:
-            self.full_list[self.rowsNum[12]] = 'false\n'
+            self.full_list[self.rowsNum[13]] = 'false\n'
             
     #--------------------------------------------------------------------#
     def on_close(self, event):

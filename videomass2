@@ -69,9 +69,9 @@ class Videomass(wx.App):
             return False
 
         # check if videomass2.conf is corrupt or unreadable
-        if float(fileconf[0]) < 1.0:
+        if float(fileconf[0]) < 1.1:
             msg = ('Videomass2: Outdated configuration file.\n'
-                    'Current version is 1.0 but found %s .\n\n' 
+                    'Current version do not match with %s .\n\n' 
                     % fileconf[0])
             print msg
             if wx.MessageBox('%s\nDo you want to restore the new one? ' 
@@ -97,7 +97,7 @@ class Videomass(wx.App):
 
         if setui[6] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-            for link in [fileconf[7],fileconf[9],fileconf[11]]:
+            for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -107,12 +107,12 @@ class Videomass(wx.App):
                 self.reprise(setui[0])
                 return True
             else:
-                ffmpeg_link = fileconf[7]
-                ffprobe_link = fileconf[9]
-                ffplay_link = fileconf[11]
+                ffmpeg_link = fileconf[8]
+                ffprobe_link = fileconf[10]
+                ffplay_link = fileconf[12]
 
         elif setui[6] == 'Windows':
-            for link in [fileconf[7],fileconf[9],fileconf[11]]:
+            for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -122,14 +122,14 @@ class Videomass(wx.App):
                 self.reprise(setui[0])
                 return True
             else:
-                ffmpeg_link = fileconf[7]
-                ffprobe_link = fileconf[9]
-                ffplay_link = fileconf[11]
+                ffmpeg_link = fileconf[8]
+                ffprobe_link = fileconf[10]
+                ffplay_link = fileconf[12]
                 
         else: # is Linux 
-            ffmpeg_link = fileconf[7]
-            ffprobe_link = fileconf[9]
-            ffplay_link = fileconf[11]
+            ffmpeg_link = fileconf[8]
+            ffprobe_link = fileconf[10]
+            ffplay_link = fileconf[12]
             #self.reprise(setui[0])
             #return True
             

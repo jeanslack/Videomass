@@ -67,18 +67,19 @@ class MainFrame(wx.Frame):
         self.icon_import = setui[10]
         #---------------------------#
         self.threads = fileconf[2]#ffmpeg option, set the cpu threads
+        self.cpu_used = fileconf[3]
         self.ffmpeg_log = ''#fileconf[3]
-        self.save_log = fileconf[3]
-        self.path_log = fileconf[4]
-        self.loglevel_type = fileconf[5]# marks as single process
+        self.save_log = fileconf[4]
+        self.path_log = fileconf[5]
+        self.loglevel_type = fileconf[6]# marks as single process
         self.loglevel_batch = ''#fileconf[7]# marks as batch process
-        self.ffmpeg_check = fileconf[6]
-        self.ffprobe_check = fileconf[8]
-        self.ffplay_check = fileconf[10]
+        self.ffmpeg_check = fileconf[7]
+        self.ffprobe_check = fileconf[9]
+        self.ffplay_check = fileconf[11]
         self.ffmpeg_link = ffmpeg_link
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
-        self.writeline_exec = fileconf[12]
+        self.writeline_exec = fileconf[13]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
         self.post_process = []# at the end of any process put file for play/metadata
@@ -93,19 +94,23 @@ class MainFrame(wx.Frame):
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
                                                          self.threads, 
+                                                         self.cpu_used,
                                                          self.loglevel_type, 
                                                          self.ffmpeg_link, 
-                                                         self.writeline_exec
+                                                         self.writeline_exec,
+                                                         self.OS,
                                                          )
         self.VconvPanel = video_conv.Video_Conv(self, self.helping, 
                                                 self.ffmpeg_link, 
                                                 self.threads, 
+                                                self.cpu_used,
                                                 self.loglevel_type,
                                                 self.OS,
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, self.helping, 
                                                 self.ffmpeg_link, 
-                                                self.threads, 
+                                                self.threads,
+                                                self.cpu_used,
                                                 self.loglevel_type, 
                                                 self.ffprobe_link,
                                                 )
@@ -648,7 +653,7 @@ class MainFrame(wx.Frame):
         Call the module setup for setting preferences
         """
         #self.parent.Setup(self)
-        setup_dlg = settings.Setup(self, self.threads, 
+        setup_dlg = settings.Setup(self, self.threads, self.cpu_used,
                                      self.save_log, self.path_log, 
                                      self.ffmpeg_link, self.ffmpeg_check,
                                      self.ffprobe_link, self.ffprobe_check, 

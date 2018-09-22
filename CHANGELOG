@@ -1,5 +1,15 @@
 +------------------------------------+
-Set 17, 2018 V.20.0.0
+Set 22, 2018 V.1.0.1
++------------------------------------+
+
+- Fixed issue with the `Presets_Manager` panel during double-pass 
+  conversion in Windows.
+- Adding a new function in the settings dialog
+- Fixed anomalies in `-cpu-used` function
+- New version of the configuration file 
+
++------------------------------------+
+Set 17, 2018 V.1.0.0
 +------------------------------------+
 This is first release of Videomass2.
 

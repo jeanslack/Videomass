@@ -73,8 +73,8 @@ class PresetsPanel(wx.Panel):
     """
 
     def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, threads, loglevel_type, ffmpeg_link,
-                 writeline_exec):
+                 PWD, threads, cpu_used, loglevel_type, 
+                 ffmpeg_link, writeline_exec, OS):
         """
         constructor
         """
@@ -82,9 +82,11 @@ class PresetsPanel(wx.Panel):
         self.path_confdir = path_confdir
         self.PWD = PWD
         self.threads = threads
+        self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
         self.ffmpeg_link = ffmpeg_link
         self.writeline_exec = writeline_exec
+        self.OS = OS
         self.parent = parent
         self.file_sources = []
         self.file_destin = ''
@@ -570,6 +572,11 @@ class PresetsPanel(wx.Panel):
 
         ######## ------------FINE VALIDAZIONI: --------------
         
+        if self.OS == 'Windows':
+                null = 'NUL'
+        else:
+            null = '/dev/null'
+        
 
         if 'DOUBLE_PASS' in comcheck:
             
@@ -577,16 +584,19 @@ class PresetsPanel(wx.Panel):
             passOne = split[0].strip()
             passTwo = split[1].strip()
             
-            command1 = ("-loglevel %s %s %s %s -f rawvideo -y "
-                        "/dev/null" % (self.loglevel_type, 
+            command1 = ("-loglevel %s %s %s %s %s -f rawvideo -y "
+                        "%s" % (self.loglevel_type, 
                                        passOne, 
                                        self.threads, 
-                                       self.time_seq)
+                                       self.cpu_used,
+                                       self.time_seq,
+                                       null,)
                                         )
-            command2 = ("-loglevel %s %s %s %s -y" % (self.loglevel_type, 
+            command2 = ("-loglevel %s %s %s %s %s -y" % (self.loglevel_type, 
                                                       passTwo, 
                                                       self.threads, 
-                                                      self.time_seq)
+                                                      self.cpu_used,
+                                                      self.time_seq,)
                                                       )
             pass1 = " ".join(command1.split())# mi formatta la stringa
             pass2 = " ".join(command2.split())# mi formatta la stringa
@@ -607,9 +617,10 @@ class PresetsPanel(wx.Panel):
 
         else:
             command = ("-loglevel %s %s "
-                        "%s %s -y" % (self.loglevel_type, 
+                        "%s %s %s -y" % (self.loglevel_type, 
                                         self.txt_cmd.GetValue(), 
                                         self.threads, 
+                                        self.cpu_used,
                                         self.time_seq)
                                         )
             self.parent.switch_Process('normal',
