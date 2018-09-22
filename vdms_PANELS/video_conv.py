@@ -285,14 +285,8 @@ class Video_Conv(wx.Panel):
                                             "to greater quality and size of "
                                             "the file."
                                                  )
-        self.spin_ctrl_bitrate.SetForegroundColour(wx.Colour(126, 63, 36))
-        self.spin_ctrl_bitrate.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
-                                                                wx.BOLD, 0, ""))
         self.slider_CRF.SetValue(23)# this is a default rate
-        self.slider_CRF.SetMinSize((230, 46))
-        self.slider_CRF.SetForegroundColour(wx.Colour(126, 63, 36))
-        self.slider_CRF.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,
-                                                                        0, ""))
+        self.slider_CRF.SetMinSize((230, -1))
         self.slider_CRF.SetToolTipString("CRF (constant rate factor) Affects "
                                  "the quality of the final video. Used for "
                                  "h264 codec on single pass only, 2-pass "
@@ -303,28 +297,19 @@ class Video_Conv(wx.Panel):
         self.ckbx_videosize.SetToolTipString(u"Enables manual setting of "
                                                  "sizing (width x height)"
                                                  )
-        self.spin_size_width.SetForegroundColour(wx.Colour(126, 63, 36))
-        self.spin_size_width.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
-                                                                wx.BOLD, 0, ""))
-        self.spin_size_height.SetForegroundColour(wx.Colour(126, 63, 36))
-        self.spin_size_height.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
-                                                                wx.BOLD, 0, ""))
         sizestr = (u"The video size is the size of the final video in pixels. "
                 "Example for youtube:: 640X480\nExample for Ipod/Iphone: "
                 "320x180\nVideo per PSP: 320x240"
                 )
         self.spin_size_height.SetToolTipString("Video height:\n%s" %(sizestr))
-        self.spin_size_height.SetMinSize((70, 28))
+        self.spin_size_height.SetMinSize((70, -1))
         self.spin_size_width.SetToolTipString("Video width:\n%s" %(sizestr))##
-        self.spin_size_width.SetMinSize((70, 28))
+        self.spin_size_width.SetMinSize((70, -1))
         self.ckbx_scale.SetToolTipString("Enable automatic scaling "
                             "proportionate videos. Scaling is any resizing "
                             "operation without changing the appearance of "
                             "the original movie")##
-        self.spin_ctrl_scale.SetForegroundColour(wx.Colour(126, 63, 36))
-        self.spin_ctrl_scale.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
-                                                                wx.BOLD, 0, ""))
-        self.spin_ctrl_scale.SetMinSize((70, 28))
+        self.spin_ctrl_scale.SetMinSize((70, -1))
         self.spin_ctrl_scale.SetToolTipString("Enter only the video width in "
                                 "pixels. The video height will be calculated"
                                 "automatically")##
@@ -375,7 +360,7 @@ class Video_Conv(wx.Panel):
         self.btn_analyzes.SetToolTipString(u"Calculate the maximum and "
                                     "average peak in dB values, of the audio "
                                     "stream on the video imported.")
-        self.spin_ctrl_audionormalize.SetMinSize((70, 28))
+        self.spin_ctrl_audionormalize.SetMinSize((70, -1))
         self.spin_ctrl_audionormalize.SetToolTipString("Threshold for the "
                                 "maximum peak level in dB values. The default " 
                                 "setting is -1.0 dB and is good for most of "

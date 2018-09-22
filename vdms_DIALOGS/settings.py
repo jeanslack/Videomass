@@ -209,9 +209,9 @@ class Setup(wx.Dialog):
         
         #----------------------Properties----------------------#
         self.SetTitle("Setup - Videomass2")
-        btn_threads.SetMinSize((40, 30))
+        btn_threads.SetMinSize((40, -1))
         btn_threads.SetForegroundColour(wx.Colour(255, 63, 21))
-        self.spinctrl_threads.SetMinSize((50,30))
+        self.spinctrl_threads.SetMinSize((50,-1))
         self.spinctrl_threads.SetToolTipString("Set here a new number of CPU threads"
                                                )
         self.check_cmdline.SetToolTipString("Allows the text writing to "
@@ -228,7 +228,7 @@ class Setup(wx.Dialog):
                               "execution process, info and error messages."
                                            )
         self.btn_log.SetToolTipString("Open Path")
-        self.txt_pathlog.SetMinSize((200, 30))
+        self.txt_pathlog.SetMinSize((200, -1))
         self.txt_pathlog.SetToolTipString("Path generation file")
         
         self.checkbox_exeFFmpeg.SetToolTipString("Enable custom search for "
@@ -237,7 +237,7 @@ class Setup(wx.Dialog):
                        "executable is entrusted to the system.")
         
         self.btn_pathFFmpeg.SetToolTipString("Open path FFmpeg")
-        self.txtctrl_ffmpeg.SetMinSize((200, 30))
+        self.txtctrl_ffmpeg.SetMinSize((200, -1))
         self.txtctrl_ffmpeg.SetToolTipString(
                                     "path to executable binary FFmpeg"
                                                     )
@@ -249,7 +249,7 @@ class Setup(wx.Dialog):
                         "executable is entrusted to the system.")
         
         self.btn_pathFFprobe.SetToolTipString("Open path FFprobe")
-        self.txtctrl_ffprobe.SetMinSize((200, 30))
+        self.txtctrl_ffprobe.SetMinSize((200, -1))
         self.txtctrl_ffprobe.SetToolTipString(
                                     "path to executable binary FFprobe"
                                                     )
@@ -261,7 +261,7 @@ class Setup(wx.Dialog):
                         "executable is entrusted to the system."
                                                   )
         self.btn_pathFFplay.SetToolTipString("Open path FFplay")
-        self.txtctrl_ffplay.SetMinSize((200, 30))
+        self.txtctrl_ffplay.SetMinSize((200, -1))
         self.txtctrl_ffplay.SetToolTipString(
                                      "path to executable binary FFplay")
         #----------------------Binding (EVT)----------------------#

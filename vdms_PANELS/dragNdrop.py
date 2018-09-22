@@ -157,7 +157,7 @@ class DnDPanel(wx.Panel):
                  )
         grid.Add(self.btn_save, 1, wx.ALL, 5)
         grid.Add(self.text_path_save, 1, wx.ALL|wx.EXPAND, 5)
-        self.text_path_save.SetMinSize((290, 21))
+        self.text_path_save.SetMinSize((290, -1))
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)

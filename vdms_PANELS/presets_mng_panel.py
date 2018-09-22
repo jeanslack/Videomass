@@ -125,7 +125,7 @@ class PresetsPanel(wx.Panel):
         
         if self.writeline_exec == 'true':
             self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"",
-                                       style=wx.TE_MULTILINE | wx.TE_PROCESS_ENTER)
+                                    style=wx.TE_MULTILINE | wx.TE_PROCESS_ENTER)
         else:
             self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"",
                                        style=wx.TE_MULTILINE | wx.TE_READONLY)
@@ -159,18 +159,14 @@ class PresetsPanel(wx.Panel):
         #----------------------------notebook 4
         
         #----------------------Set Properties----------------------#
-
-        self.cmbx_prst.SetToolTipString("You can choice a preset. "
-                                              "Each preset is defined by type")
         self.cmbx_prst.SetSelection(0)
         
         #self.list_ctrl.SetBackgroundColour(azure)
-        self.list_ctrl.SetToolTipString("Select a profile to use")
+        self.list_ctrl.SetToolTipString("List selection profiles")
         self.txt_cmd.SetMinSize((430, 60))
         self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        self.txt_cmd.SetToolTipString("Command output of selected profiles. If "
-                                  "enable, you can also change it from here "
-                                  "without changing the stored profiles.")
+        self.txt_cmd.SetToolTipString("FFmpeg command output of each selected "
+                                      "profile.")
         #----------------------------notebook 4
         #self.btn_open.SetToolTipString("Import Media (files/directory)")
         #self.text_path_open.SetMinSize((320, 21))

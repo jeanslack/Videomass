@@ -66,11 +66,11 @@ class MemPresets(wx.Dialog):
         btn3 = wx.Button(self, wx.ID_OK, "SAVE") 
 
         #----------------------Set Properties----------------------#
-        self.txt_name.SetMinSize((150, 28))
-        self.txt_descript.SetMinSize((300, 28))
+        self.txt_name.SetMinSize((150, -1))
+        self.txt_descript.SetMinSize((300, -1))
         self.txt_cmd.SetMinSize((350, 60))
-        self.txt_supp.SetMinSize((300, 28))
-        self.txt_ext.SetMinSize((70, 28))
+        self.txt_supp.SetMinSize((300, -1))
+        self.txt_ext.SetMinSize((70, -1))
 
         self.txt_name.SetToolTipString("Assign a short name to the profile "
                                     "Example:'Convert video for youtube'"

@@ -5,7 +5,7 @@
 # Porpose: Automatize settings first time start
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
-# license: GNU GENERAL PUBLIC LICENSE (see LICENSE)
+# license: GNU GENERAL PUBLIC LICENSE (see COPYING)
 
 # This file is part of Videomass2.
 
@@ -94,9 +94,9 @@ class FirstStart(wx.Dialog):
         grd_2.Add(self.txtctrl_ffplay,0, wx.ALL, 15)
         grd_2.Add(close_btn,0, wx.BOTTOM | wx.ALL, 15)
         #properties
-        self.txtctrl_ffmpeg.SetMinSize((250, 30))
-        self.txtctrl_ffplay.SetMinSize((250, 30))
-        self.txtctrl_ffprobe.SetMinSize((250, 30))
+        self.txtctrl_ffmpeg.SetMinSize((250, -1))
+        self.txtctrl_ffplay.SetMinSize((250, -1))
+        self.txtctrl_ffprobe.SetMinSize((250, -1))
         self.txtctrl_ffmpeg.Disable()
         self.txtctrl_ffprobe.Disable()
         self.txtctrl_ffplay.Disable()

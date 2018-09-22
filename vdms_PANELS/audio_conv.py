@@ -191,6 +191,7 @@ class Audio_Conv(wx.Panel):
                                     "level in dB values. The default setting "
                                     "is -1.0 dB and is good for most of the "
                                     "processes.")
+        
         #----------------------Binding (EVT)----------------------#
         self.cmbx_a.Bind(wx.EVT_COMBOBOX, self.audioFormats)
         self.Bind(wx.EVT_BUTTON, self.on_Param, self.btn_param)

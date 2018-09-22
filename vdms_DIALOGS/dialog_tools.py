@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: dialog_tools.py
-# Porpose: a module with multiple dialog tools for the menu Tools
+# Porpose: a module with multiple dialog tools
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -73,7 +73,7 @@ class Cut_Range(wx.Dialog):
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_1_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Start time position (h:m:s)")), wx.VERTICAL)
+                            "Start time position (h:m:s)")), wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
         self.stop_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
@@ -81,7 +81,7 @@ class Cut_Range(wx.Dialog):
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Time progress duration (h:m:s)")), wx.VERTICAL)
+                            "Time progress duration (h:m:s)")), wx.VERTICAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -502,8 +502,9 @@ class VideoRotate(wx.Dialog):
                                         )
         sizer_3.Add(grid_sizerLabel, 1, wx.EXPAND, 0)
         sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
-        gridBase.Add(sizerLabel, 1, wx.ALL| wx.ALIGN_CENTER_HORIZONTAL 
-                                              | wx.ALIGN_CENTER_VERTICAL,5)
+        gridBase.Add(sizerLabel, 1, wx.ALL | 
+                                    wx.ALIGN_CENTER_HORIZONTAL | 
+                                    wx.ALIGN_CENTER_VERTICAL,5)
         gridBase.Add(gridBtnExit, 1, wx.ALL,5)
         
         gridBtnExit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
