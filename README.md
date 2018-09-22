@@ -15,7 +15,6 @@
 **Videomass2** is a cross-platform GUI for FFmpeg, It provides a graphical 
 interface for managing audio and video streams through FFmpeg.
 
-* [Important Note!](#important-note)
 * [Features](#features)
 * [Official WebPage](http://jeanslack.github.io/Videomass2)
 * [Downloads](https://github.com/jeanslack/Videomass2/releases)
@@ -27,12 +26,8 @@ interface for managing audio and video streams through FFmpeg.
 * [Make a Slackware package](#make-a-slackware-package)
 * [MacOs](#MacOs)
 * [Windows](#windows)
+* [Donation](#donation)
 * [License](#license)
-
-## Important Note!
-
-Videomass2 do not include binaries/executables of the FFmpeg.
-If FFmpeg is not yet installed on your system please, install it. Videomass2 will not work without the essential FFmpeg
 
 ## Features
 
@@ -223,6 +218,11 @@ Then open a dos window and position you in the Videomass2 folder you just unzipp
 `python setup.py py2exe`
 
 A folder named 'dist' will be created where there will be the magic executable of Videomass2.exe
+
+## Donation
+
+If you like Videomass2 and you want to support its development, consider donating:
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UKYM7S5U542SJ)
 
 ## License
 
