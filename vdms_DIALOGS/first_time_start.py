@@ -277,9 +277,9 @@ class FirstStart(wx.Dialog):
                 if not b == '\n':
                     rowsNum.append(a)
 
-        full_list[rowsNum[7]] = '%s\n' % ffmpeg
-        full_list[rowsNum[9]] = '%s\n' % ffprobe
-        full_list[rowsNum[11]] = '%s\n' % ffplay
+        full_list[rowsNum[8]] = '%s\n' % ffmpeg
+        full_list[rowsNum[10]] = '%s\n' % ffprobe
+        full_list[rowsNum[12]] = '%s\n' % ffplay
         
         with open (filename, 'w') as fileconf:
             for i in full_list:

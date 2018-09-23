@@ -4,7 +4,8 @@ Set 22, 2018 V.1.0.1
 
 - Fixed issue with the `Presets_Manager` panel during double-pass 
   conversion in Windows.
-- Adding a new function in the settings dialog
+- Modified `cpu-used` function in the settings dialog
+- Adding `-threads` function in the settings dialog
 - Fixed anomalies in `-cpu-used` function
 - New version of the configuration file 
 
