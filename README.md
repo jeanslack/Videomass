@@ -24,7 +24,7 @@ interface for managing audio and video streams through FFmpeg.
 * [Build Package](#build-package)
 * [Make a debian packages](#make-a-debian-packages)
 * [Make a Slackware package](#make-a-slackware-package)
-* [MacOs](#MacOs)
+* [MacOs](#macos)
 * [Windows](#windows)
 * [Donation](#donation)
 * [License](#license)
