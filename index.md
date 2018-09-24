@@ -5,7 +5,7 @@
 * [Screenshot](screenshot.md)
 * [About](about.md)
 * [Donations](donation.md)
-* [License](COPYING)
+* [License](LICENSE)
 
 
 Copyright © 2015 - 2018 Gianluca Pernigotto   
