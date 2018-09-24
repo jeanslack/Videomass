@@ -6,6 +6,7 @@ Videomass2 is a open source front-end GUI (graphical user interface) for FFmpeg.
 ## Overview
 
 A completely new interface was created with many functional implementations.
+[screenshot](screenshot.md)
 
 * [Features](#features)
 * [Screenshots](#screenshots)
