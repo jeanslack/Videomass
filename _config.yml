@@ -1,2 +1,5 @@
 theme: jekyll-theme-midnight
 show_downloads: true
+header_pages:
+    - about.md
+    - screenshot.md
