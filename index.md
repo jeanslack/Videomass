@@ -1,4 +1,4 @@
-* [Screenshot](screenshot.md) * [License](#license)
+[Screenshot](screenshot.md)  [License](#license)
 # Welcome to Videomass2
 ![Image](/images/videomass2.png)
 
