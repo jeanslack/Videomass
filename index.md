@@ -2,13 +2,15 @@
 ![Image](/images/videomass2.png)
 
 * [Features](features.md)
-* [Screenshot](screenshot.md)  
+* [Screenshot](screenshot.md)
+* [About](about.md)
+* [Donations](donation.md)
+* [License](COPYING)
 
-## License
 
-Copyright © 2013 - 2018 Gianluca Pernigotto   
+Copyright © 2015 - 2018 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
 Mail: <jeanlucperni@gmail.com>   
-License: GPL3 (see COPYING file in the source folder)
+License: GPL3 (see License page or COPYING file in the source folder)
 
 
