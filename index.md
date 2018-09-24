@@ -7,6 +7,10 @@
 * [Donations](donation.md)
 * [License](LICENSE)
 
+## Getting Started:
+    
+* [Readme](README.md)
+
 
 Copyright © 2015 - 2018 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
