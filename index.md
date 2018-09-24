@@ -2,10 +2,9 @@
 # Welcome to Videomass2
 ![Image](/images/videomass2.png)
 
-Videomass2 is a open source front-end GUI (graphical user interface) for FFmpeg. It is cross-platform and work on **Linux**, **MacOs** and **Windows**.   
+## Features:
 
-## Features:   
-
+- Work on **Linux**, **MacOs** and **Windows**.
 - Drag n Drop interface   
 - Presets manager interface with fully customizable profiles ready to use   
 - Data streams information interface with details section   
@@ -15,7 +14,7 @@ Videomass2 is a open source front-end GUI (graphical user interface) for FFmpeg.
 - Audio peak level analysis with normalization process   
 - Grabbing audio streams from video with multilingual selection   
 - Batch processors   
-- Log management   
+- Log management
 ..and more 
 
 ## License
