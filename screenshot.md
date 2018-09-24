@@ -1,3 +1,4 @@
+[Home](index.md)
 ## Screenshots
 
 ### Windows 7 x64
