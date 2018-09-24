@@ -1,6 +1,12 @@
 theme: jekyll-theme-midnight
+title: [Videomass2]
+description: [A free, open-source and cross-platform GUI for FFmpeg.]
 show_downloads: true
 header_pages:
     - about.md
     - screenshot.md
     - downloads.md
+
+github:
+  zip_url: http://example.com/download.zip
+  another_url: another value
