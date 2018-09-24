@@ -14,11 +14,10 @@ Windows Installer by Gianluca Pernigotto
     
 Copyright 2015 - 2018 Videomass   
 
-## License
 
 Copyright © 2015 - 2018 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
 Mail: <jeanlucperni@gmail.com>   
-License: GPL3 (see COPYING file in the source folder)
+License: GPL3 (see LICENSE or COPYING file in the source folder)
 
 [Home](index.md)
