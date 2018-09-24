@@ -3,3 +3,4 @@ show_downloads: true
 header_pages:
     - about.md
     - screenshot.md
+    - downloads.md
