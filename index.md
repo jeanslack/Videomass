@@ -1,7 +1,7 @@
 # Welcome to Videomass2
 ![Image](/images/videomass2.png)
 
-* [features](features.md)
+* [Features](features.md)
 * [Screenshot](screenshot.md)  
 * [License](#license)
 
