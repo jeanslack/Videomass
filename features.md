@@ -1,3 +1,4 @@
+[Home](index.md)
 ## Features:
 
 - Work on **Linux**, **MacOs** and **Windows**.
