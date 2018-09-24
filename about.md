@@ -20,7 +20,7 @@ Videomass2 is a project created by Gianluca Pernigotto (jeanslack)
     
 ## What is FFmpeg?
 
-FFmpeg is a separate project, not connected to Videomass2. “FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library.” FFmpeg is a Trademark of Fabrice Bellard, originator of the FFmpeg project. FFmpeg is free software and is licensed under the LGPL or GPL. Specifically in the case of versions of FFmpeg packaged with Videomass2 on the installers for Windows and MacOS, FFmpeg is licensed under the GPL. Complete FFmpeg documentation and sources are available at [FFmpeg.org](https://www.ffmpeg.org/)
+FFmpeg is a separate project, not connected to Videomass2. "FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video. It includes libavcodec - the leading audio/video codec library." FFmpeg is a Trademark of Fabrice Bellard, originator of the FFmpeg project. FFmpeg is free software and is licensed under the LGPL or GPL. Specifically in the case of versions of FFmpeg packaged with Videomass2 on the installers for Windows and MacOS, FFmpeg is licensed under the GPL. Complete FFmpeg documentation and sources are available at [FFmpeg.org](https://www.ffmpeg.org/)
 
 Copyright © 2015 - 2018 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
