@@ -1,7 +1,7 @@
 
 ## Copyright:
     
-*Copyright: © 2015 - 2018 Gianluca Pernigoto <jeanlucperni@gmail.com>*
+**Copyright: © 2015 - 2018 Gianluca Pernigoto <jeanlucperni@gmail.com>**
 license: GPL3
  
 This file is part of Videomass2.   
