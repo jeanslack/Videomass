@@ -3,6 +3,7 @@ show_downloads: true
 title: Videomass2
 description: Videomass2 is a free, open source and cross-platform GUI for FFmpeg
 header_pages:
+    - features.md
     - about.md
     - screenshot.md
     - downloads.md
