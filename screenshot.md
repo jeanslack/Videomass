@@ -1,4 +1,5 @@
 [Home](index.md)
+
 ## Screenshots
 
 ### Windows 7 x64
@@ -10,3 +11,5 @@
 ![Image](/images/Linux3.png)
 ### MacOs High Sierra
 ![Image](/images/MacOsHighSierra.png)
+
+[Home](index.md)
