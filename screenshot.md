@@ -2,9 +2,14 @@
 title: This will be used as the title-tag of the page head
 ---
 
-# This is a H1
+## Screenshots
 
-[the clickable text](http://xlson.com/)
-
-* Bullet lists are also easy to create
-* One more
+### Windows 7 x64
+![Image](/images/Windows1.png)
+![Image](/images/Windows2.png)
+### Debian KDE5
+![Image](/images/Linux1.png)
+![Image](/images/Linux2.png)
+![Image](/images/Linux3.png)
+### MacOs High Sierra
+![Image](/images/MacOsHighSierra.png)
