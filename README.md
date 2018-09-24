@@ -1,23 +1,3 @@
-<div align="center">
-<h1>
-<img width="64" height="64" src="https://github.com/jeanslack/Videomass2/blob/master/art/data/images/com.github.jeanslack.Videomass2.png" alt="Icon">  Videomass2</h1>
-<h3 align="center">A open-source and cross-platform GUI for FFmpeg.</h3>
-</div>
-
-<p align="center">
-<img src="https://github.com/jeanslack/Videomass2/blob/master/art/data/images/screenshot.png" alt="Screenshot">
-</p>
-
-<div class="center">
-<h1 align="center"> Overview </h1>
-</div>
-
-**Videomass2** is a cross-platform GUI for FFmpeg, It provides a graphical 
-interface for managing audio and video streams through FFmpeg.
-
-* [Features](#features)
-* [Official WebPage](http://jeanslack.github.io/Videomass2)
-* [Downloads](https://github.com/jeanslack/Videomass2/releases)
 * [System Requirements](#system-requirements)
 * [Essential Dependencies](#essential-dependencies)
 * [Use](#use)
@@ -28,22 +8,6 @@ interface for managing audio and video streams through FFmpeg.
 * [Windows](#windows)
 * [Donation](#donation)
 * [License](#license)
-
-## Features
-
-Videomass2 presents itself with an interface completely renewed and enhanced by many features
-
-- Drag n Drop interface 
-- Presets manager interface with fully customizable profiles ready to use
-- Data streams information interface with details section
-- Preview of exported media
-- Video conversion interface 
-- Audio conversion interface
-- Audio peak level analysis implementation and audio normalization
-- Grabbing audio streams from video with multilingual selection
-- Batch processors
-- Log management
-- ..and more
 
 ## System Requirements
 
