@@ -1,3 +1,7 @@
+---
+title: Screenshot page
+---
+
 # Debian KDE5
 ![Image](/images/Linux1.png)
 ![Image](/images/Linux2.png)
