@@ -4,7 +4,7 @@
 * [Features](features.md)
 * [Screenshot](screenshot.md)
 * [About](about.md)
-* [Other Resources](other_resources.md)
+* [View Project on sourceforge.net](https://sourceforge.net/projects/videomass2/)
 * [Donations](donation.md)
 * [License](LICENSE)
 
