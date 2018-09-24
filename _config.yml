@@ -7,4 +7,5 @@ header_pages:
     - features.md
     - screenshot.md
     - getting_started.md
-    - donation
+    - donation.md
+    - license.md
