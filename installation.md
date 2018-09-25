@@ -9,6 +9,8 @@ Minimum requirements are:
 - MacOS High Sierra (64-bit only)
 - Microsoft Windows 7 or higher (64-bit only)
 
+...That's all
+
 #### Debian, Ubuntu (and based):
 For Gnu/Linux Debian or Debian distribuition based, is available a **.deb** package at the top of this page, for all architectures (32-bit and 64-bit). Before installing it, you need to install the required dependencies:
 
