@@ -11,6 +11,7 @@
 ## Getting Started:
 
 * [Installation](installation.md)
+* [Launch Videomass2 without installation](execute_sources.md.md)
 
 Copyright © 2015 - 2018 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
