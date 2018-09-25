@@ -21,6 +21,6 @@ Then proceed to install Videomass2:
 ```
 
 #### Slackware, Salix (and based):
-There is also a small repository which contains a SlackBuild for Slackware Gnu/Linux distro, to build the precompiled binary of Videomass2 with **.tgz** extension that can be installed with the `installpkg` command: [Videomass SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/Videomass)     
+There is also a small repository which contains a [SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/Videomass) script to build the precompiled binary of Videomass2 with **.tgz** extension that can be installed with the installpkg command.    
 Of course, it must be edited according to the new Videomass2.
 
