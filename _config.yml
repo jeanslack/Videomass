@@ -11,3 +11,4 @@ header_pages:
     - other_resources.md
     - installation.md
     - execute_sources.md
+    - building_package.md
