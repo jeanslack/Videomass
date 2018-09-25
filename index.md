@@ -13,6 +13,8 @@
 * [Installation](installation.md)
 * [Launch Videomass2 without installation](execute_sources.md)
 * [Build a redistributable package](building_package.md)
+* [How to use Videomass2 application](videomass2_use.md)
+
 
 Copyright © 2015 - 2018 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
