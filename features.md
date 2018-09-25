@@ -1,4 +1,5 @@
 [Home](index.md)
+
 ## Features:
 
 - Work on **Linux**, **MacOs** and **Windows**.
@@ -7,10 +8,11 @@
 - Data streams information interface with details section   
 - Preview of exported media   
 - Video conversion   
-- Audio conversion   
+- Audio conversion
+- Save jpg images from a video sequence
 - Audio peak level analysis with normalization process   
 - Grabbing audio streams from video with multilingual selection   
-- Batch processors   
+- Convert multiple file at once  
 - Log management
 - ..and more 
 
