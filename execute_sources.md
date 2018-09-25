@@ -1,3 +1,4 @@
+[Home](index.md)   
 ## Launch Videomass2 as a script from the sources
 
 **This depends on your OS. For now the following operating systems are supported:**
@@ -32,4 +33,6 @@ then run:
 python videomass2
 ```    
 
-enjoy
+enjoy   
+
+[Home](index.md)
