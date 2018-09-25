@@ -12,7 +12,7 @@
 - Save jpg images from a video sequence
 - Audio peak level analysis with normalization process   
 - Grabbing audio streams from video with multilingual selection   
-- Convert multiple file at once  
+- Convert multiple files at once  
 - Log management
 - ..and more 
 
