@@ -16,7 +16,15 @@
 
 
 #### MacOs:
-On MaOS, there is no need to install python since it should already be installed by default. For the rest, the most convenient way to get all dependencies is to use the [homebrew](https://brew.sh/) tool. After installing 'homebrew' you can immediately proceed to install wxPython and FFmpeg.
+On MaOS, there is no need to install python since it should already be installed by default. For the rest, the most convenient way to get all dependencies is to use the [homebrew](https://brew.sh/) tool. However, homebrew uses the "Command Line Tools" installed on your machine. By default, OS X does not ship with this tool, and you need to manually install it. One way to install it is to install Xcode, and it will install these commands as well. But, Xcode is heavy (in filesize), and unless you are a developer, you won’t have any need for it. Well, you can do it by just installing the command line tools only:
+```
+xcode-select --install  
+```
+When this is finished, you can install homebrew!
+```
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+After installing 'homebrew' you can immediately proceed to install wxPython and FFmpeg.
 ```
 $ brew install wxpython
 ```
