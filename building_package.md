@@ -20,16 +20,22 @@ On MaOS, there is no need to install python since it should already be installed
 ```
 $ brew install wxpython
 ```
-Before installing FFmpeg you could take a look at this interesting explanation of its homebrew compilation options:   
-<https://gist.github.com/clayton/6196167>   
+There are different ways to get FFmpeg, we consider only two here.
+1. By homebrew (the simply and secure way): 
+   Before installing FFmpeg you could take a look at this interesting explanation of its homebrew compilation options   
+   <https://gist.github.com/clayton/6196167>   
 
-Or simply search for the options you want to enable on homebrew:   
-<https://formulae.brew.sh/formula/ffmpeg>    
+   Or search for the options you want to enable on homebrew:   
+   <https://formulae.brew.sh/formula/ffmpeg>    
 
-Otherwise, get this command for enable all options:   
-```
-brew install ffmpeg --with-chromaprint --with-fdk-aac --with-fontconfig --with-freetype --with-frei0r --with-game-music-emu --with-libass --with-libbluray --with-libbs2b --with-libcaca --with-libgsm --with-libmodplug --with-librsvg --with-libsoxr --with-libssh --with-libvidstab --with-libvorbis --with-libvpx --with-opencore-amr --with-openh264 --with-openjpeg --with-openssl --with-opus --with-rtmpdump --with-rubberband --with-sdl2 --with-snappy --with-speex --with-tesseract --with-theora --with-tools --with-two-lame --with-wavpack --with-webp --with-x265 --with-xz --with-zeromq --with-zimg
-```
+   Otherwise, get this command for enable all options:   
+   ```
+   brew install ffmpeg --with-chromaprint --with-fdk-aac --with-fontconfig --with-freetype --with-frei0r --with-game-music-emu --with-libass --with-libbluray --with-libbs2b --with-libcaca --with-libgsm --with-libmodplug --with-librsvg --with-libsoxr --with-libssh --with-libvidstab --with-libvorbis --with-libvpx --with-opencore-amr --with-openh264 --with-openjpeg --with-openssl --with-opus --with-rtmpdump --with-rubberband --with-sdl2 --with-snappy --with-speex --with-tesseract --with-theora --with-tools --with-two-lame --with-wavpack --with-webp --with-x265 --with-xz --with-zeromq --with-zimg
+   ```
+2. Download the precompiled static binary files.   
+   Go at this page <https://ffmpeg.zeranoe.com/builds/macos64/static/>, download your prefered file, then extract the archive.
+   Inside the 'bin' folder you find the ffmpeg, ffprobe and ffplay binaries already to use with the terminal app and Videomass2.
+   Now, you can copy and paste all the 'bin' folder to '/Videomass2/MAcOsxSetup/FFMPEG_BIN/', or you can set the path later on Videomass2. 
 
 #### Gnu/Linux:
 
