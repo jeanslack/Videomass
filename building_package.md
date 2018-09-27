@@ -49,5 +49,11 @@ There are different ways to get FFmpeg, we consider only two here.
    Now, you can copy and paste all the 'bin' folder to '/Videomass2/MAcOsxSetup/FFMPEG_BIN/', or you can set the path later on Videomass2. 
 
 #### Gnu/Linux:
+As MacOS,  there is no need to install python since it should already be installed by default. Proceede with installing wxPython and FFmpeg if not already installed. On Debian and Ubuntu based distribuitions, install required dependencies with super user (su) or super user do (sudo):
+
+```
+~# apt-get install python-wxgtk3.0 ffmpeg
+```
+
 
 [Home](index.md)
