@@ -11,7 +11,7 @@
 - wxPython Classic >=3.0
 - FFmpeg
 
-For details on how to install required dependencies on your system, see first part of the [Build a redistributable package](building_package.md),  and then proceed with the following explanation:      
+For details on how to install required dependencies on your system, see first part of the [Build a redistributable package](building_package.md) for your OS,  and then proceed with the following explanation:      
 
 on MacOS and Gnu/Linux open a terminal window and place it inside unzipped sources folder.   
 ```
