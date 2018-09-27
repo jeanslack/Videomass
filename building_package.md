@@ -20,7 +20,8 @@ On MaOS, there is no need to install python since it should already be installed
 ```
 $ brew install wxpython
 ```
-There are different ways to get FFmpeg, we consider only two here.
+There are different ways to get FFmpeg, we consider only two here.   
+
 1. By homebrew (the simply and secure way): 
    Before installing FFmpeg you could take a look at this interesting explanation of its homebrew compilation options   
    <https://gist.github.com/clayton/6196167>   
