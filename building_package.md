@@ -59,7 +59,15 @@ As MacOS,  there is no need to install python since it should already be install
 ~$ sudo apt-get install python-wxgtk3.0 ffmpeg
 ```
 
-### Installing required dependencies on your OS
+### Let's build the package
+
+To create a redistributable package, we will use the setup.py script in the source folder, which will import _py2exe_ for Windows and _py2app_ for MacOS, plus other common packaging tools also useful for Gnu/Linux: _distutils_ and _setuptools_.
+
+- **distutils** is still the standard tool for packaging in python. It is included in the standard library that can be easily
+  imported.
+
+- **setuptools** which is not included in the standard library, must be separately installed if not present in your system.  Update: setuptools is included from python 2.7
+
 
 
 [Home](index.md)
