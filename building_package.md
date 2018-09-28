@@ -94,7 +94,8 @@ A folder named 'dist' will be created where there will be the magic executable o
 
 -----------------
 #### MacOS:
-To build a Videomass.app I suggest you create a virtual environment, also to avoid some errors that I found when compiling the app.
+To build a Videomass.app I suggest you create a virtual environment, also to avoid some errors that I found when compiling the app without a virtual environment. An exhaustive guide to doing this is as follows:   
+<https://docs.python-guide.org/dev/virtualenvs/>
 
 
 
