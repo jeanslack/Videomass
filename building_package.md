@@ -51,22 +51,46 @@ There are different ways to get FFmpeg, we consider only two here.
    Inside the 'bin' folder you find the ffmpeg, ffprobe and ffplay binaries already to use with the terminal app or by Videomass2.
    Now, you can copy and paste all the 'bin' folder to '/Videomass2/MAcOsxSetup/FFMPEG_BIN/', or you can set the path later on Videomass2.   
    
+3. Download the Videomass2 TAR or ZIP sources at the top of this page and extract the archive.
+   
 -----------------
 #### Gnu/Linux:
-As MacOS,  there is no need to install python since it should already be installed by default. Proceede with installing wxPython and FFmpeg if not already installed:
+As MacOS,  there is no need to install python since it should already be installed by default. 
 
-```
-~$ sudo apt-get install python-wxgtk3.0 ffmpeg
-```
+1. Proceede with installing wxPython and FFmpeg if not already installed:
 
+   ```
+   ~$ sudo apt-get install python-wxgtk3.0 ffmpeg
+   ```
+2. Download the Videomass2 TAR or ZIP sources at the top of this page and extract the archive.
+
+---------------------------
 ### Let's build the package
+---------------------------
 
-To create a redistributable package, we will use the setup.py script in the source folder, which will import _py2exe_ for Windows and _py2app_ for MacOS, plus other common packaging tools also useful for Gnu/Linux: _distutils_ and _setuptools_.
+To create a redistributable package, we will use the setup.py script in the source folder, with which we will use the _py2exe_ tool with Windows and the _py2app_ tool with MacOS, plus other common packaging tools also useful for Gnu/Linux: _distutils_ and _setuptools_.
 
 - **distutils** is still the standard tool for packaging in python. It is included in the standard library that can be easily
   imported.
 
-- **setuptools** which is not included in the standard library, must be separately installed if not present in your system.  Update: setuptools is included from python 2.7
+- **setuptools** which is not included in the standard library, must be separately installed if not present in your system.  Update: setuptools is included from python 2.7   
+
+-----------------
+#### Windows:
+If you have successfully completed the points described above, now download and Install the py2exe utility for python 2.7 from:
+
+<https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/>
+
+if need update it and follow this how-to:
+
+<https://www.blog.pythonlibrary.org/2010/07/31/a-py2exe-tutorial-build-a-binary-series/>
+
+Then open a dos window and position you in the Videomass2 folder you just unzipped and type:
+
+```
+python setup.py py2exe
+```
+A folder named 'dist' will be created where there will be the magic executable of Videomass2.exe
 
 
 
