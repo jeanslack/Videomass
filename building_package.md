@@ -90,7 +90,11 @@ Then open a dos window and position you in the Videomass2 folder you just unzipp
 ```
 python setup.py py2exe
 ```
-A folder named 'dist' will be created where there will be the magic executable of Videomass2.exe
+A folder named 'dist' will be created where there will be the magic executable of Videomass2.exe   
+
+-----------------
+#### MacOS:
+To build a Videomass.app I suggest you create a virtual environment, also to avoid some errors that I found when compiling the app.
 
 
 
