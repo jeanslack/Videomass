@@ -121,7 +121,7 @@ class Setup(wx.Dialog):
         gridThreads.Add(lab1_pane1, 0, wx.ALL, 5)
         self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY, 
                                             "%s" % threads[9:],
-                                            size=(50,-1), min=0, max=32, 
+                                            size=(-1,-1), min=0, max=32, 
                                             style=wx.TE_PROCESS_ENTER
                                              )
         gridThreads.Add(self.spinctrl_threads, 0, wx.ALL |
@@ -134,7 +134,7 @@ class Setup(wx.Dialog):
         gridThreads.Add(gridctrl)
         self.spinctrl_cpu = wx.SpinCtrl(tabOne, wx.ID_ANY, 
                                         "%s" % cpu_used[9:], min=-16, max=16, 
-                                        size=(50,-1), style=wx.TE_PROCESS_ENTER
+                                        size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                              )
         gridctrl.Add(self.spinctrl_cpu, 0, wx.ALL, 5)
         #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)

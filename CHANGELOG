@@ -1,3 +1,7 @@
+- Solved an exception when importing images and proceeding with normalization
+  (add: does not contain any stream)
+- FFmpeg's unrecognized errors are now better managed on volumedetect
+
 +------------------------------------+
 Set 22, 2018 V.1.0.1
 +------------------------------------+

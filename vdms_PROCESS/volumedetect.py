@@ -121,7 +121,8 @@ class VolumeDetectThread(Thread):
                     'Invalid', 
                     'Option not found', 
                     'Unknown',
-                    'No such file or directory'
+                    'No such file or directory',
+                    'does not contain any stream',
                     )
         for files in self.filelist:
             cmnd = [self.ffmpeg, '-i', files, '-hide_banner', '-af', 
@@ -133,7 +134,7 @@ class VolumeDetectThread(Thread):
                                      stderr=subprocess.PIPE,
                                      )
                 output, error =  p.communicate()
-                raw_list = error.split() # splitta tutti gli spazi
+                raw_list = error.split() # splitta tutti gli spazi 
 
                 if 'mean_volume:' in raw_list:
                     mean_volume = raw_list.index("mean_volume:")# indx integear
@@ -159,6 +160,16 @@ class VolumeDetectThread(Thread):
                 e = "%s\nffmpeg exist?" % (err), 
                 self.status = e
                 break
+                
+            except UnboundLocalError: # local variable 'e' referenced before assignment
+                """
+                dovrebbe riportare tutti gli errori di ffmpeg dal momento 
+                che la variabile `e` sarà referenziata prima di essere assegnata.
+                """
+                e = "Unrecognized Error (not in err_list):\n\n%s" % error
+                self.status = e
+                break
+                
         
         self.data = (volume, self.status)
         

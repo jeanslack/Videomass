@@ -189,14 +189,14 @@ class Video_Conv(wx.Panel):
         self.sizer_1_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                             wx.ID_ANY, (u"De-interlaced/Progressive video"))
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-        choices=[("Set default"), ("4:3"), ("16:9")], style=wx.CB_DROPDOWN | 
+        choices=[("Set default "), ("4:3"), ("16:9")], style=wx.CB_DROPDOWN | 
         wx.CB_READONLY
         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, ("Video Aspect (Optional)")
                                         )
         self.cmbx_vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
-        choices=[("Set default"), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
+        choices=[("Set default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
         ("30 fps (30p) Progessive")], style=wx.CB_DROPDOWN | wx.CB_READONLY
         )
         self.sizer_videorate_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
@@ -304,14 +304,14 @@ class Video_Conv(wx.Panel):
                 "320x180\nVideo per PSP: 320x240"
                 )
         self.spin_size_height.SetToolTipString("Video height:\n%s" %(sizestr))
-        self.spin_size_height.SetMinSize((70, -1))
+        #self.spin_size_height.SetMinSize((70, -1))
         self.spin_size_width.SetToolTipString("Video width:\n%s" %(sizestr))##
-        self.spin_size_width.SetMinSize((70, -1))
+        #self.spin_size_width.SetMinSize((70, -1))
         self.ckbx_scale.SetToolTipString("Enable automatic scaling "
                             "proportionate videos. Scaling is any resizing "
                             "operation without changing the appearance of "
                             "the original movie")##
-        self.spin_ctrl_scale.SetMinSize((70, -1))
+        #self.spin_ctrl_scale.SetMinSize((70, -1))
         self.spin_ctrl_scale.SetToolTipString("Enter only the video width in "
                                 "pixels. The video height will be calculated"
                                 "automatically")##
@@ -362,7 +362,7 @@ class Video_Conv(wx.Panel):
         self.btn_analyzes.SetToolTipString(u"Calculate the maximum and "
                                     "average peak in dB values, of the audio "
                                     "stream on the video imported.")
-        self.spin_ctrl_audionormalize.SetMinSize((70, -1))
+        #self.spin_ctrl_audionormalize.SetMinSize((70, -1))
         self.spin_ctrl_audionormalize.SetToolTipString("Threshold for the "
                                 "maximum peak level in dB values. The default " 
                                 "setting is -1.0 dB and is good for most of "
