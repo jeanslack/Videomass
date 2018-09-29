@@ -5,7 +5,7 @@
 ### Installing required dependencies on your OS   
 
 -----------------
-#### Windows:
+#### Windows
 1. Download the latest release of the Python2.7 for your architecture from [python.org](https://www.python.org/downloads/) and
    install it.
    For your convenience, I strongly recommend that you install for all users and check all the options offered by the
@@ -18,7 +18,7 @@
 4. Download the static version of FFmpeg binaries for your system architecture from <https://ffmpeg.zeranoe.com/builds/>, then extract the archive. Inside the *bin* folder you will find the FFmpeg's executables: ffmpeg.exe, ffprobe.exe and ffplay.exe (the extensions depends to your system settings or preferences). Now, you can copy and paste all the 'bin' folder to '\Videomass2\Win32Setup\FFMPEG_BIN', or you can set the path later on Videomass2.   
 
 -----------------
-#### MacOs:
+#### MacOs
 On MaOS, there is no need to install python since it should already be installed by default. For the rest, the most convenient way to get all dependencies is to use the [homebrew](https://brew.sh/) tool. However, homebrew uses the "Command Line Tools" installed on your machine. By default, OS X does not ship with this tool, and you need to manually install it. One way to install it is to install Xcode, and it will install these commands as well. But, Xcode is heavy (in filesize), and unless you are a developer, you won’t have any need for it. Well, you can do it by just installing the command line tools only:
 ```
 xcode-select --install  
@@ -54,7 +54,7 @@ There are different ways to get FFmpeg, we consider only two here.
 3. Download the Videomass2 TAR or ZIP sources at the top of this page and extract the archive.
    
 -----------------
-#### Gnu/Linux:
+#### Gnu/Linux
 As MacOS,  there is no need to install python since it should already be installed by default. 
 
 1. Proceede with installing wxPython and FFmpeg if not already installed:
@@ -76,7 +76,7 @@ To create a redistributable package, we will use the setup.py script in the sour
 - **setuptools** which is not included in the standard library, must be separately installed if not present in your system.  Update: setuptools is included from python 2.7   
 
 -----------------
-#### Windows:
+#### Windows
 If you have successfully completed the points described above, now download and Install the py2exe utility for python 2.7 from:
 
 <https://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/>
@@ -93,10 +93,37 @@ python setup.py py2exe
 A folder named 'dist' will be created where there will be the magic executable of Videomass2.exe   
 
 -----------------
-#### MacOS:
+#### MacOS
 To build a Videomass.app I suggest you create a virtual environment, also to avoid some errors that I found when compiling the app without a virtual environment. An exhaustive guide to doing this is as follows:   
-<https://docs.python-guide.org/dev/virtualenvs/>
+<https://docs.python-guide.org/dev/virtualenvs/>  
 
+and this page:   
+<https://wiki.wxpython.org/wxPythonVirtualenvOnMac>   
 
+You might be interested read the follow web page also:   
+<https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>   
+
+Note that inside Videomass2 sources already exists a setup.py with certain parameters for your MacOS, then make a virtual env inside Videomass2 sources, activate it and run setup.py:   
+```
+~$ python setup.py py2app
+``` 
+The Videomass2.app will be create at _dist_ folder
+
+-----------------
+#### Gnu/Linux
+If you want make a .deb binary package installable in your debian system and compatible with others debian-based systems, you need install those following tools first:   
+```
+~# apt-get update && apt-get install python-all python-stdeb fakeroot
+```
+This installs all the need dependencies, including python-setuptools.
+
+Then, go into Videomass2 unzipped folder with your user (not root) and type:
+```
+~$ python setup.py --command-packages=stdeb.command bdist_deb
+```
+This should create a _python-videomass2_version_all.deb_ in the new _deb_dist_ directory, installable with 
+```
+~# dpkg -i python-videomass2_version_all.deb
+```
 
 [Home](index.md)
