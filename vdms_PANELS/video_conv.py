@@ -36,6 +36,7 @@ from vdms_IO.IO_tools import volumeDetectProcess
 from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS.epilogue import Formula
 from vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
+from vdms_DIALOGS import video_sizer
 
                     
 dirname = os.path.expanduser('~') # /home/user
@@ -145,30 +146,11 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.ckbx_videosize = wx.CheckBox(self.notebook_1_pane_2, 
                                     wx.ID_ANY, ("Set Video Size"))
-        self.label_width_1 = wx.StaticText(self.notebook_1_pane_2, wx.ID_ANY, 
-                                    ("Width"))
         #self.label_sep = wx.StaticText(self.notebook_1_pane_2, wx.ID_ANY, 
                                     #("/"))
-        self.label_height = wx.StaticText(self.notebook_1_pane_2, wx.ID_ANY, 
-                    ("Heigth"))
         
-        self.spin_size_width = wx.SpinCtrl(self.notebook_1_pane_2, wx.ID_ANY, 
-        "0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-        )
-        self.label_x = wx.StaticText(self.notebook_1_pane_2, wx.ID_ANY, ("X"))
-        self.spin_size_height = wx.SpinCtrl(self.notebook_1_pane_2, wx.ID_ANY,
-        "0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-        )
-        self.ckbx_scale = wx.CheckBox(self.notebook_1_pane_2, 
-                            wx.ID_ANY, ("Enable Scaling (Resizing)"))##
-        self.ckbx_scale.SetValue(False)##
-        self.label_width_2 = wx.StaticText(self.notebook_1_pane_2, wx.ID_ANY, 
-                                        ("Width"), style=wx.ALIGN_CENTRE)###
-        
-        self.spin_ctrl_scale = wx.SpinCtrl(self.notebook_1_pane_2, wx.ID_ANY,
-                        "0", min=0, max=10000, style=wx.TE_PROCESS_ENTER)##
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-        wx.ID_ANY, ("Video Size (Optional)")
+        wx.ID_ANY, ("Video Size")
         )
         self.ckbx_deinterlace = wx.CheckBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, (u"Deinterlaces")
@@ -265,9 +247,6 @@ class Video_Conv(wx.Panel):
         ("grain"), ("stillimage"), ("psnr"), ("ssim"), ("fastecode"), 
                 ("zerolatency")], majorDimension=0, style=wx.RA_SPECIFY_ROWS
                 )
-        # Set default layout of the widget in the window:
-        self.label_width_2.Disable(), self.spin_ctrl_scale.Disable()
-
         #----------------------Set Properties----------------------#
         self.cmbx_vidContainers.SetToolTipString("Video container that will "
                                         "be used in the conversion. NOTE: for "
@@ -296,25 +275,6 @@ class Video_Conv(wx.Panel):
                                  "values the quality is higher and a larger "
                                  "file size."
                                           )
-        self.ckbx_videosize.SetToolTipString(u"Enables manual setting of "
-                                                 "sizing (width x height)"
-                                                 )
-        sizestr = (u"The video size is the size of the final video in pixels. "
-                "Example for youtube:: 640X480\nExample for Ipod/Iphone: "
-                "320x180\nVideo per PSP: 320x240"
-                )
-        self.spin_size_height.SetToolTipString("Video height:\n%s" %(sizestr))
-        #self.spin_size_height.SetMinSize((70, -1))
-        self.spin_size_width.SetToolTipString("Video width:\n%s" %(sizestr))##
-        #self.spin_size_width.SetMinSize((70, -1))
-        self.ckbx_scale.SetToolTipString("Enable automatic scaling "
-                            "proportionate videos. Scaling is any resizing "
-                            "operation without changing the appearance of "
-                            "the original movie")##
-        #self.spin_ctrl_scale.SetMinSize((70, -1))
-        self.spin_ctrl_scale.SetToolTipString("Enter only the video width in "
-                                "pixels. The video height will be calculated"
-                                "automatically")##
         self.ckbx_deinterlace.SetToolTipString(u'Deinterlace the input video '
                 u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
                 u'Based on the process described by Martin Weston for BBC R&D, '
@@ -443,17 +403,17 @@ class Video_Conv(wx.Panel):
         grid_sizer_pane1_base.Add(grid_sizer_pane1_right, 1, wx.EXPAND, 0)
         self.notebook_1_pane_1.SetSizer(grid_sizer_pane1_base)
         grid_sizer_2.Add(self.ckbx_videosize, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 10)
-        grid_sizer_4.Add(self.label_width_1, 0, wx.LEFT | wx.ALIGN_CENTER_HORIZONTAL, 0)
+        #grid_sizer_4.Add(self.label_width_1, 0, wx.LEFT | wx.ALIGN_CENTER_HORIZONTAL, 0)
         grid_sizer_4.Add((0, 0), 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
-        grid_sizer_4.Add(self.label_height, 0, wx.RIGHT | wx.ALIGN_CENTER_HORIZONTAL, 0)
+        #grid_sizer_4.Add(self.label_height, 0, wx.RIGHT | wx.ALIGN_CENTER_HORIZONTAL, 0)
         grid_sizer_2.Add(grid_sizer_4, 1, wx.EXPAND, 0)
-        grid_sizer_5.Add(self.spin_size_width, 0, wx.LEFT | wx.ALIGN_CENTER_HORIZONTAL, 0)
-        grid_sizer_5.Add(self.label_x, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
-        grid_sizer_5.Add(self.spin_size_height, 0, wx.RIGHT | wx.ALIGN_CENTER_HORIZONTAL, 0)
+        #grid_sizer_5.Add(self.spin_size_width, 0, wx.LEFT | wx.ALIGN_CENTER_HORIZONTAL, 0)
+        #grid_sizer_5.Add(self.label_x, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        #grid_sizer_5.Add(self.spin_size_height, 0, wx.RIGHT | wx.ALIGN_CENTER_HORIZONTAL, 0)
         grid_sizer_2.Add(grid_sizer_5, 1, wx.EXPAND, 0)
-        grid_sizer_2.Add(self.ckbx_scale, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 30)
-        grid_sizer_2.Add(self.label_width_2, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
-        grid_sizer_2.Add(self.spin_ctrl_scale, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        #grid_sizer_2.Add(self.ckbx_scale, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 30)
+        #grid_sizer_2.Add(self.label_width_2, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
+        #grid_sizer_2.Add(self.spin_ctrl_scale, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
         sizer_2.Add(grid_sizer_2, 1, wx.EXPAND, 0)
         grid_sizer_pane2_base.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 15)
         grid_sizer_3.Add(self.ckbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -517,7 +477,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_ctrl_bitrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
         self.Bind(wx.EVT_CHECKBOX, self.on_Enable_vsize, self.ckbx_videosize)
-        self.Bind(wx.EVT_CHECKBOX, self.on_Enable_scale, self.ckbx_scale)
+       # self.Bind(wx.EVT_CHECKBOX, self.on_Enable_scale, self.ckbx_scale)
         #self.Bind(wx.EVT_SPINCTRL, self.set_Scaling, self.spin_ctrl_scale)
         self.Bind(wx.EVT_CHECKBOX, self.on_Deinterlace, self.ckbx_deinterlace)
         self.Bind(wx.EVT_RADIOBOX, self.mod_Deinterlace, self.rdbx_deinterlace)
@@ -545,14 +505,7 @@ class Video_Conv(wx.Panel):
 
     def default_videosettings(self):
         self.cmbx_vrate.SetSelection(0),self.cmbx_Vaspect.SetSelection(0)
-        self.ckbx_videosize.SetValue(False), self.ckbx_videosize.Enable()
-        self.spin_size_height.Disable(), self.spin_size_width.Disable()
-        self.spin_ctrl_scale.Disable(), self.spin_ctrl_scale.SetValue(0)
-        self.spin_size_height.SetValue(0), self.spin_size_width.SetValue(0)
-        self.cmbx_Vaspect.Enable(), self.ckbx_scale.SetValue(False)
-        self.ckbx_scale.Enable()
-        self.label_width_1.Disable(), self.label_height.Disable()
-        self.label_x.Disable(), self.label_width_2.Disable()
+        self.cmbx_Vaspect.Enable()
         self.rdbx_deinterlace.SetSelection(0), 
         self.ckbx_deinterlace.SetValue(False)
         self.rdbx_deinterlace.Disable()
@@ -782,17 +735,14 @@ class Video_Conv(wx.Panel):
         ## TODO è meglio usare il filtro scale anzichè -s ???
         
         if self.ckbx_videosize.IsChecked():
-            
-            self.spin_size_height.Enable(), self.spin_size_width.Enable()
-            self.label_width_1.Enable(), self.label_height.Enable()
-            self.label_x.Enable(), self.ckbx_scale.Disable()
-            self.set_Sizing()
+            print 'set value'
+            sizing = video_sizer.Video_Sizer(self,'Sizing', 'cico')
+            retcode = sizing.ShowModal()
+            #self.set_Sizing()
 
         elif not self.ckbx_videosize.IsChecked():
+            print 'reset value'
 
-            self.spin_size_height.Disable(), self.spin_size_width.Disable()
-            self.label_width_1.Disable(), self.label_height.Disable()
-            self.label_x.Disable(), self.ckbx_scale.Enable()
     #------------------------------------------------------------------#
     def set_Sizing(self):
         """
@@ -811,23 +761,6 @@ class Video_Conv(wx.Panel):
         else:
             cmd_opt["VideoSize"] = ''
 
-    #------------------------------------------------------------------#
-    def on_Enable_scale(self, event):
-        """
-        Enable or disable functionality for scale. Scale is a parameter 
-        that not work if 'Video Aspect' combobox is enabled, than disable it. 
-        If checked, also call set_Scaling method below for automate the entries.
-        """
-        if self.ckbx_scale.IsChecked():
-            self.cmbx_Vaspect.Disable(), self.cmbx_Vaspect.SetSelection(0)
-            self.label_width_2.Enable(), self.spin_ctrl_scale.Enable()
-            self.ckbx_videosize.Disable()
-            self.set_Sizing()
-
-        elif not self.ckbx_scale.IsChecked():
-            self.spin_ctrl_scale.Disable(), self.spin_ctrl_scale.SetValue(0)
-            self.cmbx_Vaspect.Enable(), self.label_width_2.Disable()
-            self.ckbx_videosize.Enable()
     #------------------------------------------------------------------#
     def on_Deinterlace(self, event):
         """
