@@ -36,7 +36,7 @@ from vdms_IO.IO_tools import volumeDetectProcess
 from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS.epilogue import Formula
 from vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
-from vdms_DIALOGS import video_sizer
+from vdms_DIALOGS import video_sizer, video_crop
 
                     
 dirname = os.path.expanduser('~') # /home/user
@@ -116,7 +116,7 @@ class Video_Conv(wx.Panel):
         wx.ID_ANY, ("Video Container Selection")
         )
         self.sizer_dir_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, ('Export Preferences')
+        wx.ID_ANY, ('Improves low-quality export')
         )
         self.ckbx_pass = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
         ("2-pass encoding.")
@@ -144,13 +144,21 @@ class Video_Conv(wx.Panel):
         wx.ID_ANY, ("Video CRF Value")
         )
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
-        self.ckbx_videosize = wx.CheckBox(self.notebook_1_pane_2, 
+        self.btn_videosize = wx.Button(self.notebook_1_pane_2, 
                                     wx.ID_ANY, ("Set Video Size"))
-        #self.label_sep = wx.StaticText(self.notebook_1_pane_2, wx.ID_ANY, 
-                                    #("/"))
+        
+        self.btn_crop = wx.Button(self.notebook_1_pane_2, 
+                                    wx.ID_ANY, ("Crop Dimensions"))
+        self.btn_rotate = wx.Button(self.notebook_1_pane_2, 
+                                    wx.ID_ANY, ("Video Rotate"))
+        line1 = wx.StaticLine(self.notebook_1_pane_2, wx.ID_ANY, size=(130, -1),
+           style=wx.LI_HORIZONTAL,name='')
+        self.btn_preview = wx.Button(self.notebook_1_pane_2, 
+                                    wx.ID_ANY, ("Video Preview"))
+        self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-        wx.ID_ANY, ("Video Size")
+        wx.ID_ANY, ("FFmpeg Filters Options")
         )
         self.ckbx_deinterlace = wx.CheckBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, (u"Deinterlaces")
@@ -368,8 +376,6 @@ class Video_Conv(wx.Panel):
         self.sizer_videosize_staticbox.Lower()
         sizer_2 = wx.StaticBoxSizer(self.sizer_videosize_staticbox, wx.VERTICAL)
         grid_sizer_2 = wx.GridSizer(6, 1, 0, 0)
-        grid_sizer_5 = wx.GridSizer(1, 3, 0, 0)
-        grid_sizer_4 = wx.GridSizer(1, 3, 0, 0)
         grid_sizer_pane1_base = wx.GridSizer(1, 3, 0, 0)
         grid_sizer_pane1_right = wx.GridSizer(2, 1, 0, 0)
         self.sizer_crf_staticbox.Lower()
@@ -402,15 +408,12 @@ class Video_Conv(wx.Panel):
         grid_sizer_pane1_right.Add(sizer_crf, 1, wx.ALL | wx.EXPAND, 15)
         grid_sizer_pane1_base.Add(grid_sizer_pane1_right, 1, wx.EXPAND, 0)
         self.notebook_1_pane_1.SetSizer(grid_sizer_pane1_base)
-        grid_sizer_2.Add(self.ckbx_videosize, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 10)
-        #grid_sizer_4.Add(self.label_width_1, 0, wx.LEFT | wx.ALIGN_CENTER_HORIZONTAL, 0)
-        grid_sizer_4.Add((0, 0), 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
-        #grid_sizer_4.Add(self.label_height, 0, wx.RIGHT | wx.ALIGN_CENTER_HORIZONTAL, 0)
-        grid_sizer_2.Add(grid_sizer_4, 1, wx.EXPAND, 0)
-        #grid_sizer_5.Add(self.spin_size_width, 0, wx.LEFT | wx.ALIGN_CENTER_HORIZONTAL, 0)
-        #grid_sizer_5.Add(self.label_x, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
-        #grid_sizer_5.Add(self.spin_size_height, 0, wx.RIGHT | wx.ALIGN_CENTER_HORIZONTAL, 0)
-        grid_sizer_2.Add(grid_sizer_5, 1, wx.EXPAND, 0)
+        grid_sizer_2.Add(self.btn_videosize, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(self.btn_crop, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(line1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL|wx.EXPAND, 15)
+
         #grid_sizer_2.Add(self.ckbx_scale, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 30)
         #grid_sizer_2.Add(self.label_width_2, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
         #grid_sizer_2.Add(self.spin_ctrl_scale, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
@@ -476,7 +479,9 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.on_Automations, self.rdb_automations)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_ctrl_bitrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
-        self.Bind(wx.EVT_CHECKBOX, self.on_Enable_vsize, self.ckbx_videosize)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
        # self.Bind(wx.EVT_CHECKBOX, self.on_Enable_scale, self.ckbx_scale)
         #self.Bind(wx.EVT_SPINCTRL, self.set_Scaling, self.spin_ctrl_scale)
         self.Bind(wx.EVT_CHECKBOX, self.on_Deinterlace, self.ckbx_deinterlace)
@@ -734,14 +739,35 @@ class Video_Conv(wx.Panel):
         """
         ## TODO è meglio usare il filtro scale anzichè -s ???
         
-        if self.ckbx_videosize.IsChecked():
-            print 'set value'
-            sizing = video_sizer.Video_Sizer(self,'Sizing', 'cico')
-            retcode = sizing.ShowModal()
-            #self.set_Sizing()
 
-        elif not self.ckbx_videosize.IsChecked():
-            print 'reset value'
+        print 'set value'
+        sizing = video_sizer.Video_Sizer(self, 'cico')
+        retcode = sizing.ShowModal()
+        #self.set_Sizing()
+    #-----------------------------------------------------------------#
+    def on_Enable_rotate(self, event):
+        """
+        """
+        dialog = dialog_tools.VideoRotate(self, cmd_opt["Orientation"][0],
+                                              cmd_opt["Orientation"][1])
+        retcode = dialog.ShowModal()
+        if retcode == wx.ID_OK:
+            self.rdb_automations.EnableItem(1,enable=False)
+            data = dialog.GetValue()
+            cmd_opt["Orientation"][0] = data[0]# cmd option
+            cmd_opt["Orientation"][1] = data[1]#msg
+            if data[0] == '':
+                self.rdb_automations.EnableItem(1,enable=True)
+        else:
+            dialog.Destroy()
+            return
+    #------------------------------------------------------------------#
+    def on_Enable_crop(self, event):
+        """
+        """
+        print 'crop'
+        crop = video_crop.VideoCrop(self, 'cico', '')
+        retcode = crop.ShowModal()
 
     #------------------------------------------------------------------#
     def set_Sizing(self):
@@ -751,7 +777,7 @@ class Video_Conv(wx.Panel):
                  then they are updated again in the on_ok method.
         NOTE 1): The spinctrls gives an integear values only .
         """
-        if self.ckbx_videosize.IsChecked():
+        if self.btn_videosize.IsChecked():
             size = "-s %sx%s" % (self.spin_size_width.GetValue(), 
                                  self.spin_size_height.GetValue())
             cmd_opt["VideoSize"] = size
