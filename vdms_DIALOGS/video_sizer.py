@@ -83,23 +83,22 @@ class Video_Sizer(wx.Dialog):
         self.spin_sarN2 = wx.SpinCtrl(self, wx.ID_ANY, "1", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))##
-        ####----Button preview and CheckBox section
-        #self.btn_preview = wx.Button(self, wx.ID_ANY, ("Preview"))
-        #self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.ckb_enablesize = wx.CheckBox(self, wx.ID_ANY, (
-                                               "Enable Video Size"))
+        ####----CheckBox section
+
+        #self.ckb_enablesize = wx.CheckBox(self, wx.ID_ANY, (
+                                               #"Enable Video Size"))
         ####---videosize section
-        v_sizerbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Set Video Size")), wx.VERTICAL)
-        self.spin_size_width = wx.SpinCtrl(self, wx.ID_ANY, 
-        "0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-                                           )
-        self.label_x2 = wx.StaticText(self, wx.ID_ANY, ("X"))
-        self.label_x2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
-                              )
-        self.spin_size_height = wx.SpinCtrl(self, wx.ID_ANY,
-        "0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-                                            )
+        #v_sizerbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                    #"Set Video Size")), wx.VERTICAL)
+        #self.spin_size_width = wx.SpinCtrl(self, wx.ID_ANY, 
+        #"0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
+                                           #)
+        #self.label_x2 = wx.StaticText(self, wx.ID_ANY, ("X"))
+        #self.label_x2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
+                              #)
+        #self.spin_size_height = wx.SpinCtrl(self, wx.ID_ANY,
+        #"0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
+                                            #)
         ####----- confirm buttons section
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -131,21 +130,17 @@ class Video_Sizer(wx.Dialog):
         Flex_darsar.Add(self.spin_sarN2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         v_scalingbox.Add(Flex_scale_base)
         
-        # preview and CheckBox section
-        #grid_sizer_base.Add(self.btn_preview, 0, wx.ALL|
-                            #wx.ALIGN_CENTER_VERTICAL|
-                            #wx.ALIGN_CENTER_HORIZONTAL|
-                            #wx.EXPAND, 5
-                            #)
-        grid_sizer_base.Add(self.ckb_enablesize, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        # CheckBox section
+
+        #grid_sizer_base.Add(self.ckb_enablesize, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
         # video size section:
-        grid_sizer_base.Add(v_sizerbox, 1, wx.ALL | wx.EXPAND, 5)
-        Flex_sizing = wx.FlexGridSizer(1, 3, 0, 0)
-        Flex_sizing.Add(self.spin_size_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_sizing.Add(self.label_x2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_sizing.Add(self.spin_size_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        v_sizerbox.Add(Flex_sizing)
+        #grid_sizer_base.Add(v_sizerbox, 1, wx.ALL | wx.EXPAND, 5)
+        #Flex_sizing = wx.FlexGridSizer(1, 3, 0, 0)
+        #Flex_sizing.Add(self.spin_size_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #Flex_sizing.Add(self.label_x2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #Flex_sizing.Add(self.spin_size_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #v_sizerbox.Add(Flex_sizing)
         
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)

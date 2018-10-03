@@ -59,7 +59,8 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "AudioRate":["",""], "AudioBitrate":["",""], 
            "AudioDepth":["",""], "Normalize":"", "scale":"", 
            "deinterlace":"", "interlace":"", "file":"", "Map":"", 
-           "PixelFormat":"", "Orientation":["",""],
+           "PixelFormat":"", "Orientation":["",""],"Crop":"",
+           "Filters":""
            }
 vcodec = {
 "AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
@@ -72,7 +73,8 @@ vcodec = {
 "OGG theora":("-vcodec libtheora","ogg"), 
 "WebM (HTML5)":("-vcodec libvpx","webm"), 
 "FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
-"Copy Video Codec":("","-c:v copy")
+"Copy Video Codec":("","-c:v copy"),
+"Save Images From Video":("save images",""),
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -110,8 +112,9 @@ class Video_Conv(wx.Panel):
         choices=[("AVI (XVID mpeg4)"), ("AVI (FFmpeg mpeg4)"), 
         ("AVI (ITU h264)"), ("MP4 (mpeg4)"), ("MP4 (HQ h264/AVC)"), 
         ("M4V (HQ h264/AVC)"), ("MKV (h264)"), ("OGG theora"), ("WebM (HTML5)"), 
-        ("FLV (HQ h264/AVC)"),("Copy Video Codec")], style=wx.CB_DROPDOWN | wx.CB_READONLY
-        )
+        ("FLV (HQ h264/AVC)"),("Copy Video Codec"),("Save Images From Video")], 
+                                        style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                               )
         self.sizer_combobox_formatv_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
         wx.ID_ANY, ("Video Container Selection")
         )
@@ -124,13 +127,13 @@ class Video_Conv(wx.Panel):
         self.ckbx_pass.SetValue(False) # setto in modo spento
 
         self.sizer_automations_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, ("Automations and Filters")
+        wx.ID_ANY, ("")
         )
-        self.rdb_automations = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, "", 
-                            choices=[("Disabled"),
-                                     ("Save images from Video"),
-                                     ("Set visual Rotation")], 
-                            majorDimension=0, style=wx.RA_SPECIFY_ROWS)
+        #self.rdb_automations = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, "", 
+                            #choices=[("Disabled"),
+                                     #("Save images from Video"),
+                                     #("Set visual Rotation")], 
+                            #majorDimension=0, style=wx.RA_SPECIFY_ROWS)
         self.spin_ctrl_bitrate = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
         "1500", min=0, max=25000, style=wx.TE_PROCESS_ENTER
         )
@@ -183,14 +186,16 @@ class Video_Conv(wx.Panel):
         wx.CB_READONLY
         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, ("Video Aspect (Optional)")
+                                        wx.ID_ANY, ("Video Aspect")
                                         )
         self.cmbx_vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
         choices=[("Set default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
-        ("30 fps (30p) Progessive")], style=wx.CB_DROPDOWN | wx.CB_READONLY
-        )
+        ("30 fps (30p) Progessive"),("0.2 fps for images"), ("0.5 fps for images"),
+        ("1 fps for images"), ("1.5 fps for images"), ("2 fps for images")], 
+                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                      )
         self.sizer_videorate_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, ("Video Rate (Optional)")
+                                        wx.ID_ANY, ("Video Rate")
                                                     )
         self.notebook_1_pane_3 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_a = wx.RadioBox(self.notebook_1_pane_3, wx.ID_ANY, (
@@ -399,7 +404,7 @@ class Video_Conv(wx.Panel):
         grid_sizer_pane1_left.Add(sizer_dir, 1, wx.ALL | wx.EXPAND, 15)
         grid_sizer_pane1_base.Add(grid_sizer_pane1_left, 1, wx.EXPAND, 0)
 
-        grid_sizer_automations.Add(self.rdb_automations, 1, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        #grid_sizer_automations.Add(self.rdb_automations, 1, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         sizer_automations.Add(grid_sizer_automations, 1, wx.EXPAND, 0)
         grid_sizer_pane1_base.Add(sizer_automations, 1, wx.ALL | wx.EXPAND, 15)
         sizer_bitrate.Add(self.spin_ctrl_bitrate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
@@ -476,14 +481,11 @@ class Video_Conv(wx.Panel):
         #self.Bind(wx.EVT_COMBOBOX, self.vidContainers, self.cmbx_vidContainers)
         self.cmbx_vidContainers.Bind(wx.EVT_COMBOBOX, self.vidContainers)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Automations, self.rdb_automations)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_ctrl_bitrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
-       # self.Bind(wx.EVT_CHECKBOX, self.on_Enable_scale, self.ckbx_scale)
-        #self.Bind(wx.EVT_SPINCTRL, self.set_Scaling, self.spin_ctrl_scale)
         self.Bind(wx.EVT_CHECKBOX, self.on_Deinterlace, self.ckbx_deinterlace)
         self.Bind(wx.EVT_RADIOBOX, self.mod_Deinterlace, self.rdbx_deinterlace)
         self.Bind(wx.EVT_CHECKBOX, self.on_Interlace, self.ckbx_interlace)
@@ -532,8 +534,8 @@ class Video_Conv(wx.Panel):
             if not self.notebook_1_pane_2.IsEnabled():
                 self.notebook_1_pane_2.Enable()
                 self.ckbx_pass.Enable()
-                self.rdb_automations.Enable()
             self.on_Pass(self)
+            
         elif cmd_opt["VideoCodec"] == "-c:v copy":
             self.spin_ctrl_bitrate.Disable(), self.notebook_1_pane_2.Disable(),
             self.notebook_1_pane_4.Disable(), self.ckbx_pass.Disable(), 
@@ -542,7 +544,6 @@ class Video_Conv(wx.Panel):
             self.slider_CRF.Disable(), self.rdb_h264preset.SetSelection(0)
             self.rdb_h264profile.SetSelection(0)
             self.rdb_h264tune.SetSelection(0)
-            self.rdb_automations.Disable(),self.rdb_automations.SetSelection(0)
             self.on_h264Presets(self), self.on_h264Profiles(self)
             self.on_h264Tunes(self)
         else: # all others containers that not use h264
@@ -556,7 +557,7 @@ class Video_Conv(wx.Panel):
             if not self.notebook_1_pane_2.IsEnabled():
                 self.notebook_1_pane_2.Enable()
                 self.ckbx_pass.Enable()
-                self.rdb_automations.Enable()
+                
             self.on_Pass(self)
     #-------------------------------------------------------------------#
     def audio_default(self):
@@ -603,6 +604,7 @@ class Video_Conv(wx.Panel):
         self.audio_default() # reset audio radiobox and dict
 
         selected = self.cmbx_vidContainers.GetValue()
+        print vcodec[selected][0]
         
         if vcodec[selected][0] == "-vcodec libx264":
             cmd_opt["FormatChoice"] = "%s" % (selected)
@@ -611,6 +613,8 @@ class Video_Conv(wx.Panel):
             cmd_opt["VideoCodec"] = "-vcodec libx264"
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
+            self.parent.statusbar_msg("Output format: %s" % (
+                                    cmd_opt['VideoFormat']),None)
             self.UI_set()
         elif vcodec[selected][0] == "":# copy video codec
             cmd_opt["ext_input"], cmd_opt["InputDir"], cmd_opt["OutputDir"],\
@@ -627,7 +631,17 @@ class Video_Conv(wx.Panel):
             cmd_opt["VideoCodec"] = "-c:v copy"
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
+            self.parent.statusbar_msg("Output format: %s" % (
+                                    cmd_opt['VideoFormat']),None)
             self.UI_set()
+            
+        elif vcodec[selected][0] == "save images":
+            msg = ("Tip: set the `time range setting` in the `Options` menu "
+               "for video selection point, then set the `Video Rate` at low "
+               "values; More is low, the lower will be the extracted images. ")
+            self.parent.statusbar_msg("Output format: Save images",None)
+            wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION)
+
         else:
             cmd_opt["FormatChoice"] = "%s" % (selected)
             # avi,mkv,mp4,flv,etc.:
@@ -636,11 +650,13 @@ class Video_Conv(wx.Panel):
             cmd_opt["VideoCodec"] = "%s" %(vcodec[selected][0])
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
+            self.parent.statusbar_msg("Output format: %s" % (
+                                    cmd_opt['VideoFormat']),None)
             self.UI_set()
             
         self.setAudioRadiobox(self)
-        self.parent.statusbar_msg("Output format: %s" % (
-                                    cmd_opt['VideoFormat']),None)
+        #print self.cmbx_vidContainers.GetValue()
+        
 
     #------------------------------------------------------------------#
     def on_Pass(self, event):
@@ -665,56 +681,6 @@ class Video_Conv(wx.Panel):
                                     #cmd_opt["Passing"]),None)
 
     #------------------------------------------------------------------#
-    def on_Automations(self, event):
-        """
-        FIXME sistema meglio il blocco di codice in questa funzione
-        """
-        
-        data = ''
-        selected = self.rdb_automations.GetStringSelection()
-
-        if selected == "Save images from Video":
-            time_seq = self.parent.time_seq
-            dialog = dialog_tools.SaveImages(self, time_seq, 
-                                             cmd_opt["VideoRate"])
-            retcode = dialog.ShowModal()
-            if retcode == wx.ID_OK:
-                self.cmbx_vrate.Disable()
-                self.rdb_automations.EnableItem(2,enable=False)
-                data = dialog.GetValue()
-                if data[0] == '-ss 00:00:00 -t 00:00:00':
-                    cmd_opt["VideoRate"] = ""
-                    self.parent.time_seq = ''
-                    if not self.cmbx_vrate.IsEnabled():
-                        self.cmbx_vrate.Enable()
-                        self.rdb_automations.EnableItem(2,enable=True)
-                        
-                else:
-                    self.parent.time_seq = data[0]
-                    cmd_opt["VideoRate"] = data[1]
-            else:
-                dialog.Destroy()
-                return
-            
-        elif selected == "Set visual Rotation":
-            dialog = dialog_tools.VideoRotate(self, cmd_opt["Orientation"][0],
-                                              cmd_opt["Orientation"][1])
-            retcode = dialog.ShowModal()
-            if retcode == wx.ID_OK:
-                self.rdb_automations.EnableItem(1,enable=False)
-                data = dialog.GetValue()
-                cmd_opt["Orientation"][0] = data[0]# cmd option
-                cmd_opt["Orientation"][1] = data[1]#msg
-                if data[0] == '':
-                    self.rdb_automations.EnableItem(1,enable=True)
-            else:
-                dialog.Destroy()
-                return
-            
-        elif selected == "Disabled":
-            self.on_Vrate(self)
-
-    #------------------------------------------------------------------#
     def on_Bitrate(self, event):
         """
         Reset CRF at empty (this depend if is h264 two-pass encoding
@@ -733,6 +699,32 @@ class Video_Conv(wx.Panel):
         cmd_opt["CRF"] = "-crf %s" % self.slider_CRF.GetValue()
         
     #------------------------------------------------------------------#
+    def video_filter_checker(self):
+        """
+        evaluates whether video filters (-vf) are enabled or not
+        """
+        if cmd_opt['Crop']:
+            crop = '%s,' % cmd_opt['Crop']
+        else:
+            crop = ''
+        if cmd_opt['VideoSize']:
+            size = '%s,' % cmd_opt['VideoSize']
+        else:
+            size = ''
+        if cmd_opt['Orientation'][0]:
+            rotate = '%s,' % cmd_opt['Orientation'][0]
+        else:
+            rotate = ''
+        
+        f = '%s%s%s' % (crop,size,rotate)
+        if f:
+            l = len(f)
+            filters = '%s' % f[:l - 1]
+            cmd_opt['Filters'] = "-vf %s" % filters
+        else:
+            cmd_opt['Filters'] = ""
+        
+    #------------------------------------------------------------------#
     def on_Enable_vsize(self, event):
         """
         Enable or disable functionality for sizing video
@@ -743,49 +735,44 @@ class Video_Conv(wx.Panel):
         print 'set value'
         sizing = video_sizer.Video_Sizer(self, 'cico')
         retcode = sizing.ShowModal()
-        #self.set_Sizing()
     #-----------------------------------------------------------------#
     def on_Enable_rotate(self, event):
         """
         """
-        dialog = dialog_tools.VideoRotate(self, cmd_opt["Orientation"][0],
+        rotate = dialog_tools.VideoRotate(self, cmd_opt["Orientation"][0],
                                               cmd_opt["Orientation"][1])
-        retcode = dialog.ShowModal()
+        retcode = rotate.ShowModal()
         if retcode == wx.ID_OK:
-            self.rdb_automations.EnableItem(1,enable=False)
-            data = dialog.GetValue()
+            data = rotate.GetValue()
             cmd_opt["Orientation"][0] = data[0]# cmd option
             cmd_opt["Orientation"][1] = data[1]#msg
             if data[0] == '':
-                self.rdb_automations.EnableItem(1,enable=True)
+                self.btn_rotate.SetForegroundColour(wx.NullColour)
+            else:
+                self.btn_rotate.SetForegroundColour(wx.Colour(36, 145, 46))
+            self.video_filter_checker()
         else:
-            dialog.Destroy()
+            rotate.Destroy()
             return
     #------------------------------------------------------------------#
     def on_Enable_crop(self, event):
         """
         """
-        print 'crop'
-        crop = video_crop.VideoCrop(self, 'cico', '')
+        cmd = cmd_opt["Crop"]
+        crop = video_crop.VideoCrop(self, cmd)
         retcode = crop.ShowModal()
-
-    #------------------------------------------------------------------#
-    def set_Sizing(self):
-        """
-        NOTE 0): Sometimes the spinctlr don't get the values immediately 
-                 using the keyboard if you do not press the 'Enter' key, 
-                 then they are updated again in the on_ok method.
-        NOTE 1): The spinctrls gives an integear values only .
-        """
-        if self.btn_videosize.IsChecked():
-            size = "-s %sx%s" % (self.spin_size_width.GetValue(), 
-                                 self.spin_size_height.GetValue())
-            cmd_opt["VideoSize"] = size
-        elif self.ckbx_scale.IsChecked():
-            scale = self.spin_ctrl_scale.GetValue()
-            cmd_opt["VideoSize"] = "-vf scale=%s:-1" % (scale)
+        if retcode == wx.ID_OK:
+            data = crop.GetValue()
+            if not data:
+                self.btn_crop.SetForegroundColour(wx.NullColour)
+                cmd_opt["Crop"] = ''
+            else:
+                self.btn_crop.SetForegroundColour(wx.Colour(36, 145, 46))
+                cmd_opt["Crop"] = 'crop=%s' % data
+            self.video_filter_checker()
         else:
-            cmd_opt["VideoSize"] = ''
+            crop.Destroy()
+            return
 
     #------------------------------------------------------------------#
     def on_Deinterlace(self, event):
@@ -845,17 +832,11 @@ class Video_Conv(wx.Panel):
         """
         Set parameter with choice and put in dict value 
         """
-        if self.cmbx_vrate.GetValue() == "Set default":
+        val = self.cmbx_vrate.GetValue()
+        if val == "Set default ":
             cmd_opt["VideoRate"] = ""
-            
-        elif self.cmbx_vrate.GetValue() == "25 fps (50i) PAL":
-            cmd_opt["VideoRate"] = "-r 25"
-            
-        elif self.cmbx_vrate.GetValue() == "29,97 fps (60i) NTSC":
-            cmd_opt["VideoRate"] = "-r 29,97"
-            
-        elif self.cmbx_vrate.GetValue() == "30 fps (30p) Progessive":
-            cmd_opt["VideoRate"] = "-r 30"
+        else:
+            cmd_opt["VideoRate"] = "-r %s" % val.split(' ')[0]
             
     #------------------------------------------------------------------#
     def setAudioRadiobox(self, event):
@@ -1189,8 +1170,7 @@ class Video_Conv(wx.Panel):
         Update _allentries is callaed by on_ok method.
         """
         self.time_seq = self.parent.time_seq
-        self.set_Sizing()
-        self.on_Vrate(self), self.on_Vaspect(self)
+        #self.on_Vrate(self), self.on_Vaspect(self)
         
         if self.spin_ctrl_bitrate.IsEnabled():
             self.on_Bitrate(self)
@@ -1243,7 +1223,7 @@ class Video_Conv(wx.Panel):
         typeproc, file_sources, dir_destin,\
         filename, base_name, lenghmax = checking
     
-        if self.rdb_automations.GetStringSelection() == "Save images from Video":
+        if self.cmbx_vidContainers.GetValue() == "Save Images From Video":
             self.saveimages(file_sources, dir_destin, filename, 
                             logname, lenghmax)
         else:
