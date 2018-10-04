@@ -573,7 +573,7 @@ class MainFrame(wx.Frame):
         Redirect input file clicked at stream_play for reproduction feature.
         """
         filepath = self.import_clicked
-        IO_tools.stream_play(filepath, self.ffplay_link, 
+        IO_tools.stream_play(filepath, '', self.ffplay_link, 
                              self.loglevel_type, self.OS)
     #------------------------------------------------------------------#
     def ImportInfo(self, event):
@@ -596,7 +596,7 @@ class MainFrame(wx.Frame):
         """
         wildcard, filename = self.post_process[1], self.post_process[0]
         if wildcard is None:
-            IO_tools.stream_play(filename, self.ffplay_link, 
+            IO_tools.stream_play(filename, '', self.ffplay_link, 
                                  self.loglevel_type)
 
         else:

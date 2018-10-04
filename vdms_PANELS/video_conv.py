@@ -32,11 +32,10 @@
 import wx
 import os
 import wx.lib.agw.floatspin as FS
-from vdms_IO.IO_tools import volumeDetectProcess
+from vdms_IO.IO_tools import volumeDetectProcess, stream_play
 from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS.epilogue import Formula
 from vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
-from vdms_DIALOGS import video_sizer, video_crop
 
                     
 dirname = os.path.expanduser('~') # /home/user
@@ -60,7 +59,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "AudioDepth":["",""], "Normalize":"", "scale":"", 
            "deinterlace":"", "interlace":"", "file":"", "Map":"", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
-           "Filters":""
+           "Scale":"", "Setdar":"", "Setsar":"", "Filters":""
            }
 vcodec = {
 "AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
@@ -486,6 +485,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
+        self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
         self.Bind(wx.EVT_CHECKBOX, self.on_Deinterlace, self.ckbx_deinterlace)
         self.Bind(wx.EVT_RADIOBOX, self.mod_Deinterlace, self.rdbx_deinterlace)
         self.Bind(wx.EVT_CHECKBOX, self.on_Interlace, self.ckbx_interlace)
@@ -699,6 +699,16 @@ class Video_Conv(wx.Panel):
         cmd_opt["CRF"] = "-crf %s" % self.slider_CRF.GetValue()
         
     #------------------------------------------------------------------#
+    def on_FiltersPreview(self, event):
+        """
+        Showing a preview with filters only
+        """
+        first_path = self.file_sources[0]
+        param = "%s" % cmd_opt["Filters"]
+        filters = param.split(' ')[1]
+        stream_play(first_path, filters, 'ffplay', 
+                             self.loglevel_type, self.OS)
+    #------------------------------------------------------------------#
     def video_filter_checker(self):
         """
         evaluates whether video filters (-vf) are enabled or not
@@ -707,37 +717,68 @@ class Video_Conv(wx.Panel):
             crop = '%s,' % cmd_opt['Crop']
         else:
             crop = ''
-        if cmd_opt['VideoSize']:
-            size = '%s,' % cmd_opt['VideoSize']
+        if cmd_opt['Scale']:
+            size = '%s,' % cmd_opt['Scale']
         else:
             size = ''
+        if cmd_opt["Setdar"]:
+            dar = '%s,' % cmd_opt['Setdar']
+        else:
+            dar = ''
+        if cmd_opt["Setsar"]:
+            sar = '%s,' % cmd_opt['Setsar']
+        else:
+            sar = ''
         if cmd_opt['Orientation'][0]:
             rotate = '%s,' % cmd_opt['Orientation'][0]
         else:
             rotate = ''
         
-        f = '%s%s%s' % (crop,size,rotate)
+        f = '%s%s%s%s%s' % (crop,size,dar,sar,rotate)
         if f:
             l = len(f)
             filters = '%s' % f[:l - 1]
             cmd_opt['Filters'] = "-vf %s" % filters
         else:
             cmd_opt['Filters'] = ""
-        
     #------------------------------------------------------------------#
     def on_Enable_vsize(self, event):
         """
         Enable or disable functionality for sizing video
         """
-        ## TODO è meglio usare il filtro scale anzichè -s ???
-        
-
-        print 'set value'
-        sizing = video_sizer.Video_Sizer(self, 'cico')
+        sizing = dialog_tools.Video_Sizer(self, cmd_opt["Scale"],
+                                          cmd_opt["Setdar"], cmd_opt["Setsar"])
         retcode = sizing.ShowModal()
+        if retcode == wx.ID_OK:
+            data = sizing.GetValue()
+            if not data:
+               self.btn_videosize.SetForegroundColour(wx.NullColour)
+               #cmd_opt["VideoSize"] = ""
+               cmd_opt["Setdar"] = ""
+               cmd_opt["Setsar"] = ""
+               cmd_opt["Scale"] = ""
+            else:
+                self.btn_videosize.SetForegroundColour(wx.Colour(36, 145, 46))
+                if 'scale' in data:
+                    cmd_opt["Scale"] = data['scale']
+                else:
+                    cmd_opt["Scale"] = ""
+                if 'setdar' in data:
+                    cmd_opt['Setdar'] =  data['setdar']
+                else:
+                    cmd_opt['Setdar'] = ""
+                if 'setsar' in data:
+                    cmd_opt['Setsar'] =  data['setsar']
+                else:
+                    cmd_opt['Setsar'] = ""
+            self.video_filter_checker()
+        else:
+            sizing.Destroy()
+            return
     #-----------------------------------------------------------------#
     def on_Enable_rotate(self, event):
         """
+        Show a setting video rotate dialog
         """
         rotate = dialog_tools.VideoRotate(self, cmd_opt["Orientation"][0],
                                               cmd_opt["Orientation"][1])
@@ -746,7 +787,7 @@ class Video_Conv(wx.Panel):
             data = rotate.GetValue()
             cmd_opt["Orientation"][0] = data[0]# cmd option
             cmd_opt["Orientation"][1] = data[1]#msg
-            if data[0] == '':
+            if not data[0]:
                 self.btn_rotate.SetForegroundColour(wx.NullColour)
             else:
                 self.btn_rotate.SetForegroundColour(wx.Colour(36, 145, 46))
@@ -757,9 +798,9 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Enable_crop(self, event):
         """
+        Show a setting video crop dialog
         """
-        cmd = cmd_opt["Crop"]
-        crop = video_crop.VideoCrop(self, cmd)
+        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"])
         retcode = crop.ShowModal()
         if retcode == wx.ID_OK:
             data = crop.GetValue()

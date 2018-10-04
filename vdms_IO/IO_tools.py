@@ -71,13 +71,13 @@ def stream_info(title, filepath , helping, ffprobe_link):
         wx.MessageBox("File does not exist or not a valid file:  %s" % (
             filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
 #-----------------------------------------------------------------------#
-def stream_play(filepath, ffplay_link, loglevel_type, OS):
+def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
     """
     Thread for media reproduction with ffplay
     """
     try:
         with open(filepath):
-            thread = Play(filepath, ffplay_link, loglevel_type, OS)
+            thread = Play(filepath, param, ffplay_link, loglevel_type, OS)
             #thread.join()# attende che finisca il thread (se no ritorna subito)
             error = thread.data
 

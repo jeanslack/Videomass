@@ -38,7 +38,7 @@ class Play(Thread):
     NOTE: the loglevel is set on 'error'. Do not use 'self.loglevel_type' 
           because -stats option do not work.
     """
-    def __init__(self, filepath, ffplay_link, loglevel_type, OS):
+    def __init__(self, filepath, param, ffplay_link, loglevel_type, OS):
         """
         costructor
         """
@@ -47,6 +47,7 @@ class Play(Thread):
         self.filename = filepath
         self.ffplay = ffplay_link
         self.loglevel_type = loglevel_type
+        self.param = param
         self.status = None
         self.data = None
 
@@ -59,10 +60,12 @@ class Play(Thread):
         #try:
         command = [self.ffplay, 
                    '-i', 
-                   self.filename, 
+                   self.filename,
+                   self.param,
                    '-loglevel', 
-                   loglevel_type
+                   loglevel_type,
                    ]
+        print command
         p = subprocess.Popen(command,
                              stderr=subprocess.PIPE,
                              )
