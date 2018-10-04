@@ -853,7 +853,7 @@ class Video_Conv(wx.Panel):
         """
         Set parameter with string value 
         """
-        cmd_opt["Deinterlace"] = "-vf w3fdif=%s" % (
+        cmd_opt["Deinterlace"] = "w3fdif=%s" % (
                                 self.rdbx_deinterlace.GetStringSelection())
         if cmd_opt["Interlace"]:
             cmd_opt["Interlace"] = ""
@@ -868,7 +868,7 @@ class Video_Conv(wx.Panel):
         """
         if self.ckbx_interlace.IsChecked():
             self.ckbx_deinterlace.Disable()
-            cmd_opt["Interlace"] = "-vf interlace"
+            cmd_opt["Interlace"] = "interlace"
             if cmd_opt["Deinterlace"]:
                 cmd_opt["Deinterlace"] = ""
             
