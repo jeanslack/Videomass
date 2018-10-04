@@ -238,7 +238,7 @@ class GeneralProcess(wx.Panel):
 
         else:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.BLUE))#GREEN
-            s = '\n *** Process successfully! ***\n\n exit status %s' % msg
+            s = '\n Done!\n\n exit status %s' % msg
             self.OutText.AppendText(s)
             self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)

@@ -247,7 +247,7 @@ class VideoRotate(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         #----------------------Properties------------------------------------#
 
-        self.SetTitle("Set Visual Rotation")
+        self.SetTitle("Set Video/Image Rotation - Videomass2")
         self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTipString("Reverses visual movie from bottom to top")
         self.button_left.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -418,7 +418,7 @@ class VideoCrop(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
         #----------------------Properties------------------------------------#
-        self.SetTitle("Video Crop - Videomass2")
+        self.SetTitle("Video/Image Crop - Videomass2")
         self.top.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.top.SetToolTipString("Reverses visual movie from bottom to top")
         self.right.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -610,7 +610,7 @@ class VideoCrop(wx.Dialog):
         return (val)
 
 ###########################################################################
-class Video_Sizer(wx.Dialog):
+class VideoResolution(wx.Dialog):
     """
     This class show parameters for set custom video resizing. 
     Include a video size, video scaling with setdar and 

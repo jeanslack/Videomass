@@ -38,15 +38,17 @@ class Play(Thread):
     NOTE: the loglevel is set on 'error'. Do not use 'self.loglevel_type' 
           because -stats option do not work.
     """
-    def __init__(self, filepath, ffplay_link, loglevel_type, OS):
+    def __init__(self, filepath, param, ffplay_link, loglevel_type, OS):
         """
         costructor
         """
         Thread.__init__(self)
         """initialize"""
-        self.filename = filepath
-        self.ffplay = ffplay_link
-        self.loglevel_type = loglevel_type
+        self.filename = filepath # file name selected
+        self.ffplay = ffplay_link # command process
+        self.loglevel_type = loglevel_type # not used (used error)
+        self.param = param # parametri aggiuntivi
+        self.OS = OS # tipo di sistema operativo
         self.status = None
         self.data = None
 
@@ -60,14 +62,13 @@ class Play(Thread):
         """
         time.sleep(.5)
         loglevel_type = 'error'
-
+        
+        command = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
+                                              self.filename,
+                                              self.param,
+                                              loglevel_type,
+                                              )
         #try:
-        command = [self.ffplay, 
-                   '-i', 
-                   self.filename, 
-                   '-loglevel', 
-                   loglevel_type
-                   ]
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         p = subprocess.Popen(command,

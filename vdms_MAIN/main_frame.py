@@ -101,7 +101,8 @@ class MainFrame(wx.Frame):
                                                          self.OS,
                                                          )
         self.VconvPanel = video_conv.Video_Conv(self, self.helping, 
-                                                self.ffmpeg_link, 
+                                                self.ffmpeg_link,
+                                                self.ffplay_link,
                                                 self.threads, 
                                                 self.cpu_used,
                                                 self.loglevel_type,

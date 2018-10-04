@@ -28,6 +28,7 @@
 # Rev (09) 1 sept. 2018
 #########################################################
 import subprocess
+import shlex
 import time
 from threading import Thread
 
@@ -44,10 +45,11 @@ class Play(Thread):
         """
         Thread.__init__(self)
         """initialize"""
-        self.filename = filepath
-        self.ffplay = ffplay_link
-        self.loglevel_type = loglevel_type
-        self.param = param
+        self.filename = filepath # file name selected
+        self.ffplay = ffplay_link # command process
+        self.loglevel_type = loglevel_type # not used (used error)
+        self.param = param # parametri aggiuntivi
+        self.OS = OS # tipo di sistema operativo
         self.status = None
         self.data = None
 
@@ -56,16 +58,17 @@ class Play(Thread):
     def run(self):
         time.sleep(.5)
         loglevel_type = 'error'
+        
+        cmd = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
+                                              self.filename,
+                                              self.param,
+                                              loglevel_type,
+                                              )
+        if self.OS == 'Windows':
+            command = cmd
+        else:
+            command = shlex.split(cmd)
 
-        #try:
-        command = [self.ffplay, 
-                   '-i', 
-                   self.filename,
-                   self.param,
-                   '-loglevel', 
-                   loglevel_type,
-                   ]
-        print command
         p = subprocess.Popen(command,
                              stderr=subprocess.PIPE,
                              )

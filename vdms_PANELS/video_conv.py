@@ -87,7 +87,7 @@ class Video_Conv(wx.Panel):
     Interface panel for video conversions with audio volume normalizations
     and preset storing feature
     """
-    def __init__(self, parent, helping, ffmpeg_link, 
+    def __init__(self, parent, helping, ffmpeg_link, ffplay_link, 
                  threads, cpu_used, loglevel_type, OS):
 
         wx.Panel.__init__(self, parent)
@@ -95,6 +95,7 @@ class Video_Conv(wx.Panel):
         # passed attributes:
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
+        self.ffplay_link = ffplay_link
         self.helping = helping
         self.threads = threads
         self.cpu_used = cpu_used
@@ -701,17 +702,18 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_FiltersPreview(self, event):
         """
-        Showing a preview with filters only
+        Showing a preview with applied filters only and Only the first 
+        file in the list `self.file_sources` will be displayed
         """
         first_path = self.file_sources[0]
-        param = "%s" % cmd_opt["Filters"]
-        filters = param.split(' ')[1]
-        stream_play(first_path, filters, 'ffplay', 
-                             self.loglevel_type, self.OS)
+        filters = cmd_opt["Filters"]
+        stream_play(first_path, filters, self.ffplay_link, 
+                    self.loglevel_type, self.OS)
     #------------------------------------------------------------------#
     def video_filter_checker(self):
         """
-        evaluates whether video filters (-vf) are enabled or not
+        evaluates whether video filters (-vf) are enabled or not and 
+        sorts them according to an appropriate syntax
         """
         if cmd_opt['Crop']:
             crop = '%s,' % cmd_opt['Crop']
@@ -744,16 +746,18 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Enable_vsize(self, event):
         """
-        Enable or disable functionality for sizing video
+        Enable or disable video/image resolution functionalities
         """
-        sizing = dialog_tools.Video_Sizer(self, cmd_opt["Scale"],
-                                          cmd_opt["Setdar"], cmd_opt["Setsar"])
+        sizing = dialog_tools.VideoResolution(self, 
+                                              cmd_opt["Scale"],
+                                              cmd_opt["Setdar"], 
+                                              cmd_opt["Setsar"],
+                                              )
         retcode = sizing.ShowModal()
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
             if not data:
                self.btn_videosize.SetForegroundColour(wx.NullColour)
-               #cmd_opt["VideoSize"] = ""
                cmd_opt["Setdar"] = ""
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
@@ -778,10 +782,12 @@ class Video_Conv(wx.Panel):
     #-----------------------------------------------------------------#
     def on_Enable_rotate(self, event):
         """
-        Show a setting video rotate dialog
+        Show a setting dialog for video/image rotate
         """
-        rotate = dialog_tools.VideoRotate(self, cmd_opt["Orientation"][0],
-                                              cmd_opt["Orientation"][1])
+        rotate = dialog_tools.VideoRotate(self, 
+                                          cmd_opt["Orientation"][0],
+                                          cmd_opt["Orientation"][1],
+                                          )
         retcode = rotate.ShowModal()
         if retcode == wx.ID_OK:
             data = rotate.GetValue()
@@ -798,9 +804,9 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Enable_crop(self, event):
         """
-        Show a setting video crop dialog
+        Show a setting dialog for video crop functionalities
         """
-        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"])
+        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"],)
         retcode = crop.ShowModal()
         if retcode == wx.ID_OK:
             data = crop.GetValue()
@@ -866,7 +872,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["VideoAspect"] = ""
             
         else:
-            cmd_opt["VideoAspect"] = self.cmbx_Vaspect.GetValue()
+            cmd_opt["VideoAspect"] = '-aspect %s' % self.cmbx_Vaspect.GetValue()
             
     #------------------------------------------------------------------#
     def on_Vrate(self, event):
