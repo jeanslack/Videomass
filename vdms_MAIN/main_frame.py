@@ -391,21 +391,21 @@ class MainFrame(wx.Frame):
         ####------------------ Data_Streams
         data_streams = wx.Menu()
         self.inputMtda = data_streams.Append(wx.ID_ANY, 
-                                            "Show imported metadata", 
+                                            "Show source file metadata", 
                                         "Display additionals information of "
                                         "the streams in the imported files")
         
         self.outputMtda = data_streams.Append(wx.ID_ANY, 
-                                            "Show exported metadata", 
+                                            "Show exported file metadata", 
                                         "Display additionals information of "
                                         "the streams in the exported files")
         data_streams.AppendSeparator()
         
         self.inputPrvw = data_streams.Append(wx.ID_ANY, 
-                                          "Play imported..", 
+                                          "Playback source file..", 
                                         "Reproduct inported and selected "
                                         "file into drag and drop panel")
-        self.outputPrvw = data_streams.Append(wx.ID_ANY, "Preview", 
+        self.outputPrvw = data_streams.Append(wx.ID_ANY, "Preview exported files..", 
                                         "Reproduct exported file when "
                                         "finish encoding")
 

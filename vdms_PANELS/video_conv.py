@@ -56,7 +56,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "Tune":"", "Bitrate":"", "CRF":"", "Audio":"", 
            "AudioCodec":"", "AudioChannel":["",""], 
            "AudioRate":["",""], "AudioBitrate":["",""], 
-           "AudioDepth":["",""], "Normalize":"", "scale":"", 
+           "AudioDepth":["",""], "Normalize":"", 
            "Deinterlace":"", "Interlace":"", "file":"", "Map":"", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Filters":""
@@ -148,21 +148,21 @@ class Video_Conv(wx.Panel):
         )
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.btn_videosize = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Set Video Size"))
+                                    wx.ID_ANY, ("Set Resolution"))
         
         self.btn_crop = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Crop Dimensions"))
+                                    wx.ID_ANY, ("Crop Dimension"))
         self.btn_rotate = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Video Rotate"))
+                                    wx.ID_ANY, ("Rotation"))
         line1 = wx.StaticLine(self.notebook_1_pane_2, wx.ID_ANY, size=(130, -1),
            style=wx.LI_HORIZONTAL,name='')
         self.btn_preview = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Video Preview"))
+                                    wx.ID_ANY, ("Playback_Preview"))
         self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-        wx.ID_ANY, ("FFmpeg Filters Options")
-        )
+                                         wx.ID_ANY, ("FFmpeg Filters Section")
+                                                      )
         self.ckbx_deinterlace = wx.CheckBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, (u"Deinterlaces")
                                         )
@@ -172,15 +172,13 @@ class Video_Conv(wx.Panel):
                             style=wx.RA_SPECIFY_ROWS
                                             )
         self.ckbx_interlace = wx.CheckBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, ("Interlaces   ")
+                                        wx.ID_ANY, ("Interlaces     ")
                                         )
         self.rdbx_interlace = wx.RadioBox(self.notebook_1_pane_2, 
                                     wx.ID_ANY, ("Parameters interlacc."), 
                                     choices=[("Default"), ("Scan"), ("Lowpass")], 
                                     majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                     )
-        self.sizer_1_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                            wx.ID_ANY, (u"De-interlaced/Progressive video"))
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
         choices=[("Set default "), ("4:3"), ("16:9")], style=wx.CB_DROPDOWN | 
         wx.CB_READONLY
@@ -369,18 +367,15 @@ class Video_Conv(wx.Panel):
         grid_sizer_text_normalize = wx.FlexGridSizer(2, 2, 0, 0)
         sizer_pane3_audio_column1 = wx.BoxSizer(wx.VERTICAL)
         sizer_pane2_base = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_pane2_base = wx.GridSizer(1, 3, 0, 0)
+        grid_sizer_pane2_base = wx.GridSizer(1, 2, 0, 0)
         grid_sizer_1 = wx.GridSizer(2, 1, 0, 0)
         self.sizer_videorate_staticbox.Lower()
         sizer_videorate = wx.StaticBoxSizer(self.sizer_videorate_staticbox, wx.VERTICAL)
         self.sizer_videoaspect_staticbox.Lower()
         sizer_videoaspect = wx.StaticBoxSizer(self.sizer_videoaspect_staticbox, wx.VERTICAL)
-        self.sizer_1_staticbox.Lower()
-        sizer_1 = wx.StaticBoxSizer(self.sizer_1_staticbox, wx.VERTICAL)
-        grid_sizer_3 = wx.GridSizer(2, 2, 0, 0)
         self.sizer_videosize_staticbox.Lower()
         sizer_2 = wx.StaticBoxSizer(self.sizer_videosize_staticbox, wx.VERTICAL)
-        grid_sizer_2 = wx.GridSizer(6, 1, 0, 0)
+        grid_sizer_2 = wx.GridSizer(6, 2, 0, 0)
         grid_sizer_pane1_base = wx.GridSizer(1, 3, 0, 0)
         grid_sizer_pane1_right = wx.GridSizer(2, 1, 0, 0)
         self.sizer_crf_staticbox.Lower()
@@ -416,20 +411,18 @@ class Video_Conv(wx.Panel):
         grid_sizer_2.Add(self.btn_videosize, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_crop, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_sizer_2.Add(line1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL|wx.EXPAND, 15)
-
-        #grid_sizer_2.Add(self.ckbx_scale, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 30)
-        #grid_sizer_2.Add(self.label_width_2, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
-        #grid_sizer_2.Add(self.spin_ctrl_scale, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(self.ckbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(self.rdbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        grid_sizer_2.Add(self.ckbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(self.rdbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        grid_sizer_2.Add(line1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 5)
         sizer_2.Add(grid_sizer_2, 1, wx.EXPAND, 0)
         grid_sizer_pane2_base.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 15)
-        grid_sizer_3.Add(self.ckbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_3.Add(self.rdbx_deinterlace, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        grid_sizer_3.Add(self.ckbx_interlace, 0, wx.ALL, 5)
-        grid_sizer_3.Add(self.rdbx_interlace, 0, 0, 0)
-        sizer_1.Add(grid_sizer_3, 1, wx.EXPAND, 0)
-        grid_sizer_pane2_base.Add(sizer_1, 1, wx.ALL | wx.EXPAND, 15)
+        #----------------
+        
         sizer_videoaspect.Add(self.cmbx_Vaspect, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_1.Add(sizer_videoaspect, 1, wx.ALL | wx.EXPAND, 15)
         sizer_videorate.Add(self.cmbx_vrate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
@@ -522,7 +515,6 @@ class Video_Conv(wx.Panel):
         #self.rdbx_interlace.Disable()
         cmd_opt["VideoAspect"] = ""
         cmd_opt["VideoRate"] = ""
-        cmd_opt["VideoSize"] = ""
         self.rdbx_interlace.Hide() # TODO QUESTO E' IN SVILUPPO
         
     #-------------------------------------------------------------------#
@@ -622,7 +614,7 @@ class Video_Conv(wx.Panel):
             self.UI_set()
         elif vcodec[selected][0] == "":# copy video codec
             cmd_opt["ext_input"], cmd_opt["InputDir"], cmd_opt["OutputDir"],\
-            cmd_opt["VideoSize"], cmd_opt["Presets"], cmd_opt["Profile"],\
+            cmd_opt["Presets"], cmd_opt["Profile"],\
             cmd_opt["Tune"], cmd_opt["Bitrate"], cmd_opt["CRF"],\
             cmd_opt["Scale"], cmd_opt["Deinterlace"], cmd_opt["Interlace"],\
             cmd_opt["file"], cmd_opt["PixelFormat"],\
@@ -1346,30 +1338,27 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(dir_destin)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
-            cmd1 = ('-loglevel %s %s -pass 1 -an %s %s %s %s %s %s '
-                     '%s %s %s %s %s %s %s -f rawvideo -y %s' % (
+            cmd1 = ('-loglevel %s %s -pass 1 -an %s %s %s %s '
+                     '%s %s %s %s %s %s -f rawvideo -y %s' % (
                       self.loglevel_type, self.time_seq, 
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
-                      cmd_opt["Tune"], cmd_opt["Interlace"], 
-                      cmd_opt["Deinterlace"], cmd_opt["VideoSize"], 
-                      cmd_opt["VideoAspect"], cmd_opt["VideoRate"],
-                      cmd_opt["Orientation"][0], self.threads,
-                      self.cpu_used, null),
+                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                      cmd_opt["VideoRate"], cmd_opt["Filters"],
+                      self.threads, self.cpu_used, null),
                     )
             pass1 = " ".join(cmd1[0].split())# mi formatta la stringa
-            cmd2= ('-loglevel %s %s -pass 2 %s %s %s %s %s %s '
-                     '%s %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
+            cmd2= ('-loglevel %s %s -pass 2 %s %s %s %s %s '
+                     '%s %s %s %s %s %s %s %s %s %s %s -y' % (
                      self.loglevel_type, self.time_seq, 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
-                     cmd_opt["Tune"], cmd_opt["Interlace"], 
-                     cmd_opt["Deinterlace"], cmd_opt["VideoSize"], 
-                     cmd_opt["VideoAspect"], cmd_opt["VideoRate"],
-                     cmd_opt["Orientation"][0], cmd_opt["AudioCodec"], 
-                     cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
-                     cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                     self.threads, self.cpu_used, cmd_opt["Map"])
+                     cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                     cmd_opt["VideoRate"], cmd_opt["Filters"],
+                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
+                     cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
+                     cmd_opt["AudioDepth"][1], self.threads, 
+                     self.cpu_used, cmd_opt["Map"])
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
@@ -1392,18 +1381,17 @@ class Video_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ("-loglevel %s %s %s %s %s %s %s %s %s "
-                       "%s %s %s %s %s %s %s %s %s %s %s %s -y" % (
+            command = ("-loglevel %s %s %s %s %s %s %s %s "
+                       "%s %s %s %s %s %s %s %s %s %s -y" % (
                         self.loglevel_type, self.time_seq, 
                         cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                         cmd_opt["Presets"], cmd_opt["Profile"],
-                        cmd_opt["Tune"], cmd_opt["Interlace"], 
-                        cmd_opt["Deinterlace"], cmd_opt["VideoSize"], 
-                        cmd_opt["VideoAspect"], cmd_opt["VideoRate"],
-                        cmd_opt["Orientation"][0], cmd_opt["AudioCodec"], 
-                        cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
-                        cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                        self.threads, self.cpu_used, cmd_opt["Map"])
+                        cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                        cmd_opt["VideoRate"], cmd_opt["Filters"],
+                        cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
+                        cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
+                        cmd_opt["AudioDepth"][1], self.threads, 
+                        self.cpu_used, cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
@@ -1433,12 +1421,13 @@ class Video_Conv(wx.Panel):
               voglio controllare solo l'uscita degli errori, se ci sono.
         """
         fileout = "image%d.jpg"
-        cmd = ('%s -i "%s" -loglevel %s %s %s -an %s %s -y "%s/%s"' % (
+        cmd = ('%s -i "%s" -loglevel %s %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
                file_sources[0], 
                'error', # non imposto l'opzione -stats
                self.time_seq, 
-               cmd_opt["VideoRate"], 
+               cmd_opt["VideoRate"],
+               cmd_opt["Filters"],
                self.threads, 
                self.cpu_used,
                dir_destin[0], 
@@ -1472,7 +1461,7 @@ class Video_Conv(wx.Panel):
         formula = (u"FORMULATIONS:\n\nFile to Queue\
                 \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
                 \nDouble/Single Pass:\nDeinterlacing:\
-                \nInterlacing (progressive content)\nVideo size:\
+                \nInterlacing (progressive content)\nApplied Filters:\
                 \nVideo aspect:\nVideo rate:\nPreset h264:\nProfile h264:\
                 \nTune h264:\nOrientation:\nAudio Format:\nAudio codec:\nAudio channel:\
                 \nAudio rate:\nAudio bit-rate:\nBit per Sample:\
@@ -1482,7 +1471,7 @@ class Video_Conv(wx.Panel):
                 numfile, cmd_opt["FormatChoice"], 
                 cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
                 cmd_opt["Passing"], cmd_opt["Deinterlace"], cmd_opt["Interlace"], 
-                cmd_opt["VideoSize"], cmd_opt["VideoAspect"], 
+                cmd_opt["Filters"], cmd_opt["VideoAspect"], 
                 cmd_opt["VideoRate"], cmd_opt["Presets"], cmd_opt["Profile"], 
                 cmd_opt["Tune"], cmd_opt["Orientation"][1], cmd_opt["Audio"], 
                 cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
@@ -1506,29 +1495,25 @@ class Video_Conv(wx.Panel):
         
         #if cmd_opt["VideoCodec"] == "-vcodec libx264":
         if cmd_opt["Passing"] == "double":
-            command = ("-pass 1 -an %s %s %s %s %s %s %s %s %s %s %s %s "
-                       "DOUBLE_PASS -pass 2 %s %s %s %s %s %s %s %s %s "
+            command = ("-pass 1 -an %s %s %s %s %s %s %s %s %s "
+                       "DOUBLE_PASS -pass 2 %s %s %s %s %s %s "
                        "%s %s %s %s %s %s %s %s %s %s" % (
             cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Interlace"], cmd_opt["Deinterlace"], cmd_opt["Presets"], 
-            cmd_opt["Profile"], cmd_opt["Tune"], cmd_opt["VideoSize"], 
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Orientation"][0],
+            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
+            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"],
             cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Interlace"], cmd_opt["Deinterlace"], cmd_opt["Presets"], 
-            cmd_opt["Profile"], cmd_opt["Tune"], cmd_opt["VideoSize"], 
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Orientation"][0], 
+            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
+            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"], 
             cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1],
             cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
             cmd_opt["AudioDepth"][1], cmd_opt["Normalize"], cmd_opt["Map"])
                         )
 
         elif cmd_opt["Passing"] == "single":
-            command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s "
-                       "%s %s %s %s" % (
+            command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (
             cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
-            cmd_opt["Interlace"], cmd_opt["Deinterlace"],cmd_opt["VideoSize"], 
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Orientation"][0],
+            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"],  
+            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"],
             cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
             cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
             cmd_opt["AudioDepth"][1], cmd_opt["Normalize"], cmd_opt["Map"])
