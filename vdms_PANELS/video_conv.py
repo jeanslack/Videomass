@@ -57,7 +57,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "AudioCodec":"", "AudioChannel":["",""], 
            "AudioRate":["",""], "AudioBitrate":["",""], 
            "AudioDepth":["",""], "Normalize":"", "scale":"", 
-           "deinterlace":"", "interlace":"", "file":"", "Map":"", 
+           "Deinterlace":"", "Interlace":"", "file":"", "Map":"", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Filters":""
            }
@@ -167,10 +167,10 @@ class Video_Conv(wx.Panel):
                                         wx.ID_ANY, (u"Deinterlaces")
                                         )
         self.rdbx_deinterlace = wx.RadioBox(self.notebook_1_pane_2, 
-                            wx.ID_ANY, (u"Modality"), choices=[("complex"), 
-                            ("simple")], majorDimension=0, 
+                            wx.ID_ANY, (u"Modality"), choices=[("complex"),
+                                       ("simple")], majorDimension=0, 
                             style=wx.RA_SPECIFY_ROWS
-                            )
+                                            )
         self.ckbx_interlace = wx.CheckBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, ("Interlaces   ")
                                         )
@@ -532,13 +532,17 @@ class Video_Conv(wx.Panel):
         """
         if cmd_opt["VideoCodec"] == "-vcodec libx264":
             self.notebook_1_pane_4.Enable()
-            if not self.notebook_1_pane_2.IsEnabled():
-                self.notebook_1_pane_2.Enable()
-                self.ckbx_pass.Enable()
+            self.btn_videosize.Enable(), 
+            self.btn_crop.Enable(), self.btn_rotate.Enable(), 
+            self.btn_preview.Enable(), self.ckbx_deinterlace.Enable(),
+            self.ckbx_interlace.Enable(), self.ckbx_pass.Enable()
             self.on_Pass(self)
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
-            self.spin_ctrl_bitrate.Disable(), self.notebook_1_pane_2.Disable(),
+            self.spin_ctrl_bitrate.Disable(), self.btn_videosize.Disable(), 
+            self.btn_crop.Disable(), self.btn_rotate.Disable(), 
+            self.btn_preview.Disable(), self.ckbx_deinterlace.Disable(),
+            self.ckbx_interlace.Disable(),
             self.notebook_1_pane_4.Disable(), self.ckbx_pass.Disable(), 
             self.ckbx_pass.SetValue(False)
             self.rdb_a.EnableItem(4,enable=True)# se disable lo abilita
@@ -554,11 +558,10 @@ class Video_Conv(wx.Panel):
             self.rdb_h264tune.SetSelection(0)
             self.on_h264Presets(self), self.on_h264Profiles(self)
             self.on_h264Tunes(self)
-            
-            if not self.notebook_1_pane_2.IsEnabled():
-                self.notebook_1_pane_2.Enable()
-                self.ckbx_pass.Enable()
-                
+            self.btn_videosize.Enable(), self.btn_crop.Enable(), 
+            self.btn_rotate.Enable(), self.btn_preview.Enable(), 
+            self.ckbx_deinterlace.Enable(), self.ckbx_interlace.Enable(), 
+            self.ckbx_pass.Enable(),
             self.on_Pass(self)
     #-------------------------------------------------------------------#
     def audio_default(self):
@@ -619,12 +622,12 @@ class Video_Conv(wx.Panel):
             self.UI_set()
         elif vcodec[selected][0] == "":# copy video codec
             cmd_opt["ext_input"], cmd_opt["InputDir"], cmd_opt["OutputDir"],\
-            cmd_opt["VideoSize"], cmd_opt["VideoAspect"], cmd_opt["VideoRate"],\
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"],\
-            cmd_opt["Bitrate"], cmd_opt["CRF"], cmd_opt["scale"],\
-            cmd_opt["deinterlace"], cmd_opt["interlace"], cmd_opt["file"],\
-            cmd_opt["PixelFormat"], cmd_opt["Orientation"] = '','','','','',\
-            '','','','','','','','','','','',['','']
+            cmd_opt["VideoSize"], cmd_opt["Presets"], cmd_opt["Profile"],\
+            cmd_opt["Tune"], cmd_opt["Bitrate"], cmd_opt["CRF"],\
+            cmd_opt["Scale"], cmd_opt["Deinterlace"], cmd_opt["Interlace"],\
+            cmd_opt["file"], cmd_opt["PixelFormat"],\
+            cmd_opt["Orientation"] = '','','','','','','','','','','','',\
+                '','',['','']
             cmd_opt["Passing"] = "single"
             cmd_opt["FormatChoice"] = "%s" % (selected)
             # avi,mkv,mp4,flv,etc.:
@@ -735,14 +738,22 @@ class Video_Conv(wx.Panel):
             rotate = '%s,' % cmd_opt['Orientation'][0]
         else:
             rotate = ''
+        if cmd_opt['Deinterlace']:
+            de_in_terlace = '%s,' % cmd_opt['Deinterlace']
+        elif cmd_opt['Interlace']:
+            de_in_terlace = '%s,' % cmd_opt['Interlace']
+        else:
+            de_in_terlace = ''
         
-        f = '%s%s%s%s%s' % (crop,size,dar,sar,rotate)
+        f = '%s%s%s%s%s%s' % (crop,size,dar,sar,rotate,de_in_terlace)
         if f:
             l = len(f)
             filters = '%s' % f[:l - 1]
             cmd_opt['Filters'] = "-vf %s" % filters
         else:
             cmd_opt['Filters'] = ""
+            
+        print cmd_opt["Filters"]
     #------------------------------------------------------------------#
     def on_Enable_vsize(self, event):
         """
@@ -829,20 +840,26 @@ class Video_Conv(wx.Panel):
         if self.ckbx_deinterlace.IsChecked():
             self.rdbx_deinterlace.Enable()
             self.ckbx_interlace.Disable()
-            cmd_opt["deinterlace"] = "-vf w3fdif"
+            self.mod_Deinterlace(self)# final set
             
         elif not self.ckbx_deinterlace.IsChecked():
             self.rdbx_deinterlace.Disable()
             self.ckbx_interlace.Enable()
-            cmd_opt["deinterlace"] = ""
+            cmd_opt["Deinterlace"] = ""
+            # vai a settare i filtri da qua
             
     #------------------------------------------------------------------#
     def mod_Deinterlace(self, event):
         """
         Set parameter with string value 
         """
-        cmd_opt["deinterlace"] = "-vf w3fdif=%s" % (
-                             self.rdbx_deinterlace.GetStringSelection())
+        cmd_opt["Deinterlace"] = "-vf w3fdif=%s" % (
+                                self.rdbx_deinterlace.GetStringSelection())
+        if cmd_opt["Interlace"]:
+            cmd_opt["Interlace"] = ""
+            
+        self.video_filter_checker()
+        
     #------------------------------------------------------------------#
 
     def on_Interlace(self, event):
@@ -851,11 +868,15 @@ class Video_Conv(wx.Panel):
         """
         if self.ckbx_interlace.IsChecked():
             self.ckbx_deinterlace.Disable()
-            cmd_opt["interlace"] = "-vf interlace"
+            cmd_opt["Interlace"] = "-vf interlace"
+            if cmd_opt["Deinterlace"]:
+                cmd_opt["Deinterlace"] = ""
             
         elif not self.ckbx_interlace.IsChecked():
             self.ckbx_deinterlace.Enable()
-            cmd_opt["interlace"] = ""
+            cmd_opt["Interlace"] = ""
+        
+        self.video_filter_checker()
             
     #------------------------------------------------------------------#
     def mod_Interlace(self, event):
@@ -1227,10 +1248,10 @@ class Video_Conv(wx.Panel):
             cmd_opt["CRF"] = ''
             cmd_opt["Bitrate"] = ''
         
-        if self.ckbx_deinterlace.IsChecked():
-            self.on_Deinterlace(self), self.mod_Deinterlace(self)
-        elif self.ckbx_interlace.IsChecked():
-            self.on_Interlace(self)
+        #if self.ckbx_deinterlace.IsChecked():
+            #self.on_Deinterlace(self), self.mod_Deinterlace(self)
+        #elif self.ckbx_interlace.IsChecked():
+            #self.on_Interlace(self)
 
     #------------------------------------------------------------------#
     def on_ok(self):
@@ -1290,10 +1311,12 @@ class Video_Conv(wx.Panel):
         at proc_batch_thread Class(Thread).
         """
         if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
-            command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s -y' % (
+            command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
                        self.loglevel_type, 
                        self.time_seq, 
                        cmd_opt["VideoCodec"], 
+                       cmd_opt["VideoAspect"],
+                       cmd_opt["VideoRate"],
                        cmd_opt["AudioCodec"], 
                        cmd_opt["AudioBitrate"][1], 
                        cmd_opt["AudioRate"][1], 
@@ -1328,8 +1351,8 @@ class Video_Conv(wx.Panel):
                       self.loglevel_type, self.time_seq, 
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
-                      cmd_opt["Tune"], cmd_opt["interlace"], 
-                      cmd_opt["deinterlace"], cmd_opt["VideoSize"], 
+                      cmd_opt["Tune"], cmd_opt["Interlace"], 
+                      cmd_opt["Deinterlace"], cmd_opt["VideoSize"], 
                       cmd_opt["VideoAspect"], cmd_opt["VideoRate"],
                       cmd_opt["Orientation"][0], self.threads,
                       self.cpu_used, null),
@@ -1340,8 +1363,8 @@ class Video_Conv(wx.Panel):
                      self.loglevel_type, self.time_seq, 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
-                     cmd_opt["Tune"], cmd_opt["interlace"], 
-                     cmd_opt["deinterlace"], cmd_opt["VideoSize"], 
+                     cmd_opt["Tune"], cmd_opt["Interlace"], 
+                     cmd_opt["Deinterlace"], cmd_opt["VideoSize"], 
                      cmd_opt["VideoAspect"], cmd_opt["VideoRate"],
                      cmd_opt["Orientation"][0], cmd_opt["AudioCodec"], 
                      cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
@@ -1374,8 +1397,8 @@ class Video_Conv(wx.Panel):
                         self.loglevel_type, self.time_seq, 
                         cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                         cmd_opt["Presets"], cmd_opt["Profile"],
-                        cmd_opt["Tune"], cmd_opt["interlace"], 
-                        cmd_opt["deinterlace"], cmd_opt["VideoSize"], 
+                        cmd_opt["Tune"], cmd_opt["Interlace"], 
+                        cmd_opt["Deinterlace"], cmd_opt["VideoSize"], 
                         cmd_opt["VideoAspect"], cmd_opt["VideoRate"],
                         cmd_opt["Orientation"][0], cmd_opt["AudioCodec"], 
                         cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
@@ -1458,7 +1481,7 @@ class Video_Conv(wx.Panel):
                 \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
                 numfile, cmd_opt["FormatChoice"], 
                 cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-                cmd_opt["Passing"], cmd_opt["deinterlace"], cmd_opt["interlace"], 
+                cmd_opt["Passing"], cmd_opt["Deinterlace"], cmd_opt["Interlace"], 
                 cmd_opt["VideoSize"], cmd_opt["VideoAspect"], 
                 cmd_opt["VideoRate"], cmd_opt["Presets"], cmd_opt["Profile"], 
                 cmd_opt["Tune"], cmd_opt["Orientation"][1], cmd_opt["Audio"], 
@@ -1487,11 +1510,11 @@ class Video_Conv(wx.Panel):
                        "DOUBLE_PASS -pass 2 %s %s %s %s %s %s %s %s %s "
                        "%s %s %s %s %s %s %s %s %s %s" % (
             cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["interlace"], cmd_opt["deinterlace"], cmd_opt["Presets"], 
+            cmd_opt["Interlace"], cmd_opt["Deinterlace"], cmd_opt["Presets"], 
             cmd_opt["Profile"], cmd_opt["Tune"], cmd_opt["VideoSize"], 
             cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Orientation"][0],
             cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["interlace"], cmd_opt["deinterlace"], cmd_opt["Presets"], 
+            cmd_opt["Interlace"], cmd_opt["Deinterlace"], cmd_opt["Presets"], 
             cmd_opt["Profile"], cmd_opt["Tune"], cmd_opt["VideoSize"], 
             cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Orientation"][0], 
             cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1],
@@ -1504,7 +1527,7 @@ class Video_Conv(wx.Panel):
                        "%s %s %s %s" % (
             cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
             cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
-            cmd_opt["interlace"], cmd_opt["deinterlace"],cmd_opt["VideoSize"], 
+            cmd_opt["Interlace"], cmd_opt["Deinterlace"],cmd_opt["VideoSize"], 
             cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Orientation"][0],
             cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
             cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
