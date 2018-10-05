@@ -935,6 +935,7 @@ class Lacing(wx.Dialog):
         """
         Make sure you use the clear button when you finish the task.
         """
+        self.cmd_opt = {"lacing":""}
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         
         self.ckbx_deintW3fdif = wx.CheckBox(self, wx.ID_ANY, 
@@ -942,13 +943,13 @@ class Lacing(wx.Dialog):
                                             )
         self.rdbx_W3fdif_filter = wx.RadioBox(self, wx.ID_ANY, 
                                             (u"Filter"), choices=[("simple"),
-                                            ("complex (default)")],
+                                            ("complex")],
                                             majorDimension=0, 
                                             style=wx.RA_SPECIFY_ROWS
                                             )
         self.rdbx_W3fdif_deint = wx.RadioBox(self, wx.ID_ANY, 
                                             (u"Deint"), 
-                                            choices=[("all (default)"),
+                                            choices=[("all"),
                                             ("interlaced")], majorDimension=0, 
                                             style=wx.RA_SPECIFY_ROWS
                                             )
@@ -957,7 +958,7 @@ class Lacing(wx.Dialog):
                                             )
         self.rdbx_Yadif_mode = wx.RadioBox(self, wx.ID_ANY, 
                                             (u"Mode"), choices=[("0, send_frame"),
-                                            ("1, send_field (default)"),
+                                            ("1, send_field"),
                                             ("2, send_frame_nospatial"),
                                             ("3, send_field_nospatial")], 
                                             majorDimension=0, 
@@ -965,22 +966,28 @@ class Lacing(wx.Dialog):
                                             )
         self.rdbx_Yadif_parity = wx.RadioBox(self, wx.ID_ANY, 
                                             (u"Parity"), choices=[("0, tff"),
-                                            ("1, bff"), ("-1, auto (default)")], 
+                                            ("1, bff"), ("-1, auto")], 
                                             majorDimension=0, 
                                             style=wx.RA_SPECIFY_ROWS
                                             )
         self.rdbx_Yadif_deint = wx.RadioBox(self, wx.ID_ANY, 
-                                            (u"Deint"), choices=[("all (default)"),
+                                            (u"Deint"), choices=[("all"),
                                             ("interlaced")], majorDimension=0, 
                                             style=wx.RA_SPECIFY_ROWS
                                             )
         self.ckbx_interlace = wx.CheckBox(self, wx.ID_ANY,
                                 ("Interlaces (Using the 'interlace' filter)")
                                           )
-        self.rdbx_interlace = wx.RadioBox(self, wx.ID_ANY, 
-                                          ("Parameters interlacc."), 
-                                          choices=[("Default"), ("Scan"), 
-                                                   ("Lowpass")], 
+        self.rdbx_inter_scan = wx.RadioBox(self, wx.ID_ANY, 
+                                          ("Scanning mode"), 
+                                          choices=[("scan=tff"), 
+                                                   ("scan=bff")], 
+                                    majorDimension=0, style=wx.RA_SPECIFY_ROWS
+                                          )
+        self.rdbx_inter_lowpass = wx.RadioBox(self, wx.ID_ANY, 
+                                          ("Set vertical low-pass filter"), 
+                                          choices=[("Not set"), ("Lowpass=0"),
+                                                   ("Lowpass=1")], 
                                     majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                           )
         ####----- confirm buttons section
@@ -996,6 +1003,73 @@ class Lacing(wx.Dialog):
         self.rdbx_Yadif_mode.SetSelection(1)
         self.rdbx_Yadif_parity.SetSelection(2)
         self.rdbx_Yadif_deint.SetSelection(0)
+        self.rdbx_inter_scan.SetSelection(0)
+        self.rdbx_inter_lowpass.SetSelection(0)
+        
+        self.ckbx_deintW3fdif.SetToolTipString(u'Deinterlace the input video '
+                u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
+                u'Based on the process described by Martin Weston for BBC R&D, '
+                u'and implemented based on the de-interlace algorithm written '
+                u'by Jim Easterbrook for BBC R&D, the Weston 3 field '
+                u'deinterlacing filter uses filter coefficients calculated '
+                u'by BBC R&D.')
+                                                   
+        self.rdbx_W3fdif_filter.SetToolTipString('Set the interlacing filter '
+                        'coefficients. Accepts one of the following values:\n'
+                        'simple: Simple filter coefficient set.\n'
+                        'complex: More-complex filter coefficient set. '
+                        'Default value is complex.'
+                                                 )
+        self.rdbx_W3fdif_deint.SetToolTipString('Specify which frames to '
+                        'deinterlace. Accept one of the following values:\n'
+                        '`all` Deinterlace all frames\n'
+                        '`interlaced` Only deinterlace frames marked as '
+                        'interlaced. \nDefault value is `all`. '
+                                                  )
+        self.ckbx_deintYadif.SetToolTipString(u'Deinterlace the input video '
+            '("yadif" means "(y)et (a)nother (d)e(i)nterlacing (f)ilter"). '
+                u'For FFmpeg is the best and fastest choice '
+                                              )
+        self.rdbx_Yadif_mode.SetToolTipString('mode\n'
+           'The interlacing mode to adopt. It accepts one of the following '
+           'values:\n'
+           '0, send_frame - Output one frame for each frame.\n'
+           '1, send_field - Output one frame for each field.\n'
+           '2, send_frame_nospatial - Like send_frame, but it skips the '
+           'spatial interlacing check.\n'
+           '3, send_field_nospatial - Like send_field, but it skips the '
+           'spatial interlacing check.\nThe default value is send_field.'
+                                               )
+        self.rdbx_Yadif_parity.SetToolTipString('parity\n'
+            'The picture field parity assumed for the input interlaced video. '
+            'It accepts one of the following values:\n'
+            '0, tff - Assume the top field is first.\n'
+            '1, bff - Assume the bottom field is first.\n'
+            '-1, auto - Enable automatic detection of field parity.\n'
+            'The default value is auto. If the interlacing is unknown or the '
+            'decoder does not export this information, top field first will '
+            'be assumed.'
+                                                 )
+        self.rdbx_Yadif_deint.SetToolTipString('Specify which frames to '
+                        'deinterlace. Accept one of the following values:\n'
+                        '`all` Deinterlace all frames\n'
+                        '`interlaced` Only deinterlace frames marked as '
+                        'interlaced. \nDefault value is `all`. '
+                                                  )
+        self.ckbx_interlace.SetToolTipString('Simple interlacing filter from '
+                'progressive contents. This interleaves upper (or lower) '
+                'lines from odd frames with lower (or upper) lines from even '
+                'frames, halving the frame rate and preserving image height.'
+                                                 )
+        self.rdbx_inter_scan.SetToolTipString('scan:\n'
+            'determines whether the interlaced frame is taken from the '
+            'even (tff - default) or odd (bff) lines of the progressive frame.'
+                                              )
+        self.rdbx_inter_lowpass.SetToolTipString('lowpas:\n'
+            'Enable (default) or disable the vertical lowpass filter to '
+            'avoid twitter interlacing and reduce moire patterns.\n'
+            'Default is no setting.'
+                                                 )
         
         ####------Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -1010,8 +1084,8 @@ class Lacing(wx.Dialog):
         grid_sizer_base.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 15)
         grid_sizer_base.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 15)
         grid_sizer_base.Add(self.ckbx_interlace, 0, wx.ALL, 15)
-        grid_sizer_base.Add(self.rdbx_interlace, 0, wx.ALL, 15)
-        grid_sizer_base.Add((20, 20), 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.rdbx_inter_scan, 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
         grid_sizer_base.Add((20, 20), 0, wx.ALL, 15)
         
         # confirm btn section:
@@ -1038,7 +1112,8 @@ class Lacing(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.on_parityYadif, self.rdbx_Yadif_parity)
         self.Bind(wx.EVT_RADIOBOX, self.on_deintYadif, self.rdbx_Yadif_deint)
         self.Bind(wx.EVT_CHECKBOX, self.on_Interlace, self.ckbx_interlace)
-        self.Bind(wx.EVT_RADIOBOX, self.on_intParam, self.rdbx_interlace)
+        self.Bind(wx.EVT_RADIOBOX, self.on_intScan, self.rdbx_inter_scan)
+        self.Bind(wx.EVT_RADIOBOX, self.on_intLowpass, self.rdbx_inter_lowpass)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -1047,30 +1122,121 @@ class Lacing(wx.Dialog):
     def on_DeintW3fdif(self, event):
         """
         """
+        print 'w3fdif'
+        
+        if self.ckbx_deintW3fdif.IsChecked():
+            self.rdbx_W3fdif_filter.Enable(), self.rdbx_W3fdif_deint.Enable(),
+            self.ckbx_deintYadif.Disable(), self.ckbx_interlace.Disable()
+            self.cmd_opt["lacing"] = "w3fdif"
+            
+        elif not self.ckbx_deintW3fdif.IsChecked():
+            self.rdbx_W3fdif_filter.Disable(),self.rdbx_W3fdif_deint.Disable(),
+            self.ckbx_deintYadif.Enable(), self.ckbx_interlace.Enable(),
+            self.cmd_opt["lacing"] = ""
+    #------------------------------------------------------------------#
     def on_W3fdif_filter(self, event):
         """
         """
+        print 'filter'
+        self.cmd_opt["lacing"] = "w3fdif=%s:%s" % (
+                                self.rdbx_W3fdif_filter.GetStringSelection(),
+                                self.rdbx_W3fdif_deint.GetStringSelection()
+                                                    )
+    #------------------------------------------------------------------#
     def on_W3fdif_deint(self, event):
         """
         """
+        print 'deint w3fdif'
+        self.cmd_opt["lacing"] = "w3fdif=%s:%s" % (
+                                self.rdbx_W3fdif_filter.GetStringSelection(),
+                                self.rdbx_W3fdif_deint.GetStringSelection()
+                                                    )
+    #------------------------------------------------------------------#
     def on_DeintYadif(self, event):
         """
         """
+        print 'yadif'
+        if self.ckbx_deintYadif.IsChecked():
+            self.ckbx_deintW3fdif.Disable(), self.rdbx_Yadif_mode.Enable(),
+            self.rdbx_Yadif_parity.Enable(), self.rdbx_Yadif_deint.Enable(),
+            self.ckbx_interlace.Disable(),
+            self.cmd_opt["lacing"] = "yadif"
+            
+        elif not self.ckbx_deintYadif.IsChecked():
+            self.ckbx_deintW3fdif.Enable(), self.rdbx_Yadif_mode.Disable(),
+            self.rdbx_Yadif_parity.Disable(), self.rdbx_Yadif_deint.Disable(),
+            self.ckbx_interlace.Enable(),
+            self.cmd_opt["lacing"] = ""
+    #------------------------------------------------------------------#        
     def on_modeYadif(self, event):
         """
         """
+        print 'mode'
+        self.cmd_opt["lacing"] = "yadif=%s:%s:%s" % (
+                                self.rdbx_Yadif_mode.GetStringSelection(),
+                                self.rdbx_Yadif_parity.GetStringSelection(),
+                                self.rdbx_Yadif_deint.GetStringSelection()
+                                                    )
+    #------------------------------------------------------------------#
     def on_parityYadif(self, event):
         """
         """
+        print 'parity'
+        self.cmd_opt["lacing"] = "yadif=%s:%s:%s" % (
+                                self.rdbx_Yadif_mode.GetStringSelection(),
+                                self.rdbx_Yadif_parity.GetStringSelection(),
+                                self.rdbx_Yadif_deint.GetStringSelection()
+                                                    )
+    #------------------------------------------------------------------#
     def on_deintYadif(self, event):
         """
         """
+        print 'deint yadif'
+        self.cmd_opt["lacing"] = "yadif=%s:%s:%s" % (
+                                self.rdbx_Yadif_mode.GetStringSelection(),
+                                self.rdbx_Yadif_parity.GetStringSelection(),
+                                self.rdbx_Yadif_deint.GetStringSelection()
+                                                    )
+    #------------------------------------------------------------------#
     def on_Interlace(self, event):
         """
         """
-    def on_intParam(self, event):
+        print 'interlace'
+        if self.ckbx_interlace.IsChecked():
+            self.ckbx_deintW3fdif.Disable(), self.ckbx_deintYadif.Disable(),
+            self.rdbx_inter_scan.Enable(), self.rdbx_inter_lowpass.Enable(),
+            self.cmd_opt["lacing"] = "interlace"
+            
+        elif not self.ckbx_interlace.IsChecked():
+            self.ckbx_deintW3fdif.Enable(), self.ckbx_deintYadif.Enable(),
+            self.rdbx_interlace.Disable(), self.rdbx_inter_lowpass.Disable(),
+            self.cmd_opt["lacing"] = ""
+    #------------------------------------------------------------------#
+    def on_intScan(self, event):
         """
         """
+        print 'scan'
+        if self.rdbx_inter_lowpass.GetStringSelection() == 'Not set':
+            lowpass = ''
+        else:
+            lowpass = ':%s' % self.rdbx_inter_lowpass.GetStringSelection()
+        self.cmd_opt["lacing"] = "interlace=%s%s" % (
+                                self.rdbx_inter_scan.GetStringSelection(),
+                                lowpass,
+                                                     )
+    #------------------------------------------------------------------#
+    def on_intLowpass(self, event):
+        """
+        """
+        print 'lowpass'
+        if self.rdbx_inter_lowpass.GetStringSelection() == 'Not set':
+            lowpass = ''
+        else:
+            lowpass = ':%s' % self.rdbx_inter_lowpass.GetStringSelection()
+        self.cmd_opt["lacing"] = "interlace=%s%s" % (
+                                self.rdbx_inter_scan.GetStringSelection(),
+                                lowpass,
+                                                     )
     #------------------------------------------------------------------#
     def on_reset(self, event):
         """

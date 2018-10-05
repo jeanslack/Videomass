@@ -272,32 +272,6 @@ class Video_Conv(wx.Panel):
                                  "values the quality is higher and a larger "
                                  "file size."
                                           )
-        #self.ckbx_deinterlace.SetToolTipString(u'Deinterlace the input video '
-                #u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
-                #u'Based on the process described by Martin Weston for BBC R&D, '
-                #u'and implemented based on the de-interlace algorithm written '
-                #u'by Jim Easterbrook for BBC R&D, the Weston 3 field '
-                #u'deinterlacing filter uses filter coefficients calculated '
-                #u'by BBC R&D.")'
-                                                   #)
-        #self.rdbx_deinterlace.SetToolTipString('Set the interlacing filter '
-                        #'coefficients. Accepts one of the following values:\n'
-                        #'simple: Simple filter coefficient set.\n'
-                        #'complex: More-complex filter coefficient set. '
-                        #'Default value is complex.'
-                                                    #)
-        #self.ckbx_interlace.SetToolTipString('Simple interlacing filter from '
-                #'progressive contents. This interleaves upper (or lower) '
-                #'lines from odd frames with lower (or upper) lines from even '
-                #'frames, halving the frame rate and preserving image height.'
-                                                 #)
-        #self.rdbx_interlace.SetToolTipString('It accepts the following '
-        #'optional parameters;\nscan: determines whether the interlaced frame '
-        #'is taken from the even (tff - default) or odd (bff) lines of the '
-        #'progressive frame.\nlowpas: Enable (default) or disable the vertical '
-        #'lowpass filter to avoid twitter interlacing and reduce moire '
-        #'patterns. Default is no setting.'
-                                                  #)
         self.cmbx_Vaspect.SetSelection(0)
         self.cmbx_Vaspect.SetToolTipString(u"Video aspect (Aspect Ratio) "
                         "is the video width and video height ratio. "
@@ -398,11 +372,6 @@ class Video_Conv(wx.Panel):
         grid_sizer_2.Add(self.btn_crop, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_lacing, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        #grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        #grid_sizer_2.Add(self.ckbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        #grid_sizer_2.Add(self.rdbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_sizer_2.Add(self.ckbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        #grid_sizer_2.Add(self.rdbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_2.Add(line1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -468,10 +437,6 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_lacing, self.btn_lacing)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
-        #self.Bind(wx.EVT_CHECKBOX, self.on_Deinterlace, self.ckbx_deinterlace)
-        #self.Bind(wx.EVT_RADIOBOX, self.mod_Deinterlace, self.rdbx_deinterlace)
-        #self.Bind(wx.EVT_CHECKBOX, self.on_Interlace, self.ckbx_interlace)
-        #self.Bind(wx.EVT_RADIOBOX, self.mod_Interlace, self.rdbx_interlace)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmbx_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_vrate)
         self.Bind(wx.EVT_RADIOBOX, self.on_Audio, self.rdb_a)
