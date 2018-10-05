@@ -564,7 +564,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Scale"], cmd_opt["Deinterlace"], cmd_opt["Interlace"],\
             cmd_opt["file"], cmd_opt["PixelFormat"],\
             cmd_opt["Orientation"] = '','','','','','','','','','','','',\
-                '','',['','']
+            '','',['','']
             cmd_opt["Passing"] = "single"
             cmd_opt["FormatChoice"] = "%s" % (selected)
             # avi,mkv,mp4,flv,etc.:
@@ -596,8 +596,6 @@ class Video_Conv(wx.Panel):
             self.UI_set()
             
         self.setAudioRadiobox(self)
-        #print self.cmbx_vidContainers.GetValue()
-        
 
     #------------------------------------------------------------------#
     def on_Pass(self, event):
@@ -772,75 +770,29 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Enable_lacing(self, event):
         """
-        Show a setting dialog for video crop functionalities
+        Show a setting dialog for settings Deinterlace/Interlace filters
         """
         lacing = dialog_tools.Lacing(self)
         retcode = lacing.ShowModal()
-        #if retcode == wx.ID_OK:
-            #data = crop.GetValue()
-            #if not data:
-                #self.btn_crop.SetBackgroundColour(wx.NullColour)
-                #cmd_opt["Crop"] = ''
-            #else:
-                #self.btn_crop.SetBackgroundColour(wx.Colour(240, 161, 125))
-                #cmd_opt["Crop"] = 'crop=%s' % data
-            #self.video_filter_checker()
-        #else:
-            #crop.Destroy()
-            #return
+        if retcode == wx.ID_OK:
+            data = lacing.GetValue()
+            if not data:
+                self.btn_lacing.SetBackgroundColour(wx.NullColour)
+                cmd_opt["Deinterlace"] = ''
+                cmd_opt["Interlace"] = ''
+            else:
+                self.btn_lacing.SetBackgroundColour(wx.Colour(240, 161, 125))
+                if 'deinterlace' in data:
+                    cmd_opt["Deinterlace"] = data["deinterlace"]
+                    cmd_opt["Interlace"] = ''
+                elif 'interlace' in data:
+                    cmd_opt["Interlace"] = data["interlace"]
+                    cmd_opt["Deinterlace"] = ''
+            self.video_filter_checker()
+        else:
+            crop.Destroy()
+            return
 
-    #------------------------------------------------------------------#
-    def on_Deinterlace(self, event):
-        """
-        Enable or disable functionality 
-        """
-        if self.ckbx_deinterlace.IsChecked():
-            self.rdbx_deinterlace.Enable()
-            self.ckbx_interlace.Disable()
-            self.mod_Deinterlace(self)# final set
-            
-        elif not self.ckbx_deinterlace.IsChecked():
-            self.rdbx_deinterlace.Disable()
-            self.ckbx_interlace.Enable()
-            cmd_opt["Deinterlace"] = ""
-            self.video_filter_checker() # set filters
-            
-    #------------------------------------------------------------------#
-    def mod_Deinterlace(self, event):
-        """
-        Set parameter with string value 
-        """
-        cmd_opt["Deinterlace"] = "w3fdif=%s" % (
-                                self.rdbx_deinterlace.GetStringSelection())
-        if cmd_opt["Interlace"]:
-            cmd_opt["Interlace"] = ""
-            
-        self.video_filter_checker()
-        
-    #------------------------------------------------------------------#
-
-    def on_Interlace(self, event):
-        """
-        Enable or disable functionality 
-        """
-        if self.ckbx_interlace.IsChecked():
-            self.ckbx_deinterlace.Disable()
-            cmd_opt["Interlace"] = "interlace"
-            if cmd_opt["Deinterlace"]:
-                cmd_opt["Deinterlace"] = ""
-            
-        elif not self.ckbx_interlace.IsChecked():
-            self.ckbx_deinterlace.Enable()
-            cmd_opt["Interlace"] = ""
-        
-        self.video_filter_checker()
-            
-    #------------------------------------------------------------------#
-    def mod_Interlace(self, event):
-        # TODO this is work in progress
-        
-        print "'mod_Interlace' not implemented!"
-        
     #------------------------------------------------------------------#
     def on_Vaspect(self, event):
         """
