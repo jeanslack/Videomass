@@ -154,6 +154,8 @@ class Video_Conv(wx.Panel):
                                     wx.ID_ANY, ("Crop Dimension"))
         self.btn_rotate = wx.Button(self.notebook_1_pane_2, 
                                     wx.ID_ANY, ("Rotation"))
+        self.btn_lacing = wx.Button(self.notebook_1_pane_2, 
+                                    wx.ID_ANY, ("Deinterlace/Interlace"))
         line1 = wx.StaticLine(self.notebook_1_pane_2, wx.ID_ANY, size=(130, -1),
            style=wx.LI_HORIZONTAL,name='')
         self.btn_preview = wx.Button(self.notebook_1_pane_2, 
@@ -163,22 +165,6 @@ class Video_Conv(wx.Panel):
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                          wx.ID_ANY, ("FFmpeg Filters Section")
                                                       )
-        self.ckbx_deinterlace = wx.CheckBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, (u"Deinterlaces")
-                                        )
-        self.rdbx_deinterlace = wx.RadioBox(self.notebook_1_pane_2, 
-                            wx.ID_ANY, (u"Modality"), choices=[("complex"),
-                                       ("simple")], majorDimension=0, 
-                            style=wx.RA_SPECIFY_ROWS
-                                            )
-        self.ckbx_interlace = wx.CheckBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, ("Interlaces     ")
-                                        )
-        self.rdbx_interlace = wx.RadioBox(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Parameters interlacc."), 
-                                    choices=[("Default"), ("Scan"), ("Lowpass")], 
-                                    majorDimension=0, style=wx.RA_SPECIFY_ROWS
-                                    )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
         choices=[("Set default "), ("4:3"), ("16:9")], style=wx.CB_DROPDOWN | 
         wx.CB_READONLY
@@ -286,32 +272,32 @@ class Video_Conv(wx.Panel):
                                  "values the quality is higher and a larger "
                                  "file size."
                                           )
-        self.ckbx_deinterlace.SetToolTipString(u'Deinterlace the input video '
-                u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
-                u'Based on the process described by Martin Weston for BBC R&D, '
-                u'and implemented based on the de-interlace algorithm written '
-                u'by Jim Easterbrook for BBC R&D, the Weston 3 field '
-                u'deinterlacing filter uses filter coefficients calculated '
-                u'by BBC R&D.")'
-                                                   )
-        self.rdbx_deinterlace.SetToolTipString('Set the interlacing filter '
-                        'coefficients. Accepts one of the following values:\n'
-                        'simple: Simple filter coefficient set.\n'
-                        'complex: More-complex filter coefficient set. '
-                        'Default value is complex.'
-                                                    )
-        self.ckbx_interlace.SetToolTipString('Simple interlacing filter from '
-                'progressive contents. This interleaves upper (or lower) '
-                'lines from odd frames with lower (or upper) lines from even '
-                'frames, halving the frame rate and preserving image height.'
-                                                 )
-        self.rdbx_interlace.SetToolTipString('It accepts the following '
-        'optional parameters;\nscan: determines whether the interlaced frame '
-        'is taken from the even (tff - default) or odd (bff) lines of the '
-        'progressive frame.\nlowpas: Enable (default) or disable the vertical '
-        'lowpass filter to avoid twitter interlacing and reduce moire '
-        'patterns. Default is no setting.'
-                                                  )
+        #self.ckbx_deinterlace.SetToolTipString(u'Deinterlace the input video '
+                #u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
+                #u'Based on the process described by Martin Weston for BBC R&D, '
+                #u'and implemented based on the de-interlace algorithm written '
+                #u'by Jim Easterbrook for BBC R&D, the Weston 3 field '
+                #u'deinterlacing filter uses filter coefficients calculated '
+                #u'by BBC R&D.")'
+                                                   #)
+        #self.rdbx_deinterlace.SetToolTipString('Set the interlacing filter '
+                        #'coefficients. Accepts one of the following values:\n'
+                        #'simple: Simple filter coefficient set.\n'
+                        #'complex: More-complex filter coefficient set. '
+                        #'Default value is complex.'
+                                                    #)
+        #self.ckbx_interlace.SetToolTipString('Simple interlacing filter from '
+                #'progressive contents. This interleaves upper (or lower) '
+                #'lines from odd frames with lower (or upper) lines from even '
+                #'frames, halving the frame rate and preserving image height.'
+                                                 #)
+        #self.rdbx_interlace.SetToolTipString('It accepts the following '
+        #'optional parameters;\nscan: determines whether the interlaced frame '
+        #'is taken from the even (tff - default) or odd (bff) lines of the '
+        #'progressive frame.\nlowpas: Enable (default) or disable the vertical '
+        #'lowpass filter to avoid twitter interlacing and reduce moire '
+        #'patterns. Default is no setting.'
+                                                  #)
         self.cmbx_Vaspect.SetSelection(0)
         self.cmbx_Vaspect.SetToolTipString(u"Video aspect (Aspect Ratio) "
                         "is the video width and video height ratio. "
@@ -411,11 +397,12 @@ class Video_Conv(wx.Panel):
         grid_sizer_2.Add(self.btn_videosize, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_crop, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_sizer_2.Add(self.ckbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_sizer_2.Add(self.rdbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_2.Add(self.ckbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_sizer_2.Add(self.rdbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        grid_sizer_2.Add(self.btn_lacing, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        #grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        #grid_sizer_2.Add(self.ckbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        #grid_sizer_2.Add(self.rdbx_deinterlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        #grid_sizer_2.Add(self.ckbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        #grid_sizer_2.Add(self.rdbx_interlace, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_2.Add(line1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -479,11 +466,12 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_lacing, self.btn_lacing)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
-        self.Bind(wx.EVT_CHECKBOX, self.on_Deinterlace, self.ckbx_deinterlace)
-        self.Bind(wx.EVT_RADIOBOX, self.mod_Deinterlace, self.rdbx_deinterlace)
-        self.Bind(wx.EVT_CHECKBOX, self.on_Interlace, self.ckbx_interlace)
-        self.Bind(wx.EVT_RADIOBOX, self.mod_Interlace, self.rdbx_interlace)
+        #self.Bind(wx.EVT_CHECKBOX, self.on_Deinterlace, self.ckbx_deinterlace)
+        #self.Bind(wx.EVT_RADIOBOX, self.mod_Deinterlace, self.rdbx_deinterlace)
+        #self.Bind(wx.EVT_CHECKBOX, self.on_Interlace, self.ckbx_interlace)
+        #self.Bind(wx.EVT_RADIOBOX, self.mod_Interlace, self.rdbx_interlace)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmbx_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_vrate)
         self.Bind(wx.EVT_RADIOBOX, self.on_Audio, self.rdb_a)
@@ -507,15 +495,9 @@ class Video_Conv(wx.Panel):
     def default_videosettings(self):
         self.cmbx_vrate.SetSelection(0),self.cmbx_Vaspect.SetSelection(0)
         self.cmbx_Vaspect.Enable()
-        self.rdbx_deinterlace.SetSelection(0), 
-        self.ckbx_deinterlace.SetValue(False)
-        self.rdbx_deinterlace.Disable()
-        #self.rdbx_interlace.SetSelection(0), 
-        self.ckbx_interlace.SetValue(False)
-        #self.rdbx_interlace.Disable()
         cmd_opt["VideoAspect"] = ""
         cmd_opt["VideoRate"] = ""
-        self.rdbx_interlace.Hide() # TODO QUESTO E' IN SVILUPPO
+        #self.rdbx_interlace.Hide() # TODO QUESTO E' IN SVILUPPO
         
     #-------------------------------------------------------------------#
     def UI_set(self):
@@ -526,15 +508,14 @@ class Video_Conv(wx.Panel):
             self.notebook_1_pane_4.Enable()
             self.btn_videosize.Enable(), 
             self.btn_crop.Enable(), self.btn_rotate.Enable(), 
-            self.btn_preview.Enable(), self.ckbx_deinterlace.Enable(),
-            self.ckbx_interlace.Enable(), self.ckbx_pass.Enable()
+            self.btn_preview.Enable(),
+            self.ckbx_pass.Enable()
             self.on_Pass(self)
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
             self.spin_ctrl_bitrate.Disable(), self.btn_videosize.Disable(), 
             self.btn_crop.Disable(), self.btn_rotate.Disable(), 
-            self.btn_preview.Disable(), self.ckbx_deinterlace.Disable(),
-            self.ckbx_interlace.Disable(),
+            self.btn_preview.Disable(),
             self.notebook_1_pane_4.Disable(), self.ckbx_pass.Disable(), 
             self.ckbx_pass.SetValue(False)
             self.rdb_a.EnableItem(4,enable=True)# se disable lo abilita
@@ -552,7 +533,6 @@ class Video_Conv(wx.Panel):
             self.on_h264Tunes(self)
             self.btn_videosize.Enable(), self.btn_crop.Enable(), 
             self.btn_rotate.Enable(), self.btn_preview.Enable(), 
-            self.ckbx_deinterlace.Enable(), self.ckbx_interlace.Enable(), 
             self.ckbx_pass.Enable(),
             self.on_Pass(self)
     #-------------------------------------------------------------------#
@@ -760,12 +740,12 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
             if not data:
-               self.btn_videosize.SetForegroundColour(wx.NullColour)
+               self.btn_videosize.SetBackgroundColour(wx.NullColour)
                cmd_opt["Setdar"] = ""
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
             else:
-                self.btn_videosize.SetForegroundColour(wx.Colour(36, 145, 46))
+                self.btn_videosize.SetBackgroundColour(wx.Colour(240, 161, 125))
                 if 'scale' in data:
                     cmd_opt["Scale"] = data['scale']
                 else:
@@ -797,9 +777,9 @@ class Video_Conv(wx.Panel):
             cmd_opt["Orientation"][0] = data[0]# cmd option
             cmd_opt["Orientation"][1] = data[1]#msg
             if not data[0]:
-                self.btn_rotate.SetForegroundColour(wx.NullColour)
+                self.btn_rotate.SetBackgroundColour(wx.NullColour)
             else:
-                self.btn_rotate.SetForegroundColour(wx.Colour(36, 145, 46))
+                self.btn_rotate.SetBackgroundColour(wx.Colour(240, 161, 125))
             self.video_filter_checker()
         else:
             rotate.Destroy()
@@ -814,15 +794,35 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = crop.GetValue()
             if not data:
-                self.btn_crop.SetForegroundColour(wx.NullColour)
+                self.btn_crop.SetBackgroundColour(wx.NullColour)
                 cmd_opt["Crop"] = ''
             else:
-                self.btn_crop.SetForegroundColour(wx.Colour(36, 145, 46))
+                self.btn_crop.SetBackgroundColour(wx.Colour(240, 161, 125))
                 cmd_opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
             crop.Destroy()
             return
+    
+    #------------------------------------------------------------------#
+    def on_Enable_lacing(self, event):
+        """
+        Show a setting dialog for video crop functionalities
+        """
+        lacing = dialog_tools.Lacing(self)
+        retcode = lacing.ShowModal()
+        #if retcode == wx.ID_OK:
+            #data = crop.GetValue()
+            #if not data:
+                #self.btn_crop.SetBackgroundColour(wx.NullColour)
+                #cmd_opt["Crop"] = ''
+            #else:
+                #self.btn_crop.SetBackgroundColour(wx.Colour(240, 161, 125))
+                #cmd_opt["Crop"] = 'crop=%s' % data
+            #self.video_filter_checker()
+        #else:
+            #crop.Destroy()
+            #return
 
     #------------------------------------------------------------------#
     def on_Deinterlace(self, event):
@@ -838,7 +838,7 @@ class Video_Conv(wx.Panel):
             self.rdbx_deinterlace.Disable()
             self.ckbx_interlace.Enable()
             cmd_opt["Deinterlace"] = ""
-            # vai a settare i filtri da qua
+            self.video_filter_checker() # set filters
             
     #------------------------------------------------------------------#
     def mod_Deinterlace(self, event):
@@ -1239,12 +1239,6 @@ class Video_Conv(wx.Panel):
         else:
             cmd_opt["CRF"] = ''
             cmd_opt["Bitrate"] = ''
-        
-        #if self.ckbx_deinterlace.IsChecked():
-            #self.on_Deinterlace(self), self.mod_Deinterlace(self)
-        #elif self.ckbx_interlace.IsChecked():
-            #self.on_Interlace(self)
-
     #------------------------------------------------------------------#
     def on_ok(self):
         """

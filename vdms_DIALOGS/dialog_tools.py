@@ -88,15 +88,15 @@ class Cut_Range(wx.Dialog):
 
         #----------------------Properties ----------------------#
         self.SetTitle(title)
-        #self.start_hour_ctrl.SetMinSize((45,-1 ))
-        #self.start_minute_ctrl.SetMinSize((45, -1))
-        #self.start_second_ctrl.SetMinSize((45, -1))
+        self.start_hour_ctrl.SetMinSize((100,-1 ))
+        self.start_minute_ctrl.SetMinSize((100, -1))
+        self.start_second_ctrl.SetMinSize((100, -1))
         self.start_hour_ctrl.SetToolTipString("Hours time")
         self.start_minute_ctrl.SetToolTipString("Minutes Time")
         self.start_second_ctrl.SetToolTipString("Seconds time")
-        #self.stop_hour_ctrl.SetMinSize((45, -1))
-        #self.stop_minute_ctrl.SetMinSize((45, -1))
-        #self.stop_second_ctrl.SetMinSize((45, -1))
+        self.stop_hour_ctrl.SetMinSize((100, -1))
+        self.stop_minute_ctrl.SetMinSize((100, -1))
+        self.stop_second_ctrl.SetMinSize((100, -1))
         self.stop_hour_ctrl.SetToolTipString("Hours amount duration")
         self.stop_second_ctrl.SetToolTipString("Minutes amount duration")
         self.stop_minute_ctrl.SetToolTipString("Seconds amount duration")
@@ -810,7 +810,7 @@ class VideoResolution(wx.Dialog):
             self.spin_setsarNum.SetValue(int(self.sarNum))
             self.spin_setsarDen.SetValue(int(self.sarDen))
         
-        #----------------------Event handler (callback)--------------------------#
+    #----------------------Event handler (callback)--------------------------#
     def on_width(self, event):
         """
         Width
@@ -923,5 +923,186 @@ class VideoResolution(wx.Dialog):
             diction['setsar'] = setsar
 
         return (diction)
+
+#############################################################################
+
+class Lacing(wx.Dialog):
+    """
+    Show a dialog for image deinterlace/interlace functions.
+    """
+    
+    def __init__(self, parent):
+        """
+        Make sure you use the clear button when you finish the task.
+        """
+        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        
+        self.ckbx_deintW3fdif = wx.CheckBox(self, wx.ID_ANY, 
+                                (u"Deinterlaces (Using the 'w3fdif' filter)")
+                                            )
+        self.rdbx_W3fdif_filter = wx.RadioBox(self, wx.ID_ANY, 
+                                            (u"Filter"), choices=[("simple"),
+                                            ("complex (default)")],
+                                            majorDimension=0, 
+                                            style=wx.RA_SPECIFY_ROWS
+                                            )
+        self.rdbx_W3fdif_deint = wx.RadioBox(self, wx.ID_ANY, 
+                                            (u"Deint"), 
+                                            choices=[("all (default)"),
+                                            ("interlaced")], majorDimension=0, 
+                                            style=wx.RA_SPECIFY_ROWS
+                                            )
+        self.ckbx_deintYadif = wx.CheckBox(self, wx.ID_ANY, 
+                                (u"Deinterlaces (Using the 'yadif' filter)")
+                                            )
+        self.rdbx_Yadif_mode = wx.RadioBox(self, wx.ID_ANY, 
+                                            (u"Mode"), choices=[("0, send_frame"),
+                                            ("1, send_field (default)"),
+                                            ("2, send_frame_nospatial"),
+                                            ("3, send_field_nospatial")], 
+                                            majorDimension=0, 
+                                            style=wx.RA_SPECIFY_ROWS
+                                            )
+        self.rdbx_Yadif_parity = wx.RadioBox(self, wx.ID_ANY, 
+                                            (u"Parity"), choices=[("0, tff"),
+                                            ("1, bff"), ("-1, auto (default)")], 
+                                            majorDimension=0, 
+                                            style=wx.RA_SPECIFY_ROWS
+                                            )
+        self.rdbx_Yadif_deint = wx.RadioBox(self, wx.ID_ANY, 
+                                            (u"Deint"), choices=[("all (default)"),
+                                            ("interlaced")], majorDimension=0, 
+                                            style=wx.RA_SPECIFY_ROWS
+                                            )
+        self.ckbx_interlace = wx.CheckBox(self, wx.ID_ANY,
+                                ("Interlaces (Using the 'interlace' filter)")
+                                          )
+        self.rdbx_interlace = wx.RadioBox(self, wx.ID_ANY, 
+                                          ("Parameters interlacc."), 
+                                          choices=[("Default"), ("Scan"), 
+                                                   ("Lowpass")], 
+                                    majorDimension=0, style=wx.RA_SPECIFY_ROWS
+                                          )
+        ####----- confirm buttons section
+        btn_close = wx.Button(self, wx.ID_CANCEL, "")
+        self.btn_ok = wx.Button(self, wx.ID_OK, "")
+        btn_reset = wx.Button(self, wx.ID_CLEAR, "")
+        
+        # Properties
+        self.SetTitle("Deinterlace/Interlace - Videomass2")
+        self.ckbx_deintW3fdif.SetValue(False)
+        self.rdbx_W3fdif_filter.SetSelection(1)
+        self.rdbx_W3fdif_deint.SetSelection(0)
+        self.rdbx_Yadif_mode.SetSelection(1)
+        self.rdbx_Yadif_parity.SetSelection(2)
+        self.rdbx_Yadif_deint.SetSelection(0)
+        
+        ####------Layout
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        grid_sizer_base = wx.FlexGridSizer(4, 4, 0, 0)
+        
+        grid_sizer_base.Add(self.ckbx_deintW3fdif, 0, wx.ALL , 15)
+        grid_sizer_base.Add(self.rdbx_W3fdif_filter, 0, wx.ALL,15)
+        grid_sizer_base.Add(self.rdbx_W3fdif_deint, 0, wx.ALL, 15)
+        grid_sizer_base.Add((20, 20), 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.ckbx_deintYadif, 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.ckbx_interlace, 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.rdbx_interlace, 0, wx.ALL, 15)
+        grid_sizer_base.Add((20, 20), 0, wx.ALL, 15)
+        grid_sizer_base.Add((20, 20), 0, wx.ALL, 15)
+        
+        # confirm btn section:
+        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        grid_sizer_base.Add(gridBtn)
+        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        
+        # final settings:
+        sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
+        self.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
+        
+        
+        
+        #----------------------Binding (EVT)---------------------------------#
+        self.Bind(wx.EVT_CHECKBOX, self.on_DeintW3fdif, self.ckbx_deintW3fdif)
+        self.Bind(wx.EVT_RADIOBOX, self.on_W3fdif_filter, self.rdbx_W3fdif_filter)
+        self.Bind(wx.EVT_RADIOBOX, self.on_W3fdif_deint, self.rdbx_W3fdif_deint)
+        self.Bind(wx.EVT_CHECKBOX, self.on_DeintYadif, self.ckbx_deintYadif)
+        self.Bind(wx.EVT_RADIOBOX, self.on_modeYadif, self.rdbx_Yadif_mode)
+        self.Bind(wx.EVT_RADIOBOX, self.on_parityYadif, self.rdbx_Yadif_parity)
+        self.Bind(wx.EVT_RADIOBOX, self.on_deintYadif, self.rdbx_Yadif_deint)
+        self.Bind(wx.EVT_CHECKBOX, self.on_Interlace, self.ckbx_interlace)
+        self.Bind(wx.EVT_RADIOBOX, self.on_intParam, self.rdbx_interlace)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        
+    #----------------------Event handler (callback)--------------------------#
+    def on_DeintW3fdif(self, event):
+        """
+        """
+    def on_W3fdif_filter(self, event):
+        """
+        """
+    def on_W3fdif_deint(self, event):
+        """
+        """
+    def on_DeintYadif(self, event):
+        """
+        """
+    def on_modeYadif(self, event):
+        """
+        """
+    def on_parityYadif(self, event):
+        """
+        """
+    def on_deintYadif(self, event):
+        """
+        """
+    def on_Interlace(self, event):
+        """
+        """
+    def on_intParam(self, event):
+        """
+        """
+    #------------------------------------------------------------------#
+    def on_reset(self, event):
+        """
+        """
+    #------------------------------------------------------------------#
+    def on_close(self, event):
+
+        event.Skip()
+
+    #------------------------------------------------------------------#
+    def on_ok(self, event):
+        """
+        if you enable self.Destroy(), it delete from memory all data event and
+        no return correctly. It has the right behavior if not used here, because 
+        it is called in the main frame. 
+        
+        Event.Skip(), work correctly here. Sometimes needs to disable it for
+        needs to maintain the view of the window (for exemple).
+        """
+        self.GetValue()
+        #self.Destroy()
+        event.Skip()
+    #------------------------------------------------------------------#
+    def GetValue(self):
+        """
+        This method return values via the interface GetValue()
+        """
+        return
+
+        
+        
+        
+        
 
 
