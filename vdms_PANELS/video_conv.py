@@ -1379,17 +1379,21 @@ class Video_Conv(wx.Panel):
                fileout)
                )
         command = " ".join(cmd.split())# mi formatta la stringa
-        self.parent.switch_Process('saveimages',
-                                   None, 
-                                   None, 
-                                   None, 
-                                   command, 
-                                   None, 
-                                   None, 
-                                   None, 
-                                   logname, 
-                                   lenghmax, 
-                                   )
+        valupdate = self.update_dict(lenghmax)
+        ending = Formula(self, valupdate[0], valupdate[1])
+            
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('saveimages',
+                                        None, 
+                                        None, 
+                                        None, 
+                                        command, 
+                                        None, 
+                                        None, 
+                                        None, 
+                                        logname, 
+                                        lenghmax, 
+                                        )
     #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     def update_dict(self, lenghmax):
@@ -1403,26 +1407,55 @@ class Video_Conv(wx.Panel):
         else:
             normalize = 'Disable'
         
-        formula = (u"FORMULATIONS:\n\nFile to Queue\
-                \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
-                \nDouble/Single Pass:\nDeinterlacing:\
-                \nInterlacing (progressive content)\nApplied Filters:\
-                \nVideo aspect:\nVideo rate:\nPreset h264:\nProfile h264:\
-                \nTune h264:\nOrientation:\nAudio Format:\nAudio codec:\nAudio channel:\
+        if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
+            formula = (u"FORMULATIONS:\n\nFile to Queue\
+                \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
+                \nAudio Format:\nAudio codec:\nAudio channel:\
                 \nAudio rate:\nAudio bit-rate:\nBit per Sample:\
                 \nAudio Normalization:\nMap:\nTime selection:")
-        dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
-                numfile, cmd_opt["FormatChoice"], 
-                cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-                cmd_opt["Passing"], cmd_opt["Deinterlace"], cmd_opt["Interlace"], 
-                cmd_opt["Filters"], cmd_opt["VideoAspect"], 
-                cmd_opt["VideoRate"], cmd_opt["Presets"], cmd_opt["Profile"], 
-                cmd_opt["Tune"], cmd_opt["Orientation"][1], cmd_opt["Audio"], 
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \n%s\n%s\n%s\n%s\n%s\n%s" % (
+                numfile, cmd_opt["FormatChoice"], cmd_opt["VideoCodec"], 
+                cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Audio"], 
                 cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
                 cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
                 self.time_seq))
+                    
+        elif self.cmbx_vidContainers.GetValue() == "Save Images From Video":
+            formula = (u"FORMULATIONS:\n\nFile to Queue\
+                         \nImages Format:\nVideo rate:\
+                         \nFilters:\nTime selection:"
+                       )
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile, 'jpeg', 
+                                                    cmd_opt["VideoRate"], 
+                                                    cmd_opt["Filters"],
+                                                    self.time_seq)
+                        )
+        else:
+            formula = (u"FORMULATIONS:\n\nFile to Queue\
+                    \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
+                    \nDouble/Single Pass:\nDeinterlacing:\
+                    \nInterlacing (progressive content)\nApplied Filters:\
+                    \nVideo aspect:\nVideo rate:\nPreset h264:\nProfile h264:\
+                    \nTune h264:\nOrientation:\nAudio Format:\nAudio codec:\
+                    \nAudio channel:\nAudio rate:\nAudio bit-rate:\
+                    \nBit per Sample:\nAudio Normalization:\nMap:\
+                    \nTime selection:")
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
+                        numfile, cmd_opt["FormatChoice"], cmd_opt["VideoCodec"], 
+                        cmd_opt["Bitrate"], cmd_opt["CRF"], cmd_opt["Passing"], 
+                        cmd_opt["Deinterlace"], cmd_opt["Interlace"], 
+                        cmd_opt["Filters"], cmd_opt["VideoAspect"], 
+                        cmd_opt["VideoRate"], cmd_opt["Presets"], 
+                        cmd_opt["Profile"], cmd_opt["Tune"], 
+                        cmd_opt["Orientation"][1], cmd_opt["Audio"], 
+                        cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
+                        cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
+                        cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
+                        self.time_seq)
+                        )
         return formula, dictions
 
 #------------------------------------------------------------------#
