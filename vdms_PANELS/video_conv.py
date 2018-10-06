@@ -772,7 +772,10 @@ class Video_Conv(wx.Panel):
         """
         Show a setting dialog for settings Deinterlace/Interlace filters
         """
-        lacing = dialog_tools.Lacing(self)
+        lacing = dialog_tools.Lacing(self, 
+                                     cmd_opt["Deinterlace"],
+                                     cmd_opt["Interlace"]
+                                     )
         retcode = lacing.ShowModal()
         if retcode == wx.ID_OK:
             data = lacing.GetValue()
@@ -790,7 +793,7 @@ class Video_Conv(wx.Panel):
                     cmd_opt["Deinterlace"] = ''
             self.video_filter_checker()
         else:
-            crop.Destroy()
+            lacing.Destroy()
             return
 
     #------------------------------------------------------------------#
