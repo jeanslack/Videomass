@@ -59,7 +59,8 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "AudioDepth":["",""], "Normalize":"", 
            "Deinterlace":"", "Interlace":"", "file":"", "Map":"", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
-           "Scale":"", "Setdar":"", "Setsar":"", "Filters":""
+           "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
+           "Filters":""
            }
 vcodec = {
 "AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
@@ -156,6 +157,15 @@ class Video_Conv(wx.Panel):
                                     wx.ID_ANY, ("Rotation"))
         self.btn_lacing = wx.Button(self.notebook_1_pane_2, 
                                     wx.ID_ANY, ("Deinterlace/Interlace"))
+        denois_box = wx.StaticBoxSizer(wx.StaticBox(self.notebook_1_pane_2, 
+                                      wx.ID_ANY, ("Denoisers")), wx.VERTICAL)
+        self.cmbx_denois = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
+                                       value="Disabled",size=(100, -1),choices=[
+                                       ("Disabled"),
+                                       ("nlmeans"), 
+                                       ("hqdn3d")],
+                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                        )
         line1 = wx.StaticLine(self.notebook_1_pane_2, wx.ID_ANY, size=(130, -1),
            style=wx.LI_HORIZONTAL,name='')
         self.btn_preview = wx.Button(self.notebook_1_pane_2, 
@@ -163,12 +173,12 @@ class Video_Conv(wx.Panel):
         self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                         wx.ID_ANY, ("FFmpeg Filters Section")
+                                         wx.ID_ANY, ("Filters Section")
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-        choices=[("Set default "), ("4:3"), ("16:9")], style=wx.CB_DROPDOWN | 
-        wx.CB_READONLY
-        )
+        size=(100, -1), choices=[("Set default "), ("4:3"), ("16:9")], 
+        style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                        )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, ("Video Aspect")
                                         )
@@ -372,7 +382,10 @@ class Video_Conv(wx.Panel):
         grid_sizer_2.Add(self.btn_crop, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_lacing, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_sizer_2.Add(line1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        denois_box.Add(self.cmbx_denois, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_sizer_2.Add(denois_box, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_sizer_2.Add(line1, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 5)
         sizer_2.Add(grid_sizer_2, 1, wx.EXPAND, 0)
@@ -436,6 +449,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_lacing, self.btn_lacing)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Enable_denoiser, self.cmbx_denois)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmbx_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_vrate)
@@ -470,19 +484,18 @@ class Video_Conv(wx.Panel):
         Update all the GUI widgets based on the choices made by the user.
         """
         if cmd_opt["VideoCodec"] == "-vcodec libx264":
-            self.notebook_1_pane_4.Enable()
-            self.btn_videosize.Enable(), 
+            self.notebook_1_pane_4.Enable(), self.btn_videosize.Enable(), 
             self.btn_crop.Enable(), self.btn_rotate.Enable(), 
-            self.btn_preview.Enable(),
-            self.ckbx_pass.Enable()
+            self.btn_lacing.Enable(), self.cmbx_denois.Enable(), 
+            self.btn_preview.Enable(), self.ckbx_pass.Enable(),
             self.on_Pass(self)
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
             self.spin_ctrl_bitrate.Disable(), self.btn_videosize.Disable(), 
             self.btn_crop.Disable(), self.btn_rotate.Disable(), 
-            self.btn_preview.Disable(),
-            self.notebook_1_pane_4.Disable(), self.ckbx_pass.Disable(), 
-            self.ckbx_pass.SetValue(False)
+            self.btn_lacing.Disable(), self.cmbx_denois.Disable(), 
+            self.btn_preview.Disable(), self.notebook_1_pane_4.Disable(), 
+            self.ckbx_pass.Disable(), self.ckbx_pass.SetValue(False)
             self.rdb_a.EnableItem(4,enable=True)# se disable lo abilita
             self.slider_CRF.Disable(), self.rdb_h264preset.SetSelection(0)
             self.rdb_h264profile.SetSelection(0)
@@ -495,10 +508,10 @@ class Video_Conv(wx.Panel):
             self.rdb_h264profile.SetSelection(0)
             self.rdb_h264tune.SetSelection(0)
             self.on_h264Presets(self), self.on_h264Profiles(self)
-            self.on_h264Tunes(self)
-            self.btn_videosize.Enable(), self.btn_crop.Enable(), 
-            self.btn_rotate.Enable(), self.btn_preview.Enable(), 
-            self.ckbx_pass.Enable(),
+            self.on_h264Tunes(self), self.btn_videosize.Enable(), 
+            self.btn_crop.Enable(), self.btn_rotate.Enable(), 
+            self.btn_lacing.Enable(), self.cmbx_denois.Enable(), 
+            self.btn_preview.Enable(), self.ckbx_pass.Enable(),
             self.on_Pass(self)
     #-------------------------------------------------------------------#
     def audio_default(self):
@@ -558,13 +571,13 @@ class Video_Conv(wx.Panel):
                                     cmd_opt['VideoFormat']),None)
             self.UI_set()
         elif vcodec[selected][0] == "":# copy video codec
-            cmd_opt["ext_input"], cmd_opt["InputDir"], cmd_opt["OutputDir"],\
-            cmd_opt["Presets"], cmd_opt["Profile"],\
-            cmd_opt["Tune"], cmd_opt["Bitrate"], cmd_opt["CRF"],\
-            cmd_opt["Scale"], cmd_opt["Deinterlace"], cmd_opt["Interlace"],\
-            cmd_opt["file"], cmd_opt["PixelFormat"],\
-            cmd_opt["Orientation"] = '','','','','','','','','','','','',\
-            '','',['','']
+            #cmd_opt["ext_input"], cmd_opt["InputDir"], cmd_opt["OutputDir"],\
+            #cmd_opt["Presets"], cmd_opt["Profile"],\
+            #cmd_opt["Tune"], cmd_opt["Bitrate"], cmd_opt["CRF"],\
+            #cmd_opt["Scale"], cmd_opt["Deinterlace"], cmd_opt["Interlace"],\
+            #cmd_opt["file"], cmd_opt["PixelFormat"],\
+            #cmd_opt["Orientation"] = '','','','','','','','','','','','',\
+            #'','',['','']
             cmd_opt["Passing"] = "single"
             cmd_opt["FormatChoice"] = "%s" % (selected)
             # avi,mkv,mp4,flv,etc.:
@@ -679,8 +692,14 @@ class Video_Conv(wx.Panel):
             de_in_terlace = '%s,' % cmd_opt['Interlace']
         else:
             de_in_terlace = ''
-        
-        f = '%s%s%s%s%s%s' % (crop,size,dar,sar,rotate,de_in_terlace)
+        if cmd_opt["Denoiser"]:
+            denoiser = '%s,' % cmd_opt['Denoiser']
+        else:
+            denoiser = ''
+            
+        f = '%s%s%s%s%s%s%s' % (crop, size, dar, sar, 
+                                rotate, de_in_terlace, denoiser
+                                )
         if f:
             l = len(f)
             filters = '%s' % f[:l - 1]
@@ -795,7 +814,19 @@ class Video_Conv(wx.Panel):
         else:
             lacing.Destroy()
             return
-
+    #------------------------------------------------------------------#
+    def on_Enable_denoiser(self, event):
+        """
+        Enable filters denoiser useful in some case, example when apply
+        a deinterlace filter
+        <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
+        converting-digital-video>
+        """
+        if self.cmbx_denois.GetValue() == 'Disabled':
+            cmd_opt["Denoiser"] = ""
+        else:
+            cmd_opt["Denoiser"] = self.cmbx_denois.GetValue()
+        self.video_filter_checker()
     #------------------------------------------------------------------#
     def on_Vaspect(self, event):
         """

@@ -35,7 +35,7 @@ def current_release():
 
     Release_Name = 'Videomass2'
     Program_Name = 'videomass2'
-    Version = '1.0.1'
+    Version = '1.1.0'
     Release = 'Sept 23 2018'
     Copyright = u'© 2013-2018'
     Website = 'http://jeanslack.github.io/Videomass2/'
@@ -46,8 +46,6 @@ def current_release():
                "FFmpeg is a trademark of Fabrice Bellard, \n"
                "originator of the FFmpeg project.\n"
                "http://ffmpeg.org/")
-               
-              
     
     return (Release_Name, Program_Name, Version, Release, Copyright, 
             Website, Author, Mail, Comment)

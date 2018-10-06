@@ -1009,7 +1009,7 @@ class Lacing(wx.Dialog):
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
-        # Properties
+        # set Properties
         self.SetTitle("Deinterlace/Interlace - Videomass2")
         self.rdbx_W3fdif_filter.Hide()
         self.rdbx_W3fdif_deint.Hide()
@@ -1097,8 +1097,7 @@ class Lacing(wx.Dialog):
             'avoid twitter interlacing and reduce moire patterns.\n'
             'Default is no setting.'
                                                  )
-        
-        ####------Layout
+        ####------ set Layout
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
         
@@ -1126,7 +1125,6 @@ class Lacing(wx.Dialog):
         gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        
         # final settings:
         self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(self.sizer_base)
