@@ -420,13 +420,23 @@ class VideoCrop(wx.Dialog):
         #----------------------Properties------------------------------------#
         self.SetTitle("Video/Image Crop - Videomass2")
         self.top.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.top.SetToolTipString("Reverses visual movie from bottom to top")
         self.right.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.right.SetToolTipString("Rotate view movie to left")
         self.bottom.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.bottom.SetToolTipString("Rotate view movie to Right")
         self.left.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.left.SetToolTipString("Reverses visual movie from top to bottom")
+        #-------------- TOOLTIP
+        height = ('The height of the output video.\nThe -1 value = not set.')
+        self.top.SetToolTipString('Height:\n%s' % height)
+
+        width = ('The width of the output video.\nThe -1 value = not set.')
+        self.left.SetToolTipString('Width:\n%s' % width)
+        x = ( 'The horizontal position, in the input video, of the left edge '
+              'of the output video.\nThe -1 value = not set.'
+              )
+        self.bottom.SetToolTipString('X:\n%s' % x)
+        y = ('The vertical position, in the input video, of the top edge of '
+             'the output video.\nThe -1 value = not set.'
+              )
+        self.right.SetToolTipString('Y:\n%s' % y)
 
         #----------------------Handle layout---------------------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -485,26 +495,6 @@ class VideoCrop(wx.Dialog):
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
-        
-        #-------------- TOOLTIP
-        height = (
-        'Scale (resize) the input video or image, using the libswscale library. '
-                  )
-        self.top.SetToolTipString('Height:\n%s' % height)
-
-        width = (
-        'Set the frame (d)isplay (a)spect (r)atio. The setdar filter sets the ' 
-                   )
-        self.left.SetToolTipString(width)
-        x = (
-        'The setsar filter sets the Sample (aka Pixel) Aspect Ratio for the '
-              )
-        self.bottom.SetToolTipString(x)
-        y = (
-        'The setsar filter sets the Sample (aka Pixel) Aspect Ratio for the '
-              )
-        self.right.SetToolTipString(y)
-
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_SPINCTRL, self.on_top, self.top)
         self.Bind(wx.EVT_SPINCTRL, self.on_right, self.right)
@@ -1343,7 +1333,7 @@ class Lacing(wx.Dialog):
         """
         Reset all option and values
         """
-        self.cmd_opt.clear()
+        self.cmd_opt.clear()# deleting dictionary keys+values
         self.ckbx_deintW3fdif.SetValue(False)
         self.ckbx_deintYadif.SetValue(False)
         self.ckbx_interlace.SetValue(False)
@@ -1358,7 +1348,9 @@ class Lacing(wx.Dialog):
         self.rdbx_inter_scan.SetSelection(0)
         self.rdbx_inter_lowpass.SetSelection(1)
         self.rdbx_W3fdif_filter.Disable(),self.rdbx_W3fdif_deint.Disable(),
-        self.rdbx_Yadif_mode.Disable(), self.rdbx_Yadif_parity.Disable(), self.rdbx_Yadif_deint.Disable(), self.rdbx_inter_scan.Disable(), self.rdbx_inter_lowpass.Disable()
+        self.rdbx_Yadif_mode.Disable(), self.rdbx_Yadif_parity.Disable(), 
+        self.rdbx_Yadif_deint.Disable(), self.rdbx_inter_scan.Disable(), 
+        self.rdbx_inter_lowpass.Disable()
     #------------------------------------------------------------------#
     def on_close(self, event):
 
@@ -1383,4 +1375,234 @@ class Lacing(wx.Dialog):
         This method return values via the interface GetValue()
         """
         return self.cmd_opt
+    
+#############################################################################
+
+class Denoisers(wx.Dialog):
+    """
+    Show a dialog for set denoiser filter
+    """
+    def __init__(self, parent, denoiser):
+        """
+        Make sure you use the clear button when you finish the task.
+        Enable filters denoiser useful in some case, example when apply
+        a deinterlace filter
+        <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
+        converting-digital-video>
+        """
+        if denoiser:
+            self.denoiser = denoiser
+        else:
+            self.denoiser = ''
+        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        
+        
+        zone = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                    "Apply Denoisers Filters")), wx.VERTICAL)
+        
+        self.ckbx_nlmeans = wx.CheckBox(self, wx.ID_ANY, 
+                                (u"Enable nlmeans denoiser")
+                                            )
+        self.rdb_nlmeans = wx.RadioBox(self, wx.ID_ANY, (
+        "nlmeans options"), choices=[
+               ("Disabled"),
+               ("Old VHS tapes - good starting point restoration"), 
+               ("Heavy - really noisy inputs"), 
+               ("Light - good quality inputs")], 
+               majorDimension=0, style=wx.RA_SPECIFY_ROWS
+                                        )
+        self.ckbx_hqdn3d = wx.CheckBox(self, wx.ID_ANY, 
+                                (u"Enable hqdn3d denoiser")
+                                            )
+        self.rdb_hqdn3d = wx.RadioBox(self, wx.ID_ANY, (
+            "hqdn3d options"), choices=[
+                ("simple"),
+                ("complex")],
+                 majorDimension=0, 
+                 style=wx.RA_SPECIFY_ROWS
+                                        )
+        ###----- confirm buttons section
+        btn_close = wx.Button(self, wx.ID_CANCEL, "")
+        self.btn_ok = wx.Button(self, wx.ID_OK, "")
+        btn_reset = wx.Button(self, wx.ID_CLEAR, "")
+        
+        # set Properties
+        self.SetTitle("Denoisers filters - Videomass2")
+        self.ckbx_nlmeans.SetToolTipString(u'nlmeans:\n '
+            '(Denoise frames using Non-Local Means algorithm '
+            'is capable of restoring video sequences with even strong '
+            'noise. It is ideal for enhancing the quality of old VHS tapes.')
+        self.ckbx_hqdn3d.SetToolTipString(u'hqdn3d:\n '
+            'This is a high precision/quality 3d denoise filter. It aims '
+            'to reduce image noise, producing smooth images and making '
+            'still images really still. It should enhance compressibility.')
+                
+        ####------ set Layout
+        self.sizer_base = wx.BoxSizer(wx.VERTICAL)
+        grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
+        grid_sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
+        grid_den = wx.FlexGridSizer(2, 2, 0, 0)
+        zone.Add(grid_den)
+
+        grid_den.Add(self.ckbx_nlmeans, 0, 
+                    wx.ALL |
+                    wx.ALIGN_CENTER_VERTICAL | 
+                    wx.ALIGN_CENTER_HORIZONTAL,
+                    15)
+        grid_den.Add(self.rdb_nlmeans, 0, 
+                    wx.ALL |
+                    wx.ALIGN_CENTER_VERTICAL | 
+                    wx.ALIGN_CENTER_HORIZONTAL,
+                    15)
+        grid_den.Add(self.ckbx_hqdn3d, 0, 
+                    wx.ALL |
+                    wx.ALIGN_CENTER_VERTICAL | 
+                    wx.ALIGN_CENTER_HORIZONTAL,
+                    15)
+        grid_den.Add(self.rdb_hqdn3d, 0, 
+                    wx.ALL |
+                    wx.ALIGN_CENTER_VERTICAL | 
+                    wx.ALIGN_CENTER_HORIZONTAL,
+                    15)
+        # confirm btn section:
+        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        grid_sizer_base.Add(gridBtn)
+        gridBtn.Add(btn_close,1, 
+                    wx.ALL | 
+                    wx.ALIGN_CENTER_VERTICAL,5)
+        gridBtn.Add(self.btn_ok,1, 
+                    wx.ALL | 
+                    wx.ALIGN_CENTER_VERTICAL,5)
+        gridBtn.Add(btn_reset,1, 
+                    wx.ALL | 
+                    wx.ALIGN_CENTER_VERTICAL,5)
+        # final settings:
+        self.sizer_base.Add(grid_sizer_base, 1, 
+                            wx.ALL | 
+                            wx.EXPAND, 5)
+        self.rdb_hqdn3d.Hide()
+        self.SetSizer(self.sizer_base)
+        self.sizer_base.Fit(self)
+        self.Layout()
+        
+        #----------------------Binding (EVT)---------------------------------#
+        self.Bind(wx.EVT_CHECKBOX, self.on_nlmeans, self.ckbx_nlmeans)
+        self.Bind(wx.EVT_CHECKBOX, self.on_hqdn3d, self.ckbx_hqdn3d)
+        self.Bind(wx.EVT_RADIOBOX, self.on_nlmeans_opt, self.rdb_nlmeans)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
+        self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
+        self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        
+        self.settings()
+        
+    def settings(self):
+        """
+        Set default or set in according with previusly activated option 
+        """
+        if self.denoiser:
+            if self.denoiser.startswith('nlmeans'):
+                spl = self.denoiser.split('=')
+                if len(spl) == 1:
+                    self.rdb_nlmeans.SetSelection(0) 
+                else:
+                    if spl[1] == '8:3:2':
+                        self.rdb_nlmeans.SetSelection(1)
+                    if spl[1] == '10:5:3':
+                        self.rdb_nlmeans.SetSelection(2)
+                    if spl[1] == '6:3:1':
+                        self.rdb_nlmeans.SetSelection(3)
+                self.ckbx_nlmeans.SetValue(True)
+                self.ckbx_hqdn3d.SetValue(False)
+                self.ckbx_nlmeans.Enable()
+                self.ckbx_hqdn3d.Disable()
+                self.rdb_nlmeans.Enable()
+                    
+            else:
+                self.ckbx_nlmeans.SetValue(False)
+                self.ckbx_hqdn3d.SetValue(True)
+                self.ckbx_nlmeans.Disable()
+                self.ckbx_hqdn3d.Enable()
+                self.rdb_nlmeans.Disable()
+        else:
+            self.ckbx_nlmeans.SetValue(False)
+            self.ckbx_hqdn3d.SetValue(False)
+            self.ckbx_nlmeans.Enable()
+            self.ckbx_hqdn3d.Enable()
+            self.rdb_nlmeans.SetSelection(0)
+            self.rdb_nlmeans.Disable()
+    
+    #----------------------Event handler (callback)--------------------------#
+    #------------------------------------------------------------------------#
+    def on_nlmeans(self, event):
+        """
+        """
+        if self.ckbx_nlmeans.IsChecked():
+            self.rdb_nlmeans.Enable()
+            self.ckbx_hqdn3d.Disable()
+            self.denoiser = "nlmeans"
+            
+        elif not self.ckbx_nlmeans.IsChecked():
+            self.rdb_nlmeans.Disable()
+            self.ckbx_hqdn3d.Enable()
+            self.denoiser = ""
+    #------------------------------------------------------------------#
+    def on_nlmeans_opt(self, event):
+        """
+        """
+        opt = self.rdb_nlmeans.GetStringSelection()
+        if opt == "Disabled":
+            self.denoiser = "nlmeans"
+        elif opt == "Old VHS tapes - good starting point restoration":
+            self.denoiser = "nlmeans=8:3:2"
+        elif opt == "Heavy - really noisy inputs":
+            self.denoiser = "nlmeans=10:5:3"
+        elif opt == "Light - good quality inputs":
+            self.denoiser = "nlmeans=6:3:1"
+    #------------------------------------------------------------------#
+    def on_hqdn3d(self, event):
+        """
+        """
+        if self.ckbx_hqdn3d.IsChecked():
+            self.ckbx_nlmeans.Disable()
+            self.denoiser = "hqdn3d"
+            
+        elif not self.ckbx_hqdn3d.IsChecked():
+            self.ckbx_nlmeans.Enable()
+            self.denoiser = ""
+    #------------------------------------------------------------------#  
+    def on_reset(self, event):
+        """
+        Reset all option and values
+        """
+        self.denoiser = ""# deleting dictionary keys+values
+        self.ckbx_nlmeans.SetValue(False)
+        self.ckbx_hqdn3d.SetValue(False)
+        self.ckbx_nlmeans.Enable()
+        self.ckbx_hqdn3d.Enable()
+        self.rdb_nlmeans.SetSelection(0)
+        self.rdb_nlmeans.Disable()
+    #------------------------------------------------------------------#
+    def on_close(self, event):
+
+        event.Skip()
+
+    #------------------------------------------------------------------#
+    def on_ok(self, event):
+        """
+        if you enable self.Destroy(), it delete from memory all data event and
+        no return correctly. It has the right behavior if not used here, because 
+        it is called in the main frame. 
+        
+        Event.Skip(), work correctly here. Sometimes needs to disable it for
+        needs to maintain the view of the window (for exemple).
+        """
+        self.GetValue()
+        #self.Destroy()
+        event.Skip()
+    #------------------------------------------------------------------#
+    def GetValue(self):
+        """
+        This method return values via the interface GetValue()
+        """
+        return self.denoiser
 
