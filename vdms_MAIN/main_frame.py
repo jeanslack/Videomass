@@ -26,8 +26,6 @@
 #########################################################
 
 import wx
-import wx.lib.buttons as buttons
-import wx.lib.agw.gradientbutton as GB
 import webbrowser
 from vdms_DIALOGS import dialog_tools, settings, infoprg
 from vdms_PANELS import dragNdrop, presets_mng_panel, video_conv, audio_conv
@@ -93,30 +91,6 @@ class MainFrame(wx.Frame):
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
         
-        panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        self.btn_play = wx.Button(panel, wx.ID_ANY, ("Play"))
-        self.btn_data1 = wx.Button(panel, wx.ID_ANY, ("Data_1"))
-        self.btn_data2 = wx.Button(panel, wx.ID_ANY, ("Data_2"))
-        
-        bmp = wx.Bitmap(self.icon_headphones, wx.BITMAP_TYPE_ANY)
-        self.btn_data3 = wx.BitmapButton(panel, id=wx.ID_ANY, bitmap=bmp,
-                                size=(bmp.GetWidth()+10, bmp.GetHeight()+10))
-        
-        gbBtn = GB.GradientButton(panel, bitmap=bmp, 
-                                  label="Gradient with bitmap")
-        gbBtnNoBmp = GB.GradientButton(panel, label="Press Me")
-        gbBtnNoBmp.SetForegroundColour("red")
-        
-        b3 = GB.GradientButton(panel, label="Press Me")
-        b3.SetForegroundColour("green")
-        
-        b4 = GB.GradientButton(panel, label="Press Me")
-        b4.SetForegroundColour("yellow")
-        
-        #panel.SetBackgroundColour(wx.Colour(200, 213, 123))
-        panel.SetBackgroundColour(wx.Colour(132, 93, 186))
-        self.btn_data3.SetBackgroundColour(wx.Colour(100, 213, 123))
-
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
                                                          self.threads, 
@@ -148,23 +122,7 @@ class MainFrame(wx.Frame):
         self.VconvPanel.Hide()
         self.AconvPanel.Hide()
         
-        #s1 = wx.BoxSizer(wx.VERTICAL)
-        self.DnDsizer = wx.BoxSizer(wx.VERTICAL)
-        grid_pan = wx.FlexGridSizer(1, 8, 0, 0)
-        
-        #self.DnDsizer.Add(grid_pan, 0, wx.ALL, 5)
-        
-        grid_pan.Add(self.btn_play, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_data1, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_data2, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_data3, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(gbBtn, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(gbBtnNoBmp, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(b3, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(b4, 0, wx.CENTER|wx.ALL, 5)
-        panel.SetSizer(grid_pan)
-        self.DnDsizer.Add(panel, 0, wx.ALL|wx.EXPAND, 5)
-        
+        self.DnDsizer = wx.BoxSizer()
         self.DnDsizer.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 0)
         self.DnDsizer.Add(self.PrstsPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.DnDsizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
@@ -191,7 +149,7 @@ class MainFrame(wx.Frame):
         # disable some item menu at first boot:
         self.inputPrvw.Enable(False), self.inputMtda.Enable(False)
         self.outputPrvw.Enable(False), self.outputMtda.Enable(False)
-        ## tool bar main
+        # tool bar
         self.videomass_tool_bar()
         self.Setup_items_bar()
         # status bar
@@ -771,7 +729,7 @@ class MainFrame(wx.Frame):
                                                 #)
         # finally, create it
         self.toolbar.Realize()
-        
+
         #----------------- Tool Bar Binding (evt)-----------------------#
         self.Bind(wx.EVT_TOOL, self.File_import, icn_import)
         self.Bind(wx.EVT_TOOL, self.Preset_Mng, prs_mng)
@@ -920,7 +878,7 @@ class MainFrame(wx.Frame):
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0,6)]
         self.SetTitle("Videomass2")
-        
+
     #------------------------------------------------------------------#
     #def Help_Contest(self, event):
         #"""
