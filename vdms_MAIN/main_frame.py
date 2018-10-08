@@ -92,31 +92,32 @@ class MainFrame(wx.Frame):
         self.duration = []
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
-        
-        panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        self.btn_play = wx.Button(panel, wx.ID_ANY, ("Play"))
-        self.btn_data1 = wx.Button(panel, wx.ID_ANY, ("Data_1"))
-        self.btn_data2 = wx.Button(panel, wx.ID_ANY, ("Data_2"))
-        
-        bmp = wx.Bitmap(self.icon_headphones, wx.BITMAP_TYPE_ANY)
-        self.btn_data3 = wx.BitmapButton(panel, id=wx.ID_ANY, bitmap=bmp,
-                                size=(bmp.GetWidth()+10, bmp.GetHeight()+10))
-        
-        gbBtn = GB.GradientButton(panel, bitmap=bmp, 
-                                  label="Gradient with bitmap")
-        gbBtnNoBmp = GB.GradientButton(panel, label="Press Me")
-        gbBtnNoBmp.SetForegroundColour("red")
-        
-        b3 = GB.GradientButton(panel, label="Press Me")
-        b3.SetForegroundColour("green")
-        
-        b4 = GB.GradientButton(panel, label="Press Me")
-        b4.SetForegroundColour("yellow")
-        
-        #panel.SetBackgroundColour(wx.Colour(200, 213, 123))
-        panel.SetBackgroundColour(wx.Colour(132, 93, 186))
-        self.btn_data3.SetBackgroundColour(wx.Colour(100, 213, 123))
+        #----------- panel toolbar buttons
+        self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
 
+        playbmp = wx.Bitmap('/home/gianluca/play.png', wx.BITMAP_TYPE_ANY)
+        previewbmp = wx.Bitmap('/home/gianluca/preview.png', wx.BITMAP_TYPE_ANY)
+        infoIbmp = wx.Bitmap('/home/gianluca/infoSource.png', wx.BITMAP_TYPE_ANY)
+        infoObmp = wx.Bitmap('/home/gianluca/infoExp.png', wx.BITMAP_TYPE_ANY)
+        cutbmp = wx.Bitmap('/home/gianluca/cut.png', wx.BITMAP_TYPE_ANY)
+        testbmp = wx.Bitmap('/home/gianluca/test1.png', wx.BITMAP_TYPE_ANY)
+        self.btn_playI = GB.GradientButton(self.btnpanel, label="Play Source")
+        self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
+        self.btn_metaI = GB.GradientButton(self.btnpanel, label="Metadata Source")
+        self.btn_metaI.SetForegroundColour("grey"), self.btn_metaI.Disable()
+        self.btn_playO = GB.GradientButton(self.btnpanel, label="Preview Exp.")
+        self.btn_playO.SetForegroundColour("grey"), self.btn_playO.Disable()
+        self.btn_metaO = GB.GradientButton(self.btnpanel, label="Metadata Exp.")
+        self.btn_metaO.SetForegroundColour("grey"), self.btn_metaO.Disable()
+        
+        self.timeline = GB.GradientButton(self.btnpanel, bitmap=cutbmp, 
+                                  label="Timeline Slicing")
+        self.test = GB.GradientButton(self.btnpanel, bitmap=testbmp, 
+                                  label="Time Test Output")
+        self.timeline.SetForegroundColour("yellow")
+        self.test.SetForegroundColour("yellow")
+        self.btnpanel.SetBackgroundColour(wx.Colour(130, 130, 130))
+        #---------- others panel instances:
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
                                                          self.threads, 
@@ -147,24 +148,20 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         self.VconvPanel.Hide()
         self.AconvPanel.Hide()
-        
-        #s1 = wx.BoxSizer(wx.VERTICAL)
-        self.DnDsizer = wx.BoxSizer(wx.VERTICAL)
+        # Layout toolbar buttons:
+        self.DnDsizer = wx.BoxSizer(wx.VERTICAL) # sizer base global
         grid_pan = wx.FlexGridSizer(1, 8, 0, 0)
-        
-        #self.DnDsizer.Add(grid_pan, 0, wx.ALL, 5)
-        
-        grid_pan.Add(self.btn_play, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_data1, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_data2, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_data3, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(gbBtn, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(gbBtnNoBmp, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(b3, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(b4, 0, wx.CENTER|wx.ALL, 5)
-        panel.SetSizer(grid_pan)
-        self.DnDsizer.Add(panel, 0, wx.ALL|wx.EXPAND, 5)
-        
+        #grid_pan.Add(self.btn_data3, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_playI, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_metaI, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_playO, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_metaO, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.timeline, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.test, 0, wx.CENTER|wx.ALL, 5)
+        #grid_pan.Add(b4, 0, wx.CENTER|wx.ALL, 5)
+        self.btnpanel.SetSizer(grid_pan) # set panel
+        self.DnDsizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
+        # Layout externals panels:
         self.DnDsizer.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 0)
         self.DnDsizer.Add(self.PrstsPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.DnDsizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
@@ -196,7 +193,7 @@ class MainFrame(wx.Frame):
         self.Setup_items_bar()
         # status bar
         self.sb = self.CreateStatusBar(1)
-
+        
         #---------------------- Binding (EVT) ----------------------#
         self.DnD.ckbx_dir.Bind(wx.EVT_CHECKBOX, self.onCheckBox)
         self.DnD.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
@@ -204,7 +201,7 @@ class MainFrame(wx.Frame):
         #self.DnDPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
         #-----------------------------------------------------------#
-
+        
     #-------------------Status bar popolate--------------------#
     def statusbar_msg(self, msg, color):
         """
@@ -237,7 +234,6 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(wx.ID_FILE5, True)
         self.toolbar.EnableTool(wx.ID_FILE6, True)
         self.toolbar.EnableTool(wx.ID_FILE7, True)
-        
     #------------------------------------------------------------------#
     def Setup_items_bar(self):
         """
@@ -317,6 +313,9 @@ class MainFrame(wx.Frame):
         self.inputPrvw.Enable(True), self.inputMtda.Enable(True)
         self.import_clicked = path# used for play and metadata
         
+        self.btn_playI.SetForegroundColour("yellow"), self.btn_playI.Enable()
+        self.btn_metaI.SetForegroundColour("red"), self.btn_metaI.Enable()
+        
     #------------------------------------------------------------------#
     def importClicked_disable(self):
         """
@@ -324,6 +323,9 @@ class MainFrame(wx.Frame):
         """
         self.inputPrvw.Enable(False), self.inputMtda.Enable(False)
         self.import_clicked = ''
+        
+        self.btn_playI.SetForegroundColour("black"), self.btn_playI.Disable()
+        self.btn_metaI.SetForegroundColour("black"), self.btn_metaI.Disable()
     #------------------------------------------------------------------#
     def postExported_enable(self):
         """

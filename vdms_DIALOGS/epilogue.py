@@ -33,7 +33,7 @@ class Formula(wx.Dialog):
     Class for show epilogue dialog before run process (if all ok 
     (validations?)). It not return usable values.
     """
-    def __init__(self, parent, formula, diction):
+    def __init__(self, parent, formula, diction, title):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
@@ -43,7 +43,7 @@ class Formula(wx.Dialog):
         self.button_2 = wx.Button(panel, wx.ID_OK, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle("Epilogue - Videomass2")
+        self.SetTitle("%s - Videomass2" % title)
         label2.SetForegroundColour(wx.Colour(255, 106, 249))
         panel.SetBackgroundColour(wx.Colour(212, 255, 249))
         
@@ -52,8 +52,10 @@ class Formula(wx.Dialog):
         gr_s1 = wx.FlexGridSizer(2, 2, 0, 0)
         gr_s1.Add(label1, 0, wx.ALL, 5)
         gr_s1.Add(label2, 0, wx.ALL, 5)
-        gr_s1.Add(self.button_1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        gr_s1.Add(self.button_2, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        btngrid = wx.FlexGridSizer(1,2,0,0)
+        gr_s1.Add(btngrid)
+        btngrid.Add(self.button_1, 0, wx.ALL, 5)
+        btngrid.Add(self.button_2, 0, wx.ALL, 5)
         panel.SetSizer(gr_s1)
         s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(s1)
