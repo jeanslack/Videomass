@@ -417,27 +417,6 @@ class VideoCrop(wx.Dialog):
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
-        #----------------------Properties------------------------------------#
-        self.SetTitle("Video/Image Crop - Videomass2")
-        self.top.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.right.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.bottom.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.left.SetBackgroundColour(wx.Colour(122, 239, 255))
-        #-------------- TOOLTIP
-        height = ('The height of the output video.\nThe -1 value = not set.')
-        self.top.SetToolTipString('Height:\n%s' % height)
-
-        width = ('The width of the output video.\nThe -1 value = not set.')
-        self.left.SetToolTipString('Width:\n%s' % width)
-        x = ( 'The horizontal position, in the input video, of the left edge '
-              'of the output video.\nThe -1 value = not set.'
-              )
-        self.bottom.SetToolTipString('X:\n%s' % x)
-        y = ('The vertical position, in the input video, of the top edge of '
-             'the output video.\nThe -1 value = not set.'
-              )
-        self.right.SetToolTipString('Y:\n%s' % y)
-
         #----------------------Handle layout---------------------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         gridBase = wx.FlexGridSizer(2, 0, 0, 0)
@@ -495,6 +474,24 @@ class VideoCrop(wx.Dialog):
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
+        
+        #----------------------Properties------------------------------------#
+        self.SetTitle("Video/Image Crop - Videomass2")
+        self.top.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.right.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.bottom.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.left.SetBackgroundColour(wx.Colour(122, 239, 255))
+        height = ('The height of the output video.\nSet to -1 for disabling.')
+        width = ('The width of the output video.\nSet to -1 for disabling.')
+        x = ('The horizontal position, in the input video, of the left edge '
+              'of the output video.\nSet to -1 for disabling.')
+        y = ('The vertical position, in the input video, of the top edge of '
+             'the output video.\nSet to -1 for disabling.')
+        self.top.SetToolTipString('Height:\n%s' % height)
+        self.left.SetToolTipString('Width:\n%s' % width)
+        self.bottom.SetToolTipString('Y:\n%s' % y)
+        self.right.SetToolTipString('X:\n%s' % x)
+        
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_SPINCTRL, self.on_top, self.top)
         self.Bind(wx.EVT_SPINCTRL, self.on_right, self.right)
@@ -683,16 +680,7 @@ class VideoResolution(wx.Dialog):
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
-        
-        # Properties
-        self.SetTitle("Set Video Size - Videomass2")
-        self.spin_scale_width.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.spin_scale_height.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.spin_setdarNum.SetBackgroundColour(wx.Colour(161, 224, 153))
-        self.spin_setdarDen.SetBackgroundColour(wx.Colour(161, 224, 153))
-        self.spin_setsarNum.SetBackgroundColour(wx.Colour(227, 235, 110))
-        self.spin_setsarDen.SetBackgroundColour(wx.Colour(227, 235, 110))
-        
+
         ####------Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
@@ -742,11 +730,19 @@ class VideoResolution(wx.Dialog):
         sizer_base.Fit(self)
         self.Layout()
         
+        # Properties
+        self.SetTitle("Set Video Size - Videomass2")
+        self.spin_scale_width.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.spin_scale_height.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.spin_setdarNum.SetBackgroundColour(wx.Colour(161, 224, 153))
+        self.spin_setdarDen.SetBackgroundColour(wx.Colour(161, 224, 153))
+        self.spin_setsarNum.SetBackgroundColour(wx.Colour(227, 235, 110))
+        self.spin_setsarDen.SetBackgroundColour(wx.Colour(227, 235, 110))
         scale_str = (
         'Scale (resize) the input video or image, using the libswscale library. '
         " If we'd like to keep the aspect ratio, we need to specify only one "
         'component, either width or height, and set the other component to -1 '
-        'or to -2')
+        'or to -2.\nSet to 0 for disabling.')
         self.spin_scale_width.SetToolTipString('WIDTH:\n%s' % scale_str)
         self.spin_scale_height.SetToolTipString('HEIGHT:\n%s' % scale_str)
         setdar_str = (
@@ -759,7 +755,7 @@ class VideoResolution(wx.Dialog):
          'dimensions of the video frame. Also, the display aspect ratio set by '
          'this filter may be changed by later filters in the filterchain, e.g. '
          'in case of scaling or if another "setdar" or a "setsar" filter is '
-         'applied. ')
+         'applied.\nSet to 0 for disabling.')
         self.spin_setdarNum.SetToolTipString(setdar_str)
         self.spin_setdarDen.SetToolTipString(setdar_str)
         setsar_str = (
@@ -769,7 +765,7 @@ class VideoResolution(wx.Dialog):
         'to the equation above. Keep in mind that the sample aspect ratio set '
         'by the setsar filter may be changed by later filters in the '
         'filterchain, e.g. if another "setsar" or a "setdar" filter is '
-        'applied. ')
+        'applied.\nSet to 0 for disabling.')
         self.spin_setsarNum.SetToolTipString(setsar_str)
         self.spin_setsarDen.SetToolTipString(setsar_str)
         
@@ -1022,6 +1018,40 @@ class Lacing(wx.Dialog):
         self.rdbx_Yadif_mode.Disable(),
         self.rdbx_Yadif_parity.Disable(), self.rdbx_Yadif_deint.Disable(),
         self.rdbx_inter_scan.Disable(), self.rdbx_inter_lowpass.Disable()
+
+        ####------ set Layout
+        self.sizer_base = wx.BoxSizer(wx.VERTICAL)
+        grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
+        
+        grid_sizer_base.Add(zone1, 1, wx.ALL | wx.EXPAND, 5)
+        deint_grid = wx.FlexGridSizer(2, 4, 0, 0)
+        zone1.Add(deint_grid)
+        deint_grid.Add(self.ckbx_deintW3fdif, 0, wx.ALL , 15)
+        deint_grid.Add(self.rdbx_W3fdif_filter, 0, wx.ALL,15)
+        deint_grid.Add(self.rdbx_W3fdif_deint, 0, wx.ALL, 15)
+        deint_grid.Add((20, 20), 0, wx.ALL, 15)
+        deint_grid.Add(self.ckbx_deintYadif, 0, wx.ALL, 15)
+        deint_grid.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 15)
+        deint_grid.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 15)
+        deint_grid.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 15)
+        grid_sizer_base.Add(zone2, 1, wx.ALL | wx.EXPAND, 5)
+        inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
+        zone2.Add(inter_grid)
+        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL, 15)
+        inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 15)
+        inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
+        grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        # confirm btn section:
+        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        grid_sizer_base.Add(gridBtn)
+        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        # final settings:
+        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
+        self.SetSizer(self.sizer_base)
+        self.sizer_base.Fit(self)
+        self.Layout()
         
         self.ckbx_deintW3fdif.SetToolTipString(u'Deinterlace the input video '
                 u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
@@ -1085,41 +1115,7 @@ class Lacing(wx.Dialog):
         self.rdbx_inter_lowpass.SetToolTipString('lowpas:\n'
             'Enable (default) or disable the vertical lowpass filter to '
             'avoid twitter interlacing and reduce moire patterns.\n'
-            'Default is no setting.'
-                                                 )
-        ####------ set Layout
-        self.sizer_base = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
-        
-        grid_sizer_base.Add(zone1, 1, wx.ALL | wx.EXPAND, 5)
-        deint_grid = wx.FlexGridSizer(2, 4, 0, 0)
-        zone1.Add(deint_grid)
-        deint_grid.Add(self.ckbx_deintW3fdif, 0, wx.ALL , 15)
-        deint_grid.Add(self.rdbx_W3fdif_filter, 0, wx.ALL,15)
-        deint_grid.Add(self.rdbx_W3fdif_deint, 0, wx.ALL, 15)
-        deint_grid.Add((20, 20), 0, wx.ALL, 15)
-        deint_grid.Add(self.ckbx_deintYadif, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 15)
-        grid_sizer_base.Add(zone2, 1, wx.ALL | wx.EXPAND, 5)
-        inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
-        zone2.Add(inter_grid)
-        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL, 15)
-        inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 15)
-        inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
-        grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn)
-        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        # final settings:
-        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
-        self.SetSizer(self.sizer_base)
-        self.sizer_base.Fit(self)
-        self.Layout()
+            'Default is no setting.')
         
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_DeintW3fdif, self.ckbx_deintW3fdif)
@@ -1426,17 +1422,6 @@ class Denoisers(wx.Dialog):
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
-        # set Properties
-        self.SetTitle("Denoisers filters - Videomass2")
-        self.ckbx_nlmeans.SetToolTipString(u'nlmeans:\n '
-            '(Denoise frames using Non-Local Means algorithm '
-            'is capable of restoring video sequences with even strong '
-            'noise. It is ideal for enhancing the quality of old VHS tapes.')
-        self.ckbx_hqdn3d.SetToolTipString(u'hqdn3d:\n '
-            'This is a high precision/quality 3d denoise filter. It aims '
-            'to reduce image noise, producing smooth images and making '
-            'still images really still. It should enhance compressibility.')
-                
         ####------ set Layout
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
@@ -1484,6 +1469,17 @@ class Denoisers(wx.Dialog):
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
+        
+        # set Properties
+        self.SetTitle("Denoisers filters - Videomass2")
+        self.ckbx_nlmeans.SetToolTipString(u'nlmeans:\n '
+            '(Denoise frames using Non-Local Means algorithm '
+            'is capable of restoring video sequences with even strong '
+            'noise. It is ideal for enhancing the quality of old VHS tapes.')
+        self.ckbx_hqdn3d.SetToolTipString(u'hqdn3d:\n '
+            'This is a high precision/quality 3d denoise filter. It aims '
+            'to reduce image noise, producing smooth images and making '
+            'still images really still. It should enhance compressibility.')
         
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_nlmeans, self.ckbx_nlmeans)

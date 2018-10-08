@@ -583,6 +583,7 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch mode processing.
         """
         if self.ckb_onlynorm.IsChecked():
+            title = 'Audio Normalization'
             cmd = ("-loglevel %s %s -vn %s %s -y" % (self.loglevel_type, 
                                                   self.time_seq, 
                                                   self.threads,
@@ -590,7 +591,7 @@ class Audio_Conv(wx.Panel):
                                                   )
             command = " ".join(cmd.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
-            ending = Formula(self, valupdate[0], valupdate[1])
+            ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
@@ -607,6 +608,7 @@ class Audio_Conv(wx.Panel):
                 #used for play preview and mediainfo:
                 self.exportStreams(dir_destin)#call function more above
         else:
+            title = 'Audio Conversion'
             command = ("-loglevel %s %s -vn %s %s %s %s %s %s %s -y" % (
                                                 self.loglevel_type, 
                                                 self.time_seq,
@@ -620,7 +622,7 @@ class Audio_Conv(wx.Panel):
                                                                     )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
-            ending = Formula(self, valupdate[0], valupdate[1])
+            ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
@@ -643,13 +645,14 @@ class Audio_Conv(wx.Panel):
         """
         Composes the ffmpeg command strings for the batch_process_changes.
         """
+        title = 'Save audio from movies'
         cmdsplit1 = ("-loglevel %s %s -vn" % (self.loglevel_type, 
                                               self.time_seq)
                                               )
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 
         valupdate = self.update_dict(lenghmax)
-        ending = Formula(self, valupdate[0], valupdate[1])
+        ending = Formula(self, valupdate[0], valupdate[1], title)
         
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('grabaudio',
@@ -679,7 +682,7 @@ class Audio_Conv(wx.Panel):
             normalize = 'Disable'
             
         if self.ckb_onlynorm.IsChecked():
-            formula = (u"FORMULATIONS:\n\nFile Queue:\
+            formula = (u"SUMMARY:\n\nFile Queue:\
                        \nAudio Normalization:\nTime selection:")
             dictions = ("\n\n%s\n%s\n%s" % (numfile, 
                                             normalize, 
@@ -687,7 +690,7 @@ class Audio_Conv(wx.Panel):
                                             )
                         )
         elif self.cmbx_a.GetValue() == "Save audio from movie":
-            formula = (u"FORMULATIONS:\n\nFile Queue:\
+            formula = (u"SUMMARY:\n\nFile Queue:\
                       \nAudio Container:\nCodec copied:\nTime selection:")
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
                                                 cmd_opt["ExportExt"],
@@ -695,7 +698,7 @@ class Audio_Conv(wx.Panel):
                                                 self.time_seq)
                                                 )
         else:
-            formula = (u"FORMULATIONS:\n\nFile Queue:\
+            formula = (u"SUMMARY:\n\nFile Queue:\
                     \nAudio Container:\nAudio Codec:\nAudio bit-rate:\
                     \nAudio channel:\nAudio sample rate:\nBit per Sample:\
                     \nAudio Normalization:\nTime selection:")

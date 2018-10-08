@@ -1238,6 +1238,7 @@ class Video_Conv(wx.Panel):
         In double pass mode, split command in two part (see  os_processing.py 
         at proc_batch_thread Class(Thread).
         """
+        title = 'Video Conversions'
         if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
             command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
                        self.loglevel_type, 
@@ -1256,7 +1257,7 @@ class Video_Conv(wx.Panel):
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
-            ending = Formula(self, valupdate[0], valupdate[1])
+            ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
@@ -1298,7 +1299,7 @@ class Video_Conv(wx.Panel):
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
-            ending = Formula(self, valupdate[0], valupdate[1])
+            ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('doublepass',
@@ -1331,7 +1332,7 @@ class Video_Conv(wx.Panel):
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
-            ending = Formula(self, valupdate[0], valupdate[1])
+            ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
@@ -1356,6 +1357,7 @@ class Video_Conv(wx.Panel):
               perchè non serve la lettura dell'output in real time e inoltre 
               voglio controllare solo l'uscita degli errori, se ci sono.
         """
+        title = 'Save Images from video'
         fileout = "image%d.jpg"
         cmd = ('%s -i "%s" -loglevel %s %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
@@ -1371,7 +1373,7 @@ class Video_Conv(wx.Panel):
                )
         command = " ".join(cmd.split())# mi formatta la stringa
         valupdate = self.update_dict(lenghmax)
-        ending = Formula(self, valupdate[0], valupdate[1])
+        ending = Formula(self, valupdate[0], valupdate[1], title)
             
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('saveimages',
@@ -1399,7 +1401,7 @@ class Video_Conv(wx.Panel):
             normalize = 'Disable'
         
         if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
-            formula = (u"FORMULATIONS:\n\nFile to Queue\
+            formula = (u"SUMMARY:\n\nFile to Queue\
                 \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
                 \nAudio Format:\nAudio codec:\nAudio channel:\
                 \nAudio rate:\nAudio bit-rate:\nBit per Sample:\
@@ -1414,7 +1416,7 @@ class Video_Conv(wx.Panel):
                 self.time_seq))
                     
         elif self.cmbx_vidContainers.GetValue() == "Save Images From Video":
-            formula = (u"FORMULATIONS:\n\nFile to Queue\
+            formula = (u"SUMMARY:\n\nFile to Queue\
                          \nImages Format:\nVideo rate:\
                          \nFilters:\nTime selection:"
                        )
@@ -1424,7 +1426,7 @@ class Video_Conv(wx.Panel):
                                                     self.time_seq)
                         )
         else:
-            formula = (u"FORMULATIONS:\n\nFile to Queue\
+            formula = (u"SUMMARY:\n\nFile to Queue\
                     \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
                     \nDouble/Single Pass:\nDeinterlacing:\
                     \nInterlacing (progressive content)\nApplied Filters:\
