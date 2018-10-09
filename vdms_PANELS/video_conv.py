@@ -162,9 +162,6 @@ class Video_Conv(wx.Panel):
                                     wx.ID_ANY, ("Denoisers"))
         #line1 = wx.StaticLine(self.notebook_1_pane_2, wx.ID_ANY, size=(130, -1),
            #style=wx.LI_HORIZONTAL,name='')
-        #self.btn_preview = wx.Button(self.notebook_1_pane_2, 
-                                    #wx.ID_ANY, ("Playback_Preview"))
-        #self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
         playbmp = wx.Bitmap(play, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
                                              size=(-1,30),
