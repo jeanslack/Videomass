@@ -97,17 +97,7 @@ class Audio_Conv(wx.Panel):
         self.cmbx_a.SetSelection(4)
         self.btn_param = wx.Button(self, wx.ID_ANY, (
                                                "Audio Options"))
-        self.lab_samplerate = wx.StaticText(self, wx.ID_ANY, ("S.Rate:"))
-        self.txt_samplerate = wx.TextCtrl(self, wx.ID_ANY, "",
-                                          style=wx.TE_READONLY)
-        self.lab_bitdepth = wx.StaticText(self, wx.ID_ANY, ("Bit Depth:"))
-        self.txt_bitdepth = wx.TextCtrl(self, wx.ID_ANY, "", 
-                                          style=wx.TE_READONLY)
-        self.lab_bitrate = wx.StaticText(self, wx.ID_ANY, ("BitRate:"))
-        self.txt_bitrate = wx.TextCtrl(self, wx.ID_ANY, "", 
-                                          style=wx.TE_READONLY)
-        self.lab_channel = wx.StaticText(self, wx.ID_ANY, ("Channels:"))
-        self.txt_channel = wx.TextCtrl(self, wx.ID_ANY, "", 
+        self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY)
         self.ckb_onlynorm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Only Normalization"))
@@ -132,7 +122,7 @@ class Audio_Conv(wx.Panel):
         sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
         grid_sizer_3 = wx.FlexGridSizer(7, 2, 0, 0)
         grid_sizer_1 = wx.GridSizer(2, 1, 0, 0)
-        grid_sizer_2 = wx.GridSizer(2, 1, 0, 0)
+        grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
         grid_sizer_4 = wx.FlexGridSizer(2, 4, 0, 0)
         #grid_sizer_5 = wx.FlexGridSizer(1, 3, 0, 0)
         sizer_3 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -140,15 +130,14 @@ class Audio_Conv(wx.Panel):
         sizer_3.Add(self.cmbx_a, 0, wx.ALIGN_CENTER | wx.ALL, 20)
         grid_sizer_1.Add(sizer_3, 1, wx.ALL | wx.EXPAND, 5)
         grid_sizer_2.Add(self.btn_param, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.lab_samplerate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.txt_samplerate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.lab_bitdepth, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.txt_bitdepth, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.lab_bitrate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.txt_bitrate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.lab_channel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_4.Add(self.txt_channel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_2.Add(grid_sizer_4, 0, wx.TOP, 5)
+        grid_sizer_2.Add(self.txt_options, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_sizer_4.Add(self.lab_bitdepth, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_sizer_4.Add(self.txt_bitdepth, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_sizer_4.Add(self.lab_bitrate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_sizer_4.Add(self.txt_bitrate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_sizer_4.Add(self.lab_channel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_sizer_4.Add(self.txt_channel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_sizer_2.Add(grid_sizer_4, 0, wx.TOP, 5)
         grid_sizer_1.Add(grid_sizer_2, 1, 0, 0)
         sizer_2.Add(grid_sizer_1, 1, wx.ALL | wx.EXPAND, 20)
         grid_sizer_3.Add(self.ckb_norm, 0, wx.TOP, 5)
@@ -222,11 +211,7 @@ class Audio_Conv(wx.Panel):
         if self.ckb_onlynorm.IsChecked():
             self.ckb_onlynorm.SetValue(False)
             self.cmbx_a.Enable(), self.btn_param.Enable(),
-            self.ckb_norm.Enable(),
-            self.lab_samplerate.Enable(), self.txt_samplerate.Enable(),
-            self.lab_bitdepth.Enable(), self.txt_bitdepth.Enable(),
-            self.lab_bitrate.Enable(), self.txt_bitrate.Enable(),
-            self.lab_channel.Enable(), self.txt_channel.Enable()
+            self.ckb_norm.Enable(), self.txt_options.Enable(),
 
     #----------------------Event handler (callback)----------------------#
     #------------------------------------------------------------------#
@@ -238,29 +223,20 @@ class Audio_Conv(wx.Panel):
             if self.ckb_norm.IsChecked():
                 self.normalization_disabled()
             self.ckb_norm.Disable(), self.ckb_onlynorm.Disable()
-            self.txt_samplerate.Disable(), self.txt_bitdepth.Disable(),
-            self.txt_bitrate.Disable(), self.txt_channel.Disable(),
-            self.btn_param.Disable(), self.lab_samplerate.Disable()
-            self.lab_bitdepth.Disable(), self.lab_bitrate.Disable()
-            self.lab_channel.Disable()
+            self.txt_options.Disable(), self.btn_param.Disable()
             file_sources = self.parent.file_sources[:]
             self.audiocopy(file_sources)
         else:
             if not self.ckb_norm.IsChecked():# è l'unico caso questo
                 self.ckb_norm.Enable(), self.ckb_onlynorm.Enable(), 
-                self.txt_samplerate.Enable(), self.txt_bitdepth.Enable(), 
-                self.txt_bitrate.Enable(), self.txt_channel.Enable(), 
-                self.btn_param.Enable(), self.lab_samplerate.Enable()
-                self.lab_bitdepth.Enable(), self.lab_bitrate.Enable()
-                self.lab_channel.Enable()
+                self.txt_options.Enable(), self.btn_param.Enable()
             cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
             cmd_opt["AudioCodec"] = \
                                     acodecs[self.cmbx_a.GetValue()]
             ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
             cmd_opt["ExportExt"] = ext
         
-        self.txt_samplerate.SetValue(""), self.txt_bitdepth.SetValue(""),
-        self.txt_bitrate.SetValue(""), self.txt_channel.SetValue(""),
+        self.txt_options.SetValue("")
         cmd_opt["AudioChannel"] = ["",""]
         cmd_opt["AudioRate"] = ["",""]
         cmd_opt["AudioBitrate"] = ["",""]
@@ -333,12 +309,13 @@ class Audio_Conv(wx.Panel):
             audiodialog.Destroy()
             return
 
-        self.txt_samplerate.SetValue(""), self.txt_bitdepth.SetValue(""),
-        self.txt_bitrate.SetValue(""), self.txt_channel.SetValue(""),
-        self.txt_samplerate.AppendText(cmd_opt["AudioRate"][0])
-        self.txt_bitdepth.AppendText(cmd_opt["AudioDepth"][0])
-        self.txt_bitrate.AppendText(cmd_opt["AudioBitrate"][0])
-        self.txt_channel.AppendText(cmd_opt["AudioChannel"][0])
+        self.txt_options.SetValue("")
+        self.txt_options.AppendText("%s, %s, %s, %s" % (
+                                   cmd_opt["AudioRate"][0],
+                                   cmd_opt["AudioDepth"][0],
+                                   cmd_opt["AudioBitrate"][0],
+                                   cmd_opt["AudioChannel"][0],)
+                                   )
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#
@@ -437,17 +414,11 @@ class Audio_Conv(wx.Panel):
                 self.ckb_norm.SetValue(True), self.on_Enable_norm(self)
             self.ckb_norm.Disable()
             self.cmbx_a.Disable(), self.btn_param.Disable(),
-            self.lab_samplerate.Disable(), self.txt_samplerate.Disable(),
-            self.lab_bitdepth.Disable(), self.txt_bitdepth.Disable(),
-            self.lab_bitrate.Disable(), self.txt_bitrate.Disable(),
-            self.lab_channel.Disable(), self.txt_channel.Disable()
+            self.txt_options.Disable(),
         else:
             self.cmbx_a.Enable(), self.btn_param.Enable(),
             self.ckb_norm.Enable(),
-            self.lab_samplerate.Enable(), self.txt_samplerate.Enable(),
-            self.lab_bitdepth.Enable(), self.txt_bitdepth.Enable(),
-            self.lab_bitrate.Enable(), self.txt_bitrate.Enable(),
-            self.lab_channel.Enable(), self.txt_channel.Enable()
+            self.txt_options.Enable(),
     #------------------------------------------------------------------#
     def on_Analyzes(self, evt):  # analyzes button
         """
@@ -515,18 +486,11 @@ class Audio_Conv(wx.Panel):
         Set the parent.post_process attribute for communicate it the
         file disponibilities for play or metadata functionalities.
         """
-        wildcard = None
         if not exported:
             return
-        
-        elif len(exported) > 1:#if batch
-            wildcard = "Source (*.%s)|*.%s| All files (*.*)|*.*" % (
-                cmd_opt["ExportExt"], cmd_opt["ExportExt"])
-            self.parent.post_process = [exported[0],wildcard]
-            self.parent.postExported_enable()#enable menu items
 
         else:
-            self.parent.post_process = [exported[0], wildcard]
+            self.parent.post_process = exported
             self.parent.postExported_enable()
     #------------------------------------------------------------------#
     def update_allentries(self):
@@ -606,7 +570,8 @@ class Audio_Conv(wx.Panel):
                                            lenghmax, 
                                            )
                 #used for play preview and mediainfo:
-                self.exportStreams(dir_destin)#call function more above
+                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
+                self.exportStreams(f)#call function more above
         else:
             title = 'Audio Conversion'
             command = ("-loglevel %s %s -vn %s %s %s %s %s %s %s -y" % (
@@ -637,7 +602,9 @@ class Audio_Conv(wx.Panel):
                                            lenghmax,
                                            )
                 #used for play preview and mediainfo:
-                self.exportStreams(dir_destin)#call function more above
+                f = os.path.basename(file_sources[0]).split('.')[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                              cmd_opt["ExportExt"]))
         
     #------------------------------------------------------------------#
     def grabaudioProc(self, file_sources, dir_destin, 
@@ -667,7 +634,9 @@ class Audio_Conv(wx.Panel):
                                        lenghmax, #list
                                        )
             # used for play preview and mediainfo:
-            self.exportStreams(dir_destin)#call function more above
+            f = os.path.basename(file_sources[0]).split('.')[0]
+            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                             cmd_opt["ExportExt"]))
 
     #------------------------------------------------------------------#
     def update_dict(self, lenghmax):

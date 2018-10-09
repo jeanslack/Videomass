@@ -1151,18 +1151,10 @@ class Video_Conv(wx.Panel):
         Set the parent.post_process attribute for communicate it the
         file disponibilities for play or metadata functionalities.
         """
-        wildcard = None
         if not exported:
             return
-        
-        elif len(exported) > 1:#if batch
-            wildcard = "Source (*.%s)|*.%s| All files (*.*)|*.*" % (
-                cmd_opt["VideoFormat"], cmd_opt["VideoFormat"])
-            self.parent.post_process = [exported[0],wildcard]
-            self.parent.postExported_enable()#enable menu items
-
         else:
-            self.parent.post_process = [exported[0], wildcard]
+            self.parent.post_process = exported
             self.parent.postExported_enable()
     #-------------------------------------------------------------------#
     def update_allentries(self):
@@ -1272,7 +1264,8 @@ class Video_Conv(wx.Panel):
                                            lenghmax, 
                                            )
                 #used for play preview and mediainfo:
-                self.exportStreams(dir_destin)#call function more above
+                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
+                self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
             cmd1 = ('-loglevel %s %s -pass 1 -an %s %s %s %s '
@@ -1314,7 +1307,9 @@ class Video_Conv(wx.Panel):
                                            lenghmax, 
                                            )
                 #used for play preview and mediainfo:
-                self.exportStreams(dir_destin)#call function more above
+                f = os.path.basename(file_sources[0]).split('.')[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                              cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
@@ -1346,7 +1341,10 @@ class Video_Conv(wx.Panel):
                                            logname, 
                                            lenghmax, 
                                            )
-                self.exportStreams(dir_destin)#call function more above
+                #used for play preview and mediainfo:
+                f = os.path.basename(file_sources[0]).split('.')[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                              cmd_opt["VideoFormat"]))
     #--------------------------------------------------------------------#
     def saveimages(self, file_sources, dir_destin, 
                    filename, logname, lenghmax):

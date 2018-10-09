@@ -73,7 +73,7 @@ class Cut_Range(wx.Dialog):
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_1_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                            "Start time position (h:m:s)")), wx.VERTICAL)
+                        "Start time position (hours:min:sec)")), wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
         self.stop_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
@@ -81,7 +81,7 @@ class Cut_Range(wx.Dialog):
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                            "Time progress duration (h:m:s)")), wx.VERTICAL)
+                        "Time progress duration (hours:min:sec)")), wx.VERTICAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")

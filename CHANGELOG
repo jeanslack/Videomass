@@ -4,19 +4,25 @@ October 05, 2018 V.1.1.0
 - Solved an exception when importing images and proceeding with normalization
   (add: does not contain any stream)
 - FFmpeg's unrecognized errors are now better managed on volumedetect Processing
-- Added new filter section on Video Conversions panel:
+- Added new filter section on Video Conversions panel with new dialogs boxes
+  implementation for:
 
        scale
        rotation
        crop
        [de]interlace
+       denoisers
        
-- Each filter button has the color application on/off
-- Added new button to preview all filters set in real time.
-- Added new dialogs boxes for filter implementation
+- Each filter button has the color application to on/off state views
+- Added new button to result preview all filters set in real time.
 - Improved layout on Video conversions panel
 - Removed the 'video size' function instead of the scale filter 
 - Move the 'save image from video' function to the 'format/containers' combobox
+- Added a new button bar with play buttons, metadata and duration for cutting 
+  timeline sequences.
+- Accessibility to playback functions, metadata display, and timeline 
+  duration settings are now improved.
+- Solve bug with exported preview and exported metadata display
 
 +------------------------------------+
 Set 22, 2018 V.1.0.1
