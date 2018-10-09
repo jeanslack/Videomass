@@ -94,12 +94,11 @@ class MainFrame(wx.Frame):
         #----------- panel toolbar buttons
         self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
 
-        playbmp = wx.Bitmap('/home/gianluca/play.png', wx.BITMAP_TYPE_ANY)
-        previewbmp = wx.Bitmap('/home/gianluca/preview.png', wx.BITMAP_TYPE_ANY)
-        infoIbmp = wx.Bitmap('/home/gianluca/infoSource.png', wx.BITMAP_TYPE_ANY)
-        infoObmp = wx.Bitmap('/home/gianluca/infoExp.png', wx.BITMAP_TYPE_ANY)
-        cutbmp = wx.Bitmap('/home/gianluca/cut.png', wx.BITMAP_TYPE_ANY)
-        testbmp = wx.Bitmap('/home/gianluca/test1.png', wx.BITMAP_TYPE_ANY)
+        playbmp = wx.Bitmap(setui[11], wx.BITMAP_TYPE_ANY)
+        infoIbmp = wx.Bitmap(setui[12], wx.BITMAP_TYPE_ANY)
+        previewbmp = wx.Bitmap(setui[13], wx.BITMAP_TYPE_ANY)
+        infoObmp = wx.Bitmap(setui[14], wx.BITMAP_TYPE_ANY)
+        cutbmp = wx.Bitmap(setui[15], wx.BITMAP_TYPE_ANY)
         
         self.btn_playI = GB.GradientButton(self.btnpanel, 
                                            size=(-1,30), 
@@ -146,6 +145,7 @@ class MainFrame(wx.Frame):
                                                 self.cpu_used,
                                                 self.loglevel_type,
                                                 self.OS,
+                                                setui[16]# icon playfilters
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, self.helping, 
                                                 self.ffmpeg_link, 
@@ -342,7 +342,7 @@ class MainFrame(wx.Frame):
         """
         self.btn_playI.SetForegroundColour(wx.Colour(62, 211, 46))
         self.btn_playI.Enable()
-        self.btn_metaI.SetForegroundColour(wx.Colour(113, 227, 217))
+        self.btn_metaI.SetForegroundColour(wx.Colour(62, 211, 46))
         self.btn_metaI.Enable()
         self.import_clicked = path# used for play and metadata
         
@@ -361,9 +361,9 @@ class MainFrame(wx.Frame):
         Enable menu Streams items for output play and metadata
         info
         """
-        self.btn_playO.SetForegroundColour(wx.Colour(62, 211, 46))
+        self.btn_playO.SetForegroundColour(wx.Colour(61, 110, 227))
         self.btn_playO.Enable()
-        self.btn_metaO.SetForegroundColour(wx.Colour(113, 227, 217))
+        self.btn_metaO.SetForegroundColour(wx.Colour(61, 110, 227))
         self.btn_metaO.Enable()
 
     #---------------------- Event handler (callback) ------------------#

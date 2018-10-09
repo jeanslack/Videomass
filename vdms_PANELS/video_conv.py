@@ -32,6 +32,7 @@
 import wx
 import os
 import wx.lib.agw.floatspin as FS
+import wx.lib.agw.gradientbutton as GB
 from vdms_IO.IO_tools import volumeDetectProcess, stream_play
 from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS.epilogue import Formula
@@ -89,7 +90,7 @@ class Video_Conv(wx.Panel):
     and preset storing feature
     """
     def __init__(self, parent, helping, ffmpeg_link, ffplay_link, 
-                 threads, cpu_used, loglevel_type, OS):
+                 threads, cpu_used, loglevel_type, OS, play):
 
         wx.Panel.__init__(self, parent)
         """ constructor """
@@ -161,9 +162,15 @@ class Video_Conv(wx.Panel):
                                     wx.ID_ANY, ("Denoisers"))
         #line1 = wx.StaticLine(self.notebook_1_pane_2, wx.ID_ANY, size=(130, -1),
            #style=wx.LI_HORIZONTAL,name='')
-        self.btn_preview = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Playback_Preview"))
-        self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.btn_preview = wx.Button(self.notebook_1_pane_2, 
+                                    #wx.ID_ANY, ("Playback_Preview"))
+        #self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
+        playbmp = wx.Bitmap(play, wx.BITMAP_TYPE_ANY)
+        self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
+                                             size=(-1,30),
+                                             bitmap=playbmp, 
+                                             label="Preview Filters")
+        self.btn_preview.SetForegroundColour("yellow")
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                          wx.ID_ANY, ("Filters Section")

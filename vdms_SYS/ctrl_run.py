@@ -80,6 +80,12 @@ def system_check():
         icon_help = '%s/art/icon_help.png' % PWD
         icon_headphones = '%s/art/icon_headphones.png' % PWD
         icon_import = '%s/art/icon_import.png' % PWD
+        icn_play = '%s/art/play.png' % PWD
+        icn_infosource = '%s/art/infosource.png' % PWD
+        icn_preview = '%s/art/preview.png' % PWD
+        icn_infoexport = '%s/art/infoexport.png' % PWD
+        icn_cut = '%s/art/cut.png' % PWD
+        icn_playfilters = '%s/art/playfilters.png' % PWD
         """
         assignment path at the contestual help for helping:
         """
@@ -102,6 +108,12 @@ def system_check():
         icon_help = '/usr/share/videomass2/icons/icon_help.png'
         icon_headphones = '/usr/share/videomass2/icons/icon_headphones.png'
         icon_import = '/usr/share/videomass2/icons/icon_import.png'
+        icn_play = '/usr/share/videomass2/icons/play.png'
+        icn_infosource = '/usr/share/videomass2/icons/infosource.png'
+        icn_preview = '/usr/share/videomass2/icons/preview.png'
+        icn_infoexport = '/usr/share/videomass2/icons/infoexport.png'
+        icn_cut = '/usr/share/videomass2/icons/cut.png'
+        icn_playfilters = '/usr/share/videomass2/icons/playfilters.png'
         """
         assignment path at the contestual help for helping.
         This change if Slackware, debian, etc.
@@ -130,6 +142,12 @@ def system_check():
         icon_help = '%s/art/icon_help.png' % PWD
         icon_headphones = '%s/art/icon_headphones.png' % PWD
         icon_import = '%s/art/icon_import.png' % PWD
+        icn_play = '%s/art/play.png' % PWD
+        icn_infosource = '%s/art/infosource.png' % PWD
+        icn_preview = '%s/art/preview.png' % PWD
+        icn_infoexport = '%s/art/infoexport.png' % PWD
+        icn_cut = '%s/art/cut.png' % PWD
+        icn_playfilters = '%s/art/playfilters.png' % PWD
         """
         assignment path at the contestual help for helping:
         """
@@ -158,7 +176,8 @@ def system_check():
 
     return (videomass_icon, icon_presets, icon_switchvideomass, icon_process, 
             icon_help, help_html, OS, path_srcShare, copyerr, icon_headphones, 
-            icon_import
+            icon_import, icn_play, icn_infosource, icn_preview, icn_infoexport,
+            icn_cut, icn_playfilters
             )
 #------------------------------------------------------------------#
 def parsing_fileconf():
