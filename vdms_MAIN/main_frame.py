@@ -530,6 +530,10 @@ class MainFrame(wx.Frame):
         self.showtoolbar = setupButton.Append(wx.ID_ANY, "Show Tool Bar", 
                                        "Show tool bar view", wx.ITEM_CHECK)
         setupButton.Check(self.showtoolbar.GetId(), True)
+        
+        self.showpanelbar = setupButton.Append(wx.ID_ANY, "Show Buttons Bar", 
+                                "Show or hide buttons bar view", wx.ITEM_CHECK)
+        setupButton.Check(self.showpanelbar.GetId(), True)
 
         setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES, "Setup", 
@@ -562,6 +566,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Delprof, self.delprof)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
+        self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         #----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
@@ -664,6 +669,17 @@ class MainFrame(wx.Frame):
             self.toolbar.Show()
         else:
             self.toolbar.Hide()
+    #--------------------------------------------------------------------#
+    def Show_panelbar(self, event):
+        """
+        Show or Hide the buttons bar
+        """
+        if self.showpanelbar.IsChecked():
+            self.btnpanel.Show()
+            self.Layout()
+        else:
+            self.btnpanel.Hide()
+            self.Layout()
 
         
     #------------------------------------------------------------------#
@@ -846,6 +862,9 @@ class MainFrame(wx.Frame):
         start running.
         """
         duration = self.DnD.duration[:] # the streams duration list
+        
+        if self.showpanelbar.IsChecked():
+            self.btnpanel.Hide()# hide buttons bar if the user has shown it:
 
         IO_tools.process(self, varargs, 
                          self.path_log, 
@@ -860,7 +879,7 @@ class MainFrame(wx.Frame):
         #Show the panel:
         self.ProcessPanel.Show()
         self.Layout()
-        self.SetTitle('..Processing, be patient - Videomass2')
+        self.SetTitle('..Start Encoding - Videomass2')
 
         self.Setup_items_bar()# call set default layout method
     #------------------------------------------------------------------#
@@ -877,8 +896,6 @@ class MainFrame(wx.Frame):
         elif self.AconvPanel.IsShown():
             self.AconvPanel.on_ok()
             
-        self.btnpanel.Disable()# disable buttons panel
-
     #------------------------------------------------------------------#
     def panelShown(self, panelshown):
         """
@@ -898,7 +915,11 @@ class MainFrame(wx.Frame):
             self.switch_audio_conv(self)
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0,4)]
-        self.btnpanel.Enable()# enable buttons panel
-        self.SetTitle("Videomass2")
+        self.SetTitle("Videomass2")# set the appropriate title
+        # show buttons bar if the user has shown it:
+        if self.showpanelbar.IsChecked():
+            self.btnpanel.Show()
+            self.Layout()
+        
         
         

@@ -5,6 +5,7 @@
 URGENCY: to do soon
 --------------------
 log per doppia passata
+implementazione -vf format=yuv420p (or the alias -pix_fmt yuv420p)
 sistemare add profile su video conv.(fare da ok direttamente aggiungendo una condizione)
 rimuovi tutti gli html e setta il link alla pagina web
 
