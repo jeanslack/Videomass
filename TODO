@@ -4,10 +4,8 @@
 --------------------
 URGENCY: to do soon
 --------------------
-Trovare sistemazione time_cut_range
 log per doppia passata
 sistemare add profile su video conv.(fare da ok direttamente aggiungendo una condizione)
-Mettere unico textctrl per visualiz. il setting audio su audio conv
 rimuovi tutti gli html e setta il link alla pagina web
 
 --------------------------------------------------------------------------------
@@ -26,9 +24,6 @@ URGENCY: low
   
 - Rinnovare i presets e i profili con nuove adds: aggiungere audio in video;
   aggiungere audio su immagini
-  
-- Rivedere il pannello Audio_conversion per migliorare il layout dei widgets 
-  settings
   
 --------------------------------------------------------------------------------
 URGENCY: medium

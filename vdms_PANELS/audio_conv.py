@@ -310,12 +310,11 @@ class Audio_Conv(wx.Panel):
             return
 
         self.txt_options.SetValue("")
-        self.txt_options.AppendText("%s, %s, %s, %s" % (
-                                   cmd_opt["AudioRate"][0],
-                                   cmd_opt["AudioDepth"][0],
-                                   cmd_opt["AudioBitrate"][0],
-                                   cmd_opt["AudioChannel"][0],)
-                                   )
+        for d in [cmd_opt["AudioRate"][0],cmd_opt["AudioDepth"][0],
+                 cmd_opt["AudioBitrate"][0], cmd_opt["AudioChannel"][0]
+                 ]:
+            if not 'Not set' in d:
+                self.txt_options.AppendText(" %s," % d)
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#

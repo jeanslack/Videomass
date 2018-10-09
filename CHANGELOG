@@ -16,6 +16,7 @@ October 05, 2018 V.1.1.0
 - Each filter button has the color application to on/off state views
 - Added new button to result preview all filters set in real time.
 - Improved layout on Video conversions panel
+- Improved layout on Audio conversion panel
 - Removed the 'video size' function instead of the scale filter 
 - Move the 'save image from video' function to the 'format/containers' combobox
 - Added a new button bar with play buttons, metadata and duration for cutting 
