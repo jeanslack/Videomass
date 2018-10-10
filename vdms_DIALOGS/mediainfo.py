@@ -22,9 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (02) 14/03/2015
-# Rev (02) 20/04/2015
-# Rev (04) 27/04/2015
+# Rev (02) 14/03/2015, (04) 27/04/2015, (05) October/10/2018
 #########################################################
 
 import wx
@@ -48,18 +46,11 @@ class Mediainfo(wx.Dialog):
         format_info = wx.ListCtrl(notebook_1_pane_1, wx.ID_ANY,
                                   style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                   )
-        sizer_format_content_staticbox = wx.StaticBox(notebook_1_pane_1, 
-                                                      wx.ID_ANY, 
-                                  ("FFprobe metadata FORMAT:"))
         notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
         
         streams_info = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY,
                                    style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                    )
-        sizer_stream_content_staticbox = wx.StaticBox(notebook_1_pane_2, 
-                                                      wx.ID_ANY, 
-                        ("FFprobe Metadata STREAMS:"))
-        
         #button_help = wx.Button(self, wx.ID_HELP, "")
         button_close = wx.Button(self, wx.ID_CLOSE, "")
         
@@ -79,21 +70,14 @@ class Mediainfo(wx.Dialog):
         grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
         grid_buttons = wx.GridSizer(1, 1, 0, 0)
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
-        sizer_stream_content_staticbox.Lower()
-        sizer_stream_content = wx.StaticBoxSizer(sizer_stream_content_staticbox, wx.VERTICAL)
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
-        sizer_format_content_staticbox.Lower()
-        sizer_format_content = wx.StaticBoxSizer(sizer_format_content_staticbox, wx.VERTICAL)
-        sizer_format_content.Add(format_info, 0, wx.ALIGN_CENTER | wx.ALL, 15)
-        sizer_tab1.Add(sizer_format_content, 1, wx.ALL | wx.EXPAND, 15)
+        sizer_tab1.Add(format_info, 1, wx.ALL | wx.EXPAND, 15)
         notebook_1_pane_1.SetSizer(sizer_tab1)
-        sizer_stream_content.Add(streams_info, 0, wx.ALIGN_CENTER | wx.ALL, 15)
-        sizer_tab2.Add(sizer_stream_content, 1, wx.ALL | wx.EXPAND, 15)
+        sizer_tab2.Add(streams_info, 1, wx.ALL | wx.EXPAND, 15)
         notebook_1_pane_2.SetSizer(sizer_tab2)
         notebook_1.AddPage(notebook_1_pane_1, ("General Informations"))
         notebook_1.AddPage(notebook_1_pane_2, ("Extensive Report"))
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 15)
-        #grid_buttons.Add(button_help, 0, wx.ALIGN_RIGHT | wx.ALL, 15)
         grid_buttons.Add(button_close, 0, wx.ALL, 15)
         grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
         grid_sizer_1.AddGrowableRow(0)
