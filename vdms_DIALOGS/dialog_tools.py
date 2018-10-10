@@ -38,7 +38,7 @@ class Cut_Range(wx.Dialog):
     cutting a time range of audio and video streams. 
     FIXME: replace spinctrl with a timer spin float ctrl if exist
     """
-    def __init__(self, parent, title, hasSet):
+    def __init__(self, parent, hasSet):
         """
         FFmpeg use this format of a time range to specifier a media cutting
         range: "-ss 00:00:00 -t 00:00:00". The -ss flag is the initial
@@ -66,18 +66,32 @@ class Cut_Range(wx.Dialog):
         
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
+        labss = wx.StaticText(self, wx.ID_ANY, ("S"))
+        labss.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
+        
         self.start_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                   self.init_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
+        lab1 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.start_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.init_minute), min=0, max=59, style=wx.TE_PROCESS_ENTER)
+        lab2 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_1_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                         "Start time position (hours:min:sec)")), wx.VERTICAL)
+        
+        labt = wx.StaticText(self, wx.ID_ANY, ("T"))
+        labt.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
+        lab3 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab3.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.stop_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                  self.cut_minute), min=0, max=59, style=wx.TE_PROCESS_ENTER)
+        lab4 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab4.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -87,7 +101,7 @@ class Cut_Range(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         #----------------------Properties ----------------------#
-        self.SetTitle(title)
+        self.SetTitle('Set Time Sequences - Videomass2')
         self.start_hour_ctrl.SetMinSize((100,-1 ))
         self.start_minute_ctrl.SetMinSize((100, -1))
         self.start_second_ctrl.SetMinSize((100, -1))
@@ -103,28 +117,35 @@ class Cut_Range(wx.Dialog):
         #----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
-        gridFlex1 = wx.FlexGridSizer(1, 3, 0, 0)
-        gridFlex2 = wx.FlexGridSizer(1, 3, 0, 0)
+        gridFlex1 = wx.FlexGridSizer(1, 6, 0, 0)
+        gridFlex2 = wx.FlexGridSizer(1, 6, 0, 0)
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
         
         grid_sizer_base.Add(sizer_1_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         sizer_1_staticbox.Add(gridFlex1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFlex1.Add(labss,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(self.start_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex1.Add(lab1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(self.start_minute_ctrl,0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex1.Add(lab2,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(self.start_second_ctrl,0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         
         grid_sizer_base.Add(sizer_2_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFlex2.Add(labt,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex2.Add(lab3,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_minute_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex2.Add(lab4,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_second_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         
-        grid_sizer_base.Add(gridBtn,1,)
-        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_ok,1,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        gridBtn.Add(btn_close,0, wx.ALL,5)
+        gridBtn.Add(btn_ok,0,wx.ALL,5)
+        gridBtn.Add(btn_reset,0, wx.ALL,5)
         
-        sizer_base.Add(grid_sizer_base, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        sizer_base.Add(grid_sizer_base, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -460,17 +481,11 @@ class VideoCrop(wx.Dialog):
         gridBase.Add(sizerLabel, 1, wx.ALL | 
                                     wx.ALIGN_CENTER_HORIZONTAL | 
                                     wx.ALIGN_CENTER_VERTICAL,15)
-        gridBase.Add(gridBtnExit, 1, wx.ALL,5)
+        gridBase.Add(gridBtnExit, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         
-        gridBtnExit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
-                                              | wx.ALIGN_CENTER_VERTICAL,5
-                                               )
-        gridBtnExit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
-                                                | wx.ALIGN_CENTER_VERTICAL,5
-                                                )
-        gridBtnExit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
-                                                | wx.ALIGN_CENTER_VERTICAL,5
-                                                )
+        gridBtnExit.Add(btn_close, 1, wx.ALL ,5)
+        gridBtnExit.Add(self.btn_ok, 1, wx.ALL ,5)
+        gridBtnExit.Add(btn_reset, 1, wx.ALL ,5)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
@@ -719,7 +734,7 @@ class VideoResolution(wx.Dialog):
         
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
@@ -1044,7 +1059,7 @@ class Lacing(wx.Dialog):
         grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
@@ -1452,7 +1467,7 @@ class Denoisers(wx.Dialog):
                     15)
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         gridBtn.Add(btn_close,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)

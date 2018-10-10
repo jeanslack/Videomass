@@ -23,6 +23,7 @@
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 09/july/2018
+# Rev (02) 11/October/2018
 #########################################################
 
 import wx
@@ -377,8 +378,7 @@ class MainFrame(wx.Frame):
         """
         data = ''
 
-        title = 'Set a time Range - Videomass2'
-        dial = dialog_tools.Cut_Range(self, title, self.time_seq)
+        dial = dialog_tools.Cut_Range(self, self.time_seq)
         retcode = dial.ShowModal()
         if retcode == wx.ID_OK:
             data = dial.GetValue()

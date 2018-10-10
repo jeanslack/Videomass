@@ -23,6 +23,8 @@
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 09/july/2018
+# Rev (02) 11/October/2018
+
 #########################################################
 
 import wx
@@ -188,7 +190,7 @@ class DnDPanel(wx.Panel):
         # build the menu
         menu = wx.Menu()
         itemOne = menu.Append(self.popupID1, "Play selected file")
-        itemTwo = menu.Append(self.itemTwoId, "Open metadata window")
+        itemTwo = menu.Append(self.itemTwoId, "Show metadata window")
  
         # show the popup menu
         self.PopupMenu(menu)
@@ -202,9 +204,6 @@ class DnDPanel(wx.Panel):
         itemId = event.GetId()
         menu = event.GetEventObject()
         menuItem = menu.FindItemById(itemId)
-        
-        index = self.fileListCtrl.GetFocusedItem()
-        item = self.fileListCtrl.GetItemText(index)
 
         if not self.selected:
             self.parent.statusbar_msg('No file selected', yellow)
@@ -212,7 +211,7 @@ class DnDPanel(wx.Panel):
             self.parent.statusbar_msg('Drag and Drop - panel', azure)
             if menuItem.GetLabel() == "Play selected file":
                 self.parent.ImportPlay()
-            elif menuItem.GetLabel() == "Open metadata window":
+            elif menuItem.GetLabel() == "Show metadata window":
                 self.on_doubleClick(self)
                 
     #----------------------------------------------------------------------
@@ -257,7 +256,8 @@ class DnDPanel(wx.Panel):
         """
         Double click or keyboard enter button, open media info
         """
-        self.parent.ImportInfo(self)
+        self.onContext(self)
+        #self.parent.ImportInfo(self)
     #----------------------------------------------------------------------
     def on_deselect(self, event):
         """
