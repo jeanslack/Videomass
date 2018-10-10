@@ -31,6 +31,7 @@ from vdms_IO import IO_tools
 
 dirname = os.path.expanduser('~') # /home/user/
 duration = []
+azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
 yellow = '#faff35'
 greenolive = '#8aab3c'
@@ -126,9 +127,10 @@ class DnDPanel(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname # path name files destination
-        self.fileList = []
-        self.duration = duration
-        self.switch = 'off'
+        self.fileList = [] # list of each imported file
+        self.duration = duration # list of the duration of each file imported
+        self.switch = 'off' # tells if one or more files are imported
+        self.selected = False # tells if an imported file is selected or not
         #This builds the list control box:
         self.fileListCtrl = MyListCtrl(self, self.fileList, ffprobe_link)  #class MyListCtr
         #Establish the listctrl as a drop target:
@@ -164,10 +166,55 @@ class DnDPanel(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.fileListCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.fileListCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.fileListCtrl)
+        self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         #self.Bind(wx.EVT_CHECKBOX, self.same_filedest, self.ckbx_dir)
         #self.Bind(wx.EVT_BUTTON, self.on_custom_save, self.btn_save)
         
         self.text_path_save.SetValue(self.file_dest)
+        
+    #----------------------------------------------------------------------
+    def onContext(self, event):
+        """
+        Create and show a Context Menu
+        """
+        # only do this part the first time so the events are only bound once 
+        if not hasattr(self, "popupID1"):
+            self.popupID1 = wx.NewId()
+            self.itemTwoId = wx.NewId()
+            self.itemThreeId = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.itemTwoId)
+ 
+        # build the menu
+        menu = wx.Menu()
+        itemOne = menu.Append(self.popupID1, "Play selected file")
+        itemTwo = menu.Append(self.itemTwoId, "Open metadata window")
+ 
+        # show the popup menu
+        self.PopupMenu(menu)
+        menu.Destroy()
+    #----------------------------------------------------------------------
+    def onPopup(self, event):
+        """
+        Evaluate the label string of the menu item selected and start
+        the related process
+        """
+        itemId = event.GetId()
+        menu = event.GetEventObject()
+        menuItem = menu.FindItemById(itemId)
+        
+        index = self.fileListCtrl.GetFocusedItem()
+        item = self.fileListCtrl.GetItemText(index)
+
+        if not self.selected:
+            self.parent.statusbar_msg('No file selected', yellow)
+        else:
+            self.parent.statusbar_msg('Drag and Drop - panel', azure)
+            if menuItem.GetLabel() == "Play selected file":
+                self.parent.ImportPlay()
+            elif menuItem.GetLabel() == "Open metadata window":
+                self.on_doubleClick(self)
+                
     #----------------------------------------------------------------------
     def btn_enable(self, fileList, invalid):
         """
@@ -195,14 +242,16 @@ class DnDPanel(wx.Panel):
         self.switch = 'off'
         self.parent.Disable_ToolBtn()
         self.parent.importClicked_disable()
+        self.selected = False
     #----------------------------------------------------------------------
-    def on_select(self, row):
+    def on_select(self, event):
         """
         Selecting a line with mouse or up/down keyboard buttons
         """
         index = self.fileListCtrl.GetFocusedItem()
         item = self.fileListCtrl.GetItemText(index)
         self.parent.importClicked_enable(item)
+        self.selected = True
     #----------------------------------------------------------------------
     def on_doubleClick(self, row):
         """
@@ -210,13 +259,14 @@ class DnDPanel(wx.Panel):
         """
         self.parent.ImportInfo(self)
     #----------------------------------------------------------------------
-    def on_deselect(self, row):
+    def on_deselect(self, event):
         """
         De-selecting a line with mouse by click in empty space of
         the control list
         """
         self.parent.importClicked_disable()
-    #----------------------------------------------------------------------#
+        self.selected = False
+    #----------------------------------------------------------------------
     def on_custom_save(self):
         """
         Choice a specific directory for files save

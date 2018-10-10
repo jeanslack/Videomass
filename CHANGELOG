@@ -14,7 +14,8 @@ October 05, 2018 V.1.1.0
        denoisers
        
 - Each filter button has the color application to on/off state views
-- Added new button to result preview all filters set in real time.
+- Added new button to result preview of all filters set in real time.
+- Added new button to clear all filters set
 - Improved layout on Video conversions panel
 - Improved layout on Audio conversion panel
 - Removed the 'video size' function instead of the scale filter 

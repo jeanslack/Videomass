@@ -86,6 +86,7 @@ def system_check():
         icn_infoexport = '%s/art/infoexport.png' % PWD
         icn_cut = '%s/art/cut.png' % PWD
         icn_playfilters = '%s/art/playfilters.png' % PWD
+        icn_resetfilters = '%s/art/resetfilters.png' % PWD
         """
         assignment path at the contestual help for helping:
         """
@@ -114,6 +115,7 @@ def system_check():
         icn_infoexport = '/usr/share/videomass2/icons/infoexport.png'
         icn_cut = '/usr/share/videomass2/icons/cut.png'
         icn_playfilters = '/usr/share/videomass2/icons/playfilters.png'
+        icn_resetfilters = '/usr/share/videomass2/icons/resetfilters.png'
         """
         assignment path at the contestual help for helping.
         This change if Slackware, debian, etc.
@@ -148,6 +150,7 @@ def system_check():
         icn_infoexport = '%s/art/infoexport.png' % PWD
         icn_cut = '%s/art/cut.png' % PWD
         icn_playfilters = '%s/art/playfilters.png' % PWD
+        icn_resetfilters = '%s/art/resetfilters.png' % PWD
         """
         assignment path at the contestual help for helping:
         """
@@ -177,7 +180,7 @@ def system_check():
     return (videomass_icon, icon_presets, icon_switchvideomass, icon_process, 
             icon_help, help_html, OS, path_srcShare, copyerr, icon_headphones, 
             icon_import, icn_play, icn_infosource, icn_preview, icn_infoexport,
-            icn_cut, icn_playfilters
+            icn_cut, icn_playfilters, icn_resetfilters
             )
 #------------------------------------------------------------------#
 def parsing_fileconf():

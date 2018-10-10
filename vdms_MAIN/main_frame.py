@@ -100,26 +100,26 @@ class MainFrame(wx.Frame):
         infoObmp = wx.Bitmap(setui[14], wx.BITMAP_TYPE_ANY)
         cutbmp = wx.Bitmap(setui[15], wx.BITMAP_TYPE_ANY)
         
-        self.btn_playI = GB.GradientButton(self.btnpanel, 
-                                           size=(-1,30), 
-                                           bitmap=playbmp, 
-                                           label="Play Source",)
-        self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
+        #self.btn_playI = GB.GradientButton(self.btnpanel, 
+                                           #size=(-1,30), 
+                                           #bitmap=playbmp, 
+                                           #label="Play Source",)
+        #self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1,30),
                                            bitmap=infoIbmp, 
-                                           label="Metadata Source")
+                                           label="Show Metadata")
         self.btn_metaI.SetForegroundColour("grey"), self.btn_metaI.Disable()
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1,30),
                                            bitmap=previewbmp, 
-                                           label="Preview Exp.")
+                                           label="Preview")
         self.btn_playO.SetForegroundColour("grey"), self.btn_playO.Disable()
-        self.btn_metaO = GB.GradientButton(self.btnpanel,
-                                           size=(-1,30),
-                                           bitmap=infoObmp, 
-                                           label="Metadata Exp.")
-        self.btn_metaO.SetForegroundColour("grey"), self.btn_metaO.Disable()
+        #self.btn_metaO = GB.GradientButton(self.btnpanel,
+                                           #size=(-1,30),
+                                           #bitmap=infoObmp, 
+                                           #label="Metadata Exp.")
+        #self.btn_metaO.SetForegroundColour("grey"), self.btn_metaO.Disable()
         
         self.btn_duration = GB.GradientButton(self.btnpanel,
                                               size=(-1,30),
@@ -145,7 +145,8 @@ class MainFrame(wx.Frame):
                                                 self.cpu_used,
                                                 self.loglevel_type,
                                                 self.OS,
-                                                setui[16]# icon playfilters
+                                                setui[16],# icon playfilters
+                                                setui[17],# icon resetfilters
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, self.helping, 
                                                 self.ffmpeg_link, 
@@ -162,12 +163,11 @@ class MainFrame(wx.Frame):
         self.AconvPanel.Hide()
         # Layout toolbar buttons:
         self.DnDsizer = wx.BoxSizer(wx.VERTICAL) # sizer base global
-        grid_pan = wx.FlexGridSizer(1, 8, 0, 0)
-        #grid_pan.Add(self.btn_data3, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_playI, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan = wx.FlexGridSizer(1, 4, 0, 0)
+        #grid_pan.Add(self.btn_playI, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_metaI, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_playO, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_metaO, 0, wx.CENTER|wx.ALL, 5)
+        #grid_pan.Add(self.btn_metaO, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_duration, 0, wx.CENTER|wx.ALL, 5)
         self.btnpanel.SetSizer(grid_pan) # set panel
         self.DnDsizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
@@ -204,14 +204,14 @@ class MainFrame(wx.Frame):
                                     "selected streams in the imported files"
                                         )
         
-        self.btn_metaO.SetToolTipString("Show exported file metadata.\n" 
-                                        "Display additionals information of "
-                                        "the streams in the exported files"
-                                        )
-        self.btn_playI.SetToolTipString("Playback source file.\n" 
-                                        "Reproduct inported and selected "
-                                        "file into drag and drop panel"
-                                        )
+        #self.btn_metaO.SetToolTipString("Show exported file metadata.\n" 
+                                        #"Display additionals information of "
+                                        #"the streams in the exported files"
+                                        #)
+        #self.btn_playI.SetToolTipString("Playback source file.\n" 
+                                        #"Reproduct inported and selected "
+                                        #"file into drag and drop panel"
+                                        #)
         self.btn_playO.SetToolTipString("Preview exported files.\n"
                                         "Reproduct exported file when "
                                         "finish encoding"
@@ -228,14 +228,15 @@ class MainFrame(wx.Frame):
         self.DnD.ckbx_dir.Bind(wx.EVT_CHECKBOX, self.onCheckBox)
         self.DnD.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
-        self.Bind(wx.EVT_BUTTON, self.ImportPlay, self.btn_playI)
+        #self.Bind(wx.EVT_BUTTON, self.ImportPlay, self.btn_playI)
         self.Bind(wx.EVT_BUTTON, self.ImportInfo, self.btn_metaI)
         self.Bind(wx.EVT_BUTTON, self.ExportPlay, self.btn_playO)
-        self.Bind(wx.EVT_BUTTON, self.ExportInfo, self.btn_metaO)
+        #self.Bind(wx.EVT_BUTTON, self.ExportInfo, self.btn_metaO)
         #self.Bind(wx.EVT_SHOW, self.panelShown)
         #self.DnDPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
         #-----------------------------------------------------------#
+        self.statusbar_msg('Drag and Drop - panel',azure)#set default statusmsg
         
     #-------------------Status bar popolate--------------------#
     def statusbar_msg(self, msg, color):
@@ -340,8 +341,8 @@ class MainFrame(wx.Frame):
         when click with the mouse on a control list item, 
         enable Metadata Info and file reproduction menu
         """
-        self.btn_playI.SetForegroundColour(wx.Colour(62, 211, 46))
-        self.btn_playI.Enable()
+        #self.btn_playI.SetForegroundColour(wx.Colour(62, 211, 46))
+        #self.btn_playI.Enable()
         self.btn_metaI.SetForegroundColour(wx.Colour(62, 211, 46))
         self.btn_metaI.Enable()
         self.import_clicked = path# used for play and metadata
@@ -351,7 +352,7 @@ class MainFrame(wx.Frame):
         """
         Disable streams imported menu
         """
-        self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
+        #self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
         self.btn_metaI.SetForegroundColour("grey"), self.btn_metaI.Disable()
         self.import_clicked = ''
         
@@ -363,8 +364,8 @@ class MainFrame(wx.Frame):
         """
         self.btn_playO.SetForegroundColour(wx.Colour(61, 110, 227))
         self.btn_playO.Enable()
-        self.btn_metaO.SetForegroundColour(wx.Colour(61, 110, 227))
-        self.btn_metaO.Enable()
+        #self.btn_metaO.SetForegroundColour(wx.Colour(61, 110, 227))
+        #self.btn_metaO.Enable()
 
     #---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the dragNdrop panel
@@ -385,15 +386,16 @@ class MainFrame(wx.Frame):
                 data = ''
                 self.btn_duration.SetForegroundColour("white")
             else:
-                self.btn_duration.SetForegroundColour(wx.Colour(240, 65, 26))
+                self.btn_duration.SetForegroundColour("yellow")
             self.time_seq = data
         else:
             dial.Destroy()
             return
     #------------------------------ Menu  Streams -----------------------#
-    def ImportPlay(self, event):
+    def ImportPlay(self):
         """
         Redirect input file clicked at stream_play for reproduction feature.
+        This feature is available by context menu in drag n drop panel.
         """
         filepath = self.import_clicked
         IO_tools.stream_play(filepath, 
@@ -427,17 +429,17 @@ class MainFrame(wx.Frame):
                              self.OS,
                              )
     #------------------------------------------------------------------#
-    def ExportInfo(self, event):
-        """
-        Metadata feature for exported file, useful for metadata control. 
-        The first exported file in the list will be displayed.
-        """
-        title = 'File Output Metadata Display - Videomass2'
-        IO_tools.stream_info(title, 
-                             self.post_process, 
-                             self.helping, 
-                             self.ffprobe_link,
-                             )
+    #def ExportInfo(self, event):
+        #"""
+        #Metadata feature for exported file, useful for metadata control. 
+        #The first exported file in the list will be displayed.
+        #"""
+        #title = 'File Output Metadata Display - Videomass2'
+        #IO_tools.stream_info(title, 
+                             #self.post_process, 
+                             #self.helping, 
+                             #self.ffprobe_link,
+                             #)
     #-----------------------------------------------------------------#
     def onCheckBox(self, event):
         """

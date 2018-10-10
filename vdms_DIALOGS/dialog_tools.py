@@ -803,10 +803,9 @@ class VideoResolution(wx.Dialog):
         """
         if self.spin_scale_width.GetValue() == '0':
             self.width = ''
+            #self.spin_scale_height.Disable()
         else:
             self.width = 'w=%s' % self.spin_scale_width.GetValue()
-            
-        
     #------------------------------------------------------------------#
     def on_height(self, event):
         """
@@ -864,6 +863,8 @@ class VideoResolution(wx.Dialog):
         self.spin_scale_width.SetValue(0), self.spin_scale_height.SetValue(0)
         self.spin_setdarNum.SetValue(0), self.spin_setdarDen.SetValue(0)
         self.spin_setsarNum.SetValue(0), self.spin_setsarDen.SetValue(0)
+        self.spin_scale_height.Disable(), self.spin_setdarDen.Disable()
+        self.spin_setsarDen.Disable()
         
     #------------------------------------------------------------------#
     def on_close(self, event):
@@ -890,19 +891,19 @@ class VideoResolution(wx.Dialog):
         """
         diction = {}
 
-        if not self.width and not self.height:
+        if not self.width or not self.height:
             size = ''
         else:
             size = 'scale=%s:%s' % (self.width,self.height)
             diction['scale'] = size
         
-        if not self.darNum and not self.darDen:
+        if not self.darNum or not self.darDen:
             setdar = ''
         else:
             setdar = 'setdar=%s/%s' % (self.darNum,self.darDen)
             diction['setdar'] = setdar
         
-        if not self.sarNum and not self.sarDen:
+        if not self.sarNum or not self.sarDen:
             setsar = ''
         else:
             setsar = 'setsar=%s/%s' % (self.sarNum,self.sarDen)
