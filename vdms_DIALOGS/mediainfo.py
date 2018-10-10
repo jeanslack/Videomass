@@ -95,7 +95,7 @@ class Mediainfo(wx.Dialog):
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 15)
         #grid_buttons.Add(button_help, 0, wx.ALIGN_RIGHT | wx.ALL, 15)
         grid_buttons.Add(button_close, 0, wx.ALL, 15)
-        grid_sizer_1.Add(grid_buttons, 1, wx.EXPAND, 0)
+        grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
         grid_sizer_1.AddGrowableRow(0)
         grid_sizer_1.AddGrowableRow(1)
         grid_sizer_1.AddGrowableCol(0)

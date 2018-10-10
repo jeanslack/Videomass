@@ -212,7 +212,8 @@ class DnDPanel(wx.Panel):
             if menuItem.GetLabel() == "Play selected file":
                 self.parent.ImportPlay()
             elif menuItem.GetLabel() == "Show metadata window":
-                self.on_doubleClick(self)
+                #self.on_doubleClick(self)
+                self.parent.ImportInfo(self)
                 
     #----------------------------------------------------------------------
     def btn_enable(self, fileList, invalid):
