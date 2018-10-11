@@ -401,27 +401,27 @@ class VideoCrop(wx.Dialog):
         """
         Make sure you use the clear button when you finish the task.
         """
-        self.w = ''
-        self.h = ''
-        self.y = ''
-        self.x = ''
+        self.w = '' # set -1 = disable
+        self.h = '' # set -1 = disable
+        self.y = '' # set -1 = disable
+        self.x = '' # set -1 = disable
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """ 
         """
-        self.label_top = wx.StaticText(self, wx.ID_ANY, ("Top (Height)"))
-        self.top = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
+        self.label_width = wx.StaticText(self, wx.ID_ANY, ("Width"))
+        self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
                                size=(100,-1), style=wx.TE_PROCESS_ENTER
                                 )
-        self.label_right = wx.StaticText(self, wx.ID_ANY, ("Right (X)"))
-        self.right = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
+        self.label_height = wx.StaticText(self, wx.ID_ANY, ("Height"))
+        self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
                                  size=(100,-1), style=wx.TE_PROCESS_ENTER
                                  )
-        self.label_bottom = wx.StaticText(self, wx.ID_ANY, ("Bottom (Y)"))
-        self.bottom = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
+        self.label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
+        self.crop_X = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
                                  size=(100,-1), style=wx.TE_PROCESS_ENTER
                                  )
-        self.label_left = wx.StaticText(self, wx.ID_ANY, ("Left (Width)"))
-        self.left = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
+        self.label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
+        self.crop_Y = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
                                  size=(100,-1), style=wx.TE_PROCESS_ENTER
                                  )
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -438,14 +438,18 @@ class VideoCrop(wx.Dialog):
         sizer_3 = wx.BoxSizer(wx.VERTICAL)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
 
-        sizer_3.Add(self.label_top, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        sizer_3.Add(self.top, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        sizer_3.Add(self.label_height, 0, wx.ALL | 
+                                         wx.ALIGN_CENTER_HORIZONTAL, 5
+                                         )
+        sizer_3.Add(self.crop_height, 0, wx.ALL | 
+                                        wx.ALIGN_CENTER_HORIZONTAL, 5
+                                        )
         
-        grid_sizerBase.Add(self.label_left, 0, wx.ALL 
+        grid_sizerBase.Add(self.label_Y, 0, wx.ALL 
                                                 | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
-        grid_sizerBase.Add(self.left, 0, wx.ALL 
+        grid_sizerBase.Add(self.crop_Y, 0, wx.ALL 
                                                 | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
@@ -453,20 +457,20 @@ class VideoCrop(wx.Dialog):
                                             | wx.ALIGN_CENTER_HORIZONTAL 
                                             | wx.ALIGN_CENTER_VERTICAL, 5
                                             )
-        grid_sizerBase.Add(self.right, 0, wx.ALL 
+        grid_sizerBase.Add(self.crop_width, 0, wx.ALL 
                                             | wx.ALIGN_CENTER_HORIZONTAL 
                                             | wx.ALIGN_CENTER_VERTICAL, 5
                                             )
-        grid_sizerBase.Add(self.label_right, 0, wx.ALL 
+        grid_sizerBase.Add(self.label_width, 0, wx.ALL 
                                                 | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
         
         sizer_3.Add(grid_sizerBase, 1, wx.EXPAND, 0)
-        sizer_3.Add(self.bottom, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
+        sizer_3.Add(self.crop_X, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
-        sizer_3.Add(self.label_bottom, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
+        sizer_3.Add(self.label_X, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
         sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
@@ -484,26 +488,26 @@ class VideoCrop(wx.Dialog):
         
         #----------------------Properties------------------------------------#
         self.SetTitle("Video/Image Crop - Videomass2")
-        self.top.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.right.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.bottom.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.left.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
         height = ('The height of the output video.\nSet to -1 for disabling.')
         width = ('The width of the output video.\nSet to -1 for disabling.')
-        x = ('The horizontal position, in the input video, of the left edge '
-              'of the output video.\nSet to -1 for disabling.')
-        y = ('The vertical position, in the input video, of the top edge of '
-             'the output video.\nSet to -1 for disabling.')
-        self.top.SetToolTipString('Height:\n%s' % height)
-        self.left.SetToolTipString('Width:\n%s' % width)
-        self.bottom.SetToolTipString('Y:\n%s' % y)
-        self.right.SetToolTipString('X:\n%s' % x)
+        x = ('The horizontal position of the left edge. The value 0 sets '
+             'the position on the extreme left of the frame. Values above 0 '
+             'move the position to the right side of the frame.\n'
+             'Set to -1 to disable this position and center the frame.')
+        y = ('The vertical position of the top edge of the left corner. ' 
+             'Values above 0 move the position towards the bottom side of '
+             'the frame.\n'
+             'Set to -1 to disable this position and center the frame.')
+        self.crop_width.SetToolTipString('Width:\n%s' % width)
+        self.crop_Y.SetToolTipString('Y:\n%s' % y)
+        self.crop_X.SetToolTipString('X:\n%s' % x)
+        self.crop_height.SetToolTipString('Height:\n%s' % height)
         
         #----------------------Binding (EVT)---------------------------------#
-        self.Bind(wx.EVT_SPINCTRL, self.on_top, self.top)
-        self.Bind(wx.EVT_SPINCTRL, self.on_right, self.right)
-        self.Bind(wx.EVT_SPINCTRL, self.on_bottom, self.bottom)
-        self.Bind(wx.EVT_SPINCTRL, self.on_left, self.left)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -515,62 +519,21 @@ class VideoCrop(wx.Dialog):
             for i in s:
                 if i.startswith('w'):
                     self.w = i[2:]
-                    self.left.SetValue(int(self.w))
+                    self.crop_width.SetValue(int(self.w))
                 if i.startswith('h'):
                     self.h = i[2:]
-                    self.top.SetValue(int(self.h))
-                if i.startswith('y'):
-                    self.y = i[2:]
-                    self.bottom.SetValue(int(self.y))
+                    self.crop_height.SetValue(int(self.h))
                 if i.startswith('x'):
                     self.x = i[2:]
-                    self.right.SetValue(int(self.x))
+                    self.crop_X.SetValue(int(self.x))
+                if i.startswith('y'):
+                    self.y = i[2:]
+                    self.crop_Y.SetValue(int(self.y))
 
-    #----------------------Event handler (callback)--------------------------#
-    def on_top(self, event):
-        """
-        Height
-        """
-        if self.top.GetValue() == '-1':
-            self.h = ''
-        else:
-            self.h = 'h=%s:' % self.top.GetValue()
-            
-        
-    #------------------------------------------------------------------#
-    def on_right(self, event):
-        """
-        Y
-        """
-        if self.right.GetValue() == '-1':
-            self.y = ''
-        else:
-            self.y = 'y=%s:' % self.right.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_bottom(self, event):
-        """
-        X
-        """
-        if self.bottom.GetValue() == '-1':
-            self.x = ''
-        else:
-            self.x = 'x=%s:' % self.bottom.GetValue()
-    #------------------------------------------------------------------#
-    def on_left(self, event):
-        """
-        Width
-        """
-        if self.left.GetValue() == '-1':
-            self.w = ''
-        else:
-            self.w = 'w=%s:' % self.left.GetValue()
-        
-    #------------------------------------------------------------------#
     def on_reset(self, event):
         self.h, self.y, self.x, self.w = "", "", "", ""
-        self.top.SetValue(-1), self.bottom.SetValue(-1)
-        self.right.SetValue(-1), self.left.SetValue(-1)
+        self.crop_width.SetValue(-1), self.crop_X.SetValue(-1)
+        self.crop_height.SetValue(-1), self.crop_Y.SetValue(-1)
         
     #------------------------------------------------------------------#
     def on_close(self, event):
@@ -595,6 +558,28 @@ class VideoCrop(wx.Dialog):
         """
         This method return values via the interface GetValue()
         """
+        #print self.crop_Y.GetValue(),self.crop_width.GetValue(),self.crop_X.GetValue(),self.crop_height.GetValue()
+        #print type(self.crop_Y.GetValue())
+        if self.crop_width.GetValue() == -1:
+            self.w = ''
+        else:
+            self.w = 'w=%s:' % self.crop_width.GetValue()
+            
+        if self.crop_height.GetValue() == -1:
+            self.h = ''
+        else:
+            self.h = 'h=%s:' % self.crop_height.GetValue()
+            
+        if self.crop_X.GetValue() == -1:
+            self.x = ''
+        else:
+            self.x = 'x=%s:' % self.crop_X.GetValue()
+        
+        if self.crop_Y.GetValue() == -1:
+            self.y = ''
+        else:
+            self.y = 'y=%s:' % self.crop_Y.GetValue()
+
         s = '%s%s%s%s' % (self.w, self.h, self.x, self.y)
         if s:
             l = len(s)
@@ -812,16 +797,12 @@ class VideoResolution(wx.Dialog):
         self.darDen = '%s' % self.spin_setdarDen.GetValue()
         self.sarNum = '%s' % self.spin_setsarNum.GetValue()
         self.sarDen = '%s' % self.spin_setsarDen.GetValue()
-        
-        print self.width,self.height,self.darNum,self.darDen,self.sarNum,self.sarDen
 
         if self.width == '0' or self.height == '0':
             size = ''
-            print 'si'
         else:
             size = 'scale=w=%s:h=%s' % (self.width,self.height)
             diction['scale'] = size
-            print 'no'
         
         if self.darNum == '0' or self.darDen == '0':
             setdar = ''

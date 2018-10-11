@@ -100,7 +100,7 @@ class GeneralProcess(wx.Panel):
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
         sizer.Add(self.labPerc, 0, wx.ALL| wx.ALIGN_CENTER_VERTICAL, 5 )
         sizer.Add(self.barProg, 0, wx.EXPAND|wx.ALL, 5 )
-        sizer.Add(grid)
+        sizer.Add(grid, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         grid.Add(self.button_stop, 0, wx.ALL, 5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
