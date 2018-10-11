@@ -590,7 +590,10 @@ class Video_Conv(wx.Panel):
                "for video selection point, then set the `Video Rate` at low "
                "values; More is low, the lower will be the extracted images. ")
             self.parent.statusbar_msg("Output format: Save images",None)
-            wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION)
+            wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION
+                          )
+            self.ckbx_pass.SetValue(False)
+            self.UI_set()
 
         else:
             cmd_opt["FormatChoice"] = "%s" % (selected)
@@ -1501,33 +1504,59 @@ class Video_Conv(wx.Panel):
         """
         self.update_allentries()# aggiorno gli imput
         
-        #if cmd_opt["VideoCodec"] == "-vcodec libx264":
-        if cmd_opt["Passing"] == "double":
-            command = ("-pass 1 -an %s %s %s %s %s %s %s %s %s "
-                       "DOUBLE_PASS -pass 2 %s %s %s %s %s %s "
-                       "%s %s %s %s %s %s %s %s %s %s" % (
-            cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"],
-            cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"], 
-            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1],
-            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-            cmd_opt["AudioDepth"][1], cmd_opt["Normalize"], cmd_opt["Map"])
-                        )
-
-        elif cmd_opt["Passing"] == "single":
-            command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (
-            cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"],  
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"],
-            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
-            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-            cmd_opt["AudioDepth"][1], cmd_opt["Normalize"], cmd_opt["Map"])
-                        )
+        if not self.ckbx_pass.IsChecked():
+            if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
+                outext = cmd_opt["VideoFormat"]
+                command = ('%s %s %s %s %s %s %s %s %s' % ( 
+                            cmd_opt["VideoCodec"], 
+                            cmd_opt["VideoAspect"],
+                            cmd_opt["VideoRate"],
+                            cmd_opt["AudioCodec"], 
+                            cmd_opt["AudioBitrate"][1], 
+                            cmd_opt["AudioRate"][1], 
+                            cmd_opt["AudioChannel"][1], 
+                            cmd_opt["AudioDepth"][1], 
+                            cmd_opt["Map"])
+                                )
+            elif self.cmbx_vidContainers.GetValue() == "Save Images From Video":
+                outext = "image%d.jpg"
+                command = ('%s %s -an' % (
+                           cmd_opt["VideoRate"],
+                           cmd_opt["Filters"],)
+                           )
+            else:
+                outext = cmd_opt["VideoFormat"]
+                command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s" % ( 
+                            cmd_opt["VideoCodec"], cmd_opt["CRF"], 
+                            cmd_opt["Presets"], cmd_opt["Profile"],
+                            cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                            cmd_opt["VideoRate"], cmd_opt["Filters"],
+                            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
+                            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
+                            cmd_opt["AudioDepth"][1], cmd_opt["Map"])
+                            )
+        else:
+            outext = cmd_opt["VideoFormat"]
+            cmd1 = ('-pass 1 -an %s %s %s %s %s %s %s %s -f rawvideo' % (
+                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
+                      cmd_opt["Presets"], cmd_opt["Profile"],
+                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                      cmd_opt["VideoRate"], cmd_opt["Filters"])
+                    )
+            cmd2= ('-pass 2 %s %s %s %s %s %s'
+                     '%s %s %s %s %s %s %s %s' % ( 
+                     cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
+                     cmd_opt["Presets"], cmd_opt["Profile"],
+                     cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                     cmd_opt["VideoRate"], cmd_opt["Filters"],
+                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
+                     cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
+                     cmd_opt["AudioDepth"][1], cmd_opt["Map"])
+                    )
+            command = ("%s DOUBLE_PASS %s" % (cmd1,cmd2))
+                       
         command = ' '.join(command.split())# sitemo meglio gli spazi in stringa
-        list = [command, cmd_opt["VideoFormat"]]
+        list = [command, outext]
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
