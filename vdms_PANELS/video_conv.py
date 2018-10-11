@@ -1466,7 +1466,7 @@ class Video_Conv(wx.Panel):
             formula = (u"SUMMARY:\n\nFile to Queue\
                     \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
                     \nDouble/Single Pass:\nDeinterlacing:\
-                    \nInterlacing (progressive content)\nApplied Filters:\
+                    \nInterlacing:\nApplied Filters:\
                     \nVideo aspect:\nVideo rate:\nPreset h264:\nProfile h264:\
                     \nTune h264:\nOrientation:\nAudio Format:\nAudio codec:\
                     \nAudio channel:\nAudio rate:\nAudio bit-rate:\

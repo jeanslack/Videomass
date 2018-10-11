@@ -342,23 +342,23 @@ class VideoRotate(wx.Dialog):
     #----------------------Event handler (callback)--------------------------#
     def on_up(self, event):
         self.orientation = "transpose=2,transpose=2"
-        self.text_rotate.SetValue("180° from bottom to top")
+        self.text_rotate.SetValue(u"180° from bottom to top")
         
     #------------------------------------------------------------------#
     def on_left(self, event):
         opt = "transpose=2"
         self.orientation = opt
-        self.text_rotate.SetValue("Rotate 90° Left")
+        self.text_rotate.SetValue(u"Rotate 90° Left")
         
     #------------------------------------------------------------------#
     def on_right(self, event):
         self.orientation = "transpose=1"
-        self.text_rotate.SetValue("Rotate 90° Right")
+        self.text_rotate.SetValue(u"Rotate 90° Right")
         
     #------------------------------------------------------------------#
     def on_down(self, event):
         self.orientation = "transpose=2,transpose=2"
-        self.text_rotate.SetValue("180° from top to bottom")
+        self.text_rotate.SetValue(u"180° from top to bottom")
         
     #------------------------------------------------------------------#
     def on_reset(self, event):
@@ -616,13 +616,12 @@ class VideoResolution(wx.Dialog):
         When this dialog is called, the values previously set are returned 
         for a complete reading (if there are preconfigured values)
         """
-
-        self.width = ""
-        self.height = ""
-        self.darNum = ""
-        self.darDen = ""
-        self.sarNum = ""
-        self.sarDen = ""
+        self.width = "0"
+        self.height = "0"
+        self.darNum = "0"
+        self.darDen = "0"
+        self.sarNum = "0"
+        self.sarDen = "0"
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
@@ -631,19 +630,19 @@ class VideoResolution(wx.Dialog):
                                     "Set Video Scaling")), wx.VERTICAL)
         
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
-                                            max=10000, style=wx.TE_PROCESS_ENTER
+                                            max=9000, style=wx.TE_PROCESS_ENTER
                                             )
         self.label_x1 = wx.StaticText(self, wx.ID_ANY, ("X")
                                       )
         self.label_x1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
                               )
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
-                                             max=10000, style=wx.TE_PROCESS_ENTER
+                                             max=9000, style=wx.TE_PROCESS_ENTER
                                              )
         self.label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar:")
                                           )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
-                                      max=10000, style=wx.TE_PROCESS_ENTER,
+                                      max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))
         self.label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
@@ -651,7 +650,7 @@ class VideoResolution(wx.Dialog):
                                           wx.BOLD,0, "")
                                           )
         self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
-                                      max=10000, style=wx.TE_PROCESS_ENTER,
+                                      max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1)
                                       )##
         self.label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar:")
@@ -667,22 +666,6 @@ class VideoResolution(wx.Dialog):
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))##
-        ####----CheckBox section
-
-        #self.ckb_enablesize = wx.CheckBox(self, wx.ID_ANY, (
-                                               #"Enable Video Size"))
-        ####---videosize section
-        #v_sizerbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    #"Set Video Size")), wx.VERTICAL)
-        #self.spin_size_width = wx.SpinCtrl(self, wx.ID_ANY, 
-        #"0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-                                           #)
-        #self.label_x2 = wx.StaticText(self, wx.ID_ANY, ("X"))
-        #self.label_x2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
-                              #)
-        #self.spin_size_height = wx.SpinCtrl(self, wx.ID_ANY,
-        #"0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-                                            #)
         ####----- confirm buttons section
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -711,26 +694,12 @@ class VideoResolution(wx.Dialog):
         Flex_darsar.Add(self.label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_darsar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         v_scalingbox.Add(Flex_scale_base)
-        
-        # CheckBox section
-
-        #grid_sizer_base.Add(self.ckb_enablesize, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        
-        # video size section:
-        #grid_sizer_base.Add(v_sizerbox, 1, wx.ALL | wx.EXPAND, 5)
-        #Flex_sizing = wx.FlexGridSizer(1, 3, 0, 0)
-        #Flex_sizing.Add(self.spin_size_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #Flex_sizing.Add(self.label_x2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #Flex_sizing.Add(self.spin_size_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #v_sizerbox.Add(Flex_sizing)
-        
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
         grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        
         # final settings:
         sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
@@ -777,12 +746,12 @@ class VideoResolution(wx.Dialog):
         self.spin_setsarDen.SetToolTipString(setsar_str)
         
         #----------------------Binding (EVT)---------------------------------#
-        self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)
-        self.Bind(wx.EVT_SPINCTRL, self.on_height, self.spin_scale_height)
-        self.Bind(wx.EVT_SPINCTRL, self.on_darNum, self.spin_setdarNum)
-        self.Bind(wx.EVT_SPINCTRL, self.on_darDen, self.spin_setdarDen)
-        self.Bind(wx.EVT_SPINCTRL, self.on_sarNum, self.spin_setsarNum)
-        self.Bind(wx.EVT_SPINCTRL, self.on_sarDen, self.spin_setsarDen)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_height, self.spin_scale_height)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_darNum, self.spin_setdarNum)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_darDen, self.spin_setdarDen)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_sarNum, self.spin_setsarNum)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_sarDen, self.spin_setsarDen)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -804,74 +773,14 @@ class VideoResolution(wx.Dialog):
             self.spin_setsarDen.SetValue(int(self.sarDen))
         
     #----------------------Event handler (callback)--------------------------#
-    def on_width(self, event):
-        """
-        Width
-        """
-        if self.spin_scale_width.GetValue() == '0':
-            self.width = ''
-            #self.spin_scale_height.Disable()
-        else:
-            self.width = 'w=%s' % self.spin_scale_width.GetValue()
-    #------------------------------------------------------------------#
-    def on_height(self, event):
-        """
-        Height
-        """
-        if self.spin_scale_height.GetValue() == '0':
-            self.height = ''
-        else:
-            self.height = 'h=%s' % self.spin_scale_height.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_darNum(self, event):
-        """
-        setdar Numerator
-        """
-        if self.spin_setdarNum.GetValue() == '0':
-            self.darNum = ''
-        else:
-            self.darNum = '%s' % self.spin_setdarNum.GetValue()
-    #------------------------------------------------------------------#
-    def on_darDen(self, event):
-        """
-        setdar denominator
-        """
-        if self.spin_setdarDen.GetValue() == '0':
-            self.darDen = ''
-        else:
-            self.darDen = '%s' % self.spin_setdarDen.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_sarNum(self, event):
-        """
-        setsar numerator
-        """
-        if self.spin_setsarNum.GetValue() == '0':
-            self.sarNum = ''
-        else:
-            self.sarNum = '%s' % self.spin_setsarNum.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_sarDen(self, event):
-        """
-        setsar denominator
-        """
-        if self.spin_setsarDen.GetValue() == '0':
-            self.sarDen = ''
-        else:
-            self.sarDen = '%s' % self.spin_setsarDen.GetValue()
-        
-    #------------------------------------------------------------------#
+    ##------------------------------------------------------------------#
     def on_reset(self, event):
-        self.width, self.height = "", ""
-        self.darNum, self.darDen = "", ""
-        self.sarNum, self.sarDen = "", ""
+        self.width, self.height = "0", "0"
+        self.darNum, self.darDen = "0", "0"
+        self.sarNum, self.sarDen = "0", "0"
         self.spin_scale_width.SetValue(0), self.spin_scale_height.SetValue(0)
         self.spin_setdarNum.SetValue(0), self.spin_setdarDen.SetValue(0)
         self.spin_setsarNum.SetValue(0), self.spin_setsarDen.SetValue(0)
-        self.spin_scale_height.Disable(), self.spin_setdarDen.Disable()
-        self.spin_setsarDen.Disable()
         
     #------------------------------------------------------------------#
     def on_close(self, event):
@@ -897,20 +806,30 @@ class VideoResolution(wx.Dialog):
         This method return values via the interface GetValue()
         """
         diction = {}
-
-        if not self.width or not self.height:
-            size = ''
-        else:
-            size = 'scale=%s:%s' % (self.width,self.height)
-            diction['scale'] = size
+        self.width = '%s' % self.spin_scale_width.GetValue()
+        self.height = '%s' % self.spin_scale_height.GetValue()
+        self.darNum = '%s' % self.spin_setdarNum.GetValue()
+        self.darDen = '%s' % self.spin_setdarDen.GetValue()
+        self.sarNum = '%s' % self.spin_setsarNum.GetValue()
+        self.sarDen = '%s' % self.spin_setsarDen.GetValue()
         
-        if not self.darNum or not self.darDen:
+        print self.width,self.height,self.darNum,self.darDen,self.sarNum,self.sarDen
+
+        if self.width == '0' or self.height == '0':
+            size = ''
+            print 'si'
+        else:
+            size = 'scale=w=%s:h=%s' % (self.width,self.height)
+            diction['scale'] = size
+            print 'no'
+        
+        if self.darNum == '0' or self.darDen == '0':
             setdar = ''
         else:
             setdar = 'setdar=%s/%s' % (self.darNum,self.darDen)
             diction['setdar'] = setdar
         
-        if not self.sarNum or not self.sarDen:
+        if self.sarNum == '0' or self.sarDen == '0':
             setsar = ''
         else:
             setsar = 'setsar=%s/%s' % (self.sarNum,self.sarDen)

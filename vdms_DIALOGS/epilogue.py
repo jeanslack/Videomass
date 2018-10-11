@@ -39,8 +39,8 @@ class Formula(wx.Dialog):
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         label1 = wx.StaticText(panel, wx.ID_ANY, formula)
         label2 = wx.StaticText(panel, wx.ID_ANY, diction)
-        self.button_1 = wx.Button(panel, wx.ID_CANCEL, "")
-        self.button_2 = wx.Button(panel, wx.ID_OK, "")
+        self.button_1 = wx.Button(self, wx.ID_CANCEL, "")
+        self.button_2 = wx.Button(self, wx.ID_OK, "")
         
         #----------------------Properties----------------------#
         self.SetTitle("%s - Videomass2" % title)
@@ -49,15 +49,15 @@ class Formula(wx.Dialog):
         
         #---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
-        gr_s1 = wx.FlexGridSizer(2, 2, 0, 0)
+        gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
         gr_s1.Add(label1, 0, wx.ALL, 5)
         gr_s1.Add(label2, 0, wx.ALL, 5)
         btngrid = wx.FlexGridSizer(1,2,0,0)
-        gr_s1.Add(btngrid)
         btngrid.Add(self.button_1, 0, wx.ALL, 5)
         btngrid.Add(self.button_2, 0, wx.ALL, 5)
-        panel.SetSizer(gr_s1)
+        panel.SetSizer(gr_s1)#
         s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
+        s1.Add(btngrid, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         self.SetSizer(s1)
         s1.Fit(self)
         self.Layout()

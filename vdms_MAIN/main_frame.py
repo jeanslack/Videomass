@@ -110,12 +110,12 @@ class MainFrame(wx.Frame):
                                            size=(-1,30),
                                            bitmap=infoIbmp, 
                                            label="Show Metadata")
-        self.btn_metaI.SetForegroundColour("grey"), self.btn_metaI.Disable()
+        self.btn_metaI.SetForegroundColour("grey")
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1,30),
                                            bitmap=previewbmp, 
                                            label="Preview")
-        self.btn_playO.SetForegroundColour("grey"), self.btn_playO.Disable()
+        self.btn_playO.SetForegroundColour("grey")
         #self.btn_metaO = GB.GradientButton(self.btnpanel,
                                            #size=(-1,30),
                                            #bitmap=infoObmp, 
@@ -345,7 +345,6 @@ class MainFrame(wx.Frame):
         #self.btn_playI.SetForegroundColour(wx.Colour(62, 211, 46))
         #self.btn_playI.Enable()
         self.btn_metaI.SetForegroundColour(wx.Colour(62, 211, 46))
-        self.btn_metaI.Enable()
         self.import_clicked = path# used for play and metadata
         
     #------------------------------------------------------------------#
@@ -354,7 +353,7 @@ class MainFrame(wx.Frame):
         Disable streams imported menu
         """
         #self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
-        self.btn_metaI.SetForegroundColour("grey"), self.btn_metaI.Disable()
+        self.btn_metaI.SetForegroundColour("grey")
         self.import_clicked = ''
         
     #------------------------------------------------------------------#
@@ -364,7 +363,6 @@ class MainFrame(wx.Frame):
         info
         """
         self.btn_playO.SetForegroundColour(wx.Colour(61, 110, 227))
-        self.btn_playO.Enable()
         #self.btn_metaO.SetForegroundColour(wx.Colour(61, 110, 227))
         #self.btn_metaO.Enable()
 
@@ -409,8 +407,12 @@ class MainFrame(wx.Frame):
         """
         Redirect input file clicked at stream_info for metadata display
         """
-        title = 'File Input Metadata Display - Videomass2'
         filepath = self.import_clicked
+        if not filepath:
+            wx.MessageBox("No file selected into Drag N Drop list", 
+                          'Videomass2', wx.ICON_EXCLAMATION, self)
+            return
+        title = 'File Input Metadata Display - Videomass2'
         IO_tools.stream_info(title, 
                              filepath, 
                              self.helping, 
@@ -422,6 +424,11 @@ class MainFrame(wx.Frame):
         Reproduction functionality for exported files, useful for testing 
         the result. The first one exported of the list will be reproduced.
         """
+        if not self.post_process:
+            wx.MessageBox("No files exported with `Start Encoding` yet", 
+                          'Videomass2', wx.ICON_EXCLAMATION, self)
+            return
+
         IO_tools.stream_play(self.post_process,
                              '', 
                              self.ffplay_link, 
