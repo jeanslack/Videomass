@@ -564,33 +564,26 @@ class PresetsPanel(wx.Panel):
         filename, base_name, lenghmax = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
-        
-        if self.OS == 'Windows':
-                null = 'NUL'
-        else:
-            null = '/dev/null'
-        
-
         if 'DOUBLE_PASS' in comcheck:
             
             split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
             passOne = split[0].strip()
             passTwo = split[1].strip()
             
-            command1 = ("-loglevel %s %s %s %s %s -f rawvideo -y "
-                        "%s" % (self.loglevel_type, 
-                                       passOne, 
-                                       self.threads, 
-                                       self.cpu_used,
-                                       self.time_seq,
-                                       null,)
-                                        )
-            command2 = ("-loglevel %s %s %s %s %s -y" % (self.loglevel_type, 
+            command1 = ("-loglevel %s %s %s %s %s -f rawvideo" % (
+                                                    self.loglevel_type, 
+                                                    passOne, 
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                    self.time_seq,)
+                        )
+            command2 = ("-loglevel %s %s %s %s %s" % (self.loglevel_type, 
                                                       passTwo, 
                                                       self.threads, 
                                                       self.cpu_used,
-                                                      self.time_seq,)
+                                                      self.time_seq,
                                                       )
+                        )
             pass1 = " ".join(command1.split())# mi formatta la stringa
             pass2 = " ".join(command2.split())# mi formatta la stringa
 

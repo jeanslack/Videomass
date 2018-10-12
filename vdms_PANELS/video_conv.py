@@ -1257,16 +1257,12 @@ class Video_Conv(wx.Panel):
             self.saveimages(file_sources, dir_destin, filename, 
                             logname, lenghmax)
         else:
-            if self.OS == 'Windows':
-                null = 'NUL'
-            else:
-                null = '/dev/null'
-            self.stdProc(file_sources, dir_destin, lenghmax, logname, null)
+            self.stdProc(file_sources, dir_destin, lenghmax, logname)
 
         return
 
     #------------------------------------------------------------------#
-    def stdProc(self, file_sources, dir_destin, lenghmax, logname, null):
+    def stdProc(self, file_sources, dir_destin, lenghmax, logname):
         """
         Composes the ffmpeg command strings for batch process. 
         In double pass mode, split command in two part (see  os_processing.py 
@@ -1310,18 +1306,18 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
-            cmd1 = ('-loglevel %s %s -pass 1 -an %s %s %s %s '
-                     '%s %s %s %s %s %s -f rawvideo -y %s' % (
+            cmd1 = ('-loglevel %s %s -an %s %s %s %s '
+                     '%s %s %s %s %s %s -f rawvideo' % (
                       self.loglevel_type, self.time_seq, 
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
                       cmd_opt["Tune"], cmd_opt["VideoAspect"], 
                       cmd_opt["VideoRate"], cmd_opt["Filters"],
-                      self.threads, self.cpu_used, null),
+                      self.threads, self.cpu_used),
                     )
             pass1 = " ".join(cmd1[0].split())# mi formatta la stringa
-            cmd2= ('-loglevel %s %s -pass 2 %s %s %s %s %s '
-                     '%s %s %s %s %s %s %s %s %s %s %s -y' % (
+            cmd2= ('-loglevel %s %s %s %s %s %s %s '
+                     '%s %s %s %s %s %s %s %s %s %s %s' % (
                      self.loglevel_type, self.time_seq, 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
@@ -1537,14 +1533,13 @@ class Video_Conv(wx.Panel):
                             )
         else:
             outext = cmd_opt["VideoFormat"]
-            cmd1 = ('-pass 1 -an %s %s %s %s %s %s %s %s -f rawvideo' % (
+            cmd1 = ('-an %s %s %s %s %s %s %s %s -f rawvideo' % (
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
                       cmd_opt["Tune"], cmd_opt["VideoAspect"], 
                       cmd_opt["VideoRate"], cmd_opt["Filters"])
                     )
-            cmd2= ('-pass 2 %s %s %s %s %s %s'
-                     '%s %s %s %s %s %s %s %s' % ( 
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % ( 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 

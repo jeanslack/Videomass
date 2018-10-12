@@ -390,6 +390,10 @@ class DoublePassThread(Thread):
         self.duration = duration # duration list
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
         self.OS = OS
+        if self.OS == 'Windows':
+            self.nul = 'NUL'
+        else:
+            self.nul = '/dev/null'
         
         self.start()# start the thread (va in self.run())
 
@@ -412,10 +416,15 @@ class DoublePassThread(Thread):
                 volume = '' #altrimenti inserisce None nei comandi sotto
             
             #--------------- first pass
-            pass1 = '%s -i "%s" %s' % (self.ffmpeg_link, 
+            pass1 = ('%s -i "%s" %s -passlogfile "%s/%s.log" '
+                    '-pass 1 -y %s' % (self.ffmpeg_link, 
                                        files, 
                                        self.passList[0],
+                                       folders, 
+                                       filename,
+                                       self.nul,
                                        )
+                     )
             if self.OS == 'Windows':
                 args = pass1
             else:
@@ -468,14 +477,18 @@ class DoublePassThread(Thread):
                 break # fermo il ciclo for, altrimenti passa avanti
             
             #--------------- second pass
-            pass2 = '%s -i "%s" %s %s "%s/%s.%s"' % (self.ffmpeg_link, 
-                                                    files, 
-                                                    volume,
-                                                    self.passList[1], 
-                                                    folders, 
-                                                    filename,
-                                                    self.extoutput,
-                                                    )
+            pass2 = ('%s -i "%s" %s %s -passlogfile "%s/%s.log" '
+                     '-pass 2 -y "%s/%s.%s"' % (self.ffmpeg_link, 
+                                               files, 
+                                               volume,
+                                               self.passList[1], 
+                                               folders, 
+                                               filename,
+                                               folders, 
+                                               filename,
+                                               self.extoutput,
+                                                )
+                     )
             if self.OS == 'Windows':
                 args = pass2
             else:

@@ -100,7 +100,7 @@ class GeneralProcess(wx.Panel):
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
         sizer.Add(self.labPerc, 0, wx.ALL| wx.ALIGN_CENTER_VERTICAL, 5 )
         sizer.Add(self.barProg, 0, wx.EXPAND|wx.ALL, 5 )
-        sizer.Add(grid)
+        sizer.Add(grid, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         grid.Add(self.button_stop, 0, wx.ALL, 5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
@@ -416,10 +416,14 @@ class DoublePassThread(Thread):
                 volume = '' #altrimenti inserisce None nei comandi sotto
             
             #--------------- first pass
-            pass1 = '%s -i "%s" %s' % (self.ffmpeg_link, 
-                                       files, 
-                                       self.passList[0],
-                                       )
+            pass1 = ('%s -i "%s" %s -passlogfile "%s/%s.log" '
+                     '-pass 1 -y NUL' % (self.ffmpeg_link, 
+                                         files, 
+                                         self.passList[0],
+                                         folders, 
+                                         filename,
+                                         )
+                    )
             try:
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -471,14 +475,18 @@ class DoublePassThread(Thread):
                 break # fermo il ciclo for, altrimenti passa avanti
             
             #--------------- second pass
-            pass2 = '%s -i "%s" %s %s "%s/%s.%s"' % (self.ffmpeg_link, 
-                                                    files, 
-                                                    volume,
-                                                    self.passList[1], 
-                                                    folders, 
-                                                    filename,
-                                                    self.extoutput,
-                                                    )
+            pass2 = ('%s -i "%s" %s %s -passlogfile "%s/%s.log" '
+                     '-pass 2 -y "%s/%s.%s"' % (self.ffmpeg_link, 
+                                               files, 
+                                               volume,
+                                               self.passList[1], 
+                                               folders, 
+                                               filename,
+                                               folders, 
+                                               filename,
+                                               self.extoutput,
+                                                )
+                     )
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          cmd=pass2, 

@@ -4,6 +4,9 @@ October 05, 2018 V.1.1.0
 - Solved an exception when importing images and proceeding with normalization
   (add: does not contain any stream)
 - FFmpeg's unrecognized errors are now better managed on volumedetect Processing
+- resolved the writing of the 'passlogfile' on the source folder of 'Videomass2'
+  during double pass processes. The log file will be written to the same source 
+  output path
 - Added new filter section on Video Conversions panel with new dialogs boxes
   implementation for:
 
