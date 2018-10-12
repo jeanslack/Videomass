@@ -101,34 +101,41 @@ class MainFrame(wx.Frame):
         infoObmp = wx.Bitmap(setui[14], wx.BITMAP_TYPE_ANY)
         cutbmp = wx.Bitmap(setui[15], wx.BITMAP_TYPE_ANY)
         
-        #self.btn_playI = GB.GradientButton(self.btnpanel, 
-                                           #size=(-1,30), 
-                                           #bitmap=playbmp, 
-                                           #label="Play Source",)
-        #self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
         self.btn_metaI = GB.GradientButton(self.btnpanel,
-                                           size=(-1,30),
+                                           size=(-1,25),
                                            bitmap=infoIbmp, 
                                            label="Show Metadata")
-        self.btn_metaI.SetForegroundColour("grey")
+        #self.btn_metaI.SetForegroundColour("grey")
+        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_metaI.SetBottomStartColour(wx.Colour(156, 189, 200))
+        self.btn_metaI.SetTopStartColour(wx.Colour(156, 189, 200))
+        self.btn_metaI.SetTopEndColour(wx.Colour(156, 189, 200))
+        
         self.btn_playO = GB.GradientButton(self.btnpanel,
-                                           size=(-1,30),
+                                           size=(-1,25),
                                            bitmap=previewbmp, 
                                            label="Preview")
-        self.btn_playO.SetForegroundColour("grey")
-        #self.btn_metaO = GB.GradientButton(self.btnpanel,
-                                           #size=(-1,30),
-                                           #bitmap=infoObmp, 
-                                           #label="Metadata Exp.")
-        #self.btn_metaO.SetForegroundColour("grey"), self.btn_metaO.Disable()
+        #self.btn_playO.SetForegroundColour("grey")
+        self.btn_playO.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_playO.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_playO.SetBottomStartColour(wx.Colour(156, 189, 200))
+        self.btn_playO.SetTopStartColour(wx.Colour(156, 189, 200))
+        self.btn_playO.SetTopEndColour(wx.Colour(156, 189, 200))
         
         self.btn_duration = GB.GradientButton(self.btnpanel,
-                                              size=(-1,30),
+                                              size=(-1,25),
                                               bitmap=cutbmp, 
                                               label="Duration")
-        self.btn_duration.SetForegroundColour("white")
-        #self.btnpanel.SetBackgroundColour(wx.Colour(156, 189, 200))
-        self.btnpanel.SetBackgroundColour(wx.Colour(255, 255, 255))
+        #self.btn_duration.SetForegroundColour("white")
+        self.btn_duration.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_duration.SetBottomStartColour(wx.Colour(156, 189, 200))
+        self.btn_duration.SetTopStartColour(wx.Colour(156, 189, 200))
+        self.btn_duration.SetTopEndColour(wx.Colour(156, 189, 200))
+
+        self.btnpanel.SetBackgroundColour(wx.Colour(156, 189, 200))
+        #self.btnpanel.SetBackgroundColour(wx.Colour(255, 255, 255))
         #---------- others panel instances:
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
@@ -164,7 +171,7 @@ class MainFrame(wx.Frame):
         self.AconvPanel.Hide()
         # Layout toolbar buttons:
         self.DnDsizer = wx.BoxSizer(wx.VERTICAL) # sizer base global
-        grid_pan = wx.FlexGridSizer(1, 4, 0, 0)
+        grid_pan = wx.FlexGridSizer(1, 6, 0, 0)
         #grid_pan.Add(self.btn_playI, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_metaI, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_playO, 0, wx.CENTER|wx.ALL, 5)
@@ -205,14 +212,6 @@ class MainFrame(wx.Frame):
                                     "selected streams in the imported files"
                                         )
         
-        #self.btn_metaO.SetToolTipString("Show exported file metadata.\n" 
-                                        #"Display additionals information of "
-                                        #"the streams in the exported files"
-                                        #)
-        #self.btn_playI.SetToolTipString("Playback source file.\n" 
-                                        #"Reproduct inported and selected "
-                                        #"file into drag and drop panel"
-                                        #)
         self.btn_playO.SetToolTipString("Preview exported files.\n"
                                         "Reproduct exported file when "
                                         "finish encoding"
@@ -342,9 +341,7 @@ class MainFrame(wx.Frame):
         when click with the mouse on a control list item, 
         enable Metadata Info and file reproduction menu
         """
-        #self.btn_playI.SetForegroundColour(wx.Colour(62, 211, 46))
-        #self.btn_playI.Enable()
-        self.btn_metaI.SetForegroundColour(wx.Colour(62, 211, 46))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(172, 236, 19))
         self.import_clicked = path# used for play and metadata
         
     #------------------------------------------------------------------#
@@ -352,8 +349,7 @@ class MainFrame(wx.Frame):
         """
         Disable streams imported menu
         """
-        #self.btn_playI.SetForegroundColour("grey"), self.btn_playI.Disable()
-        self.btn_metaI.SetForegroundColour("grey")
+        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 255, 255))
         self.import_clicked = ''
         
     #------------------------------------------------------------------#
@@ -362,9 +358,7 @@ class MainFrame(wx.Frame):
         Enable menu Streams items for output play and metadata
         info
         """
-        self.btn_playO.SetForegroundColour(wx.Colour(61, 110, 227))
-        #self.btn_metaO.SetForegroundColour(wx.Colour(61, 110, 227))
-        #self.btn_metaO.Enable()
+        self.btn_playO.SetBottomEndColour(wx.Colour(172, 236, 19))
 
     #---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the dragNdrop panel
@@ -382,9 +376,9 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
-                self.btn_duration.SetForegroundColour("white")
+                self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 255))
             else:
-                self.btn_duration.SetForegroundColour("yellow")
+                self.btn_duration.SetBottomEndColour(wx.Colour(172, 236, 19))
             self.time_seq = data
         else:
             dial.Destroy()
