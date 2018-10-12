@@ -28,6 +28,7 @@
 import wx
 import os
 import wx.lib.agw.floatspin as FS
+import wx.lib.agw.gradientbutton as GB
 from vdms_IO.IO_tools import volumeDetectProcess, FFProbe
 from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS.epilogue import Formula
@@ -95,15 +96,41 @@ class Audio_Conv(wx.Panel):
                  ("AC3 [.ac3]"),
                  ("Save audio from movie")], style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
-        self.btn_param = wx.Button(self, wx.ID_ANY, (
-                                               "Audio Options"))
+        #self.btn_param = wx.Button(self, wx.ID_ANY, (
+                                               #"Audio Options"))
+        
+        self.btn_param = GB.GradientButton(self,
+                                           size=(-1,25), 
+                                           label="Audio Options")
+        self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                    foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_param.SetBottomEndColour(wx.Colour(156, 189, 200))
+        self.btn_param.SetBottomStartColour(wx.Colour(156, 189, 200))
+        self.btn_param.SetTopStartColour(wx.Colour(156, 189, 200))
+        self.btn_param.SetTopEndColour(wx.Colour(156, 189, 200))
+        
+        
+        
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY)
         self.ckb_onlynorm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Only Normalization"))
         self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Audio Normalization"))
-        self.btn_analyzes = wx.Button(self, wx.ID_ANY, ("Analyzes"))
+        #self.btn_analyzes = wx.Button(self, wx.ID_ANY, ("Analyzes"))
+        
+        
+        self.btn_analyzes = GB.GradientButton(self,
+                                           size=(-1,25), 
+                                           label="Analyzes")
+        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                    foregroundcolour=wx.Colour(165,165, 165))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(156, 189, 200))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(156, 189, 200))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(156, 189, 200))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(156, 189, 200))
+        
+        
         self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("db Volume Max:"))
         self.txt_volmax = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         self.lab_volmid = wx.StaticText(self, wx.ID_ANY, ("db Volume Middle:"))
@@ -315,6 +342,9 @@ class Audio_Conv(wx.Panel):
                  ]:
             if not 'Not set' in d:
                 self.txt_options.AppendText(" %s," % d)
+                self.btn_param.SetBottomEndColour(wx.Colour(172, 236, 19))
+            else:
+                self.btn_param.SetBottomEndColour(wx.Colour(156, 189, 200))
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#
@@ -387,6 +417,7 @@ class Audio_Conv(wx.Panel):
                "default dB value (-1.0)")
         if self.ckb_norm.IsChecked():# if checked
             self.parent.statusbar_msg(msg, greenolive)
+            self.btn_analyzes.SetForegroundColour(wx.Colour(100,0,0))
             self.btn_analyzes.Enable(), self.spin_amplitude.Enable(),
             self.lab_amplitude.Enable(), 
             if len(self.parent.file_sources) == 1:# se solo un file
@@ -395,6 +426,7 @@ class Audio_Conv(wx.Panel):
 
         else:# is not checked
             self.parent.statusbar_msg("Disable audio normalization", None)
+            self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_analyzes.Disable(), self.lab_volmax.Disable()
             self.txt_volmax.SetValue(""), self.txt_volmid.SetValue("")
             self.txt_volmax.Disable(), self.lab_volmid.Disable()
@@ -466,6 +498,7 @@ class Audio_Conv(wx.Panel):
                         
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
+        self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
     #-----------------------------------------------------------------------#
     def disableParent(self):
         """

@@ -1211,7 +1211,7 @@ class Lacing(wx.Dialog):
         Show or Hide advanved option for all filters
         """
         if self.enable_opt.GetValue():
-            self.enable_opt.SetBackgroundColour(wx.Colour(240, 161, 125))
+            #self.enable_opt.SetBackgroundColour(wx.Colour(240, 161, 125))
             self.rdbx_W3fdif_filter.Show()
             self.rdbx_W3fdif_deint.Show()
             self.rdbx_Yadif_mode.Show()
@@ -1220,7 +1220,7 @@ class Lacing(wx.Dialog):
             self.rdbx_inter_scan.Show()
             self.rdbx_inter_lowpass.Show()
         else:
-            self.enable_opt.SetBackgroundColour(wx.NullColour)
+            #self.enable_opt.SetBackgroundColour(wx.NullColour)
             self.rdbx_W3fdif_filter.Hide()
             self.rdbx_W3fdif_deint.Hide()
             self.rdbx_Yadif_mode.Hide()
