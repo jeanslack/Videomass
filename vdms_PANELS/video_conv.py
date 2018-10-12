@@ -33,6 +33,7 @@ import wx
 import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
+import wx.lib.platebtn as platebtn
 from vdms_IO.IO_tools import volumeDetectProcess, stream_play
 from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS.epilogue import Formula
@@ -164,12 +165,25 @@ class Video_Conv(wx.Panel):
         self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,30), 
                                             label="Denoisers")
+        
+        
+        
+        btn1 = platebtn.PlateButton(self.notebook_1_pane_2, label="il Testo mostrato", style=platebtn.PB_STYLE_DEFAULT)
+        
+        bm = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
+        btn2 = platebtn.PlateButton(self.notebook_1_pane_2, label="Questo Gradiente", bmp=bm,style=platebtn.PB_STYLE_GRADIENT)
+        btn2.SetForegroundColour('red')
+        
+        
+        
+        
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
                                              size=(-1,30),
                                              bitmap=playbmp, 
                                              )
         resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
+        btn2.SetBitmap(resetbmp)
         self.btn_reset = GB.GradientButton(self.notebook_1_pane_2,
                                              size=(-1,30),
                                              bitmap=resetbmp, 
@@ -316,6 +330,8 @@ class Video_Conv(wx.Panel):
         grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_sizer_2.Add(self.btn_lacing, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_sizer_2.Add(self.btn_denois, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_sizer_2.Add(btn1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_sizer_2.Add(btn2, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_sizer_2.Add(self.btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)

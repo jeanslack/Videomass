@@ -477,7 +477,7 @@ class VideoCrop(wx.Dialog):
         gridBase.Add(sizerLabel, 1, wx.ALL | 
                                     wx.ALIGN_CENTER_HORIZONTAL | 
                                     wx.ALIGN_CENTER_VERTICAL,15)
-        gridBase.Add(gridBtnExit, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        gridBase.Add(gridBtnExit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         
         gridBtnExit.Add(btn_close, 1, wx.ALL ,5)
         gridBtnExit.Add(self.btn_ok, 1, wx.ALL ,5)
@@ -681,7 +681,7 @@ class VideoResolution(wx.Dialog):
         v_scalingbox.Add(Flex_scale_base)
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
@@ -951,10 +951,10 @@ class Lacing(wx.Dialog):
         grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        gridBtn.Add(btn_close,1, wx.ALL,5)
+        gridBtn.Add(self.btn_ok,1, wx.ALL,5)
+        gridBtn.Add(btn_reset,1, wx.ALL,5)
         # final settings:
         self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(self.sizer_base)
@@ -1309,7 +1309,7 @@ class Denoisers(wx.Dialog):
                                             )
         self.rdb_nlmeans = wx.RadioBox(self, wx.ID_ANY, (
         "nlmeans options"), choices=[
-               ("Disabled"),
+               ("Default"),
                ("Old VHS tapes - good starting point restoration"), 
                ("Heavy - really noisy inputs"), 
                ("Light - good quality inputs")], 
@@ -1320,8 +1320,9 @@ class Denoisers(wx.Dialog):
                                             )
         self.rdb_hqdn3d = wx.RadioBox(self, wx.ID_ANY, (
             "hqdn3d options"), choices=[
-                ("simple"),
-                ("complex")],
+                ("Default"),
+                ("Conservative [4.0:4.0:3.0:3.0]"),
+                ("Old VHS tapes restoration [9.0:5.0:3.0:3.0]")],
                  majorDimension=0, 
                  style=wx.RA_SPECIFY_ROWS
                                         )
@@ -1359,7 +1360,7 @@ class Denoisers(wx.Dialog):
                     15)
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         gridBtn.Add(btn_close,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
@@ -1373,7 +1374,6 @@ class Denoisers(wx.Dialog):
         self.sizer_base.Add(grid_sizer_base, 1, 
                             wx.ALL | 
                             wx.EXPAND, 5)
-        self.rdb_hqdn3d.Hide()
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
@@ -1393,6 +1393,7 @@ class Denoisers(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.on_nlmeans, self.ckbx_nlmeans)
         self.Bind(wx.EVT_CHECKBOX, self.on_hqdn3d, self.ckbx_hqdn3d)
         self.Bind(wx.EVT_RADIOBOX, self.on_nlmeans_opt, self.rdb_nlmeans)
+        self.Bind(wx.EVT_RADIOBOX, self.on_hqdn3d_opt, self.rdb_hqdn3d)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -1420,13 +1421,25 @@ class Denoisers(wx.Dialog):
                 self.ckbx_nlmeans.Enable()
                 self.ckbx_hqdn3d.Disable()
                 self.rdb_nlmeans.Enable()
+                self.rdb_hqdn3d.Disable()
                     
-            else:
+            elif self.denoiser.startswith('hqdn3d'):
+                spl = self.denoiser.split('=')
+                print spl
+                if len(spl) == 1:
+                    self.rdb_hqdn3d.SetSelection(0) 
+                else:
+                    if spl[1] == '4.0:4.0:3.0:3.0':
+                        self.rdb_hqdn3d.SetSelection(1)
+                    if spl[1] == '9.0:5.0:3.0:3.0':
+                        self.rdb_hqdn3d.SetSelection(2)
+                
                 self.ckbx_nlmeans.SetValue(False)
                 self.ckbx_hqdn3d.SetValue(True)
                 self.ckbx_nlmeans.Disable()
                 self.ckbx_hqdn3d.Enable()
                 self.rdb_nlmeans.Disable()
+                self.rdb_hqdn3d.Enable()
         else:
             self.ckbx_nlmeans.SetValue(False)
             self.ckbx_hqdn3d.SetValue(False)
@@ -1434,6 +1447,7 @@ class Denoisers(wx.Dialog):
             self.ckbx_hqdn3d.Enable()
             self.rdb_nlmeans.SetSelection(0)
             self.rdb_nlmeans.Disable()
+            self.rdb_hqdn3d.Disable()
     
     #----------------------Event handler (callback)--------------------------#
     #------------------------------------------------------------------------#
@@ -1442,6 +1456,7 @@ class Denoisers(wx.Dialog):
         """
         if self.ckbx_nlmeans.IsChecked():
             self.rdb_nlmeans.Enable()
+            self.rdb_hqdn3d.Disable()
             self.ckbx_hqdn3d.Disable()
             self.denoiser = "nlmeans"
             
@@ -1454,7 +1469,7 @@ class Denoisers(wx.Dialog):
         """
         """
         opt = self.rdb_nlmeans.GetStringSelection()
-        if opt == "Disabled":
+        if opt == "Default":
             self.denoiser = "nlmeans"
         elif opt == "Old VHS tapes - good starting point restoration":
             self.denoiser = "nlmeans=8:3:2"
@@ -1468,11 +1483,27 @@ class Denoisers(wx.Dialog):
         """
         if self.ckbx_hqdn3d.IsChecked():
             self.ckbx_nlmeans.Disable()
+            self.rdb_hqdn3d.Enable()
             self.denoiser = "hqdn3d"
             
         elif not self.ckbx_hqdn3d.IsChecked():
             self.ckbx_nlmeans.Enable()
+            self.rdb_hqdn3d.Disable()
             self.denoiser = ""
+    #------------------------------------------------------------------# 
+    def on_hqdn3d_opt(self, event):
+        """
+        """
+        opt = self.rdb_hqdn3d.GetStringSelection()
+        if opt == "Default":
+            self.denoiser = "hqdn3d"
+            
+        elif opt == "Conservative [4.0:4.0:3.0:3.0]":
+            self.denoiser = "hqdn3d=4.0:4.0:3.0:3.0"
+            
+        elif opt == "Old VHS tapes restoration [9.0:5.0:3.0:3.0]":
+            self.denoiser = "hqdn3d=9.0:5.0:3.0:3.0"
+            
     #------------------------------------------------------------------#  
     def on_reset(self, event):
         """
@@ -1485,6 +1516,8 @@ class Denoisers(wx.Dialog):
         self.ckbx_hqdn3d.Enable()
         self.rdb_nlmeans.SetSelection(0)
         self.rdb_nlmeans.Disable()
+        self.rdb_hqdn3d.SetSelection(0)
+        self.rdb_hqdn3d.Disable()
     #------------------------------------------------------------------#
     def on_close(self, event):
 
