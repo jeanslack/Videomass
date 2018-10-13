@@ -711,8 +711,9 @@ class Video_Conv(wx.Panel):
             wx.MessageBox("No filter enabled", "Info -Videomass2", 
                           wx.ICON_INFORMATION)
             return
+        self.time_seq = self.parent.time_seq
+        filters = '%s %s' % (self.time_seq, cmd_opt["Filters"])
         first_path = self.file_sources[0]
-        filters = cmd_opt["Filters"]
         stream_play(first_path, filters, self.ffplay_link, 
                     self.loglevel_type, self.OS)
     #------------------------------------------------------------------#

@@ -22,16 +22,26 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (06) 24/08/2014
-# Rev (07) 12/01/2015
-# Rev (08) 20/04/2015
-# Rev (09) 1 sept. 2018
+# Rev (06) 24/08/2014, 07) 12/01/2015, (08) 20/04/2015, (09) 1 sept. 2018
+# Rev (10) October 13 2018
 #########################################################
+import wx
 import subprocess
 import shlex
 import time
 from threading import Thread
 
+#########################################################################
+def Messages(msg):
+    """
+    Receive error messages from Play(Thread) via wxCallafter
+    """
+
+    wx.MessageBox("[ffplay] Error:  %s" % (msg), 
+                      "FFplay - Videomass2", 
+                      wx.ICON_ERROR
+                      )
+#########################################################################
 class Play(Thread):
     """
     Run a separate process thread for media reproduction with a called 
@@ -50,42 +60,42 @@ class Play(Thread):
         self.loglevel_type = loglevel_type # not used (used error)
         self.param = param # parametri aggiuntivi
         self.OS = OS # tipo di sistema operativo
-        self.status = None
-        self.data = None
 
         self.start() # start the thread (va in self.run())
 
     def run(self):
-        time.sleep(.5)
+        #time.sleep(.5)
         loglevel_type = 'error'
-        
         cmd = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
                                               self.filename,
                                               self.param,
                                               loglevel_type,
                                               )
-        if self.OS == 'Windows':
-            command = cmd
-        else:
-            command = shlex.split(cmd)
-
-        p = subprocess.Popen(command,
-                             stderr=subprocess.PIPE,
-                             )
-        error =  p.communicate()
-
-        # except OSError as err_0:
-        #     if err_0[1] == 'No such file or directory':
-        #         pyerror = "%s: \nProbably '%s' do not exist in your system" % (
-        #         err_0, command[0])
-        #         
-        #     else:
-        #         pyerror = "%s: " % (err_0)
-        #         
-        #     self.status =  pyerror
-        #     
-        # #else:
-        # if error[1]:
-        #     self.status = error[1]
-        #     
-        # self.data = self.status
+        print cmd
+        try:
+            if self.OS == 'Windows':
+                command = cmd
+            else:
+                command = shlex.split(cmd)
+        except UnicodeEncodeError as err:
+                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
+                wx.CallAfter(Messages, e)
+                return
+        try:
+            p = subprocess.Popen(command,
+                                stderr=subprocess.PIPE,
+                                )
+            error =  p.communicate()
+            
+            if error[1]:
+                wx.CallAfter(Messages, error[1])
+                return
+        
+        except OSError as err_0:
+            if err_0[1] == 'No such file or directory':
+                pyerror = "%s: \nProbably '%s' do not exist in your system" % (
+                err_0, command[0])
+            else:
+                pyerror = "%s: " % (err_0)
+            wx.CallAfter(Messages, pyerror)
+            return

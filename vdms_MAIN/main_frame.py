@@ -386,12 +386,12 @@ class MainFrame(wx.Frame):
     #------------------------------ Menu  Streams -----------------------#
     def ImportPlay(self):
         """
-        Redirect input file clicked at stream_play for reproduction feature.
-        This feature is available by context menu in drag n drop panel.
+        Redirect input file clicked at stream_play for playback feature.
+        This feature is available by context menu in drag n drop panel only.
         """
         filepath = self.import_clicked
         IO_tools.stream_play(filepath, 
-                             '', 
+                             self.time_seq, 
                              self.ffplay_link, 
                              self.loglevel_type, 
                              self.OS,
@@ -415,8 +415,8 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def ExportPlay(self, event):
         """
-        Reproduction functionality for exported files, useful for testing 
-        the result. The first one exported of the list will be reproduced.
+        Playback functionality for exported files, useful for result 
+        testing. The first one exported of the list will be reproduced.
         """
         if not self.post_process:
             wx.MessageBox("No files exported with `Start Encoding` yet", 

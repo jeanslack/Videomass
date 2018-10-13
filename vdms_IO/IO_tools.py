@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 21/july/2018
+# Rev (01) 21/july/2018, (02) October/13/2018
 #########################################################
 import wx
 from vdms_PROCESS.task_processing import GeneralProcess
@@ -70,6 +70,7 @@ def stream_info(title, filepath , helping, ffprobe_link):
     except IOError:
         wx.MessageBox("File does not exist or not a valid file:  %s" % (
             filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
+        
 #-----------------------------------------------------------------------#
 def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
     """
@@ -79,18 +80,11 @@ def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
         with open(filepath):
             thread = Play(filepath, param, ffplay_link, loglevel_type, OS)
             #thread.join()# attende che finisca il thread (se no ritorna subito)
-            error = thread.data
-
+            #error = thread.data
     except IOError:
             wx.MessageBox("File does not exist or not a valid file:  %s" % (
                 filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
             return
-    if error:
-        wx.MessageBox("[ffplay] Error:  %s" % (error), 
-                      "FFplay - Videomass2", 
-                      wx.ICON_ERROR
-                      )
-
 #-----------------------------------------------------------------------#
 def probeDuration(path_list, ffprobe_link):
     """

@@ -2,35 +2,38 @@
 October 05, 2018 V.1.1.0
 +------------------------------------+
 - Solved an exception when importing images and proceeding with normalization
-  (add: does not contain any stream)
+  (add: does not contain any stream).
 - FFmpeg's unrecognized errors are now better managed on volumedetect Processing
 - resolved the writing of the 'passlogfile' on the source folder of 'Videomass2'
-  during double pass processes. The log file will be written to the same source 
-  output path
+  during double pass processes. Now, the log file will be written to the same 
+  source output path.
 - Added new filter section on Video Conversions panel with new dialogs boxes
-  implementation for:
+  implementation:
 
-       scale
-       rotation
-       crop
-       [de]interlace
-       denoisers
+       - scale
+       - rotation
+       - crop
+       - deinterlace/interlace
+       - denoisers
        
-- Each filter button has the color application to on/off state views
-- Added new button to result preview of all filters set in real time.
-- Added new button to clear all filters set
+- Each filter button has the color application to on/off state views.
+- Added new playback button to result preview of all filters set.
+- Added new button to clear all filters set.
 - Improved layout on Video conversions panel
 - Improved layout on Audio conversion panel
 - Removed the 'video size' function instead of the scale filter 
 - Move the 'save image from video' function to the 'format/containers' combobox
-- Added a new button bar with play buttons, metadata and duration for cutting 
-  timeline sequences.
-- Accessibility to playback functions, metadata display, and timeline 
-  duration settings are now improved.
-- Solve bug with exported preview and exported metadata display
+- Added a new buttons bar with color application to on/off state views
+- Accessibility to playback exported file, metadata display, and timeline 
+  duration, are now improved.
+- Fixed bug that did not reproduce the exported file with preview button
 - Added a contextual menu on the drag n drop panel with playback and metadata 
   feature of the selected item. This is activable by right click or double 
   click into one imported items.
+- Added message support for exceptions and errors in streaming playback (ffplay)
+- Added support for time sequences also on playback of input streaming
+- Fixed a bug that did not send the message for ASCII/UTF-8 support on all 
+  processes with non-ASCII/UTF-8 file names related to shlex module on Unix.
 - Improved overall layout 
 
 +------------------------------------+

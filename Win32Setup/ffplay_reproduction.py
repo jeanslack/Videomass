@@ -27,9 +27,22 @@
 # Rev (08) 20/04/2015
 # Rev (09) 1 sept. 2018
 #########################################################
+import wx
 import subprocess
 import time
 from threading import Thread
+
+#########################################################################
+def Messages(msg):
+    """
+    Receive error messages from Play(Thread) via wxCallafter
+    """
+
+    wx.MessageBox("[ffplay] Error:  %s" % (msg), 
+                      "FFplay - Videomass2", 
+                      wx.ICON_ERROR
+                      )
+#########################################################################
 
 class Play(Thread):
     """
@@ -60,35 +73,31 @@ class Play(Thread):
         < Windows: https://stackoverflow.com/questions/1813872/running-
         a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
-        time.sleep(.5)
+        #time.sleep(.5)
         loglevel_type = 'error'
-        
         command = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
                                               self.filename,
                                               self.param,
                                               loglevel_type,
                                               )
-        #try:
-        startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        p = subprocess.Popen(command,
-                             stderr=subprocess.PIPE,
-                             startupinfo=startupinfo,
-                             )
-        error =  p.communicate()
-
-        # except OSError as err_0:
-        #     if err_0[1] == 'No such file or directory':
-        #         pyerror = "%s: \nProbably '%s' do not exist in your system" % (
-        #         err_0, command[0])
-        #         
-        #     else:
-        #         pyerror = "%s: " % (err_0)
-        #         
-        #     self.status =  pyerror
-        #     
-        # #else:
-        # if error[1]:
-        #     self.status = error[1]
-        #     
-        # self.data = self.status
+        try:
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            p = subprocess.Popen(command,
+                                stderr=subprocess.PIPE,
+                                startupinfo=startupinfo,
+                                )
+            error =  p.communicate()
+            
+            if error[1]:
+                wx.CallAfter(Messages, error[1])
+                return
+        
+        except OSError as err_0:
+            if err_0[1] == 'No such file or directory':
+                pyerror = "%s: \nProbably '%s' do not exist in your system" % (
+                err_0, command[0])
+            else:
+                pyerror = "%s: " % (err_0)
+            wx.CallAfter(Messages, pyerror)
+            return
