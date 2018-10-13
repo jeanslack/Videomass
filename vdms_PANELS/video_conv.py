@@ -154,7 +154,7 @@ class Video_Conv(wx.Panel):
                                                label="Set Resolution")
         self.btn_videosize.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_videosize.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_videosize.SetBottomEndColour(wx.Colour(97, 204, 199))
         self.btn_videosize.SetBottomStartColour(wx.Colour(97, 204, 199))
         self.btn_videosize.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_videosize.SetTopEndColour(wx.Colour(97, 204, 199))
@@ -163,7 +163,7 @@ class Video_Conv(wx.Panel):
                                           label="Crop Dimension")
         self.btn_crop.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_crop.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_crop.SetBottomEndColour(wx.Colour(97, 204, 199))
         self.btn_crop.SetBottomStartColour(wx.Colour(97, 204, 199))
         self.btn_crop.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_crop.SetTopEndColour(wx.Colour(97, 204, 199))
@@ -172,7 +172,7 @@ class Video_Conv(wx.Panel):
                                             label="Rotation")
         self.btn_rotate.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_rotate.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_rotate.SetBottomEndColour(wx.Colour(97, 204, 199))
         self.btn_rotate.SetBottomStartColour(wx.Colour(97, 204, 199))
         self.btn_rotate.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_rotate.SetTopEndColour(wx.Colour(97, 204, 199))
@@ -182,7 +182,7 @@ class Video_Conv(wx.Panel):
                                             label="De/Interlace")
         self.btn_lacing.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_lacing.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_lacing.SetBottomEndColour(wx.Colour(97, 204, 199))
         self.btn_lacing.SetBottomStartColour(wx.Colour(97, 204, 199))
         self.btn_lacing.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_lacing.SetTopEndColour(wx.Colour(97, 204, 199))
@@ -192,7 +192,7 @@ class Video_Conv(wx.Panel):
                                             label="Denoisers")
         self.btn_denois.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_denois.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_denois.SetBottomEndColour(wx.Colour(97, 204, 199))
         self.btn_denois.SetBottomStartColour(wx.Colour(97, 204, 199))
         self.btn_denois.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_denois.SetTopEndColour(wx.Colour(97, 204, 199))

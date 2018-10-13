@@ -107,10 +107,10 @@ class MainFrame(wx.Frame):
                                            label="Show Metadata")
         #self.btn_metaI.SetForegroundColour("grey")
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_metaI.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_metaI.SetTopStartColour(wx.Colour(255, 255, 255))
-        self.btn_metaI.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(200, 200, 200))
+        self.btn_metaI.SetBottomStartColour(wx.Colour(200, 200, 200))
+        self.btn_metaI.SetTopStartColour(wx.Colour(200, 200, 200))
+        self.btn_metaI.SetTopEndColour(wx.Colour(200, 200, 200))
         
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
@@ -118,10 +118,10 @@ class MainFrame(wx.Frame):
                                            label="Preview")
         #self.btn_playO.SetForegroundColour("grey")
         self.btn_playO.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_playO.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_playO.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_playO.SetTopStartColour(wx.Colour(255, 255, 255))
-        self.btn_playO.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_playO.SetBottomEndColour(wx.Colour(200, 200, 200))
+        self.btn_playO.SetBottomStartColour(wx.Colour(200, 200, 200))
+        self.btn_playO.SetTopStartColour(wx.Colour(200, 200, 200))
+        self.btn_playO.SetTopEndColour(wx.Colour(200, 200, 200))
         
         self.btn_duration = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
@@ -129,10 +129,10 @@ class MainFrame(wx.Frame):
                                               label="Duration")
         #self.btn_duration.SetForegroundColour("white")
         self.btn_duration.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_duration.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_duration.SetTopStartColour(wx.Colour(255, 255, 255))
-        self.btn_duration.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_duration.SetBottomEndColour(wx.Colour(200, 200, 200))
+        self.btn_duration.SetBottomStartColour(wx.Colour(200, 200, 200))
+        self.btn_duration.SetTopStartColour(wx.Colour(200, 200, 200))
+        self.btn_duration.SetTopEndColour(wx.Colour(200, 200, 200))
 
         #self.btnpanel.SetBackgroundColour(wx.Colour(156, 189, 200))
         self.btnpanel.SetBackgroundColour(wx.Colour(97, 204, 199))
@@ -349,7 +349,7 @@ class MainFrame(wx.Frame):
         """
         Disable streams imported menu
         """
-        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 255, 255))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(200, 200, 200))
         self.import_clicked = ''
         
     #------------------------------------------------------------------#
@@ -376,7 +376,7 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
-                self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 255))
+                self.btn_duration.SetBottomEndColour(wx.Colour(200, 200, 200))
             else:
                 self.btn_duration.SetBottomEndColour(wx.Colour(172, 236, 19))
             self.time_seq = data
