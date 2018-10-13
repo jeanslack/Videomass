@@ -257,7 +257,7 @@ class Video_Conv(wx.Panel):
         self.rdb_a.EnableItem(8,enable=True),self.rdb_a.EnableItem(9,enable=True)
         self.rdb_a.SetSelection(0)
         self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
-                      wx.ID_ANY, ("Audio Normalization Stream")
+                      wx.ID_ANY, ("Audio Normalization (Stream)")
                                 )
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25), 
@@ -272,12 +272,12 @@ class Video_Conv(wx.Panel):
         
         
         self.label_dbMax = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                ("dB Maximum audio level:  ")
+                                ("Max Volume db.  ")
                                 )
         self.text_dbMax = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_dbMedium = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    ("dB Middle audio level:")
+                                    ("Average Volume db.")
                                     )
         self.text_dbMedium = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
@@ -320,10 +320,7 @@ class Video_Conv(wx.Panel):
         sizer_pane3_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane3_base = wx.GridSizer(1, 2, 0, 0)
         sizer_pane3_audio_column2 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_in_column2 = wx.FlexGridSizer(3, 1, 0, 0)
-        grid_sizer_audionormalize = wx.GridSizer(3, 1, 0, 0)
-        grid_sizer_slider_normalize = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_sizer_text_normalize = wx.FlexGridSizer(2, 2, 0, 0)
+        grid_sizer_in_column2 = wx.FlexGridSizer(5, 2, 0, 0)
         sizer_pane3_audio_column1 = wx.BoxSizer(wx.VERTICAL)
         sizer_pane2_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane2_base = wx.GridSizer(1, 2, 0, 0)
@@ -378,7 +375,7 @@ class Video_Conv(wx.Panel):
         sizer_2.Add(grid_sizer_2, 1, wx.EXPAND, 0)
         grid_sizer_pane2_base.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 15)
         #----------------
-        
+
         sizer_videoaspect.Add(self.cmbx_Vaspect, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_1.Add(sizer_videoaspect, 1, wx.ALL | wx.EXPAND, 15)
         sizer_videorate.Add(self.cmbx_vrate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
@@ -388,19 +385,18 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_2.SetSizer(sizer_pane2_base)
         sizer_pane3_audio_column1.Add(self.rdb_a, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column1, 1, wx.EXPAND, 0)
-        grid_sizer_in_column2.Add(self.ckbx_a_normalize, 0, wx.TOP, 15)
-        grid_sizer_audionormalize.Add(self.btn_analyzes, 0, wx.ALL, 15)
-        grid_sizer_text_normalize.Add(self.label_dbMax, 0, wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_text_normalize.Add(self.text_dbMax, 0, wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_text_normalize.Add(self.label_dbMedium, 0, wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_text_normalize.Add(self.text_dbMedium, 0, wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_audionormalize.Add(grid_sizer_text_normalize, 1, wx.ALL, 5)
-        grid_sizer_slider_normalize.Add(self.label_normalize, 0, wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_slider_normalize.Add(self.spin_ctrl_audionormalize, 0, wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_audionormalize.Add(grid_sizer_slider_normalize, 1, wx.EXPAND, 0)
-        grid_sizer_in_column2.Add(grid_sizer_audionormalize, 1, wx.ALL, 5)
-        sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.EXPAND, 0)
-        grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.EXPAND, 0)
+        grid_sizer_in_column2.Add(self.ckbx_a_normalize, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.btn_analyzes, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.label_dbMax, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.text_dbMax, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.label_dbMedium, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.text_dbMedium, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.label_normalize, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.spin_ctrl_audionormalize, 0, wx.TOP, 5)
+        sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.ALL, 15)
+        grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.ALL, 0)
         sizer_pane3_base.Add(grid_sizer_pane3_base, 1, wx.EXPAND, 0)
         self.notebook_1_pane_3.SetSizer(sizer_pane3_base)
         grid_sizer_pane4_base.Add(self.rdb_h264preset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)

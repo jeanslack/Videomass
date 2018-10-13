@@ -97,8 +97,6 @@ class Audio_Conv(wx.Panel):
                  ("AC3 [.ac3]"),
                  ("Save audio from movie")], style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
-        #self.btn_param = wx.Button(self, wx.ID_ANY, (
-                                               #"Audio Options"))
         
         self.btn_param = GB.GradientButton(self,
                                            size=(-1,25), 
@@ -110,17 +108,12 @@ class Audio_Conv(wx.Panel):
         self.btn_param.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_param.SetTopEndColour(wx.Colour(97, 204, 199))
         
-        
-        
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY)
         self.ckb_onlynorm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Only Normalization"))
         self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Audio Normalization"))
-        #self.btn_analyzes = wx.Button(self, wx.ID_ANY, ("Analyzes"))
-        
-        
         self.btn_analyzes = GB.GradientButton(self,
                                            size=(-1,25), 
                                            label="Analyzes")
@@ -132,12 +125,12 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes.SetTopEndColour(wx.Colour(97, 204, 199))
         
         
-        self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("db Volume Max:"))
+        self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("Max Volume db."))
         self.txt_volmax = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
-        self.lab_volmid = wx.StaticText(self, wx.ID_ANY, ("db Volume Middle:"))
+        self.lab_volmid = wx.StaticText(self, wx.ID_ANY, ("Average Volume db."))
         self.txt_volmid = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
-                                    "Max Peak Level Threshold:"))
+                                    "Max Peak Level Threshold:   "))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
                                     agwStyle=FS.FS_LEFT)
