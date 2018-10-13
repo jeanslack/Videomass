@@ -42,6 +42,7 @@ yellow = '#faff35'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#8aab3c'
+ciano = '#61ccc7' # rgb 97, 204, 199
 
 cmd_opt = {"AudioContainer":"MP3 [.mp3]", 
            "AudioCodec":"-c:a libmp3lame", 
@@ -104,10 +105,10 @@ class Audio_Conv(wx.Panel):
                                            label="Audio Options")
         self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_param.SetBottomEndColour(wx.Colour(156, 189, 200))
-        self.btn_param.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_param.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_param.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_param.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_param.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_param.SetTopEndColour(wx.Colour(97, 204, 199))
         
         
         
@@ -125,10 +126,10 @@ class Audio_Conv(wx.Panel):
                                            label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(156, 189, 200))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(97, 204, 199))
         
         
         self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("db Volume Max:"))
@@ -344,7 +345,7 @@ class Audio_Conv(wx.Panel):
                 self.txt_options.AppendText(" %s," % d)
                 self.btn_param.SetBottomEndColour(wx.Colour(172, 236, 19))
             else:
-                self.btn_param.SetBottomEndColour(wx.Colour(156, 189, 200))
+                self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#

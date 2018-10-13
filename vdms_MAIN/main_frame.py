@@ -109,7 +109,7 @@ class MainFrame(wx.Frame):
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_metaI.SetBottomEndColour(wx.Colour(255, 255, 255))
         self.btn_metaI.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_metaI.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_metaI.SetTopStartColour(wx.Colour(255, 255, 255))
         self.btn_metaI.SetTopEndColour(wx.Colour(156, 189, 200))
         
         self.btn_playO = GB.GradientButton(self.btnpanel,
@@ -120,7 +120,7 @@ class MainFrame(wx.Frame):
         self.btn_playO.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_playO.SetBottomEndColour(wx.Colour(255, 255, 255))
         self.btn_playO.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_playO.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_playO.SetTopStartColour(wx.Colour(255, 255, 255))
         self.btn_playO.SetTopEndColour(wx.Colour(156, 189, 200))
         
         self.btn_duration = GB.GradientButton(self.btnpanel,
@@ -131,7 +131,7 @@ class MainFrame(wx.Frame):
         self.btn_duration.SetBaseColours(startcolour=wx.Colour(220, 255, 255), foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 255))
         self.btn_duration.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_duration.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_duration.SetTopStartColour(wx.Colour(255, 255, 255))
         self.btn_duration.SetTopEndColour(wx.Colour(156, 189, 200))
 
         #self.btnpanel.SetBackgroundColour(wx.Colour(156, 189, 200))

@@ -155,27 +155,27 @@ class Video_Conv(wx.Panel):
         self.btn_videosize.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_videosize.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_videosize.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_videosize.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_videosize.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_videosize.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_videosize.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_videosize.SetTopEndColour(wx.Colour(97, 204, 199))
         self.btn_crop = GB.GradientButton(self.notebook_1_pane_2,
                                           size=(-1,25), 
                                           label="Crop Dimension")
         self.btn_crop.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_crop.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_crop.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_crop.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_crop.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_crop.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_crop.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_crop.SetTopEndColour(wx.Colour(97, 204, 199))
         self.btn_rotate = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25), 
                                             label="Rotation")
         self.btn_rotate.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_rotate.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_rotate.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_rotate.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_rotate.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_rotate.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_rotate.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_rotate.SetTopEndColour(wx.Colour(97, 204, 199))
         
         self.btn_lacing = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25), 
@@ -183,9 +183,9 @@ class Video_Conv(wx.Panel):
         self.btn_lacing.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_lacing.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_lacing.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_lacing.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_lacing.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_lacing.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_lacing.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_lacing.SetTopEndColour(wx.Colour(97, 204, 199))
         
         self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25), 
@@ -193,9 +193,9 @@ class Video_Conv(wx.Panel):
         self.btn_denois.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(100, 0, 0))
         self.btn_denois.SetBottomEndColour(wx.Colour(255, 255, 255))
-        self.btn_denois.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_denois.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_denois.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_denois.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_denois.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_denois.SetTopEndColour(wx.Colour(97, 204, 199))
         
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
@@ -264,15 +264,15 @@ class Video_Conv(wx.Panel):
                                             label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(156, 189, 200))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(156, 189, 200))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(156, 189, 200))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(156, 189, 200))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(97, 204, 199))
         
         
         
         self.label_dbMax = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                ("dB Maximum audio level: ")
+                                ("dB Maximum audio level:  ")
                                 )
         self.text_dbMax = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
@@ -282,7 +282,7 @@ class Video_Conv(wx.Panel):
         self.text_dbMedium = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    ("Max Peak Level Threshold:")
+                                    ("Max Peak Level Threshold:  ")
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
             wx.ID_ANY, min_val=-99.0, max_val=0.0, increment=1.0, value=-1.0, 
@@ -389,15 +389,15 @@ class Video_Conv(wx.Panel):
         sizer_pane3_audio_column1.Add(self.rdb_a, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column1, 1, wx.EXPAND, 0)
         grid_sizer_in_column2.Add(self.ckbx_a_normalize, 0, wx.TOP, 15)
-        grid_sizer_audionormalize.Add(self.btn_analyzes, 0, wx.TOP, 15)
-        grid_sizer_text_normalize.Add(self.label_dbMax, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_text_normalize.Add(self.text_dbMax, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_text_normalize.Add(self.label_dbMedium, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_text_normalize.Add(self.text_dbMedium, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_audionormalize.Add(grid_sizer_text_normalize, 1, wx.EXPAND, 0)
-        grid_sizer_slider_normalize.Add(self.label_normalize, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_slider_normalize.Add(self.spin_ctrl_audionormalize, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_audionormalize.Add(grid_sizer_slider_normalize, 1, wx.ALL, 5)
+        grid_sizer_audionormalize.Add(self.btn_analyzes, 0, wx.ALL, 15)
+        grid_sizer_text_normalize.Add(self.label_dbMax, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizer_text_normalize.Add(self.text_dbMax, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizer_text_normalize.Add(self.label_dbMedium, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizer_text_normalize.Add(self.text_dbMedium, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizer_audionormalize.Add(grid_sizer_text_normalize, 1, wx.ALL, 5)
+        grid_sizer_slider_normalize.Add(self.label_normalize, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizer_slider_normalize.Add(self.spin_ctrl_audionormalize, 0, wx.ALIGN_CENTER_VERTICAL, 15)
+        grid_sizer_audionormalize.Add(grid_sizer_slider_normalize, 1, wx.EXPAND, 0)
         grid_sizer_in_column2.Add(grid_sizer_audionormalize, 1, wx.ALL, 5)
         sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.EXPAND, 0)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.EXPAND, 0)
@@ -734,11 +734,11 @@ class Video_Conv(wx.Panel):
             cmd_opt['Setsar'], cmd_opt['Deinterlace'] = "",""
             cmd_opt['Interlace'], cmd_opt['Denoiser'] = "",""
             cmd_opt["Filters"] = ""
-            self.btn_videosize.SetBottomEndColour(wx.Colour(156, 189, 200))
-            self.btn_crop.SetBottomEndColour(wx.Colour(156, 189, 200))
-            self.btn_denois.SetBottomEndColour(wx.Colour(156, 189, 200))
-            self.btn_lacing.SetBottomEndColour(wx.Colour(156, 189, 200))
-            self.btn_rotate.SetBottomEndColour(wx.Colour(156, 189, 200))
+            self.btn_videosize.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_crop.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_denois.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_lacing.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_rotate.SetBottomEndColour(wx.Colour(97, 204, 199))
     #------------------------------------------------------------------#
     def video_filter_checker(self):
         """
@@ -802,7 +802,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
             if not data:
-               self.btn_videosize.SetBottomEndColour(wx.Colour(156, 189, 200))
+               self.btn_videosize.SetBottomEndColour(wx.Colour(97, 204, 199))
                cmd_opt["Setdar"] = ""
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
@@ -839,7 +839,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Orientation"][0] = data[0]# cmd option
             cmd_opt["Orientation"][1] = data[1]#msg
             if not data[0]:
-                self.btn_rotate.SetBottomEndColour(wx.Colour(156, 189, 200))
+                self.btn_rotate.SetBottomEndColour(wx.Colour(97, 204, 199))
             else:
                 self.btn_rotate.SetBottomEndColour(wx.Colour(172, 236, 19))
             self.video_filter_checker()
@@ -856,7 +856,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = crop.GetValue()
             if not data:
-                self.btn_crop.SetBottomEndColour(wx.Colour(156, 189, 200))
+                self.btn_crop.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Crop"] = ''
             else:
                 self.btn_crop.SetBottomEndColour(wx.Colour(172, 236, 19))
@@ -879,7 +879,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = lacing.GetValue()
             if not data:
-                self.btn_lacing.SetBottomEndColour(wx.Colour(156, 189, 200))
+                self.btn_lacing.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Deinterlace"] = ''
                 cmd_opt["Interlace"] = ''
             else:
@@ -907,7 +907,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = den.GetValue()
             if not data:
-                self.btn_denois.SetBottomEndColour(wx.Colour(156, 189, 200))
+                self.btn_denois.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Denoiser"] = ''
             else:
                 self.btn_denois.SetBottomEndColour(wx.Colour(172, 236, 19))
