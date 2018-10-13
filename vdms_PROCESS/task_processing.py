@@ -313,23 +313,13 @@ class ProcThread(Thread):
                                                        folders, 
                                                        filename, 
                                                        self.extoutput
-                                                       )
+                                                       )          
             try:
                 if self.OS == 'Windows':
                     args = cmd
                 else:
                     args = shlex.split(cmd)
-            except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
-                wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         cmd=e, 
-                         duration=0
-                         )
-                STATUS_ERROR = 1
-                break
-            
-            try:
+                    
                 p = subprocess.Popen(args, 
                                      stderr=subprocess.PIPE, 
                                      bufsize=1, 
@@ -342,6 +332,18 @@ class ProcThread(Thread):
                          cmd=e, 
                          duration=0
                          )
+                STATUS_ERROR = 1
+                break
+            
+            except UnicodeEncodeError as err:
+                e = ('Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             cmd=e, 
+                             duration=0
+                             )
                 STATUS_ERROR = 1
                 break
             
@@ -426,14 +428,20 @@ class DoublePassThread(Thread):
                                        filename,
                                        self.nul,
                                        )
-                     )
+                     ) 
             try:
                 if self.OS == 'Windows':
                     args = pass1
                 else:
                     args = shlex.split(pass1)
-            except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
+                    
+                p1 = subprocess.Popen(args, 
+                                      stderr=subprocess.PIPE, 
+                                      bufsize=1, 
+                                      universal_newlines=True,
+                                      )
+            except OSError as err:
+                e = "%s\nffmpeg exist?" % (err)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 
@@ -442,14 +450,10 @@ class DoublePassThread(Thread):
                 STATUS_ERROR = 1
                 break
             
-            try:
-                p1 = subprocess.Popen(args, 
-                                      stderr=subprocess.PIPE, 
-                                      bufsize=1, 
-                                      universal_newlines=True,
-                                      )
-            except OSError as err:
-                e = "%s\nffmpeg exist?" % (err)
+            except UnicodeEncodeError as err:
+                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 
@@ -558,17 +562,7 @@ class SingleProcThread(Thread):
                 args = self.cmd
             else:
                 args = shlex.split(self.cmd)
-        except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
-                wx.CallAfter(pub.sendMessage, 
-                            "COUNT_EVT", 
-                            cmd=e, 
-                            duration=0
-                            )
-                STATUS_ERROR = 1
-                wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
-                return
-        try:
+                
             p = subprocess.Popen(args, 
                                  stderr=subprocess.PIPE,
                                  )
@@ -589,6 +583,19 @@ class SingleProcThread(Thread):
             STATUS_ERROR = 1
             wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
             return
+        
+        except UnicodeEncodeError as err:
+                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             cmd=e, 
+                             duration=0
+                             )
+                STATUS_ERROR = 1
+                wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
+                return
         
         else:
             if error[1]:# ffmpeg error
@@ -669,8 +676,13 @@ class GrabAudioProc(Thread):
                 else:
                     args = shlex.split(cmd)
                     
-            except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
+                p = subprocess.Popen(args, 
+                                     stderr=subprocess.PIPE, 
+                                     bufsize=1, # if 1 means line buffered
+                                     universal_newlines=True,
+                                     )
+            except OSError as err:
+                e = "%s\nffmpeg exist?" % (err), 
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 
@@ -679,14 +691,10 @@ class GrabAudioProc(Thread):
                 STATUS_ERROR = 1
                 break
             
-            try:
-                p = subprocess.Popen(args, 
-                                     stderr=subprocess.PIPE, 
-                                     bufsize=1, # if 1 means line buffered
-                                     universal_newlines=True,
-                                     )
-            except OSError as err:
-                e = "%s\nffmpeg exist?" % (err), 
+            except UnicodeEncodeError as err:
+                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 

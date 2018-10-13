@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 21/july/2018
+# Rev (01) 21/july/2018, (02) October 13 2018
 #########################################################
 import wx
 from wx.lib.pubsub import setupkwargs
@@ -93,7 +93,7 @@ class VolumeDetectThread(Thread):
     volume peak level when required for audio normalization process.
     The volume data is a list sended to the dialog with wx.callafter.
     """
-    def __init__(self, ffmpeg_bin, filelist):
+    def __init__(self, ffmpeg_bin, filelist, OS):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -104,6 +104,10 @@ class VolumeDetectThread(Thread):
         self.ffmpeg = ffmpeg_bin
         self.status = None
         self.data = None
+        if OS == 'Windows':#Replace /dev/null with NUL on Windows.
+            self.nul = 'NUL'
+        else:
+            self.nul = '/dev/null'
 
         self.start() # start the thread (va in self.run())
 
@@ -125,10 +129,19 @@ class VolumeDetectThread(Thread):
                     'does not contain any stream',
                     )
         for files in self.filelist:
-            cmnd = [self.ffmpeg, '-i', files, '-hide_banner', '-af', 
-                    'volumedetect', '-vn', '-sn', '-dn', '-f', 'null', 
-                    '/dev/null'
-                    ]#Replace /dev/null with NUL on Windows.
+            cmnd = [self.ffmpeg, 
+                    '-i', 
+                    files, 
+                    '-hide_banner', 
+                    '-af', 
+                    'volumedetect', 
+                    '-vn', 
+                    '-sn', 
+                    '-dn', 
+                    '-f', 
+                    'null', 
+                    self.nul,
+                    ]
             try:
                 p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, 
                                      stderr=subprocess.PIPE,
@@ -169,8 +182,13 @@ class VolumeDetectThread(Thread):
                 e = "Unrecognized Error (not in err_list):\n\n%s" % error
                 self.status = e
                 break
+            
+            except UnicodeEncodeError as err:
+                e = ('Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.')
+                self.status = e
+                break
                 
-        
         self.data = (volume, self.status)
         
         wx.CallAfter(pub.sendMessage, 

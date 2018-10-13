@@ -22,10 +22,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (06) 24/08/2014
-# Rev (07) 12/01/2015
-# Rev (08) 20/04/2015
-# Rev (09) 1 sept. 2018
+# Rev (06) 24/08/2014, 07) 12/01/2015, (08) 20/04/2015, (09) 1 sept. 2018
+# Rev (10) October 13 2018
 #########################################################
 import wx
 import subprocess
@@ -38,7 +36,7 @@ def Messages(msg):
     Receive error messages from Play(Thread) via wxCallafter
     """
 
-    wx.MessageBox("[ffplay] Error:  %s" % (msg), 
+    wx.MessageBox("[playback] Error:  %s" % (msg), 
                       "FFplay - Videomass2", 
                       wx.ICON_ERROR
                       )
@@ -76,10 +74,10 @@ class Play(Thread):
         #time.sleep(.5)
         loglevel_type = 'error'
         command = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
-                                              self.filename,
-                                              self.param,
-                                              loglevel_type,
-                                              )
+                                                  self.filename,
+                                                  self.param,
+                                                  loglevel_type,
+                                                  )
         try:
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -100,4 +98,10 @@ class Play(Thread):
             else:
                 pyerror = "%s: " % (err_0)
             wx.CallAfter(Messages, pyerror)
+            return
+        
+        except UnicodeEncodeError as err:
+            e = ('Non-ASCII/UTF-8 character string not supported. '
+                    'Please, check the filename and correct it.')
+            wx.CallAfter(Messages, e)
             return

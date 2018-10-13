@@ -37,7 +37,7 @@ def Messages(msg):
     Receive error messages from Play(Thread) via wxCallafter
     """
 
-    wx.MessageBox("[ffplay] Error:  %s" % (msg), 
+    wx.MessageBox("[playback] ERROR:  %s" % (msg), 
                       "FFplay - Videomass2", 
                       wx.ICON_ERROR
                       )
@@ -71,17 +71,11 @@ class Play(Thread):
                                               self.param,
                                               loglevel_type,
                                               )
-        print cmd
         try:
             if self.OS == 'Windows':
                 command = cmd
             else:
                 command = shlex.split(cmd)
-        except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
-                wx.CallAfter(Messages, e)
-                return
-        try:
             p = subprocess.Popen(command,
                                 stderr=subprocess.PIPE,
                                 )
@@ -98,4 +92,10 @@ class Play(Thread):
             else:
                 pyerror = "%s: " % (err_0)
             wx.CallAfter(Messages, pyerror)
+            return
+        
+        except UnicodeEncodeError as err:
+            e = ('Non-ASCII/UTF-8 character string not supported. '
+                    'Please, check the filename and correct it.')
+            wx.CallAfter(Messages, e)
             return

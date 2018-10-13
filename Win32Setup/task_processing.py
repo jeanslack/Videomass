@@ -335,13 +335,16 @@ class ProcThread(Thread):
                          )
                 STATUS_ERROR = 1
                 break
+            
             except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
+                e = ('Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
                 wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         cmd=e, 
-                         duration=0
-                         )
+                             "COUNT_EVT", 
+                             cmd=e, 
+                             duration=0
+                             )
                 STATUS_ERROR = 1
                 break
             
@@ -444,7 +447,9 @@ class DoublePassThread(Thread):
                 break
 
             except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
+                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 
@@ -566,20 +571,23 @@ class SingleProcThread(Thread):
                 e = "%s: " % (err_0)
                 
             wx.CallAfter(pub.sendMessage, 
-                            "COUNT_EVT", 
-                            cmd=e, 
-                            duration=self.duration
-                            )
+                         "COUNT_EVT", 
+                         cmd=e, 
+                         duration=self.duration
+                         )
             STATUS_ERROR = 1
             wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
             return
+        
         except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
+                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
                 wx.CallAfter(pub.sendMessage, 
-                            "COUNT_EVT", 
-                            cmd=e, 
-                            duration=0
-                            )
+                             "COUNT_EVT", 
+                             cmd=e, 
+                             duration=0
+                             )
                 STATUS_ERROR = 1
                 wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
                 return
@@ -677,8 +685,11 @@ class GrabAudioProc(Thread):
                              )
                 STATUS_ERROR = 1
                 break
+            
             except UnicodeEncodeError as err:
-                e = '%s\n'% (err) + 'filename: Support ASCII/UTF-8 only.\n'
+                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
+                     'Please, check the filename and correct it.'
+                     )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 

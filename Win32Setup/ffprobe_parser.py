@@ -118,6 +118,12 @@ class FFProbe(object):
         except OSError:
             self.error = 'ffprobe not found in the system'
             return
+        
+        except UnicodeEncodeError as err:
+            e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
+                    'Please, check the filename and correct it.')
+            self.error = e
+            return
 
         raw_list = output.split('\n') # create list with strings element
 

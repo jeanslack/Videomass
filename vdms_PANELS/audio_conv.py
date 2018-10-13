@@ -70,7 +70,7 @@ class Audio_Conv(wx.Panel):
     with preset storing feature (TODO)
     """
     def __init__(self, parent, helping, ffmpeg_link, threads, 
-                 cpu_used, loglevel_type, ffprobe_link,):
+                 cpu_used, loglevel_type, ffprobe_link, OS):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
@@ -79,6 +79,7 @@ class Audio_Conv(wx.Panel):
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
         self.ffprobe_link = ffprobe_link
+        self.OS = OS
         # others attributes:
         self.file_sources = []
         self.file_destin = ''
@@ -336,7 +337,7 @@ class Audio_Conv(wx.Panel):
                  ]:
             if not 'Not set' in d:
                 self.txt_options.AppendText(" %s," % d)
-                self.btn_param.SetBottomEndColour(wx.Colour(172, 236, 19))
+                self.btn_param.SetBottomEndColour(wx.Colour(240, 255, 0))
             else:
                 self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
         
@@ -465,7 +466,7 @@ class Audio_Conv(wx.Panel):
         self.parent.statusbar_msg("",None)
         normalize = self.spin_amplitude.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources)
+        data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
 
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass2", wx.ICON_ERROR)

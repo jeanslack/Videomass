@@ -804,7 +804,7 @@ class Video_Conv(wx.Panel):
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
             else:
-                self.btn_videosize.SetBottomEndColour(wx.Colour(172, 236, 19))
+                self.btn_videosize.SetBottomEndColour(wx.Colour(240, 255, 0))
                 if 'scale' in data:
                     cmd_opt["Scale"] = data['scale']
                 else:
@@ -838,7 +838,7 @@ class Video_Conv(wx.Panel):
             if not data[0]:
                 self.btn_rotate.SetBottomEndColour(wx.Colour(97, 204, 199))
             else:
-                self.btn_rotate.SetBottomEndColour(wx.Colour(172, 236, 19))
+                self.btn_rotate.SetBottomEndColour(wx.Colour(240, 255, 0))
             self.video_filter_checker()
         else:
             rotate.Destroy()
@@ -856,7 +856,7 @@ class Video_Conv(wx.Panel):
                 self.btn_crop.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Crop"] = ''
             else:
-                self.btn_crop.SetBottomEndColour(wx.Colour(172, 236, 19))
+                self.btn_crop.SetBottomEndColour(wx.Colour(240, 255, 0))
                 cmd_opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
@@ -880,7 +880,7 @@ class Video_Conv(wx.Panel):
                 cmd_opt["Deinterlace"] = ''
                 cmd_opt["Interlace"] = ''
             else:
-                self.btn_lacing.SetBottomEndColour(wx.Colour(172, 236, 19))
+                self.btn_lacing.SetBottomEndColour(wx.Colour(240, 255, 0))
                 if 'deinterlace' in data:
                     cmd_opt["Deinterlace"] = data["deinterlace"]
                     cmd_opt["Interlace"] = ''
@@ -907,7 +907,7 @@ class Video_Conv(wx.Panel):
                 self.btn_denois.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Denoiser"] = ''
             else:
-                self.btn_denois.SetBottomEndColour(wx.Colour(172, 236, 19))
+                self.btn_denois.SetBottomEndColour(wx.Colour(240, 255, 0))
                 cmd_opt["Denoiser"] = data
             self.video_filter_checker()
         else:
@@ -1168,7 +1168,7 @@ class Video_Conv(wx.Panel):
         self.parent.statusbar_msg("",None)
         normalize = self.spin_ctrl_audionormalize.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources)
+        data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
 
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass2", wx.ICON_ERROR)
