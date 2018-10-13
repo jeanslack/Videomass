@@ -1,5 +1,4 @@
 # Welcome to Videomass2
-![Image](/images/videomass2.png)
 
 * [Features](features.md)
 * [Screenshot](screenshot.md)
