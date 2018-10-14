@@ -4,7 +4,7 @@
 ![Image](/images/videomass2.png)
 
 Videomass2 is a restyling of an old project started many years ago [link](https://github.com/jeanslack/Videomass), then abandoned. 
-Videomass2 is a desktop multimedia conversion application completely based on FFmpeg, able to convert video, music and images. Originally created for the purpose of being usable on most platforms while maintaining the same feel and touch of each operating system.That's why it was written in Python with the most popular toolkit ever: wxPython classic.   
+Videomass2 is a desktop multimedia conversion application completely based on FFmpeg, able to convert video, music and images. Originally created for the purpose of being usable on most platforms while maintaining the same touch and feel of each operating system.That's why it was written in Python with the most popular toolkit ever: wxPython classic.   
 
 Videomass2 is a project created by Gianluca Pernigotto (jeanslack)  
     
