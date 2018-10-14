@@ -38,7 +38,7 @@ class Cut_Range(wx.Dialog):
     cutting a time range of audio and video streams. 
     FIXME: replace spinctrl with a timer spin float ctrl if exist
     """
-    def __init__(self, parent, title, hasSet):
+    def __init__(self, parent, hasSet):
         """
         FFmpeg use this format of a time range to specifier a media cutting
         range: "-ss 00:00:00 -t 00:00:00". The -ss flag is the initial
@@ -68,26 +68,34 @@ class Cut_Range(wx.Dialog):
         """constructor """
         self.start_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                   self.init_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
+        lab1 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.start_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.init_minute), min=0, max=59, style=wx.TE_PROCESS_ENTER)
+        lab2 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_1_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                            "Start time position (h:m:s)")), wx.VERTICAL)
+                        "Start time position (hours:min:sec)")), wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
+        lab3 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab3.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.stop_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                  self.cut_minute), min=0, max=59, style=wx.TE_PROCESS_ENTER)
+        lab4 = wx.StaticText(self, wx.ID_ANY, (":"))
+        lab4.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, ""))
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                            "Time progress duration (h:m:s)")), wx.VERTICAL)
+                        "Time progress duration (hours:min:sec)")), wx.VERTICAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         #----------------------Properties ----------------------#
-        self.SetTitle(title)
+        self.SetTitle('Set Time Sequences - Videomass2')
         self.start_hour_ctrl.SetMinSize((100,-1 ))
         self.start_minute_ctrl.SetMinSize((100, -1))
         self.start_second_ctrl.SetMinSize((100, -1))
@@ -103,28 +111,33 @@ class Cut_Range(wx.Dialog):
         #----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
-        gridFlex1 = wx.FlexGridSizer(1, 3, 0, 0)
-        gridFlex2 = wx.FlexGridSizer(1, 3, 0, 0)
+        gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
+        gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
         
         grid_sizer_base.Add(sizer_1_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         sizer_1_staticbox.Add(gridFlex1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         gridFlex1.Add(self.start_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex1.Add(lab1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(self.start_minute_ctrl,0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex1.Add(lab2,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(self.start_second_ctrl,0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         
         grid_sizer_base.Add(sizer_2_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         gridFlex2.Add(self.stop_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex2.Add(lab3,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_minute_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridFlex2.Add(lab4,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_second_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         
-        grid_sizer_base.Add(gridBtn,1,)
-        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_ok,1,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        gridBtn.Add(btn_close,0, wx.ALL,5)
+        gridBtn.Add(btn_ok,0,wx.ALL,5)
+        gridBtn.Add(btn_reset,0, wx.ALL,5)
         
-        sizer_base.Add(grid_sizer_base, 1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        sizer_base.Add(grid_sizer_base, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -329,23 +342,23 @@ class VideoRotate(wx.Dialog):
     #----------------------Event handler (callback)--------------------------#
     def on_up(self, event):
         self.orientation = "transpose=2,transpose=2"
-        self.text_rotate.SetValue("180° from bottom to top")
+        self.text_rotate.SetValue(u"180° from bottom to top")
         
     #------------------------------------------------------------------#
     def on_left(self, event):
         opt = "transpose=2"
         self.orientation = opt
-        self.text_rotate.SetValue("Rotate 90° Left")
+        self.text_rotate.SetValue(u"Rotate 90° Left")
         
     #------------------------------------------------------------------#
     def on_right(self, event):
         self.orientation = "transpose=1"
-        self.text_rotate.SetValue("Rotate 90° Right")
+        self.text_rotate.SetValue(u"Rotate 90° Right")
         
     #------------------------------------------------------------------#
     def on_down(self, event):
         self.orientation = "transpose=2,transpose=2"
-        self.text_rotate.SetValue("180° from top to bottom")
+        self.text_rotate.SetValue(u"180° from top to bottom")
         
     #------------------------------------------------------------------#
     def on_reset(self, event):
@@ -388,27 +401,27 @@ class VideoCrop(wx.Dialog):
         """
         Make sure you use the clear button when you finish the task.
         """
-        self.w = ''
-        self.h = ''
-        self.y = ''
-        self.x = ''
+        self.w = '' # set -1 = disable
+        self.h = '' # set -1 = disable
+        self.y = '' # set -1 = disable
+        self.x = '' # set -1 = disable
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """ 
         """
-        self.label_top = wx.StaticText(self, wx.ID_ANY, ("Top (Height)"))
-        self.top = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
+        self.label_width = wx.StaticText(self, wx.ID_ANY, ("Width"))
+        self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
                                size=(100,-1), style=wx.TE_PROCESS_ENTER
                                 )
-        self.label_right = wx.StaticText(self, wx.ID_ANY, ("Right (X)"))
-        self.right = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
+        self.label_height = wx.StaticText(self, wx.ID_ANY, ("Height"))
+        self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
                                  size=(100,-1), style=wx.TE_PROCESS_ENTER
                                  )
-        self.label_bottom = wx.StaticText(self, wx.ID_ANY, ("Bottom (Y)"))
-        self.bottom = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
+        self.label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
+        self.crop_X = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
                                  size=(100,-1), style=wx.TE_PROCESS_ENTER
                                  )
-        self.label_left = wx.StaticText(self, wx.ID_ANY, ("Left (Width)"))
-        self.left = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
+        self.label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
+        self.crop_Y = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
                                  size=(100,-1), style=wx.TE_PROCESS_ENTER
                                  )
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -425,14 +438,18 @@ class VideoCrop(wx.Dialog):
         sizer_3 = wx.BoxSizer(wx.VERTICAL)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
 
-        sizer_3.Add(self.label_top, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        sizer_3.Add(self.top, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        sizer_3.Add(self.label_height, 0, wx.ALL | 
+                                         wx.ALIGN_CENTER_HORIZONTAL, 5
+                                         )
+        sizer_3.Add(self.crop_height, 0, wx.ALL | 
+                                        wx.ALIGN_CENTER_HORIZONTAL, 5
+                                        )
         
-        grid_sizerBase.Add(self.label_left, 0, wx.ALL 
+        grid_sizerBase.Add(self.label_Y, 0, wx.ALL 
                                                 | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
-        grid_sizerBase.Add(self.left, 0, wx.ALL 
+        grid_sizerBase.Add(self.crop_Y, 0, wx.ALL 
                                                 | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
@@ -440,63 +457,57 @@ class VideoCrop(wx.Dialog):
                                             | wx.ALIGN_CENTER_HORIZONTAL 
                                             | wx.ALIGN_CENTER_VERTICAL, 5
                                             )
-        grid_sizerBase.Add(self.right, 0, wx.ALL 
+        grid_sizerBase.Add(self.crop_width, 0, wx.ALL 
                                             | wx.ALIGN_CENTER_HORIZONTAL 
                                             | wx.ALIGN_CENTER_VERTICAL, 5
                                             )
-        grid_sizerBase.Add(self.label_right, 0, wx.ALL 
+        grid_sizerBase.Add(self.label_width, 0, wx.ALL 
                                                 | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
         
         sizer_3.Add(grid_sizerBase, 1, wx.EXPAND, 0)
-        sizer_3.Add(self.bottom, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
+        sizer_3.Add(self.crop_X, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
-        sizer_3.Add(self.label_bottom, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
+        sizer_3.Add(self.label_X, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
         sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
         gridBase.Add(sizerLabel, 1, wx.ALL | 
                                     wx.ALIGN_CENTER_HORIZONTAL | 
                                     wx.ALIGN_CENTER_VERTICAL,15)
-        gridBase.Add(gridBtnExit, 1, wx.ALL,5)
+        gridBase.Add(gridBtnExit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         
-        gridBtnExit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
-                                              | wx.ALIGN_CENTER_VERTICAL,5
-                                               )
-        gridBtnExit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
-                                                | wx.ALIGN_CENTER_VERTICAL,5
-                                                )
-        gridBtnExit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL 
-                                                | wx.ALIGN_CENTER_VERTICAL,5
-                                                )
+        gridBtnExit.Add(btn_close, 1, wx.ALL ,5)
+        gridBtnExit.Add(self.btn_ok, 1, wx.ALL ,5)
+        gridBtnExit.Add(btn_reset, 1, wx.ALL ,5)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
         
         #----------------------Properties------------------------------------#
         self.SetTitle("Video/Image Crop - Videomass2")
-        self.top.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.right.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.bottom.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.left.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
         height = ('The height of the output video.\nSet to -1 for disabling.')
         width = ('The width of the output video.\nSet to -1 for disabling.')
-        x = ('The horizontal position, in the input video, of the left edge '
-              'of the output video.\nSet to -1 for disabling.')
-        y = ('The vertical position, in the input video, of the top edge of '
-             'the output video.\nSet to -1 for disabling.')
-        self.top.SetToolTipString('Height:\n%s' % height)
-        self.left.SetToolTipString('Width:\n%s' % width)
-        self.bottom.SetToolTipString('Y:\n%s' % y)
-        self.right.SetToolTipString('X:\n%s' % x)
+        x = ('The horizontal position of the left edge. The value 0 sets '
+             'the position on the extreme left of the frame. Values above 0 '
+             'move the position to the right side of the frame.\n'
+             'Set to -1 to disable this position and center the frame.')
+        y = ('The vertical position of the top edge of the left corner. ' 
+             'Values above 0 move the position towards the bottom side of '
+             'the frame.\n'
+             'Set to -1 to disable this position and center the frame.')
+        self.crop_width.SetToolTipString('Width:\n%s' % width)
+        self.crop_Y.SetToolTipString('Y:\n%s' % y)
+        self.crop_X.SetToolTipString('X:\n%s' % x)
+        self.crop_height.SetToolTipString('Height:\n%s' % height)
         
         #----------------------Binding (EVT)---------------------------------#
-        self.Bind(wx.EVT_SPINCTRL, self.on_top, self.top)
-        self.Bind(wx.EVT_SPINCTRL, self.on_right, self.right)
-        self.Bind(wx.EVT_SPINCTRL, self.on_bottom, self.bottom)
-        self.Bind(wx.EVT_SPINCTRL, self.on_left, self.left)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -508,62 +519,21 @@ class VideoCrop(wx.Dialog):
             for i in s:
                 if i.startswith('w'):
                     self.w = i[2:]
-                    self.left.SetValue(int(self.w))
+                    self.crop_width.SetValue(int(self.w))
                 if i.startswith('h'):
                     self.h = i[2:]
-                    self.top.SetValue(int(self.h))
-                if i.startswith('y'):
-                    self.y = i[2:]
-                    self.bottom.SetValue(int(self.y))
+                    self.crop_height.SetValue(int(self.h))
                 if i.startswith('x'):
                     self.x = i[2:]
-                    self.right.SetValue(int(self.x))
+                    self.crop_X.SetValue(int(self.x))
+                if i.startswith('y'):
+                    self.y = i[2:]
+                    self.crop_Y.SetValue(int(self.y))
 
-    #----------------------Event handler (callback)--------------------------#
-    def on_top(self, event):
-        """
-        Height
-        """
-        if self.top.GetValue() == '-1':
-            self.h = ''
-        else:
-            self.h = 'h=%s:' % self.top.GetValue()
-            
-        
-    #------------------------------------------------------------------#
-    def on_right(self, event):
-        """
-        Y
-        """
-        if self.right.GetValue() == '-1':
-            self.y = ''
-        else:
-            self.y = 'y=%s:' % self.right.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_bottom(self, event):
-        """
-        X
-        """
-        if self.bottom.GetValue() == '-1':
-            self.x = ''
-        else:
-            self.x = 'x=%s:' % self.bottom.GetValue()
-    #------------------------------------------------------------------#
-    def on_left(self, event):
-        """
-        Width
-        """
-        if self.left.GetValue() == '-1':
-            self.w = ''
-        else:
-            self.w = 'w=%s:' % self.left.GetValue()
-        
-    #------------------------------------------------------------------#
     def on_reset(self, event):
         self.h, self.y, self.x, self.w = "", "", "", ""
-        self.top.SetValue(-1), self.bottom.SetValue(-1)
-        self.right.SetValue(-1), self.left.SetValue(-1)
+        self.crop_width.SetValue(-1), self.crop_X.SetValue(-1)
+        self.crop_height.SetValue(-1), self.crop_Y.SetValue(-1)
         
     #------------------------------------------------------------------#
     def on_close(self, event):
@@ -588,6 +558,28 @@ class VideoCrop(wx.Dialog):
         """
         This method return values via the interface GetValue()
         """
+        #print self.crop_Y.GetValue(),self.crop_width.GetValue(),self.crop_X.GetValue(),self.crop_height.GetValue()
+        #print type(self.crop_Y.GetValue())
+        if self.crop_width.GetValue() == -1:
+            self.w = ''
+        else:
+            self.w = 'w=%s:' % self.crop_width.GetValue()
+            
+        if self.crop_height.GetValue() == -1:
+            self.h = ''
+        else:
+            self.h = 'h=%s:' % self.crop_height.GetValue()
+            
+        if self.crop_X.GetValue() == -1:
+            self.x = ''
+        else:
+            self.x = 'x=%s:' % self.crop_X.GetValue()
+        
+        if self.crop_Y.GetValue() == -1:
+            self.y = ''
+        else:
+            self.y = 'y=%s:' % self.crop_Y.GetValue()
+
         s = '%s%s%s%s' % (self.w, self.h, self.x, self.y)
         if s:
             l = len(s)
@@ -609,13 +601,12 @@ class VideoResolution(wx.Dialog):
         When this dialog is called, the values previously set are returned 
         for a complete reading (if there are preconfigured values)
         """
-
-        self.width = ""
-        self.height = ""
-        self.darNum = ""
-        self.darDen = ""
-        self.sarNum = ""
-        self.sarDen = ""
+        self.width = "0"
+        self.height = "0"
+        self.darNum = "0"
+        self.darDen = "0"
+        self.sarNum = "0"
+        self.sarDen = "0"
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
@@ -624,19 +615,19 @@ class VideoResolution(wx.Dialog):
                                     "Set Video Scaling")), wx.VERTICAL)
         
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
-                                            max=10000, style=wx.TE_PROCESS_ENTER
+                                            max=9000, style=wx.TE_PROCESS_ENTER
                                             )
         self.label_x1 = wx.StaticText(self, wx.ID_ANY, ("X")
                                       )
         self.label_x1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
                               )
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
-                                             max=10000, style=wx.TE_PROCESS_ENTER
+                                             max=9000, style=wx.TE_PROCESS_ENTER
                                              )
         self.label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar:")
                                           )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
-                                      max=10000, style=wx.TE_PROCESS_ENTER,
+                                      max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))
         self.label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
@@ -644,7 +635,7 @@ class VideoResolution(wx.Dialog):
                                           wx.BOLD,0, "")
                                           )
         self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
-                                      max=10000, style=wx.TE_PROCESS_ENTER,
+                                      max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1)
                                       )##
         self.label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar:")
@@ -660,22 +651,6 @@ class VideoResolution(wx.Dialog):
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))##
-        ####----CheckBox section
-
-        #self.ckb_enablesize = wx.CheckBox(self, wx.ID_ANY, (
-                                               #"Enable Video Size"))
-        ####---videosize section
-        #v_sizerbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    #"Set Video Size")), wx.VERTICAL)
-        #self.spin_size_width = wx.SpinCtrl(self, wx.ID_ANY, 
-        #"0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-                                           #)
-        #self.label_x2 = wx.StaticText(self, wx.ID_ANY, ("X"))
-        #self.label_x2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
-                              #)
-        #self.spin_size_height = wx.SpinCtrl(self, wx.ID_ANY,
-        #"0", min=0, max=10000, style=wx.TE_PROCESS_ENTER
-                                            #)
         ####----- confirm buttons section
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -704,26 +679,12 @@ class VideoResolution(wx.Dialog):
         Flex_darsar.Add(self.label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_darsar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         v_scalingbox.Add(Flex_scale_base)
-        
-        # CheckBox section
-
-        #grid_sizer_base.Add(self.ckb_enablesize, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        
-        # video size section:
-        #grid_sizer_base.Add(v_sizerbox, 1, wx.ALL | wx.EXPAND, 5)
-        #Flex_sizing = wx.FlexGridSizer(1, 3, 0, 0)
-        #Flex_sizing.Add(self.spin_size_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #Flex_sizing.Add(self.label_x2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #Flex_sizing.Add(self.spin_size_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #v_sizerbox.Add(Flex_sizing)
-        
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        
         # final settings:
         sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
@@ -770,12 +731,12 @@ class VideoResolution(wx.Dialog):
         self.spin_setsarDen.SetToolTipString(setsar_str)
         
         #----------------------Binding (EVT)---------------------------------#
-        self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)
-        self.Bind(wx.EVT_SPINCTRL, self.on_height, self.spin_scale_height)
-        self.Bind(wx.EVT_SPINCTRL, self.on_darNum, self.spin_setdarNum)
-        self.Bind(wx.EVT_SPINCTRL, self.on_darDen, self.spin_setdarDen)
-        self.Bind(wx.EVT_SPINCTRL, self.on_sarNum, self.spin_setsarNum)
-        self.Bind(wx.EVT_SPINCTRL, self.on_sarDen, self.spin_setsarDen)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_height, self.spin_scale_height)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_darNum, self.spin_setdarNum)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_darDen, self.spin_setdarDen)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_sarNum, self.spin_setsarNum)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_sarDen, self.spin_setsarDen)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -797,70 +758,11 @@ class VideoResolution(wx.Dialog):
             self.spin_setsarDen.SetValue(int(self.sarDen))
         
     #----------------------Event handler (callback)--------------------------#
-    def on_width(self, event):
-        """
-        Width
-        """
-        if self.spin_scale_width.GetValue() == '0':
-            self.width = ''
-        else:
-            self.width = 'w=%s' % self.spin_scale_width.GetValue()
-            
-        
-    #------------------------------------------------------------------#
-    def on_height(self, event):
-        """
-        Height
-        """
-        if self.spin_scale_height.GetValue() == '0':
-            self.height = ''
-        else:
-            self.height = 'h=%s' % self.spin_scale_height.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_darNum(self, event):
-        """
-        setdar Numerator
-        """
-        if self.spin_setdarNum.GetValue() == '0':
-            self.darNum = ''
-        else:
-            self.darNum = '%s' % self.spin_setdarNum.GetValue()
-    #------------------------------------------------------------------#
-    def on_darDen(self, event):
-        """
-        setdar denominator
-        """
-        if self.spin_setdarDen.GetValue() == '0':
-            self.darDen = ''
-        else:
-            self.darDen = '%s' % self.spin_setdarDen.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_sarNum(self, event):
-        """
-        setsar numerator
-        """
-        if self.spin_setsarNum.GetValue() == '0':
-            self.sarNum = ''
-        else:
-            self.sarNum = '%s' % self.spin_setsarNum.GetValue()
-        
-    #------------------------------------------------------------------#
-    def on_sarDen(self, event):
-        """
-        setsar denominator
-        """
-        if self.spin_setsarDen.GetValue() == '0':
-            self.sarDen = ''
-        else:
-            self.sarDen = '%s' % self.spin_setsarDen.GetValue()
-        
-    #------------------------------------------------------------------#
+    ##------------------------------------------------------------------#
     def on_reset(self, event):
-        self.width, self.height = "", ""
-        self.darNum, self.darDen = "", ""
-        self.sarNum, self.sarDen = "", ""
+        self.width, self.height = "0", "0"
+        self.darNum, self.darDen = "0", "0"
+        self.sarNum, self.sarDen = "0", "0"
         self.spin_scale_width.SetValue(0), self.spin_scale_height.SetValue(0)
         self.spin_setdarNum.SetValue(0), self.spin_setdarDen.SetValue(0)
         self.spin_setsarNum.SetValue(0), self.spin_setsarDen.SetValue(0)
@@ -889,20 +791,26 @@ class VideoResolution(wx.Dialog):
         This method return values via the interface GetValue()
         """
         diction = {}
+        self.width = '%s' % self.spin_scale_width.GetValue()
+        self.height = '%s' % self.spin_scale_height.GetValue()
+        self.darNum = '%s' % self.spin_setdarNum.GetValue()
+        self.darDen = '%s' % self.spin_setdarDen.GetValue()
+        self.sarNum = '%s' % self.spin_setsarNum.GetValue()
+        self.sarDen = '%s' % self.spin_setsarDen.GetValue()
 
-        if not self.width and not self.height:
+        if self.width == '0' or self.height == '0':
             size = ''
         else:
-            size = 'scale=%s:%s' % (self.width,self.height)
+            size = 'scale=w=%s:h=%s' % (self.width,self.height)
             diction['scale'] = size
         
-        if not self.darNum and not self.darDen:
+        if self.darNum == '0' or self.darDen == '0':
             setdar = ''
         else:
             setdar = 'setdar=%s/%s' % (self.darNum,self.darDen)
             diction['setdar'] = setdar
         
-        if not self.sarNum and not self.sarDen:
+        if self.sarNum == '0' or self.sarDen == '0':
             setsar = ''
         else:
             setsar = 'setsar=%s/%s' % (self.sarNum,self.sarDen)
@@ -1043,10 +951,10 @@ class Lacing(wx.Dialog):
         grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn)
-        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        gridBtn.Add(btn_close,1, wx.ALL,5)
+        gridBtn.Add(self.btn_ok,1, wx.ALL,5)
+        gridBtn.Add(btn_reset,1, wx.ALL,5)
         # final settings:
         self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(self.sizer_base)
@@ -1303,7 +1211,7 @@ class Lacing(wx.Dialog):
         Show or Hide advanved option for all filters
         """
         if self.enable_opt.GetValue():
-            self.enable_opt.SetBackgroundColour(wx.Colour(240, 161, 125))
+            #self.enable_opt.SetBackgroundColour(wx.Colour(240, 161, 125))
             self.rdbx_W3fdif_filter.Show()
             self.rdbx_W3fdif_deint.Show()
             self.rdbx_Yadif_mode.Show()
@@ -1312,7 +1220,7 @@ class Lacing(wx.Dialog):
             self.rdbx_inter_scan.Show()
             self.rdbx_inter_lowpass.Show()
         else:
-            self.enable_opt.SetBackgroundColour(wx.NullColour)
+            #self.enable_opt.SetBackgroundColour(wx.NullColour)
             self.rdbx_W3fdif_filter.Hide()
             self.rdbx_W3fdif_deint.Hide()
             self.rdbx_Yadif_mode.Hide()
@@ -1401,7 +1309,7 @@ class Denoisers(wx.Dialog):
                                             )
         self.rdb_nlmeans = wx.RadioBox(self, wx.ID_ANY, (
         "nlmeans options"), choices=[
-               ("Disabled"),
+               ("Default"),
                ("Old VHS tapes - good starting point restoration"), 
                ("Heavy - really noisy inputs"), 
                ("Light - good quality inputs")], 
@@ -1412,8 +1320,9 @@ class Denoisers(wx.Dialog):
                                             )
         self.rdb_hqdn3d = wx.RadioBox(self, wx.ID_ANY, (
             "hqdn3d options"), choices=[
-                ("simple"),
-                ("complex")],
+                ("Default"),
+                ("Conservative [4.0:4.0:3.0:3.0]"),
+                ("Old VHS tapes restoration [9.0:5.0:3.0:3.0]")],
                  majorDimension=0, 
                  style=wx.RA_SPECIFY_ROWS
                                         )
@@ -1451,7 +1360,7 @@ class Denoisers(wx.Dialog):
                     15)
         # confirm btn section:
         gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn)
+        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         gridBtn.Add(btn_close,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
@@ -1465,7 +1374,6 @@ class Denoisers(wx.Dialog):
         self.sizer_base.Add(grid_sizer_base, 1, 
                             wx.ALL | 
                             wx.EXPAND, 5)
-        self.rdb_hqdn3d.Hide()
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
@@ -1485,6 +1393,7 @@ class Denoisers(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.on_nlmeans, self.ckbx_nlmeans)
         self.Bind(wx.EVT_CHECKBOX, self.on_hqdn3d, self.ckbx_hqdn3d)
         self.Bind(wx.EVT_RADIOBOX, self.on_nlmeans_opt, self.rdb_nlmeans)
+        self.Bind(wx.EVT_RADIOBOX, self.on_hqdn3d_opt, self.rdb_hqdn3d)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -1512,13 +1421,25 @@ class Denoisers(wx.Dialog):
                 self.ckbx_nlmeans.Enable()
                 self.ckbx_hqdn3d.Disable()
                 self.rdb_nlmeans.Enable()
+                self.rdb_hqdn3d.Disable()
                     
-            else:
+            elif self.denoiser.startswith('hqdn3d'):
+                spl = self.denoiser.split('=')
+                print spl
+                if len(spl) == 1:
+                    self.rdb_hqdn3d.SetSelection(0) 
+                else:
+                    if spl[1] == '4.0:4.0:3.0:3.0':
+                        self.rdb_hqdn3d.SetSelection(1)
+                    if spl[1] == '9.0:5.0:3.0:3.0':
+                        self.rdb_hqdn3d.SetSelection(2)
+                
                 self.ckbx_nlmeans.SetValue(False)
                 self.ckbx_hqdn3d.SetValue(True)
                 self.ckbx_nlmeans.Disable()
                 self.ckbx_hqdn3d.Enable()
                 self.rdb_nlmeans.Disable()
+                self.rdb_hqdn3d.Enable()
         else:
             self.ckbx_nlmeans.SetValue(False)
             self.ckbx_hqdn3d.SetValue(False)
@@ -1526,6 +1447,7 @@ class Denoisers(wx.Dialog):
             self.ckbx_hqdn3d.Enable()
             self.rdb_nlmeans.SetSelection(0)
             self.rdb_nlmeans.Disable()
+            self.rdb_hqdn3d.Disable()
     
     #----------------------Event handler (callback)--------------------------#
     #------------------------------------------------------------------------#
@@ -1534,6 +1456,7 @@ class Denoisers(wx.Dialog):
         """
         if self.ckbx_nlmeans.IsChecked():
             self.rdb_nlmeans.Enable()
+            self.rdb_hqdn3d.Disable()
             self.ckbx_hqdn3d.Disable()
             self.denoiser = "nlmeans"
             
@@ -1546,7 +1469,7 @@ class Denoisers(wx.Dialog):
         """
         """
         opt = self.rdb_nlmeans.GetStringSelection()
-        if opt == "Disabled":
+        if opt == "Default":
             self.denoiser = "nlmeans"
         elif opt == "Old VHS tapes - good starting point restoration":
             self.denoiser = "nlmeans=8:3:2"
@@ -1560,11 +1483,27 @@ class Denoisers(wx.Dialog):
         """
         if self.ckbx_hqdn3d.IsChecked():
             self.ckbx_nlmeans.Disable()
+            self.rdb_hqdn3d.Enable()
             self.denoiser = "hqdn3d"
             
         elif not self.ckbx_hqdn3d.IsChecked():
             self.ckbx_nlmeans.Enable()
+            self.rdb_hqdn3d.Disable()
             self.denoiser = ""
+    #------------------------------------------------------------------# 
+    def on_hqdn3d_opt(self, event):
+        """
+        """
+        opt = self.rdb_hqdn3d.GetStringSelection()
+        if opt == "Default":
+            self.denoiser = "hqdn3d"
+            
+        elif opt == "Conservative [4.0:4.0:3.0:3.0]":
+            self.denoiser = "hqdn3d=4.0:4.0:3.0:3.0"
+            
+        elif opt == "Old VHS tapes restoration [9.0:5.0:3.0:3.0]":
+            self.denoiser = "hqdn3d=9.0:5.0:3.0:3.0"
+            
     #------------------------------------------------------------------#  
     def on_reset(self, event):
         """
@@ -1577,6 +1516,8 @@ class Denoisers(wx.Dialog):
         self.ckbx_hqdn3d.Enable()
         self.rdb_nlmeans.SetSelection(0)
         self.rdb_nlmeans.Disable()
+        self.rdb_hqdn3d.SetSelection(0)
+        self.rdb_hqdn3d.Disable()
     #------------------------------------------------------------------#
     def on_close(self, event):
 

@@ -100,17 +100,20 @@ class AudioSettings(wx.Dialog):
         self.rdb_bitdepth.SetToolTipString(datastr.bitdepth_tooltip)
 
         """----------------------Build layout----------------------"""
-        grid_sizer_1 = wx.FlexGridSizer(3, 2, 0, 0)#radiobox
-        grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)#buttons
+        sizerBase = wx.BoxSizer(wx.VERTICAL)
+        grid_sizer_1 = wx.FlexGridSizer(1, 4, 0, 0)#radiobox
+        sizerBase.Add(grid_sizer_1, 0, wx.ALL, 0)
         grid_sizer_1.Add(self.rdb_bitrate, 0, wx.ALL, 15)
         grid_sizer_1.Add(self.rdb_channels, 0, wx.ALL, 15)
         grid_sizer_1.Add(self.rdb_sample_r, 0, wx.ALL, 15)
         grid_sizer_1.Add(self.rdb_bitdepth, 0, wx.ALL, 15)
-        grid_sizer_1.Add(grid_sizer_2, 0, wx.ALL, 0)
-        grid_sizer_2.Add(self.btn_cancel, 0, wx.ALL, 15)
-        grid_sizer_2.Add(self.btn_ok, 0, wx.ALL , 15)
-        self.SetSizer(grid_sizer_1)
-        grid_sizer_1.Fit(self)
+        
+        grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)#buttons
+        grid_sizer_2.Add(self.btn_cancel, 0, wx.ALL, 5)
+        grid_sizer_2.Add(self.btn_ok, 0, wx.ALL , 5)
+        sizerBase.Add(grid_sizer_2, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        self.SetSizer(sizerBase)
+        sizerBase.Fit(self)
         self.Layout()
         
         """--------------------Binders (EVT)----------------------"""

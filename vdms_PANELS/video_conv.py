@@ -32,6 +32,7 @@
 import wx
 import os
 import wx.lib.agw.floatspin as FS
+import wx.lib.agw.gradientbutton as GB
 from vdms_IO.IO_tools import volumeDetectProcess, stream_play
 from vdms_IO.filedir_control import inspect
 from vdms_DIALOGS.epilogue import Formula
@@ -89,7 +90,7 @@ class Video_Conv(wx.Panel):
     and preset storing feature
     """
     def __init__(self, parent, helping, ffmpeg_link, ffplay_link, 
-                 threads, cpu_used, loglevel_type, OS):
+                 threads, cpu_used, loglevel_type, OS, iconplay, iconreset):
 
         wx.Panel.__init__(self, parent)
         """ constructor """
@@ -148,22 +149,77 @@ class Video_Conv(wx.Panel):
         wx.ID_ANY, ("Video CRF Value")
         )
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
-        self.btn_videosize = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Set Resolution"))
+        self.btn_videosize = GB.GradientButton(self.notebook_1_pane_2,
+                                               size=(-1,25), 
+                                               label="Set Resolution")
+        self.btn_videosize.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                        foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_videosize.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_videosize.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_videosize.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_videosize.SetTopEndColour(wx.Colour(97, 204, 199))
+        self.btn_crop = GB.GradientButton(self.notebook_1_pane_2,
+                                          size=(-1,25), 
+                                          label="Crop Dimension")
+        self.btn_crop.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                        foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_crop.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_crop.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_crop.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_crop.SetTopEndColour(wx.Colour(97, 204, 199))
+        self.btn_rotate = GB.GradientButton(self.notebook_1_pane_2,
+                                            size=(-1,25), 
+                                            label="Rotation")
+        self.btn_rotate.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                        foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_rotate.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_rotate.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_rotate.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_rotate.SetTopEndColour(wx.Colour(97, 204, 199))
         
-        self.btn_crop = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Crop Dimension"))
-        self.btn_rotate = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Rotation"))
-        self.btn_lacing = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Deinterlace/Interlace"))
-        self.btn_denois = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Denoisers"))
-        #line1 = wx.StaticLine(self.notebook_1_pane_2, wx.ID_ANY, size=(130, -1),
-           #style=wx.LI_HORIZONTAL,name='')
-        self.btn_preview = wx.Button(self.notebook_1_pane_2, 
-                                    wx.ID_ANY, ("Playback_Preview"))
-        self.btn_preview.SetBackgroundColour(wx.Colour(122, 239, 255))
+        self.btn_lacing = GB.GradientButton(self.notebook_1_pane_2,
+                                            size=(-1,25), 
+                                            label="De/Interlace")
+        self.btn_lacing.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                        foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_lacing.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_lacing.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_lacing.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_lacing.SetTopEndColour(wx.Colour(97, 204, 199))
+        
+        self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
+                                            size=(-1,25), 
+                                            label="Denoisers")
+        self.btn_denois.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                        foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_denois.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_denois.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_denois.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_denois.SetTopEndColour(wx.Colour(97, 204, 199))
+        
+        playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
+        self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
+                                             size=(-1,25),
+                                             bitmap=playbmp, 
+                                             )
+        self.btn_preview.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                        foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_preview.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_preview.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_preview.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_preview.SetTopEndColour(wx.Colour(97, 204, 199))
+        
+        resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
+        self.btn_reset = GB.GradientButton(self.notebook_1_pane_2,
+                                             size=(-1,25),
+                                             bitmap=resetbmp, 
+                                             )
+        self.btn_reset.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                        foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_reset.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_reset.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_reset.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_reset.SetTopEndColour(wx.Colour(97, 204, 199))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                          wx.ID_ANY, ("Filters Section")
@@ -201,23 +257,32 @@ class Video_Conv(wx.Panel):
         self.rdb_a.EnableItem(8,enable=True),self.rdb_a.EnableItem(9,enable=True)
         self.rdb_a.SetSelection(0)
         self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
-                      wx.ID_ANY, ("Audio Normalization Stream")
+                      wx.ID_ANY, ("Audio Normalization (Stream)")
                                 )
-        self.btn_analyzes = wx.Button(self.notebook_1_pane_3, wx.ID_ANY, 
-                                ("Analyzes")
-                                )
+        self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
+                                            size=(-1,25), 
+                                            label="Analyzes")
+        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                    foregroundcolour=wx.Colour(165,165, 165))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(97, 204, 199))
+        
+        
+        
         self.label_dbMax = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                ("dB Maximum audio level: ")
+                                ("Max Volume db.  ")
                                 )
         self.text_dbMax = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_dbMedium = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    ("dB Middle audio level:")
+                                    ("Average Volume db.")
                                     )
         self.text_dbMedium = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    ("Max Peak Level Threshold:")
+                                    ("Max Peak Level Threshold:  ")
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
             wx.ID_ANY, min_val=-99.0, max_val=0.0, increment=1.0, value=-1.0, 
@@ -247,75 +312,6 @@ class Video_Conv(wx.Panel):
         ("grain"), ("stillimage"), ("psnr"), ("ssim"), ("fastecode"), 
                 ("zerolatency")], majorDimension=0, style=wx.RA_SPECIFY_ROWS
                 )
-        #----------------------Set Properties----------------------#
-        self.cmbx_vidContainers.SetToolTipString("Video container that will "
-                                        "be used in the conversion. NOTE: for "
-                                        "any container change, all settings "
-                                        "there be reset.")
-        self.cmbx_vidContainers.SetSelection(6)
-
-
-        self.ckbx_pass.SetToolTipString("If use double pass, can improve "
-                                            "the video quality, but it take "
-                                            "more time. We recommend using "
-                                            "it in high video compression."
-                                                 )
-        self.spin_ctrl_bitrate.SetToolTipString("The bit rate determines the "
-                                            "quality and the final video "
-                                            "size. A larger value correspond "
-                                            "to greater quality and size of "
-                                            "the file."
-                                                 )
-        self.slider_CRF.SetValue(23)# this is a default rate
-        self.slider_CRF.SetMinSize((230, -1))
-        self.slider_CRF.SetToolTipString("CRF (constant rate factor) Affects "
-                                 "the quality of the final video. Used for "
-                                 "h264 codec on single pass only, 2-pass "
-                                 "encoding swich to bitrate. With lower "
-                                 "values the quality is higher and a larger "
-                                 "file size."
-                                          )
-        self.cmbx_Vaspect.SetSelection(0)
-        self.cmbx_Vaspect.SetToolTipString(u"Video aspect (Aspect Ratio) "
-                        "is the video width and video height ratio. "
-                        "Leave on 'Set default' to copy the original settings."
-                                                )
-        self.cmbx_vrate.SetSelection(0)
-        self.cmbx_vrate.SetToolTipString(u"Video Rate: A any video consists "
-                       "of images displayed as frames, repeated a given number "
-                       "of times per second. In countries are 30 NTSC, PAL "
-                       "countries (like Italy) are 25. Leave on 'Set default' "
-                       "to copy the original settings."
-                                              )
-        
-        self.ckbx_a_normalize.SetToolTipString("Performs audio "
-                    "normalization in the video audio stream. "
-                    "NOTE: this feature is disabled for "
-                    "'Try to copy audio source' and 'No audio stream (silent)' "
-                    "selections." )
-        self.btn_analyzes.SetToolTipString(u"Calculate the maximum and "
-                                    "average peak in dB values, of the audio "
-                                    "stream on the video imported.")
-        #self.spin_ctrl_audionormalize.SetMinSize((70, -1))
-        self.spin_ctrl_audionormalize.SetToolTipString("Threshold for the "
-                                "maximum peak level in dB values. The default " 
-                                "setting is -1.0 dB and is good for most of "
-                                "the processes")
-        
-        self.rdb_a.SetToolTipString("Choose the appropriate Audio Codec. "
-                                    "Some Audio Codecs are disabled for "
-                                    "certain Video Containers. " )
-        self.rdb_h264preset.SetToolTipString("preset h264")
-        self.rdb_h264preset.SetSelection(0)
-        self.rdb_h264profile.SetToolTipString("profili h264")
-        self.rdb_h264profile.SetSelection(0)
-        self.rdb_h264tune.SetToolTipString("tune h264")
-        self.rdb_h264tune.SetSelection(0)
-        self.notebook_1_pane_4.SetToolTipString("The parameters on this tab "
-                        "are enabled only for the video-codec h264. Although "
-                        "optional, is set to 'preset medium' as default "
-                        "parameter.")
-        
         #----------------------Build Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
@@ -324,10 +320,7 @@ class Video_Conv(wx.Panel):
         sizer_pane3_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane3_base = wx.GridSizer(1, 2, 0, 0)
         sizer_pane3_audio_column2 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_in_column2 = wx.FlexGridSizer(3, 1, 0, 0)
-        grid_sizer_audionormalize = wx.GridSizer(3, 1, 0, 0)
-        grid_sizer_slider_normalize = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_sizer_text_normalize = wx.FlexGridSizer(2, 2, 0, 0)
+        grid_sizer_in_column2 = wx.FlexGridSizer(5, 2, 0, 0)
         sizer_pane3_audio_column1 = wx.BoxSizer(wx.VERTICAL)
         sizer_pane2_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane2_base = wx.GridSizer(1, 2, 0, 0)
@@ -378,10 +371,11 @@ class Video_Conv(wx.Panel):
         grid_sizer_2.Add(self.btn_denois, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_sizer_2.Add(self.btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         sizer_2.Add(grid_sizer_2, 1, wx.EXPAND, 0)
         grid_sizer_pane2_base.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 15)
         #----------------
-        
+
         sizer_videoaspect.Add(self.cmbx_Vaspect, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizer_1.Add(sizer_videoaspect, 1, wx.ALL | wx.EXPAND, 15)
         sizer_videorate.Add(self.cmbx_vrate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
@@ -391,19 +385,18 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_2.SetSizer(sizer_pane2_base)
         sizer_pane3_audio_column1.Add(self.rdb_a, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column1, 1, wx.EXPAND, 0)
-        grid_sizer_in_column2.Add(self.ckbx_a_normalize, 0, wx.TOP, 15)
-        grid_sizer_audionormalize.Add(self.btn_analyzes, 0, wx.TOP, 15)
-        grid_sizer_text_normalize.Add(self.label_dbMax, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_text_normalize.Add(self.text_dbMax, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_text_normalize.Add(self.label_dbMedium, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_text_normalize.Add(self.text_dbMedium, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_audionormalize.Add(grid_sizer_text_normalize, 1, wx.EXPAND, 0)
-        grid_sizer_slider_normalize.Add(self.label_normalize, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_slider_normalize.Add(self.spin_ctrl_audionormalize, 0, wx.TOP|wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_audionormalize.Add(grid_sizer_slider_normalize, 1, wx.ALL, 5)
-        grid_sizer_in_column2.Add(grid_sizer_audionormalize, 1, wx.ALL, 5)
-        sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.EXPAND, 0)
-        grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.EXPAND, 0)
+        grid_sizer_in_column2.Add(self.ckbx_a_normalize, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.btn_analyzes, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.label_dbMax, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.text_dbMax, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.label_dbMedium, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.text_dbMedium, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.label_normalize, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.spin_ctrl_audionormalize, 0, wx.TOP, 5)
+        sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.ALL, 15)
+        grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.ALL, 0)
         sizer_pane3_base.Add(grid_sizer_pane3_base, 1, wx.EXPAND, 0)
         self.notebook_1_pane_3.SetSizer(sizer_pane3_base)
         grid_sizer_pane4_base.Add(self.rdb_h264preset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
@@ -423,6 +416,79 @@ class Video_Conv(wx.Panel):
         sizer_base.Add(self.panel_base, 1, wx.EXPAND, 0)
         self.SetSizer(sizer_base)
         self.Layout()
+        
+        #----------------------Set Properties----------------------#
+        self.cmbx_vidContainers.SetToolTipString("Video container that will "
+                                        "be used in the conversion. NOTE: for "
+                                        "any container change, all settings "
+                                        "there be reset.")
+        self.cmbx_vidContainers.SetSelection(6)
+
+
+        self.ckbx_pass.SetToolTipString("If use double pass, can improve "
+                                            "the video quality, but it take "
+                                            "more time. We recommend using "
+                                            "it in high video compression."
+                                                 )
+        self.spin_ctrl_bitrate.SetToolTipString("The bit rate determines the "
+                                            "quality and the final video "
+                                            "size. A larger value correspond "
+                                            "to greater quality and size of "
+                                            "the file."
+                                                 )
+        self.slider_CRF.SetValue(23)# this is a default rate
+        self.slider_CRF.SetMinSize((230, -1))
+        self.slider_CRF.SetToolTipString("CRF (constant rate factor) Affects "
+                                 "the quality of the final video. Used for "
+                                 "h264 codec on single pass only, 2-pass "
+                                 "encoding swich to bitrate. With lower "
+                                 "values the quality is higher and a larger "
+                                 "file size."
+                                          )
+        self.btn_preview.SetToolTipString("Try the filters you've enabled "
+                                          "by playing a video preview"
+                                          )
+        self.btn_reset.SetToolTipString("Clear all enabled filters ")
+        self.cmbx_Vaspect.SetSelection(0)
+        self.cmbx_Vaspect.SetToolTipString(u"Video aspect (Aspect Ratio) "
+                        "is the video width and video height ratio. "
+                        "Leave on 'Set default' to copy the original settings."
+                                                )
+        self.cmbx_vrate.SetSelection(0)
+        self.cmbx_vrate.SetToolTipString(u"Video Rate: A any video consists "
+                       "of images displayed as frames, repeated a given number "
+                       "of times per second. In countries are 30 NTSC, PAL "
+                       "countries (like Italy) are 25. Leave on 'Set default' "
+                       "to copy the original settings."
+                                              )
+        
+        self.ckbx_a_normalize.SetToolTipString("Performs audio "
+                    "normalization in the video audio stream. "
+                    "NOTE: this feature is disabled for "
+                    "'Try to copy audio source' and 'No audio stream (silent)' "
+                    "selections." )
+        self.btn_analyzes.SetToolTipString(u"Calculate the maximum and "
+                                    "average peak in dB values, of the audio "
+                                    "stream on the video imported.")
+        #self.spin_ctrl_audionormalize.SetMinSize((70, -1))
+        self.spin_ctrl_audionormalize.SetToolTipString("Threshold for the "
+                                "maximum peak level in dB values. The default " 
+                                "setting is -1.0 dB and is good for most of "
+                                "the processes")
+        
+        self.rdb_a.SetToolTipString("Choose the appropriate Audio Codec. "
+                                    "Some Audio Codecs are disabled for "
+                                    "certain Video Containers. " )
+        self.rdb_h264preset.SetToolTipString("preset h264")
+        self.rdb_h264preset.SetSelection(0)
+        self.rdb_h264profile.SetToolTipString("profili h264")
+        self.rdb_h264profile.SetSelection(0)
+        self.rdb_h264tune.SetToolTipString("tune h264")
+        self.rdb_h264tune.SetSelection(0)
+        self.notebook_1_pane_4.SetToolTipString("The parameters on this tab "
+                        "are enabled only for the video-codec h264. Although "
+                        "optional, is set to 'preset medium' as default "
+                        "parameter.")
 
         #----------------------Binding (EVT)----------------------#
         """
@@ -441,6 +507,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Enable_lacing, self.btn_lacing)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
+        self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmbx_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_vrate)
         self.Bind(wx.EVT_RADIOBOX, self.on_Audio, self.rdb_a)
@@ -575,7 +642,10 @@ class Video_Conv(wx.Panel):
                "for video selection point, then set the `Video Rate` at low "
                "values; More is low, the lower will be the extracted images. ")
             self.parent.statusbar_msg("Output format: Save images",None)
-            wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION)
+            wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION
+                          )
+            self.ckbx_pass.SetValue(False)
+            self.UI_set()
 
         else:
             cmd_opt["FormatChoice"] = "%s" % (selected)
@@ -637,10 +707,35 @@ class Video_Conv(wx.Panel):
         Showing a preview with applied filters only and Only the first 
         file in the list `self.file_sources` will be displayed
         """
+        if not cmd_opt["Filters"]:
+            wx.MessageBox("No filter enabled", "Info -Videomass2", 
+                          wx.ICON_INFORMATION)
+            return
+        self.time_seq = self.parent.time_seq
+        filters = '%s %s' % (self.time_seq, cmd_opt["Filters"])
         first_path = self.file_sources[0]
-        filters = cmd_opt["Filters"]
         stream_play(first_path, filters, self.ffplay_link, 
                     self.loglevel_type, self.OS)
+    #------------------------------------------------------------------#
+    def on_FiltersClear(self, event):
+        """
+        Reset all enabled filters
+        """
+        if not cmd_opt["Filters"]:
+            wx.MessageBox("No filter enabled", "Info -Videomass2", 
+                          wx.ICON_INFORMATION)
+            return
+        else:
+            cmd_opt['Crop'], cmd_opt["Orientation"] = "", ["",""]
+            cmd_opt['Scale'], cmd_opt['Setdar'] = "",""
+            cmd_opt['Setsar'], cmd_opt['Deinterlace'] = "",""
+            cmd_opt['Interlace'], cmd_opt['Denoiser'] = "",""
+            cmd_opt["Filters"] = ""
+            self.btn_videosize.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_crop.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_denois.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_lacing.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_rotate.SetBottomEndColour(wx.Colour(97, 204, 199))
     #------------------------------------------------------------------#
     def video_filter_checker(self):
         """
@@ -704,12 +799,12 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
             if not data:
-               self.btn_videosize.SetBackgroundColour(wx.NullColour)
+               self.btn_videosize.SetBottomEndColour(wx.Colour(97, 204, 199))
                cmd_opt["Setdar"] = ""
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
             else:
-                self.btn_videosize.SetBackgroundColour(wx.Colour(240, 161, 125))
+                self.btn_videosize.SetBottomEndColour(wx.Colour(240, 255, 0))
                 if 'scale' in data:
                     cmd_opt["Scale"] = data['scale']
                 else:
@@ -741,9 +836,9 @@ class Video_Conv(wx.Panel):
             cmd_opt["Orientation"][0] = data[0]# cmd option
             cmd_opt["Orientation"][1] = data[1]#msg
             if not data[0]:
-                self.btn_rotate.SetBackgroundColour(wx.NullColour)
+                self.btn_rotate.SetBottomEndColour(wx.Colour(97, 204, 199))
             else:
-                self.btn_rotate.SetBackgroundColour(wx.Colour(240, 161, 125))
+                self.btn_rotate.SetBottomEndColour(wx.Colour(240, 255, 0))
             self.video_filter_checker()
         else:
             rotate.Destroy()
@@ -758,10 +853,10 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = crop.GetValue()
             if not data:
-                self.btn_crop.SetBackgroundColour(wx.NullColour)
+                self.btn_crop.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Crop"] = ''
             else:
-                self.btn_crop.SetBackgroundColour(wx.Colour(240, 161, 125))
+                self.btn_crop.SetBottomEndColour(wx.Colour(240, 255, 0))
                 cmd_opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
@@ -781,11 +876,11 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = lacing.GetValue()
             if not data:
-                self.btn_lacing.SetBackgroundColour(wx.NullColour)
+                self.btn_lacing.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Deinterlace"] = ''
                 cmd_opt["Interlace"] = ''
             else:
-                self.btn_lacing.SetBackgroundColour(wx.Colour(240, 161, 125))
+                self.btn_lacing.SetBottomEndColour(wx.Colour(240, 255, 0))
                 if 'deinterlace' in data:
                     cmd_opt["Deinterlace"] = data["deinterlace"]
                     cmd_opt["Interlace"] = ''
@@ -809,10 +904,10 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = den.GetValue()
             if not data:
-                self.btn_denois.SetBackgroundColour(wx.NullColour)
+                self.btn_denois.SetBottomEndColour(wx.Colour(97, 204, 199))
                 cmd_opt["Denoiser"] = ''
             else:
-                self.btn_denois.SetBackgroundColour(wx.Colour(240, 161, 125))
+                self.btn_denois.SetBottomEndColour(wx.Colour(240, 255, 0))
                 cmd_opt["Denoiser"] = data
             self.video_filter_checker()
         else:
@@ -1033,6 +1128,7 @@ class Video_Conv(wx.Panel):
                "default dB value (-1.0)")
         if self.ckbx_a_normalize.GetValue():# is checked
             self.parent.statusbar_msg(msg, greenolive)
+            self.btn_analyzes.SetForegroundColour(wx.Colour(100,0,0))
             self.btn_analyzes.Enable(), self.spin_ctrl_audionormalize.Enable()
             self.label_normalize.Enable()
             cmd_opt["Map"] = '-map 0'
@@ -1044,6 +1140,7 @@ class Video_Conv(wx.Panel):
         elif not self.ckbx_a_normalize.GetValue():# is not checked
             self.parent.statusbar_msg("Disable audio normalization inside video", None)
             self.spin_ctrl_audionormalize.SetValue(-1.0), self.label_normalize.Disable()
+            self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_analyzes.Disable(), self.spin_ctrl_audionormalize.Disable()
             self.text_dbMax.SetValue(""), self.text_dbMedium.SetValue("")
             self.text_dbMax.Disable(), self.text_dbMedium.Disable()
@@ -1071,7 +1168,7 @@ class Video_Conv(wx.Panel):
         self.parent.statusbar_msg("",None)
         normalize = self.spin_ctrl_audionormalize.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources)
+        data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
 
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass2", wx.ICON_ERROR)
@@ -1098,6 +1195,7 @@ class Video_Conv(wx.Panel):
                     
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
+        self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
         
     #------------------------------------------------------------------#
     def on_h264Presets(self, event):
@@ -1151,18 +1249,10 @@ class Video_Conv(wx.Panel):
         Set the parent.post_process attribute for communicate it the
         file disponibilities for play or metadata functionalities.
         """
-        wildcard = None
         if not exported:
             return
-        
-        elif len(exported) > 1:#if batch
-            wildcard = "Source (*.%s)|*.%s| All files (*.*)|*.*" % (
-                cmd_opt["VideoFormat"], cmd_opt["VideoFormat"])
-            self.parent.post_process = [exported[0],wildcard]
-            self.parent.postExported_enable()#enable menu items
-
         else:
-            self.parent.post_process = [exported[0], wildcard]
+            self.parent.post_process = exported
             self.parent.postExported_enable()
     #-------------------------------------------------------------------#
     def update_allentries(self):
@@ -1223,16 +1313,12 @@ class Video_Conv(wx.Panel):
             self.saveimages(file_sources, dir_destin, filename, 
                             logname, lenghmax)
         else:
-            if self.OS == 'Windows':
-                null = 'NUL'
-            else:
-                null = '/dev/null'
-            self.stdProc(file_sources, dir_destin, lenghmax, logname, null)
+            self.stdProc(file_sources, dir_destin, lenghmax, logname)
 
         return
 
     #------------------------------------------------------------------#
-    def stdProc(self, file_sources, dir_destin, lenghmax, logname, null):
+    def stdProc(self, file_sources, dir_destin, lenghmax, logname):
         """
         Composes the ffmpeg command strings for batch process. 
         In double pass mode, split command in two part (see  os_processing.py 
@@ -1272,21 +1358,22 @@ class Video_Conv(wx.Panel):
                                            lenghmax, 
                                            )
                 #used for play preview and mediainfo:
-                self.exportStreams(dir_destin)#call function more above
+                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
+                self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
-            cmd1 = ('-loglevel %s %s -pass 1 -an %s %s %s %s '
-                     '%s %s %s %s %s %s -f rawvideo -y %s' % (
+            cmd1 = ('-loglevel %s %s -an %s %s %s %s '
+                     '%s %s %s %s %s %s -f rawvideo' % (
                       self.loglevel_type, self.time_seq, 
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
                       cmd_opt["Tune"], cmd_opt["VideoAspect"], 
                       cmd_opt["VideoRate"], cmd_opt["Filters"],
-                      self.threads, self.cpu_used, null),
+                      self.threads, self.cpu_used),
                     )
             pass1 = " ".join(cmd1[0].split())# mi formatta la stringa
-            cmd2= ('-loglevel %s %s -pass 2 %s %s %s %s %s '
-                     '%s %s %s %s %s %s %s %s %s %s %s -y' % (
+            cmd2= ('-loglevel %s %s %s %s %s %s %s '
+                     '%s %s %s %s %s %s %s %s %s %s %s' % (
                      self.loglevel_type, self.time_seq, 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
@@ -1314,7 +1401,9 @@ class Video_Conv(wx.Panel):
                                            lenghmax, 
                                            )
                 #used for play preview and mediainfo:
-                self.exportStreams(dir_destin)#call function more above
+                f = os.path.basename(file_sources[0]).split('.')[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                              cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
@@ -1346,7 +1435,10 @@ class Video_Conv(wx.Panel):
                                            logname, 
                                            lenghmax, 
                                            )
-                self.exportStreams(dir_destin)#call function more above
+                #used for play preview and mediainfo:
+                f = os.path.basename(file_sources[0]).split('.')[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                              cmd_opt["VideoFormat"]))
     #--------------------------------------------------------------------#
     def saveimages(self, file_sources, dir_destin, 
                    filename, logname, lenghmax):
@@ -1429,7 +1521,7 @@ class Video_Conv(wx.Panel):
             formula = (u"SUMMARY:\n\nFile to Queue\
                     \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
                     \nDouble/Single Pass:\nDeinterlacing:\
-                    \nInterlacing (progressive content)\nApplied Filters:\
+                    \nInterlacing:\nApplied Filters:\
                     \nVideo aspect:\nVideo rate:\nPreset h264:\nProfile h264:\
                     \nTune h264:\nOrientation:\nAudio Format:\nAudio codec:\
                     \nAudio channel:\nAudio rate:\nAudio bit-rate:\
@@ -1464,33 +1556,58 @@ class Video_Conv(wx.Panel):
         """
         self.update_allentries()# aggiorno gli imput
         
-        #if cmd_opt["VideoCodec"] == "-vcodec libx264":
-        if cmd_opt["Passing"] == "double":
-            command = ("-pass 1 -an %s %s %s %s %s %s %s %s %s "
-                       "DOUBLE_PASS -pass 2 %s %s %s %s %s %s "
-                       "%s %s %s %s %s %s %s %s %s %s" % (
-            cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"],
-            cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"], 
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"], 
-            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1],
-            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-            cmd_opt["AudioDepth"][1], cmd_opt["Normalize"], cmd_opt["Map"])
-                        )
-
-        elif cmd_opt["Passing"] == "single":
-            command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (
-            cmd_opt["VideoCodec"], cmd_opt["Bitrate"], cmd_opt["CRF"], 
-            cmd_opt["Presets"], cmd_opt["Profile"], cmd_opt["Tune"],  
-            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], cmd_opt["Filters"],
-            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
-            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-            cmd_opt["AudioDepth"][1], cmd_opt["Normalize"], cmd_opt["Map"])
-                        )
+        if not self.ckbx_pass.IsChecked():
+            if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
+                outext = cmd_opt["VideoFormat"]
+                command = ('%s %s %s %s %s %s %s %s %s' % ( 
+                            cmd_opt["VideoCodec"], 
+                            cmd_opt["VideoAspect"],
+                            cmd_opt["VideoRate"],
+                            cmd_opt["AudioCodec"], 
+                            cmd_opt["AudioBitrate"][1], 
+                            cmd_opt["AudioRate"][1], 
+                            cmd_opt["AudioChannel"][1], 
+                            cmd_opt["AudioDepth"][1], 
+                            cmd_opt["Map"])
+                                )
+            elif self.cmbx_vidContainers.GetValue() == "Save Images From Video":
+                outext = "image%d.jpg"
+                command = ('%s %s -an' % (
+                           cmd_opt["VideoRate"],
+                           cmd_opt["Filters"],)
+                           )
+            else:
+                outext = cmd_opt["VideoFormat"]
+                command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s" % ( 
+                            cmd_opt["VideoCodec"], cmd_opt["CRF"], 
+                            cmd_opt["Presets"], cmd_opt["Profile"],
+                            cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                            cmd_opt["VideoRate"], cmd_opt["Filters"],
+                            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
+                            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
+                            cmd_opt["AudioDepth"][1], cmd_opt["Map"])
+                            )
+        else:
+            outext = cmd_opt["VideoFormat"]
+            cmd1 = ('-an %s %s %s %s %s %s %s %s -f rawvideo' % (
+                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
+                      cmd_opt["Presets"], cmd_opt["Profile"],
+                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                      cmd_opt["VideoRate"], cmd_opt["Filters"])
+                    )
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % ( 
+                     cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
+                     cmd_opt["Presets"], cmd_opt["Profile"],
+                     cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                     cmd_opt["VideoRate"], cmd_opt["Filters"],
+                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
+                     cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
+                     cmd_opt["AudioDepth"][1], cmd_opt["Map"])
+                    )
+            command = ("%s DOUBLE_PASS %s" % (cmd1,cmd2))
+                       
         command = ' '.join(command.split())# sitemo meglio gli spazi in stringa
-        list = [command, cmd_opt["VideoFormat"]]
+        list = [command, outext]
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'

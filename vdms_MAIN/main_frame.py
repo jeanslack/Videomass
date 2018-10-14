@@ -23,9 +23,11 @@
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 09/july/2018
+# Rev (02) 11/October/2018
 #########################################################
 
 import wx
+import wx.lib.agw.gradientbutton as GB
 import webbrowser
 from vdms_DIALOGS import dialog_tools, settings, infoprg
 from vdms_PANELS import dragNdrop, presets_mng_panel, video_conv, audio_conv
@@ -90,7 +92,54 @@ class MainFrame(wx.Frame):
         self.duration = []
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
+        #----------- panel toolbar buttons
+        self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+
+        playbmp = wx.Bitmap(setui[11], wx.BITMAP_TYPE_ANY)
+        infoIbmp = wx.Bitmap(setui[12], wx.BITMAP_TYPE_ANY)
+        previewbmp = wx.Bitmap(setui[13], wx.BITMAP_TYPE_ANY)
+        infoObmp = wx.Bitmap(setui[14], wx.BITMAP_TYPE_ANY)
+        cutbmp = wx.Bitmap(setui[15], wx.BITMAP_TYPE_ANY)
         
+        self.btn_metaI = GB.GradientButton(self.btnpanel,
+                                           size=(-1,25),
+                                           bitmap=infoIbmp, 
+                                           label="Show Metadata")
+        #self.btn_metaI.SetForegroundColour("grey")
+        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+                                      foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_metaI.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_metaI.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_metaI.SetTopEndColour(wx.Colour(205, 235, 222))
+        
+        self.btn_playO = GB.GradientButton(self.btnpanel,
+                                           size=(-1,25),
+                                           bitmap=previewbmp, 
+                                           label="Preview")
+        #self.btn_playO.SetForegroundColour("grey")
+        self.btn_playO.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+                                      foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_playO.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_playO.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_playO.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_playO.SetTopEndColour(wx.Colour(205, 235, 222))
+        
+        self.btn_duration = GB.GradientButton(self.btnpanel,
+                                              size=(-1,25),
+                                              bitmap=cutbmp, 
+                                              label="Duration")
+        #self.btn_duration.SetForegroundColour("white")
+        self.btn_duration.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+                                         foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_duration.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_duration.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_duration.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_duration.SetTopEndColour(wx.Colour(205, 235, 222))
+
+        #self.btnpanel.SetBackgroundColour(wx.Colour(156, 189, 200))
+        self.btnpanel.SetBackgroundColour(wx.Colour(97, 204, 199))
+        #---------- others panel instances:
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
                                                          self.threads, 
@@ -107,6 +156,8 @@ class MainFrame(wx.Frame):
                                                 self.cpu_used,
                                                 self.loglevel_type,
                                                 self.OS,
+                                                setui[16],# icon playfilters
+                                                setui[17],# icon resetfilters
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, self.helping, 
                                                 self.ffmpeg_link, 
@@ -114,6 +165,7 @@ class MainFrame(wx.Frame):
                                                 self.cpu_used,
                                                 self.loglevel_type, 
                                                 self.ffprobe_link,
+                                                self.OS,
                                                 )
 
         self.DnD = dragNdrop.DnDPanel(self, self.ffprobe_link) # dragNdrop panel
@@ -121,8 +173,17 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         self.VconvPanel.Hide()
         self.AconvPanel.Hide()
-        
-        self.DnDsizer = wx.BoxSizer()
+        # Layout toolbar buttons:
+        self.DnDsizer = wx.BoxSizer(wx.VERTICAL) # sizer base global
+        grid_pan = wx.FlexGridSizer(1, 6, 0, 0)
+        #grid_pan.Add(self.btn_playI, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_metaI, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_playO, 0, wx.CENTER|wx.ALL, 5)
+        #grid_pan.Add(self.btn_metaO, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_duration, 0, wx.CENTER|wx.ALL, 5)
+        self.btnpanel.SetSizer(grid_pan) # set panel
+        self.DnDsizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
+        # Layout externals panels:
         self.DnDsizer.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 0)
         self.DnDsizer.Add(self.PrstsPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.DnDsizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
@@ -141,28 +202,46 @@ class MainFrame(wx.Frame):
             self.SetSize((900, 530))
         #self.Centre()
         #self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
-        
         self.SetSizer(self.DnDsizer)
         self.Layout()
+        
+        # Tooltips:
+        self.btn_duration.SetToolTipString('Set a time sequences to apply '
+                            'at any media with duration. Also, you can set '
+                            'a `time progress duration` only, as test with '
+                            'a little process duration'
+                                           )
+        self.btn_metaI.SetToolTipString("Show source file metadata\n" 
+                                    "Display additionals information of "
+                                    "selected streams in the imported files"
+                                        )
+        
+        self.btn_playO.SetToolTipString("Preview exported files.\n"
+                                        "Reproduct exported file when "
+                                        "finish encoding"
+                                        )
         # menu bar
         self.videomass_menu_bar()
-        # disable some item menu at first boot:
-        self.inputPrvw.Enable(False), self.inputMtda.Enable(False)
-        self.outputPrvw.Enable(False), self.outputMtda.Enable(False)
-        # tool bar
+        ## tool bar main
         self.videomass_tool_bar()
         self.Setup_items_bar()
         # status bar
         self.sb = self.CreateStatusBar(1)
-
+        
         #---------------------- Binding (EVT) ----------------------#
         self.DnD.ckbx_dir.Bind(wx.EVT_CHECKBOX, self.onCheckBox)
         self.DnD.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
+        self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
+        #self.Bind(wx.EVT_BUTTON, self.ImportPlay, self.btn_playI)
+        self.Bind(wx.EVT_BUTTON, self.ImportInfo, self.btn_metaI)
+        self.Bind(wx.EVT_BUTTON, self.ExportPlay, self.btn_playO)
+        #self.Bind(wx.EVT_BUTTON, self.ExportInfo, self.btn_metaO)
         #self.Bind(wx.EVT_SHOW, self.panelShown)
         #self.DnDPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
         #-----------------------------------------------------------#
-
+        self.statusbar_msg('Drag and Drop - panel',azure)#set default statusmsg
+        
     #-------------------Status bar popolate--------------------#
     def statusbar_msg(self, msg, color):
         """
@@ -195,7 +274,6 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(wx.ID_FILE5, True)
         self.toolbar.EnableTool(wx.ID_FILE6, True)
         self.toolbar.EnableTool(wx.ID_FILE7, True)
-        
     #------------------------------------------------------------------#
     def Setup_items_bar(self):
         """
@@ -209,7 +287,6 @@ class MainFrame(wx.Frame):
             self.default_all.Enable(False), self.refresh.Enable(False), 
             self.addprof_prstmngr.Enable(False), self.addprof_other.Enable(False), 
             self.delprof.Enable(False), self.editprof.Enable(False), 
-            self.cutrange.Enable(False),
             
         elif self.PrstsPanel.IsShown():
             self.file_open.Enable(True), self.saveme.Enable(True), 
@@ -217,7 +294,6 @@ class MainFrame(wx.Frame):
             self.default_all.Enable(True), self.refresh.Enable(True), 
             self.addprof_prstmngr.Enable(True), self.addprof_other.Enable(False), 
             self.delprof.Enable(True), self.editprof.Enable(True), 
-            self.cutrange.Enable(True),
             self.toolbar.EnableTool(wx.ID_FILE3, True)
             self.toolbar.EnableTool(wx.ID_FILE6, True)
             self.toolbar.EnableTool(wx.ID_FILE7, True)
@@ -230,7 +306,6 @@ class MainFrame(wx.Frame):
             self.default_all.Enable(False), self.refresh.Enable(False), 
             self.addprof_prstmngr.Enable(False), self.addprof_other.Enable(True), 
             self.delprof.Enable(False), self.editprof.Enable(False), 
-            self.cutrange.Enable(True),
             self.toolbar.EnableTool(wx.ID_FILE3, True)
             self.toolbar.EnableTool(wx.ID_FILE5, True)
             self.toolbar.EnableTool(wx.ID_FILE7, True)
@@ -243,7 +318,6 @@ class MainFrame(wx.Frame):
             self.default_all.Enable(False), self.refresh.Enable(False), 
             self.addprof_prstmngr.Enable(False), self.addprof_other.Enable(True), 
             self.delprof.Enable(False), self.editprof.Enable(False), 
-            self.cutrange.Enable(True),
             self.toolbar.EnableTool(wx.ID_FILE3, True)
             self.toolbar.EnableTool(wx.ID_FILE5, True)
             self.toolbar.EnableTool(wx.ID_FILE6, True)
@@ -256,9 +330,8 @@ class MainFrame(wx.Frame):
             self.default_all.Enable(False), self.refresh.Enable(False), 
             self.addprof_prstmngr.Enable(False), self.addprof_other.Enable(False), 
             self.delprof.Enable(False), self.editprof.Enable(False), 
-            self.cutrange.Enable(False),
             #Disable all top menu bar :
-            [self.menuBar.EnableTop(x, False) for x in range(0,6)]
+            [self.menuBar.EnableTop(x, False) for x in range(0,4)]
             #Disable the tool bar
             self.toolbar.EnableTool(wx.ID_FILE3, False)
             self.toolbar.EnableTool(wx.ID_FILE5, False)
@@ -272,7 +345,7 @@ class MainFrame(wx.Frame):
         when click with the mouse on a control list item, 
         enable Metadata Info and file reproduction menu
         """
-        self.inputPrvw.Enable(True), self.inputMtda.Enable(True)
+        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 162, 1))
         self.import_clicked = path# used for play and metadata
         
     #------------------------------------------------------------------#
@@ -280,19 +353,99 @@ class MainFrame(wx.Frame):
         """
         Disable streams imported menu
         """
-        self.inputPrvw.Enable(False), self.inputMtda.Enable(False)
+        self.btn_metaI.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.import_clicked = ''
+        
     #------------------------------------------------------------------#
     def postExported_enable(self):
         """
         Enable menu Streams items for output play and metadata
         info
         """
-        self.outputPrvw.Enable(True), self.outputMtda.Enable(True)
+        self.btn_playO.SetBottomEndColour(wx.Colour(0, 240, 0))
 
     #---------------------- Event handler (callback) ------------------#
-    #------------------------------------------------------------------#
     # This series of events are interceptions of the dragNdrop panel
+    #-------------------------------- Options ----------------------------#
+    def Cut_range(self, event):
+        """
+        Call dialog for Set a time selection cutting on all imported
+        media. The values persist so that they are not reset.
+        """
+        data = ''
+
+        dial = dialog_tools.Cut_Range(self, self.time_seq)
+        retcode = dial.ShowModal()
+        if retcode == wx.ID_OK:
+            data = dial.GetValue()
+            if data == '-ss 00:00:00 -t 00:00:00':
+                data = ''
+                self.btn_duration.SetBottomEndColour(wx.Colour(205, 235, 222))
+            else:
+                self.btn_duration.SetBottomEndColour(wx.Colour(228, 57, 57))
+            self.time_seq = data
+        else:
+            dial.Destroy()
+            return
+    #------------------------------ Menu  Streams -----------------------#
+    def ImportPlay(self):
+        """
+        Redirect input file clicked at stream_play for playback feature.
+        This feature is available by context menu in drag n drop panel only.
+        """
+        filepath = self.import_clicked
+        IO_tools.stream_play(filepath, 
+                             self.time_seq, 
+                             self.ffplay_link, 
+                             self.loglevel_type, 
+                             self.OS,
+                             )
+    #------------------------------------------------------------------#
+    def ImportInfo(self, event):
+        """
+        Redirect input file clicked at stream_info for metadata display
+        """
+        filepath = self.import_clicked
+        if not filepath:
+            wx.MessageBox("No file selected into Drag N Drop list", 
+                          'Videomass2', wx.ICON_EXCLAMATION, self)
+            return
+        title = 'File Input Metadata Display - Videomass2'
+        IO_tools.stream_info(title, 
+                             filepath, 
+                             self.helping, 
+                             self.ffprobe_link,
+                             )
+    #------------------------------------------------------------------#
+    def ExportPlay(self, event):
+        """
+        Playback functionality for exported files, useful for result 
+        testing. The first one exported of the list will be reproduced.
+        """
+        if not self.post_process:
+            wx.MessageBox("No files exported with `Start Encoding` yet", 
+                          'Videomass2', wx.ICON_EXCLAMATION, self)
+            return
+
+        IO_tools.stream_play(self.post_process,
+                             '', 
+                             self.ffplay_link, 
+                             self.loglevel_type,
+                             self.OS,
+                             )
+    #------------------------------------------------------------------#
+    #def ExportInfo(self, event):
+        #"""
+        #Metadata feature for exported file, useful for metadata control. 
+        #The first exported file in the list will be displayed.
+        #"""
+        #title = 'File Output Metadata Display - Videomass2'
+        #IO_tools.stream_info(title, 
+                             #self.post_process, 
+                             #self.helping, 
+                             #self.ffprobe_link,
+                             #)
+    #-----------------------------------------------------------------#
     def onCheckBox(self, event):
         """
         Intercept the Checkbox event in the dragNdrop panel
@@ -316,13 +469,13 @@ class MainFrame(wx.Frame):
         self.Destroy()
     #------------------------------------------------------------------#
 
-###############################- BUILD THE MENU BAR  ########################
+############################### BUILD THE MENU BAR  ########################
     def videomass_menu_bar(self):
         """
         Make a menu bar. Per usare la disabilitazione di un menu item devi
         prima settare l'attributo self sull'item interessato - poi lo gestisci
         con self.item.Enable(False) per disabilitare o (True) per abilitare.
-        Se vuoi disabilitare lintero top di items fai per esempio:
+        Se vuoi disabilitare l'intero top di items fai per esempio:
         self.menuBar.EnableTop(6, False) per disabilitare la voce Help.
         """
         self.menuBar = wx.MenuBar()
@@ -378,45 +531,16 @@ class MainFrame(wx.Frame):
         
         self.menuBar.Append(editButton,"Edit")
         
-        ####------------------ optionsBtn
-        optionsBtn = wx.Menu()
-        
-        self.cutrange = optionsBtn.Append(wx.NewId(), "Time range setting", 
-                "Set a time sequences to apply at video or audio streaming")
-
-        #optionsBtn.AppendSeparator()
-        
-        self.menuBar.Append(optionsBtn,"Options")
-        
-        ####------------------ Data_Streams
-        data_streams = wx.Menu()
-        self.inputMtda = data_streams.Append(wx.ID_ANY, 
-                                            "Show source file metadata", 
-                                        "Display additionals information of "
-                                        "the streams in the imported files")
-        
-        self.outputMtda = data_streams.Append(wx.ID_ANY, 
-                                            "Show exported file metadata", 
-                                        "Display additionals information of "
-                                        "the streams in the exported files")
-        data_streams.AppendSeparator()
-        
-        self.inputPrvw = data_streams.Append(wx.ID_ANY, 
-                                          "Playback source file..", 
-                                        "Reproduct inported and selected "
-                                        "file into drag and drop panel")
-        self.outputPrvw = data_streams.Append(wx.ID_ANY, "Preview exported files..", 
-                                        "Reproduct exported file when "
-                                        "finish encoding")
-
-        self.menuBar.Append(data_streams,"Data_Streams")
-
         ####------------------ setup button
         setupButton = wx.Menu()
 
         self.showtoolbar = setupButton.Append(wx.ID_ANY, "Show Tool Bar", 
                                        "Show tool bar view", wx.ITEM_CHECK)
         setupButton.Check(self.showtoolbar.GetId(), True)
+        
+        self.showpanelbar = setupButton.Append(wx.ID_ANY, "Show Buttons Bar", 
+                                "Show or hide buttons bar view", wx.ITEM_CHECK)
+        setupButton.Check(self.showpanelbar.GetId(), True)
 
         setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES, "Setup", 
@@ -447,15 +571,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Addprof, self.addprof_other)
         self.Bind(wx.EVT_MENU, self.Editprof, self.editprof)
         self.Bind(wx.EVT_MENU, self.Delprof, self.delprof)
-        #----TOOLS----
-        self.Bind(wx.EVT_MENU, self.Cut_range, self.cutrange)
-        #----PREVIEWS---
-        self.Bind(wx.EVT_MENU, self.ImportPlay, self.inputPrvw)
-        self.Bind(wx.EVT_MENU, self.ImportInfo, self.inputMtda)
-        self.Bind(wx.EVT_MENU, self.ExportPlay, self.outputPrvw)
-        self.Bind(wx.EVT_MENU, self.ExportInfo, self.outputMtda)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
+        self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         #----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
@@ -548,94 +666,6 @@ class MainFrame(wx.Frame):
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Delprof()
-            
-    #-------------------------------- Options ----------------------------#
-    def Cut_range(self, event):
-        """
-        Call dialog for Set a time selection cutting on all imported
-        media. The values persist so that they are not reset.
-        """
-        data = ''
-
-        title = 'Set a time Range - Videomass2'
-        dial = dialog_tools.Cut_Range(self, title, self.time_seq)
-        retcode = dial.ShowModal()
-        if retcode == wx.ID_OK:
-            data = dial.GetValue()
-            if data == '-ss 00:00:00 -t 00:00:00':
-                data = ''
-            self.time_seq = data
-        else:
-            dial.Destroy()
-            return
-    #------------------------------ Menu  Streams -----------------------#
-    def ImportPlay(self, event):
-        """
-        Redirect input file clicked at stream_play for reproduction feature.
-        """
-        filepath = self.import_clicked
-        IO_tools.stream_play(filepath, '', self.ffplay_link, 
-                             self.loglevel_type, self.OS)
-    #------------------------------------------------------------------#
-    def ImportInfo(self, event):
-        """
-        Redirect input file clicked at stream_info for metadata display
-        """
-        title = 'File Input Metadata Display - Videomass2'
-        filepath = self.import_clicked
-        IO_tools.stream_info(title, filepath , self.helping, 
-                             self.ffprobe_link)
-    #------------------------------------------------------------------#
-    def ExportPlay(self, event):
-        """
-        Play feature for exported file. If only one file has been processed, 
-        the file will be played directly.
-        If the files have been exported in batch modality, the file dialog 
-        will be opened in the folder where they were exported. 
-        However, the first path export will always be open.
-        All this one is valutate from wildcard element: if None or not. 
-        """
-        wildcard, filename = self.post_process[1], self.post_process[0]
-        if wildcard is None:
-            IO_tools.stream_play(filename, '', self.ffplay_link, 
-                                 self.loglevel_type)
-
-        else:
-            dialfile = wx.FileDialog(self, "Choice a file stream for "
-                    "reproduction - Videomass2", "%s" % (filename), "", 
-                    wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
-                                     )
-            if dialfile.ShowModal() == wx.ID_OK:
-                filepath = dialfile.GetPath()
-                dialfile.Destroy()
-                IO_tools.stream_play(filepath, self.ffplay_link, 
-                                     self.loglevel_type)
-    #------------------------------------------------------------------#
-    def ExportInfo(self, event):
-        """
-        Metadata feature for exported file. If only one file has been processed, 
-        the file will be opened directly.
-        If the files have been exported in batch modality, the file dialog 
-        will be opened in the folder where they were exported. 
-        However, the first path export will always be open.
-        All this one is valutate from wildcard element: if None or not. 
-        """
-        title = 'File Output Metadata Display - Videomass2'
-        wildcard, filename = self.post_process[1], self.post_process[0]
-        if wildcard == None:
-            IO_tools.stream_info(title, filename , self.helping, 
-                                 self.ffprobe_link)
-
-        else:
-            dialfile = wx.FileDialog(self, "Choice a file for get "
-                    "metadata info - Videomass2", "%s" % (filename), "", 
-                    wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
-                                     )
-            if dialfile.ShowModal() == wx.ID_OK:
-                filepath = dialfile.GetPath()
-                dialfile.Destroy()
-                IO_tools.stream_info(title, filepath , self.helping, 
-                                     self.ffprobe_link)
                 
     #------------------------ Menu  Preferences -------------------------#
     def Show_toolbar(self, event):
@@ -646,6 +676,17 @@ class MainFrame(wx.Frame):
             self.toolbar.Show()
         else:
             self.toolbar.Hide()
+    #--------------------------------------------------------------------#
+    def Show_panelbar(self, event):
+        """
+        Show or Hide the buttons bar
+        """
+        if self.showpanelbar.IsChecked():
+            self.btnpanel.Show()
+            self.Layout()
+        else:
+            self.btnpanel.Hide()
+            self.Layout()
 
         
     #------------------------------------------------------------------#
@@ -669,7 +710,8 @@ class MainFrame(wx.Frame):
         #wx.MessageBox("La guida al programma deve venire sviluppata a breve.")
         #self.on_manual(self)
         #self.parent.on_help(self)
-        webbrowser.open('%s/Indice_ipertestuale.html' % (self.helping))
+        page = 'https://jeanslack.github.io/Videomass2/videomass2_use.html'
+        webbrowser.open(page)
 
     #------------------------------------------------------------------#
     def Info(self, event):
@@ -729,7 +771,7 @@ class MainFrame(wx.Frame):
                                                 #)
         # finally, create it
         self.toolbar.Realize()
-
+        
         #----------------- Tool Bar Binding (evt)-----------------------#
         self.Bind(wx.EVT_TOOL, self.File_import, icn_import)
         self.Bind(wx.EVT_TOOL, self.Preset_Mng, prs_mng)
@@ -827,6 +869,9 @@ class MainFrame(wx.Frame):
         start running.
         """
         duration = self.DnD.duration[:] # the streams duration list
+        
+        if self.showpanelbar.IsChecked():
+            self.btnpanel.Hide()# hide buttons bar if the user has shown it:
 
         IO_tools.process(self, varargs, 
                          self.path_log, 
@@ -841,7 +886,7 @@ class MainFrame(wx.Frame):
         #Show the panel:
         self.ProcessPanel.Show()
         self.Layout()
-        self.SetTitle('..Processing, be patient - Videomass2')
+        self.SetTitle('..Start Encoding - Videomass2')
 
         self.Setup_items_bar()# call set default layout method
     #------------------------------------------------------------------#
@@ -857,7 +902,7 @@ class MainFrame(wx.Frame):
             self.VconvPanel.on_ok()
         elif self.AconvPanel.IsShown():
             self.AconvPanel.on_ok()
-
+            
     #------------------------------------------------------------------#
     def panelShown(self, panelshown):
         """
@@ -876,13 +921,12 @@ class MainFrame(wx.Frame):
             self.ProcessPanel.Hide()
             self.switch_audio_conv(self)
         # Enable all top menu bar:
-        [self.menuBar.EnableTop(x, True) for x in range(0,6)]
-        self.SetTitle("Videomass2")
-
-    #------------------------------------------------------------------#
-    #def Help_Contest(self, event):
-        #"""
-        #Run the predefined browser on contestual help
-        #"""
-        #webbrowser.open('%s/04-Gestione_presets.html' % (self.helping))
+        [self.menuBar.EnableTop(x, True) for x in range(0,4)]
+        self.SetTitle("Videomass2")# set the appropriate title
+        # show buttons bar if the user has shown it:
+        if self.showpanelbar.IsChecked():
+            self.btnpanel.Show()
+            self.Layout()
+        
+        
         
