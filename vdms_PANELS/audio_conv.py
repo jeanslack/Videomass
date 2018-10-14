@@ -263,6 +263,7 @@ class Audio_Conv(wx.Panel):
         cmd_opt["AudioRate"] = ["",""]
         cmd_opt["AudioBitrate"] = ["",""]
         cmd_opt["AudioDepth"] = ["",""]
+        self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
     #------------------------------------------------------------------#
     def on_Param(self, evt):
         """
@@ -332,14 +333,18 @@ class Audio_Conv(wx.Panel):
             return
 
         self.txt_options.SetValue("")
-        for d in [cmd_opt["AudioRate"][0],cmd_opt["AudioDepth"][0],
-                 cmd_opt["AudioBitrate"][0], cmd_opt["AudioChannel"][0]
+        count = 0
+        for d in [cmd_opt["AudioRate"],cmd_opt["AudioDepth"],
+                 cmd_opt["AudioBitrate"], cmd_opt["AudioChannel"]
                  ]:
-            if not 'Not set' in d:
-                self.txt_options.AppendText(" %s," % d)
-                self.btn_param.SetBottomEndColour(wx.Colour(240, 255, 0))
-            else:
-                self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
+            if d[1]:
+                count += 1
+                self.txt_options.AppendText(" %s," % d[0])
+
+        if count == 0:
+            self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
+        else:
+            self.btn_param.SetBottomEndColour(wx.Colour(240, 255, 0))
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#
