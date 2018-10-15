@@ -7,11 +7,11 @@ URGENCY: to do soon
 implementazione -vf format=yuv420p (or the alias -pix_fmt yuv420p)
 rimuovi tutti gli html e setta il link alla pagina web
 
+Scrivi i tooltip sui pulsanti nella barra pulsanti
+
 --------------------------------------------------------------------------------
 URGENCY: high
 --------------------------------------------------------------------------------
-- Su Windows, nel menu edit, compare abilitato 'Write the current...' anche nel
-  pannello drag n drop (???).
 
 --------------------------------------------------------------------------------
 URGENCY: low
@@ -21,8 +21,6 @@ URGENCY: low
   
 - Rinnovare i presets e i profili con nuove adds: aggiungere audio in video;
   aggiungere audio su immagini
-  
-- Implementazione previusly settings audio, come nei filtri video
   
 --------------------------------------------------------------------------------
 URGENCY: medium

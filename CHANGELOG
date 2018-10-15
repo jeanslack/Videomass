@@ -1,41 +1,55 @@
 +------------------------------------+
 October 05, 2018 V.1.1.0
 +------------------------------------+
-- Solved an exception when importing images and proceeding with normalization
-  (add: does not contain any stream).
-- FFmpeg's unrecognized errors are now better managed on volumedetect Processing
-- resolved the writing of the 'passlogfile' on the source folder of 'Videomass2'
-  during double pass processes. Now, the log file will be written to the same 
-  source output path.
-- Added new filter section on Video Conversions panel with new dialogs boxes
-  implementation:
 
-       - scale
-       - rotation
-       - crop
-       - deinterlace/interlace
-       - denoisers
-       
-- Each filter button has the color application to on/off state views.
-- Added new playback button to result preview of all filters set.
-- Added new button to clear all filters set.
-- Improved layout on Video conversions panel
-- Improved layout on Audio conversion panel
-- Removed the 'video size' function instead of the scale filter 
-- Move the 'save image from video' function to the 'format/containers' combobox
-- Added a new buttons bar with color application to on/off state views
-- Accessibility to playback exported file, metadata display, and timeline 
-  duration, are now improved.
-- Fixed bug that did not reproduce the exported file with preview button
-- Added a contextual menu on the drag n drop panel with playback and metadata 
-  feature of the selected item. This is activable by right click or double 
-  click into one imported items.
-- Added message support for exceptions and errors in streaming playback (ffplay)
-- Added support for time sequences also on playback of input streaming
-- Fixed a bug that did not send the message for ASCII/UTF-8 support on all 
-  processes with non-ASCII/UTF-8 file names related to shlex module on Unix.
-- Improved settings storage on audio options
-- Improved overall layout 
+BUG FIXES:
+    - Solved an exception when importing images and proceeding with normalization
+      (add: does not contain any stream).
+    - FFmpeg's unrecognized errors are now better managed on volumedetect Processing
+    - resolved the writing of the 'passlogfile' on the source folder of 'Videomass2'
+       during double pass processes. Now, the log file will be written to the same 
+       source output path.
+    - Fixed bug that did not reproduce the exported file with preview button
+    - Fixed a bug that did not send the message for ASCII/UTF-8 support on all 
+      processes with non-ASCII/UTF-8 file names related to shlex module on Unix.
+    - Fixed bug in the `Save Audio from Movie` when save as profile 
+    - Fixed minor bugs
+
+ADDITIONAL FEATURES:
+    - Added new filter section on Video Conversions panel with new dialogs boxes
+      implementation:
+
+        - scale
+        - rotation
+        - crop
+        - deinterlace/interlace
+        - denoisers
+        
+    - Each filter button has the color application to on/off state views.
+    - Added new playback button to result preview of all filters set.
+    - Added new button to clear all filters set.
+    - Improved layout on Video conversions panel
+    - Improved layout on Audio conversion panel
+    - Added a new buttons bar with color application to on/off state views
+    - Accessibility to playback exported file, metadata display, and timeline 
+      duration, are now improved.
+    - Added a contextual menu on the drag n drop panel with playback and metadata 
+      feature of the selected item. This is activable by right click or double 
+      click into one imported items.
+    - Added message support for exceptions and errors in streaming playback (ffplay)
+    - Added support for time sequences also on playback of input streaming
+
+REMOVALS and DISPLACEMENTS:
+    - Removed the 'video size' function instead of the scale filter 
+    - Move the 'save image from video' function to the 'format/containers' combobox
+    - Audio Conversion panel: Message box removed on the save profile with audio 
+      normalization enabled. Now you can also save parameters with audio 
+      normalization after a confirmation message.
+  
+IMPROVEMENTS:
+    - Improved settings storage on audio options for Audio and Video panels
+    - Overall accessibility has been significantly improved
+    - Improved overall layout 
 
 +------------------------------------+
 Set 22, 2018 V.1.0.1

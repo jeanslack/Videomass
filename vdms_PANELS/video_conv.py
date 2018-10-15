@@ -1186,22 +1186,20 @@ class Video_Conv(wx.Panel):
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(normalize)
                 if float(maxvol) >= float(normalize):
-                    # non processa se è superiore o uguale a norm.
                     self.parent.statusbar_msg(msg, yellow)
-                    volume.append('')
-                else:
-                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+
+                volume.append("-af volume=%sdB" % (str(offset)[1:]))
                     
                 if len(data[0]) == 1:# append in textctrl
                     self.text_dbMax.SetValue(""), 
                     self.text_dbMedium.SetValue("")
                     self.text_dbMax.AppendText(v[0])
                     self.text_dbMedium.AppendText(v[1])
-                    
+        print volume
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
-        
+
     #------------------------------------------------------------------#
     def on_h264Presets(self, event):
         """

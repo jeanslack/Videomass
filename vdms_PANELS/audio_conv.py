@@ -473,8 +473,9 @@ class Audio_Conv(wx.Panel):
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
         """
-        msg = ("The track peak level is equal to or higher than the level set " 
-               "on the threshold. If you proceed, there will be no changes. ")
+        msg = ("The audio stream peak level is equal to or higher " 
+               "than the level set on the threshold. If you proceed, "
+               "there will be no changes.")
         self.parent.statusbar_msg("",None)
         normalize = self.spin_amplitude.GetValue()
 
@@ -491,21 +492,20 @@ class Audio_Conv(wx.Panel):
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(normalize)
                 if float(maxvol) >= float(normalize):
-                    # non processa se è superiore o uguale a norm.
                     self.parent.statusbar_msg(msg, yellow)
-                    volume.append('')
-                else:
-                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+
+                volume.append("-af volume=%sdB" % (str(offset)[1:]))
                     
                 if len(data[0]) == 1:# append in textctrl
                     self.txt_volmax.SetValue("")
                     self.txt_volmid.SetValue("")
                     self.txt_volmax.AppendText(v[0])
                     self.txt_volmid.AppendText(v[1])
-                        
+        print volume
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+        
     #-----------------------------------------------------------------------#
     def disableParent(self):
         """
@@ -627,7 +627,7 @@ class Audio_Conv(wx.Panel):
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
             ending = Formula(self, valupdate[0], valupdate[1], title)
-            
+
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
                                            file_sources,
@@ -725,24 +725,48 @@ class Audio_Conv(wx.Panel):
         current setting. All profiles saved in this way will also be stored 
         in the preset 'User Presets'
         
+        NOTE: For multiple processes involving audio normalization and those 
+              for saving audio streams from movies, only the data from the 
+              first file in the list will be considered.
+        
         FIXME have any problem with xml escapes in special character
         (like && for ffmpeg double pass), so there is some to get around it 
         (escamotage), but work .
         """
-        if self.ckb_onlynorm.IsChecked():
-            wx.MessageBox("Sorry, operation not allowed.\n\n"
-                          "Audio normalization is a specific\n"
-                          "process applied track by track.", 
-                          "WARNING - Videomass2", wx.ICON_WARNING, self)
-            return
+        if cmd_opt["Normalize"]:
+            
+            if wx.MessageBox("Audio normalization is a specific process "
+                             "applied track by track.\n\n"
+                             "Are you sure to proceed ?", 
+                             'Audio normalization enabled! - Videomass2', 
+                             wx.ICON_QUESTION | wx.YES_NO, 
+                            None) == wx.NO:
+                return #Se L'utente risponde no
+            else:
+                normalize = cmd_opt["Normalize"][0]# tengo il primo valore lista
         else:
-            command = ("-vn %s %s %s %s %s %s" % (
-                    cmd_opt["Normalize"], cmd_opt["AudioCodec"], 
-                    cmd_opt["AudioBitrate"][1], cmd_opt["AudioDepth"][1], 
-                    cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1],)
-                        )
-        command = ' '.join(command.split())# sitemo meglio gli spazi in stringa
-        list = [command, cmd_opt["ExportExt"]]
+            normalize = ''
+        
+        if self.ckb_onlynorm.IsChecked():
+            command = ("-vn %s" % normalize)
+            command = ' '.join(command.split())# sistemo gli spazi
+            list = [command, cmd_opt["ExportExt"]]
+            
+        elif self.cmbx_a.GetValue() == "Save audio from movie":
+            command = ("-vn %s" % cmd_opt["AudioCodec"][0])
+            command = ' '.join(command.split())# sistemo gli spazi
+            list = [command, cmd_opt["ExportExt"][0]]
+  
+        else:
+            command = ("-vn %s %s %s %s %s %s" % (normalize, 
+                                                  cmd_opt["AudioCodec"], 
+                                                  cmd_opt["AudioBitrate"][1], 
+                                                  cmd_opt["AudioDepth"][1], 
+                                                  cmd_opt["AudioRate"][1], 
+                                                  cmd_opt["AudioChannel"][1],
+                                                  ))
+            command = ' '.join(command.split())# sistemo gli spazi
+            list = [command, cmd_opt["ExportExt"]]
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'

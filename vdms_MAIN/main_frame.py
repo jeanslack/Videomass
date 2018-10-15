@@ -451,7 +451,7 @@ class MainFrame(wx.Frame):
         """
         filepath = self.import_clicked
         if not filepath:
-            wx.MessageBox("No file selected into Drag N Drop list", 
+            wx.MessageBox("No file selected into Drag and Drop list", 
                           'Videomass2', wx.ICON_EXCLAMATION, self)
             return
         title = 'File Input Metadata Display - Videomass2'
@@ -498,7 +498,6 @@ class MainFrame(wx.Frame):
         panel. The list is reloaded automatically after pressed ok button 
         in the dialog for update view.
         """
-        print 'si'
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Addprof()
         else:
@@ -696,6 +695,8 @@ class MainFrame(wx.Frame):
             self.toolbar.Show()
         else:
             self.toolbar.Hide()
+            
+        self.Layout()
     #--------------------------------------------------------------------#
     def Show_panelbar(self, event):
         """
@@ -703,12 +704,10 @@ class MainFrame(wx.Frame):
         """
         if self.showpanelbar.IsChecked():
             self.btnpanel.Show()
-            self.Layout()
         else:
             self.btnpanel.Hide()
-            self.Layout()
-
-        
+            
+        self.Layout()
     #------------------------------------------------------------------#
     def Setup(self, event):
         """
