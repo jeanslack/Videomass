@@ -1093,7 +1093,14 @@ class Video_Conv(wx.Panel):
               data[0][1] is ffmpeg option command for audio channels and
               data[0][0] is a simple description for view.
         """ 
-        audiodialog = audiodialogs.AudioSettings(self,audio_type,title)
+        audiodialog = audiodialogs.AudioSettings(self,
+                                                 audio_type,
+                                                 cmd_opt["AudioRate"],
+                                                 cmd_opt["AudioDepth"],
+                                                 cmd_opt["AudioBitrate"], 
+                                                 cmd_opt["AudioChannel"],
+                                                 title,
+                                                 )
         retcode = audiodialog.ShowModal()
         
         if retcode == wx.ID_OK:

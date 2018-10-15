@@ -34,6 +34,7 @@ October 05, 2018 V.1.1.0
 - Added support for time sequences also on playback of input streaming
 - Fixed a bug that did not send the message for ASCII/UTF-8 support on all 
   processes with non-ASCII/UTF-8 file names related to shlex module on Unix.
+- Improved settings storage on audio options
 - Improved overall layout 
 
 +------------------------------------+
