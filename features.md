@@ -2,18 +2,21 @@
 
 ## Features:
 
-- Work on **Linux**, **MacOs** and **Windows**.
-- Drag n Drop interface   
-- Presets manager interface with fully customizable profiles ready to use   
-- Data streams information interface with details section   
-- Preview of exported media   
-- Video conversion   
-- Audio conversion
+- Drag n' Drop interface   
+- Presets manager interface with fully customizable and expandable profiles  
+- Displaying metadata streams information 
+- Preview of exported media
+- Preview video filters
+- Reproduction of imported media
+- Video conversions interface 
+- Audio conversions interface
 - Save jpg images from a video sequence
 - Audio peak level analysis with normalization process   
-- Grabbing audio streams from video with multilingual selection   
-- Convert multiple files at once  
+- Grabbing audio streams from video with multilingual selection  
+- Settings for timing export and filter previews or simple playback
+- Selection of the time interval (for exports, previews, reproduction, tests)
+- Convert multiple files at once 
 - Log management
-- ..and more 
+- Work on **Linux**, **MacOs** and **Windows**. 
 
 [Home](index.md)
