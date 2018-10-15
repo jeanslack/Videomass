@@ -1,8 +1,8 @@
 # Welcome to Videomass2
 
+* [What is Videomass2 ?](about.md)
 * [Features](features.md)
 * [Screenshot](screenshot.md)
-* [About](about.md)
 * [View Project on sourceforge.net](https://sourceforge.net/projects/videomass2/)
 * [Donations](donation.md)
 * [License](LICENSE)
