@@ -102,8 +102,8 @@ class Audio_Conv(wx.Panel):
         self.btn_param = GB.GradientButton(self,
                                            size=(-1,25), 
                                            label="Audio Options")
-        self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
-                                    foregroundcolour=wx.Colour(100, 0, 0))
+        self.btn_param.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
+                                    foregroundcolour=wx.Colour(255, 255, 255))
         self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
         self.btn_param.SetBottomStartColour(wx.Colour(97, 204, 199))
         self.btn_param.SetTopStartColour(wx.Colour(97, 204, 199))
@@ -118,7 +118,7 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes = GB.GradientButton(self,
                                            size=(-1,25), 
                                            label="Analyzes")
-        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(97, 204, 199))
         self.btn_analyzes.SetBottomStartColour(wx.Colour(97, 204, 199))
@@ -417,7 +417,7 @@ class Audio_Conv(wx.Panel):
                "default dB value (-1.0)")
         if self.ckb_norm.IsChecked():# if checked
             self.parent.statusbar_msg(msg, greenolive)
-            self.btn_analyzes.SetForegroundColour(wx.Colour(100,0,0))
+            self.btn_analyzes.SetForegroundColour(wx.Colour(255, 255, 255))
             self.btn_analyzes.Enable(), self.spin_amplitude.Enable(),
             self.lab_amplitude.Enable(), 
             if len(self.parent.file_sources) == 1:# se solo un file

@@ -107,7 +107,7 @@ class MainFrame(wx.Frame):
                                            label="Show Metadata")
         #self.btn_metaI.SetForegroundColour("grey")
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                      foregroundcolour=wx.Colour(100, 0, 0))
+                                      foregroundcolour=wx.Colour(56, 163, 159))
         self.btn_metaI.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_metaI.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_metaI.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -119,7 +119,7 @@ class MainFrame(wx.Frame):
                                            label="Preview")
         #self.btn_playO.SetForegroundColour("grey")
         self.btn_playO.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                      foregroundcolour=wx.Colour(100, 0, 0))
+                                      foregroundcolour=wx.Colour(56, 163, 159))
         self.btn_playO.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_playO.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_playO.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -131,7 +131,7 @@ class MainFrame(wx.Frame):
                                               label="Duration")
         #self.btn_duration.SetForegroundColour("white")
         self.btn_duration.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                         foregroundcolour=wx.Colour(100, 0, 0))
+                                    foregroundcolour=wx.Colour(56, 163, 159))
         self.btn_duration.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_duration.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_duration.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -206,19 +206,14 @@ class MainFrame(wx.Frame):
         self.Layout()
         
         # Tooltips:
-        self.btn_duration.SetToolTipString('Set a time sequences to apply '
-                            'at any media with duration. Also, you can set '
-                            'a `time progress duration` only, as test with '
-                            'a little process duration'
+        self.btn_duration.SetToolTipString('Sets a global time sequences to '
+                                        'apply at any media file with duration.'
                                            )
-        self.btn_metaI.SetToolTipString("Show source file metadata\n" 
-                                    "Display additionals information of "
-                                    "selected streams in the imported files"
+        self.btn_metaI.SetToolTipString("Show information about the metadata "
+                                        "of the selected imported file." 
                                         )
-        
-        self.btn_playO.SetToolTipString("Preview exported files.\n"
-                                        "Reproduct exported file when "
-                                        "finish encoding"
+        self.btn_playO.SetToolTipString("Preview exported files. Reproduction "
+                                        "exported file when finish encoding."
                                         )
         # menu bar
         self.videomass_menu_bar()

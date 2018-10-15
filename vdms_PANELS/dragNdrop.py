@@ -206,7 +206,8 @@ class DnDPanel(wx.Panel):
         menuItem = menu.FindItemById(itemId)
 
         if not self.selected:
-            self.parent.statusbar_msg('No file selected yet', yellow)
+            self.parent.statusbar_msg('No file selected for `%s` yet' % 
+                                      menuItem.GetLabel(), yellow)
         else:
             self.parent.statusbar_msg('Drag and Drop - panel', azure)
             if menuItem.GetLabel() == "Play selected file":

@@ -82,9 +82,10 @@ def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
             #thread.join()# attende che finisca il thread (se no ritorna subito)
             #error = thread.data
     except IOError:
-            wx.MessageBox("File does not exist or not a valid file:  %s" % (
-                filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
-            return
+        wx.MessageBox("File does not exist or not a valid file:  %s" % (
+            filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
+        return
+    
 #-----------------------------------------------------------------------#
 def probeDuration(path_list, ffprobe_link):
     """
