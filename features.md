@@ -13,7 +13,6 @@
 - Save jpg images from a video sequence
 - Audio peak level analysis with normalization process   
 - Grabbing audio streams from video with multilingual selection  
-- Settings for timing export and filter previews or simple playback
 - Selection of the time interval (for exports, previews, reproduction, tests)
 - Convert multiple files at once 
 - Log management
