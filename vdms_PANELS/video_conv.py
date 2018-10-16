@@ -115,7 +115,7 @@ class Video_Conv(wx.Panel):
         ("AVI (ITU h264)"), ("MP4 (mpeg4)"), ("MP4 (HQ h264/AVC)"), 
         ("M4V (HQ h264/AVC)"), ("MKV (h264)"), ("OGG theora"), ("WebM (HTML5)"), 
         ("FLV (HQ h264/AVC)"),("Copy Video Codec"),("Save Images From Video")], 
-                                        style=wx.CB_DROPDOWN | wx.CB_READONLY
+                            size=(200,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
                                                )
         self.sizer_combobox_formatv_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
         wx.ID_ANY, ("Video Container Selection")
@@ -636,9 +636,10 @@ class Video_Conv(wx.Panel):
             self.UI_set()
             
         elif vcodec[selected][0] == "save images":
-            msg = ("Tip: set the `time range setting` in the `Options` menu "
-               "for video selection point, then set the `Video Rate` at low "
-               "values; More is low, the lower will be the extracted images. ")
+            msg = ("Tip: set a short time progress duration with `Duration` "
+                   "button, then try set the `Video Rate` at low values "
+                   "(0.2 fps); More is low, the lower will be the extracted "
+                   "images. ")
             self.parent.statusbar_msg("Output format: Save images",None)
             wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION
                           )
@@ -1195,7 +1196,6 @@ class Video_Conv(wx.Panel):
                     self.text_dbMedium.SetValue("")
                     self.text_dbMax.AppendText(v[0])
                     self.text_dbMedium.AppendText(v[1])
-        print volume
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
@@ -1559,10 +1559,16 @@ class Video_Conv(wx.Panel):
         """
         self.update_allentries()# aggiorno gli imput
         
+        if cmd_opt["Normalize"]:
+            normalize = cmd_opt["Normalize"][0]
+        else:
+            normalize = ''
+        
         if not self.ckbx_pass.IsChecked():
             if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
                 outext = cmd_opt["VideoFormat"]
-                command = ('%s %s %s %s %s %s %s %s %s' % ( 
+                command = ('%s %s %s %s %s %s %s %s %s %s' % (
+                            normalize,
                             cmd_opt["VideoCodec"], 
                             cmd_opt["VideoAspect"],
                             cmd_opt["VideoRate"],
@@ -1581,7 +1587,8 @@ class Video_Conv(wx.Panel):
                            )
             else:
                 outext = cmd_opt["VideoFormat"]
-                command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s" % ( 
+                command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (
+                            normalize,
                             cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                             cmd_opt["Presets"], cmd_opt["Profile"],
                             cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -1598,7 +1605,8 @@ class Video_Conv(wx.Panel):
                       cmd_opt["Tune"], cmd_opt["VideoAspect"], 
                       cmd_opt["VideoRate"], cmd_opt["Filters"])
                     )
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % ( 
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
+                     normalize,
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 

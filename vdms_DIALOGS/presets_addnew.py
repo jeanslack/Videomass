@@ -70,7 +70,7 @@ class MemPresets(wx.Dialog):
         self.txt_descript.SetMinSize((300, -1))
         self.txt_cmd.SetMinSize((350, 60))
         self.txt_supp.SetMinSize((300, -1))
-        self.txt_ext.SetMinSize((70, -1))
+        self.txt_ext.SetMinSize((150, -1))
 
         self.txt_name.SetToolTipString("Assign a short name to the profile "
                                     "Example:'Convert video for youtube'"
@@ -249,6 +249,10 @@ class MemPresets(wx.Dialog):
             #self.Destroy() # con ID_OK e ID_CANCEL non serve
             
         elif self.arg == 'addprofile':
-            wx.MessageBox(u"Successfull storing in 'your personal profiles'")
+            wx.MessageBox(u"Successfull storing !\n\n"
+                          "You will find this profile in the 'Users Profiles' "
+                          "preset in the 'Presets Manager' panel.\n"
+                          "Use the 'Reload presets list' on File menu to "
+                          "update profile list.")
                 
         event.Skip() 

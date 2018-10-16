@@ -237,6 +237,7 @@ class MainFrame(wx.Frame):
         
         #----------------------Set Properties----------------------#
         self.SetTitle("Videomass2")
+        self.btn_playO.Hide()
         icon = wx.EmptyIcon()
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
@@ -261,6 +262,16 @@ class MainFrame(wx.Frame):
         self.btn_playO.SetToolTipString("Preview exported files. Reproduction "
                                         "exported file when finish encoding."
                                         )
+        self.btn_saveprf.SetToolTipString("Save as profile with the current "
+                                        "settings of this panel."
+                                        )
+        self.btn_newprf.SetToolTipString("Create a new profile from yourself "
+                                        "and save it in the selected preset."
+                                        )
+        self.btn_delprf.SetToolTipString("Delete the selected profile."
+                                        )
+        self.btn_editprf.SetToolTipString("Edit the selected profile."
+                                          )
         # menu bar
         self.videomass_menu_bar()
         ## tool bar main
@@ -406,6 +417,9 @@ class MainFrame(wx.Frame):
         Enable menu Streams items for output play and metadata
         info
         """
+        if not self.btn_playO.IsShown():
+            self.btn_playO.Show()
+            self.Layout()
         self.btn_playO.SetBottomEndColour(wx.Colour(0, 240, 0))
 
     #---------------------- Event handler (callback) ------------------#
@@ -737,7 +751,7 @@ class MainFrame(wx.Frame):
         """
         Display the program informations and developpers
         """
-        infoprg.info(self.videomass_icon)
+        infoprg.info(self, self.videomass_icon)
         
 ###############################  BUILD THE TOOL BAR  ########################
     def videomass_tool_bar(self):
@@ -797,6 +811,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.switch_video_conv, switch_video)
         self.Bind(wx.EVT_TOOL, self.switch_audio_conv, switch_audio)
         self.Bind(wx.EVT_TOOL, self.Run_Coding, run_coding)
+        self.Bind(wx.EVT_TOOL, self.Helpme, help_contest)
 
     #--------------- Tool Bar Callback (event handler) -----------------#
     #------------------------------------------------------------------#
