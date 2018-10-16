@@ -488,10 +488,10 @@ class VideoCrop(wx.Dialog):
         
         #----------------------Properties------------------------------------#
         self.SetTitle("Video/Image Crop - Videomass2")
-        self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
         height = ('The height of the output video.\nSet to -1 for disabling.')
         width = ('The width of the output video.\nSet to -1 for disabling.')
         x = ('The horizontal position of the left edge. The value 0 sets '
@@ -693,12 +693,12 @@ class VideoResolution(wx.Dialog):
         
         # Properties
         self.SetTitle("Set Video Size - Videomass2")
-        self.spin_scale_width.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.spin_scale_height.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.spin_setdarNum.SetBackgroundColour(wx.Colour(161, 224, 153))
-        self.spin_setdarDen.SetBackgroundColour(wx.Colour(161, 224, 153))
-        self.spin_setsarNum.SetBackgroundColour(wx.Colour(227, 235, 110))
-        self.spin_setsarDen.SetBackgroundColour(wx.Colour(227, 235, 110))
+        #self.spin_scale_width.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.spin_scale_height.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.spin_setdarNum.SetBackgroundColour(wx.Colour(161, 224, 153))
+        #self.spin_setdarDen.SetBackgroundColour(wx.Colour(161, 224, 153))
+        #self.spin_setsarNum.SetBackgroundColour(wx.Colour(227, 235, 110))
+        #self.spin_setsarDen.SetBackgroundColour(wx.Colour(227, 235, 110))
         scale_str = (
         'Scale (resize) the input video or image, using the libswscale library. '
         " If we'd like to keep the aspect ratio, we need to specify only one "

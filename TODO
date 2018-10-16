@@ -8,6 +8,9 @@ URGENCY: to do soon
   quindi eliminando la maggior parte degli html oppure rimuovi tutti gli html 
   e setta il link alla pagina web
   
+- Inserire un buttone help su ogni finestra di dialogo dove i tooltip non sono 
+  efficaci. L'idea è di implementare dei file pdf o al limite degli html.
+  
 - Rinnovare i presets e i profili con nuove adds: aggiungere audio in video;
   aggiungere audio su immagini
   
