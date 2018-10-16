@@ -55,7 +55,7 @@ class Mediainfo(wx.Dialog):
         button_close = wx.Button(self, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle('Metadata display of the selcted media - Videomass2')
+        self.SetTitle(title)
         format_info.SetMinSize((640, 300))
         format_info.SetBackgroundColour(wx.Colour(217, 255, 255))
         format_info.InsertColumn(0, 'Type', width=200)

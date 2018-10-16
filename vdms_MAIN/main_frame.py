@@ -468,7 +468,7 @@ class MainFrame(wx.Frame):
             wx.MessageBox("No file selected into Drag and Drop list", 
                           'Videomass2', wx.ICON_EXCLAMATION, self)
             return
-        title = 'File Input Metadata Display - Videomass2'
+        title = 'Metadata of selected media - Videomass2'
         IO_tools.stream_info(title, 
                              filepath, 
                              self.helping, 
