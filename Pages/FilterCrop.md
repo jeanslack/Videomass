@@ -14,4 +14,6 @@ The crop filter crops specific portions in the frame area. It is used by specify
 
 ![Image](../images/crop.png)
 
+The button clear, restores the values to defaults parameters and disables the filter if you confirm with the Ok button. However, the values equal to -1 set on all input fields disable this filter.
+
 [Back](../videomass2_use.md)
