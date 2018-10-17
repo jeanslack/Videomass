@@ -3,7 +3,7 @@
 *NOTE: some parts of these guides are taken from the [FFmpeg](https://ffmpeg.org/documentation.html) documentation* 
 
 ## User Guide
-- Video Filter Section
+- Video Filters Section
   * [Crop a video/image frame](Pages/FilterCrop.md) 
   * [Scale a video/image frame](Pages/FilterScaling.md) 
 
