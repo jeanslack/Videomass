@@ -36,16 +36,16 @@ Set to 0 for disabling.
 
 To reduce a video in 1280X720 to 640X360, then keeping the same aspect ratio to 16: 9 there are 3 ways:
 
-1) set width to 640 and set heigth to 360
-2) set width to 640 and set height to -1 or -2
-3) set heigth to 360 and set width to -1 or -2
+1) set width to 640 and set heigth to 360   
+2) set width to 640 and set height to -1 or -2   
+3) set heigth to 360 and set width to -1 or -2   
 
-setdar/setsar (aspect ratio) should not need to be changed.
+setdar/setsar (aspect ratio) should not need to be changed.   
 
-To reduce the same video to a resolution of 640X480, we should also set the 4:3 sedar filter.
+To reduce the same video to a resolution of 640X480, we should also set the 4:3 sedar filter.   
 
 To change the resolution on undefined aspect ratio (400X200), you can use setsar filter:
-setsar to 1:1
+setsar to 1:1   
 
 ----------------------
 We can confirm our choices with the **OK button**.
