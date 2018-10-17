@@ -12,3 +12,5 @@ header_pages:
     - execute_sources.md
     - building_package.md
     - videomass_use.md
+    
+    -Pages/UseIndex.md
