@@ -12,6 +12,6 @@ The crop filter crops specific portions in the frame area. It is used by specify
 
 - **Y**, The vertical position of the top edge of the left corner. Values above 0 move the position towards the bottom side of the frame. Set to -1 to disable this position and center the frame vertically.
 
-![Image](/images/crop.png)
+![Image](../images/crop.png)
 
 [Back](../videomass2_use.md)
