@@ -4,14 +4,14 @@
 * [Features](features.md)
 * [Screenshot](screenshot.md)
 
-## Installation and Building, Getting Started:
+## Getting started with installation and building
 
 * [Installation](installation.md)
 * [Launch Videomass2 without installation](execute_sources.md)
 * [Build a redistributable package](building_package.md)
 
-## User guide, start with the application
-* [How to use Videomass2 application](videomass2_use.md)
+## User guide
+* [start with the application](videomass2_use.md)
 
 Videomass2 is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)
 
