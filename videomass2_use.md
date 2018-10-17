@@ -1,7 +1,8 @@
 [Home](index.md)
 
-## Index
+## User Guide
 
-* [Crop a video/image frame](Pages/FilterCrop.md)   
+* [Crop a video/image frame](Pages/FilterCrop.md) 
+* [Scale a video/image frame](Pages/FilterScaling.md) 
 
 [Home](index.md)
