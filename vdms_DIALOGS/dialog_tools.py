@@ -29,6 +29,7 @@
 #########################################################
 
 import wx
+import webbrowser
 #import wx.lib.masked as masked # not work on macOSX
 
 ####################################################################
@@ -397,7 +398,7 @@ class VideoCrop(wx.Dialog):
     TODO: make rotate button with images 
     """
     
-    def __init__(self, parent, fcrop):
+    def __init__(self, parent, fcrop, iconhelp):
         """
         Make sure you use the clear button when you finish the task.
         """
@@ -408,6 +409,12 @@ class VideoCrop(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """ 
         """
+       # btn_help = wx.Button(self, wx.ID_HELP, "")
+       
+        bmp = wx.Bitmap(iconhelp, wx.BITMAP_TYPE_ANY)
+        btn_help = wx.BitmapButton(self, id=wx.ID_ANY, bitmap=bmp,
+                                  size=(bmp.GetWidth()+10, bmp.GetHeight()+0))
+        
         self.label_width = wx.StaticText(self, wx.ID_ANY, ("Width"))
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
                                size=(100,-1), style=wx.TE_PROCESS_ENTER
@@ -432,9 +439,10 @@ class VideoCrop(wx.Dialog):
         
         #----------------------Handle layout---------------------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        gridBase = wx.FlexGridSizer(2, 0, 0, 0)
+        gridBase = wx.FlexGridSizer(3, 0, 0, 0)
         sizerBase.Add(gridBase, 0, wx.ALL, 0)
         gridBtnExit = wx.FlexGridSizer(1, 3, 0, 0)
+        
         sizer_3 = wx.BoxSizer(wx.VERTICAL)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
 
@@ -474,9 +482,10 @@ class VideoCrop(wx.Dialog):
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
         sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
+        gridBase.Add(btn_help, 1, wx.ALL | wx.TOP, 10)
         gridBase.Add(sizerLabel, 1, wx.ALL | 
                                     wx.ALIGN_CENTER_HORIZONTAL | 
-                                    wx.ALIGN_CENTER_VERTICAL,15)
+                                    wx.ALIGN_CENTER_VERTICAL,10)
         gridBase.Add(gridBtnExit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         
         gridBtnExit.Add(btn_close, 1, wx.ALL ,5)
@@ -494,14 +503,8 @@ class VideoCrop(wx.Dialog):
         #self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
         height = ('The height of the output video.\nSet to -1 for disabling.')
         width = ('The width of the output video.\nSet to -1 for disabling.')
-        x = ('The horizontal position of the left edge. The value 0 sets '
-             'the position on the extreme left of the frame. Values above 0 '
-             'move the position to the right side of the frame.\n'
-             'Set to -1 to disable this position and center the frame.')
-        y = ('The vertical position of the top edge of the left corner. ' 
-             'Values above 0 move the position towards the bottom side of '
-             'the frame.\n'
-             'Set to -1 to disable this position and center the frame.')
+        x = ('The horizontal position of the left edge.')
+        y = ('The vertical position of the top edge of the left corner.')
         self.crop_width.SetToolTipString('Width:\n%s' % width)
         self.crop_Y.SetToolTipString('Y:\n%s' % y)
         self.crop_X.SetToolTipString('X:\n%s' % x)
@@ -511,6 +514,7 @@ class VideoCrop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         
         if fcrop: # set the previusly values
             s = fcrop.split(':')
@@ -529,6 +533,13 @@ class VideoCrop(wx.Dialog):
                 if i.startswith('y'):
                     self.y = i[2:]
                     self.crop_Y.SetValue(int(self.y))
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/FilterCrop.html'
+        webbrowser.open(page)
+    #------------------------------------------------------------------#
 
     def on_reset(self, event):
         self.h, self.y, self.x, self.w = "", "", "", ""
@@ -595,7 +606,7 @@ class VideoResolution(wx.Dialog):
     Include a video size, video scaling with setdar and 
     setsar options.
     """
-    def __init__(self, parent, scale, dar, sar):
+    def __init__(self, parent, scale, dar, sar, iconhelp):
         """
         See FFmpeg documents for more details..
         When this dialog is called, the values previously set are returned 
@@ -611,6 +622,10 @@ class VideoResolution(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
         ####----scaling static box section
+        bmp = wx.Bitmap(iconhelp, wx.BITMAP_TYPE_ANY)
+        btn_help = wx.BitmapButton(self, id=wx.ID_ANY, bitmap=bmp,
+                                  size=(bmp.GetWidth()+10, bmp.GetHeight()+0))
+        
         v_scalingbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     "Set Video Scaling")), wx.VERTICAL)
         
@@ -658,11 +673,12 @@ class VideoResolution(wx.Dialog):
 
         ####------Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
+        grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
         
         # scaling section:
+        grid_sizer_base.Add(btn_help, 1, wx.ALL|wx.TOP,5)
         grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 5)
-        Flex_scale_base = wx.FlexGridSizer(2, 1, 0, 0)
+        Flex_scale_base = wx.FlexGridSizer(3, 1, 0, 0)
         Flex_scale = wx.FlexGridSizer(1, 3, 0, 0)
         Flex_scale_base.Add(Flex_scale)
         Flex_scale.Add(self.spin_scale_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
@@ -700,33 +716,18 @@ class VideoResolution(wx.Dialog):
         #self.spin_setsarNum.SetBackgroundColour(wx.Colour(227, 235, 110))
         #self.spin_setsarDen.SetBackgroundColour(wx.Colour(227, 235, 110))
         scale_str = (
-        'Scale (resize) the input video or image, using the libswscale library. '
-        " If we'd like to keep the aspect ratio, we need to specify only one "
-        'component, either width or height, and set the other component to -1 '
-        'or to -2.\nSet to 0 for disabling.')
+        'Scale (resize) the input video or image.')
         self.spin_scale_width.SetToolTipString('WIDTH:\n%s' % scale_str)
         self.spin_scale_height.SetToolTipString('HEIGHT:\n%s' % scale_str)
-        setdar_str = (
-        'Set the frame (d)isplay (a)spect (r)atio. The setdar filter sets the '
-         'Display Aspect Ratio for the filter output video. This is done by ' 
-         'changing the specified Sample (aka Pixel) Aspect Ratio, according to ' 
-         'the following equation: \n'
-             'DAR = HORIZONTAL_RESOLUTION / VERTICAL_RESOLUTION * SAR \n'
-         'Keep in mind that the setdar filter does not modify the pixel '
-         'dimensions of the video frame. Also, the display aspect ratio set by '
-         'this filter may be changed by later filters in the filterchain, e.g. '
-         'in case of scaling or if another "setdar" or a "setsar" filter is '
-         'applied.\nSet to 0 for disabling.')
+        setdar_str = ('Set the frame (d)isplay (a)spect (r)atio. '
+                      'The setdar filter sets the Display Aspect '
+                      'Ratio for the filter output video. '
+                      'Set to 0 for disabling.')
         self.spin_setdarNum.SetToolTipString(setdar_str)
         self.spin_setdarDen.SetToolTipString(setdar_str)
-        setsar_str = (
-        'The setsar filter sets the Sample (aka Pixel) Aspect Ratio for the '
-        'filter output video. Note that as a consequence of the application '
-        'of this filter, the output display aspect ratio will change according '
-        'to the equation above. Keep in mind that the sample aspect ratio set '
-        'by the setsar filter may be changed by later filters in the '
-        'filterchain, e.g. if another "setsar" or a "setdar" filter is '
-        'applied.\nSet to 0 for disabling.')
+        setsar_str = ('The setsar filter sets the Sample (aka Pixel) '
+                      'Aspect Ratio for the filter output video. '
+                      'Set to 0 for disabling.')
         self.spin_setsarNum.SetToolTipString(setsar_str)
         self.spin_setsarDen.SetToolTipString(setsar_str)
         
@@ -740,7 +741,8 @@ class VideoResolution(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
-        
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+
         if scale:
             self.width = scale.split(':')[0][8:]
             self.height = scale.split(':')[1][2:]
@@ -759,6 +761,12 @@ class VideoResolution(wx.Dialog):
         
     #----------------------Event handler (callback)--------------------------#
     ##------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/FilterScaling.html'
+        webbrowser.open(page)
+    #------------------------------------------------------------------#
     def on_reset(self, event):
         self.width, self.height = "0", "0"
         self.darNum, self.darDen = "0", "0"

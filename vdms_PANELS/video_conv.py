@@ -90,7 +90,8 @@ class Video_Conv(wx.Panel):
     and preset storing feature
     """
     def __init__(self, parent, helping, ffmpeg_link, ffplay_link, 
-                 threads, cpu_used, loglevel_type, OS, iconplay, iconreset):
+                 threads, cpu_used, loglevel_type, OS, iconplay, 
+                 iconreset, iconhelp):
 
         wx.Panel.__init__(self, parent)
         """ constructor """
@@ -102,6 +103,7 @@ class Video_Conv(wx.Panel):
         self.threads = threads
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
+        self.iconhelp = iconhelp
         # others attributes;
         self.file_sources = []
         self.file_destin = ''
@@ -793,6 +795,7 @@ class Video_Conv(wx.Panel):
                                               cmd_opt["Scale"],
                                               cmd_opt["Setdar"], 
                                               cmd_opt["Setsar"],
+                                              self.iconhelp,
                                               )
         retcode = sizing.ShowModal()
         if retcode == wx.ID_OK:
@@ -847,7 +850,7 @@ class Video_Conv(wx.Panel):
         """
         Show a setting dialog for video crop functionalities
         """
-        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"],)
+        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"], self.iconhelp)
         retcode = crop.ShowModal()
         if retcode == wx.ID_OK:
             data = crop.GetValue()
