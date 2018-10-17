@@ -1,6 +1,6 @@
 [Home](index.md)
 
-*NOTE: some parts of these guides are taken from the [FFmpeg](https://ffmpeg.org/documentation.html) documentation* 
+_NOTE: some parts of these guides are taken from the [FFmpeg](https://ffmpeg.org/documentation.html) documentation_    
 
 ## User Guide
 - Video Filters Section
