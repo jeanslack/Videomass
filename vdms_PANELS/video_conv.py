@@ -153,7 +153,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.btn_videosize = GB.GradientButton(self.notebook_1_pane_2,
                                                size=(-1,25), 
-                                               label="Set Resolution")
+                                               label="Resize")
         self.btn_videosize.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                         foregroundcolour=wx.Colour(255, 255, 255))
         self.btn_videosize.SetBottomEndColour(wx.Colour(97, 204, 199))
@@ -872,7 +872,8 @@ class Video_Conv(wx.Panel):
         """
         lacing = dialog_tools.Lacing(self, 
                                      cmd_opt["Deinterlace"],
-                                     cmd_opt["Interlace"]
+                                     cmd_opt["Interlace"],
+                                     self.iconhelp,
                                      )
         retcode = lacing.ShowModal()
         if retcode == wx.ID_OK:

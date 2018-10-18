@@ -624,43 +624,46 @@ class VideoResolution(wx.Dialog):
         ####----scaling static box section
         bmp = wx.Bitmap(iconhelp, wx.BITMAP_TYPE_ANY)
         btn_help = wx.BitmapButton(self, id=wx.ID_ANY, bitmap=bmp,
-                                  size=(bmp.GetWidth()+10, bmp.GetHeight()+0))
+                                  size=(bmp.GetWidth()+5, bmp.GetHeight()+5))
         
         v_scalingbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Set Video Scaling")), wx.VERTICAL)
+                                    "Change Resolution")), wx.VERTICAL)
+        
+        label_scale = wx.StaticText(self, wx.ID_ANY, ("Scale:")
+                                          )
         
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
                                             max=9000, style=wx.TE_PROCESS_ENTER
                                             )
-        self.label_x1 = wx.StaticText(self, wx.ID_ANY, ("X")
+        label_x1 = wx.StaticText(self, wx.ID_ANY, ("X")
                                       )
-        self.label_x1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
+        label_x1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
                               )
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
                                              max=9000, style=wx.TE_PROCESS_ENTER
                                              )
-        self.label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar:")
+        label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar:")
                                           )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))
-        self.label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/")
+        label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
-        self.label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
+        label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
                                           wx.BOLD,0, "")
                                           )
         self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1)
                                       )##
-        self.label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar:")
+        label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar:")
                                           )
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))
-        self.label_sepsar = wx.StaticText(self, wx.ID_ANY, ("/")
+        label_sepsar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
-        self.label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
+        label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
                                           wx.BOLD,0, "")
                                           )
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
@@ -679,20 +682,21 @@ class VideoResolution(wx.Dialog):
         grid_sizer_base.Add(btn_help, 1, wx.ALL|wx.TOP,5)
         grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 5)
         Flex_scale_base = wx.FlexGridSizer(3, 1, 0, 0)
-        Flex_scale = wx.FlexGridSizer(1, 3, 0, 0)
+        Flex_scale = wx.FlexGridSizer(1, 4, 0, 0)
         Flex_scale_base.Add(Flex_scale)
+        Flex_scale.Add(label_scale, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(self.spin_scale_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_scale.Add(self.label_x1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_scale.Add(label_x1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(self.spin_scale_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_darsar = wx.FlexGridSizer(2, 4, 0, 0)
         Flex_scale_base.Add(Flex_darsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_setdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_darsar.Add(label_setdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_darsar.Add(self.spin_setdarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_sepdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_darsar.Add(label_sepdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_darsar.Add(self.spin_setdarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_setsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_darsar.Add(label_setsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_darsar.Add(self.spin_setsarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_darsar.Add(label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_darsar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         v_scalingbox.Add(Flex_scale_base)
         # confirm btn section:
@@ -708,28 +712,19 @@ class VideoResolution(wx.Dialog):
         self.Layout()
         
         # Properties
-        self.SetTitle("Set Video Size - Videomass2")
-        #self.spin_scale_width.SetBackgroundColour(wx.Colour(122, 239, 255))
-        #self.spin_scale_height.SetBackgroundColour(wx.Colour(122, 239, 255))
-        #self.spin_setdarNum.SetBackgroundColour(wx.Colour(161, 224, 153))
-        #self.spin_setdarDen.SetBackgroundColour(wx.Colour(161, 224, 153))
-        #self.spin_setsarNum.SetBackgroundColour(wx.Colour(227, 235, 110))
-        #self.spin_setsarDen.SetBackgroundColour(wx.Colour(227, 235, 110))
-        scale_str = (
-        'Scale (resize) the input video or image.')
+        self.SetTitle("Resize (change resolution) - Videomass2")
+
+        scale_str = ('Scale (resize) the input video or image.')
         self.spin_scale_width.SetToolTipString('WIDTH:\n%s' % scale_str)
         self.spin_scale_height.SetToolTipString('HEIGHT:\n%s' % scale_str)
-        setdar_str = ('Set the frame (d)isplay (a)spect (r)atio. '
-                      'The setdar filter sets the Display Aspect '
-                      'Ratio for the filter output video. '
-                      'Set to 0 for disabling.')
-        self.spin_setdarNum.SetToolTipString(setdar_str)
-        self.spin_setdarDen.SetToolTipString(setdar_str)
+        setdar_str = ('Sets the Display Aspect '
+                      'Ratio.\nSet to 0 for disabling.')
+        self.spin_setdarNum.SetToolTipString('-NUMERATOR-\n%s' % setdar_str)
+        self.spin_setdarDen.SetToolTipString('-DENOMINATOR-\n%s' % setdar_str)
         setsar_str = ('The setsar filter sets the Sample (aka Pixel) '
-                      'Aspect Ratio for the filter output video. '
-                      'Set to 0 for disabling.')
-        self.spin_setsarNum.SetToolTipString(setsar_str)
-        self.spin_setsarDen.SetToolTipString(setsar_str)
+                      'Aspect Ratio.\nSet to 0 for disabling.')
+        self.spin_setsarNum.SetToolTipString('-NUMERATOR-\n%s' % setsar_str)
+        self.spin_setsarDen.SetToolTipString('-DENOMINATOR-\n%s' % setsar_str)
         
         #----------------------Binding (EVT)---------------------------------#
         #self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)
@@ -834,7 +829,7 @@ class Lacing(wx.Dialog):
     with advanced option for each filter.
     """
     
-    def __init__(self, parent, deinterlace, interlace):
+    def __init__(self, parent, deinterlace, interlace, iconhelp):
         """
         Make sure you use the clear button when you finish the task.
         """
@@ -846,6 +841,10 @@ class Lacing(wx.Dialog):
         else:
             pass
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        
+        bmp = wx.Bitmap(iconhelp, wx.BITMAP_TYPE_ANY)
+        btn_help = wx.BitmapButton(self, id=wx.ID_ANY, bitmap=bmp,
+                                  size=(bmp.GetWidth()+5, bmp.GetHeight()+5))
         
         zone1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     "Deinterlace")), wx.VERTICAL)
@@ -958,8 +957,9 @@ class Lacing(wx.Dialog):
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
         grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        gridBtn = wx.FlexGridSizer(1, 4, 0, 0)
         grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        gridBtn.Add(btn_help,1, wx.ALL,5)
         gridBtn.Add(btn_close,1, wx.ALL,5)
         gridBtn.Add(self.btn_ok,1, wx.ALL,5)
         gridBtn.Add(btn_reset,1, wx.ALL,5)
