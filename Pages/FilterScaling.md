@@ -6,15 +6,15 @@ Scale (resize) the input video or image, using the libswscale library. If we'd l
 only one component, either width or height, and set the other component to -1 or to -2.   
 Set to 0 value for disabling.   
 
-**Width**, Sets the width of the output video to pixel values. Set to 0 for disabling; set to -1 or -2 keep the same 
+**width**, Sets the width of the output video to pixel values. Set to 0 for disabling; set to -1 or -2 keep the same 
 aspect ratio of the input video.   
 
-**Height**, Sets the height of the output video to pixel values. Set to 0 for disabling; set to -1 or -2 keep the same 
+**height**, Sets the height of the output video to pixel values. Set to 0 for disabling; set to -1 or -2 keep the same 
 aspect ratio of the input video. 
 
-## setdar Filter:
+## Setdar Filter:
 
-**Setdar**, Set the frame (d)isplay (a)spect (r)atio. The setdar filter sets the Display Aspect Ratio for the filter 
+**setdar**, Set the frame (d)isplay (a)spect (r)atio. The setdar filter sets the Display Aspect Ratio for the filter 
 output video. This is done by changing the specified Sample (aka Pixel) Aspect Ratio, according to the following equation: 
 ``` 
 DAR = HORIZONTAL_RESOLUTION / VERTICAL_RESOLUTION * SAR
@@ -24,9 +24,9 @@ set by this filter may be changed by later filters in the filterchain, e.g. in c
 "setsar" filter is applied.   
 Set to 0 for disabling.   
 
-## setsar Filter:
+## Setsar Filter:
 
-**Setsar**, The setsar filter sets the Sample (aka Pixel) Aspect Ratio for the filter output video. Note that as a 
+**setsar**, The setsar filter sets the Sample (aka Pixel) Aspect Ratio for the filter output video. Note that as a 
 consequence of the application of this filter, the output display aspect ratio will change according to the equation 
 above. Keep in mind that the sample aspect ratio set by the setsar filter may be changed by later filters in the filterchain, 
 e.g. if another "setsar" or a "setdar" filter is applied.   
