@@ -2,7 +2,7 @@
 
 ## Crop Filter
 
-The crop filter crops specific portions in the frame area. It is used by specifying values in pixels on the coordinates concerning height, width, horizontal distance (Y) and vertical distance (X). The starting point of the X and Y coordinates always starts from 0, which is the left end of the frame. Each of the coordinates can only be disabled with the value -1 independently.
+The crop filter crops specific portions in the frame area. It is used by specifying values in pixels on the coordinates concerning height, width, horizontal distance (Y) and vertical distance (X). The starting point of the X and Y coordinates always starts from 0, which is the upper left end of the frame (the highlighted red corner of the image below). Each of the coordinates can only be disabled with the value -1 independently.
 
 - **Height**, The height of the output video. Set to -1 for disabling.
 
