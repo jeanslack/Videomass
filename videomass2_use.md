@@ -6,5 +6,6 @@ _NOTE: some parts of these guides are taken from the [FFmpeg](https://ffmpeg.org
 - [Video Filters Section](Pages/VideoFilters.md)
   * [Crop a video/image frame](Pages/FilterCrop.md) 
   * [Scale a video/image frame](Pages/FilterScaling.md) 
+  * [Deinterlace & Interlace](Pages/Deint_Inter.md) 
 
 [Home](index.md)
