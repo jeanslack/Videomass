@@ -398,7 +398,7 @@ class VideoCrop(wx.Dialog):
     TODO: make rotate button with images 
     """
     
-    def __init__(self, parent, fcrop, iconhelp):
+    def __init__(self, parent, fcrop):
         """
         Make sure you use the clear button when you finish the task.
         """
@@ -409,12 +409,6 @@ class VideoCrop(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """ 
         """
-       # btn_help = wx.Button(self, wx.ID_HELP, "")
-       
-        bmp = wx.Bitmap(iconhelp, wx.BITMAP_TYPE_ANY)
-        btn_help = wx.BitmapButton(self, id=wx.ID_ANY, bitmap=bmp,
-                                  size=(bmp.GetWidth()+10, bmp.GetHeight()+0))
-        
         self.label_width = wx.StaticText(self, wx.ID_ANY, ("Width"))
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
                                size=(100,-1), style=wx.TE_PROCESS_ENTER
@@ -433,15 +427,16 @@ class VideoCrop(wx.Dialog):
                                  )
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     "Crop Dimensions")), wx.VERTICAL)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
         #----------------------Handle layout---------------------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        gridBase = wx.FlexGridSizer(3, 0, 0, 0)
+        gridBase = wx.FlexGridSizer(2, 0, 0, 0)
         sizerBase.Add(gridBase, 0, wx.ALL, 0)
-        gridBtnExit = wx.FlexGridSizer(1, 3, 0, 0)
+        gridBtnExit = wx.FlexGridSizer(1, 4, 0, 0)
         
         sizer_3 = wx.BoxSizer(wx.VERTICAL)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
@@ -482,12 +477,11 @@ class VideoCrop(wx.Dialog):
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
         sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
-        gridBase.Add(btn_help, 1, wx.ALL | wx.TOP, 10)
         gridBase.Add(sizerLabel, 1, wx.ALL | 
                                     wx.ALIGN_CENTER_HORIZONTAL | 
                                     wx.ALIGN_CENTER_VERTICAL,10)
-        gridBase.Add(gridBtnExit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        
+        gridBase.Add(gridBtnExit)
+        gridBtnExit.Add(btn_help, 1, wx.ALL ,5)
         gridBtnExit.Add(btn_close, 1, wx.ALL ,5)
         gridBtnExit.Add(self.btn_ok, 1, wx.ALL ,5)
         gridBtnExit.Add(btn_reset, 1, wx.ALL ,5)
@@ -606,7 +600,7 @@ class VideoResolution(wx.Dialog):
     Include a video size, video scaling with setdar and 
     setsar options.
     """
-    def __init__(self, parent, scale, dar, sar, iconhelp):
+    def __init__(self, parent, scale, dar, sar):
         """
         See FFmpeg documents for more details..
         When this dialog is called, the values previously set are returned 
@@ -622,14 +616,11 @@ class VideoResolution(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
         ####----scaling static box section
-        bmp = wx.Bitmap(iconhelp, wx.BITMAP_TYPE_ANY)
-        btn_help = wx.BitmapButton(self, id=wx.ID_ANY, bitmap=bmp,
-                                  size=(bmp.GetWidth()+5, bmp.GetHeight()+5))
         
         v_scalingbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     "Change Resolution")), wx.VERTICAL)
         
-        label_scale = wx.StaticText(self, wx.ID_ANY, ("Scale:")
+        label_scale = wx.StaticText(self, wx.ID_ANY, ("Scale (resize):")
                                           )
         
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
@@ -642,7 +633,7 @@ class VideoResolution(wx.Dialog):
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
                                              max=9000, style=wx.TE_PROCESS_ENTER
                                              )
-        label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar:")
+        label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar (display aspect ratio):")
                                           )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
@@ -656,7 +647,7 @@ class VideoResolution(wx.Dialog):
                                       max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1)
                                       )##
-        label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar:")
+        label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar (sample aspect ratio):")
                                           )
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
@@ -670,20 +661,22 @@ class VideoResolution(wx.Dialog):
                                       max=10000, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))##
         ####----- confirm buttons section
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         ####------Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
+        grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
         
         # scaling section:
-        grid_sizer_base.Add(btn_help, 1, wx.ALL|wx.TOP,5)
         grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 5)
-        Flex_scale_base = wx.FlexGridSizer(3, 1, 0, 0)
+        Flex_scale_base = wx.GridSizer(3, 1, 0, 0)
         Flex_scale = wx.FlexGridSizer(1, 4, 0, 0)
+        
         Flex_scale_base.Add(Flex_scale)
+                            
         Flex_scale.Add(label_scale, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(self.spin_scale_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(label_x1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
@@ -700,11 +693,19 @@ class VideoResolution(wx.Dialog):
         Flex_darsar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         v_scalingbox.Add(Flex_scale_base)
         # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridexit.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridexit.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridexit.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        
+        
         grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
-        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # final settings:
         sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
@@ -718,11 +719,11 @@ class VideoResolution(wx.Dialog):
         self.spin_scale_width.SetToolTipString('WIDTH:\n%s' % scale_str)
         self.spin_scale_height.SetToolTipString('HEIGHT:\n%s' % scale_str)
         setdar_str = ('Sets the Display Aspect '
-                      'Ratio.\nSet to 0 for disabling.')
+                      'Ratio.\nSet to 0 to disabling.')
         self.spin_setdarNum.SetToolTipString('-NUMERATOR-\n%s' % setdar_str)
         self.spin_setdarDen.SetToolTipString('-DENOMINATOR-\n%s' % setdar_str)
         setsar_str = ('The setsar filter sets the Sample (aka Pixel) '
-                      'Aspect Ratio.\nSet to 0 for disabling.')
+                      'Aspect Ratio.\nSet to 0 to disabling.')
         self.spin_setsarNum.SetToolTipString('-NUMERATOR-\n%s' % setsar_str)
         self.spin_setsarDen.SetToolTipString('-DENOMINATOR-\n%s' % setsar_str)
         
@@ -829,7 +830,7 @@ class Lacing(wx.Dialog):
     with advanced option for each filter.
     """
     
-    def __init__(self, parent, deinterlace, interlace, iconhelp):
+    def __init__(self, parent, deinterlace, interlace):
         """
         Make sure you use the clear button when you finish the task.
         """
@@ -841,10 +842,6 @@ class Lacing(wx.Dialog):
         else:
             pass
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        
-        bmp = wx.Bitmap(iconhelp, wx.BITMAP_TYPE_ANY)
-        btn_help = wx.BitmapButton(self, id=wx.ID_ANY, bitmap=bmp,
-                                  size=(bmp.GetWidth()+5, bmp.GetHeight()+5))
         
         zone1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     "Deinterlace")), wx.VERTICAL)
@@ -906,6 +903,7 @@ class Lacing(wx.Dialog):
         self.enable_opt = wx.wx.ToggleButton(self, wx.ID_ANY, 
                                             "Enable/Dis advanced Option")
         ####----- confirm buttons section
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -937,7 +935,6 @@ class Lacing(wx.Dialog):
         ####------ set Layout
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
-        
         grid_sizer_base.Add(zone1, 1, wx.ALL | wx.EXPAND, 5)
         deint_grid = wx.FlexGridSizer(2, 4, 0, 0)
         zone1.Add(deint_grid)
@@ -957,12 +954,17 @@ class Lacing(wx.Dialog):
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
         grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 4, 0, 0)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridhelp.Add(btn_help)#, flag=wx.ALL|wx.ALIGN_LEFT|wx.LEFT, border=10)
+        gridexit.Add(btn_close,1, wx.ALL,5)
+        gridexit.Add(self.btn_ok,1, wx.ALL,5)
+        gridexit.Add(btn_reset,1, wx.ALL,5)
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
         grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        gridBtn.Add(btn_help,1, wx.ALL,5)
-        gridBtn.Add(btn_close,1, wx.ALL,5)
-        gridBtn.Add(self.btn_ok,1, wx.ALL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL,5)
+
         # final settings:
         self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(self.sizer_base)
@@ -1048,6 +1050,7 @@ class Lacing(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         
         self.settings()
         
@@ -1236,7 +1239,7 @@ class Lacing(wx.Dialog):
             self.rdbx_Yadif_deint.Hide()
             self.rdbx_inter_scan.Hide()
             self.rdbx_inter_lowpass.Hide()
-        
+            
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
@@ -1263,6 +1266,12 @@ class Lacing(wx.Dialog):
         self.rdbx_Yadif_mode.Disable(), self.rdbx_Yadif_parity.Disable(), 
         self.rdbx_Yadif_deint.Disable(), self.rdbx_inter_scan.Disable(), 
         self.rdbx_inter_lowpass.Disable()
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/De_Interlace.html'
+        webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
 
@@ -1335,6 +1344,7 @@ class Denoisers(wx.Dialog):
                  style=wx.RA_SPECIFY_ROWS
                                         )
         ###----- confirm buttons section
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -1367,15 +1377,26 @@ class Denoisers(wx.Dialog):
                     wx.ALIGN_CENTER_HORIZONTAL,
                     15)
         # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        #gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        
         grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        gridBtn.Add(btn_close,1, 
+        
+        gridhelp.Add(btn_help,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(self.btn_ok,1, 
+        gridexit.Add(btn_close,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, 
+        gridexit.Add(self.btn_ok,1, 
+                    wx.ALL | 
+                    wx.ALIGN_CENTER_VERTICAL,5)
+        gridexit.Add(btn_reset,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
         # final settings:
@@ -1402,6 +1423,7 @@ class Denoisers(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.on_hqdn3d, self.ckbx_hqdn3d)
         self.Bind(wx.EVT_RADIOBOX, self.on_nlmeans_opt, self.rdb_nlmeans)
         self.Bind(wx.EVT_RADIOBOX, self.on_hqdn3d_opt, self.rdb_hqdn3d)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -1511,7 +1533,12 @@ class Denoisers(wx.Dialog):
             
         elif opt == "Old VHS tapes restoration [9.0:5.0:3.0:3.0]":
             self.denoiser = "hqdn3d=9.0:5.0:3.0:3.0"
-            
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Denoisers.html'
+        webbrowser.open(page)
     #------------------------------------------------------------------#  
     def on_reset(self, event):
         """

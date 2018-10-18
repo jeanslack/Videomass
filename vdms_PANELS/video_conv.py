@@ -795,7 +795,6 @@ class Video_Conv(wx.Panel):
                                               cmd_opt["Scale"],
                                               cmd_opt["Setdar"], 
                                               cmd_opt["Setsar"],
-                                              self.iconhelp,
                                               )
         retcode = sizing.ShowModal()
         if retcode == wx.ID_OK:
@@ -850,7 +849,7 @@ class Video_Conv(wx.Panel):
         """
         Show a setting dialog for video crop functionalities
         """
-        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"], self.iconhelp)
+        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"])
         retcode = crop.ShowModal()
         if retcode == wx.ID_OK:
             data = crop.GetValue()
@@ -873,7 +872,6 @@ class Video_Conv(wx.Panel):
         lacing = dialog_tools.Lacing(self, 
                                      cmd_opt["Deinterlace"],
                                      cmd_opt["Interlace"],
-                                     self.iconhelp,
                                      )
         retcode = lacing.ShowModal()
         if retcode == wx.ID_OK:

@@ -173,7 +173,7 @@ class Setup(wx.Dialog):
 
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY,(
                                        " Use a custom path to run FFmpeg"))
-        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, "Import")
+        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFmpeg, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFmpeg = wx.FlexGridSizer(1, 2, 0, 0)
@@ -183,7 +183,7 @@ class Setup(wx.Dialog):
 
         self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
                                        " Use a custom path to run FFprobe"))
-        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, "Import")
+        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFprobe, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFprobe = wx.FlexGridSizer(1, 2, 0, 0)
@@ -193,7 +193,7 @@ class Setup(wx.Dialog):
 
         self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
                                        " Use a custom path to run FFplay"))
-        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, "Import")
+        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFplay, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFplay = wx.FlexGridSizer(1, 2, 0, 0)
