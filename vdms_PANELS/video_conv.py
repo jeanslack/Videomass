@@ -91,7 +91,7 @@ class Video_Conv(wx.Panel):
     """
     def __init__(self, parent, helping, ffmpeg_link, ffplay_link, 
                  threads, cpu_used, loglevel_type, OS, iconplay, 
-                 iconreset, iconhelp):
+                 iconreset):
 
         wx.Panel.__init__(self, parent)
         """ constructor """
@@ -103,7 +103,6 @@ class Video_Conv(wx.Panel):
         self.threads = threads
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
-        self.iconhelp = iconhelp
         # others attributes;
         self.file_sources = []
         self.file_destin = ''

@@ -971,61 +971,26 @@ class Lacing(wx.Dialog):
         self.sizer_base.Fit(self)
         self.Layout()
         
-        self.ckbx_deintW3fdif.SetToolTipString(u'Deinterlace the input video '
-                u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
-                u'Based on the process described by Martin Weston for BBC R&D, '
-                u'and implemented based on the de-interlace algorithm written '
-                u'by Jim Easterbrook for BBC R&D, the Weston 3 field '
-                u'deinterlacing filter uses filter coefficients calculated '
-                u'by BBC R&D.')
-                                                   
+        self.ckbx_deintW3fdif.SetToolTipString('Deinterlace the input video '
+                                               'with `w3fdif` filter')
+                
         self.rdbx_W3fdif_filter.SetToolTipString('Set the interlacing filter '
-                        'coefficients. Accepts one of the following values:\n'
-                        'simple: Simple filter coefficient set.\n'
-                        'complex: More-complex filter coefficient set. '
-                        'Default value is complex.'
+                                                 'coefficients.'
                                                  )
         self.rdbx_W3fdif_deint.SetToolTipString('Specify which frames to '
-                        'deinterlace. Accept one of the following values:\n'
-                        '`all` Deinterlace all frames\n'
-                        '`interlaced` Only deinterlace frames marked as '
-                        'interlaced. \nDefault value is `all`. '
+                                                'deinterlace.'
                                                   )
         self.ckbx_deintYadif.SetToolTipString(u'Deinterlace the input video '
-            '("yadif" means "(y)et (a)nother (d)e(i)nterlacing (f)ilter"). '
-                u'For FFmpeg is the best and fastest choice '
+            'with `yadif` filter. For FFmpeg is the best and fastest choice '
                                               )
         self.rdbx_Yadif_mode.SetToolTipString('mode\n'
-           'The interlacing mode to adopt. It accepts one of the following '
-           'values:\n'
-           '0, send_frame - Output one frame for each frame.\n'
-           '1, send_field - Output one frame for each field.\n'
-           '2, send_frame_nospatial - Like send_frame, but it skips the '
-           'spatial interlacing check.\n'
-           '3, send_field_nospatial - Like send_field, but it skips the '
-           'spatial interlacing check.\nThe default value is send_field.'
-                                               )
+           'The interlacing mode to adopt.')
         self.rdbx_Yadif_parity.SetToolTipString('parity\n'
-            'The picture field parity assumed for the input interlaced video. '
-            'It accepts one of the following values:\n'
-            '0, tff - Assume the top field is first.\n'
-            '1, bff - Assume the bottom field is first.\n'
-            '-1, auto - Enable automatic detection of field parity.\n'
-            'The default value is auto. If the interlacing is unknown or the '
-            'decoder does not export this information, top field first will '
-            'be assumed.'
-                                                 )
+            'The picture field parity assumed for the input interlaced video.')
         self.rdbx_Yadif_deint.SetToolTipString('Specify which frames to '
-                        'deinterlace. Accept one of the following values:\n'
-                        '`all` Deinterlace all frames\n'
-                        '`interlaced` Only deinterlace frames marked as '
-                        'interlaced. \nDefault value is `all`. '
-                                                  )
+                                               'deinterlace.')
         self.ckbx_interlace.SetToolTipString('Simple interlacing filter from '
-                'progressive contents. This interleaves upper (or lower) '
-                'lines from odd frames with lower (or upper) lines from even '
-                'frames, halving the frame rate and preserving image height.'
-                                                 )
+                'progressive contents.')
         self.rdbx_inter_scan.SetToolTipString('scan:\n'
             'determines whether the interlaced frame is taken from the '
             'even (tff - default) or odd (bff) lines of the progressive frame.'
@@ -1270,7 +1235,7 @@ class Lacing(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/De_Interlace.html'
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Deint_Inter.html'
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):

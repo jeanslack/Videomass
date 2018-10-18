@@ -202,7 +202,6 @@ class MainFrame(wx.Frame):
                                                 self.OS,
                                                 setui[14],# icon playfilters
                                                 setui[15],# icon resetfilters
-                                                self.icon_help,
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, self.helping, 
                                                 self.ffmpeg_link, 
