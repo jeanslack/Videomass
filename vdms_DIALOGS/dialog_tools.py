@@ -622,9 +622,9 @@ class VideoResolution(wx.Dialog):
         ####----scaling static box section
         
         v_scalingbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Change Resolution")), wx.VERTICAL)
+                                    "Scale (resize)")), wx.VERTICAL)
         
-        label_scale = wx.StaticText(self, wx.ID_ANY, ("Scale (resize):")
+        label_width = wx.StaticText(self, wx.ID_ANY, ("Width")
                                           )
         
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
@@ -637,7 +637,13 @@ class VideoResolution(wx.Dialog):
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
                                              max=9000, style=wx.TE_PROCESS_ENTER
                                              )
-        label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar (display aspect ratio):")
+        label_height = wx.StaticText(self, wx.ID_ANY, ("Height")
+                                          )
+        #-------
+        
+        v_setdar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                    "Setdar (display aspect ratio):")), wx.VERTICAL)
+        label_num = wx.StaticText(self, wx.ID_ANY, ("Numerator")
                                           )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
@@ -651,7 +657,12 @@ class VideoResolution(wx.Dialog):
                                       max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1)
                                       )##
-        label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar (sample aspect ratio):")
+        label_den = wx.StaticText(self, wx.ID_ANY, ("Denominator")
+                                          )
+        #----------
+        v_setsar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                    "SetSar (sample aspect ratio):")), wx.VERTICAL)
+        label_num1 = wx.StaticText(self, wx.ID_ANY, ("Numerator")
                                           )
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
@@ -664,6 +675,8 @@ class VideoResolution(wx.Dialog):
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
                                       size=(90,-1))##
+        label_den1 = wx.StaticText(self, wx.ID_ANY, ("Denominator")
+                                          )
         ####----- confirm buttons section
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
@@ -672,30 +685,40 @@ class VideoResolution(wx.Dialog):
 
         ####------Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
+        grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
         
         # scaling section:
-        grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 5)
-        Flex_scale_base = wx.GridSizer(3, 1, 0, 0)
-        Flex_scale = wx.FlexGridSizer(1, 4, 0, 0)
+        grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 15)
+        grid_sizer_base.Add(v_setdar, 1, wx.ALL | wx.EXPAND, 15)
+        grid_sizer_base.Add(v_setsar, 1, wx.ALL | wx.EXPAND, 15)
+        #Flex_scale_base = wx.GridSizer(3, 1, 0, 0)
         
-        Flex_scale_base.Add(Flex_scale)
-                            
-        Flex_scale.Add(label_scale, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+       # Flex_scale_base.Add(Flex_scale)
+        Flex_scale = wx.FlexGridSizer(1, 5, 0, 0)
+        v_scalingbox.Add(Flex_scale, 0, wx.ALL|wx.ALIGN_CENTER, 5)
+        Flex_scale.Add(label_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(self.spin_scale_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(label_x1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(self.spin_scale_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar = wx.FlexGridSizer(2, 4, 0, 0)
-        Flex_scale_base.Add(Flex_darsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(label_setdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setdarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(label_sepdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setdarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(label_setsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setsarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        v_scalingbox.Add(Flex_scale_base)
+        Flex_scale.Add(label_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        Flex_dar = wx.FlexGridSizer(1, 5, 0, 0)
+        v_setdar.Add(Flex_dar, 0, wx.ALL|wx.ALIGN_CENTER, 5)
+        Flex_dar.Add(label_num, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(self.spin_setdarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(label_sepdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(label_den, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        Flex_sar = wx.FlexGridSizer(1, 5, 0, 0)
+        v_setsar.Add(Flex_sar, 0, wx.ALL|wx.ALIGN_CENTER, 5)
+        Flex_sar.Add(label_num1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(self.spin_setsarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(label_den1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
         # confirm btn section:
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.GridSizer(1, 3, 0, 0)
@@ -705,8 +728,8 @@ class VideoResolution(wx.Dialog):
         gridhelp = wx.GridSizer(1, 1, 0, 0)
         gridhelp.Add(btn_help,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         
-        gridBtn.Add(gridhelp)
-        gridBtn.Add(gridexit)
+        gridBtn.Add(gridhelp, 1, wx.ALL, 10)
+        gridBtn.Add(gridexit, 1, wx.ALL, 10)
         
         
         grid_sizer_base.Add(gridBtn)#, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
