@@ -1,6 +1,9 @@
 [Back](../videomass2_use.md)
 
 ## Deinterlacer filters:
+Videomass2 offers an interface with two different types of video de-interlacers, and a simple interleaver with the related options.   
+Deinterlacers are useful for removing a series of annoying little lines that disturb the image of a movie.
+Although not very useful, an interleaver for progressive content is also available.
 
 ### w3fdif 
 stands for Weston 3 Field Deinterlacing Filter.   
