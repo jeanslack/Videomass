@@ -22,10 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (05) 20/07/2014
-# Rev (06) 12/03/2015
-# Rev (07)  30/04/2015 (improved management audio with ffprobe)
-# Rev (08)  04/Aug/2018 (improved management audio with ffprobe)
+# Rev: 20/July/2014, 12/March/2015, 30/Apr/2015,04/Aug/2018, 19/Oct/2018
 #########################################################
 
 import wx
@@ -91,6 +88,7 @@ class Cut_Range(wx.Dialog):
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                         "Time progress duration (hours:min:sec)")), wx.VERTICAL)
+        btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -114,9 +112,8 @@ class Cut_Range(wx.Dialog):
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
         gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
         gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
         
-        grid_sizer_base.Add(sizer_1_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizer_base.Add(sizer_1_staticbox,0,wx.ALL|wx.ALIGN_CENTRE, 5)
         sizer_1_staticbox.Add(gridFlex1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         gridFlex1.Add(self.start_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(lab1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
@@ -124,21 +121,26 @@ class Cut_Range(wx.Dialog):
         gridFlex1.Add(lab2,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(self.start_second_ctrl,0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         
-        grid_sizer_base.Add(sizer_2_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        grid_sizer_base.Add(sizer_2_staticbox,0,wx.ALL|wx.ALIGN_CENTRE,5)
         sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         gridFlex2.Add(self.stop_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(lab3,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_minute_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(lab4,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_second_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        
-        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-        gridBtn.Add(btn_close,0, wx.ALL,5)
-        gridBtn.Add(btn_ok,0,wx.ALL,5)
-        gridBtn.Add(btn_reset,0, wx.ALL,5)
-        
+    
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help,1, wx.ALL,5)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridexit.Add(btn_close,1, wx.ALL, 5)
+        gridexit.Add(btn_ok,1,wx.ALL,5)
+        gridexit.Add(btn_reset,1, wx.ALL,5)
+        #gridBtn = wx.FlexGridSizer(1, 2, 0, 0)
+        gridBtn = wx.BoxSizer()
+        gridBtn.Add(gridhelp,0, wx.ALL, 10)
+        gridBtn.Add(gridexit,1, wx.ALL,10)
+        grid_sizer_base.Add(gridBtn,1, wx.ALL|wx.ALIGN_CENTRE, 5)
         sizer_base.Add(grid_sizer_base, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -150,6 +152,7 @@ class Cut_Range(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.stop_hour, self.stop_hour_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.stop_minute, self.stop_minute_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.stop_second, self.stop_second_ctrl)
+        #self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.resetValues, btn_reset)
@@ -1378,7 +1381,7 @@ class Denoisers(wx.Dialog):
         gridBtn.Add(gridhelp)
         gridBtn.Add(gridexit)
         
-        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        grid_sizer_base.Add(gridBtn)#, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         
         gridhelp.Add(btn_help,1, 
                     wx.ALL | 

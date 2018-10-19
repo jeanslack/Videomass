@@ -22,8 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 01/May/2015
-# Rev (02) 03/Sept/2018
+# Rev: 01/May/2015, 03/Sept/2018, 19/Oct/2018
 #########################################################
 
 import wx
@@ -61,9 +60,10 @@ class MemPresets(wx.Dialog):
         siz4_supp = wx.StaticBox(self, wx.ID_ANY, "  Supported file types import:")
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
         siz4_ext = wx.StaticBox(self, wx.ID_ANY, "  Output format extension:")
-        btn5 = wx.Button(self, wx.ID_CANCEL, "")
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        btn_canc = wx.Button(self, wx.ID_CANCEL, "")
         #btn4 = wx.Button(self, wx.ID_HELP, "")
-        btn3 = wx.Button(self, wx.ID_OK, "SAVE") 
+        btn_save = wx.Button(self, wx.ID_OK, "SAVE") 
 
         #----------------------Set Properties----------------------#
         self.txt_name.SetMinSize((150, -1))
@@ -98,8 +98,8 @@ class MemPresets(wx.Dialog):
         
         #----------------------Build layout----------------------#
         grd_s1 = wx.FlexGridSizer(4, 1, 0, 0)
-        siz5 = wx.BoxSizer(wx.VERTICAL)
-        grd_s3 = wx.GridSizer(1, 2, 0, 0)
+        boxSiz = wx.BoxSizer(wx.VERTICAL)
+        grdexit = wx.GridSizer(1, 2, 0, 0)
         grd_s4 = wx.GridSizer(1, 2, 0, 0)
         siz4_ext.Lower()
         s4_ext = wx.StaticBoxSizer(siz4_ext, wx.VERTICAL)
@@ -124,20 +124,24 @@ class MemPresets(wx.Dialog):
         s4_ext.Add(self.txt_ext, 0, wx.ALL, 15)
         grd_s4.Add(s4_ext, 1, wx.ALL | wx.EXPAND, 15)
         grd_s1.Add(grd_s4, 1, wx.EXPAND, 0)
-        grd_s3.Add(btn5, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        #grd_s3.Add(btn4, 0, wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 15)
-        grd_s3.Add(btn3, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        #siz5.Add(grd_s3, 1, wx.EXPAND, 15)
-        siz5.Add(grd_s3, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        grd_s1.Add(siz5, 1, wx.ALL | wx.EXPAND, 15)
+        grdBtn =  wx.GridSizer(1, 2, 0, 0)
+        grdhelp = wx.GridSizer(1, 1, 0, 0)
+        grdhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn.Add(grdhelp)
+        grdexit.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn.Add(grdexit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        
+        boxSiz.Add(grdBtn,1, wx.ALL | wx.EXPAND, 5)
+        grd_s1.Add(boxSiz, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(grd_s1)
         grd_s1.Fit(self)
         self.Layout()
 
         #----------------------Binder (EVT)----------------------#
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn5)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_canc)
         #self.Bind(wx.EVT_BUTTON, self.on_help, btn4)
-        self.Bind(wx.EVT_BUTTON, self.on_apply, btn3)
+        self.Bind(wx.EVT_BUTTON, self.on_apply, btn_save)
         
         #-------------------Binder (EVT) End --------------------#
         if arg == 'edit':

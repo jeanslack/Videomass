@@ -85,7 +85,8 @@ class AudioSettings(wx.Dialog):
         
         if self.rdb_bitrate.GetStringSelection() == 'not suitable ':
             self.rdb_bitrate.Disable()
-
+            
+        btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -118,16 +119,24 @@ class AudioSettings(wx.Dialog):
         grid_sizer_1.Add(self.rdb_sample_r, 0, wx.ALL, 15)
         grid_sizer_1.Add(self.rdb_bitdepth, 0, wx.ALL, 15)
         
-        grid_sizer_2 = wx.FlexGridSizer(1, 3, 0, 0)#buttons
-        grid_sizer_2.Add(self.btn_cancel, 0, wx.ALL, 5)
-        grid_sizer_2.Add(self.btn_ok, 0, wx.ALL , 5)
-        grid_sizer_2.Add(btn_reset, 0, wx.ALL , 5)
-        sizerBase.Add(grid_sizer_2, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)#buttons
+        gridhelp.Add(btn_help, 0, wx.ALL, 5)
+        
+        gridexit = wx.GridSizer(1, 3, 0, 0)#buttons
+        gridexit.Add(self.btn_cancel, 0, wx.ALL, 5)
+        gridexit.Add(self.btn_ok, 0, wx.ALL , 5)
+        gridexit.Add(btn_reset, 0, wx.ALL , 5)
+        
+        gridBtn = wx.GridSizer(1, 2, 0, 0)#buttons
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        sizerBase.Add(gridBtn, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
         
         """--------------------Binders (EVT)----------------------"""
+        #self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, self.btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_apply, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
