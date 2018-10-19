@@ -4,6 +4,7 @@ Videomass2 offers an interface with two different types of video de-interlacers,
 Deinterlacers are useful for removing a series of annoying little lines that disturb the image of a movie.
 Although not very useful, an interleaver for progressive content is also available.
 
+------------------
 ## Deinterlacer filters:
 
 ### w3fdif 
