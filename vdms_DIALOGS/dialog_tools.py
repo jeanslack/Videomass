@@ -434,10 +434,8 @@ class VideoCrop(wx.Dialog):
         
         #----------------------Handle layout---------------------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        gridBase = wx.FlexGridSizer(2, 0, 0, 0)
+        gridBase = wx.FlexGridSizer(2, 1, 0, 0)
         sizerBase.Add(gridBase, 0, wx.ALL, 0)
-        gridBtnExit = wx.FlexGridSizer(1, 4, 0, 0)
-        
         sizer_3 = wx.BoxSizer(wx.VERTICAL)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
 
@@ -480,11 +478,17 @@ class VideoCrop(wx.Dialog):
         gridBase.Add(sizerLabel, 1, wx.ALL | 
                                     wx.ALIGN_CENTER_HORIZONTAL | 
                                     wx.ALIGN_CENTER_VERTICAL,10)
-        gridBase.Add(gridBtnExit)
-        gridBtnExit.Add(btn_help, 1, wx.ALL ,5)
-        gridBtnExit.Add(btn_close, 1, wx.ALL ,5)
-        gridBtnExit.Add(self.btn_ok, 1, wx.ALL ,5)
-        gridBtnExit.Add(btn_reset, 1, wx.ALL ,5)
+        
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridBase.Add(gridBtn)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridBtn.Add(gridhelp, 0, wx.ALL ,5)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridBtn.Add(gridexit, 0, wx.ALL ,5)
+        gridhelp.Add(btn_help, 1, wx.ALL ,5)
+        gridexit.Add(btn_close, 1, wx.ALL, 5)
+        gridexit.Add(self.btn_ok, 1, wx.ALL ,5)
+        gridexit.Add(btn_reset, 1, wx.ALL ,5)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
@@ -705,7 +709,7 @@ class VideoResolution(wx.Dialog):
         gridBtn.Add(gridexit)
         
         
-        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
+        grid_sizer_base.Add(gridBtn)#, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         # final settings:
         sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
@@ -901,7 +905,7 @@ class Lacing(wx.Dialog):
                                     majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                           )
         self.enable_opt = wx.wx.ToggleButton(self, wx.ID_ANY, 
-                                            "Enable/Dis advanced Option")
+                                            "Advanced Options")
         ####----- confirm buttons section
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
@@ -954,19 +958,20 @@ class Lacing(wx.Dialog):
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
         grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # confirm btn section:
+            
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        grid_sizer_base.Add(gridBtn)#
         gridhelp = wx.GridSizer(1, 1, 0, 0)
         gridexit = wx.GridSizer(1, 3, 0, 0)
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridhelp.Add(btn_help)#, flag=wx.ALL|wx.ALIGN_LEFT|wx.LEFT, border=10)
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        
+        gridhelp.Add(btn_help,1, wx.ALL,5)
         gridexit.Add(btn_close,1, wx.ALL,5)
         gridexit.Add(self.btn_ok,1, wx.ALL,5)
         gridexit.Add(btn_reset,1, wx.ALL,5)
-        gridBtn.Add(gridhelp)
-        gridBtn.Add(gridexit)
-        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-
         # final settings:
-        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
+        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL, 5)
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
