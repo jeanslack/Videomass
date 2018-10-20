@@ -151,7 +151,7 @@ class Video_Conv(wx.Panel):
         )
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.btn_videosize = GB.GradientButton(self.notebook_1_pane_2,
-                                               size=(-1,25), 
+                                               size=(-1,-1), 
                                                label="Resize")
         self.btn_videosize.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                         foregroundcolour=wx.Colour(255, 255, 255))
@@ -160,7 +160,7 @@ class Video_Conv(wx.Panel):
         self.btn_videosize.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_videosize.SetTopEndColour(wx.Colour(97, 204, 199))
         self.btn_crop = GB.GradientButton(self.notebook_1_pane_2,
-                                          size=(-1,25), 
+                                          size=(-1,-1), 
                                           label="Crop Dimension")
         self.btn_crop.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                         foregroundcolour=wx.Colour(255, 255, 255))
@@ -169,7 +169,7 @@ class Video_Conv(wx.Panel):
         self.btn_crop.SetTopStartColour(wx.Colour(97, 204, 199))
         self.btn_crop.SetTopEndColour(wx.Colour(97, 204, 199))
         self.btn_rotate = GB.GradientButton(self.notebook_1_pane_2,
-                                            size=(-1,25), 
+                                            size=(-1,-1), 
                                             label="Rotation")
         self.btn_rotate.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                         foregroundcolour=wx.Colour(255, 255, 255))
@@ -179,7 +179,7 @@ class Video_Conv(wx.Panel):
         self.btn_rotate.SetTopEndColour(wx.Colour(97, 204, 199))
         
         self.btn_lacing = GB.GradientButton(self.notebook_1_pane_2,
-                                            size=(-1,25), 
+                                            size=(-1,-1), 
                                             label="De/Interlace")
         self.btn_lacing.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                         foregroundcolour=wx.Colour(255, 255, 255))
@@ -189,7 +189,7 @@ class Video_Conv(wx.Panel):
         self.btn_lacing.SetTopEndColour(wx.Colour(97, 204, 199))
         
         self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
-                                            size=(-1,25), 
+                                            size=(-1,-1), 
                                             label="Denoisers")
         self.btn_denois.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                         foregroundcolour=wx.Colour(255, 255, 255))
@@ -200,25 +200,25 @@ class Video_Conv(wx.Panel):
         
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
-                                             size=(-1,25),
+                                             size=(-1,30),
                                              bitmap=playbmp, 
                                              )
         self.btn_preview.SetBaseColours(startcolour=wx.Colour(50, 255, 255))
-        self.btn_preview.SetBottomEndColour(wx.Colour(97, 204, 199))
-        self.btn_preview.SetBottomStartColour(wx.Colour(97, 204, 199))
-        self.btn_preview.SetTopStartColour(wx.Colour(97, 204, 199))
-        self.btn_preview.SetTopEndColour(wx.Colour(97, 204, 199))
+        self.btn_preview.SetBottomEndColour(wx.Colour(97, 204, 153))
+        self.btn_preview.SetBottomStartColour(wx.Colour(97, 204, 153))
+        self.btn_preview.SetTopStartColour(wx.Colour(97, 204, 153))
+        self.btn_preview.SetTopEndColour(wx.Colour(97, 204, 153))
         
         resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
         self.btn_reset = GB.GradientButton(self.notebook_1_pane_2,
-                                             size=(-1,25),
+                                             size=(-1,30),
                                              bitmap=resetbmp, 
                                              )
         self.btn_reset.SetBaseColours(startcolour=wx.Colour(50, 255, 255))
-        self.btn_reset.SetBottomEndColour(wx.Colour(97, 204, 199))
-        self.btn_reset.SetBottomStartColour(wx.Colour(97, 204, 199))
-        self.btn_reset.SetTopStartColour(wx.Colour(97, 204, 199))
-        self.btn_reset.SetTopEndColour(wx.Colour(97, 204, 199))
+        self.btn_reset.SetBottomEndColour(wx.Colour(97, 204, 153))
+        self.btn_reset.SetBottomStartColour(wx.Colour(97, 204, 153))
+        self.btn_reset.SetTopStartColour(wx.Colour(97, 204, 153))
+        self.btn_reset.SetTopEndColour(wx.Colour(97, 204, 153))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                          wx.ID_ANY, ("Filters Section")
@@ -259,7 +259,7 @@ class Video_Conv(wx.Panel):
                       wx.ID_ANY, ("Audio Normalization")
                                 )
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
-                                            size=(-1,25), 
+                                            size=(-1,-1), 
                                             label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))

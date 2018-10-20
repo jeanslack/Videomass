@@ -478,10 +478,9 @@ class VideoCrop(wx.Dialog):
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
         sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
-        gridBase.Add(sizerLabel, 1, wx.ALL | 
+        gridBase.Add(sizerLabel, 1, wx.ALL |
                                     wx.ALIGN_CENTER_HORIZONTAL | 
                                     wx.ALIGN_CENTER_VERTICAL,10)
-        
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridBase.Add(gridBtn)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
