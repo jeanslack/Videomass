@@ -201,13 +201,19 @@ class Setup(wx.Dialog):
         gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 15)
         gridFFplay.Add(self.txtctrl_ffplay, 0, wx.ALIGN_CENTER_VERTICAL, 5)
         #------------------------------------------------------bottom
-        gridBottom = wx.FlexGridSizer(1, 2, 0, 0)
-        gridBase.Add(gridBottom, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "Close")
+        gridBottom = wx.GridSizer(1, 2, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help, 0, wx.ALL, 5)
+        gridBottom.Add(gridhelp, 0, wx.ALL, 10)
+        btn_close = wx.Button(self, wx.ID_CANCEL, "")
+        gridexit = wx.GridSizer(1, 2, 0, 0)
+        gridexit.Add(btn_close, 0, wx.ALL, 5)
         btn_ok = wx.Button(self, wx.ID_APPLY, "")
-        gridBottom.Add(btn_close, 0, wx.ALL, 5)
-        gridBottom.Add(btn_ok, 0, wx.ALL, 5)
-        sizer.Add(gridBase,1, wx.ALL|wx.EXPAND, 10)
+        gridexit.Add(btn_ok, 0, wx.ALL, 5)
+        gridBottom.Add(gridexit, 0, wx.ALL, 10)
+        gridBase.Add(gridBottom)#, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        sizer.Add(gridBase,1, wx.ALL|wx.EXPAND, 5)
         self.SetSizer(sizer)
         sizer.Fit(self)
         self.Layout()
@@ -283,6 +289,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
 
@@ -496,6 +503,12 @@ class Setup(wx.Dialog):
     
         else:
             self.full_list[self.rowsNum[13]] = 'false\n'
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Startup/Setup.html'
+        webbrowser.open(page)
             
     #--------------------------------------------------------------------#
     def on_close(self, event):

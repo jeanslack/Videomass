@@ -152,7 +152,7 @@ class Cut_Range(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.stop_hour, self.stop_hour_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.stop_minute, self.stop_minute_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.stop_second, self.stop_second_ctrl)
-        #self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.resetValues, btn_reset)
@@ -204,6 +204,12 @@ class Cut_Range(wx.Dialog):
         self.stop_minute_ctrl.SetValue(0), self.stop_second_ctrl.SetValue(0)
         self.init_hour, self.init_minute, self.init_seconds = '00','00','00'
         self.cut_hour, self.cut_minute, self.cut_seconds = '00','00','00'
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Flatbar/Duration.html'
+        webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
 
@@ -537,7 +543,7 @@ class VideoCrop(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/FilterCrop.html'
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/FilterCrop.html'
         webbrowser.open(page)
     #------------------------------------------------------------------#
 
@@ -789,7 +795,7 @@ class VideoResolution(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/FilterScaling.html'
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/FilterScaling.html'
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_reset(self, event):
@@ -1265,7 +1271,7 @@ class Lacing(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Deint_Inter.html'
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/Deint_Inter.html'
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
@@ -1532,7 +1538,7 @@ class Denoisers(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Denoisers.html'
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/Denoisers.html'
         webbrowser.open(page)
     #------------------------------------------------------------------#  
     def on_reset(self, event):

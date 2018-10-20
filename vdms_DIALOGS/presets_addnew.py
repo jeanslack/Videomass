@@ -65,7 +65,6 @@ class MemPresets(wx.Dialog):
                                                   "(do not include the `.`)"))
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
-        #btn4 = wx.Button(self, wx.ID_HELP, "")
         btn_save = wx.Button(self, wx.ID_OK, "Save..") 
 
         #----------------------Set Properties----------------------#
@@ -135,7 +134,7 @@ class MemPresets(wx.Dialog):
 
         #----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_canc)
-        #self.Bind(wx.EVT_BUTTON, self.on_help, btn4)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_apply, btn_save)
         
         #-------------------Binder (EVT) End --------------------#
@@ -162,14 +161,17 @@ class MemPresets(wx.Dialog):
         self.txt_ext.AppendText(self.array[4]) # extension
     
 #---------------------Callback (event handler)----------------------#
-
+    
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Flatbar/PresetsDialog.html'
+        webbrowser.open(page)
+    #------------------------------------------------------------------#
     def on_close(self, event):
         #self.Destroy()
         event.Skip()
-
-    #def on_help(self, event):
-        #wx.MessageBox(u"Work in progress")
-        
+    #------------------------------------------------------------------#
     def on_apply(self, event):
         
         nameprofile = self.txt_name.GetValue()
