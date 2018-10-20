@@ -152,7 +152,7 @@ class MainFrame(wx.Frame):
         self.btn_newprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=newprfbmp, 
-                                              label="New Profile")
+                                              label="New..")
         self.btn_newprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
                                     foregroundcolour=wx.Colour(56, 163, 159))
         self.btn_newprf.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -163,7 +163,7 @@ class MainFrame(wx.Frame):
         self.btn_delprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=delprfbmp, 
-                                              label="Delete Profile")
+                                              label="Delete..")
         self.btn_delprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
                                     foregroundcolour=wx.Colour(56, 163, 159))
         self.btn_delprf.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -174,7 +174,7 @@ class MainFrame(wx.Frame):
         self.btn_editprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=editprfbmp, 
-                                              label="Edit Profile")
+                                              label="Edit..")
         self.btn_editprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
                                     foregroundcolour=wx.Colour(56, 163, 159))
         self.btn_editprf.SetBottomEndColour(wx.Colour(205, 235, 222))

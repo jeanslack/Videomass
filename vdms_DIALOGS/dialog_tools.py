@@ -139,7 +139,7 @@ class Cut_Range(wx.Dialog):
         gridBtn = wx.BoxSizer()
         gridBtn.Add(gridhelp,0, wx.ALL, 10)
         gridBtn.Add(gridexit,1, wx.ALL,10)
-        grid_sizer_base.Add(gridBtn,1, wx.ALL|wx.ALIGN_CENTRE, 5)
+        grid_sizer_base.Add(gridBtn,1, wx.ALL|wx.ALIGN_CENTRE, 0)
         sizer_base.Add(grid_sizer_base, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
@@ -986,7 +986,7 @@ class Lacing(wx.Dialog):
         # confirm btn section:
             
         gridBtn = wx.GridSizer(1, 2, 0, 0)
-        grid_sizer_base.Add(gridBtn)#
+        grid_sizer_base.Add(gridBtn,1, wx.ALL|wx.ALIGN_CENTRE, 0)#
         gridhelp = wx.GridSizer(1, 1, 0, 0)
         gridexit = wx.GridSizer(1, 3, 0, 0)
         gridBtn.Add(gridhelp)

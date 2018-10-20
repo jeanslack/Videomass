@@ -450,7 +450,7 @@ class PresetsPanel(wx.Panel):
         """
         if wx.MessageBox(u"WARNING: you are going to restore all default "
                          "presets from videomass2! Proceed?", 
-                         "Please confirm - Videoamss", 
+                         "Please confirm - Videomass2", 
                          wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
@@ -523,6 +523,14 @@ class PresetsPanel(wx.Panel):
                                       "before deleting profile itself", 
                                       yellow)
         else:
+            filename = dict_presets[self.cmbx_prst.GetValue()][0]
+            if wx.MessageBox(u"Are you sure you want to delete the "
+                             "selected profile?", 
+                             "Please confirm - Videomass2", 
+                             wx.ICON_QUESTION | 
+                             wx.YES_NO, self) == wx.NO:
+                return
+        
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             # call module-function and pass list as argument
             delete_profiles(array, filename)

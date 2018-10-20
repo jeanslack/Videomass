@@ -51,19 +51,22 @@ class MemPresets(wx.Dialog):
         self.array = array
         
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, "  Profile Name:")
+        siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, "Profile Name")
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, "  Description:")
+        siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, "Description")
         self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, "  ffmpeg command line:")
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, ("Parameters command "
+                        "line of the profile (Do not use `-i` or output file)"))
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz4_supp = wx.StaticBox(self, wx.ID_ANY, "  Supported file types import:")
+        siz4_supp = wx.StaticBox(self, wx.ID_ANY, ("Files supported in the "
+                                        "import (do not include the `.`)"))
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz4_ext = wx.StaticBox(self, wx.ID_ANY, "  Output format extension:")
+        siz4_ext = wx.StaticBox(self, wx.ID_ANY, ("Output format extension "
+                                                  "(do not include the `.`)"))
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
         #btn4 = wx.Button(self, wx.ID_HELP, "")
-        btn_save = wx.Button(self, wx.ID_OK, "SAVE") 
+        btn_save = wx.Button(self, wx.ID_OK, "Save..") 
 
         #----------------------Set Properties----------------------#
         self.txt_name.SetMinSize((150, -1))
@@ -72,20 +75,12 @@ class MemPresets(wx.Dialog):
         self.txt_supp.SetMinSize((300, -1))
         self.txt_ext.SetMinSize((150, -1))
 
-        self.txt_name.SetToolTipString("Assign a short name to the profile "
-                                    "Example:'Convert video for youtube'"
+        self.txt_name.SetToolTipString("Assign a short name to the profile. "
                                         )
         self.txt_descript.SetToolTipString("Assign a long description to "
-                            "the profile. Example: 'video h264, video size "
-                            "640x480 and audio mp3, stereo, bitrate 160kb, etc'"
-                                        )
-         
-        self.txt_cmd.SetToolTipString("No type ffmpeg command call "
-                    "here, no input flag '-i' and no type input/output file/dir "
-                    "names, Yes this:\n "
-                    "-vn -acodec libfaac -ab 128\n "
-                    "No this:\n "
-                    "ffmpeg -i name.ext -vn -acodec libfaac -ab 128 name.avi"
+                                           "the profile."
+                                           )
+        self.txt_cmd.SetToolTipString("Do not use `-i` or output file, please."
                                         )
         self.txt_supp.SetToolTipString("You can limit the type "
                             "of files formats imported by specifying in a box "

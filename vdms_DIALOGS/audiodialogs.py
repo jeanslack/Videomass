@@ -130,7 +130,7 @@ class AudioSettings(wx.Dialog):
         gridBtn = wx.GridSizer(1, 2, 0, 0)#buttons
         gridBtn.Add(gridhelp)
         gridBtn.Add(gridexit)
-        sizerBase.Add(gridBtn, 1, wx.ALL | wx.EXPAND, 5)
+        sizerBase.Add(gridBtn,1, wx.ALL|wx.ALIGN_CENTRE, 10)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()

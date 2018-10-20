@@ -38,6 +38,7 @@ ADDITIONAL FEATURES:
       click into one imported items.
     - Added message support for exceptions and errors in streaming playback (ffplay)
     - Added support for time sequences also on playback of input streaming
+    - Added contextual help buttons with online user guides
 
 REMOVALS and DISPLACEMENTS:
     - Removed the 'video size' function instead of the scale filter 
@@ -45,6 +46,7 @@ REMOVALS and DISPLACEMENTS:
     - Audio Conversion panel: Message box removed on the save profile with audio 
       normalization enabled. Now you can also save parameters with audio 
       normalization after a confirmation message.
+    - Removed all html files for user's guide. Now the user guide is online only.
   
 IMPROVEMENTS:
     - Improved settings storage on audio options for Audio and Video panels
