@@ -12,6 +12,3 @@ header_pages:
     - execute_sources.md
     - building_package.md
     - videomass_use.md
-    
-    - /Pages/FilterCrop.md
-    - /Pages/FilterScaling.md
