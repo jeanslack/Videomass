@@ -400,7 +400,7 @@ class MainFrame(wx.Frame):
         when click with the mouse on a control list item, 
         enable Metadata Info and file reproduction menu
         """
-        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 162, 1))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(0, 240, 0))
         self.import_clicked = path# used for play and metadata
         
     #------------------------------------------------------------------#
@@ -440,7 +440,7 @@ class MainFrame(wx.Frame):
                 data = ''
                 self.btn_duration.SetBottomEndColour(wx.Colour(205, 235, 222))
             else:
-                self.btn_duration.SetBottomEndColour(wx.Colour(228, 57, 57))
+                self.btn_duration.SetBottomEndColour(wx.Colour(0, 240, 0))
             self.time_seq = data
         else:
             dial.Destroy()
