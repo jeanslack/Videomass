@@ -1,4 +1,4 @@
-[Back](../videomass2_use.md)
+[Back](../../videomass2_use.md)
 
 ## Denoisers
 
@@ -14,4 +14,4 @@ It is ideal for enhancing the quality of old VHS tapes.
 This is a high precision/quality 3d denoise filter. It aims to reduce image noise, producing smooth images and making 
 still images really still. It should enhance compressibility.
 
-[Back](../videomass2_use.md)
+[Back](../../videomass2_use.md)
