@@ -100,7 +100,7 @@ class Audio_Conv(wx.Panel):
         self.cmbx_a.SetSelection(4)
         
         self.btn_param = GB.GradientButton(self,
-                                           size=(-1,-1), 
+                                           size=(-1,25), 
                                            label="Audio Options")
         self.btn_param.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                     foregroundcolour=wx.Colour(255, 255, 255))
@@ -116,7 +116,7 @@ class Audio_Conv(wx.Panel):
         self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Audio Normalization"))
         self.btn_analyzes = GB.GradientButton(self,
-                                           size=(-1,-1), 
+                                           size=(-1,25), 
                                            label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))

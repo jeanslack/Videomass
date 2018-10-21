@@ -143,7 +143,7 @@ class DnDPanel(wx.Panel):
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         self.ckbx_dir = wx.CheckBox(self, wx.ID_ANY, (
                                 "Save destination in source folder"))
-        self.btn_save = wx.Button(self, wx.ID_SAVE, "")
+        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(30,-1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER | wx.TE_READONLY
                                                     )

@@ -573,7 +573,8 @@ class MainFrame(wx.Frame):
         
         self.file_open = fileButton.Append(wx.ID_OPEN, "Add File.. ", 
                         "Files import with drag and drop")
-        self.file_save = fileButton.Append(wx.ID_SAVE, "Save Destination.. ", 
+        self.file_save = fileButton.Append(wx.ID_SAVE, "Choose a Destination " 
+                                                        "folder..", 
                         "Choice a folder where save processed files")
         fileButton.AppendSeparator()
         self.saveme = fileButton.Append(wx.ID_REVERT_TO_SAVED,
