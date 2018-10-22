@@ -34,12 +34,11 @@ class Mediainfo(wx.Dialog):
     """
     Show dialog for display metadata info. 
     """
-    def __init__(self, title, path, helping, ffprobe_link):
+    def __init__(self, title, path, ffprobe_link):
         # with 'None' not depend from videomass2. With 'parent, -1' if close
         # videomass2 also close mediainfo window:
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
-        self.helping = helping
         
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
@@ -188,8 +187,4 @@ class Mediainfo(wx.Dialog):
         #event.Skip()
 
     #-------------------------------------------------------------------#
-    #def on_help(self, event):
-        #wx.MessageBox("L'help contestuale é ancora in fase di sviluppo .")
-        #webbrowser.open(mediainfo_help)
-        #webbrowser.open('%s/06-Informazioni_media.html' % self.helping)
         

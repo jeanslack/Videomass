@@ -124,7 +124,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         ('share/videomass2/icons', glob_files('art/*.png')),
         ('share/applications', ['videomass2.desktop']),
         ('share/pixmaps', ['art/videomass2.png']),
-        ('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
+        #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
                 ]
     
     DEPENDENCIES = ['python', 'wxpython']
@@ -200,7 +200,7 @@ def OSX():
     # place sources even path must be relative-path
     DATA_FILES = [('share', glob_files('share/*.vdms')),
             ('share', ['share/videomass2.conf']), 
-            ('docs/HTML', glob_files('docs/HTML/*.html')), 
+            #('docs/HTML', glob_files('docs/HTML/*.html')), 
             ('art', glob_files('art/*.png')), 
             ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING','TODO',
                   'README.md']),]
@@ -271,7 +271,7 @@ def WIN32():
     
     DATA_FILES = [('share', glob_files('share/*.vdms')),
                   ('share', glob_files('share/*.conf')),
-                  ('docs/HTML', glob_files('docs/HTML/*.html')), 
+                  #('docs/HTML', glob_files('docs/HTML/*.html')), 
                   ('art', glob_files('art/*.png')), 
                   ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',
                         'COPYING','TODO','README.md','videomass.ico',

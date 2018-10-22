@@ -89,10 +89,6 @@ def system_check():
         icn_newprf = '%s/art/newprf.png' % PWD
         icn_delprf = '%s/art/delprf.png' % PWD
         icn_editprf = '%s/art/editprf.png' % PWD
-        """
-        assignment path at the contestual help for helping:
-        """
-        help_html = "file://%s/docs/HTML" % PWD
         
     elif OS == ('Linux'):
         """
@@ -120,18 +116,6 @@ def system_check():
         icn_newprf = '/usr/share/videomass2/icons/newprf.png'
         icn_delprf = '/usr/share/videomass2/icons/delprf.png'
         icn_editprf = '/usr/share/videomass2/icons/editprf.png'
-        """
-        assignment path at the contestual help for helping.
-        This change if Slackware, debian, etc.
-        """
-        if os.path.exists('/usr/doc/videomass2/HTML'): # Slackware
-            help_html = 'file:///usr/doc/videomass2/HTML'
-            
-        elif os.path.exists('/usr/share/doc/python-videomass2/HTML'):# debian
-            help_html = 'file:///usr/share/doc/python-videomass2/HTML'
-            
-        else:
-            print 'ERROR LOAD HTML PAGE: path not found'
             
     else: # it should be Windows OS
         """
@@ -157,10 +141,6 @@ def system_check():
         icn_newprf = '%s/art/newprf.png' % PWD
         icn_delprf = '%s/art/delprf.png' % PWD
         icn_editprf = '%s/art/editprf.png' % PWD
-        """
-        assignment path at the contestual help for helping:
-        """
-        help_html = "file://%s/docs/HTML" % PWD
         
     #### check videomass.conf and config directory
     if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
@@ -184,7 +164,7 @@ def system_check():
             copyerr = True
 
     return (videomass_icon, icon_presets, icon_switchvideomass, icon_process, 
-            icon_help, help_html, OS, path_srcShare, copyerr, icon_headphones, 
+            icon_help, OS, path_srcShare, copyerr, icon_headphones, 
             icon_import, icn_infosource, icn_preview, icn_cut, icn_playfilters, 
             icn_resetfilters, icn_saveprf, icn_newprf, icn_delprf, icn_editprf
             )

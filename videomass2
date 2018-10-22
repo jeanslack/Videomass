@@ -61,7 +61,7 @@ class Videomass(wx.App):
         """
         setui = system_check() # for user-space settings
         fileconf = parsing_fileconf() # for user interface settings
-        if setui[8]: # if source dir is corrupt
+        if setui[7]: # if source dir is corrupt
             wx.MessageBox('Can not find the configuration file\n\n'
                           'Sorry, cannot continue..',
                           'Fatal Error - Videomass2', wx.ICON_STOP)
@@ -95,7 +95,7 @@ class Videomass(wx.App):
                 os.remove("%s/videomass2.conf" % path_confdir)
             return False
 
-        if setui[6] == 'Darwin':
+        if setui[5] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
             for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
@@ -111,7 +111,7 @@ class Videomass(wx.App):
                 ffprobe_link = fileconf[10]
                 ffplay_link = fileconf[12]
 
-        elif setui[6] == 'Windows':
+        elif setui[5] == 'Windows':
             for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False

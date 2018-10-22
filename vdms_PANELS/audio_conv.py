@@ -69,12 +69,11 @@ class Audio_Conv(wx.Panel):
     Interface panel for audio conversions and volume normalizations,
     with preset storing feature (TODO)
     """
-    def __init__(self, parent, helping, ffmpeg_link, threads, 
+    def __init__(self, parent, ffmpeg_link, threads, 
                  cpu_used, loglevel_type, ffprobe_link, OS):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
-        self.helping = helping
         self.threads = threads
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type

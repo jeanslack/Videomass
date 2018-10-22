@@ -89,7 +89,7 @@ class Video_Conv(wx.Panel):
     Interface panel for video conversions with audio volume normalizations
     and preset storing feature
     """
-    def __init__(self, parent, helping, ffmpeg_link, ffplay_link, 
+    def __init__(self, parent, ffmpeg_link, ffplay_link, 
                  threads, cpu_used, loglevel_type, OS, iconplay, 
                  iconreset):
 
@@ -99,7 +99,6 @@ class Video_Conv(wx.Panel):
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
         self.ffplay_link = ffplay_link
-        self.helping = helping
         self.threads = threads
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type

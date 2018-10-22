@@ -57,14 +57,14 @@ def process(self, varargs, path_log, panelshown, duration, OS):
 
     self.ProcessPanel = GeneralProcess(self, path_log, panelshown, varargs)
 #-----------------------------------------------------------------------#
-def stream_info(title, filepath , helping, ffprobe_link):
+def stream_info(title, filepath , ffprobe_link):
     """
     Show media information of the streams content.
     This function make a bit control of file existance.
     """
     try:
         with open(filepath):
-            dialog = Mediainfo(title, filepath, helping, ffprobe_link)
+            dialog = Mediainfo(title, filepath, ffprobe_link)
             dialog.Show()
 
     except IOError:

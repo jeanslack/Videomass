@@ -62,11 +62,11 @@ class MainFrame(wx.Frame):
         self.icon_switchvideomass = setui[2]
         self.icon_process = setui[3]
         self.icon_help = setui[4]
-        self.helping = setui[5]# path contestual help for helping:
-        self.OS = setui[6]# ID of the operative system:
-        path_srcShare = setui[7]# share dir (are where the origin files?):
-        self.icon_headphones = setui[9]
-        self.icon_import = setui[10]
+        #self.helping = setui[5]# path contestual help for helping:
+        self.OS = setui[5]# ID of the operative system:
+        path_srcShare = setui[6]# share dir (are where the origin files?):
+        self.icon_headphones = setui[8]
+        self.icon_import = setui[9]
         #---------------------------#
         self.threads = fileconf[2]#ffmpeg option, set the cpu threads
         self.cpu_used = fileconf[3]
@@ -95,13 +95,13 @@ class MainFrame(wx.Frame):
         #----------- panel toolbar buttons
         self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         
-        infoIbmp = wx.Bitmap(setui[11], wx.BITMAP_TYPE_ANY)
-        previewbmp = wx.Bitmap(setui[12], wx.BITMAP_TYPE_ANY)
-        cutbmp = wx.Bitmap(setui[13], wx.BITMAP_TYPE_ANY)
-        saveprfbmp = wx.Bitmap(setui[16], wx.BITMAP_TYPE_ANY)
-        newprfbmp = wx.Bitmap(setui[17], wx.BITMAP_TYPE_ANY)
-        delprfbmp = wx.Bitmap(setui[18], wx.BITMAP_TYPE_ANY)
-        editprfbmp = wx.Bitmap(setui[19], wx.BITMAP_TYPE_ANY)
+        infoIbmp = wx.Bitmap(setui[10], wx.BITMAP_TYPE_ANY)
+        previewbmp = wx.Bitmap(setui[11], wx.BITMAP_TYPE_ANY)
+        cutbmp = wx.Bitmap(setui[12], wx.BITMAP_TYPE_ANY)
+        saveprfbmp = wx.Bitmap(setui[15], wx.BITMAP_TYPE_ANY)
+        newprfbmp = wx.Bitmap(setui[16], wx.BITMAP_TYPE_ANY)
+        delprfbmp = wx.Bitmap(setui[17], wx.BITMAP_TYPE_ANY)
+        editprfbmp = wx.Bitmap(setui[18], wx.BITMAP_TYPE_ANY)
         
         
         
@@ -193,18 +193,16 @@ class MainFrame(wx.Frame):
                                                          self.writeline_exec,
                                                          self.OS,
                                                          )
-        self.VconvPanel = video_conv.Video_Conv(self, self.helping, 
-                                                self.ffmpeg_link,
+        self.VconvPanel = video_conv.Video_Conv(self, self.ffmpeg_link,
                                                 self.ffplay_link,
                                                 self.threads, 
                                                 self.cpu_used,
                                                 self.loglevel_type,
                                                 self.OS,
-                                                setui[14],# icon playfilters
-                                                setui[15],# icon resetfilters
+                                                setui[13],# icon playfilters
+                                                setui[14],# icon resetfilters
                                                 )
-        self.AconvPanel = audio_conv.Audio_Conv(self, self.helping, 
-                                                self.ffmpeg_link, 
+        self.AconvPanel = audio_conv.Audio_Conv(self, self.ffmpeg_link, 
                                                 self.threads,
                                                 self.cpu_used,
                                                 self.loglevel_type, 
@@ -471,7 +469,6 @@ class MainFrame(wx.Frame):
         title = 'Metadata of selected media - Videomass2'
         IO_tools.stream_info(title, 
                              filepath, 
-                             self.helping, 
                              self.ffprobe_link,
                              )
     #------------------------------------------------------------------#
