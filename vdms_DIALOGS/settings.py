@@ -163,7 +163,7 @@ class Setup(wx.Dialog):
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
         grid_logBtn = wx.FlexGridSizer(1, 2, 0, 0)
         gridLog.Add(grid_logBtn)
-        self.btn_log = wx.Button(tabTwo, wx.ID_SAVE, "")
+        self.btn_log = wx.Button(tabTwo, wx.ID_ANY, "Browse..")
         grid_logBtn.Add(self.btn_log, 0, wx.ALL, 15)
         self.txt_pathlog = wx.TextCtrl(tabTwo, wx.ID_ANY, "")
         grid_logBtn.Add(self.txt_pathlog, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 15)
