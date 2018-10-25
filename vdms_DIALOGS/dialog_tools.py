@@ -208,7 +208,7 @@ class Cut_Range(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Flatbar/Duration.html'
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Toolbar/Duration.html'
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):

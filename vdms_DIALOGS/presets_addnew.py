@@ -165,7 +165,8 @@ class MemPresets(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Flatbar/PresetsDialog.html'
+        page = ('https://jeanslack.github.io/Videomass2/Pages/'
+                'Presets_Management/Profiles_management.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):

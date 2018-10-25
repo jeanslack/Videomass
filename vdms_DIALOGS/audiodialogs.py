@@ -136,10 +136,18 @@ class AudioSettings(wx.Dialog):
         self.Layout()
         
         """--------------------Binders (EVT)----------------------"""
-        #self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, self.btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_apply, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = ('https://jeanslack.github.io/Videomass2/Pages/'
+                'Audio_Parameters/Audio_parameters.html')
+        webbrowser.open(page)
     
     #------------------------------------------------------------------#
     def on_reset(self, event):
