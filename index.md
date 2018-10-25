@@ -11,7 +11,8 @@
 * [Build a redistributable package](building_package.md)
 
 ## User guide
-* [start with the application](videomass2_use.md)
+* [Start with the application](videomass2_use.md)
+* [Known problems](known_problems.md)
 
 Videomass2 is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)
 
