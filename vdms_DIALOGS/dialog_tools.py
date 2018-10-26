@@ -543,7 +543,8 @@ class VideoCrop(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/FilterCrop.html'
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/
+                VideoConv_Panel/Filters/FilterCrop.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
 
@@ -795,7 +796,8 @@ class VideoResolution(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/FilterScaling.html'
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/
+                VideoConv_Panel/Filters/FilterScaling.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_reset(self, event):
@@ -1271,7 +1273,8 @@ class Lacing(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/Deint_Inter.html'
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/
+                VideoConv_Panel/Filters/Deint_Inter.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
@@ -1538,7 +1541,8 @@ class Denoisers(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Filters/Denoisers.html'
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/
+                VideoConv_Panel/Filters/Denoisers.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#  
     def on_reset(self, event):
