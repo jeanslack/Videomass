@@ -1,4 +1,4 @@
-[Back](../../videomass2_use.md)
+[Back](../../../../videomass2_use.md)
 
 ## Scale:
 
@@ -44,4 +44,4 @@ We can confirm our choices with the **OK button**.
 The **Clear button**, restores the values to defaults parameters and disables the filter if you confirm with the Ok button. 
 However, the values equal to 0 set on all input fields disable this filter.
 
-[Back](../../videomass2_use.md)
+[Back](../../../../videomass2_use.md)
