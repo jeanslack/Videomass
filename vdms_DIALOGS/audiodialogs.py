@@ -26,6 +26,7 @@
 #########################################################
 
 import wx
+import webbrowser
 
 class AudioSettings(wx.Dialog):
     """

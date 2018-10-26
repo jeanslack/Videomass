@@ -29,6 +29,7 @@
 
 import wx
 import os
+import webbrowser
 
 dirname = os.path.expanduser('~/') # /home/user/
 filename = '%s/.videomass2/videomass2.conf' % (dirname)
