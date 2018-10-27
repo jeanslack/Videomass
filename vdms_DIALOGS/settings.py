@@ -113,12 +113,12 @@ class Setup(wx.Dialog):
         gridGeneral = wx.FlexGridSizer(3, 1, 0, 0)
         tabOne.SetSizer(gridGeneral)#aggiungo il sizer su tab 1
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    "Settings CPU:")), wx.VERTICAL)
+                                    "Settings CPU")), wx.VERTICAL)
         gridGeneral.Add(boxLabThreads, 1, wx.ALL|wx.EXPAND, 15)
         gridThreads = wx.FlexGridSizer(4, 1, 0, 0)
         boxLabThreads.Add(gridThreads, 1, wx.ALL|wx.EXPAND, 15)
         lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,(
-                               "Set the number of threads (from 0 to 32):"))
+                               "Set the number of threads (from 0 to 32)"))
         gridThreads.Add(lab1_pane1, 0, wx.ALL, 5)
         self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY, 
                                             "%s" % threads[9:],
@@ -129,7 +129,7 @@ class Setup(wx.Dialog):
                                                   wx.ALIGN_CENTER_VERTICAL, 
                                                   5)
         lab2_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (
-                            "Quality/Speed ratio modifier (from -16 to 16):"))
+                            "Quality/Speed ratio modifier (from -16 to 16)"))
         gridThreads.Add(lab2_pane1, 0, wx.ALL, 5)
         gridctrl = wx.FlexGridSizer(1, 2, 0, 0)
         gridThreads.Add(gridctrl)
@@ -141,14 +141,12 @@ class Setup(wx.Dialog):
         #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
         boxLabOthers = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    "Other Settings:")), wx.VERTICAL)
+                                    "Other Settings")), wx.VERTICAL)
         gridGeneral.Add(boxLabOthers, 0, wx.ALL|wx.EXPAND, 15)
         gridOthers = wx.GridSizer(1, 1, 0, 0)
         boxLabOthers.Add(gridOthers, 1, wx.ALL|wx.EXPAND, 15)
         self.check_cmdline = wx.CheckBox(tabOne, wx.ID_ANY, (
-            "Enable text writing on the command line\n"
-            "reading tab in the Presets Manager panel.\n"
-            "Warning! use this function at your own risk!"))
+            "Enables writing of command line text"))
         gridOthers.Add(self.check_cmdline, 0, wx.ALL, 5)
         #--------------------------------------------------TAB 2
         gridLog = wx.FlexGridSizer(4, 1, 0, 0)

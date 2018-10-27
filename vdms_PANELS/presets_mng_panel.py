@@ -219,7 +219,7 @@ class PresetsPanel(wx.Panel):
         #nb1_p4.SetSizer(grid_siz5)
         #----------------------------notebook 4
         nb1.AddPage(nb1_p1, ("Selecting Presets"))
-        nb1.AddPage(nb1_p2, ("Command Line Reading"))
+        nb1.AddPage(nb1_p2, ("Command Line FFmpeg"))
         #nb1.AddPage(nb1_p3, ("Export Preferences"))
         #nb1.AddPage(nb1_p4, ("Importing/Exporting"))
         grd_s2.Add(nb1, 1, wx.EXPAND, 0)
