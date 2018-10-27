@@ -5,6 +5,7 @@
 In the setup window you can set some parameters that will be saved for the next program openings. 
 Whenever you save these settings, the program must necessarily be restarted to make them effective.
 
+------------------
 ### General Table
 
 **Settings CPU**   
@@ -27,6 +28,7 @@ by some FFmpeg encoder.
   _Allows you to make changes to the FFmpeg command line in the 'Command Line FFmpeg' table of the 'Presets Manager' panel. 
   Any parameter changes will not be stored but will still be applied during the process._
   
+-------------------  
 ### Log Table
 
 Each export process involves writing a log file. A log file contains a report showing errors, commands and other 
@@ -37,6 +39,8 @@ indications. Videomass2 generates three types of log files:
 3) Videomass_PresetsManager.log   
 
 You can save these log files in a specific location on your drive, they will be copied from the Videomass2 configuration directory to a location of your choice.
+
+-------------------
    
 
 [Back](../../videomass2_use.md)
