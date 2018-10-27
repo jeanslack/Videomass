@@ -7,17 +7,19 @@ URGENCY: to do soon
 - Rinnovare i presets e i profili con nuove adds: aggiungere audio in video;
   aggiungere audio su immagini
   
---------------------------------------------------------------------------------
+--------------
 URGENCY: high
---------------------------------------------------------------------------------
-Free and Open sources icons for toolbar and panelbar
---------------------------------------------------------------------------------
+--------------
+- Free and Open sources icons for toolbar and panelbar
+
+-------------
 URGENCY: low
---------------------------------------------------------------------------------
-implementazione -vf format=yuv420p (or the alias -pix_fmt yuv420p)
---------------------------------------------------------------------------------
+-------------
+- implementazione -vf format=yuv420p (or the alias -pix_fmt yuv420p)
+
+---------------
 URGENCY: medium
---------------------------------------------------------------------------------
+----------------
 - Rivedere ctrl_run modulo e On_init boot strap (su mac, in modalità script 
   portable, non funzia quando la versione del file conf differisce)
 
