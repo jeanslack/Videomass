@@ -6,7 +6,7 @@ _NOTE: some parts of these guides are taken from the [FFmpeg](https://ffmpeg.org
 - [Startup](Pages/Startup/Startup.md)
   * [Setup (preferences)](Pages/Startup/Setup.md)
   
-- [Main Toolbar](Pages/Main_toolbar/Main_toolbar.md)
+- [Main Toolbar](Pages/Main_Toolbar/Main_toolbar.md)
   * [Video Conversion](Pages/Main_Toolbar/VideoConv_Panel/idx.md)
     * [Video Filters Section](Pages/Main_Toolbar/VideoConv_Panel/Filters//VideoFilters.md)
       * [Crop a video/image frame](Pages/Main_Toolbar/VideoConv_Panel/Filters/FilterCrop.md) 
