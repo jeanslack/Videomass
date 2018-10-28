@@ -7,7 +7,7 @@ _NOTE: some parts of these guides are taken from the [FFmpeg](https://ffmpeg.org
   * [Setup (preferences)](Pages/Startup/Setup.md)
   
 - [Main Toolbar](Pages/Main_Toolbar/Main_toolbar.md)
-  - [Presets Management](Pages/Main_Toolbar/PresetsManager_Panel/Presets_management.md)
+  * [Presets Manager](Pages/Main_Toolbar/PresetsManager_Panel/Presets_management.md)
     * [Profiles Management](Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.md)
   * [Video Conversion](Pages/Main_Toolbar/VideoConv_Panel/idx.md)
     * [Video Filters Section](Pages/Main_Toolbar/VideoConv_Panel/Filters//VideoFilters.md)
