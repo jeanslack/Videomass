@@ -20,6 +20,7 @@ you can also reset the current preset, ie return to the default state, or reset 
 all your customizations to return to the original state.
 
 ### The "New", "Delete" and "Edit" buttons
+![Image](../../../images/presets_manager_buttons.png)   
 These buttons are shown on the toolbar when the **Presets Manager** interface is active.
 * To create a [new profile](https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html), press the _New.._ button in the toolbar.
 * To delete a profile, press the _Delete.._ button in the toolbar.
