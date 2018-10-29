@@ -4,7 +4,9 @@
 The window for managing profiles is used to create new profiles, to add new settings and to edit existing profiles. 
 It is composed of five text fields, four of which are mandatory.
 - "_Profile Name_" is a short description that you specify as an identification.
+
 - "_Description_" is a longer description.
+
 - "_Command Line Parameters_" allows you to enter the FFmpeg command. The rule is not to enter the input and output 
   parameters, ie the command call of FFmpeg and any '-i' flags and the names of the imported and exported files but 
   only the command settings. For conversions that involve a double pass, use the string **DOUBLE_PASS** as a separator 
@@ -13,7 +15,8 @@ It is composed of five text fields, four of which are mandatory.
   -an -vcodec libx264 -b:v 1500k -f rawvideo DOUBLE_PASS -vcodec libx264 -b:v 1500k
   ```
 - "_Files supported in the import_" field is optional and is useful for limiting the importation of one or more formats 
-  that you can specify or not (this entry is not mandatory).
+  that you can specify or not. When you specify a list of formats, they must be separated by a white space.
+  
 - "_Output format extension_", Here you have to specify the name of the output format (extension), without including 
   the dot '.' and any other punctuation mark.
 
