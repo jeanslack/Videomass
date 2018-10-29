@@ -1,9 +1,14 @@
 [Back](../../videomass2_use.md)
 
 ## Duration
+![Image](../../images/duration.png) 
 
-When any time is set, the Duration button in the secondary toolbar is turned with a green gradient. 
-When all time values are reset with the Clear key and then confirmed, the key color will return to default.
+When any time is set, the Duration button in the secondary toolbar is turned with a green gradient.   
+![Image](../../images/btn_durationOn.png)   
+When all time values are reset with the Clear key and then confirmed, the key color will return to default.   
+![Image](../../images/btn_durationOff.png)
+
+----------------
 
 The Duration tool consists of two different parameters: 
 **Seeking** (time position) and **Cut** (duration) both expressed in hours, minutes and seconds (hh,mm,ss).
