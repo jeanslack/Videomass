@@ -49,5 +49,6 @@ not be stored on the profile. To save a new profile, you will need to use the 'N
 ### Start Encoding
 When you press the Start Encoding key, the process starts immediately with the parameters of the selected profile. 
 At the end of the process a preview key is displayed in the toolbar, which you can use to check the conversion result.
+![Image](../../../images/presets_manager_preview.png)
 
 [Back](../../../videomass2_use.md)
