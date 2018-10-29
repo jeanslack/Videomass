@@ -27,7 +27,7 @@ When you are on the **Presets Manager** interface, the following functions are e
 - _reset all presets_ (reset all presets at once. This will erase all your customizations 
   to return to the original state.)
 
-- _Reload Presets List_ (This feature can be useful when you import new presets previously exported)
+- _Reload Presets List_ (This feature can be useful when you import new presets previously exported to recharg the new one)
 
 ### The "New", "Delete" and "Edit" buttons
 ![Image](../../../images/presets_manager_buttons.png)   
