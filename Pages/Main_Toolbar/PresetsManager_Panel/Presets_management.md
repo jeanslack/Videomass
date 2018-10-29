@@ -13,7 +13,7 @@ Each preset is an xml file with a .vdms extension containing the entries of each
 All presets are located in the Videomass2 configuration directory.
 
 ### Menu Bar
-When you are on the 'Presets Manager' interface, the following functions are enabled in the menubar - _File_:
+When you are on the **Presets Manager** interface, the following functions are enabled in the menubar - _File_:
 
 - _Save the current preset as separated file_ (export the selected preset)
 
@@ -34,8 +34,9 @@ These buttons are shown on the toolbar when the **Presets Manager** interface is
 * To [edit a profile](https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html). press the _Edit.._ button in the toolbar.
 
 ### Selecting Preset (tab)
-In this tab there is a list of all presets that can be selected from a drop-down menu.
-**NOTE:** "_User Profiles_" is a particular menu item where the profiles that you saved from the Video Conversions and Audio Conversions interfaces are stored.
+In this tab there is a list of all presets that can be selected from a drop-down menu.   
+**Note:** "_User Profiles_" is a particular menu item where the profiles that you saved from the Video 
+Conversions and Audio Conversions interfaces are stored.
 
 ### Command Line FFmpeg (tab)
 By selecting the 'Command Line FFmpeg' tab you will see the command of each selected profile. To change a command on the 
