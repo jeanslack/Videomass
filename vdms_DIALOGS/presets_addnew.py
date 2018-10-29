@@ -56,8 +56,8 @@ class MemPresets(wx.Dialog):
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
         siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, "Description")
         self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, ("Parameters command "
-                        "line of the profile (Do not use `-i` or output file)"))
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, ("Command Line Parameters "
+                        "Do not use `-i` or output filename)"))
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
         siz4_supp = wx.StaticBox(self, wx.ID_ANY, ("Files supported in the "
                                         "import (do not include the `.`)"))
@@ -166,8 +166,8 @@ class MemPresets(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = ('https://jeanslack.github.io/Videomass2/Pages/'
-                'Presets_Management/Profiles_management.html')
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+                'PresetsManager_Panel/Profiles_management.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
