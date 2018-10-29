@@ -20,7 +20,7 @@ a specific part of the time position.
 To extract only a small segment in the middle of a film, it can be used in conjunction with Cut, which specifies the 
 duration.
 
-**Tip:** To find out the overall duration of an imported media file, you can use the Show Metadata tool.
+**Tip:** To find out the overall duration of an imported media file, you can use the [Show Metadata](Show_Metadata.md) tool.
 
 **trick:** To perform conversion tests, you can use the ** Cut ** parameter to set a short duration without 
 waiting for the end of a whole process (which can sometimes be very long).
