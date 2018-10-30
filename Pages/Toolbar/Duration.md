@@ -35,7 +35,7 @@ To find out the overall duration of an imported media file, you can use the [Sho
 
 ----------------
 
-### _Trick:_ 
+### _Trick_ 
 To perform conversion tests, you can use the **Cut** parameter to set a short duration without waiting for the end 
 of a whole process (which can sometimes be very long).
 
