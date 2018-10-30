@@ -16,7 +16,7 @@ When all time values are reset with the Clear key and then confirmed with the Ok
 
 ----------------
 
-### _How can I extract a segment?_
+### _How can I extract a segment from a media?_
 If you need to extract only a specific part of your media file, you will need to use the Seeking parameter to get 
 a specific part of the time position.
 To extract only a small segment in the middle of a movie, it can be used in conjunction with Cut, which specifies the 
@@ -29,18 +29,23 @@ minutes from the beginning of the film, we have to set the Seeking parameter to 
 
 ----------------
 
-**Tip:** To find out the overall duration of an imported media file, you can use the [Show Metadata](https://github.com/jeanslack/Videomass2/blob/gh-pages/Pages/Toolbar/Show_metadata.md) tool.
+### _Tip_
+To find out the overall duration of an imported media file, you can use the [Show Metadata](https://github.com/jeanslack/Videomass2/blob/gh-pages/Pages/Toolbar/Show_metadata.md) tool.
 
 ----------------
 
-**trick:** To perform conversion tests, you can use the **Cut** parameter to set a short duration without 
-waiting for the end of a whole process (which can sometimes be very long).
+### _Trick:_ 
+To perform conversion tests, you can use the **Cut** parameter to set a short duration without waiting for the end 
+of a whole process (which can sometimes be very long).
 
 ----------------
 
-**NOTES:** On Videomass2 the Duration tool, when set, generates a parameter that is reflected globally throughout 
-the program and in all those processes that use it, ie in all conversion processes with presets, video conversions, 
-audio conversions and playback.
+### _NOTES:_ 
+On Videomass2 the Duration tool, when set, generates a parameter that is reflected globally throughout the program 
+and in all those processes that use it, ie in all conversion processes with presets, video conversions, audio conversions 
+and playback.
 Keeping this principle in mind you can enable or disable this tool as needed.
+
+----------------
 
 [Back](../../videomass2_use.md)
