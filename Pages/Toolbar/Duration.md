@@ -24,7 +24,8 @@ duration.
 
 Example: if we have a film with a duration of one hour, to extract a segment from the twenty-third to forty-second 
 minutes from the beginning of the film, we have to set the Seeking parameter to 00.23.00 and the Cut parameter to 
-00.19, 00.  See the graph below.
+00.19, 00.  See the graph below.   
+
 ![Image](../../images/duration_graphic.png)
 
 ----------------
