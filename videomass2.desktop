@@ -2,7 +2,7 @@
 [Desktop Entry]
 Name=Videomass2
 GenericName=A Free and cross-platform GUI for FFmpeg
-Comment=
+Comment=Audio/Video Converter Interface
 Exec=/usr/bin/videomass2 %F
 Icon=/usr/share/pixmaps/videomass2.png
 Terminal=false
