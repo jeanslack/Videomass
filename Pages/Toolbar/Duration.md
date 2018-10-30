@@ -21,15 +21,22 @@ If you need to extract only a specific part of your media file, you will need to
 a specific part of the time position.
 To extract only a small segment in the middle of a movie, it can be used in conjunction with Cut, which specifies the 
 duration.   
+
 Example: if we have a film with a duration of one hour, to extract a segment from the twenty-third to forty-second 
 minutes from the beginning of the film, we have to set the Seeking parameter to 00.23.00 and the Cut parameter to 
 00.19, 00.  See the graph below.
 ![Image](../../images/duration_graphic.png)
 
+----------------
+
 **Tip:** To find out the overall duration of an imported media file, you can use the [Show Metadata](https://github.com/jeanslack/Videomass2/blob/gh-pages/Pages/Toolbar/Show_metadata.md) tool.
+
+----------------
 
 **trick:** To perform conversion tests, you can use the **Cut** parameter to set a short duration without 
 waiting for the end of a whole process (which can sometimes be very long).
+
+----------------
 
 **NOTES:** On Videomass2 the Duration tool, when set, generates a parameter that is reflected globally throughout 
 the program and in all those processes that use it, ie in all conversion processes with presets, video conversions, 
