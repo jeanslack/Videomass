@@ -42,9 +42,9 @@ of a whole process (which can sometimes be very long).
 ----------------
 
 ### _IMPORTANT NOTES:_ 
-On Videomass2 the Duration tool, when set, generates a parameter that is reflected globally throughout the program 
-and in all those processes that use it, ie in all conversion processes with _Presets Manager_, _Video Conversions_, _Audio Conversions_ interfaces and _playback_ function.
-Keeping this principle in mind you can enable or disable this tool as needed.
+The Duration tool, when set, generates a parameter that is extended globally, ie in all conversion processes with 
+the _Presets Manager_, _Video Conversions_, _Audio Conversions_ and _playback_ interfaces. 
+Keeping this principle in mind, it is possible to enable or disable this instrument as needed.
 
 ----------------
 
