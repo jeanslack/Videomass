@@ -7,7 +7,7 @@ Wizard
 ![Image](/images/windows_wizard.png)   
 
 Drag n Drop   
-![Image](/images/Windows_DnD.png)   
+![Image](/images/windows_DnD.png)   
 
 ### Xubuntu 18.04
 Presets Manager   
