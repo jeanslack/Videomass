@@ -4,10 +4,10 @@
 
 ![Image](../../../images/presets_manager.png)
 
-Presets Manager is an interface for managing and using profiles. It is based on two types of lists: the list of presets, 
-selectable by a drop down, and the list of profiles that always remains on display. Each preset can contain one or more 
-profiles; each profile can be executed as a conversion process; it can be edited or deleted. A user can also create new 
-profiles and organize them on certain presets.   
+Presets Manager is an interface that allows a quick selection of profiles to start a conversion process. It is based 
+on two types of lists: the list of presets, selectable by a drop down, and the list of selectable profiles. Each preset 
+can contain one or more profiles; each profile can be executed as a conversion process; 
+it can be edited or deleted. A user can also create new profiles and organize them on certain presets.   
 
 A single click on a profile enables the _start encoding_ and all the functions that can be performed on the profiles.   
 Double-clicking on the selected profile opens the dialog for editing the profile itself (the same can be done by pressing the _Edit_ button, see below for details).
