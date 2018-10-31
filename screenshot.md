@@ -3,13 +3,18 @@
 ## Screenshots
 
 ### Windows 7 x64
-![Image](/images/Windows1.png)
-![Image](/images/Windows2.png)
-### Debian KDE5
-![Image](/images/Linux1.png)
-![Image](/images/Linux2.png)
-![Image](/images/Linux3.png)
+Wizard   
+![Image](/images/windows_wizard.png)   
+
+Drag n Drop   
+![Image](/images/Windows_DnD.png)   
+
+### Xubuntu 18.04
+Presets Manager   
+![Image](/images/presets_manager.png)   
+
 ### MacOs High Sierra
-![Image](/images/MacOsHighSierra.png)
+during a conversion   
+![Image](/images/MacOsHighSierra.png)   
 
 [Home](index.md)
