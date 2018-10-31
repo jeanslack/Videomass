@@ -47,6 +47,7 @@ fly, you must first enable the write function on the [Setup dialog](https://gith
 not be stored on the profile. To save a new profile, you will need to use the 'New..' function in the toolbar.
 
 ### Start Encoding
+![Image](../../../images/start_encoding_button.png)   
 When you select a profile and press the _Start Encoding_ button in the main toolbar, the process immediately starts with the parameters of the selected profile. 
 
 At the end of the process the preview button is displayed in the toolbar, which you can use to check the conversion result.
