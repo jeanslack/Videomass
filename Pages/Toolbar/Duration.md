@@ -11,7 +11,8 @@ point (if set), and not from the beginning of the first scene of a movie.
 
 When set with time values above zero and then confirmed with the Ok button, the Duration button in the secondary toolbar is turned with a green gradient.   
 ![Image](../../images/btn_durationOn.png)   
-When all time values are reset with the Clear key and then confirmed with the Ok button, the key color will return to default.   
+When all time values are reset with the Clear button and then confirmed with the Ok button, the Duration button will 
+revert to default color.   
 ![Image](../../images/btn_durationOff.png)
 
 ----------------
@@ -31,7 +32,7 @@ minutes from the beginning of the film, we have to set the Seeking parameter to 
 ----------------
 
 ### _Tip_
-To find out the overall duration of an imported media file, you can use the [Show Metadata](https://github.com/jeanslack/Videomass2/blob/gh-pages/Pages/Toolbar/Show_metadata.html) tool.
+To find out the overall duration of an imported media file, you can use the [Show Metadata](Pages/Toolbar/Show_metadata.md) tool.
 
 ----------------
 
