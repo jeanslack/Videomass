@@ -31,7 +31,7 @@ minutes from the beginning of the film, we have to set the Seeking parameter to 
 ----------------
 
 ### _Tip_
-To find out the overall duration of an imported media file, you can use the [Show Metadata](https://github.com/jeanslack/Videomass2/blob/gh-pages/Pages/Toolbar/Show_metadata.md) tool.
+To find out the overall duration of an imported media file, you can use the [Show Metadata](https://github.com/jeanslack/Videomass2/blob/gh-pages/Pages/Toolbar/Show_metadata.html) tool.
 
 ----------------
 
