@@ -10,7 +10,7 @@ It has two tabs, one for summary information and the other for more extensive in
 types of data contained in the files. 
 Generally the following lists are marked in yellow:
 - General format
-- Video stream media (all index from 0 to max number)
+- Video media stream (all index from 0 to max number)
 - Audio media stream (all index from 0 to max number)
 - Subtitle media stream (all index from 0 to max number)
 
