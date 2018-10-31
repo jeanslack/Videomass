@@ -16,6 +16,7 @@ Double-clicking on a profile opens a profile editing window (the same can be don
 specific preset. All presets are located in the Videomass2 configuration folder.
 
 ### Menubar
+![Image](../../../images/menubarFile.png)   
 With **Presets Manager** interface, the following functions are enabled in the menubar - _File_:
 
 - _Save the current preset as separated file_ (export the selected preset)
