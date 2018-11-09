@@ -22,7 +22,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev: 20/July/2014, 12/March/2015, 30/Apr/2015,04/Aug/2018, 19/Oct/2018
+# Rev: 20/July/2014, 12/March/2015, 30/Apr/2015, 04/Aug/2018, 19/Oct/2018,
+#      09/Nov/2018
 #########################################################
 
 import wx
@@ -95,15 +96,15 @@ class Cut_Range(wx.Dialog):
 
         #----------------------Properties ----------------------#
         self.SetTitle('Duration - Videomass2')
-        self.start_hour_ctrl.SetMinSize((100,-1 ))
-        self.start_minute_ctrl.SetMinSize((100, -1))
-        self.start_second_ctrl.SetMinSize((100, -1))
+        #self.start_hour_ctrl.SetMinSize((100,-1 ))
+        #self.start_minute_ctrl.SetMinSize((100, -1))
+        #self.start_second_ctrl.SetMinSize((100, -1))
         self.start_hour_ctrl.SetToolTipString("Hours time")
         self.start_minute_ctrl.SetToolTipString("Minutes Time")
         self.start_second_ctrl.SetToolTipString("Seconds time")
-        self.stop_hour_ctrl.SetMinSize((100, -1))
-        self.stop_minute_ctrl.SetMinSize((100, -1))
-        self.stop_second_ctrl.SetMinSize((100, -1))
+        #self.stop_hour_ctrl.SetMinSize((100, -1))
+        #self.stop_minute_ctrl.SetMinSize((100, -1))
+        #self.stop_second_ctrl.SetMinSize((100, -1))
         self.stop_hour_ctrl.SetToolTipString("Hours amount duration")
         self.stop_second_ctrl.SetToolTipString("Minutes amount duration")
         self.stop_minute_ctrl.SetToolTipString("Seconds amount duration")
@@ -130,17 +131,18 @@ class Cut_Range(wx.Dialog):
         gridFlex2.Add(self.stop_second_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
     
         gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridhelp.Add(btn_help,1, wx.ALL,5)
+        gridhelp.Add(btn_help, 1, wx.ALL,5)
         gridexit = wx.GridSizer(1, 3, 0, 0)
-        gridexit.Add(btn_close,1, wx.ALL, 5)
-        gridexit.Add(btn_ok,1,wx.ALL,5)
-        gridexit.Add(btn_reset,1, wx.ALL,5)
-        #gridBtn = wx.FlexGridSizer(1, 2, 0, 0)
-        gridBtn = wx.BoxSizer()
-        gridBtn.Add(gridhelp,0, wx.ALL, 10)
-        gridBtn.Add(gridexit,1, wx.ALL,10)
-        grid_sizer_base.Add(gridBtn,1, wx.ALL|wx.ALIGN_CENTRE, 0)
-        sizer_base.Add(grid_sizer_base, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridexit.Add(btn_close, 1, wx.ALL,5)
+        gridexit.Add(btn_ok, 1, wx.ALL,5)
+        gridexit.Add(btn_reset, 1, wx.ALL,5)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        #gridBtn = wx.BoxSizer()
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        #grid_sizer_base.Add(gridBtn)#, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
+        grid_sizer_base.Add(gridBtn, 1, wx.ALL,5)
+        sizer_base.Add(grid_sizer_base)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -420,19 +422,19 @@ class VideoCrop(wx.Dialog):
         """
         self.label_width = wx.StaticText(self, wx.ID_ANY, ("Width"))
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
-                               size=(100,-1), style=wx.TE_PROCESS_ENTER
+                               size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                 )
         self.label_height = wx.StaticText(self, wx.ID_ANY, ("Height"))
         self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
-                                 size=(100,-1), style=wx.TE_PROCESS_ENTER
+                                 size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
         self.label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
         self.crop_X = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
-                                 size=(100,-1), style=wx.TE_PROCESS_ENTER
+                                 size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
         self.label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
         self.crop_Y = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
-                                 size=(100,-1), style=wx.TE_PROCESS_ENTER
+                                 size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     "Crop Dimensions")), wx.VERTICAL)
@@ -656,7 +658,7 @@ class VideoResolution(wx.Dialog):
                                           )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1))
+                                      size=(-1,-1))
         label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
         label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
@@ -664,7 +666,7 @@ class VideoResolution(wx.Dialog):
                                           )
         self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1)
+                                      size=(-1,-1)
                                       )##
         label_den = wx.StaticText(self, wx.ID_ANY, ("Denominator")
                                           )
@@ -675,7 +677,7 @@ class VideoResolution(wx.Dialog):
                                           )
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1))
+                                      size=(-1,-1))
         label_sepsar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
         label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
@@ -683,7 +685,7 @@ class VideoResolution(wx.Dialog):
                                           )
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1))##
+                                      size=(-1,-1))##
         label_den1 = wx.StaticText(self, wx.ID_ANY, ("Denominator")
                                           )
         ####----- confirm buttons section

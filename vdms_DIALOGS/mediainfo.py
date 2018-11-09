@@ -56,11 +56,11 @@ class Mediainfo(wx.Dialog):
         #----------------------Properties----------------------#
         self.SetTitle(title)
         format_info.SetMinSize((640, 300))
-        format_info.SetBackgroundColour(wx.Colour(217, 255, 255))
+        #format_info.SetBackgroundColour(wx.Colour(217, 255, 255))
         format_info.InsertColumn(0, 'Type', width=200)
         format_info.InsertColumn(1, 'Parameters', width=450)
         streams_info.SetMinSize((640, 300))
-        streams_info.SetBackgroundColour(wx.Colour(217, 255, 255))
+        #streams_info.SetBackgroundColour(wx.Colour(217, 255, 255))
         streams_info.InsertColumn(0, 'Type', width=200)
         streams_info.InsertColumn(1, 'Parameters', width=450)
         
@@ -115,7 +115,7 @@ class Mediainfo(wx.Dialog):
                 (key, value) = format_list[a][0].strip().split('=')
                 num_items = format_info.GetItemCount()
                 format_info.InsertStringItem(num_items, 'General format:')
-                format_info.SetItemBackgroundColour(index, "yellow")
+                format_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in format_list[a]:
                     (key, value) = b.strip().split('=')
@@ -134,7 +134,7 @@ class Mediainfo(wx.Dialog):
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
                                'Video media stream (index %s):' % (value[0]))
-                streams_info.SetItemBackgroundColour(index, "yellow")
+                streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in video_list[a]:
                     (key, value) = b.strip().split('=')
@@ -151,7 +151,7 @@ class Mediainfo(wx.Dialog):
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
                                'Audio media stream (index %s):' % (value[0]))
-                streams_info.SetItemBackgroundColour(index, "yellow")
+                streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in audio_list[a]:
                     (key, value) = b.strip().split('=')
@@ -168,7 +168,7 @@ class Mediainfo(wx.Dialog):
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
                             'Subtitle media stream (index %s):' % (value[0]))
-                streams_info.SetItemBackgroundColour(index, "yellow")
+                streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in subtitle_list[a]:
                     (key, value) = b.strip().split('=')
