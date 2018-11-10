@@ -35,7 +35,7 @@ dirname = os.path.expanduser('~') # /home/user/
 duration = []
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
-yellow = '#faff35'
+yellow = '#dac714'
 greenolive = '#8aab3c'
 orange = '#f28924'
 

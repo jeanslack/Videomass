@@ -127,7 +127,7 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
                 ]
     
-    DEPENDENCIES = ['python', 'wxpython']
+    DEPENDENCIES = ['python', 'wxpython', 'ffmpeg']
     EXTRA_DEPEND = {'ffmpeg':  ["ffmpeg"],}
     
     setup(name = PRG_NAME,

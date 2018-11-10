@@ -79,7 +79,7 @@ vcodec = {
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
-yellow = '#faff35'
+yellow = '#dac714'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#8aab3c'
