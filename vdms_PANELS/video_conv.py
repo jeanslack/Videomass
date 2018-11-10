@@ -223,7 +223,7 @@ class Video_Conv(wx.Panel):
                                          wx.ID_ANY, ("Filters Section")
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-        size=(100, -1), choices=[("Set default "), ("4:3"), ("16:9")], 
+        size=(200, -1), choices=[("Set default "), ("4:3"), ("16:9")], 
         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 

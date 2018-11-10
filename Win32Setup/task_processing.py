@@ -105,7 +105,7 @@ class GeneralProcess(wx.Panel):
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
         # set_properties:
-        self.OutText.SetBackgroundColour((217, 255, 255))
+        #self.OutText.SetBackgroundColour((217, 255, 255))
         self.ckbx_text.SetToolTipString("Show FFmpeg messages in real time in "
                                         "the log view console, useful for "
                                         "knowledge the all exit status as "
