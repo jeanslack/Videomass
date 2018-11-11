@@ -79,7 +79,7 @@ vcodec = {
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
-yellow = '#dac714'
+yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#8aab3c'
@@ -295,18 +295,18 @@ class Video_Conv(wx.Panel):
         
         self.notebook_1_pane_4 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_h264preset = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-        "presets (h264)"), choices=[("Disabled"), ("ultrafast"), 
+        "presets"), choices=[("Disabled"), ("ultrafast"), 
         ("superfast"), ("veryfast"), ("faster"), ("fast"), ("medium"), 
         ("slow"), ("slower"), ("veryslow"), ("placebo")],  majorDimension=0, 
                                                     style=wx.RA_SPECIFY_ROWS
                                                     )
         self.rdb_h264profile = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-        "Profile (h264)"), choices=[("Disabled"), ("baseline"), 
+        "Profile"), choices=[("Disabled"), ("baseline"), 
         ("main"), ("high"), ("high10"), ("high444")], majorDimension=0, 
                                                     style=wx.RA_SPECIFY_ROWS
                                                     )
         self.rdb_h264tune = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-        "Tune (h264)"), choices=[("Disabled"), ("film"), ("animation"),
+        "Tune"), choices=[("Disabled"), ("film"), ("animation"),
         ("grain"), ("stillimage"), ("psnr"), ("ssim"), ("fastecode"), 
                 ("zerolatency")], majorDimension=0, style=wx.RA_SPECIFY_ROWS
                 )
@@ -405,7 +405,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1.AddPage(self.notebook_1_pane_1, ("Video Container"))
         self.notebook_1.AddPage(self.notebook_1_pane_2, ("Video Settings"))
         self.notebook_1.AddPage(self.notebook_1_pane_3, ("Audio Settings"))
-        self.notebook_1.AddPage(self.notebook_1_pane_4, ("Codec H264 Options"))
+        self.notebook_1.AddPage(self.notebook_1_pane_4, ("H.264/X.264 Options"))
         grid_sizer_base.Add(self.notebook_1, 1, wx.ALL | wx.EXPAND, 5)
         self.panel_base.SetSizer(grid_sizer_base)
         grid_sizer_base.AddGrowableRow(0)
@@ -477,14 +477,14 @@ class Video_Conv(wx.Panel):
         self.rdb_a.SetToolTipString("Choose the appropriate Audio Codec. "
                                     "Some Audio Codecs are disabled for "
                                     "certain Video Containers. " )
-        self.rdb_h264preset.SetToolTipString("preset h264")
+        self.rdb_h264preset.SetToolTipString("preset h.264")
         self.rdb_h264preset.SetSelection(0)
-        self.rdb_h264profile.SetToolTipString("profili h264")
+        self.rdb_h264profile.SetToolTipString("profili h.264")
         self.rdb_h264profile.SetSelection(0)
-        self.rdb_h264tune.SetToolTipString("tune h264")
+        self.rdb_h264tune.SetToolTipString("tune h.264")
         self.rdb_h264tune.SetSelection(0)
         self.notebook_1_pane_4.SetToolTipString("The parameters on this tab "
-                        "are enabled only for the video-codec h264. Although "
+                        "are enabled only for the video-codec h.264. Although "
                         "optional, is set to 'preset medium' as default "
                         "parameter.")
 
