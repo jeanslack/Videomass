@@ -80,17 +80,15 @@ def system_check():
         icon_help = '%s/art/icon_help.png' % PWD
         icon_headphones = '%s/art/icon_headphones.png' % PWD
         icon_import = '%s/art/icon_import.png' % PWD
-        icn_play = '%s/art/play.png' % PWD
         icn_infosource = '%s/art/infosource.png' % PWD
         icn_preview = '%s/art/preview.png' % PWD
-        icn_infoexport = '%s/art/infoexport.png' % PWD
         icn_cut = '%s/art/cut.png' % PWD
         icn_playfilters = '%s/art/playfilters.png' % PWD
         icn_resetfilters = '%s/art/resetfilters.png' % PWD
-        """
-        assignment path at the contestual help for helping:
-        """
-        help_html = "file://%s/docs/HTML" % PWD
+        icn_saveprf = '%s/art/saveprf.png' % PWD
+        icn_newprf = '%s/art/newprf.png' % PWD
+        icn_delprf = '%s/art/delprf.png' % PWD
+        icn_editprf = '%s/art/editprf.png' % PWD
         
     elif OS == ('Linux'):
         """
@@ -109,25 +107,15 @@ def system_check():
         icon_help = '/usr/share/videomass2/icons/icon_help.png'
         icon_headphones = '/usr/share/videomass2/icons/icon_headphones.png'
         icon_import = '/usr/share/videomass2/icons/icon_import.png'
-        icn_play = '/usr/share/videomass2/icons/play.png'
         icn_infosource = '/usr/share/videomass2/icons/infosource.png'
         icn_preview = '/usr/share/videomass2/icons/preview.png'
-        icn_infoexport = '/usr/share/videomass2/icons/infoexport.png'
         icn_cut = '/usr/share/videomass2/icons/cut.png'
         icn_playfilters = '/usr/share/videomass2/icons/playfilters.png'
         icn_resetfilters = '/usr/share/videomass2/icons/resetfilters.png'
-        """
-        assignment path at the contestual help for helping.
-        This change if Slackware, debian, etc.
-        """
-        if os.path.exists('/usr/doc/videomass2/HTML'): # Slackware
-            help_html = 'file:///usr/doc/videomass2/HTML'
-            
-        elif os.path.exists('/usr/share/doc/python-videomass2/HTML'):# debian
-            help_html = 'file:///usr/share/doc/python-videomass2/HTML'
-            
-        else:
-            print 'ERROR LOAD HTML PAGE: path not found'
+        icn_saveprf = '/usr/share/videomass2/icons/saveprf.png'
+        icn_newprf = '/usr/share/videomass2/icons/newprf.png'
+        icn_delprf = '/usr/share/videomass2/icons/delprf.png'
+        icn_editprf = '/usr/share/videomass2/icons/editprf.png'
             
     else: # it should be Windows OS
         """
@@ -144,17 +132,15 @@ def system_check():
         icon_help = '%s/art/icon_help.png' % PWD
         icon_headphones = '%s/art/icon_headphones.png' % PWD
         icon_import = '%s/art/icon_import.png' % PWD
-        icn_play = '%s/art/play.png' % PWD
         icn_infosource = '%s/art/infosource.png' % PWD
         icn_preview = '%s/art/preview.png' % PWD
-        icn_infoexport = '%s/art/infoexport.png' % PWD
         icn_cut = '%s/art/cut.png' % PWD
         icn_playfilters = '%s/art/playfilters.png' % PWD
         icn_resetfilters = '%s/art/resetfilters.png' % PWD
-        """
-        assignment path at the contestual help for helping:
-        """
-        help_html = "file://%s/docs/HTML" % PWD
+        icn_saveprf = '%s/art/saveprf.png' % PWD
+        icn_newprf = '%s/art/newprf.png' % PWD
+        icn_delprf = '%s/art/delprf.png' % PWD
+        icn_editprf = '%s/art/editprf.png' % PWD
         
     #### check videomass.conf and config directory
     if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
@@ -178,9 +164,9 @@ def system_check():
             copyerr = True
 
     return (videomass_icon, icon_presets, icon_switchvideomass, icon_process, 
-            icon_help, help_html, OS, path_srcShare, copyerr, icon_headphones, 
-            icon_import, icn_play, icn_infosource, icn_preview, icn_infoexport,
-            icn_cut, icn_playfilters, icn_resetfilters
+            icon_help, OS, path_srcShare, copyerr, icon_headphones, 
+            icon_import, icn_infosource, icn_preview, icn_cut, icn_playfilters, 
+            icn_resetfilters, icn_saveprf, icn_newprf, icn_delprf, icn_editprf
             )
 #------------------------------------------------------------------#
 def parsing_fileconf():

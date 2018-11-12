@@ -57,14 +57,14 @@ def process(self, varargs, path_log, panelshown, duration, OS):
 
     self.ProcessPanel = GeneralProcess(self, path_log, panelshown, varargs)
 #-----------------------------------------------------------------------#
-def stream_info(title, filepath , helping, ffprobe_link):
+def stream_info(title, filepath , ffprobe_link):
     """
     Show media information of the streams content.
     This function make a bit control of file existance.
     """
     try:
         with open(filepath):
-            dialog = Mediainfo(title, filepath, helping, ffprobe_link)
+            dialog = Mediainfo(title, filepath, ffprobe_link)
             dialog.Show()
 
     except IOError:
@@ -82,9 +82,10 @@ def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
             #thread.join()# attende che finisca il thread (se no ritorna subito)
             #error = thread.data
     except IOError:
-            wx.MessageBox("File does not exist or not a valid file:  %s" % (
-                filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
-            return
+        wx.MessageBox("File does not exist or not a valid file:  %s" % (
+            filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
+        return
+    
 #-----------------------------------------------------------------------#
 def probeDuration(path_list, ffprobe_link):
     """

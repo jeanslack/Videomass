@@ -35,7 +35,7 @@ dirname = os.path.expanduser('~') # /home/user/
 duration = []
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
-yellow = '#faff35'
+yellow = '#a29500'
 greenolive = '#8aab3c'
 orange = '#f28924'
 
@@ -143,7 +143,7 @@ class DnDPanel(wx.Panel):
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         self.ckbx_dir = wx.CheckBox(self, wx.ID_ANY, (
                                 "Save destination in source folder"))
-        self.btn_save = wx.Button(self, wx.ID_SAVE, "")
+        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1,-1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER | wx.TE_READONLY
                                                     )
@@ -206,9 +206,10 @@ class DnDPanel(wx.Panel):
         menuItem = menu.FindItemById(itemId)
 
         if not self.selected:
-            self.parent.statusbar_msg('No file selected yet', yellow)
+            self.parent.statusbar_msg('No file selected for `%s` yet' % 
+                                      menuItem.GetLabel(), yellow)
         else:
-            self.parent.statusbar_msg('Drag and Drop - panel', azure)
+            self.parent.statusbar_msg('Drag and Drop - panel', None)
             if menuItem.GetLabel() == "Play selected file":
                 self.parent.ImportPlay()
             elif menuItem.GetLabel() == "Show metadata window":

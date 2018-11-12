@@ -45,7 +45,7 @@ Long_Dscrp = dr[1]
 Short_Lic = dr[2]
 Long_Lic = dr[3]
 
-def info(videomass_icon):
+def info(parent, videomass_icon):
         """
         It's a predefined template to create a dialogue on 
         the program information
@@ -55,34 +55,33 @@ def info(videomass_icon):
 
         info.SetIcon(wx.Icon(videomass_icon, wx.BITMAP_TYPE_PNG))
         
-        info.SetName("%s - " % Name)
+        info.SetName("%s" % Name)
         
-        info.SetVersion("v%s" % Version)
+        info.SetVersion("%s" % Version)
         
-        info.SetDescription(u'%s\n\n%s' %(Short_Dscrp,Long_Dscrp))
-        
-        info.SetCopyright("%s\nby %s" %(Copyright, Author))
+        info.SetDescription(u'%s\nThis is a test release version.' %(
+                                                                Short_Dscrp)
+                            )
+        info.SetCopyright("Copyright %s %s" %(Copyright, Author))
         
         info.SetWebSite(Website)
         
         info.SetLicence(Long_Lic)
         
-        info.AddDeveloper(u"\n%s \n"
-                        u"%s\n"
-                        u"%s\n\n"
-                        u"%s\n" %(Author,Mail,Website,Comment))
-        #info.AddDocWriter(u"La documentazione ufficiale é parziale e ancora\n"
-                        #u"in fase di sviluppo, si prega di contattare l'autore\n"
-                        #u"per ulteriori delucidazioni.")
+        #info.AddDeveloper(u"\n%s \n"
+                        #u"%s\n"
+                        #u"%s\n\n"
+                        #u"%s\n" %(Author,Mail,Website,Comment))
+        info.AddDeveloper(u"%s %s,\n%s\n" %(Author,Mail,Comment))
+        info.AddDocWriter("The official documentation is partial and still\n"
+                          "under development, please contact the author\n"
+                          "for further information.\n")
                         
         #info.AddArtist(u'Gianluca Pernigotto powered by wx.Python')
         
-        #info.AddTranslator(u"Al momento, il supporto alle traduzioni manca del\n"
-                        #u"tutto, l'unica lingua presente nel programma é\n"
-                        #u"quella italiana a cura di: Gianluca Pernigotto\n\n"
-
-                        #u"Se siete interessati a tradurre il programma\n"
-                        #u"in altre lingue, contattare l'autore.")
+        info.AddTranslator("Not yet support for translations. If you are\n"
+                           "interested in translating the program into\n"
+                           "other languages, contact the author.")
                     
         wx.AboutBox(info)
         #event.Skip()

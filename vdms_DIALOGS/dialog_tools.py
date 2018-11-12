@@ -22,13 +22,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (05) 20/07/2014
-# Rev (06) 12/03/2015
-# Rev (07)  30/04/2015 (improved management audio with ffprobe)
-# Rev (08)  04/Aug/2018 (improved management audio with ffprobe)
+# Rev: 20/July/2014, 12/March/2015, 30/Apr/2015, 04/Aug/2018, 19/Oct/2018,
+#      09/Nov/2018
 #########################################################
 
 import wx
+import webbrowser
 #import wx.lib.masked as masked # not work on macOSX
 
 ####################################################################
@@ -77,7 +76,7 @@ class Cut_Range(wx.Dialog):
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_1_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        "Start time position (hours:min:sec)")), wx.VERTICAL)
+                        "Seeking (start point) [hh,mm,ss]")), wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
         lab3 = wx.StaticText(self, wx.ID_ANY, (":"))
@@ -89,22 +88,23 @@ class Cut_Range(wx.Dialog):
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        "Time progress duration (hours:min:sec)")), wx.VERTICAL)
+                        "Cut (end point) [hh,mm,ss]")), wx.VERTICAL)
+        btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         #----------------------Properties ----------------------#
-        self.SetTitle('Set Time Sequences - Videomass2')
-        self.start_hour_ctrl.SetMinSize((100,-1 ))
-        self.start_minute_ctrl.SetMinSize((100, -1))
-        self.start_second_ctrl.SetMinSize((100, -1))
+        self.SetTitle('Duration - Videomass2')
+        #self.start_hour_ctrl.SetMinSize((100,-1 ))
+        #self.start_minute_ctrl.SetMinSize((100, -1))
+        #self.start_second_ctrl.SetMinSize((100, -1))
         self.start_hour_ctrl.SetToolTipString("Hours time")
         self.start_minute_ctrl.SetToolTipString("Minutes Time")
         self.start_second_ctrl.SetToolTipString("Seconds time")
-        self.stop_hour_ctrl.SetMinSize((100, -1))
-        self.stop_minute_ctrl.SetMinSize((100, -1))
-        self.stop_second_ctrl.SetMinSize((100, -1))
+        #self.stop_hour_ctrl.SetMinSize((100, -1))
+        #self.stop_minute_ctrl.SetMinSize((100, -1))
+        #self.stop_second_ctrl.SetMinSize((100, -1))
         self.stop_hour_ctrl.SetToolTipString("Hours amount duration")
         self.stop_second_ctrl.SetToolTipString("Minutes amount duration")
         self.stop_minute_ctrl.SetToolTipString("Seconds amount duration")
@@ -113,9 +113,8 @@ class Cut_Range(wx.Dialog):
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
         gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
         gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
         
-        grid_sizer_base.Add(sizer_1_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizer_base.Add(sizer_1_staticbox,0,wx.ALL|wx.ALIGN_CENTRE, 5)
         sizer_1_staticbox.Add(gridFlex1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         gridFlex1.Add(self.start_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(lab1,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
@@ -123,21 +122,27 @@ class Cut_Range(wx.Dialog):
         gridFlex1.Add(lab2,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex1.Add(self.start_second_ctrl,0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         
-        grid_sizer_base.Add(sizer_2_staticbox,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        grid_sizer_base.Add(sizer_2_staticbox,0,wx.ALL|wx.ALIGN_CENTRE,5)
         sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         gridFlex2.Add(self.stop_hour_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(lab3,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_minute_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(lab4,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         gridFlex2.Add(self.stop_second_ctrl,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        
-        grid_sizer_base.Add(gridBtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-        gridBtn.Add(btn_close,0, wx.ALL,5)
-        gridBtn.Add(btn_ok,0,wx.ALL,5)
-        gridBtn.Add(btn_reset,0, wx.ALL,5)
-        
-        sizer_base.Add(grid_sizer_base, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-
+    
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help, 1, wx.ALL,5)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridexit.Add(btn_close, 1, wx.ALL,5)
+        gridexit.Add(btn_ok, 1, wx.ALL,5)
+        gridexit.Add(btn_reset, 1, wx.ALL,5)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        #gridBtn = wx.BoxSizer()
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        #grid_sizer_base.Add(gridBtn)#, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
+        grid_sizer_base.Add(gridBtn, 1, wx.ALL,5)
+        sizer_base.Add(grid_sizer_base)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -149,6 +154,7 @@ class Cut_Range(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.stop_hour, self.stop_hour_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.stop_minute, self.stop_minute_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.stop_second, self.stop_second_ctrl)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         self.Bind(wx.EVT_BUTTON, self.resetValues, btn_reset)
@@ -200,6 +206,12 @@ class Cut_Range(wx.Dialog):
         self.stop_minute_ctrl.SetValue(0), self.stop_second_ctrl.SetValue(0)
         self.init_hour, self.init_minute, self.init_seconds = '00','00','00'
         self.cut_hour, self.cut_minute, self.cut_seconds = '00','00','00'
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Toolbar/Duration.html'
+        webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
 
@@ -410,31 +422,31 @@ class VideoCrop(wx.Dialog):
         """
         self.label_width = wx.StaticText(self, wx.ID_ANY, ("Width"))
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
-                               size=(100,-1), style=wx.TE_PROCESS_ENTER
+                               size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                 )
         self.label_height = wx.StaticText(self, wx.ID_ANY, ("Height"))
         self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
-                                 size=(100,-1), style=wx.TE_PROCESS_ENTER
+                                 size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
         self.label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
         self.crop_X = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
-                                 size=(100,-1), style=wx.TE_PROCESS_ENTER
+                                 size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
         self.label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
         self.crop_Y = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
-                                 size=(100,-1), style=wx.TE_PROCESS_ENTER
+                                 size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     "Crop Dimensions")), wx.VERTICAL)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
         #----------------------Handle layout---------------------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        gridBase = wx.FlexGridSizer(2, 0, 0, 0)
+        gridBase = wx.FlexGridSizer(2, 1, 0, 0)
         sizerBase.Add(gridBase, 0, wx.ALL, 0)
-        gridBtnExit = wx.FlexGridSizer(1, 3, 0, 0)
         sizer_3 = wx.BoxSizer(wx.VERTICAL)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
 
@@ -474,34 +486,33 @@ class VideoCrop(wx.Dialog):
                                                 | wx.ALIGN_CENTER_VERTICAL,5
                                                 )
         sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
-        gridBase.Add(sizerLabel, 1, wx.ALL | 
+        gridBase.Add(sizerLabel, 1, wx.ALL |
                                     wx.ALIGN_CENTER_HORIZONTAL | 
-                                    wx.ALIGN_CENTER_VERTICAL,15)
-        gridBase.Add(gridBtnExit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        
-        gridBtnExit.Add(btn_close, 1, wx.ALL ,5)
-        gridBtnExit.Add(self.btn_ok, 1, wx.ALL ,5)
-        gridBtnExit.Add(btn_reset, 1, wx.ALL ,5)
+                                    wx.ALIGN_CENTER_VERTICAL,10)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridBase.Add(gridBtn)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridBtn.Add(gridhelp, 0, wx.ALL ,5)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridBtn.Add(gridexit, 0, wx.ALL ,5)
+        gridhelp.Add(btn_help, 1, wx.ALL ,5)
+        gridexit.Add(btn_close, 1, wx.ALL, 5)
+        gridexit.Add(self.btn_ok, 1, wx.ALL ,5)
+        gridexit.Add(btn_reset, 1, wx.ALL ,5)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
         
         #----------------------Properties------------------------------------#
         self.SetTitle("Video/Image Crop - Videomass2")
-        self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
         height = ('The height of the output video.\nSet to -1 for disabling.')
         width = ('The width of the output video.\nSet to -1 for disabling.')
-        x = ('The horizontal position of the left edge. The value 0 sets '
-             'the position on the extreme left of the frame. Values above 0 '
-             'move the position to the right side of the frame.\n'
-             'Set to -1 to disable this position and center the frame.')
-        y = ('The vertical position of the top edge of the left corner. ' 
-             'Values above 0 move the position towards the bottom side of '
-             'the frame.\n'
-             'Set to -1 to disable this position and center the frame.')
+        x = ('The horizontal position of the left edge.')
+        y = ('The vertical position of the top edge of the left corner.')
         self.crop_width.SetToolTipString('Width:\n%s' % width)
         self.crop_Y.SetToolTipString('Y:\n%s' % y)
         self.crop_X.SetToolTipString('X:\n%s' % x)
@@ -511,6 +522,7 @@ class VideoCrop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         
         if fcrop: # set the previusly values
             s = fcrop.split(':')
@@ -529,6 +541,14 @@ class VideoCrop(wx.Dialog):
                 if i.startswith('y'):
                     self.y = i[2:]
                     self.crop_Y.SetValue(int(self.y))
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+                'VideoConv_Panel/Filters/FilterCrop.html')
+        webbrowser.open(page)
+    #------------------------------------------------------------------#
 
     def on_reset(self, event):
         self.h, self.y, self.x, self.w = "", "", "", ""
@@ -611,47 +631,65 @@ class VideoResolution(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
         ####----scaling static box section
+        
         v_scalingbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Set Video Scaling")), wx.VERTICAL)
+                                    "Scale (resize)")), wx.VERTICAL)
+        
+        label_width = wx.StaticText(self, wx.ID_ANY, ("Width")
+                                          )
         
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
                                             max=9000, style=wx.TE_PROCESS_ENTER
                                             )
-        self.label_x1 = wx.StaticText(self, wx.ID_ANY, ("X")
+        label_x1 = wx.StaticText(self, wx.ID_ANY, ("X")
                                       )
-        self.label_x1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
+        label_x1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD,0, "")
                               )
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
                                              max=9000, style=wx.TE_PROCESS_ENTER
                                              )
-        self.label_setdar = wx.StaticText(self, wx.ID_ANY, ("SetDar:")
+        label_height = wx.StaticText(self, wx.ID_ANY, ("Height")
+                                          )
+        #-------
+        
+        v_setdar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                    "Setdar (display aspect ratio):")), wx.VERTICAL)
+        label_num = wx.StaticText(self, wx.ID_ANY, ("Numerator")
                                           )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1))
-        self.label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/")
+                                      size=(-1,-1))
+        label_sepdar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
-        self.label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
+        label_sepdar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
                                           wx.BOLD,0, "")
                                           )
         self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1)
+                                      size=(-1,-1)
                                       )##
-        self.label_setsar = wx.StaticText(self, wx.ID_ANY, ("SetSar:")
+        label_den = wx.StaticText(self, wx.ID_ANY, ("Denominator")
+                                          )
+        #----------
+        v_setsar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                    "SetSar (sample aspect ratio):")), wx.VERTICAL)
+        label_num1 = wx.StaticText(self, wx.ID_ANY, ("Numerator")
                                           )
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1))
-        self.label_sepsar = wx.StaticText(self, wx.ID_ANY, ("/")
+                                      size=(-1,-1))
+        label_sepsar = wx.StaticText(self, wx.ID_ANY, ("/")
                                           )
-        self.label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
+        label_sepsar.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, 
                                           wx.BOLD,0, "")
                                           )
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
-                                      size=(90,-1))##
+                                      size=(-1,-1))##
+        label_den1 = wx.StaticText(self, wx.ID_ANY, ("Denominator")
+                                          )
         ####----- confirm buttons section
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -661,30 +699,51 @@ class VideoResolution(wx.Dialog):
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
         
         # scaling section:
-        grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 5)
-        Flex_scale_base = wx.FlexGridSizer(2, 1, 0, 0)
-        Flex_scale = wx.FlexGridSizer(1, 3, 0, 0)
-        Flex_scale_base.Add(Flex_scale)
+        grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 15)
+        grid_sizer_base.Add(v_setdar, 1, wx.ALL | wx.EXPAND, 15)
+        grid_sizer_base.Add(v_setsar, 1, wx.ALL | wx.EXPAND, 15)
+        #Flex_scale_base = wx.GridSizer(3, 1, 0, 0)
+        
+        
+       # Flex_scale_base.Add(Flex_scale)
+        Flex_scale = wx.FlexGridSizer(1, 5, 0, 0)
+        v_scalingbox.Add(Flex_scale, 0, wx.ALL|wx.ALIGN_CENTER, 5)
+        Flex_scale.Add(label_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(self.spin_scale_width, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_scale.Add(self.label_x1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_scale.Add(label_x1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         Flex_scale.Add(self.spin_scale_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar = wx.FlexGridSizer(2, 4, 0, 0)
-        Flex_scale_base.Add(Flex_darsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_setdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setdarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_sepdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setdarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_setsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setsarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        Flex_darsar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        v_scalingbox.Add(Flex_scale_base)
+        Flex_scale.Add(label_height, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        Flex_dar = wx.FlexGridSizer(1, 5, 0, 0)
+        v_setdar.Add(Flex_dar, 0, wx.ALL|wx.ALIGN_CENTER, 5)
+        Flex_dar.Add(label_num, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(self.spin_setdarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(label_sepdar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_dar.Add(label_den, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        Flex_sar = wx.FlexGridSizer(1, 5, 0, 0)
+        v_setsar.Add(Flex_sar, 0, wx.ALL|wx.ALIGN_CENTER, 5)
+        Flex_sar.Add(label_num1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(self.spin_setsarNum, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(label_sepsar, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        Flex_sar.Add(label_den1, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
         # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
-        gridBtn.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridexit.Add(btn_close,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridexit.Add(self.btn_ok,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridexit.Add(btn_reset,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        
+        gridBtn.Add(gridhelp, 1, wx.ALL, 10)
+        gridBtn.Add(gridexit, 1, wx.ALL, 10)
+        
+        
+        grid_sizer_base.Add(gridBtn)#, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         # final settings:
         sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
@@ -692,43 +751,19 @@ class VideoResolution(wx.Dialog):
         self.Layout()
         
         # Properties
-        self.SetTitle("Set Video Size - Videomass2")
-        self.spin_scale_width.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.spin_scale_height.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.spin_setdarNum.SetBackgroundColour(wx.Colour(161, 224, 153))
-        self.spin_setdarDen.SetBackgroundColour(wx.Colour(161, 224, 153))
-        self.spin_setsarNum.SetBackgroundColour(wx.Colour(227, 235, 110))
-        self.spin_setsarDen.SetBackgroundColour(wx.Colour(227, 235, 110))
-        scale_str = (
-        'Scale (resize) the input video or image, using the libswscale library. '
-        " If we'd like to keep the aspect ratio, we need to specify only one "
-        'component, either width or height, and set the other component to -1 '
-        'or to -2.\nSet to 0 for disabling.')
+        self.SetTitle("Resize (change resolution) - Videomass2")
+
+        scale_str = ('Scale (resize) the input video or image.')
         self.spin_scale_width.SetToolTipString('WIDTH:\n%s' % scale_str)
         self.spin_scale_height.SetToolTipString('HEIGHT:\n%s' % scale_str)
-        setdar_str = (
-        'Set the frame (d)isplay (a)spect (r)atio. The setdar filter sets the '
-         'Display Aspect Ratio for the filter output video. This is done by ' 
-         'changing the specified Sample (aka Pixel) Aspect Ratio, according to ' 
-         'the following equation: \n'
-             'DAR = HORIZONTAL_RESOLUTION / VERTICAL_RESOLUTION * SAR \n'
-         'Keep in mind that the setdar filter does not modify the pixel '
-         'dimensions of the video frame. Also, the display aspect ratio set by '
-         'this filter may be changed by later filters in the filterchain, e.g. '
-         'in case of scaling or if another "setdar" or a "setsar" filter is '
-         'applied.\nSet to 0 for disabling.')
-        self.spin_setdarNum.SetToolTipString(setdar_str)
-        self.spin_setdarDen.SetToolTipString(setdar_str)
-        setsar_str = (
-        'The setsar filter sets the Sample (aka Pixel) Aspect Ratio for the '
-        'filter output video. Note that as a consequence of the application '
-        'of this filter, the output display aspect ratio will change according '
-        'to the equation above. Keep in mind that the sample aspect ratio set '
-        'by the setsar filter may be changed by later filters in the '
-        'filterchain, e.g. if another "setsar" or a "setdar" filter is '
-        'applied.\nSet to 0 for disabling.')
-        self.spin_setsarNum.SetToolTipString(setsar_str)
-        self.spin_setsarDen.SetToolTipString(setsar_str)
+        setdar_str = ('Sets the Display Aspect '
+                      'Ratio.\nSet to 0 to disabling.')
+        self.spin_setdarNum.SetToolTipString('-NUMERATOR-\n%s' % setdar_str)
+        self.spin_setdarDen.SetToolTipString('-DENOMINATOR-\n%s' % setdar_str)
+        setsar_str = ('The setsar filter sets the Sample (aka Pixel) '
+                      'Aspect Ratio.\nSet to 0 to disabling.')
+        self.spin_setsarNum.SetToolTipString('-NUMERATOR-\n%s' % setsar_str)
+        self.spin_setsarDen.SetToolTipString('-DENOMINATOR-\n%s' % setsar_str)
         
         #----------------------Binding (EVT)---------------------------------#
         #self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)
@@ -740,7 +775,8 @@ class VideoResolution(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
-        
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+
         if scale:
             self.width = scale.split(':')[0][8:]
             self.height = scale.split(':')[1][2:]
@@ -759,6 +795,13 @@ class VideoResolution(wx.Dialog):
         
     #----------------------Event handler (callback)--------------------------#
     ##------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+                'VideoConv_Panel/Filters/FilterScaling.html')
+        webbrowser.open(page)
+    #------------------------------------------------------------------#
     def on_reset(self, event):
         self.width, self.height = "0", "0"
         self.darNum, self.darDen = "0", "0"
@@ -897,8 +940,9 @@ class Lacing(wx.Dialog):
                                     majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                           )
         self.enable_opt = wx.wx.ToggleButton(self, wx.ID_ANY, 
-                                            "Enable/Dis advanced Option")
+                                            "Advanced Options")
         ####----- confirm buttons section
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -930,7 +974,6 @@ class Lacing(wx.Dialog):
         ####------ set Layout
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
-        
         grid_sizer_base.Add(zone1, 1, wx.ALL | wx.EXPAND, 5)
         deint_grid = wx.FlexGridSizer(2, 4, 0, 0)
         zone1.Add(deint_grid)
@@ -950,72 +993,44 @@ class Lacing(wx.Dialog):
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
         grid_sizer_base.Add(self.enable_opt,1, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
         # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        gridBtn.Add(btn_close,1, wx.ALL,5)
-        gridBtn.Add(self.btn_ok,1, wx.ALL,5)
-        gridBtn.Add(btn_reset,1, wx.ALL,5)
+            
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        grid_sizer_base.Add(gridBtn,1, wx.ALL|wx.ALIGN_CENTRE, 0)#
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        
+        gridhelp.Add(btn_help,1, wx.ALL,5)
+        gridexit.Add(btn_close,1, wx.ALL,5)
+        gridexit.Add(self.btn_ok,1, wx.ALL,5)
+        gridexit.Add(btn_reset,1, wx.ALL,5)
         # final settings:
-        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
+        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL, 5)
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
         
-        self.ckbx_deintW3fdif.SetToolTipString(u'Deinterlace the input video '
-                u'("w3fdif" stands for "Weston 3 Field Deinterlacing Filter. '
-                u'Based on the process described by Martin Weston for BBC R&D, '
-                u'and implemented based on the de-interlace algorithm written '
-                u'by Jim Easterbrook for BBC R&D, the Weston 3 field '
-                u'deinterlacing filter uses filter coefficients calculated '
-                u'by BBC R&D.')
-                                                   
+        self.ckbx_deintW3fdif.SetToolTipString('Deinterlace the input video '
+                                               'with `w3fdif` filter')
+                
         self.rdbx_W3fdif_filter.SetToolTipString('Set the interlacing filter '
-                        'coefficients. Accepts one of the following values:\n'
-                        'simple: Simple filter coefficient set.\n'
-                        'complex: More-complex filter coefficient set. '
-                        'Default value is complex.'
+                                                 'coefficients.'
                                                  )
         self.rdbx_W3fdif_deint.SetToolTipString('Specify which frames to '
-                        'deinterlace. Accept one of the following values:\n'
-                        '`all` Deinterlace all frames\n'
-                        '`interlaced` Only deinterlace frames marked as '
-                        'interlaced. \nDefault value is `all`. '
+                                                'deinterlace.'
                                                   )
         self.ckbx_deintYadif.SetToolTipString(u'Deinterlace the input video '
-            '("yadif" means "(y)et (a)nother (d)e(i)nterlacing (f)ilter"). '
-                u'For FFmpeg is the best and fastest choice '
+            'with `yadif` filter. For FFmpeg is the best and fastest choice '
                                               )
         self.rdbx_Yadif_mode.SetToolTipString('mode\n'
-           'The interlacing mode to adopt. It accepts one of the following '
-           'values:\n'
-           '0, send_frame - Output one frame for each frame.\n'
-           '1, send_field - Output one frame for each field.\n'
-           '2, send_frame_nospatial - Like send_frame, but it skips the '
-           'spatial interlacing check.\n'
-           '3, send_field_nospatial - Like send_field, but it skips the '
-           'spatial interlacing check.\nThe default value is send_field.'
-                                               )
+           'The interlacing mode to adopt.')
         self.rdbx_Yadif_parity.SetToolTipString('parity\n'
-            'The picture field parity assumed for the input interlaced video. '
-            'It accepts one of the following values:\n'
-            '0, tff - Assume the top field is first.\n'
-            '1, bff - Assume the bottom field is first.\n'
-            '-1, auto - Enable automatic detection of field parity.\n'
-            'The default value is auto. If the interlacing is unknown or the '
-            'decoder does not export this information, top field first will '
-            'be assumed.'
-                                                 )
+            'The picture field parity assumed for the input interlaced video.')
         self.rdbx_Yadif_deint.SetToolTipString('Specify which frames to '
-                        'deinterlace. Accept one of the following values:\n'
-                        '`all` Deinterlace all frames\n'
-                        '`interlaced` Only deinterlace frames marked as '
-                        'interlaced. \nDefault value is `all`. '
-                                                  )
+                                               'deinterlace.')
         self.ckbx_interlace.SetToolTipString('Simple interlacing filter from '
-                'progressive contents. This interleaves upper (or lower) '
-                'lines from odd frames with lower (or upper) lines from even '
-                'frames, halving the frame rate and preserving image height.'
-                                                 )
+                'progressive contents.')
         self.rdbx_inter_scan.SetToolTipString('scan:\n'
             'determines whether the interlaced frame is taken from the '
             'even (tff - default) or odd (bff) lines of the progressive frame.'
@@ -1040,6 +1055,7 @@ class Lacing(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         
         self.settings()
         
@@ -1228,7 +1244,7 @@ class Lacing(wx.Dialog):
             self.rdbx_Yadif_deint.Hide()
             self.rdbx_inter_scan.Hide()
             self.rdbx_inter_lowpass.Hide()
-        
+            
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
@@ -1255,6 +1271,13 @@ class Lacing(wx.Dialog):
         self.rdbx_Yadif_mode.Disable(), self.rdbx_Yadif_parity.Disable(), 
         self.rdbx_Yadif_deint.Disable(), self.rdbx_inter_scan.Disable(), 
         self.rdbx_inter_lowpass.Disable()
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+                'VideoConv_Panel/Filters/Deint_Inter.html')
+        webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
 
@@ -1327,6 +1350,7 @@ class Denoisers(wx.Dialog):
                  style=wx.RA_SPECIFY_ROWS
                                         )
         ###----- confirm buttons section
+        btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -1359,15 +1383,26 @@ class Denoisers(wx.Dialog):
                     wx.ALIGN_CENTER_HORIZONTAL,
                     15)
         # confirm btn section:
-        gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
-        grid_sizer_base.Add(gridBtn, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        gridBtn.Add(btn_close,1, 
+        #gridBtn = wx.FlexGridSizer(1, 3, 0, 0)
+        
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridexit = wx.GridSizer(1, 3, 0, 0)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridBtn.Add(gridhelp)
+        gridBtn.Add(gridexit)
+        
+        grid_sizer_base.Add(gridBtn)#, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        
+        gridhelp.Add(btn_help,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(self.btn_ok,1, 
+        gridexit.Add(btn_close,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
-        gridBtn.Add(btn_reset,1, 
+        gridexit.Add(self.btn_ok,1, 
+                    wx.ALL | 
+                    wx.ALIGN_CENTER_VERTICAL,5)
+        gridexit.Add(btn_reset,1, 
                     wx.ALL | 
                     wx.ALIGN_CENTER_VERTICAL,5)
         # final settings:
@@ -1394,6 +1429,7 @@ class Denoisers(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.on_hqdn3d, self.ckbx_hqdn3d)
         self.Bind(wx.EVT_RADIOBOX, self.on_nlmeans_opt, self.rdb_nlmeans)
         self.Bind(wx.EVT_RADIOBOX, self.on_hqdn3d_opt, self.rdb_hqdn3d)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
@@ -1503,7 +1539,13 @@ class Denoisers(wx.Dialog):
             
         elif opt == "Old VHS tapes restoration [9.0:5.0:3.0:3.0]":
             self.denoiser = "hqdn3d=9.0:5.0:3.0:3.0"
-            
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+                'VideoConv_Panel/Filters/Denoisers.html')
+        webbrowser.open(page)
     #------------------------------------------------------------------#  
     def on_reset(self, event):
         """

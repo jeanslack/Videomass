@@ -61,7 +61,7 @@ dict_presets = {
                     }
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
-yellow = '#faff35'
+yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#8aab3c'
@@ -219,7 +219,7 @@ class PresetsPanel(wx.Panel):
         #nb1_p4.SetSizer(grid_siz5)
         #----------------------------notebook 4
         nb1.AddPage(nb1_p1, ("Selecting Presets"))
-        nb1.AddPage(nb1_p2, ("Command Line Reading"))
+        nb1.AddPage(nb1_p2, ("Command Line FFmpeg"))
         #nb1.AddPage(nb1_p3, ("Export Preferences"))
         #nb1.AddPage(nb1_p4, ("Importing/Exporting"))
         grd_s2.Add(nb1, 1, wx.EXPAND, 0)
@@ -450,7 +450,7 @@ class PresetsPanel(wx.Panel):
         """
         if wx.MessageBox(u"WARNING: you are going to restore all default "
                          "presets from videomass2! Proceed?", 
-                         "Please confirm - Videoamss", 
+                         "Please confirm - Videomass2", 
                          wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
@@ -523,6 +523,14 @@ class PresetsPanel(wx.Panel):
                                       "before deleting profile itself", 
                                       yellow)
         else:
+            filename = dict_presets[self.cmbx_prst.GetValue()][0]
+            if wx.MessageBox(u"Are you sure you want to delete the "
+                             "selected profile?", 
+                             "Please confirm - Videomass2", 
+                             wx.ICON_QUESTION | 
+                             wx.YES_NO, self) == wx.NO:
+                return
+        
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             # call module-function and pass list as argument
             delete_profiles(array, filename)

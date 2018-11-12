@@ -45,7 +45,7 @@ class Formula(wx.Dialog):
         #----------------------Properties----------------------#
         self.SetTitle("%s - Videomass2" % title)
         label2.SetForegroundColour(wx.Colour(255, 106, 249))
-        panel.SetBackgroundColour(wx.Colour(212, 255, 249))
+        #panel.SetBackgroundColour(wx.Colour(212, 255, 249))
         
         #---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)

@@ -34,12 +34,11 @@ class Mediainfo(wx.Dialog):
     """
     Show dialog for display metadata info. 
     """
-    def __init__(self, title, path, helping, ffprobe_link):
+    def __init__(self, title, path, ffprobe_link):
         # with 'None' not depend from videomass2. With 'parent, -1' if close
         # videomass2 also close mediainfo window:
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
-        self.helping = helping
         
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
@@ -57,11 +56,11 @@ class Mediainfo(wx.Dialog):
         #----------------------Properties----------------------#
         self.SetTitle(title)
         format_info.SetMinSize((640, 300))
-        format_info.SetBackgroundColour(wx.Colour(217, 255, 255))
+        #format_info.SetBackgroundColour(wx.Colour(217, 255, 255))
         format_info.InsertColumn(0, 'Type', width=200)
         format_info.InsertColumn(1, 'Parameters', width=450)
         streams_info.SetMinSize((640, 300))
-        streams_info.SetBackgroundColour(wx.Colour(217, 255, 255))
+        #streams_info.SetBackgroundColour(wx.Colour(217, 255, 255))
         streams_info.InsertColumn(0, 'Type', width=200)
         streams_info.InsertColumn(1, 'Parameters', width=450)
         
@@ -116,7 +115,7 @@ class Mediainfo(wx.Dialog):
                 (key, value) = format_list[a][0].strip().split('=')
                 num_items = format_info.GetItemCount()
                 format_info.InsertStringItem(num_items, 'General format:')
-                format_info.SetItemBackgroundColour(index, "yellow")
+                format_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in format_list[a]:
                     (key, value) = b.strip().split('=')
@@ -135,7 +134,7 @@ class Mediainfo(wx.Dialog):
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
                                'Video media stream (index %s):' % (value[0]))
-                streams_info.SetItemBackgroundColour(index, "yellow")
+                streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in video_list[a]:
                     (key, value) = b.strip().split('=')
@@ -152,7 +151,7 @@ class Mediainfo(wx.Dialog):
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
                                'Audio media stream (index %s):' % (value[0]))
-                streams_info.SetItemBackgroundColour(index, "yellow")
+                streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in audio_list[a]:
                     (key, value) = b.strip().split('=')
@@ -169,7 +168,7 @@ class Mediainfo(wx.Dialog):
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
                             'Subtitle media stream (index %s):' % (value[0]))
-                streams_info.SetItemBackgroundColour(index, "yellow")
+                streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in subtitle_list[a]:
                     (key, value) = b.strip().split('=')
@@ -188,8 +187,4 @@ class Mediainfo(wx.Dialog):
         #event.Skip()
 
     #-------------------------------------------------------------------#
-    #def on_help(self, event):
-        #wx.MessageBox("L'help contestuale é ancora in fase di sviluppo .")
-        #webbrowser.open(mediainfo_help)
-        #webbrowser.open('%s/06-Informazioni_media.html' % self.helping)
         

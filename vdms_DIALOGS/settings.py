@@ -29,6 +29,7 @@
 
 import wx
 import os
+import webbrowser
 
 dirname = os.path.expanduser('~/') # /home/user/
 filename = '%s/.videomass2/videomass2.conf' % (dirname)
@@ -112,12 +113,12 @@ class Setup(wx.Dialog):
         gridGeneral = wx.FlexGridSizer(3, 1, 0, 0)
         tabOne.SetSizer(gridGeneral)#aggiungo il sizer su tab 1
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    "Settings CPU:")), wx.VERTICAL)
+                                    "Settings CPU")), wx.VERTICAL)
         gridGeneral.Add(boxLabThreads, 1, wx.ALL|wx.EXPAND, 15)
         gridThreads = wx.FlexGridSizer(4, 1, 0, 0)
         boxLabThreads.Add(gridThreads, 1, wx.ALL|wx.EXPAND, 15)
         lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,(
-                               "Set the number of threads (from 0 to 32):"))
+                               "Set the number of threads (from 0 to 32)"))
         gridThreads.Add(lab1_pane1, 0, wx.ALL, 5)
         self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY, 
                                             "%s" % threads[9:],
@@ -128,7 +129,7 @@ class Setup(wx.Dialog):
                                                   wx.ALIGN_CENTER_VERTICAL, 
                                                   5)
         lab2_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (
-                            "Quality/Speed ratio modifier (from -16 to 16):"))
+                            "Quality/Speed ratio modifier (from -16 to 16)"))
         gridThreads.Add(lab2_pane1, 0, wx.ALL, 5)
         gridctrl = wx.FlexGridSizer(1, 2, 0, 0)
         gridThreads.Add(gridctrl)
@@ -140,14 +141,12 @@ class Setup(wx.Dialog):
         #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
         boxLabOthers = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    "Other Settings:")), wx.VERTICAL)
+                                    "Other Settings")), wx.VERTICAL)
         gridGeneral.Add(boxLabOthers, 0, wx.ALL|wx.EXPAND, 15)
         gridOthers = wx.GridSizer(1, 1, 0, 0)
         boxLabOthers.Add(gridOthers, 1, wx.ALL|wx.EXPAND, 15)
         self.check_cmdline = wx.CheckBox(tabOne, wx.ID_ANY, (
-            "Enable text writing on the command line\n"
-            "reading tab in the Presets Manager panel.\n"
-            "Warning! use this function at your own risk!"))
+            "Enables writing of command line text"))
         gridOthers.Add(self.check_cmdline, 0, wx.ALL, 5)
         #--------------------------------------------------TAB 2
         gridLog = wx.FlexGridSizer(4, 1, 0, 0)
@@ -163,7 +162,7 @@ class Setup(wx.Dialog):
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
         grid_logBtn = wx.FlexGridSizer(1, 2, 0, 0)
         gridLog.Add(grid_logBtn)
-        self.btn_log = wx.Button(tabTwo, wx.ID_SAVE, "")
+        self.btn_log = wx.Button(tabTwo, wx.ID_ANY, "Browse..")
         grid_logBtn.Add(self.btn_log, 0, wx.ALL, 15)
         self.txt_pathlog = wx.TextCtrl(tabTwo, wx.ID_ANY, "")
         grid_logBtn.Add(self.txt_pathlog, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 15)
@@ -173,7 +172,7 @@ class Setup(wx.Dialog):
 
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY,(
                                        " Use a custom path to run FFmpeg"))
-        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, "Import")
+        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFmpeg, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFmpeg = wx.FlexGridSizer(1, 2, 0, 0)
@@ -183,7 +182,7 @@ class Setup(wx.Dialog):
 
         self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
                                        " Use a custom path to run FFprobe"))
-        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, "Import")
+        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFprobe, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFprobe = wx.FlexGridSizer(1, 2, 0, 0)
@@ -193,7 +192,7 @@ class Setup(wx.Dialog):
 
         self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
                                        " Use a custom path to run FFplay"))
-        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, "Import")
+        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFplay, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFplay = wx.FlexGridSizer(1, 2, 0, 0)
@@ -201,13 +200,19 @@ class Setup(wx.Dialog):
         gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 15)
         gridFFplay.Add(self.txtctrl_ffplay, 0, wx.ALIGN_CENTER_VERTICAL, 5)
         #------------------------------------------------------bottom
-        gridBottom = wx.FlexGridSizer(1, 2, 0, 0)
-        gridBase.Add(gridBottom, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        btn_close = wx.Button(self, wx.ID_CANCEL, "Close")
+        gridBottom = wx.GridSizer(1, 2, 0, 0)
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help, 0, wx.ALL, 5)
+        gridBottom.Add(gridhelp, 0, wx.ALL, 10)
+        btn_close = wx.Button(self, wx.ID_CANCEL, "")
+        gridexit = wx.GridSizer(1, 2, 0, 0)
+        gridexit.Add(btn_close, 0, wx.ALL, 5)
         btn_ok = wx.Button(self, wx.ID_APPLY, "")
-        gridBottom.Add(btn_close, 0, wx.ALL, 5)
-        gridBottom.Add(btn_ok, 0, wx.ALL, 5)
-        sizer.Add(gridBase,1, wx.ALL|wx.EXPAND, 10)
+        gridexit.Add(btn_ok, 0, wx.ALL, 5)
+        gridBottom.Add(gridexit, 0, wx.ALL, 10)
+        gridBase.Add(gridBottom)#, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        sizer.Add(gridBase,1, wx.ALL|wx.EXPAND, 5)
         self.SetSizer(sizer)
         sizer.Fit(self)
         self.Layout()
@@ -283,6 +288,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
 
@@ -496,6 +502,12 @@ class Setup(wx.Dialog):
     
         else:
             self.full_list[self.rowsNum[13]] = 'false\n'
+    #------------------------------------------------------------------#
+    def on_help(self, event):
+        """
+        """
+        page = 'https://jeanslack.github.io/Videomass2/Pages/Startup/Setup.html'
+        webbrowser.open(page)
             
     #--------------------------------------------------------------------#
     def on_close(self, event):

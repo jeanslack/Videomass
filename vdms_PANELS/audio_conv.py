@@ -38,7 +38,7 @@ dirname = os.path.expanduser('~') # /home/user
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
-yellow = '#faff35'
+yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#8aab3c'
@@ -69,12 +69,11 @@ class Audio_Conv(wx.Panel):
     Interface panel for audio conversions and volume normalizations,
     with preset storing feature (TODO)
     """
-    def __init__(self, parent, helping, ffmpeg_link, threads, 
+    def __init__(self, parent, ffmpeg_link, threads, 
                  cpu_used, loglevel_type, ffprobe_link, OS):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
-        self.helping = helping
         self.threads = threads
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
@@ -103,11 +102,11 @@ class Audio_Conv(wx.Panel):
                                            size=(-1,25), 
                                            label="Audio Options")
         self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
-                                    foregroundcolour=wx.Colour(100, 0, 0))
-        self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
-        self.btn_param.SetBottomStartColour(wx.Colour(97, 204, 199))
-        self.btn_param.SetTopStartColour(wx.Colour(97, 204, 199))
-        self.btn_param.SetTopEndColour(wx.Colour(97, 204, 199))
+                                    foregroundcolour=wx.Colour(28,28,28))
+        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY)
@@ -120,10 +119,10 @@ class Audio_Conv(wx.Panel):
                                            label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(97, 204, 199))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(97, 204, 199))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(97, 204, 199))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
         
         self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("Max Volume db."))
@@ -263,7 +262,7 @@ class Audio_Conv(wx.Panel):
         cmd_opt["AudioRate"] = ["",""]
         cmd_opt["AudioBitrate"] = ["",""]
         cmd_opt["AudioDepth"] = ["",""]
-        self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
     #------------------------------------------------------------------#
     def on_Param(self, evt):
         """
@@ -311,7 +310,14 @@ class Audio_Conv(wx.Panel):
               data[0][1] is ffmpeg option command for audio channels and
               data[0][0] is a simple description for view.
         """
-        audiodialog = audiodialogs.AudioSettings(self,audio_type,title)
+        audiodialog = audiodialogs.AudioSettings(self, 
+                                                 audio_type, 
+                                                 cmd_opt["AudioRate"],
+                                                 cmd_opt["AudioDepth"],
+                                                 cmd_opt["AudioBitrate"], 
+                                                 cmd_opt["AudioChannel"],
+                                                 title,
+                                                 )
         retcode = audiodialog.ShowModal()
         
         if retcode == wx.ID_OK:
@@ -324,7 +330,8 @@ class Audio_Conv(wx.Panel):
                     cmd_opt["AudioCodec"] = "-c:a pcm_s16le"
                 else:
                     cmd_opt["AudioCodec"] = data[3][1]
-                cmd_opt["AudioDepth"] = ["%s" % (data[3][0]),""]
+                cmd_opt["AudioDepth"] = ("%s" % (data[3][0]),
+                                         "%s" % (data[3][1]))
             else:# entra su tutti gli altri tranne wav aiff
                 cmd_opt["AudioDepth"] = data[3]
         else:
@@ -339,12 +346,12 @@ class Audio_Conv(wx.Panel):
                  ]:
             if d[1]:
                 count += 1
-                self.txt_options.AppendText(" %s," % d[0])
+                self.txt_options.AppendText(" %s | " % d[0])
 
         if count == 0:
-            self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
         else:
-            self.btn_param.SetBottomEndColour(wx.Colour(240, 255, 0))
+            self.btn_param.SetBottomEndColour(wx.Colour(0, 240, 0))
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#
@@ -417,7 +424,7 @@ class Audio_Conv(wx.Panel):
                "default dB value (-1.0)")
         if self.ckb_norm.IsChecked():# if checked
             self.parent.statusbar_msg(msg, greenolive)
-            self.btn_analyzes.SetForegroundColour(wx.Colour(100,0,0))
+            self.btn_analyzes.SetForegroundColour(wx.Colour(255, 255, 255))
             self.btn_analyzes.Enable(), self.spin_amplitude.Enable(),
             self.lab_amplitude.Enable(), 
             if len(self.parent.file_sources) == 1:# se solo un file
@@ -466,8 +473,9 @@ class Audio_Conv(wx.Panel):
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
         """
-        msg = ("The track peak level is equal to or higher than the level set " 
-               "on the threshold. If you proceed, there will be no changes. ")
+        msg = ("The audio stream peak level is equal to or higher " 
+               "than the level set on the threshold. If you proceed, "
+               "there will be no changes.")
         self.parent.statusbar_msg("",None)
         normalize = self.spin_amplitude.GetValue()
 
@@ -484,21 +492,20 @@ class Audio_Conv(wx.Panel):
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(normalize)
                 if float(maxvol) >= float(normalize):
-                    # non processa se è superiore o uguale a norm.
                     self.parent.statusbar_msg(msg, yellow)
-                    volume.append('')
-                else:
-                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+
+                volume.append("-af volume=%sdB" % (str(offset)[1:]))
                     
                 if len(data[0]) == 1:# append in textctrl
                     self.txt_volmax.SetValue("")
                     self.txt_volmid.SetValue("")
                     self.txt_volmax.AppendText(v[0])
                     self.txt_volmid.AppendText(v[1])
-                        
+        print volume
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+        
     #-----------------------------------------------------------------------#
     def disableParent(self):
         """
@@ -620,7 +627,7 @@ class Audio_Conv(wx.Panel):
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
             ending = Formula(self, valupdate[0], valupdate[1], title)
-            
+
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
                                            file_sources,
@@ -718,24 +725,48 @@ class Audio_Conv(wx.Panel):
         current setting. All profiles saved in this way will also be stored 
         in the preset 'User Presets'
         
+        NOTE: For multiple processes involving audio normalization and those 
+              for saving audio streams from movies, only the data from the 
+              first file in the list will be considered.
+        
         FIXME have any problem with xml escapes in special character
         (like && for ffmpeg double pass), so there is some to get around it 
         (escamotage), but work .
         """
-        if self.ckb_onlynorm.IsChecked():
-            wx.MessageBox("Sorry, operation not allowed.\n\n"
-                          "Audio normalization is a specific\n"
-                          "process applied track by track.", 
-                          "WARNING - Videomass2", wx.ICON_WARNING, self)
-            return
+        if cmd_opt["Normalize"]:
+            
+            if wx.MessageBox("Audio normalization is a specific process "
+                             "applied track by track.\n\n"
+                             "Are you sure to proceed ?", 
+                             'Audio normalization enabled! - Videomass2', 
+                             wx.ICON_QUESTION | wx.YES_NO, 
+                            None) == wx.NO:
+                return #Se L'utente risponde no
+            else:
+                normalize = cmd_opt["Normalize"][0]# tengo il primo valore lista
         else:
-            command = ("-vn %s %s %s %s %s %s" % (
-                    cmd_opt["Normalize"], cmd_opt["AudioCodec"], 
-                    cmd_opt["AudioBitrate"][1], cmd_opt["AudioDepth"][1], 
-                    cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1],)
-                        )
-        command = ' '.join(command.split())# sitemo meglio gli spazi in stringa
-        list = [command, cmd_opt["ExportExt"]]
+            normalize = ''
+        
+        if self.ckb_onlynorm.IsChecked():
+            command = ("-vn %s" % normalize)
+            command = ' '.join(command.split())# sistemo gli spazi
+            list = [command, cmd_opt["ExportExt"]]
+            
+        elif self.cmbx_a.GetValue() == "Save audio from movie":
+            command = ("-vn %s" % cmd_opt["AudioCodec"][0])
+            command = ' '.join(command.split())# sistemo gli spazi
+            list = [command, cmd_opt["ExportExt"][0]]
+  
+        else:
+            command = ("-vn %s %s %s %s %s %s" % (normalize, 
+                                                  cmd_opt["AudioCodec"], 
+                                                  cmd_opt["AudioBitrate"][1], 
+                                                  cmd_opt["AudioDepth"][1], 
+                                                  cmd_opt["AudioRate"][1], 
+                                                  cmd_opt["AudioChannel"][1],
+                                                  ))
+            command = ' '.join(command.split())# sistemo gli spazi
+            list = [command, cmd_opt["ExportExt"]]
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'

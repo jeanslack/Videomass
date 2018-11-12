@@ -22,13 +22,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 01/May/2015
-# Rev (02) 03/Sept/2018
+# Rev: 01/May/2015, 03/Sept/2018, 19/Oct/2018
 #########################################################
 
 import wx
 import string
 from vdms_IO.presets_manager_properties import delete_profiles
+import webbrowser
 
 class MemPresets(wx.Dialog):
     """
@@ -52,40 +52,35 @@ class MemPresets(wx.Dialog):
         self.array = array
         
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, "  Profile Name:")
+        siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, "Profile Name")
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, "  Description:")
+        siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, "Description")
         self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, "  ffmpeg command line:")
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, ("Command Line Parameters "
+                        "Do not use `-i` or output filename)"))
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz4_supp = wx.StaticBox(self, wx.ID_ANY, "  Supported file types import:")
+        siz4_supp = wx.StaticBox(self, wx.ID_ANY, ("Files supported in the "
+                                        "import (do not include the `.`)"))
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz4_ext = wx.StaticBox(self, wx.ID_ANY, "  Output format extension:")
-        btn5 = wx.Button(self, wx.ID_CANCEL, "")
-        #btn4 = wx.Button(self, wx.ID_HELP, "")
-        btn3 = wx.Button(self, wx.ID_OK, "SAVE") 
+        siz4_ext = wx.StaticBox(self, wx.ID_ANY, ("Output format extension "
+                                                  "(do not include the `.`)"))
+        btn_help = wx.Button(self, wx.ID_HELP, "")
+        btn_canc = wx.Button(self, wx.ID_CANCEL, "")
+        btn_save = wx.Button(self, wx.ID_OK, "Save..") 
 
         #----------------------Set Properties----------------------#
         self.txt_name.SetMinSize((150, -1))
         self.txt_descript.SetMinSize((300, -1))
         self.txt_cmd.SetMinSize((350, 60))
         self.txt_supp.SetMinSize((300, -1))
-        self.txt_ext.SetMinSize((70, -1))
+        self.txt_ext.SetMinSize((150, -1))
 
-        self.txt_name.SetToolTipString("Assign a short name to the profile "
-                                    "Example:'Convert video for youtube'"
+        self.txt_name.SetToolTipString("Assign a short name to the profile. "
                                         )
         self.txt_descript.SetToolTipString("Assign a long description to "
-                            "the profile. Example: 'video h264, video size "
-                            "640x480 and audio mp3, stereo, bitrate 160kb, etc'"
-                                        )
-         
-        self.txt_cmd.SetToolTipString("No type ffmpeg command call "
-                    "here, no input flag '-i' and no type input/output file/dir "
-                    "names, Yes this:\n "
-                    "-vn -acodec libfaac -ab 128\n "
-                    "No this:\n "
-                    "ffmpeg -i name.ext -vn -acodec libfaac -ab 128 name.avi"
+                                           "the profile."
+                                           )
+        self.txt_cmd.SetToolTipString("Do not use `-i` or output file, please."
                                         )
         self.txt_supp.SetToolTipString("You can limit the type "
                             "of files formats imported by specifying in a box "
@@ -98,8 +93,8 @@ class MemPresets(wx.Dialog):
         
         #----------------------Build layout----------------------#
         grd_s1 = wx.FlexGridSizer(4, 1, 0, 0)
-        siz5 = wx.BoxSizer(wx.VERTICAL)
-        grd_s3 = wx.GridSizer(1, 2, 0, 0)
+        boxSiz = wx.BoxSizer(wx.VERTICAL)
+        grdexit = wx.GridSizer(1, 2, 0, 0)
         grd_s4 = wx.GridSizer(1, 2, 0, 0)
         siz4_ext.Lower()
         s4_ext = wx.StaticBoxSizer(siz4_ext, wx.VERTICAL)
@@ -124,20 +119,24 @@ class MemPresets(wx.Dialog):
         s4_ext.Add(self.txt_ext, 0, wx.ALL, 15)
         grd_s4.Add(s4_ext, 1, wx.ALL | wx.EXPAND, 15)
         grd_s1.Add(grd_s4, 1, wx.EXPAND, 0)
-        grd_s3.Add(btn5, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        #grd_s3.Add(btn4, 0, wx.ALL | wx.ALIGN_RIGHT | wx.ALIGN_CENTER_VERTICAL, 15)
-        grd_s3.Add(btn3, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        #siz5.Add(grd_s3, 1, wx.EXPAND, 15)
-        siz5.Add(grd_s3, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        grd_s1.Add(siz5, 1, wx.ALL | wx.EXPAND, 15)
+        grdBtn =  wx.GridSizer(1, 2, 0, 0)
+        grdhelp = wx.GridSizer(1, 1, 0, 0)
+        grdhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn.Add(grdhelp)
+        grdexit.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn.Add(grdexit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        
+        boxSiz.Add(grdBtn,1, wx.ALL | wx.EXPAND, 5)
+        grd_s1.Add(boxSiz, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(grd_s1)
         grd_s1.Fit(self)
         self.Layout()
 
         #----------------------Binder (EVT)----------------------#
-        self.Bind(wx.EVT_BUTTON, self.on_close, btn5)
-        #self.Bind(wx.EVT_BUTTON, self.on_help, btn4)
-        self.Bind(wx.EVT_BUTTON, self.on_apply, btn3)
+        self.Bind(wx.EVT_BUTTON, self.on_close, btn_canc)
+        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        self.Bind(wx.EVT_BUTTON, self.on_apply, btn_save)
         
         #-------------------Binder (EVT) End --------------------#
         if arg == 'edit':
@@ -163,14 +162,18 @@ class MemPresets(wx.Dialog):
         self.txt_ext.AppendText(self.array[4]) # extension
     
 #---------------------Callback (event handler)----------------------#
-
+    
+    def on_help(self, event):
+        """
+        """
+        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+                'PresetsManager_Panel/Profiles_management.html')
+        webbrowser.open(page)
+    #------------------------------------------------------------------#
     def on_close(self, event):
         #self.Destroy()
         event.Skip()
-
-    #def on_help(self, event):
-        #wx.MessageBox(u"Work in progress")
-        
+    #------------------------------------------------------------------#
     def on_apply(self, event):
         
         nameprofile = self.txt_name.GetValue()
@@ -249,6 +252,10 @@ class MemPresets(wx.Dialog):
             #self.Destroy() # con ID_OK e ID_CANCEL non serve
             
         elif self.arg == 'addprofile':
-            wx.MessageBox(u"Successfull storing in 'your personal profiles'")
+            wx.MessageBox(u"Successfull storing !\n\n"
+                          "You will find this profile in the 'Users Profiles' "
+                          "preset in the 'Presets Manager' panel.\n"
+                          "Use the 'Reload presets list' on File menu to "
+                          "update profile list.")
                 
         event.Skip() 
