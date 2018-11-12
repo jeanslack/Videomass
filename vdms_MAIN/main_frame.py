@@ -110,7 +110,7 @@ class MainFrame(wx.Frame):
                                            bitmap=infoIbmp, 
                                            label="Show Metadata")
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                      foregroundcolour=wx.Colour(56, 163, 159))
+                                      foregroundcolour=wx.Colour(28,28,28))
         self.btn_metaI.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_metaI.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_metaI.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -121,7 +121,7 @@ class MainFrame(wx.Frame):
                                            bitmap=previewbmp, 
                                            label="Preview")
         self.btn_playO.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                      foregroundcolour=wx.Colour(56, 163, 159))
+                                      foregroundcolour=wx.Colour(28,28,28))
         self.btn_playO.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_playO.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_playO.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -132,7 +132,7 @@ class MainFrame(wx.Frame):
                                               bitmap=cutbmp, 
                                               label="Duration")
         self.btn_duration.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                    foregroundcolour=wx.Colour(56, 163, 159))
+                                    foregroundcolour=wx.Colour(28,28,28))
         self.btn_duration.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_duration.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_duration.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -143,7 +143,7 @@ class MainFrame(wx.Frame):
                                               bitmap=saveprfbmp, 
                                               label="Save As Profile")
         self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                    foregroundcolour=wx.Colour(56, 163, 159))
+                                    foregroundcolour=wx.Colour(28,28,28))
         self.btn_saveprf.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_saveprf.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_saveprf.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -154,7 +154,7 @@ class MainFrame(wx.Frame):
                                               bitmap=newprfbmp, 
                                               label="New..")
         self.btn_newprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                    foregroundcolour=wx.Colour(56, 163, 159))
+                                    foregroundcolour=wx.Colour(28,28,28))
         self.btn_newprf.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_newprf.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_newprf.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -165,7 +165,7 @@ class MainFrame(wx.Frame):
                                               bitmap=delprfbmp, 
                                               label="Delete..")
         self.btn_delprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                    foregroundcolour=wx.Colour(56, 163, 159))
+                                    foregroundcolour=wx.Colour(28,28,28))
         self.btn_delprf.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_delprf.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_delprf.SetTopStartColour(wx.Colour(205, 235, 222))
@@ -176,13 +176,14 @@ class MainFrame(wx.Frame):
                                               bitmap=editprfbmp, 
                                               label="Edit..")
         self.btn_editprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
-                                    foregroundcolour=wx.Colour(56, 163, 159))
+                                    foregroundcolour=wx.Colour(28,28,28))
         self.btn_editprf.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_editprf.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_editprf.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_editprf.SetTopEndColour(wx.Colour(205, 235, 222))
 
-        self.btnpanel.SetBackgroundColour(wx.Colour(97, 204, 199))
+        #self.btnpanel.SetBackgroundColour(wx.Colour(97, 204, 199))
+        self.btnpanel.SetBackgroundColour(wx.Colour(28, 28, 28))
         #---------- others panel instances:
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
