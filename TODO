@@ -11,6 +11,12 @@ URGENCY: to do soon
 URGENCY: high
 --------------
 - Free and Open sources icons for toolbar and panelbar
+- Bug on video conversions onto audio selection ..when set parameters but
+  you choice another audio container the dialog box does not more appear
+- Bug on audio conversions ..when set the the bit depth on wav and aiff format
+  does not report into text display.
+- Sistemare il wizard ..i riferimenti descrittivi non sono coerenti.
+- Sistemare anche la guida gh-pages 
 
 -------------
 URGENCY: low
