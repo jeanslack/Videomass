@@ -154,48 +154,48 @@ class Video_Conv(wx.Panel):
                                                label="Resize")
         self.btn_videosize.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(28,28,28))
-        self.btn_videosize.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_videosize.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_videosize.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_videosize.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_videosize.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_videosize.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_videosize.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_videosize.SetTopEndColour(wx.Colour(220,220,220))
         self.btn_crop = GB.GradientButton(self.notebook_1_pane_2,
                                           size=(-1,25), 
                                           label="Crop Dimension")
         self.btn_crop.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(28,28,28))
-        self.btn_crop.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_crop.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_crop.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_crop.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_crop.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_crop.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_crop.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_crop.SetTopEndColour(wx.Colour(220,220,220))
         self.btn_rotate = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25), 
                                             label="Rotation")
         self.btn_rotate.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(28,28,28))
-        self.btn_rotate.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_rotate.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_rotate.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_rotate.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_rotate.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_rotate.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_rotate.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_rotate.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_lacing = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25), 
                                             label="De/Interlace")
         self.btn_lacing.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(28,28,28))
-        self.btn_lacing.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_lacing.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_lacing.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_lacing.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_lacing.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_lacing.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_lacing.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_lacing.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25), 
                                             label="Denoisers")
         self.btn_denois.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                         foregroundcolour=wx.Colour(28,28,28))
-        self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_denois.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_denois.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_denois.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_denois.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_denois.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_denois.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_denois.SetTopEndColour(wx.Colour(220,220,220))
         
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
@@ -262,10 +262,10 @@ class Video_Conv(wx.Panel):
                                             label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(220,220,220))
         
         
         
@@ -297,10 +297,10 @@ class Video_Conv(wx.Panel):
                                            label="Audio Options")
         self.btn_aparam.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_aparam.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_aparam.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_aparam.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_aparam.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_aparam.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_aparam.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_aparam.SetTopEndColour(wx.Colour(220,220,220))
         self.txt_audio_options = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, 
                                        size=(300,-1), style=wx.TE_READONLY)
         
@@ -604,7 +604,7 @@ class Video_Conv(wx.Panel):
         cmd_opt["AudioDepth"] = ["",""]
         self.btn_aparam.Disable()
         self.btn_aparam.SetForegroundColour(wx.Colour(165,165, 165))
-        self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_aparam.SetBottomEndColour(wx.Colour(220,220,220))
         self.txt_audio_options.SetValue('')
         self.ckbx_a_normalize.Enable()
     #-------------------------------------------------------------------#
@@ -756,11 +756,11 @@ class Video_Conv(wx.Panel):
             cmd_opt['Setsar'], cmd_opt['Deinterlace'] = "",""
             cmd_opt['Interlace'], cmd_opt['Denoiser'] = "",""
             cmd_opt["Filters"] = ""
-            self.btn_videosize.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_crop.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_lacing.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_rotate.SetBottomEndColour(wx.Colour(205, 235, 222))
+            self.btn_videosize.SetBottomEndColour(wx.Colour(220,220,220))
+            self.btn_crop.SetBottomEndColour(wx.Colour(220,220,220))
+            self.btn_denois.SetBottomEndColour(wx.Colour(220,220,220))
+            self.btn_lacing.SetBottomEndColour(wx.Colour(220,220,220))
+            self.btn_rotate.SetBottomEndColour(wx.Colour(220,220,220))
     #------------------------------------------------------------------#
     def video_filter_checker(self):
         """
@@ -824,7 +824,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
             if not data:
-               self.btn_videosize.SetBottomEndColour(wx.Colour(205, 235, 222))
+               self.btn_videosize.SetBottomEndColour(wx.Colour(220,220,220))
                cmd_opt["Setdar"] = ""
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
@@ -861,7 +861,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Orientation"][0] = data[0]# cmd option
             cmd_opt["Orientation"][1] = data[1]#msg
             if not data[0]:
-                self.btn_rotate.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_rotate.SetBottomEndColour(wx.Colour(220,220,220))
             else:
                 self.btn_rotate.SetBottomEndColour(wx.Colour(0, 240, 0))
             self.video_filter_checker()
@@ -878,7 +878,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = crop.GetValue()
             if not data:
-                self.btn_crop.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_crop.SetBottomEndColour(wx.Colour(220,220,220))
                 cmd_opt["Crop"] = ''
             else:
                 self.btn_crop.SetBottomEndColour(wx.Colour(0, 240, 0))
@@ -901,7 +901,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = lacing.GetValue()
             if not data:
-                self.btn_lacing.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_lacing.SetBottomEndColour(wx.Colour(220,220,220))
                 cmd_opt["Deinterlace"] = ''
                 cmd_opt["Interlace"] = ''
             else:
@@ -929,7 +929,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = den.GetValue()
             if not data:
-                self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_denois.SetBottomEndColour(wx.Colour(220,220,220))
                 cmd_opt["Denoiser"] = ''
             else:
                 self.btn_denois.SetBottomEndColour(wx.Colour(0, 240, 0))
@@ -1064,12 +1064,12 @@ class Video_Conv(wx.Panel):
                 self.btn_aparam.Enable()
                 self.txt_audio_options.SetValue('')
                 self.btn_aparam.SetForegroundColour(wx.Colour(28,28,28))
-                self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_aparam.SetBottomEndColour(wx.Colour(220,220,220))
             else:
                 self.btn_aparam.Disable(), 
                 self.txt_audio_options.SetValue('')
                 self.btn_aparam.SetForegroundColour(wx.Colour(165,165,165))
-                self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_aparam.SetBottomEndColour(wx.Colour(220,220,220))
             
         if audioformat == "Default (managed by FFmpeg)":
             self.audio_default()
@@ -1209,7 +1209,7 @@ class Video_Conv(wx.Panel):
                 self.txt_audio_options.AppendText(" %s | " % d[0])
 
         if count == 0:
-            self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+            self.btn_aparam.SetBottomEndColour(wx.Colour(220,220,220))
         else:
             self.btn_aparam.SetBottomEndColour(wx.Colour(0, 240, 0))
             

@@ -109,81 +109,81 @@ class MainFrame(wx.Frame):
                                            size=(-1,25),
                                            bitmap=infoIbmp, 
                                            label="Show Metadata")
-        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(240,255,255), 
                                       foregroundcolour=wx.Colour(28,28,28))
-        self.btn_metaI.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_metaI.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_metaI.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_metaI.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_metaI.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_metaI.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_metaI.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
                                            bitmap=previewbmp, 
                                            label="Preview")
-        self.btn_playO.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+        self.btn_playO.SetBaseColours(startcolour=wx.Colour(240,255,255), 
                                       foregroundcolour=wx.Colour(28,28,28))
-        self.btn_playO.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_playO.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_playO.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_playO.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_playO.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_playO.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_playO.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_playO.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_duration = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=cutbmp, 
                                               label="Duration")
-        self.btn_duration.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+        self.btn_duration.SetBaseColours(startcolour=wx.Colour(240,255,255), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_duration.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_duration.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_duration.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_duration.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_duration.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_duration.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_duration.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_duration.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=saveprfbmp, 
                                               label="Save As Profile")
-        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_saveprf.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_saveprf.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_saveprf.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_saveprf.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_saveprf.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_saveprf.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_saveprf.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_saveprf.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_newprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=newprfbmp, 
                                               label="New..")
-        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_newprf.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_newprf.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_newprf.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_newprf.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_newprf.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_newprf.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_newprf.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_newprf.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_delprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=delprfbmp, 
                                               label="Delete..")
-        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_delprf.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_delprf.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_delprf.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_delprf.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_delprf.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_delprf.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_delprf.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_delprf.SetTopEndColour(wx.Colour(220,220,220))
         
         self.btn_editprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=editprfbmp, 
                                               label="Edit..")
-        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(220, 255, 255), 
+        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_editprf.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_editprf.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_editprf.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_editprf.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_editprf.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_editprf.SetBottomStartColour(wx.Colour(220,220,220))
+        self.btn_editprf.SetTopStartColour(wx.Colour(220,220,220))
+        self.btn_editprf.SetTopEndColour(wx.Colour(220,220,220))
 
         #self.btnpanel.SetBackgroundColour(wx.Colour(97, 204, 199))
-        self.btnpanel.SetBackgroundColour(wx.Colour(28, 28, 28))
+        self.btnpanel.SetBackgroundColour(wx.Colour(255,255,255))
         #---------- others panel instances:
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
@@ -407,7 +407,7 @@ class MainFrame(wx.Frame):
         """
         Disable streams imported menu
         """
-        self.btn_metaI.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(220,220,220))
         self.import_clicked = ''
         
     #------------------------------------------------------------------#
@@ -437,7 +437,7 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
-                self.btn_duration.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_duration.SetBottomEndColour(wx.Colour(220,220,220))
             else:
                 self.btn_duration.SetBottomEndColour(wx.Colour(0, 240, 0))
             self.time_seq = data
