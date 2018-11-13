@@ -73,22 +73,40 @@ def system_check():
         """
         assignment path at the used icons:
         """
+        maintoolbar = '%s/art/material-design-icons/maintoolbar_36' % PWD
+        toolbar = '%s/art/material-design-icons/toolbar_24' % PWD
+        filters24 = '%s/art/material-design-icons/filters_24' % PWD
+        filters18 = '%s/art/material-design-icons/filters_18' % PWD
+        # 128x128
         videomass_icon = "%s/art/videomass2.png" % PWD
-        icon_presets = '%s/art/icon_presets.png' % PWD
-        icon_switchvideomass = '%s/art/icon_switchvideomass.png' % PWD
+        # main toolbar icons 32x32 - 36x36:
+        icon_import = '%s/icon_import.png' % maintoolbar
+        icon_presets = '%s/icon_presets.png' % maintoolbar
+        icon_switchvideomass = '%s/icon_videoconversions.png' % maintoolbar
+        icon_headphones = '%s/icon_audioconversions.png' % maintoolbar
         icon_process = '%s/art/icon_process.png' % PWD
-        icon_help = '%s/art/icon_help.png' % PWD
-        icon_headphones = '%s/art/icon_headphones.png' % PWD
-        icon_import = '%s/art/icon_import.png' % PWD
-        icn_infosource = '%s/art/infosource.png' % PWD
-        icn_preview = '%s/art/preview.png' % PWD
-        icn_cut = '%s/art/cut.png' % PWD
-        icn_playfilters = '%s/art/playfilters.png' % PWD
-        icn_resetfilters = '%s/art/resetfilters.png' % PWD
-        icn_saveprf = '%s/art/saveprf.png' % PWD
-        icn_newprf = '%s/art/newprf.png' % PWD
-        icn_delprf = '%s/art/delprf.png' % PWD
-        icn_editprf = '%s/art/editprf.png' % PWD
+        icon_help = '%s/icon_help.png' % maintoolbar
+        # toolbar icons 24x24:
+        icn_infosource = '%s/infosource.png' % toolbar
+        icn_preview = '%s/preview.png' % toolbar
+        icn_cut = '%s/cut.png' % toolbar
+        icn_saveprf = '%s/saveprf.png' % toolbar
+        icn_newprf = '%s/newprf.png' % toolbar
+        icn_delprf = '%s/delprf.png' % toolbar
+        icn_editprf = '%s/editprf.png' % toolbar
+        # filters icons 24x24:
+        icn_playfilters = '%s/playfilters.png' % filters24
+        icn_resetfilters = '%s/resetfilters.png' % filters24
+        # filters icons 18x18:
+        ic_resize = '%s/resize.png' % filters18
+        ic_crop = '%s/crop.png' % filters18
+        ic_rotate = '%s/rotate.png' % filters18
+        ic_deinterlace = '%s/deinterlace.png' % filters18
+        ic_denoiser = '%s/denoiser.png' % filters18
+        ic_analyzes = '%s/analyzes.png' % filters18
+        ic_settings = '%s/settings.png' % filters18
+        
+        
         
     elif OS == ('Linux'):
         """
@@ -99,23 +117,35 @@ def system_check():
         """
         assignment path at the used icons:
         """
+        url = '/usr/share/pixmaps/videomass2/icons'
+        # main videomass2 icon
         videomass_icon = "/usr/share/pixmaps/videomass2.png"
-        icon_presets = '/usr/share/videomass2/icons/icon_presets.png'
-        #icon_eyes = '/usr/share/videomass2/icons/tecnoeyes.png'
-        icon_switchvideomass = '/usr/share/videomass2/icons/icon_switchvideomass.png'
+        # main toolbar icons 32x32 - 36x36:
+        icon_import = '%s/material-design-icons/maintoolbar_36/icon_import.png' % url
+        icon_presets = '%s/material-design-icons/maintoolbar_36/icon_presets.png' % url
+        icon_switchvideomass = '%s/material-design-icons/maintoolbar_36/icon_videoconversions.png' % url
+        icon_headphones = '%s/material-design-icons/maintoolbar_36/icon_audioconversions.png' % url
         icon_process = '/usr/share/videomass2/icons/icon_process.png'
-        icon_help = '/usr/share/videomass2/icons/icon_help.png'
-        icon_headphones = '/usr/share/videomass2/icons/icon_headphones.png'
-        icon_import = '/usr/share/videomass2/icons/icon_import.png'
-        icn_infosource = '/usr/share/videomass2/icons/infosource.png'
-        icn_preview = '/usr/share/videomass2/icons/preview.png'
-        icn_cut = '/usr/share/videomass2/icons/cut.png'
-        icn_playfilters = '/usr/share/videomass2/icons/playfilters.png'
-        icn_resetfilters = '/usr/share/videomass2/icons/resetfilters.png'
-        icn_saveprf = '/usr/share/videomass2/icons/saveprf.png'
-        icn_newprf = '/usr/share/videomass2/icons/newprf.png'
-        icn_delprf = '/usr/share/videomass2/icons/delprf.png'
-        icn_editprf = '/usr/share/videomass2/icons/editprf.png'
+        icon_help = '%s/material-design-icons/maintoolbar_36/icon_help.png' % url
+        # toolbar icons 24x24:
+        icn_infosource = '%s/material-design-icons/toolbar_24/infosource.png' % url
+        icn_preview = '%s/material-design-icons/toolbar_24/preview.png' % url
+        icn_cut = '%s/material-design-icons/toolbar_24/cut.png' % url
+        icn_saveprf = '%s/material-design-icons/toolbar_24/saveprf.png' % url
+        icn_newprf = '%s/material-design-icons/toolbar_24/newprf.png' % url
+        icn_delprf = '%s/material-design-icons/toolbar_24/delprf.png' % url
+        icn_editprf = '%s/material-design-icons/toolbar_24/editprf.png' % url
+        # filters icons 24x24:
+        icn_playfilters = '%s/material-design-icons/filters_24/playfilters.png' % url
+        icn_resetfilters = '%s/material-design-icons/filters_24/resetfilters.png' % url
+        # filters icons 18x18:
+        ic_resize = '%s/material-design-icons/filters_18/resize.png' % url
+        ic_crop = '%s/material-design-icons/filters_18/crop.png' % url
+        ic_rotate = '%s/material-design-icons/filters_18/rotate.png' % url
+        ic_deinterlace = '%s/material-design-icons/filters_18/deinterlace.png' % url
+        ic_denoiser = '%s/material-design-icons/filters_18/denoiser.png' % url
+        ic_analyzes = '%s/material-design-icons/filters_18/analyzes.png' % url
+        ic_settings = '%s/material-design-icons/filters_18/settings.png' % url
             
     else: # it should be Windows OS
         """
@@ -125,22 +155,38 @@ def system_check():
         """
         assignment path at the used icons:
         """
+        maintoolbar = '%s/art/material-design-icons/maintoolbar_36' % PWD
+        toolbar = '%s/art/material-design-icons/toolbar_24' % PWD
+        filters24 = '%s/art/material-design-icons/filters_24' % PWD
+        filters18 = '%s/art/material-design-icons/filters_18' % PWD
+        # 128x128
         videomass_icon = "%s/art/videomass2.png" % PWD
-        icon_presets = '%s/art/icon_presets.png' % PWD
-        icon_switchvideomass = '%s/art/icon_switchvideomass.png' % PWD
+        # main toolbar icons 32x32 - 36x36:
+        icon_import = '%s/icon_import.png' % maintoolbar
+        icon_presets = '%s/icon_presets.png' % maintoolbar
+        icon_switchvideomass = '%s/icon_videoconversions.png' % maintoolbar
+        icon_headphones = '%s/icon_audioconversions.png' % maintoolbar
         icon_process = '%s/art/icon_process.png' % PWD
-        icon_help = '%s/art/icon_help.png' % PWD
-        icon_headphones = '%s/art/icon_headphones.png' % PWD
-        icon_import = '%s/art/icon_import.png' % PWD
-        icn_infosource = '%s/art/infosource.png' % PWD
-        icn_preview = '%s/art/preview.png' % PWD
-        icn_cut = '%s/art/cut.png' % PWD
-        icn_playfilters = '%s/art/playfilters.png' % PWD
-        icn_resetfilters = '%s/art/resetfilters.png' % PWD
-        icn_saveprf = '%s/art/saveprf.png' % PWD
-        icn_newprf = '%s/art/newprf.png' % PWD
-        icn_delprf = '%s/art/delprf.png' % PWD
-        icn_editprf = '%s/art/editprf.png' % PWD
+        icon_help = '%s/icon_help.png' % maintoolbar
+        # toolbar icons 24x24:
+        icn_infosource = '%s/infosource.png' % toolbar
+        icn_preview = '%s/preview.png' % toolbar
+        icn_cut = '%s/cut.png' % toolbar
+        icn_saveprf = '%s/saveprf.png' % toolbar
+        icn_newprf = '%s/newprf.png' % toolbar
+        icn_delprf = '%s/delprf.png' % toolbar
+        icn_editprf = '%s/editprf.png' % toolbar
+        # filters icons 24x24:
+        icn_playfilters = '%s/playfilters.png' % filters24
+        icn_resetfilters = '%s/resetfilters.png' % filters24
+        # filters icons 18x18:
+        ic_resize = '%s/resize.png' % filters18
+        ic_crop = '%s/crop.png' % filters18
+        ic_rotate = '%s/rotate.png' % filters18
+        ic_deinterlace = '%s/deinterlace.png' % filters18
+        ic_denoiser = '%s/denoiser.png' % filters18
+        ic_analyzes = '%s/analyzes.png' % filters18
+        ic_settings = '%s/settings.png' % filters18
         
     #### check videomass.conf and config directory
     if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
@@ -166,7 +212,9 @@ def system_check():
     return (videomass_icon, icon_presets, icon_switchvideomass, icon_process, 
             icon_help, OS, path_srcShare, copyerr, icon_headphones, 
             icon_import, icn_infosource, icn_preview, icn_cut, icn_playfilters, 
-            icn_resetfilters, icn_saveprf, icn_newprf, icn_delprf, icn_editprf
+            icn_resetfilters, icn_saveprf, icn_newprf, icn_delprf, icn_editprf,
+            ic_resize, ic_crop, ic_rotate, ic_deinterlace, ic_denoiser,
+            ic_analyzes, ic_settings,
             )
 #------------------------------------------------------------------#
 def parsing_fileconf():

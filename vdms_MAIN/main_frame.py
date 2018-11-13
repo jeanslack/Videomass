@@ -202,6 +202,13 @@ class MainFrame(wx.Frame):
                                                 self.OS,
                                                 setui[13],# icon playfilters
                                                 setui[14],# icon resetfilters
+                                                setui[19],# icon resize
+                                                setui[20],# icon crop
+                                                setui[21],# icon rotate
+                                                setui[22],# icon deinterlace
+                                                setui[23],# icon ic_denoiser
+                                                setui[24],# icon analyzes
+                                                setui[25],# icon settings
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, self.ffmpeg_link, 
                                                 self.threads,
@@ -209,6 +216,8 @@ class MainFrame(wx.Frame):
                                                 self.loglevel_type, 
                                                 self.ffprobe_link,
                                                 self.OS,
+                                                setui[24],# icon analyzes
+                                                setui[25],# icon settings
                                                 )
 
         self.DnD = dragNdrop.DnDPanel(self, self.ffprobe_link) # dragNdrop panel

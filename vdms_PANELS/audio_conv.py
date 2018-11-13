@@ -70,7 +70,8 @@ class Audio_Conv(wx.Panel):
     with preset storing feature (TODO)
     """
     def __init__(self, parent, ffmpeg_link, threads, 
-                 cpu_used, loglevel_type, ffprobe_link, OS):
+                 cpu_used, loglevel_type, ffprobe_link, OS,
+                 iconanalyzes, iconsettings,):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
@@ -97,9 +98,10 @@ class Audio_Conv(wx.Panel):
                  ("AC3 [.ac3]"),
                  ("Save audio from movie")], style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
-        
+        setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
         self.btn_param = GB.GradientButton(self,
-                                           size=(-1,25), 
+                                           size=(-1,25),
+                                           bitmap=setbmp,
                                            label="Audio Options")
         self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(28,28,28))
@@ -114,8 +116,10 @@ class Audio_Conv(wx.Panel):
                                                "Only Normalization"))
         self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Audio Normalization"))
+        analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self,
-                                           size=(-1,25), 
+                                           size=(-1,25),
+                                           bitmap=analyzebmp,
                                            label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
