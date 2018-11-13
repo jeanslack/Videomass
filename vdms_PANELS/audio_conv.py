@@ -103,10 +103,10 @@ class Audio_Conv(wx.Panel):
                                            label="Audio Options")
         self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_param.SetBottomEndColour(wx.Colour(220,220,220))
-        self.btn_param.SetBottomStartColour(wx.Colour(220,220,220))
-        self.btn_param.SetTopStartColour(wx.Colour(220,220,220))
-        self.btn_param.SetTopEndColour(wx.Colour(220,220,220))
+        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY)
@@ -119,10 +119,10 @@ class Audio_Conv(wx.Panel):
                                            label="Analyzes")
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(220,220,220))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(220,220,220))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(220,220,220))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(220,220,220))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
         
         self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("Max Volume db."))
@@ -262,7 +262,7 @@ class Audio_Conv(wx.Panel):
         cmd_opt["AudioRate"] = ["",""]
         cmd_opt["AudioBitrate"] = ["",""]
         cmd_opt["AudioDepth"] = ["",""]
-        self.btn_param.SetBottomEndColour(wx.Colour(220,220,220))
+        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
     #------------------------------------------------------------------#
     def on_Param(self, evt):
         """
@@ -349,7 +349,7 @@ class Audio_Conv(wx.Panel):
                 self.txt_options.AppendText(" %s | " % d[0])
 
         if count == 0:
-            self.btn_param.SetBottomEndColour(wx.Colour(220,220,220))
+            self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
         else:
             self.btn_param.SetBottomEndColour(wx.Colour(0, 240, 0))
         
