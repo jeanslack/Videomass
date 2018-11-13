@@ -41,11 +41,12 @@ def current_release():
     Website = 'http://jeanslack.github.io/Videomass2/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'
     Mail = '<jeanlucperni@gmail.com>'
-    Comment = ("Thanks to:\n"
-               "FFmpeg\n"
-               "FFmpeg is a trademark of Fabrice Bellard, \n"
-               "originator of the FFmpeg project.\n"
-               "http://ffmpeg.org/")
+    Comment = ("\nThanks to:\n"
+               "FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
+               "originator of the FFmpeg project:\n"
+               "http://ffmpeg.org/\n"
+               "Material design icons from Google:\n"
+               "http://google.github.io/material-design-icons/#getting-icons")
     
     return (Release_Name, Program_Name, Version, Release, Copyright, 
             Website, Author, Mail, Comment)

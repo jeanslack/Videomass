@@ -103,7 +103,7 @@ class Audio_Conv(wx.Panel):
                                            size=(-1,25),
                                            bitmap=setbmp,
                                            label="Audio Options")
-        self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+        self.btn_param.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_param.SetBottomStartColour(wx.Colour(205, 235, 222))
@@ -121,7 +121,7 @@ class Audio_Conv(wx.Panel):
                                            size=(-1,25),
                                            bitmap=analyzebmp,
                                            label="Analyzes")
-        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
@@ -428,7 +428,7 @@ class Audio_Conv(wx.Panel):
                "default dB value (-1.0)")
         if self.ckb_norm.IsChecked():# if checked
             self.parent.statusbar_msg(msg, greenolive)
-            self.btn_analyzes.SetForegroundColour(wx.Colour(255, 255, 255))
+            self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
             self.btn_analyzes.Enable(), self.spin_amplitude.Enable(),
             self.lab_amplitude.Enable(), 
             if len(self.parent.file_sources) == 1:# se solo un file
@@ -679,7 +679,7 @@ class Audio_Conv(wx.Panel):
             # used for play preview and mediainfo:
             f = os.path.basename(file_sources[0]).split('.')[0]
             self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                             cmd_opt["ExportExt"]))
+                                             cmd_opt["ExportExt"][0]))
 
     #------------------------------------------------------------------#
     def update_dict(self, lenghmax):
