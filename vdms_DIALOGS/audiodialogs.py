@@ -290,9 +290,9 @@ compression formats, do not have associated bit depths.\
         self.channels = {0:("Not set",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-acodec pcm_s16le"),
-                         2:("24 bit","-acodec pcm_s24le"),
-                         4:("32 bit","-acodec pcm_s32le")
+        self.bitdepth = {0:("Not set",""),1:("16 bit","-c:a pcm_s16le"),
+                         2:("24 bit","-c:a pcm_s24le"),
+                         4:("32 bit","-c:a pcm_s32le")
                          }
     #-----------------------------------------------------------------#
     def flac_param(self):

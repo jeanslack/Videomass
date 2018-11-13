@@ -47,7 +47,7 @@ class FirstStart(wx.Dialog):
                "system, otherwise you can manually specify your paths.\n\n"
                "- If you want start the search now, press the 'Search' button."
                "\n\n- If you want to set a custom local paths, activate the "
-               "'Setup'\n  checkbox, then complete the text fields with your "
+               "'Enable Custom Paths'\n  checkbox, then complete the text fields with your "
                "custom\n  paths of FFmpeg.\n"
                )
         # widget:

@@ -70,7 +70,8 @@ class Audio_Conv(wx.Panel):
     with preset storing feature (TODO)
     """
     def __init__(self, parent, ffmpeg_link, threads, 
-                 cpu_used, loglevel_type, ffprobe_link, OS):
+                 cpu_used, loglevel_type, ffprobe_link, OS,
+                 iconanalyzes, iconsettings,):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
@@ -97,16 +98,17 @@ class Audio_Conv(wx.Panel):
                  ("AC3 [.ac3]"),
                  ("Save audio from movie")], style=wx.CB_DROPDOWN | wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
-        
+        setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
         self.btn_param = GB.GradientButton(self,
-                                           size=(-1,25), 
+                                           size=(-1,25),
+                                           bitmap=setbmp,
                                            label="Audio Options")
-        self.btn_param.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
-                                    foregroundcolour=wx.Colour(255, 255, 255))
-        self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
-        self.btn_param.SetBottomStartColour(wx.Colour(97, 204, 199))
-        self.btn_param.SetTopStartColour(wx.Colour(97, 204, 199))
-        self.btn_param.SetTopEndColour(wx.Colour(97, 204, 199))
+        self.btn_param.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
+                                    foregroundcolour=wx.Colour(28,28,28))
+        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY)
@@ -114,15 +116,17 @@ class Audio_Conv(wx.Panel):
                                                "Only Normalization"))
         self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
                                                "Audio Normalization"))
+        analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self,
-                                           size=(-1,25), 
+                                           size=(-1,25),
+                                           bitmap=analyzebmp,
                                            label="Analyzes")
-        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(50, 255, 255),
+        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(220, 255, 255),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(97, 204, 199))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(97, 204, 199))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(97, 204, 199))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(97, 204, 199))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
         
         self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("Max Volume db."))
@@ -262,7 +266,7 @@ class Audio_Conv(wx.Panel):
         cmd_opt["AudioRate"] = ["",""]
         cmd_opt["AudioBitrate"] = ["",""]
         cmd_opt["AudioDepth"] = ["",""]
-        self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
+        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
     #------------------------------------------------------------------#
     def on_Param(self, evt):
         """
@@ -330,7 +334,8 @@ class Audio_Conv(wx.Panel):
                     cmd_opt["AudioCodec"] = "-c:a pcm_s16le"
                 else:
                     cmd_opt["AudioCodec"] = data[3][1]
-                cmd_opt["AudioDepth"] = ["%s" % (data[3][0]),""]
+                cmd_opt["AudioDepth"] = ("%s" % (data[3][0]),
+                                         "%s" % (data[3][1]))
             else:# entra su tutti gli altri tranne wav aiff
                 cmd_opt["AudioDepth"] = data[3]
         else:
@@ -345,12 +350,12 @@ class Audio_Conv(wx.Panel):
                  ]:
             if d[1]:
                 count += 1
-                self.txt_options.AppendText(" %s," % d[0])
+                self.txt_options.AppendText(" %s | " % d[0])
 
         if count == 0:
-            self.btn_param.SetBottomEndColour(wx.Colour(97, 204, 199))
+            self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
         else:
-            self.btn_param.SetBottomEndColour(wx.Colour(240, 255, 0))
+            self.btn_param.SetBottomEndColour(wx.Colour(0, 240, 0))
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#

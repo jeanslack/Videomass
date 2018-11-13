@@ -1,4 +1,15 @@
 +------------------------------------+
+November 12, 2018 V.1.2.5
++------------------------------------+
+
+- Fixed bug on the ``Video Conversions`` and ``Audio Conversions`` panels when
+  set audio parameters specially with ``wav`` format.
+- in the ``Audio Settings`` tab, I've added new elements that improve accessibility 
+  and readability of settings.
+- Improved buttons colour and appearance
+- Add new buttons icons free and open source
+
++------------------------------------+
 October 27, 2018 V.1.2.0
 +------------------------------------+
 
