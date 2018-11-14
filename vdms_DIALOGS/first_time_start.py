@@ -44,11 +44,14 @@ class FirstStart(wx.Dialog):
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         
         msg = ("This wizard automatically searches for FFmpeg in your\n"
-               "system, otherwise you can manually specify your customs paths.\n\n"
-               "- If you want start the search now, press the 'Search' button."
-               "\n\n- If you want to set a custom local paths, activate the "
-               "'Enable Custom Paths'\n  checkbox, then complete the text fields with your "
-               "custom\n  paths of FFmpeg.\n"
+               "system. You can also manually specify your customs\n"
+               "paths. However, you can always change these settings\n"
+               "later.\n\n"
+               "- If you want start the search now,\n  press the 'Search' button."
+               "\n\n"
+               "- If you want to set your custom paths,\n  check the "
+               "'Enable Custom Paths', then enter the \n  paths "
+               "of FFmpeg and press the 'Confirm' button."
                )
         # widget:
         bitmap_drumsT = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(
