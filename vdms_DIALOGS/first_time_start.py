@@ -44,7 +44,7 @@ class FirstStart(wx.Dialog):
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         
         msg = ("This wizard automatically searches for FFmpeg in your\n"
-               "system, otherwise you can manually specify your paths.\n\n"
+               "system, otherwise you can manually specify your customs paths.\n\n"
                "- If you want start the search now, press the 'Search' button."
                "\n\n- If you want to set a custom local paths, activate the "
                "'Enable Custom Paths'\n  checkbox, then complete the text fields with your "
@@ -55,7 +55,7 @@ class FirstStart(wx.Dialog):
                                         img,wx.BITMAP_TYPE_ANY))
         lab_welc2 = wx.StaticText(self, wx.ID_ANY, (msg))
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
-                                              "Welcome on Videomass2 Wizard!"))
+                                              "Welcome to Videomass2 Wizard!"))
         self.searchBtn = wx.Button(self, wx.ID_ANY, ("Search"))
         self.ckbx_paths = wx.CheckBox(self, wx.ID_ANY, ("Enable Custom Paths"))
         self.customBtn = wx.Button(self, wx.ID_ANY, ("Confirm"))
