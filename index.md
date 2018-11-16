@@ -10,8 +10,8 @@
 * [Launch Videomass2 without installation](execute_sources.md)
 * [Build a redistributable package](building_package.md)
 
-## User guide
-* [Start with the application](videomass2_use.md)
+## Get Help
+* [User Guide](videomass2_use.md)
 * [Known problems](known_problems.md)
 
 Videomass2 is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)
