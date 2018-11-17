@@ -10,7 +10,7 @@ please rename them appropriately. This problem affects all platforms (Windows, M
 
 - On MacOSx, if there are problems with the Videomass2 configuration folder, or when the configuration file version 
 changes during updates with a new version of the program, the warning windows may disappear immediately when Videomass2 
-is started. One solution is to permanently delete the configuration folder located in ```~/.videomass2``` and re-open 
-the Videomass2 program.
+is started, making it impossible to read the warnings. One solution is to permanently delete the configuration folder 
+located in ```~/.videomass2``` and re-open the Videomass2 program.
 
 [Home](index.md)
