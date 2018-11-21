@@ -49,24 +49,25 @@ class MainFrame(wx.Frame):
     appropriate instance method. (see switch_Process method doc strings)
     """
     def __init__(self, setui, fileconf, path_confdir, PWD, 
-                 ffmpeg_link, ffprobe_link, ffplay_link
-                 ):
+                 ffmpeg_link, ffprobe_link, ffplay_link,
+                 pathicons):
         """
         NOTE: 'path_srcShare' is a current work directory of Videomass2 
                program. How it can be localized depend if Videomass2 is 
                run as portable program or installated program.
         """
 
-        self.videomass_icon = setui[0]
-        self.icon_presets = setui[1]
-        self.icon_switchvideomass = setui[2]
-        self.icon_process = setui[3]
-        self.icon_help = setui[4]
+        self.videomass_icon = pathicons[0]
+        self.icon_presets = pathicons[1]
+        self.icon_switchvideomass = pathicons[2]
+        self.icon_process = pathicons[3]
+        self.icon_help = pathicons[4]
+        self.icon_headphones = pathicons[5]
+        self.icon_import = pathicons[6]
         #self.helping = setui[5]# path contestual help for helping:
-        self.OS = setui[5]# ID of the operative system:
-        path_srcShare = setui[6]# share dir (are where the origin files?):
-        self.icon_headphones = setui[8]
-        self.icon_import = setui[9]
+        self.OS = setui[0]# ID of the operative system:
+        path_srcShare = setui[1]# share dir (are where the origin files?):
+        
         #---------------------------#
         self.threads = fileconf[2]#ffmpeg option, set the cpu threads
         self.cpu_used = fileconf[3]
@@ -95,13 +96,13 @@ class MainFrame(wx.Frame):
         #----------- panel toolbar buttons
         self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         
-        infoIbmp = wx.Bitmap(setui[10], wx.BITMAP_TYPE_ANY)
-        previewbmp = wx.Bitmap(setui[11], wx.BITMAP_TYPE_ANY)
-        cutbmp = wx.Bitmap(setui[12], wx.BITMAP_TYPE_ANY)
-        saveprfbmp = wx.Bitmap(setui[15], wx.BITMAP_TYPE_ANY)
-        newprfbmp = wx.Bitmap(setui[16], wx.BITMAP_TYPE_ANY)
-        delprfbmp = wx.Bitmap(setui[17], wx.BITMAP_TYPE_ANY)
-        editprfbmp = wx.Bitmap(setui[18], wx.BITMAP_TYPE_ANY)
+        infoIbmp = wx.Bitmap(pathicons[7], wx.BITMAP_TYPE_ANY)
+        previewbmp = wx.Bitmap(pathicons[8], wx.BITMAP_TYPE_ANY)
+        cutbmp = wx.Bitmap(pathicons[9], wx.BITMAP_TYPE_ANY)
+        saveprfbmp = wx.Bitmap(pathicons[12], wx.BITMAP_TYPE_ANY)
+        newprfbmp = wx.Bitmap(pathicons[13], wx.BITMAP_TYPE_ANY)
+        delprfbmp = wx.Bitmap(pathicons[14], wx.BITMAP_TYPE_ANY)
+        editprfbmp = wx.Bitmap(pathicons[15], wx.BITMAP_TYPE_ANY)
         
         
         
@@ -109,78 +110,78 @@ class MainFrame(wx.Frame):
                                            size=(-1,25),
                                            bitmap=infoIbmp, 
                                            label="Show Metadata")
-        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(240,255,255), 
+        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                       foregroundcolour=wx.Colour(28,28,28))
-        self.btn_metaI.SetBottomEndColour(wx.Colour(175,175,175))
-        self.btn_metaI.SetBottomStartColour(wx.Colour(175,175,175))
-        self.btn_metaI.SetTopStartColour(wx.Colour(175,175,175))
-        self.btn_metaI.SetTopEndColour(wx.Colour(175,175,175))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_metaI.SetBottomStartColour(wx.Colour(255,255,255))
+        self.btn_metaI.SetTopStartColour(wx.Colour(255,255,255))
+        self.btn_metaI.SetTopEndColour(wx.Colour(255,255,255))
         
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
                                            bitmap=previewbmp, 
                                            label="Preview")
-        self.btn_playO.SetBaseColours(startcolour=wx.Colour(240,255,255), 
+        self.btn_playO.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                       foregroundcolour=wx.Colour(28,28,28))
-        self.btn_playO.SetBottomEndColour(wx.Colour(175,175,175))
-        self.btn_playO.SetBottomStartColour(wx.Colour(175,175,175))
-        self.btn_playO.SetTopStartColour(wx.Colour(175,175,175))
-        self.btn_playO.SetTopEndColour(wx.Colour(175,175,175))
+        self.btn_playO.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_playO.SetBottomStartColour(wx.Colour(255,255,255))
+        self.btn_playO.SetTopStartColour(wx.Colour(255,255,255))
+        self.btn_playO.SetTopEndColour(wx.Colour(255,255,255))
         
         self.btn_duration = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=cutbmp, 
                                               label="Duration")
-        self.btn_duration.SetBaseColours(startcolour=wx.Colour(240,255,255), 
+        self.btn_duration.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_duration.SetBottomEndColour(wx.Colour(175,175,175))
-        self.btn_duration.SetBottomStartColour(wx.Colour(175,175,175))
-        self.btn_duration.SetTopStartColour(wx.Colour(175,175,175))
-        self.btn_duration.SetTopEndColour(wx.Colour(175,175,175))
+        self.btn_duration.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_duration.SetBottomStartColour(wx.Colour(255,255,255))
+        self.btn_duration.SetTopStartColour(wx.Colour(255,255,255))
+        self.btn_duration.SetTopEndColour(wx.Colour(255,255,255))
         
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=saveprfbmp, 
                                               label="Save As Profile")
-        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
+        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_saveprf.SetBottomEndColour(wx.Colour(175,175,175))
-        self.btn_saveprf.SetBottomStartColour(wx.Colour(175,175,175))
-        self.btn_saveprf.SetTopStartColour(wx.Colour(175,175,175))
-        self.btn_saveprf.SetTopEndColour(wx.Colour(175,175,175))
+        self.btn_saveprf.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_saveprf.SetBottomStartColour(wx.Colour(255,255,255))
+        self.btn_saveprf.SetTopStartColour(wx.Colour(255,255,255))
+        self.btn_saveprf.SetTopEndColour(wx.Colour(255,255,255))
         
         self.btn_newprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=newprfbmp, 
                                               label="New..")
-        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
+        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_newprf.SetBottomEndColour(wx.Colour(175,175,175))
-        self.btn_newprf.SetBottomStartColour(wx.Colour(175,175,175))
-        self.btn_newprf.SetTopStartColour(wx.Colour(175,175,175))
-        self.btn_newprf.SetTopEndColour(wx.Colour(175,175,175))
+        self.btn_newprf.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_newprf.SetBottomStartColour(wx.Colour(255,255,255))
+        self.btn_newprf.SetTopStartColour(wx.Colour(255,255,255))
+        self.btn_newprf.SetTopEndColour(wx.Colour(255,255,255))
         
         self.btn_delprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=delprfbmp, 
                                               label="Delete..")
-        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
+        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_delprf.SetBottomEndColour(wx.Colour(175,175,175))
-        self.btn_delprf.SetBottomStartColour(wx.Colour(175,175,175))
-        self.btn_delprf.SetTopStartColour(wx.Colour(175,175,175))
-        self.btn_delprf.SetTopEndColour(wx.Colour(175,175,175))
+        self.btn_delprf.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_delprf.SetBottomStartColour(wx.Colour(255,255,255))
+        self.btn_delprf.SetTopStartColour(wx.Colour(255,255,255))
+        self.btn_delprf.SetTopEndColour(wx.Colour(255,255,255))
         
         self.btn_editprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=editprfbmp, 
                                               label="Edit..")
-        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(240,255,255), 
+        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_editprf.SetBottomEndColour(wx.Colour(175,175,175))
-        self.btn_editprf.SetBottomStartColour(wx.Colour(175,175,175))
-        self.btn_editprf.SetTopStartColour(wx.Colour(175,175,175))
-        self.btn_editprf.SetTopEndColour(wx.Colour(175,175,175))
+        self.btn_editprf.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_editprf.SetBottomStartColour(wx.Colour(255,255,255))
+        self.btn_editprf.SetTopStartColour(wx.Colour(255,255,255))
+        self.btn_editprf.SetTopEndColour(wx.Colour(255,255,255))
 
         #self.btnpanel.SetBackgroundColour(wx.Colour(97, 204, 199))
         self.btnpanel.SetBackgroundColour(wx.Colour(205, 235, 222))
@@ -200,15 +201,15 @@ class MainFrame(wx.Frame):
                                                 self.cpu_used,
                                                 self.loglevel_type,
                                                 self.OS,
-                                                setui[13],# icon playfilters
-                                                setui[14],# icon resetfilters
-                                                setui[19],# icon resize
-                                                setui[20],# icon crop
-                                                setui[21],# icon rotate
-                                                setui[22],# icon deinterlace
-                                                setui[23],# icon ic_denoiser
-                                                setui[24],# icon analyzes
-                                                setui[25],# icon settings
+                                                pathicons[10],# icon playfilters
+                                                pathicons[11],# icon resetfilters
+                                                pathicons[16],# icon resize
+                                                pathicons[17],# icon crop
+                                                pathicons[18],# icon rotate
+                                                pathicons[19],# icon deinterlace
+                                                pathicons[20],# icon ic_denoiser
+                                                pathicons[21],# icon analyzes
+                                                pathicons[22],# icon settings
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, self.ffmpeg_link, 
                                                 self.threads,
@@ -216,8 +217,8 @@ class MainFrame(wx.Frame):
                                                 self.loglevel_type, 
                                                 self.ffprobe_link,
                                                 self.OS,
-                                                setui[24],# icon analyzes
-                                                setui[25],# icon settings
+                                                pathicons[21],# icon analyzes
+                                                pathicons[22],# icon settings
                                                 )
 
         self.DnD = dragNdrop.DnDPanel(self, self.ffprobe_link) # dragNdrop panel
@@ -416,7 +417,7 @@ class MainFrame(wx.Frame):
         """
         Disable streams imported menu
         """
-        self.btn_metaI.SetBottomEndColour(wx.Colour(175,175,175))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(255,255,255))
         self.import_clicked = ''
         
     #------------------------------------------------------------------#
@@ -446,7 +447,7 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
-                self.btn_duration.SetBottomEndColour(wx.Colour(175,175,175))
+                self.btn_duration.SetBottomEndColour(wx.Colour(255,255,255))
             else:
                 self.btn_duration.SetBottomEndColour(wx.Colour(0, 240, 0))
             self.time_seq = data

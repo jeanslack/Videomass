@@ -4,10 +4,13 @@ November 12, 2018 V.1.2.5
 
 - Fixed bug on the ``Video Conversions`` and ``Audio Conversions`` panels when
   set audio parameters specially with ``wav`` format.
-- in the ``Audio Settings`` tab, I've added new elements that improve accessibility 
-  and readability of settings.
+- Added new elements that improve accessibility and readability of audio settings 
+  in the ``Video Conversions`` panel.
 - Improved buttons colour and appearance
-- Add new buttons icons free and open source
+- Added new icons free and open source compatible with GPL3.
+- Fixed bug in the preview after ``Save audio from movie``. The exit with 
+  invalid filename is be fixed.
+  
 
 +------------------------------------+
 October 27, 2018 V.1.2.0

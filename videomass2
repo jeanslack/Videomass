@@ -32,6 +32,7 @@
 import wx
 import os
 from vdms_SYS.ctrl_run import system_check, parsing_fileconf
+from vdms_SYS.appearance import Appearance
 
 path_confdir = os.path.expanduser('~/.videomass2/')# presets path
 PWD = os.getcwd()
@@ -61,7 +62,8 @@ class Videomass(wx.App):
         """
         setui = system_check() # for user-space settings
         fileconf = parsing_fileconf() # for user interface settings
-        if setui[7]: # if source dir is corrupt
+        
+        if setui[2]: # if source dir is corrupt
             wx.MessageBox('Can not find the configuration file\n\n'
                           'Sorry, cannot continue..',
                           'Fatal Error - Videomass2', wx.ICON_STOP)
@@ -94,8 +96,11 @@ class Videomass(wx.App):
                              None) == wx.YES:
                 os.remove("%s/videomass2.conf" % path_confdir)
             return False
+        
+        icons = Appearance(setui[3], fileconf[14])# set appearance instance
+        pathicons = icons.icons_set() # get paths icons
 
-        if setui[5] == 'Darwin':
+        if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
             for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
@@ -104,14 +109,14 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.reprise(setui[0])
+                self.reprise("%s/art/videomass2.png" % PWD)
                 return True
             else:
                 ffmpeg_link = fileconf[8]
                 ffprobe_link = fileconf[10]
                 ffplay_link = fileconf[12]
 
-        elif setui[5] == 'Windows':
+        elif setui[0] == 'Windows':
             for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
@@ -119,7 +124,7 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.reprise(setui[0])
+                self.reprise("%s/art/videomass2.png" % PWD)
                 return True
             else:
                 ffmpeg_link = fileconf[8]
@@ -130,12 +135,13 @@ class Videomass(wx.App):
             ffmpeg_link = fileconf[8]
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
-            #self.reprise(setui[0])
+            #self.reprise("%s/art/videomass2.png" % PWD)
             #return True
             
         from vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 
-                               ffmpeg_link, ffprobe_link, ffplay_link
+                               ffmpeg_link, ffprobe_link, ffplay_link,
+                               pathicons
                                )
         main_frame.Show()
         self.SetTopWindow(main_frame)

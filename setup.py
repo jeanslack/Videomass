@@ -122,13 +122,16 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
         ('share/videomass2/config', glob_files('share/*.vdms')),
         ('share/videomass2/config', ['share/videomass2.conf', 'share/README']),
         ('share/videomass2/icons', glob_files('art/*.png')),
+        ('share/videomass2/icons/36x36', glob_files('art/icons/36x36/*.png')),
+        ('share/videomass2/icons/24x24', glob_files('art/icons/24x24/*.png')),
+        ('share/videomass2/icons/18x18', glob_files('art/icons/18x18/*.png')),
         ('share/applications', ['videomass2.desktop']),
         ('share/pixmaps', ['art/videomass2.png']),
         #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
                 ]
     
     DEPENDENCIES = ['python', 'wxpython', 'ffmpeg']
-    EXTRA_DEPEND = {'ffmpeg':  ["ffmpeg"],}
+    #EXTRA_DEPEND = {'ffmpeg':  ["ffmpeg"],}
     
     setup(name = PRG_NAME,
         version = VERSION,
@@ -201,7 +204,10 @@ def OSX():
     DATA_FILES = [('share', glob_files('share/*.vdms')),
             ('share', ['share/videomass2.conf']), 
             #('docs/HTML', glob_files('docs/HTML/*.html')), 
-            ('art', glob_files('art/*.png')), 
+            ('art', glob_files('art/*.png')),
+            ('art/icons/36x36', glob_files('art/icons/36x36/*.png')),
+            ('art/icons/24x24', glob_files('art/icons/24x24/*.png')),
+            ('art/icons/18x18', glob_files('art/icons/18x18/*.png')),
             ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING','TODO',
                   'README.md']),]
     
@@ -216,11 +222,12 @@ def OSX():
                'CFBundleDisplayName': RLS_NAME,
                'CFBundleGetInfoString': "Making Videomass2",
                'CFBundleIdentifier': "com.jeanslack.videomass2",
-               'CFBundleVersion': "19.1.1",
-               'CFBundleShortVersionString': "19.1.1",
-               'NSHumanReadableCopyright': u"Copyright © 2018, "
+               'CFBundleVersion': "%s" % VERSION,
+               'CFBundleShortVersionString': "%s" % VERSION,
+               'NSHumanReadableCopyright': u"Copyright %s, "
                                             "Gianluca Pernigotto, "
-                                            "All Rights Reserved",}
+                                            "All Rights Reserved" % COPYRIGHT,
+                            }
                }
 
     #--------------- This is setup: --------------------#
@@ -272,7 +279,10 @@ def WIN32():
     DATA_FILES = [('share', glob_files('share/*.vdms')),
                   ('share', glob_files('share/*.conf')),
                   #('docs/HTML', glob_files('docs/HTML/*.html')), 
-                  ('art', glob_files('art/*.png')), 
+                  ('art', glob_files('art/*.png')),
+                  ('art/icons/36x36', glob_files('art/icons/36x36/*.png')),
+                  ('art/icons/24x24', glob_files('art/icons/24x24/*.png')),
+                  ('art/icons/18x18', glob_files('art/icons/18x18/*.png')),
                   ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',
                         'COPYING','TODO','README.md','videomass.ico',
                         'Win32Setup/NOTICE.rtf']),
