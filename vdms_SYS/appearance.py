@@ -35,35 +35,36 @@ class Appearance(object):
     """
     def __init__(self, installation, iconset):
         """
-        Each icon set is defined by a name set on the configuration file. 
-        By default the icon set is `` Default``, when the user chooses another 
-        icon set it is searched for on the other methods.
+        The paths where the icon sets are located depend on where the program 
+        is run and on which operating system.
+        Each icons set is defined by the name of the folder that contains it.  
+        By default the icon set is ``default``. 
         """
         if installation == 'portable':
-            self.url = '%s/art/icons' % os.getcwd() # work current directory
-            self.videomass_icon = "%s/videomass2.png" % self.url # 128x128
+            url = '%s/art/icons' % os.getcwd() # work current directory
+            self.videomass_icon = "%s/videomass2.png" % url # 128x128
             
         elif installation == 'standard linux':
-            self.url = '/usr/share/videomass2/icons'
+            url = '/usr/share/videomass2/icons'
             self.videomass_icon = "/usr/share/pixmaps/videomass2.png" # 128x128
         
         if iconset == 'default':
-            self.x36 = '%s/default/36x36' % self.url
-            self.x24 = '%s/default/24x24' % self.url
-            self.x18 = '%s/default/18x18' % self.url
+            self.x36 = '%s/default/36x36' % url
+            self.x24 = '%s/default/24x24' % url
+            self.x18 = '%s/default/18x18' % url
             self.icons_set()
         
         elif iconset == 'flat-color':
-            self.x36 = '%s/flat/36x36' % self.url
-            self.x24 = '%s/flat/24x24' % self.url
-            self.x18 = '%s/flat/18x18' % self.url
+            self.x36 = '%s/flat/36x36' % url
+            self.x24 = '%s/flat/24x24' % url
+            self.x18 = '%s/flat/18x18' % url
             self.icons_set()
             
     def icons_set(self):
         """
-        assignment path at the used icons:
+        assignment path at the used icons in according to configuration file.
         """
-        # main x24 icons 32x32 - 36x36:
+        # main icons 32x32 - 36x36:
         icon_import = '%s/icon_import.png' % self.x36
         icon_presets = '%s/icon_presets.png' % self.x36
         icon_switchvideomass = '%s/icon_videoconversions.png' % self.x36
