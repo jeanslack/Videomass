@@ -29,6 +29,7 @@ import os
 
 class Appearance(object):
     """
+    - called by bootstrap on_init -
     This class determines the paths to use to set icons on the appearance of 
     the graphical interface. In the future it could also be used for setting 
     colors or other elements of the graphic appearance.
@@ -47,17 +48,23 @@ class Appearance(object):
         elif installation == 'standard linux':
             url = '/usr/share/videomass2/icons'
             self.videomass_icon = "/usr/share/pixmaps/videomass2.png" # 128x128
-        
-        if iconset == 'default':
-            self.x36 = '%s/default/36x36' % url
-            self.x24 = '%s/default/24x24' % url
-            self.x18 = '%s/default/18x18' % url
+        # default black
+        if iconset == 'Material_Design_Icons_black': # default
+            self.x36 = '%s/Material_Design_Icons_black/36x36' % url
+            self.x24 = '%s/Material_Design_Icons_black/24x24' % url
+            self.x18 = '%s/Material_Design_Icons_black/18x18' % url
             self.icons_set()
-        
-        elif iconset == 'flat-color':
-            self.x36 = '%s/flat/36x36' % url
-            self.x24 = '%s/flat/24x24' % url
-            self.x18 = '%s/flat/18x18' % url
+        # default white
+        elif iconset == 'Material_Design_Icons_white':
+            self.x36 = '%s/Material_Design_Icons_white/36x36' % url
+            self.x24 = '%s/Material_Design_Icons_black/24x24' % url
+            self.x18 = '%s/Material_Design_Icons_black/18x18' % url
+            self.icons_set()
+        # flat-colours
+        elif iconset == 'Flat_Color_Icons':
+            self.x36 = '%s/Flat_Color_Icons/36x36' % url
+            self.x24 = '%s/Material_Design_Icons_black/24x24' % url
+            self.x18 = '%s/Material_Design_Icons_black/18x18' % url
             self.icons_set()
             
     def icons_set(self):

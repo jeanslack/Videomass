@@ -41,7 +41,9 @@ class Setup(wx.Dialog):
     """
     def __init__(self, parent, threads, cpu_used, save_log, path_log, 
                  ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
-                 ffplay_link, ffplay_check, writeline_exec, OS):
+                 ffplay_link, ffplay_check, writeline_exec, OS,
+                 iconset,
+                 ):
         """
         NOTE 0): self.rowsNum attribute is a sorted list with a exatly number 
                  index corresponding to each read line of the videomass2.conf.
@@ -84,6 +86,7 @@ class Setup(wx.Dialog):
         self.ffplay_check = ffplay_check
         self.writeline_exec = writeline_exec
         self.OS = OS
+        self.iconset = iconset
         
         if self.OS == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
@@ -104,6 +107,9 @@ class Setup(wx.Dialog):
         
         tabThree = wx.Panel(notebook, wx.ID_ANY)
         notebook.AddPage(tabThree, "Executables")
+        
+        tabFour = wx.Panel(notebook, wx.ID_ANY)
+        notebook.AddPage(tabFour, "Appearance")
         # make a sizer base and grid base. Note that grid base contains
         # buttons close and apply. First add notebook then the buttons at bottom
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -174,7 +180,9 @@ class Setup(wx.Dialog):
                                        " Use a custom path to run FFmpeg"))
         self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "")
-        gridExec.Add(self.checkbox_exeFFmpeg, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
+        gridExec.Add(self.checkbox_exeFFmpeg, 1, wx.TOP|
+                                                 wx.ALIGN_CENTER_VERTICAL|
+                                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFmpeg = wx.FlexGridSizer(1, 2, 0, 0)
         gridExec.Add(gridFFmpeg)
         gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 15)
@@ -184,7 +192,9 @@ class Setup(wx.Dialog):
                                        " Use a custom path to run FFprobe"))
         self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "")
-        gridExec.Add(self.checkbox_exeFFprobe, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
+        gridExec.Add(self.checkbox_exeFFprobe, 1, wx.TOP|
+                                                  wx.ALIGN_CENTER_VERTICAL|
+                                                  wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFprobe = wx.FlexGridSizer(1, 2, 0, 0)
         gridExec.Add(gridFFprobe)
         gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 15)
@@ -194,11 +204,27 @@ class Setup(wx.Dialog):
                                        " Use a custom path to run FFplay"))
         self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, "Browse..")
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "")
-        gridExec.Add(self.checkbox_exeFFplay, 1, wx.TOP|wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL, 15)
+        gridExec.Add(self.checkbox_exeFFplay, 1, wx.TOP|
+                                                 wx.ALIGN_CENTER_VERTICAL|
+                                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
         gridFFplay = wx.FlexGridSizer(1, 2, 0, 0)
         gridExec.Add(gridFFplay)
         gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 15)
         gridFFplay.Add(self.txtctrl_ffplay, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        #--------------------------------------------------TAB 4
+        gridappearance = wx.FlexGridSizer(3, 1, 0, 0)
+        tabFour.SetSizer(gridappearance)#aggiungo il sizer su tab 4
+        boxLabAppear = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
+                                    "Set Icon Themes")), wx.VERTICAL)
+        gridappearance.Add(boxLabAppear, 1, wx.ALL|wx.EXPAND, 15)
+        self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY, 
+                         choices=[("Material_Design_Icons_black"), 
+                                  ("Material_Design_Icons_white"),
+                                  ("Flat_Color_Icons"), 
+                                  ], style=wx.CB_DROPDOWN | wx.CB_READONLY)
+        boxLabAppear.Add(self.cmbx_icons, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        self.cmbx_icons.SetValue(self.iconset)
+        
         #------------------------------------------------------bottom
         gridBottom = wx.GridSizer(1, 2, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
@@ -288,6 +314,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
@@ -502,6 +529,13 @@ class Setup(wx.Dialog):
     
         else:
             self.full_list[self.rowsNum[13]] = 'false\n'
+    #------------------------------------------------------------------#
+    def on_Iconthemes(self, event):
+        """
+        Set themes of icons
+        """
+        choice = self.cmbx_icons.GetStringSelection()
+        self.full_list[self.rowsNum[14]] = choice
     #------------------------------------------------------------------#
     def on_help(self, event):
         """

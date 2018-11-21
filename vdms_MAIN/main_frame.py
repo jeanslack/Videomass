@@ -83,6 +83,7 @@ class MainFrame(wx.Frame):
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
         self.writeline_exec = fileconf[13]
+        self.iconset = fileconf[14]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
         self.post_process = []# at the end of any process put file for play/metadata
@@ -742,7 +743,8 @@ class MainFrame(wx.Frame):
                                      self.ffmpeg_link, self.ffmpeg_check,
                                      self.ffprobe_link, self.ffprobe_check, 
                                      self.ffplay_link, self.ffplay_check, 
-                                     self.writeline_exec, self.OS
+                                     self.writeline_exec, self.OS, 
+                                     self.iconset,
                                      )
         setup_dlg.ShowModal()
         

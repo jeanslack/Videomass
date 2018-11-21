@@ -38,52 +38,34 @@ DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
 #------------------------------------------------------------------------#
 def system_check():
     """
-    -This function check existing of the '/home/user/.videomass2' configuration 
-    folder with videomass2.conf and vdms files content.
-    It is called from videomass2 bootstrap. If these files do not 
-    exist or are deleted in, this function restore them from assign paths
-    established below. 
-    -Check which oprative system is used to make the necessary adjustments
-    On MacOSX is also created the directory that contains 
-    the ffmpeg presets if not exist. 
-    -Assign the paths of icons and html user manual.
-    NOTE: Windows implementations: 
-           - for double pass windows has not /dev/null (use NUL instead)
-             https://trac.ffmpeg.org/wiki/Encode/H.264#twopass
-           - Use ffmpeg.exe command on Windows
+    - called by bootstrap on_init -
+    Assignment of the appropriate paths for sharing the configuration folder.
+    This function checks the integrity of the Videomass2 configuration folder 
+    located in each user's home directory. If this folder does not exist in 
+    the user space it will be recovered from the source or installation folder 
+    (this depends if portable mode or installated mode) and will be saved in 
+    the user's home.  
     """
     copyerr = False
     
     # What is the OS ??
     #OS = [x for x in ['Darwin','Linux','Windows'] if platform.system() in x ][0]
     OS = platform.system()
-    
-    """
-    Assignment path where there is av_profile.xml and videomass2.conf
-    This depends if portable mode or installable mode:
-    """
+
     if os.path.exists('%s/vdms_MAIN' % (PWD)) or OS == ('Darwin'):
-        """
-        Paths for MacOSX or Linux without installation (portable)
-        """
+        #Paths for MacOSX or Linux without installation (portable)
         path_srcShare = '%s/share' % PWD
         installation = 'portable'
         
-    elif OS == ('Linux'):
-        """
-        Path for Linux (Videomass2 standard installation mode)
-        """
+    elif OS == ('Linux'): #Path for Linux (standard installation mode)
         path_srcShare = '/usr/share/videomass2/config'
         installation = 'standard linux'
         
     else: # it should be Windows OS
-        """
-        This paths are for OS == Windows
-        """
         path_srcShare = '%s/share' % PWD
         installation = 'portable'
 
-    #### check videomass.conf and config directory
+    #### check videomass.conf and config. folder
     if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
         if os.path.isfile('%s/.videomass2/videomass2.conf' % DIRNAME):
             pass
@@ -109,9 +91,11 @@ def system_check():
 #------------------------------------------------------------------------#
 def parsing_fileconf():
     """
-    This function is called by videomass on_init. It make a parsing of the
-    configuration file localized on '~/.videomass2/videomass2.conf' 
-    and return values list of the current program settings.
+    - called by bootstrap on_init -
+    Make a parsing of the configuration file localized on 
+    ``~/.videomass2/videomass2.conf`` and return values list of the current 
+    program settings. If this file is not present or is damaged, it is marked 
+    as corrupt.
     """
     filename = '%s/.videomass2/videomass2.conf' % (DIRNAME)
 
