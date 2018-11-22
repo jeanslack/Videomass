@@ -68,8 +68,8 @@ class Videomass(wx.App):
             print 'Videomass2: Fatal Error, file configuration not found'
             return False
 
-        # check if videomass2.conf is corrupt or unreadable
-        if float(fileconf[0]) < 1.1:
+        # check videomass2.conf version
+        if float(fileconf[0]) < 1.2:
             msg = ('Videomass2: Outdated configuration file.\n'
                     'Current version do not match with %s .\n\n' 
                     % fileconf[0])

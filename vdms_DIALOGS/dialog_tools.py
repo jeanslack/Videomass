@@ -273,13 +273,13 @@ class VideoRotate(wx.Dialog):
         #----------------------Properties------------------------------------#
 
         self.SetTitle("Set Video/Image Rotation - Videomass2")
-        self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTipString("Reverses visual movie from bottom to top")
-        self.button_left.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.button_left.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_left.SetToolTipString("Rotate view movie to left")
-        self.button_right.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.button_right.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_right.SetToolTipString("Rotate view movie to Right")
-        self.button_down.SetBackgroundColour(wx.Colour(122, 239, 255))
+        #self.button_down.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_down.SetToolTipString("Reverses visual movie from top to bottom")
         self.text_rotate.SetMinSize((200, 30))
         self.text_rotate.SetToolTipString("Display show settings")
