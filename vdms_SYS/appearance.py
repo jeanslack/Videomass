@@ -31,8 +31,7 @@ class Appearance(object):
     """
     - called by bootstrap on_init -
     This class determines the paths to use to set icons on the appearance of 
-    the graphical interface. In the future it could also be used for setting 
-    colors or other elements of the graphic appearance.
+    the graphical interface.
     """
     def __init__(self, installation, iconset):
         """

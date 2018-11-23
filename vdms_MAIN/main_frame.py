@@ -64,6 +64,11 @@ class MainFrame(wx.Frame):
         self.icon_help = pathicons[4]
         self.icon_headphones = pathicons[5]
         self.icon_import = pathicons[6]
+        barC = fileconf[15].split(',') 
+        barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) # toolbar panel colour
+        bBtnC = fileconf[16].split(',')
+        self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2])) # toolbar buttons colour
+        
         #self.helping = setui[5]# path contestual help for helping:
         self.OS = setui[0]# ID of the operative system:
         path_srcShare = setui[1]# share dir (are where the origin files?):
@@ -113,10 +118,10 @@ class MainFrame(wx.Frame):
                                            label="Show Metadata")
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                       foregroundcolour=wx.Colour(28,28,28))
-        self.btn_metaI.SetBottomEndColour(wx.Colour(255,255,255))
-        self.btn_metaI.SetBottomStartColour(wx.Colour(255,255,255))
-        self.btn_metaI.SetTopStartColour(wx.Colour(255,255,255))
-        self.btn_metaI.SetTopEndColour(wx.Colour(255,255,255))
+        self.btn_metaI.SetBottomEndColour(self.bBtnC)
+        self.btn_metaI.SetBottomStartColour(self.bBtnC)
+        self.btn_metaI.SetTopStartColour(self.bBtnC)
+        self.btn_metaI.SetTopEndColour(self.bBtnC)
         
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
@@ -124,10 +129,10 @@ class MainFrame(wx.Frame):
                                            label="Preview")
         self.btn_playO.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                       foregroundcolour=wx.Colour(28,28,28))
-        self.btn_playO.SetBottomEndColour(wx.Colour(255,255,255))
-        self.btn_playO.SetBottomStartColour(wx.Colour(255,255,255))
-        self.btn_playO.SetTopStartColour(wx.Colour(255,255,255))
-        self.btn_playO.SetTopEndColour(wx.Colour(255,255,255))
+        self.btn_playO.SetBottomEndColour(self.bBtnC)
+        self.btn_playO.SetBottomStartColour(self.bBtnC)
+        self.btn_playO.SetTopStartColour(self.bBtnC)
+        self.btn_playO.SetTopEndColour(self.bBtnC)
         
         self.btn_duration = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
@@ -135,10 +140,10 @@ class MainFrame(wx.Frame):
                                               label="Duration")
         self.btn_duration.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_duration.SetBottomEndColour(wx.Colour(255,255,255))
-        self.btn_duration.SetBottomStartColour(wx.Colour(255,255,255))
-        self.btn_duration.SetTopStartColour(wx.Colour(255,255,255))
-        self.btn_duration.SetTopEndColour(wx.Colour(255,255,255))
+        self.btn_duration.SetBottomEndColour(self.bBtnC)
+        self.btn_duration.SetBottomStartColour(self.bBtnC)
+        self.btn_duration.SetTopStartColour(self.bBtnC)
+        self.btn_duration.SetTopEndColour(self.bBtnC)
         
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
@@ -146,10 +151,10 @@ class MainFrame(wx.Frame):
                                               label="Save As Profile")
         self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_saveprf.SetBottomEndColour(wx.Colour(255,255,255))
-        self.btn_saveprf.SetBottomStartColour(wx.Colour(255,255,255))
-        self.btn_saveprf.SetTopStartColour(wx.Colour(255,255,255))
-        self.btn_saveprf.SetTopEndColour(wx.Colour(255,255,255))
+        self.btn_saveprf.SetBottomEndColour(self.bBtnC)
+        self.btn_saveprf.SetBottomStartColour(self.bBtnC)
+        self.btn_saveprf.SetTopStartColour(self.bBtnC)
+        self.btn_saveprf.SetTopEndColour(self.bBtnC)
         
         self.btn_newprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
@@ -157,10 +162,10 @@ class MainFrame(wx.Frame):
                                               label="New..")
         self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_newprf.SetBottomEndColour(wx.Colour(255,255,255))
-        self.btn_newprf.SetBottomStartColour(wx.Colour(255,255,255))
-        self.btn_newprf.SetTopStartColour(wx.Colour(255,255,255))
-        self.btn_newprf.SetTopEndColour(wx.Colour(255,255,255))
+        self.btn_newprf.SetBottomEndColour(self.bBtnC)
+        self.btn_newprf.SetBottomStartColour(self.bBtnC)
+        self.btn_newprf.SetTopStartColour(self.bBtnC)
+        self.btn_newprf.SetTopEndColour(self.bBtnC)
         
         self.btn_delprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
@@ -168,10 +173,10 @@ class MainFrame(wx.Frame):
                                               label="Delete..")
         self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_delprf.SetBottomEndColour(wx.Colour(255,255,255))
-        self.btn_delprf.SetBottomStartColour(wx.Colour(255,255,255))
-        self.btn_delprf.SetTopStartColour(wx.Colour(255,255,255))
-        self.btn_delprf.SetTopEndColour(wx.Colour(255,255,255))
+        self.btn_delprf.SetBottomEndColour(self.bBtnC)
+        self.btn_delprf.SetBottomStartColour(self.bBtnC)
+        self.btn_delprf.SetTopStartColour(self.bBtnC)
+        self.btn_delprf.SetTopEndColour(self.bBtnC)
         
         self.btn_editprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
@@ -179,13 +184,13 @@ class MainFrame(wx.Frame):
                                               label="Edit..")
         self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
-        self.btn_editprf.SetBottomEndColour(wx.Colour(255,255,255))
-        self.btn_editprf.SetBottomStartColour(wx.Colour(255,255,255))
-        self.btn_editprf.SetTopStartColour(wx.Colour(255,255,255))
-        self.btn_editprf.SetTopEndColour(wx.Colour(255,255,255))
+        self.btn_editprf.SetBottomEndColour(self.bBtnC)
+        self.btn_editprf.SetBottomStartColour(self.bBtnC)
+        self.btn_editprf.SetTopStartColour(self.bBtnC)
+        self.btn_editprf.SetTopEndColour(self.bBtnC)
 
-        #self.btnpanel.SetBackgroundColour(wx.Colour(97, 204, 199))
-        self.btnpanel.SetBackgroundColour(wx.Colour(205, 235, 222))
+        self.btnpanel.SetBackgroundColour(barColor)
+        #self.btnpanel.SetBackgroundColour(wx.Colour(205, 235, 222))
         #---------- others panel instances:
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
                                                          path_confdir, PWD, 
@@ -418,7 +423,7 @@ class MainFrame(wx.Frame):
         """
         Disable streams imported menu
         """
-        self.btn_metaI.SetBottomEndColour(wx.Colour(255,255,255))
+        self.btn_metaI.SetBottomEndColour(self.bBtnC)
         self.import_clicked = ''
         
     #------------------------------------------------------------------#
@@ -448,7 +453,7 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
-                self.btn_duration.SetBottomEndColour(wx.Colour(255,255,255))
+                self.btn_duration.SetBottomEndColour(self.bBtnC)
             else:
                 self.btn_duration.SetBottomEndColour(wx.Colour(0, 240, 0))
             self.time_seq = data

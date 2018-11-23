@@ -214,17 +214,43 @@ class Setup(wx.Dialog):
         #--------------------------------------------------TAB 4
         gridappearance = wx.FlexGridSizer(3, 1, 0, 0)
         tabFour.SetSizer(gridappearance)#aggiungo il sizer su tab 4
-        boxLabAppear = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
+        boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
                                     "Set Icon Themes")), wx.VERTICAL)
-        gridappearance.Add(boxLabAppear, 1, wx.ALL|wx.EXPAND, 15)
+        gridappearance.Add(boxLabIcons, 1, wx.ALL|wx.EXPAND, 15)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY, 
                          choices=[("Material_Design_Icons_black"), 
                                   ("Material_Design_Icons_white"),
                                   ("Flat_Color_Icons"), 
                                   ], style=wx.CB_DROPDOWN | wx.CB_READONLY)
-        boxLabAppear.Add(self.cmbx_icons, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        boxLabIcons.Add(self.cmbx_icons, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         self.cmbx_icons.SetValue(self.iconset)
         
+        boxLabColor = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
+                                    "Custom Colour UI")), wx.VERTICAL)
+        gridappearance.Add(boxLabColor, 1, wx.ALL|wx.EXPAND, 15)
+        gridTBColor = wx.FlexGridSizer(4, 3, 0, 0)
+        boxLabColor.Add(gridTBColor)
+        
+        labTBColor = wx.StaticText(tabFour, wx.ID_ANY, ("Toolbar Colour:"))
+        gridTBColor.Add(labTBColor, 0, wx.ALL | 
+                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                     wx.ALIGN_CENTER_VERTICAL, 15)
+        
+        btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, "Bar Colour")
+        gridTBColor.Add(btn_TBcolor, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        btn_TBcolorClear = wx.Button(tabFour, wx.ID_CLEAR, "")
+        gridTBColor.Add(btn_TBcolorClear, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        
+        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, ("Toolbar Buttons Colour:"))
+        gridTBColor.Add(labTBColorBtn, 0, wx.ALL | 
+                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                     wx.ALIGN_CENTER_VERTICAL, 15)
+        
+        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, "Btn Colour")
+        gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, "")
+        gridTBColor.Add(btn_TBcolorClearBtn, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+
         #------------------------------------------------------bottom
         gridBottom = wx.GridSizer(1, 2, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
@@ -315,6 +341,12 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
+        
+        self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
+        self.Bind(wx.EVT_BUTTON, self.onColorDefault, btn_TBcolorClear)
+        self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
+        self.Bind(wx.EVT_BUTTON, self.onColorDefault, btn_TBcolorClearBtn)
+        
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
@@ -537,6 +569,44 @@ class Setup(wx.Dialog):
         choice = self.cmbx_icons.GetStringSelection()
         self.full_list[self.rowsNum[14]] = choice
     #------------------------------------------------------------------#
+    def onColorDlg(self, event):
+        """
+        Colorize the toolbar bar
+        """
+        btn = event.GetEventObject()
+        identify = btn.GetLabelText()
+  
+        dlg = wx.ColourDialog(self)
+ 
+        # Ensure the full colour dialog is displayed, 
+        # not the abbreviated version.
+        dlg.GetColourData().SetChooseFull(True)
+ 
+        if dlg.ShowModal() == wx.ID_OK:
+            data = dlg.GetColourData()
+            rgb = str(data.GetColour().Get())
+            choice = rgb.replace('(','').replace(')','').strip()
+            
+            if identify == 'Bar Colour':
+                self.full_list[self.rowsNum[15]] = "%s\n" % choice
+            elif identify == 'Btn Colour':
+                self.full_list[self.rowsNum[16]] = "%s\n" % choice
+ 
+        dlg.Destroy()
+    #----------------------------------------------------------------------#
+    def onColorDefault(self, event):
+        """
+        Restore the default colors of the toolbar
+        """
+        btn = event.GetEventObject()
+        identify = btn.GetLabelText()
+        
+        if identify == 'Bar Colour':
+            self.full_list[self.rowsNum[15]] = '205,235,222\n'
+        elif identify == 'Btn Colour':
+            self.full_list[self.rowsNum[16]] = '255,255,255\n'
+        
+    #----------------------------------------------------------------------#
     def on_help(self, event):
         """
         """
