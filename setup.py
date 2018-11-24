@@ -121,12 +121,12 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
     DATA_FILES = [
         ('share/videomass2/config', glob_files('share/*.vdms')),
         ('share/videomass2/config', ['share/videomass2.conf', 'share/README']),
-        ('share/videomass2/icons', glob_files('art/*.png')),
-        ('share/videomass2/icons/36x36', glob_files('art/icons/36x36/*.png')),
-        ('share/videomass2/icons/24x24', glob_files('art/icons/24x24/*.png')),
-        ('share/videomass2/icons/18x18', glob_files('art/icons/18x18/*.png')),
+        ('share/videomass2/icons', glob_files('art/*')),
+        #('share/videomass2/icons/36x36', glob_files('art/icons/36x36/*.png')),
+        #('share/videomass2/icons/24x24', glob_files('art/icons/24x24/*.png')),
+        #('share/videomass2/icons/18x18', glob_files('art/icons/18x18/*.png')),
         ('share/applications', ['videomass2.desktop']),
-        ('share/pixmaps', ['art/videomass2.png']),
+        ('share/pixmaps', ['art/icons/videomass2.png']),
         #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
                 ]
     

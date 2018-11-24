@@ -228,7 +228,7 @@ class Setup(wx.Dialog):
         boxLabColor = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
                                     "Custom Colour UI")), wx.VERTICAL)
         gridappearance.Add(boxLabColor, 1, wx.ALL|wx.EXPAND, 15)
-        gridTBColor = wx.FlexGridSizer(4, 3, 0, 0)
+        gridTBColor = wx.FlexGridSizer(3, 2, 0, 0)
         boxLabColor.Add(gridTBColor)
         
         labTBColor = wx.StaticText(tabFour, wx.ID_ANY, ("Toolbar Colour:"))
@@ -238,8 +238,6 @@ class Setup(wx.Dialog):
         
         btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, "Bar Colour")
         gridTBColor.Add(btn_TBcolor, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        btn_TBcolorClear = wx.Button(tabFour, wx.ID_CLEAR, "")
-        gridTBColor.Add(btn_TBcolorClear, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         
         labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, ("Toolbar Buttons Colour:"))
         gridTBColor.Add(labTBColorBtn, 0, wx.ALL | 
@@ -248,8 +246,8 @@ class Setup(wx.Dialog):
         
         btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, "Btn Colour")
         gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, "")
-        gridTBColor.Add(btn_TBcolorClearBtn, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, "Revert Default")
+        gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 15)
 
         #------------------------------------------------------bottom
         gridBottom = wx.GridSizer(1, 2, 0, 0)
@@ -343,9 +341,8 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
-        self.Bind(wx.EVT_BUTTON, self.onColorDefault, btn_TBcolorClear)
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
-        self.Bind(wx.EVT_BUTTON, self.onColorDefault, btn_TBcolorClearBtn)
+        self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, btn_TBcolorClearBtn)
         
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
@@ -594,17 +591,13 @@ class Setup(wx.Dialog):
  
         dlg.Destroy()
     #----------------------------------------------------------------------#
-    def onColorDefault(self, event):
+    def onAppearanceDefault(self, event):
         """
-        Restore the default colors of the toolbar
+        Restore to default settings colors and icons set
         """
-        btn = event.GetEventObject()
-        identify = btn.GetLabelText()
-        
-        if identify == 'Bar Colour':
-            self.full_list[self.rowsNum[15]] = '205,235,222\n'
-        elif identify == 'Btn Colour':
-            self.full_list[self.rowsNum[16]] = '255,255,255\n'
+        self.full_list[self.rowsNum[14]] = "Material_Design_Icons_black\n"
+        self.full_list[self.rowsNum[15]] = '205,235,222\n'
+        self.full_list[self.rowsNum[16]] = '255,255,255\n'
         
     #----------------------------------------------------------------------#
     def on_help(self, event):

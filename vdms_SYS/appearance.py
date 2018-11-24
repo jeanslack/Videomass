@@ -62,8 +62,8 @@ class Appearance(object):
         # flat-colours
         elif iconset == 'Flat_Color_Icons':
             self.x36 = '%s/Flat_Color_Icons/36x36' % url
-            self.x24 = '%s/Material_Design_Icons_black/24x24' % url
-            self.x18 = '%s/Material_Design_Icons_black/18x18' % url
+            self.x24 = '%s/Flat_Color_Icons/24x24' % url
+            self.x18 = '%s/Flat_Color_Icons/18x18' % url
             self.icons_set()
             
     def icons_set(self):
