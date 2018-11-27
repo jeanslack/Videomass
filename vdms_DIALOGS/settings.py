@@ -231,7 +231,7 @@ class Setup(wx.Dialog):
         gridTBColor = wx.FlexGridSizer(3, 2, 0, 0)
         boxLabColor.Add(gridTBColor)
         
-        labTBColor = wx.StaticText(tabFour, wx.ID_ANY, ("Toolbar Colour:"))
+        labTBColor = wx.StaticText(tabFour, wx.ID_ANY, ("Change Toolbar Colour:"))
         gridTBColor.Add(labTBColor, 0, wx.ALL | 
                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                      wx.ALIGN_CENTER_VERTICAL, 15)
@@ -239,14 +239,14 @@ class Setup(wx.Dialog):
         btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, "Bar Colour")
         gridTBColor.Add(btn_TBcolor, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         
-        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, ("Toolbar Buttons Colour:"))
+        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, ("Change Toolbar Buttons Colour:"))
         gridTBColor.Add(labTBColorBtn, 0, wx.ALL | 
                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                      wx.ALIGN_CENTER_VERTICAL, 15)
         
-        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, "Btn Colour")
+        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, "Buttons Colour")
         gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, "Revert Default")
+        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, "Restore default settings")
         gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 15)
 
         #------------------------------------------------------bottom
@@ -586,7 +586,7 @@ class Setup(wx.Dialog):
             
             if identify == 'Bar Colour':
                 self.full_list[self.rowsNum[15]] = "%s\n" % choice
-            elif identify == 'Btn Colour':
+            elif identify == 'Buttons Colour':
                 self.full_list[self.rowsNum[16]] = "%s\n" % choice
  
         dlg.Destroy()
