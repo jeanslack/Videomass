@@ -127,13 +127,13 @@ def LINUX_DEBIAN(id_distro, id_version):
     DATA_FILES = [
         ('share/videomass2/config', glob_files('share/*.vdms')),
         ('share/videomass2/config', ['share/videomass2.conf', 'share/README']),
-        ('share/videomass2/icons', glob_files('art/icons/*.png')),
+        ('share/videomass2/icons', ['art/icons/videomass2.png']),
         ('%s' % set_1[0], glob_files('%s/*.md' % set_1[1])),
         ('%s/36x36' % set_1[0], glob_files('%s/36x36/*.png' % set_1[1])),
         ('%s/24x24' % set_1[0], glob_files('%s/24x24/*.png' % set_1[1])),
         ('%s/18x18' % set_1[0], glob_files('%s/18x18/*.png' % set_1[1])),
         
-        ('%s' % set_1[0], glob_files('%s/*.txt' % set_1[1])),
+        ('%s' % set_2[0], glob_files('%s/*.txt' % set_2[1])),
         ('%s/36x36' % set_2[0], glob_files('%s/36x36/*.png' % set_2[1])),
         ('%s/24x24' % set_2[0], glob_files('%s/24x24/*.png' % set_2[1])),
         ('%s/18x18' % set_2[0], glob_files('%s/18x18/*.png' % set_2[1])),
@@ -142,12 +142,12 @@ def LINUX_DEBIAN(id_distro, id_version):
         ('%s/36x36' % set_3[0], glob_files('%s/36x36/*.png' % set_3[1])),
         
         ('share/applications', ['videomass2.desktop']),
-        ('share/pixmaps', ['art/videomass2.png']),
+        ('share/pixmaps', ['art/icons/videomass2.png']),
         #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
                 ]
     
-    DEPENDENCIES = ['python', 'wxpython', 'ffmpeg']
-    #EXTRA_DEPEND = {'ffmpeg':  ["ffmpeg"],}
+    DEPENDENCIES = ['python2.7', 'python-wxgtk3.0', 'ffmpeg']
+    EXTRA_DEPEND = {'':  [""],}
     
     setup(name = PRG_NAME,
         version = VERSION,
@@ -163,7 +163,7 @@ def LINUX_DEBIAN(id_distro, id_version):
         scripts = ['videomass2'],
         data_files = DATA_FILES,
         install_requires = DEPENDENCIES,
-        #extras_require = EXTRA_DEPEND
+        extras_require = EXTRA_DEPEND
         )
 
 #-----------------------------------------------------------------------#
