@@ -144,9 +144,8 @@ def LINUX_DEBIAN(id_distro, id_version):
         ('share/applications', ['videomass2.desktop']),
         ('share/pixmaps', ['art/icons/videomass2.png']),
         #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
-                ]
-    
-    DEPENDENCIES = ['python2.7', 'python-wxgtk3.0', 'ffmpeg']
+                    ]
+    DEPENDENCIES = ['python', 'wxpython',]
     EXTRA_DEPEND = {'':  [""],}
     
     setup(name = PRG_NAME,

@@ -1,4 +1,4 @@
-include Videomass.py README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
+include Videomass2.py README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
 recursive-include docs *
 recursive-include art *
 recursive-include share *
