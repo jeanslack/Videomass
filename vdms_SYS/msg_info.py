@@ -44,9 +44,12 @@ def current_release():
     Comment = ("\nThanks to:\n"
                "FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
                "originator of the FFmpeg project:\n"
-               "http://ffmpeg.org/\n"
+               "<http://ffmpeg.org/>\n"
                "Material design icons from Google:\n"
-               "http://google.github.io/material-design-icons/#getting-icons")
+               "http://google.github.io/material-design-icons/#getting-icons"
+               "Flat Color Icons:\n"
+               "https://icons8.com/color-icons"
+               )
     
     return (Release_Name, Program_Name, Version, Release, Copyright, 
             Website, Author, Mail, Comment)

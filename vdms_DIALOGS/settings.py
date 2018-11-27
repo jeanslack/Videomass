@@ -563,7 +563,7 @@ class Setup(wx.Dialog):
         """
         Set themes of icons
         """
-        choice = self.cmbx_icons.GetStringSelection()
+        choice = "%s\n" % self.cmbx_icons.GetStringSelection()
         self.full_list[self.rowsNum[14]] = choice
     #------------------------------------------------------------------#
     def onColorDlg(self, event):
