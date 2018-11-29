@@ -216,13 +216,28 @@ def OSX():
     # this is DATA_FILE structure: 
     # ('dir/file') > destination of the data, ['dir/file'] > on current 
     # place sources even path must be relative-path
+
+    set_1 = 'art/icons/Flat_Color_Icons'
+    set_2 = 'art/icons/Material_Design_Icons_black'
+    set_3 = 'art/icons/Material_Design_Icons_white'
     DATA_FILES = [('share', glob_files('share/*.vdms')),
             ('share', ['share/videomass2.conf']), 
             #('docs/HTML', glob_files('docs/HTML/*.html')), 
-            ('art', glob_files('art/*.png')),
-            ('art/icons/36x36', glob_files('art/icons/36x36/*.png')),
-            ('art/icons/24x24', glob_files('art/icons/24x24/*.png')),
-            ('art/icons/18x18', glob_files('art/icons/18x18/*.png')),
+            ('art/icons', glob_files('art/icons/*.png')),
+
+            ('%s' % set_1, glob_files('%s/*.md' % set_1)),
+            ('%s/36x36' % set_1, glob_files('%s/36x36/*.png' % set_1)),
+            ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
+            ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
+
+            '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+            ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
+            ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
+            ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
+
+            '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+            ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
+
             ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING','TODO',
                   'README.md']),]
     
@@ -291,13 +306,27 @@ def WIN32():
         for cp in files:
             shutil.copy(cp, '%s/vdms_PROCESS' % PWD)
     
+    set_1 = 'art/icons/Flat_Color_Icons'
+    set_2 = 'art/icons/Material_Design_Icons_black'
+    set_3 = 'art/icons/Material_Design_Icons_white'
     DATA_FILES = [('share', glob_files('share/*.vdms')),
                   ('share', glob_files('share/*.conf')),
                   #('docs/HTML', glob_files('docs/HTML/*.html')), 
-                  ('art', glob_files('art/*.png')),
-                  ('art/icons/36x36', glob_files('art/icons/36x36/*.png')),
-                  ('art/icons/24x24', glob_files('art/icons/24x24/*.png')),
-                  ('art/icons/18x18', glob_files('art/icons/18x18/*.png')),
+                  ('art/icons', glob_files('art/icons/*.png')),
+
+                  ('%s' % set_1, glob_files('%s/*.md' % set_1)),
+                  ('%s/36x36' % set_1, glob_files('%s/36x36/*.png' % set_1)),
+                  ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
+                  ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
+
+                  '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+                  ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
+                  ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
+                  ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
+
+                  '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+                  ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
+                  
                   ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',
                         'COPYING','TODO','README.md','videomass.ico',
                         'Win32Setup/NOTICE.rtf']),
