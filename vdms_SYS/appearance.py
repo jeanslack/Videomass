@@ -43,10 +43,12 @@ class Appearance(object):
         if installation == 'portable':
             url = '%s/art/icons' % os.getcwd() # work current directory
             self.videomass_icon = "%s/videomass2.png" % url # 128x128
+            self.wizard_icon = "%s/videomass2_wizard.png" % url # 128x128
             
         elif installation == 'standard linux':
             url = '/usr/share/videomass2/icons'
             self.videomass_icon = "/usr/share/pixmaps/videomass2.png" # 128x128
+            self.wizard_icon = "/usr/share/pixmaps/videomass2_wizard.png" % url # 128x128
         # default black
         if iconset == 'Material_Design_Icons_black': # default
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url
@@ -120,6 +122,7 @@ class Appearance(object):
                 ic_denoiser, # 20
                 ic_analyzes, # 21
                 ic_settings, # 22
+                self.wizard_icon, # 23
                 )
             
         

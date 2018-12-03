@@ -148,12 +148,11 @@ class FirstStart(wx.Dialog):
         match = [i for i, j in zip(array, biname) if os.path.basename(i) == j]
         
         if len(match) < 3:
-            wx.MessageBox("text fields with incorrect association:\n\n"
-                          "ffmpeg must match the ffmpeg label\n"
-                          "ffprobe must match the ffprobe label\n"
-                          "ffplay must match the ffplay label\n\n"
-                          "Please, repair these errors..",
-                          'Error', wx.ICON_ERROR, self)
+            wx.MessageBox("Wrong entries on text fields:\n\n"
+                          "ffmpeg: invalid pathname\n"
+                          "ffprobe: invalid pathname\n"
+                          "ffplay: invalid pathname\n\n",
+                          'Entry errors', wx.ICON_ERROR, self)
             return
 
         for x in array:
@@ -293,8 +292,8 @@ class FirstStart(wx.Dialog):
             for i in full_list:
                 fileconf.write('%s' % i)
             
-        wx.MessageBox(u"\nThe procedure wizard has been completed.\n"
+        wx.MessageBox(u"\nWizard completed successfully.\n"
                        "Restart Videomass2 now.\n\nThank You!", 
-                       "Message - Videomass2")   
+                       "That's all folks!")   
         self.Destroy()
         
