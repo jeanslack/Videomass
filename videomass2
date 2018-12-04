@@ -133,8 +133,8 @@ class Videomass(wx.App):
             ffmpeg_link = fileconf[8]
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
-            self.firstrun(pathicons[23])
-            return True
+            #self.firstrun(pathicons[23])
+            #return True
             
         from vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 
