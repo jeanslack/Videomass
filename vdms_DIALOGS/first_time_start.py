@@ -43,15 +43,15 @@ class FirstStart(wx.Dialog):
         """
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         
-        msg = ("This wizard automatically searches for FFmpeg in your\n"
-               "system. You can also manually specify your customs\n"
-               "paths. However, you can always change these settings\n"
-               "later.\n\n"
-               "- If you want start the search now,\n  press the 'Search' button."
+        msg = ("This wizard automatically searches for FFmpeg in your system.\n"
+               "You can also manually specify your customs paths of FFmpeg.\n"
+               "However, you can always change these settings later in the\n"
+               "Setup dialog.\n\n"
+               "- If you want start the search now, press the 'Search' button."
                "\n\n"
-               "- If you want to set your custom paths,\n  check the "
-               "'Enable Custom Paths', then enter the \n  paths "
-               "of FFmpeg and press the 'Confirm' button."
+               "- If you want to set your custom paths, check the\n"
+               "  'Enable Custom Paths', then enter the paths of FFmpeg\n"
+               "  and press the 'Confirm' button."
                )
         # widget:
         bitmap_drumsT = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(
@@ -75,27 +75,31 @@ class FirstStart(wx.Dialog):
         self.SetTitle("Wizard - Videomass2")
         lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL,wx.BOLD, 0, ""))
         # layout:
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
         grd_base = wx.FlexGridSizer(2, 1, 0, 0)
         grd_1 = wx.FlexGridSizer(1, 2, 0, 0)
         grd_ext = wx.FlexGridSizer(2, 1, 0, 0)
         grd_2 = wx.FlexGridSizer(6, 2, 0, 0)
         grd_base.Add(grd_1)
-        grd_1.Add(bitmap_drumsT,0,wx.ALL, 5)
+        grd_1.Add(bitmap_drumsT,0,wx.ALL, 10)
         grd_1.Add(grd_ext)
         grd_base.Add(grd_2)
-        grd_ext.Add(lab_welc1,0,  wx.ALL, 5)
-        grd_ext.Add(lab_welc2,0, wx.ALIGN_CENTER | wx.ALL, 5)
+        grd_ext.Add(lab_welc1,0,  wx.ALL, 10)
+        grd_ext.Add(lab_welc2,0, wx.ALIGN_CENTER | wx.ALL, 10)
         grd_2.Add(self.searchBtn,0, wx.ALL|wx.EXPAND, 15)
-        grd_2.Add((0, 0), 0, wx.ALL, 5)
         grd_2.Add(self.ckbx_paths,0, wx.ALIGN_CENTER | wx.ALL, 15)
-        grd_2.Add(self.customBtn,0, wx.ALL|wx.EXPAND, 15)
         grd_2.Add(lab_ffmpeg,0, wx.ALIGN_CENTER | wx.ALL, 15)
         grd_2.Add(self.txtctrl_ffmpeg,0, wx.ALL, 15)
         grd_2.Add(lab_ffprobe,0, wx.ALIGN_CENTER | wx.ALL, 15)
         grd_2.Add(self.txtctrl_ffprobe,0, wx.ALL, 15)
         grd_2.Add(lab_ffplay,0, wx.ALIGN_CENTER | wx.ALL, 15)
         grd_2.Add(self.txtctrl_ffplay,0, wx.ALL, 15)
-        grd_2.Add(close_btn,0, wx.BOTTOM | wx.ALL, 15)
+        grd_2.Add((260,0), 0, wx.ALL, 15)
+        grd_btn = wx.FlexGridSizer(1, 2, 0, 0)
+        
+        grd_btn.Add(self.customBtn,0, flag=wx.ALL, border=5)
+        grd_btn.Add(close_btn,0, flag=wx.ALL, border=5)
+        grd_2.Add(grd_btn,0, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         #properties
         self.txtctrl_ffmpeg.SetMinSize((250, -1))
         self.txtctrl_ffplay.SetMinSize((250, -1))
@@ -104,9 +108,10 @@ class FirstStart(wx.Dialog):
         self.txtctrl_ffprobe.Disable()
         self.txtctrl_ffplay.Disable()
         self.customBtn.Disable()
-
-        self.SetSizer(grd_base)
-        grd_base.Fit(self)
+        
+        sizer_base.Add(grd_base)
+        self.SetSizer(sizer_base)
+        sizer_base.Fit(self)
         self.Layout()
         
         ######################## bindings #####################
@@ -143,12 +148,11 @@ class FirstStart(wx.Dialog):
         match = [i for i, j in zip(array, biname) if os.path.basename(i) == j]
         
         if len(match) < 3:
-            wx.MessageBox("text fields with incorrect association:\n\n"
-                          "ffmpeg must match the ffmpeg label\n"
-                          "ffprobe must match the ffprobe label\n"
-                          "ffplay must match the ffplay label\n\n"
-                          "Please, repair these errors..",
-                          'Error', wx.ICON_ERROR, self)
+            wx.MessageBox("Wrong entries on text fields:\n\n"
+                          "ffmpeg: invalid pathname\n"
+                          "ffprobe: invalid pathname\n"
+                          "ffplay: invalid pathname\n\n",
+                          'Entry errors', wx.ICON_ERROR, self)
             return
 
         for x in array:
@@ -288,8 +292,8 @@ class FirstStart(wx.Dialog):
             for i in full_list:
                 fileconf.write('%s' % i)
             
-        wx.MessageBox(u"\nThe procedure wizard has been completed.\n"
+        wx.MessageBox(u"\nWizard completed successfully.\n"
                        "Restart Videomass2 now.\n\nThank You!", 
-                       "Message - Videomass2")   
+                       "That's all folks!")   
         self.Destroy()
         

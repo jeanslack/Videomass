@@ -57,7 +57,7 @@ def info(parent, videomass_icon):
         
         info.SetName("%s" % Name)
         
-        info.SetVersion("%s" % Version)
+        info.SetVersion("- %s" % Version)
         
         info.SetDescription(u'%s\nThis is a test release version.' %(
                                                                 Short_Dscrp)
@@ -72,16 +72,28 @@ def info(parent, videomass_icon):
                         #u"%s\n"
                         #u"%s\n\n"
                         #u"%s\n" %(Author,Mail,Website,Comment))
-        info.AddDeveloper(u"%s %s,\n%s\n" %(Author,Mail,Comment))
-        info.AddDocWriter("The official documentation is partial and still\n"
-                          "under development, please contact the author\n"
-                          "for further information.\n")
+        info.SetDevelopers('')
+        info.AddDeveloper(u"%s %s\n" %(Author,Mail))
+        info.AddDeveloper(u"Thanks to:")
+        info.AddDeveloper(u"- FFmpeg, FFmpeg is a trademark of Fabrice Bellard,\n"
+                           "originator of the FFmpeg project\n<http://ffmpeg.org/>")
+        info.AddDeveloper(u"- Material design icons from Google\n"
+               "http://google.github.io/material-design-icons/#getting-icons")
+        info.AddDeveloper(u"- Flat Color Icons\nhttp://icons8.com/color-icons\n")
+        
+        info.SetDocWriters('')
+        info.AddDocWriter("Gianluca Pernigotto (online documentation)\n")
                         
         #info.AddArtist(u'Gianluca Pernigotto powered by wx.Python')
         
-        info.AddTranslator("Not yet support for translations. If you are\n"
-                           "interested in translating the program into\n"
-                           "other languages, contact the author.")
+        info.SetTranslators('')
+        info.AddTranslator("Gianluca Pernigotto (English translation only).\n"
+                           "If you are interested in translating the program \n"
+                           "into other languages, contact the author.\n<jeanlucperni@gmail.com>")
+        info.SetArtists('')
+        info.AddArtist('- Gianluca Pernigotto (Videomass2 app icon only)\nhttp://jeanslack.github.io/Videomass2/')
+        info.AddArtist('- Material design icons from Google\nhttp://google.github.io/material-design-icons/#getting-icons')
+        info.AddArtist('- Flat Color Icons\nhttp://icons8.com/color-icons')
                     
         wx.AboutBox(info)
         #event.Skip()

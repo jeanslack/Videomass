@@ -92,7 +92,7 @@ def LINUX_SLACKWARE(id_distro, id_version):
         scripts = ['videomass2']
         )
 #-----------------------------------------------------------------------#
-def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
+def LINUX_DEBIAN(id_distro, id_version):
     """
     ------------------------------------------------
     setup of building package for Debian based distro
@@ -118,20 +118,35 @@ def LINUX_DEBIAN_UBUNTU(id_distro, id_version):
     # this is DATA_FILE structure: 
     # ('dir/file destination of the data', ['dir/file on current place sources']
     # even path must be relative-path
+    set_1 = ['share/videomass2/icons/Flat_Color_Icons', 
+             'art/icons/Flat_Color_Icons']
+    set_2 = ['share/videomass2/icons/Material_Design_Icons_black', 
+             'art/icons/Material_Design_Icons_black']
+    set_3 = ['share/videomass2/icons/Material_Design_Icons_white', 
+             'art/icons/Material_Design_Icons_white']
     DATA_FILES = [
         ('share/videomass2/config', glob_files('share/*.vdms')),
         ('share/videomass2/config', ['share/videomass2.conf', 'share/README']),
-        ('share/videomass2/icons', glob_files('art/*.png')),
-        ('share/videomass2/icons/36x36', glob_files('art/icons/36x36/*.png')),
-        ('share/videomass2/icons/24x24', glob_files('art/icons/24x24/*.png')),
-        ('share/videomass2/icons/18x18', glob_files('art/icons/18x18/*.png')),
+        ('share/videomass2/icons', ['art/icons/videomass2.png']),
+        ('%s' % set_1[0], glob_files('%s/*.md' % set_1[1])),
+        ('%s/36x36' % set_1[0], glob_files('%s/36x36/*.png' % set_1[1])),
+        ('%s/24x24' % set_1[0], glob_files('%s/24x24/*.png' % set_1[1])),
+        ('%s/18x18' % set_1[0], glob_files('%s/18x18/*.png' % set_1[1])),
+        
+        ('%s' % set_2[0], glob_files('%s/*.txt' % set_2[1])),
+        ('%s/36x36' % set_2[0], glob_files('%s/36x36/*.png' % set_2[1])),
+        ('%s/24x24' % set_2[0], glob_files('%s/24x24/*.png' % set_2[1])),
+        ('%s/18x18' % set_2[0], glob_files('%s/18x18/*.png' % set_2[1])),
+        
+        ('%s' % set_3[0], glob_files('%s/*.txt' % set_3[1])),
+        ('%s/36x36' % set_3[0], glob_files('%s/36x36/*.png' % set_3[1])),
+        
         ('share/applications', ['videomass2.desktop']),
-        ('share/pixmaps', ['art/videomass2.png']),
+        ('share/pixmaps', ['art/icons/videomass2.png']),
         #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
-                ]
-    
-    DEPENDENCIES = ['python', 'wxpython', 'ffmpeg']
-    #EXTRA_DEPEND = {'ffmpeg':  ["ffmpeg"],}
+                    ]
+    DEPENDENCIES = ['python', 'wxpython',]
+    EXTRA_DEPEND = {'':  [""],}
     
     setup(name = PRG_NAME,
         version = VERSION,
@@ -201,13 +216,28 @@ def OSX():
     # this is DATA_FILE structure: 
     # ('dir/file') > destination of the data, ['dir/file'] > on current 
     # place sources even path must be relative-path
+
+    set_1 = 'art/icons/Flat_Color_Icons'
+    set_2 = 'art/icons/Material_Design_Icons_black'
+    set_3 = 'art/icons/Material_Design_Icons_white'
     DATA_FILES = [('share', glob_files('share/*.vdms')),
             ('share', ['share/videomass2.conf']), 
             #('docs/HTML', glob_files('docs/HTML/*.html')), 
-            ('art', glob_files('art/*.png')),
-            ('art/icons/36x36', glob_files('art/icons/36x36/*.png')),
-            ('art/icons/24x24', glob_files('art/icons/24x24/*.png')),
-            ('art/icons/18x18', glob_files('art/icons/18x18/*.png')),
+            ('art/icons', glob_files('art/icons/*.png')),
+
+            ('%s' % set_1, glob_files('%s/*.md' % set_1)),
+            ('%s/36x36' % set_1, glob_files('%s/36x36/*.png' % set_1)),
+            ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
+            ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
+
+            '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+            ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
+            ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
+            ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
+
+            '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+            ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
+
             ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING','TODO',
                   'README.md']),]
     
@@ -276,13 +306,27 @@ def WIN32():
         for cp in files:
             shutil.copy(cp, '%s/vdms_PROCESS' % PWD)
     
+    set_1 = 'art/icons/Flat_Color_Icons'
+    set_2 = 'art/icons/Material_Design_Icons_black'
+    set_3 = 'art/icons/Material_Design_Icons_white'
     DATA_FILES = [('share', glob_files('share/*.vdms')),
                   ('share', glob_files('share/*.conf')),
                   #('docs/HTML', glob_files('docs/HTML/*.html')), 
-                  ('art', glob_files('art/*.png')),
-                  ('art/icons/36x36', glob_files('art/icons/36x36/*.png')),
-                  ('art/icons/24x24', glob_files('art/icons/24x24/*.png')),
-                  ('art/icons/18x18', glob_files('art/icons/18x18/*.png')),
+                  ('art/icons', glob_files('art/icons/*.png')),
+
+                  ('%s' % set_1, glob_files('%s/*.md' % set_1)),
+                  ('%s/36x36' % set_1, glob_files('%s/36x36/*.png' % set_1)),
+                  ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
+                  ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
+
+                  '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+                  ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
+                  ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
+                  ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
+
+                  '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+                  ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
+                  
                   ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',
                         'COPYING','TODO','README.md','videomass.ico',
                         'Win32Setup/NOTICE.rtf']),
@@ -337,7 +381,7 @@ elif platform.system() == 'Linux':
     if dist_name == 'Slackware ':
         LINUX_SLACKWARE(dist_name, dist_version)
     else:
-        LINUX_DEBIAN_UBUNTU(dist_name, dist_version)
+        LINUX_DEBIAN(dist_name, dist_version)
 else:
     WIN32()
 ##################################################################

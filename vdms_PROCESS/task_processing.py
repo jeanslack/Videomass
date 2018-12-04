@@ -90,7 +90,7 @@ class GeneralProcess(wx.Panel):
                                             "scroll output in real time"))
         self.barProg = wx.Gauge(self, wx.ID_ANY, range = 0)
         self.labPerc = wx.StaticText(self, label="Percentage: 0%")
-        self.button_stop = wx.Button(self, wx.ID_STOP, "")
+        self.button_stop = wx.Button(self, wx.ID_STOP, "Abort")
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
 
         sizer = wx.BoxSizer(wx.VERTICAL)

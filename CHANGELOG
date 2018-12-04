@@ -1,15 +1,27 @@
+# encoding: utf-8
+Videomass2
+Author: Gianluca (jeanslack) Pernigotto
+Copyright: (c) Gianluca Pernigotto 20014-2018
+License: GPL3
+
+Change Log:
+
 +------------------------------------+
 November 12, 2018 V.1.2.5
 +------------------------------------+
 
-- Fixed bug on the ``Video Conversions`` and ``Audio Conversions`` panels when
-  set audio parameters specially with ``wav`` format.
+BUG FIXES:
+- Fixed bug on the `Video Conversions` and `Audio Conversions` panels when
+  set audio parameters specially with `wav` format.
+- Fixed bug in the preview after `Save audio from movie`. The exit with 
+  invalid filename is be fixed.
+  
+NEW: [features/enhancements]
 - Added new elements that improve accessibility and readability of audio settings 
-  in the ``Video Conversions`` panel.
+  in the `Video Conversions` panel.
 - Improved buttons colour and appearance
 - Added new icons free and open source compatible with GPL3.
-- Fixed bug in the preview after ``Save audio from movie``. The exit with 
-  invalid filename is be fixed.
+
   
 
 +------------------------------------+

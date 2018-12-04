@@ -25,13 +25,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (08) 04/08/2014
-# Rev (09) 01/18/2015
-# Rev (10) August 18 2018
+# Rev 04/08/2014, 01/18/2015, August 18 2018
 #########################################################
 import wx
 import os
 from vdms_SYS.ctrl_run import system_check, parsing_fileconf
+from vdms_SYS.appearance import Appearance
 
 path_confdir = os.path.expanduser('~/.videomass2/')# presets path
 PWD = os.getcwd()
@@ -61,15 +60,16 @@ class Videomass(wx.App):
         """
         setui = system_check() # for user-space settings
         fileconf = parsing_fileconf() # for user interface settings
-        if setui[7]: # if source dir is corrupt
+        
+        if setui[2]: # if source dir is corrupt
             wx.MessageBox('Can not find the configuration file\n\n'
                           'Sorry, cannot continue..',
                           'Fatal Error - Videomass2', wx.ICON_STOP)
             print 'Videomass2: Fatal Error, file configuration not found'
             return False
 
-        # check if videomass2.conf is corrupt or unreadable
-        if float(fileconf[0]) < 1.1:
+        # check videomass2.conf version
+        if float(fileconf[0]) < 1.2:
             msg = ('Videomass2: Outdated configuration file.\n'
                     'Current version do not match with %s .\n\n' 
                     % fileconf[0])
@@ -94,8 +94,11 @@ class Videomass(wx.App):
                              None) == wx.YES:
                 os.remove("%s/videomass2.conf" % path_confdir)
             return False
+        
+        icons = Appearance(setui[3], fileconf[14])# set appearance instance
+        pathicons = icons.icons_set() # get paths icons
 
-        if setui[5] == 'Darwin':
+        if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
             for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
@@ -104,14 +107,14 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.reprise(setui[0])
+                self.firstrun(pathicons[23])
                 return True
             else:
                 ffmpeg_link = fileconf[8]
                 ffprobe_link = fileconf[10]
                 ffplay_link = fileconf[12]
 
-        elif setui[5] == 'Windows':
+        elif setui[0] == 'Windows':
             for link in [fileconf[8],fileconf[10],fileconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
@@ -119,7 +122,7 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.reprise(setui[0])
+                self.firstrun(pathicons[23])
                 return True
             else:
                 ffmpeg_link = fileconf[8]
@@ -130,18 +133,19 @@ class Videomass(wx.App):
             ffmpeg_link = fileconf[8]
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
-            #self.reprise(setui[0])
+            #self.firstrun(pathicons[23])
             #return True
             
         from vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 
-                               ffmpeg_link, ffprobe_link, ffplay_link
+                               ffmpeg_link, ffprobe_link, ffplay_link,
+                               pathicons
                                )
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True
             
-    def reprise(self, icon):
+    def firstrun(self, icon):
         """
         Start a temporary dialog: this is showing during first time 
         start the Videomass2 application on MaOS and Windows.

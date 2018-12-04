@@ -10,14 +10,12 @@ URGENCY: to do soon
 --------------
 URGENCY: high
 --------------
-- Sistemare il wizard ..i riferimenti descrittivi non sono coerenti.
 - Sistemare anche la guida gh-pages 
 - Rivedere setup.py per i cambiamenti directories delle icone
 
 -------------
 URGENCY: low
 -------------
-- implementazione -vf format=yuv420p (or the alias -pix_fmt yuv420p)
 
 ---------------
 URGENCY: medium
