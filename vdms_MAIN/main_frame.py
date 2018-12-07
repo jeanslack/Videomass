@@ -22,8 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 09/july/2018
-# Rev (02) 11/October/2018
+# Rev (01) 09/july/2018, (02) 11/Oct/2018, (03) 7/Dec/2018
 #########################################################
 
 import wx

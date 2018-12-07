@@ -100,16 +100,16 @@ class Setup(wx.Dialog):
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
         
         tabOne = wx.Panel(notebook, wx.ID_ANY)
-        notebook.AddPage(tabOne, "General")
+        notebook.AddPage(tabOne, _(u"General"))
         
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
-        notebook.AddPage(tabTwo, "Log")
+        notebook.AddPage(tabTwo, _(u"Log"))
         
         tabThree = wx.Panel(notebook, wx.ID_ANY)
-        notebook.AddPage(tabThree, "Executables")
+        notebook.AddPage(tabThree, _(u"Executables"))
         
         tabFour = wx.Panel(notebook, wx.ID_ANY)
-        notebook.AddPage(tabFour, "Appearance")
+        notebook.AddPage(tabFour, _(u"Appearance"))
         # make a sizer base and grid base. Note that grid base contains
         # buttons close and apply. First add notebook then the buttons at bottom
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -119,12 +119,12 @@ class Setup(wx.Dialog):
         gridGeneral = wx.FlexGridSizer(3, 1, 0, 0)
         tabOne.SetSizer(gridGeneral)#aggiungo il sizer su tab 1
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    "Settings CPU")), wx.VERTICAL)
+                                    _(u"Settings CPU"))), wx.VERTICAL)
         gridGeneral.Add(boxLabThreads, 1, wx.ALL|wx.EXPAND, 15)
         gridThreads = wx.FlexGridSizer(4, 1, 0, 0)
         boxLabThreads.Add(gridThreads, 1, wx.ALL|wx.EXPAND, 15)
         lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,(
-                               "Set the number of threads (from 0 to 32)"))
+                               _(u"Set the number of threads (from 0 to 32)")))
         gridThreads.Add(lab1_pane1, 0, wx.ALL, 5)
         self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY, 
                                             "%s" % threads[9:],
@@ -135,7 +135,7 @@ class Setup(wx.Dialog):
                                                   wx.ALIGN_CENTER_VERTICAL, 
                                                   5)
         lab2_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (
-                            "Quality/Speed ratio modifier (from -16 to 16)"))
+                        _(u"Quality/Speed ratio modifier (from -16 to 16)")))
         gridThreads.Add(lab2_pane1, 0, wx.ALL, 5)
         gridctrl = wx.FlexGridSizer(1, 2, 0, 0)
         gridThreads.Add(gridctrl)
@@ -147,12 +147,12 @@ class Setup(wx.Dialog):
         #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
         boxLabOthers = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    "Other Settings")), wx.VERTICAL)
+                                    _(u"Other Settings"))), wx.VERTICAL)
         gridGeneral.Add(boxLabOthers, 0, wx.ALL|wx.EXPAND, 15)
         gridOthers = wx.GridSizer(1, 1, 0, 0)
         boxLabOthers.Add(gridOthers, 1, wx.ALL|wx.EXPAND, 15)
         self.check_cmdline = wx.CheckBox(tabOne, wx.ID_ANY, (
-            "Enables writing of command line text"))
+            _(u"Enables writing of command line text")))
         gridOthers.Add(self.check_cmdline, 0, wx.ALL, 5)
         #--------------------------------------------------TAB 2
         gridLog = wx.FlexGridSizer(4, 1, 0, 0)
@@ -161,14 +161,14 @@ class Setup(wx.Dialog):
                                            #(" Generates ffmpeg log files"))
         #gridLog.Add(self.check_ffmpeglog, 0, wx.ALL, 15)
         self.check_cmdlog = wx.CheckBox(tabTwo, wx.ID_ANY, 
-                                (" Specifies a custom path to save the log"))
+                            (_(u" Specifies a custom path to save the log")))
         gridLog.Add(self.check_cmdlog, 0, wx.ALL, 15)
         lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, 
-                               ("Where do you want to save the log?"))
+                               (_(u"Where do you want to save the log?")))
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
         grid_logBtn = wx.FlexGridSizer(1, 2, 0, 0)
         gridLog.Add(grid_logBtn)
-        self.btn_log = wx.Button(tabTwo, wx.ID_ANY, "Browse..")
+        self.btn_log = wx.Button(tabTwo, wx.ID_ANY, _(u"Browse.."))
         grid_logBtn.Add(self.btn_log, 0, wx.ALL, 15)
         self.txt_pathlog = wx.TextCtrl(tabTwo, wx.ID_ANY, "")
         grid_logBtn.Add(self.txt_pathlog, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 15)
@@ -177,8 +177,8 @@ class Setup(wx.Dialog):
         tabThree.SetSizer(gridExec)#aggiungo il sizer su tab 3
 
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY,(
-                                       " Use a custom path to run FFmpeg"))
-        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, "Browse..")
+                                       _(u" Use a custom path to run FFmpeg")))
+        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, _(u"Browse.."))
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFmpeg, 1, wx.TOP|
                                                  wx.ALIGN_CENTER_VERTICAL|
@@ -189,8 +189,8 @@ class Setup(wx.Dialog):
         gridFFmpeg.Add(self.txtctrl_ffmpeg, 0, wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       " Use a custom path to run FFprobe"))
-        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, "Browse..")
+                                       _(u" Use a custom path to run FFprobe")))
+        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, _(u"Browse.."))
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFprobe, 1, wx.TOP|
                                                   wx.ALIGN_CENTER_VERTICAL|
@@ -201,8 +201,8 @@ class Setup(wx.Dialog):
         gridFFprobe.Add(self.txtctrl_ffprobe, 0, wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       " Use a custom path to run FFplay"))
-        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, "Browse..")
+                                       _(u" Use a custom path to run FFplay")))
+        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, _(u"Browse.."))
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "")
         gridExec.Add(self.checkbox_exeFFplay, 1, wx.TOP|
                                                  wx.ALIGN_CENTER_VERTICAL|
@@ -215,7 +215,7 @@ class Setup(wx.Dialog):
         gridappearance = wx.FlexGridSizer(3, 1, 0, 0)
         tabFour.SetSizer(gridappearance)#aggiungo il sizer su tab 4
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
-                                    "Set Icon Themes")), wx.VERTICAL)
+                                    _(u"Set Icon Themes"))), wx.VERTICAL)
         gridappearance.Add(boxLabIcons, 1, wx.ALL|wx.EXPAND, 15)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY, 
                          choices=[("Material_Design_Icons_black"), 
@@ -226,27 +226,30 @@ class Setup(wx.Dialog):
         self.cmbx_icons.SetValue(self.iconset)
         
         boxLabColor = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
-                                    "Custom Colour UI")), wx.VERTICAL)
+                                    _(u"Custom Colour UI"))), wx.VERTICAL)
         gridappearance.Add(boxLabColor, 1, wx.ALL|wx.EXPAND, 15)
         gridTBColor = wx.FlexGridSizer(3, 2, 0, 0)
         boxLabColor.Add(gridTBColor)
         
-        labTBColor = wx.StaticText(tabFour, wx.ID_ANY, ("Change Toolbar Colour:"))
+        labTBColor = wx.StaticText(tabFour, wx.ID_ANY, (
+                                            _(u"Change Toolbar Colour:")))
         gridTBColor.Add(labTBColor, 0, wx.ALL | 
                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                      wx.ALIGN_CENTER_VERTICAL, 15)
         
-        btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, "Bar Colour")
+        btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, _(u"Bar Colour"))
         gridTBColor.Add(btn_TBcolor, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         
-        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, ("Change Toolbar Buttons Colour:"))
+        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, (
+                                          _(u"Change Toolbar Buttons Colour:")))
         gridTBColor.Add(labTBColorBtn, 0, wx.ALL | 
                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                      wx.ALIGN_CENTER_VERTICAL, 15)
         
-        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, "Buttons Colour")
+        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, _(u"Buttons Colour"))
         gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
-        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, "Restore default settings")
+        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, 
+                                        _(u"Restore default settings"))
         gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 15)
 
         #------------------------------------------------------bottom
@@ -268,59 +271,59 @@ class Setup(wx.Dialog):
         self.Layout()
         
         #----------------------Properties----------------------#
-        self.SetTitle("Setup - Videomass2")
-        self.spinctrl_cpu.SetToolTipString("Quality/Speed ratio modifier "
-                                            "(from -16 to 16) (default 1)")
-        self.check_cmdline.SetToolTipString("Allows the text writing to "
-                                            "performs your custom parameters."
-                                            )
+        self.SetTitle(_(u"Setup - Videomass2"))
+        self.spinctrl_cpu.SetToolTipString(_(u"Quality/Speed ratio modifier "
+                                            u"(from -16 to 16) (default 1)"))
+        self.check_cmdline.SetToolTipString(_(u"Allows the text writing to "
+                                            u"performs your custom parameters."
+                                            ))
         #self.check_ffmpeglog.SetToolTipString("At each conversion process, is "
                               #"also generated a log file of ffmpeg. Note that "
                               #"can reach considerable size. This feature is "
                               #"disabled in batch processes."
                                               #)
-        self.check_cmdlog.SetToolTipString("Generates a log file command in "
-                              "the directory specified below. Log file is a "
-                              "file containing the parameters of the "
-                              "execution process, info and error messages."
+        self.check_cmdlog.SetToolTipString(_(u"Generates a log file command in "
+                              u"the directory specified below. Log file is a "
+                              u"file containing the parameters of the "
+                              u"execution process, info and error messages.")
                                            )
-        self.btn_log.SetToolTipString("Open Path")
+        self.btn_log.SetToolTipString(_(u"Open Path"))
         self.txt_pathlog.SetMinSize((200, -1))
-        self.txt_pathlog.SetToolTipString("Path generation file")
+        self.txt_pathlog.SetToolTipString(_(u"Path generation file"))
         
-        self.checkbox_exeFFmpeg.SetToolTipString("Enable custom search for "
-                       "the executable FFmpeg. If the checkbox is disabled or "
-                       "if the path field is empty, the search of the "
-                       "executable is entrusted to the system.")
+        self.checkbox_exeFFmpeg.SetToolTipString(_(u"Enable custom search for "
+                       u"the executable FFmpeg. If the checkbox is disabled or "
+                       u"if the path field is empty, the search of the "
+                       u"executable is entrusted to the system."))
         
-        self.btn_pathFFmpeg.SetToolTipString("Open path FFmpeg")
+        self.btn_pathFFmpeg.SetToolTipString(_(u"Open path FFmpeg"))
         self.txtctrl_ffmpeg.SetMinSize((200, -1))
         self.txtctrl_ffmpeg.SetToolTipString(
-                                    "path to executable binary FFmpeg"
+                                    _(u"path to executable binary FFmpeg")
                                                     )
-        self.checkbox_exeFFprobe.SetToolTipString("Path generation file")
+        self.checkbox_exeFFprobe.SetToolTipString(_(u"Path generation file"))
         
-        self.checkbox_exeFFmpeg.SetToolTipString("Enable custom search for "
-                        "the executable FFprobe. If the checkbox is disabled or "
-                        "if the path field is empty, the search of the "
-                        "executable is entrusted to the system.")
+        self.checkbox_exeFFmpeg.SetToolTipString(_(u"Enable custom search for "
+                    u"the executable FFprobe. If the checkbox is disabled or "
+                    u"if the path field is empty, the search of the "
+                    u"executable is entrusted to the system."))
         
-        self.btn_pathFFprobe.SetToolTipString("Open path FFprobe")
+        self.btn_pathFFprobe.SetToolTipString(_(u"Open path FFprobe"))
         self.txtctrl_ffprobe.SetMinSize((200, -1))
         self.txtctrl_ffprobe.SetToolTipString(
-                                    "path to executable binary FFprobe"
+                                    _(u"path to executable binary FFprobe")
                                                     )
-        self.checkbox_exeFFplay.SetToolTipString("Path generation file"
+        self.checkbox_exeFFplay.SetToolTipString(_(u"Path generation file")
                                                  )
-        self.checkbox_exeFFmpeg.SetToolTipString("Enable custom search for "
-                        "the executable FFplay. If the checkbox is disabled or "
-                        "if the path field is empty, the search of the "
-                        "executable is entrusted to the system."
+        self.checkbox_exeFFmpeg.SetToolTipString(_(u"Enable custom search for "
+                    u"the executable FFplay. If the checkbox is disabled or "
+                    u"if the path field is empty, the search of the "
+                    u"executable is entrusted to the system.")
                                                   )
-        self.btn_pathFFplay.SetToolTipString("Open path FFplay")
+        self.btn_pathFFplay.SetToolTipString(_(u"Open path FFplay"))
         self.txtctrl_ffplay.SetMinSize((200, -1))
         self.txtctrl_ffplay.SetToolTipString(
-                                     "path to executable binary FFplay")
+                                     _(u"path to executable binary FFplay"))
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_direct_cmd, self.check_cmdline)
         #self.Bind(wx.EVT_CHECKBOX, self.log_ffmpeg, self.check_ffmpeglog)
@@ -424,7 +427,8 @@ class Setup(wx.Dialog):
     #--------------------------------------------------------------------#
     def save_path_log(self, event):
         """specifies a path to save the log"""
-        dialdir = wx.DirDialog(self, "Where do you want to save the log file?")
+        dialdir = wx.DirDialog(self, 
+                               _(u"Where do you want to save the log file?"))
             
         if dialdir.ShowModal() == wx.ID_OK:
             self.txt_pathlog.SetValue("")
@@ -459,9 +463,9 @@ class Setup(wx.Dialog):
     def open_path_ffmpeg(self, event):
         """Indicates a new ffmpeg path-name"""
         dialogfile = wx.FileDialog(self, 
-                        "Indicates where the binary ffmpeg", "", "", 
-                        "ffmpeg binarys (*%s)|*%s| All files (*.*)|*.*"
-                        % (self.ffmpeg, self.ffmpeg), 
+                        _(u"Indicates where the binary ffmpeg"), "", "", 
+                        _(u"ffmpeg binarys (*%s)|*%s| All files (*.*)|*.*"
+                        % (self.ffmpeg, self.ffmpeg)), 
                         wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialogfile.ShowModal() == wx.ID_OK:
@@ -495,9 +499,9 @@ class Setup(wx.Dialog):
     def open_path_ffprobe(self, event):
         """Indicates a new ffprobe path-name"""
         dialfile = wx.FileDialog(self, 
-                    "Indicates where the binary ffprobe", "", "", 
-                    "ffprobe binarys (*%s)|*%s| All files (*.*)|*.*"
-                    % (self.ffprobe, self.ffprobe), 
+                    _(u"Indicates where the binary ffprobe"), "", "", 
+                    _(u"ffprobe binarys (*%s)|*%s| All files (*.*)|*.*"
+                    % (self.ffprobe, self.ffprobe)), 
                     wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialfile.ShowModal() == wx.ID_OK:
@@ -531,9 +535,9 @@ class Setup(wx.Dialog):
     def open_path_ffplay(self, event):
         """Indicates a new ffplay path-name"""
         dialfile = wx.FileDialog(self, 
-                    "Indicates where the binary ffplay", "", "", 
-                    "ffplay binarys (*%s)|*%s| All files (*.*)|*.*"
-                    % (self.ffplay, self.ffplay), 
+                    _(u"Indicates where the binary ffplay"), "", "", 
+                    _(u"ffplay binarys (*%s)|*%s| All files (*.*)|*.*"
+                    % (self.ffplay, self.ffplay)), 
                     wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialfile.ShowModal() == wx.ID_OK:
@@ -638,13 +642,13 @@ class Setup(wx.Dialog):
         #                 os.symlink(ffplay_src, "%s/FFMPEG_BIN/bin/ffplay" % PWD)
 
         if self.check_cmdlog.IsChecked() and self.txt_pathlog.GetValue() == "":
-            wx.MessageBox("Warning, The log command has no set path name ", 
+            wx.MessageBox(_(u"Warning, The log command has no set path name "), 
                             "WARNING - Videomass2", wx.ICON_WARNING)
         else:
             with open (filename, 'w') as fileconf:
                 for i in self.full_list:
                     fileconf.write('%s' % i)
-            wx.MessageBox(u"\nChanges need to restart the program")
+            wx.MessageBox(_(u"\nChanges need to restart the program"))
             
             #self.Destroy() # WARNING on mac not close corretly, on linux ok
             self.Close()

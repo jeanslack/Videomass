@@ -55,10 +55,10 @@ def supported_formats(array3, file_sources):
             for x in exclude:
                 file_sources.remove(x)
             if not file_sources:
-                wx.MessageBox("The selected profile is not suitable to convert "
-                              "the following file formats: \n\n%s\n\n" 
-                              % ('\n'.join(exclude)), 
-                              "Unsuitable format - Videoamass", 
+                wx.MessageBox(_(u"The selected profile is not suitable to convert "
+                              u"the following file formats: \n\n%s\n\n" 
+                              % ('\n'.join(exclude))), 
+                              _(u"Unsuitable format - Videoamass"), 
                               wx.ICON_WARNING | wx.OK, 
                               None
                               )

@@ -882,16 +882,16 @@ class Lacing(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         
         zone1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Deinterlace")), wx.VERTICAL)
+                                    _(u"Deinterlace"))), wx.VERTICAL)
         zone2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Interlace")), wx.VERTICAL)
+                                    _(u"Interlace"))), wx.VERTICAL)
         
         self.ckbx_deintW3fdif = wx.CheckBox(self, wx.ID_ANY, 
-                                (u"Deinterlaces (Using the 'w3fdif' filter)")
+                                (_(u"Deinterlaces (Using the 'w3fdif' filter)"))
                                             )
         self.rdbx_W3fdif_filter = wx.RadioBox(self, wx.ID_ANY, 
-                                            (u"Filter"), choices=[("simple"),
-                                            ("complex")],
+                                              (u"Filter"), choices=[(u"simple"),
+                                              (u"complex")],
                                             majorDimension=0, 
                                             style=wx.RA_SPECIFY_ROWS
                                             )
@@ -902,7 +902,7 @@ class Lacing(wx.Dialog):
                                             style=wx.RA_SPECIFY_ROWS
                                             )
         self.ckbx_deintYadif = wx.CheckBox(self, wx.ID_ANY, 
-                                (u"Deinterlaces (Using the 'yadif' filter)")
+                                (_(u"Deinterlaces (Using the 'yadif' filter)"))
                                             )
         self.rdbx_Yadif_mode = wx.RadioBox(self, wx.ID_ANY, 
                                             (u"Mode"), choices=[("0, send_frame"),
@@ -924,7 +924,7 @@ class Lacing(wx.Dialog):
                                             style=wx.RA_SPECIFY_ROWS
                                             )
         self.ckbx_interlace = wx.CheckBox(self, wx.ID_ANY,
-                                ("Interlaces (Using the 'interlace' filter)")
+                            (_(u"Interlaces (Using the 'interlace' filter)"))
                                           )
         self.rdbx_inter_scan = wx.RadioBox(self, wx.ID_ANY, 
                                           ("Scanning mode"), 
@@ -939,7 +939,7 @@ class Lacing(wx.Dialog):
                                     majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                           )
         self.enable_opt = wx.wx.ToggleButton(self, wx.ID_ANY, 
-                                            "Advanced Options")
+                                            _(u"Advanced Options"))
         ####----- confirm buttons section
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
@@ -947,7 +947,7 @@ class Lacing(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
         # set Properties
-        self.SetTitle("Deinterlace/Interlace - Videomass2")
+        self.SetTitle(_(u"Deinterlace/Interlace - Videomass2"))
         self.rdbx_W3fdif_filter.Hide()
         self.rdbx_W3fdif_deint.Hide()
         self.rdbx_Yadif_mode.Hide()
@@ -1010,34 +1010,34 @@ class Lacing(wx.Dialog):
         self.sizer_base.Fit(self)
         self.Layout()
         
-        self.ckbx_deintW3fdif.SetToolTipString('Deinterlace the input video '
-                                               'with `w3fdif` filter')
+        self.ckbx_deintW3fdif.SetToolTipString(_(u'Deinterlace the input video '
+                                               u'with `w3fdif` filter'))
                 
-        self.rdbx_W3fdif_filter.SetToolTipString('Set the interlacing filter '
-                                                 'coefficients.'
+        self.rdbx_W3fdif_filter.SetToolTipString(_(u'Set the interlacing filter '
+                                                 u'coefficients.')
                                                  )
-        self.rdbx_W3fdif_deint.SetToolTipString('Specify which frames to '
-                                                'deinterlace.'
+        self.rdbx_W3fdif_deint.SetToolTipString(_(u'Specify which frames to '
+                                                u'deinterlace.')
                                                   )
-        self.ckbx_deintYadif.SetToolTipString(u'Deinterlace the input video '
-            'with `yadif` filter. For FFmpeg is the best and fastest choice '
+        self.ckbx_deintYadif.SetToolTipString(_(u'Deinterlace the input video '
+            u'with `yadif` filter. For FFmpeg is the best and fastest choice ')
                                               )
-        self.rdbx_Yadif_mode.SetToolTipString('mode\n'
-           'The interlacing mode to adopt.')
-        self.rdbx_Yadif_parity.SetToolTipString('parity\n'
-            'The picture field parity assumed for the input interlaced video.')
-        self.rdbx_Yadif_deint.SetToolTipString('Specify which frames to '
-                                               'deinterlace.')
-        self.ckbx_interlace.SetToolTipString('Simple interlacing filter from '
-                'progressive contents.')
-        self.rdbx_inter_scan.SetToolTipString('scan:\n'
-            'determines whether the interlaced frame is taken from the '
-            'even (tff - default) or odd (bff) lines of the progressive frame.'
+        self.rdbx_Yadif_mode.SetToolTipString(_(u'mode\n'
+           u'The interlacing mode to adopt.'))
+        self.rdbx_Yadif_parity.SetToolTipString(_(u'parity\n'
+            u'The picture field parity assumed for the input interlaced video.'))
+        self.rdbx_Yadif_deint.SetToolTipString(_(u'Specify which frames to '
+                                               u'deinterlace.'))
+        self.ckbx_interlace.SetToolTipString(_(u'Simple interlacing filter from '
+                u'progressive contents.'))
+        self.rdbx_inter_scan.SetToolTipString(_(u'scan:\n'
+            u'determines whether the interlaced frame is taken from the '
+            u'even (tff - default) or odd (bff) lines of the progressive frame.')
                                               )
-        self.rdbx_inter_lowpass.SetToolTipString('lowpas:\n'
-            'Enable (default) or disable the vertical lowpass filter to '
-            'avoid twitter interlacing and reduce moire patterns.\n'
-            'Default is no setting.')
+        self.rdbx_inter_lowpass.SetToolTipString(_(u'lowpas:\n'
+            u'Enable (default) or disable the vertical lowpass filter to '
+            u'avoid twitter interlacing and reduce moire patterns.\n'
+            u'Default is no setting.'))
         
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_DeintW3fdif, self.ckbx_deintW3fdif)
@@ -1324,13 +1324,13 @@ class Denoisers(wx.Dialog):
         
         
         zone = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Apply Denoisers Filters")), wx.VERTICAL)
+                                    _(u"Apply Denoisers Filters"))), wx.VERTICAL)
         
         self.ckbx_nlmeans = wx.CheckBox(self, wx.ID_ANY, 
-                                (u"Enable nlmeans denoiser")
+                                (_(u"Enable nlmeans denoiser"))
                                             )
         self.rdb_nlmeans = wx.RadioBox(self, wx.ID_ANY, (
-        "nlmeans options"), choices=[
+               _(u"nlmeans options")), choices=[
                ("Default"),
                ("Old VHS tapes - good starting point restoration"), 
                ("Heavy - really noisy inputs"), 
@@ -1338,10 +1338,10 @@ class Denoisers(wx.Dialog):
                majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                         )
         self.ckbx_hqdn3d = wx.CheckBox(self, wx.ID_ANY, 
-                                (u"Enable hqdn3d denoiser")
+                                (_(u"Enable hqdn3d denoiser"))
                                             )
         self.rdb_hqdn3d = wx.RadioBox(self, wx.ID_ANY, (
-            "hqdn3d options"), choices=[
+               _(u"hqdn3d options")), choices=[
                 ("Default"),
                 ("Conservative [4.0:4.0:3.0:3.0]"),
                 ("Old VHS tapes restoration [9.0:5.0:3.0:3.0]")],
@@ -1413,15 +1413,15 @@ class Denoisers(wx.Dialog):
         self.Layout()
         
         # set Properties
-        self.SetTitle("Denoisers filters - Videomass2")
-        self.ckbx_nlmeans.SetToolTipString(u'nlmeans:\n '
-            '(Denoise frames using Non-Local Means algorithm '
-            'is capable of restoring video sequences with even strong '
-            'noise. It is ideal for enhancing the quality of old VHS tapes.')
-        self.ckbx_hqdn3d.SetToolTipString(u'hqdn3d:\n '
-            'This is a high precision/quality 3d denoise filter. It aims '
-            'to reduce image noise, producing smooth images and making '
-            'still images really still. It should enhance compressibility.')
+        self.SetTitle(_(u"Denoisers filters - Videomass2"))
+        self.ckbx_nlmeans.SetToolTipString(_(u'nlmeans:\n '
+            u'(Denoise frames using Non-Local Means algorithm '
+            u'is capable of restoring video sequences with even strong '
+            u'noise. It is ideal for enhancing the quality of old VHS tapes.'))
+        self.ckbx_hqdn3d.SetToolTipString(_(u'hqdn3d:\n '
+            u'This is a high precision/quality 3d denoise filter. It aims '
+            u'to reduce image noise, producing smooth images and making '
+            u'still images really still. It should enhance compressibility.'))
         
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_CHECKBOX, self.on_nlmeans, self.ckbx_nlmeans)

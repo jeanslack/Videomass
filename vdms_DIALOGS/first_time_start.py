@@ -43,36 +43,37 @@ class FirstStart(wx.Dialog):
         """
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         
-        msg = ("This wizard automatically searches for FFmpeg in your system.\n"
-               "You can also manually specify your customs paths of FFmpeg.\n"
-               "However, you can always change these settings later in the\n"
-               "Setup dialog.\n\n"
-               "- If you want start the search now, press the 'Search' button."
-               "\n\n"
-               "- If you want to set your custom paths, check the\n"
-               "  'Enable Custom Paths', then enter the paths of FFmpeg\n"
-               "  and press the 'Confirm' button."
+        msg = (_(
+            u"This wizard automatically searches for FFmpeg in your system.\n"
+            u"You can also manually specify your customs paths of FFmpeg.\n"
+            u"However, you can always change these settings later in the\n"
+            u"Setup dialog.\n\n"
+            u"- If you want start the search now, press the 'Search' button."
+            u"\n\n"
+            u"- If you want to set your custom paths, check the\n"
+            u"  'Enable Custom Paths', then enter the paths of FFmpeg\n"
+            u"  and press the 'Confirm' button.")
                )
         # widget:
         bitmap_drumsT = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(
                                         img,wx.BITMAP_TYPE_ANY))
         lab_welc2 = wx.StaticText(self, wx.ID_ANY, (msg))
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
-                                              "Welcome to Videomass2 Wizard!"))
-        self.searchBtn = wx.Button(self, wx.ID_ANY, ("Search"))
-        self.ckbx_paths = wx.CheckBox(self, wx.ID_ANY, ("Enable Custom Paths"))
-        self.customBtn = wx.Button(self, wx.ID_ANY, ("Confirm"))
-        lab_ffmpeg = wx.StaticText(self, wx.ID_ANY, ("ffmpeg pathname:"))
+                                        _(u"Welcome to Videomass2 Wizard!")))
+        self.searchBtn = wx.Button(self, wx.ID_ANY, (_(u"Search")))
+        self.ckbx_paths = wx.CheckBox(self, wx.ID_ANY, (_(u"Enable Custom Paths")))
+        self.customBtn = wx.Button(self, wx.ID_ANY, (_(u"Confirm")))
+        lab_ffmpeg = wx.StaticText(self, wx.ID_ANY, (_(u"ffmpeg pathname:")))
         self.txtctrl_ffmpeg = wx.TextCtrl(self, wx.ID_ANY, "")
-        lab_ffprobe = wx.StaticText(self, wx.ID_ANY, ("ffprobe pathname:"))
+        lab_ffprobe = wx.StaticText(self, wx.ID_ANY, (_(u"ffprobe pathname:")))
         self.txtctrl_ffprobe = wx.TextCtrl(self, wx.ID_ANY, "")
-        lab_ffplay = wx.StaticText(self, wx.ID_ANY, ("ffplay pathname:"))
+        lab_ffplay = wx.StaticText(self, wx.ID_ANY, (_(u"ffplay pathname:")))
         self.txtctrl_ffplay = wx.TextCtrl(self, wx.ID_ANY, "")
         
         close_btn = wx.Button(self, wx.ID_EXIT, "")
         
         # properties
-        self.SetTitle("Wizard - Videomass2")
+        self.SetTitle(_(u"Wizard - Videomass2"))
         lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL,wx.BOLD, 0, ""))
         # layout:
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -148,11 +149,11 @@ class FirstStart(wx.Dialog):
         match = [i for i, j in zip(array, biname) if os.path.basename(i) == j]
         
         if len(match) < 3:
-            wx.MessageBox("Wrong entries on text fields:\n\n"
-                          "ffmpeg: invalid pathname\n"
-                          "ffprobe: invalid pathname\n"
-                          "ffplay: invalid pathname\n\n",
-                          'Entry errors', wx.ICON_ERROR, self)
+            wx.MessageBox(_(u"Wrong entries on text fields:\n\n"
+                          u"ffmpeg: invalid pathname\n"
+                          u"ffprobe: invalid pathname\n"
+                          u"ffplay: invalid pathname\n\n"),
+                          u'Entry errors', wx.ICON_ERROR, self)
             return
 
         for x in array:
@@ -166,19 +167,19 @@ class FirstStart(wx.Dialog):
                 nobin = x
                 break
         if empty:
-            wx.MessageBox("You have not completed all the assignment fields.\n"
-                          "Please, continue with settings.",
-                          'Warning', wx.ICON_EXCLAMATION, self)
+            wx.MessageBox(_(u"You have not completed all the assignment fields.\n"
+                          u"Please, continue with settings."),
+                          u'Warning', wx.ICON_EXCLAMATION, self)
             return
         if noexists:
-            wx.MessageBox("No such file '%s'.\n"
-                          "Please, continue with settings." % x,
-                          'Error', wx.ICON_ERROR, self)
+            wx.MessageBox(_(u"No such file '%s'.\n"
+                          u"Please, continue with settings." % x),
+                          u'Error', wx.ICON_ERROR, self)
             return
         if nobin:
-            wx.MessageBox("'%s'\ndoes not match with:\n"
-                          "%s\n"
-                          "Please, continue with settings." % (x, biname),
+            wx.MessageBox(_(u"'%s'\ndoes not match with:\n"
+                          u"%s\n"
+                          u"Please, continue with settings." % x, biname),
                           'Error', wx.ICON_ERROR, self)
             return
 
@@ -242,14 +243,14 @@ class FirstStart(wx.Dialog):
                 else:
                     noexists = False
             if noexists:
-                wx.MessageBox("'%s' is not installed on the system.\n"
-                          "Please, install it or set a new custom path." 
-                          % required, 'Warning', wx.ICON_EXCLAMATION, self)
+                wx.MessageBox(_(u"'%s' is not installed on the system.\n"
+                          u"Please, install it or set a new custom path." 
+                          % required), 'Warning', wx.ICON_EXCLAMATION, self)
                 return
             else:
-                if wx.MessageBox("The Videomass2 system folder already "
-                        "includes the binary executables of FFmpeg, "
-                        "FFprobe and FFplay.\n\nDo you want to use them?", 
+                if wx.MessageBox(_(u"The Videomass2 system folder already "
+                        u"includes the binary executables of FFmpeg, "
+                        u"FFprobe and FFplay.\n\nDo you want to use them?"), 
                         'Please Confirm - Videomass2',
                         wx.ICON_QUESTION |
                         wx.YES_NO, 
@@ -292,8 +293,8 @@ class FirstStart(wx.Dialog):
             for i in full_list:
                 fileconf.write('%s' % i)
             
-        wx.MessageBox(u"\nWizard completed successfully.\n"
-                       "Restart Videomass2 now.\n\nThank You!", 
-                       "That's all folks!")   
+        wx.MessageBox(_(u"\nWizard completed successfully.\n"
+                       "Restart Videomass2 now.\n\nThank You!"), 
+                       _(u"That's all folks!"))   
         self.Destroy()
         

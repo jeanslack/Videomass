@@ -52,21 +52,21 @@ class MemPresets(wx.Dialog):
         self.array = array
         
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, "Profile Name")
+        siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, _(u"Profile Name"))
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, "Description")
+        siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, _(u"Description"))
         self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, ("Command Line Parameters "
-                        "Do not use `-i` or output filename)"))
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_(u"Command Line Parameters "
+                        u"Do not use `-i` or output filename)")))
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz4_supp = wx.StaticBox(self, wx.ID_ANY, ("Files supported in the "
-                                        "import (do not include the `.`)"))
+        siz4_supp = wx.StaticBox(self, wx.ID_ANY, (_(u"Files supported in the "
+                                        u"import (do not include the `.`)")))
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
-        siz4_ext = wx.StaticBox(self, wx.ID_ANY, ("Output format extension "
-                                                  "(do not include the `.`)"))
+        siz4_ext = wx.StaticBox(self, wx.ID_ANY, (_(u"Output format extension "
+                                                  u"(do not include the `.`)")))
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
-        btn_save = wx.Button(self, wx.ID_OK, "Save..") 
+        btn_save = wx.Button(self, wx.ID_OK, _(u"Save.."))
 
         #----------------------Set Properties----------------------#
         self.txt_name.SetMinSize((150, -1))
@@ -75,21 +75,20 @@ class MemPresets(wx.Dialog):
         self.txt_supp.SetMinSize((300, -1))
         self.txt_ext.SetMinSize((150, -1))
 
-        self.txt_name.SetToolTipString("Assign a short name to the profile. "
-                                        )
-        self.txt_descript.SetToolTipString("Assign a long description to "
-                                           "the profile."
+        self.txt_name.SetToolTipString(_(u"Assign a short name to the profile. "
+                                        ))
+        self.txt_descript.SetToolTipString(_(u"Assign a long description to "
+                                           u"the profile.")
                                            )
-        self.txt_cmd.SetToolTipString("Do not use `-i` or output file, please."
-                                        )
-        self.txt_supp.SetToolTipString("You can limit the type "
-                            "of files formats imported by specifying in a box "
-                            "a format or multiple formats separated by a space "
-                            "(a list of extensions without the dot)."
-                            "Leave blank to involve any type of file to import " 
-                            "inbound."
-        )
-        self.txt_ext.SetToolTipString("Write here the output format extension")
+        self.txt_cmd.SetToolTipString(_(u"Do not use `-i` or output file, please."
+                                        ))
+        self.txt_supp.SetToolTipString(_(u"You can limit the type "
+                            u"of files formats imported by specifying in a box "
+                            u"a format or multiple formats separated by a space "
+                            u"(a list of extensions without the dot)."
+                            u"Leave blank to involve any type of file to import " 
+                            u"inbound."))
+        self.txt_ext.SetToolTipString(_(u"Write here the output format extension"))
         
         #----------------------Build layout----------------------#
         grd_s1 = wx.FlexGridSizer(4, 1, 0, 0)
@@ -198,14 +197,14 @@ class MemPresets(wx.Dialog):
         if nameprofile == '' or descriptprofile == '' or\
                                 paramprofile == '' or extprofile ==  '':
                                     
-            wx.MessageBox(u"Incomplete profile assignement. I can't save",
+            wx.MessageBox(_(u"Incomplete profile assignement. I can't save"),
                         "Warning", wx.ICON_EXCLAMATION, self)
             return
                                             
         elif cod_names in raw_list and self.arg == 'newprofile': # if exist name
                 
-            wx.MessageBox(u"Profile already stored with the same name."
-                "nome", "Warning", wx.ICON_EXCLAMATION, self)
+            wx.MessageBox(_(u"Profile already stored with the same name."
+                u"nome"), "Warning", wx.ICON_EXCLAMATION, self)
             return
 
         if self.arg == 'edit':
@@ -242,20 +241,20 @@ class MemPresets(wx.Dialog):
             #rlist.close()
         
         if self.arg == 'newprofile':
-            wx.MessageBox("Successfull storing !")
+            wx.MessageBox(_(u"Successfull storing !"))
             self.txt_name.SetValue(''), self.txt_descript.SetValue(''),
             self.txt_cmd.SetValue(''), self.txt_ext.SetValue('')
             self.txt_supp.SetValue('')
             
         elif self.arg == 'edit':
-            wx.MessageBox(u"Successfull modified !")
+            wx.MessageBox(_(u"Successfull modified !"))
             #self.Destroy() # con ID_OK e ID_CANCEL non serve
             
         elif self.arg == 'addprofile':
-            wx.MessageBox(u"Successfull storing !\n\n"
-                          "You will find this profile in the 'Users Profiles' "
-                          "preset in the 'Presets Manager' panel.\n"
-                          "Use the 'Reload presets list' on File menu to "
-                          "update profile list.")
+            wx.MessageBox(_(u"Successfull storing !\n\n"
+                          u"You will find this profile in the 'Users Profiles' "
+                          u"preset in the 'Presets Manager' panel.\n"
+                          u"Use the 'Reload presets list' on File menu to "
+                          u"update profile list."))
                 
         event.Skip() 
