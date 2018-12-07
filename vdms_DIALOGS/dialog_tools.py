@@ -76,7 +76,7 @@ class Cut_Range(wx.Dialog):
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY,"%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_1_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        "Seeking (start point) [hh,mm,ss]")), wx.VERTICAL)
+                        _(u"Seeking (start point) [hh,mm,ss]"))), wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
         lab3 = wx.StaticText(self, wx.ID_ANY, (":"))
@@ -88,7 +88,7 @@ class Cut_Range(wx.Dialog):
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        "Cut (end point) [hh,mm,ss]")), wx.VERTICAL)
+                        _(u"Cut (end point) [hh,mm,ss]"))), wx.VERTICAL)
         btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -99,15 +99,15 @@ class Cut_Range(wx.Dialog):
         #self.start_hour_ctrl.SetMinSize((100,-1 ))
         #self.start_minute_ctrl.SetMinSize((100, -1))
         #self.start_second_ctrl.SetMinSize((100, -1))
-        self.start_hour_ctrl.SetToolTipString("Hours time")
-        self.start_minute_ctrl.SetToolTipString("Minutes Time")
-        self.start_second_ctrl.SetToolTipString("Seconds time")
+        self.start_hour_ctrl.SetToolTipString(_(u"Hours time"))
+        self.start_minute_ctrl.SetToolTipString(_(u"Minutes Time"))
+        self.start_second_ctrl.SetToolTipString(_(u"Seconds time"))
         #self.stop_hour_ctrl.SetMinSize((100, -1))
         #self.stop_minute_ctrl.SetMinSize((100, -1))
         #self.stop_second_ctrl.SetMinSize((100, -1))
-        self.stop_hour_ctrl.SetToolTipString("Hours amount duration")
-        self.stop_second_ctrl.SetToolTipString("Minutes amount duration")
-        self.stop_minute_ctrl.SetToolTipString("Seconds amount duration")
+        self.stop_hour_ctrl.SetToolTipString(_(u"Hours amount duration"))
+        self.stop_second_ctrl.SetToolTipString(_(u"Minutes amount duration"))
+        self.stop_minute_ctrl.SetToolTipString(_(u"Seconds amount duration"))
         #----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
@@ -257,32 +257,32 @@ class VideoRotate(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
         
-        self.button_up = wx.Button(self, wx.ID_ANY, ("Flip over")) # capovolgi Sopra
-        self.button_left = wx.Button(self, wx.ID_ANY, ("Rotate Left")) # ruota sx
-        self.button_right = wx.Button(self, wx.ID_ANY, ("Rotate Right")) # ruota a destra
-        self.button_down = wx.Button(self, wx.ID_ANY, ("Flip below")) # capovolgi sotto
+        self.button_up = wx.Button(self, wx.ID_ANY, (_(u"Flip over"))) # capovolgi Sopra
+        self.button_left = wx.Button(self, wx.ID_ANY, (_(u"Rotate Left"))) # ruota sx
+        self.button_right = wx.Button(self, wx.ID_ANY, (_(u"Rotate Right"))) # ruota a destra
+        self.button_down = wx.Button(self, wx.ID_ANY, (_(u"Flip below"))) # capovolgi sotto
         #self.button_reset = wx.Button(self, wx.ID_ANY, ("RESET"))
         self.text_rotate = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER | wx.TE_READONLY
                                     )
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Orientation points")), wx.VERTICAL)
+                                    _(u"Orientation points"))), wx.VERTICAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         #----------------------Properties------------------------------------#
 
-        self.SetTitle("Set Video/Image Rotation - Videomass2")
+        self.SetTitle(_(u"Set Video/Image Rotation - Videomass2"))
         #self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.button_up.SetToolTipString("Reverses visual movie from bottom to top")
+        self.button_up.SetToolTipString(_(u"Reverses visual movie from bottom to top"))
         #self.button_left.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.button_left.SetToolTipString("Rotate view movie to left")
+        self.button_left.SetToolTipString(_(u"Rotate view movie to left"))
         #self.button_right.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.button_right.SetToolTipString("Rotate view movie to Right")
+        self.button_right.SetToolTipString(_(u"Rotate view movie to Right"))
         #self.button_down.SetBackgroundColour(wx.Colour(122, 239, 255))
-        self.button_down.SetToolTipString("Reverses visual movie from top to bottom")
+        self.button_down.SetToolTipString(_(u"Reverses visual movie from top to bottom"))
         self.text_rotate.SetMinSize((200, 30))
-        self.text_rotate.SetToolTipString("Display show settings")
+        self.text_rotate.SetToolTipString(_(u"Display show settings"))
 
         #----------------------Handle layout---------------------------------#
 
@@ -354,23 +354,23 @@ class VideoRotate(wx.Dialog):
     #----------------------Event handler (callback)--------------------------#
     def on_up(self, event):
         self.orientation = "transpose=2,transpose=2"
-        self.text_rotate.SetValue(u"180° from bottom to top")
+        self.text_rotate.SetValue(_(u"180° from bottom to top"))
         
     #------------------------------------------------------------------#
     def on_left(self, event):
         opt = "transpose=2"
         self.orientation = opt
-        self.text_rotate.SetValue(u"Rotate 90° Left")
+        self.text_rotate.SetValue(_(u"Rotate 90° Left"))
         
     #------------------------------------------------------------------#
     def on_right(self, event):
         self.orientation = "transpose=1"
-        self.text_rotate.SetValue(u"Rotate 90° Right")
+        self.text_rotate.SetValue(_(u"Rotate 90° Right"))
         
     #------------------------------------------------------------------#
     def on_down(self, event):
         self.orientation = "transpose=2,transpose=2"
-        self.text_rotate.SetValue(u"180° from top to bottom")
+        self.text_rotate.SetValue(_(u"180° from top to bottom"))
         
     #------------------------------------------------------------------#
     def on_reset(self, event):
@@ -420,11 +420,11 @@ class VideoCrop(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """ 
         """
-        self.label_width = wx.StaticText(self, wx.ID_ANY, ("Width"))
+        self.label_width = wx.StaticText(self, wx.ID_ANY, (_(u"Width")))
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1,  max=10000,
                                size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                 )
-        self.label_height = wx.StaticText(self, wx.ID_ANY, ("Height"))
+        self.label_height = wx.StaticText(self, wx.ID_ANY, (_(u"Height")))
         self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "-1", min=-1, max=10000, 
                                  size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
@@ -437,7 +437,7 @@ class VideoCrop(wx.Dialog):
                                  size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                  )
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Crop Dimensions")), wx.VERTICAL)
+                                    _(u"Crop Dimensions"))), wx.VERTICAL)
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -509,14 +509,14 @@ class VideoCrop(wx.Dialog):
         #self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_Y.SetBackgroundColour(wx.Colour(122, 239, 255))
-        height = ('The height of the output video.\nSet to -1 for disabling.')
-        width = ('The width of the output video.\nSet to -1 for disabling.')
-        x = ('The horizontal position of the left edge.')
-        y = ('The vertical position of the top edge of the left corner.')
-        self.crop_width.SetToolTipString('Width:\n%s' % width)
+        height = (_(u'The height of the output video.\nSet to -1 for disabling.'))
+        width = (_(u'The width of the output video.\nSet to -1 for disabling.'))
+        x = (_(u'The horizontal position of the left edge.'))
+        y = (_(u'The vertical position of the top edge of the left corner.'))
+        self.crop_width.SetToolTipString(_(u'Width:\n%s' % width))
         self.crop_Y.SetToolTipString('Y:\n%s' % y)
         self.crop_X.SetToolTipString('X:\n%s' % x)
-        self.crop_height.SetToolTipString('Height:\n%s' % height)
+        self.crop_height.SetToolTipString(_(u'Height:\n%s' % height))
         
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
@@ -633,9 +633,9 @@ class VideoResolution(wx.Dialog):
         ####----scaling static box section
         
         v_scalingbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Scale (resize)")), wx.VERTICAL)
+                                    _(u"Scale (resize)"))), wx.VERTICAL)
         
-        label_width = wx.StaticText(self, wx.ID_ANY, ("Width")
+        label_width = wx.StaticText(self, wx.ID_ANY, (_(u"Width"))
                                           )
         
         self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
@@ -648,14 +648,13 @@ class VideoResolution(wx.Dialog):
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0", min=-2, 
                                              max=9000, style=wx.TE_PROCESS_ENTER
                                              )
-        label_height = wx.StaticText(self, wx.ID_ANY, ("Height")
-                                          )
+        label_height = wx.StaticText(self, wx.ID_ANY, (_(u"Height")))
         #-------
         
         v_setdar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Setdar (display aspect ratio):")), wx.VERTICAL)
-        label_num = wx.StaticText(self, wx.ID_ANY, ("Numerator")
-                                          )
+                                    _(u"Setdar (display aspect ratio):"))), wx.VERTICAL)
+        label_num = wx.StaticText(self, wx.ID_ANY, (_(u"Numerator"))
+                                  )
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(-1,-1))
@@ -668,12 +667,12 @@ class VideoResolution(wx.Dialog):
                                       max=99, style=wx.TE_PROCESS_ENTER,
                                       size=(-1,-1)
                                       )##
-        label_den = wx.StaticText(self, wx.ID_ANY, ("Denominator")
+        label_den = wx.StaticText(self, wx.ID_ANY, (_(u"Denominator"))
                                           )
         #----------
         v_setsar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "SetSar (sample aspect ratio):")), wx.VERTICAL)
-        label_num1 = wx.StaticText(self, wx.ID_ANY, ("Numerator")
+                                    _(u"SetSar (sample aspect ratio):"))), wx.VERTICAL)
+        label_num1 = wx.StaticText(self, wx.ID_ANY, (_(u"Numerator"))
                                           )
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
@@ -686,7 +685,7 @@ class VideoResolution(wx.Dialog):
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0, 
                                       max=10000, style=wx.TE_PROCESS_ENTER,
                                       size=(-1,-1))##
-        label_den1 = wx.StaticText(self, wx.ID_ANY, ("Denominator")
+        label_den1 = wx.StaticText(self, wx.ID_ANY, (_(u"Denominator"))
                                           )
         ####----- confirm buttons section
         btn_help = wx.Button(self, wx.ID_HELP, "")
@@ -751,19 +750,19 @@ class VideoResolution(wx.Dialog):
         self.Layout()
         
         # Properties
-        self.SetTitle("Resize (change resolution) - Videomass2")
+        self.SetTitle(_(u"Resize (change resolution) - Videomass2"))
 
-        scale_str = ('Scale (resize) the input video or image.')
-        self.spin_scale_width.SetToolTipString('WIDTH:\n%s' % scale_str)
-        self.spin_scale_height.SetToolTipString('HEIGHT:\n%s' % scale_str)
-        setdar_str = ('Sets the Display Aspect '
-                      'Ratio.\nSet to 0 to disabling.')
-        self.spin_setdarNum.SetToolTipString('-NUMERATOR-\n%s' % setdar_str)
-        self.spin_setdarDen.SetToolTipString('-DENOMINATOR-\n%s' % setdar_str)
-        setsar_str = ('The setsar filter sets the Sample (aka Pixel) '
-                      'Aspect Ratio.\nSet to 0 to disabling.')
-        self.spin_setsarNum.SetToolTipString('-NUMERATOR-\n%s' % setsar_str)
-        self.spin_setsarDen.SetToolTipString('-DENOMINATOR-\n%s' % setsar_str)
+        scale_str = (_(u'Scale (resize) the input video or image.'))
+        self.spin_scale_width.SetToolTipString(_(u'WIDTH:\n%s' % scale_str))
+        self.spin_scale_height.SetToolTipString(_(u'HEIGHT:\n%s' % scale_str))
+        setdar_str = (_(u'Sets the Display Aspect '
+                      u'Ratio.\nSet to 0 to disabling.'))
+        self.spin_setdarNum.SetToolTipString(_(u'-NUMERATOR-\n%s' % setdar_str))
+        self.spin_setdarDen.SetToolTipString(_(u'-DENOMINATOR-\n%s' % setdar_str))
+        setsar_str = (_(u'The setsar filter sets the Sample (aka Pixel) '
+                      u'Aspect Ratio.\nSet to 0 to disabling.'))
+        self.spin_setsarNum.SetToolTipString(_(u'-NUMERATOR-\n%s' % setsar_str))
+        self.spin_setsarDen.SetToolTipString(_(u'-DENOMINATOR-\n%s' % setsar_str))
         
         #----------------------Binding (EVT)---------------------------------#
         #self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)

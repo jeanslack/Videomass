@@ -32,6 +32,11 @@ import os
 from vdms_SYS.ctrl_run import system_check, parsing_fileconf
 from vdms_SYS.appearance import Appearance
 
+# add translation macro to builtin similar to what gettext does
+import __builtin__
+__builtin__.__dict__['_'] = wx.GetTranslation
+from vdms_SYS import app_const as appC
+
 path_confdir = os.path.expanduser('~/.videomass2/')# presets path
 PWD = os.getcwd()
 
@@ -51,6 +56,7 @@ class Videomass(wx.App):
         #self.setui = system_check() # for user-space settings
         #self.fileconf = parsing_fileconf() # for user interface settings
         wx.App.__init__(self, redirect, filename) # Call the base class constructor
+    #-------------------------------------------------------------------
         
     def OnInit(self):
         """
@@ -58,6 +64,11 @@ class Videomass(wx.App):
         prepares the environment configuration. The 'fileconf' take all 
         values of the file configuration.
         """
+        lang = 'it'
+        self.locale = None
+        wx.Locale.AddCatalogLookupPathPrefix('locale')
+        self.updateLanguage(lang)
+        
         setui = system_check() # for user-space settings
         fileconf = parsing_fileconf() # for user interface settings
         
@@ -144,7 +155,8 @@ class Videomass(wx.App):
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True
-            
+    #-------------------------------------------------------------------
+    
     def firstrun(self, icon):
         """
         Start a temporary dialog: this is showing during first time 
@@ -155,11 +167,47 @@ class Videomass(wx.App):
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True
+    #------------------------------------------------------------------
+    
+    def updateLanguage(self, lang):
+        """
+        Update the language to the requested one.
+        
+        Make *sure* any existing locale is deleted before the new
+        one is created.  The old C++ object needs to be deleted
+        before the new one is created, and if we just assign a new
+        instance to the old Python variable, the old C++ locale will
+        not be destroyed soon enough, likely causing a crash.
+        
+        :param string `lang`: one of the supported language codes
+        
+        """
+        # if an unsupported language is requested default to English
+        if lang in appC.supLang:
+            selLang = appC.supLang[lang]
+            print 'si'
+        else:
+            selLang = wx.LANGUAGE_DEFAULT
+            print appC.supLang
+            
+            
+        if self.locale:
+            assert sys.getrefcount(self.locale) <= 2
+            del self.locale
+        
+        # create a locale object for this language
+        self.locale = wx.Locale(selLang)
+        if self.locale.IsOk():
+            self.locale.AddCatalog(appC.langDomain)
+        else:
+            self.locale = None
+    #-------------------------------------------------------------------
 
     def OnExit(self):
         """
         """
         print "OnExit"
+    #-------------------------------------------------------------------
     
 if __name__ == "__main__":
     app = Videomass(False)

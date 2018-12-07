@@ -115,7 +115,7 @@ class MainFrame(wx.Frame):
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
                                            bitmap=infoIbmp, 
-                                           label="Show Metadata")
+                                           label=_(u"Show Metadata"))
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                       foregroundcolour=wx.Colour(28,28,28))
         self.btn_metaI.SetBottomEndColour(self.bBtnC)
@@ -126,7 +126,7 @@ class MainFrame(wx.Frame):
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
                                            bitmap=previewbmp, 
-                                           label="Preview")
+                                           label=_(u"Preview"))
         self.btn_playO.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                       foregroundcolour=wx.Colour(28,28,28))
         self.btn_playO.SetBottomEndColour(self.bBtnC)
@@ -137,7 +137,7 @@ class MainFrame(wx.Frame):
         self.btn_duration = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=cutbmp, 
-                                              label="Duration")
+                                              label=_(u"Duration"))
         self.btn_duration.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_duration.SetBottomEndColour(self.bBtnC)
@@ -148,7 +148,7 @@ class MainFrame(wx.Frame):
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=saveprfbmp, 
-                                              label="Save As Profile")
+                                              label=_(u"Save As Profile"))
         self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
@@ -159,7 +159,7 @@ class MainFrame(wx.Frame):
         self.btn_newprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=newprfbmp, 
-                                              label="New..")
+                                              label=_(u"New.."))
         self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_newprf.SetBottomEndColour(self.bBtnC)
@@ -170,7 +170,7 @@ class MainFrame(wx.Frame):
         self.btn_delprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=delprfbmp, 
-                                              label="Delete..")
+                                              label=_(u"Delete.."))
         self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_delprf.SetBottomEndColour(self.bBtnC)
@@ -181,7 +181,7 @@ class MainFrame(wx.Frame):
         self.btn_editprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=editprfbmp, 
-                                              label="Edit..")
+                                              label=_(u"Edit.."))
         self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_editprf.SetBottomEndColour(self.bBtnC)
@@ -268,25 +268,25 @@ class MainFrame(wx.Frame):
         self.Layout()
         
         # Tooltips:
-        self.btn_duration.SetToolTipString('Sets a global time sequences to '
-                                        'apply at any media file with duration.'
-                                           )
-        self.btn_metaI.SetToolTipString("Show information about the metadata "
-                                        "of the selected imported file." 
-                                        )
-        self.btn_playO.SetToolTipString("Preview exported files. Reproduction "
-                                        "exported file when finish encoding."
-                                        )
-        self.btn_saveprf.SetToolTipString("Save as profile with the current "
-                                        "settings of this panel."
-                                        )
-        self.btn_newprf.SetToolTipString("Create a new profile from yourself "
-                                        "and save it in the selected preset."
-                                        )
-        self.btn_delprf.SetToolTipString("Delete the selected profile."
-                                        )
-        self.btn_editprf.SetToolTipString("Edit the selected profile."
-                                          )
+        self.btn_duration.SetToolTipString(_(u'Sets a global time sequences to '
+                                        u'apply at any media file with duration.'
+                                           ))
+        self.btn_metaI.SetToolTipString(_(u"Show information about the metadata "
+                                        u"of the selected imported file." 
+                                        ))
+        self.btn_playO.SetToolTipString(_(u"Preview exported files. Reproduction "
+                                        u"exported file when finish encoding."
+                                        ))
+        self.btn_saveprf.SetToolTipString(_(u"Save as profile with the current "
+                                        u"settings of this panel."
+                                        ))
+        self.btn_newprf.SetToolTipString(_(u"Create a new profile from yourself "
+                                        u"and save it in the selected preset."
+                                        ))
+        self.btn_delprf.SetToolTipString(_(u"Delete the selected profile."
+                                        ))
+        self.btn_editprf.SetToolTipString(_(u"Edit the selected profile."
+                                          ))
         # menu bar
         self.videomass_menu_bar()
         ## tool bar main
@@ -480,7 +480,7 @@ class MainFrame(wx.Frame):
         """
         filepath = self.import_clicked
         if not filepath:
-            wx.MessageBox("No file selected into Drag and Drop list", 
+            wx.MessageBox(_(u"No file selected into Drag and Drop list"), 
                           'Videomass2', wx.ICON_EXCLAMATION, self)
             return
         title = 'Metadata of selected media - Videomass2'
@@ -495,7 +495,7 @@ class MainFrame(wx.Frame):
         testing. The first one exported of the list will be reproduced.
         """
         if not self.post_process:
-            wx.MessageBox("No files exported with `Start Encoding` yet", 
+            wx.MessageBox(_(u"No files exported with `Start Encoding` yet"), 
                           'Videomass2', wx.ICON_EXCLAMATION, self)
             return
 
@@ -585,59 +585,58 @@ class MainFrame(wx.Frame):
         ####----------------------- file
         fileButton = wx.Menu()
         
-        self.file_open = fileButton.Append(wx.ID_OPEN, "Add File.. ", 
-                        "Files import with drag and drop")
-        self.file_save = fileButton.Append(wx.ID_SAVE, "Choose a Destination " 
-                                                        "folder..", 
-                        "Choice a folder where save processed files")
+        self.file_open = fileButton.Append(wx.ID_OPEN, _(u"Add File.. "), 
+                        _(u"Files import with drag and drop"))
+        self.file_save = fileButton.Append(wx.ID_SAVE, _(u"Choose a Destination " 
+                                                        u"folder.."), 
+                        _(u"Choice a folder where save processed files"))
         fileButton.AppendSeparator()
         self.saveme = fileButton.Append(wx.ID_REVERT_TO_SAVED,
-                                 "Save the current preset as separated file",
-                       "Make a back-up of the selected preset on combobox"
-                                    )
-        self.restore = fileButton.Append(wx.ID_REPLACE, "Restore a previously "
-                                                "saved preset", 
-                "Replace the selected preset with other saved custom preset."
+                                 _(u"Save the current preset as separated file"),
+                       _(u"Make a back-up of the selected preset on combobox"
+                                    ))
+        self.restore = fileButton.Append(wx.ID_REPLACE, _(u"Restore a previously "
+                                                u"saved preset"), 
+                _(u"Replace the selected preset with other saved custom preset.")
                                                 )
-        self.default = fileButton.Append(wx.ID_ANY, "Reset the current preset ",
-                            "Replace the selected preset with default values."
+        self.default = fileButton.Append(wx.ID_ANY, _(u"Reset the current preset "),
+                            _(u"Replace the selected preset with default values.")
                                                 )
         fileButton.AppendSeparator()
         
-        self.default_all = fileButton.Append(wx.ID_UNDO, "Reset all presets ",
-                         "Revert all presets to default values"
+        self.default_all = fileButton.Append(wx.ID_UNDO, _(u"Reset all presets "),
+                         _(u"Revert all presets to default values")
                                                 )
         
         fileButton.AppendSeparator()
-        self.refresh = fileButton.Append(wx.ID_REFRESH, "Reload presets list", 
-              "It is not necessary to use this function, but sometimes it can "
-              "be useful")
+        self.refresh = fileButton.Append(wx.ID_REFRESH, _(u"Reload presets list"), 
+                                           _(u"..Sometimes it can be useful"))
         fileButton.AppendSeparator()
-        exitItem = fileButton.Append(wx.ID_EXIT, "Exit", "Close Videomass2")
-        self.menuBar.Append(fileButton,"File")
+        exitItem = fileButton.Append(wx.ID_EXIT, _(u"Exit"), _(u"Close Videomass2"))
+        self.menuBar.Append(fileButton,u"&File")
         
         ####------------------ setup button
         setupButton = wx.Menu()
 
-        self.showtoolbar = setupButton.Append(wx.ID_ANY, "Show Tool Bar", 
-                                       "Show tool bar view", wx.ITEM_CHECK)
+        self.showtoolbar = setupButton.Append(wx.ID_ANY, _(u"Show Tool Bar"), 
+                                       _(u"Show tool bar view"), wx.ITEM_CHECK)
         setupButton.Check(self.showtoolbar.GetId(), True)
         
-        self.showpanelbar = setupButton.Append(wx.ID_ANY, "Show Buttons Bar", 
-                                "Show or hide buttons bar view", wx.ITEM_CHECK)
+        self.showpanelbar = setupButton.Append(wx.ID_ANY, _(u"Show Buttons Bar"), 
+                                _(u"Show or hide buttons bar view"), wx.ITEM_CHECK)
         setupButton.Check(self.showpanelbar.GetId(), True)
 
         setupButton.AppendSeparator()
-        setupItem = setupButton.Append(wx.ID_PREFERENCES, "Setup", 
-                                       "General Settings")
+        setupItem = setupButton.Append(wx.ID_PREFERENCES, _(u"Setup"), 
+                                       _(u"General Settings"))
         
-        self.menuBar.Append(setupButton,"Preferences")
+        self.menuBar.Append(setupButton,_(u"&Preferences"))
         
         ####------------------ help buton
         helpButton = wx.Menu()
-        helpItem = helpButton.Append( wx.ID_HELP, "User Guide", "Guide")
-        infoItem = helpButton.Append(wx.ID_ABOUT, "About Videomass2", "About")
-        self.menuBar.Append(helpButton,"Help")
+        helpItem = helpButton.Append( wx.ID_HELP, _(u"User Guide"), "")
+        infoItem = helpButton.Append(wx.ID_ABOUT, _(u"About Videomass2"), "")
+        self.menuBar.Append(helpButton, _(u"&Help"))
 
         self.SetMenuBar(self.menuBar)
         
@@ -780,14 +779,14 @@ class MainFrame(wx.Frame):
         self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
         
         #-------- Import button
-        icn_import = self.toolbar.AddLabelTool(wx.ID_FILE3, 'Add File',
+        icn_import = self.toolbar.AddLabelTool(wx.ID_FILE3, _(u'Add File'),
                                          wx.Bitmap(self.icon_import),
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE3, False)
         self.toolbar.AddSeparator()
         
         #-------- Switch at preset manager
-        prs_mng = self.toolbar.AddLabelTool(wx.ID_FILE5, 'Presets Manager', 
+        prs_mng = self.toolbar.AddLabelTool(wx.ID_FILE5, _(u'Presets Manager'), 
                                     wx.Bitmap(self.icon_presets)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE5, False)
@@ -795,27 +794,27 @@ class MainFrame(wx.Frame):
         
         #-------- Switch at videomass
         switch_video = self.toolbar.AddLabelTool(wx.ID_FILE6, 
-                    'Video Conversions', wx.Bitmap(self.icon_switchvideomass)
+                    _(u'Video Conversions'), wx.Bitmap(self.icon_switchvideomass)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE6, False)
         self.toolbar.AddSeparator()
 
         #-------- Switch Advanced audio
         switch_audio = self.toolbar.AddLabelTool(wx.ID_FILE7, 
-                    'Audio Conversions',  wx.Bitmap(self.icon_headphones)
+                    _(u'Audio Conversions'),  wx.Bitmap(self.icon_headphones)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE7, False)
         self.toolbar.AddSeparator()
         
         # ------- Run process button
-        run_coding = self.toolbar.AddLabelTool(wx.ID_OK, 'Start Encoding', 
+        run_coding = self.toolbar.AddLabelTool(wx.ID_OK, _(u'Start Encoding'), 
                                     wx.Bitmap(self.icon_process)
                                                 )
         self.toolbar.EnableTool(wx.ID_OK, False)
         self.toolbar.AddSeparator()
         
         #------- help button
-        help_contest = self.toolbar.AddLabelTool(wx.ID_ANY, 'Help', 
+        help_contest = self.toolbar.AddLabelTool(wx.ID_ANY, _(u'Help'), 
                                     wx.Bitmap(self.icon_help)
                                                 )
         # finally, create it

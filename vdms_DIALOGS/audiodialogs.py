@@ -220,34 +220,34 @@ class TypeAudioParameters(object):
     audio bitrates, sample rate, audio channels and bitdepth and also 
     include messages tooltip.
     """
-    channel_tooltip = (u"""\
+    channel_tooltip = (_(u"""\
 The audio channels are represented by monophonic, 
 stereophonic and quadraphonic techniques reproduction.
 For some codecs can only assign an audio stream
 monaural or stereo, for others even polyphonic.
 If you are insecure you set to "Not set", will be copied
 source values.\
-""")
-    sample_rate_tooltip = (u"""\
+"""))
+    sample_rate_tooltip = (_(u"""\
 The audio Rate (or sample-rate) is the sound sampling 
 frequency and is measured in hertz. The higher the frequency, 
 plus the audio signal will be true to the sound source, but 
 the file will increase its size. For normal playback with 
 audio CD set a sample rate of 44100kHz. If you are insecure 
 you set to "Not set", will be copied source values.\
-""")
-    bitrate_tooltip = (u"""\
+"""))
+    bitrate_tooltip = (_(u"""\
 The audio bitrate affects on file compression
 and on the quality of listening. The higher
 the value and more higher quality.\
-""")
-    bitdepth_tooltip = (u"""\
+"""))
+    bitdepth_tooltip = (_(u"""\
 bit depth is the number of bits of information in each 
 sample, and it directly corresponds to the resolution 
 of each sample. Bit depth is only meaningful in reference 
 to a PCM digital signal. Non-PCM formats, such as lossy 
 compression formats, do not have associated bit depths.\
-""")
+"""))
     def __init__(self, audio_format):
         """
         Accept a type string object representing the name of the audio 
