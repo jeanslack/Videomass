@@ -30,8 +30,17 @@ from wx.lib.pubsub import pub # work on wxPython >= 2.9 = 3.0
 import subprocess
 from threading import Thread
 
-
+########################################################################
+# message strings for all the following Classes.
+# WARNING: For translation reasons, try to keep the position of these 
+#          strings unaltered.
+non_ascii_msg = _(u'Non-ASCII/UTF-8 character string not supported. '
+                  u'Please, check the filename and correct it.')
+not_exist_msg =  _(u'exist in your system?')
+unrecognized_msg = _(u"Unrecognized Error (not in err_list):")
+not_exist_msg = _(u"File does not exist:")
 #########################################################################
+
 class PopupDialog(wx.Dialog):
     """ 
     A pop-up dialog box for temporary user messages that tell the user 
@@ -173,12 +182,12 @@ class VolumeDetectThread(Thread):
                         break
                     
             except IOError:
-                e = "File does not exist:  %s" % filepath
+                e = "%s  %s" % (not_exist_msg, filepath)
                 self.status = e
                 break
             
             except OSError:
-                e = "%s\nffmpeg exist?" % (err), 
+                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg)
                 self.status = e
                 break
             
@@ -187,13 +196,13 @@ class VolumeDetectThread(Thread):
                 dovrebbe riportare tutti gli errori di ffmpeg dal momento 
                 che la variabile `e` sarà referenziata prima di essere assegnata.
                 """
-                e = "Unrecognized Error (not in err_list):\n\n%s" % error
+                e = "%s\n\n%s" % (unrecognized_msg, error)
                 self.status = e
                 break
             
             except UnicodeEncodeError as err:
-                e = ('Non-ASCII/UTF-8 character string not supported. '
-                     'Please, check the filename and correct it.')
+                e = (non_ascii_msg
+                     )
                 self.status = e
                 break
         

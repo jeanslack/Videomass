@@ -31,7 +31,15 @@ import subprocess
 import time
 from threading import Thread
 
+########################################################################
+# message strings for all the following Classes.
+# WARNING: For translation reasons, try to keep the position of these 
+#          strings unaltered.
+non_ascii_msg = _(u'Non-ASCII/UTF-8 character string not supported. '
+                  u'Please, check the filename and correct it.')
+not_exist_msg =  _(u'exist in your system?')
 #########################################################################
+
 def Messages(msg):
     """
     Receive error messages from Play(Thread) via wxCallafter
@@ -94,16 +102,15 @@ class Play(Thread):
         
         except OSError as err_0:
             if err_0[1] == 'No such file or directory':
-                pyerror = _(u"%s: \nProbably '%s' "
-                            u"do not exist in your system") % (
-                          err_0, command[0])
+                pyerror = (u"%s: \n'%s' %s") % (err_0, command[0], 
+                                                not_exist_msg)
             else:
                 pyerror = "%s: " % (err_0)
             wx.CallAfter(Messages, pyerror)
             return
         
         except UnicodeEncodeError as err:
-            e = ('Non-ASCII/UTF-8 character string not supported. '
-                    'Please, check the filename and correct it.')
+            e = (non_ascii_msg
+                 )
             wx.CallAfter(Messages, e)
             return

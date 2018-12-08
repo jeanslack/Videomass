@@ -648,7 +648,8 @@ class Setup(wx.Dialog):
             with open (filename, 'w') as fileconf:
                 for i in self.full_list:
                     fileconf.write('%s' % i)
-            wx.MessageBox(_(u"\nChanges need to restart the program"))
+            wx.MessageBox(_(u"Changes will take affect once the program " 
+                            u"has been restarted"))
             
             #self.Destroy() # WARNING on mac not close corretly, on linux ok
             self.Close()

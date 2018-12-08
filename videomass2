@@ -74,21 +74,21 @@ class Videomass(wx.App):
         fileconf = parsing_fileconf() # for user interface settings
         
         if setui[2]: # if source dir is corrupt
-            wx.MessageBox('Can not find the configuration file\n\n'
-                          'Sorry, cannot continue..',
+            wx.MessageBox(_(u'Can not find the configuration file\n\n'
+                          u'Sorry, cannot continue..'),
                           'Fatal Error - Videomass2', wx.ICON_STOP)
             print 'Videomass2: Fatal Error, file configuration not found'
             return False
 
         # check videomass2.conf version
         if float(fileconf[0]) < 1.2:
-            msg = ('Videomass2: Outdated configuration file.\n'
-                    'Current version do not match with %s .\n\n' 
-                    % fileconf[0])
+            msg = (_(u'Videomass2: Outdated configuration file.\n'
+                    u'Current version do not match with %s .\n\n' 
+                    % fileconf[0]))
             print msg
-            if wx.MessageBox('%s\nDo you want to restore the new one? ' 
-                             % (msg), 
-                             'Please Confirm - Videomass2',
+            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ' 
+                             % (msg)), 
+                             _(u'Please Confirm - Videomass2'),
                               wx.ICON_QUESTION | 
                               wx.YES_NO, 
                               None) == wx.YES:
@@ -96,11 +96,11 @@ class Videomass(wx.App):
             return False
             
         elif fileconf == 'corrupted':
-            msg = ('Videomass2: corrupt configuration file\n\n')
+            msg = (_(u'Videomass2: corrupt configuration file\n\n'))
             print msg
-            if wx.MessageBox('%s\nDo you want to restore the new one? ' 
-                             % (msg), 
-                             'Please Confirm - Videomass2',
+            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ' 
+                             % (msg)), 
+                             _(u'Please Confirm - Videomass2'),
                              wx.ICON_QUESTION | 
                              wx.YES_NO, 
                              None) == wx.YES:
@@ -145,8 +145,8 @@ class Videomass(wx.App):
             ffmpeg_link = fileconf[8]
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
-            self.firstrun(pathicons[23])
-            return True
+            #self.firstrun(pathicons[23])
+            #return True
             
         from vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 

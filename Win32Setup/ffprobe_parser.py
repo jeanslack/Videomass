@@ -31,6 +31,14 @@
 import subprocess
 import re
 
+########################################################################
+# message strings for all the following Classes.
+# WARNING: For translation reasons, try to keep the position of these 
+#          strings unaltered.
+non_ascii_msg = _(u'Non-ASCII/UTF-8 character string not supported. '
+                  u'Please, check the filename and correct it.')
+not_exist_msg =  _(u'not found in your system')
+#########################################################################
 
 class FFProbe(object):
     """
@@ -116,12 +124,12 @@ class FFProbe(object):
                 self.error = error
 
         except OSError:
-            self.error = 'ffprobe not found in the system'
+            self.error = "'ffprobe.exe' %s" % not_exist_msg
             return
         
         except UnicodeEncodeError as err:
-            e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
-                    'Please, check the filename and correct it.')
+            e = (non_ascii_msg
+                 )
             self.error = e
             return
 

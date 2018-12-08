@@ -82,15 +82,15 @@ class GeneralProcess(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
 
-        lbl = wx.StaticText(self, label="Log View Console:")
+        lbl = wx.StaticText(self, label=_(u"Log View Console:"))
         self.OutText = wx.TextCtrl(self, wx.ID_ANY, "",
                         style = wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2
                                     )
-        self.ckbx_text = wx.CheckBox(self, wx.ID_ANY,("Enable the FFmpeg "
-                                            "scroll output in real time"))
+        self.ckbx_text = wx.CheckBox(self, wx.ID_ANY,(_(u"Enable the FFmpeg "
+                                            u"scroll output in real time")))
         self.barProg = wx.Gauge(self, wx.ID_ANY, range = 0)
-        self.labPerc = wx.StaticText(self, label=" 0%")
-        self.button_stop = wx.Button(self, wx.ID_STOP, "Abort")
+        self.labPerc = wx.StaticText(self, label="Percentage: 0%")
+        self.button_stop = wx.Button(self, wx.ID_STOP, _(u"Abort"))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
 
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -106,13 +106,13 @@ class GeneralProcess(wx.Panel):
 
         # set_properties:
         #self.OutText.SetBackgroundColour((217, 255, 255))
-        self.ckbx_text.SetToolTipString("Show FFmpeg messages in real time in "
-                                        "the log view console, useful for "
+        self.ckbx_text.SetToolTipString(_(u"Show FFmpeg messages in real time "
+                                        "in the log view console, useful for "
                                         "knowledge the all exit status as "
                                         "errors and warnings."
-                                           )
+                                           ))
         #self.button_stop.SetMinSize((200, 30))
-        self.button_stop.SetToolTipString("Stops current process")
+        self.button_stop.SetToolTipString(_(u"Stops current process"))
         #self.button_close.SetMinSize((200, 30))
         #self.SetSizer(sizer)
         self.SetSizerAndFit(sizer)
@@ -156,7 +156,7 @@ class GeneralProcess(wx.Panel):
             timesum = (int(hours)*60 + int(minutes))*60 + int(seconds)
             self.barProg.SetValue(timesum)
             percentage = timesum / duration * 100
-            self.labPerc.SetLabel("%s%%" % str(int(percentage)))
+            self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
 
         elif self.STATUS_ERROR == None:
             err_list = ('not found', 
@@ -189,7 +189,7 @@ class GeneralProcess(wx.Panel):
                                                           cmd))
         self.barProg.SetRange(duration)#set la durata complessiva
         self.barProg.SetValue(0)# resetto la prog bar
-        self.labPerc.SetLabel("100%")
+        self.labPerc.SetLabel("Percentage: 100%")
         print '%s' % textlog
         self.OutText.AppendText("%s" % textlog)
         # write all ffmpeg commands
@@ -240,7 +240,7 @@ class GeneralProcess(wx.Panel):
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.BLUE))#GREEN
             s = '\n Done!\n\n exit status %s' % msg
             self.OutText.AppendText(s)
-            self.labPerc.SetLabel("100%")
+            self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
             self.barProg.SetValue(0)
@@ -250,8 +250,17 @@ class GeneralProcess(wx.Panel):
             copy_restore("%s/.videomass2/%s" % (DIRNAME, self.logname),
                             "%s/%s" % (self.path_log, self.logname))
 
-#------------------------------ THREADS -------------------------------#
+
 ########################################################################
+# message strings for all the following Classes.
+# WARNING: For translation reasons, try to keep the position of these 
+#          strings unaltered.
+non_ascii_msg = _(u'Non-ASCII/UTF-8 character string not supported. '
+                  u'Please, check the filename and correct it.')
+not_exist_msg =  _(u'exist in your system?')
+########################################################################
+
+
 class ProcThread(Thread):
     """
     This class represents a separate thread for running processes, which 
@@ -327,7 +336,7 @@ class ProcThread(Thread):
                                      startupinfo=startupinfo,
                                      )
             except OSError as err:
-                e = "%s\nffmpeg exist?" % (err), 
+                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg), 
                 wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          cmd=e, 
@@ -337,8 +346,7 @@ class ProcThread(Thread):
                 break
             
             except UnicodeEncodeError as err:
-                e = ('Non-ASCII/UTF-8 character string not supported. '
-                     'Please, check the filename and correct it.'
+                e = (non_ascii_msg
                      )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
@@ -437,7 +445,7 @@ class DoublePassThread(Thread):
                                       startupinfo=startupinfo,
                                       )
             except OSError as err:
-                e = "%s\nffmpeg exist?" % (err)
+                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 
@@ -447,8 +455,7 @@ class DoublePassThread(Thread):
                 break
 
             except UnicodeEncodeError as err:
-                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
-                     'Please, check the filename and correct it.'
+                e = (non_ascii_msg
                      )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
@@ -565,8 +572,8 @@ class SingleProcThread(Thread):
             
         except OSError as err_0:
             if err_0[1] == 'No such file or directory':
-                e = "%s: \nProbably '%s' do not exist in your system" % (
-                err_0, self.cmd.split()[0])
+                e = "%s: \n'%s' %s" % (
+                err_0, self.cmd.split()[0], not_exist_msg)
             else:
                 e = "%s: " % (err_0)
                 
@@ -580,8 +587,7 @@ class SingleProcThread(Thread):
             return
         
         except UnicodeEncodeError as err:
-                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
-                     'Please, check the filename and correct it.'
+                e = (non_ascii_msg
                      )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
@@ -677,7 +683,7 @@ class GrabAudioProc(Thread):
                                      startupinfo=startupinfo,
                                      )
             except OSError as err:
-                e = "%s\nffmpeg exist?" % (err), 
+                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg), 
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 
@@ -687,8 +693,7 @@ class GrabAudioProc(Thread):
                 break
             
             except UnicodeEncodeError as err:
-                e = ('ERROR: Non-ASCII/UTF-8 character string not supported. '
-                     'Please, check the filename and correct it.'
+                e = (non_ascii_msg
                      )
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
