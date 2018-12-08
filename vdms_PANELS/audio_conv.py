@@ -96,13 +96,14 @@ class Audio_Conv(wx.Panel):
                  ("AAC [.m4a]"), 
                  ("ALAC [.m4a]"), 
                  ("AC3 [.ac3]"),
-                 ("Save audio from movie")], style=wx.CB_DROPDOWN | wx.CB_READONLY)
+                 (_(u"Save audio from movie"))], style=wx.CB_DROPDOWN | 
+                                                       wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
         self.btn_param = GB.GradientButton(self,
                                            size=(-1,25),
                                            bitmap=setbmp,
-                                           label="Audio Options")
+                                           label=_(u"Audio Options"))
         self.btn_param.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -113,14 +114,14 @@ class Audio_Conv(wx.Panel):
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY)
         self.ckb_onlynorm = wx.CheckBox(self, wx.ID_ANY, (
-                                               "Only Normalization"))
+                                               _(u"Only Normalization")))
         self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
-                                               "Audio Normalization"))
+                                               _(u"Audio Normalization")))
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self,
                                            size=(-1,25),
                                            bitmap=analyzebmp,
-                                           label="Analyzes")
+                                           label=_(u"Analyzes"))
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -129,12 +130,14 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
         
-        self.lab_volmax = wx.StaticText(self, wx.ID_ANY, ("Max Volume db."))
+        self.lab_volmax = wx.StaticText(self, wx.ID_ANY, (_(u"Max Volume db.")))
         self.txt_volmax = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
-        self.lab_volmid = wx.StaticText(self, wx.ID_ANY, ("Average Volume db."))
+        self.lab_volmid = wx.StaticText(self, wx.ID_ANY, 
+                                                   (_(u"Average Volume db."))
+                                        )
         self.txt_volmid = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
-                                    "Max Peak Level Threshold:   "))
+                                    _(u"Max Peak Level Threshold:   ")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
                                     agwStyle=FS.FS_LEFT)
@@ -151,7 +154,9 @@ class Audio_Conv(wx.Panel):
         grid_sizer_4 = wx.FlexGridSizer(2, 4, 0, 0)
         #grid_sizer_5 = wx.FlexGridSizer(1, 3, 0, 0)
         sizer_3 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    "Audio Container Selection")), wx.VERTICAL)
+                                    _(u"Audio Container Selection"))), 
+                                                       wx.VERTICAL
+                                                       )
         sizer_3.Add(self.cmbx_a, 0, wx.ALIGN_CENTER | wx.ALL, 20)
         grid_sizer_1.Add(sizer_3, 1, wx.ALL | wx.EXPAND, 5)
         grid_sizer_2.Add(self.btn_param, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
@@ -191,21 +196,21 @@ class Audio_Conv(wx.Panel):
         sizer_base.Add(sizer_global, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
         # Set tooltip:
-        self.btn_param.SetToolTipString(u"Enable advanced settings as audio "
-                                    "bit-rate, audio channel and audio rate "
-                                    "of the selected audio codec."
+        self.btn_param.SetToolTipString(_(u"Enable advanced settings as audio "
+                                    u"bit-rate, audio channel and audio rate "
+                                    u"of the selected audio codec.")
                                               )
-        self.btn_analyzes.SetToolTipString(u"Calculate the maximum and average "
-                                    "peak in dB values of the one audio track "
-                                    "imported. This feature is disabled for "
-                                    "multiple file to process."
+        self.btn_analyzes.SetToolTipString(_(u"Calculate the maximum and average "
+                                    u"peak in dB values of the one audio track "
+                                    u"imported. This feature is disabled for "
+                                    u"multiple file to process.")
                                               )
-        self.txt_volmax.SetToolTipString("Maximum peak scanned in dB values.")
-        self.txt_volmid.SetToolTipString("Average peak scanned in dB values.")
-        self.spin_amplitude.SetToolTipString("Threshold for the maximum peak "
-                                    "level in dB values. The default setting "
-                                    "is -1.0 dB and is good for most of the "
-                                    "processes.")
+        self.txt_volmax.SetToolTipString(_(u"Maximum peak scanned in dB values."))
+        self.txt_volmid.SetToolTipString(_(u"Average peak scanned in dB values."))
+        self.spin_amplitude.SetToolTipString(_(u"Threshold for the maximum peak "
+                                    u"level in dB values. The default setting "
+                                    u"is -1.0 dB and is good for most of the "
+                                    u"processes."))
         
         #----------------------Binding (EVT)----------------------#
         self.cmbx_a.Bind(wx.EVT_COMBOBOX, self.audioFormats)
@@ -381,15 +386,16 @@ class Audio_Conv(wx.Panel):
             audio_list = metadata.get_audio_codec_name()
             # ...and proceed to checkout:
             if audio_list == None:
-                wx.MessageBox("There are no audio streams:\n%s " % (files), 
+                wx.MessageBox(_(u"There are no audio streams:\n%s " % (files)), 
                             'Warning - Videomass2', wx.ICON_EXCLAMATION, self)
                 return
 
             elif len(audio_list) > 1:
                 dlg = wx.SingleChoiceDialog(self, 
-                        "The imported video contains multiple audio\n" 
-                        "streams. Select which stream you want to\n"
-                        "export between these:", "Stream choice - Videomass2",
+                        _(u"The imported video contains multiple audio\n" 
+                        u"streams. Select which stream you want to\n"
+                        u"export between these:"), 
+                        _(u"Stream choice - Videomass2"),
                         audio_list, wx.CHOICEDLG_STYLE
                                             )
                 if dlg.ShowModal() == wx.ID_OK:
@@ -403,7 +409,7 @@ class Audio_Conv(wx.Panel):
                         if cn in ('ogg','vorbis'): cn = 'oga'
                         cmd_opt["ExportExt"].append(cn)
                     else:
-                        wx.MessageBox("Nothing choice:\n%s " % (files), 
+                        wx.MessageBox(_(u"Nothing choice:\n%s " % (files)), 
                             'Error - Videomass2', wx.ICON_ERROR, self)
                         return
                 else:
@@ -423,9 +429,9 @@ class Audio_Conv(wx.Panel):
         """
         Choice if use or not audio normalization
         """
-        msg = ("Tip: check the volume peak by pressing the Analyzes button; "
-               "set the normalize maximum amplitude or accept "
-               "default dB value (-1.0)")
+        msg = (_(u"Tip: check the volume peak by pressing the Analyzes button; "
+               u"set the normalize maximum amplitude or accept "
+               u"default dB value (-1.0)"))
         if self.ckb_norm.IsChecked():# if checked
             self.parent.statusbar_msg(msg, greenolive)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
@@ -436,7 +442,7 @@ class Audio_Conv(wx.Panel):
                 self.lab_volmax.Enable(), self.txt_volmax.Enable(),
 
         else:# is not checked
-            self.parent.statusbar_msg("Disable audio normalization", None)
+            self.parent.statusbar_msg(_(u"Disable audio normalization"), None)
             self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_analyzes.Disable(), self.lab_volmax.Disable()
             self.txt_volmax.SetValue(""), self.txt_volmid.SetValue("")
@@ -477,9 +483,9 @@ class Audio_Conv(wx.Panel):
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
         """
-        msg = ("The audio stream peak level is equal to or higher " 
-               "than the level set on the threshold. If you proceed, "
-               "there will be no changes.")
+        msg = (_(u"The audio stream peak level is equal to or higher " 
+               u"than the level set on the threshold. If you proceed, "
+               u"there will be no changes."))
         self.parent.statusbar_msg("",None)
         normalize = self.spin_amplitude.GetValue()
 
@@ -552,8 +558,9 @@ class Audio_Conv(wx.Panel):
         # check normalization data offset, if enable.
         if self.ckb_norm.IsChecked():
             if self.btn_analyzes.IsEnabled():
-                wx.MessageBox("Press the analyze button before proceeding.",
-                              "Missing volume dectect -Videomass2")
+                wx.MessageBox(_(u"Missing volume dectect!\n"
+                              u"Press the analyze button before proceeding."),
+                                "Warning!", wx.ICON_WARNING)
                 return
         self.update_allentries()# last update of all setting interface
         # make a different id need to avoid attribute overwrite:
@@ -694,26 +701,26 @@ class Audio_Conv(wx.Panel):
             normalize = 'Disable'
             
         if self.ckb_onlynorm.IsChecked():
-            formula = (u"SUMMARY:\n\nFile Queue:\
-                       \nAudio Normalization:\nTime selection:")
+            formula = (_(u"SUMMARY:\n\nFile Queue:\
+                       \nAudio Normalization:\nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s" % (numfile, 
                                             normalize, 
                                             self.time_seq
                                             )
                         )
         elif self.cmbx_a.GetValue() == "Save audio from movie":
-            formula = (u"SUMMARY:\n\nFile Queue:\
-                      \nAudio Container:\nCodec copied:\nTime selection:")
+            formula = (_(u"SUMMARY:\n\nFile Queue:\
+                      \nAudio Container:\nCodec copied:\nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
                                                 cmd_opt["ExportExt"],
                                                 cmd_opt["CodecCopied"], 
                                                 self.time_seq)
                                                 )
         else:
-            formula = (u"SUMMARY:\n\nFile Queue:\
+            formula = (_(u"SUMMARY:\n\nFile Queue:\
                     \nAudio Container:\nAudio Codec:\nAudio bit-rate:\
                     \nAudio channel:\nAudio sample rate:\nBit per Sample:\
-                    \nAudio Normalization:\nTime selection:")
+                    \nAudio Normalization:\nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
                     numfile, cmd_opt["AudioContainer"], 
                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][0], 
@@ -739,10 +746,10 @@ class Audio_Conv(wx.Panel):
         """
         if cmd_opt["Normalize"]:
             
-            if wx.MessageBox("Audio normalization is a specific process "
-                             "applied track by track.\n\n"
-                             "Are you sure to proceed ?", 
-                             'Audio normalization enabled! - Videomass2', 
+            if wx.MessageBox(_(u"Audio normalization is a specific process "
+                             u"applied track by track.\n\n"
+                             u"Are you sure to proceed ?"), 
+                             _(u'Audio normalization enabled! - Videomass2'), 
                              wx.ICON_QUESTION | wx.YES_NO, 
                             None) == wx.NO:
                 return #Se L'utente risponde no
@@ -777,7 +784,7 @@ class Audio_Conv(wx.Panel):
         full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
-                                 filename, list, 'Create a new profile on '
-                                 '"%s" preset - Videomass2' % (
-                                 name_preset))
+                                 filename, list, _(u'Create a new profile on '
+                                 u'"%s" preset - Videomass2' % (
+                                 name_preset)))
         prstdlg.ShowModal()

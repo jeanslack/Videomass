@@ -87,8 +87,9 @@ class Play(Thread):
         
         except OSError as err_0:
             if err_0[1] == 'No such file or directory':
-                pyerror = "%s: \nProbably '%s' do not exist in your system" % (
-                err_0, command[0])
+                pyerror = _(u"%s: \nProbably '%s' "
+                            u"do not exist in your system") % (
+                          err_0, command[0])
             else:
                 pyerror = "%s: " % (err_0)
             wx.CallAfter(Messages, pyerror)

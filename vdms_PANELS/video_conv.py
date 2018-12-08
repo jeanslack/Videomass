@@ -112,21 +112,31 @@ class Video_Conv(wx.Panel):
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, style=0)
         self.notebook_1_pane_1 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
-        choices=[("AVI (XVID mpeg4)"), ("AVI (FFmpeg mpeg4)"), 
-        ("AVI (ITU h264)"), ("MP4 (mpeg4)"), ("MP4 (HQ h264/AVC)"), 
-        ("M4V (HQ h264/AVC)"), ("MKV (h264)"), ("OGG theora"), ("WebM (HTML5)"), 
-        ("FLV (HQ h264/AVC)"),("Copy Video Codec"),("Save Images From Video")], 
+                                  choices=[("AVI (XVID mpeg4)"), 
+                                           ("AVI (FFmpeg mpeg4)"), 
+                                           ("AVI (ITU h264)"), 
+                                           ("MP4 (mpeg4)"), 
+                                           ("MP4 (HQ h264/AVC)"), 
+                                           ("M4V (HQ h264/AVC)"), 
+                                           ("MKV (h264)"), 
+                                           ("OGG theora"), 
+                                           ("WebM (HTML5)"), 
+                                           ("FLV (HQ h264/AVC)"),
+                                           (_(u"Copy Video Codec")),
+                                           (_(u"Save Images From Video"))], 
                             size=(200,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
                                                )
-        self.sizer_combobox_formatv_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, ("Video Container Selection")
-        )
+        self.sizer_combobox_formatv_staticbox = wx.StaticBox(
+                                             self.notebook_1_pane_1, wx.ID_ANY, 
+                                            (_(u"Video Container Selection"))
+                                                             )
         self.sizer_dir_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, ('Improves low-quality export')
-        )
+                                   wx.ID_ANY, 
+                                   (_(u'Improves low-quality export'))
+                                                )
         self.ckbx_pass = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
-        ("2-pass encoding.")
-        )
+                                     (_(u"2-pass encoding."))
+                                     )
         self.ckbx_pass.SetValue(False) # setto in modo spento
 
         self.sizer_automations_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
@@ -141,20 +151,20 @@ class Video_Conv(wx.Panel):
         "1500", min=0, max=25000, style=wx.TE_PROCESS_ENTER
         )
         self.sizer_bitrate_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, ("Video Bit-Rate Value")
+        wx.ID_ANY, (_(u"Video Bit-Rate Value"))
         )
         self.slider_CRF = wx.Slider(self.notebook_1_pane_1, wx.ID_ANY, 1, 0, 51, 
         style=wx.SL_HORIZONTAL | wx.SL_AUTOTICKS | wx.SL_LABELS
         )
         self.sizer_crf_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, ("Video CRF Value")
+        wx.ID_ANY, (_(u"Video CRF Value"))
         )
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
         resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
         self.btn_videosize = GB.GradientButton(self.notebook_1_pane_2,
                                                size=(-1,25),
                                                bitmap=resizebmp,
-                                               label="Resize")
+                                               label=_(u"Resize"))
         self.btn_videosize.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                         foregroundcolour=wx.Colour(28,28,28))
         self.btn_videosize.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -165,7 +175,7 @@ class Video_Conv(wx.Panel):
         self.btn_crop = GB.GradientButton(self.notebook_1_pane_2,
                                           size=(-1,25),
                                           bitmap=cropbmp,
-                                          label="Crop Dimension")
+                                          label=_(u"Crop Dimension"))
         self.btn_crop.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                         foregroundcolour=wx.Colour(28,28,28))
         self.btn_crop.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -176,7 +186,7 @@ class Video_Conv(wx.Panel):
         self.btn_rotate = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25),
                                             bitmap=rotatebmp,
-                                            label="Rotation")
+                                            label=_(u"Rotation"))
         self.btn_rotate.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                         foregroundcolour=wx.Colour(28,28,28))
         self.btn_rotate.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -187,7 +197,7 @@ class Video_Conv(wx.Panel):
         self.btn_lacing = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25),
                                             bitmap=deintbmp,
-                                            label="De/Interlace")
+                                            label=_(u"De/Interlace"))
         self.btn_lacing.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                         foregroundcolour=wx.Colour(28,28,28))
         self.btn_lacing.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -198,7 +208,7 @@ class Video_Conv(wx.Panel):
         self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25),
                                             bitmap=denoiserbmp,
-                                            label="Denoisers")
+                                            label=_(u"Denoisers"))
         self.btn_denois.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                         foregroundcolour=wx.Colour(28,28,28))
         self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -227,17 +237,17 @@ class Video_Conv(wx.Panel):
         self.btn_reset.SetTopEndColour(wx.Colour(97, 204, 153))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                         wx.ID_ANY, ("Filters Section")
+                                         wx.ID_ANY, (_(u"Filters Section"))
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-        size=(200, -1), choices=[("Set default "), ("4:3"), ("16:9")], 
+        size=(200, -1), choices=[(_(u"Set default ")), ("4:3"), ("16:9")], 
         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, ("Video Aspect")
                                         )
         self.cmbx_vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
-        choices=[("Set default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
+        choices=[(_(u"Set default ")), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
         ("30 fps (30p) Progessive"),("0.2 fps for images"), ("0.5 fps for images"),
         ("1 fps for images"), ("1.5 fps for images"), ("2 fps for images")], 
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
@@ -247,12 +257,17 @@ class Video_Conv(wx.Panel):
                                                     )
         self.notebook_1_pane_3 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_a = wx.RadioBox(self.notebook_1_pane_3, wx.ID_ANY, (
-        "Audio Codec Selecting"), choices=[("Default (managed by FFmpeg)"), 
-        ("Wav (Raw, No_MultiChannel)"), ("Flac (Lossless, No_MultiChannel)"), 
-        ("Aac (Lossy, MultiChannel)"), ("Alac (Lossless, m4v, No_MultiChannel)"),
-        ("Ac3 (Lossy, MultiChannel)"), ("Ogg (Lossy, No_MultiChannel)"),
-        ("Mp3 (Lossy, No_MultiChannel)"), ("Try to copy audio source"),
-        ("No audio stream (silent)")], 
+                                 _(u"Audio Codec Selecting")), 
+                            choices=[(_(u"Default (managed by FFmpeg)")), 
+                                    ("Wav (Raw, No_MultiChannel)"), 
+                                    ("Flac (Lossless, No_MultiChannel)"), 
+                                    ("Aac (Lossy, MultiChannel)"), 
+                                    ("Alac (Lossless, m4v, No_MultiChannel)"),
+                                    ("Ac3 (Lossy, MultiChannel)"), 
+                                    ("Ogg (Lossy, No_MultiChannel)"),
+                                    ("Mp3 (Lossy, No_MultiChannel)"), 
+                                    (_(u"Try to copy audio source")),
+                                    (_(u"No audio stream (silent)"))], 
                                     majorDimension=2, style=wx.RA_SPECIFY_COLS
                                     )
         self.rdb_a.EnableItem(0,enable=True),self.rdb_a.EnableItem(1,enable=True)
@@ -262,13 +277,13 @@ class Video_Conv(wx.Panel):
         self.rdb_a.EnableItem(8,enable=True),self.rdb_a.EnableItem(9,enable=True)
         self.rdb_a.SetSelection(0)
         self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
-                      wx.ID_ANY, ("Audio Normalization")
+                      wx.ID_ANY, (_(u"Audio Normalization"))
                                 )
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25),
                                             bitmap=analyzebmp,
-                                            label="Analyzes")
+                                            label=_(u"Analyzes"))
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -279,17 +294,17 @@ class Video_Conv(wx.Panel):
         
         
         self.label_dbMax = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                ("Max Volume db.  ")
+                                (_(u"Max Volume db.  "))
                                 )
         self.text_dbMax = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_dbMedium = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    ("Average Volume db.")
+                                    (_(u"Average Volume db."))
                                     )
         self.text_dbMedium = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    ("Max Peak Level Threshold:  ")
+                                    (_(u"Max Peak Level Threshold:  "))
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
             wx.ID_ANY, min_val=-99.0, max_val=0.0, increment=1.0, value=-1.0, 
@@ -305,7 +320,7 @@ class Video_Conv(wx.Panel):
         self.btn_aparam = GB.GradientButton(self.notebook_1_pane_3,
                                            size=(-1,25),
                                            bitmap=setbmp,
-                                           label="Audio Options")
+                                           label=_(u"Audio Options"))
         self.btn_aparam.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -317,21 +332,29 @@ class Video_Conv(wx.Panel):
         
         self.notebook_1_pane_4 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_h264preset = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-        "presets"), choices=[("Disabled"), ("ultrafast"), 
-        ("superfast"), ("veryfast"), ("faster"), ("fast"), ("medium"), 
-        ("slow"), ("slower"), ("veryslow"), ("placebo")],  majorDimension=0, 
-                                                    style=wx.RA_SPECIFY_ROWS
-                                                    )
+                                    _(u"presets")), choices=[(_(u"Disabled")), 
+                                                ("ultrafast"), ("superfast"), 
+                                                ("veryfast"), ("faster"), 
+                                                ("fast"), ("medium"), 
+                                                ("slow"), ("slower"), 
+                                                ("veryslow"), ("placebo")],  
+                                majorDimension=0, style=wx.RA_SPECIFY_ROWS
+                                            )
         self.rdb_h264profile = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-        "Profile"), choices=[("Disabled"), ("baseline"), 
-        ("main"), ("high"), ("high10"), ("high444")], majorDimension=0, 
-                                                    style=wx.RA_SPECIFY_ROWS
-                                                    )
+                                    _(u"Profile")), choices=[(_(u"Disabled")), 
+                                                    ("baseline"), ("main"), 
+                                                    ("high"), ("high10"), 
+                                                    ("high444")], 
+                                majorDimension=0, style=wx.RA_SPECIFY_ROWS
+                                            )
         self.rdb_h264tune = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-        "Tune"), choices=[("Disabled"), ("film"), ("animation"),
-        ("grain"), ("stillimage"), ("psnr"), ("ssim"), ("fastecode"), 
-                ("zerolatency")], majorDimension=0, style=wx.RA_SPECIFY_ROWS
-                )
+                                        _(u"Tune")), choices=[(_(u"Disabled")), 
+                                                ("film"), ("animation"),
+                                                ("grain"), ("stillimage"), 
+                                                ("psnr"), ("ssim"), 
+                                                ("fastecode"), ("zerolatency")], 
+                                    majorDimension=0, style=wx.RA_SPECIFY_ROWS
+                                         )
         #----------------------Build Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
@@ -346,9 +369,11 @@ class Video_Conv(wx.Panel):
         grid_sizer_pane2_base = wx.GridSizer(1, 2, 0, 0)
         grid_sizer_1 = wx.GridSizer(2, 1, 0, 0)
         self.sizer_videorate_staticbox.Lower()
-        sizer_videorate = wx.StaticBoxSizer(self.sizer_videorate_staticbox, wx.VERTICAL)
+        sizer_videorate = wx.StaticBoxSizer(self.sizer_videorate_staticbox, 
+                                            wx.VERTICAL)
         self.sizer_videoaspect_staticbox.Lower()
-        sizer_videoaspect = wx.StaticBoxSizer(self.sizer_videoaspect_staticbox, wx.VERTICAL)
+        sizer_videoaspect = wx.StaticBoxSizer(self.sizer_videoaspect_staticbox, 
+                                              wx.VERTICAL)
         self.sizer_videosize_staticbox.Lower()
         sizer_2 = wx.StaticBoxSizer(self.sizer_videosize_staticbox, wx.VERTICAL)
         grid_sizer_2 = wx.GridSizer(6, 2, 0, 0)
@@ -359,7 +384,8 @@ class Video_Conv(wx.Panel):
         self.sizer_bitrate_staticbox.Lower()
         sizer_bitrate = wx.StaticBoxSizer(self.sizer_bitrate_staticbox, wx.VERTICAL)
         self.sizer_automations_staticbox.Lower()
-        sizer_automations = wx.StaticBoxSizer(self.sizer_automations_staticbox, wx.VERTICAL)
+        sizer_automations = wx.StaticBoxSizer(self.sizer_automations_staticbox, 
+                                              wx.VERTICAL)
         grid_sizer_automations = wx.GridSizer(3, 1, 0, 0)
 
         grid_sizer_pane1_left = wx.GridSizer(2, 1, 0, 0)
@@ -367,44 +393,88 @@ class Video_Conv(wx.Panel):
         sizer_dir = wx.StaticBoxSizer(self.sizer_dir_staticbox, wx.VERTICAL)
         grid_sizer_dir = wx.GridSizer(1, 1, 0, 0)# vuoto
         self.sizer_combobox_formatv_staticbox.Lower()
-        sizer_combobox_formatv = wx.StaticBoxSizer(self.sizer_combobox_formatv_staticbox, wx.VERTICAL)
-        sizer_combobox_formatv.Add(self.cmbx_vidContainers, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
-        grid_sizer_pane1_left.Add(sizer_combobox_formatv, 1, wx.ALL | wx.EXPAND, 15)
-        grid_sizer_dir.Add(self.ckbx_pass, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
+        sizer_combobox_formatv = wx.StaticBoxSizer(
+                                        self.sizer_combobox_formatv_staticbox, 
+                                        wx.VERTICAL)
+        sizer_combobox_formatv.Add(self.cmbx_vidContainers, 0, 
+                                   wx.ALL |
+                                   wx.ALIGN_CENTER_HORIZONTAL | 
+                                   wx.ALIGN_CENTER_VERTICAL, 20
+                                   )
+        grid_sizer_pane1_left.Add(sizer_combobox_formatv, 1, wx.ALL | 
+                                                             wx.EXPAND, 15
+                                                             )
+        grid_sizer_dir.Add(self.ckbx_pass, 0, wx.ALL | 
+                                              wx.ALIGN_CENTER_HORIZONTAL | 
+                                              wx.ALIGN_CENTER_VERTICAL, 20
+                                              )
         sizer_dir.Add(grid_sizer_dir, 1, wx.EXPAND, 0)
         grid_sizer_pane1_left.Add(sizer_dir, 1, wx.ALL | wx.EXPAND, 15)
         grid_sizer_pane1_base.Add(grid_sizer_pane1_left, 1, wx.EXPAND, 0)
 
-        #grid_sizer_automations.Add(self.rdb_automations, 1, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        #grid_sizer_automations.Add(self.rdb_automations, 1, 
+                                    #wx.ALL|
+                                    #wx.ALIGN_CENTER_HORIZONTAL, 5
+                                    #)
         sizer_automations.Add(grid_sizer_automations, 1, wx.EXPAND, 0)
         grid_sizer_pane1_base.Add(sizer_automations, 1, wx.ALL | wx.EXPAND, 15)
-        sizer_bitrate.Add(self.spin_ctrl_bitrate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
+        sizer_bitrate.Add(self.spin_ctrl_bitrate, 0, wx.ALL| 
+                                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                                     wx.ALIGN_CENTER_VERTICAL, 
+                                                     20
+                                                     )
         grid_sizer_pane1_right.Add(sizer_bitrate, 1, wx.ALL | wx.EXPAND, 15)
-        sizer_crf.Add(self.slider_CRF, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 20)
+        sizer_crf.Add(self.slider_CRF, 0, wx.ALL | 
+                                          wx.ALIGN_CENTER_HORIZONTAL | 
+                                          wx.ALIGN_CENTER_VERTICAL, 20
+                                          )
         grid_sizer_pane1_right.Add(sizer_crf, 1, wx.ALL | wx.EXPAND, 15)
         grid_sizer_pane1_base.Add(grid_sizer_pane1_right, 1, wx.EXPAND, 0)
         self.notebook_1_pane_1.SetSizer(grid_sizer_pane1_base)
-        grid_sizer_2.Add(self.btn_videosize, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_sizer_2.Add(self.btn_crop, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_sizer_2.Add(self.btn_lacing, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_sizer_2.Add(self.btn_denois, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_sizer_2.Add(self.btn_videosize, 0, wx.ALL |
+                                                wx.ALIGN_CENTER_HORIZONTAL, 5
+                                                )
+        grid_sizer_2.Add(self.btn_crop, 0, wx.ALL |
+                                           wx.ALIGN_CENTER_HORIZONTAL, 5
+                                           )
+        grid_sizer_2.Add(self.btn_rotate, 0, wx.ALL | 
+                                             wx.ALIGN_CENTER_HORIZONTAL, 5
+                                             )
+        grid_sizer_2.Add(self.btn_lacing, 0, wx.ALL | 
+                                             wx.ALIGN_CENTER_HORIZONTAL, 5
+                                             )
+        grid_sizer_2.Add(self.btn_denois, 0, wx.ALL | 
+                                             wx.ALIGN_CENTER_HORIZONTAL, 5
+                                             )
         grid_sizer_2.Add((20, 20), 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_sizer_2.Add(self.btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_sizer_2.Add(self.btn_preview, 0, wx.ALL | 
+                                              wx.ALIGN_CENTER_HORIZONTAL, 5
+                                              )
+        grid_sizer_2.Add(self.btn_reset, 0, wx.ALL | 
+                                            wx.ALIGN_CENTER_HORIZONTAL, 5
+                                            )
         sizer_2.Add(grid_sizer_2, 1, wx.EXPAND, 0)
         grid_sizer_pane2_base.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 15)
         #----------------
 
-        sizer_videoaspect.Add(self.cmbx_Vaspect, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        sizer_videoaspect.Add(self.cmbx_Vaspect, 0, wx.ALL | 
+                                                    wx.ALIGN_CENTER_HORIZONTAL, 
+                                                    15
+                                                    )
         grid_sizer_1.Add(sizer_videoaspect, 1, wx.ALL | wx.EXPAND, 15)
-        sizer_videorate.Add(self.cmbx_vrate, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        sizer_videorate.Add(self.cmbx_vrate, 0, wx.ALL | 
+                                                wx.ALIGN_CENTER_HORIZONTAL, 15
+                                                )
         grid_sizer_1.Add(sizer_videorate, 1, wx.ALL | wx.EXPAND, 15)
         grid_sizer_pane2_base.Add(grid_sizer_1, 1, wx.EXPAND, 0)
         sizer_pane2_base.Add(grid_sizer_pane2_base, 1, wx.EXPAND, 0)
         self.notebook_1_pane_2.SetSizer(sizer_pane2_base)
         
-        #sizer_pane3_audio_column1.Add(self.rdb_a, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        #sizer_pane3_audio_column1.Add(self.rdb_a, 0, 
+                                       #wx.ALL | 
+                                       #wx.ALIGN_CENTER_HORIZONTAL | 
+                                       #wx.ALIGN_CENTER_VERTICAL, 15
+                                       #)
         grid_sizer_pane3_base.Add(self.rdb_a, 0, wx.ALL | wx.EXPAND, 15)
         grid_sizer_in_column2.Add(self.ckbx_a_normalize, 0, wx.TOP, 5)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
@@ -419,24 +489,43 @@ class Video_Conv(wx.Panel):
         sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.ALL, 15)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.ALL, 0)
         grid_a_param = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_a_param.Add(self.btn_aparam, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_a_param.Add(self.txt_audio_options, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_a_param.Add(self.btn_aparam, 0, wx.ALL|
+                                             wx.ALIGN_CENTER_VERTICAL, 5
+                                             )
+        grid_a_param.Add(self.txt_audio_options, 0, wx.ALL|
+                                                    wx.ALIGN_CENTER_VERTICAL, 5
+                                                    )
         #grid_sizer_pane3_base.Add(self.btn_aparam, 0, wx.ALL, 15)
         grid_sizer_pane3_base.Add(grid_a_param, 0, wx.ALL, 10)
         #grid_sizer_pane3_base.Add(self.txt_audio_options, 0, wx.ALL, 15)
-        sizer_pane3_base.Add(grid_sizer_pane3_base, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        sizer_pane3_base.Add(grid_sizer_pane3_base, 1, 
+                                        wx.ALL | 
+                                        wx.ALIGN_CENTER_HORIZONTAL | 
+                                        wx.ALIGN_CENTER_VERTICAL, 15
+                                        )
         self.notebook_1_pane_3.SetSizer(sizer_pane3_base)
         
         
-        grid_sizer_pane4_base.Add(self.rdb_h264preset, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_pane4_base.Add(self.rdb_h264profile, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
-        grid_sizer_pane4_base.Add(self.rdb_h264tune, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 15)
+        grid_sizer_pane4_base.Add(self.rdb_h264preset, 0, 
+                                  wx.ALL | 
+                                  wx.ALIGN_CENTER_HORIZONTAL | 
+                                  wx.ALIGN_CENTER_VERTICAL, 15
+                                  )
+        grid_sizer_pane4_base.Add(self.rdb_h264profile, 0, 
+                                  wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | 
+                                  wx.ALIGN_CENTER_VERTICAL, 15
+                                  )
+        grid_sizer_pane4_base.Add(self.rdb_h264tune, 0, 
+                                  wx.ALL | 
+                                  wx.ALIGN_CENTER_HORIZONTAL | 
+                                  wx.ALIGN_CENTER_VERTICAL, 15
+                                  )
         sizer_pane4_base.Add(grid_sizer_pane4_base, 1, wx.EXPAND, 0)
         self.notebook_1_pane_4.SetSizer(sizer_pane4_base)
-        self.notebook_1.AddPage(self.notebook_1_pane_1, ("Video Container"))
-        self.notebook_1.AddPage(self.notebook_1_pane_2, ("Video Settings"))
-        self.notebook_1.AddPage(self.notebook_1_pane_3, ("Audio Settings"))
-        self.notebook_1.AddPage(self.notebook_1_pane_4, ("H.264/X.264 Options"))
+        self.notebook_1.AddPage(self.notebook_1_pane_1, (_(u"Video Container")))
+        self.notebook_1.AddPage(self.notebook_1_pane_2, (_(u"Video Settings")))
+        self.notebook_1.AddPage(self.notebook_1_pane_3, (_(u"Audio Settings")))
+        self.notebook_1.AddPage(self.notebook_1_pane_4, (_(u"H.264/X.264 Options")))
         grid_sizer_base.Add(self.notebook_1, 1, wx.ALL | wx.EXPAND, 5)
         self.panel_base.SetSizer(grid_sizer_base)
         grid_sizer_base.AddGrowableRow(0)
@@ -447,77 +536,77 @@ class Video_Conv(wx.Panel):
         self.Layout()
         
         #----------------------Set Properties----------------------#
-        self.cmbx_vidContainers.SetToolTipString("Video container that will "
-                                        "be used in the conversion. NOTE: for "
-                                        "any container change, all settings "
-                                        "there be reset.")
+        self.cmbx_vidContainers.SetToolTipString(_(u"Video container that will "
+                                        u"be used in the conversion. NOTE: for "
+                                        u"any container change, all settings "
+                                        u"there be reset."))
         self.cmbx_vidContainers.SetSelection(6)
 
 
-        self.ckbx_pass.SetToolTipString("If use double pass, can improve "
-                                            "the video quality, but it take "
-                                            "more time. We recommend using "
-                                            "it in high video compression."
+        self.ckbx_pass.SetToolTipString(_(u"If use double pass, can improve "
+                                            u"the video quality, but it take "
+                                            u"more time. We recommend using "
+                                            u"it in high video compression.")
                                                  )
-        self.spin_ctrl_bitrate.SetToolTipString("The bit rate determines the "
-                                            "quality and the final video "
-                                            "size. A larger value correspond "
-                                            "to greater quality and size of "
-                                            "the file."
+        self.spin_ctrl_bitrate.SetToolTipString(_(u"The bit rate determines the "
+                                            u"quality and the final video "
+                                            u"size. A larger value correspond "
+                                            u"to greater quality and size of "
+                                            u"the file.")
                                                  )
         self.slider_CRF.SetValue(23)# this is a default rate
         self.slider_CRF.SetMinSize((230, -1))
-        self.slider_CRF.SetToolTipString("CRF (constant rate factor) Affects "
-                                 "the quality of the final video. Used for "
-                                 "h264 codec on single pass only, 2-pass "
-                                 "encoding swich to bitrate. With lower "
-                                 "values the quality is higher and a larger "
-                                 "file size."
+        self.slider_CRF.SetToolTipString(_(u"CRF (constant rate factor) Affects "
+                                 u"the quality of the final video. Used for "
+                                 u"h264 codec on single pass only, 2-pass "
+                                 u"encoding swich to bitrate. With lower "
+                                 u"values the quality is higher and a larger "
+                                 u"file size.")
                                           )
-        self.btn_preview.SetToolTipString("Try the filters you've enabled "
-                                          "by playing a video preview"
+        self.btn_preview.SetToolTipString(_(u"Try the filters you've enabled "
+                                          u"by playing a video preview")
                                           )
-        self.btn_reset.SetToolTipString("Clear all enabled filters ")
+        self.btn_reset.SetToolTipString(_(u"Clear all enabled filters "))
         self.cmbx_Vaspect.SetSelection(0)
-        self.cmbx_Vaspect.SetToolTipString(u"Video aspect (Aspect Ratio) "
-                        "is the video width and video height ratio. "
-                        "Leave on 'Set default' to copy the original settings."
-                                                )
+        self.cmbx_Vaspect.SetToolTipString(_(u"Video aspect (Aspect Ratio) "
+                        u"is the video width and video height ratio. "
+                        u"Leave on 'Set default' to copy the original settings."
+                                                ))
         self.cmbx_vrate.SetSelection(0)
-        self.cmbx_vrate.SetToolTipString(u"Video Rate: A any video consists "
-                       "of images displayed as frames, repeated a given number "
-                       "of times per second. In countries are 30 NTSC, PAL "
-                       "countries (like Italy) are 25. Leave on 'Set default' "
-                       "to copy the original settings."
-                                              )
+        self.cmbx_vrate.SetToolTipString(_(u"Video Rate: A any video consists "
+                    u"of images displayed as frames, repeated a given number "
+                    u"of times per second. In countries are 30 NTSC, PAL "
+                    u"countries (like Italy) are 25. Leave on 'Set default' "
+                    u"to copy the original settings.")
+                                            )
         
-        self.ckbx_a_normalize.SetToolTipString("Performs audio "
-                    "normalization in the video audio stream. "
-                    "NOTE: this feature is disabled for "
-                    "'Try to copy audio source' and 'No audio stream (silent)' "
-                    "selections." )
-        self.btn_analyzes.SetToolTipString(u"Calculate the maximum and "
-                                    "average peak in dB values, of the audio "
-                                    "stream on the video imported.")
+        self.ckbx_a_normalize.SetToolTipString(_(u"Performs audio "
+                u"normalization in the video audio stream. "
+                u"NOTE: this feature is disabled for "
+                u"'Try to copy audio source' and 'No audio stream (silent)' "
+                u"selections." ))
+        self.btn_analyzes.SetToolTipString(_(u"Calculate the maximum and "
+                                    u"average peak in dB values, of the audio "
+                                    u"stream on the video imported."))
         #self.spin_ctrl_audionormalize.SetMinSize((70, -1))
-        self.spin_ctrl_audionormalize.SetToolTipString("Threshold for the "
-                                "maximum peak level in dB values. The default " 
-                                "setting is -1.0 dB and is good for most of "
-                                "the processes")
+        self.spin_ctrl_audionormalize.SetToolTipString(_(u"Threshold for the "
+                                u"maximum peak level in dB values. The default " 
+                                u"setting is -1.0 dB and is good for most of "
+                                u"the processes"))
         
-        self.rdb_a.SetToolTipString("Choose the appropriate Audio Codec. "
-                                    "Some Audio Codecs are disabled for "
-                                    "certain Video Containers. " )
-        self.rdb_h264preset.SetToolTipString("preset h.264")
+        self.rdb_a.SetToolTipString(_(u"Choose the appropriate Audio Codec. "
+                                    u"Some Audio Codecs are disabled for "
+                                    u"certain Video Containers. " ))
+        self.rdb_h264preset.SetToolTipString(_(u"presets h.264"))
         self.rdb_h264preset.SetSelection(0)
-        self.rdb_h264profile.SetToolTipString("profili h.264")
+        self.rdb_h264profile.SetToolTipString(_(u"profile h.264"))
         self.rdb_h264profile.SetSelection(0)
-        self.rdb_h264tune.SetToolTipString("tune h.264")
+        self.rdb_h264tune.SetToolTipString(_(u"tune h.264"))
         self.rdb_h264tune.SetSelection(0)
-        self.notebook_1_pane_4.SetToolTipString("The parameters on this tab "
-                        "are enabled only for the video-codec h.264. Although "
-                        "optional, is set to 'preset medium' as default "
-                        "parameter.")
+        self.notebook_1_pane_4.SetToolTipString(_(u"The parameters on this tab "
+                        u"are enabled only for the video-codec h.264. Although "
+                        u"optional, is set to 'preset medium' as default "
+                        u"parameter."))
 
         #----------------------Binding (EVT)----------------------#
         """
@@ -673,11 +762,11 @@ class Video_Conv(wx.Panel):
             self.UI_set()
             
         elif vcodec[selected][0] == "save images":
-            msg = ("Tip: set a short time progress duration with `Duration` "
-                   "button, then try set the `Video Rate` at low values "
-                   "(0.2 fps); More is low, the lower will be the extracted "
-                   "images. ")
-            self.parent.statusbar_msg("Output format: Save images",None)
+            msg = (_(u"Tip: set a short time progress duration with `Duration` "
+                   u"button, then try set the `Video Rate` at low values "
+                   u"(0.2 fps); More is low, the lower will be the extracted "
+                   u"images. "))
+            self.parent.statusbar_msg(_(u"Output format: Save images"),None)
             wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION
                           )
             self.ckbx_pass.SetValue(False)
@@ -691,7 +780,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["VideoCodec"] = "%s" %(vcodec[selected][0])
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
-            self.parent.statusbar_msg("Output format: %s" % (
+            self.parent.statusbar_msg(_(u"Output format: %s") % (
                                     cmd_opt['VideoFormat']),None)
             self.UI_set()
             
@@ -744,7 +833,7 @@ class Video_Conv(wx.Panel):
         file in the list `self.file_sources` will be displayed
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox("No filter enabled", "Info -Videomass2", 
+            wx.MessageBox(_(u"No filter enabled"), "Info -Videomass2", 
                           wx.ICON_INFORMATION)
             return
         self.time_seq = self.parent.time_seq
@@ -758,7 +847,7 @@ class Video_Conv(wx.Panel):
         Reset all enabled filters
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox("No filter enabled", "Info -Videomass2", 
+            wx.MessageBox(_(u"No filter enabled"), "Info -Videomass2", 
                           wx.ICON_INFORMATION)
             return
         else:
@@ -1232,9 +1321,9 @@ class Video_Conv(wx.Panel):
         Enable or disable functionality for volume normalization of
         the video. Not enable if batch mode is enable
         """
-        msg = ("Tip: check the volume peak by pressing the Analyzess button; "
-               "set the normalize maximum amplitude or accept "
-               "default dB value (-1.0)")
+        msg = (_(u"Tip: check the volume peak by pressing the Analyzess button; "
+               u"set the normalize maximum amplitude or accept "
+               u"default dB value (-1.0)"))
         if self.ckbx_a_normalize.GetValue():# is checked
             self.parent.statusbar_msg(msg, greenolive)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
@@ -1247,7 +1336,8 @@ class Video_Conv(wx.Panel):
                 self.label_dbMax.Enable(), self.label_dbMedium.Enable()
 
         elif not self.ckbx_a_normalize.GetValue():# is not checked
-            self.parent.statusbar_msg("Disable audio normalization inside video", None)
+            self.parent.statusbar_msg(_(u"Disable audio normalization "
+                                        u"inside video"), None)
             self.spin_ctrl_audionormalize.SetValue(-1.0), self.label_normalize.Disable()
             self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_analyzes.Disable(), self.spin_ctrl_audionormalize.Disable()
@@ -1271,9 +1361,9 @@ class Video_Conv(wx.Panel):
         Get audio peak level analyzes data for the offset calculation 
         need to normalization process.
         """
-        msg = ("The audio stream peak level is equal to or higher " 
-               "than the level set on the threshold. If you proceed, "
-               "there will be no changes.")
+        msg = (_(u"The audio stream peak level is equal to or higher " 
+               u"than the level set on the threshold. If you proceed, "
+               u"there will be no changes."))
         self.parent.statusbar_msg("",None)
         normalize = self.spin_ctrl_audionormalize.GetValue()
 
@@ -1388,8 +1478,9 @@ class Video_Conv(wx.Panel):
         # check normalization data offset, if enable
         if self.ckbx_a_normalize.IsChecked():
             if self.btn_analyzes.IsEnabled():
-                wx.MessageBox("Press the analyze button before proceeding.",
-                              "Missing volume dectect -Videomass2")
+                wx.MessageBox(_(u"Missing volume dectect!\n"
+                              u"Press the analyze button before proceeding."),
+                                "Warning!", wx.ICON_WARNING)
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]
@@ -1599,11 +1690,11 @@ class Video_Conv(wx.Panel):
             normalize = 'Disable'
         
         if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
-            formula = (u"SUMMARY:\n\nFile to Queue\
+            formula = (_(u"SUMMARY:\n\nFile to Queue\
                 \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
                 \nAudio Format:\nAudio codec:\nAudio channel:\
                 \nAudio rate:\nAudio bit-rate:\nBit per Sample:\
-                \nAudio Normalization:\nMap:\nTime selection:")
+                \nAudio Normalization:\nMap:\nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s" % (
                 numfile, cmd_opt["FormatChoice"], cmd_opt["VideoCodec"], 
@@ -1614,17 +1705,17 @@ class Video_Conv(wx.Panel):
                 self.time_seq))
                     
         elif self.cmbx_vidContainers.GetValue() == "Save Images From Video":
-            formula = (u"SUMMARY:\n\nFile to Queue\
+            formula = (_(u"SUMMARY:\n\nFile to Queue\
                          \nImages Format:\nVideo rate:\
                          \nFilters:\nTime selection:"
-                       )
+                       ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile, 'jpeg', 
                                                     cmd_opt["VideoRate"], 
                                                     cmd_opt["Filters"],
                                                     self.time_seq)
                         )
         else:
-            formula = (u"SUMMARY:\n\nFile to Queue\
+            formula = (_(u"SUMMARY:\n\nFile to Queue\
                     \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
                     \nDouble/Single Pass:\nDeinterlacing:\
                     \nInterlacing:\nApplied Filters:\
@@ -1632,7 +1723,7 @@ class Video_Conv(wx.Panel):
                     \nTune h264:\nOrientation:\nAudio Format:\nAudio codec:\
                     \nAudio channel:\nAudio rate:\nAudio bit-rate:\
                     \nBit per Sample:\nAudio Normalization:\nMap:\
-                    \nTime selection:")
+                    \nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
                         numfile, cmd_opt["FormatChoice"], cmd_opt["VideoCodec"], 
@@ -1728,7 +1819,7 @@ class Video_Conv(wx.Panel):
         full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
-                                 filename, list, 'Create a new profile on '
-                                 '"%s" preset - Videomass2' % (
+                                 filename, list, _(u'Create a new profile on '
+                                 u'"%s" preset - Videomass2') % (
                                  name_preset))
         prstdlg.ShowModal()

@@ -33,6 +33,7 @@ from vdms_SYS.ctrl_run import system_check, parsing_fileconf
 from vdms_SYS.appearance import Appearance
 
 # add translation macro to builtin similar to what gettext does
+#import locale
 import __builtin__
 __builtin__.__dict__['_'] = wx.GetTranslation
 from vdms_SYS import app_const as appC
@@ -64,7 +65,7 @@ class Videomass(wx.App):
         prepares the environment configuration. The 'fileconf' take all 
         values of the file configuration.
         """
-        lang = 'it'
+        lang = ''
         self.locale = None
         wx.Locale.AddCatalogLookupPathPrefix('locale')
         self.updateLanguage(lang)
@@ -144,8 +145,8 @@ class Videomass(wx.App):
             ffmpeg_link = fileconf[8]
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
-            #self.firstrun(pathicons[23])
-            #return True
+            self.firstrun(pathicons[23])
+            return True
             
         from vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 
@@ -185,10 +186,10 @@ class Videomass(wx.App):
         # if an unsupported language is requested default to English
         if lang in appC.supLang:
             selLang = appC.supLang[lang]
-            print 'si'
+            print 'set a custom language: %s' % selLang
         else:
             selLang = wx.LANGUAGE_DEFAULT
-            print appC.supLang
+            print "Set language default\n%s" % appC.supLang
             
             
         if self.locale:

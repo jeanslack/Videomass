@@ -230,12 +230,12 @@ def OSX():
             ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
             ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
 
-            '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+            ('%s' % set_2, glob_files('%s/*.txt' % set_2)),
             ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
             ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
             ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
 
-            '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+            ('%s' % set_3, glob_files('%s/*.txt' % set_3)),
             ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
 
             ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING','TODO',
@@ -319,12 +319,12 @@ def WIN32():
                   ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
                   ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
 
-                  '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+                  ('%s' % set_2, glob_files('%s/*.txt' % set_2)),
                   ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
                   ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
                   ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
 
-                  '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+                  ('%s' % set_3, glob_files('%s/*.txt' % set_3)),
                   ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
                   
                   ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',

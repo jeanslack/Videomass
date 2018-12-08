@@ -1,0 +1,618 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-08 13:33+0100\n"
+"PO-Revision-Date: 2018-12-08 14:52+0100\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.11\n"
+
+#: /vdms_MAIN/main_frame.py:117
+msgid "Show Metadata"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:128
+msgid "Preview"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:139
+msgid "Duration"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:150
+msgid "Save As Profile"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:161
+msgid "New.."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:172
+msgid "Delete.."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:183
+msgid "Edit.."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:270
+msgid "Sets a global time sequences to apply at any media file with duration."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:273
+msgid "Show information about the metadata of the selected imported file."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:276
+msgid ""
+"Preview exported files. Reproduction exported file when finish encoding."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:279
+msgid "Save as profile with the current settings of this panel."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:282
+msgid "Create a new profile from yourself and save it in the selected preset."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:285
+msgid "Delete the selected profile."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:287
+msgid "Edit the selected profile."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:482
+msgid "No file selected into Drag and Drop list"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:497
+msgid "No files exported with `Start Encoding` yet"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:587
+msgid "Add File.. "
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:588
+msgid "Files import with drag and drop"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:589
+msgid "Choose a Destination folder.."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:591
+msgid "Choice a folder where save processed files"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:594
+msgid "Save the current preset as separated file"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:595
+msgid "Make a back-up of the selected preset on combobox"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:597
+msgid "Restore a previously saved preset"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:599
+msgid "Replace the selected preset with other saved custom preset."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:601
+msgid "Reset the current preset "
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:602
+msgid "Replace the selected preset with default values."
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:606
+msgid "Reset all presets "
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:607
+msgid "Revert all presets to default values"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:611
+msgid "Reload presets list"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:612
+msgid "..Sometimes it can be useful"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:614
+msgid "Exit"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:614
+msgid "Close Videomass2"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:620
+msgid "Show Tool Bar"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:621
+msgid "Show tool bar view"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:624
+msgid "Show Buttons Bar"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:625
+msgid "Show or hide buttons bar view"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:629
+msgid "Setup"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:630
+msgid "General Settings"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:632
+msgid "&Preferences"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:636
+msgid "User Guide"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:637
+msgid "About Videomass2"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:638
+msgid "&Help"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:781
+msgid "Add File"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:788
+msgid "Presets Manager"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:796
+msgid "Video Conversions"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:803
+msgid "Audio Conversions"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:809
+msgid "Start Encoding"
+msgstr ""
+
+#: /vdms_MAIN/main_frame.py:816
+msgid "Help"
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:47
+msgid ""
+"This wizard automatically searches for FFmpeg in your system.\n"
+"You can also manually specify your customs paths of FFmpeg.\n"
+"However, you can always change these settings later in the\n"
+"Setup dialog.\n"
+"\n"
+"- If you want start the search now, press the 'Search' button.\n"
+"\n"
+"- If you want to set your custom paths, check the\n"
+"  'Enable Custom Paths', then enter the paths of FFmpeg\n"
+"  and press the 'Confirm' button."
+msgstr ""
+"Questo assistente prova a cercare FFmpeg nel tuo sistema.\n"
+"In alternativa, puoi anche assegnare dei percorsi specifici per\n"
+"localizzare gli eseguibili.\n"
+"Ricorda che è sempre possibile reimpostare queste opzioni\n"
+"successivamente nel dialogo di Setup.\n"
+"\n"
+"- Per far partire la ricerca automatica ora, premi il pulsante 'Cerca'.\n"
+"\n"
+"- Per impostare percorsi specifici, spunta 'Abilita Percorsi Specifici',\n"
+"  inserisci i percorsi di FFmpeg e conferma con l'apposito pulsante."
+
+#: /vdms_DIALOGS/first_time_start.py:62
+msgid "Welcome to Videomass2 Wizard!"
+msgstr "Benvenuto nell'assistente di Videomass2!"
+
+#: /vdms_DIALOGS/first_time_start.py:63
+msgid "Search"
+msgstr "Cerca"
+
+#: /vdms_DIALOGS/first_time_start.py:64
+msgid "Enable Custom Paths"
+msgstr "Abilita Percorsi Specifici"
+
+#: /vdms_DIALOGS/first_time_start.py:65
+msgid "Confirm"
+msgstr "Conferma"
+
+#: /vdms_DIALOGS/first_time_start.py:66
+msgid "ffmpeg pathname:"
+msgstr "Percoso di ffmpeg:"
+
+#: /vdms_DIALOGS/first_time_start.py:68
+msgid "ffprobe pathname:"
+msgstr "Percorso di ffprobe:"
+
+#: /vdms_DIALOGS/first_time_start.py:70
+msgid "ffplay pathname:"
+msgstr "Percorso di ffplay:"
+
+#: /vdms_DIALOGS/first_time_start.py:76
+msgid "Wizard - Videomass2"
+msgstr "Assistente - Videomass2"
+
+#: /vdms_DIALOGS/first_time_start.py:152
+msgid ""
+"Wrong entries on text fields:\n"
+"\n"
+"ffmpeg: invalid pathname\n"
+"ffprobe: invalid pathname\n"
+"ffplay: invalid pathname\n"
+"\n"
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:170
+msgid ""
+"You have not completed all the assignment fields.\n"
+"Please, continue with settings."
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:175
+#, python-format
+msgid ""
+"No such file '%s'.\n"
+"Please, continue with settings."
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:180
+#, python-format
+msgid ""
+"'%s'\n"
+"does not match with:\n"
+"%s\n"
+"Please, continue with settings."
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:246
+#, python-format
+msgid ""
+"'%s' is not installed on the system.\n"
+"Please, install it or set a new custom path."
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:251
+msgid ""
+"The Videomass2 system folder already includes the binary executables of "
+"FFmpeg, FFprobe and FFplay.\n"
+"\n"
+"Do you want to use them?"
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:296
+msgid ""
+"\n"
+"Wizard completed successfully.\n"
+"Restart Videomass2 now.\n"
+"\n"
+"Thank You!"
+msgstr ""
+
+#: /vdms_DIALOGS/first_time_start.py:298
+msgid "That's all folks!"
+msgstr ""
+
+#: /vdms_DIALOGS/mediainfo.py:60 /vdms_DIALOGS/mediainfo.py:64
+msgid "Type"
+msgstr ""
+
+#: /vdms_DIALOGS/mediainfo.py:61 /vdms_DIALOGS/mediainfo.py:65
+msgid "Parameters"
+msgstr ""
+
+#: /vdms_DIALOGS/mediainfo.py:77
+msgid "General Informations"
+msgstr ""
+
+#: /vdms_DIALOGS/mediainfo.py:78
+msgid "Extensive Report"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:55
+msgid "Profile Name"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:57
+msgid "Description"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:59
+msgid "Command Line Parameters Do not use `-i` or output filename)"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:62
+msgid "Files supported in the import (do not include the `.`)"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:65
+msgid "Output format extension (do not include the `.`)"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:69
+msgid "Save.."
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:78
+msgid "Assign a short name to the profile. "
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:80
+msgid "Assign a long description to the profile."
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:83
+msgid "Do not use `-i` or output file, please."
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:85
+msgid ""
+"You can limit the type of files formats imported by specifying in a box a "
+"format or multiple formats separated by a space (a list of extensions "
+"without the dot).Leave blank to involve any type of file to import inbound."
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:91
+msgid "Write here the output format extension"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:200
+msgid "Incomplete profile assignement. I can't save"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:206
+msgid "Profile already stored with the same name.nome"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:244
+msgid "Successfull storing !"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:250
+msgid "Successfull modified !"
+msgstr ""
+
+#: /vdms_DIALOGS/presets_addnew.py:254
+msgid ""
+"Successfull storing !\n"
+"\n"
+"You will find this profile in the 'Users Profiles' preset in the 'Presets "
+"Manager' panel.\n"
+"Use the 'Reload presets list' on File menu to update profile list."
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:103
+msgid "General"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:106
+msgid "Log"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:109
+msgid "Executables"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:112
+msgid "Appearance"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:122
+msgid "Settings CPU"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:127
+msgid "Set the number of threads (from 0 to 32)"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:138
+msgid "Quality/Speed ratio modifier (from -16 to 16)"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:150
+msgid "Other Settings"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:155
+msgid "Enables writing of command line text"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:164
+msgid " Specifies a custom path to save the log"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:167
+msgid "Where do you want to save the log?"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:171 /vdms_DIALOGS/settings.py:181
+#: /vdms_DIALOGS/settings.py:193 /vdms_DIALOGS/settings.py:205
+msgid "Browse.."
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:180
+msgid " Use a custom path to run FFmpeg"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:192
+msgid " Use a custom path to run FFprobe"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:204
+msgid " Use a custom path to run FFplay"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:218
+msgid "Set Icon Themes"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:229
+msgid "Custom Colour UI"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:235
+msgid "Change Toolbar Colour:"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:240
+msgid "Bar Colour"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:244
+msgid "Change Toolbar Buttons Colour:"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:249
+msgid "Buttons Colour"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:252
+msgid "Restore default settings"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:274
+msgid "Setup - Videomass2"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:275
+msgid "Quality/Speed ratio modifier (from -16 to 16) (default 1)"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:277
+msgid "Allows the text writing to performs your custom parameters."
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:285
+msgid ""
+"Generates a log file command in the directory specified below. Log file is a "
+"file containing the parameters of the execution process, info and error "
+"messages."
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:290
+msgid "Open Path"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:292 /vdms_DIALOGS/settings.py:304
+#: /vdms_DIALOGS/settings.py:316
+msgid "Path generation file"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:294
+msgid ""
+"Enable custom search for the executable FFmpeg. If the checkbox is disabled "
+"or if the path field is empty, the search of the executable is entrusted to "
+"the system."
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:299
+msgid "Open path FFmpeg"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:302
+msgid "path to executable binary FFmpeg"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:306
+msgid ""
+"Enable custom search for the executable FFprobe. If the checkbox is disabled "
+"or if the path field is empty, the search of the executable is entrusted to "
+"the system."
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:311
+msgid "Open path FFprobe"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:314
+msgid "path to executable binary FFprobe"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:318
+msgid ""
+"Enable custom search for the executable FFplay. If the checkbox is disabled "
+"or if the path field is empty, the search of the executable is entrusted to "
+"the system."
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:323
+msgid "Open path FFplay"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:326
+msgid "path to executable binary FFplay"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:431
+msgid "Where do you want to save the log file?"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:466
+msgid "Indicates where the binary ffmpeg"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:467
+#, python-format
+msgid "ffmpeg binarys (*%s)|*%s| All files (*.*)|*.*"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:502
+msgid "Indicates where the binary ffprobe"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:503
+#, python-format
+msgid "ffprobe binarys (*%s)|*%s| All files (*.*)|*.*"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:538
+msgid "Indicates where the binary ffplay"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:539
+#, python-format
+msgid "ffplay binarys (*%s)|*%s| All files (*.*)|*.*"
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:645
+msgid "Warning, The log command has no set path name "
+msgstr ""
+
+#: /vdms_DIALOGS/settings.py:651
+msgid ""
+"\n"
+"Changes need to restart the program"
+msgstr ""

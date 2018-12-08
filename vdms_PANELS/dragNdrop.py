@@ -64,7 +64,7 @@ class MyListCtrl(wx.ListCtrl):
         and advise with status bar messages
         """
         if os.path.isdir(path):
-            mess = "Directories/folders are not accepted: > '%s'" % path
+            mess = _(u"Directories/folders are not accepted: > '%s'" % path)
             print mess
             self.parent.statusbar_msg(mess, orange)
             self.invalid = True
@@ -79,12 +79,12 @@ class MyListCtrl(wx.ListCtrl):
             duration.append(s[0])
             if s[1]:
                 if s[1] == 'N/A':
-                    msg = "%s; %s" %(s[1],'duration is skipped')
+                    msg = "%s; %s" %(s[1],_(u'duration is skipped'))
                     self.parent.statusbar_msg(msg, greenolive)
                 else:
                     self.parent.statusbar_msg(s[1], red)
         else:
-            mess = "Duplicate files are not accepted: > '%s'" % path
+            mess = _(u"Duplicate files are not accepted: > '%s'" % path)
             print mess
             self.parent.statusbar_msg(mess, yellow)
             
@@ -142,13 +142,13 @@ class DnDPanel(wx.Panel):
         # create widgets
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         self.ckbx_dir = wx.CheckBox(self, wx.ID_ANY, (
-                                "Save destination in source folder"))
+                                _(u"Save destination in source folder")))
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1,-1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER | wx.TE_READONLY
                                                     )
-        lbl = wx.StaticText(self, label="Drag some files here:")
-        self.fileListCtrl.InsertColumn(0,'Files list',width=700)
+        lbl = wx.StaticText(self, label=_(u"Drag some files here:"))
+        self.fileListCtrl.InsertColumn(0,_(u'Files list'),width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
         grid = wx.FlexGridSizer(1, 4, 5, 5)
@@ -189,8 +189,8 @@ class DnDPanel(wx.Panel):
  
         # build the menu
         menu = wx.Menu()
-        itemOne = menu.Append(self.popupID1, "Play selected file")
-        itemTwo = menu.Append(self.itemTwoId, "Show metadata window")
+        itemOne = menu.Append(self.popupID1, _(u"Play selected file"))
+        itemTwo = menu.Append(self.itemTwoId, _(u"Show metadata window"))
  
         # show the popup menu
         self.PopupMenu(menu)
@@ -206,7 +206,7 @@ class DnDPanel(wx.Panel):
         menuItem = menu.FindItemById(itemId)
 
         if not self.selected:
-            self.parent.statusbar_msg('No file selected for `%s` yet' % 
+            self.parent.statusbar_msg(_(u'No file selected to `%s` yet') % 
                                       menuItem.GetLabel(), yellow)
         else:
             self.parent.statusbar_msg('Drag and Drop - panel', None)
@@ -273,7 +273,7 @@ class DnDPanel(wx.Panel):
         """
         Choice a specific directory for files save
         """
-        dialdir = wx.DirDialog(self, "Choose a directory: - Videomass2")
+        dialdir = wx.DirDialog(self, _(u"Choose a directory: - Videomass2"))
             
         if dialdir.ShowModal() == wx.ID_OK:
             self.text_path_save.SetValue("")
