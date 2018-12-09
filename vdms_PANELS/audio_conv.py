@@ -96,7 +96,7 @@ class Audio_Conv(wx.Panel):
                  ("AAC [.m4a]"), 
                  ("ALAC [.m4a]"), 
                  ("AC3 [.ac3]"),
-                 (_(u"Save audio from movie"))], style=wx.CB_DROPDOWN | 
+                 (u"Save audio from movie")], style=wx.CB_DROPDOWN | 
                                                        wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)

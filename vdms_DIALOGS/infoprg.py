@@ -87,9 +87,7 @@ def info(parent, videomass_icon):
         #info.AddArtist(u'Gianluca Pernigotto powered by wx.Python')
         
         info.SetTranslators('')
-        info.AddTranslator("Gianluca Pernigotto (English translation only).\n"
-                           "If you are interested in translating the program \n"
-                           "into other languages, contact the author.\n<jeanlucperni@gmail.com>")
+        info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> English and Italian translations.\n")
         info.SetArtists('')
         info.AddArtist('- Gianluca Pernigotto (Videomass2 app icon only)\nhttp://jeanslack.github.io/Videomass2/')
         info.AddArtist('- Material design icons from Google\nhttp://google.github.io/material-design-icons/#getting-icons')

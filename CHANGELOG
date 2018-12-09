@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-November 12, 2018 V.1.2.5
+December 9, 2018 V.1.2.5
 +------------------------------------+
 
 BUG FIXES:
@@ -21,6 +21,8 @@ NEW: [features/enhancements]
   in the `Video Conversions` panel.
 - Improved buttons colour and appearance
 - Added new icons free and open source compatible with GPL3.
+- Add supports for the localization of internationalization (i18n) with a new 
+  implementation of the Italian language
 
   
 

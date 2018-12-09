@@ -122,8 +122,8 @@ class Video_Conv(wx.Panel):
                                            ("OGG theora"), 
                                            ("WebM (HTML5)"), 
                                            ("FLV (HQ h264/AVC)"),
-                                           (_(u"Copy Video Codec")),
-                                           (_(u"Save Images From Video"))], 
+                                           (u"Copy Video Codec"),
+                                           (u"Save Images From Video")], 
                             size=(200,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
                                                )
         self.sizer_combobox_formatv_staticbox = wx.StaticBox(
@@ -240,14 +240,14 @@ class Video_Conv(wx.Panel):
                                          wx.ID_ANY, (_(u"Filters Section"))
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-        size=(200, -1), choices=[(_(u"Set default ")), ("4:3"), ("16:9")], 
+        size=(200, -1), choices=[(u"Set default "), ("4:3"), ("16:9")], 
         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, ("Video Aspect")
                                         )
         self.cmbx_vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
-        choices=[(_(u"Set default ")), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
+        choices=[(u"Set default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
         ("30 fps (30p) Progessive"),("0.2 fps for images"), ("0.5 fps for images"),
         ("1 fps for images"), ("1.5 fps for images"), ("2 fps for images")], 
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
@@ -258,7 +258,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_3 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_a = wx.RadioBox(self.notebook_1_pane_3, wx.ID_ANY, (
                                  _(u"Audio Codec Selecting")), 
-                            choices=[(_(u"Default (managed by FFmpeg)")), 
+                            choices=[(u"Default (managed by FFmpeg)"), 
                                     ("Wav (Raw, No_MultiChannel)"), 
                                     ("Flac (Lossless, No_MultiChannel)"), 
                                     ("Aac (Lossy, MultiChannel)"), 
@@ -266,8 +266,8 @@ class Video_Conv(wx.Panel):
                                     ("Ac3 (Lossy, MultiChannel)"), 
                                     ("Ogg (Lossy, No_MultiChannel)"),
                                     ("Mp3 (Lossy, No_MultiChannel)"), 
-                                    (_(u"Try to copy audio source")),
-                                    (_(u"No audio stream (silent)"))], 
+                                    (u"Try to copy audio source"),
+                                    (u"No audio stream (silent)")], 
                                     majorDimension=2, style=wx.RA_SPECIFY_COLS
                                     )
         self.rdb_a.EnableItem(0,enable=True),self.rdb_a.EnableItem(1,enable=True)
