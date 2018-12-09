@@ -59,7 +59,7 @@ def info(parent, videomass_icon):
         
         info.SetVersion("- %s" % Version)
         
-        info.SetDescription(u'%s\nThis is a test release version.' %(
+        info.SetDescription(_(u'%s\nThis is a test release version.') %(
                                                                 Short_Dscrp)
                             )
         info.SetCopyright("Copyright %s %s" %(Copyright, Author))

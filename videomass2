@@ -83,11 +83,11 @@ class Videomass(wx.App):
         # check videomass2.conf version
         if float(fileconf[0]) < 1.2:
             msg = (_(u'Videomass2: Outdated configuration file.\n'
-                    u'Current version do not match with %s .\n\n' 
-                    % fileconf[0]))
+                    u'Current version do not match with %s .\n\n') 
+                    % fileconf[0])
             print msg
-            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ' 
-                             % (msg)), 
+            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ') 
+                             % (msg), 
                              _(u'Please Confirm - Videomass2'),
                               wx.ICON_QUESTION | 
                               wx.YES_NO, 
@@ -98,8 +98,8 @@ class Videomass(wx.App):
         elif fileconf == 'corrupted':
             msg = (_(u'Videomass2: corrupt configuration file\n\n'))
             print msg
-            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ' 
-                             % (msg)), 
+            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ') 
+                             % (msg), 
                              _(u'Please Confirm - Videomass2'),
                              wx.ICON_QUESTION | 
                              wx.YES_NO, 

@@ -464,8 +464,8 @@ class Setup(wx.Dialog):
         """Indicates a new ffmpeg path-name"""
         dialogfile = wx.FileDialog(self, 
                         _(u"Indicates where the binary ffmpeg"), "", "", 
-                        _(u"ffmpeg binarys (*%s)|*%s| All files (*.*)|*.*"
-                        % (self.ffmpeg, self.ffmpeg)), 
+                        u"ffmpeg binarys (*%s)|*%s| All files (*.*)|*.*"
+                        % (self.ffmpeg, self.ffmpeg), 
                         wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialogfile.ShowModal() == wx.ID_OK:
@@ -500,8 +500,8 @@ class Setup(wx.Dialog):
         """Indicates a new ffprobe path-name"""
         dialfile = wx.FileDialog(self, 
                     _(u"Indicates where the binary ffprobe"), "", "", 
-                    _(u"ffprobe binarys (*%s)|*%s| All files (*.*)|*.*"
-                    % (self.ffprobe, self.ffprobe)), 
+                    u"ffprobe binarys (*%s)|*%s| All files (*.*)|*.*"
+                    % (self.ffprobe, self.ffprobe), 
                     wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialfile.ShowModal() == wx.ID_OK:
@@ -536,8 +536,8 @@ class Setup(wx.Dialog):
         """Indicates a new ffplay path-name"""
         dialfile = wx.FileDialog(self, 
                     _(u"Indicates where the binary ffplay"), "", "", 
-                    _(u"ffplay binarys (*%s)|*%s| All files (*.*)|*.*"
-                    % (self.ffplay, self.ffplay)), 
+                    u"ffplay binarys (*%s)|*%s| All files (*.*)|*.*"
+                    % (self.ffplay, self.ffplay), 
                     wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialfile.ShowModal() == wx.ID_OK:

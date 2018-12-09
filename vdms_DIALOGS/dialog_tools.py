@@ -513,10 +513,10 @@ class VideoCrop(wx.Dialog):
         width = (_(u'The width of the output video.\nSet to -1 for disabling.'))
         x = (_(u'The horizontal position of the left edge.'))
         y = (_(u'The vertical position of the top edge of the left corner.'))
-        self.crop_width.SetToolTipString(_(u'Width:\n%s' % width))
+        self.crop_width.SetToolTipString(_(u'Width:\n%s') % width)
         self.crop_Y.SetToolTipString('Y:\n%s' % y)
         self.crop_X.SetToolTipString('X:\n%s' % x)
-        self.crop_height.SetToolTipString(_(u'Height:\n%s' % height))
+        self.crop_height.SetToolTipString(_(u'Height:\n%s') % height)
         
         #----------------------Binding (EVT)---------------------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
@@ -753,16 +753,16 @@ class VideoResolution(wx.Dialog):
         self.SetTitle(_(u"Resize (change resolution) - Videomass2"))
 
         scale_str = (_(u'Scale (resize) the input video or image.'))
-        self.spin_scale_width.SetToolTipString(_(u'WIDTH:\n%s' % scale_str))
-        self.spin_scale_height.SetToolTipString(_(u'HEIGHT:\n%s' % scale_str))
+        self.spin_scale_width.SetToolTipString(_(u'WIDTH:\n%s') % scale_str)
+        self.spin_scale_height.SetToolTipString(_(u'HEIGHT:\n%s') % scale_str)
         setdar_str = (_(u'Sets the Display Aspect '
                       u'Ratio.\nSet to 0 to disabling.'))
-        self.spin_setdarNum.SetToolTipString(_(u'-NUMERATOR-\n%s' % setdar_str))
-        self.spin_setdarDen.SetToolTipString(_(u'-DENOMINATOR-\n%s' % setdar_str))
+        self.spin_setdarNum.SetToolTipString(_(u'-NUMERATOR-\n%s') % setdar_str)
+        self.spin_setdarDen.SetToolTipString(_(u'-DENOMINATOR-\n%s') % setdar_str)
         setsar_str = (_(u'The setsar filter sets the Sample (aka Pixel) '
                       u'Aspect Ratio.\nSet to 0 to disabling.'))
-        self.spin_setsarNum.SetToolTipString(_(u'-NUMERATOR-\n%s' % setsar_str))
-        self.spin_setsarDen.SetToolTipString(_(u'-DENOMINATOR-\n%s' % setsar_str))
+        self.spin_setsarNum.SetToolTipString(_(u'-NUMERATOR-\n%s') % setsar_str)
+        self.spin_setsarDen.SetToolTipString(_(u'-DENOMINATOR-\n%s') % setsar_str)
         
         #----------------------Binding (EVT)---------------------------------#
         #self.Bind(wx.EVT_SPINCTRL, self.on_width, self.spin_scale_width)

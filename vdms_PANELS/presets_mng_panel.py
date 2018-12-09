@@ -398,8 +398,8 @@ class PresetsPanel(wx.Panel):
 
         wildcard = "Source (*.vdms)|*.vdms| All files (*.*)|*.*"
         dialfile = wx.FileDialog(self, 
-                                 _(u"Preset restore (%s.vdms) - Videomass2 "
-                                 % (filename)), "%s" % (filename), "", 
+                                 _(u"Preset restore (%s.vdms) - Videomass2 ")
+                                 % (filename), "%s" % (filename), "", 
                                  wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
                                      )
         if dialfile.ShowModal() == wx.ID_OK:
@@ -410,14 +410,14 @@ class PresetsPanel(wx.Panel):
             if tail != '%s.vdms' % filename:
                 wx.MessageBox(_(u"'%s' \n\ndoes not match with the one in use:\n\n"
                               u"'%s'\n\nPlease, select a corresponding preset "
-                              u"in the \ncombobox, first" % (dirname, filename)), 
+                              u"in the \ncombobox, first") % (dirname, filename), 
                               "WARNING ! - Videomass2",  wx.ICON_WARNING, self
                                 )
                 return
             
             if wx.MessageBox(_(u'The preset "%s" will be imported and will '
-                    u'overwrite the one in use ! Proceed ?' % (tail)), 
-                    'Please confirm - Videomass2', wx.ICON_QUESTION | 
+                    u'overwrite the one in use ! Proceed ?') % (tail), 
+                    _(u'Please confirm - Videomass2'), wx.ICON_QUESTION | 
                                                   wx.YES_NO, 
                                                   self) == wx.NO:
                 return
@@ -480,8 +480,8 @@ class PresetsPanel(wx.Panel):
         prstdialog = presets_addnew.MemPresets(self, 'newprofile', 
                                                full_pathname, filename, 
                                                None, _(u'Create a new '
-                                u'profile on the selected "%s" preset' % (
-                                                name_preset))
+                                u'profile on the selected "%s" preset') % (
+                                                name_preset)
                                                 )
         ret = prstdialog.ShowModal()
         if ret == wx.ID_OK:
@@ -507,8 +507,8 @@ class PresetsPanel(wx.Panel):
             prstdialog = presets_addnew.MemPresets(self, 'edit', 
                                                    full_pathname, 
                                                    filename, array, 
-                                            _(u'Edit profile on "%s" preset: ' 
-                                                   % (name_preset))
+                                            _(u'Edit profile on "%s" preset: ') 
+                                                   % (name_preset)
                                                    )
             ret = prstdialog.ShowModal()
             if ret == wx.ID_OK:

@@ -64,7 +64,7 @@ class MyListCtrl(wx.ListCtrl):
         and advise with status bar messages
         """
         if os.path.isdir(path):
-            mess = _(u"Directories/folders are not accepted: > '%s'" % path)
+            mess = _(u"Directories/folders are not accepted: > '%s'") % path
             print mess
             self.parent.statusbar_msg(mess, orange)
             self.invalid = True
@@ -84,7 +84,7 @@ class MyListCtrl(wx.ListCtrl):
                 else:
                     self.parent.statusbar_msg(s[1], red)
         else:
-            mess = _(u"Duplicate files are not accepted: > '%s'" % path)
+            mess = _(u"Duplicate files are not accepted: > '%s'") % path
             print mess
             self.parent.statusbar_msg(mess, yellow)
             

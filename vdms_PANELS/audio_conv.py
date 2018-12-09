@@ -386,7 +386,7 @@ class Audio_Conv(wx.Panel):
             audio_list = metadata.get_audio_codec_name()
             # ...and proceed to checkout:
             if audio_list == None:
-                wx.MessageBox(_(u"There are no audio streams:\n%s " % (files)), 
+                wx.MessageBox(_(u"There are no audio streams:\n%s ") % (files), 
                             'Warning - Videomass2', wx.ICON_EXCLAMATION, self)
                 return
 
@@ -409,7 +409,7 @@ class Audio_Conv(wx.Panel):
                         if cn in ('ogg','vorbis'): cn = 'oga'
                         cmd_opt["ExportExt"].append(cn)
                     else:
-                        wx.MessageBox(_(u"Nothing choice:\n%s " % (files)), 
+                        wx.MessageBox(_(u"Nothing choice:\n%s ") % (files), 
                             'Error - Videomass2', wx.ICON_ERROR, self)
                         return
                 else:
@@ -785,6 +785,6 @@ class Audio_Conv(wx.Panel):
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                  filename, list, _(u'Create a new profile on '
-                                 u'"%s" preset - Videomass2' % (
-                                 name_preset)))
+                                 u'"%s" preset - Videomass2') % (
+                                 name_preset))
         prstdlg.ShowModal()
