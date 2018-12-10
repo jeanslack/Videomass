@@ -96,7 +96,7 @@ class Audio_Conv(wx.Panel):
                  ("AAC [.m4a]"), 
                  ("ALAC [.m4a]"), 
                  ("AC3 [.ac3]"),
-                 (u"Save audio from movie")], style=wx.CB_DROPDOWN | 
+                 (_(u"Save audio from movie"))], style=wx.CB_DROPDOWN | 
                                                        wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
@@ -249,7 +249,7 @@ class Audio_Conv(wx.Panel):
         """
         Get selected container from combobox
         """
-        if self.cmbx_a.GetValue() == "Save audio from movie":
+        if self.cmbx_a.GetValue() == _(u"Save audio from movie"):
             if self.ckb_norm.IsChecked():
                 self.normalization_disabled()
             self.ckb_norm.Disable(), self.ckb_onlynorm.Disable()
@@ -586,7 +586,7 @@ class Audio_Conv(wx.Panel):
         filename, base_name, lenghmax = checking
 
 
-        if self.cmbx_a.GetValue() == "Save audio from movie":
+        if self.cmbx_a.GetValue() == _(u"Save audio from movie"):
             self.grabaudioProc(file_sources, dir_destin, lenghmax, logname)
         else:
             self.stdProc(file_sources, dir_destin, lenghmax, logname)
@@ -662,7 +662,7 @@ class Audio_Conv(wx.Panel):
         """
         Composes the ffmpeg command strings for the batch_process_changes.
         """
-        title = 'Save audio from movies'
+        title = _(u'Save audio from movies')
         cmdsplit1 = ("-loglevel %s %s -vn" % (self.loglevel_type, 
                                               self.time_seq)
                                               )
@@ -708,7 +708,7 @@ class Audio_Conv(wx.Panel):
                                             self.time_seq
                                             )
                         )
-        elif self.cmbx_a.GetValue() == "Save audio from movie":
+        elif self.cmbx_a.GetValue() == _(u"Save audio from movie"):
             formula = (_(u"SUMMARY:\n\nFile Queue:\
                       \nAudio Container:\nCodec copied:\nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
@@ -763,7 +763,7 @@ class Audio_Conv(wx.Panel):
             command = ' '.join(command.split())# sistemo gli spazi
             list = [command, cmd_opt["ExportExt"]]
             
-        elif self.cmbx_a.GetValue() == "Save audio from movie":
+        elif self.cmbx_a.GetValue() == _(u"Save audio from movie"):
             command = ("-vn %s" % cmd_opt["AudioCodec"][0])
             command = ' '.join(command.split())# sistemo gli spazi
             list = [command, cmd_opt["ExportExt"][0]]

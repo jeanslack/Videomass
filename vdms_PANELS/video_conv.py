@@ -74,8 +74,8 @@ vcodec = {
 "OGG theora":("-vcodec libtheora","ogg"), 
 "WebM (HTML5)":("-vcodec libvpx","webm"), 
 "FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
-"Copy Video Codec":("","-c:v copy"),
-"Save Images From Video":("save images",""),
+_(u"Copy Video Codec"):("","-c:v copy"),
+_(u"Save Images From Video"):("save images",""),
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -122,8 +122,8 @@ class Video_Conv(wx.Panel):
                                            ("OGG theora"), 
                                            ("WebM (HTML5)"), 
                                            ("FLV (HQ h264/AVC)"),
-                                           (u"Copy Video Codec"),
-                                           (u"Save Images From Video")], 
+                                           (_(u"Copy Video Codec")),
+                                           (_(u"Save Images From Video"))], 
                             size=(200,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
                                                )
         self.sizer_combobox_formatv_staticbox = wx.StaticBox(
@@ -258,7 +258,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_3 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_a = wx.RadioBox(self.notebook_1_pane_3, wx.ID_ANY, (
                                  _(u"Audio Codec Selecting")), 
-                            choices=[(u"Default (managed by FFmpeg)"), 
+                            choices=[(_(u"Default (managed by FFmpeg)")), 
                                     ("Wav (Raw, No_MultiChannel)"), 
                                     ("Flac (Lossless, No_MultiChannel)"), 
                                     ("Aac (Lossy, MultiChannel)"), 
@@ -266,8 +266,8 @@ class Video_Conv(wx.Panel):
                                     ("Ac3 (Lossy, MultiChannel)"), 
                                     ("Ogg (Lossy, No_MultiChannel)"),
                                     ("Mp3 (Lossy, No_MultiChannel)"), 
-                                    (u"Try to copy audio source"),
-                                    (u"No audio stream (silent)")], 
+                                    (_(u"Try to copy audio source")),
+                                    (_(u"No audio stream (silent)"))], 
                                     majorDimension=2, style=wx.RA_SPECIFY_COLS
                                     )
         self.rdb_a.EnableItem(0,enable=True),self.rdb_a.EnableItem(1,enable=True)
@@ -332,7 +332,7 @@ class Video_Conv(wx.Panel):
         
         self.notebook_1_pane_4 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_h264preset = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-                                    _(u"presets")), choices=[(_(u"Disabled")), 
+                                    u"presets"), choices=[(u"Disabled"), 
                                                 ("ultrafast"), ("superfast"), 
                                                 ("veryfast"), ("faster"), 
                                                 ("fast"), ("medium"), 
@@ -341,14 +341,14 @@ class Video_Conv(wx.Panel):
                                 majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                             )
         self.rdb_h264profile = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-                                    _(u"Profile")), choices=[(_(u"Disabled")), 
+                                    u"Profile"), choices=[(u"Disabled"), 
                                                     ("baseline"), ("main"), 
                                                     ("high"), ("high10"), 
                                                     ("high444")], 
                                 majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                             )
         self.rdb_h264tune = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-                                        _(u"Tune")), choices=[(_(u"Disabled")), 
+                                        u"Tune"), choices=[(u"Disabled"), 
                                                 ("film"), ("animation"),
                                                 ("grain"), ("stillimage"), 
                                                 ("psnr"), ("ssim"), 
@@ -695,8 +695,8 @@ class Video_Conv(wx.Panel):
         Set default audio parameters. This method is called on first run and
         if there is a change inthe  video container selection on the combobox
         """
-        self.rdb_a.SetStringSelection("Default (managed by FFmpeg)")
-        cmd_opt["Audio"] = "Default (managed by FFmpeg)"
+        self.rdb_a.SetStringSelection(_(u"Default (managed by FFmpeg)"))
+        cmd_opt["Audio"] = _(u"Default (managed by FFmpeg)")
         cmd_opt["AudioCodec"] = ""
         cmd_opt["AudioBitrate"] = ["",""]
         cmd_opt["AudioChannel"] = ["",""]
@@ -1171,7 +1171,7 @@ class Video_Conv(wx.Panel):
                 self.btn_aparam.SetForegroundColour(wx.Colour(165,165,165))
                 self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
             
-        if audioformat == "Default (managed by FFmpeg)":
+        if audioformat == _(u"Default (managed by FFmpeg)"):
             self.audio_default()
             # reset parametrs
             self.ckbx_a_normalize.Enable()
@@ -1211,7 +1211,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Audio"] = audioformat
             param('yes', 'yes')
 
-        elif audioformat == "Try to copy audio source":
+        elif audioformat == _(u"Try to copy audio source"):
             # reset parametrs
             self.normalize_default()
             self.rdb_a.SetSelection(8)
@@ -1219,7 +1219,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Audio"] = audioformat
             cmd_opt["AudioCodec"] = "-c:a copy"
 
-        elif audioformat == "No audio stream (silent)":
+        elif audioformat == _(u"No audio stream (silent)"):
             # reset parametrs
             self.normalize_default()
             self.rdb_a.SetSelection(9)
@@ -1490,7 +1490,7 @@ class Video_Conv(wx.Panel):
         logname = 'Videomass_VideoConversion.log'
 
         ######## ------------ VALIDAZIONI: --------------
-        if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
+        if self.cmbx_vidContainers.GetValue() == _(u"Copy Video Codec"):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, '')
         else:
@@ -1506,7 +1506,7 @@ class Video_Conv(wx.Panel):
         typeproc, file_sources, dir_destin,\
         filename, base_name, lenghmax = checking
     
-        if self.cmbx_vidContainers.GetValue() == "Save Images From Video":
+        if self.cmbx_vidContainers.GetValue() == _(u"Save Images From Video"):
             self.saveimages(file_sources, dir_destin, filename, 
                             logname, lenghmax)
         else:
@@ -1522,7 +1522,7 @@ class Video_Conv(wx.Panel):
         at proc_batch_thread Class(Thread).
         """
         title = 'Video Conversions'
-        if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
+        if self.cmbx_vidContainers.GetValue() == _(u"Copy Video Codec"):
             command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
                        self.loglevel_type, 
                        self.time_seq, 
@@ -1646,7 +1646,7 @@ class Video_Conv(wx.Panel):
               perchè non serve la lettura dell'output in real time e inoltre 
               voglio controllare solo l'uscita degli errori, se ci sono.
         """
-        title = 'Save Images from video'
+        title = _(u'Save Images from video')
         fileout = "image%d.jpg"
         cmd = ('%s -i "%s" -loglevel %s %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
@@ -1689,7 +1689,7 @@ class Video_Conv(wx.Panel):
         else:
             normalize = 'Disable'
         
-        if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
+        if self.cmbx_vidContainers.GetValue() == _(u"Copy Video Codec"):
             formula = (_(u"SUMMARY:\n\nFile to Queue\
                 \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
                 \nAudio Format:\nAudio codec:\nAudio channel:\
@@ -1704,7 +1704,7 @@ class Video_Conv(wx.Panel):
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
                 self.time_seq))
                     
-        elif self.cmbx_vidContainers.GetValue() == "Save Images From Video":
+        elif self.cmbx_vidContainers.GetValue() == _(u"Save Images From Video"):
             formula = (_(u"SUMMARY:\n\nFile to Queue\
                          \nImages Format:\nVideo rate:\
                          \nFilters:\nTime selection:"
@@ -1759,7 +1759,7 @@ class Video_Conv(wx.Panel):
             normalize = ''
         
         if not self.ckbx_pass.IsChecked():
-            if self.cmbx_vidContainers.GetValue() == "Copy Video Codec":
+            if self.cmbx_vidContainers.GetValue() == _(u"Copy Video Codec"):
                 outext = cmd_opt["VideoFormat"]
                 command = ('%s %s %s %s %s %s %s %s %s %s' % (
                             normalize,
@@ -1773,7 +1773,7 @@ class Video_Conv(wx.Panel):
                             cmd_opt["AudioDepth"][1], 
                             cmd_opt["Map"])
                                 )
-            elif self.cmbx_vidContainers.GetValue() == "Save Images From Video":
+            elif self.cmbx_vidContainers.GetValue() == _(u"Save Images From Video"):
                 outext = "image%d.jpg"
                 command = ('%s %s -an' % (
                            cmd_opt["VideoRate"],

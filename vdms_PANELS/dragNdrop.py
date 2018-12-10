@@ -210,9 +210,9 @@ class DnDPanel(wx.Panel):
                                       menuItem.GetLabel(), yellow)
         else:
             self.parent.statusbar_msg('Drag and Drop - panel', None)
-            if menuItem.GetLabel() == "Play selected file":
+            if menuItem.GetLabel() == _(u"Play selected file"):
                 self.parent.ImportPlay()
-            elif menuItem.GetLabel() == "Show metadata window":
+            elif menuItem.GetLabel() == _(u"Show metadata window"):
                 #self.on_doubleClick(self)
                 self.parent.ImportInfo(self)
                 

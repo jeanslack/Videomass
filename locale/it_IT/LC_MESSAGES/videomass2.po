@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass2 1.2.5\n"
 "POT-Creation-Date: 2018-12-09 00:00+CET\n"
-"PO-Revision-Date: 2018-12-09 18:19+0100\n"
+"PO-Revision-Date: 2018-12-10 14:26+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -561,11 +561,15 @@ msgstr "Questo è tutto!"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/infoprg.py:62
 msgid ""
-"%s\n"
+"Videomass2 provides a graphical interface for\n"
+"manipulate audio and video streams through\n"
+"FFmpeg.\n"
 "This is a test release version."
 msgstr ""
-"%s\n"
-"Questa è una versione di prova."
+"Videomass2 è un'interfaccia grafica multi piattaforma\n"
+"per le conversioni audio/video attraveso FFmpeg.\n"
+"\n"
+"Questa è una test release."
 
 #: /vdms_DIALOGS/mediainfo.py:60 /vdms_DIALOGS/mediainfo.py:64
 msgid "Type"
@@ -581,7 +585,7 @@ msgstr "Informazioni Generali"
 
 #: /vdms_DIALOGS/mediainfo.py:78
 msgid "Extensive Report"
-msgstr "Rapporto Ampliato (Tutte le informazioni)"
+msgstr "Tutte le informazioni"
 
 #: /vdms_DIALOGS/presets_addnew.py:55 /vdms_PANELS/presets_mng_panel.py:289
 msgid "Profile Name"
@@ -647,14 +651,14 @@ msgstr "Profilo modificato con successo!"
 msgid ""
 "Successfull storing !\n"
 "\n"
-"You will find this profile in the 'Users Profiles' preset in the 'Presets Manager' panel.\n"
+"You will find this profile in the 'User Profiles' preset in the 'Presets Manager' panel.\n"
 "Use the 'Reload presets list' on File menu to update profile list."
 msgstr ""
 "Profilo salvato con successo !\n"
 "\n"
-"Troverai questo profilo nel preset 'Profili Utenti' del Presets Manager.\n"
-"Use the 'Reload presets list' on File menu to update profile list.\n"
-"Usa la funzione 'Ricarica la lista dei presets' nel menu file per aggiornare tutti i profili."
+"Troverai questo profilo nel preset 'Profili Utente' del Gestionale Presets.\n"
+"Usa la funzione 'Ricarica la lista dei presets' nel menu file\n"
+"per aggiornare tutti i profili."
 
 #: /vdms_DIALOGS/settings.py:103
 msgid "General"
@@ -733,7 +737,7 @@ msgstr "Personalizza Il Colore Grafico"
 msgid "Change Toolbar Colour:"
 msgstr "Cambia il colore della barra"
 
-#: /vdms_DIALOGS/settings.py:240
+#: /vdms_DIALOGS/settings.py:240 /vdms_DIALOGS/settings.py:591
 msgid "Bar Colour"
 msgstr "Colore Barra"
 
@@ -741,7 +745,7 @@ msgstr "Colore Barra"
 msgid "Change Toolbar Buttons Colour:"
 msgstr "Cambia il colore dei pulsanti nella barra"
 
-#: /vdms_DIALOGS/settings.py:249
+#: /vdms_DIALOGS/settings.py:249 /vdms_DIALOGS/settings.py:593
 msgid "Buttons Colour"
 msgstr "Colore Pulsanti"
 
@@ -1017,6 +1021,7 @@ msgid "Video Conversions"
 msgstr "Conversioni Video"
 
 #: /vdms_MAIN/main_frame.py:803 /vdms_PANELS/presets_mng_panel.py:44
+#: /vdms_PANELS/presets_mng_panel.py:106
 msgid "Audio Conversions"
 msgstr "Conversioni Audio"
 
@@ -1028,7 +1033,10 @@ msgstr "Inizia Codifica"
 msgid "Help"
 msgstr "Aiuto"
 
-#: /vdms_PANELS/audio_conv.py:99
+#: /vdms_PANELS/audio_conv.py:99 /vdms_PANELS/audio_conv.py:252
+#: /vdms_PANELS/audio_conv.py:309 /vdms_PANELS/audio_conv.py:589
+#: /vdms_PANELS/audio_conv.py:665 /vdms_PANELS/audio_conv.py:711
+#: /vdms_PANELS/audio_conv.py:766
 msgid "Save audio from movie"
 msgstr "Salva file audio dal filmato"
 
@@ -1230,11 +1238,11 @@ msgstr "Trascina alcuni file qui:"
 msgid "Files list"
 msgstr "Lista dei Files"
 
-#: /vdms_PANELS/dragNdrop.py:192
+#: /vdms_PANELS/dragNdrop.py:192 /vdms_PANELS/dragNdrop.py:213
 msgid "Play selected file"
 msgstr "Riproduci il file selezionato"
 
-#: /vdms_PANELS/dragNdrop.py:193
+#: /vdms_PANELS/dragNdrop.py:193 /vdms_PANELS/dragNdrop.py:215
 msgid "Show metadata window"
 msgstr "Mostra la finestra con i metadati"
 
@@ -1246,65 +1254,65 @@ msgstr "Ancora nessun file selezionato per la funzione `%s`"
 msgid "Choose a directory: - Videomass2"
 msgstr "Scegli una cartella: - Videomass2"
 
-#: /vdms_PANELS/presets_mng_panel.py:45
+#: /vdms_PANELS/presets_mng_panel.py:45 /vdms_PANELS/presets_mng_panel.py:107
 msgid "Extract audio from video"
-msgstr ""
+msgstr "Estrai traccia audio dal filmato"
 
-#: /vdms_PANELS/presets_mng_panel.py:46
+#: /vdms_PANELS/presets_mng_panel.py:46 /vdms_PANELS/presets_mng_panel.py:108
 msgid "Convert to AVI"
-msgstr ""
+msgstr "Converti in formato AVI"
 
-#: /vdms_PANELS/presets_mng_panel.py:47
+#: /vdms_PANELS/presets_mng_panel.py:47 /vdms_PANELS/presets_mng_panel.py:109
 msgid "Mobile Phones multimedia"
 msgstr ""
 
-#: /vdms_PANELS/presets_mng_panel.py:48
+#: /vdms_PANELS/presets_mng_panel.py:48 /vdms_PANELS/presets_mng_panel.py:110
 msgid "iPod iTunes"
 msgstr ""
 
-#: /vdms_PANELS/presets_mng_panel.py:49
+#: /vdms_PANELS/presets_mng_panel.py:49 /vdms_PANELS/presets_mng_panel.py:111
 msgid "Convert to VCD (mpg)"
-msgstr ""
+msgstr "Converti in formato VCD (.mpg)"
 
-#: /vdms_PANELS/presets_mng_panel.py:51
+#: /vdms_PANELS/presets_mng_panel.py:51 /vdms_PANELS/presets_mng_panel.py:112
 msgid "Convert to quicktime (mov)"
-msgstr ""
+msgstr "Converti in Quicktime (.mov)"
 
-#: /vdms_PANELS/presets_mng_panel.py:52
+#: /vdms_PANELS/presets_mng_panel.py:52 /vdms_PANELS/presets_mng_panel.py:113
 msgid "Convert to DV"
-msgstr ""
+msgstr "Converti in DV"
 
-#: /vdms_PANELS/presets_mng_panel.py:53
+#: /vdms_PANELS/presets_mng_panel.py:53 /vdms_PANELS/presets_mng_panel.py:114
 msgid "Google Android"
 msgstr ""
 
-#: /vdms_PANELS/presets_mng_panel.py:54
+#: /vdms_PANELS/presets_mng_panel.py:54 /vdms_PANELS/presets_mng_panel.py:115
 msgid "Google webm"
 msgstr ""
 
-#: /vdms_PANELS/presets_mng_panel.py:55
+#: /vdms_PANELS/presets_mng_panel.py:55 /vdms_PANELS/presets_mng_panel.py:116
 msgid "DVD Conversions"
-msgstr ""
+msgstr "Conversioni DVD"
 
-#: /vdms_PANELS/presets_mng_panel.py:56
+#: /vdms_PANELS/presets_mng_panel.py:56 /vdms_PANELS/presets_mng_panel.py:117
 msgid "MPEG-4 Conversions"
-msgstr ""
+msgstr "Conversioni in MPEG-4"
 
-#: /vdms_PANELS/presets_mng_panel.py:57
+#: /vdms_PANELS/presets_mng_panel.py:57 /vdms_PANELS/presets_mng_panel.py:118
 msgid "PS3 Compatible"
-msgstr ""
+msgstr "Compatibilità per PS3"
 
-#: /vdms_PANELS/presets_mng_panel.py:58
+#: /vdms_PANELS/presets_mng_panel.py:58 /vdms_PANELS/presets_mng_panel.py:119
 msgid "PSP Compatible"
-msgstr ""
+msgstr "Compatibilità per PSP"
 
-#: /vdms_PANELS/presets_mng_panel.py:59
+#: /vdms_PANELS/presets_mng_panel.py:59 /vdms_PANELS/presets_mng_panel.py:120
 msgid "Websites"
-msgstr ""
+msgstr "Siti Web"
 
-#: /vdms_PANELS/presets_mng_panel.py:60
+#: /vdms_PANELS/presets_mng_panel.py:60 /vdms_PANELS/presets_mng_panel.py:121
 msgid "User Profiles"
-msgstr ""
+msgstr "Profili Utente"
 
 #: /vdms_PANELS/presets_mng_panel.py:103
 msgid "Select a preset from the drop down:"
@@ -1415,13 +1423,19 @@ msgstr "Sei sicuro di voler eliminare il profilo selezionato?"
 msgid "Select a profile in the list before start encoding"
 msgstr "Seleziona un profilo nell'elenco prima di iniziare la codifica"
 
-#: /vdms_PANELS/video_conv.py:125
+#: /vdms_PANELS/video_conv.py:77 /vdms_PANELS/video_conv.py:125
+#: /vdms_PANELS/video_conv.py:754 /vdms_PANELS/video_conv.py:1493
+#: /vdms_PANELS/video_conv.py:1525 /vdms_PANELS/video_conv.py:1692
+#: /vdms_PANELS/video_conv.py:1762
 msgid "Copy Video Codec"
-msgstr ""
+msgstr "Copia il Codec Video di origine"
 
-#: /vdms_PANELS/video_conv.py:126
+#: /vdms_PANELS/video_conv.py:78 /vdms_PANELS/video_conv.py:126
+#: /vdms_PANELS/video_conv.py:147 /vdms_PANELS/video_conv.py:1509
+#: /vdms_PANELS/video_conv.py:1649 /vdms_PANELS/video_conv.py:1707
+#: /vdms_PANELS/video_conv.py:1776
 msgid "Save Images From Video"
-msgstr ""
+msgstr "Esporta Immagini dal Video"
 
 #: /vdms_PANELS/video_conv.py:131
 msgid "Video Container Selection"
@@ -1475,17 +1489,20 @@ msgstr ""
 msgid "Audio Codec Selecting"
 msgstr "Selezione Codec Audio"
 
-#: /vdms_PANELS/video_conv.py:261
+#: /vdms_PANELS/video_conv.py:261 /vdms_PANELS/video_conv.py:698
+#: /vdms_PANELS/video_conv.py:699 /vdms_PANELS/video_conv.py:1174
 msgid "Default (managed by FFmpeg)"
-msgstr ""
+msgstr "Automatico (Gestito da FFmpeg)"
 
-#: /vdms_PANELS/video_conv.py:269
+#: /vdms_PANELS/video_conv.py:269 /vdms_PANELS/video_conv.py:586
+#: /vdms_PANELS/video_conv.py:1214
 msgid "Try to copy audio source"
-msgstr ""
+msgstr "Prova a copiare l'origine"
 
-#: /vdms_PANELS/video_conv.py:270
+#: /vdms_PANELS/video_conv.py:270 /vdms_PANELS/video_conv.py:586
+#: /vdms_PANELS/video_conv.py:1222
 msgid "No audio stream (silent)"
-msgstr ""
+msgstr "Senza Sorg. Sonora (Muto)"
 
 #: /vdms_PANELS/video_conv.py:297
 msgid "Max Volume db.  "
@@ -1562,7 +1579,7 @@ msgstr "Frequenza video: ogni video è composto da immagini visualizzate come fo
 
 #: /vdms_PANELS/video_conv.py:583
 msgid "Performs audio normalization in the video audio stream. NOTE: this feature is disabled for 'Try to copy audio source' and 'No audio stream (silent)' selections."
-msgstr "Esegue la normalizzazione dei flussi audio inclusi nel video. NOTA: questa funzione è disabilitata per le selezioni 'Try to copy audio source' e 'No audio stream (silent)'."
+msgstr "Esegue la normalizzazione dei flussi audio inclusi nel video. NOTA: questa funzione è disabilitata per le selezioni `Prova a copiare l'origine` e `Senza Sorg. Sonora (Muto)`."
 
 #: /vdms_PANELS/video_conv.py:588
 msgid "Calculate the maximum and average peak in dB values, of the audio stream on the video imported."
@@ -1767,10 +1784,6 @@ msgstr "Errore sconosciuto (assente in err_list)"
 #: /vdms_PROCESS/volumedetect.py:41
 msgid "File does not exist:"
 msgstr "Il file non esiste:"
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_SYS/msg_info.py:65
-msgid "Videomass2 is a cross-platform GUI for FFmpeg."
-msgstr "Videomass2 è un'interfaccia grafica multi piattaforma basata su FFmpeg."
 
 #: /videomass2:77
 msgid ""

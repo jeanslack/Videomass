@@ -588,9 +588,9 @@ class Setup(wx.Dialog):
             rgb = str(data.GetColour().Get())
             choice = rgb.replace('(','').replace(')','').strip()
             
-            if identify == 'Bar Colour':
+            if identify == _(u'Bar Colour'):
                 self.full_list[self.rowsNum[15]] = "%s\n" % choice
-            elif identify == 'Buttons Colour':
+            elif identify == _(u'Buttons Colour'):
                 self.full_list[self.rowsNum[16]] = "%s\n" % choice
  
         dlg.Destroy()

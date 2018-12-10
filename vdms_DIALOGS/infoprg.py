@@ -59,8 +59,9 @@ def info(parent, videomass_icon):
         
         info.SetVersion("- %s" % Version)
         
-        info.SetDescription(_(u'%s\nThis is a test release version.') %(
-                                                                Short_Dscrp)
+        info.SetDescription(_(u"Videomass2 provides a graphical interface for\n"
+                              u"manipulate audio and video streams through\n"
+                              u"FFmpeg.\nThis is a test release version.")
                             )
         info.SetCopyright("Copyright %s %s" %(Copyright, Author))
         

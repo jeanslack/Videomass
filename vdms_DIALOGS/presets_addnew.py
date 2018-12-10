@@ -252,7 +252,7 @@ class MemPresets(wx.Dialog):
             
         elif self.arg == 'addprofile':
             wx.MessageBox(_(u"Successfull storing !\n\n"
-                          u"You will find this profile in the 'Users Profiles' "
+                          u"You will find this profile in the 'User Profiles' "
                           u"preset in the 'Presets Manager' panel.\n"
                           u"Use the 'Reload presets list' on File menu to "
                           u"update profile list."))
