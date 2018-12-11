@@ -90,7 +90,7 @@ def info(parent, videomass_icon):
         info.SetTranslators('')
         info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> English and Italian translations.\n")
         info.SetArtists('')
-        info.AddArtist('- Gianluca Pernigotto (Videomass2 app icon only)\nhttp://jeanslack.github.io/Videomass2/')
+        info.AddArtist('- Gianluca Pernigotto (Videomass2 app icons only)\nhttp://jeanslack.github.io/Videomass2/')
         info.AddArtist('- Material design icons from Google\nhttp://google.github.io/material-design-icons/#getting-icons')
         info.AddArtist('- Flat Color Icons\nhttp://icons8.com/color-icons')
                     

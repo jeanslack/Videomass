@@ -6,370 +6,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-12-09 01:16+CET\n"
-"PO-Revision-Date: 2018-12-09 18:21+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-12-11 09:31+0100\n"
+"PO-Revision-Date: 2018-12-11 09:31+0100\n"
+"Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
+"Language-Team: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
-"Language-Team: \n"
-"Language: en_GB\n"
 "X-Generator: Poedit 1.8.11\n"
 
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:223
-msgid ""
-"The audio channels are represented by monophonic, \n"
-"stereophonic and quadraphonic techniques reproduction.\n"
-"For some codecs can only assign an audio stream\n"
-"monaural or stereo, for others even polyphonic.\n"
-"If you are insecure you set to \"Not set\", will be copied\n"
-"source values."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:231
-msgid ""
-"The audio Rate (or sample-rate) is the sound sampling \n"
-"frequency and is measured in hertz. The higher the frequency, \n"
-"plus the audio signal will be true to the sound source, but \n"
-"the file will increase its size. For normal playback with \n"
-"audio CD set a sample rate of 44100kHz. If you are insecure \n"
-"you set to \"Not set\", will be copied source values."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:239
-msgid ""
-"The audio bitrate affects on file compression\n"
-"and on the quality of listening. The higher\n"
-"the value and more higher quality."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:244
-msgid ""
-"bit depth is the number of bits of information in each \n"
-"sample, and it directly corresponds to the resolution \n"
-"of each sample. Bit depth is only meaningful in reference \n"
-"to a PCM digital signal. Non-PCM formats, such as lossy \n"
-"compression formats, do not have associated bit depths."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:79
-msgid "Seeking (start point) [hh,mm,ss]"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:91
-msgid "Cut (end point) [hh,mm,ss]"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:102
-msgid "Hours time"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:103
-msgid "Minutes Time"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:104
-msgid "Seconds time"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:108
-msgid "Hours amount duration"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:109
-msgid "Minutes amount duration"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:110
-msgid "Seconds amount duration"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:260
-msgid "Flip over"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:261
-msgid "Rotate Left"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:262
-msgid "Rotate Right"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:263
-msgid "Flip below"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:269
-msgid "Orientation points"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:275
-msgid "Set Video/Image Rotation - Videomass2"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:277
-msgid "Reverses visual movie from bottom to top"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:279
-msgid "Rotate view movie to left"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:281
-msgid "Rotate view movie to Right"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:283
-msgid "Reverses visual movie from top to bottom"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:285
-msgid "Display show settings"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:357
-msgid "180Â° from bottom to top"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:363
-msgid "Rotate 90Â° Left"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:368
-msgid "Rotate 90Â° Right"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:373
-msgid "180Â° from top to bottom"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:423
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:638
-msgid "Width"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:427
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:651
-msgid "Height"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:440
-msgid "Crop Dimensions"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:512
-msgid ""
-"The height of the output video.\n"
-"Set to -1 for disabling."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:513
-msgid ""
-"The width of the output video.\n"
-"Set to -1 for disabling."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:514
-msgid "The horizontal position of the left edge."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:515
-msgid "The vertical position of the top edge of the left corner."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:516
-msgid ""
-"Width:\n"
-"%s"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:519
-msgid ""
-"Height:\n"
-"%s"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:636
-msgid "Scale (resize)"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:655
-msgid "Setdar (display aspect ratio):"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:656
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:675
-msgid "Numerator"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:670
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:688
-msgid "Denominator"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:674
-msgid "SetSar (sample aspect ratio):"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:753
-msgid "Resize (change resolution) - Videomass2"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:755
-msgid "Scale (resize) the input video or image."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:756
-msgid ""
-"WIDTH:\n"
-"%s"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:757
-msgid ""
-"HEIGHT:\n"
-"%s"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:758
-msgid ""
-"Sets the Display Aspect Ratio.\n"
-"Set to 0 to disabling."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:760
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:764
-msgid ""
-"-NUMERATOR-\n"
-"%s"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:761
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:765
-msgid ""
-"-DENOMINATOR-\n"
-"%s"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:762
-msgid ""
-"The setsar filter sets the Sample (aka Pixel) Aspect Ratio.\n"
-"Set to 0 to disabling."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:885
-msgid "Deinterlace"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:887
-msgid "Interlace"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:890
-msgid "Deinterlaces (Using the 'w3fdif' filter)"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:905
-msgid "Deinterlaces (Using the 'yadif' filter)"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:927
-msgid "Interlaces (Using the 'interlace' filter)"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:942
-msgid "Advanced Options"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:950
-msgid "Deinterlace/Interlace - Videomass2"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1013
-msgid "Deinterlace the input video with `w3fdif` filter"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1016
-msgid "Set the interlacing filter coefficients."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1019
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1029
-msgid "Specify which frames to deinterlace."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1022
-msgid "Deinterlace the input video with `yadif` filter. For FFmpeg is the best and fastest choice "
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1025
-msgid ""
-"mode\n"
-"The interlacing mode to adopt."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1027
-msgid ""
-"parity\n"
-"The picture field parity assumed for the input interlaced video."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1031
-msgid "Simple interlacing filter from progressive contents."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1033
-msgid ""
-"scan:\n"
-"determines whether the interlaced frame is taken from the even (tff - default) or odd (bff) lines of the progressive frame."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1037
-msgid ""
-"lowpas:\n"
-"Enable (default) or disable the vertical lowpass filter to avoid twitter interlacing and reduce moire patterns.\n"
-"Default is no setting."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1327
-msgid "Apply Denoisers Filters"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1330
-msgid "Enable nlmeans denoiser"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1333
-msgid "nlmeans options"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1341
-msgid "Enable hqdn3d denoiser"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1344
-msgid "hqdn3d options"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1416
-msgid "Denoisers filters - Videomass2"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1417
-msgid ""
-"nlmeans:\n"
-" (Denoise frames using Non-Local Means algorithm is capable of restoring video sequences with even strong noise. It is ideal for enhancing the quality of old VHS tapes."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1421
-msgid ""
-"hqdn3d:\n"
-" This is a high precision/quality 3d denoise filter. It aims to reduce image noise, producing smooth images and making still images really still. It should enhance compressibility."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:46
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:47
 msgid ""
 "This wizard automatically searches for FFmpeg in your system.\n"
 "You can also manually specify your customs paths of FFmpeg.\n"
@@ -432,12 +81,14 @@ msgid ""
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:175
+#, python-format
 msgid ""
 "No such file '%s'.\n"
 "Please, continue with settings."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:180
+#, python-format
 msgid ""
 "'%s'\n"
 "does not match with:\n"
@@ -446,6 +97,7 @@ msgid ""
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:246
+#, python-format
 msgid ""
 "'%s' is not installed on the system.\n"
 "Please, install it or set a new custom path."
@@ -453,14 +105,14 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:251
 msgid ""
-"The Videomass2 system folder already includes the binary executables of FFmpeg, FFprobe and FFplay.\n"
+"The Videomass2 system folder already includes the binary executables of "
+"FFmpeg, FFprobe and FFplay.\n"
 "\n"
 "Do you want to use them?"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:254
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:91
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:103
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:86
 msgid "Please Confirm - Videomass2"
 msgstr ""
 
@@ -479,7 +131,9 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/infoprg.py:62
 msgid ""
-"%s\n"
+"Videomass2 provides a graphical interface for\n"
+"manipulate audio and video streams through\n"
+"FFmpeg.\n"
 "This is a test release version."
 msgstr ""
 
@@ -540,7 +194,10 @@ msgid "Do not use `-i` or output file, please."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/presets_addnew.py:85
-msgid "You can limit the type of files formats imported by specifying in a box a format or multiple formats separated by a space (a list of extensions without the dot).Leave blank to involve any type of file to import inbound."
+msgid ""
+"You can limit the type of files formats imported by specifying in a box a "
+"format or multiple formats separated by a space (a list of extensions "
+"without the dot).Leave blank to involve any type of file to import inbound."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/presets_addnew.py:91
@@ -567,7 +224,8 @@ msgstr ""
 msgid ""
 "Successfull storing !\n"
 "\n"
-"You will find this profile in the 'Users Profiles' preset in the 'Presets Manager' panel.\n"
+"You will find this profile in the 'User Profiles' preset in the 'Presets "
+"Manager' panel.\n"
 "Use the 'Reload presets list' on File menu to update profile list."
 msgstr ""
 
@@ -647,6 +305,7 @@ msgid "Change Toolbar Colour:"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:240
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:591
 msgid "Bar Colour"
 msgstr ""
 
@@ -655,6 +314,7 @@ msgid "Change Toolbar Buttons Colour:"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:249
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:593
 msgid "Buttons Colour"
 msgstr ""
 
@@ -675,7 +335,10 @@ msgid "Allows the text writing to performs your custom parameters."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:285
-msgid "Generates a log file command in the directory specified below. Log file is a file containing the parameters of the execution process, info and error messages."
+msgid ""
+"Generates a log file command in the directory specified below. Log file is a "
+"file containing the parameters of the execution process, info and error "
+"messages."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:290
@@ -689,7 +352,10 @@ msgid "Path generation file"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:294
-msgid "Enable custom search for the executable FFmpeg. If the checkbox is disabled or if the path field is empty, the search of the executable is entrusted to the system."
+msgid ""
+"Enable custom search for the executable FFmpeg. If the checkbox is disabled "
+"or if the path field is empty, the search of the executable is entrusted to "
+"the system."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:299
@@ -701,7 +367,10 @@ msgid "path to executable binary FFmpeg"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:306
-msgid "Enable custom search for the executable FFprobe. If the checkbox is disabled or if the path field is empty, the search of the executable is entrusted to the system."
+msgid ""
+"Enable custom search for the executable FFprobe. If the checkbox is disabled "
+"or if the path field is empty, the search of the executable is entrusted to "
+"the system."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:311
@@ -713,7 +382,10 @@ msgid "path to executable binary FFprobe"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:318
-msgid "Enable custom search for the executable FFplay. If the checkbox is disabled or if the path field is empty, the search of the executable is entrusted to the system."
+msgid ""
+"Enable custom search for the executable FFplay. If the checkbox is disabled "
+"or if the path field is empty, the search of the executable is entrusted to "
+"the system."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:323
@@ -746,6 +418,70 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py:651
 msgid "Changes will take affect once the program has been restarted"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:84
+#, python-format
+msgid ""
+"Already exist: \n"
+"\n"
+"%s\n"
+"\n"
+"Do you want to overwrite? "
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:93
+#, python-format
+msgid ""
+"The file does not exist:\n"
+"\n"
+"'%s'\n"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:94
+msgid "Input file error - Videomass2"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:100
+#, python-format
+msgid ""
+"The folder does not exist:\n"
+"\n"
+"'%s'\n"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:101
+msgid "Output folder error - Videomass2"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py:71
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py:85
+#, python-format
+msgid "File does not exist or not a valid file:  %s"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py:128
+msgid "Videomass2 - Loading..."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py:129
+msgid ""
+"\n"
+"Wait....\n"
+"Audio peak analysis.\n"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/presets_manager_properties.py:58
+#, python-format
+msgid ""
+"The selected profile is not suitable to convert the following file formats:\n"
+"\n"
+"%s\n"
+"\n"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/presets_manager_properties.py:61
+msgid "Unsuitable format - Videoamass2"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py:117
@@ -785,7 +521,8 @@ msgid "Show information about the metadata of the selected imported file."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py:276
-msgid "Preview exported files. Reproduction exported file when finish encoding."
+msgid ""
+"Preview exported files. Reproduction exported file when finish encoding."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py:279
@@ -869,11 +606,11 @@ msgid "..Sometimes it can be useful"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py:614
-msgid "Close Videomass2"
+msgid "Exit"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py:614
-msgid "Exit"
+msgid "Close Videomass2"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py:620
@@ -930,6 +667,7 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py:803
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:44
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:106
 msgid "Audio Conversions"
 msgstr ""
 
@@ -942,6 +680,10 @@ msgid "Help"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:99
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:252
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:589
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:711
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:766
 msgid "Save audio from movie"
 msgstr ""
 
@@ -982,11 +724,15 @@ msgid "Audio Container Selection"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:199
-msgid "Enable advanced settings as audio bit-rate, audio channel and audio rate of the selected audio codec."
+msgid ""
+"Enable advanced settings as audio bit-rate, audio channel and audio rate of "
+"the selected audio codec."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:203
-msgid "Calculate the maximum and average peak in dB values of the one audio track imported. This feature is disabled for multiple file to process."
+msgid ""
+"Calculate the maximum and average peak in dB values of the one audio track "
+"imported. This feature is disabled for multiple file to process."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:208
@@ -998,10 +744,13 @@ msgid "Average peak scanned in dB values."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:210
-msgid "Threshold for the maximum peak level in dB values. The default setting is -1.0 dB and is good for most of the processes."
+msgid ""
+"Threshold for the maximum peak level in dB values. The default setting is "
+"-1.0 dB and is good for most of the processes."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:389
+#, python-format
 msgid ""
 "There are no audio streams:\n"
 "%s "
@@ -1019,13 +768,16 @@ msgid "Stream choice - Videomass2"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:412
+#, python-format
 msgid ""
 "Nothing choice:\n"
 "%s "
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:432
-msgid "Tip: check the volume peak by pressing the Analyzes button; set the normalize maximum amplitude or accept default dB value (-1.0)"
+msgid ""
+"Tip: check the volume peak by pressing the Analyzes button; set the "
+"normalize maximum amplitude or accept default dB value (-1.0)"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:445
@@ -1034,7 +786,9 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:486
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1364
-msgid "The audio stream peak level is equal to or higher than the level set on the threshold. If you proceed, there will be no changes."
+msgid ""
+"The audio stream peak level is equal to or higher than the level set on the "
+"threshold. If you proceed, there will be no changes."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:561
@@ -1042,6 +796,10 @@ msgstr ""
 msgid ""
 "Missing volume dectect!\n"
 "Press the analyze button before proceeding."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:665
+msgid "Save audio from movies"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:704
@@ -1091,10 +849,12 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:787
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1822
+#, python-format
 msgid "Create a new profile on \"%s\" preset - Videomass2"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py:67
+#, python-format
 msgid "Directories/folders are not accepted: > '%s'"
 msgstr ""
 
@@ -1103,6 +863,7 @@ msgid "duration is skipped"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py:87
+#, python-format
 msgid "Duplicate files are not accepted: > '%s'"
 msgstr ""
 
@@ -1119,14 +880,17 @@ msgid "Files list"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py:192
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py:213
 msgid "Play selected file"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py:193
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py:215
 msgid "Show metadata window"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py:209
+#, python-format
 msgid "No file selected to `%s` yet"
 msgstr ""
 
@@ -1135,62 +899,82 @@ msgid "Choose a directory: - Videomass2"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:45
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:107
 msgid "Extract audio from video"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:46
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:108
 msgid "Convert to AVI"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:47
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:109
 msgid "Mobile Phones multimedia"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:48
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:110
 msgid "iPod iTunes"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:49
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:111
 msgid "Convert to VCD (mpg)"
 msgstr ""
 
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:50
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:112
+msgid "Convert DVD VOB"
+msgstr ""
+
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:51
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:113
 msgid "Convert to quicktime (mov)"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:52
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:114
 msgid "Convert to DV"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:53
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:115
 msgid "Google Android"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:54
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:116
 msgid "Google webm"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:55
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:117
 msgid "DVD Conversions"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:56
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:118
 msgid "MPEG-4 Conversions"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:57
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:119
 msgid "PS3 Compatible"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:58
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:120
 msgid "PSP Compatible"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:59
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:121
 msgid "Websites"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:60
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:122
 msgid "User Profiles"
 msgstr ""
 
@@ -1223,10 +1007,15 @@ msgid "Supported formats"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:304
-msgid "For some circumstance, the selected preset is corrupted. To restore the original copy at least go to the File menu and choose 'restore the preset source in use'. Note, before you make this choice, saved your personal settings."
+msgid ""
+"For some circumstance, the selected preset is corrupted. To restore the "
+"original copy at least go to the File menu and choose 'restore the preset "
+"source in use'. Note, before you make this choice, saved your personal "
+"settings."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:352
+#, python-format
 msgid "Pofile Name Selected:  %s"
 msgstr ""
 
@@ -1239,10 +1028,12 @@ msgid "The preset is saved"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:401
+#, python-format
 msgid "Preset restore (%s.vdms) - Videomass2 "
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:411
+#, python-format
 msgid ""
 "'%s' \n"
 "\n"
@@ -1255,7 +1046,10 @@ msgid ""
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:418
-msgid "The preset \"%s\" will be imported and will overwrite the one in use ! Proceed ?"
+#, python-format
+msgid ""
+"The preset \"%s\" will be imported and will overwrite the one in use ! "
+"Proceed ?"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:420
@@ -1270,10 +1064,13 @@ msgid "The current preset will be overwritten to default values! proceed?"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:453
-msgid "WARNING: you are going to restore all default presets from videomass2! Proceed?"
+msgid ""
+"WARNING: you are going to restore all default presets from videomass2! "
+"Proceed?"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:482
+#, python-format
 msgid "Create a new profile on the selected \"%s\" preset"
 msgstr ""
 
@@ -1282,6 +1079,7 @@ msgid "Select a profile in the list before to edit profile itself"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:510
+#, python-format
 msgid "Edit profile on \"%s\" preset: "
 msgstr ""
 
@@ -1297,11 +1095,20 @@ msgstr ""
 msgid "Select a profile in the list before start encoding"
 msgstr ""
 
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:77
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:125
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1493
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1525
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1692
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1762
 msgid "Copy Video Codec"
 msgstr ""
 
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:78
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:126
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1509
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1707
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1776
 msgid "Save Images From Video"
 msgstr ""
 
@@ -1349,24 +1156,24 @@ msgstr ""
 msgid "Filters Section"
 msgstr ""
 
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:243
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:250
-msgid "Set default "
-msgstr ""
-
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:260
 msgid "Audio Codec Selecting"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:261
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:698
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:699
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1174
 msgid "Default (managed by FFmpeg)"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:269
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1214
 msgid "Try to copy audio source"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:270
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1222
 msgid "No audio stream (silent)"
 msgstr ""
 
@@ -1376,24 +1183,6 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:307
 msgid "Max Peak Level Threshold:  "
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:335
-msgid "presets"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:335
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:344
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:351
-msgid "Disabled"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:344
-msgid "Profile"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:351
-msgid "Tune"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:525
@@ -1413,19 +1202,28 @@ msgid "H.264/X.264 Options"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:539
-msgid "Video container that will be used in the conversion. NOTE: for any container change, all settings there be reset."
+msgid ""
+"Video container that will be used in the conversion. NOTE: for any container "
+"change, all settings there be reset."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:546
-msgid "If use double pass, can improve the video quality, but it take more time. We recommend using it in high video compression."
+msgid ""
+"If use double pass, can improve the video quality, but it take more time. We "
+"recommend using it in high video compression."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:551
-msgid "The bit rate determines the quality and the final video size. A larger value correspond to greater quality and size of the file."
+msgid ""
+"The bit rate determines the quality and the final video size. A larger value "
+"correspond to greater quality and size of the file."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:559
-msgid "CRF (constant rate factor) Affects the quality of the final video. Used for h264 codec on single pass only, 2-pass encoding swich to bitrate. With lower values the quality is higher and a larger file size."
+msgid ""
+"CRF (constant rate factor) Affects the quality of the final video. Used for "
+"h264 codec on single pass only, 2-pass encoding swich to bitrate. With lower "
+"values the quality is higher and a larger file size."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:566
@@ -1437,27 +1235,41 @@ msgid "Clear all enabled filters "
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:571
-msgid "Video aspect (Aspect Ratio) is the video width and video height ratio. Leave on 'Set default' to copy the original settings."
+msgid ""
+"Video aspect (Aspect Ratio) is the video width and video height ratio. Leave "
+"on 'Set default' to copy the original settings."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:576
-msgid "Video Rate: A any video consists of images displayed as frames, repeated a given number of times per second. In countries are 30 NTSC, PAL countries (like Italy) are 25. Leave on 'Set default' to copy the original settings."
+msgid ""
+"Video Rate: A any video consists of images displayed as frames, repeated a "
+"given number of times per second. In countries are 30 NTSC, PAL countries "
+"(like Italy) are 25. Leave on 'Set default' to copy the original settings."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:583
-msgid "Performs audio normalization in the video audio stream. NOTE: this feature is disabled for 'Try to copy audio source' and 'No audio stream (silent)' selections."
+msgid ""
+"Performs audio normalization in the video audio stream. NOTE: this feature "
+"is disabled for 'Try to copy audio source' and 'No audio stream (silent)' "
+"selections."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:588
-msgid "Calculate the maximum and average peak in dB values, of the audio stream on the video imported."
+msgid ""
+"Calculate the maximum and average peak in dB values, of the audio stream on "
+"the video imported."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:592
-msgid "Threshold for the maximum peak level in dB values. The default setting is -1.0 dB and is good for most of the processes"
+msgid ""
+"Threshold for the maximum peak level in dB values. The default setting is "
+"-1.0 dB and is good for most of the processes"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:597
-msgid "Choose the appropriate Audio Codec. Some Audio Codecs are disabled for certain Video Containers. "
+msgid ""
+"Choose the appropriate Audio Codec. Some Audio Codecs are disabled for "
+"certain Video Containers. "
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:600
@@ -1473,11 +1285,16 @@ msgid "tune h.264"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:606
-msgid "The parameters on this tab are enabled only for the video-codec h.264. Although optional, is set to 'preset medium' as default parameter."
+msgid ""
+"The parameters on this tab are enabled only for the video-codec h.264. "
+"Although optional, is set to 'preset medium' as default parameter."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:765
-msgid "Tip: set a short time progress duration with `Duration` button, then try set the `Video Rate` at low values (0.2 fps); More is low, the lower will be the extracted images. "
+msgid ""
+"Tip: set a short time progress duration with `Duration` button, then try set "
+"the `Video Rate` at low values (0.2 fps); More is low, the lower will be the "
+"extracted images. "
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:769
@@ -1485,6 +1302,7 @@ msgid "Output format: Save images"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:783
+#, python-format
 msgid "Output format: %s"
 msgstr ""
 
@@ -1494,11 +1312,17 @@ msgid "No filter enabled"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1324
-msgid "Tip: check the volume peak by pressing the Analyzess button; set the normalize maximum amplitude or accept default dB value (-1.0)"
+msgid ""
+"Tip: check the volume peak by pressing the Analyzess button; set the "
+"normalize maximum amplitude or accept default dB value (-1.0)"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1339
 msgid "Disable audio normalization inside video"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1649
+msgid "Save Images from video"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1693
@@ -1566,7 +1390,9 @@ msgstr ""
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/ffprobe_parser.py:38
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/task_processing.py:258
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/volumedetect.py:37
-msgid "Non-ASCII/UTF-8 character string not supported. Please, check the filename and correct it."
+msgid ""
+"Non-ASCII/UTF-8 character string not supported. Please, check the filename "
+"and correct it."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/ffplay_reproduction.py:40
@@ -1592,7 +1418,9 @@ msgid "Abort"
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/task_processing.py:109
-msgid "Show FFmpeg messages in real time in the log view console, useful for knowledge the all exit status as errors and warnings."
+msgid ""
+"Show FFmpeg messages in real time in the log view console, useful for "
+"knowledge the all exit status as errors and warnings."
 msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/task_processing.py:115
@@ -1605,35 +1433,4 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/volumedetect.py:41
 msgid "File does not exist:"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_SYS/msg_info.py:65
-msgid "Videomass2 is a cross-platform GUI for FFmpeg."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:77
-msgid ""
-"Can not find the configuration file\n"
-"\n"
-"Sorry, cannot continue.."
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:85
-msgid ""
-"Videomass2: Outdated configuration file.\n"
-"Current version do not match with %s .\n"
-"\n"
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:89
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:101
-msgid ""
-"%s\n"
-"Do you want to restore the new one? "
-msgstr ""
-
-#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:99
-msgid ""
-"Videomass2: corrupt configuration file\n"
-"\n"
 msgstr ""

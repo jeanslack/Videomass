@@ -36,6 +36,27 @@ PWD = os.getcwd() # work current directory (where is Videomsass?)
 DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
 
 #------------------------------------------------------------------------#
+
+def parsing_fileconf():
+    """
+    - called by bootstrap on_init -
+    Make a parsing of the configuration file localized on 
+    ``~/.videomass2/videomass2.conf`` and return values list of the current 
+    program settings. If this file is not present or is damaged, it is marked 
+    as corrupt.
+    """
+    filename = '%s/.videomass2/videomass2.conf' % (DIRNAME)
+
+    with open (filename, 'r') as f:
+        fconf = f.readlines()
+    lst = [line.strip() for line in fconf if not line.startswith('#')]
+    curr_conf = [x for x in lst if x]# list without empties values
+    if not curr_conf:
+        return 'corrupted'
+    else:
+        return curr_conf
+#------------------------------------------------------------------------#
+
 def system_check():
     """
     - called by bootstrap on_init -
@@ -47,6 +68,7 @@ def system_check():
     the user's home.  
     """
     copyerr = False
+    existfileconf = True # il file conf esiste (True) o non esite (False)
     
     # What is the OS ??
     #OS = [x for x in ['Darwin','Linux','Windows'] if platform.system() in x ][0]
@@ -68,42 +90,43 @@ def system_check():
     #### check videomass.conf and config. folder
     if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
         if os.path.isfile('%s/.videomass2/videomass2.conf' % DIRNAME):
-            pass
+            fileconf = parsing_fileconf() # fileconf data
+            if fileconf == 'corrupted':
+                print 'videomass2.conf is corrupted! try to restore..'
+                existfileconf = False
+            if float(fileconf[0]) < 1.2:
+                existfileconf = False
         else:
-            if OS == ('Linux') or OS == ('Darwin'):
-                shutil.copyfile('%s/videomass2.conf' % path_srcShare, 
-                                '%s/.videomass2/videomass2.conf' % DIRNAME)
-            elif OS == ('Windows'):
-                shutil.copyfile('%s/videomassWin32.conf' % path_srcShare, 
-                                '%s/.videomass2/videomass2.conf' % DIRNAME)
+            existfileconf = False
+        
+        if not existfileconf:
+            try:
+                if OS == ('Linux') or OS == ('Darwin'):
+                    shutil.copyfile('%s/videomass2.conf' % path_srcShare, 
+                                    '%s/.videomass2/videomass2.conf' % DIRNAME)
+                elif OS == ('Windows'):
+                    shutil.copyfile('%s/videomassWin32.conf' % path_srcShare, 
+                                    '%s/.videomass2/videomass2.conf' % DIRNAME)
+                fileconf = parsing_fileconf() # fileconf data, reread the file
+            except IOError:
+                copyerr = True
+                fileconf = 'corrupted'
     else:
         try:
-            shutil.copytree(path_srcShare, '%s/.videomass2' % DIRNAME)
+            print 'sono qui'
+            shutil.copytree(path_srcShare,'%s/.videomass2' % DIRNAME)
             if OS == ('Windows'):
                 os.remove("%s/.videomass2/videomass2.conf" % (DIRNAME))
                 os.rename("%s/.videomass2/videomassWin32.conf" % (DIRNAME),
                           "%s/.videomass2/videomass2.conf" % (DIRNAME))
+            fileconf = parsing_fileconf() # fileconf data, reread the file
         except OSError:
             copyerr = True
+            fileconf = 'corrupted'
+        except IOError:
+            copyerr = True
+            fileconf = 'corrupted'
 
-    return (OS, path_srcShare, copyerr, installation)
+    return (OS, path_srcShare, copyerr, installation, fileconf)
 
 #------------------------------------------------------------------------#
-def parsing_fileconf():
-    """
-    - called by bootstrap on_init -
-    Make a parsing of the configuration file localized on 
-    ``~/.videomass2/videomass2.conf`` and return values list of the current 
-    program settings. If this file is not present or is damaged, it is marked 
-    as corrupt.
-    """
-    filename = '%s/.videomass2/videomass2.conf' % (DIRNAME)
-
-    with open (filename, 'r') as f:
-        fconf = f.readlines()
-    lst = [line.strip() for line in fconf if not line.startswith('#')]
-    curr_conf = [x for x in lst if x]# list without empties values
-    if not curr_conf:
-        return 'corrupted'
-    else:
-        return curr_conf

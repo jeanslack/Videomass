@@ -29,7 +29,7 @@
 #########################################################
 import wx
 import os
-from vdms_SYS.ctrl_run import system_check, parsing_fileconf
+from vdms_SYS.ctrl_run import system_check
 from vdms_SYS.appearance import Appearance
 
 # add translation macro to builtin similar to what gettext does
@@ -71,40 +71,13 @@ class Videomass(wx.App):
         self.updateLanguage(lang)
         
         setui = system_check() # for user-space settings
-        fileconf = parsing_fileconf() # for user interface settings
+        fileconf = setui[4] # for user interface settings
         
-        if setui[2]: # if source dir is corrupt
+        if setui[2]: # if source /share is missing and .videomass is corrupted
             wx.MessageBox(_(u'Can not find the configuration file\n\n'
-                          u'Sorry, cannot continue..'),
-                          'Fatal Error - Videomass2', wx.ICON_STOP)
+                            u'Sorry, cannot continue..'),
+                             'Fatal Error - Videomass2', wx.ICON_STOP)
             print 'Videomass2: Fatal Error, file configuration not found'
-            return False
-
-        # check videomass2.conf version
-        if float(fileconf[0]) < 1.2:
-            msg = (_(u'Videomass2: Outdated configuration file.\n'
-                    u'Current version do not match with %s .\n\n') 
-                    % fileconf[0])
-            print msg
-            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ') 
-                             % (msg), 
-                             _(u'Please Confirm - Videomass2'),
-                              wx.ICON_QUESTION | 
-                              wx.YES_NO, 
-                              None) == wx.YES:
-                os.remove("%s/videomass2.conf" % path_confdir)
-            return False
-            
-        elif fileconf == 'corrupted':
-            msg = (_(u'Videomass2: corrupt configuration file\n\n'))
-            print msg
-            if wx.MessageBox(_(u'%s\nDo you want to restore the new one? ') 
-                             % (msg), 
-                             _(u'Please Confirm - Videomass2'),
-                             wx.ICON_QUESTION | 
-                             wx.YES_NO, 
-                             None) == wx.YES:
-                os.remove("%s/videomass2.conf" % path_confdir)
             return False
         
         icons = Appearance(setui[3], fileconf[14])# set appearance instance
