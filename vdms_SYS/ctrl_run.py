@@ -113,7 +113,6 @@ def system_check():
                 fileconf = 'corrupted'
     else:
         try:
-            print 'sono qui'
             shutil.copytree(path_srcShare,'%s/.videomass2' % DIRNAME)
             if OS == ('Windows'):
                 os.remove("%s/.videomass2/videomass2.conf" % (DIRNAME))

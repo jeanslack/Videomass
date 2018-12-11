@@ -1,14 +1,14 @@
 # English translation for videomass2.
 # Copyright (c) 2018 Gianluca Pernigotto
 # This file is distributed under the same license as the videomass2 package
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+# Gianluca Pernigotto <jeanlucperni@gmail.com>, 2018, 2019.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-11 11:52+0100\n"
-"PO-Revision-Date: 2018-12-11 11:52+0100\n"
+"PO-Revision-Date: 2018-12-11 19:46+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
