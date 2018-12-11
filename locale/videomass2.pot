@@ -8,14 +8,380 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-10 19:06+0100\n"
+"POT-Creation-Date: 2018-12-11 11:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:223
+msgid ""
+"The audio channels are represented by monophonic, \n"
+"stereophonic and quadraphonic techniques reproduction.\n"
+"For some codecs can only assign an audio stream\n"
+"monaural or stereo, for others even polyphonic.\n"
+"If you are insecure you set to \"Not set\", will be copied\n"
+"source values."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:231
+msgid ""
+"The audio Rate (or sample-rate) is the sound sampling \n"
+"frequency and is measured in hertz. The higher the frequency, \n"
+"plus the audio signal will be true to the sound source, but \n"
+"the file will increase its size. For normal playback with \n"
+"audio CD set a sample rate of 44100kHz. If you are insecure \n"
+"you set to \"Not set\", will be copied source values."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:239
+msgid ""
+"The audio bitrate affects on file compression\n"
+"and on the quality of listening. The higher\n"
+"the value and more higher quality."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:244
+msgid ""
+"bit depth is the number of bits of information in each \n"
+"sample, and it directly corresponds to the resolution \n"
+"of each sample. Bit depth is only meaningful in reference \n"
+"to a PCM digital signal. Non-PCM formats, such as lossy \n"
+"compression formats, do not have associated bit depths."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:79
+msgid "Seeking (start point) [hh,mm,ss]"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:91
+msgid "Cut (end point) [hh,mm,ss]"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:102
+msgid "Hours time"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:103
+msgid "Minutes Time"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:104
+msgid "Seconds time"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:108
+msgid "Hours amount duration"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:109
+msgid "Minutes amount duration"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:110
+msgid "Seconds amount duration"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:260
+msgid "Flip over"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:261
+msgid "Rotate Left"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:262
+msgid "Rotate Right"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:263
+msgid "Flip below"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:269
+msgid "Orientation points"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:275
+msgid "Set Video/Image Rotation - Videomass2"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:277
+msgid "Reverses visual movie from bottom to top"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:279
+msgid "Rotate view movie to left"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:281
+msgid "Rotate view movie to Right"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:283
+msgid "Reverses visual movie from top to bottom"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:285
+msgid "Display show settings"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:357
+msgid "180° from bottom to top"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:363
+msgid "Rotate 90° Left"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:368
+msgid "Rotate 90° Right"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:373
+msgid "180° from top to bottom"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:423
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:638
+msgid "Width"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:427
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:651
+msgid "Height"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:440
+msgid "Crop Dimensions"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:512
+msgid ""
+"The height of the output video.\n"
+"Set to -1 for disabling."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:513
+msgid ""
+"The width of the output video.\n"
+"Set to -1 for disabling."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:514
+msgid "The horizontal position of the left edge."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:515
+msgid "The vertical position of the top edge of the left corner."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:516
+#, python-format
+msgid ""
+"Width:\n"
+"%s"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:519
+#, python-format
+msgid ""
+"Height:\n"
+"%s"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:636
+msgid "Scale (resize)"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:655
+msgid "Setdar (display aspect ratio):"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:656
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:675
+msgid "Numerator"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:670
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:688
+msgid "Denominator"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:674
+msgid "SetSar (sample aspect ratio):"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:753
+msgid "Resize (change resolution) - Videomass2"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:755
+msgid "Scale (resize) the input video or image."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:756
+#, python-format
+msgid ""
+"WIDTH:\n"
+"%s"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:757
+#, python-format
+msgid ""
+"HEIGHT:\n"
+"%s"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:758
+msgid ""
+"Sets the Display Aspect Ratio.\n"
+"Set to 0 to disabling."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:760
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:764
+#, python-format
+msgid ""
+"-NUMERATOR-\n"
+"%s"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:761
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:765
+#, python-format
+msgid ""
+"-DENOMINATOR-\n"
+"%s"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:762
+msgid ""
+"The setsar filter sets the Sample (aka Pixel) Aspect Ratio.\n"
+"Set to 0 to disabling."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:885
+msgid "Deinterlace"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:887
+msgid "Interlace"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:890
+msgid "Deinterlaces (Using the 'w3fdif' filter)"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:905
+msgid "Deinterlaces (Using the 'yadif' filter)"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:927
+msgid "Interlaces (Using the 'interlace' filter)"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:942
+msgid "Advanced Options"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:950
+msgid "Deinterlace/Interlace - Videomass2"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1013
+msgid "Deinterlace the input video with `w3fdif` filter"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1016
+msgid "Set the interlacing filter coefficients."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1019
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1029
+msgid "Specify which frames to deinterlace."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1022
+msgid ""
+"Deinterlace the input video with `yadif` filter. For FFmpeg is the best and "
+"fastest choice "
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1025
+msgid ""
+"mode\n"
+"The interlacing mode to adopt."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1027
+msgid ""
+"parity\n"
+"The picture field parity assumed for the input interlaced video."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1031
+msgid "Simple interlacing filter from progressive contents."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1033
+msgid ""
+"scan:\n"
+"determines whether the interlaced frame is taken from the even (tff - "
+"default) or odd (bff) lines of the progressive frame."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1037
+msgid ""
+"lowpas:\n"
+"Enable (default) or disable the vertical lowpass filter to avoid twitter "
+"interlacing and reduce moire patterns.\n"
+"Default is no setting."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1327
+msgid "Apply Denoisers Filters"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1330
+msgid "Enable nlmeans denoiser"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1333
+msgid "nlmeans options"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1341
+msgid "Enable hqdn3d denoiser"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1344
+msgid "hqdn3d options"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1416
+msgid "Denoisers filters - Videomass2"
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1417
+msgid ""
+"nlmeans:\n"
+" (Denoise frames using Non-Local Means algorithm is capable of restoring "
+"video sequences with even strong noise. It is ideal for enhancing the "
+"quality of old VHS tapes."
+msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1421
+msgid ""
+"hqdn3d:\n"
+" This is a high precision/quality 3d denoise filter. It aims to reduce image "
+"noise, producing smooth images and making still images really still. It "
+"should enhance compressibility."
+msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:47
 msgid ""
@@ -1433,3 +1799,11 @@ msgstr ""
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/volumedetect.py:41
 msgid "File does not exist:"
 msgstr ""
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:77
+msgid ""
+"Can not find the configuration file\n"
+"\n"
+"Sorry, cannot continue.."
+msgstr ""
+

@@ -25,7 +25,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev 04/08/2014, 01/18/2015, August 18 2018
+# Rev December/11/2018
 #########################################################
 import wx
 import os
@@ -37,7 +37,7 @@ from vdms_SYS.appearance import Appearance
 import __builtin__
 __builtin__.__dict__['_'] = wx.GetTranslation
 from vdms_SYS import app_const as appC
-
+# set pathname:
 path_confdir = os.path.expanduser('~/.videomass2/')# presets path
 PWD = os.getcwd()
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass2 1.2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-11 09:09+0100\n"
-"PO-Revision-Date: 2018-12-11 09:30+0100\n"
+"POT-Creation-Date: 2018-12-11 11:26+0100\n"
+"PO-Revision-Date: 2018-12-11 11:51+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -19,6 +19,441 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 1.8.11\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:223
+msgid ""
+"The audio channels are represented by monophonic, \n"
+"stereophonic and quadraphonic techniques reproduction.\n"
+"For some codecs can only assign an audio stream\n"
+"monaural or stereo, for others even polyphonic.\n"
+"If you are insecure you set to \"Not set\", will be copied\n"
+"source values."
+msgstr ""
+"I canali audio sono rappresentati da tecniche di riproduzione monofoniche, \n"
+"stereofoniche e quadrifoniche.\n"
+"Per alcuni codecs è possibile solo assegnare un flusso audio monofonico o \n"
+"stereofonico, per altri anche polifonico.\n"
+"Se non si è sicuri,  impostare su \"Non impostato\", così verranno copiati "
+"i\n"
+"valori di origine."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:231
+msgid ""
+"The audio Rate (or sample-rate) is the sound sampling \n"
+"frequency and is measured in hertz. The higher the frequency, \n"
+"plus the audio signal will be true to the sound source, but \n"
+"the file will increase its size. For normal playback with \n"
+"audio CD set a sample rate of 44100kHz. If you are insecure \n"
+"you set to \"Not set\", will be copied source values."
+msgstr ""
+"La frequenza audio (o frequenza di campionamento) è la frequenza \n"
+"di campionamento del suono e viene misurata in hertz. Più alta è la "
+"frequenza, \n"
+"più il segnale audio sarà fedele alla sorgente sonora, ma il file "
+"aumenterà \n"
+"le sue dimensioni. Per la riproduzione di CD audio impostare una frequenza \n"
+"di campionamento a 44100kHz.  Se non si è sicuri, lasciare su \"Non impostato"
+"\", \n"
+"così verranno copiati i valori di origine."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:239
+msgid ""
+"The audio bitrate affects on file compression\n"
+"and on the quality of listening. The higher\n"
+"the value and more higher quality."
+msgstr ""
+"L'audio bit-rate influisce sulla compressione dei file e \n"
+"sulla qualità dell'ascolto.\n"
+"Più alto è il suo valore e più alta sarà la qualità del suono."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py:244
+msgid ""
+"bit depth is the number of bits of information in each \n"
+"sample, and it directly corresponds to the resolution \n"
+"of each sample. Bit depth is only meaningful in reference \n"
+"to a PCM digital signal. Non-PCM formats, such as lossy \n"
+"compression formats, do not have associated bit depths."
+msgstr ""
+"la profondità di bit è la risoluzione in bit delle informazioni in ciascun \n"
+"campione audio ed è significativa solo in riferimento a un segnale digitale "
+"PCM.\n"
+"I formati non PCM, come i formati di compressione con perdita, non hanno \n"
+"profondità di bit associate."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:79
+msgid "Seeking (start point) [hh,mm,ss]"
+msgstr "Cerca (punto di partenza) [ore, minuti, secondi]"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:91
+msgid "Cut (end point) [hh,mm,ss]"
+msgstr "Taglia (punto finale) [ore, minuti, secondi]"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:102
+msgid "Hours time"
+msgstr "Inizio del tempo in Ore"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:103
+msgid "Minutes Time"
+msgstr "Inizio del tempo in Minuti"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:104
+msgid "Seconds time"
+msgstr "Inizio del tempo in Secondi"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:108
+msgid "Hours amount duration"
+msgstr "Tempo di durata in Ore, dal tempo di inizio"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:109
+msgid "Minutes amount duration"
+msgstr "Tempo di durata in Minuti, dal tempo di inizio"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:110
+msgid "Seconds amount duration"
+msgstr "Tempo di durata in Secondi, dal tempo di inizio"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:260
+msgid "Flip over"
+msgstr "Capovolgere sopra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:261
+msgid "Rotate Left"
+msgstr "Ruotare a sinistra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:262
+msgid "Rotate Right"
+msgstr "Ruotare a destra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:263
+msgid "Flip below"
+msgstr "Capovolgere sotto"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:269
+msgid "Orientation points"
+msgstr "Punti di orientamento"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:275
+msgid "Set Video/Image Rotation - Videomass2"
+msgstr "Impostazioni di Rotazione Video/Immagine - Videomass2"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:277
+msgid "Reverses visual movie from bottom to top"
+msgstr "Inverti l'immagine dal basso verso l'alto"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:279
+msgid "Rotate view movie to left"
+msgstr "Ruota l'immagine a Sinistra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:281
+msgid "Rotate view movie to Right"
+msgstr "Ruota l'immagine verso Destra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:283
+msgid "Reverses visual movie from top to bottom"
+msgstr "Inverti l'immagine dall'alto verso il basso"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:285
+msgid "Display show settings"
+msgstr "Visualizza le impostazioni correnti"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:357
+msgid "180° from bottom to top"
+msgstr "180° da sotto a sopra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:363
+msgid "Rotate 90° Left"
+msgstr "Ruotare di 90° a sinistra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:368
+msgid "Rotate 90° Right"
+msgstr "Ruotare di 90° a destra"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:373
+msgid "180° from top to bottom"
+msgstr "180° da sopra a sotto"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:423
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:638
+msgid "Width"
+msgstr "Larghezza"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:427
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:651
+msgid "Height"
+msgstr "Altezza"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:440
+msgid "Crop Dimensions"
+msgstr "Dimensione del Ritaglio"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:512
+msgid ""
+"The height of the output video.\n"
+"Set to -1 for disabling."
+msgstr ""
+"L'altezza del video/immagine in uscita.\n"
+"Imposta a -1 per disabilitare"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:513
+msgid ""
+"The width of the output video.\n"
+"Set to -1 for disabling."
+msgstr ""
+"La larghezza del video/immagine in uscita\n"
+"Imposta a -1 per disabilitare"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:514
+msgid "The horizontal position of the left edge."
+msgstr "La posizione orizzontale del bordo sinistro."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:515
+msgid "The vertical position of the top edge of the left corner."
+msgstr "La posizione verticale del bordo superiore dell'angolo sinistro."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:516
+#, python-format
+msgid ""
+"Width:\n"
+"%s"
+msgstr ""
+"Larghezza:\n"
+"%s"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:519
+#, python-format
+msgid ""
+"Height:\n"
+"%s"
+msgstr ""
+"Altezza:\n"
+"%s"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:636
+msgid "Scale (resize)"
+msgstr "Scala (ridimensiona)"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:655
+msgid "Setdar (display aspect ratio):"
+msgstr "Setdar (display aspect ratio):"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:656
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:675
+msgid "Numerator"
+msgstr "Numeratore"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:670
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:688
+msgid "Denominator"
+msgstr "Denominatore"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:674
+msgid "SetSar (sample aspect ratio):"
+msgstr "SetSar (sample aspect ratio):"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:753
+msgid "Resize (change resolution) - Videomass2"
+msgstr "Ridimensiona (cambia risoluzione) - Videomass2"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:755
+msgid "Scale (resize) the input video or image."
+msgstr "Scala (ridimensiona) il video/immagine di input."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:756
+#, python-format
+msgid ""
+"WIDTH:\n"
+"%s"
+msgstr ""
+"LARGHEZZA:\n"
+"%s"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:757
+#, python-format
+msgid ""
+"HEIGHT:\n"
+"%s"
+msgstr ""
+"ALTEZZA:\n"
+"%s"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:758
+msgid ""
+"Sets the Display Aspect Ratio.\n"
+"Set to 0 to disabling."
+msgstr ""
+"Imposta visualizzazione proporzioni dello schermo.\n"
+"Impostare a 0 per disabilitare."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:760
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:764
+#, python-format
+msgid ""
+"-NUMERATOR-\n"
+"%s"
+msgstr ""
+"-NUMERATORE-\n"
+"%s"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:761
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:765
+#, python-format
+msgid ""
+"-DENOMINATOR-\n"
+"%s"
+msgstr ""
+"-DENOMINATORE-\n"
+"%s"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:762
+msgid ""
+"The setsar filter sets the Sample (aka Pixel) Aspect Ratio.\n"
+"Set to 0 to disabling."
+msgstr ""
+"Il filtro setsar imposta il rapporto di aspetto del campione (noto anche "
+"come pixel).\n"
+"Impostare a 0 per disabilitare."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:885
+msgid "Deinterlace"
+msgstr "Deinterlacciamento"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:887
+msgid "Interlace"
+msgstr "Interlacciamento"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:890
+msgid "Deinterlaces (Using the 'w3fdif' filter)"
+msgstr "Deinterlaccia (Usando il filtro 'w3fdif')"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:905
+msgid "Deinterlaces (Using the 'yadif' filter)"
+msgstr "Deinterlaccia (Usando il filtro 'yadif')"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:927
+msgid "Interlaces (Using the 'interlace' filter)"
+msgstr "Interlaccia (Usando il filtro 'interlace')"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:942
+msgid "Advanced Options"
+msgstr "Opzioni Avanzate"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:950
+msgid "Deinterlace/Interlace - Videomass2"
+msgstr "Deinterlacciamento/Interlacciamento - Videomass2"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1013
+msgid "Deinterlace the input video with `w3fdif` filter"
+msgstr "Deinterlaccia il video di input con il filtro `w3fdif`"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1016
+msgid "Set the interlacing filter coefficients."
+msgstr "Imposta i coefficienti del filtro interlacciamento."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1019
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1029
+msgid "Specify which frames to deinterlace."
+msgstr "Specificare i fotogrammi da deinterlacciare."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1022
+msgid ""
+"Deinterlace the input video with `yadif` filter. For FFmpeg is the best and "
+"fastest choice "
+msgstr ""
+"Deinterlaccia il video in ingresso con il filtro `yadif`.\n"
+"Per FFmpeg è la scelta migliore e più veloce."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1025
+msgid ""
+"mode\n"
+"The interlacing mode to adopt."
+msgstr ""
+"mode\n"
+"La modalità interlacciata da adottare."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1027
+msgid ""
+"parity\n"
+"The picture field parity assumed for the input interlaced video."
+msgstr ""
+"parity\n"
+"La parità del campo dell'immagine presupposta per il video interlacciato di "
+"input."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1031
+msgid "Simple interlacing filter from progressive contents."
+msgstr "Filtro interlacciamento semplice dai contenuti progressivi."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1033
+msgid ""
+"scan:\n"
+"determines whether the interlaced frame is taken from the even (tff - "
+"default) or odd (bff) lines of the progressive frame."
+msgstr ""
+"scan:\n"
+"determina se il fotogramma interlacciato viene preso dalle linee pari (TFF - "
+"predefinito) o dispari (BFF) del fotogramma progressivo.\n"
+"Scan=ttf è l'impostazione predefinita."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1037
+msgid ""
+"lowpas:\n"
+"Enable (default) or disable the vertical lowpass filter to avoid twitter "
+"interlacing and reduce moire patterns.\n"
+"Default is no setting."
+msgstr ""
+"lowpas:\n"
+"Abilitare (predefinito) o disabilitare il filtro passa-basso verticale per "
+"evitare l'interlacciamento di twitter e ridurre i pattern di moiré.\n"
+"Lowpass=1 è l'impostazione predefinita."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1327
+msgid "Apply Denoisers Filters"
+msgstr "Applicare Filtri Denoisers (rimuovono i disturbi dell'immagine)"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1330
+msgid "Enable nlmeans denoiser"
+msgstr "Abilita il denoiser nlmeans"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1333
+msgid "nlmeans options"
+msgstr "Opzioni filtro nlmeans"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1341
+msgid "Enable hqdn3d denoiser"
+msgstr "Abilita il denoiser hqdn3d"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1344
+msgid "hqdn3d options"
+msgstr "Opzioni filtro hqdn3d"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1416
+msgid "Denoisers filters - Videomass2"
+msgstr "Filtri Denoisers - Videomass2"
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1417
+msgid ""
+"nlmeans:\n"
+" (Denoise frames using Non-Local Means algorithm is capable of restoring "
+"video sequences with even strong noise. It is ideal for enhancing the "
+"quality of old VHS tapes."
+msgstr ""
+"nlmeans:\n"
+" (Elimina il disturbo dai fotogrammi utilizzando l'algoritmo Non-Local, il "
+"quale è in grado di ristrutturare sequenze video con rumore anche intenso, "
+"ideale per migliorare la qualità dei vecchi nastri VHS."
+
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py:1421
+msgid ""
+"hqdn3d:\n"
+" This is a high precision/quality 3d denoise filter. It aims to reduce image "
+"noise, producing smooth images and making still images really still. It "
+"should enhance compressibility."
+msgstr ""
+"hqdn3d:\n"
+" Questo è un filtro per il denoise 3d di alta precisione e qualità. Mira a "
+"ridurre il rumore dell'immagine, a produrre immagini uniformi e a rendere "
+"ferme le immagini statiche. Dovrebbe migliorare comprensibilmente la qualità "
+"visiva."
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py:47
 msgid ""
@@ -502,11 +937,11 @@ msgid ""
 "\n"
 "Do you want to overwrite? "
 msgstr ""
-"I seguenti file sono già presenti: \n"
+"File già esistente: \n"
 "\n"
 "%s\n"
 "\n"
-"Vuoi sovrascriverli? "
+"Vuoi sovrascrivere? "
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:93
 #, python-format
@@ -515,7 +950,7 @@ msgid ""
 "\n"
 "'%s'\n"
 msgstr ""
-"Il file non esiste:\n"
+"File inesistente:\n"
 "\n"
 "'%s'\n"
 
@@ -530,19 +965,19 @@ msgid ""
 "\n"
 "'%s'\n"
 msgstr ""
-"La cartella non esiste:\n"
+"Cartella inesistente:\n"
 "\n"
 "'%s'\n"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py:101
 msgid "Output folder error - Videomass2"
-msgstr "Errore cartella destinazione - Videomass2"
+msgstr "Errore cartella di destinazione"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py:71
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py:85
 #, python-format
 msgid "File does not exist or not a valid file:  %s"
-msgstr "Il file non esiste o non è un file valido: %s"
+msgstr "File invalido o non esistente:  %s"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py:128
 msgid "Videomass2 - Loading..."
@@ -556,7 +991,7 @@ msgid ""
 msgstr ""
 "\n"
 "Attendi....\n"
-"Analisi audio livello di picco.\n"
+"Analisi livello di picco.\n"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/presets_manager_properties.py:58
 #, python-format
@@ -918,7 +1353,7 @@ msgstr ""
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:665
 msgid "Save audio from movies"
-msgstr "Salva file audio dal filmato"
+msgstr "Salva l'audio dal filmato"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py:704
 msgid ""
@@ -1055,7 +1490,7 @@ msgstr "Converti in formato AVI"
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:47
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:109
 msgid "Mobile Phones multimedia"
-msgstr ""
+msgstr "Telefoni cellulari multimediali"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:48
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:110
@@ -1070,7 +1505,7 @@ msgstr "Converti in formato VCD (.mpg)"
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:50
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:112
 msgid "Convert DVD VOB"
-msgstr ""
+msgstr "Converti DVD VOB"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:51
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py:113
@@ -1517,7 +1952,7 @@ msgstr "Disattiva la normalizzazione del flusso audio dentro il video"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1649
 msgid "Save Images from video"
-msgstr "Esporta Immagini dal Video"
+msgstr "Esporta le immagini dal video"
 
 #: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py:1693
 msgid ""
@@ -1682,123 +2117,15 @@ msgstr "Errore sconosciuto (assente in err_list)"
 msgid "File does not exist:"
 msgstr "Il file non esiste:"
 
-#~ msgid ""
-#~ "The audio channels are represented by monophonic, \n"
-#~ "stereophonic and quadraphonic techniques reproduction.\n"
-#~ "For some codecs can only assign an audio stream\n"
-#~ "monaural or stereo, for others even polyphonic.\n"
-#~ "If you are insecure you set to \"Not set\", will be copied\n"
-#~ "source values."
-#~ msgstr ""
-#~ "I canali audio sono rappresentati da tecniche di riproduzione "
-#~ "monofoniche, \n"
-#~ "stereofoniche e quadrifoniche.\n"
-#~ "Per alcuni codecs è possibile solo assegnare un flusso audio monofonico "
-#~ "o \n"
-#~ "stereofonico, per altri anche polifonico.\n"
-#~ "Se non si è sicuri,  impostare su \"Non impostato\", così verranno "
-#~ "copiati i\n"
-#~ "valori di origine."
-
-#~ msgid ""
-#~ "The audio Rate (or sample-rate) is the sound sampling \n"
-#~ "frequency and is measured in hertz. The higher the frequency, \n"
-#~ "plus the audio signal will be true to the sound source, but \n"
-#~ "the file will increase its size. For normal playback with \n"
-#~ "audio CD set a sample rate of 44100kHz. If you are insecure \n"
-#~ "you set to \"Not set\", will be copied source values."
-#~ msgstr ""
-#~ "La frequenza audio (o frequenza di campionamento) è la frequenza \n"
-#~ "di campionamento del suono e viene misurata in hertz. Più alta è la "
-#~ "frequenza, \n"
-#~ "più il segnale audio sarà fedele alla sorgente sonora, ma il file "
-#~ "aumenterà \n"
-#~ "le sue dimensioni. Per la riproduzione di CD audio impostare una "
-#~ "frequenza \n"
-#~ "di campionamento a 44100kHz.  Se non si è sicuri, lasciare su \"Non "
-#~ "impostato\", \n"
-#~ "così verranno copiati i valori di origine."
-
-#~ msgid ""
-#~ "The audio bitrate affects on file compression\n"
-#~ "and on the quality of listening. The higher\n"
-#~ "the value and more higher quality."
-#~ msgstr ""
-#~ "L'audio bit-rate influisce sulla compressione dei file e \n"
-#~ "sulla qualità dell'ascolto.\n"
-#~ "Più alto è il suo valore e più alta sarà la qualità del suono."
-
-#~ msgid ""
-#~ "bit depth is the number of bits of information in each \n"
-#~ "sample, and it directly corresponds to the resolution \n"
-#~ "of each sample. Bit depth is only meaningful in reference \n"
-#~ "to a PCM digital signal. Non-PCM formats, such as lossy \n"
-#~ "compression formats, do not have associated bit depths."
-#~ msgstr ""
-#~ "la profondità di bit è la risoluzione in bit delle informazioni in "
-#~ "ciascun \n"
-#~ "campione audio ed è significativa solo in riferimento a un segnale "
-#~ "digitale PCM.\n"
-#~ "I formati non PCM, come i formati di compressione con perdita, non "
-#~ "hanno \n"
-#~ "profondità di bit associate."
-
-#~ msgid "Seeking (start point) [hh,mm,ss]"
-#~ msgstr "Cerca (punto di partenza) [ore, minuti, secondi]"
-
-#~ msgid "Cut (end point) [hh,mm,ss]"
-#~ msgstr "Taglia (punto finale) [ore, minuti, secondi]"
-
-#~ msgid "Hours time"
-#~ msgstr "Inizio del tempo in Ore"
-
-#~ msgid "Minutes Time"
-#~ msgstr "Inizio del tempo in Minuti"
-
-#~ msgid "Seconds time"
-#~ msgstr "Inizio del tempo in Secondi"
-
-#~ msgid "Hours amount duration"
-#~ msgstr "Tempo di durata in Ore, dal tempo di inizio"
-
-#~ msgid "Minutes amount duration"
-#~ msgstr "Tempo di durata in Minuti, dal tempo di inizio"
-
-#~ msgid "Seconds amount duration"
-#~ msgstr "Tempo di durata in Secondi, dal tempo di inizio"
-
-#~ msgid "Flip over"
-#~ msgstr "Capovolgere sopra"
-
-#~ msgid "Rotate Left"
-#~ msgstr "Ruotare a sinistra"
-
-#~ msgid "Rotate Right"
-#~ msgstr "Ruotare a destra"
-
-#~ msgid "Flip below"
-#~ msgstr "Capovolgere sotto"
-
-#~ msgid "Orientation points"
-#~ msgstr "Punti di orientamento"
-
-#~ msgid "Set Video/Image Rotation - Videomass2"
-#~ msgstr "Impostazioni di Rotazione Video/Immagine - Videomass2"
-
-#~ msgid "Reverses visual movie from bottom to top"
-#~ msgstr "Inverti l'immagine dal basso verso l'alto"
-
-#~ msgid "Rotate view movie to left"
-#~ msgstr "Ruota l'immagine a Sinistra"
-
-#~ msgid "Rotate view movie to Right"
-#~ msgstr "Ruota l'immagine verso Destra"
-
-#~ msgid "Reverses visual movie from top to bottom"
-#~ msgstr "Inverti l'immagine dall'alto verso il basso"
-
-#~ msgid "Display show settings"
-#~ msgstr "Visualizza le impostazioni correnti"
+#: /home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2:77
+msgid ""
+"Can not find the configuration file\n"
+"\n"
+"Sorry, cannot continue.."
+msgstr ""
+"Impossibile trovare il file di configurazione.\n"
+"\n"
+"Spiacente, non posso continuare.."
 
 #~ msgid "180Â° from bottom to top"
 #~ msgstr "180° da sotto a sopra"
@@ -1812,230 +2139,6 @@ msgstr "Il file non esiste:"
 #~ msgid "180Â° from top to bottom"
 #~ msgstr "180° da sopra a sotto"
 
-#~ msgid "Width"
-#~ msgstr "Larghezza"
-
-#~ msgid "Height"
-#~ msgstr "Altezza"
-
-#~ msgid "Crop Dimensions"
-#~ msgstr "Dimensione del Ritaglio"
-
-#~ msgid ""
-#~ "The height of the output video.\n"
-#~ "Set to -1 for disabling."
-#~ msgstr ""
-#~ "L'altezza del video/immagine in uscita.\n"
-#~ "Imposta a -1 per disabilitare"
-
-#~ msgid ""
-#~ "The width of the output video.\n"
-#~ "Set to -1 for disabling."
-#~ msgstr ""
-#~ "La larghezza del video/immagine in uscita\n"
-#~ "Imposta a -1 per disabilitare"
-
-#~ msgid "The horizontal position of the left edge."
-#~ msgstr "La posizione orizzontale del bordo sinistro."
-
-#~ msgid "The vertical position of the top edge of the left corner."
-#~ msgstr "La posizione verticale del bordo superiore dell'angolo sinistro."
-
-#~ msgid ""
-#~ "Width:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Larghezza:\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Height:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Altezza:\n"
-#~ "%s"
-
-#~ msgid "Scale (resize)"
-#~ msgstr "Scala (ridimensiona)"
-
-#~ msgid "Setdar (display aspect ratio):"
-#~ msgstr "Setdar (display aspect ratio):"
-
-#~ msgid "Numerator"
-#~ msgstr "Numeratore"
-
-#~ msgid "Denominator"
-#~ msgstr "Denominatore"
-
-#~ msgid "SetSar (sample aspect ratio):"
-#~ msgstr "SetSar (sample aspect ratio):"
-
-#~ msgid "Resize (change resolution) - Videomass2"
-#~ msgstr "Ridimensiona (cambia risoluzione) - Videomass2"
-
-#~ msgid "Scale (resize) the input video or image."
-#~ msgstr "Scala (ridimensiona) il video/immagine di input."
-
-#~ msgid ""
-#~ "WIDTH:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "LARGHEZZA:\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "HEIGHT:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "ALTEZZA:\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Sets the Display Aspect Ratio.\n"
-#~ "Set to 0 to disabling."
-#~ msgstr ""
-#~ "Imposta visualizzazione proporzioni dello schermo.\n"
-#~ "Impostare a 0 per disabilitare."
-
-#~ msgid ""
-#~ "-NUMERATOR-\n"
-#~ "%s"
-#~ msgstr ""
-#~ "-NUMERATORE-\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "-DENOMINATOR-\n"
-#~ "%s"
-#~ msgstr ""
-#~ "-DENOMINATORE-\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "The setsar filter sets the Sample (aka Pixel) Aspect Ratio.\n"
-#~ "Set to 0 to disabling."
-#~ msgstr ""
-#~ "Il filtro setsar imposta il rapporto di aspetto del campione (noto anche "
-#~ "come pixel).\n"
-#~ "Impostare a 0 per disabilitare."
-
-#~ msgid "Deinterlace"
-#~ msgstr "Deinterlacciamento"
-
-#~ msgid "Interlace"
-#~ msgstr "Interlacciamento"
-
-#~ msgid "Deinterlaces (Using the 'w3fdif' filter)"
-#~ msgstr "Deinterlaccia (Usando il filtro 'w3fdif')"
-
-#~ msgid "Deinterlaces (Using the 'yadif' filter)"
-#~ msgstr "Deinterlaccia (Usando il filtro 'yadif')"
-
-#~ msgid "Interlaces (Using the 'interlace' filter)"
-#~ msgstr "Interlaccia (Usando il filtro 'interlace')"
-
-#~ msgid "Advanced Options"
-#~ msgstr "Opzioni Avanzate"
-
-#~ msgid "Deinterlace/Interlace - Videomass2"
-#~ msgstr "Deinterlacciamento/Interlacciamento - Videomass2"
-
-#~ msgid "Deinterlace the input video with `w3fdif` filter"
-#~ msgstr "Deinterlaccia il video di input con il filtro `w3fdif`"
-
-#~ msgid "Set the interlacing filter coefficients."
-#~ msgstr "Imposta i coefficienti del filtro interlacciamento."
-
-#~ msgid "Specify which frames to deinterlace."
-#~ msgstr "Specificare i fotogrammi da deinterlacciare."
-
-#~ msgid ""
-#~ "Deinterlace the input video with `yadif` filter. For FFmpeg is the best "
-#~ "and fastest choice "
-#~ msgstr ""
-#~ "Deinterlaccia il video in ingresso con il filtro `yadif`.\n"
-#~ "Per FFmpeg è la scelta migliore e più veloce."
-
-#~ msgid ""
-#~ "mode\n"
-#~ "The interlacing mode to adopt."
-#~ msgstr ""
-#~ "mode\n"
-#~ "La modalità interlacciata da adottare."
-
-#~ msgid ""
-#~ "parity\n"
-#~ "The picture field parity assumed for the input interlaced video."
-#~ msgstr ""
-#~ "parity\n"
-#~ "La parità del campo dell'immagine presupposta per il video interlacciato "
-#~ "di input."
-
-#~ msgid "Simple interlacing filter from progressive contents."
-#~ msgstr "Filtro interlacciamento semplice dai contenuti progressivi."
-
-#~ msgid ""
-#~ "scan:\n"
-#~ "determines whether the interlaced frame is taken from the even (tff - "
-#~ "default) or odd (bff) lines of the progressive frame."
-#~ msgstr ""
-#~ "scan:\n"
-#~ "determina se il fotogramma interlacciato viene preso dalle linee pari "
-#~ "(TFF - predefinito) o dispari (BFF) del fotogramma progressivo.\n"
-#~ "Scan=ttf è l'impostazione predefinita."
-
-#~ msgid ""
-#~ "lowpas:\n"
-#~ "Enable (default) or disable the vertical lowpass filter to avoid twitter "
-#~ "interlacing and reduce moire patterns.\n"
-#~ "Default is no setting."
-#~ msgstr ""
-#~ "lowpas:\n"
-#~ "Abilitare (predefinito) o disabilitare il filtro passa-basso verticale "
-#~ "per evitare l'interlacciamento di twitter e ridurre i pattern di moiré.\n"
-#~ "Lowpass=1 è l'impostazione predefinita."
-
-#~ msgid "Apply Denoisers Filters"
-#~ msgstr "Applicare Filtri Denoisers (rimuovono i disturbi dell'immagine)"
-
-#~ msgid "Enable nlmeans denoiser"
-#~ msgstr "Abilita il denoiser nlmeans"
-
-#~ msgid "nlmeans options"
-#~ msgstr "Opzioni filtro nlmeans"
-
-#~ msgid "Enable hqdn3d denoiser"
-#~ msgstr "Abilita il denoiser hqdn3d"
-
-#~ msgid "hqdn3d options"
-#~ msgstr "Opzioni filtro hqdn3d"
-
-#~ msgid "Denoisers filters - Videomass2"
-#~ msgstr "Filtri Denoisers - Videomass2"
-
-#~ msgid ""
-#~ "nlmeans:\n"
-#~ " (Denoise frames using Non-Local Means algorithm is capable of restoring "
-#~ "video sequences with even strong noise. It is ideal for enhancing the "
-#~ "quality of old VHS tapes."
-#~ msgstr ""
-#~ "nlmeans:\n"
-#~ " (Elimina il disturbo dai fotogrammi utilizzando l'algoritmo Non-Local, "
-#~ "il quale è in grado di ristrutturare sequenze video con rumore anche "
-#~ "intenso, ideale per migliorare la qualità dei vecchi nastri VHS."
-
-#~ msgid ""
-#~ "hqdn3d:\n"
-#~ " This is a high precision/quality 3d denoise filter. It aims to reduce "
-#~ "image noise, producing smooth images and making still images really "
-#~ "still. It should enhance compressibility."
-#~ msgstr ""
-#~ "hqdn3d:\n"
-#~ " Questo è un filtro per il denoise 3d di alta precisione e qualità. Mira "
-#~ "a ridurre il rumore dell'immagine, a produrre immagini uniformi e a "
-#~ "rendere ferme le immagini statiche. Dovrebbe migliorare comprensibilmente "
-#~ "la qualità visiva."
-
 #~ msgid "presets"
 #~ msgstr "Presets"
 
@@ -2044,12 +2147,3 @@ msgstr "Il file non esiste:"
 
 #~ msgid "Tune"
 #~ msgstr "Tune"
-
-#~ msgid ""
-#~ "Can not find the configuration file\n"
-#~ "\n"
-#~ "Sorry, cannot continue.."
-#~ msgstr ""
-#~ "Impossibile trovare il file di configurazione.\n"
-#~ "\n"
-#~ "Spiacente, non posso continuare.."

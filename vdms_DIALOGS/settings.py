@@ -264,7 +264,7 @@ class Setup(wx.Dialog):
         btn_ok = wx.Button(self, wx.ID_APPLY, "")
         gridexit.Add(btn_ok, 0, wx.ALL, 5)
         gridBottom.Add(gridexit, 0, wx.ALL, 10)
-        gridBase.Add(gridBottom)#, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
+        gridBase.Add(gridBottom, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         sizer.Add(gridBase,1, wx.ALL|wx.EXPAND, 5)
         self.SetSizer(sizer)
         sizer.Fit(self)
