@@ -29,7 +29,7 @@
 
 import wx
 import os
-from vdms_IO import IO_tools
+from videomass2.vdms_IO import IO_tools
 
 dirname = os.path.expanduser('~') # /home/user/
 duration = []

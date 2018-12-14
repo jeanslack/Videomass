@@ -33,10 +33,10 @@ import wx
 import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
-from vdms_IO.IO_tools import volumeDetectProcess, stream_play
-from vdms_IO.filedir_control import inspect
-from vdms_DIALOGS.epilogue import Formula
-from vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
+from videomass2.vdms_IO.IO_tools import volumeDetectProcess, stream_play
+from videomass2.vdms_IO.filedir_control import inspect
+from videomass2.vdms_DIALOGS.epilogue import Formula
+from videomass2.vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
 
                     
 dirname = os.path.expanduser('~') # /home/user

@@ -27,7 +27,7 @@
 
 import wx
 import string
-from vdms_IO.presets_manager_properties import delete_profiles
+from videomass2.vdms_IO.presets_manager_properties import delete_profiles
 import webbrowser
 
 class MemPresets(wx.Dialog):

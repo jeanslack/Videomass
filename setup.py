@@ -39,7 +39,8 @@ import platform
 from glob import glob
 import os
 import shutil
-from vdms_SYS.msg_info import current_release, descriptions_release
+from videomass2.vdms_SYS.msg_info import current_release
+from videomass2.vdms_SYS.msg_info import descriptions_release
 
 cr = current_release()
 RLS_NAME = cr[0] # release name first letter is Uppercase
@@ -56,6 +57,25 @@ dr = descriptions_release()
 LICENSE = dr[2] # short license
 DESCRIPTION = dr[0]
 LONG_DESCRIPTION = dr[1]
+
+CLASSIFIERS = [
+            'Development Status :: 4 - Beta',
+            'Environment :: Graphic',
+            'Environment :: MacOS X :: Cocoa',
+            'Environment :: Win32 (MS Windows)',
+            'Environment :: X11 Applications :: GTK',
+            'Intended Audience :: End Users/Desktop',
+            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+            'Natural Language :: English',
+            'Natural Language :: Italian',
+            'Operating System :: MacOS :: MacOS X',
+            'Operating System :: Microsoft :: Windows',
+            'Operating System :: POSIX',
+            'Programming Language :: Python',
+            'Topic :: Multimedia :: Video :: Conversion',
+            'Topic :: Multimedia :: Sound/Audio :: Conversion',
+            'Topic :: Utilities',
+                ]
 
 #---------------------------------------------------------------------#
 def glob_files(pattern):
@@ -141,11 +161,26 @@ def LINUX_DEBIAN(id_distro, id_version):
         ('%s' % set_3[0], glob_files('%s/*.txt' % set_3[1])),
         ('%s/36x36' % set_3[0], glob_files('%s/36x36/*.png' % set_3[1])),
         
-        ('share/applications', ['videomass2.desktop']),
-        ('share/pixmaps', ['art/icons/videomass2.png']),
-        #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
-                    ]
-    DEPENDENCIES = ['python', 'wxpython',]
+        ('share/applications', ['art/videomass2.desktop']),
+        ('share/pixmaps', ['art/icons/videomass2.png']),]
+        
+    # Get the locale files
+    for loc_dir in os.listdir("locale"):
+        if not 'videomass2.pot' in loc_dir:
+            tmp = "locale/" + loc_dir + "/LC_MESSAGES"
+            if os.path.isdir(tmp):
+                tmp2 = tmp + "/videomass2.mo"
+                if os.path.exists(tmp2):
+                    DATA_FILES.append(('share/' + tmp, [tmp2]))
+                    
+    # Get the documents files
+    for docs in  ["AUTHORS", "CHANGELOG",
+                  "COPYING", "INSTALL", 
+                  "README.md", "TODO"]:
+        DATA_FILES.append(('share/videomass2', [docs]))
+        
+
+    DEPENDENCIES = ['python', 'wxPython',]
     EXTRA_DEPEND = {'':  [""],}
     
     setup(name = PRG_NAME,
@@ -156,13 +191,17 @@ def LINUX_DEBIAN(id_distro, id_version):
         author_email = EMAIL,
         url = WEBSITE,
         license = LICENSE,
-        platforms = ['Gnu/Linux (%s %s)' % (id_distro, id_version)],
-        packages = ['vdms_DIALOGS','vdms_IO','vdms_MAIN',
-                    'vdms_PANELS','vdms_PROCESS','vdms_SYS'],
-        scripts = ['videomass2'],
+        platforms = [ "Many" ],
+        packages = ["videomass2", "videomass2/vdms_DIALOGS", 
+                    "videomass2/vdms_IO", "videomass2/vdms_MAIN", 
+                    "videomass2/vdms_PANELS", "videomass2/vdms_PROCESS",
+                    "videomass2/vdms_SYS",
+                    ],
+        scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
+        classifiers = CLASSIFIERS,
         install_requires = DEPENDENCIES,
-        extras_require = EXTRA_DEPEND
+        extras_require = EXTRA_DEPEND,
         )
 
 #-----------------------------------------------------------------------#
@@ -202,16 +241,6 @@ def OSX():
     """
     PWD = os.getcwd() # current work directory path
     PATH_ICON = '%s/videomass.icns' % PWD
-    OSX_CLASSIFIERS = [
-                    'Development Status :: %s' % (VERSION),
-                    'Environment :: Graphic',
-                    'Environment :: MacOS X :: Cocoa',
-                    'Intended Audience :: Users',
-                    'License :: %s' %(LICENSE),
-                    'Natural Language :: English',
-                    'Operating System :: MacOS :: MacOS X',
-                    'Programming Language :: Python',
-                    ]
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
     # this is DATA_FILE structure: 
     # ('dir/file') > destination of the data, ['dir/file'] > on current 
@@ -276,7 +305,7 @@ def OSX():
         options = {'py2app': OPTIONS},
         description = DESCRIPTION,
         long_description = LONG_DESCRIPTION,
-        classifiers = OSX_CLASSIFIERS,
+        classifiers = CLASSIFIERS,
         author = AUTHOR,
         author_email = EMAIL,
         url = WEBSITE,

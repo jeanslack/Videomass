@@ -28,7 +28,7 @@
 import wx
 import os
 import webbrowser
-from vdms_IO.IO_tools import FFProbe
+from videomass2.vdms_IO.IO_tools import FFProbe
 
 class Mediainfo(wx.Dialog):
     """

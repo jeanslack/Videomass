@@ -26,7 +26,7 @@
 #########################################################
 
 import wx
-from vdms_SYS.msg_info import current_release, descriptions_release
+from videomass2.vdms_SYS.msg_info import current_release, descriptions_release
 
 cr = current_release()
 Name = cr[0]

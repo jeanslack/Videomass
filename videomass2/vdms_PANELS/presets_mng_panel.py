@@ -31,12 +31,12 @@
 
 import wx
 import os
-from vdms_IO.presets_manager_properties import parser_xml
-from vdms_IO.presets_manager_properties import delete_profiles
-from vdms_IO.presets_manager_properties import supported_formats
-from vdms_SYS.os_interaction import copy_restore, copy_backup, copy_on
-from vdms_IO.filedir_control import inspect
-from vdms_DIALOGS import presets_addnew
+from videomass2.vdms_IO.presets_manager_properties import parser_xml
+from videomass2.vdms_IO.presets_manager_properties import delete_profiles
+from videomass2.vdms_IO.presets_manager_properties import supported_formats
+from videomass2.vdms_SYS.os_interaction import copy_restore, copy_backup, copy_on
+from videomass2.vdms_IO.filedir_control import inspect
+from videomass2.vdms_DIALOGS import presets_addnew
 
 array = []# all parameters of the selected profile
 # this dictionary content all presets in ~/.videomass2:

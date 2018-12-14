@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ctrl_run.py
-# Porpose: Used for program boot
+# Porpose: Program boot data
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -22,9 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 17/01/2015
-# Rev (02) 17/july/2018
-# Rev (03) 6 Sept 2018
+# Rev December 14 2018
 #########################################################
 
 import sys
@@ -64,7 +62,7 @@ def system_check():
     This function checks the integrity of the Videomass2 configuration folder 
     located in each user's home directory. If this folder does not exist in 
     the user space it will be recovered from the source or installation folder 
-    (this depends if portable mode or installated mode) and will be saved in 
+    (this depends if local or system installation) and will be saved in 
     the user's home.  
     """
     copyerr = False
@@ -73,19 +71,17 @@ def system_check():
     # What is the OS ??
     #OS = [x for x in ['Darwin','Linux','Windows'] if platform.system() in x ][0]
     OS = platform.system()
-
-    if os.path.exists('%s/vdms_MAIN' % (PWD)) or OS == ('Darwin'):
+    
+    if os.path.exists('%s/videomass2' % (PWD)) or OS in ['Darwin', 'Windows']:
         #Paths for MacOSX or Linux without installation (portable)
+        localepath = 'locale'
         path_srcShare = '%s/share' % PWD
-        installation = 'portable'
+        IS_LOCAL = True
         
-    elif OS == ('Linux'): #Path for Linux (standard installation mode)
+    else: # Path system installation 
+        localepath = '/usr/share/locale'
         path_srcShare = '/usr/share/videomass2/config'
-        installation = 'standard linux'
-        
-    else: # it should be Windows OS
-        path_srcShare = '%s/share' % PWD
-        installation = 'portable'
+        IS_LOCAL = False
 
     #### check videomass.conf and config. folder
     if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
@@ -126,6 +122,6 @@ def system_check():
             copyerr = True
             fileconf = 'corrupted'
 
-    return (OS, path_srcShare, copyerr, installation, fileconf)
+    return (OS, path_srcShare, copyerr, IS_LOCAL, fileconf, localepath)
 
 #------------------------------------------------------------------------#

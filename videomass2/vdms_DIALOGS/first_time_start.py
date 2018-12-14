@@ -29,7 +29,7 @@ import wx
 import os
 import platform
 
-from vdms_SYS.whichcraft import which
+from videomass2.vdms_SYS.whichcraft import which
 
 dirname = os.path.expanduser('~/') # /home/user/
 filename = '%s/.videomass2/videomass2.conf' % (dirname)

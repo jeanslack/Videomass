@@ -22,10 +22,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (06) 24/08/2014
-# Rev (07) 12/01/2015
-# Rev (08) 20/04/2015
-# Rev (09) 12 july 2018
+
+
+# Rev (09) july 12 2018
+# Rev (09) december 14 2018
 #########################################################
 
 """
@@ -44,8 +44,8 @@ import re
 import time
 from wx.lib.pubsub import setupkwargs
 from wx.lib.pubsub import pub # work on wxPython >= 2.9 = 3.0
-from vdms_SYS.os_interaction import copy_restore
-from vdms_IO.make_filelog import write_log
+from videomass2.vdms_SYS.os_interaction import copy_restore
+from videomass2.vdms_IO.make_filelog import write_log
 
 # Set a global variables for some communication from threads process:
 CHANGE_STATUS = None

@@ -25,15 +25,15 @@
 # Rev (01) 21/july/2018, (02) October/13/2018
 #########################################################
 import wx
-from vdms_PROCESS.task_processing import GeneralProcess
-from vdms_PROCESS.task_processing import ProcThread
-from vdms_PROCESS.task_processing import DoublePassThread
-from vdms_PROCESS.task_processing import GrabAudioProc
-from vdms_PROCESS.task_processing import SingleProcThread
-from vdms_PROCESS.volumedetect import VolumeDetectThread, PopupDialog
-from vdms_PROCESS.ffplay_reproduction import Play
-from vdms_PROCESS.ffprobe_parser import FFProbe
-from vdms_DIALOGS.mediainfo import Mediainfo
+from videomass2.vdms_PROCESS.task_processing import GeneralProcess
+from videomass2.vdms_PROCESS.task_processing import ProcThread
+from videomass2.vdms_PROCESS.task_processing import DoublePassThread
+from videomass2.vdms_PROCESS.task_processing import GrabAudioProc
+from videomass2.vdms_PROCESS.task_processing import SingleProcThread
+from videomass2.vdms_PROCESS.volumedetect import VolumeDetectThread, PopupDialog
+from videomass2.vdms_PROCESS.ffplay_reproduction import Play
+from videomass2.vdms_PROCESS.ffprobe_parser import FFProbe
+from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
 
 
 #-----------------------------------------------------------------------#

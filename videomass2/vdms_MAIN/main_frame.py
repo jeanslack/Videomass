@@ -28,9 +28,10 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
-from vdms_DIALOGS import dialog_tools, settings, infoprg
-from vdms_PANELS import dragNdrop, presets_mng_panel, video_conv, audio_conv
-from vdms_IO import IO_tools
+from videomass2.vdms_DIALOGS import dialog_tools, settings, infoprg
+from videomass2.vdms_PANELS import dragNdrop, presets_mng_panel
+from videomass2.vdms_PANELS import video_conv, audio_conv
+from videomass2.vdms_IO import IO_tools
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))

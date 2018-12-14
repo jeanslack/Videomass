@@ -33,22 +33,22 @@ class Appearance(object):
     This class determines the paths to use to set icons on the appearance of 
     the graphical interface.
     """
-    def __init__(self, installation, iconset):
+    def __init__(self, IS_LOCAL, iconset):
         """
         The paths where the icon sets are located depend on where the program 
         is run and on which operating system.
         Each icons set is defined by the name of the folder that contains it.  
         By default the icon set is ``default``. 
         """
-        if installation == 'portable':
+        if IS_LOCAL:
             url = '%s/art/icons' % os.getcwd() # work current directory
             self.videomass_icon = "%s/videomass2.png" % url # 128x128
             self.wizard_icon = "%s/videomass2_wizard.png" % url # 128x128
             
-        elif installation == 'standard linux':
+        else:
             url = '/usr/share/videomass2/icons'
             self.videomass_icon = "/usr/share/pixmaps/videomass2.png" # 128x128
-            self.wizard_icon = "/usr/share/pixmaps/videomass2_wizard.png" % url # 128x128
+            self.wizard_icon = "/usr/share/pixmaps/videomass2_wizard.png" # 128x128
         # default black
         if iconset == 'Material_Design_Icons_black': # default
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url

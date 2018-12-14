@@ -4,8 +4,8 @@
 # Friday Aug 23 10:37:47 2013
 #
 #########################################################
-# Name: videomass2.py
-# Porpose: bootstrap for main launch script of videomass2
+# Name: Videomass2.py
+# Porpose: bootstrap for the videomass2
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -25,18 +25,18 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev December/11/2018
+# Rev December/14/2018
 #########################################################
 import wx
 import os
-from vdms_SYS.ctrl_run import system_check
-from vdms_SYS.appearance import Appearance
+from videomass2.vdms_SYS.ctrl_run import system_check
+from videomass2.vdms_SYS.appearance import Appearance
 
 # add translation macro to builtin similar to what gettext does
 #import locale
 import __builtin__
 __builtin__.__dict__['_'] = wx.GetTranslation
-from vdms_SYS import app_const as appC
+from videomass2.vdms_SYS import app_const as appC
 # set pathname:
 path_confdir = os.path.expanduser('~/.videomass2/')# presets path
 PWD = os.getcwd()
@@ -65,13 +65,13 @@ class Videomass(wx.App):
         prepares the environment configuration. The 'fileconf' take all 
         values of the file configuration.
         """
-        lang = ''
-        self.locale = None
-        wx.Locale.AddCatalogLookupPathPrefix('locale')
-        self.updateLanguage(lang)
-        
         setui = system_check() # for user-space settings
         fileconf = setui[4] # for user interface settings
+        
+        lang = ''
+        self.locale = None
+        wx.Locale.AddCatalogLookupPathPrefix(setui[5])
+        self.updateLanguage(lang)
         
         if setui[2]: # if source /share is missing and .videomass is corrupted
             wx.MessageBox(_(u'Can not find the configuration file\n\n'
@@ -121,7 +121,7 @@ class Videomass(wx.App):
             #self.firstrun(pathicons[23])
             #return True
             
-        from vdms_MAIN.main_frame import MainFrame
+        from videomass2.vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 
                                ffmpeg_link, ffprobe_link, ffplay_link,
                                pathicons
@@ -136,7 +136,7 @@ class Videomass(wx.App):
         Start a temporary dialog: this is showing during first time 
         start the Videomass2 application on MaOS and Windows.
         """
-        from vdms_DIALOGS.first_time_start import FirstStart
+        from videomass2.vdms_DIALOGS.first_time_start import FirstStart
         main_frame = FirstStart(icon)
         main_frame.Show()
         self.SetTopWindow(main_frame)
@@ -183,8 +183,13 @@ class Videomass(wx.App):
         print "OnExit"
     #-------------------------------------------------------------------
     
-if __name__ == "__main__":
+#if __name__ == "__main__":
+def Main():
     app = Videomass(False)
     #app.MainLoop()
     fred = app.MainLoop()
     print "after MainLoop", fred
+    
+    
+#-----------------------------------------------------------------------------#
+
