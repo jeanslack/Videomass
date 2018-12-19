@@ -29,26 +29,37 @@ import os
 
 class Appearance(object):
     """
-    - called by bootstrap on_init -
-    This class determines the paths to use to set icons on the appearance of 
-    the graphical interface.
+    This class determines the paths to use to set icons on the 
+    graphic appearance of the Videomass2 program.
     """
     def __init__(self, IS_LOCAL, iconset):
         """
         The paths where the icon sets are located depend on where the program 
         is run and on which operating system.
         Each icons set is defined by the name of the folder that contains it.  
-        By default the icon set is ``default``. 
         """
         if IS_LOCAL:
             url = '%s/art/icons' % os.getcwd() # work current directory
-            self.videomass_icon = "%s/videomass2.png" % url # 128x128
-            self.wizard_icon = "%s/videomass2_wizard.png" % url # 128x128
+            self.videomass_icon = "%s/videomass2.png" % url
+            self.wizard_icon = "%s/videomass2_wizard.png" % url
             
         else:
-            url = '/usr/share/videomass2/icons'
-            self.videomass_icon = "/usr/share/pixmaps/videomass2.png" # 128x128
-            self.wizard_icon = "/usr/share/pixmaps/videomass2_wizard.png" # 128x128
+            from videomass2.vdms_SYS.whichcraft import which
+            binarypath = which('videomass2')
+            if binarypath == '/usr/local/bin/videomass2':
+                url = '/usr/local/share/videomass2/icons'
+                self.videomass_icon = "/usr/local/share/pixmaps/videomass2.png" 
+                self.wizard_icon = "/usr/local/share/pixmaps/videomass2_wizard.png"
+            elif binarypath == '/usr/bin/videomass2':
+                url = '/usr/share/videomass2/icons'
+                self.videomass_icon = "/usr/share/pixmaps/videomass2.png"
+                self.wizard_icon = "/usr/share/pixmaps/videomass2_wizard.png"
+            else:
+                import site
+                userbase = site.getuserbase()
+                url = userbase + '/share/videomass2/icons'
+                self.videomass_icon = userbase + "/share/pixmaps/videomass2.png"
+                self.wizard_icon = userbase + "/share/pixmaps/videomass2_wizard.png"
         # default black
         if iconset == 'Material_Design_Icons_black': # default
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url

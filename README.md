@@ -4,9 +4,8 @@ interface for managing audio and video streams through FFmpeg.
 * [Features](#features)
 * [Official WebPage](http://jeanslack.github.io/Videomass2)
 * [Downloads](https://github.com/jeanslack/Videomass2/releases)
-* [System Requirements](#system-requirements)
 * [Essential Dependencies](#essential-dependencies)
-* [Use](#use)
+* [Run without installing](#run-without-installing)
 * [Build Package](#build-package)
 * [Make a debian packages](#make-a-debian-packages)
 * [Make a Slackware package](#make-a-slackware-package)
@@ -17,25 +16,22 @@ interface for managing audio and video streams through FFmpeg.
 
 ## Features
 
-Videomass2 presents itself with an interface completely renewed and enhanced by many features
-
-- Drag n Drop interface 
-- Presets manager interface with fully customizable profiles ready to use
-- Data streams information interface with details section
+- Drag n' Drop interface   
+- Presets manager interface with fully customizable and expandable profiles  
+- Displaying metadata streams information 
 - Preview of exported media
-- Video conversion interface 
-- Audio conversion interface
-- Audio peak level analysis implementation and audio normalization
-- Grabbing audio streams from video with multilingual selection
-- Batch processors
+- Preview video filters
+- Reproduction of imported media
+- Video conversions interface 
+- Audio conversions interface
+- Save jpg images from a video sequence
+- Audio peak level analysis with normalization process   
+- Grabbing audio streams from video with multilingual selection  
+- Selection of the time interval (for exports, previews, reproduction, tests)
+- Convert multiple files at once 
 - Log management
-- ..and more
-
-## System Requirements
-
-* Gnu/Linux
-* OSX 10.13 or later
-* Windows 7 or later
+- Work on many platforms where Python and wxPython are supported, 
+  including **Linux**, **MacOs** and **Windows**. 
 
 ## Essential Dependencies
 
@@ -43,66 +39,20 @@ Videomass2 presents itself with an interface completely renewed and enhanced by 
 - Python >= 2.7 (no python >= 3)   
 - wxPython >= 3.0
 
-**Extra required:**
+**Optionals:**
 - ffmpeg >= 3.2
 - ffprobe (for multimedia streams analysis) (can be built-in into ffmpeg)
 - ffplay (media player for media preview) (can be built-in into ffmpeg)
 
-**Optionals:**
-- libx264 (has to be explicitly enabled when compiling ffmpeg)
-- libmp3lame (has to be explicitly enabled when compiling ffmpeg)
-- libfdk-aac (has to be explicitly enabled when compiling ffmpeg)
-- libfdk-aac (has to be explicitly enabled when compiling ffmpeg)
-- xvidcore (has to be explicitly enabled when compiling ffmpeg)
-- libvpx (has to be explicitly enabled when compiling ffmpeg)
-- libvorbis (has to be explicitly enabled when compiling ffmpeg)
-- wavpack (has to be explicitly enabled when compiling ffmpeg)
 
-## Use
+## Run without installing
 
-- ***nix**: To start **videomass2** without installing in the system, simply run the "videomass2" file into 
-unzipped sources folder, like this: `~$ python videomass2` or `~$ ./videomass2`. 
-Be sure to check the execution permissions first.
-
-- **Windows**: To start **videomass2** without installing in the system, unzip the Videomass2 sources 
-folder that you just download, open a dos window and position you in the folder you just 
-unzipped, then type: `python videomass2`
-
+You can even launch the application without installing it, by running the
+launcher script:
 
 ## Build Package
 
-For building a redistributable package, using setup.py script in the sources folder.
-There are several way to use it, this depends on the operating system used since each 
-operating system has its own packaging tools. However, the common need tools and useful 
-for simple python distibutions are *distutils* and *setuptools*.
-
-- **distutils** is still the standard tool for packaging in python. It is included in the
-standard library that can be easily imported.   
-
-- **setuptools** which is not included in the standard library, must be
-separately installed if not present in your system.
-Update: setuptools is included from python 2.7
-
-## Make a debian packages
-
-If you want make a *.deb* binary package installable in your debian system and 
-compatible with others debian-based systems, you need install those following tools: 
-`~# apt-get update && apt-get install python-all python-stdeb fakeroot`. 
-This installs all the need dependencies, including python-setuptools.   
-
-Then, go into Videomass2 unzipped folder with your user (not root) and type:   
-`~$ python setup.py --command-packages=stdeb.command bdist_deb`   
-This should create a *python-videomass2_version_all.deb* in the new deb_dist directory, 
-installable with `~# dpkg -i python-videomass2_version_all.deb` command.
-
-See also [setup.py](https://github.com/jeanslack/Videomass2/blob/master/setup.py) 
-script for insights.
-
-## Make a Slackware package
-
-Is available a SlackBuild script to build a package *.tgz* for Slackware and Slackware based 
-distributions. 
-See here [videomass.SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/Videomass2)
+See the setup.py 
 
 ## MacOs
 
