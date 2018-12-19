@@ -6,6 +6,34 @@ The explanations in the README.md to how to do packaging and installing
 Videomass2, include all Debian distribuition based, Slackware and based, 
 MacOsX and Microsoft Windows.
 
-
 ===================================================
+
+NOTE TO TRASLATORS:
+
+To start a new translation, create a new folder 
+(for example de_DE for the German language) with the following structure:
+
+    /local
+        /de_DE
+            /LC_MESSAGES
+            
+Take the file with the `.pot` extension, located in the source /local folder, 
+and copy it into the LC_MESSAGES folder, renaming the extension to `.po`. 
+Now you can open it with a translation editing program (for example `poedit`) 
+and then save it by generating a`.mo` file
+
+Update the /vdms_SYS/app_const.py file by adding the newly translated language 
+to the dictionary, for example:
+
+    supLang = {u "en": wx.LANGUAGE_ENGLISH,
+               u "it": wx.LANGUAGE_ENGLISH,
+               u "de": wx.LANGUAGE_GERMAN,
+               }
+               
+===================================================
+
+HOW TO GENERATE A FILE `.pot`
+
+xgettext -d videomass2 '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/videomass2' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/audiodialogs.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/dialog_tools.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/first_time_start.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/infoprg.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/mediainfo.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/presets_addnew.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_DIALOGS/settings.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/filedir_control.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/IO_tools.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_IO/presets_manager_properties.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_MAIN/main_frame.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/audio_conv.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/dragNdrop.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/presets_mng_panel.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PANELS/video_conv.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/ffplay_reproduction.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/ffprobe_parser.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/task_processing.py' '/home/gianluca/Pubblici/MyGitHub/dev/Videomass2/vdms_PROCESS/volumedetect.py' 
+
 

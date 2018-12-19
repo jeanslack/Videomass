@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: volumedetect.py
-# Porpose: Audio Peak level volume analyzes for Ms Windows
+# Porpose: Audio Peak level volume analyzes
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -102,7 +102,7 @@ class VolumeDetectThread(Thread):
     volume peak level when required for audio normalization process.
     The volume data is a list sended to the dialog with wx.callafter.
     """
-    def __init__(self, ffmpeg_bin, filelist):
+    def __init__(self, ffmpeg_bin, filelist, OS):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -125,10 +125,6 @@ class VolumeDetectThread(Thread):
         File normalization process for get volume levels data.
         It is used by normalize.py, audio_conv.py and video_conv.py
         TODO: Replace /dev/null with NUL on Windows.
-        
-        NOTE for subprocess.STARTUPINFO() 
-        < Windows: https://stackoverflow.com/questions/1813872/running-
-        a-process-in-pythonw-with-popen-without-a-console?lq=1>
         
         """
         volume = list()
@@ -153,18 +149,14 @@ class VolumeDetectThread(Thread):
                     '-dn', 
                     '-f', 
                     'null', 
-                    self.nul
+                    self.nul,
                     ]
             try:
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                p = subprocess.Popen(cmnd,
-                                     stdout=subprocess.PIPE, 
+                p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, 
                                      stderr=subprocess.PIPE,
-                                     startupinfo=startupinfo,
                                      )
                 output, error =  p.communicate()
-                raw_list = error.split() # splitta tutti gli spazi
+                raw_list = error.split() # splitta tutti gli spazi 
 
                 if 'mean_volume:' in raw_list:
                     mean_volume = raw_list.index("mean_volume:")# indx integear
@@ -187,10 +179,10 @@ class VolumeDetectThread(Thread):
                 break
             
             except OSError:
-                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg)
+                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg) 
                 self.status = e
                 break
-            
+                
             except UnboundLocalError: # local variable 'e' referenced before assignment
                 """
                 dovrebbe riportare tutti gli errori di ffmpeg dal momento 
@@ -205,7 +197,7 @@ class VolumeDetectThread(Thread):
                      )
                 self.status = e
                 break
-        
+                
         self.data = (volume, self.status)
         
         wx.CallAfter(pub.sendMessage, 

@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ffplay_reproduction.py 
-# Porpose: simple media player with x-window-terminal-emulator for Ms Windows
+# Porpose: simple media player with x-window-terminal-emulator
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2018/19 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -25,9 +25,9 @@
 # Rev (06) 24/08/2014, 07) 12/01/2015, (08) 20/04/2015, (09) 1 sept. 2018
 # Rev (10) October 13 2018
 #########################################################
-
 import wx
 import subprocess
+import shlex
 import time
 from threading import Thread
 
@@ -45,12 +45,11 @@ def Messages(msg):
     Receive error messages from Play(Thread) via wxCallafter
     """
 
-    wx.MessageBox("[playback] Error:  %s" % (msg), 
+    wx.MessageBox("[playback] ERROR:  %s" % (msg), 
                       "FFplay - Videomass2", 
                       wx.ICON_ERROR
                       )
 #########################################################################
-
 class Play(Thread):
     """
     Run a separate process thread for media reproduction with a called 
@@ -69,30 +68,24 @@ class Play(Thread):
         self.loglevel_type = loglevel_type # not used (used error)
         self.param = param # parametri aggiuntivi
         self.OS = OS # tipo di sistema operativo
-        self.status = None
-        self.data = None
 
         self.start() # start the thread (va in self.run())
 
     def run(self):
-        """
-        NOTE for subprocess.STARTUPINFO() 
-        < Windows: https://stackoverflow.com/questions/1813872/running-
-        a-process-in-pythonw-with-popen-without-a-console?lq=1>
-        """
         #time.sleep(.5)
         loglevel_type = 'error'
-        command = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
-                                                  self.filename,
-                                                  self.param,
-                                                  loglevel_type,
-                                                  )
+        cmd = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
+                                              self.filename,
+                                              self.param,
+                                              loglevel_type,
+                                              )
         try:
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            if self.OS == 'Windows':
+                command = cmd
+            else:
+                command = shlex.split(cmd)
             p = subprocess.Popen(command,
                                 stderr=subprocess.PIPE,
-                                startupinfo=startupinfo,
                                 )
             error =  p.communicate()
             

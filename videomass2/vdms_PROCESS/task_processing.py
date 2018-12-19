@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: os_processing.py (for wxpython >= 2.8)
-# Porpose: module for system processing commands for Ms Windows
+# Porpose: module for system processing commands
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2018/19 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -260,7 +260,7 @@ non_ascii_msg = _(u'Non-ASCII/UTF-8 character string not supported. '
 not_exist_msg =  _(u'exist in your system?')
 ########################################################################
 
-
+#------------------------------ THREADS -------------------------------#
 class ProcThread(Thread):
     """
     This class represents a separate thread for running processes, which 
@@ -291,9 +291,6 @@ class ProcThread(Thread):
     def run(self):
         """
         Subprocess initialize thread.
-        NOTE for subprocess.STARTUPINFO() 
-        < Windows: https://stackoverflow.com/questions/1813872/running-
-        a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         global STATUS_ERROR
         status = None
@@ -325,18 +322,20 @@ class ProcThread(Thread):
                                                        folders, 
                                                        filename, 
                                                        self.extoutput
-                                                       )
+                                                       )          
             try:
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                p = subprocess.Popen(cmd, 
+                if self.OS == 'Windows':
+                    args = cmd
+                else:
+                    args = shlex.split(cmd)
+                    
+                p = subprocess.Popen(args, 
                                      stderr=subprocess.PIPE, 
                                      bufsize=1, 
                                      universal_newlines=True,
-                                     startupinfo=startupinfo,
                                      )
             except OSError as err:
-                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg), 
+                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg), 
                 wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          cmd=e, 
@@ -361,6 +360,7 @@ class ProcThread(Thread):
                          cmd=cmd, 
                          duration=duration
                          )
+            # < https://stackoverflow.com/questions/1388753/how-to-get-output-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1 >
             with p.stderr:
                 for line in iter(p.stderr.readline, b''):
                     print line,
@@ -402,15 +402,16 @@ class DoublePassThread(Thread):
         self.duration = duration # duration list
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
         self.OS = OS
+        if self.OS == 'Windows':
+            self.nul = 'NUL'
+        else:
+            self.nul = '/dev/null'
         
         self.start()# start the thread (va in self.run())
 
     def run(self):
         """
         Subprocess initialize thread.
-        NOTE for subprocess.STARTUPINFO() 
-        < Windows: https://stackoverflow.com/questions/1813872/running-
-        a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         global STATUS_ERROR
         status = None
@@ -428,24 +429,27 @@ class DoublePassThread(Thread):
             
             #--------------- first pass
             pass1 = ('%s -i "%s" %s -passlogfile "%s/%s.log" '
-                     '-pass 1 -y NUL' % (self.ffmpeg_link, 
-                                         files, 
-                                         self.passList[0],
-                                         folders, 
-                                         filename,
-                                         )
-                    )
+                    '-pass 1 -y %s' % (self.ffmpeg_link, 
+                                       files, 
+                                       self.passList[0],
+                                       folders, 
+                                       filename,
+                                       self.nul,
+                                       )
+                     ) 
             try:
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                p1 = subprocess.Popen(pass1, 
+                if self.OS == 'Windows':
+                    args = pass1
+                else:
+                    args = shlex.split(pass1)
+                    
+                p1 = subprocess.Popen(args, 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True,
-                                      startupinfo=startupinfo,
                                       )
             except OSError as err:
-                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg)
+                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 
@@ -453,7 +457,7 @@ class DoublePassThread(Thread):
                              )
                 STATUS_ERROR = 1
                 break
-
+            
             except UnicodeEncodeError as err:
                 e = (non_ascii_msg
                      )
@@ -464,7 +468,7 @@ class DoublePassThread(Thread):
                              )
                 STATUS_ERROR = 1
                 break
-
+            
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          cmd=pass1, 
@@ -499,18 +503,20 @@ class DoublePassThread(Thread):
                                                self.extoutput,
                                                 )
                      )
+            if self.OS == 'Windows':
+                args = pass2
+            else:
+                args = shlex.split(pass2)
+                
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          cmd=pass2, 
                          duration=duration
                          )
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            p2 = subprocess.Popen(pass2, 
+            p2 = subprocess.Popen(args, 
                                   stderr=subprocess.PIPE, 
                                   bufsize=1, 
                                   universal_newlines=True,
-                                  startupinfo=startupinfo,
                                   )
             with p2.stderr:
                 for line2 in iter(p2.stderr.readline, b''):
@@ -555,18 +561,17 @@ class SingleProcThread(Thread):
     def run(self):
         """
         Subprocess initialize thread.
-        NOTE for subprocess.STARTUPINFO() 
-        < Windows: https://stackoverflow.com/questions/1813872/running-
-        a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         global STATUS_ERROR
-
+        
         try:
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            p = subprocess.Popen(self.cmd, 
+            if self.OS == 'Windows':
+                args = self.cmd
+            else:
+                args = shlex.split(self.cmd)
+                
+            p = subprocess.Popen(args, 
                                  stderr=subprocess.PIPE,
-                                 startupinfo=startupinfo,
                                  )
             error =  p.communicate()
             
@@ -578,10 +583,10 @@ class SingleProcThread(Thread):
                 e = "%s: " % (err_0)
                 
             wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         cmd=e, 
-                         duration=self.duration
-                         )
+                            "COUNT_EVT", 
+                            cmd=e, 
+                            duration=self.duration
+                            )
             STATUS_ERROR = 1
             wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
             return
@@ -597,6 +602,7 @@ class SingleProcThread(Thread):
                 STATUS_ERROR = 1
                 wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
                 return
+        
         else:
             if error[1]:# ffmpeg error
                 e = "%s\n\n%s" % (self.cmd, error[1])
@@ -647,9 +653,6 @@ class GrabAudioProc(Thread):
     def run(self):
         """
         Subprocess initialize thread.
-        NOTE for subprocess.STARTUPINFO() 
-        < Windows: https://stackoverflow.com/questions/1813872/running-
-        a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         global STATUS_ERROR
         status = None
@@ -674,16 +677,18 @@ class GrabAudioProc(Thread):
                                                    ext,
                                                     )
             try:
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                p = subprocess.Popen(cmd, 
+                if self.OS == 'Windows':
+                    args = cmd
+                else:
+                    args = shlex.split(cmd)
+                    
+                p = subprocess.Popen(args, 
                                      stderr=subprocess.PIPE, 
                                      bufsize=1, # if 1 means line buffered
                                      universal_newlines=True,
-                                     startupinfo=startupinfo,
                                      )
             except OSError as err:
-                e = "%s\n'ffmpeg.exe' %s" % (err, not_exist_msg), 
+                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg), 
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              cmd=e, 

@@ -7,22 +7,26 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-November 12, 2018 V.1.2.5
+December 9, 2018 V.1.2.5
 +------------------------------------+
 
 BUG FIXES:
-- Fixed bug on the `Video Conversions` and `Audio Conversions` panels when
-  set audio parameters specially with `wav` format.
-- Fixed bug in the preview after `Save audio from movie`. The exit with 
-  invalid filename is be fixed.
+    - Fixed bug on the `Video Conversions` and `Audio Conversions` panels when
+      set audio parameters specially with `wav` format.
+    - Fixed bug in the preview after `Save audio from movie`. The exit with 
+      invalid filename is be fixed.
   
 NEW: [features/enhancements]
-- Added new elements that improve accessibility and readability of audio settings 
-  in the `Video Conversions` panel.
-- Improved buttons colour and appearance
-- Added new icons free and open source compatible with GPL3.
-
+    - Added new elements that improve accessibility and readability of audio 
+      settings in the `Video Conversions` panel.
+    - Improved buttons colour and appearance
+    - Added new icons free and open source compatible with GPL3.
+    - Add supports for the localization of internationalization (i18n) 
+    - Add support to Italian language.
   
+IMPROVEMENTS:
+    - Improved configuration file error handling: if the version of the 
+      configuration file changes, it is automatically updated
 
 +------------------------------------+
 October 27, 2018 V.1.2.0
@@ -83,12 +87,12 @@ IMPROVEMENTS:
 Set 22, 2018 V.1.0.1
 +------------------------------------+
 
-- Fixed issue with the `Presets_Manager` panel during double-pass 
-  conversion in Windows.
-- Modified `cpu-used` function in the settings dialog
-- Adding `-threads` function in the settings dialog
-- Fixed anomalies in `-cpu-used` function
-- New version of the configuration file 
+    - Fixed issue with the `Presets_Manager` panel during double-pass 
+      conversion in Windows.
+    - Modified `cpu-used` function in the settings dialog
+    - Adding `-threads` function in the settings dialog
+    - Fixed anomalies in `-cpu-used` function
+    - New version of the configuration file 
 
 +------------------------------------+
 Set 17, 2018 V.1.0.0
@@ -98,18 +102,18 @@ This is first release of Videomass2.
 Videomass2 presents itself with an interface completely renewed and enhanced 
 by many features:
 
-- Drag n Drop interface
-- Presets manager interface with fully customizable profiles ready to use
-- Data streams information interface with details section
-- Preview of exported media
-- Video conversion interface
-- Audio conversion interface
-- Audio peak level analysis implementation and audio normalization
-- Grabbing audio streams from video with multilingual selection
-- Batch processors
-- Log management
-- Convert any media file to multiple formats
-- Cut Video and Audio timeline
-- Batch Processing
-- Video to Image Sequence
-..and more
+    - Drag n Drop interface
+    - Presets manager interface with fully customizable profiles ready to use
+    - Data streams information interface with details section
+    - Preview of exported media
+    - Video conversion interface
+    - Audio conversion interface
+    - Audio peak level analysis implementation and audio normalization
+    - Grabbing audio streams from video with multilingual selection
+    - Batch processors
+    - Log management
+    - Convert any media file to multiple formats
+    - Cut Video and Audio timeline
+    - Batch Processing
+    - Video to Image Sequence
+    ..and more

@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ffprobe_parser.py (for wxpython >= 2.8)
-# Porpose: ffprobe parsing class for Ms Windows
+# Porpose: ffprobe parsing class
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2018/19 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -90,10 +90,6 @@ class FFProbe(object):
         """
         The ffprobe command has stdout and stderr (unlike ffmpeg and ffplay)
         which allows me to initialize separate attributes also for errors
-        
-        NOTE for subprocess.STARTUPINFO() 
-        < Windows: https://stackoverflow.com/questions/1813872/running-
-        a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         self.error = False
         self.mediastreams = []
@@ -111,12 +107,9 @@ class FFProbe(object):
             cmnd = [ffprobe_link, '-show_format', '-show_streams', '-v', 
                     'error', mediafile]
         try:
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, 
                                  stderr=subprocess.PIPE, 
                                  universal_newlines=True,
-                                 startupinfo=startupinfo,
                                  )
             output, error =  p.communicate()
 
@@ -124,7 +117,7 @@ class FFProbe(object):
                 self.error = error
 
         except OSError:
-            self.error = "'ffprobe.exe' %s" % not_exist_msg
+            self.error = "'ffprobe' %s" % not_exist_msg
             return
         
         except UnicodeEncodeError as err:

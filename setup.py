@@ -26,11 +26,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) September 24 2014
-# Rev (02) January 21 2015
-# Rev (03) May 04 2015
-# Rev (04) Nov 10 2017
-# Rev (05) Sept 3 2018
+# Rev (05) December 15 2018
 #########################################################
 
 from distutils.core import setup
@@ -39,7 +35,8 @@ import platform
 from glob import glob
 import os
 import shutil
-from vdms_SYS.msg_info import current_release, descriptions_release
+from videomass2.vdms_SYS.msg_info import current_release
+from videomass2.vdms_SYS.msg_info import descriptions_release
 
 cr = current_release()
 RLS_NAME = cr[0] # release name first letter is Uppercase
@@ -57,6 +54,25 @@ LICENSE = dr[2] # short license
 DESCRIPTION = dr[0]
 LONG_DESCRIPTION = dr[1]
 
+CLASSIFIERS = [
+            'Development Status :: 4 - Beta',
+            'Environment :: Graphic',
+            'Environment :: MacOS X :: Cocoa',
+            'Environment :: Win32 (MS Windows)',
+            'Environment :: X11 Applications :: GTK',
+            'Intended Audience :: End Users/Desktop',
+            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+            'Natural Language :: English',
+            'Natural Language :: Italian',
+            'Operating System :: MacOS :: MacOS X',
+            'Operating System :: Microsoft :: Windows',
+            'Operating System :: POSIX',
+            'Programming Language :: Python :: 2.7',
+            'Topic :: Multimedia :: Video :: Conversion',
+            'Topic :: Multimedia :: Sound/Audio :: Conversion',
+            'Topic :: Utilities',
+                ]
+
 #---------------------------------------------------------------------#
 def glob_files(pattern):
     """
@@ -65,34 +81,9 @@ def glob_files(pattern):
     """
     return [f for f in glob(pattern) if os.path.isfile(f)]
 
-#---------------------------------------------------------------------#
-def LINUX_SLACKWARE(id_distro, id_version):
-    """
-    ------------------------------------------------
-    setup of building package for Slackware
-    ------------------------------------------------
-    
-    REQUIRED TOOLS: 
-    pysetuptools
-    
-    USAGE: 
-    Use in a SlackBuild combination
-    """
-    setup(name = PRG_NAME,
-        version = VERSION,
-        description = DESCRIPTION,
-        long_description = LONG_DESCRIPTION,
-        author = AUTHOR,
-        author_email = EMAIL,
-        url = WEBSITE,
-        license = LICENSE,
-        platforms = ['Gnu/Linux (%s %s)' % (id_distro, id_version)],
-        packages = ['vdms_DIALOGS','vdms_IO','vdms_MAIN',
-                    'vdms_PANELS','vdms_PROCESS','vdms_SYS'],
-        scripts = ['videomass2']
-        )
+
 #-----------------------------------------------------------------------#
-def LINUX_DEBIAN(id_distro, id_version):
+def LINUX():
     """
     ------------------------------------------------
     setup of building package for Debian based distro
@@ -118,34 +109,44 @@ def LINUX_DEBIAN(id_distro, id_version):
     # this is DATA_FILE structure: 
     # ('dir/file destination of the data', ['dir/file on current place sources']
     # even path must be relative-path
-    set_1 = ['share/videomass2/icons/Flat_Color_Icons', 
-             'art/icons/Flat_Color_Icons']
-    set_2 = ['share/videomass2/icons/Material_Design_Icons_black', 
-             'art/icons/Material_Design_Icons_black']
-    set_3 = ['share/videomass2/icons/Material_Design_Icons_white', 
-             'art/icons/Material_Design_Icons_white']
     DATA_FILES = [
         ('share/videomass2/config', glob_files('share/*.vdms')),
         ('share/videomass2/config', ['share/videomass2.conf', 'share/README']),
         ('share/videomass2/icons', ['art/icons/videomass2.png']),
-        ('%s' % set_1[0], glob_files('%s/*.md' % set_1[1])),
-        ('%s/36x36' % set_1[0], glob_files('%s/36x36/*.png' % set_1[1])),
-        ('%s/24x24' % set_1[0], glob_files('%s/24x24/*.png' % set_1[1])),
-        ('%s/18x18' % set_1[0], glob_files('%s/18x18/*.png' % set_1[1])),
+        ('share/applications', ['art/videomass2.desktop']),
+        ('share/pixmaps', ['art/icons/videomass2.png']),]
+    
+    # get all icons and icons docs
+    for art in os.listdir('art/icons'):
+        if art not in ['videomass2_wizard.png', 'videomass2.png']:
+            tmp = "art/icons/" + art
+            if os.path.exists(tmp):
+                pathdoc = 'share/videomass2/icons/%s' % art
+                DATA_FILES.append((pathdoc, glob_files('%s/*.md' % tmp)))
+                DATA_FILES.append((pathdoc, glob_files('%s/*.txt' % tmp)))
+            for size in ['18x18','24x24', '36x36']:
+                if os.path.exists(tmp + '/' + size):
+                    path =  tmp +  '/' + size
+                    pathsize = 'share/videomass2/icons/%s/%s' % (art,size)
+                    DATA_FILES.append((pathsize, glob_files('%s/*.png' % path)))
         
-        ('%s' % set_2[0], glob_files('%s/*.txt' % set_2[1])),
-        ('%s/36x36' % set_2[0], glob_files('%s/36x36/*.png' % set_2[1])),
-        ('%s/24x24' % set_2[0], glob_files('%s/24x24/*.png' % set_2[1])),
-        ('%s/18x18' % set_2[0], glob_files('%s/18x18/*.png' % set_2[1])),
+    # Get the locale files
+    for loc_dir in os.listdir("locale"):
+        if not 'videomass2.pot' in loc_dir:
+            tmp = "locale/" + loc_dir + "/LC_MESSAGES"
+            if os.path.isdir(tmp):
+                tmp2 = tmp + "/videomass2.mo"
+                if os.path.exists(tmp2):
+                    DATA_FILES.append(('share/' + tmp, [tmp2]))
+                    
+    # Get the documents files
+    for docs in  ["AUTHORS", "CHANGELOG",
+                  "COPYING", "INSTALL", 
+                  "README.md", "TODO"]:
+        DATA_FILES.append(('share/videomass2', [docs]))
         
-        ('%s' % set_3[0], glob_files('%s/*.txt' % set_3[1])),
-        ('%s/36x36' % set_3[0], glob_files('%s/36x36/*.png' % set_3[1])),
-        
-        ('share/applications', ['videomass2.desktop']),
-        ('share/pixmaps', ['art/icons/videomass2.png']),
-        #('share/doc/python-videomass2/HTML', glob_files('docs/HTML/*.html')),
-                    ]
-    DEPENDENCIES = ['python', 'wxpython',]
+
+    DEPENDENCIES = ['python', 'wxPython',]
     EXTRA_DEPEND = {'':  [""],}
     
     setup(name = PRG_NAME,
@@ -156,13 +157,17 @@ def LINUX_DEBIAN(id_distro, id_version):
         author_email = EMAIL,
         url = WEBSITE,
         license = LICENSE,
-        platforms = ['Gnu/Linux (%s %s)' % (id_distro, id_version)],
-        packages = ['vdms_DIALOGS','vdms_IO','vdms_MAIN',
-                    'vdms_PANELS','vdms_PROCESS','vdms_SYS'],
-        scripts = ['videomass2'],
+        platforms = [ "Many" ],
+        packages = ["videomass2", "videomass2/vdms_DIALOGS", 
+                    "videomass2/vdms_IO", "videomass2/vdms_MAIN", 
+                    "videomass2/vdms_PANELS", "videomass2/vdms_PROCESS",
+                    "videomass2/vdms_SYS",
+                    ],
+        scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
+        classifiers = CLASSIFIERS,
         install_requires = DEPENDENCIES,
-        extras_require = EXTRA_DEPEND
+        extras_require = EXTRA_DEPEND,
         )
 
 #-----------------------------------------------------------------------#
@@ -202,16 +207,6 @@ def OSX():
     """
     PWD = os.getcwd() # current work directory path
     PATH_ICON = '%s/videomass.icns' % PWD
-    OSX_CLASSIFIERS = [
-                    'Development Status :: %s' % (VERSION),
-                    'Environment :: Graphic',
-                    'Environment :: MacOS X :: Cocoa',
-                    'Intended Audience :: Users',
-                    'License :: %s' %(LICENSE),
-                    'Natural Language :: English',
-                    'Operating System :: MacOS :: MacOS X',
-                    'Programming Language :: Python',
-                    ]
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
     # this is DATA_FILE structure: 
     # ('dir/file') > destination of the data, ['dir/file'] > on current 
@@ -230,12 +225,12 @@ def OSX():
             ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
             ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
 
-            '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+            ('%s' % set_2, glob_files('%s/*.txt' % set_2)),
             ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
             ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
             ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
 
-            '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+            ('%s' % set_3, glob_files('%s/*.txt' % set_3)),
             ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
 
             ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING','TODO',
@@ -276,7 +271,7 @@ def OSX():
         options = {'py2app': OPTIONS},
         description = DESCRIPTION,
         long_description = LONG_DESCRIPTION,
-        classifiers = OSX_CLASSIFIERS,
+        classifiers = CLASSIFIERS,
         author = AUTHOR,
         author_email = EMAIL,
         url = WEBSITE,
@@ -319,12 +314,12 @@ def WIN32():
                   ('%s/24x24' % set_1, glob_files('%s/24x24/*.png' % set_1)),
                   ('%s/18x18' % set_1, glob_files('%s/18x18/*.png' % set_1)),
 
-                  '%s' % set_2, glob_files('%s/*.txt' % set_2)),
+                  ('%s' % set_2, glob_files('%s/*.txt' % set_2)),
                   ('%s/36x36' % set_2, glob_files('%s/36x36/*.png' % set_2)),
                   ('%s/24x24' % set_2, glob_files('%s/24x24/*.png' % set_2)),
                   ('%s/18x18' % set_2, glob_files('%s/18x18/*.png' % set_2)),
 
-                  '%s' % set_3, glob_files('%s/*.txt' % set_3)),
+                  ('%s' % set_3, glob_files('%s/*.txt' % set_3)),
                   ('%s/36x36' % set_3, glob_files('%s/36x36/*.png' % set_3)),
                   
                   ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',
@@ -373,15 +368,8 @@ def WIN32():
 #################################################################
 if platform.system() == 'Darwin':
     OSX()
-    
 elif platform.system() == 'Linux':
-    dist_name = platform.linux_distribution()[0]
-    dist_version = platform.linux_distribution()[1]
-    
-    if dist_name == 'Slackware ':
-        LINUX_SLACKWARE(dist_name, dist_version)
-    else:
-        LINUX_DEBIAN(dist_name, dist_version)
+    LINUX()
 else:
     WIN32()
 ##################################################################
