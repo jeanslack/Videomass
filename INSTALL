@@ -22,7 +22,7 @@ using pip program:
 
 pip install videomass2
 
-Linux/Macintosh/Unix need root privilegies
+Linux/Macintosh/Unix with root privilegies
 
 #--------------------------------------------------------------------------#
 Option 2) Build a Windows exe: [Windows]

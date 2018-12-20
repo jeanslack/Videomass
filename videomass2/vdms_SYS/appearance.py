@@ -44,22 +44,34 @@ class Appearance(object):
             self.wizard_icon = "%s/videomass2_wizard.png" % url
             
         else:
-            from videomass2.vdms_SYS.whichcraft import which
-            binarypath = which('videomass2')
-            if binarypath == '/usr/local/bin/videomass2':
-                url = '/usr/local/share/videomass2/icons'
-                self.videomass_icon = "/usr/local/share/pixmaps/videomass2.png" 
-                self.wizard_icon = "/usr/local/share/pixmaps/videomass2_wizard.png"
-            elif binarypath == '/usr/bin/videomass2':
-                url = '/usr/share/videomass2/icons'
-                self.videomass_icon = "/usr/share/pixmaps/videomass2.png"
-                self.wizard_icon = "/usr/share/pixmaps/videomass2_wizard.png"
+            import sys
+            import platform
+            OS = platform.system()
+            if OS == 'Windows':
+                pythonpath = os.path.dirname(sys.executable)
+                url = pythonpath + '\\share\\videomass2\\icons'
+                self.videomass_icon = url + "\\videomass2.png" 
+                self.wizard_icon = url + "\\videomass2_wizard.png"
             else:
-                import site
-                userbase = site.getuserbase()
-                url = userbase + '/share/videomass2/icons'
-                self.videomass_icon = userbase + "/share/pixmaps/videomass2.png"
-                self.wizard_icon = userbase + "/share/pixmaps/videomass2_wizard.png"
+                from videomass2.vdms_SYS.whichcraft import which
+                binarypath = which('videomass2')
+                if binarypath == '/usr/local/bin/videomass2':
+                    url = '/usr/local/share/videomass2/icons'
+                    share = '/usr/local/share'
+                    self.videomass_icon = share + "/pixmaps/videomass2.png" 
+                    self.wizard_icon = share + "/pixmaps/videomass2_wizard.png"
+                elif binarypath == '/usr/bin/videomass2':
+                    url = '/usr/share/videomass2/icons'
+                    share = '/usr/share/pixmaps'
+                    self.videomass_icon = share + "/videomass2.png"
+                    self.wizard_icon = share + "/videomass2_wizard.png"
+                else:
+                    import site # .local user
+                    userbase = site.getuserbase()
+                    url = userbase + '/share/videomass2/icons'
+                    share = '/share/pixmaps'
+                    self.videomass_icon = userbase + share + "/videomass2.png"
+                    self.wizard_icon = userbase+share+"/videomass2_wizard.png"
         # default black
         if iconset == 'Material_Design_Icons_black': # default
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url
@@ -110,30 +122,30 @@ class Appearance(object):
         ic_analyzes = '%s/analyzes.png' % self.x18
         ic_settings = '%s/settings.png' % self.x18
         
-        return (self.videomass_icon, # 0
-                icon_presets, # 1
-                icon_switchvideomass, # 2
-                icon_process, # 3
-                icon_help, # 4
-                icon_headphones, # 5
-                icon_import, # 6
-                icn_infosource, # 7
-                icn_preview, # 8
-                icn_cut, # 9
-                icn_playfilters, # 10
-                icn_resetfilters,  # 11
-                icn_saveprf, # 12
-                icn_newprf, # 13
-                icn_delprf, # 14
-                icn_editprf, # 15
-                ic_resize, # 16
-                ic_crop, # 17
-                ic_rotate, # 18
-                ic_deinterlace, # 19
-                ic_denoiser, # 20
-                ic_analyzes, # 21
-                ic_settings, # 22
-                self.wizard_icon, # 23
-                )
+        return [os.path.join(norm) for norm in [self.videomass_icon, # 0
+                                                icon_presets, # 1
+                                                icon_switchvideomass, # 2
+                                                icon_process, # 3
+                                                icon_help, # 4
+                                                icon_headphones, # 5
+                                                icon_import, # 6
+                                                icn_infosource, # 7
+                                                icn_preview, # 8
+                                                icn_cut, # 9
+                                                icn_playfilters, # 10
+                                                icn_resetfilters,  # 11
+                                                icn_saveprf, # 12
+                                                icn_newprf, # 13
+                                                icn_delprf, # 14
+                                                icn_editprf, # 15
+                                                ic_resize, # 16
+                                                ic_crop, # 17
+                                                ic_rotate, # 18
+                                                ic_deinterlace, # 19
+                                                ic_denoiser, # 20
+                                                ic_analyzes, # 21
+                                                ic_settings, # 22
+                                                self.wizard_icon, # 23
+                                                ]]
             
         

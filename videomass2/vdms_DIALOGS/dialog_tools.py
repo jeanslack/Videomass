@@ -106,8 +106,8 @@ class Cut_Range(wx.Dialog):
         #self.stop_minute_ctrl.SetMinSize((100, -1))
         #self.stop_second_ctrl.SetMinSize((100, -1))
         self.stop_hour_ctrl.SetToolTipString(_(u"Hours amount duration"))
-        self.stop_second_ctrl.SetToolTipString(_(u"Minutes amount duration"))
-        self.stop_minute_ctrl.SetToolTipString(_(u"Seconds amount duration"))
+        self.stop_minute_ctrl.SetToolTipString(_(u"Minutes amount duration"))
+        self.stop_second_ctrl.SetToolTipString(_(u"Seconds amount duration"))
         #----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)

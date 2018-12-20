@@ -1,6 +1,9 @@
 
 ************** NEW DEVELOPMENT CYCLE  july/2018 ***************
+This file serves as a scratch place for some ideas about things that are wanted
+in Videomass2 or that would be nice to have.
 
+This is a partial list of planned features that are yet to be implemented. 
 --------------------
 URGENCY: to do soon
 --------------------  
@@ -18,9 +21,6 @@ URGENCY: low
 ---------------
 URGENCY: medium
 ----------------
-- Rivedere ctrl_run modulo e On_init boot strap (su mac, in modalità script 
-  portable, non funzia quando la versione del file conf differisce)
-
 - Il log view di doppia passata non è ancora coerente:
     EXAMPLE:
     file queue 1 of 1

@@ -51,6 +51,7 @@ from setuptools import setup, find_packages
 import platform
 from glob import glob
 import os
+import sys
 import shutil
 from videomass2.vdms_SYS.msg_info import current_release, descriptions_release
 
@@ -112,10 +113,13 @@ def BUILD_PKG():
     
     DATA_FILES = [ # even path must be relative-path
         ('share/videomass2/config', glob_files('share/*.vdms')),
-        ('share/videomass2/config', ['share/videomass2.conf', 
-                                        'share/README']),
-        ('share/videomass2/icons', ['art/icons/videomass2.png']),
-        ('share/applications', ['art/videomass2.desktop']),
+        ('share/videomass2/config', ['share/videomass2.conf',
+                                     'share/videomassWin32.conf',
+                                     'share/README']),
+        ('share/videomass2/icons', glob_files('art/icons/*.png')),
+        ('share/applications', ['art/videomass.icns',
+                                'art/videomass.ico',
+                                'art/videomass2.desktop']),
         ('share/pixmaps', ['art/icons/videomass2.png']),]
     
     # get all icons and icons docs
@@ -134,7 +138,7 @@ def BUILD_PKG():
         
     # Get the locale files
     for loc_dir in os.listdir("locale"):
-        if loc_dir not in ['videomass2.pot', 'README']:
+        if loc_dir not in ['videomass2.pot', 'README', 'make_pot.sh']:
             tmp = "locale/" + loc_dir + "/LC_MESSAGES"
             if os.path.isdir(tmp):
                 tmp2 = tmp + "/videomass2.mo"
@@ -142,15 +146,11 @@ def BUILD_PKG():
                     DATA_FILES.append(('share/' + tmp, [tmp2]))
                     
     # Get the documents files
-    for docs in  ["AUTHORS", "CHANGELOG",
+    for docs in  ["AUTHORS", "BUGS", "CHANGELOG",
                   "COPYING", "INSTALL", 
                   "README.md", "TODO"]:
         DATA_FILES.append(('share/videomass2', [docs]))
         
-
-    DEPENDENCIES = ['python', 'wxPython',]
-    EXTRA_DEPEND = {'':  [""],}
-    
     setup(name = PRG_NAME,
         version = VERSION,
         description = DESCRIPTION,
@@ -164,8 +164,7 @@ def BUILD_PKG():
         scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
-        install_requires = DEPENDENCIES,
-        extras_require = EXTRA_DEPEND,
+        #install_requires = ['wxPython>=3.0,<4.0',],
         )
 
 ########################################################################
@@ -202,7 +201,7 @@ def OSX():
         
     # Get the locale files
     for loc_dir in os.listdir("locale"):
-        if loc_dir not in ['videomass2.pot', 'README']:
+        if loc_dir not in ['videomass2.pot', 'README', 'make_pot.sh']:
             tmp = "locale/" + loc_dir + "/LC_MESSAGES"
             if os.path.isdir(tmp):
                 tmp2 = tmp + "/videomass2.mo"
@@ -264,19 +263,14 @@ def WIN32():
     
     if not os.path.exists('%s/bin/Videomass2.py' % PWD):
         os.rename("%s/bin/videomass2" % PWD,"%s/bin/Videomass2.py" % PWD)
-        
-    if not os.path.exists('%s/Win32Setup/ORIG' % PWD):
-        shutil.copytree('%s/vdms_PROCESS' % PWD, '%s/Win32Setup/ORIG' % PWD)
-        files = glob("%s/Win32Setup/*.py" % PWD)
-        for cp in files:
-            shutil.copy(cp, '%s/vdms_PROCESS' % PWD)
-    
+
     DATA_FILES = [('share', glob_files('share/*.vdms')),
                   ('share', glob_files('share/*.conf')),
                   #('docs/HTML', glob_files('docs/HTML/*.html')), 
                   ('art/icons', glob_files('art/icons/*.png')),
+                  ('', ['art/videomass.ico']),
                   ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',
-                        'COPYING','TODO','README.md','videomass.ico',
+                        'COPYING','TODO','README.md',
                         'Win32Setup/NOTICE.rtf']),
                   ('FFMPEG_BIN', glob_files('Win32Setup/FFMPEG_BIN/*')),
                   ]
@@ -296,12 +290,12 @@ def WIN32():
         
     # Get the locale files
     for loc_dir in os.listdir("locale"):
-        if loc_dir not in ['videomass2.pot', 'README']:
+        if loc_dir not in ['videomass2.pot', 'README', 'make_pot.sh']:
             tmp = "locale/" + loc_dir + "/LC_MESSAGES"
             if os.path.isdir(tmp):
                 tmp2 = tmp + "/videomass2.mo"
                 if os.path.exists(tmp2):
-                    DATA_FILES.append(('locale' + tmp, [tmp2]))
+                    DATA_FILES.append((tmp, [tmp2]))
                     
     includes = ["wx.lib.pubsub.*", "wx.lib.pubsub.core.*", 
                 "wx.lib.pubsub.core.kwargs.*"

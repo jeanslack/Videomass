@@ -188,7 +188,7 @@ class PresetsPanel(wx.Panel):
         grid_siz5 = wx.FlexGridSizer(2, 2, 0, 0)
         grid_siz6 = wx.FlexGridSizer(1, 7, 0, 0)
         grd_s3 = wx.GridSizer(1, 1, 0, 0)
-        #siz1.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 10)########################################
+        #siz1.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 10)#########################
         grd_s1.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
         grd_s3.Add(self.txt_cmd, 0, wx.ALL | wx.EXPAND 
                                             | wx.ALIGN_CENTER_HORIZONTAL 

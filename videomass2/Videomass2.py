@@ -118,6 +118,7 @@ class Videomass(wx.App):
             ffmpeg_link = fileconf[8]
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
+            # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True
             
@@ -190,6 +191,4 @@ def Main():
     fred = app.MainLoop()
     print "after MainLoop", fred
     
-    
-#-----------------------------------------------------------------------------#
 
