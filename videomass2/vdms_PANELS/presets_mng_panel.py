@@ -42,13 +42,16 @@ array = []# all parameters of the selected profile
 # this dictionary content all presets in ~/.videomass2:
 dict_presets = {
 _(u"Audio Conversions") : ("preset-v1-Audio", "Audio Conversions"), 
-_(u"Extract audio from video"): ("preset-v1-VideoAudio", "Extract audio from video"),
+_(u"Extract audio from video"): ("preset-v1-VideoAudio", 
+                                 "Extract audio from video"),
 _(u"Convert to AVI") : ("preset-v1-AVI", "Convert to AVI"),
-_(u"Mobile Phones multimedia") : ("preset-v1-MobilePhones", "Mobile Phones multimedia"),
+_(u"Mobile Phones multimedia") : ("preset-v1-MobilePhones", 
+                                  "Mobile Phones multimedia"),
 _(u"iPod iTunes") : ("preset-v1-iPod-iTunes", "iPod iTunes"),
 _(u"Convert to VCD (mpg)") : ("preset-v1-VCD", "Convert to VCD (mpg)"),
 _(u"Convert DVD VOB") : ("preset-v1-VOB", "Convert DVD VOB"),
-_(u"Convert to quicktime (mov)") : ("preset-v1-quicktime", "Convert to quicktime (mov)"),
+_(u"Convert to quicktime (mov)") : ("preset-v1-quicktime", 
+                                    "Convert to quicktime (mov)"),
 _(u"Convert to DV") : ("preset-v1-DV", "Convert to DV"),
 _(u"Google Android") : ("preset-v1-GoogleAndroid", "Google Android"),
 _(u"Google webm") : ("preset-v1-GoogleWebm", "Google webm"),
@@ -188,7 +191,7 @@ class PresetsPanel(wx.Panel):
         grid_siz5 = wx.FlexGridSizer(2, 2, 0, 0)
         grid_siz6 = wx.FlexGridSizer(1, 7, 0, 0)
         grd_s3 = wx.GridSizer(1, 1, 0, 0)
-        #siz1.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 10)########################################
+        #siz1.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 10)#########################
         grd_s1.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
         grd_s3.Add(self.txt_cmd, 0, wx.ALL | wx.EXPAND 
                                             | wx.ALIGN_CENTER_HORIZONTAL 
@@ -338,8 +341,9 @@ class PresetsPanel(wx.Panel):
         param = dati[event.GetText()] 
         # lista extract and construct command from param and description (type)
         # slct is the profile name
-        lista =  [slct, param["type"],param["parametri"], param["filesupport"], 
-            param["estensione"]]
+        lista =  [slct, param["type"],param["parametri"], 
+                  param["filesupport"], param["estensione"]
+                  ]
 
         array.append(lista[0])# lista[0] is the profile name 
         array.append(lista[1])# lista[1] description
@@ -408,16 +412,17 @@ class PresetsPanel(wx.Panel):
             dialfile.Destroy()
             
             if tail != '%s.vdms' % filename:
-                wx.MessageBox(_(u"'%s' \n\ndoes not match with the one in use:\n\n"
-                              u"'%s'\n\nPlease, select a corresponding preset "
-                              u"in the \ncombobox, first") % (dirname, filename), 
-                              "WARNING ! - Videomass2",  wx.ICON_WARNING, self
+                wx.MessageBox(_(u"'{0}' \n\ndoes not match with the one in use:\n\n"
+                              u"'{1}'\n\nPlease, select a corresponding preset "
+                              u"in the \ncombobox, first").format(dirname, 
+                                                                  filename), 
+                              "Videomass2: warning!",  wx.ICON_WARNING, self
                                 )
                 return
             
             if wx.MessageBox(_(u'The preset "%s" will be imported and will '
                     u'overwrite the one in use ! Proceed ?') % (tail), 
-                    _(u'Please confirm - Videomass2'), wx.ICON_QUESTION | 
+                    _(u'Videomass2: Please confirm'), wx.ICON_QUESTION | 
                                                   wx.YES_NO, 
                                                   self) == wx.NO:
                 return
@@ -434,7 +439,7 @@ class PresetsPanel(wx.Panel):
         #copy_restore('%s/share/av_presets.xml' % (self.PWD), '%s' % (self.dirconf))
         if wx.MessageBox(_(u"The current preset will be overwritten to "
                          u"default values! proceed?"), 
-                         _(u"Please confirm - Videomass2"), wx.ICON_QUESTION | 
+                         _(u"Videomass2: Please confirm"), wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
         
@@ -452,7 +457,7 @@ class PresetsPanel(wx.Panel):
         """
         if wx.MessageBox(_(u"WARNING: you are going to restore all default "
                          u"presets from videomass2! Proceed?"), 
-                         _(u"Please confirm - Videomass2"), 
+                         _(u"Videomass2: Please confirm"), 
                          wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
@@ -528,7 +533,7 @@ class PresetsPanel(wx.Panel):
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             if wx.MessageBox(_(u"Are you sure you want to delete the "
                              u"selected profile?"), 
-                             _(u"Please confirm - Videomass2"), 
+                             _(u"Videomass2: Please confirm"), 
                              wx.ICON_QUESTION | 
                              wx.YES_NO, self) == wx.NO:
                 return

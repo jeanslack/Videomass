@@ -29,26 +29,58 @@ import os
 
 class Appearance(object):
     """
-    - called by bootstrap on_init -
-    This class determines the paths to use to set icons on the appearance of 
-    the graphical interface.
+    This class determines the paths to use to set icons on the 
+    graphic appearance of the Videomass2 program.
     """
     def __init__(self, IS_LOCAL, iconset):
         """
         The paths where the icon sets are located depend on where the program 
         is run and on which operating system.
         Each icons set is defined by the name of the folder that contains it.  
-        By default the icon set is ``default``. 
         """
         if IS_LOCAL:
             url = '%s/art/icons' % os.getcwd() # work current directory
-            self.videomass_icon = "%s/videomass2.png" % url # 128x128
-            self.wizard_icon = "%s/videomass2_wizard.png" % url # 128x128
+            self.videomass_icon = "%s/videomass2.png" % url
+            self.wizard_icon = "%s/videomass2_wizard.png" % url
             
         else:
-            url = '/usr/share/videomass2/icons'
-            self.videomass_icon = "/usr/share/pixmaps/videomass2.png" # 128x128
-            self.wizard_icon = "/usr/share/pixmaps/videomass2_wizard.png" # 128x128
+            import sys
+            import platform
+            OS = platform.system()
+            
+            if OS == 'Windows':
+                #Installed with 'pip install videomass2' cmd
+                pythonpath = os.path.dirname(sys.executable)
+                url = pythonpath + '\\share\\videomass2\\icons'
+                self.videomass_icon = url + "\\videomass2.png" 
+                self.wizard_icon = url + "\\videomass2_wizard.png"
+            else:
+                from videomass2.vdms_SYS.whichcraft import which
+                binarypath = which('videomass2')
+                
+                if binarypath == '/usr/local/bin/videomass2':
+                    #usually Linux,MacOs,Unix
+                    url = '/usr/local/share/videomass2/icons'
+                    share = '/usr/local/share/pixmaps'
+                    self.videomass_icon = share + '/videomass2.png'
+                    self.wizard_icon = url + '/videomass2_wizard.png'
+                    
+                elif binarypath == '/usr/bin/videomass2':
+                    #usually Linux 
+                    url = '/usr/share/videomass2/icons'
+                    share = '/usr/share/pixmaps'
+                    self.videomass_icon = share + "/videomass2.png"
+                    self.wizard_icon = url + "/videomass2_wizard.png"
+                    
+                else: 
+                    #installed with 'pip install --user videomass2' cmd
+                    import site
+                    userbase = site.getuserbase()
+                    url = userbase + '/share/videomass2/icons'
+                    share = '/share/pixmaps'
+                    self.videomass_icon = userbase+share + "/videomass2.png"
+                    self.wizard_icon = userbase+url+"/videomass2_wizard.png"
+                    
         # default black
         if iconset == 'Material_Design_Icons_black': # default
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url
@@ -99,30 +131,30 @@ class Appearance(object):
         ic_analyzes = '%s/analyzes.png' % self.x18
         ic_settings = '%s/settings.png' % self.x18
         
-        return (self.videomass_icon, # 0
-                icon_presets, # 1
-                icon_switchvideomass, # 2
-                icon_process, # 3
-                icon_help, # 4
-                icon_headphones, # 5
-                icon_import, # 6
-                icn_infosource, # 7
-                icn_preview, # 8
-                icn_cut, # 9
-                icn_playfilters, # 10
-                icn_resetfilters,  # 11
-                icn_saveprf, # 12
-                icn_newprf, # 13
-                icn_delprf, # 14
-                icn_editprf, # 15
-                ic_resize, # 16
-                ic_crop, # 17
-                ic_rotate, # 18
-                ic_deinterlace, # 19
-                ic_denoiser, # 20
-                ic_analyzes, # 21
-                ic_settings, # 22
-                self.wizard_icon, # 23
-                )
+        return [os.path.join(norm) for norm in [self.videomass_icon, # 0
+                                                icon_presets, # 1
+                                                icon_switchvideomass, # 2
+                                                icon_process, # 3
+                                                icon_help, # 4
+                                                icon_headphones, # 5
+                                                icon_import, # 6
+                                                icn_infosource, # 7
+                                                icn_preview, # 8
+                                                icn_cut, # 9
+                                                icn_playfilters, # 10
+                                                icn_resetfilters,  # 11
+                                                icn_saveprf, # 12
+                                                icn_newprf, # 13
+                                                icn_delprf, # 14
+                                                icn_editprf, # 15
+                                                ic_resize, # 16
+                                                ic_crop, # 17
+                                                ic_rotate, # 18
+                                                ic_deinterlace, # 19
+                                                ic_denoiser, # 20
+                                                ic_analyzes, # 21
+                                                ic_settings, # 22
+                                                self.wizard_icon, # 23
+                                                ]]
             
         

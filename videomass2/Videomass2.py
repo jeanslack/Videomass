@@ -76,7 +76,7 @@ class Videomass(wx.App):
         if setui[2]: # if source /share is missing and .videomass is corrupted
             wx.MessageBox(_(u'Can not find the configuration file\n\n'
                             u'Sorry, cannot continue..'),
-                             'Fatal Error - Videomass2', wx.ICON_STOP)
+                             'Videomass2: Fatal Error', wx.ICON_STOP)
             print 'Videomass2: Fatal Error, file configuration not found'
             return False
         
@@ -118,6 +118,7 @@ class Videomass(wx.App):
             ffmpeg_link = fileconf[8]
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
+            # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True
             
@@ -190,6 +191,4 @@ def Main():
     fred = app.MainLoop()
     print "after MainLoop", fred
     
-    
-#-----------------------------------------------------------------------------#
 

@@ -518,7 +518,7 @@ class MainFrame(wx.Frame):
         elif self.AconvPanel.IsShown():
             self.AconvPanel.Addprof()
         else:
-            print 'Error, no panels shown - Videomass2'
+            print 'Videomass2: Error, no panels shown'
     #------------------------------------------------------------------#
     def Newprofile(self, event):
         """
@@ -529,7 +529,7 @@ class MainFrame(wx.Frame):
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Addprof()
         else:
-            print 'Error, no presets manager panel shown - Videomass2'
+            print 'Videomass2: Error, no presets manager panel shown'
     #------------------------------------------------------------------#
     def Delprofile(self, event):
         """
@@ -935,7 +935,7 @@ class MainFrame(wx.Frame):
         #Show the panel:
         self.ProcessPanel.Show()
         self.Layout()
-        self.SetTitle('..Start Encoding - Videomass2')
+        self.SetTitle(_('..Start Encoding - Videomass2'))
 
         self.Setup_items_bar()# call set default layout method
     #------------------------------------------------------------------#

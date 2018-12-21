@@ -95,7 +95,7 @@ class Cut_Range(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         #----------------------Properties ----------------------#
-        self.SetTitle('Duration - Videomass2')
+        self.SetTitle('Videomass2: duration')
         #self.start_hour_ctrl.SetMinSize((100,-1 ))
         #self.start_minute_ctrl.SetMinSize((100, -1))
         #self.start_second_ctrl.SetMinSize((100, -1))
@@ -106,8 +106,8 @@ class Cut_Range(wx.Dialog):
         #self.stop_minute_ctrl.SetMinSize((100, -1))
         #self.stop_second_ctrl.SetMinSize((100, -1))
         self.stop_hour_ctrl.SetToolTipString(_(u"Hours amount duration"))
-        self.stop_second_ctrl.SetToolTipString(_(u"Minutes amount duration"))
-        self.stop_minute_ctrl.SetToolTipString(_(u"Seconds amount duration"))
+        self.stop_minute_ctrl.SetToolTipString(_(u"Minutes amount duration"))
+        self.stop_second_ctrl.SetToolTipString(_(u"Seconds amount duration"))
         #----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
@@ -272,7 +272,7 @@ class VideoRotate(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         #----------------------Properties------------------------------------#
 
-        self.SetTitle(_(u"Set Video/Image Rotation - Videomass2"))
+        self.SetTitle(_(u"Videomass2: Set Video/Image Rotation"))
         #self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTipString(_(u"Reverses visual movie from bottom to top"))
         #self.button_left.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -504,7 +504,7 @@ class VideoCrop(wx.Dialog):
         self.Layout()
         
         #----------------------Properties------------------------------------#
-        self.SetTitle("Video/Image Crop - Videomass2")
+        self.SetTitle("Videomass2: Video/Image Crop")
         #self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -750,7 +750,7 @@ class VideoResolution(wx.Dialog):
         self.Layout()
         
         # Properties
-        self.SetTitle(_(u"Resize (change resolution) - Videomass2"))
+        self.SetTitle(_(u"Videomass2: Resize (change resolution)"))
 
         scale_str = (_(u'Scale (resize) the input video or image.'))
         self.spin_scale_width.SetToolTipString(_(u'WIDTH:\n%s') % scale_str)
@@ -947,7 +947,7 @@ class Lacing(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
         # set Properties
-        self.SetTitle(_(u"Deinterlace/Interlace - Videomass2"))
+        self.SetTitle(_(u"Videomass2: Deinterlace/Interlace"))
         self.rdbx_W3fdif_filter.Hide()
         self.rdbx_W3fdif_deint.Hide()
         self.rdbx_Yadif_mode.Hide()
@@ -1413,7 +1413,7 @@ class Denoisers(wx.Dialog):
         self.Layout()
         
         # set Properties
-        self.SetTitle(_(u"Denoisers filters - Videomass2"))
+        self.SetTitle(_(u"Videomass2: Denoisers filters"))
         self.ckbx_nlmeans.SetToolTipString(_(u'nlmeans:\n '
             u'(Denoise frames using Non-Local Means algorithm '
             u'is capable of restoring video sequences with even strong '

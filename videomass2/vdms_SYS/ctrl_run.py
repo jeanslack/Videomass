@@ -71,17 +71,40 @@ def system_check():
     # What is the OS ??
     #OS = [x for x in ['Darwin','Linux','Windows'] if platform.system() in x ][0]
     OS = platform.system()
-    
-    if os.path.exists('%s/videomass2' % (PWD)) or OS in ['Darwin', 'Windows']:
-        #Paths for MacOSX or Linux without installation (portable)
+
+    if os.path.isdir('%s/art' % PWD):
         localepath = 'locale'
         path_srcShare = '%s/share' % PWD
         IS_LOCAL = True
         
-    else: # Path system installation 
-        localepath = '/usr/share/locale'
-        path_srcShare = '/usr/share/videomass2/config'
-        IS_LOCAL = False
+    else: # Path system installation (usr, usr/local, ~/.local, \python27\)
+        if OS == 'Windows':
+            #Installed with 'pip install videomass2' command
+            pythonpath = os.path.dirname(sys.executable)
+            localepath = pythonpath + '\\share\\locale'
+            path_srcShare = pythonpath + '\\share\\videomass2\\config'
+            IS_LOCAL = False
+            
+        else:
+            from videomass2.vdms_SYS.whichcraft import which
+            binarypath = which('videomass2')
+            if binarypath == '/usr/local/bin/videomass2':
+                #usually Linux,MacOs,Unix
+                localepath = '/usr/local/share/locale'
+                path_srcShare = '/usr/local/share/videomass2/config'
+                IS_LOCAL = False
+            elif binarypath == '/usr/bin/videomass2':
+                #usually Linux
+                localepath = '/usr/share/locale'
+                path_srcShare = '/usr/share/videomass2/config'
+                IS_LOCAL = False
+            else:
+                #installed with 'pip install --user videomass2' command
+                import site
+                userbase = site.getuserbase()
+                localepath = userbase + 'share/locale'
+                path_srcShare = userbase + '/share/videomass2/config'
+                IS_LOCAL = False
 
     #### check videomass.conf and config. folder
     if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass

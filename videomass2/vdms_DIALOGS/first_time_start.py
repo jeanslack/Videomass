@@ -73,7 +73,7 @@ class FirstStart(wx.Dialog):
         close_btn = wx.Button(self, wx.ID_EXIT, "")
         
         # properties
-        self.SetTitle(_(u"Wizard - Videomass2"))
+        self.SetTitle(_(u"Videomass2: Wizard"))
         lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL,wx.BOLD, 0, ""))
         # layout:
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -153,7 +153,7 @@ class FirstStart(wx.Dialog):
                           u"ffmpeg: invalid pathname\n"
                           u"ffprobe: invalid pathname\n"
                           u"ffplay: invalid pathname\n\n"),
-                          u'Entry errors', wx.ICON_ERROR, self)
+                          u'Videomass2: Entry errors', wx.ICON_ERROR, self)
             return
 
         for x in array:
@@ -169,18 +169,17 @@ class FirstStart(wx.Dialog):
         if empty:
             wx.MessageBox(_(u"You have not completed all the assignment fields.\n"
                           u"Please, continue with settings."),
-                          u'Warning', wx.ICON_EXCLAMATION, self)
+                          u'Videomass2: Warning', wx.ICON_EXCLAMATION, self)
             return
         if noexists:
             wx.MessageBox(_(u"No such file '%s'.\n"
                           u"Please, continue with settings.") % x,
-                          u'Error', wx.ICON_ERROR, self)
+                          u'Videomass2: Error', wx.ICON_ERROR, self)
             return
         if nobin:
-            wx.MessageBox(_(u"'%s'\ndoes not match with:\n"
-                          u"%s\n"
-                          u"Please, continue with settings.") % x, biname,
-                          'Error', wx.ICON_ERROR, self)
+            wx.MessageBox(_(u"'{0}'\ndoes not match with:\n{1}\n"
+                        u"Please, continue with settings.".format(x, biname)),
+                            'Videomass2: Error', wx.ICON_ERROR, self)
             return
 
         self.completion(ffmpeg, ffprobe, ffplay)
@@ -245,13 +244,14 @@ class FirstStart(wx.Dialog):
             if noexists:
                 wx.MessageBox(_(u"'%s' is not installed on the system.\n"
                           u"Please, install it or set a new custom path.") 
-                          % required, 'Warning', wx.ICON_EXCLAMATION, self)
+                          % required, 'Videomass2: Warning', 
+                          wx.ICON_EXCLAMATION, self)
                 return
             else:
                 if wx.MessageBox(_(u"The Videomass2 system folder already "
                         u"includes the binary executables of FFmpeg, "
                         u"FFprobe and FFplay.\n\nDo you want to use them?"), 
-                        _(u'Please Confirm - Videomass2'),
+                        _(u'Videomass2: Please Confirm'),
                         wx.ICON_QUESTION |
                         wx.YES_NO, 
                         None) == wx.YES:

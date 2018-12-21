@@ -46,7 +46,7 @@ def Messages(msg):
     """
 
     wx.MessageBox("[playback] ERROR:  %s" % (msg), 
-                      "FFplay - Videomass2", 
+                      "Videomass2: FFplay", 
                       wx.ICON_ERROR
                       )
 #########################################################################

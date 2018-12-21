@@ -1,0 +1,25 @@
+===================================================
+
+NOTE TO TRASLATORS:
+
+To start a new translation, create twice new folders (for example 'de_DE' for 
+the German language and 'LC_MESSAGES') with the following tree:
+
+    /locale
+        /de_DE
+            /LC_MESSAGES
+            
+Copy the file with the ".pot" extension, located in the source '/local' folder, 
+and paste into the 'LC_MESSAGES' folder, renaming the extension to ".po". 
+Now you can work on new tanslation with a translation editing program (for 
+example 'poedit') and then save it by generating a '.mo' file.
+
+Than update the "/vdms_SYS/app_const.py" file by adding the newly translated language 
+to the dictionary, for example:
+
+    supLang = {u "en": wx.LANGUAGE_ENGLISH,
+               u "it": wx.LANGUAGE_ENGLISH,
+               u "de": wx.LANGUAGE_GERMAN,
+               }
+               
+===================================================

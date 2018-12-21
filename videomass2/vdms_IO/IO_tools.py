@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: streams_tools.py
-# Porpose: Redirect any input/output resources for process
+# Porpose: Redirect any input/output resources to process
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -22,17 +22,33 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 21/july/2018, (02) October/13/2018
+# Rev (01) 21/july/2018, (02) December/20/2018
 #########################################################
+
 import wx
-from videomass2.vdms_PROCESS.task_processing import GeneralProcess
-from videomass2.vdms_PROCESS.task_processing import ProcThread
-from videomass2.vdms_PROCESS.task_processing import DoublePassThread
-from videomass2.vdms_PROCESS.task_processing import GrabAudioProc
-from videomass2.vdms_PROCESS.task_processing import SingleProcThread
-from videomass2.vdms_PROCESS.volumedetect import VolumeDetectThread, PopupDialog
-from videomass2.vdms_PROCESS.ffplay_reproduction import Play
-from videomass2.vdms_PROCESS.ffprobe_parser import FFProbe
+import platform
+
+if platform.system() == 'Windows':
+    from videomass2.vdms_PROCESS.task_processingWin32 import GeneralProcess
+    from videomass2.vdms_PROCESS.task_processingWin32 import ProcThread
+    from videomass2.vdms_PROCESS.task_processingWin32 import DoublePassThread
+    from videomass2.vdms_PROCESS.task_processingWin32 import GrabAudioProc
+    from videomass2.vdms_PROCESS.task_processingWin32 import SingleProcThread
+    from videomass2.vdms_PROCESS.volumedetectWin32 import VolumeDetectThread
+    from videomass2.vdms_PROCESS.volumedetectWin32 import PopupDialog
+    from videomass2.vdms_PROCESS.ffplay_reproductionWin32 import Play
+    from videomass2.vdms_PROCESS.ffprobe_parserWin32 import FFProbe
+else:
+    from videomass2.vdms_PROCESS.task_processing import GeneralProcess
+    from videomass2.vdms_PROCESS.task_processing import ProcThread
+    from videomass2.vdms_PROCESS.task_processing import DoublePassThread
+    from videomass2.vdms_PROCESS.task_processing import GrabAudioProc
+    from videomass2.vdms_PROCESS.task_processing import SingleProcThread
+    from videomass2.vdms_PROCESS.volumedetect import VolumeDetectThread
+    from videomass2.vdms_PROCESS.volumedetect import PopupDialog
+    from videomass2.vdms_PROCESS.ffplay_reproduction import Play
+    from videomass2.vdms_PROCESS.ffprobe_parser import FFProbe
+    
 from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
 
 
@@ -69,7 +85,7 @@ def stream_info(title, filepath , ffprobe_link):
 
     except IOError:
         wx.MessageBox(_(u"File does not exist or not a valid file:  %s") % (
-            filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
+            filepath), "Videomass2: warning", wx.ICON_EXCLAMATION, None)
         
 #-----------------------------------------------------------------------#
 def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
@@ -83,7 +99,7 @@ def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
             #error = thread.data
     except IOError:
         wx.MessageBox(_(u"File does not exist or not a valid file:  %s") % (
-            filepath), "Warning - Videomass2", wx.ICON_EXCLAMATION, None)
+            filepath), "Videomass2: warning", wx.ICON_EXCLAMATION, None)
         return
     
 #-----------------------------------------------------------------------#

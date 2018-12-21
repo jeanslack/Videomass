@@ -22,10 +22,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (08) 04/08/2014
-# Rev (09) 14/01/2015
-# Rev (10) 10/03/2015
-# Rev (11) 29/04/2015
 # Rev (12) 25/July/2018
 #########################################################
 
@@ -86,24 +82,23 @@ greenolive = '#8aab3c'
 
 class Video_Conv(wx.Panel):
     """
-    Interface panel for video conversions with audio volume normalizations
-    and preset storing feature
+    Interface panel for video conversions
     """
-    def __init__(self, parent, ffmpeg_link, ffplay_link, 
-                 threads, cpu_used, loglevel_type, OS, iconplay, 
-                 iconreset, iconresize, iconcrop, iconrotate, icondeinterlace,
+    def __init__(self, parent, ffmpeg_link, ffplay_link, threads, 
+                 cpu_used, loglevel_type, OS, iconplay, iconreset, 
+                 iconresize, iconcrop, iconrotate, icondeinterlace,
                  icondenoiser, iconanalyzes, iconsettings,):
 
         wx.Panel.__init__(self, parent)
-        """ constructor """
-        # passed attributes:
+
+        # set attributes:
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
         self.ffplay_link = ffplay_link
         self.threads = threads
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
-        # others attributes;
+        # set others attributes;
         self.file_sources = []
         self.file_destin = ''
         self.OS = OS
@@ -635,7 +630,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Presets, self.rdb_h264preset)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Profiles, self.rdb_h264profile)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Tunes, self.rdb_h264tune)
-        #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la chiusura dalla x di chiusura
+        #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
     #----------------------used methods----------------------#
         # initialize default layout:
@@ -767,7 +762,7 @@ class Video_Conv(wx.Panel):
                    u"(0.2 fps); More is low, the lower will be the extracted "
                    u"images. "))
             self.parent.statusbar_msg(_(u"Output format: Save images"),None)
-            wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION
+            wx.MessageBox(msg, "Videomass2: info", wx.ICON_INFORMATION
                           )
             self.ckbx_pass.SetValue(False)
             self.UI_set()
@@ -833,7 +828,7 @@ class Video_Conv(wx.Panel):
         file in the list `self.file_sources` will be displayed
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox(_(u"No filter enabled"), "Info -Videomass2", 
+            wx.MessageBox(_(u"No filter enabled"), "Videomass2: Info", 
                           wx.ICON_INFORMATION)
             return
         self.time_seq = self.parent.time_seq
@@ -847,7 +842,7 @@ class Video_Conv(wx.Panel):
         Reset all enabled filters
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox(_(u"No filter enabled"), "Info -Videomass2", 
+            wx.MessageBox(_(u"No filter enabled"), "Videomass2: Info", 
                           wx.ICON_INFORMATION)
             return
         else:
@@ -899,12 +894,10 @@ class Video_Conv(wx.Panel):
         else:
             denoiser = ''
             
-        f = '%s%s%s%s%s%s%s' % (crop, size, dar, sar, 
-                                rotate, lacing, denoiser
-                                )
+        f = crop + size + dar + sar + rotate + lacing + denoiser
         if f:
-            l = len(f)
-            filters = '%s' % f[:l - 1]
+            lengh = len(f)
+            filters = '%s' % f[:lengh - 1]
             cmd_opt['Filters'] = "-vf %s" % filters
         else:
             cmd_opt['Filters'] = ""
@@ -1338,7 +1331,8 @@ class Video_Conv(wx.Panel):
         elif not self.ckbx_a_normalize.GetValue():# is not checked
             self.parent.statusbar_msg(_(u"Disable audio normalization "
                                         u"inside video"), None)
-            self.spin_ctrl_audionormalize.SetValue(-1.0), self.label_normalize.Disable()
+            self.spin_ctrl_audionormalize.SetValue(-1.0)
+            self.label_normalize.Disable()
             self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_analyzes.Disable(), self.spin_ctrl_audionormalize.Disable()
             self.text_dbMax.SetValue(""), self.text_dbMedium.SetValue("")
@@ -1480,7 +1474,7 @@ class Video_Conv(wx.Panel):
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_(u"Missing volume dectect!\n"
                               u"Press the analyze button before proceeding."),
-                                "Warning!", wx.ICON_WARNING)
+                                "Videomass2: Warning!", wx.ICON_WARNING)
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]
@@ -1819,7 +1813,7 @@ class Video_Conv(wx.Panel):
         full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
-                                 filename, list, _(u'Create a new profile on '
-                                 u'"%s" preset - Videomass2') % (
+                                            filename, list, 
+                    _(u'Videomass2: Create a new profile on "%s" preset') % (
                                  name_preset))
         prstdlg.ShowModal()

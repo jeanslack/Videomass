@@ -102,7 +102,7 @@ class VolumeDetectThread(Thread):
     volume peak level when required for audio normalization process.
     The volume data is a list sended to the dialog with wx.callafter.
     """
-    def __init__(self, ffmpeg_bin, filelist):
+    def __init__(self, ffmpeg_bin, filelist, OS):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
