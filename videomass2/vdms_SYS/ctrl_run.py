@@ -77,8 +77,9 @@ def system_check():
         path_srcShare = '%s/share' % PWD
         IS_LOCAL = True
         
-    else: # Path system installation (usr, usr/local, ~/.local)
+    else: # Path system installation (usr, usr/local, ~/.local, \python27\)
         if OS == 'Windows':
+            #Installed with 'pip install videomass2' command
             pythonpath = os.path.dirname(sys.executable)
             localepath = pythonpath + '\\share\\locale'
             path_srcShare = pythonpath + '\\share\\videomass2\\config'
@@ -88,14 +89,17 @@ def system_check():
             from videomass2.vdms_SYS.whichcraft import which
             binarypath = which('videomass2')
             if binarypath == '/usr/local/bin/videomass2':
+                #usually Linux,MacOs,Unix
                 localepath = '/usr/local/share/locale'
                 path_srcShare = '/usr/local/share/videomass2/config'
                 IS_LOCAL = False
             elif binarypath == '/usr/bin/videomass2':
+                #usually Linux
                 localepath = '/usr/share/locale'
                 path_srcShare = '/usr/share/videomass2/config'
                 IS_LOCAL = False
             else:
+                #installed with 'pip install --user videomass2' command
                 import site
                 userbase = site.getuserbase()
                 localepath = userbase + 'share/locale'
