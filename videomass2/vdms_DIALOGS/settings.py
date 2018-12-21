@@ -271,7 +271,7 @@ class Setup(wx.Dialog):
         self.Layout()
         
         #----------------------Properties----------------------#
-        self.SetTitle(_(u"Setup - Videomass2"))
+        self.SetTitle(_(u"Videomass2: setup"))
         self.spinctrl_cpu.SetToolTipString(_(u"Quality/Speed ratio modifier "
                                             u"(from -16 to 16) (default 1)"))
         self.check_cmdline.SetToolTipString(_(u"Allows the text writing to "
@@ -643,7 +643,7 @@ class Setup(wx.Dialog):
 
         if self.check_cmdlog.IsChecked() and self.txt_pathlog.GetValue() == "":
             wx.MessageBox(_(u"Warning, The log command has no set path name "), 
-                            "WARNING - Videomass2", wx.ICON_WARNING)
+                            "Videomass2: warning", wx.ICON_WARNING)
         else:
             with open (filename, 'w') as fileconf:
                 for i in self.full_list:

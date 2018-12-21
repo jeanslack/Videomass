@@ -95,7 +95,7 @@ class Mediainfo(wx.Dialog):
         # execute a control for errors:
         if metadata.ERROR():
             wx.MessageBox("[FFprobe] Error:  %s" % (metadata.error), 
-                    "FFprobe - Videomass2", wx.ICON_ERROR, self)
+                    "Videomass2: FFprobe", wx.ICON_ERROR, self)
             self.Destroy()
             return
         

@@ -762,7 +762,7 @@ class Video_Conv(wx.Panel):
                    u"(0.2 fps); More is low, the lower will be the extracted "
                    u"images. "))
             self.parent.statusbar_msg(_(u"Output format: Save images"),None)
-            wx.MessageBox(msg, "INFO - Videomass2", wx.ICON_INFORMATION
+            wx.MessageBox(msg, "Videomass2: info", wx.ICON_INFORMATION
                           )
             self.ckbx_pass.SetValue(False)
             self.UI_set()
@@ -828,7 +828,7 @@ class Video_Conv(wx.Panel):
         file in the list `self.file_sources` will be displayed
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox(_(u"No filter enabled"), "Info -Videomass2", 
+            wx.MessageBox(_(u"No filter enabled"), "Videomass2: Info", 
                           wx.ICON_INFORMATION)
             return
         self.time_seq = self.parent.time_seq
@@ -842,7 +842,7 @@ class Video_Conv(wx.Panel):
         Reset all enabled filters
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox(_(u"No filter enabled"), "Info -Videomass2", 
+            wx.MessageBox(_(u"No filter enabled"), "Videomass2: Info", 
                           wx.ICON_INFORMATION)
             return
         else:
@@ -1474,7 +1474,7 @@ class Video_Conv(wx.Panel):
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_(u"Missing volume dectect!\n"
                               u"Press the analyze button before proceeding."),
-                                "Warning!", wx.ICON_WARNING)
+                                "Videomass2: Warning!", wx.ICON_WARNING)
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]
@@ -1813,7 +1813,7 @@ class Video_Conv(wx.Panel):
         full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
-                                 filename, list, _(u'Create a new profile on '
-                                 u'"%s" preset - Videomass2') % (
+                                            filename, list, 
+                    _(u'Videomass2: Create a new profile on "%s" preset') % (
                                  name_preset))
         prstdlg.ShowModal()

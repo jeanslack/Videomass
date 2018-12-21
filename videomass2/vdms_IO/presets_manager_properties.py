@@ -58,7 +58,7 @@ def supported_formats(array3, file_sources):
                 wx.MessageBox(_(u"The selected profile is not suitable to "
                                 u"convert the following file formats:\n\n%s\n\n") 
                               % ('\n'.join(exclude)), 
-                              _(u"Unsuitable format - Videoamass2"), 
+                              _(u"Videomass2: Unsuitable format"), 
                               wx.ICON_WARNING | wx.OK, 
                               None
                               )
@@ -108,7 +108,7 @@ def parser_xml(arg): # arg é il nome del file xml (vdms)
                     ext = extension.data
 
             dati[name] = { "type": types, "parametri": params, 
-                                    "filesupport": support, "estensione": ext }
+                           "filesupport": support, "estensione": ext }
     #return dati[name]
 
     return dati

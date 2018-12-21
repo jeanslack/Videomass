@@ -387,7 +387,7 @@ class Audio_Conv(wx.Panel):
             # ...and proceed to checkout:
             if audio_list == None:
                 wx.MessageBox(_(u"There are no audio streams:\n%s ") % (files), 
-                            'Warning - Videomass2', wx.ICON_EXCLAMATION, self)
+                            'Videomass2: warning', wx.ICON_EXCLAMATION, self)
                 return
 
             elif len(audio_list) > 1:
@@ -395,7 +395,7 @@ class Audio_Conv(wx.Panel):
                         _(u"The imported video contains multiple audio\n" 
                         u"streams. Select which stream you want to\n"
                         u"export between these:"), 
-                        _(u"Stream choice - Videomass2"),
+                        _(u"Videomass2: Stream choice"),
                         audio_list, wx.CHOICEDLG_STYLE
                                             )
                 if dlg.ShowModal() == wx.ID_OK:
@@ -410,7 +410,7 @@ class Audio_Conv(wx.Panel):
                         cmd_opt["ExportExt"].append(cn)
                     else:
                         wx.MessageBox(_(u"Nothing choice:\n%s ") % (files), 
-                            'Error - Videomass2', wx.ICON_ERROR, self)
+                            'Videomass2: Error', wx.ICON_ERROR, self)
                         return
                 else:
                     pass
@@ -492,7 +492,7 @@ class Audio_Conv(wx.Panel):
         data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
 
         if data[1]:
-            wx.MessageBox(data[1], "ERROR! -Videomass2", wx.ICON_ERROR)
+            wx.MessageBox(data[1], "Videomass2: ERROR!", wx.ICON_ERROR)
             return
         else:
             volume = list()
@@ -560,7 +560,7 @@ class Audio_Conv(wx.Panel):
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_(u"Missing volume dectect!\n"
                               u"Press the analyze button before proceeding."),
-                                "Warning!", wx.ICON_WARNING)
+                                "Videomass2: Warning!", wx.ICON_WARNING)
                 return
         self.update_allentries()# last update of all setting interface
         # make a different id need to avoid attribute overwrite:
@@ -749,7 +749,7 @@ class Audio_Conv(wx.Panel):
             if wx.MessageBox(_(u"Audio normalization is a specific process "
                              u"applied track by track.\n\n"
                              u"Are you sure to proceed ?"), 
-                             _(u'Audio normalization enabled! - Videomass2'), 
+                             _(u'Videomass2: Audio normalization enabled!'), 
                              wx.ICON_QUESTION | wx.YES_NO, 
                             None) == wx.NO:
                 return #Se L'utente risponde no
@@ -784,7 +784,7 @@ class Audio_Conv(wx.Panel):
         full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
-                                 filename, list, _(u'Create a new profile on '
-                                 u'"%s" preset - Videomass2') % (
-                                 name_preset))
+                                            filename, list, 
+                    _(u'Videomass2: Create a new profile on "%s" preset') % (
+                                                                name_preset))
         prstdlg.ShowModal()

@@ -25,6 +25,7 @@ interface for audio and video conversions through FFmpeg.
 - Selection of the time interval (for exports, previews, reproduction, tests)
 - Convert multiple files at once 
 - Log management
+- Italian and English Language support
 - Work on many platforms where Python and wxPython are supported, 
   including **Linux**, **MacOs** and **Windows**. 
 

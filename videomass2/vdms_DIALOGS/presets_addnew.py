@@ -51,19 +51,32 @@ class MemPresets(wx.Dialog):
         self.arg = arg # arg é solo un parametro di valutazione (edit o newprofile).
         self.array = array
         
-        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
+        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                    style=wx.TE_PROCESS_ENTER
+                                    )
         siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, _(u"Profile Name"))
-        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
+        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                        style=wx.TE_PROCESS_ENTER
+                                        )
         siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, _(u"Description"))
-        self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_(u"Command Line Parameters "
-                        u"Do not use `-i` or output filename)")))
-        self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
+        self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                   style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, 
+                                      (_(u"Command Line Parameters "
+                                   u"Do not use `-i` or output filename)"))
+                                      )
+        self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                    style=wx.TE_PROCESS_ENTER
+                                    )
         siz4_supp = wx.StaticBox(self, wx.ID_ANY, (_(u"Files supported in the "
-                                        u"import (do not include the `.`)")))
-        self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_PROCESS_ENTER)
+                                        u"import (do not include the `.`)"))
+                                                    )
+        self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                   style=wx.TE_PROCESS_ENTER
+                                   )
         siz4_ext = wx.StaticBox(self, wx.ID_ANY, (_(u"Output format extension "
-                                                  u"(do not include the `.`)")))
+                                                  u"(do not include the `.`)"))
+                                                  )
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
         btn_save = wx.Button(self, wx.ID_OK, _(u"Save.."))
@@ -198,13 +211,13 @@ class MemPresets(wx.Dialog):
                                 paramprofile == '' or extprofile ==  '':
                                     
             wx.MessageBox(_(u"Incomplete profile assignement. I can't save"),
-                        "Warning", wx.ICON_EXCLAMATION, self)
+                        "Videomass2: warning", wx.ICON_EXCLAMATION, self)
             return
                                             
         elif cod_names in raw_list and self.arg == 'newprofile': # if exist name
                 
-            wx.MessageBox(_(u"Profile already stored with the same name."
-                u"nome"), "Warning", wx.ICON_EXCLAMATION, self)
+            wx.MessageBox(_(u"Profile already stored with the same name."), 
+                          "Videomass2: warning", wx.ICON_EXCLAMATION, self)
             return
 
         if self.arg == 'edit':

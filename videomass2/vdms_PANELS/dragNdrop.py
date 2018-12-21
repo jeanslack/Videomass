@@ -273,7 +273,7 @@ class DnDPanel(wx.Panel):
         """
         Choice a specific directory for files save
         """
-        dialdir = wx.DirDialog(self, _(u"Choose a directory: - Videomass2"))
+        dialdir = wx.DirDialog(self, _(u"Videomass2: Choose a directory"))
             
         if dialdir.ShowModal() == wx.ID_OK:
             self.text_path_save.SetValue("")
