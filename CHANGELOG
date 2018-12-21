@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-December 9, 2018 V.1.2.5
+December 21, 2018 V.1.3.0
 +------------------------------------+
 
 BUG FIXES:
@@ -23,6 +23,8 @@ NEW: [features/enhancements]
     - Added new icons free and open source compatible with GPL3.
     - Add supports for the localization of internationalization (i18n) 
     - Add support to Italian language.
+    - Now Videomass2 has wheel on PyPi installable via pip and support 
+      for Linux/Macintosh/Unix/Windows
   
 IMPROVEMENTS:
     - Improved configuration file error handling: if the version of the 

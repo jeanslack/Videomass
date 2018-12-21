@@ -67,7 +67,7 @@ More details:
     IF YOU WANT SET A VIRTUALENV environment need for build the .app:
     https://wiki.wxpython.org/wxPythonVirtualenvOnMac
 
-    On Mac OSX, I installed wxpython with Homebrew using:
+    On Mac OSX, I installed wxpPthon with Homebrew using:
 
     brew install wxpython
     Change into your virtualenv site-packages directory:

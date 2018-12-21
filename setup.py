@@ -106,9 +106,8 @@ def glob_files(pattern):
 ########################################################################
 def BUILD_PKG():
     """
-    ------------------------------------------------
-    Builds pre-compiled packages
-    ------------------------------------------------
+    Builds source and pre-compiled packages
+
     """
     
     DATA_FILES = [ # even path must be relative-path
@@ -164,15 +163,14 @@ def BUILD_PKG():
         scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
-        #install_requires = ['wxPython>=3.0,<4.0',],
+        install_requires = ['wxPython',],
         )
 
 ########################################################################
 def OSX():
     """
-    ------------------------------------------------
-    py2app build script for videomass2
-    ------------------------------------------------
+    build videomass2.app
+
     """
     PATH_ICON = '%s/art/videomass.icns' % PWD
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
@@ -206,7 +204,7 @@ def OSX():
             if os.path.isdir(tmp):
                 tmp2 = tmp + "/videomass2.mo"
                 if os.path.exists(tmp2):
-                    DATA_FILES.append(('locale' + tmp, [tmp2]))
+                    DATA_FILES.append((tmp, [tmp2]))
     
     OPTIONS = {'argv_emulation' : False,
                'resources' : RESOURCES,
@@ -227,11 +225,13 @@ def OSX():
                             }
                 }
 
-    #--------------- This is setup: --------------------#
-    if not os.path.exists('%s/bin/Videomass2.py' % PWD):
-        os.rename("%s/bin/videomass2" % PWD,"%s/bin/Videomass2.py" % PWD)
-        #shutil.copyfile('%s/videomass2' % PWD, '%s/Videomass2.py' % PWD)
     
+    if not os.path.exists('%s/bin/Videomass2.py' % PWD):
+        #os.rename("%s/bin/videomass2" % PWD,"%s/bin/Videomass2.py" % PWD)
+        shutil.copyfile('%s/bin/videomass2' % PWD, 
+                        '%s/bin/Videomass2.py' % PWD
+                        )
+    #--------------- setup: --------------------#
     setup(app = ['bin/Videomass2.py'],
         packages = find_packages(),
         include = ['python', 'wx',],
@@ -253,16 +253,19 @@ def OSX():
 ########################################################################
 def WIN32():
     """
-    ------------------------------------------------
-    py2exe build script for videomass2
-    ------------------------------------------------
+    build videomass2.exe
+    
     -Usage:
         python setup.py py2exe --help
+
     """
     import py2exe
     
     if not os.path.exists('%s/bin/Videomass2.py' % PWD):
-        os.rename("%s/bin/videomass2" % PWD,"%s/bin/Videomass2.py" % PWD)
+        #os.rename("%s/bin/videomass2" % PWD,"%s/bin/Videomass2.py" % PWD)
+        shutil.copyfile('%s/bin/videomass2' % PWD, 
+                        '%s/bin/Videomass2.py' % PWD
+                        )
 
     DATA_FILES = [('share', glob_files('share/*.vdms')),
                   ('share', glob_files('share/*.conf')),
@@ -308,7 +311,7 @@ def WIN32():
     dll_excludes = ['libgdk-win32-2.0-0.dll', 'libgobject-2.0-0.dll',
                     'tcl84.dll', 'tk84.dll'
                     ]
- 
+    #--------------- Setup: --------------------#
     setup(options = {"py2exe": {"compressed": 2, 
                                 "optimize": 2,
                                 "includes": includes,
@@ -333,7 +336,7 @@ def WIN32():
     author = AUTHOR,
          )
 
-#----------------------------------------------------------------------#
+########################################################################
 
 if __name__ == '__main__':
     if platform.system() == 'Windows' and 'py2exe' in sys.argv:

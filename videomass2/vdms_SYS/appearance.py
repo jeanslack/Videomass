@@ -47,7 +47,9 @@ class Appearance(object):
             import sys
             import platform
             OS = platform.system()
+            
             if OS == 'Windows':
+                #Installed with 'pip install videomass2' cmd
                 pythonpath = os.path.dirname(sys.executable)
                 url = pythonpath + '\\share\\videomass2\\icons'
                 self.videomass_icon = url + "\\videomass2.png" 
@@ -55,23 +57,30 @@ class Appearance(object):
             else:
                 from videomass2.vdms_SYS.whichcraft import which
                 binarypath = which('videomass2')
+                
                 if binarypath == '/usr/local/bin/videomass2':
+                    #usually Linux,MacOs,Unix
                     url = '/usr/local/share/videomass2/icons'
-                    share = '/usr/local/share'
-                    self.videomass_icon = share + "/pixmaps/videomass2.png" 
-                    self.wizard_icon = share + "/pixmaps/videomass2_wizard.png"
+                    share = '/usr/local/share/pixmaps'
+                    self.videomass_icon = share + '/videomass2.png'
+                    self.wizard_icon = url + '/videomass2_wizard.png'
+                    
                 elif binarypath == '/usr/bin/videomass2':
+                    #usually Linux 
                     url = '/usr/share/videomass2/icons'
                     share = '/usr/share/pixmaps'
                     self.videomass_icon = share + "/videomass2.png"
-                    self.wizard_icon = share + "/videomass2_wizard.png"
-                else:
-                    import site # .local user
+                    self.wizard_icon = url + "/videomass2_wizard.png"
+                    
+                else: 
+                    #installed with 'pip install --user videomass2' cmd
+                    import site
                     userbase = site.getuserbase()
                     url = userbase + '/share/videomass2/icons'
                     share = '/share/pixmaps'
-                    self.videomass_icon = userbase + share + "/videomass2.png"
-                    self.wizard_icon = userbase+share+"/videomass2_wizard.png"
+                    self.videomass_icon = userbase+share + "/videomass2.png"
+                    self.wizard_icon = userbase+url+"/videomass2_wizard.png"
+                    
         # default black
         if iconset == 'Material_Design_Icons_black': # default
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url
