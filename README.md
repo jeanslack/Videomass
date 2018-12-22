@@ -42,10 +42,10 @@ It provides a graphical interface for audio and video conversions through FFmpeg
 ## Installation via pip
 
 On Windows:   
-    pip install --no-deps videomass2
+    `pip install --no-deps videomass2`
 
 On MacOsX, Linux, Unix (for single user):   
-    pip install --user videomass2
+    `pip install --user videomass2`
 
 On MacOsX, Linux, Unix (for all users, need root privileges to install):   
-    pip install videomass2
+    `pip install videomass2`
