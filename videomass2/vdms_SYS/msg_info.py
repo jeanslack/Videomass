@@ -65,8 +65,7 @@ def descriptions_release():
     short_d = (u"Videomass2 is a cross-platform GUI for FFmpeg.")
     
     long_d = ("-Videomass2- provides a graphical interface for\n "
-              "managing audio and video streams through\n "
-              "FFmpeg even in batch mode.")
+              "audio and video conversions through FFmpeg\n ")
 
     short_l = (u"GPL3 (Gnu Public License)")
 

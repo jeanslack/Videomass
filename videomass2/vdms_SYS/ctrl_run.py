@@ -37,11 +37,9 @@ DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
 
 def parsing_fileconf():
     """
-    - called by bootstrap on_init -
     Make a parsing of the configuration file localized on 
-    ``~/.videomass2/videomass2.conf`` and return values list of the current 
-    program settings. If this file is not present or is damaged, it is marked 
-    as corrupt.
+    ``~/.videomass2/videomass2.conf`` and return object list 
+    of the current program settings.
     """
     filename = '%s/.videomass2/videomass2.conf' % (DIRNAME)
 
@@ -57,22 +55,17 @@ def parsing_fileconf():
 
 def system_check():
     """
-    - called by bootstrap on_init -
-    Assignment of the appropriate paths for sharing the configuration folder.
-    This function checks the integrity of the Videomass2 configuration folder 
-    located in each user's home directory. If this folder does not exist in 
-    the user space it will be recovered from the source or installation folder 
-    (this depends if local or system installation) and will be saved in 
-    the user's home.  
+    Setting and assigning shared data paths and checking 
+    the configuration folder  
     """
     copyerr = False
-    existfileconf = True # il file conf esiste (True) o non esite (False)
+    existfileconf = True # il file conf esiste (True) o non esiste (False)
     
     # What is the OS ??
-    #OS = [x for x in ['Darwin','Linux','Windows'] if platform.system() in x ][0]
     OS = platform.system()
 
     if os.path.isdir('%s/art' % PWD):
+        #launch without installing on any OS or .exe and .app
         localepath = 'locale'
         path_srcShare = '%s/share' % PWD
         IS_LOCAL = True
@@ -102,7 +95,7 @@ def system_check():
                 #installed with 'pip install --user videomass2' command
                 import site
                 userbase = site.getuserbase()
-                localepath = userbase + 'share/locale'
+                localepath = userbase + '/share/locale'
                 path_srcShare = userbase + '/share/videomass2/config'
                 IS_LOCAL = False
 

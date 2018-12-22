@@ -77,7 +77,6 @@ LONG_DESCRIPTION = dr[1]
 
 CLASSIFIERS = [
             'Development Status :: 4 - Beta',
-            'Environment :: Graphic',
             'Environment :: MacOS X :: Cocoa',
             'Environment :: Win32 (MS Windows)',
             'Environment :: X11 Applications :: GTK',
@@ -149,11 +148,13 @@ def BUILD_PKG():
                   "COPYING", "INSTALL", 
                   "README.md", "TODO"]:
         DATA_FILES.append(('share/videomass2', [docs]))
+    
+    readme = open("README.rst").read()
         
     setup(name = PRG_NAME,
         version = VERSION,
         description = DESCRIPTION,
-        long_description = LONG_DESCRIPTION,
+        long_description = readme,
         author = AUTHOR,
         author_email = EMAIL,
         url = WEBSITE,
