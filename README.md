@@ -1,9 +1,12 @@
+==================================================
+**Videomass2** is a cross-platform GUI for FFmpeg, It provides a graphical 
+interface for audio and video conversions through FFmpeg.
+==================================================
+<p align="center">
 <a href="https://github.com/jeanslack/Videomass2/blob/master/COPYING"><img alt="License: GPL3" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
 
 <a href="https://test.pypi.org/project/videomass2/"><img alt="PyPI" src="https://black.readthedocs.io/en/stable/_static/pypi.svg"></a>
-
-**Videomass2** is a cross-platform GUI for FFmpeg, It provides a graphical 
-interface for audio and video conversions through FFmpeg.
+</p>
 
 * [Features](#features)
 * [Official WebPage](http://jeanslack.github.io/Videomass2)
