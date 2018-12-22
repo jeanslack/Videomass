@@ -1,18 +1,16 @@
 
-**Videomass2** is a cross-platform GUI for FFmpeg, It provides a graphical 
-interface for audio and video conversions through FFmpeg.
+# **Videomass2** is a cross-platform GUI for FFmpeg   
+It provides a graphical interface for audio and video conversions through FFmpeg.
 
-* [Features](#features)
+
+* [Main project page](https://github.com/jeanslack/Videomass2)
 * [Support Page and documentation](http://jeanslack.github.io/Videomass2)
-* [Downloads](https://github.com/jeanslack/Videomass2/releases)
-* [Essential Dependencies](#essential-dependencies)
-* [Installing](#installing)
-* [Donation](#donation)
-* [License](#license)
+* [Downloads source code](https://github.com/jeanslack/Videomass2/releases)
+* [Installers for Windows/MacOsX/Linux](https://sourceforge.net/projects/videomass2/)
 
 ## Features
 
-- Drag n' Drop interface   
+- Drag n' Drop interface
 - Presets manager interface with fully customizable and expandable profiles  
 - Displaying metadata streams information 
 - Preview of exported media
@@ -26,7 +24,7 @@ interface for audio and video conversions through FFmpeg.
 - Selection of the time interval (for exports, previews, reproduction, tests)
 - Convert multiple files at once 
 - Log management
-- Italian and English Language support
+- Italian and English Languages support
 - Work on many platforms where Python and wxPython are supported, 
   including **Linux**, **MacOs** and **Windows**. 
 
@@ -41,30 +39,13 @@ interface for audio and video conversions through FFmpeg.
 - ffprobe (for multimedia streams analysis) (can be built-in into ffmpeg)
 - ffplay (media player for media preview) (can be built-in into ffmpeg)
 
-## Installing
-On Windows:
-```
-pip install --no-deps videomass2
-```
+## Installation via pip
 
-On MacOsX, Linux, Unix (for single user):
-```
-pip install --user videomass2
-```
+On Windows:   
+    pip install --no-deps videomass2
 
-On MacOsX, Linux, Unix (for all users, need root privileges):
-```
-pip install videomass2
-```
+On MacOsX, Linux, Unix (for single user):   
+    pip install --user videomass2
 
-## Donation
-
-If you like Videomass2 and you want to support its development, consider donating via:
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UKYM7S5U542SJ)
-
-## License
-
-Copyright © 2013 - 2018 by Gianluca Pernigotto
-Author and Developer: Gianluca Pernigotto   
-Mail: <jeanlucperni@gmail.com>   
-License: GPL3 (see LICENSE file in the docs folder)
+On MacOsX, Linux, Unix (for all users, need root privileges to install):   
+    pip install videomass2

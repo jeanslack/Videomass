@@ -149,12 +149,11 @@ def BUILD_PKG():
                   "README.md", "TODO"]:
         DATA_FILES.append(('share/videomass2', [docs]))
     
-    readme = open("README.rst").read()
-        
     setup(name = PRG_NAME,
         version = VERSION,
         description = DESCRIPTION,
-        long_description = readme,
+        long_description = open('README.md').read(),
+        long_description_content_type='text/markdown',
         author = AUTHOR,
         author_email = EMAIL,
         url = WEBSITE,
