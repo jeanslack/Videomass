@@ -2,17 +2,11 @@
 **Videomass2** is a cross-platform GUI for FFmpeg, It provides a graphical 
 interface for audio and video conversions through FFmpeg.
 
-<p align="center">
-<a href="https://github.com/jeanslack/Videomass2/blob/master/COPYING"><img alt="License: GPL3" src="https://black.readthedocs.io/en/stable/_static/license.svg"></a>
-
-<a href="https://test.pypi.org/project/videomass2/"><img alt="PyPI" src="https://black.readthedocs.io/en/stable/_static/pypi.svg"></a>
-</p>
-
 * [Features](#features)
-* [Official WebPage](http://jeanslack.github.io/Videomass2)
+* [Support Page and documentation](http://jeanslack.github.io/Videomass2)
 * [Downloads](https://github.com/jeanslack/Videomass2/releases)
 * [Essential Dependencies](#essential-dependencies)
-* [Installing and build packages](#installing-and-build-packages)
+* [Installing](#installing)
 * [Donation](#donation)
 * [License](#license)
 
@@ -47,9 +41,21 @@ interface for audio and video conversions through FFmpeg.
 - ffprobe (for multimedia streams analysis) (can be built-in into ffmpeg)
 - ffplay (media player for media preview) (can be built-in into ffmpeg)
 
-## Installing and build packages
-See the INSTALL file on the root sources folder or visit the support page
-at <https://jeanslack.github.io/Videomass2/>
+## Installing
+On Windows:
+```
+pip install --no-deps videomass2
+```
+
+On MacOsX, Linux, Unix (for single user):
+```
+pip install --user videomass2
+```
+
+On MacOsX, Linux, Unix (for all users, need root privileges):
+```
+pip install videomass2
+```
 
 ## Donation
 
