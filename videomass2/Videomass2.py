@@ -184,7 +184,7 @@ class Videomass(wx.App):
         print "OnExit"
     #-------------------------------------------------------------------
     
-#if __name__ == "__main__":
+
 def Main():
     app = Videomass(False)
     #app.MainLoop()

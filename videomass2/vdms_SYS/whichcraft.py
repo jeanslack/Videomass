@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'Daniel Roy Greenfeld'
-__email__ = 'pydanny@gmail.com'
-__version__ = '0.4.1'
+__author__ = "Daniel Roy Greenfeld"
+__email__ = "pydanny@gmail.com"
+__version__ = "0.5.2"
 
 import os
 import sys
 
-try:    # Forced testing
+try:  # Forced testing
     from shutil import which
-except ImportError:    # Forced testing
+except ImportError:  # Forced testing
     # Versions prior to Python 3.3 don't have shutil.which
 
     def which(cmd, mode=os.F_OK | os.X_OK, path=None):
@@ -24,9 +24,9 @@ except ImportError:    # Forced testing
         # Check that a given file can be accessed with the correct mode.
         # Additionally check that `file` is not a directory, as on Windows
         # directories pass the os.access check.
+
         def _access_check(fn, mode):
-            return (os.path.exists(fn) and os.access(fn, mode) and
-                    not os.path.isdir(fn))
+            return os.path.exists(fn) and os.access(fn, mode) and not os.path.isdir(fn)
 
         # If we're given a path with a directory part, look it up directly
         # rather than referring to PATH directories. This includes checking
@@ -34,12 +34,14 @@ except ImportError:    # Forced testing
         if os.path.dirname(cmd):
             if _access_check(cmd, mode):
                 return cmd
+
             return None
 
         if path is None:
             path = os.environ.get("PATH", os.defpath)
         if not path:
             return None
+
         path = path.split(os.pathsep)
 
         if sys.platform == "win32":
@@ -71,4 +73,5 @@ except ImportError:    # Forced testing
                     name = os.path.join(dir, thefile)
                     if _access_check(name, mode):
                         return name
-        return None 
+
+        return None

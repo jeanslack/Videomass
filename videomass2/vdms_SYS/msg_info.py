@@ -35,8 +35,8 @@ def current_release():
 
     Release_Name = 'Videomass2'
     Program_Name = 'videomass2'
-    Version = '1.3.0'
-    Release = 'December 21 2018'
+    Version = '1.3.2'
+    Release = 'December 22 2018'
     Copyright = u'© 2013-2019'
     Website = 'http://jeanslack.github.io/Videomass2/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'
@@ -65,8 +65,7 @@ def descriptions_release():
     short_d = (u"Videomass2 is a cross-platform GUI for FFmpeg.")
     
     long_d = ("-Videomass2- provides a graphical interface for\n "
-              "managing audio and video streams through\n "
-              "FFmpeg even in batch mode.")
+              "audio and video conversions through FFmpeg\n ")
 
     short_l = (u"GPL3 (Gnu Public License)")
 
