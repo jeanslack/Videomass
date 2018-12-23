@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 #
-# Friday Aug 23 10:37:47 2013
-#
 #########################################################
-# Name: launcher.py
-# Porpose: main launch script of videomass2
+# Name: videomass2.py
+# Porpose: videomass2 binary for installation only
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
