@@ -110,15 +110,16 @@ def AppendPackageFiles(data, baseicons, baselocale):
     # get all icons and icons docs
     for art in os.listdir('art/icons'):
         if art not in ['videomass2_wizard.png', 'videomass2.png']:
-            tmp = baseicons + art
+            tmp = "art/icons/" + art
             if os.path.exists(tmp):
-                pathdoc = baseicons + '%s' % art
+                pathdoc = '%s/%s' % (baseicons,art)
                 data.append((pathdoc, glob_files('%s/*.md' % tmp)))
                 data.append((pathdoc, glob_files('%s/*.txt' % tmp)))
             for size in ['18x18','24x24', '36x36']:
                 if os.path.exists(tmp + '/' + size):
                     path =  tmp +  '/' + size
-                    pathsize = '%s%s/%s' % (baseicons,art,size)
+                    pathsize = '%s/%s/%s' % (baseicons,art,size)
+                    print pathsize
                     data.append((pathsize, glob_files('%s/*.png' % path)))
         
     # Get the locale files
@@ -138,7 +139,7 @@ def SOURCE_BUILD():
     Source/Build distributions
 
     """
-    data = [ # even path must be relative-path
+    DATA_FILES = [ # even path must be relative-path
             ('share/videomass2/config', glob_files('share/*.vdms')),
             ('share/videomass2/config', ['share/videomass2.conf',
                                         'share/videomassWin32.conf',
@@ -153,7 +154,7 @@ def SOURCE_BUILD():
                                 'COPYING','TODO','README.md']),
             ]
     # get the package data
-    DATA_FILES = AppendPackageFiles(data, 'share/videomass2/icons', 'share/')
+    DATA_FILES = AppendPackageFiles(DATA_FILES, 'share/videomass2/icons', 'share/')
 
     setup(name = PRG_NAME,
         version = VERSION,
@@ -308,3 +309,4 @@ if __name__ == '__main__':
         OSX()
     else:
         SOURCE_BUILD()
+        #p()
