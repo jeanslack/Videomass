@@ -1,28 +1,36 @@
 [Home](index.md)
 
-## Installation
+# Installation
 
-#### Windows and MacOS:
-For a typical installation on Microsoft Windows and MacOS operating systems, installers are available at the top of this page. They are only available for x86_64 (64-bit) architecture. Both installers contain everything you need to be used in standalone mode, without the need for anything else.
+## Windows and MacOS installers:
+Installation on Microsoft Windows and MacOS operating systems, installers are 
+available at the top of this page (respectively the EXE and DMG buttons). 
+They are only available for x86_64 (64-bit) architecture. Both installers contain 
+everything you need to be used in standalone mode, without the need for anything else.
 
 Minimum requirements are:
 - MacOS High Sierra (64-bit only)
 - Microsoft Windows 7 to Windows 10 (64-bit only)
 
-...That's all
+## Windows, MacOs, Unix, Linux:
+Otherwise, for all systems and architectures there are available the wheels on 
+PyPi (Python Package Index) at <https://pypi.org/project/videomass2/> that you 
+can install it by **pip** command.
+First you must have Python2.7 and wxPython3.0 already installed in your 
+system, of course. Then you have to make sure you also have pip installed, 
+if not, install it: <https://www.makeuseof.com/tag/install-pip-for-python/>.
 
-#### Debian, Ubuntu (and based):
-For Gnu/Linux Debian or Debian distribuition based, is available a **.deb** package at the top of this page, for all architectures (32-bit and 64-bit). Before installing it, you need to install the required dependencies:
+- On Windows:
 
 ```
-~$ sudo apt-get install python-wxgtk3.0 ffmpeg
-```
-Then proceed to install Videomass2, example:
-```
-~$ sudo dpkg -i python-videomass2_1.0.1-1_all.deb
+pip install videomass2
 ```
 
-#### Slackware, Salix (and based):
-There is also a small repository which contains a [SlackBuild](https://github.com/jeanslack/slackbuilds/tree/master/Videomass) script to build the precompiled binary of Videomass2 with **.tgz** extension that can be installed with the installpkg command.    
-Of course, it must be edited according to the new Videomass2.
+- On MacOs, Unix and Linux (with root privilegies):
+
+```
+sudo pip install videomass2
+```
+
+[Home](index.md)
 
