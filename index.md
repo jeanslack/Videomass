@@ -16,6 +16,7 @@
 * [Known problems](known_problems.md)
 
 Videomass2 is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)
+Videomass2 now also has wheels on [PyPi](https://pypi.org/project/videomass2/)
 
 ## Donation   
 

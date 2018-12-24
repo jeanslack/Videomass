@@ -3,6 +3,9 @@
 # Let's build the package
 ---------------------------
 
+If you have already installed the dependencies listed on this page [dependencies](dependencies.md),
+you can now proceed with the following package construction methods.
+
 - To create a redistributable package, we will use the **setup.py** script in the source 
 folder, with which we will use the _py2exe_ tool to make a standalone package for Windows, 
 _py2app_ tool to make a standalone package for MacOS.
@@ -46,13 +49,51 @@ and this page:
 <https://wiki.wxpython.org/wxPythonVirtualenvOnMac>   
 
 You might be interested read the follow web page also:   
-<https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>   
+<https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/> 
 
 Note that inside Videomass2 sources already exists a setup.py with certain parameters for your MacOS, then make a virtual env inside Videomass2 sources, activate it and run setup.py:   
 ```
 ~$ python setup.py py2app
 ``` 
-The Videomass2.app will be create at _dist_ folder
+
+This will create a self contained applet in the ./dist/ directory
+
+**More details and resources:**
+
+-Usage for get help:
+`python setup.py py2app --help`
+
+-Usage for development and debug:
+`python setup.py py2app -A`
+
+and then debug with terminal: 
+`./dist/Videomass2.app/Contents/MacOS/videomass2`
+
+-Usage for building a redistributable version standalone:
+`python setup.py py2app`
+
+-look at there for major info:
+<https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>
+<https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies>
+    
+IF YOU WANT SET A VIRTUALENV environment need for build the .app:
+<https://wiki.wxpython.org/wxPythonVirtualenvOnMac>
+
+On Mac OSX, I installed wxpPthon with Homebrew using:
+`brew install wxpython`
+    
+Change into your virtualenv site-packages directory:
+
+`cd /venv/lib/python2.7/site-packages`
+
+then link the wx.pth
+    
+```
+ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/wx.pth wx.pth
+```
+```     
+ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/wx-3.0-osx_cocoa wx-3.0-osx_cocoa
+```
 
 -----------------
 ## Gnu/Linux Debian

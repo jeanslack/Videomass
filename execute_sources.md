@@ -1,36 +1,20 @@
-[Home](index.md)   
-## Launch Videomass2 as a script from the sources
+[Home](index.md)
 
-**This depends on your OS. For now the following operating systems are supported:**
-- Gnu/Linux
-- MacOS
-- Windows
+# Launch Videomass2 as a script from the sources
+------------------------------------------------
 
-**Requires dependencies:**
-- Python 2.7
-- wxPython Classic >=3.0
-- FFmpeg
+First you must have [these dependencies](dependencies.md) already installed in your system, of course.     
 
-For details on how to install required dependencies on your system, see first part of the [Build a redistributable package](building_package.md) for your OS,  and then proceed with the following explanation:      
-
-on MacOS and Gnu/Linux open a terminal window and place it inside unzipped sources folder.   
+on MacOS and Gnu/Linux open a terminal window and place it inside unzipped Videomass2 sources folder.   
 ```
 cd /YourHomeDir/Videomass2-master
-```   
-then run:   
-```
-python videomass2
-```   
-
-enjoy   
+python launcher
+```     
 
 On Microsoft Windows open a dos window and place it inside unzipped sources folder.   
 ```
 cd \YourHomeDir\Videomass2-master
-```   
-then run:   
-```
-python videomass2
+python launcher
 ```    
 
 enjoy   
