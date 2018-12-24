@@ -170,7 +170,7 @@ def SOURCE_BUILD():
         scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
-        install_requires = ['wxPython',],
+        #install_requires = ['wxPython',],
         )
 
 ########################################################################
@@ -239,9 +239,6 @@ def OSX():
 def WIN32():
     """
     build videomass2.exe
-    
-    -Usage:
-        python setup.py py2exe --help
 
     """
     import py2exe

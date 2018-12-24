@@ -2,11 +2,11 @@
 # **Videomass2** is a cross-platform GUI for FFmpeg   
 It provides a graphical interface for audio and video conversions through FFmpeg.
 
-
+* [View progect on PyPi](https://pypi.org/project/videomass2/)
 * [Main project page](https://github.com/jeanslack/Videomass2)
 * [Support Page and documentation](http://jeanslack.github.io/Videomass2)
 * [Downloads source code](https://github.com/jeanslack/Videomass2/releases)
-* [Installers for Windows/MacOsX/Linux](https://sourceforge.net/projects/videomass2/)
+* [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
 
 ## Features
 
@@ -31,7 +31,7 @@ It provides a graphical interface for audio and video conversions through FFmpeg
 ## Essential Dependencies
 
 **Required:**
-- Python >= 2.7 (no python >= 3)   
+- Python >= 2.7 (not python >= 3)   
 - wxPython >= 3.0 (wxPython classic)
 
 **Optionals:**
@@ -39,13 +39,3 @@ It provides a graphical interface for audio and video conversions through FFmpeg
 - ffprobe (for multimedia streams analysis) (can be built-in into ffmpeg)
 - ffplay (media player for media preview) (can be built-in into ffmpeg)
 
-## Installation via pip
-
-On Windows:   
-    `pip install --no-deps videomass2`
-
-On MacOsX, Linux, Unix (for single user):   
-    `pip install --user videomass2`
-
-On MacOsX, Linux, Unix (for all users, need root privileges to install):   
-    `pip install videomass2`
