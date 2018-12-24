@@ -10,6 +10,7 @@ header_pages:
     - other_resources.md
     - installation.md
     - execute_sources.md
+    - dependencies.md
     - building_package.md
     - videomass_use.md
     - known_problems

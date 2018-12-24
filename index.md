@@ -4,9 +4,10 @@
 * [Features](features.md)
 * [Screenshot](screenshot.md)
 
-## Getting started (installation and building)
+## Getting started (installation, dependencies and building)
 
 * [Installation](installation.md)
+* [Dependencies](dependencies.md)
 * [Launch Videomass2 without installation](execute_sources.md)
 * [Build a redistributable package](building_package.md)
 

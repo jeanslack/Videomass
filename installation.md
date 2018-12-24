@@ -13,9 +13,9 @@ Minimum requirements are:
 
 ## Windows, MacOs, Unix, Linux:
 Also, for all systems and architectures there is available the wheel on 
-PyPi (Python Package Index) at <https://pypi.org/project/videomass2/> that you 
+[PyPi (Python Package Index)](https://pypi.org/project/videomass2/) that you 
 can install it via **pip** command.
-First you must have [these dependencies](building_package.html) already 
+First you must have [these dependencies](dependencies.md) already 
 installed in your system, of course. Then you have to make sure you also have 
 **pip** installed, if not, install it: <https://www.makeuseof.com/tag/install-pip-for-python/>.   
 
