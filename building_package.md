@@ -56,37 +56,46 @@ Note that inside Videomass2 sources already exists a setup.py with certain param
 ~$ python setup.py py2app
 ``` 
 
-This will create a self contained applet in the ./dist/ directory
+This will create a self contained applet in the ./dist/ directory   
 
-**More details and resources:**
 
--Usage for get help:
-`python setup.py py2app --help`
+**More details and resources:**   
 
--Usage for development and debug:
-`python setup.py py2app -A`
+-Usage for get help:   
 
-and then debug with terminal: 
-`./dist/Videomass2.app/Contents/MacOS/videomass2`
+`python setup.py py2app --help`   
 
--Usage for building a redistributable version standalone:
-`python setup.py py2app`
+-Usage for development and debug:   
 
--look at there for major info:
-<https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>
-<https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies>
+`python setup.py py2app -A`   
+
+and then debug with terminal:   
+
+`./dist/Videomass2.app/Contents/MacOS/videomass2`   
+
+-Usage for building a redistributable version standalone:   
+
+`python setup.py py2app`   
+
+-Resources:   
+
+<https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>   
+
+<https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies>   
+
+Set a virtualenv environment need for build the .app:   
+
+<https://wiki.wxpython.org/wxPythonVirtualenvOnMac>   
+
+On Mac OSX, I installed wxpPthon with Homebrew using:   
+
+`brew install wxpython`   
     
-IF YOU WANT SET A VIRTUALENV environment need for build the .app:
-<https://wiki.wxpython.org/wxPythonVirtualenvOnMac>
+...and I change into virtualenv site-packages directory:   
 
-On Mac OSX, I installed wxpPthon with Homebrew using:
-`brew install wxpython`
-    
-Change into your virtualenv site-packages directory:
+`cd /venv/lib/python2.7/site-packages`   
 
-`cd /venv/lib/python2.7/site-packages`
-
-then link the wx.pth
+then link the wx.pth   
     
 ```
 ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/wx.pth wx.pth
@@ -98,28 +107,49 @@ ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-pac
 -----------------
 ## Gnu/Linux Debian
 
-If you want make a .deb binary package installable in your debian system and compatible with others debian-based systems, you need install those following tools first:   
+If you want make a .deb binary package installable in your debian system, 
+you need install those following tools first:
+
 ```
 ~# apt-get update && apt-get install python-all python-stdeb fakeroot
 ```
-This installs all the need dependencies, including python-setuptools.
 
-Then, go into Videomass2 unzipped folder with your user (not root) and type:
+This will installs all the need dependencies, including python-setuptools. 
+Then, go into Videomass2 unzipped folder with your user (not root)   
+
+- To generate both source and binary packages type:
+
 ```
 ~$ python setup.py --command-packages=stdeb.command bdist_deb
 ```
-This should create a _python-videomass2_version_all.deb_ in the new _deb_dist_ directory, installable with 
+
+The command above should create a _python-videomass2_version_all.deb_ in 
+the new _deb_dist_ directory, installable with   
+
 ```
 ~# dpkg -i python-videomass2_version_all.deb
 ```
 
+- To generate a source packages only:
+
+```
+~$ python setup.py --command-packages=stdeb.command sdist_dsc
+```
+
+#### Resources:
+
+<https://pypi.python.org/pypi/stdeb>   
+<http://shallowsky.com/blog/programming/python-debian-packages-w-stdeb.html>   
+
+
 ## Build distribution for Windows, MacOsX, Linux, Unix
 
-First install the following tools:
+First install the following tools:   
 
-- **pip** or **python-pip**, The PyPA recommended tool for installing Python packages
+- **pip** or **python-pip**, The PyPA recommended tool for installing Python packages   
 
-- **wheel** or **python-wheel**, The wheel project provides a "bdist_wheel" command for setuptools. The files wheel can be installed with "pip".
+- **wheel** or **python-wheel**, The wheel project provides a "bdist_wheel" 
+command for setuptools. The files wheel can be installed with "pip".   
 
 ```
 python setup.py sdist bdist_wheel
@@ -127,7 +157,7 @@ python setup.py sdist bdist_wheel
 
 In the dist folder you find a source distribution (videomass2-x.x.x.tar.gz) and
 a build distribution (videomass2-x.x.x-py2-none-any.whl). You can install the 
-build distribution with **pip** command:
+build distribution with **pip** command:   
 
 ```
 cd dist
