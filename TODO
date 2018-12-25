@@ -8,8 +8,9 @@ This is a partial list of planned features that are yet to be implemented.
 --------------------
 URGENCY: to do soon
 --------------------  
-- Rinnovare i presets e i profili con nuove adds: aggiungere audio in video;
-  aggiungere audio su immagini
+Profile update:
+- profile to add audio traces to a movie;
+- profile to add audio track on images.
   
 --------------
 URGENCY: high
@@ -22,8 +23,10 @@ URGENCY: low
 ---------------
 URGENCY: medium
 ----------------
-- Il log view di doppia passata non è ancora coerente:
-    EXAMPLE:
+- The log view for the double pass should show the progressive pass number.
+  
+  EXAMPLE:
+  
     file queue 1 of 1
     ...pass 1 of 2
     ...pass 2 of 2

@@ -1,9 +1,10 @@
 Videomass2 Builds and Installation Instructions
 
 Base Dependencies:
-python 2.7 
-wxPython 3.0
-pip
+
+    - python 2.7 
+    - wxPython 3.0
+    - pip
 
 #--------------------------------------------------------------------------#
 NOTE: [Linux/Macintosh/Unix/Windows]
@@ -17,46 +18,37 @@ Videomass2 from the python Package Index (aka PyPi) follow the Options below.
 #--------------------------------------------------------------------------#
 Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
 
-Videomass2 is also available in the python package index and can be installed
-using pip program. First install wxPython3.0 for your system platform before 
-to install Videomass2.
-
 pip install videomass2
-
-Linux/Macintosh/Unix with root privilegies
 
 #--------------------------------------------------------------------------#
 Option 2) Build a Windows exe: [Windows]
+
+please, visit the following support page to Windows paragraph.
 
 https://jeanslack.github.io/Videomass2/building_package.html
 
 #--------------------------------------------------------------------------#
 Option 3) Build a MacOSX app: [Macintosh OSX]
 
+please, visit the following support page to MacOsX paragraph.
+
 https://jeanslack.github.io/Videomass2/building_package.html
 
 #--------------------------------------------------------------------------#
 Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
 
+please, visit the following support page to Build distribution for Windows, 
+MacOsX, Linux, Unix paragraph.
+
 https://jeanslack.github.io/Videomass2/building_package.html
 
 #--------------------------------------------------------------------------#
 Option 5) Build as Debian package: [Linux/Macintosh/Unix/Windows]
-    
-TOOLS: 
-apt-get install python-all python-stdeb fakeroot
 
-USAGE: 
-- for generate both source and binary packages:
-    python setup.py --command-packages=stdeb.command bdist_deb
+please, visit the following support page to Gnu/Linux Debian paragraph.
     
-- Or you can generate source packages only:
-    python setup.py --command-packages=stdeb.command sdist_dsc
-    
-RESOURCES:
-- look at there for major info:
-  <https://pypi.python.org/pypi/stdeb>
-  <http://shallowsky.com/blog/programming/python-debian-packages-w-stdeb.html>
+https://jeanslack.github.io/Videomass2/building_package.html
+#--------------------------------------------------------------------------#
 
 
 
