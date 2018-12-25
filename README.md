@@ -3,9 +3,9 @@
 It provides a graphical interface for audio and video conversions through FFmpeg.
 
 * [View progect on PyPi](https://pypi.org/project/videomass2/)
-* [Main project page](https://github.com/jeanslack/Videomass2)
-* [Support Page and documentation](http://jeanslack.github.io/Videomass2)
-* [Downloads source code](https://github.com/jeanslack/Videomass2/releases)
+* [GitHub Page](https://github.com/jeanslack/Videomass2)
+* [Support Page and Documentation](http://jeanslack.github.io/Videomass2)
+* [Downloads Source Code](https://github.com/jeanslack/Videomass2/releases)
 * [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
 
 ## Features
