@@ -1,5 +1,7 @@
-include Videomass2.py README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
+include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
 recursive-include docs *
 recursive-include art *
 recursive-include share *
 recursive-include locale *
+recursive-include MAcOsxSetup *
+recursive-include Win32Setup *

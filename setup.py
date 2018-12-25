@@ -3,8 +3,8 @@
 # 
 #########################################################
 # Name: setup.py
-# Porpose: script for building Videomass2 executable.
-# Platform: many
+# Porpose: script to setup Videomass2.
+# Platform: all
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -38,8 +38,8 @@
    2) MacOSX:
       - python setup.py py2app
 
-   3) make a sources and pre-compiled packages
-      - python setup.py [option * ]
+   3) All
+      - python setup.py [options * ]
       
  * See the INSTALL file in the sources for major details
 
@@ -96,43 +96,31 @@ CLASSIFIERS = [
 #######################################################################
 def glob_files(pattern):
     """
-    Useful function for globbing that iterate on pattern 
-    marked with wildcard and put in a objects list
+    Useful function for globbing that iterate on a pattern marked 
+    with wildcard and put it in a objects list
     """
     return [f for f in glob(pattern) if os.path.isfile(f)]
 
 
 ########################################################################
-def BUILD_PKG():
+def AppendPackageFiles(data, baseicons, baselocale):
     """
-    Builds source and pre-compiled packages
-
+    Add all icons and all locale files to data list
     """
-    
-    DATA_FILES = [ # even path must be relative-path
-        ('share/videomass2/config', glob_files('share/*.vdms')),
-        ('share/videomass2/config', ['share/videomass2.conf',
-                                     'share/videomassWin32.conf',
-                                     'share/README']),
-        ('share/videomass2/icons', glob_files('art/icons/*.png')),
-        ('share/applications', ['art/videomass.icns',
-                                'art/videomass.ico',
-                                'art/videomass2.desktop']),
-        ('share/pixmaps', ['art/icons/videomass2.png']),]
-    
     # get all icons and icons docs
     for art in os.listdir('art/icons'):
         if art not in ['videomass2_wizard.png', 'videomass2.png']:
             tmp = "art/icons/" + art
             if os.path.exists(tmp):
-                pathdoc = 'share/videomass2/icons/%s' % art
-                DATA_FILES.append((pathdoc, glob_files('%s/*.md' % tmp)))
-                DATA_FILES.append((pathdoc, glob_files('%s/*.txt' % tmp)))
+                pathdoc = '%s/%s' % (baseicons,art)
+                data.append((pathdoc, glob_files('%s/*.md' % tmp)))
+                data.append((pathdoc, glob_files('%s/*.txt' % tmp)))
             for size in ['18x18','24x24', '36x36']:
                 if os.path.exists(tmp + '/' + size):
                     path =  tmp +  '/' + size
-                    pathsize = 'share/videomass2/icons/%s/%s' % (art,size)
-                    DATA_FILES.append((pathsize, glob_files('%s/*.png' % path)))
+                    pathsize = '%s/%s/%s' % (baseicons,art,size)
+                    print pathsize
+                    data.append((pathsize, glob_files('%s/*.png' % path)))
         
     # Get the locale files
     for loc_dir in os.listdir("locale"):
@@ -141,14 +129,33 @@ def BUILD_PKG():
             if os.path.isdir(tmp):
                 tmp2 = tmp + "/videomass2.mo"
                 if os.path.exists(tmp2):
-                    DATA_FILES.append(('share/' + tmp, [tmp2]))
+                    data.append((baselocale + tmp, [tmp2]))
                     
-    # Get the documents files
-    for docs in  ["AUTHORS", "BUGS", "CHANGELOG",
-                  "COPYING", "INSTALL", 
-                  "README.md", "TODO"]:
-        DATA_FILES.append(('share/videomass2', [docs]))
-    
+    return data
+
+########################################################################
+def SOURCE_BUILD():
+    """
+    Source/Build distributions
+
+    """
+    DATA_FILES = [ # even path must be relative-path
+            ('share/videomass2/config', glob_files('share/*.vdms')),
+            ('share/videomass2/config', ['share/videomass2.conf',
+                                        'share/videomassWin32.conf',
+                                        'share/README']),
+            ('share/videomass2/icons', glob_files('art/icons/*.png')),
+            ('share/applications', ['art/videomass.icns',
+                                    'art/videomass.ico',
+                                    'art/videomass2.desktop']),
+            ('share/pixmaps', ['art/icons/videomass2.png']),
+            ('share/videomass2', ['AUTHORS','BUGS',
+                                'CHANGELOG','INSTALL',
+                                'COPYING','TODO','README.md']),
+            ]
+    # get the package data
+    DATA_FILES = AppendPackageFiles(DATA_FILES, 'share/videomass2/icons', 'share/')
+
     setup(name = PRG_NAME,
         version = VERSION,
         description = DESCRIPTION,
@@ -158,12 +165,12 @@ def BUILD_PKG():
         author_email = EMAIL,
         url = WEBSITE,
         license = LICENSE,
-        platforms = [ "Many" ],
+        platforms = ["All"],
         packages = find_packages(),
         scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
-        install_requires = ['wxPython',],
+        #install_requires = ['wxPython',],
         )
 
 ########################################################################
@@ -176,35 +183,15 @@ def OSX():
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
 
     # place sources even path must be relative-path
-    DATA_FILES = [('share', glob_files('share/*.vdms')),
+    data = [('share', glob_files('share/*.vdms')),
             ('share', ['share/videomass2.conf']), 
-            #('docs/HTML', glob_files('docs/HTML/*.html')), 
             ('art/icons', glob_files('art/icons/*.png')),
-            ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL','COPYING',
-                  'TODO','README.md']),
-                  ]
-    # get all icons and icons docs
-    for art in os.listdir('art/icons'):
-        if art not in ['videomass2_wizard.png', 'videomass2.png']:
-            tmp = "art/icons/" + art
-            if os.path.exists(tmp):
-                pathdoc = 'art/icons/%s' % art
-                DATA_FILES.append((pathdoc, glob_files('%s/*.md' % tmp)))
-                DATA_FILES.append((pathdoc, glob_files('%s/*.txt' % tmp)))
-            for size in ['18x18','24x24', '36x36']:
-                if os.path.exists(tmp + '/' + size):
-                    path =  tmp +  '/' + size
-                    pathsize = 'art/icons/%s/%s' % (art,size)
-                    DATA_FILES.append((pathsize, glob_files('%s/*.png' % path)))
-        
-    # Get the locale files
-    for loc_dir in os.listdir("locale"):
-        if loc_dir not in ['videomass2.pot', 'README', 'make_pot.sh']:
-            tmp = "locale/" + loc_dir + "/LC_MESSAGES"
-            if os.path.isdir(tmp):
-                tmp2 = tmp + "/videomass2.mo"
-                if os.path.exists(tmp2):
-                    DATA_FILES.append((tmp, [tmp2]))
+            ('', ['AUTHORS', 'BUGS',
+                  'CHANGELOG', 'INSTALL',
+                  'COPYING', 'TODO', 'README.md']),
+            ]
+    # get the package data
+    DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
     
     OPTIONS = {'argv_emulation' : False,
                'resources' : RESOURCES,
@@ -224,10 +211,8 @@ def OSX():
                                             "All Rights Reserved" % COPYRIGHT,
                             }
                 }
-
-    
+               
     if not os.path.exists('%s/bin/Videomass2.py' % PWD):
-        #os.rename("%s/bin/videomass2" % PWD,"%s/bin/Videomass2.py" % PWD)
         shutil.copyfile('%s/bin/videomass2' % PWD, 
                         '%s/bin/Videomass2.py' % PWD
                         )
@@ -254,51 +239,27 @@ def OSX():
 def WIN32():
     """
     build videomass2.exe
-    
-    -Usage:
-        python setup.py py2exe --help
 
     """
     import py2exe
     
     if not os.path.exists('%s/bin/Videomass2.py' % PWD):
-        #os.rename("%s/bin/videomass2" % PWD,"%s/bin/Videomass2.py" % PWD)
         shutil.copyfile('%s/bin/videomass2' % PWD, 
                         '%s/bin/Videomass2.py' % PWD
                         )
 
-    DATA_FILES = [('share', glob_files('share/*.vdms')),
-                  ('share', glob_files('share/*.conf')),
-                  #('docs/HTML', glob_files('docs/HTML/*.html')), 
-                  ('art/icons', glob_files('art/icons/*.png')),
-                  ('', ['art/videomass.ico']),
-                  ('', ['AUTHORS','BUGS','CHANGELOG','INSTALL',
-                        'COPYING','TODO','README.md',
-                        'Win32Setup/NOTICE.rtf']),
-                  ('FFMPEG_BIN', glob_files('Win32Setup/FFMPEG_BIN/*')),
-                  ]
-    # get all icons and icons docs
-    for art in os.listdir('art/icons'):
-        if art not in ['videomass2_wizard.png', 'videomass2.png']:
-            tmp = "art/icons/" + art
-            if os.path.exists(tmp):
-                pathdoc = 'art/icons/%s' % art
-                DATA_FILES.append((pathdoc, glob_files('%s/*.md' % tmp)))
-                DATA_FILES.append((pathdoc, glob_files('%s/*.txt' % tmp)))
-            for size in ['18x18','24x24', '36x36']:
-                if os.path.exists(tmp + '/' + size):
-                    path =  tmp +  '/' + size
-                    pathsize = 'art/icons/%s/%s' % (art,size)
-                    DATA_FILES.append((pathsize, glob_files('%s/*.png' % path)))
-        
-    # Get the locale files
-    for loc_dir in os.listdir("locale"):
-        if loc_dir not in ['videomass2.pot', 'README', 'make_pot.sh']:
-            tmp = "locale/" + loc_dir + "/LC_MESSAGES"
-            if os.path.isdir(tmp):
-                tmp2 = tmp + "/videomass2.mo"
-                if os.path.exists(tmp2):
-                    DATA_FILES.append((tmp, [tmp2]))
+    data = [('share', glob_files('share/*.vdms')),
+            ('share', glob_files('share/*.conf')), 
+            ('art/icons', glob_files('art/icons/*.png')),
+            ('', ['art/videomass.ico']),
+            ('', ['AUTHORS', 'BUGS',
+                  'CHANGELOG', 'INSTALL',
+                  'COPYING', 'TODO', 'README.md',
+                  'Win32Setup/NOTICE.rtf']),
+            ('FFMPEG_BIN', glob_files('Win32Setup/FFMPEG_BIN/*')),
+             ]
+    # get the package data
+    DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
                     
     includes = ["wx.lib.pubsub.*", "wx.lib.pubsub.core.*", 
                 "wx.lib.pubsub.core.kwargs.*"
@@ -344,4 +305,4 @@ if __name__ == '__main__':
     elif platform.system() == 'Darwin' and 'py2app' in sys.argv:
         OSX()
     else:
-        BUILD_PKG()
+        SOURCE_BUILD()

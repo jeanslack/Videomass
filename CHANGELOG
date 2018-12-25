@@ -7,6 +7,25 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+December 22, 2018 V.1.3.3
++------------------------------------+
+
+BUG FIXES:
+  
+NEW: [features/enhancements]
+    - Update the MANIFEST.in: For completeness, the MAcOsxSetup and 
+      Win32Setup folders have been added to the source distribution
+  
+IMPROVEMENTS:
+    - Improved setup.py script
+    - Change pathname icon (Icon=/usr/local/share/pixmaps/videomass2.png) 
+      of the desktop entry to videomass2.desktop for wheel and source 
+      distributions
+      
+REMOVALS and DISPLACEMENTS:
+    - Remove the wxPython dependency from setup.py for PyPi distribution
+
++------------------------------------+
 December 21, 2018 V.1.3.2
 +------------------------------------+
 

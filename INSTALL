@@ -1,9 +1,10 @@
 Videomass2 Builds and Installation Instructions
 
 Base Dependencies:
-python 2.7 
-wxPython 3.0
-pip
+
+    - python 2.7 
+    - wxPython 3.0
+    - pip
 
 #--------------------------------------------------------------------------#
 NOTE: [Linux/Macintosh/Unix/Windows]
@@ -17,103 +18,37 @@ Videomass2 from the python Package Index (aka PyPi) follow the Options below.
 #--------------------------------------------------------------------------#
 Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
 
-Videomass2 is also available in the python package index and can be installed
-using pip program:
-
 pip install videomass2
-
-Linux/Macintosh/Unix with root privilegies
 
 #--------------------------------------------------------------------------#
 Option 2) Build a Windows exe: [Windows]
 
-To build an exe of Videomass2 for Windows, py2exe (http://www.py2exe.org) must 
-be installed. After installing py2exe just do the following.
+please, visit the following support page to Windows paragraph.
 
-python setup.py py2exe
-
-This will build an exe and place it in the .\dist\
+https://jeanslack.github.io/Videomass2/building_package.html
 
 #--------------------------------------------------------------------------#
 Option 3) Build a MacOSX app: [Macintosh OSX]
 
-This requires having py2app (http://cheeseshop.python.org/pypi/py2app/) 
-installed. If they are installed just issue the following command to 
-build an applet.
+please, visit the following support page to MacOsX paragraph.
 
-python setup.py py2app
-
-This will create a self contained applet in the ./dist/ directory
-
-More details:
-
-    -Usage for get help:
-        python setup.py py2app --help
-
-    -Usage for development and debug:
-        python setup.py py2app -A
-    and then debug with terminal: 
-        ./dist/Videomass2.app/Contents/MacOS/videomass2
-
-    -Usage for building a redistributable version standalone:
-        python setup.py py2app
-
-    -look at there for major info:
-    <https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications
-    -with-python-and-py2app/>
-    <https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring
-    -dependencies>
-    
-    IF YOU WANT SET A VIRTUALENV environment need for build the .app:
-    https://wiki.wxpython.org/wxPythonVirtualenvOnMac
-
-    On Mac OSX, I installed wxpPthon with Homebrew using:
-
-    brew install wxpython
-    Change into your virtualenv site-packages directory:
-
-    cd /venv/lib/python2.7/site-packages
-    then link the wx.pth
-    
-     ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/
-     site-packages/wx.pth wx.pth
-     
-     ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/
-     site-packages/wx-3.0-osx_cocoa wx-3.0-osx_cocoa
+https://jeanslack.github.io/Videomass2/building_package.html
 
 #--------------------------------------------------------------------------#
 Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
 
-To make an Python wheel from videomass2, wheel is required.
+please, visit the following support page to Build distribution for Windows, 
+MacOsX, Linux, Unix paragraph.
 
-pip install wheel
-
-If wheel is installed the following command will build an sources and an wheel:
-
-python setup.py sdist bdist_wheel
-
-The wheel will be placed in ./dist/ and can be installed by doing the following
-
-cd dist/
-pip install videomass2-x.x.x-py2-none-any.whl
+https://jeanslack.github.io/Videomass2/building_package.html
 
 #--------------------------------------------------------------------------#
 Option 5) Build as Debian package: [Linux/Macintosh/Unix/Windows]
-    
-TOOLS: 
-apt-get install python-all python-stdeb fakeroot
 
-USAGE: 
-- for generate both source and binary packages:
-    python setup.py --command-packages=stdeb.command bdist_deb
+please, visit the following support page to Gnu/Linux Debian paragraph.
     
-- Or you can generate source packages only:
-    python setup.py --command-packages=stdeb.command sdist_dsc
-    
-RESOURCES:
-- look at there for major info:
-  <https://pypi.python.org/pypi/stdeb>
-  <http://shallowsky.com/blog/programming/python-debian-packages-w-stdeb.html>
+https://jeanslack.github.io/Videomass2/building_package.html
+#--------------------------------------------------------------------------#
 
 
 
