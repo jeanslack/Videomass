@@ -26,13 +26,14 @@ It provides a graphical interface for audio and video conversions through FFmpeg
 - Log management
 - Italian and English Languages support
 - Work on many platforms where Python and wxPython are supported, 
-  including **Linux**, **MacOs** and **Windows**. 
+  including **Linux**, **MacOs** and **Windows**.
+- Compabible with Python2 and Python3
 
 ## Essential Dependencies
 
 **Required:**
-- Python >= 2.7 (not python >= 3)   
-- wxPython >= 3.0 (wxPython classic)
+- Python >= 2.7 or Python >=3.7   
+- wxPython >= 3.0 (wxPython classic) or wxPython >= 4.0 (wxPython Phoenix)
 
 **Optionals:**
 - ffmpeg >= 3.2

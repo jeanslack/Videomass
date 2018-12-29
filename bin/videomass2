@@ -2,11 +2,14 @@
 # -*- coding: UTF-8 -*-
 #
 #########################################################
-# Name: videomass2.py
-# Porpose: videomass2 binary for installation only
-# Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Name: launcher.py
+# Porpose: main launch script of videomass2
+# Compatibility: Python3, Python2
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
+# Rev (10) December 29 2018
+#########################################################
 
 # This file is part of Videomass2.
 
@@ -23,11 +26,29 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev December/14/2018
 #########################################################
+import sys
 
 if __name__ == '__main__':
-    from videomass2 import Videomass2
+    
+    if sys.version_info[0] == 2: # Python2 with wxPython Classic
+        try:
+            from videomass2 import Videomass2
+            #import wx
+        except ImportError as err:
+                sys.stderr.write("ERROR: wxPython Classic is required (%s).\n" 
+                                 % err)
+                sys.exit(1)
+        
+    elif sys.version_info[0] == 3: # Python3 with wxPython Phoenix
+        try:
+            from videomass3 import Videomass2
+            #import wx
+        except ImportError as err:
+                sys.stderr.write("ERROR: wxPython Phoenix is required (%s).\n" 
+                                 % err)
+                sys.exit(1)
+                        
     Videomass2.Main()
 
 

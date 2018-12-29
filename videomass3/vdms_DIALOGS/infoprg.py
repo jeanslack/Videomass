@@ -3,9 +3,12 @@
 #########################################################
 # Name: infoprog.py
 # Porpose: about videomass2 dialog
-# resource: <http://zetcode.com/wxpython/dialogs/>
-# Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Compatibility: Python3, wxPython Phoenix
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
+# Rev (01) December 28 2018
+#########################################################
 
 # This file is part of Videomass2.
 
@@ -22,11 +25,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (00) 10/Nov/2017
 #########################################################
 
 import wx
-from videomass2.vdms_SYS.msg_info import current_release, descriptions_release
+import wx.adv
+from videomass3.vdms_SYS.msg_info import current_release, descriptions_release
 
 cr = current_release()
 Name = cr[0]
@@ -51,19 +54,20 @@ def info(parent, videomass_icon):
         the program information
         
         """
-        info = wx.AboutDialogInfo()
+        info =  wx.adv.AboutDialogInfo()
 
-        info.SetIcon(wx.Icon(videomass_icon, wx.BITMAP_TYPE_PNG))
+        info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
+        #info.SetIcon(videomass_icon)
         
         info.SetName("%s" % Name)
         
-        info.SetVersion("- %s" % Version)
+        info.SetVersion("v%s" % Version)
         
-        info.SetDescription(_(u"Videomass2 provides a graphical interface for\n"
-                              u"audio and video conversion through FFmpeg\n"
-                              u"\n"
-                              u"This is a test release version.\n"
-                              u"It is based on Python2 and wxPython Classic")
+        info.SetDescription(_("Videomass2 provides a graphical interface for\n"
+                              "audio and video conversion through FFmpeg\n"
+                              "\n"
+                              "This is a test release version.\n"
+                              "It is based on Python3 and wxPython Phoenix")
                             )
         info.SetCopyright("Copyright %s %s" %(Copyright, Author))
         
@@ -71,29 +75,29 @@ def info(parent, videomass_icon):
         
         info.SetLicence(Long_Lic)
         
-        #info.AddDeveloper(u"\n%s \n"
-                        #u"%s\n"
-                        #u"%s\n\n"
-                        #u"%s\n" %(Author,Mail,Website,Comment))
-        info.SetDevelopers('')
-        info.AddDeveloper(u"%s %s\n" %(Author,Mail))
-        info.AddDeveloper(u"Thanks to:")
-        info.AddDeveloper(u"- Python (programming language)\n<https://www.python.org/>")
-        info.AddDeveloper(u"- wxPython "
+        #info.AddDeveloper("\n%s \n"
+                        #"%s\n"
+                        #"%s\n\n"
+                        #"%s\n" %(Author,Mail,Website,Comment))
+        #info.SetDevelopers('')
+        info.AddDeveloper("%s %s\n" %(Author,Mail))
+        info.AddDeveloper("Thanks to:")
+        info.AddDeveloper("- Python (programming language)\n<https://www.python.org/>")
+        info.AddDeveloper("- wxPython "
                           "(cross-platform GUI toolkit for the Python language)"
                           "\n<https://wxpython.org/>")
-        info.AddDeveloper(u"- FFmpeg (a complete, cross-platform solution for media)\n"
+        info.AddDeveloper("- FFmpeg (a complete, cross-platform solution for media)\n"
                            "<http://ffmpeg.org/>")
-        info.AddDeveloper(u"- Material design icons\n"
+        info.AddDeveloper("- Material design icons\n"
                "http://google.github.io/material-design-icons/#getting-icons")
-        info.AddDeveloper(u"- Flat Color Icons\nhttp://icons8.com/color-icons\n")
+        info.AddDeveloper("- Flat Color Icons\nhttp://icons8.com/color-icons\n")
         
-        info.SetDocWriters('')
+        #info.SetDocWriters('')
         info.AddDocWriter("Gianluca Pernigotto (online documentation)\n")
                         
-        #info.AddArtist(u'Gianluca Pernigotto powered by wx.Python')
+        #info.AddArtist('Gianluca Pernigotto powered by wx.Python')
         
-        info.SetTranslators('')
+        #info.SetTranslators('')
         info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> "
                            "English to Italian translations.\n")
         #info.SetArtists('')
@@ -101,5 +105,5 @@ def info(parent, videomass_icon):
         #info.AddArtist('- Material design icons from Google\nhttp://google.github.io/material-design-icons/#getting-icons')
         #info.AddArtist('- Flat Color Icons\nhttp://icons8.com/color-icons')
                     
-        wx.AboutBox(info)
+        wx.adv.AboutBox(info)
         #event.Skip()

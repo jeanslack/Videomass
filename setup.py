@@ -4,10 +4,12 @@
 #########################################################
 # Name: setup.py
 # Porpose: script to setup Videomass2.
+# Compatibility: Python3, Python2
 # Platform: all
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
+# Rev (11) December 29 2018
 #########################################################
 
 # This file is part of Videomass2.
@@ -25,7 +27,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (05) December 15 2018
 #########################################################
 """
  Videomass2 Setup Script
@@ -47,13 +48,32 @@
 
 #---- Imports ----#
 from distutils.core import setup
-from setuptools import setup, find_packages
+from setuptools import setup
 import platform
 from glob import glob
 import os
 import sys
 import shutil
-from videomass2.vdms_SYS.msg_info import current_release, descriptions_release
+
+if sys.version_info[0] == 2: # Python2 with wxPython Classic
+    from videomass2.vdms_SYS.msg_info import current_release 
+    from videomass2.vdms_SYS.msg_info import descriptions_release
+    prg_language = 'Programming Language :: Python :: 2.7'
+    PACKAGES = ['videomass2','videomass2/vdms_DIALOGS',
+                'videomass2/vdms_IO','videomass2/vdms_MAIN',
+                'videomass2/vdms_PANELS','videomass2/vdms_PROCESS',
+                'videomass2/vdms_SYS'
+                ]
+    
+elif sys.version_info[0] == 3: # Python3 with wxPython Phoenix
+    from videomass3.vdms_SYS.msg_info import current_release 
+    from videomass3.vdms_SYS.msg_info import descriptions_release
+    prg_language = 'Programming Language :: Python :: 3.7'
+    PACKAGES = ['videomass3','videomass3/vdms_DIALOGS',
+                'videomass3/vdms_IO','videomass3/vdms_MAIN',
+                'videomass3/vdms_PANELS','videomass3/vdms_PROCESS',
+                'videomass3/vdms_SYS'
+                ]
 
 #---- current work directory path ----#
 PWD = os.getcwd() 
@@ -87,7 +107,7 @@ CLASSIFIERS = [
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX',
-            'Programming Language :: Python :: 2.7',
+            prg_language,
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
             'Topic :: Utilities',
@@ -119,7 +139,6 @@ def AppendPackageFiles(data, baseicons, baselocale):
                 if os.path.exists(tmp + '/' + size):
                     path =  tmp +  '/' + size
                     pathsize = '%s/%s/%s' % (baseicons,art,size)
-                    print pathsize
                     data.append((pathsize, glob_files('%s/*.png' % path)))
         
     # Get the locale files
@@ -166,11 +185,11 @@ def SOURCE_BUILD():
         url = WEBSITE,
         license = LICENSE,
         platforms = ["All"],
-        packages = find_packages(),
+        packages = PACKAGES,
         scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
-        #install_requires = ['wxPython',],
+        install_requires = ['wxPython',],
         )
 
 ########################################################################
@@ -218,7 +237,7 @@ def OSX():
                         )
     #--------------- setup: --------------------#
     setup(app = ['bin/Videomass2.py'],
-        packages = find_packages(),
+        packages = PACKAGES,
         include = ['python', 'wx',],
         name = RLS_NAME,
         version = VERSION,
@@ -268,7 +287,7 @@ def WIN32():
                 'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
                 'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
                 ]
-    packages = find_packages()
+    packages = PACKAGES
     dll_excludes = ['libgdk-win32-2.0-0.dll', 'libgobject-2.0-0.dll',
                     'tcl84.dll', 'tk84.dll'
                     ]

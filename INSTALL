@@ -2,9 +2,9 @@ Videomass2 Builds and Installation Instructions
 
 Base Dependencies:
 
-    - python 2.7 
-    - wxPython 3.0
-    - pip
+    - Python >= 2.7 or Python >=3.7 
+    - wxPython >= 3.0 (wxPython classic) or wxPython >= 4.0 (wxPython Phoenix)
+    - pip2 or pip3
 
 #--------------------------------------------------------------------------#
 NOTE: [Linux/Macintosh/Unix/Windows]

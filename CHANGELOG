@@ -7,6 +7,20 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+December 29, 2018 V.1.3.5
++------------------------------------+
+
+BUG FIXES:
+  
+NEW: [features/enhancements]
+    - Add support compatibility for Python2.x and Python3.x
+  
+IMPROVEMENTS:
+    - Improved setup.py script
+      
+REMOVALS and DISPLACEMENTS:
+
++------------------------------------+
 December 22, 2018 V.1.3.3
 +------------------------------------+
 
