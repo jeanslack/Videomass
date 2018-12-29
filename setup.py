@@ -7,7 +7,7 @@
 # Compatibility: Python3, Python2
 # Platform: all
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2014-2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev (11) December 29 2018
 #########################################################
@@ -68,7 +68,7 @@ if sys.version_info[0] == 2: # Python2 with wxPython Classic
 elif sys.version_info[0] == 3: # Python3 with wxPython Phoenix
     from videomass3.vdms_SYS.msg_info import current_release 
     from videomass3.vdms_SYS.msg_info import descriptions_release
-    prg_language = 'Programming Language :: Python :: 3.7'
+    prg_language = 'Programming Language :: Python :: 3'
     PACKAGES = ['videomass3','videomass3/vdms_DIALOGS',
                 'videomass3/vdms_IO','videomass3/vdms_MAIN',
                 'videomass3/vdms_PANELS','videomass3/vdms_PROCESS',
