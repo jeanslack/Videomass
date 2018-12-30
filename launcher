@@ -34,22 +34,24 @@ if __name__ == '__main__':
     if sys.version_info[0] == 2: # Python2 with wxPython Classic
         try:
             from videomass2 import Videomass2
-            #import wx
+            Videomass2.Main()
         except ImportError as err:
-                sys.stderr.write("ERROR: wxPython Classic is required (%s).\n" 
-                                 % err)
-                sys.exit(1)
+            sys.stderr.write("[ERROR] wxPython Classic is required (%s).\n" 
+                                % err)
+            sys.exit(1)
         
     elif sys.version_info[0] == 3: # Python3 with wxPython Phoenix
         try:
-            from videomass3 import Videomass2
-            #import wx
+            from videomass3 import Videomass3
+            Videomass3.Main()
         except ImportError as err:
-                sys.stderr.write("ERROR: wxPython Phoenix is required (%s).\n" 
-                                 % err)
-                sys.exit(1)
-                        
-    Videomass2.Main()
+            sys.stderr.write("[ERROR] wxPython Phoenix is required (%s).\n" 
+                                % err)
+            sys.exit(1)
+                
+    else: # Could it be Python4 ?
+        sys.stderr.write("[ERROR] This Python version is not supported yet.\n")
+        sys.exit(1)
 
 
 

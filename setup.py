@@ -58,7 +58,6 @@ import shutil
 if sys.version_info[0] == 2: # Python2 with wxPython Classic
     from videomass2.vdms_SYS.msg_info import current_release 
     from videomass2.vdms_SYS.msg_info import descriptions_release
-    prg_language = 'Programming Language :: Python :: 2.7'
     PACKAGES = ['videomass2','videomass2/vdms_DIALOGS',
                 'videomass2/vdms_IO','videomass2/vdms_MAIN',
                 'videomass2/vdms_PANELS','videomass2/vdms_PROCESS',
@@ -68,12 +67,14 @@ if sys.version_info[0] == 2: # Python2 with wxPython Classic
 elif sys.version_info[0] == 3: # Python3 with wxPython Phoenix
     from videomass3.vdms_SYS.msg_info import current_release 
     from videomass3.vdms_SYS.msg_info import descriptions_release
-    prg_language = 'Programming Language :: Python :: 3'
     PACKAGES = ['videomass3','videomass3/vdms_DIALOGS',
                 'videomass3/vdms_IO','videomass3/vdms_MAIN',
                 'videomass3/vdms_PANELS','videomass3/vdms_PROCESS',
                 'videomass3/vdms_SYS'
                 ]
+else: # Could it be Python4 ?
+    sys.stderr.write("[ERROR] This Python version is not supported yet.\n")
+    sys.exit(1)
 
 #---- current work directory path ----#
 PWD = os.getcwd() 
@@ -107,7 +108,10 @@ CLASSIFIERS = [
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX',
-            prg_language,
+            'Programming Language :: Python :: 2.7'
+            'Programming Language :: Python :: 3.5'
+            'Programming Language :: Python :: 3.6'
+            'Programming Language :: Python :: 3.7'
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
             'Topic :: Utilities',
