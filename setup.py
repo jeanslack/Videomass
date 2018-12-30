@@ -48,33 +48,14 @@
 
 #---- Imports ----#
 from distutils.core import setup
-from setuptools import setup
+from setuptools import setup, find_packages
 import platform
 from glob import glob
 import os
 import sys
 import shutil
-
-if sys.version_info[0] == 2: # Python2 with wxPython Classic
-    from videomass2.vdms_SYS.msg_info import current_release 
-    from videomass2.vdms_SYS.msg_info import descriptions_release
-    PACKAGES = ['videomass2','videomass2/vdms_DIALOGS',
-                'videomass2/vdms_IO','videomass2/vdms_MAIN',
-                'videomass2/vdms_PANELS','videomass2/vdms_PROCESS',
-                'videomass2/vdms_SYS'
-                ]
-    
-elif sys.version_info[0] == 3: # Python3 with wxPython Phoenix
-    from videomass3.vdms_SYS.msg_info import current_release 
-    from videomass3.vdms_SYS.msg_info import descriptions_release
-    PACKAGES = ['videomass3','videomass3/vdms_DIALOGS',
-                'videomass3/vdms_IO','videomass3/vdms_MAIN',
-                'videomass3/vdms_PANELS','videomass3/vdms_PROCESS',
-                'videomass3/vdms_SYS'
-                ]
-else: # Could it be Python4 ?
-    sys.stderr.write("[ERROR] This Python version is not supported yet.\n")
-    sys.exit(1)
+from videomass2.vdms_SYS.msg_info import current_release 
+from videomass2.vdms_SYS.msg_info import descriptions_release
 
 #---- current work directory path ----#
 PWD = os.getcwd() 
@@ -109,9 +90,6 @@ CLASSIFIERS = [
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX',
             'Programming Language :: Python :: 2.7'
-            'Programming Language :: Python :: 3.5'
-            'Programming Language :: Python :: 3.6'
-            'Programming Language :: Python :: 3.7'
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
             'Topic :: Utilities',
@@ -189,7 +167,7 @@ def SOURCE_BUILD():
         url = WEBSITE,
         license = LICENSE,
         platforms = ["All"],
-        packages = PACKAGES,
+        packages = find_packages(),
         scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
@@ -241,7 +219,7 @@ def OSX():
                         )
     #--------------- setup: --------------------#
     setup(app = ['bin/Videomass2.py'],
-        packages = PACKAGES,
+        packages = find_packages(),
         include = ['python', 'wx',],
         name = RLS_NAME,
         version = VERSION,
@@ -291,7 +269,7 @@ def WIN32():
                 'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
                 'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
                 ]
-    packages = PACKAGES
+    packages = find_packages()
     dll_excludes = ['libgdk-win32-2.0-0.dll', 'libgobject-2.0-0.dll',
                     'tcl84.dll', 'tk84.dll'
                     ]

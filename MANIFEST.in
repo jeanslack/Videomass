@@ -5,5 +5,3 @@ recursive-include share *
 recursive-include locale *
 recursive-include MAcOsxSetup *
 recursive-include Win32Setup *
-recursive-include videomass2 *
-recursive-include videomass3 *
