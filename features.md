@@ -17,5 +17,7 @@
 - Convert multiple files at once 
 - Log management
 - Work on **Linux**, **MacOs** and **Windows**. 
+- Original language English
+- Italian Languages support
 
 [Home](index.md)

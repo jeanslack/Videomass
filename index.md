@@ -3,6 +3,7 @@
 * [What is Videomass2 ?](about.md)
 * [Features](features.md)
 * [Screenshot](screenshot.md)
+* [Videomass3 with Python3 support](http://jeanslack.github.io/Videomass3)
 
 ## Getting started (installation, dependencies and building)
 
@@ -16,7 +17,6 @@
 * [Known problems](known_problems.md)
 
 Videomass2 is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)   
-
 Videomass2 now also has wheels on [PyPi](https://pypi.org/project/videomass2/)   
 
 ## Donation   

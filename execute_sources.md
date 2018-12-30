@@ -15,8 +15,6 @@ On Microsoft Windows open a dos window and place it inside unzipped sources fold
 ```
 cd \YourHomeDir\Videomass2-master
 python launcher
-```    
-
-enjoy   
+```      
 
 [Home](index.md)
