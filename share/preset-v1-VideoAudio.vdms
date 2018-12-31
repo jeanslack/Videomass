@@ -19,7 +19,7 @@
     </label>
     
     <label name="From any Video to MPEG4 audio" type="Extracting audio stream in MPEG4 with bitrate 112, stereo, Sample-Rate 44100, from any video">
-        <parameters>-vn -acodec libfaac -b:a 112k -ac 2 -ar 48000 </parameters>
+        <parameters>-vn -acodec aac -b:a 112k -ac 2 -ar 48000 </parameters>
         <filesupport> </filesupport>
         <extension>m4a</extension>
     </label>

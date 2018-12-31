@@ -32,7 +32,7 @@
     </label>
     
     <label name="MPEG4 audio - 112kbps" type="Convert to MPEG4 with bitrate 112, stereo, frequenza 44100, any audio format">
-        <parameters>-acodec libfaac -b:a 112k -ac 2 -ar 48000 </parameters>
+        <parameters>-acodec aac -b:a 112k -ac 2 -ar 48000 </parameters>
         <filesupport> </filesupport>
         <extension>m4a</extension>
     </label>

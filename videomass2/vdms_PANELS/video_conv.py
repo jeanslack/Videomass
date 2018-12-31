@@ -1180,7 +1180,7 @@ class Video_Conv(wx.Panel):
             param('yes', 'yes')
             
         elif audioformat == "Aac (Lossy, MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a libfaac"
+            cmd_opt["AudioCodec"] = "-c:a aac"
             cmd_opt["Audio"] = audioformat
             param('yes', 'yes')
             
@@ -1234,7 +1234,7 @@ class Video_Conv(wx.Panel):
         elif cmd_opt["AudioCodec"] == "-c:a flac":
             self.audio_dialog("flac", "Audio FLAC Codec Parameters")
             
-        elif cmd_opt["AudioCodec"] == "-c:a libfaac":
+        elif cmd_opt["AudioCodec"] == "-c:a aac":
             self.audio_dialog("aac", "Audio AAC Codec Parameters")
             
         elif cmd_opt["AudioCodec"] == "-c:a alac":
