@@ -1,5 +1,5 @@
 
-# **Videomass2** is a cross-platform GUI for FFmpeg (with support for Python2.7 and wxPython-Classic)
+# **Videomass2** provides a graphical interface for audio and video conversions through FFmpeg.
 It provides a graphical interface for audio and video conversions through FFmpeg.
 
 * [View progect on PyPi](https://pypi.org/project/videomass2/)

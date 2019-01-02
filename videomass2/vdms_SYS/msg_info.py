@@ -35,7 +35,7 @@ def current_release():
 
     Release_Name = 'Videomass2'
     Program_Name = 'videomass2'
-    Version = '1.3.5'
+    Version = '1.3.4'
     Release = 'December 29 2018'
     Copyright = u'© 2013-2019'
     Website = 'http://jeanslack.github.io/Videomass2/'
@@ -62,7 +62,8 @@ def descriptions_release():
     Author = current_release()
     Mail = current_release()
 
-    short_d = (u"Videomass2 is a cross-platform GUI for FFmpeg.")
+    short_d = (u"Videomass2 is a cross-platform GUI for FFmpeg. "
+               u"(Compatible with Python2 and wxPython-Classic)")
     
     long_d = ("-Videomass2- provides a graphical interface for\n "
               "audio and video conversions through FFmpeg\n ")

@@ -89,7 +89,7 @@ CLASSIFIERS = [
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX',
-            'Programming Language :: Python :: 2.7'
+            'Programming Language :: Python :: 2.7',
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
             'Topic :: Utilities',
