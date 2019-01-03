@@ -1,6 +1,10 @@
 
 # **Videomass2** provides a graphical interface for audio and video conversions through FFmpeg.
-It provides a graphical interface for audio and video conversions through FFmpeg.
+
+Videomass2 is only compatible with Python2 and wxPython-Classic   
+
+If you want to use a version compatible with Python3 and the wxPython-Phoenix 
+toolkit, [Videomass3](https://github.com/jeanslack/Videomass3) is also available.   
 
 * [View progect on PyPi](https://pypi.org/project/videomass2/)
 * [GitHub Page](https://github.com/jeanslack/Videomass2)
