@@ -1,10 +1,14 @@
 #!/usr/bin/env xdg-open
+
 [Desktop Entry]
-Name=Videomass2
-GenericName=A Free and cross-platform GUI for FFmpeg
-Comment=Audio/Video Converter Interface
-Exec=videomass2 %U
-Icon=/usr/local/share/pixmaps/videomass2.png
-Terminal=false
+Encoding=UTF-8
 Type=Application
-Categories=AudioVideo;
+Name=Videomass2
+Exec=videomass2 %U
+GenericName=A Free and cross-platform GUI for FFmpeg
+GenericName[it]=Un'interfaccia grafica libera e multi-piattaforma per FFmpeg
+Comment=Audio/Video Converter Interface
+Comment[it]=Interfaccia di conversione Audio/Video
+Icon=videomass2
+Terminal=false
+Categories=AudioVideo

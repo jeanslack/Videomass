@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-30 15:44+0100\n"
+"POT-Creation-Date: 2019-01-04 20:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1021,40 +1021,48 @@ msgid "User Guide"
 msgstr ""
 
 #: ../videomass2/vdms_MAIN/main_frame.py:638
+msgid "Issue tracker"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:640
+msgid "FFmpeg documentation"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:643
 msgid "About Videomass2"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:639
+#: ../videomass2/vdms_MAIN/main_frame.py:644
 msgid "&Help"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:782
+#: ../videomass2/vdms_MAIN/main_frame.py:831
 msgid "Add File"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:789
+#: ../videomass2/vdms_MAIN/main_frame.py:838
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:797
+#: ../videomass2/vdms_MAIN/main_frame.py:846
 msgid "Video Conversions"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:804
+#: ../videomass2/vdms_MAIN/main_frame.py:853
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:44
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:109
 msgid "Audio Conversions"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:810
+#: ../videomass2/vdms_MAIN/main_frame.py:859
 msgid "Start Encoding"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:817
+#: ../videomass2/vdms_MAIN/main_frame.py:866
 msgid "Help"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:938
+#: ../videomass2/vdms_MAIN/main_frame.py:987
 msgid "..Start Encoding - Videomass2"
 msgstr ""
 

@@ -635,6 +635,11 @@ class MainFrame(wx.Frame):
         ####------------------ help buton
         helpButton = wx.Menu()
         helpItem = helpButton.Append( wx.ID_HELP, _(u"User Guide"), "")
+        issueItem = helpButton.Append( wx.ID_ANY, _(u"Issue tracker"), "")
+        helpButton.AppendSeparator()
+        docFFmpeg = helpButton.Append(wx.ID_ANY, _(u"FFmpeg documentation"), "")
+        helpButton.AppendSeparator()
+        #checkItem = helpButton.Append(wx.ID_ANY, _(u"Check new versions"), "")
         infoItem = helpButton.Append(wx.ID_ABOUT, _(u"About Videomass2"), "")
         self.menuBar.Append(helpButton, _(u"&Help"))
 
@@ -656,6 +661,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         #----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
+        self.Bind(wx.EVT_MENU, self.Issues, issueItem)
+        self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
+        #self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
 
     #-------------------Menu Bar Event handler (callback)----------------------#
@@ -752,7 +760,7 @@ class MainFrame(wx.Frame):
                                      )
         setup_dlg.ShowModal()
         
-    #---------------------------- Menu Edit ----------------------------#
+    #---------------------------- Menu Help ----------------------------#
     def Helpme(self, event):
         """ """
         #wx.MessageBox("La guida al programma deve venire sviluppata a breve.")
@@ -760,13 +768,54 @@ class MainFrame(wx.Frame):
         #self.parent.on_help(self)
         page = 'https://jeanslack.github.io/Videomass2/videomass2_use.html'
         webbrowser.open(page)
-
+        
+    #------------------------------------------------------------------#
+    def Issues(self, event):
+        """
+        Display Issues page on github
+        """
+        page = 'https://github.com/jeanslack/Videomass2/issues'
+        webbrowser.open(page)
+        
+    #------------------------------------------------------------------#
+    def DocFFmpeg(self, event):
+        """
+        Display FFmpeg page documentation
+        """
+        page = 'https://www.ffmpeg.org/documentation.html'
+        webbrowser.open(page)
+    
+    #-------------------------------------------------------------------#
+    #def CheckNewReleases(self, event):
+        #"""
+        #"""
+        #import subprocess
+        #if self.OS == 'Windows':
+            #cmd = 'pip search videomass2'
+        #else:
+            #cmd = ['pip','searc','videomass2']
+            
+        #p = subprocess.Popen(cmd,
+                             #stdout=subprocess.PIPE,
+                             #stderr=subprocess.PIPE,
+                             #universal_newlines=True,
+                             #)
+        #output, error = p.communicate()
+        
+        #if error:
+            #print (error)
+        #else:
+            #print output.split()[1].split('(')[1].split(')')[0]
+        
+        
     #------------------------------------------------------------------#
     def Info(self, event):
         """
         Display the program informations and developpers
         """
         infoprg.info(self, self.videomass_icon)
+
+    #------------------------------------------------------------------#
         
 ###############################  BUILD THE TOOL BAR  ########################
     def videomass_tool_bar(self):

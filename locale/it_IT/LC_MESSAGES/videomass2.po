@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass2 1.2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-30 15:44+0100\n"
-"PO-Revision-Date: 2018-12-30 15:45+0100\n"
+"POT-Creation-Date: 2019-01-04 20:38+0100\n"
+"PO-Revision-Date: 2019-01-04 20:42+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -1193,40 +1193,48 @@ msgid "User Guide"
 msgstr "Guida in linea"
 
 #: ../videomass2/vdms_MAIN/main_frame.py:638
+msgid "Issue tracker"
+msgstr "Segnala un Problema.."
+
+#: ../videomass2/vdms_MAIN/main_frame.py:640
+msgid "FFmpeg documentation"
+msgstr "Documentazione di FFmpeg"
+
+#: ../videomass2/vdms_MAIN/main_frame.py:643
 msgid "About Videomass2"
 msgstr "Informazioni"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:639
+#: ../videomass2/vdms_MAIN/main_frame.py:644
 msgid "&Help"
 msgstr "&Aiuto"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:782
+#: ../videomass2/vdms_MAIN/main_frame.py:831
 msgid "Add File"
 msgstr "Aggiungi File"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:789
+#: ../videomass2/vdms_MAIN/main_frame.py:838
 msgid "Presets Manager"
 msgstr "Gestionale Presets"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:797
+#: ../videomass2/vdms_MAIN/main_frame.py:846
 msgid "Video Conversions"
 msgstr "Conversioni Video"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:804
+#: ../videomass2/vdms_MAIN/main_frame.py:853
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:44
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:109
 msgid "Audio Conversions"
 msgstr "Conversioni Audio"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:810
+#: ../videomass2/vdms_MAIN/main_frame.py:859
 msgid "Start Encoding"
 msgstr "Inizia Codifica"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:817
+#: ../videomass2/vdms_MAIN/main_frame.py:866
 msgid "Help"
 msgstr "Aiuto"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:938
+#: ../videomass2/vdms_MAIN/main_frame.py:987
 msgid "..Start Encoding - Videomass2"
 msgstr "...Codifica in Corso - Videomass2"
 

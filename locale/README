@@ -14,8 +14,12 @@ and paste into the 'LC_MESSAGES' folder, renaming the extension to ".po".
 Now you can work on new tanslation with a translation editing program (for 
 example 'poedit') and then save it by generating a '.mo' file.
 
-Than update the "/vdms_SYS/app_const.py" file by adding the newly translated language 
-to the dictionary, for example:
+Than update the "videomass2/vdms_SYS/app_const.py" file by adding the newly 
+translated language to the dictionary, for example add this line:
+
+    u "de": wx.LANGUAGE_GERMAN,
+    
+to:
 
     supLang = {u "en": wx.LANGUAGE_ENGLISH,
                u "it": wx.LANGUAGE_ENGLISH,

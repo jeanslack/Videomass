@@ -35,8 +35,8 @@ def current_release():
 
     Release_Name = 'Videomass2'
     Program_Name = 'videomass2'
-    Version = '1.3.4'
-    Release = 'January 02 2019'
+    Version = '1.4.0'
+    Release = 'January 05 2019'
     Copyright = u'© 2013-2019'
     Website = 'http://jeanslack.github.io/Videomass2/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'
