@@ -56,9 +56,9 @@ from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
 def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
     """
     1) TIME DEFINITION FOR THE PROGRESS BAR
-        For a consistent visual operation of the progress bar,If a specific 
+        For a suitable and efficient progress bar, if a specific 
         time sequence has been set with the duration tool, the total duration 
-        of each multimedia file will be replaced with the set time sequence. 
+        of each media file will be replaced with the set time sequence. 
         Otherwise the duration of each media will be the one originated from 
         its real duration.
         
@@ -68,9 +68,8 @@ def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
     """
     if time_seq:
         newDuration = []
-        dur = time_seq.split()[3]
-        pos = dur.split(':')
-        h,m,s = pos[0],pos[1],pos[2]
+        dur = time_seq.split()[3] # the -t flag
+        h,m,s = dur.split(':')
         totalsum = (int(h)*60+ int(m)*60+ int(s))
         for n in duration:
             newDuration.append(totalsum)
