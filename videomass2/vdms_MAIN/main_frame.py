@@ -637,9 +637,11 @@ class MainFrame(wx.Frame):
         helpItem = helpButton.Append( wx.ID_HELP, _(u"User Guide"), "")
         issueItem = helpButton.Append( wx.ID_ANY, _(u"Issue tracker"), "")
         helpButton.AppendSeparator()
+        DonationItem = helpButton.Append( wx.ID_ANY, _(u"Donation"), "")
+        helpButton.AppendSeparator()
         docFFmpeg = helpButton.Append(wx.ID_ANY, _(u"FFmpeg documentation"), "")
         helpButton.AppendSeparator()
-        #checkItem = helpButton.Append(wx.ID_ANY, _(u"Check new versions"), "")
+        checkItem = helpButton.Append(wx.ID_ANY, _(u"Check new releases"), "")
         infoItem = helpButton.Append(wx.ID_ABOUT, _(u"About Videomass2"), "")
         self.menuBar.Append(helpButton, _(u"&Help"))
 
@@ -662,8 +664,9 @@ class MainFrame(wx.Frame):
         #----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
         self.Bind(wx.EVT_MENU, self.Issues, issueItem)
+        self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
-        #self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
+        self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
 
     #-------------------Menu Bar Event handler (callback)----------------------#
@@ -778,6 +781,14 @@ class MainFrame(wx.Frame):
         webbrowser.open(page)
         
     #------------------------------------------------------------------#
+    def Donation(self, event):
+        """
+        Display Issues page on github
+        """
+        page = 'https://jeanslack.github.io/Videomass2/donation.html'
+        webbrowser.open(page)
+        
+    #------------------------------------------------------------------#
     def DocFFmpeg(self, event):
         """
         Display FFmpeg page documentation
@@ -786,27 +797,54 @@ class MainFrame(wx.Frame):
         webbrowser.open(page)
     
     #-------------------------------------------------------------------#
-    #def CheckNewReleases(self, event):
-        #"""
-        #"""
-        #import subprocess
-        #if self.OS == 'Windows':
-            #cmd = 'pip search videomass2'
-        #else:
-            #cmd = ['pip','searc','videomass2']
+    def CheckNewReleases(self, event):
+        """
+        Check for new version releases of Videomass2, useful for 
+        users with Videomass2 installer on Windows and MacOs.
+        """
+        from videomass2.vdms_SYS.msg_info import current_release
+        import urllib
+        
+        cr = current_release()
+        try:
+            f = urllib.urlopen('https://pypi.org/project/videomass2/')
+            myfile = f.read()
+            page = myfile.strip().split()
+            indx = ''
+            for v in page:
+                if 'class="package-header__name">' in v:
+                    indx = page.index(v)
+
+        except IOError as error:
+            wx.MessageBox(error, "Videomass2: ERROR", 
+                          wx.ICON_ERROR, None
+                          )
+            return
             
-        #p = subprocess.Popen(cmd,
-                             #stdout=subprocess.PIPE,
-                             #stderr=subprocess.PIPE,
-                             #universal_newlines=True,
-                             #)
-        #output, error = p.communicate()
-        
-        #if error:
-            #print (error)
-        #else:
-            #print output.split()[1].split('(')[1].split(')')[0]
-        
+        if indx: 
+            new_major, new_minor, new_micro =  page[indx+2].split('.')
+            new_version = int('%s%s%s' %(new_major, new_minor, new_micro))
+            this_major, this_minor, this_micro = cr[2].split('.')
+            this_version = int('%s%s%s' %(this_major, this_minor, this_micro))
+            
+            if new_version > this_version:
+                wx.MessageBox(_(u'A new version (v%s) of Videomass2 is available'
+                                u'\nfrom <https://pypi.org/project/videomass2/>' 
+                                % page[indx+2]), "Videomass2: Check version", 
+                                wx.ICON_INFORMATION, None
+                                )
+            else:
+                wx.MessageBox(_(u'You are already using the latest version '
+                                u'(v%s) of Videomass2' % cr[2]), 
+                                "Videomass2: Check version", 
+                                wx.ICON_INFORMATION, None
+                                )
+        else:
+            wx.MessageBox(_(u'An error was found in the search for '
+                            u'the web page.\nSorry for this inconvenience.'),
+                        "Videomass2: Warning", wx.ICON_EXCLAMATION, None
+                        )
+            return
         
     #------------------------------------------------------------------#
     def Info(self, event):
@@ -975,7 +1013,8 @@ class MainFrame(wx.Frame):
                          self.path_log, 
                          self.panelshown, 
                          duration,
-                         self.OS)
+                         self.OS,
+                         self.time_seq,)
         #make the positioning:
         self.DnDsizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
         #Hide all others panels:
