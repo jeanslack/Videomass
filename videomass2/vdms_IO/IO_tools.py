@@ -53,12 +53,29 @@ from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
 
 
 #-----------------------------------------------------------------------#
-def process(self, varargs, path_log, panelshown, duration, OS):
+def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
     """
-    Here the most suitable thread is assigned to the type of process 
-    to be executed. Instead for the 'GeneralProcess' panel things 
-    should not change.
+    1) TIME DEFINITION FOR THE PROGRESS BAR
+        For a consistent visual operation of the progress bar,If a specific 
+        time sequence has been set with the duration tool, the total duration 
+        of each multimedia file will be replaced with the set time sequence. 
+        Otherwise the duration of each media will be the one originated from 
+        its real duration.
+        
+    2) STARTING THE PROCESS
+        Than, the process is assigned to the most suitable thread and at 
+        the same time the panel with the progress bar is instantiated.
     """
+    if time_seq:
+        newDuration = []
+        dur = time_seq.split()[3]
+        pos = dur.split(':')
+        h,m,s = pos[0],pos[1],pos[2]
+        totalsum = (int(h)*60+ int(m)*60+ int(s))
+        for n in duration:
+            newDuration.append(totalsum)
+        duration = newDuration
+
     if varargs[0] == 'normal':# video conv and audio conv panels
         ProcThread(varargs, duration, OS) 
         
