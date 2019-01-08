@@ -16,16 +16,11 @@
 * [User Guide](videomass2_use.md)
 * [Known problems](known_problems.md)
 
+## Donation
+* [Donation](donation.md)
+
 Videomass2 is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)   
 Videomass2 now also has wheels on [PyPi](https://pypi.org/project/videomass2/)   
-
-## Donation   
-
-If you like Videomass2 and you want to support its development, consider making 
-a donation.    
-This will encourage development:   
-
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UKYM7S5U542SJ)
 
 Copyright © 2015 - 2018 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  

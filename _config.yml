@@ -13,4 +13,5 @@ header_pages:
     - dependencies.md
     - building_package.md
     - videomass_use.md
-    - known_problems
+    - known_problems.md
+    - donation.md
