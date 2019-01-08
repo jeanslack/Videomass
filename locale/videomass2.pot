@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-04 20:36+0100\n"
+"POT-Creation-Date: 2019-01-08 18:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -830,16 +830,16 @@ msgstr ""
 msgid "Videomass2: Output folder error"
 msgstr ""
 
-#: ../videomass2/vdms_IO/IO_tools.py:87 ../videomass2/vdms_IO/IO_tools.py:101
+#: ../videomass2/vdms_IO/IO_tools.py:103 ../videomass2/vdms_IO/IO_tools.py:117
 #, python-format
 msgid "File does not exist or not a valid file:  %s"
 msgstr ""
 
-#: ../videomass2/vdms_IO/IO_tools.py:144
+#: ../videomass2/vdms_IO/IO_tools.py:160
 msgid "Videomass2 - Loading..."
 msgstr ""
 
-#: ../videomass2/vdms_IO/IO_tools.py:145
+#: ../videomass2/vdms_IO/IO_tools.py:161
 msgid ""
 "\n"
 "Wait....\n"
@@ -1025,44 +1025,70 @@ msgid "Issue tracker"
 msgstr ""
 
 #: ../videomass2/vdms_MAIN/main_frame.py:640
+msgid "Donation"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:642
 msgid "FFmpeg documentation"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:643
+#: ../videomass2/vdms_MAIN/main_frame.py:644
+msgid "Check new releases"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:645
 msgid "About Videomass2"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:644
+#: ../videomass2/vdms_MAIN/main_frame.py:646
 msgid "&Help"
 msgstr ""
 
 #: ../videomass2/vdms_MAIN/main_frame.py:831
+#, python-brace-format
+msgid ""
+"A new version (v{0}) of Videomass2 is available\n"
+"from <https://pypi.org/project/videomass2/>"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:837
+#, python-brace-format
+msgid "You are already using the latest version (v{0}) of Videomass2"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:843
+msgid ""
+"An error was found in the search for the web page.\n"
+"Sorry for this inconvenience."
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:869
 msgid "Add File"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:838
+#: ../videomass2/vdms_MAIN/main_frame.py:876
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:846
+#: ../videomass2/vdms_MAIN/main_frame.py:884
 msgid "Video Conversions"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:853
+#: ../videomass2/vdms_MAIN/main_frame.py:891
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:44
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:109
 msgid "Audio Conversions"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:859
+#: ../videomass2/vdms_MAIN/main_frame.py:897
 msgid "Start Encoding"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:866
+#: ../videomass2/vdms_MAIN/main_frame.py:904
 msgid "Help"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:987
+#: ../videomass2/vdms_MAIN/main_frame.py:1026
 msgid "..Start Encoding - Videomass2"
 msgstr ""
 
