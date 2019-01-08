@@ -28,9 +28,17 @@
 
 #########################################################
 
+import sys
+
 if __name__ == '__main__':
+    if sys.version_info[0] > 2:
+        sys.stderr.write("[ERROR] Videomass2 work with Python2+ only!\n")
+        sys.exit(1)
+    try:
+        import wx
+    except ImportError:
+        sys.stderr.write("[ERROR] The wxPython-Classic module was not found!\n")
+        sys.exit(1)
+    
     from videomass2 import Videomass2
-    Videomass2.Main()
-
-
-
+    Videomass2.main()

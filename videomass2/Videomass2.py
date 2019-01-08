@@ -185,7 +185,7 @@ class Videomass(wx.App):
     #-------------------------------------------------------------------
     
 
-def Main():
+def main():
     app = Videomass(False)
     #app.MainLoop()
     fred = app.MainLoop()
