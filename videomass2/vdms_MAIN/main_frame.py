@@ -830,13 +830,13 @@ class MainFrame(wx.Frame):
             if new_version > this_version:
                 wx.MessageBox(_(u'A new version (v{0}) of Videomass2 is available'
                             u'\nfrom <https://pypi.org/project/videomass2/>') 
-                            .format(page[indx+2]), "Videomass2: Check version", 
+                            .format(page[indx+2]), "Videomass2: Check new version", 
                                 wx.ICON_INFORMATION, None
                                 )
             else:
                 wx.MessageBox(_(u'You are already using the latest version '
                                 u'(v{0}) of Videomass2').format(cr[2]), 
-                                "Videomass2: Check version", 
+                                "Videomass2: Check new version", 
                                 wx.ICON_INFORMATION, None
                                 )
         else:
