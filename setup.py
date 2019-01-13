@@ -57,6 +57,34 @@ import shutil
 from videomass2.vdms_SYS.msg_info import current_release 
 from videomass2.vdms_SYS.msg_info import descriptions_release
 
+
+#---- Version Check(s) ----#
+if sys.version_info[0] > 2:
+    sys.stderr.write(u"[ERROR] Not a supported Python version. Need 2.7+\n"
+                     u"You are using Python version %s\n"
+                     u"Instead, you could install or build a compatible "
+                     u"version of Videomass3 with Python3.\n" % sys.version)
+    sys.exit(1)
+try:
+    import wx
+    
+except ImportError:
+    if 'bdist_wheel' not in sys.argv:
+        sys.stderr.write("[ERROR] 'wx' module is required.\n"
+                         "Videomass2 need wxPython-Classic. Unfortunately "
+                         "(unlike wxPython-Phoenix) the wxPython-Classic "
+                         "installation can not be automated.\n")
+        
+        if ['Windows', 'Darwin'] in platform.system():
+            sys.stderr.write(
+                u"Please, install wxPython-Classic, you could find it here:\n"
+                u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
+                             )
+        else:
+            sys.stderr.write('Please, install wxPython with your package'
+                             'manager.\n')
+        sys.exit(1)
+
 #---- current work directory path ----#
 PWD = os.getcwd() 
 
