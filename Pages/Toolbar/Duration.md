@@ -1,10 +1,10 @@
-[Back](../../videomass2_use.md)
+[Back](../../videomass_use.md)
 
 ## Duration
 
 The Duration tool consists of two different parameters: 
 **Seeking** (time position) and **Cut** (duration) both expressed in hours, minutes and seconds (hh,mm,ss).
-Note that on Videomass2 the Cut parameter (duration) always refers to the total duration from the set Seeking 
+Note that on Videomass the Cut parameter (duration) always refers to the total duration from the set Seeking 
 point (if set), and not from the beginning of the first scene of a movie.
 
 ![Image](../../images/duration.png) 
@@ -49,4 +49,4 @@ Keeping this principle in mind, it is possible to enable or disable this instrum
 
 ----------------
 
-[Back](../../videomass2_use.md)
+[Back](../../videomass_use.md)

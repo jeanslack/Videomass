@@ -1,4 +1,4 @@
-[Back](../../videomass2_use.md)
+[Back](../../videomass_use.md)
 
 ## Show Metadata
 
@@ -20,4 +20,4 @@ It can be opened from the context menu by right click or double-click on the ite
 
 ![Image](../../images/show_metadata_options.png)   
 
-[Back](../../videomass2_use.md)
+[Back](../../videomass_use.md)

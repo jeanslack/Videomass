@@ -16,8 +16,7 @@
 - Selection of the time interval (for exports, previews, reproduction, tests)
 - Convert multiple files at once 
 - Log management
-- Work on **Linux**, **MacOs** and **Windows**. 
-- Original language English
-- Italian Languages support
+- Work on **Linux**, **Unix**, **MacOs** and **Windows**. 
+- Multi language (English and Italian support for now)
 
 [Home](index.md)

@@ -49,8 +49,8 @@ brew install ffmpeg --with-chromaprint --with-fdk-aac --with-fontconfig --with-f
 - By download the precompiled static binary files:   
 
 Go at this page <https://ffmpeg.zeranoe.com/builds/macos64/static/>, download your prefered file, then extract the archive.
-Inside the 'bin' folder you find the ffmpeg, ffprobe and ffplay binaries already to use with the terminal app or by Videomass2.
-Now, you can copy and paste all the 'bin' folder to '/Videomass2/MAcOsxSetup/FFMPEG_BIN/', or you can set the path later on Videomass2.   
+Inside the 'bin' folder you find the ffmpeg, ffprobe and ffplay binaries already to use with the terminal app or by Videomass.
+Now, you can copy and paste all the 'bin' folder to '/Videomass/MAcOsxSetup/FFMPEG_BIN/', or you can set the path later on Videomass.   
 
 Also, If you want to get separately the ffmpeg, ffprobe and ffplay installers statically compiled and ready to install, you can download them at the following site:
 

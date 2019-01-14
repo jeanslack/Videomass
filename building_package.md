@@ -21,7 +21,7 @@ In any case, make sure you have installed all the base necessary requirements:
 
 - **setuptools**, which is not included in the standard library, must be separately installed if not present in your system. Update: setuptools is included from python 2.7
 
-- Then, Download the Videomass2 TAR or ZIP sources at the top of this page and extract the archive.
+- Then, Download the Videomass TAR or ZIP sources at the top of this page and extract the archive.
 
 -----------------
 ## Windows 
@@ -33,12 +33,12 @@ if need update it and follow this how-to:
 
 <https://www.blog.pythonlibrary.org/2010/07/31/a-py2exe-tutorial-build-a-binary-series/>
 
-Then open a dos window and position you in the Videomass2 folder you just unzipped and type:
+Then open a dos window and position you in the Videomass folder you just unzipped and type:
 
 ```
 python setup.py py2exe
 ```
-A folder named 'dist' will be created where there will be the magic executable of Videomass2.exe   
+A folder named 'dist' will be created where there will be the magic executable of Videomass.exe   
 
 -----------------
 ## MacOS
@@ -51,7 +51,7 @@ and this page:
 You might be interested read the follow web page also:   
 <https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/> 
 
-Note that inside Videomass2 sources already exists a setup.py with certain parameters for your MacOS, then make a virtual env inside Videomass2 sources, activate it and run setup.py:   
+Note that inside Videomass sources already exists a setup.py with certain parameters for your MacOS, then make a virtual env inside Videomass sources, activate it and run setup.py:   
 ```
 ~$ python setup.py py2app
 ``` 
@@ -71,7 +71,7 @@ This will create a self contained applet in the ./dist/ directory
 
 and then debug with terminal:   
 
-`./dist/Videomass2.app/Contents/MacOS/videomass2`   
+`./dist/Videomass.app/Contents/MacOS/videomass`   
 
 -Usage for building a redistributable version standalone:   
 
@@ -115,7 +115,7 @@ you need install those following tools first:
 ```
 
 This will installs all the need dependencies, including python-setuptools. 
-Then, go into Videomass2 unzipped folder with your user (not root)   
+Then, go into Videomass unzipped folder with your user (not root)   
 
 - To generate both source and binary packages type:
 
@@ -123,11 +123,11 @@ Then, go into Videomass2 unzipped folder with your user (not root)
 ~$ python setup.py --command-packages=stdeb.command bdist_deb
 ```
 
-The command above should create a _python-videomass2_version_all.deb_ in 
+The command above should create a _python-videomass_version_all.deb_ in 
 the new _deb_dist_ directory, installable with   
 
 ```
-~# dpkg -i python-videomass2_version_all.deb
+~# dpkg -i python-videomass_version_all.deb
 ```
 
 - To generate a source packages only:
@@ -155,13 +155,13 @@ command for setuptools. The files wheel can be installed with "pip".
 python setup.py sdist bdist_wheel
 ```
 
-In the dist folder you find a source distribution (videomass2-x.x.x.tar.gz) and
-a build distribution (videomass2-x.x.x-py2-none-any.whl). You can install the 
+In the dist folder you find a source distribution (videomass-x.x.x.tar.gz) and
+a build distribution (videomass-x.x.x-py2-none-any.whl). You can install the 
 build distribution with **pip** command:   
 
 ```
 cd dist
-pip install videomass2-x.x.x-py2-none-any.whl
+pip install videomass-x.x.x-py2-none-any.whl
 ```
 
 [Home](index.md)

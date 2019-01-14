@@ -1,6 +1,6 @@
-[Back](../../../../videomass2_use.md)
+[Back](../../../../videomass_use.md)
 
-Videomass2 offers an interface with two different types of video de-interlacers, and a simple interleaver with the related options.   
+Videomass offers an interface with two different types of video de-interlacers, and a simple interleaver with the related options.   
 Deinterlacers are useful for removing a series of annoying little lines that disturb the image of a movie.
 Although not very useful, an interleaver for progressive content is also available.
 
@@ -63,4 +63,4 @@ frames with lower (or upper) lines from even frames, halving the frame rate and 
   - **lowpass**, Enable (default) or disable the vertical lowpass filter to avoid twitter interlacing and reduce moire 
   patterns. Default is no setting.
 
-[Back](../../../../videomass2_use.md)
+[Back](../../../../videomass_use.md)

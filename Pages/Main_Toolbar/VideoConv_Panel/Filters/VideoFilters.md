@@ -1,4 +1,4 @@
-[Back](../../../../videomass2_use.md)
+[Back](../../../../videomass_use.md)
 
 ## Video filters section
 
@@ -9,4 +9,4 @@ All available filters are auto-chained and can be played simultaneously with the
 (the one with the yellow play icon). When a certain filter is set, the corresponding button will assume 
 a yellow gradient: ![Image](../../../../images/button_rotation.png)   
 
-[Back](../../../../videomass2_use.md)
+[Back](../../../../videomass_use.md)

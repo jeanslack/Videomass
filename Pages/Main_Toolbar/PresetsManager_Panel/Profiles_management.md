@@ -1,4 +1,4 @@
-[Back](../../../videomass2_use.md)
+[Back](../../../videomass_use.md)
 
 ## Profiles Management
 The window for managing profiles is used to create new profiles, to add new settings and to edit existing profiles. 
@@ -37,4 +37,4 @@ Go to the _Presets Manager_ interface by pressing the corresponding button on th
 New profiles can also be added from the _Video Conversions_ and _Audio Conversions_ interfaces. Whenever you set a specific parameter configuration and press the 'Save as Profile' button, you will save those parameters in the 'User Profile' preset of the 'Presets Manager' interface.
 ![Image](../../../images/save_as_profile.png) 
 
-[Back](../../../videomass2_use.md)
+[Back](../../../videomass_use.md)

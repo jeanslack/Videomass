@@ -2,7 +2,7 @@
 
 ## Donation   
 
-If you like Videomass2 and you want to support its development, consider making 
+If you like Videomass and you want to support its development, consider making 
 a donation.    
 This will encourage development:   
 

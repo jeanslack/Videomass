@@ -1,4 +1,4 @@
-[Back](../../../videomass2_use.md)
+[Back](../../../videomass_use.md)
 
 ## Presets Manager
 
@@ -13,7 +13,7 @@ A single click on a profile allows you to use it for a conversion process, or to
 Double-clicking on a profile opens a profile editing window (the same can be done by pressing the _Edit_ button).
 
 **Note**: each preset is an xml file with a _.vdms_ extension containing the entries of each profile stored on a 
-specific preset. All presets are located in the Videomass2 configuration folder.
+specific preset. All presets are located in the Videomass configuration folder.
 
 ### Menubar
 ![Image](../../../images/menubarFile.png)   
@@ -33,9 +33,9 @@ With **Presets Manager** interface, the following functions are enabled in the m
 ### Tools buttons
 ![Image](../../../images/presets_manager_buttons.png)   
 These buttons are shown on the toolbar when the **Presets Manager** interface is active.
-* To create a [new profile](https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html), press the _New.._ button in the toolbar.
+* To create a [new profile](https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html), press the _New.._ button in the toolbar.
 * To delete a profile, press the _Delete.._ button in the toolbar.
-* To [edit a profile](https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html). press the _Edit.._ button in the toolbar.
+* To [edit a profile](https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html). press the _Edit.._ button in the toolbar.
 
 ### The _Selecting Preset_ tab
 In this tab there is a list of all presets that can be selected from a drop-down menu.   
@@ -44,7 +44,7 @@ Conversions and Audio Conversions interfaces are stored.
 
 ### The _Command Line FFmpeg_ tab
 By selecting the 'Command Line FFmpeg' tab you will see the command of each selected profile. To change a command on the 
-fly, you must first enable the write function on the [Setup dialog](https://github.com/jeanslack/Videomass2/blob/gh-pages/Pages/Startup/Setup.md). Remember that a profile changed on the fly will only be applied in the conversion process but will 
+fly, you must first enable the write function on the [Setup dialog](https://github.com/jeanslack/Videomass/blob/gh-pages/Pages/Startup/Setup.md). Remember that a profile changed on the fly will only be applied in the conversion process but will 
 not be stored on the profile. To save a new profile, you will need to use the 'New..' function in the toolbar.
 
 ### Start Encoding
@@ -54,4 +54,4 @@ When you select a profile and press the _Start Encoding_ button in the main tool
 At the end of the process the preview button is displayed in the toolbar, which you can use to check the conversion result.
 ![Image](../../../images/presets_manager_preview.png)
 
-[Back](../../../videomass2_use.md)
+[Back](../../../videomass_use.md)
