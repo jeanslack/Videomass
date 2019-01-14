@@ -1,16 +1,13 @@
 
-# **Videomass2** provides a graphical interface for audio and video conversions through FFmpeg.
+# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.
 
-Videomass2 is only compatible with Python2 and wxPython-Classic   
+Videomass now is compatible with Python2 (with wxPython-Classic) and Python3 (with wxPython-Phoenix)    
 
-If you want to use a version compatible with Python3 and the wxPython-Phoenix 
-toolkit, [Videomass3](https://github.com/jeanslack/Videomass3) is also available.   
-
-* [View progect on PyPi](https://pypi.org/project/videomass2/)
-* [GitHub Page](https://github.com/jeanslack/Videomass2)
-* [Support Page and Documentation](http://jeanslack.github.io/Videomass2)
-* [Downloads Source Code](https://github.com/jeanslack/Videomass2/releases)
-* [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
+* [View progect on PyPi](https://pypi.org/project/videomass/)
+* [GitHub Page](https://github.com/jeanslack/Videomass)
+* [Support Page and Documentation](http://jeanslack.github.io/Videomass)
+* [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
+* [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass/)
 
 ## Features
 
@@ -35,8 +32,8 @@ toolkit, [Videomass3](https://github.com/jeanslack/Videomass3) is also available
 ## Essential Dependencies
 
 **Required:**
-- Python >=2.7    
-- wxPython >= 3.0 (wxPython Classic)   
+- Python >=2.7 or Python >=3.5.0   
+- wxPython >= 3.0 (wxPython Classic) or wxPython >= 4.0 (wxPython Classic)    
 
 **Optionals:**
 - ffmpeg >= 3.2

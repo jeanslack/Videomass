@@ -7,20 +7,20 @@
 # Copyright: (c) 2018/19 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (09) 16 july 2018
 # Rev (10) 3 Sept 2018
@@ -58,7 +58,7 @@ def supported_formats(array3, file_sources):
                 wx.MessageBox(_(u"The selected profile is not suitable to "
                                 u"convert the following file formats:\n\n%s\n\n") 
                               % ('\n'.join(exclude)), 
-                              _(u"Videomass2: Unsuitable format"), 
+                              _(u"Videomass: Unsuitable format"), 
                               wx.ICON_WARNING | wx.OK, 
                               None
                               )
@@ -81,7 +81,7 @@ def parser_xml(arg): # arg é il nome del file xml (vdms)
     {name: {filesupport:?, descript:?, command:?, extens:?}, else: {etc etc}}
     
     """
-    with open('%s/.videomass2/%s.vdms' %(DIRNAME, arg),'r') as fread:
+    with open('%s/.videomass/%s.vdms' %(DIRNAME, arg),'r') as fread:
         data = fread.read()
 
     parser = parseString(data) # fa il parsing del file xml ed esce: 
@@ -129,8 +129,8 @@ def delete_profiles(array, filename):
     """
     
     dati = parser_xml(filename)
-    #dirconf = os.path.expanduser('~/.videomass2/%s.vdms' % (filename))
-    dirconf = '%s/.videomass2/%s.vdms' % (DIRNAME, filename)
+    #dirconf = os.path.expanduser('~/.videomass/%s.vdms' % (filename))
+    dirconf = '%s/.videomass/%s.vdms' % (DIRNAME, filename)
     
     """
     Posso anche usare i dizionari al posto degli indici lista (sotto i cicli 

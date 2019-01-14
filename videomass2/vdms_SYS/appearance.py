@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) November/20/2018
 #########################################################
@@ -30,7 +30,7 @@ import os
 class Appearance(object):
     """
     This class determines the paths to use to set icons on the 
-    graphic appearance of the Videomass2 program.
+    graphic appearance of the Videomass program.
     """
     def __init__(self, IS_LOCAL, iconset):
         """
@@ -40,8 +40,8 @@ class Appearance(object):
         """
         if IS_LOCAL:
             url = '%s/art/icons' % os.getcwd() # work current directory
-            self.videomass_icon = "%s/videomass2.png" % url
-            self.wizard_icon = "%s/videomass2_wizard.png" % url
+            self.videomass_icon = "%s/videomass.png" % url
+            self.wizard_icon = "%s/videomass_wizard.png" % url
             
         else:
             import sys
@@ -49,37 +49,37 @@ class Appearance(object):
             OS = platform.system()
             
             if OS == 'Windows':
-                #Installed with 'pip install videomass2' cmd
+                #Installed with 'pip install videomass' cmd
                 pythonpath = os.path.dirname(sys.executable)
-                url = pythonpath + '\\share\\videomass2\\icons'
-                self.videomass_icon = url + "\\videomass2.png" 
-                self.wizard_icon = url + "\\videomass2_wizard.png"
+                url = pythonpath + '\\share\\videomass\\icons'
+                self.videomass_icon = url + "\\videomass.png" 
+                self.wizard_icon = url + "\\videomass_wizard.png"
             else:
                 from videomass2.vdms_SYS.whichcraft import which
-                binarypath = which('videomass2')
+                binarypath = which('videomass')
                 
-                if binarypath == '/usr/local/bin/videomass2':
+                if binarypath == '/usr/local/bin/videomass':
                     #usually Linux,MacOs,Unix
-                    url = '/usr/local/share/videomass2/icons'
+                    url = '/usr/local/share/videomass/icons'
                     share = '/usr/local/share/pixmaps'
-                    self.videomass_icon = share + '/videomass2.png'
-                    self.wizard_icon = url + '/videomass2_wizard.png'
+                    self.videomass_icon = share + '/videomass.png'
+                    self.wizard_icon = url + '/videomass_wizard.png'
                     
-                elif binarypath == '/usr/bin/videomass2':
+                elif binarypath == '/usr/bin/videomass':
                     #usually Linux 
-                    url = '/usr/share/videomass2/icons'
+                    url = '/usr/share/videomass/icons'
                     share = '/usr/share/pixmaps'
-                    self.videomass_icon = share + "/videomass2.png"
-                    self.wizard_icon = url + "/videomass2_wizard.png"
+                    self.videomass_icon = share + "/videomass.png"
+                    self.wizard_icon = url + "/videomass_wizard.png"
                     
                 else: 
-                    #installed with 'pip install --user videomass2' cmd
+                    #installed with 'pip install --user videomass' cmd
                     import site
                     userbase = site.getuserbase()
-                    url = userbase + '/share/videomass2/icons'
+                    url = userbase + '/share/videomass/icons'
                     share = '/share/pixmaps'
-                    self.videomass_icon = userbase+share + "/videomass2.png"
-                    self.wizard_icon = userbase+url+"/videomass2_wizard.png"
+                    self.videomass_icon = userbase+share + "/videomass.png"
+                    self.wizard_icon = userbase+url+"/videomass_wizard.png"
                     
         # default black
         if iconset == 'Material_Design_Icons_black': # default

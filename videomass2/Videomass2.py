@@ -4,26 +4,26 @@
 # Friday Aug 23 10:37:47 2013
 #
 #########################################################
-# Name: Videomass2.py
-# Porpose: bootstrap for the videomass2
+# Name: videomass2.py
+# Porpose: bootstrap for the videomass
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev December/14/2018
 #########################################################
@@ -38,7 +38,7 @@ import __builtin__
 __builtin__.__dict__['_'] = wx.GetTranslation
 from videomass2.vdms_SYS import app_const as appC
 # set pathname:
-path_confdir = os.path.expanduser('~/.videomass2/')# presets path
+path_confdir = os.path.expanduser('~/.videomass/')# presets path
 PWD = os.getcwd()
 
 class Videomass(wx.App):
@@ -76,8 +76,8 @@ class Videomass(wx.App):
         if setui[2]: # if source /share is missing and .videomass is corrupted
             wx.MessageBox(_(u'Can not find the configuration file\n\n'
                             u'Sorry, cannot continue..'),
-                             'Videomass2: Fatal Error', wx.ICON_STOP)
-            print 'Videomass2: Fatal Error, file configuration not found'
+                             'Videomass: Fatal Error', wx.ICON_STOP)
+            print 'Videomass: Fatal Error, file configuration not found'
             return False
         
         icons = Appearance(setui[3], fileconf[14])# set appearance instance
@@ -135,7 +135,7 @@ class Videomass(wx.App):
     def firstrun(self, icon):
         """
         Start a temporary dialog: this is showing during first time 
-        start the Videomass2 application on MaOS and Windows.
+        start the Videomass application on MaOS and Windows.
         """
         from videomass2.vdms_DIALOGS.first_time_start import FirstStart
         main_frame = FirstStart(icon)

@@ -7,20 +7,20 @@
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) july 08 2018
 #########################################################
@@ -283,28 +283,28 @@ class Audio_Conv(wx.Panel):
             cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
         #--------------------------------------------#
         if cmd_opt["AudioContainer"] == "WAV [.wav]":
-            self.audio_parameters("wav", "Audio WAV Parameters - Videomass2")
+            self.audio_parameters("wav", "Audio WAV Parameters - Videomass")
             
         elif cmd_opt["AudioContainer"] == "AIFF [.aiff]":
-            self.audio_parameters("aiff", "Audio AIFF Parameters - Videomass2")
+            self.audio_parameters("aiff", "Audio AIFF Parameters - Videomass")
 
         elif cmd_opt["AudioContainer"] == "FLAC [.flac]":
-            self.audio_parameters("flac", "Audio FLAC Parameters - Videomass2")
+            self.audio_parameters("flac", "Audio FLAC Parameters - Videomass")
             
         elif cmd_opt["AudioContainer"] == "OGG [.ogg]":
-            self.audio_parameters("ogg", "Audio OGG Parameters - Videomass2")
+            self.audio_parameters("ogg", "Audio OGG Parameters - Videomass")
             
         elif cmd_opt["AudioContainer"] == "MP3 [.mp3]":
-            self.audio_parameters("mp3", "Audio MP3 Parameters - Videomass2")
+            self.audio_parameters("mp3", "Audio MP3 Parameters - Videomass")
         
         elif cmd_opt["AudioContainer"] == "AAC [.m4a]":
-            self.audio_parameters("aac", "Audio AAC Parameters - Videomass2")
+            self.audio_parameters("aac", "Audio AAC Parameters - Videomass")
         
         elif cmd_opt["AudioContainer"] == "ALAC [.m4a]":
-            self.audio_parameters("alac", "Audio ALAC Parameters - Videomass2")
+            self.audio_parameters("alac", "Audio ALAC Parameters - Videomass")
             
         elif cmd_opt["AudioContainer"] == "AC3 [.ac3]":
-            self.audio_parameters("ac3", "Audio AC3 Parameters - Videomass2")
+            self.audio_parameters("ac3", "Audio AC3 Parameters - Videomass")
             
         #elif self.cmbx_a.GetValue() == "Save audio from movie":
             #self.audiocopy()
@@ -379,7 +379,7 @@ class Audio_Conv(wx.Panel):
             # first execute a control for errors:
             if metadata.ERROR():
                 wx.MessageBox("[FFprobe] Error:  %s" % (metadata.error), 
-                              "ERROR - Videomass2",
+                              "ERROR - Videomass",
                 wx.ICON_ERROR, self)
                 return
             # Proceed with the istance method call:
@@ -387,7 +387,7 @@ class Audio_Conv(wx.Panel):
             # ...and proceed to checkout:
             if audio_list == None:
                 wx.MessageBox(_(u"There are no audio streams:\n%s ") % (files), 
-                            'Videomass2: warning', wx.ICON_EXCLAMATION, self)
+                            'Videomass: warning', wx.ICON_EXCLAMATION, self)
                 return
 
             elif len(audio_list) > 1:
@@ -395,7 +395,7 @@ class Audio_Conv(wx.Panel):
                         _(u"The imported video contains multiple audio\n" 
                         u"streams. Select which stream you want to\n"
                         u"export between these:"), 
-                        _(u"Videomass2: Stream choice"),
+                        _(u"Videomass: Stream choice"),
                         audio_list, wx.CHOICEDLG_STYLE
                                             )
                 if dlg.ShowModal() == wx.ID_OK:
@@ -410,7 +410,7 @@ class Audio_Conv(wx.Panel):
                         cmd_opt["ExportExt"].append(cn)
                     else:
                         wx.MessageBox(_(u"Nothing choice:\n%s ") % (files), 
-                            'Videomass2: Error', wx.ICON_ERROR, self)
+                            'Videomass: Error', wx.ICON_ERROR, self)
                         return
                 else:
                     pass
@@ -492,7 +492,7 @@ class Audio_Conv(wx.Panel):
         data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
 
         if data[1]:
-            wx.MessageBox(data[1], "Videomass2: ERROR!", wx.ICON_ERROR)
+            wx.MessageBox(data[1], "Videomass: ERROR!", wx.ICON_ERROR)
             return
         else:
             volume = list()
@@ -560,7 +560,7 @@ class Audio_Conv(wx.Panel):
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_(u"Missing volume dectect!\n"
                               u"Press the analyze button before proceeding."),
-                                "Videomass2: Warning!", wx.ICON_WARNING)
+                                "Videomass: Warning!", wx.ICON_WARNING)
                 return
         self.update_allentries()# last update of all setting interface
         # make a different id need to avoid attribute overwrite:
@@ -749,7 +749,7 @@ class Audio_Conv(wx.Panel):
             if wx.MessageBox(_(u"Audio normalization is a specific process "
                              u"applied track by track.\n\n"
                              u"Are you sure to proceed ?"), 
-                             _(u'Videomass2: Audio normalization enabled!'), 
+                             _(u'Videomass: Audio normalization enabled!'), 
                              wx.ICON_QUESTION | wx.YES_NO, 
                             None) == wx.NO:
                 return #Se L'utente risponde no
@@ -781,10 +781,10 @@ class Audio_Conv(wx.Panel):
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
-        full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
+        full_pathname = '%s/.videomass/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                             filename, list, 
-                    _(u'Videomass2: Create a new profile on "%s" preset') % (
+                    _(u'Videomass: Create a new profile on "%s" preset') % (
                                                                 name_preset))
         prstdlg.ShowModal()

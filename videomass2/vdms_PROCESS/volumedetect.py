@@ -7,20 +7,20 @@
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 21/july/2018, (02) October 13 2018
 #########################################################
@@ -46,7 +46,7 @@ class PopupDialog(wx.Dialog):
     A pop-up dialog box for temporary user messages that tell the user 
     the load in progress (required for large files).
     Use:
-            loadDlg = PopupDialog(None, ("Videomass2 - Loading..."), 
+            loadDlg = PopupDialog(None, ("Videomass - Loading..."), 
                         ("\nAttendi....\nSto eseguendo un processo .\n")
                                 )
             loadDlg.ShowModal() 

@@ -7,20 +7,20 @@
 # Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (12) 25/July/2018
 #########################################################
@@ -762,7 +762,7 @@ class Video_Conv(wx.Panel):
                    u"(0.2 fps); More is low, the lower will be the extracted "
                    u"images. "))
             self.parent.statusbar_msg(_(u"Output format: Save images"),None)
-            wx.MessageBox(msg, "Videomass2: info", wx.ICON_INFORMATION
+            wx.MessageBox(msg, "Videomass: info", wx.ICON_INFORMATION
                           )
             self.ckbx_pass.SetValue(False)
             self.UI_set()
@@ -828,7 +828,7 @@ class Video_Conv(wx.Panel):
         file in the list `self.file_sources` will be displayed
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox(_(u"No filter enabled"), "Videomass2: Info", 
+            wx.MessageBox(_(u"No filter enabled"), "Videomass: Info", 
                           wx.ICON_INFORMATION)
             return
         self.time_seq = self.parent.time_seq
@@ -842,7 +842,7 @@ class Video_Conv(wx.Panel):
         Reset all enabled filters
         """
         if not cmd_opt["Filters"]:
-            wx.MessageBox(_(u"No filter enabled"), "Videomass2: Info", 
+            wx.MessageBox(_(u"No filter enabled"), "Videomass: Info", 
                           wx.ICON_INFORMATION)
             return
         else:
@@ -1364,7 +1364,7 @@ class Video_Conv(wx.Panel):
         data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
 
         if data[1]:
-            wx.MessageBox(data[1], "ERROR! -Videomass2", wx.ICON_ERROR)
+            wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()
@@ -1474,7 +1474,7 @@ class Video_Conv(wx.Panel):
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_(u"Missing volume dectect!\n"
                               u"Press the analyze button before proceeding."),
-                                "Videomass2: Warning!", wx.ICON_WARNING)
+                                "Videomass: Warning!", wx.ICON_WARNING)
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]
@@ -1810,10 +1810,10 @@ class Video_Conv(wx.Panel):
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
-        full_pathname = '%s/.videomass2/preset-v1-Personal.vdms' % dirname
+        full_pathname = '%s/.videomass/preset-v1-Personal.vdms' % dirname
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                             filename, list, 
-                    _(u'Videomass2: Create a new profile on "%s" preset') % (
+                    _(u'Videomass: Create a new profile on "%s" preset') % (
                                  name_preset))
         prstdlg.ShowModal()

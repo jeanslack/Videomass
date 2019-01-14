@@ -7,20 +7,20 @@
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 21/july/2018, (02) December/20/2018
 #########################################################
@@ -101,7 +101,7 @@ def stream_info(title, filepath , ffprobe_link):
 
     except IOError:
         wx.MessageBox(_(u"File does not exist or not a valid file:  %s") % (
-            filepath), "Videomass2: warning", wx.ICON_EXCLAMATION, None)
+            filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
         
 #-----------------------------------------------------------------------#
 def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
@@ -115,7 +115,7 @@ def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
             #error = thread.data
     except IOError:
         wx.MessageBox(_(u"File does not exist or not a valid file:  %s") % (
-            filepath), "Videomass2: warning", wx.ICON_EXCLAMATION, None)
+            filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
         return
     
 #-----------------------------------------------------------------------#
@@ -133,7 +133,7 @@ def probeDuration(path_list, ffprobe_link):
         err = metadata.error
         print "[FFprobe] Error:  %s" % err
         #wx.MessageBox("%s\nFile not supported!" % (metadata.error),
-                      #"Error - Videomass2", 
+                      #"Error - Videomass", 
                       #wx.ICON_ERROR, None)
         duration = 0
         return duration, err
@@ -157,7 +157,7 @@ def volumeDetectProcess(ffmpeg, filelist, OS):
     """
     thread = VolumeDetectThread(ffmpeg, filelist, OS) 
     loadDlg = PopupDialog(None, 
-                          _(u"Videomass2 - Loading..."), 
+                          _(u"Videomass - Loading..."), 
                           _(u"\nWait....\nAudio peak analysis.\n")
                           )
     loadDlg.ShowModal()

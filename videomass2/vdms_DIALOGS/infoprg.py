@@ -2,25 +2,25 @@
 
 #########################################################
 # Name: infoprog.py
-# Porpose: about videomass2 dialog
+# Porpose: about videomass dialog
 # resource: <http://zetcode.com/wxpython/dialogs/>
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (00) 10/Nov/2017
 #########################################################
@@ -59,7 +59,7 @@ def info(parent, videomass_icon):
         
         info.SetVersion("- %s" % Version)
         
-        info.SetDescription(_(u"Videomass2 provides a graphical interface for\n"
+        info.SetDescription(_(u"Videomass provides a graphical interface for\n"
                               u"audio and video conversion through FFmpeg\n"
                               u"\n"
                               u"This is a test release version.\n"
@@ -97,7 +97,7 @@ def info(parent, videomass_icon):
         info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> "
                            "English to Italian translations.\n")
         #info.SetArtists('')
-        #info.AddArtist('- Gianluca Pernigotto (Videomass2 app icons only)\nhttp://jeanslack.github.io/Videomass2/')
+        #info.AddArtist('- Gianluca Pernigotto (Videomass app icons only)\nhttp://jeanslack.github.io/Videomass/')
         #info.AddArtist('- Material design icons from Google\nhttp://google.github.io/material-design-icons/#getting-icons')
         #info.AddArtist('- Flat Color Icons\nhttp://icons8.com/color-icons')
                     

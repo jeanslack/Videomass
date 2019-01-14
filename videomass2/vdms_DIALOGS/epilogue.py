@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (05) 12/03/2015
 # Rev (06) 03/Aug/2018
@@ -43,7 +43,7 @@ class Formula(wx.Dialog):
         self.button_2 = wx.Button(self, wx.ID_OK, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle("%s - Videomass2" % title)
+        self.SetTitle("%s - Videomass" % title)
         label2.SetForegroundColour(wx.Colour(255, 106, 249))
         #panel.SetBackgroundColour(wx.Colour(212, 255, 249))
         

@@ -7,20 +7,20 @@
 # Copyright: (c) 2018/19 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (09) 16 july 2018
 #########################################################
@@ -91,14 +91,14 @@ def inspect(file_sources, dir_destin, extoutput):
     for f in file_sources:
         if not os.path.isfile(os.path.abspath(f)):
             wx.MessageBox(_(u"The file does not exist:\n\n'%s'\n") % (f), 
-                            _(u"Videomass2: Input file error"), wx.ICON_ERROR
+                            _(u"Videomass: Input file error"), wx.ICON_ERROR
                             )
             return (False,None,None,None,None)
 
     for d in outputdir:
         if not os.path.isdir(os.path.abspath(d)):
             wx.MessageBox(_(u"The folder does not exist:\n\n'%s'\n") % (d), 
-                            _(u"Videomass2: Output folder error"), wx.ICON_ERROR
+                            _(u"Videomass: Output folder error"), wx.ICON_ERROR
                             )
             return (False,None,None,None,None)
 

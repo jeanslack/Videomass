@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev December 14 2018
 #########################################################
@@ -38,10 +38,10 @@ DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
 def parsing_fileconf():
     """
     Make a parsing of the configuration file localized on 
-    ``~/.videomass2/videomass2.conf`` and return object list 
+    ``~/.videomass/videomass.conf`` and return object list 
     of the current program settings.
     """
-    filename = '%s/.videomass2/videomass2.conf' % (DIRNAME)
+    filename = '%s/.videomass/videomass.conf' % (DIRNAME)
 
     with open (filename, 'r') as f:
         fconf = f.readlines()
@@ -72,39 +72,39 @@ def system_check():
         
     else: # Path system installation (usr, usr/local, ~/.local, \python27\)
         if OS == 'Windows':
-            #Installed with 'pip install videomass2' command
+            #Installed with 'pip install videomass' command
             pythonpath = os.path.dirname(sys.executable)
             localepath = pythonpath + '\\share\\locale'
-            path_srcShare = pythonpath + '\\share\\videomass2\\config'
+            path_srcShare = pythonpath + '\\share\\videomass\\config'
             IS_LOCAL = False
             
         else:
             from videomass2.vdms_SYS.whichcraft import which
-            binarypath = which('videomass2')
-            if binarypath == '/usr/local/bin/videomass2':
+            binarypath = which('videomass')
+            if binarypath == '/usr/local/bin/videomass':
                 #usually Linux,MacOs,Unix
                 localepath = '/usr/local/share/locale'
-                path_srcShare = '/usr/local/share/videomass2/config'
+                path_srcShare = '/usr/local/share/videomass/config'
                 IS_LOCAL = False
-            elif binarypath == '/usr/bin/videomass2':
+            elif binarypath == '/usr/bin/videomass':
                 #usually Linux
                 localepath = '/usr/share/locale'
-                path_srcShare = '/usr/share/videomass2/config'
+                path_srcShare = '/usr/share/videomass/config'
                 IS_LOCAL = False
             else:
-                #installed with 'pip install --user videomass2' command
+                #installed with 'pip install --user videomass' command
                 import site
                 userbase = site.getuserbase()
                 localepath = userbase + '/share/locale'
-                path_srcShare = userbase + '/share/videomass2/config'
+                path_srcShare = userbase + '/share/videomass/config'
                 IS_LOCAL = False
 
     #### check videomass.conf and config. folder
-    if os.path.exists('%s/.videomass2' % DIRNAME):#if exist folder ~/.videomass
-        if os.path.isfile('%s/.videomass2/videomass2.conf' % DIRNAME):
+    if os.path.exists('%s/.videomass' % DIRNAME):#if exist folder ~/.videomass
+        if os.path.isfile('%s/.videomass/videomass.conf' % DIRNAME):
             fileconf = parsing_fileconf() # fileconf data
             if fileconf == 'corrupted':
-                print 'videomass2.conf is corrupted! try to restore..'
+                print 'videomass.conf is corrupted! try to restore..'
                 existfileconf = False
             if float(fileconf[0]) < 1.2:
                 existfileconf = False
@@ -114,22 +114,22 @@ def system_check():
         if not existfileconf:
             try:
                 if OS == ('Linux') or OS == ('Darwin'):
-                    shutil.copyfile('%s/videomass2.conf' % path_srcShare, 
-                                    '%s/.videomass2/videomass2.conf' % DIRNAME)
+                    shutil.copyfile('%s/videomass.conf' % path_srcShare, 
+                                    '%s/.videomass/videomass.conf' % DIRNAME)
                 elif OS == ('Windows'):
                     shutil.copyfile('%s/videomassWin32.conf' % path_srcShare, 
-                                    '%s/.videomass2/videomass2.conf' % DIRNAME)
+                                    '%s/.videomass/videomass.conf' % DIRNAME)
                 fileconf = parsing_fileconf() # fileconf data, reread the file
             except IOError:
                 copyerr = True
                 fileconf = 'corrupted'
     else:
         try:
-            shutil.copytree(path_srcShare,'%s/.videomass2' % DIRNAME)
+            shutil.copytree(path_srcShare,'%s/.videomass' % DIRNAME)
             if OS == ('Windows'):
-                os.remove("%s/.videomass2/videomass2.conf" % (DIRNAME))
-                os.rename("%s/.videomass2/videomassWin32.conf" % (DIRNAME),
-                          "%s/.videomass2/videomass2.conf" % (DIRNAME))
+                os.remove("%s/.videomass/videomass.conf" % (DIRNAME))
+                os.rename("%s/.videomass/videomassWin32.conf" % (DIRNAME),
+                          "%s/.videomass/videomass.conf" % (DIRNAME))
             fileconf = parsing_fileconf() # fileconf data, reread the file
         except OSError:
             copyerr = True

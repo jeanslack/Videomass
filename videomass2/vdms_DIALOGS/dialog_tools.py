@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev: 20/July/2014, 12/March/2015, 30/Apr/2015, 04/Aug/2018, 19/Oct/2018,
 #      09/Nov/2018
@@ -95,7 +95,7 @@ class Cut_Range(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         #----------------------Properties ----------------------#
-        self.SetTitle('Videomass2: duration')
+        self.SetTitle('Videomass: duration')
         #self.start_hour_ctrl.SetMinSize((100,-1 ))
         #self.start_minute_ctrl.SetMinSize((100, -1))
         #self.start_second_ctrl.SetMinSize((100, -1))
@@ -210,7 +210,7 @@ class Cut_Range(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass2/Pages/Toolbar/Duration.html'
+        page = 'https://jeanslack.github.io/Videomass/Pages/Toolbar/Duration.html'
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
@@ -272,7 +272,7 @@ class VideoRotate(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         #----------------------Properties------------------------------------#
 
-        self.SetTitle(_(u"Videomass2: Set Video/Image Rotation"))
+        self.SetTitle(_(u"Videomass: Set Video/Image Rotation"))
         #self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTipString(_(u"Reverses visual movie from bottom to top"))
         #self.button_left.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -504,7 +504,7 @@ class VideoCrop(wx.Dialog):
         self.Layout()
         
         #----------------------Properties------------------------------------#
-        self.SetTitle("Videomass2: Video/Image Crop")
+        self.SetTitle("Videomass: Video/Image Crop")
         #self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -545,7 +545,7 @@ class VideoCrop(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
                 'VideoConv_Panel/Filters/FilterCrop.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
@@ -750,7 +750,7 @@ class VideoResolution(wx.Dialog):
         self.Layout()
         
         # Properties
-        self.SetTitle(_(u"Videomass2: Resize (change resolution)"))
+        self.SetTitle(_(u"Videomass: Resize (change resolution)"))
 
         scale_str = (_(u'Scale (resize) the input video or image.'))
         self.spin_scale_width.SetToolTipString(_(u'WIDTH:\n%s') % scale_str)
@@ -797,7 +797,7 @@ class VideoResolution(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
                 'VideoConv_Panel/Filters/FilterScaling.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
@@ -947,7 +947,7 @@ class Lacing(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
         # set Properties
-        self.SetTitle(_(u"Videomass2: Deinterlace/Interlace"))
+        self.SetTitle(_(u"Videomass: Deinterlace/Interlace"))
         self.rdbx_W3fdif_filter.Hide()
         self.rdbx_W3fdif_deint.Hide()
         self.rdbx_Yadif_mode.Hide()
@@ -1274,7 +1274,7 @@ class Lacing(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
                 'VideoConv_Panel/Filters/Deint_Inter.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
@@ -1413,7 +1413,7 @@ class Denoisers(wx.Dialog):
         self.Layout()
         
         # set Properties
-        self.SetTitle(_(u"Videomass2: Denoisers filters"))
+        self.SetTitle(_(u"Videomass: Denoisers filters"))
         self.ckbx_nlmeans.SetToolTipString(_(u'nlmeans:\n '
             u'(Denoise frames using Non-Local Means algorithm '
             u'is capable of restoring video sequences with even strong '
@@ -1542,7 +1542,7 @@ class Denoisers(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
                 'VideoConv_Panel/Filters/Denoisers.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#  

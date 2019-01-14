@@ -7,20 +7,20 @@
 # Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GNU GENERAL PUBLIC LICENSE (see COPYING)
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (00) Sett 15 2018
 #########################################################
@@ -32,7 +32,7 @@ import platform
 from videomass2.vdms_SYS.whichcraft import which
 
 dirname = os.path.expanduser('~/') # /home/user/
-filename = '%s/.videomass2/videomass2.conf' % (dirname)
+filename = '%s/.videomass/videomass.conf' % (dirname)
 PWD = os.getcwd()
 OS = platform.system()
 
@@ -59,7 +59,7 @@ class FirstStart(wx.Dialog):
                                         img,wx.BITMAP_TYPE_ANY))
         lab_welc2 = wx.StaticText(self, wx.ID_ANY, (msg))
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
-                                        _(u"Welcome to Videomass2 Wizard!")))
+                                        _(u"Welcome to Videomass Wizard!")))
         self.searchBtn = wx.Button(self, wx.ID_ANY, (_(u"Search")))
         self.ckbx_paths = wx.CheckBox(self, wx.ID_ANY, (_(u"Enable Custom Paths")))
         self.customBtn = wx.Button(self, wx.ID_ANY, (_(u"Confirm")))
@@ -73,7 +73,7 @@ class FirstStart(wx.Dialog):
         close_btn = wx.Button(self, wx.ID_EXIT, "")
         
         # properties
-        self.SetTitle(_(u"Videomass2: Wizard"))
+        self.SetTitle(_(u"Videomass: Wizard"))
         lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL,wx.BOLD, 0, ""))
         # layout:
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -153,7 +153,7 @@ class FirstStart(wx.Dialog):
                           u"ffmpeg: invalid pathname\n"
                           u"ffprobe: invalid pathname\n"
                           u"ffplay: invalid pathname\n\n"),
-                          u'Videomass2: Entry errors', wx.ICON_ERROR, self)
+                          u'Videomass: Entry errors', wx.ICON_ERROR, self)
             return
 
         for x in array:
@@ -169,17 +169,17 @@ class FirstStart(wx.Dialog):
         if empty:
             wx.MessageBox(_(u"You have not completed all the assignment fields.\n"
                           u"Please, continue with settings."),
-                          u'Videomass2: Warning', wx.ICON_EXCLAMATION, self)
+                          u'Videomass: Warning', wx.ICON_EXCLAMATION, self)
             return
         if noexists:
             wx.MessageBox(_(u"No such file '%s'.\n"
                           u"Please, continue with settings.") % x,
-                          u'Videomass2: Error', wx.ICON_ERROR, self)
+                          u'Videomass: Error', wx.ICON_ERROR, self)
             return
         if nobin:
             wx.MessageBox(_(u"'{0}'\ndoes not match with:\n{1}\n"
                         u"Please, continue with settings.".format(x, biname)),
-                            'Videomass2: Error', wx.ICON_ERROR, self)
+                            'Videomass: Error', wx.ICON_ERROR, self)
             return
 
         self.completion(ffmpeg, ffprobe, ffplay)
@@ -244,14 +244,14 @@ class FirstStart(wx.Dialog):
             if noexists:
                 wx.MessageBox(_(u"'%s' is not installed on the system.\n"
                           u"Please, install it or set a new custom path.") 
-                          % required, 'Videomass2: Warning', 
+                          % required, 'Videomass: Warning', 
                           wx.ICON_EXCLAMATION, self)
                 return
             else:
-                if wx.MessageBox(_(u"The Videomass2 system folder already "
+                if wx.MessageBox(_(u"The Videomass system folder already "
                         u"includes the binary executables of FFmpeg, "
                         u"FFprobe and FFplay.\n\nDo you want to use them?"), 
-                        _(u'Videomass2: Please Confirm'),
+                        _(u'Videomass: Please Confirm'),
                         wx.ICON_QUESTION |
                         wx.YES_NO, 
                         None) == wx.YES:
@@ -294,7 +294,7 @@ class FirstStart(wx.Dialog):
                 fileconf.write('%s' % i)
             
         wx.MessageBox(_(u"\nWizard completed successfully.\n"
-                       "Restart Videomass2 now.\n\nThank You!"), 
+                       "Restart Videomass now.\n\nThank You!"), 
                        _(u"That's all folks!"))   
         self.Destroy()
         

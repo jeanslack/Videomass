@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # creation date: 10 Nov. 2017
 #########################################################
@@ -33,12 +33,12 @@ def current_release():
     Example 19.1.1c1
     """
 
-    Release_Name = 'Videomass2'
-    Program_Name = 'videomass2'
+    Release_Name = 'Videomass'
+    Program_Name = 'videomass'
     Version = '1.4.1'
     Release = 'January 14 2019'
     Copyright = u'© 2013-2019'
-    Website = 'http://jeanslack.github.io/Videomass2/'
+    Website = 'http://jeanslack.github.io/Videomass/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'
     Mail = '<jeanlucperni@gmail.com>'
     Comment = ("\nThanks to:\n"
@@ -62,10 +62,10 @@ def descriptions_release():
     Author = current_release()
     Mail = current_release()
 
-    short_d = (u"Videomass2 is a cross-platform GUI for FFmpeg. "
+    short_d = (u"Videomass is a cross-platform GUI for FFmpeg. "
                u"(Compatible with Python2 and wxPython-Classic only).")
     
-    long_d = ("-Videomass2- provides a graphical interface for\n "
+    long_d = ("-Videomass- provides a graphical interface for\n "
               "audio and video conversions through FFmpeg\n ")
 
     short_l = (u"GPL3 (Gnu Public License)")
@@ -73,13 +73,13 @@ def descriptions_release():
     license = (u"Copyright - %s %s\n"
                 "Author and Developer: %s\n"
                 "Mail: %s\n\n"
-                "Videomass2 is free software: you can redistribute\n"
+                "Videomass is free software: you can redistribute\n"
                 "it and/or modify it under the terms of the GNU General\n"
                 "Public License as published by the Free Software\n"
                 "Foundation, either version 3 of the License, or (at your\n"
                 "option) any later version.\n\n"
 
-                "Videomass2 is distributed in the hope that it\n"
+                "Videomass is distributed in the hope that it\n"
                 "will be useful, but WITHOUT ANY WARRANTY; without\n"
                 "even the implied warranty of MERCHANTABILITY or\n" 
                 "FITNESS FOR A PARTICULAR PURPOSE.\n" 

@@ -7,20 +7,20 @@
 # Copyright: (c) 2018/2019) Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (01) 09/july/2018, (02) 11/Oct/2018, (03) 7/Dec/2018
 #########################################################
@@ -52,8 +52,8 @@ class MainFrame(wx.Frame):
                  ffmpeg_link, ffprobe_link, ffplay_link,
                  pathicons):
         """
-        NOTE: 'path_srcShare' is a current work directory of Videomass2 
-               program. How it can be localized depend if Videomass2 is 
+        NOTE: 'path_srcShare' is a current work directory of Videomass 
+               program. How it can be localized depend if Videomass is 
                run as portable program or installated program.
         """
 
@@ -251,7 +251,7 @@ class MainFrame(wx.Frame):
         self.DnDsizer.Add(self.AconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         
         #----------------------Set Properties----------------------#
-        self.SetTitle("Videomass2")
+        self.SetTitle("Videomass")
         self.btn_playO.Hide()
         icon = wx.EmptyIcon()
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
@@ -481,9 +481,9 @@ class MainFrame(wx.Frame):
         filepath = self.import_clicked
         if not filepath:
             wx.MessageBox(_(u"No file selected into Drag and Drop list"), 
-                          'Videomass2', wx.ICON_EXCLAMATION, self)
+                          'Videomass', wx.ICON_EXCLAMATION, self)
             return
-        title = 'Metadata of selected media - Videomass2'
+        title = 'Metadata of selected media - Videomass'
         IO_tools.stream_info(title, 
                              filepath, 
                              self.ffprobe_link,
@@ -496,7 +496,7 @@ class MainFrame(wx.Frame):
         """
         if not self.post_process:
             wx.MessageBox(_(u"No files exported with `Start Encoding` yet"), 
-                          'Videomass2', wx.ICON_EXCLAMATION, self)
+                          'Videomass', wx.ICON_EXCLAMATION, self)
             return
 
         IO_tools.stream_play(self.post_process,
@@ -518,7 +518,7 @@ class MainFrame(wx.Frame):
         elif self.AconvPanel.IsShown():
             self.AconvPanel.Addprof()
         else:
-            print 'Videomass2: Error, no panels shown'
+            print 'Videomass: Error, no panels shown'
     #------------------------------------------------------------------#
     def Newprofile(self, event):
         """
@@ -529,7 +529,7 @@ class MainFrame(wx.Frame):
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Addprof()
         else:
-            print 'Videomass2: Error, no presets manager panel shown'
+            print 'Videomass: Error, no presets manager panel shown'
     #------------------------------------------------------------------#
     def Delprofile(self, event):
         """
@@ -612,7 +612,7 @@ class MainFrame(wx.Frame):
         self.refresh = fileButton.Append(wx.ID_REFRESH, _(u"Reload presets list"), 
                                            _(u"..Sometimes it can be useful"))
         fileButton.AppendSeparator()
-        exitItem = fileButton.Append(wx.ID_EXIT, _(u"Exit"), _(u"Close Videomass2"))
+        exitItem = fileButton.Append(wx.ID_EXIT, _(u"Exit"), _(u"Close Videomass"))
         self.menuBar.Append(fileButton,u"&File")
         
         ####------------------ setup button
@@ -642,7 +642,7 @@ class MainFrame(wx.Frame):
         docFFmpeg = helpButton.Append(wx.ID_ANY, _(u"FFmpeg documentation"), "")
         helpButton.AppendSeparator()
         checkItem = helpButton.Append(wx.ID_ANY, _(u"Check new releases"), "")
-        infoItem = helpButton.Append(wx.ID_ABOUT, _(u"About Videomass2"), "")
+        infoItem = helpButton.Append(wx.ID_ABOUT, _(u"About Videomass"), "")
         self.menuBar.Append(helpButton, _(u"&Help"))
 
         self.SetMenuBar(self.menuBar)
@@ -769,7 +769,7 @@ class MainFrame(wx.Frame):
         #wx.MessageBox("La guida al programma deve venire sviluppata a breve.")
         #self.on_manual(self)
         #self.parent.on_help(self)
-        page = 'https://jeanslack.github.io/Videomass2/videomass2_use.html'
+        page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
         webbrowser.open(page)
         
     #------------------------------------------------------------------#
@@ -777,7 +777,7 @@ class MainFrame(wx.Frame):
         """
         Display Issues page on github
         """
-        page = 'https://github.com/jeanslack/Videomass2/issues'
+        page = 'https://github.com/jeanslack/Videomass/issues'
         webbrowser.open(page)
         
     #------------------------------------------------------------------#
@@ -785,7 +785,7 @@ class MainFrame(wx.Frame):
         """
         Display Issues page on github
         """
-        page = 'https://jeanslack.github.io/Videomass2/donation.html'
+        page = 'https://jeanslack.github.io/Videomass/donation.html'
         webbrowser.open(page)
         
     #------------------------------------------------------------------#
@@ -799,15 +799,15 @@ class MainFrame(wx.Frame):
     #-------------------------------------------------------------------#
     def CheckNewReleases(self, event):
         """
-        Check for new version releases of Videomass2, useful for 
-        users with Videomass2 installer on Windows and MacOs.
+        Check for new version releases of Videomass, useful for 
+        users with Videomass installer on Windows and MacOs.
         """
         from videomass2.vdms_SYS.msg_info import current_release
         import urllib
         
         cr = current_release()
         try:
-            f = urllib.urlopen('https://pypi.org/project/videomass2/')
+            f = urllib.urlopen('https://pypi.org/project/videomass/')
             myfile = f.read()
             page = myfile.strip().split()
             indx = ''
@@ -816,7 +816,7 @@ class MainFrame(wx.Frame):
                     indx = page.index(v)
 
         except IOError as error:
-            wx.MessageBox(error, "Videomass2: ERROR", 
+            wx.MessageBox(error, "Videomass: ERROR", 
                           wx.ICON_ERROR, None
                           )
             return
@@ -828,21 +828,21 @@ class MainFrame(wx.Frame):
             this_version = int('%s%s%s' %(this_major, this_minor, this_micro))
             
             if new_version > this_version:
-                wx.MessageBox(_(u'A new version (v{0}) of Videomass2 is available'
-                            u'\nfrom <https://pypi.org/project/videomass2/>') 
-                            .format(page[indx+2]), "Videomass2: Check new version", 
+                wx.MessageBox(_(u'A new version (v{0}) of Videomass is available'
+                            u'\nfrom <https://pypi.org/project/videomass/>') 
+                            .format(page[indx+2]), "Videomass: Check new version", 
                                 wx.ICON_INFORMATION, None
                                 )
             else:
                 wx.MessageBox(_(u'You are already using the latest version '
-                                u'(v{0}) of Videomass2').format(cr[2]), 
-                                "Videomass2: Check new version", 
+                                u'(v{0}) of Videomass').format(cr[2]), 
+                                "Videomass: Check new version", 
                                 wx.ICON_INFORMATION, None
                                 )
         else:
             wx.MessageBox(_(u'An error was found in the search for '
                             u'the web page.\nSorry for this inconvenience.'),
-                        "Videomass2: Warning", wx.ICON_EXCLAMATION, None
+                        "Videomass: Warning", wx.ICON_EXCLAMATION, None
                         )
             return
         
@@ -1023,7 +1023,7 @@ class MainFrame(wx.Frame):
         #Show the panel:
         self.ProcessPanel.Show()
         self.Layout()
-        self.SetTitle(_('..Start Encoding - Videomass2'))
+        self.SetTitle(_('..Start Encoding - Videomass'))
 
         self.Setup_items_bar()# call set default layout method
     #------------------------------------------------------------------#
@@ -1059,7 +1059,7 @@ class MainFrame(wx.Frame):
             self.switch_audio_conv(self)
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0,3)]
-        self.SetTitle("Videomass2")# set the appropriate title
+        self.SetTitle("Videomass")# set the appropriate title
         # show buttons bar if the user has shown it:
         if self.showpanelbar.IsChecked():
             self.btnpanel.Show()

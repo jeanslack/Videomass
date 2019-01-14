@@ -7,13 +7,13 @@ the *.vdms files, are simple xml files need for presets list;
 the videomass.conf is the main configuration file.
 
 When you run the program as first run, this folder content is 
-copied to the /home/user/.videomass2 folder.
+copied to the /home/user/.videomass folder.
 Also, is used to store the log files of the conversion processes
 and to store the personal saved presets.
 
 In the full installation of videomass on Gnu/Linux systems, also 
-this content is stored in /usr/share/videomass2 and copied when need 
-into /home/user/.videomass2 (for restoration cases if the home
+this content is stored in /usr/share/videomass and copied when need 
+into /home/user/.videomass (for restoration cases if the home
 configuration folder is deleted)
 
 

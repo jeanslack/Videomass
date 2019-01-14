@@ -7,20 +7,20 @@
 # Copyright: (c) 2014-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev (08) 04/08/2014
 # Rev (09) 01/18/2015
@@ -39,7 +39,7 @@ from videomass2.vdms_IO.filedir_control import inspect
 from videomass2.vdms_DIALOGS import presets_addnew
 
 array = []# all parameters of the selected profile
-# this dictionary content all presets in ~/.videomass2:
+# this dictionary content all presets in ~/.videomass:
 dict_presets = {
 _(u"Audio Conversions") : ("preset-v1-Audio", "Audio Conversions"), 
 _(u"Extract audio from video"): ("preset-v1-VideoAudio", 
@@ -402,7 +402,7 @@ class PresetsPanel(wx.Panel):
 
         wildcard = "Source (*.vdms)|*.vdms| All files (*.*)|*.*"
         dialfile = wx.FileDialog(self, 
-                                 _(u"Preset restore (%s.vdms) - Videomass2 ")
+                                 _(u"Preset restore (%s.vdms) - Videomass ")
                                  % (filename), "%s" % (filename), "", 
                                  wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
                                      )
@@ -416,13 +416,13 @@ class PresetsPanel(wx.Panel):
                               u"'{1}'\n\nPlease, select a corresponding preset "
                               u"in the \ncombobox, first").format(dirname, 
                                                                   filename), 
-                              "Videomass2: warning!",  wx.ICON_WARNING, self
+                              "Videomass: warning!",  wx.ICON_WARNING, self
                                 )
                 return
             
             if wx.MessageBox(_(u'The preset "%s" will be imported and will '
                     u'overwrite the one in use ! Proceed ?') % (tail), 
-                    _(u'Videomass2: Please confirm'), wx.ICON_QUESTION | 
+                    _(u'Videomass: Please confirm'), wx.ICON_QUESTION | 
                                                   wx.YES_NO, 
                                                   self) == wx.NO:
                 return
@@ -439,7 +439,7 @@ class PresetsPanel(wx.Panel):
         #copy_restore('%s/share/av_presets.xml' % (self.PWD), '%s' % (self.dirconf))
         if wx.MessageBox(_(u"The current preset will be overwritten to "
                          u"default values! proceed?"), 
-                         _(u"Videomass2: Please confirm"), wx.ICON_QUESTION | 
+                         _(u"Videomass: Please confirm"), wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
         
@@ -456,8 +456,8 @@ class PresetsPanel(wx.Panel):
         restore all preset files in the path presets of the program
         """
         if wx.MessageBox(_(u"WARNING: you are going to restore all default "
-                         u"presets from videomass2! Proceed?"), 
-                         _(u"Videomass2: Please confirm"), 
+                         u"presets from videomass! Proceed?"), 
+                         _(u"Videomass: Please confirm"), 
                          wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
@@ -533,7 +533,7 @@ class PresetsPanel(wx.Panel):
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             if wx.MessageBox(_(u"Are you sure you want to delete the "
                              u"selected profile?"), 
-                             _(u"Videomass2: Please confirm"), 
+                             _(u"Videomass: Please confirm"), 
                              wx.ICON_QUESTION | 
                              wx.YES_NO, self) == wx.NO:
                 return

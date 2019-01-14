@@ -3,7 +3,7 @@
 # 
 #########################################################
 # Name: setup.py
-# Porpose: script to setup Videomass2.
+# Porpose: script to setup Videomass.
 # Compatibility: Python3, Python2
 # Platform: all
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -12,24 +12,24 @@
 # Rev (11) December 29 2018
 #########################################################
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
 """
- Videomass2 Setup Script
+ Videomass Setup Script
 
  USAGE:
 
@@ -48,40 +48,44 @@
 
 #---- Imports ----#
 from distutils.core import setup
-from setuptools import setup, find_packages
+from setuptools import setup
 import platform
 from glob import glob
 import os
 import sys
 import shutil
-from videomass2.vdms_SYS.msg_info import current_release 
-from videomass2.vdms_SYS.msg_info import descriptions_release
-
 
 #---- Version Check(s) ----#
-if sys.version_info[0] != 2:
+if sys.version_info[0] == 2:
+    from videomass2.vdms_SYS.msg_info import current_release 
+    from videomass2.vdms_SYS.msg_info import descriptions_release
+    
+    PACKAGES = ['videomass2', 'videomass2/vdms_DIALOGS', 
+                'videomass2/vdms_IO', 'videomass2/vdms_MAIN', 
+                'videomass2/vdms_PANELS', 'videomass2/vdms_PROCESS', 
+                'videomass2/vdms_SYS',]
+    
+elif sys.version_info[0] == 3:
+    from videomass3.vdms_SYS.msg_info import current_release
+    from videomass3.vdms_SYS.msg_info import descriptions_release
+    
+    PACKAGES = ['videomass3', 'videomass3/vdms_DIALOGS', 
+                'videomass3/vdms_IO', 'videomass3/vdms_MAIN', 
+                'videomass3/vdms_PANELS', 'videomass3/vdms_PROCESS', 
+                'videomass3/vdms_SYS',]
+else:
     sys.stderr.write(
-                u"[ERROR] Not a supported Python version. Need 2.7+\n"
-                u"You are using Python version %s\n"
-                u"Instead, you could install or build a compatible "
-                u"version of Videomass3 for Python3.\n" % sys.version)
+                u"[ERROR] Not a supported Python version.\n"
+                u"You are using Python version %s\n" % sys.version)
     sys.exit(1)
+
 try:
     import wx
     
 except ImportError:
     if 'bdist_wheel' not in sys.argv:
         sys.stderr.write("[ERROR] 'wx' module is required.\n"
-                         "Videomass2 need wxPython-Classic.\n")
-        
-        if ['Windows', 'Darwin'] in platform.system():
-            sys.stderr.write(
-            u"You could find it here:\n"
-            u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
-                             )
-        else:
-            sys.stderr.write('Please, install wxPython with your package'
-                             'manager.\n')
+                         "Please, before proceeding, install it.\n")
         sys.exit(1)
 
 #---- current work directory path ----#
@@ -104,23 +108,29 @@ LICENSE = dr[2] # short license
 DESCRIPTION = dr[0]
 LONG_DESCRIPTION = dr[1]
 
+#---- categorize with ----#
 CLASSIFIERS = [
-        'Development Status :: 4 - Beta',
-        'Environment :: MacOS X :: Cocoa',
-        'Environment :: Win32 (MS Windows)',
-        'Environment :: X11 Applications :: GTK',
-        'Intended Audience :: End Users/Desktop',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-        'Natural Language :: English',
-        'Natural Language :: Italian',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: Microsoft :: Windows',
-        'Operating System :: POSIX',
-        'Programming Language :: Python :: 2.7',
-        'Topic :: Multimedia :: Video :: Conversion',
-        'Topic :: Multimedia :: Sound/Audio :: Conversion',
-        'Topic :: Utilities',
-            ]
+            'Development Status :: 4 - Beta',
+            'Environment :: MacOS X :: Cocoa',
+            'Environment :: Win32 (MS Windows)',
+            'Environment :: X11 Applications :: GTK',
+            'Intended Audience :: End Users/Desktop',
+            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+            'Natural Language :: English',
+            'Natural Language :: Italian',
+            'Operating System :: MacOS :: MacOS X',
+            'Operating System :: Microsoft :: Windows',
+            'Operating System :: POSIX',
+            'Programming Language :: Python :: 2',
+            'Programming Language :: Python :: 2.7',
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.5',
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Topic :: Multimedia :: Video :: Conversion',
+            'Topic :: Multimedia :: Sound/Audio :: Conversion',
+            'Topic :: Utilities',
+                ]
 
 #######################################################################
 def glob_files(pattern):
@@ -138,7 +148,7 @@ def AppendPackageFiles(data, baseicons, baselocale):
     """
     # get all icons and icons docs
     for art in os.listdir('art/icons'):
-        if art not in ['videomass2_wizard.png', 'videomass2.png']:
+        if art not in ['videomass_wizard.png', 'videomass.png']:
             tmp = "art/icons/" + art
             if os.path.exists(tmp):
                 pathdoc = '%s/%s' % (baseicons,art)
@@ -152,10 +162,10 @@ def AppendPackageFiles(data, baseicons, baselocale):
         
     # Get the locale files
     for loc_dir in os.listdir("locale"):
-        if loc_dir not in ['videomass2.pot', 'README', 'make_pot.sh']:
+        if loc_dir not in ['videomass.pot', 'README', 'make_pot.sh']:
             tmp = "locale/" + loc_dir + "/LC_MESSAGES"
             if os.path.isdir(tmp):
-                tmp2 = tmp + "/videomass2.mo"
+                tmp2 = tmp + "/videomass.mo"
                 if os.path.exists(tmp2):
                     data.append((baselocale + tmp, [tmp2]))
                     
@@ -168,22 +178,23 @@ def SOURCE_BUILD():
 
     """
     DATA_FILES = [ # even path must be relative-path
-            ('share/videomass2/config', glob_files('share/*.vdms')),
-            ('share/videomass2/config', ['share/videomass2.conf',
+            ('share/videomass/config', glob_files('share/*.vdms')),
+            ('share/videomass/config', ['share/videomass.conf',
                                         'share/videomassWin32.conf',
                                         'share/README']),
-            ('share/videomass2/icons', glob_files('art/icons/*.png')),
+            ('share/videomass/icons', glob_files('art/icons/*.png')),
             ('share/applications', ['art/videomass.icns',
                                     'art/videomass.ico',
-                                    'art/videomass2.desktop']),
-            ('share/pixmaps', ['art/icons/videomass2.png']),
-            ('share/videomass2', ['AUTHORS','BUGS',
+                                    'art/videomass.desktop']),
+            ('share/pixmaps', ['art/icons/videomass.png']),
+            ('share/videomass', ['AUTHORS','BUGS',
                                 'CHANGELOG','INSTALL',
                                 'COPYING','TODO','README.md']),
             ]
     # get the package data
-    DATA_FILES = AppendPackageFiles(DATA_FILES, 'share/videomass2/icons', 'share/')
-
+    DATA_FILES = AppendPackageFiles(DATA_FILES, 
+                                    'share/videomass/icons', 'share/',
+                                    )
     setup(name = PRG_NAME,
         version = VERSION,
         description = DESCRIPTION,
@@ -194,8 +205,8 @@ def SOURCE_BUILD():
         url = WEBSITE,
         license = LICENSE,
         platforms = ["All"],
-        packages = find_packages(),
-        scripts = ['bin/videomass2'],
+        packages = PACKAGES,
+        scripts = ['bin/videomass'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
         #install_requires = ['wxPython',],
@@ -204,7 +215,7 @@ def SOURCE_BUILD():
 ########################################################################
 def OSX():
     """
-    build videomass2.app
+    build videomass.app
 
     """
     PATH_ICON = '%s/art/videomass.icns' % PWD
@@ -212,7 +223,7 @@ def OSX():
 
     # place sources even path must be relative-path
     data = [('share', glob_files('share/*.vdms')),
-            ('share', ['share/videomass2.conf']), 
+            ('share', ['share/videomass.conf']), 
             ('art/icons', glob_files('art/icons/*.png')),
             ('', ['AUTHORS', 'BUGS',
                   'CHANGELOG', 'INSTALL',
@@ -230,8 +241,8 @@ def OSX():
                #'LSEnvironment':'$0',
                'CFBundleName': RLS_NAME,
                'CFBundleDisplayName': RLS_NAME,
-               'CFBundleGetInfoString': "Making Videomass2",
-               'CFBundleIdentifier': "com.jeanslack.videomass2",
+               'CFBundleGetInfoString': "Making Videomass",
+               'CFBundleIdentifier': "com.jeanslack.videomass",
                'CFBundleVersion': "%s" % VERSION,
                'CFBundleShortVersionString': "%s" % VERSION,
                'NSHumanReadableCopyright': u"Copyright %s, "
@@ -240,13 +251,13 @@ def OSX():
                             }
                 }
                
-    if not os.path.exists('%s/bin/Videomass2.py' % PWD):
-        shutil.copyfile('%s/bin/videomass2' % PWD, 
-                        '%s/bin/Videomass2.py' % PWD
+    if not os.path.exists('%s/bin/Videomass.py' % PWD):
+        shutil.copyfile('%s/bin/videomass' % PWD, 
+                        '%s/bin/Videomass.py' % PWD
                         )
     #--------------- setup: --------------------#
-    setup(app = ['bin/Videomass2.py'],
-        packages = find_packages(),
+    setup(app = ['bin/Videomass.py'],
+        packages = PACKAGES,
         include = ['python', 'wx',],
         name = RLS_NAME,
         version = VERSION,
@@ -266,14 +277,14 @@ def OSX():
 ########################################################################
 def WIN32():
     """
-    build videomass2.exe
+    build videomass.exe
 
     """
     import py2exe
     
-    if not os.path.exists('%s/bin/Videomass2.py' % PWD):
-        shutil.copyfile('%s/bin/videomass2' % PWD, 
-                        '%s/bin/Videomass2.py' % PWD
+    if not os.path.exists('%s/bin/Videomass.py' % PWD):
+        shutil.copyfile('%s/bin/videomass' % PWD, 
+                        '%s/bin/Videomass.py' % PWD
                         )
 
     data = [('share', glob_files('share/*.vdms')),
@@ -296,7 +307,7 @@ def WIN32():
                 'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
                 'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
                 ]
-    packages = find_packages()
+    packages = PACKAGES
     dll_excludes = ['libgdk-win32-2.0-0.dll', 'libgobject-2.0-0.dll',
                     'tcl84.dll', 'tk84.dll'
                     ]
@@ -316,7 +327,7 @@ def WIN32():
                                 }
                     },
     console = [],
-    windows = ['bin/Videomass2.py'],
+    windows = ['bin/Videomass.py'],
     data_files = DATA_FILES,
     icon_resources = [(1, "art/videomass.ico")],
     name = RLS_NAME,
@@ -327,10 +338,11 @@ def WIN32():
 
 ########################################################################
 
-if __name__ == '__main__':
-    if platform.system() == 'Windows' and 'py2exe' in sys.argv:
-        WIN32()
-    elif platform.system() == 'Darwin' and 'py2app' in sys.argv:
-        OSX()
-    else:
-        SOURCE_BUILD()
+if platform.system() == 'Windows' and 'py2exe' in sys.argv:
+    WIN32()
+    
+elif platform.system() == 'Darwin' and 'py2app' in sys.argv:
+    OSX()
+    
+else:
+    SOURCE_BUILD()

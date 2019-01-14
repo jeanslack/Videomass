@@ -7,20 +7,20 @@
 # Copyright: (c) 2015-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 
-# This file is part of Videomass2.
+# This file is part of Videomass.
 
-#    Videomass2 is free software: you can redistribute it and/or modify
+#    Videomass is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    Videomass2 is distributed in the hope that it will be useful,
+#    Videomass is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 
 #    You should have received a copy of the GNU General Public License
-#    along with Videomass2.  If not, see <http://www.gnu.org/licenses/>.
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 # Rev: 01/May/2015, 03/Sept/2018, 19/Oct/2018
 #########################################################
@@ -178,7 +178,7 @@ class MemPresets(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = ('https://jeanslack.github.io/Videomass2/Pages/Main_Toolbar/'
+        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
                 'PresetsManager_Panel/Profiles_management.html')
         webbrowser.open(page)
     #------------------------------------------------------------------#
@@ -211,13 +211,13 @@ class MemPresets(wx.Dialog):
                                 paramprofile == '' or extprofile ==  '':
                                     
             wx.MessageBox(_(u"Incomplete profile assignement. I can't save"),
-                        "Videomass2: warning", wx.ICON_EXCLAMATION, self)
+                        "Videomass: warning", wx.ICON_EXCLAMATION, self)
             return
                                             
         elif cod_names in raw_list and self.arg == 'newprofile': # if exist name
                 
             wx.MessageBox(_(u"Profile already stored with the same name."), 
-                          "Videomass2: warning", wx.ICON_EXCLAMATION, self)
+                          "Videomass: warning", wx.ICON_EXCLAMATION, self)
             return
 
         if self.arg == 'edit':

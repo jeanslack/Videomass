@@ -1,5 +1,5 @@
 # encoding: utf-8
-Videomass2
+Videomass
 Author: Gianluca (jeanslack) Pernigotto
 Copyright: (c) Gianluca Pernigotto 20014-2018
 License: GPL3
@@ -23,15 +23,15 @@ NEW [features/enhancements]:
   
 IMPROVEMENTS:
 
-    - Improved the videomass2.desktop for desktop menu
+    - Improved the videomass.desktop for desktop menu
       specification on Linux 
     - Improved progress bar during conversions with time specifications 
       set with the Duration tool.
       
 REMOVALS and DISPLACEMENTS:
 
-   - Change main icon of the Videomass2.png, Videomass2_wizard.png.
-   - Rerpoducted new .icns and .ico file with the new image of Videomass2
+   - Change main icon of the Videomass.png, Videomass_wizard.png.
+   - Rerpoducted new .icns and .ico file with the new image of Videomass
    - Update locale
    - Removal of 'install_requires' from setup.py. Unfortunately I have not 
      yet found a pythonic way compatible with all operating systems to 
@@ -64,8 +64,8 @@ NEW: [features/enhancements]
   
 IMPROVEMENTS:
     - Improved setup.py script
-    - Change pathname icon (Icon=/usr/local/share/pixmaps/videomass2.png) 
-      of the desktop entry to videomass2.desktop for wheel and source 
+    - Change pathname icon (Icon=/usr/local/share/pixmaps/videomass.png) 
+      of the desktop entry to videomass.desktop for wheel and source 
       distributions
       
 REMOVALS and DISPLACEMENTS:
@@ -88,7 +88,7 @@ NEW: [features/enhancements]
     - Added new icons free and open source compatible with GPL3.
     - Add supports for the localization of internationalization (i18n) 
     - Add support to Italian language.
-    - Now Videomass2 has wheel on PyPi installable via pip and support 
+    - Now Videomass has wheel on PyPi installable via pip and support 
       for Linux/Macintosh/Unix/Windows
   
 IMPROVEMENTS:
@@ -103,7 +103,7 @@ BUG FIXES:
     - Solved an exception when importing images and proceeding with normalization
       (add: does not contain any stream).
     - FFmpeg's unrecognized errors are now better managed on volumedetect Processing
-    - resolved the writing of the 'passlogfile' on the source folder of 'Videomass2'
+    - resolved the writing of the 'passlogfile' on the source folder of 'Videomass'
        during double pass processes. Now, the log file will be written to the same 
        source output path.
     - Fixed bug that did not reproduce the exported file with preview button
@@ -164,9 +164,9 @@ Set 22, 2018 V.1.0.1
 +------------------------------------+
 Set 17, 2018 V.1.0.0
 +------------------------------------+
-This is first release of Videomass2.
+This is first release of Videomass.
 
-Videomass2 presents itself with an interface completely renewed and enhanced 
+Videomass presents itself with an interface completely renewed and enhanced 
 by many features:
 
     - Drag n Drop interface
