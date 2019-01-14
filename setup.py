@@ -59,11 +59,12 @@ from videomass2.vdms_SYS.msg_info import descriptions_release
 
 
 #---- Version Check(s) ----#
-if sys.version_info[0] > 2:
-    sys.stderr.write(u"[ERROR] Not a supported Python version. Need 2.7+\n"
-                     u"You are using Python version %s\n"
-                     u"Instead, you could install or build a compatible "
-                     u"version of Videomass3 with Python3.\n" % sys.version)
+if sys.version_info[0] != 2:
+    sys.stderr.write(
+                u"[ERROR] Not a supported Python version. Need 2.7+\n"
+                u"You are using Python version %s\n"
+                u"Instead, you could install or build a compatible "
+                u"version of Videomass3 for Python3.\n" % sys.version)
     sys.exit(1)
 try:
     import wx
@@ -71,14 +72,12 @@ try:
 except ImportError:
     if 'bdist_wheel' not in sys.argv:
         sys.stderr.write("[ERROR] 'wx' module is required.\n"
-                         "Videomass2 need wxPython-Classic. Unfortunately "
-                         "(unlike wxPython-Phoenix) the wxPython-Classic "
-                         "installation can not be automated.\n")
+                         "Videomass2 need wxPython-Classic.\n")
         
         if ['Windows', 'Darwin'] in platform.system():
             sys.stderr.write(
-                u"Please, install wxPython-Classic, you could find it here:\n"
-                u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
+            u"You could find it here:\n"
+            u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
                              )
         else:
             sys.stderr.write('Please, install wxPython with your package'
@@ -106,22 +105,22 @@ DESCRIPTION = dr[0]
 LONG_DESCRIPTION = dr[1]
 
 CLASSIFIERS = [
-            'Development Status :: 4 - Beta',
-            'Environment :: MacOS X :: Cocoa',
-            'Environment :: Win32 (MS Windows)',
-            'Environment :: X11 Applications :: GTK',
-            'Intended Audience :: End Users/Desktop',
-            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-            'Natural Language :: English',
-            'Natural Language :: Italian',
-            'Operating System :: MacOS :: MacOS X',
-            'Operating System :: Microsoft :: Windows',
-            'Operating System :: POSIX',
-            'Programming Language :: Python :: 2.7',
-            'Topic :: Multimedia :: Video :: Conversion',
-            'Topic :: Multimedia :: Sound/Audio :: Conversion',
-            'Topic :: Utilities',
-                ]
+        'Development Status :: 4 - Beta',
+        'Environment :: MacOS X :: Cocoa',
+        'Environment :: Win32 (MS Windows)',
+        'Environment :: X11 Applications :: GTK',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Natural Language :: English',
+        'Natural Language :: Italian',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Multimedia :: Video :: Conversion',
+        'Topic :: Multimedia :: Sound/Audio :: Conversion',
+        'Topic :: Utilities',
+            ]
 
 #######################################################################
 def glob_files(pattern):
@@ -199,7 +198,7 @@ def SOURCE_BUILD():
         scripts = ['bin/videomass2'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
-        install_requires = ['wxPython',],
+        #install_requires = ['wxPython',],
         )
 
 ########################################################################

@@ -33,28 +33,27 @@ import platform
 
 if __name__ == '__main__':
     if sys.version_info[0] > 2:
-        sys.stderr.write(u"[ERROR] Not a supported Python version. Need 2.7+\n"
-                     u"You are using Python version %s\n"
-                     u"Instead, you could install or build a compatible "
-                     u"version of Videomass3 with Python3.\n" % sys.version)
+        sys.stderr.write(
+                    u"[ERROR] Not a supported Python version. Need 2.7+\n"
+                    u"You are using Python version %s\n" % sys.version
+                         )
         sys.exit(1)
     try:
         import wx
-        
+    
     except ImportError:
-        if 'bdist_wheel' not in sys.argv:
-            sys.stderr.write("[ERROR] 'wx' module is required!\n"
-                             "Videomass2 need wxPython-Classic\n")
-            
-            if ['Windows', 'Darwin'] in platform.system():
-                sys.stderr.write(
-                    u"Please, install wxPython-Classic, you could find it here:\n"
-                    u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
-                                )
-            else:
-                sys.stderr.write('Please, install wxPython with your package'
-                                 'manager.\n')
-            sys.exit(1)
+        sys.stderr.write("[ERROR] 'wx' module is required.\n"
+                         "Videomass2 need wxPython-Classic.\n")
+        
+        if ['Windows', 'Darwin'] in platform.system():
+            sys.stderr.write(
+            "You could find it here:\n"
+            u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
+                             )
+        else:
+            sys.stderr.write('Please, install wxPython with your package'
+                             'manager.\n')
+        sys.exit(1)
     
     from videomass2 import Videomass2
     Videomass2.main()
