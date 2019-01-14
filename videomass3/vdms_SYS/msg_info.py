@@ -38,7 +38,7 @@ def current_release():
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
     Version = '1.4.1'
-    Release = 'January 10 2019'
+    Release = 'January 14 2019'
     Copyright = '© 2013-2019'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'
@@ -64,8 +64,7 @@ def descriptions_release():
     Author = current_release()
     Mail = current_release()
 
-    short_d = ("Videomass is a cross-platform GUI for FFmpeg "
-               "(Compatible with Python3 and wxPython-Phoenix only).")
+    short_d = ("Videomass is a cross-platform GUI for FFmpeg")
     
     long_d = ("-Videomass- provides a graphical interface for\n "
               "audio and video conversions through FFmpeg\n ")

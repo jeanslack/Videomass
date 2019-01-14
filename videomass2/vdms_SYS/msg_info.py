@@ -62,8 +62,7 @@ def descriptions_release():
     Author = current_release()
     Mail = current_release()
 
-    short_d = (u"Videomass is a cross-platform GUI for FFmpeg. "
-               u"(Compatible with Python2 and wxPython-Classic only).")
+    short_d = (u"Videomass is a cross-platform GUI for FFmpeg.")
     
     long_d = ("-Videomass- provides a graphical interface for\n "
               "audio and video conversions through FFmpeg\n ")
