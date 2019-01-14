@@ -11,31 +11,28 @@ January 14, 2019 V.1.4.1
 +------------------------------------+
 
 BUG FIXES:
-    - Improved installation management when different versions of the pip 
-      (pip2 / pip3) tool are used to install versions of Videomass compatible 
-      only with python2 or python3. 
-      Now the messages managed by pip should be clarifying if an installation 
-      incompatible with a Python version is not successful.
+    - Resolved an execution problem after installing Videomass with 
+      the pip tool for Python3. 
   
 NEW [features/enhancements]:
+    - Added compatibility with python3. Videomass now works on both 
+      Python2 and Python3.
     - Added new useful entries in the help menu
-    - The main icons of Videomass have been recreated with a new logo
+    - Videomass icon has been recreated with a new logo and design
   
 IMPROVEMENTS:
 
-    - Improved the videomass.desktop for desktop menu
-      specification on Linux 
+    - Improved the videomass.desktop for desktop menu specification on Linux 
     - Improved progress bar during conversions with time specifications 
       set with the Duration tool.
       
 REMOVALS and DISPLACEMENTS:
-
-   - Change main icon of the Videomass.png, Videomass_wizard.png.
-   - Rerpoducted new .icns and .ico file with the new image of Videomass
-   - Update locale
-   - Removal of 'install_requires' from setup.py. Unfortunately I have not 
-     yet found a pythonic way compatible with all operating systems to 
-     automate a dependency like wxPython-Classic.
+    
+    - Videomass2/Videomass3 has been changed to Videomass.
+    - Update locale
+    - "install_requires" has been removed from the SOURCE_BUILD function in 
+      setup.py. Unfortunately I have not yet found a pythonic way compatible 
+      with all systems to automate a dependency like wxPython.
 
 +------------------------------------+
 December 29, 2018 V.1.3.4
