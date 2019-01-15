@@ -60,8 +60,7 @@ if __name__ == '__main__':
                              )
             
             if ['Windows', 'Darwin'] in platform.system():
-                sys.stderr.write(
-                "You could find it here:\n"
+                sys.stderr.write("You could find it here:\n"
                 u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
                                 )
             else:

@@ -2,9 +2,9 @@ Videomass Builds and Installation Instructions
 
 Base Dependencies:
 
-    - Python >= 2.7
-    - wxPython >= 3.0 (wxPython Classic)
-    - pip
+    - Python 2/3
+    - wxPython Classic/wxPython Phoenix
+    - pip2/pip3
 
 #--------------------------------------------------------------------------#
 NOTE: [Linux/Macintosh/Unix/Windows]
@@ -18,36 +18,37 @@ Videomass from the python Package Index (aka PyPi) follow the Options below.
 #--------------------------------------------------------------------------#
 Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
 
-pip install videomass2
+Before to install Videomass with pip tool, please install a compatible
+version of wxPython for your Python version.
+
+- If you have Python2 installed:
+
+    pip2 install videomass
+
+- If you have Python3 installed:
+
+    pip3 install videomass
+    
+- To uninstall use the same version of the Pip tool:
+
+    pip uninstall videomass
 
 #--------------------------------------------------------------------------#
-Option 2) Build a Windows exe: [Windows]
+Option 2) Build a Windows executable (.exe): [Windows]
 
-please, visit the following support page to Windows paragraph.
-
-https://jeanslack.github.io/Videomass/building_package.html
+python setup.py py2exe
 
 #--------------------------------------------------------------------------#
+
 Option 3) Build a MacOSX app: [Macintosh OSX]
 
-please, visit the following support page to MacOsX paragraph.
-
-https://jeanslack.github.io/Videomass/building_package.html
+python setup.py py2app
 
 #--------------------------------------------------------------------------#
 Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
 
-please, visit the following support page to Build distribution for Windows, 
-MacOsX, Linux, Unix paragraph.
+python setup.py bdist_wheel
 
-https://jeanslack.github.io/Videomass/building_package.html
-
-#--------------------------------------------------------------------------#
-Option 5) Build as Debian package: [Linux/Macintosh/Unix/Windows]
-
-please, visit the following support page to Gnu/Linux Debian paragraph.
-    
-https://jeanslack.github.io/Videomass/building_package.html
 #--------------------------------------------------------------------------#
 
 
