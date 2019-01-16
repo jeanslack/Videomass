@@ -6,8 +6,8 @@
 
 ## Getting started
 
-* [Download and installation](installation.md)
-* [Wiki](https://github.com/jeanslack/Videomass/wiki.md)
+* [Download and installation](download_installation.md)
+* [Wiki](https://github.com/jeanslack/Videomass/wiki)
 
 ## Get Help
 * [User Guide](videomass_use.md)
