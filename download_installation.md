@@ -1,6 +1,6 @@
 [Home](index.md)
 
-# Installation
+# Download and installation
 --------------
 ## Windows and MacOS installers:
 Installers are available at the top of this page. 
@@ -13,11 +13,10 @@ Minimum requirements are:
 
 ## Windows, MacOs, Unix, Linux:
 Also, wheels are available for all systems and architectures from 
-[PyPi (Python Package Index)](https://pypi.org/project/videomass/) that can be 
-installed using the **pip** command.
-First you must have [these dependencies](dependencies.md) already 
-installed in your system, of course. Then you have to make sure you also have 
-**pip** installed, if not, install it: <https://www.makeuseof.com/tag/install-pip-for-python/>.   
+[Python Package Index (PyPi)](https://pypi.org/project/videomass/) that can be 
+installed using the **pip** command. Please, see the 
+[Wiki](https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi) page 
+for explanations.
 
 [Home](index.md)
 

@@ -6,7 +6,7 @@
 
 ## Getting started (installation, dependencies and building)
 
-* [Installation](installation.md)
+* [Download and installation](installation.md)
 * [Dependencies](dependencies.md)
 * [Launch Videomass without installation](execute_sources.md)
 * [Build a redistributable package](building_package.md)

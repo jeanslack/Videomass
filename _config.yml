@@ -7,11 +7,7 @@ header_pages:
     - features.md
     - screenshot.md
     - LICENSE
-    - other_resources.md
-    - installation.md
-    - execute_sources.md
-    - dependencies.md
-    - building_package.md
+    - download_installation.md
     - videomass_use.md
     - known_problems.md
     - donation.md
