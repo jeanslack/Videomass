@@ -20,6 +20,9 @@ https://sourceforge.net/projects/videomass2/
 
 Videomass can be run without installing by un-tarring the source package and 
 executing the "launcher" script in the root of the un-tarred directory.
+
+    python launcher
+    
 Alternatively, however, if you want the setup.py script to allow you to build 
 an executable for your operating system or if you simply want to install 
 Videomass from the python Package Index (aka PyPi) follow the Options below.
@@ -53,7 +56,7 @@ python setup.py py2exe
 
 Please, Visit the Wiki page for more info:
 
-https://github.com/jeanslack/Videomass/wiki
+https://github.com/jeanslack/Videomass/wiki/Windows,-build-from-source
 
 #--------------------------------------------------------------------------#
 
@@ -63,7 +66,7 @@ python setup.py py2app
 
 Please, Visit the Wiki page for more info:
 
-https://github.com/jeanslack/Videomass/wiki
+https://github.com/jeanslack/Videomass/wiki/MacOs,-build-from-source
 
 #--------------------------------------------------------------------------#
 Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
@@ -72,7 +75,7 @@ python setup.py bdist_wheel
 
 Please, Visit the Wiki page for more info:
 
-https://github.com/jeanslack/Videomass/wiki
+https://github.com/jeanslack/Videomass/wiki/PyPi-wheels
 
 #--------------------------------------------------------------------------#
 
