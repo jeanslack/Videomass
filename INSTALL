@@ -9,6 +9,15 @@ Base Dependencies:
 #--------------------------------------------------------------------------#
 NOTE: [Linux/Macintosh/Unix/Windows]
 
+Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are 
+available. These installation programs contain everything needed to be used 
+in standalone mode, without the need for anything else. Visit the sourceforge 
+page at the following link: 
+
+https://sourceforge.net/projects/videomass2/
+
+...
+
 Videomass can be run without installing by un-tarring the source package and 
 executing the "launcher" script in the root of the un-tarred directory.
 Alternatively, however, if you want the setup.py script to allow you to build 
@@ -32,11 +41,19 @@ version of wxPython for your Python version.
 - To uninstall use the same version of the Pip tool:
 
     pip uninstall videomass
+    
+Please, Visit the Wiki page for more info: 
+
+https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi
 
 #--------------------------------------------------------------------------#
 Option 2) Build a Windows executable (.exe): [Windows]
 
 python setup.py py2exe
+
+Please, Visit the Wiki page for more info:
+
+https://github.com/jeanslack/Videomass/wiki
 
 #--------------------------------------------------------------------------#
 
@@ -44,10 +61,18 @@ Option 3) Build a MacOSX app: [Macintosh OSX]
 
 python setup.py py2app
 
+Please, Visit the Wiki page for more info:
+
+https://github.com/jeanslack/Videomass/wiki
+
 #--------------------------------------------------------------------------#
 Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
 
 python setup.py bdist_wheel
+
+Please, Visit the Wiki page for more info:
+
+https://github.com/jeanslack/Videomass/wiki
 
 #--------------------------------------------------------------------------#
 

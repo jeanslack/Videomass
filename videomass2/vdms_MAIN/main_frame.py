@@ -635,6 +635,7 @@ class MainFrame(wx.Frame):
         ####------------------ help buton
         helpButton = wx.Menu()
         helpItem = helpButton.Append( wx.ID_HELP, _(u"User Guide"), "")
+        wikiItem = helpButton.Append( wx.ID_ANY, _(u"Wiki"), "")
         issueItem = helpButton.Append( wx.ID_ANY, _(u"Issue tracker"), "")
         helpButton.AppendSeparator()
         DonationItem = helpButton.Append( wx.ID_ANY, _(u"Donation"), "")
@@ -663,6 +664,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         #----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
+        self.Bind(wx.EVT_MENU, self.Wiki, wikiItem)
         self.Bind(wx.EVT_MENU, self.Issues, issueItem)
         self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
@@ -765,11 +767,14 @@ class MainFrame(wx.Frame):
         
     #---------------------------- Menu Help ----------------------------#
     def Helpme(self, event):
-        """ """
-        #wx.MessageBox("La guida al programma deve venire sviluppata a breve.")
-        #self.on_manual(self)
-        #self.parent.on_help(self)
+        """Online User guide"""
         page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
+        webbrowser.open(page)
+        
+    #------------------------------------------------------------------#
+    def Wiki(self, event):
+        """Wiki page """
+        page = 'https://github.com/jeanslack/Videomass/wiki'
         webbrowser.open(page)
         
     #------------------------------------------------------------------#
