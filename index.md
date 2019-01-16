@@ -4,12 +4,10 @@
 * [Features](features.md)
 * [Screenshot](screenshot.md)
 
-## Getting started (installation, dependencies and building)
+## Getting started
 
 * [Download and installation](installation.md)
-* [Dependencies](dependencies.md)
-* [Launch Videomass without installation](execute_sources.md)
-* [Build a redistributable package](building_package.md)
+* [Wiki](https://github.com/jeanslack/Videomass/wiki.md)
 
 ## Get Help
 * [User Guide](videomass_use.md)
