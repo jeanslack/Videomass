@@ -808,11 +808,28 @@ class MainFrame(wx.Frame):
         users with Videomass installer on Windows and MacOs.
         """
         from videomass2.vdms_SYS.msg_info import current_release
+        """
+        FIXME : There are was some error regarding 
+        [SSL: CERTIFICATE_VERIFY_FAILED]
+        see:
+        <https://stackoverflow.com/questions/27835619/urllib-and-ssl-
+        certificate-verify-failed-error>
+        <https://stackoverflow.com/questions/35569042/ssl-certificate-
+        verify-failed-with-python3>
+        """
+        import ssl
         import urllib
         
         cr = current_release()
         try:
-            f = urllib.urlopen('https://pypi.org/project/videomass/')
+            context = ssl._create_unverified_context()
+            f = urllib.urlopen(u'https://pypi.org/project/videomass/',
+                                       context=context
+                                       )
+            #f = urllib.urlopen(
+                            #u'https://test.pypi.org/project/videomass/',
+                            #context=context
+                                       #)
             myfile = f.read()
             page = myfile.strip().split()
             indx = ''
@@ -821,8 +838,8 @@ class MainFrame(wx.Frame):
                     indx = page.index(v)
 
         except IOError as error:
-            wx.MessageBox(error, "Videomass: ERROR", 
-                          wx.ICON_ERROR, None
+            wx.MessageBox("%s" % error, "Videomass: ERROR", 
+                          wx.ICON_ERROR
                           )
             return
             
