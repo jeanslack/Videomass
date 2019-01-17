@@ -75,7 +75,7 @@ python setup.py bdist_wheel
 
 Please, Visit the Wiki page for more info:
 
-https://github.com/jeanslack/Videomass/wiki/PyPi-wheels
+https://github.com/jeanslack/Videomass/wiki/Make-pure-Python-wheels
 
 #--------------------------------------------------------------------------#
 
