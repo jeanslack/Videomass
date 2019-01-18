@@ -463,10 +463,10 @@ class Setup(wx.Dialog):
     def open_path_ffmpeg(self, event):
         """Indicates a new ffmpeg path-name"""
         dialogfile = wx.FileDialog(self, 
-                        _(u"Indicates where the binary ffmpeg"), "", "", 
-                        u"ffmpeg binarys (*%s)|*%s| All files (*.*)|*.*"
-                        % (self.ffmpeg, self.ffmpeg), 
-                        wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+            _(u"Videomass: Where is the ffmpeg executable located?"), "", "", 
+                u"ffmpeg binaries (*%s)|*%s| All files (*.*)|*.*"
+            % (self.ffmpeg, self.ffmpeg), 
+            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialogfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffmpeg.SetValue("")
@@ -499,10 +499,10 @@ class Setup(wx.Dialog):
     def open_path_ffprobe(self, event):
         """Indicates a new ffprobe path-name"""
         dialfile = wx.FileDialog(self, 
-                    _(u"Indicates where the binary ffprobe"), "", "", 
-                    u"ffprobe binarys (*%s)|*%s| All files (*.*)|*.*"
-                    % (self.ffprobe, self.ffprobe), 
-                    wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+            _(u"Videomass: Where is the ffprobe executable located?"), "", "", 
+                u"ffprobe binaries (*%s)|*%s| All files (*.*)|*.*"
+            % (self.ffprobe, self.ffprobe), 
+            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffprobe.SetValue("")
@@ -535,10 +535,10 @@ class Setup(wx.Dialog):
     def open_path_ffplay(self, event):
         """Indicates a new ffplay path-name"""
         dialfile = wx.FileDialog(self, 
-                    _(u"Indicates where the binary ffplay"), "", "", 
-                    u"ffplay binarys (*%s)|*%s| All files (*.*)|*.*"
-                    % (self.ffplay, self.ffplay), 
-                    wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
+                _(u"Videomass: Where is the ffplay executable located?"), "", "", 
+                    u"ffplay binaries (*%s)|*%s| All files (*.*)|*.*"
+                % (self.ffplay, self.ffplay), 
+                wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
             
         if dialfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffplay.SetValue("")

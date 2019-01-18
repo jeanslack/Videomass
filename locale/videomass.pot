@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 18:13+0100\n"
+"POT-Creation-Date: 2019-01-18 23:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -470,107 +470,108 @@ msgid ""
 "should enhance compressibility."
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:47
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:49
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:53
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:55
 msgid ""
-"This wizard automatically searches for FFmpeg in your system.\n"
-"You can also manually specify your customs paths of FFmpeg.\n"
-"However, you can always change these settings later in the\n"
-"Setup dialog.\n"
+"This wizard will attempt to automatically detect FFmpeg in\n"
+"your system.\n"
 "\n"
-"- If you want start the search now, press the 'Search' button.\n"
+"In addition, you can manually set a custom path where to\n"
+"locate FFmpeg.\n"
 "\n"
-"- If you want to set your custom paths, check the\n"
-"  'Enable Custom Paths', then enter the paths of FFmpeg\n"
-"  and press the 'Confirm' button."
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:62
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:64
-msgid "Welcome to Videomass Wizard!"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:63
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:65
-msgid "Search"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:64
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:66
-msgid "Enable Custom Paths"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:65
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:67
-msgid "Confirm"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:66
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:68
-msgid "ffmpeg pathname:"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:68
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:70
-msgid "ffprobe pathname:"
+"However, you can always change these settings in the Setup\n"
+"dialog.\n"
+"\n"
+"- Press the 'Search' button if you want to start searching now.\n"
+"\n"
+"- Check the 'Enables a custom path of ffmpeg' If you want\n"
+"  to set a custom path, then press the 'Browse' button and\n"
+"  confirm.\n"
 msgstr ""
 
 #: ../videomass2/vdms_DIALOGS/first_time_start.py:70
 #: ../videomass3/vdms_DIALOGS/first_time_start.py:72
-msgid "ffplay pathname:"
+msgid "Welcome to Videomass Wizard!"
+msgstr ""
+
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:71
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:73
+msgid "Search"
+msgstr ""
+
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:73
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:75
+msgid "Enables a custom path of ffmpeg"
+msgstr ""
+
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:74
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:76
+msgid "Confirm"
 msgstr ""
 
 #: ../videomass2/vdms_DIALOGS/first_time_start.py:76
 #: ../videomass3/vdms_DIALOGS/first_time_start.py:78
+msgid "Browse your folders and locate ffmpeg:"
+msgstr ""
+
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:77
+#: ../videomass2/vdms_DIALOGS/settings.py:171
+#: ../videomass2/vdms_DIALOGS/settings.py:181
+#: ../videomass2/vdms_DIALOGS/settings.py:193
+#: ../videomass2/vdms_DIALOGS/settings.py:205
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:79
+#: ../videomass3/vdms_DIALOGS/settings.py:171
+#: ../videomass3/vdms_DIALOGS/settings.py:183
+#: ../videomass3/vdms_DIALOGS/settings.py:197
+#: ../videomass3/vdms_DIALOGS/settings.py:211
+msgid "Browse.."
+msgstr ""
+
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:82
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:84
 msgid "Videomass: Wizard"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:152
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:154
-msgid ""
-"Wrong entries on text fields:\n"
-"\n"
-"ffmpeg: invalid pathname\n"
-"ffprobe: invalid pathname\n"
-"ffplay: invalid pathname\n"
-"\n"
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:143
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:145
+msgid "Videomass: locate the ffmpeg folder"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:170
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:172
-msgid ""
-"You have not completed all the assignment fields.\n"
-"Please, continue with settings."
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:175
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:177
-#, python-format
-msgid ""
-"No such file '%s'.\n"
-"Please, continue with settings."
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:180
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:182
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:156
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:158
 #, python-brace-format
 msgid ""
-"'{0}'\n"
-"does not match with:\n"
-"{1}\n"
-"Please, continue with settings."
+"'{0}' was not found in the specified path:\n"
+"'{1}'\n"
+"\n"
+"Please, choose a valid path."
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:245
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:247
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:171
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:173
+#, python-brace-format
+msgid ""
+"'{0}' was not found in the specified path:\n"
+"'{1}'\n"
+"Some required executables are missing.\n"
+"need {2}"
+msgstr ""
+
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:190
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:191
+msgid "Please, Locate the folder with ffmpeg inside first."
+msgstr ""
+
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:254
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:255
 #, python-format
 msgid ""
 "'%s' is not installed on the system.\n"
 "Please, install it or set a new custom path."
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:251
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:253
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:260
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:261
 msgid ""
 "The Videomass system folder already includes the binary executables of "
 "FFmpeg, FFprobe and FFplay.\n"
@@ -578,15 +579,15 @@ msgid ""
 "Do you want to use them?"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:254
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:263
 #: ../videomass2/vdms_IO/filedir_control.py:86
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:256
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:264
 #: ../videomass3/vdms_IO/filedir_control.py:88
 msgid "Videomass: Please Confirm"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:296
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:298
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:314
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:313
 msgid ""
 "\n"
 "Wizard completed successfully.\n"
@@ -595,8 +596,8 @@ msgid ""
 "Thank You!"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:298
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:300
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:316
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:315
 msgid "That's all folks!"
 msgstr ""
 
@@ -780,17 +781,6 @@ msgstr ""
 msgid "Where do you want to save the log?"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/settings.py:171
-#: ../videomass2/vdms_DIALOGS/settings.py:181
-#: ../videomass2/vdms_DIALOGS/settings.py:193
-#: ../videomass2/vdms_DIALOGS/settings.py:205
-#: ../videomass3/vdms_DIALOGS/settings.py:171
-#: ../videomass3/vdms_DIALOGS/settings.py:183
-#: ../videomass3/vdms_DIALOGS/settings.py:197
-#: ../videomass3/vdms_DIALOGS/settings.py:211
-msgid "Browse.."
-msgstr ""
-
 #: ../videomass2/vdms_DIALOGS/settings.py:180
 #: ../videomass3/vdms_DIALOGS/settings.py:182
 msgid " Use a custom path to run FFmpeg"
@@ -943,17 +933,17 @@ msgstr ""
 
 #: ../videomass2/vdms_DIALOGS/settings.py:466
 #: ../videomass3/vdms_DIALOGS/settings.py:474
-msgid "Indicates where the binary ffmpeg"
+msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr ""
 
 #: ../videomass2/vdms_DIALOGS/settings.py:502
 #: ../videomass3/vdms_DIALOGS/settings.py:510
-msgid "Indicates where the binary ffprobe"
+msgid "Videomass: Where is the ffprobe executable located?"
 msgstr ""
 
 #: ../videomass2/vdms_DIALOGS/settings.py:538
 #: ../videomass3/vdms_DIALOGS/settings.py:546
-msgid "Indicates where the binary ffplay"
+msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
 #: ../videomass2/vdms_DIALOGS/settings.py:645
@@ -1240,91 +1230,96 @@ msgstr ""
 
 #: ../videomass2/vdms_MAIN/main_frame.py:638
 #: ../videomass3/vdms_MAIN/main_frame.py:640
+msgid "Wiki"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:639
+#: ../videomass3/vdms_MAIN/main_frame.py:641
 msgid "Issue tracker"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:640
-#: ../videomass3/vdms_MAIN/main_frame.py:642
+#: ../videomass2/vdms_MAIN/main_frame.py:641
+#: ../videomass3/vdms_MAIN/main_frame.py:643
 msgid "Donation"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:642
-#: ../videomass3/vdms_MAIN/main_frame.py:644
+#: ../videomass2/vdms_MAIN/main_frame.py:643
+#: ../videomass3/vdms_MAIN/main_frame.py:645
 msgid "FFmpeg documentation"
-msgstr ""
-
-#: ../videomass2/vdms_MAIN/main_frame.py:644
-#: ../videomass3/vdms_MAIN/main_frame.py:646
-msgid "Check new releases"
 msgstr ""
 
 #: ../videomass2/vdms_MAIN/main_frame.py:645
 #: ../videomass3/vdms_MAIN/main_frame.py:647
-msgid "About Videomass"
+msgid "Check new releases"
 msgstr ""
 
 #: ../videomass2/vdms_MAIN/main_frame.py:646
 #: ../videomass3/vdms_MAIN/main_frame.py:648
+msgid "About Videomass"
+msgstr ""
+
+#: ../videomass2/vdms_MAIN/main_frame.py:647
+#: ../videomass3/vdms_MAIN/main_frame.py:649
 msgid "&Help"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:831
-#: ../videomass3/vdms_MAIN/main_frame.py:835
+#: ../videomass2/vdms_MAIN/main_frame.py:853
+#: ../videomass3/vdms_MAIN/main_frame.py:859
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
 "from <https://pypi.org/project/videomass/>"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:837
-#: ../videomass3/vdms_MAIN/main_frame.py:841
+#: ../videomass2/vdms_MAIN/main_frame.py:859
+#: ../videomass3/vdms_MAIN/main_frame.py:865
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:843
-#: ../videomass3/vdms_MAIN/main_frame.py:847
+#: ../videomass2/vdms_MAIN/main_frame.py:865
+#: ../videomass3/vdms_MAIN/main_frame.py:871
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:869
-#: ../videomass3/vdms_MAIN/main_frame.py:873
+#: ../videomass2/vdms_MAIN/main_frame.py:891
+#: ../videomass3/vdms_MAIN/main_frame.py:897
 msgid "Add File"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:876
-#: ../videomass3/vdms_MAIN/main_frame.py:880
+#: ../videomass2/vdms_MAIN/main_frame.py:898
+#: ../videomass3/vdms_MAIN/main_frame.py:904
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:884
-#: ../videomass3/vdms_MAIN/main_frame.py:888
+#: ../videomass2/vdms_MAIN/main_frame.py:906
+#: ../videomass3/vdms_MAIN/main_frame.py:912
 msgid "Video Conversions"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:891
+#: ../videomass2/vdms_MAIN/main_frame.py:913
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:44
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:109
-#: ../videomass3/vdms_MAIN/main_frame.py:895
+#: ../videomass3/vdms_MAIN/main_frame.py:919
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:42
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:107
 msgid "Audio Conversions"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:897
-#: ../videomass3/vdms_MAIN/main_frame.py:901
+#: ../videomass2/vdms_MAIN/main_frame.py:919
+#: ../videomass3/vdms_MAIN/main_frame.py:925
 msgid "Start Encoding"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:904
-#: ../videomass3/vdms_MAIN/main_frame.py:908
+#: ../videomass2/vdms_MAIN/main_frame.py:926
+#: ../videomass3/vdms_MAIN/main_frame.py:932
 msgid "Help"
 msgstr ""
 
-#: ../videomass2/vdms_MAIN/main_frame.py:1026
-#: ../videomass3/vdms_MAIN/main_frame.py:1031
+#: ../videomass2/vdms_MAIN/main_frame.py:1048
+#: ../videomass3/vdms_MAIN/main_frame.py:1055
 msgid "..Start Encoding - Videomass"
 msgstr ""
 

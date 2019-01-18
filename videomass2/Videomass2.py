@@ -119,8 +119,8 @@ class Videomass(wx.App):
             ffprobe_link = fileconf[10]
             ffplay_link = fileconf[12]
             # --- used for debug only ---#
-            self.firstrun(pathicons[23])
-            return True
+            #self.firstrun(pathicons[23])
+            #return True
             
         from videomass2.vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 

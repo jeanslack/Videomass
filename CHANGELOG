@@ -21,7 +21,7 @@ NEW [features/enhancements]:
     - Videomass icon has been recreated with a new logo and design
   
 IMPROVEMENTS:
-
+    - Improved custom localization of executables on the wizard dialog
     - Improved the videomass.desktop for desktop menu specification on Linux 
     - Improved progress bar during conversions with time specifications 
       set with the Duration tool.
