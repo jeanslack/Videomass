@@ -54,13 +54,12 @@ class FirstStart(wx.Dialog):
             u"your system.\n\n"
             u"In addition, you can manually set a custom path where to\n"
             u"locate FFmpeg.\n\n"
-            u"However, you can always change these settings in the Setup\n"
-            u"dialog.\n\n"
-            u"- Press the 'Search' button if you want to start searching now."
+            u"However, you can always change these settings later in the\n"
+            u"Setup dialog.\n\n"
+            u"- Press the 'Auto-detection' button to start searching now."
             u"\n\n"
-            u"- Check the 'Enables a custom path of ffmpeg' If you want\n"
-            u"  to set a custom path, then press the 'Browse' button and\n"
-            u"  confirm.\n")
+            u"- Press the 'Browse' button to browse your folders and locate\n"
+            u"  ffmpeg, then 'Confirm' with the button")
                )
         # widget:
         bitmap_drumsT = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(
@@ -68,12 +67,10 @@ class FirstStart(wx.Dialog):
         lab_welc2 = wx.StaticText(self, wx.ID_ANY, (msg))
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
                                         _(u"Welcome to Videomass Wizard!")))
-        self.searchBtn = wx.Button(self, wx.ID_ANY, (_(u"Search")))
-        self.ckbx_paths = wx.CheckBox(self, wx.ID_ANY, (
-                                       _(u"Enables a custom path of ffmpeg")))
+        self.searchBtn = wx.Button(self, wx.ID_ANY, (_(u"Auto-detection")))
+
         self.confirmBtn = wx.Button(self, wx.ID_ANY, (_(u"Confirm")))
-        self.lab_ffmpeg = wx.StaticText(self, wx.ID_ANY, (
-                               _(u"Browse your folders and locate ffmpeg:")))
+
         self.ffmpegBtn = wx.Button(self, wx.ID_ANY, (_(u"Browse..")))
         
         close_btn = wx.Button(self, wx.ID_EXIT, "")
@@ -85,7 +82,7 @@ class FirstStart(wx.Dialog):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grd_base = wx.FlexGridSizer(2, 1, 0, 0)
         grd_1 = wx.FlexGridSizer(1, 2, 0, 0)
-        grd_ext = wx.FlexGridSizer(2, 1, 0, 0)
+        grd_ext = wx.FlexGridSizer(4, 1, 0, 0)
         grd_2 = wx.FlexGridSizer(3, 2, 0, 0)
         grd_base.Add(grd_1)
         grd_1.Add(bitmap_drumsT,0,wx.ALL, 10)
@@ -94,21 +91,20 @@ class FirstStart(wx.Dialog):
         grd_ext.Add(lab_welc1,0,  wx.ALL, 10)
         grd_ext.Add(lab_welc2,0, wx.ALIGN_CENTER | wx.ALL, 10)
         grd_2.Add(self.searchBtn,0, wx.ALL, 15)
-        grd_2.Add(self.ckbx_paths,0, wx.ALIGN_CENTER | wx.ALL, 15)
-        grd_2.Add(self.lab_ffmpeg,0, wx.ALIGN_CENTER | wx.ALL, 15)
-        grd_2.Add(self.ffmpegBtn,0, wx.ALIGN_CENTER | wx.ALL, 15)
-        grd_2.Add((260,0), 0, wx.ALL, 15)
+
+        grd_2.Add((260,0), 0, wx.ALL, 5)
+        grd_2.Add(self.ffmpegBtn,0, wx.ALL, 15)
+
+        grd_2.Add((260,0), 0, wx.ALL, 5)
         grd_btn = wx.FlexGridSizer(1, 2, 0, 0)
         
         grd_btn.Add(self.confirmBtn,0, flag=wx.ALL, border=5)
         grd_btn.Add(close_btn,0, flag=wx.ALL, border=5)
+        grd_2.Add((260,0), 0, wx.ALL, 15)
         grd_2.Add(grd_btn,0, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
         #properties
-        self.searchBtn.SetMinSize((250, -1))
-        self.ffmpegBtn.SetMinSize((250, -1))
-        self.ffmpegBtn.Disable()
-        self.lab_ffmpeg.Disable()
-        self.confirmBtn.Disable()
+        self.searchBtn.SetMinSize((-1, -1))
+        self.ffmpegBtn.SetMinSize((-1, -1))
         
         sizer_base.Add(grd_base)
         self.SetSizer(sizer_base)
@@ -118,7 +114,6 @@ class FirstStart(wx.Dialog):
         ######################## bindings #####################
         self.Bind(wx.EVT_BUTTON, self.on_close)
         self.Bind(wx.EVT_BUTTON, self.search, self.searchBtn)
-        self.Bind(wx.EVT_CHECKBOX, self.enablePaths, self.ckbx_paths)
         self.Bind(wx.EVT_BUTTON, self.Executables, self.ffmpegBtn)
         self.Bind(wx.EVT_BUTTON, self.on_Custom, self.confirmBtn)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
@@ -188,27 +183,12 @@ class FirstStart(wx.Dialog):
         
         if not self.FFmpeg:
             wx.MessageBox(_(u"Please, Locate the folder with ffmpeg inside "
-                            u"first."),
-                            u'Videomass: Warning', wx.ICON_EXCLAMATION, self)
+                            u"first or try with the 'auto-detection' button"),
+                            u'Videomass: Warning', wx.ICON_INFORMATION, self)
             return
 
         self.completion(self.FFmpeg)
 
-    #-------------------------------------------------------------------#
-    def enablePaths(self, event):
-        """
-        Enables or disables widgets depending on the user's choices
-        """
-        if self.ckbx_paths.IsChecked():
-            self.ffmpegBtn.Enable()
-            self.lab_ffmpeg.Enable()
-            self.searchBtn.Disable()
-            self.confirmBtn.Enable()
-        else:
-            self.ffmpegBtn.Disable()
-            self.lab_ffmpeg.Disable()
-            self.searchBtn.Enable()
-            self.confirmBtn.Disable()
     #-------------------------------------------------------------------#
     def search(self, event):
         """

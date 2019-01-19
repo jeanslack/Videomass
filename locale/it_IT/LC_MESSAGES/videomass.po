@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-19 00:00+0100\n"
-"PO-Revision-Date: 2019-01-19 00:03+0100\n"
+"POT-Creation-Date: 2019-01-19 07:23+0100\n"
+"PO-Revision-Date: 2019-01-19 07:43+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -554,61 +554,49 @@ msgid ""
 "In addition, you can manually set a custom path where to\n"
 "locate FFmpeg.\n"
 "\n"
-"However, you can always change these settings in the Setup\n"
-"dialog.\n"
+"However, you can always change these settings later in the\n"
+"Setup dialog.\n"
 "\n"
-"- Press the 'Search' button if you want to start searching now.\n"
+"- Press the 'Auto-detection' button to start searching now.\n"
 "\n"
-"- Check the 'Enables a custom path of ffmpeg' If you want\n"
-"  to set a custom path, then press the 'Browse' button and\n"
-"  confirm.\n"
+"- Press the 'Browse' button to browse your folders and locate\n"
+"  ffmpeg, then 'Confirm' with the button"
 msgstr ""
 "Questo assistente tenterà di individuare automaticamente\n"
 "FFmpeg sul tuo sistema.\n"
 "\n"
 "Inoltre, puoi impostare manualmente un percorso specifico\n"
-"dove localizzare FFmpeg.\n"
+"per localizzare FFmpeg.\n"
 "\n"
-"Tuttavia, è sempre possibile cambiare queste impostazioni \n"
-"nel dialogo di Setup.\n"
+"Tuttavia, è sempre possibile modificare queste impostazioni\n"
+"in seguito nel dialogo di Setup.\n"
 "\n"
-"- Premi il pulsante 'Cerca'  se vuoi iniziare adesso la ricerca.\n"
+"- Premi il tasto 'Auto-rileva' per iniziare la ricerca ora.\n"
 "\n"
-"- Spunta 'Abilita un percorso personalizzato di ffmpeg' se\n"
-"  vuo impostare un percorso specifico, quindi premi 'Sfoglia'\n"
-"  e 'Conferma'\n"
+"- Premere 'Sfoglia' per trovare FFmpeg tra le tue cartelle, quindi\n"
+"  confermare con il tasto 'Conferma'"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:70
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:72
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:69
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:71
 msgid "Welcome to Videomass Wizard!"
 msgstr "Benvenuto nell'assistente di Videomass!"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:71
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:73
-msgid "Search"
-msgstr "Cerca"
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:70
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:72
+msgid "Auto-detection"
+msgstr "Auto-rileva"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:73
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:75
-msgid "Enables a custom path of ffmpeg"
-msgstr "Abilita un percorso personalizzato di ffmpeg"
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:74
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:76
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:72
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:74
 msgid "Confirm"
 msgstr "Conferma"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:76
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:78
-msgid "Browse your folders and locate ffmpeg:"
-msgstr "Sfoglia le tue cartelle e trova ffmpeg:"
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:77
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:74
 #: ../videomass2/vdms_DIALOGS/settings.py:171
 #: ../videomass2/vdms_DIALOGS/settings.py:181
 #: ../videomass2/vdms_DIALOGS/settings.py:193
 #: ../videomass2/vdms_DIALOGS/settings.py:205
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:79
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:76
 #: ../videomass3/vdms_DIALOGS/settings.py:171
 #: ../videomass3/vdms_DIALOGS/settings.py:183
 #: ../videomass3/vdms_DIALOGS/settings.py:197
@@ -616,18 +604,18 @@ msgstr "Sfoglia le tue cartelle e trova ffmpeg:"
 msgid "Browse.."
 msgstr "Sfoglia.."
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:82
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:84
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:79
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:81
 msgid "Videomass: Wizard"
 msgstr "Videomass: Assistente"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:143
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:145
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:138
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:140
 msgid "Videomass: locate the ffmpeg folder"
 msgstr "Videomass: localizzare la cartella di ffmpeg"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:156
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:158
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:151
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:153
 #, python-brace-format
 msgid ""
 "'{0}' was not found in the specified path:\n"
@@ -640,8 +628,8 @@ msgstr ""
 "\n"
 "Per favore, scegliere un percorso valido."
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:171
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:173
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:166
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:168
 #, python-brace-format
 msgid ""
 "'{0}' was not found in the specified path:\n"
@@ -654,13 +642,16 @@ msgstr ""
 "Dei file associati sono mancanti.\n"
 "sono richiesti {2}"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:190
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:191
-msgid "Please, Locate the folder with ffmpeg inside first."
-msgstr "Per favore, indicare quale cartella contiene ffmpeg prima."
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:185
+msgid ""
+"Please, Locate the folder with ffmpeg inside first or try with the 'auto-"
+"detection' button"
+msgstr ""
+"Per favore, localizzare una cartella che contiene ffmpeg o provare con il "
+"pulsante 'Auto-rileva'"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:254
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:255
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:234
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:235
 #, python-format
 msgid ""
 "'%s' is not installed on the system.\n"
@@ -669,8 +660,8 @@ msgstr ""
 "'%s' Non è installato nel sistema.\n"
 "Per favore, installalo o imposta percorsi specifici."
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:260
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:261
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:240
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:241
 msgid ""
 "The Videomass system folder already includes the binary executables of "
 "FFmpeg, FFprobe and FFplay.\n"
@@ -682,15 +673,15 @@ msgstr ""
 "\n"
 "Desideri utilizzarli?"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:263
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:243
 #: ../videomass2/vdms_IO/filedir_control.py:86
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:264
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:244
 #: ../videomass3/vdms_IO/filedir_control.py:88
 msgid "Videomass: Please Confirm"
 msgstr "Videomass2: Prego confermare"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:314
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:313
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:294
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:293
 msgid ""
 "\n"
 "Wizard completed successfully.\n"
@@ -704,8 +695,8 @@ msgstr ""
 "\n"
 "Grazie!"
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:316
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:315
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:296
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:295
 msgid "That's all folks!"
 msgstr "Questo è tutto!"
 
@@ -2613,6 +2604,10 @@ msgstr "Errore sconosciuto (assente in err_list)"
 msgid "File does not exist:"
 msgstr "Il file non esiste:"
 
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:186
+msgid "Please, Locate the folder with ffmpeg inside first."
+msgstr "Per favore, indicare quale cartella contiene ffmpeg prima."
+
 #: ../videomass3/vdms_DIALOGS/infoprg.py:66
 msgid ""
 "Videomass provides a graphical interface for\n"
@@ -2626,6 +2621,46 @@ msgstr ""
 "\n"
 "Questa è una versione di prova.\n"
 "E' scritta in Python3 con il toolkit grafico wxPython Phoenix."
+
+#~ msgid ""
+#~ "This wizard will attempt to automatically detect FFmpeg in\n"
+#~ "your system.\n"
+#~ "\n"
+#~ "In addition, you can manually set a custom path where to\n"
+#~ "locate FFmpeg.\n"
+#~ "\n"
+#~ "However, you can always change these settings in the Setup\n"
+#~ "dialog.\n"
+#~ "\n"
+#~ "- Press the 'Search' button if you want to start searching now.\n"
+#~ "\n"
+#~ "- Check the 'Enables a custom path of ffmpeg' If you want\n"
+#~ "  to set a custom path, then press the 'Browse' button and\n"
+#~ "  confirm.\n"
+#~ msgstr ""
+#~ "Questo assistente tenterà di individuare automaticamente\n"
+#~ "FFmpeg sul tuo sistema.\n"
+#~ "\n"
+#~ "Inoltre, puoi impostare manualmente un percorso specifico\n"
+#~ "dove localizzare FFmpeg.\n"
+#~ "\n"
+#~ "Tuttavia, è sempre possibile cambiare queste impostazioni \n"
+#~ "nel dialogo di Setup.\n"
+#~ "\n"
+#~ "- Premi il pulsante 'Cerca'  se vuoi iniziare adesso la ricerca.\n"
+#~ "\n"
+#~ "- Spunta 'Abilita un percorso personalizzato di ffmpeg' se\n"
+#~ "  vuo impostare un percorso specifico, quindi premi 'Sfoglia'\n"
+#~ "  e 'Conferma'\n"
+
+#~ msgid "Search"
+#~ msgstr "Cerca"
+
+#~ msgid "Enables a custom path of ffmpeg"
+#~ msgstr "Abilita un percorso personalizzato di ffmpeg"
+
+#~ msgid "Browse your folders and locate ffmpeg:"
+#~ msgstr "Sfoglia le tue cartelle e trova ffmpeg:"
 
 #~ msgid "Indicates where the binary ffmpeg"
 #~ msgstr "Indica dove è il binario di ffmpeg"
