@@ -232,7 +232,7 @@ class FirstStart(wx.Dialog):
                 ffprobe = which(biname[1])
                 ffplay = which(biname[2])
         
-        self.completion(ffmpeg,ffprobe,ffplay)
+        self.completion([ffmpeg,ffprobe,ffplay])
     #-------------------------------------------------------------------#
     
     def completion(self, FFmpeg):
