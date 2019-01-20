@@ -21,7 +21,7 @@ NEW [features/enhancements]:
     - Videomass icon has been recreated with a new logo and design
   
 IMPROVEMENTS:
-    - Improved the wizard dialog to auto-detected FFmpeg or browse for
+    - Improved the wizard dialog
     - Improved the videomass.desktop for desktop menu specification on Linux 
     - Improved progress bar during conversions with time specifications 
       set with the Duration tool.
