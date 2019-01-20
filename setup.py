@@ -48,7 +48,7 @@
 
 #---- Imports ----#
 from distutils.core import setup
-from setuptools import setup
+from setuptools import setup, find_packages
 import platform
 from glob import glob
 import os
@@ -257,7 +257,7 @@ def OSX():
                         )
     #--------------- setup: --------------------#
     setup(app = ['bin/Videomass.py'],
-        packages = PACKAGES,
+        packages = find_packages(),
         include = ['python', 'wx',],
         name = RLS_NAME,
         version = VERSION,
@@ -307,7 +307,7 @@ def WIN32():
                 'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
                 'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
                 ]
-    packages = PACKAGES
+    packages = find_packages
     dll_excludes = ['libgdk-win32-2.0-0.dll', 'libgobject-2.0-0.dll',
                     'tcl84.dll', 'tk84.dll'
                     ]
