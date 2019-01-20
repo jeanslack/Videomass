@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-19 07:44+0100\n"
-"PO-Revision-Date: 2019-01-19 07:44+0100\n"
+"POT-Creation-Date: 2019-01-20 17:44+0100\n"
+"PO-Revision-Date: 2019-01-20 17:44+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -471,45 +471,39 @@ msgid ""
 "should enhance compressibility."
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:53
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:55
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:48
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:50
 msgid ""
 "This wizard will attempt to automatically detect FFmpeg in\n"
 "your system.\n"
 "\n"
-"In addition, you can manually set a custom path where to\n"
-"locate FFmpeg.\n"
+"In addition, it allows you to manually set a custom path\n"
+"to locate FFmpeg and its associated executables.\n"
 "\n"
-"However, you can always change these settings later in the\n"
-"Setup dialog.\n"
+"Also, Remember that you can always change these settings\n"
+"later, through the Setup dialog.\n"
 "\n"
-"- Press the 'Auto-detection' button to start searching now.\n"
+"- Press 'Auto-detection' to start the system search now.\n"
 "\n"
-"- Press the 'Browse' button to browse your folders and locate\n"
-"  ffmpeg, then 'Confirm' with the button"
+"- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:69
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:71
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:62
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:64
 msgid "Welcome to Videomass Wizard!"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:70
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:72
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:65
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:67
 msgid "Auto-detection"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:72
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:74
-msgid "Confirm"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:74
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:67
 #: ../videomass2/vdms_DIALOGS/settings.py:171
 #: ../videomass2/vdms_DIALOGS/settings.py:181
 #: ../videomass2/vdms_DIALOGS/settings.py:193
 #: ../videomass2/vdms_DIALOGS/settings.py:205
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:76
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:69
 #: ../videomass3/vdms_DIALOGS/settings.py:171
 #: ../videomass3/vdms_DIALOGS/settings.py:183
 #: ../videomass3/vdms_DIALOGS/settings.py:197
@@ -517,68 +511,54 @@ msgstr ""
 msgid "Browse.."
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:79
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:81
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:72
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:74
 msgid "Videomass: Wizard"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:138
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:140
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:130
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:132
 msgid "Videomass: locate the ffmpeg folder"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:151
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:153
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:150
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:151
 #, python-brace-format
 msgid ""
-"'{0}' was not found in the specified path:\n"
-"'{1}'\n"
+"File not found: '{0}'\n"
+"'{1}' does not exist!\n"
+"\n"
+"Need {2}\n"
 "\n"
 "Please, choose a valid path."
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:166
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:168
-#, python-brace-format
-msgid ""
-"'{0}' was not found in the specified path:\n"
-"'{1}'\n"
-"Some required executables are missing.\n"
-"need {2}"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:185
-msgid ""
-"Please, Locate the folder with ffmpeg inside first or try with the 'auto-"
-"detection' button"
-msgstr ""
-
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:234
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:235
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:205
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:206
 #, python-format
 msgid ""
 "'%s' is not installed on the system.\n"
-"Please, install it or set a new custom path."
+"Please, install it or set a custom path using the 'Browse..' button."
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:240
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:241
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:212
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:213
 msgid ""
-"The Videomass system folder already includes the binary executables of "
-"FFmpeg, FFprobe and FFplay.\n"
+"Videomass already seems to include FFmpeg and the executables associated "
+"with it.\n"
 "\n"
-"Do you want to use them?"
+"Are you sure you want to use them?"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:243
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:216
 #: ../videomass2/vdms_IO/filedir_control.py:86
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:244
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:217
 #: ../videomass3/vdms_IO/filedir_control.py:88
 msgid "Videomass: Please Confirm"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:294
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:293
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:262
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:263
 msgid ""
 "\n"
 "Wizard completed successfully.\n"
@@ -587,8 +567,8 @@ msgid ""
 "Thank You!"
 msgstr ""
 
-#: ../videomass2/vdms_DIALOGS/first_time_start.py:296
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:295
+#: ../videomass2/vdms_DIALOGS/first_time_start.py:264
+#: ../videomass3/vdms_DIALOGS/first_time_start.py:265
 msgid "That's all folks!"
 msgstr ""
 
@@ -2279,10 +2259,6 @@ msgstr ""
 #: ../videomass3/vdms_PROCESS/volumedetect.py:36
 #: ../videomass3/vdms_PROCESS/volumedetectWin32.py:36
 msgid "File does not exist:"
-msgstr ""
-
-#: ../videomass3/vdms_DIALOGS/first_time_start.py:186
-msgid "Please, Locate the folder with ffmpeg inside first."
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/infoprg.py:66
