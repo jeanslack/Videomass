@@ -33,12 +33,12 @@ Now also compatible with Python3 and wxPython-Phoenix.
 
 ## Essential Dependencies
 
-**Required:**
+**Required:**   
 - Python (2/3)     
 - wxPython  (Classic/Phoenix)  
 
-**Optionals:**
-- ffmpeg >= 3.2
-- ffprobe (for multimedia streams analysis) (can be built-in into ffmpeg)
-- ffplay (media player for media preview) (can be built-in into ffmpeg)
+**Optionals:**   
+- ffmpeg >= 3.2   
+- ffprobe (for multimedia streams analysis)  
+- ffplay (media player for media preview)   
 
