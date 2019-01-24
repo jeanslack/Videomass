@@ -218,7 +218,8 @@ class Setup(wx.Dialog):
                                     _(u"Set Icon Themes"))), wx.VERTICAL)
         gridappearance.Add(boxLabIcons, 1, wx.ALL|wx.EXPAND, 15)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY, 
-                         choices=[("Material_Design_Icons_black"), 
+                         choices=[("Videomass_Sign_Icons"),
+                                  ("Material_Design_Icons_black"), 
                                   ("Material_Design_Icons_white"),
                                   ("Flat_Color_Icons"), 
                                   ], style=wx.CB_DROPDOWN | wx.CB_READONLY)
@@ -599,7 +600,7 @@ class Setup(wx.Dialog):
         """
         Restore to default settings colors and icons set
         """
-        self.full_list[self.rowsNum[14]] = "Material_Design_Icons_black\n"
+        self.full_list[self.rowsNum[14]] = "Videomass_Sign_Icons\n"
         self.full_list[self.rowsNum[15]] = '205,235,222\n'
         self.full_list[self.rowsNum[16]] = '255,255,255\n'
         

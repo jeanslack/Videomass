@@ -83,13 +83,18 @@ class Appearance(object):
                     self.videomass_icon = userbase+share + "/videomass.png"
                     self.wizard_icon = userbase+url+"/videomass_wizard.png"
                     
-        # default black
-        if iconset == 'Material_Design_Icons_black': # default
+        # videomass sign
+        if iconset == 'Videomass_Sign_Icons': # default
+            self.x36 = '%s/Videomass_Sign_Icons/36x36' % url
+            self.x24 = '%s/Videomass_Sign_Icons/24x24' % url
+            self.x18 = '%s/Videomass_Sign_Icons/18x18' % url
+        # material design black
+        if iconset == 'Material_Design_Icons_black':
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url
             self.x24 = '%s/Material_Design_Icons_black/24x24' % url
             self.x18 = '%s/Material_Design_Icons_black/18x18' % url
             self.icons_set()
-        # default white
+        # material design white
         elif iconset == 'Material_Design_Icons_white':
             self.x36 = '%s/Material_Design_Icons_white/36x36' % url
             self.x24 = '%s/Material_Design_Icons_black/24x24' % url
