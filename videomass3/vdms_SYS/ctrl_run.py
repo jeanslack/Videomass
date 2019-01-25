@@ -107,7 +107,7 @@ def system_check():
             if fileconf == 'corrupted':
                 print ('videomass.conf is corrupted! try to restore..')
                 existfileconf = False
-            if float(fileconf[0]) < 1.2:
+            if float(fileconf[0]) != 1.3:
                 existfileconf = False
         else:
             existfileconf = False
