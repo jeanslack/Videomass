@@ -145,10 +145,10 @@ def probeDuration(path_list, ffprobe_link):
                 duration = (int(items[9:16].split('.')[0]))
     except ValueError as ve:
         duration = 0
-        if ve[0] == "invalid literal for int() with base 10: 'N/A'":
+        if ve.args[0] == "invalid literal for int() with base 10: 'N/A'":
             return duration, 'N/A'
         else:
-            return duration, ve
+            return duration, ve.args
     
     return duration , None
 #-------------------------------------------------------------------------#

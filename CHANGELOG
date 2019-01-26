@@ -11,15 +11,20 @@ January 24, 2019 V.1.4.5
 +------------------------------------+
 
 BUG FIXES:
+    - Fix the 'ValueError' object is not subscriptable exception on
+      Python3 when drop file with no duration (IO_tools.probeDuration() )
   
 NEW [features/enhancements]:
     - Added new icons set to default settings.
+    - The command line text of each profile is always editable now.
   
 IMPROVEMENTS:
       
 REMOVALS and DISPLACEMENTS:
     - Changed version to videomass.conf file configuration with new 
       default settings
+    - Removed 'Enable write from command text line' from settings.py. This  
+      make editable the profile text into presets manager panel
 
 +------------------------------------+
 January 14, 2019 V.1.4.4

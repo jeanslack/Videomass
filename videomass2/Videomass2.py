@@ -80,7 +80,7 @@ class Videomass(wx.App):
             print 'Videomass: Fatal Error, file configuration not found'
             return False
         
-        icons = Appearance(setui[3], fileconf[14])# set appearance instance
+        icons = Appearance(setui[3], fileconf[13])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
 
         if setui[0] == 'Darwin':

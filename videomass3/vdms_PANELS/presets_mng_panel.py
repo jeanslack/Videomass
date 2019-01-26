@@ -75,7 +75,7 @@ class PresetsPanel(wx.Panel):
 
     def __init__(self, parent, path_srcShare, path_confdir,
                  PWD, threads, cpu_used, loglevel_type, 
-                 ffmpeg_link, writeline_exec, OS):
+                 ffmpeg_link, OS):
         """
         constructor
         """
@@ -86,7 +86,6 @@ class PresetsPanel(wx.Panel):
         self.cpu_used = cpu_used
         self.loglevel_type = loglevel_type
         self.ffmpeg_link = ffmpeg_link
-        self.writeline_exec = writeline_exec
         self.OS = OS
         self.parent = parent
         self.file_sources = []
@@ -125,41 +124,8 @@ class PresetsPanel(wx.Panel):
                         style=wx.CB_DROPDOWN | wx.CB_READONLY
                         )
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
-        
-        if self.writeline_exec == 'true':
-            self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"",
-                                    style=wx.TE_MULTILINE | wx.TE_PROCESS_ENTER)
-        else:
-            self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"",
-                                       style=wx.TE_MULTILINE | wx.TE_READONLY)
-            
-        #----------------------------notebook 3
-        #nb1_p3 = wx.Panel(nb1, wx.ID_ANY)
-        
-        #self.ckbox_test = wx.CheckBox(nb1_p3, wx.ID_ANY, ("Test"))
-        #self.lab_sec = wx.StaticText(nb1_p3, wx.ID_ANY, "Sec : ")
-        #self.spin_ctrl_test = wx.SpinCtrl(nb1_p3, wx.ID_ANY, "", min=10,
-                             #max=10000, style=wx.TE_PROCESS_ENTER
-                                          #)
-        #static_line_1 = wx.StaticLine(nb1_p3, wx.ID_ANY, style=wx.LI_VERTICAL)
-        #-----------------------widget in test processing tab (ntbook3)
-        #image1 = wx.Image(self.icon_play, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        #self.btn_play = wx.BitmapButton(nb1_p3, -1, image1)
-        #self.label_preview = wx.StaticText(nb1_p3, wx.ID_ANY, "Preview")
-        #self.text_group_ext = wx.TextCtrl(nb1_p3, wx.ID_ANY, "", 
-                                                  #style=wx.TE_PROCESS_ENTER
-                                           #)
-        #----------------------------notebook 4
-        #nb1_p4 = wx.Panel(nb1, wx.ID_ANY)
-        #self.btn_open = wx.Button(nb1_p4, wx.ID_OPEN, "")
-        #self.text_path_open = wx.TextCtrl(nb1_p4, wx.ID_ANY, "", 
-                                    #style=wx.TE_PROCESS_ENTER
-                                                    #)
-        #self.btn_save = wx.Button(nb1_p4, wx.ID_SAVE, "")
-        #self.text_path_save = wx.TextCtrl(nb1_p4, wx.ID_ANY, "", 
-                                    #style=wx.TE_PROCESS_ENTER | wx.TE_READONLY
-                                                    #)
-        #----------------------------notebook 4
+        self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"",
+                                style=wx.TE_MULTILINE | wx.TE_PROCESS_ENTER)
         
         #----------------------Set Properties----------------------#
         self.cmbx_prst.SetSelection(0)
@@ -170,14 +136,6 @@ class PresetsPanel(wx.Panel):
         self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.txt_cmd.SetToolTip(_("FFmpeg command output of each selected "
                                       "profile."))
-        #----------------------------notebook 4
-        #self.btn_open.SetToolTip("Import Media (files/directory)")
-        #self.text_path_open.SetMinSize((320, 21))
-        #self.text_path_open.SetToolTip("Imported path-name")
-        #self.btn_save.SetToolTip("Export Media (files/directory)")
-        #self.text_path_save.SetMinSize((320, 21))
-        #self.text_path_save.SetToolTip("Exported path-name")
-        #----------------------------notebook 4
 
         #----------------------Build Layout----------------------#
         #siz1 = wx.BoxSizer(wx.VERTICAL)
@@ -199,30 +157,8 @@ class PresetsPanel(wx.Panel):
         grid_siz7.Add(self.cmbx_prst, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
         nb1_p1.SetSizer(grid_siz7)
         nb1_p2.SetSizer(grd_s3)
-        
-        
-        #grid_siz6.Add(self.ckbox_test, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz6.Add(self.lab_sec, 0, wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz6.Add(self.text_secondi, 0, wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz6.Add(self.spin_ctrl_test, 0, wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz6.Add(static_line_1, 0, wx.ALL | wx.EXPAND, 15)
-        #grid_siz6.Add(self.btn_play, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz6.Add(self.label_preview, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        #grid_siz6.Add(self.text_group_ext, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 15)
-        
-        #nb1_p3.SetSizer(grid_siz6)
-        
-        #----------------------------notebook 4
-        #grid_siz5.Add(self.btn_open, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz5.Add(self.text_path_open, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz5.Add(self.btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
-        #grid_siz5.Add(self.text_path_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
-        #nb1_p4.SetSizer(grid_siz5)
-        #----------------------------notebook 4
         nb1.AddPage(nb1_p1, (_("Selecting Presets")))
         nb1.AddPage(nb1_p2, (_("Command Line FFmpeg")))
-        #nb1.AddPage(nb1_p3, ("Export Preferences"))
-        #nb1.AddPage(nb1_p4, ("Importing/Exporting"))
         grd_s2.Add(nb1, 1, wx.EXPAND, 0)
         grd_s2.Add(grd_s4, 1, wx.EXPAND, 0)
         grd_s1.Add(grd_s2, 1, wx.ALL | wx.EXPAND, 15)
@@ -242,7 +178,6 @@ class PresetsPanel(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.Editprof, self.list_ctrl)
         self.Bind(wx.EVT_TEXT, self.enter_command, self.txt_cmd)
-        #self.Bind(wx.EVT_BUTTON, self.Playtest, self.btn_play)
         
         #----------------------Create preset list----------------------#
         if array != []: # appena avvio, cancella i dati in memoria se esistono

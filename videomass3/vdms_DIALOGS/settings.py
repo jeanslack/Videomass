@@ -41,7 +41,7 @@ class Setup(wx.Dialog):
     """
     def __init__(self, parent, threads, cpu_used, save_log, path_log, 
                  ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
-                 ffplay_link, ffplay_check, writeline_exec, OS,
+                 ffplay_link, ffplay_check, OS,
                  iconset,
                  ):
         """
@@ -70,9 +70,9 @@ class Setup(wx.Dialog):
 
         ##USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
         ##uncomment the following code for a convenient reading
-        #print "\nPOSITION:    ROW:     VALUE:"
+        #print("\nPOSITION:    ROW:     VALUE:")
         #for n, k in enumerate(sorted(dic)):
-            #print n, ' -------> ', k, ' --> ', dic[k]
+            #print(n, ' -------> ', k, ' --> ', dic[k])
 
         self.threads = threads
         self.cpu_used = cpu_used
@@ -84,7 +84,6 @@ class Setup(wx.Dialog):
         self.ffprobe_check = ffprobe_check
         self.ffplay_link = ffplay_link
         self.ffplay_check = ffplay_check
-        self.writeline_exec = writeline_exec
         self.OS = OS
         self.iconset = iconset
         
@@ -146,14 +145,6 @@ class Setup(wx.Dialog):
         gridctrl.Add(self.spinctrl_cpu, 0, wx.ALL, 5)
         #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
-        boxLabOthers = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    _("Other Settings"))), wx.VERTICAL)
-        gridGeneral.Add(boxLabOthers, 0, wx.ALL|wx.EXPAND, 15)
-        gridOthers = wx.GridSizer(1, 1, 0, 0)
-        boxLabOthers.Add(gridOthers, 1, wx.ALL|wx.EXPAND, 15)
-        self.check_cmdline = wx.CheckBox(tabOne, wx.ID_ANY, (
-            _("Enables writing of command line text")))
-        gridOthers.Add(self.check_cmdline, 0, wx.ALL, 5)
         #--------------------------------------------------TAB 2
         gridLog = wx.FlexGridSizer(4, 1, 0, 0)
         tabTwo.SetSizer(gridLog)#aggiungo il sizer su tab 2
@@ -282,15 +273,9 @@ class Setup(wx.Dialog):
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
         self.spinctrl_cpu.SetToolTip(_("Quality/Speed ratio modifier "
-                                            "(from -16 to 16) (default 1)"))
-        self.check_cmdline.SetToolTip(_("Allows the text writing to "
-                                            "performs your custom parameters."
-                                            ))
-        #self.check_ffmpeglog.SetToolTip("At each conversion process, is "
-                              #"also generated a log file of ffmpeg. Note that "
-                              #"can reach considerable size. This feature is "
-                              #"disabled in batch processes."
-                                              #)
+                                            "(from -16 to 16) (default 1)")
+                                    )
+
         self.check_cmdlog.SetToolTip(_("Generates a log file command in "
                               "the directory specified below. Log file is a "
                               "file containing the parameters of the "
@@ -334,7 +319,6 @@ class Setup(wx.Dialog):
         self.txtctrl_ffplay.SetToolTip(
                                      _("path to executable binary FFplay"))
         #----------------------Binding (EVT)----------------------#
-        self.Bind(wx.EVT_CHECKBOX, self.on_direct_cmd, self.check_cmdline)
         #self.Bind(wx.EVT_CHECKBOX, self.log_ffmpeg, self.check_ffmpeglog)
         self.Bind(wx.EVT_CHECKBOX, self.log_command, self.check_cmdlog)
         self.Bind(wx.EVT_BUTTON, self.save_path_log, self.btn_log)
@@ -405,9 +389,6 @@ class Setup(wx.Dialog):
         else:
             self.txtctrl_ffplay.AppendText(self.ffplay_link)
             self.checkbox_exeFFplay.SetValue(True)
-            
-        if self.writeline_exec == 'true':
-            self.check_cmdline.SetValue(True)
     
     #--------------------------------------------------------------------#
     def on_threads(self, event):
@@ -562,22 +543,12 @@ class Setup(wx.Dialog):
         self.full_list[self.rowsNum[12]] = '%s\n' % (t)
             
     #--------------------------------------------------------------------#
-    def on_direct_cmd(self, event):
-        """
-        enable or disable direct text command editable
-        """
-        if self.check_cmdline.IsChecked():
-            self.full_list[self.rowsNum[13]] = 'true\n'
-    
-        else:
-            self.full_list[self.rowsNum[13]] = 'false\n'
-    #------------------------------------------------------------------#
     def on_Iconthemes(self, event):
         """
         Set themes of icons
         """
         choice = "%s\n" % self.cmbx_icons.GetStringSelection()
-        self.full_list[self.rowsNum[14]] = choice
+        self.full_list[self.rowsNum[13]] = choice
     #------------------------------------------------------------------#
     def onColorDlg(self, event):
         """
@@ -598,9 +569,9 @@ class Setup(wx.Dialog):
             choice = rgb.replace('(','').replace(')','').strip()
             
             if identify == _('Bar Colour'):
-                self.full_list[self.rowsNum[15]] = "%s\n" % choice
+                self.full_list[self.rowsNum[14]] = "%s\n" % choice
             elif identify == _('Buttons Colour'):
-                self.full_list[self.rowsNum[16]] = "%s\n" % choice
+                self.full_list[self.rowsNum[15]] = "%s\n" % choice
  
         dlg.Destroy()
     #----------------------------------------------------------------------#
@@ -608,9 +579,9 @@ class Setup(wx.Dialog):
         """
         Restore to default settings colors and icons set
         """
-        self.full_list[self.rowsNum[14]] = "Videomass_Sign_Icons\n"
-        self.full_list[self.rowsNum[15]] = '205,235,222\n'
-        self.full_list[self.rowsNum[16]] = '255,255,255\n'
+        self.full_list[self.rowsNum[13]] = "Videomass_Sign_Icons\n"
+        self.full_list[self.rowsNum[14]] = '205,235,222\n'
+        self.full_list[self.rowsNum[15]] = '255,255,255\n'
         
     #----------------------------------------------------------------------#
     def on_help(self, event):

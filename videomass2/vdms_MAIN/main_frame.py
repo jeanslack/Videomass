@@ -64,9 +64,9 @@ class MainFrame(wx.Frame):
         self.icon_help = pathicons[4]
         self.icon_headphones = pathicons[5]
         self.icon_import = pathicons[6]
-        barC = fileconf[15].split(',') 
+        barC = fileconf[14].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) # toolbar panel colour
-        bBtnC = fileconf[16].split(',')
+        bBtnC = fileconf[15].split(',')
         self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2])) # toolbar buttons colour
         
         #self.helping = setui[5]# path contestual help for helping:
@@ -87,8 +87,7 @@ class MainFrame(wx.Frame):
         self.ffmpeg_link = ffmpeg_link
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
-        self.writeline_exec = fileconf[13]
-        self.iconset = fileconf[14]
+        self.iconset = fileconf[13]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
         self.post_process = []# at the end of any process put file for play/metadata
@@ -197,8 +196,7 @@ class MainFrame(wx.Frame):
                                                          self.threads, 
                                                          self.cpu_used,
                                                          self.loglevel_type, 
-                                                         self.ffmpeg_link, 
-                                                         self.writeline_exec,
+                                                         self.ffmpeg_link,
                                                          self.OS,
                                                          )
         self.VconvPanel = video_conv.Video_Conv(self, self.ffmpeg_link,
@@ -760,8 +758,7 @@ class MainFrame(wx.Frame):
                                      self.ffmpeg_link, self.ffmpeg_check,
                                      self.ffprobe_link, self.ffprobe_check, 
                                      self.ffplay_link, self.ffplay_check, 
-                                     self.writeline_exec, self.OS, 
-                                     self.iconset,
+                                     self.OS, self.iconset,
                                      )
         setup_dlg.ShowModal()
         
