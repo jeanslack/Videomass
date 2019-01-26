@@ -60,19 +60,22 @@ if sys.version_info[0] == 2:
     from videomass2.vdms_SYS.msg_info import current_release 
     from videomass2.vdms_SYS.msg_info import descriptions_release
     
-    PACKAGES = ['videomass2', 'videomass2/vdms_DIALOGS', 
-                'videomass2/vdms_IO', 'videomass2/vdms_MAIN', 
-                'videomass2/vdms_PANELS', 'videomass2/vdms_PROCESS', 
-                'videomass2/vdms_SYS',]
+    EXCLUDE = ["*.videomass3", "*.videomass3.*", "videomass3.*", "videomass3"]
+    REQUIRES = []
     
 elif sys.version_info[0] == 3:
     from videomass3.vdms_SYS.msg_info import current_release
     from videomass3.vdms_SYS.msg_info import descriptions_release
     
-    PACKAGES = ['videomass3', 'videomass3/vdms_DIALOGS', 
-                'videomass3/vdms_IO', 'videomass3/vdms_MAIN', 
-                'videomass3/vdms_PANELS', 'videomass3/vdms_PROCESS', 
-                'videomass3/vdms_SYS',]
+    EXCLUDE = ["*.videomass2", "*.videomass2.*", "videomass2.*", "videomass2"]
+    
+    if platform.system() in ['Windows','Darwin']:
+        REQUIRES = ['wxPython','pyPubSub']
+        
+    else:
+        REQUIRES = []
+        
+        
 else:
     sys.stderr.write(
                 u"[ERROR] Not a supported Python version.\n"
@@ -205,11 +208,11 @@ def SOURCE_BUILD():
         url = WEBSITE,
         license = LICENSE,
         platforms = ["All"],
-        packages = PACKAGES,
+        packages = find_packages(exclude=EXCLUDE),
         scripts = ['bin/videomass'],
         data_files = DATA_FILES,
         classifiers = CLASSIFIERS,
-        #install_requires = ['wxPython',],
+        install_requires = REQUIRES,
         )
 
 ########################################################################
@@ -257,7 +260,7 @@ def OSX():
                         )
     #--------------- setup: --------------------#
     setup(app = ['bin/Videomass.py'],
-        packages = find_packages(),
+        packages = find_packages(exclude=EXCLUDE),
         include = ['python', 'wx',],
         name = RLS_NAME,
         version = VERSION,
@@ -307,7 +310,7 @@ def WIN32():
                 'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
                 'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
                 ]
-    packages = find_packages()
+    packages = find_packages(exclude=EXCLUDE)
     dll_excludes = ['libgdk-win32-2.0-0.dll', 'libgobject-2.0-0.dll',
                     'tcl84.dll', 'tk84.dll'
                     ]
