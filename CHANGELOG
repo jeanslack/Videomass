@@ -11,12 +11,16 @@ January 24, 2019 V.1.4.5
 +------------------------------------+
 
 BUG FIXES:
-    - Fix the 'ValueError' object is not subscriptable exception on
-      Python3 when drop file with no duration (IO_tools.probeDuration() )
+    - Fixed the 'ValueError' object is not subscriptable exception on
+      Python3 when drop file with no duration (IO_tools.probeDuration())
+    - Fixed issue on setup.py to create packages with the right modules 
+      packages (videomass2 or 3)
   
 NEW [features/enhancements]:
     - Added new icons set to default settings.
     - The command line text of each profile is always editable now.
+    - Added install_requires for Windows and MacOs to automate the 
+      installation dependencies
   
 IMPROVEMENTS:
       
