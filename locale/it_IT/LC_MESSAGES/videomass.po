@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-20 17:40+0100\n"
-"PO-Revision-Date: 2019-01-20 17:41+0100\n"
+"POT-Creation-Date: 2019-01-26 14:19+0100\n"
+"PO-Revision-Date: 2019-01-26 14:20+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -586,15 +586,15 @@ msgid "Auto-detection"
 msgstr "Auto-rileva"
 
 #: ../videomass2/vdms_DIALOGS/first_time_start.py:67
+#: ../videomass2/vdms_DIALOGS/settings.py:161
 #: ../videomass2/vdms_DIALOGS/settings.py:171
-#: ../videomass2/vdms_DIALOGS/settings.py:181
-#: ../videomass2/vdms_DIALOGS/settings.py:193
-#: ../videomass2/vdms_DIALOGS/settings.py:205
+#: ../videomass2/vdms_DIALOGS/settings.py:183
+#: ../videomass2/vdms_DIALOGS/settings.py:195
 #: ../videomass3/vdms_DIALOGS/first_time_start.py:69
-#: ../videomass3/vdms_DIALOGS/settings.py:171
-#: ../videomass3/vdms_DIALOGS/settings.py:183
-#: ../videomass3/vdms_DIALOGS/settings.py:197
-#: ../videomass3/vdms_DIALOGS/settings.py:211
+#: ../videomass3/vdms_DIALOGS/settings.py:162
+#: ../videomass3/vdms_DIALOGS/settings.py:174
+#: ../videomass3/vdms_DIALOGS/settings.py:188
+#: ../videomass3/vdms_DIALOGS/settings.py:202
 msgid "Browse.."
 msgstr "Sfoglia.."
 
@@ -715,16 +715,16 @@ msgid "Extensive Report"
 msgstr "Tutte le informazioni"
 
 #: ../videomass2/vdms_DIALOGS/presets_addnew.py:57
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:292
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:230
 #: ../videomass3/vdms_DIALOGS/presets_addnew.py:59
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:290
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:225
 msgid "Profile Name"
 msgstr "Nome Profilo"
 
 #: ../videomass2/vdms_DIALOGS/presets_addnew.py:61
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:293
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:231
 #: ../videomass3/vdms_DIALOGS/presets_addnew.py:63
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:291
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:226
 msgid "Description"
 msgstr "Descrizione"
 
@@ -816,140 +816,121 @@ msgstr ""
 "Usa la funzione 'Ricarica la lista dei presets' nel menu file\n"
 "per aggiornare tutti i profili."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:103
-#: ../videomass3/vdms_DIALOGS/settings.py:103
+#: ../videomass2/vdms_DIALOGS/settings.py:101
+#: ../videomass3/vdms_DIALOGS/settings.py:102
 msgid "General"
 msgstr "Generale"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:106
-#: ../videomass3/vdms_DIALOGS/settings.py:106
+#: ../videomass2/vdms_DIALOGS/settings.py:104
+#: ../videomass3/vdms_DIALOGS/settings.py:105
 msgid "Log"
 msgstr "Gestione Log"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:109
-#: ../videomass3/vdms_DIALOGS/settings.py:109
+#: ../videomass2/vdms_DIALOGS/settings.py:107
+#: ../videomass3/vdms_DIALOGS/settings.py:108
 msgid "Executables"
 msgstr "Eseguibili (binari)"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:112
-#: ../videomass3/vdms_DIALOGS/settings.py:112
+#: ../videomass2/vdms_DIALOGS/settings.py:110
+#: ../videomass3/vdms_DIALOGS/settings.py:111
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:122
-#: ../videomass3/vdms_DIALOGS/settings.py:122
+#: ../videomass2/vdms_DIALOGS/settings.py:120
+#: ../videomass3/vdms_DIALOGS/settings.py:121
 msgid "Settings CPU"
 msgstr "Impostazioni CPU"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:127
-#: ../videomass3/vdms_DIALOGS/settings.py:127
+#: ../videomass2/vdms_DIALOGS/settings.py:125
+#: ../videomass3/vdms_DIALOGS/settings.py:126
 msgid "Set the number of threads (from 0 to 32)"
 msgstr "Imposta il numero dei threads (da 0 a 32)"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:138
-#: ../videomass3/vdms_DIALOGS/settings.py:138
+#: ../videomass2/vdms_DIALOGS/settings.py:136
+#: ../videomass3/vdms_DIALOGS/settings.py:137
 msgid "Quality/Speed ratio modifier (from -16 to 16)"
 msgstr "Modificatore di rapporto qualità/velocità (da -16 a 16)"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:150
-#: ../videomass3/vdms_DIALOGS/settings.py:150
-msgid "Other Settings"
-msgstr "Altre Impostazioni"
-
-#: ../videomass2/vdms_DIALOGS/settings.py:155
+#: ../videomass2/vdms_DIALOGS/settings.py:154
 #: ../videomass3/vdms_DIALOGS/settings.py:155
-msgid "Enables writing of command line text"
-msgstr ""
-"Abilita la scrittura/modifica del testo\n"
-"della linea di comando del Presets Manager"
-
-#: ../videomass2/vdms_DIALOGS/settings.py:164
-#: ../videomass3/vdms_DIALOGS/settings.py:164
 msgid " Specifies a custom path to save the log"
 msgstr ""
 "Specifica un percorso personalizzato\n"
 "per il salvataggio del log."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:167
-#: ../videomass3/vdms_DIALOGS/settings.py:167
+#: ../videomass2/vdms_DIALOGS/settings.py:157
+#: ../videomass3/vdms_DIALOGS/settings.py:158
 msgid "Where do you want to save the log?"
 msgstr "Dove vuoi salvare il file di log?"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:180
-#: ../videomass3/vdms_DIALOGS/settings.py:182
+#: ../videomass2/vdms_DIALOGS/settings.py:170
+#: ../videomass3/vdms_DIALOGS/settings.py:173
 msgid " Use a custom path to run FFmpeg"
 msgstr "Usa un percorso personalizzato per avviare FFmpeg."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:192
-#: ../videomass3/vdms_DIALOGS/settings.py:196
+#: ../videomass2/vdms_DIALOGS/settings.py:182
+#: ../videomass3/vdms_DIALOGS/settings.py:187
 msgid " Use a custom path to run FFprobe"
 msgstr "Usa un percorso personalizzato per avviare FFprobe."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:204
-#: ../videomass3/vdms_DIALOGS/settings.py:210
+#: ../videomass2/vdms_DIALOGS/settings.py:194
+#: ../videomass3/vdms_DIALOGS/settings.py:201
 msgid " Use a custom path to run FFplay"
 msgstr "Usa un percorso personalizzato per avviare FFplay."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:218
-#: ../videomass3/vdms_DIALOGS/settings.py:226
+#: ../videomass2/vdms_DIALOGS/settings.py:208
+#: ../videomass3/vdms_DIALOGS/settings.py:217
 msgid "Set Icon Themes"
 msgstr "Imposta Temi icona"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:229
-#: ../videomass3/vdms_DIALOGS/settings.py:237
+#: ../videomass2/vdms_DIALOGS/settings.py:220
+#: ../videomass3/vdms_DIALOGS/settings.py:229
 msgid "Custom Colour UI"
 msgstr "Personalizza Il Colore Grafico"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:235
-#: ../videomass3/vdms_DIALOGS/settings.py:243
+#: ../videomass2/vdms_DIALOGS/settings.py:226
+#: ../videomass3/vdms_DIALOGS/settings.py:235
 msgid "Change Toolbar Colour:"
 msgstr "Cambia il colore della barra"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:240
-#: ../videomass2/vdms_DIALOGS/settings.py:591
-#: ../videomass3/vdms_DIALOGS/settings.py:248
-#: ../videomass3/vdms_DIALOGS/settings.py:599
+#: ../videomass2/vdms_DIALOGS/settings.py:231
+#: ../videomass2/vdms_DIALOGS/settings.py:562
+#: ../videomass3/vdms_DIALOGS/settings.py:240
+#: ../videomass3/vdms_DIALOGS/settings.py:571
 msgid "Bar Colour"
 msgstr "Colore Barra"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:244
-#: ../videomass3/vdms_DIALOGS/settings.py:252
+#: ../videomass2/vdms_DIALOGS/settings.py:235
+#: ../videomass3/vdms_DIALOGS/settings.py:244
 msgid "Change Toolbar Buttons Colour:"
 msgstr "Cambia il colore dei pulsanti nella barra"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:249
-#: ../videomass2/vdms_DIALOGS/settings.py:593
-#: ../videomass3/vdms_DIALOGS/settings.py:257
-#: ../videomass3/vdms_DIALOGS/settings.py:601
+#: ../videomass2/vdms_DIALOGS/settings.py:240
+#: ../videomass2/vdms_DIALOGS/settings.py:564
+#: ../videomass3/vdms_DIALOGS/settings.py:249
+#: ../videomass3/vdms_DIALOGS/settings.py:573
 msgid "Buttons Colour"
 msgstr "Colore Pulsanti"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:252
-#: ../videomass3/vdms_DIALOGS/settings.py:260
+#: ../videomass2/vdms_DIALOGS/settings.py:243
+#: ../videomass3/vdms_DIALOGS/settings.py:252
 msgid "Restore default settings"
 msgstr "Ripristina impostazioni predefinite"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:274
-#: ../videomass3/vdms_DIALOGS/settings.py:282
+#: ../videomass2/vdms_DIALOGS/settings.py:265
+#: ../videomass3/vdms_DIALOGS/settings.py:274
 msgid "Videomass: setup"
 msgstr "Videomass: Impostazioni"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:275
-#: ../videomass3/vdms_DIALOGS/settings.py:283
+#: ../videomass2/vdms_DIALOGS/settings.py:266
+#: ../videomass3/vdms_DIALOGS/settings.py:275
 msgid "Quality/Speed ratio modifier (from -16 to 16) (default 1)"
 msgstr ""
 "Modificatore di rapporto qualità/velocità (da -16 a 16) (valore predefinito "
 "1)"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:277
-#: ../videomass3/vdms_DIALOGS/settings.py:285
-msgid "Allows the text writing to performs your custom parameters."
-msgstr ""
-"Consente la scrittura di testo addizionale per eseguire al volo parametri "
-"personalizzati."
-
-#: ../videomass2/vdms_DIALOGS/settings.py:285
-#: ../videomass3/vdms_DIALOGS/settings.py:293
+#: ../videomass2/vdms_DIALOGS/settings.py:270
+#: ../videomass3/vdms_DIALOGS/settings.py:279
 msgid ""
 "Generates a log file command in the directory specified below. Log file is a "
 "file containing the parameters of the execution process, info and error "
@@ -959,22 +940,22 @@ msgstr ""
 "è un registro contenente i parametri del processo di esecuzione, "
 "informazioni e messaggi di errore."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:290
-#: ../videomass3/vdms_DIALOGS/settings.py:298
+#: ../videomass2/vdms_DIALOGS/settings.py:275
+#: ../videomass3/vdms_DIALOGS/settings.py:284
 msgid "Open Path"
 msgstr "Sfoglia e apri/importa un percorso"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:292
-#: ../videomass2/vdms_DIALOGS/settings.py:304
-#: ../videomass2/vdms_DIALOGS/settings.py:316
-#: ../videomass3/vdms_DIALOGS/settings.py:300
-#: ../videomass3/vdms_DIALOGS/settings.py:312
-#: ../videomass3/vdms_DIALOGS/settings.py:324
+#: ../videomass2/vdms_DIALOGS/settings.py:277
+#: ../videomass2/vdms_DIALOGS/settings.py:289
+#: ../videomass2/vdms_DIALOGS/settings.py:301
+#: ../videomass3/vdms_DIALOGS/settings.py:286
+#: ../videomass3/vdms_DIALOGS/settings.py:298
+#: ../videomass3/vdms_DIALOGS/settings.py:310
 msgid "Path generation file"
 msgstr "Percorso importato per la generazione del log"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:294
-#: ../videomass3/vdms_DIALOGS/settings.py:302
+#: ../videomass2/vdms_DIALOGS/settings.py:279
+#: ../videomass3/vdms_DIALOGS/settings.py:288
 msgid ""
 "Enable custom search for the executable FFmpeg. If the checkbox is disabled "
 "or if the path field is empty, the search of the executable is entrusted to "
@@ -984,18 +965,18 @@ msgstr ""
 "controllo è disabilitata o se il campo percorso è vuoto, la ricerca "
 "dell'eseguibile è affidata al sistema."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:299
-#: ../videomass3/vdms_DIALOGS/settings.py:307
+#: ../videomass2/vdms_DIALOGS/settings.py:284
+#: ../videomass3/vdms_DIALOGS/settings.py:293
 msgid "Open path FFmpeg"
 msgstr "Sfoglia e importa il percorso di FFmpeg"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:302
-#: ../videomass3/vdms_DIALOGS/settings.py:310
+#: ../videomass2/vdms_DIALOGS/settings.py:287
+#: ../videomass3/vdms_DIALOGS/settings.py:296
 msgid "path to executable binary FFmpeg"
 msgstr "Percorso del binario eseguibile FFmpeg"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:306
-#: ../videomass3/vdms_DIALOGS/settings.py:314
+#: ../videomass2/vdms_DIALOGS/settings.py:291
+#: ../videomass3/vdms_DIALOGS/settings.py:300
 msgid ""
 "Enable custom search for the executable FFprobe. If the checkbox is disabled "
 "or if the path field is empty, the search of the executable is entrusted to "
@@ -1005,18 +986,18 @@ msgstr ""
 "controllo è disabilitata o se il campo percorso è vuoto, la ricerca "
 "dell'eseguibile è affidata al sistema."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:311
-#: ../videomass3/vdms_DIALOGS/settings.py:319
+#: ../videomass2/vdms_DIALOGS/settings.py:296
+#: ../videomass3/vdms_DIALOGS/settings.py:305
 msgid "Open path FFprobe"
 msgstr "Sfoglia e importa il percorso di FFprobe"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:314
-#: ../videomass3/vdms_DIALOGS/settings.py:322
+#: ../videomass2/vdms_DIALOGS/settings.py:299
+#: ../videomass3/vdms_DIALOGS/settings.py:308
 msgid "path to executable binary FFprobe"
 msgstr "Percorso del binario eseguibile FFprobe"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:318
-#: ../videomass3/vdms_DIALOGS/settings.py:326
+#: ../videomass2/vdms_DIALOGS/settings.py:303
+#: ../videomass3/vdms_DIALOGS/settings.py:312
 msgid ""
 "Enable custom search for the executable FFplay. If the checkbox is disabled "
 "or if the path field is empty, the search of the executable is entrusted to "
@@ -1026,45 +1007,45 @@ msgstr ""
 "controllo è disabilitata o se il campo percorso è vuoto, la ricerca "
 "dell'eseguibile è affidata al sistema."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:323
-#: ../videomass3/vdms_DIALOGS/settings.py:331
+#: ../videomass2/vdms_DIALOGS/settings.py:308
+#: ../videomass3/vdms_DIALOGS/settings.py:317
 msgid "Open path FFplay"
 msgstr "Sfoglia e importa il percorso di FFplay"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:326
-#: ../videomass3/vdms_DIALOGS/settings.py:334
+#: ../videomass2/vdms_DIALOGS/settings.py:311
+#: ../videomass3/vdms_DIALOGS/settings.py:320
 msgid "path to executable binary FFplay"
 msgstr "Percorso del binario eseguibile FFplay"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:431
-#: ../videomass3/vdms_DIALOGS/settings.py:439
+#: ../videomass2/vdms_DIALOGS/settings.py:412
+#: ../videomass3/vdms_DIALOGS/settings.py:421
 msgid "Where do you want to save the log file?"
 msgstr "Dove preferisci salvare il file di log?"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:466
-#: ../videomass3/vdms_DIALOGS/settings.py:474
+#: ../videomass2/vdms_DIALOGS/settings.py:447
+#: ../videomass3/vdms_DIALOGS/settings.py:456
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile ffmpeg?"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:502
-#: ../videomass3/vdms_DIALOGS/settings.py:510
+#: ../videomass2/vdms_DIALOGS/settings.py:483
+#: ../videomass3/vdms_DIALOGS/settings.py:492
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile ffprobe?"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:538
-#: ../videomass3/vdms_DIALOGS/settings.py:546
+#: ../videomass2/vdms_DIALOGS/settings.py:519
+#: ../videomass3/vdms_DIALOGS/settings.py:528
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile ffplay?"
 
-#: ../videomass2/vdms_DIALOGS/settings.py:645
-#: ../videomass3/vdms_DIALOGS/settings.py:653
+#: ../videomass2/vdms_DIALOGS/settings.py:616
+#: ../videomass3/vdms_DIALOGS/settings.py:625
 msgid "Warning, The log command has no set path name "
 msgstr ""
 "Avviso, il log non ha ancora un percorso impostato.\n"
 "Non posso salvare."
 
-#: ../videomass2/vdms_DIALOGS/settings.py:651
-#: ../videomass3/vdms_DIALOGS/settings.py:659
+#: ../videomass2/vdms_DIALOGS/settings.py:622
+#: ../videomass3/vdms_DIALOGS/settings.py:631
 msgid "Changes will take affect once the program has been restarted"
 msgstr "Le modifiche verranno applicate una volta riavviato il programma."
 
@@ -1157,251 +1138,251 @@ msgstr ""
 msgid "Videomass: Unsuitable format"
 msgstr "Videomass: Formato inadatto"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:118
-#: ../videomass3/vdms_MAIN/main_frame.py:120
+#: ../videomass2/vdms_MAIN/main_frame.py:117
+#: ../videomass3/vdms_MAIN/main_frame.py:119
 msgid "Show Metadata"
 msgstr "Mostra Metadati"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:129
-#: ../videomass3/vdms_MAIN/main_frame.py:131
+#: ../videomass2/vdms_MAIN/main_frame.py:128
+#: ../videomass3/vdms_MAIN/main_frame.py:130
 msgid "Preview"
 msgstr "Anteprima"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:140
-#: ../videomass3/vdms_MAIN/main_frame.py:142
+#: ../videomass2/vdms_MAIN/main_frame.py:139
+#: ../videomass3/vdms_MAIN/main_frame.py:141
 msgid "Duration"
 msgstr "Durata"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:151
-#: ../videomass3/vdms_MAIN/main_frame.py:153
+#: ../videomass2/vdms_MAIN/main_frame.py:150
+#: ../videomass3/vdms_MAIN/main_frame.py:152
 msgid "Save As Profile"
 msgstr "Salva Come Profilo"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:162
-#: ../videomass3/vdms_MAIN/main_frame.py:164
+#: ../videomass2/vdms_MAIN/main_frame.py:161
+#: ../videomass3/vdms_MAIN/main_frame.py:163
 msgid "New.."
 msgstr "Nuovo.."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:173
-#: ../videomass3/vdms_MAIN/main_frame.py:175
+#: ../videomass2/vdms_MAIN/main_frame.py:172
+#: ../videomass3/vdms_MAIN/main_frame.py:174
 msgid "Delete.."
 msgstr "Cancella.."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:184
-#: ../videomass3/vdms_MAIN/main_frame.py:186
+#: ../videomass2/vdms_MAIN/main_frame.py:183
+#: ../videomass3/vdms_MAIN/main_frame.py:185
 msgid "Edit.."
 msgstr "Modifica.."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:271
-#: ../videomass3/vdms_MAIN/main_frame.py:273
+#: ../videomass2/vdms_MAIN/main_frame.py:269
+#: ../videomass3/vdms_MAIN/main_frame.py:271
 msgid "Sets a global time sequences to apply at any media file with duration."
 msgstr ""
 "Imposta una sequenza temporale globale applicato a ogni file multimediale "
 "importato con durata."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:274
-#: ../videomass3/vdms_MAIN/main_frame.py:276
+#: ../videomass2/vdms_MAIN/main_frame.py:272
+#: ../videomass3/vdms_MAIN/main_frame.py:274
 msgid "Show information about the metadata of the selected imported file."
 msgstr ""
 "Mostra una finestra con i metadati del file selezionato nell'importazione."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:277
-#: ../videomass3/vdms_MAIN/main_frame.py:279
+#: ../videomass2/vdms_MAIN/main_frame.py:275
+#: ../videomass3/vdms_MAIN/main_frame.py:277
 msgid ""
 "Preview exported files. Reproduction exported file when finish encoding."
 msgstr ""
 "Anteprima dei file esportati. Riproduzione file esportato al termine della "
 "codifica."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:280
-#: ../videomass3/vdms_MAIN/main_frame.py:282
+#: ../videomass2/vdms_MAIN/main_frame.py:278
+#: ../videomass3/vdms_MAIN/main_frame.py:280
 msgid "Save as profile with the current settings of this panel."
 msgstr "Salva come profilo con le impostazioni correnti di questo pannello."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:283
-#: ../videomass3/vdms_MAIN/main_frame.py:285
+#: ../videomass2/vdms_MAIN/main_frame.py:281
+#: ../videomass3/vdms_MAIN/main_frame.py:283
 msgid "Create a new profile from yourself and save it in the selected preset."
 msgstr "Crea un nuovo profilo da te stesso e salvalo nel preset selezionato."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:286
-#: ../videomass3/vdms_MAIN/main_frame.py:288
+#: ../videomass2/vdms_MAIN/main_frame.py:284
+#: ../videomass3/vdms_MAIN/main_frame.py:286
 msgid "Delete the selected profile."
 msgstr "Cancella il profilo selezionato."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:288
-#: ../videomass3/vdms_MAIN/main_frame.py:290
+#: ../videomass2/vdms_MAIN/main_frame.py:286
+#: ../videomass3/vdms_MAIN/main_frame.py:288
 msgid "Edit the selected profile."
 msgstr "Modifica il profilo selezionato."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:483
-#: ../videomass3/vdms_MAIN/main_frame.py:485
+#: ../videomass2/vdms_MAIN/main_frame.py:481
+#: ../videomass3/vdms_MAIN/main_frame.py:483
 msgid "No file selected into Drag and Drop list"
 msgstr "Ancora nessun file selezionato nella lista Drag n Drop."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:498
-#: ../videomass3/vdms_MAIN/main_frame.py:500
+#: ../videomass2/vdms_MAIN/main_frame.py:496
+#: ../videomass3/vdms_MAIN/main_frame.py:498
 msgid "No files exported with `Start Encoding` yet"
 msgstr "Ancora nessun file esportato con `Avvia Codifica`"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:588
-#: ../videomass3/vdms_MAIN/main_frame.py:590
+#: ../videomass2/vdms_MAIN/main_frame.py:586
+#: ../videomass3/vdms_MAIN/main_frame.py:588
 msgid "Add File.. "
 msgstr "Aggiungi File.."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:589
-#: ../videomass3/vdms_MAIN/main_frame.py:591
+#: ../videomass2/vdms_MAIN/main_frame.py:587
+#: ../videomass3/vdms_MAIN/main_frame.py:589
 msgid "Files import with drag and drop"
 msgstr "Finestra di importazione file con Drag n Drop"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:590
-#: ../videomass3/vdms_MAIN/main_frame.py:592
+#: ../videomass2/vdms_MAIN/main_frame.py:588
+#: ../videomass3/vdms_MAIN/main_frame.py:590
 msgid "Choose a Destination folder.."
 msgstr "Scegli una cartella di destinazione.."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:592
-#: ../videomass3/vdms_MAIN/main_frame.py:594
+#: ../videomass2/vdms_MAIN/main_frame.py:590
+#: ../videomass3/vdms_MAIN/main_frame.py:592
 msgid "Choice a folder where save processed files"
 msgstr "Cartella di destinazione file processati"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:595
-#: ../videomass3/vdms_MAIN/main_frame.py:597
+#: ../videomass2/vdms_MAIN/main_frame.py:593
+#: ../videomass3/vdms_MAIN/main_frame.py:595
 msgid "Save the current preset as separated file"
 msgstr "Salva il preset corrente come file separato"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:596
-#: ../videomass3/vdms_MAIN/main_frame.py:598
+#: ../videomass2/vdms_MAIN/main_frame.py:594
+#: ../videomass3/vdms_MAIN/main_frame.py:596
 msgid "Make a back-up of the selected preset on combobox"
 msgstr "Effettua un backup del preset selezionato sulla combobox"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:598
-#: ../videomass3/vdms_MAIN/main_frame.py:600
+#: ../videomass2/vdms_MAIN/main_frame.py:596
+#: ../videomass3/vdms_MAIN/main_frame.py:598
 msgid "Restore a previously saved preset"
 msgstr "Ripristina un preset precedentemente salvato"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:600
-#: ../videomass3/vdms_MAIN/main_frame.py:602
+#: ../videomass2/vdms_MAIN/main_frame.py:598
+#: ../videomass3/vdms_MAIN/main_frame.py:600
 msgid "Replace the selected preset with other saved custom preset."
 msgstr ""
 "Importa e sostituisci con altri preset personalizzati precedentemente "
 "salvati."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:602
-#: ../videomass3/vdms_MAIN/main_frame.py:604
+#: ../videomass2/vdms_MAIN/main_frame.py:600
+#: ../videomass3/vdms_MAIN/main_frame.py:602
 msgid "Reset the current preset "
 msgstr "Ripristina il preset corrente"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:603
-#: ../videomass3/vdms_MAIN/main_frame.py:605
+#: ../videomass2/vdms_MAIN/main_frame.py:601
+#: ../videomass3/vdms_MAIN/main_frame.py:603
 msgid "Replace the selected preset with default values."
 msgstr "Ripristina il preset corrente con i valori predefiniti"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:607
-#: ../videomass3/vdms_MAIN/main_frame.py:609
+#: ../videomass2/vdms_MAIN/main_frame.py:605
+#: ../videomass3/vdms_MAIN/main_frame.py:607
 msgid "Reset all presets "
 msgstr "Ripristina tutti i presets"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:608
-#: ../videomass3/vdms_MAIN/main_frame.py:610
+#: ../videomass2/vdms_MAIN/main_frame.py:606
+#: ../videomass3/vdms_MAIN/main_frame.py:608
 msgid "Revert all presets to default values"
 msgstr "Ripristina tutti i presets con i valori predefiniti"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:612
-#: ../videomass3/vdms_MAIN/main_frame.py:614
+#: ../videomass2/vdms_MAIN/main_frame.py:610
+#: ../videomass3/vdms_MAIN/main_frame.py:612
 msgid "Reload presets list"
 msgstr "Ricarica la lista dei presets"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:613
-#: ../videomass3/vdms_MAIN/main_frame.py:615
+#: ../videomass2/vdms_MAIN/main_frame.py:611
+#: ../videomass3/vdms_MAIN/main_frame.py:613
 msgid "..Sometimes it can be useful"
 msgstr "...A volte può essere utile, ma usalo cautamente"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:615
-#: ../videomass3/vdms_MAIN/main_frame.py:617
+#: ../videomass2/vdms_MAIN/main_frame.py:613
+#: ../videomass3/vdms_MAIN/main_frame.py:615
 msgid "Exit"
 msgstr "Esci.."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:615
-#: ../videomass3/vdms_MAIN/main_frame.py:617
+#: ../videomass2/vdms_MAIN/main_frame.py:613
+#: ../videomass3/vdms_MAIN/main_frame.py:615
 msgid "Close Videomass"
 msgstr "Terminare l'applicazione"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:621
-#: ../videomass3/vdms_MAIN/main_frame.py:623
+#: ../videomass2/vdms_MAIN/main_frame.py:619
+#: ../videomass3/vdms_MAIN/main_frame.py:621
 msgid "Show Tool Bar"
 msgstr "Mostra/Nascondi barra principale"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:622
-#: ../videomass3/vdms_MAIN/main_frame.py:624
+#: ../videomass2/vdms_MAIN/main_frame.py:620
+#: ../videomass3/vdms_MAIN/main_frame.py:622
 msgid "Show tool bar view"
 msgstr "Mostra/Nascondi barra Principale"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:625
-#: ../videomass3/vdms_MAIN/main_frame.py:627
+#: ../videomass2/vdms_MAIN/main_frame.py:623
+#: ../videomass3/vdms_MAIN/main_frame.py:625
 msgid "Show Buttons Bar"
 msgstr "Mostra/nascondi barra strumenti"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:626
-#: ../videomass3/vdms_MAIN/main_frame.py:628
+#: ../videomass2/vdms_MAIN/main_frame.py:624
+#: ../videomass3/vdms_MAIN/main_frame.py:626
 msgid "Show or hide buttons bar view"
 msgstr "Mostra o nascondi la barra strumenti"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:630
-#: ../videomass3/vdms_MAIN/main_frame.py:632
+#: ../videomass2/vdms_MAIN/main_frame.py:628
+#: ../videomass3/vdms_MAIN/main_frame.py:630
 msgid "Setup"
 msgstr "Impostazioni"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:631
-#: ../videomass3/vdms_MAIN/main_frame.py:633
+#: ../videomass2/vdms_MAIN/main_frame.py:629
+#: ../videomass3/vdms_MAIN/main_frame.py:631
 msgid "General Settings"
 msgstr "Impostazioni del programma"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:633
-#: ../videomass3/vdms_MAIN/main_frame.py:635
+#: ../videomass2/vdms_MAIN/main_frame.py:631
+#: ../videomass3/vdms_MAIN/main_frame.py:633
 msgid "&Preferences"
 msgstr "&Preferenze"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:637
-#: ../videomass3/vdms_MAIN/main_frame.py:639
+#: ../videomass2/vdms_MAIN/main_frame.py:635
+#: ../videomass3/vdms_MAIN/main_frame.py:637
 msgid "User Guide"
 msgstr "Guida in linea"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:638
-#: ../videomass3/vdms_MAIN/main_frame.py:640
+#: ../videomass2/vdms_MAIN/main_frame.py:636
+#: ../videomass3/vdms_MAIN/main_frame.py:638
 msgid "Wiki"
 msgstr "Wiki"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:639
-#: ../videomass3/vdms_MAIN/main_frame.py:641
+#: ../videomass2/vdms_MAIN/main_frame.py:637
+#: ../videomass3/vdms_MAIN/main_frame.py:639
 msgid "Issue tracker"
 msgstr "Segnala un Problema.."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:641
-#: ../videomass3/vdms_MAIN/main_frame.py:643
+#: ../videomass2/vdms_MAIN/main_frame.py:639
+#: ../videomass3/vdms_MAIN/main_frame.py:641
 msgid "Donation"
 msgstr "Donazione"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:643
-#: ../videomass3/vdms_MAIN/main_frame.py:645
+#: ../videomass2/vdms_MAIN/main_frame.py:641
+#: ../videomass3/vdms_MAIN/main_frame.py:643
 msgid "FFmpeg documentation"
 msgstr "Documentazione di FFmpeg"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:645
-#: ../videomass3/vdms_MAIN/main_frame.py:647
+#: ../videomass2/vdms_MAIN/main_frame.py:643
+#: ../videomass3/vdms_MAIN/main_frame.py:645
 msgid "Check new releases"
 msgstr "Controlla nuovi rilasci"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:646
-#: ../videomass3/vdms_MAIN/main_frame.py:648
+#: ../videomass2/vdms_MAIN/main_frame.py:644
+#: ../videomass3/vdms_MAIN/main_frame.py:646
 msgid "About Videomass"
 msgstr "Informazioni"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:647
-#: ../videomass3/vdms_MAIN/main_frame.py:649
+#: ../videomass2/vdms_MAIN/main_frame.py:645
+#: ../videomass3/vdms_MAIN/main_frame.py:647
 msgid "&Help"
 msgstr "&Aiuto"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:853
-#: ../videomass3/vdms_MAIN/main_frame.py:859
+#: ../videomass2/vdms_MAIN/main_frame.py:850
+#: ../videomass3/vdms_MAIN/main_frame.py:856
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
@@ -1410,14 +1391,14 @@ msgstr ""
 "Una nuova versione  (v{0}) di Videomass è disponibile\n"
 "nel sito <https://pypi.org/project/videomass/>"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:859
-#: ../videomass3/vdms_MAIN/main_frame.py:865
+#: ../videomass2/vdms_MAIN/main_frame.py:856
+#: ../videomass3/vdms_MAIN/main_frame.py:862
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr "Stai già utilizzando la più recente versione (v{0}) di Videomass."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:865
-#: ../videomass3/vdms_MAIN/main_frame.py:871
+#: ../videomass2/vdms_MAIN/main_frame.py:862
+#: ../videomass3/vdms_MAIN/main_frame.py:868
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
@@ -1425,42 +1406,42 @@ msgstr ""
 "E' avvenuto un errore inatteso nella ricerca della pagina web.\n"
 "Mi dispiace per l'inconveniente."
 
-#: ../videomass2/vdms_MAIN/main_frame.py:891
-#: ../videomass3/vdms_MAIN/main_frame.py:897
+#: ../videomass2/vdms_MAIN/main_frame.py:888
+#: ../videomass3/vdms_MAIN/main_frame.py:894
 msgid "Add File"
 msgstr "Aggiungi File"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:898
-#: ../videomass3/vdms_MAIN/main_frame.py:904
+#: ../videomass2/vdms_MAIN/main_frame.py:895
+#: ../videomass3/vdms_MAIN/main_frame.py:901
 msgid "Presets Manager"
 msgstr "Gestionale Presets"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:906
-#: ../videomass3/vdms_MAIN/main_frame.py:912
+#: ../videomass2/vdms_MAIN/main_frame.py:903
+#: ../videomass3/vdms_MAIN/main_frame.py:909
 msgid "Video Conversions"
 msgstr "Conversioni Video"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:913
+#: ../videomass2/vdms_MAIN/main_frame.py:910
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:44
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:109
-#: ../videomass3/vdms_MAIN/main_frame.py:919
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:108
+#: ../videomass3/vdms_MAIN/main_frame.py:916
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:42
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:107
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:106
 msgid "Audio Conversions"
 msgstr "Conversioni Audio"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:919
-#: ../videomass3/vdms_MAIN/main_frame.py:925
+#: ../videomass2/vdms_MAIN/main_frame.py:916
+#: ../videomass3/vdms_MAIN/main_frame.py:922
 msgid "Start Encoding"
 msgstr "Inizia Codifica"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:926
-#: ../videomass3/vdms_MAIN/main_frame.py:932
+#: ../videomass2/vdms_MAIN/main_frame.py:923
+#: ../videomass3/vdms_MAIN/main_frame.py:929
 msgid "Help"
 msgstr "Aiuto"
 
-#: ../videomass2/vdms_MAIN/main_frame.py:1048
-#: ../videomass3/vdms_MAIN/main_frame.py:1055
+#: ../videomass2/vdms_MAIN/main_frame.py:1045
+#: ../videomass3/vdms_MAIN/main_frame.py:1052
 msgid "..Start Encoding - Videomass"
 msgstr "...Codifica in Corso - Videomass"
 
@@ -1782,154 +1763,154 @@ msgid "Videomass: Choose a directory"
 msgstr "Videomass: Scegli una cartella di destinazione.."
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:45
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:110
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:109
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:43
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:108
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:107
 msgid "Extract audio from video"
 msgstr "Estrai traccia audio dal filmato"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:47
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:111
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:110
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:45
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:109
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:108
 msgid "Convert to AVI"
 msgstr "Converti in formato AVI"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:48
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:112
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:111
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:46
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:110
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:109
 msgid "Mobile Phones multimedia"
 msgstr "Telefoni cellulari multimediali"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:50
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:113
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:112
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:48
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:111
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:110
 msgid "iPod iTunes"
 msgstr ""
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:51
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:114
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:113
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:49
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:112
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:111
 msgid "Convert to VCD (mpg)"
 msgstr "Converti in formato VCD (.mpg)"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:52
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:115
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:114
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:50
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:113
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:112
 msgid "Convert DVD VOB"
 msgstr "Converti DVD VOB"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:53
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:116
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:115
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:51
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:114
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:113
 msgid "Convert to quicktime (mov)"
 msgstr "Converti in Quicktime (.mov)"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:55
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:117
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:116
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:53
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:115
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:114
 msgid "Convert to DV"
 msgstr "Converti in DV"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:56
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:118
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:117
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:54
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:116
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:115
 msgid "Google Android"
 msgstr ""
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:57
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:119
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:118
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:55
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:117
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:116
 msgid "Google webm"
 msgstr ""
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:58
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:120
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:119
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:56
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:118
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:117
 msgid "DVD Conversions"
 msgstr "Conversioni DVD"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:59
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:121
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:120
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:57
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:119
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:118
 msgid "MPEG-4 Conversions"
 msgstr "Conversioni in MPEG-4"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:60
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:122
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:121
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:58
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:120
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:119
 msgid "PS3 Compatible"
 msgstr "Compatibilità per PS3"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:61
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:123
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:122
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:59
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:121
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:120
 msgid "PSP Compatible"
 msgstr "Compatibilità per PSP"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:62
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:124
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:123
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:60
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:122
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:121
 msgid "Websites"
 msgstr "Siti Web"
 
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:63
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:125
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:124
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:61
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:123
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:122
 msgid "User Profiles"
 msgstr "Profili Utente"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:106
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:104
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:105
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:103
 msgid "Select a preset from the drop down:"
 msgstr "Seleziona un preset dal menu a discesa:"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:170
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:168
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:137
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:134
 msgid "List selection profiles"
 msgstr "Lista profili di selezione"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:173
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:171
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:140
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:137
 msgid "FFmpeg command output of each selected profile."
 msgstr "Output del comando di ogni profilo selezionato."
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:224
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:222
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:165
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:160
 msgid "Selecting Presets"
 msgstr "Selezione Presets"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:225
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:223
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:166
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:161
 msgid "Command Line FFmpeg"
 msgstr "Linea di Comando FFmpeg"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:294
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:292
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:232
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:227
 msgid "Output Extension Type"
 msgstr "Estensione di Uscita"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:295
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:293
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:233
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:228
 msgid "Supported formats"
 msgstr "Formati Supportati"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:307
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:305
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:245
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:240
 msgid ""
 "For some circumstance, the selected preset is corrupted. To restore the "
 "original copy at least go to the File menu and choose 'restore the preset "
@@ -1941,30 +1922,30 @@ msgstr ""
 "corrente\". Prima di effettuare questa scelta fai un back-up se hai "
 "impostazioni precedentemente salvate."
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:356
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:354
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:294
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:289
 #, python-format
 msgid "Pofile Name Selected:  %s"
 msgstr "Nome del Profilo Selezionato:  %s"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:389
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:386
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:326
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:321
 msgid "Select a directory to save it"
 msgstr "Salva nella cartella selezionata"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:394
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:391
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:331
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:326
 msgid "The preset is saved"
 msgstr "Il preset è stato salvato"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:405
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:402
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:342
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:337
 #, python-format
 msgid "Preset restore (%s.vdms) - Videomass "
 msgstr "Ripristino preset(%s.vdms) - Videomass"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:415
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:412
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:352
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:347
 #, python-brace-format
 msgid ""
 "'{0}' \n"
@@ -1985,8 +1966,8 @@ msgstr ""
 "Si prega di selezionare un preset corrispondente a\n"
 "quelli nel menu a discesa."
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:423
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:420
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:360
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:355
 #, python-format
 msgid ""
 "The preset \"%s\" will be imported and will overwrite the one in use ! "
@@ -1994,60 +1975,60 @@ msgid ""
 msgstr ""
 "Il preset \"% s\" sarà importato e sovrascriverà quello in uso! Procedere ?"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:425
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:442
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:460
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:536
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:422
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:439
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:457
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:530
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:362
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:379
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:397
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:473
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:357
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:374
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:392
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:465
 msgid "Videomass: Please confirm"
 msgstr "Videomass: Prego confermare"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:440
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:437
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:377
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:372
 msgid "The current preset will be overwritten to default values! proceed?"
 msgstr ""
 "Il preset corrente verrà sovrascritto con i valori di default! procedere?"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:458
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:455
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:395
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:390
 msgid ""
 "WARNING: you are going to restore all default presets from videomass! "
 "Proceed?"
 msgstr ""
 "ATTENZIONE: stai per ripristinare tutti i preset predefiniti! Procedere?"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:487
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:483
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:424
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:418
 #, python-format
 msgid "Create a new profile on the selected \"%s\" preset"
 msgstr "Crea un nuovo profilo sul preset selezionato \"% s\""
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:503
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:498
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:440
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:433
 msgid "Select a profile in the list before to edit profile itself"
 msgstr "Seleziona un profilo nell'elenco prima di modificare il profilo stesso"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:515
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:510
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:452
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:445
 #, python-format
 msgid "Edit profile on \"%s\" preset: "
 msgstr "Modifica il profilo sul preset \"%s\": "
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:529
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:523
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:466
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:458
 msgid "Select a profile in the list before deleting profile itself"
 msgstr "Seleziona un profilo nell'elenco prima di eliminare il profilo stesso"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:534
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:528
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:471
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:463
 msgid "Are you sure you want to delete the selected profile?"
 msgstr "Sei sicuro di voler eliminare il profilo selezionato?"
 
-#: ../videomass2/vdms_PANELS/presets_mng_panel.py:566
-#: ../videomass3/vdms_PANELS/presets_mng_panel.py:560
+#: ../videomass2/vdms_PANELS/presets_mng_panel.py:503
+#: ../videomass3/vdms_PANELS/presets_mng_panel.py:495
 msgid "Select a profile in the list before start encoding"
 msgstr "Seleziona un profilo nell'elenco prima di iniziare la codifica"
 
@@ -2593,6 +2574,19 @@ msgstr ""
 "\n"
 "Questa è una versione di prova.\n"
 "E' scritta in Python3 con il toolkit grafico wxPython Phoenix."
+
+#~ msgid "Other Settings"
+#~ msgstr "Altre Impostazioni"
+
+#~ msgid "Enables writing of command line text"
+#~ msgstr ""
+#~ "Abilita la scrittura/modifica del testo\n"
+#~ "della linea di comando del Presets Manager"
+
+#~ msgid "Allows the text writing to performs your custom parameters."
+#~ msgstr ""
+#~ "Consente la scrittura di testo addizionale per eseguire al volo parametri "
+#~ "personalizzati."
 
 #~ msgid ""
 #~ "This wizard will attempt to automatically detect FFmpeg in\n"
