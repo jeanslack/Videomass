@@ -13,8 +13,9 @@ January 24, 2019 V.1.4.5
 BUG FIXES:
     - Fixed the 'ValueError' object is not subscriptable exception on
       Python3 when drop file with no duration (IO_tools.probeDuration())
-    - Fixed issue on setup.py to create packages with the right modules 
-      packages (videomass2 or 3)
+    - Fixed 'SyntaxError' issue on setup.py to create packages with the 
+      appropriate modules packages (videomass2 or 3) during compiling
+      with py2exe and py2app.
   
 NEW [features/enhancements]:
     - Added new icons set to default settings.

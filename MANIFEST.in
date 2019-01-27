@@ -1,4 +1,4 @@
-include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
+include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO requirements.txt
 recursive-include videomass2 *
 recursive-include videomass3 *
 recursive-include docs *

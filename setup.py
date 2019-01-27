@@ -72,18 +72,10 @@ elif sys.version_info[0] == 3:
                "videomass2.*", "videomass2"]
     
     if platform.system() in ['Windows','Darwin']:
-        REQUIRES = ['wxPython','pyPubSub']
+        REQUIRES = ['wxpython>=4.0.3"','PyPubSub>=4.0.0']
         
     else:
         REQUIRES = []
-        
-        
-else:
-    sys.stderr.write(
-                u"[ERROR] Not a supported Python version.\n"
-                u"Python2 or Python3 are required, "
-                u"You are using Python version %s\n" % sys.version)
-    sys.exit(1)
 
 try:
     import wx
