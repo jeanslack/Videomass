@@ -311,7 +311,7 @@ def WIN32():
     includes = ["wx.lib.pubsub.*", "wx.lib.pubsub.core.*", 
                 "wx.lib.pubsub.core.kwargs.*"
                 ]
-    excludes = ['_gtkagg', '_tkagg', 'bsddb', 'curses',
+    excludes = [EXCLUDE[3],'_gtkagg', '_tkagg', 'bsddb', 'curses',
                 'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
                 'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
                 ]
