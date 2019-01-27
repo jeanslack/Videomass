@@ -45,7 +45,6 @@ if __name__ == '__main__':
                             )
             sys.exit(1)
         
-        
         from videomass3 import Videomass3
         Videomass3.main()
         
@@ -59,12 +58,12 @@ if __name__ == '__main__':
                             "Videomass for Python2 need wxPython-Classic.\n"
                              )
             
-            if ['Windows', 'Darwin'] in platform.system():
+            if platform.system() in ['Windows', 'Darwin']:
                 sys.stderr.write("You could find it here:\n"
                 u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
                                 )
             else:
-                sys.stderr.write('Please, install wxPython with your package'
+                sys.stderr.write('Please, install wxPython with your package '
                                 'manager.\n')
             sys.exit(1)
         

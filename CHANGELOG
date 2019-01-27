@@ -16,6 +16,7 @@ BUG FIXES:
     - Fixed 'SyntaxError' issue on setup.py to create packages with the 
       appropriate modules packages (videomass2 or 3) during compiling
       with py2exe and py2app.
+    - Corrected a conditional error on the Videomass launch code.
   
 NEW [features/enhancements]:
     - Added new icons set to default settings.
