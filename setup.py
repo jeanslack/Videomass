@@ -60,14 +60,16 @@ if sys.version_info[0] == 2:
     from videomass2.vdms_SYS.msg_info import current_release 
     from videomass2.vdms_SYS.msg_info import descriptions_release
     
-    EXCLUDE = ["*.videomass3", "*.videomass3.*", "videomass3.*", "videomass3"]
+    EXCLUDE = ["*.videomass3", "*.videomass3.*", 
+               "videomass3.*", "videomass3"]
     REQUIRES = []
     
 elif sys.version_info[0] == 3:
     from videomass3.vdms_SYS.msg_info import current_release
     from videomass3.vdms_SYS.msg_info import descriptions_release
     
-    EXCLUDE = ["*.videomass2", "*.videomass2.*", "videomass2.*", "videomass2"]
+    EXCLUDE = ["*.videomass2", "*.videomass2.*", 
+               "videomass2.*", "videomass2"]
     
     if platform.system() in ['Windows','Darwin']:
         REQUIRES = ['wxPython','pyPubSub']
@@ -79,6 +81,7 @@ elif sys.version_info[0] == 3:
 else:
     sys.stderr.write(
                 u"[ERROR] Not a supported Python version.\n"
+                u"Python2 or Python3 are required, "
                 u"You are using Python version %s\n" % sys.version)
     sys.exit(1)
 
@@ -86,7 +89,7 @@ try:
     import wx
     
 except ImportError:
-    if 'bdist_wheel' not in sys.argv:
+    if 'bdist_wheel' not in sys.argv: # with py2app and py2exe only
         sys.stderr.write("[ERROR] 'wx' module is required.\n"
                          "Please, before proceeding, install it.\n")
         sys.exit(1)
