@@ -2,17 +2,19 @@
 
 NOTE TO TRASLATORS:
 
-To start a new translation, create twice new folders (for example 'de_DE' for 
-the German language and 'LC_MESSAGES') with the following tree:
+To start a new translation, create two new folders (for example 'de_DE' for 
+the German language and 'LC_MESSAGES') with the following example tree:
 
     /locale
         /de_DE
             /LC_MESSAGES
             
-Copy the file with the ".pot" extension, located in the source '/local' folder, 
-and paste into the 'LC_MESSAGES' folder, renaming the extension to ".po". 
-Now you can work on new tanslation with a translation editing program (for 
-example 'poedit') and then save it by generating a '.mo' file.
+Copy the file translation template with the ".pot" extension, located in 
+the source '/local' folder, and paste into the 'LC_MESSAGES' folder, 
+renaming the extension to ".po". 
+Now you can work on your new native language tanslation with a translation 
+editing program, for example 'poedit', and then save it by generating a 
+'.mo' file.
 
 Than update the "videomass2/vdms_SYS/app_const.py" file by adding the newly 
 translated language to the dictionary, for example add this line:
@@ -22,8 +24,11 @@ translated language to the dictionary, for example add this line:
 to:
 
     supLang = {u "en": wx.LANGUAGE_ENGLISH,
-               u "it": wx.LANGUAGE_ENGLISH,
+               u "it": wx.LANGUAGE_ITALIAN,
                u "de": wx.LANGUAGE_GERMAN,
                }
+
+For a list of the supported languages, please see:
+https://wxpython.org/Phoenix/docs/html/wx.Language.enumeration.html#wx-language
                
 ===================================================
