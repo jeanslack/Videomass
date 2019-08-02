@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (13) December 28 2018
+# Rev (14) August 2 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -305,7 +305,7 @@ class Video_Conv(wx.Panel):
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
             wx.ID_ANY, min_val=-99.0, max_val=0.0, increment=1.0, value=-1.0, 
-                        agwStyle=FS.FS_LEFT
+                        agwStyle=FS.FS_LEFT, size=(-1,-1)
                         )
         self.spin_ctrl_audionormalize.SetFormat("%f")
         self.spin_ctrl_audionormalize.SetDigits(1)

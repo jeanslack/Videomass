@@ -119,8 +119,9 @@ class Mediainfo(wx.Dialog):
                 format_info.InsertItem(num_items, 'General format:')
                 format_info.SetItemBackgroundColour(index, "green")
                 index +=1
+                print (format_list[a])
                 for b in format_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     format_info.InsertItem(index, key)
                     format_info.SetItem(index, 1, value)
                     index += 1
@@ -139,7 +140,7 @@ class Mediainfo(wx.Dialog):
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in video_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     streams_info.InsertItem(index, key)
                     streams_info.SetItem(index, 1, value)
                     index += 1
@@ -156,7 +157,7 @@ class Mediainfo(wx.Dialog):
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in audio_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     streams_info.InsertItem(index, key)
                     streams_info.SetItem(index, 1, value)
                     index += 1
@@ -173,7 +174,7 @@ class Mediainfo(wx.Dialog):
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in subtitle_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     streams_info.InsertItem(index, key)
                     streams_info.SetItem(index, 1, value)
                     index += 1

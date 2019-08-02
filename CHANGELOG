@@ -7,6 +7,22 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+August 2, 2019 V.1.4.6
++------------------------------------+
+
+BUG FIXES:
+    - fixed parsing problem on media_info.py dialog, when the values 
+      have other signs '='
+
+IMPROVEMENTS:
+    - Improved display of the text box on spin control for adjusting the 
+      peak audio level threshold on the audio_panel.py and video_panel.py
+      
+NEW:
+    - setup.py now supports the automatic installation of the pubsub module 
+      for Python3 when videomass is installed with the 'pip' command
+
++------------------------------------+
 January 24, 2019 V.1.4.5
 +------------------------------------+
 

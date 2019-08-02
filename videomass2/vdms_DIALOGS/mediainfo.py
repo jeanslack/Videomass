@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (02) 14/03/2015, (04) 27/04/2015, (05) October/10/2018
+# Rev (06) August 2 2019
 #########################################################
 
 import wx
@@ -118,7 +118,7 @@ class Mediainfo(wx.Dialog):
                 format_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in format_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     format_info.InsertStringItem(index, key)
                     format_info.SetStringItem(index, 1, value)
                     index += 1
@@ -137,7 +137,7 @@ class Mediainfo(wx.Dialog):
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in video_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     streams_info.InsertStringItem(index, key)
                     streams_info.SetStringItem(index, 1, value)
                     index += 1
@@ -154,7 +154,7 @@ class Mediainfo(wx.Dialog):
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in audio_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     streams_info.InsertStringItem(index, key)
                     streams_info.SetStringItem(index, 1, value)
                     index += 1
@@ -171,7 +171,7 @@ class Mediainfo(wx.Dialog):
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in subtitle_list[a]:
-                    (key, value) = b.strip().split('=')
+                    (key, value) = b.strip().split('=',1)
                     streams_info.InsertStringItem(index, key)
                     streams_info.SetStringItem(index, 1, value)
                     index += 1

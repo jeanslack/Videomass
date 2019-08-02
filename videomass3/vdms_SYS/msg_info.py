@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev December 28 2018
+# Rev August 2 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -37,8 +37,8 @@ def current_release():
 
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
-    Version = '1.4.5'
-    Release = 'January 26 2019'
+    Version = '1.4.6'
+    Release = 'August 2 2019'
     Copyright = '© 2013-2019'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'

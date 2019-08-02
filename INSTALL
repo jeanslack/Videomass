@@ -1,13 +1,6 @@
 Videomass Builds and Installation Instructions
 
-Base Dependencies:
-
-    - Python 2/3
-    - wxPython Classic/wxPython Phoenix
-    - pip2/pip3
-
-#--------------------------------------------------------------------------#
-NOTE: [Linux/Macintosh/Unix/Windows]
+...
 
 Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are 
 available. These installation programs contain everything needed to be used 
@@ -17,6 +10,28 @@ page at the following link:
 https://sourceforge.net/projects/videomass2/
 
 ...
+
+
+#--------------------------------------------------------------------------#
+
+Base Dependencies:
+    
+    - Python >=3.7
+    - wxPython Phoenix *
+    - pip
+    - ffmpeg
+    
+    * Also make sure that the pubsub module is installed, if it is not 
+      installed you need to install it:
+      
+            pip install PyPubSub
+    
+    OR (if you still use Python2)
+
+    - Python >=2.7
+    - wxPython Classic
+    - pip 
+    - ffmpeg
 
 Videomass can be run without installing by un-tarring the source package and 
 executing the "launcher" script in the root of the un-tarred directory.
@@ -30,18 +45,9 @@ Videomass from the python Package Index (aka PyPi) follow the Options below.
 #--------------------------------------------------------------------------#
 Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
 
-Before to install Videomass with pip tool, please install a compatible
-version of wxPython for your Python version.
-
-- If you have Python2 installed:
-
-    pip2 install videomass
-
-- If you have Python3 installed:
-
-    pip3 install videomass
+    pip install videomass
     
-- To uninstall use the same version of the Pip tool:
+- To uninstall:
 
     pip uninstall videomass
     

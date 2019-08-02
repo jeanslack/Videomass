@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (12) 25/July/2018
+# Rev (13) August 2 2019
 #########################################################
 
 import wx
@@ -303,7 +303,7 @@ class Video_Conv(wx.Panel):
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
             wx.ID_ANY, min_val=-99.0, max_val=0.0, increment=1.0, value=-1.0, 
-                        agwStyle=FS.FS_LEFT
+                        agwStyle=FS.FS_LEFT, size=(-1,-1)
                         )
         self.spin_ctrl_audionormalize.SetFormat("%f")
         self.spin_ctrl_audionormalize.SetDigits(1)

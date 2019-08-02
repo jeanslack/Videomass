@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev December 28 2018
+# Rev August 2 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -142,7 +142,7 @@ class Audio_Conv(wx.Panel):
                                     _("Max Peak Level Threshold:   ")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
-                                    agwStyle=FS.FS_LEFT)
+                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_amplitude.SetFormat("%f")
         self.spin_amplitude.SetDigits(1)
         #----------------------Set Properties----------------------#

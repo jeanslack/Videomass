@@ -1,5 +1,4 @@
 
-
 All the icons included in this folder are part of Videomass.
 
 Videomass is free software: you can redistribute it and/or modify

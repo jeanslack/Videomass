@@ -1,4 +1,3 @@
-
 # **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.
 
 Now also compatible with Python3 and wxPython-Phoenix.    
@@ -18,8 +17,8 @@ Now also compatible with Python3 and wxPython-Phoenix.
 - Preview of exported media
 - Preview video filters
 - Reproduction of imported media
-- Video conversions interface 
-- Audio conversions interface
+- Independent video conversions interface 
+- Independent audio conversions interface
 - Save jpg images from a video sequence
 - Audio peak level analysis with normalization process   
 - Grabbing audio streams from video with multilingual selection  

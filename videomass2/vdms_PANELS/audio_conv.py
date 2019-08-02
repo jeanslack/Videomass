@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) july 08 2018
+# Rev (02) August 2 2019
 #########################################################
 
 import wx
@@ -140,7 +140,7 @@ class Audio_Conv(wx.Panel):
                                     _(u"Max Peak Level Threshold:   ")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
-                                    agwStyle=FS.FS_LEFT)
+                                    agwStyle=FS.FS_LEFT, size=(-1,-1))
         self.spin_amplitude.SetFormat("%f")
         self.spin_amplitude.SetDigits(1)
         #----------------------Set Properties----------------------#
