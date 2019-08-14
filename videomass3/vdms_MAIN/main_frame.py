@@ -31,6 +31,7 @@ import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
 from videomass3.vdms_DIALOGS import dialog_tools, settings, infoprg
+from videomass3.vdms_DIALOGS import findexec, checkconf
 from videomass3.vdms_PANELS import dragNdrop, presets_mng_panel
 from videomass3.vdms_PANELS import video_conv, audio_conv
 from videomass3.vdms_IO import IO_tools
@@ -615,6 +616,17 @@ class MainFrame(wx.Frame):
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"), _("Close Videomass"))
         self.menuBar.Append(fileButton,"&File")
         
+        ####------------------ tools button
+        toolsButton = wx.Menu()
+        
+        checkexec= toolsButton.Append( wx.ID_ANY, _(
+                        "Check installed executables"), 
+                        "Check for ffmpeg, ffprobe and ffplay executables.")
+        toolsButton.AppendSeparator()
+        checkconf = toolsButton.Append( wx.ID_ANY, _("Check FFmpeg configure"), 
+                                "Shows the configuration features of FFmpeg")
+        self.menuBar.Append(toolsButton,_(u"&Tools"))
+        
         ####------------------ setup button
         setupButton = wx.Menu()
 
@@ -658,6 +670,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Default_all, self.default_all)
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
+        #----TOOLS----
+        self.Bind(wx.EVT_MENU, self.Check_exec, checkexec)
+        self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
         self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
@@ -750,6 +765,26 @@ class MainFrame(wx.Frame):
             self.btnpanel.Hide()
             
         self.Layout()
+    #------------------------------------------------------------------#
+    def Check_exec(self, event):
+        """
+        Run a dialog to check the installed executables
+        
+        """
+        #self.parent.Find(self)
+        dlg = findexec.Find(self)
+        dlg.ShowModal()
+    #------------------------------------------------------------------#
+    #------------------------------------------------------------------#
+    def Check_conf(self, event):
+        """
+        Run a dialog box to verify the build configuration of 
+        the FFmpeg
+        
+        """
+        #self.parent.Find(self)
+        dlg = checkconf.Checkconf(self)
+        dlg.ShowModal()
     #------------------------------------------------------------------#
     def Setup(self, event):
         """

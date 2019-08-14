@@ -613,6 +613,17 @@ class MainFrame(wx.Frame):
         exitItem = fileButton.Append(wx.ID_EXIT, _(u"Exit"), _(u"Close Videomass"))
         self.menuBar.Append(fileButton,u"&File")
         
+        ####------------------ tools button
+        toolsButton = wx.Menu()
+        
+        checkexec= toolsButton.Append( wx.ID_ANY, 
+                        _(u"Check installed executables"), 
+                        "Check for ffmpeg, ffprobe and ffplay executables")
+        toolsButton.AppendSeparator()
+        checkconf = toolsButton.Append( wx.ID_ANY, _(u"Check FFmpeg configure"), 
+                                "Shows the configuration features of FFmpeg")
+        self.menuBar.Append(toolsButton,_(u"&Tools"))
+        
         ####------------------ setup button
         setupButton = wx.Menu()
 
