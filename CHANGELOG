@@ -7,6 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+August 14, 2019 V.1.4.7
++------------------------------------+
+
+BUG FIXES:
+    - fixed wrong main window size when run on FreeBSD O.S.
+
+IMPROVEMENTS:
+    - Messages output from command line for debugging
+
++------------------------------------+
 August 2, 2019 V.1.4.6
 +------------------------------------+
 
