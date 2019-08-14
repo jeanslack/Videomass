@@ -8,7 +8,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (11) Gennary 14 2019
+# Rev: Gen 14-2019, Aug 14-2019
 #########################################################
 
 # This file is part of Videomass.
@@ -38,10 +38,10 @@ if __name__ == '__main__':
             import wx
         
         except ImportError:
-            sys.stderr.write("[ERROR] 'wx' module is required.\n"
+            sys.stderr.write("videomass: ERROR: 'wx' module is required.\n"
                              "Videomass for Python3 need wxPython-Phoenix.\n"
-                             "You could install it with 'pip' tool:\n"
-                             "or visit the wxPython web page for more info\n"
+                             "Visit the wxPython web page for more info:\n"
+                             u"<https://wxpython.org/>\n"
                             )
             sys.exit(1)
         
@@ -54,7 +54,7 @@ if __name__ == '__main__':
             import wx
         
         except ImportError:
-            sys.stderr.write("[ERROR] 'wx' module is required.\n"
+            sys.stderr.write("videomass: ERROR: 'wx' module is required.\n"
                             "Videomass for Python2 need wxPython-Classic.\n"
                              )
             
@@ -72,8 +72,8 @@ if __name__ == '__main__':
     
     else:
         sys.stderr.write(
-                    "[ERROR] Not a supported Python version. Need Python2 "
-                    "or Python3\n"
+                    "videomass: ERROR: Not a supported Python version. "
+                    "Need Python2 or Python3\n"
                     "You are using Python version %s\n" % sys.version
                          )
         sys.exit(1)

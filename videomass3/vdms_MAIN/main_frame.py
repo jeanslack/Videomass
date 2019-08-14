@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (04) December 28 2018
+# Rev: Dec 28 2018, Aug 14 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -258,10 +258,10 @@ class MainFrame(wx.Frame):
         self.SetIcon(icon)
         if self.OS == 'Darwin':
             self.SetSize((920, 435))
-        elif self.OS == 'Linux':
-            self.SetSize((1000, 600))
         elif self.OS == 'Windows':
             self.SetSize((900, 530))
+        else:
+            self.SetSize((1000, 600))
         #self.Centre()
         #self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.DnDsizer)
