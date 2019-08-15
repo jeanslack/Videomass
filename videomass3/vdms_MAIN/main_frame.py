@@ -770,23 +770,16 @@ class MainFrame(wx.Frame):
         Run a dialog to check the installed executables by IO_tools
         
         """
-        pass
-        #IO_tools.testFFmpeg_conf(self.OS)
-        
-        
-        
-        
-        
-        #self.parent.Find(self)
-        #dlg = findexec.Find(self)
-        #dlg.ShowModal()
+        print('TODO: do something'
     #------------------------------------------------------------------#
     def Check_conf(self, event):
         """
         Call IO_tools.testFFmpeg_conf to test features of FFmpeg
         
         """
-        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.OS,)
+        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.ffprobe_link, 
+                                 self.ffplay_link, self.OS,
+                                 )
         
     #------------------------------------------------------------------#
     def Setup(self, event):

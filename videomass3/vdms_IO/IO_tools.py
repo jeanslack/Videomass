@@ -54,7 +54,7 @@ else:
     from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf
     
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
-from videomass3.vdms_DIALOGS import findexec, checkconf
+from videomass3.vdms_DIALOGS import checkconf
 
 #-----------------------------------------------------------------------#
 def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
@@ -171,9 +171,9 @@ def volumeDetectProcess(ffmpeg, filelist, OS):
     
     return data
 #-------------------------------------------------------------------------#
-def testFFmpeg_conf(ffmpeg_link, OS):
+def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
     """
-    Call check_bin.ffmpeg_conf to get data to test the building 
+    Call *check_bin.ffmpeg_conf* to get data to test the building 
     configurations of the installed or imported FFmpeg executable 
     and send it to dialog box.
     
@@ -188,6 +188,8 @@ def testFFmpeg_conf(ffmpeg_link, OS):
                       None)
         return
     else:
-        dlg = checkconf.Checkconf(out)
+        dlg = checkconf.Checkconf(out, ffmpeg_link, 
+                                  ffprobe_link, ffplay_link
+                                  )
         dlg.ShowModal()
         

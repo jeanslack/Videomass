@@ -42,12 +42,19 @@ def ffmpeg_conf(ffmpeg_link, OS):
     ...If errors returns 'Not found'
     
     """
-    if OS == 'Windows':
+    if OS == 'Windows':# add Windows compatibility
         #TODO
         print('sono windows')
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        p = subprocess.Popen(ffmpeg_link,
+                            stderr=subprocess.PIPE,
+                            startupinfo=startupinfo,
+                            )
+        error =  p.communicate()
     else:
         try:
-            p = subprocess.Popen(['ffmpeg.exe'], stderr=subprocess.PIPE,) 
+            p = subprocess.Popen([ffmpeg_link], stderr=subprocess.PIPE,) 
             err = p.communicate()
         except FileNotFoundError as err:
             return('Not found', err)

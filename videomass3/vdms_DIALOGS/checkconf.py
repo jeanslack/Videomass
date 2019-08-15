@@ -28,6 +28,8 @@
 #########################################################
 
 import wx
+import os
+from shutil import which
 
 class Checkconf(wx.Dialog):
     """
@@ -35,14 +37,14 @@ class Checkconf(wx.Dialog):
     FFmpeg on different notebook panels
     
     """
-    def __init__(self, out):
+    def __init__(self, out, ffmpeg_link, ffprobe_link, ffplay_link):
         # with 'None' not depend from videomass. With 'parent, -1' if close
         # videomass also close mediainfo window:
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
-        Textinfo = wx.TextCtrl(notebook_1_pane_1, wx.ID_ANY, "", 
+        txtinfo = wx.TextCtrl(notebook_1_pane_1, wx.ID_ANY, "", 
                                     style = wx.TE_MULTILINE | 
                                     wx.TE_READONLY | 
                                     wx.TE_RICH2
@@ -68,16 +70,16 @@ class Checkconf(wx.Dialog):
         
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: FFmpeg build configuration features"))
-        others_opt.SetMinSize((640, 300))
-        others_opt.InsertColumn(0, _('Flags'), width=200)
+        others_opt.SetMinSize((700, 400))
+        others_opt.InsertColumn(0, _('Flags'), width=300)
         others_opt.InsertColumn(1, _('Options'), width=450)
         #others_opt.SetBackgroundColour(wx.Colour(217, 255, 255))
         enable_opt.SetMinSize((640, 300))
-        enable_opt.InsertColumn(0, _('State'), width=200)
+        enable_opt.InsertColumn(0, _('State'), width=300)
         enable_opt.InsertColumn(1, _('Options'), width=450)
         #enable_opt.SetBackgroundColour(wx.Colour(217, 255, 255))
         disabled_opt.SetMinSize((640, 300))
-        disabled_opt.InsertColumn(0, _('State'), width=200)
+        disabled_opt.InsertColumn(0, _('State'), width=300)
         disabled_opt.InsertColumn(1, _('Options'), width=450)
         #disabled_opt.SetBackgroundColour(wx.Colour(217, 255, 255))
         
@@ -90,7 +92,7 @@ class Checkconf(wx.Dialog):
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         
-        sizer_tab1.Add(Textinfo, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_tab1.Add(txtinfo, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_1.SetSizer(sizer_tab1)
         
         sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
@@ -114,7 +116,7 @@ class Checkconf(wx.Dialog):
         self.Layout()
         
         # delete previous append:
-        Textinfo.Clear()# reset textctrl before close
+        txtinfo.Clear()# reset textctrl before close
         others_opt.DeleteAllItems()
         enable_opt.DeleteAllItems()
         disabled_opt.DeleteAllItems()
@@ -122,11 +124,79 @@ class Checkconf(wx.Dialog):
         # create lists by out:
         info, others, enable, disable = out
         
-        #### populate Textinfo TextCtrl output:
-        #Textinfo.SetDefaultStyle(wx.TextAttr(wx.BLUE))#GREEN
-        for t in info:
-            Textinfo.AppendText('\n    %s\n' % t.strip())
+        ffmpeg_text = _("FFmpeg is a very fast video and audio converter "
+                        "that can also grab from a live audio/video source. "
+                        "It can also convert between arbitrary sample rates "
+                        "and resize video on the fly with a high quality "
+                        "polyphase filter.")
         
+        ffprobe_text = _("FFprobe is a simple multimedia stream analyzer. "
+                         "You can use it to output all kinds of information "
+                         "about an input including duration, frame rate, "
+                         "frame size, etc. It is also useful for gathering "
+                         "specific information about an input to be used "
+                         "in a script. ")
+        
+        ffplay_text = _("FFplay is a very simple and portable media player "
+                        "using the FFmpeg libraries and the SDL library. "
+                        "It is mostly used as a testbed for the various "
+                        "FFmpeg APIs. ")
+        
+        if which(ffmpeg_link):
+            ffmpeg = _("FFmpeg is installed in your system.")
+        else:
+            if os.path.exists(ffmpeg_link):
+                ffmpeg = _("FFmpeg was imported locally")
+            
+        if which(ffprobe_link):
+            ffprobe = _("FFprobe is installed in your system.")
+        else:
+            if os.path.exists(ffprobe_link):
+                ffprobe = _("FFprobe was imported locally")
+            else:
+                ffprobe = _("FFprobe not found !")
+                
+        if which(ffplay_link):
+            ffplay = _("FFplay is installed in your system.")
+        else:
+            if os.path.exists(ffplay_link):
+                ffplay = _("FFplay was imported locally")
+            else:
+                ffplay = _("FFplay not found !")
+        
+        #### populate txtinfo TextCtrl output:
+        for t in info:
+            txtinfo.AppendText('\n      %s\n' % t.strip())
+            
+        txtinfo.AppendText('\n--------------------------------------------')
+        txtinfo.AppendText('\n%s\n' % ffmpeg_text)
+        txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN
+                                            ))
+        txtinfo.AppendText('\n      %s\n' % ffmpeg)
+        
+        txtinfo.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+        txtinfo.AppendText('--------------------------------------------')
+        txtinfo.AppendText('\n%s\n' % ffprobe_text)
+        if "FFprobe not found !" in ffprobe:
+            txtinfo.SetDefaultStyle(wx.TextAttr(wx.RED))
+            txtinfo.AppendText('\n      %s\n' % ffprobe)
+        else:
+            txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN))
+            #txtinfo.SetForegroundColour('#8aab3c')
+            txtinfo.AppendText('\n      %s\n' % ffprobe)
+            
+        txtinfo.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+        txtinfo.AppendText('--------------------------------------------')
+        txtinfo.AppendText('\n%s\n' % ffplay_text)
+        if "FFplay not found !" in ffplay:
+            txtinfo.SetDefaultStyle(wx.TextAttr(wx.RED))
+            txtinfo.AppendText('\n    %s\n' % ffplay)
+        else:
+            txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN))
+            txtinfo.AppendText('\n    %s\n' % ffplay)
+        
+        txtinfo.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            
         #### populate others_opt listctrl output:
         index = 0 
         if not others:
