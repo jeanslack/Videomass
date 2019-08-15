@@ -31,7 +31,6 @@ import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
 from videomass3.vdms_DIALOGS import dialog_tools, settings, infoprg
-from videomass3.vdms_DIALOGS import findexec, checkconf
 from videomass3.vdms_PANELS import dragNdrop, presets_mng_panel
 from videomass3.vdms_PANELS import video_conv, audio_conv
 from videomass3.vdms_IO import IO_tools
@@ -768,23 +767,27 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def Check_exec(self, event):
         """
-        Run a dialog to check the installed executables
+        Run a dialog to check the installed executables by IO_tools
         
         """
+        pass
+        #IO_tools.testFFmpeg_conf(self.OS)
+        
+        
+        
+        
+        
         #self.parent.Find(self)
-        dlg = findexec.Find(self)
-        dlg.ShowModal()
-    #------------------------------------------------------------------#
+        #dlg = findexec.Find(self)
+        #dlg.ShowModal()
     #------------------------------------------------------------------#
     def Check_conf(self, event):
         """
-        Run a dialog box to verify the build configuration of 
-        the FFmpeg
+        Call IO_tools.testFFmpeg_conf to test features of FFmpeg
         
         """
-        #self.parent.Find(self)
-        dlg = checkconf.Checkconf(self)
-        dlg.ShowModal()
+        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.OS,)
+        
     #------------------------------------------------------------------#
     def Setup(self, event):
         """
