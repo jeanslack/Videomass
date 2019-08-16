@@ -15,10 +15,13 @@ Profile update:
 --------------
 URGENCY: high
 --------------
-
+fare compatibilità Windows con python2 e python3 per: 
+displayer to watch the building configurations of the installed 
+or imported FFmpeg executables
 -------------
 URGENCY: low
 -------------
+make a displayer to watch the -formats, -encoders -decoders (and -filters ?)*
 
 ---------------
 URGENCY: medium

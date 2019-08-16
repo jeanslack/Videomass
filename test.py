@@ -4,6 +4,73 @@
 
 import subprocess
 
+def ffmpeg_conf(ffmpeg_link):
+    """
+    Execute FFmpeg without arguments to parse output 
+    configuration  messages
+    
+    ...Returns lists of:
+        - info = [version number etc, release and building]
+        - others = [building flags]
+        - enable = [enabled features]
+        - disable = [disable features]
+    
+    ...If errors returns 'Not found'
+    
+    """
+    try: # grab generic informations:
+        p = subprocess.check_output([ffmpeg_link, '-version'])
+    except OSError as e:
+        return('Not found', e)
+
+    info = []
+
+    print p.split('\n')
+
+    return
+    ##########################################
+    for v in _vers:
+        for a in v:
+
+            print a
+        #if 'ffmpeg version' in v:
+            #info.append(v.strip().decode())
+        #if 'built with' in v:
+            #info.append(v.strip().decode())
+    
+    try: # grab buildconf:
+        p = subprocess.Popen([ffmpeg_link, 
+                              '-loglevel', 
+                              'error', 
+                              '-buildconf'], 
+                             stdout=subprocess.PIPE, 
+                             stderr=subprocess.STDOUT,)
+        build = p.communicate()
+    except OSError as e:
+        return('Not found', e)
+    
+    conf = []
+    for c in build.split('\n'):
+        conf.append(c.strip().decode())
+
+    enable = []
+    disable = []
+    others = []
+
+    for en in conf:
+        if en.startswith('--enable'):
+            enable.append(en.split('--enable-')[1])
+        elif en.startswith('--disable'):
+            disable.append(en.split('--disable-')[1])
+        else:
+            others.append(en)
+    if 'configuration:' in others:
+        others.remove('configuration:')
+    #if '' in others:
+        #others.remove('')
+    
+    return(info, others, enable, disable)
+
 def funz(ffmpeg_link):
     try: # grab buildconf:
         p = subprocess.run([ffmpeg_link, 
@@ -77,4 +144,5 @@ def funz(ffmpeg_link):
     #for x in enable:
         #print(x.split('--enable')[1])
 
-funz('ffmpeg')
+#Formats('ffmpeg')
+ffmpeg_conf('ffmpe')

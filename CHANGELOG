@@ -7,11 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-August 14, 2019 V.1.4.7
+August 16, 2019 V.1.5.0
 +------------------------------------+
 
 BUG FIXES:
     - fixed wrong main window size when run on FreeBSD O.S.
+
+ADD:
+	- added new tools menu with a new displayer to watch the 
+      building configurations of the installed or imported FFmpeg 
+      executables 
 
 IMPROVEMENTS:
     - Messages output from command line during start-up

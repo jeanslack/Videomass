@@ -616,12 +616,12 @@ class MainFrame(wx.Frame):
         ####------------------ tools button
         toolsButton = wx.Menu()
         
-        checkexec= toolsButton.Append( wx.ID_ANY, 
-                        _(u"Check installed executables"), 
-                        "Check for ffmpeg, ffprobe and ffplay executables")
-        toolsButton.AppendSeparator()
-        checkconf = toolsButton.Append( wx.ID_ANY, _(u"Check FFmpeg configure"), 
-                                "Shows the configuration features of FFmpeg")
+        #checkexec= toolsButton.Append( wx.ID_ANY, _(
+                        #"Check installed executables"), 
+                        #"Check for ffmpeg, ffprobe and ffplay executables.")
+        #toolsButton.AppendSeparator()
+        checkconf = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg specifications"), 
+                                u"Shows the configuration features of FFmpeg")
         self.menuBar.Append(toolsButton,_(u"&Tools"))
         
         ####------------------ setup button
@@ -667,6 +667,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Default_all, self.default_all)
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
+        #----TOOLS----
+        #self.Bind(wx.EVT_MENU, self.Check_exec, checkexec)
+        self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
         self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
@@ -735,6 +738,22 @@ class MainFrame(wx.Frame):
         destroy the videomass.
         """
         self.Destroy()
+    #--------------------------- Menu Tools ---------------------------#
+    def Check_exec(self, event):
+        """
+        Run a dialog to check the installed executables by IO_tools
+        
+        """
+        print('TODO: do something')
+    #------------------------------------------------------------------#
+    def Check_conf(self, event):
+        """
+        Call IO_tools.testFFmpeg_conf to test features of FFmpeg
+        
+        """
+        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.ffprobe_link, 
+                                 self.ffplay_link, self.OS,
+                                 )
                 
     #------------------------ Menu  Preferences -------------------------#
     def Show_toolbar(self, event):

@@ -38,6 +38,7 @@ if platform.system() == 'Windows':
     from videomass2.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass2.vdms_PROCESS.ffplay_reproductionWin32 import Play
     from videomass2.vdms_PROCESS.ffprobe_parserWin32 import FFProbe
+    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf
 else:
     from videomass2.vdms_PROCESS.task_processing import GeneralProcess
     from videomass2.vdms_PROCESS.task_processing import ProcThread
@@ -48,8 +49,10 @@ else:
     from videomass2.vdms_PROCESS.volumedetect import PopupDialog
     from videomass2.vdms_PROCESS.ffplay_reproduction import Play
     from videomass2.vdms_PROCESS.ffprobe_parser import FFProbe
+    from videomass2.vdms_PROCESS.check_bin import ffmpeg_conf
     
 from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
+from videomass2.vdms_DIALOGS import checkconf
 
 
 #-----------------------------------------------------------------------#
@@ -166,5 +169,27 @@ def volumeDetectProcess(ffmpeg, filelist, OS):
     loadDlg.Destroy()
     
     return data
+#-------------------------------------------------------------------------#
+def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
+    """
+    Call *check_bin.ffmpeg_conf* to get data to test the building 
+    configurations of the installed or imported FFmpeg executable 
+    and send it to dialog box.
+    
+    
+    """
+    out = ffmpeg_conf(ffmpeg_link)
+    if 'Not found' in out[0]:
+        wx.MessageBox(_("FFmpeg executable not found !"
+                        "\n\n{0}".format(out[1])), 
+                      "Videomass: error",
+                      wx.ICON_ERROR, 
+                      None)
+        return
+    else:
+        dlg = checkconf.Checkconf(out, ffmpeg_link, 
+                                  ffprobe_link, ffplay_link
+                                  )
+        dlg.Show()
     
 
