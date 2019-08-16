@@ -191,5 +191,5 @@ def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
         dlg = checkconf.Checkconf(out, ffmpeg_link, 
                                   ffprobe_link, ffplay_link
                                   )
-        dlg.ShowModal()
+        dlg.Show()
         

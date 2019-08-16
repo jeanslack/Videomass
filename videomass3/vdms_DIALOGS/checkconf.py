@@ -207,12 +207,13 @@ class Checkconf(wx.Dialog):
             others_opt.SetItemBackgroundColour(index, "blue")
             n = len(others)
             for a in range(n):
-                (key, value) = others[a].strip().split('=')
-                #(key, value) = others[a][0].strip().split('=')
-                num_items = others_opt.GetItemCount()
-                index +=1
-                others_opt.InsertItem(index, key)
-                others_opt.SetItem(index, 1, value)
+                if '=' in others[a]:
+                    (key, value) = others[a].strip().split('=')
+                    #(key, value) = others[a][0].strip().split('=')
+                    num_items = others_opt.GetItemCount()
+                    index +=1
+                    others_opt.InsertItem(index, key)
+                    others_opt.SetItem(index, 1, value)
                 
         #### populate enable_opt listctrl output:
         index = 0

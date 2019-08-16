@@ -765,23 +765,6 @@ class MainFrame(wx.Frame):
             
         self.Layout()
     #------------------------------------------------------------------#
-    def Check_exec(self, event):
-        """
-        Run a dialog to check the installed executables by IO_tools
-        
-        """
-        print('TODO: do something'
-    #------------------------------------------------------------------#
-    def Check_conf(self, event):
-        """
-        Call IO_tools.testFFmpeg_conf to test features of FFmpeg
-        
-        """
-        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.ffprobe_link, 
-                                 self.ffplay_link, self.OS,
-                                 )
-        
-    #------------------------------------------------------------------#
     def Setup(self, event):
         """
         Call the module setup for setting preferences
@@ -795,6 +778,23 @@ class MainFrame(wx.Frame):
                                      self.OS, self.iconset,
                                      )
         setup_dlg.ShowModal()
+    
+    #--------------------------- Menu Tools ---------------------------#
+    def Check_exec(self, event):
+        """
+        Run a dialog to check the installed executables by IO_tools
+        
+        """
+        print('TODO: do something')
+    #------------------------------------------------------------------#
+    def Check_conf(self, event):
+        """
+        Call IO_tools.testFFmpeg_conf to test features of FFmpeg
+        
+        """
+        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.ffprobe_link, 
+                                 self.ffplay_link, self.OS,
+                                 )
         
     #---------------------------- Menu Edit ----------------------------#
     def Helpme(self, event):
