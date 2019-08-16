@@ -618,11 +618,11 @@ class MainFrame(wx.Frame):
         ####------------------ tools button
         toolsButton = wx.Menu()
         
-        checkexec= toolsButton.Append( wx.ID_ANY, _(
-                        "Check installed executables"), 
-                        "Check for ffmpeg, ffprobe and ffplay executables.")
-        toolsButton.AppendSeparator()
-        checkconf = toolsButton.Append( wx.ID_ANY, _("Check FFmpeg configure"), 
+        #checkexec= toolsButton.Append( wx.ID_ANY, _(
+                        #"Check installed executables"), 
+                        #"Check for ffmpeg, ffprobe and ffplay executables.")
+        #toolsButton.AppendSeparator()
+        checkconf = toolsButton.Append( wx.ID_ANY, _("FFmpeg specifications"), 
                                 "Shows the configuration features of FFmpeg")
         self.menuBar.Append(toolsButton,_(u"&Tools"))
         
@@ -670,7 +670,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
-        self.Bind(wx.EVT_MENU, self.Check_exec, checkexec)
+        #self.Bind(wx.EVT_MENU, self.Check_exec, checkexec)
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)

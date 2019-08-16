@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
+
 #########################################################
 # Name: check_bin.py
 # Porpose: Test the binaries of ffmpeg, ffprobe and ffplay
-# Compatibility: Python3, wxPython Phoenix
+# Compatibility: Python3, wxPython Phoenix on Unix like only
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -42,51 +43,51 @@ def ffmpeg_conf(ffmpeg_link, OS):
     ...If errors returns 'Not found'
     
     """
-    if OS == 'Windows':# add Windows compatibility
-        #TODO
-        print('sono windows')
-        startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-        p = subprocess.Popen(ffmpeg_link,
-                            stderr=subprocess.PIPE,
-                            startupinfo=startupinfo,
-                            )
-        error =  p.communicate()
-    else:
-        try:
-            p = subprocess.Popen([ffmpeg_link], stderr=subprocess.PIPE,) 
-            err = p.communicate()
-        except FileNotFoundError as err:
-            return('Not found', err)
+    try: # grab generic informations:
+        p = subprocess.run([ffmpeg_link,
+                              '-version'], 
+                            stdout=subprocess.PIPE, 
+                            stderr=subprocess.STDOUT,) 
+        vers = p.stdout
+    except FileNotFoundError as e:
+        return('Not found', e)
 
     info = []
+    for v in vers.split(b'\n'):
+        if b'ffmpeg version' in v:
+            info.append(v.strip().decode())
+        if b'built with' in v:
+            info.append(v.strip().decode())
+    
+    try: # grab buildconf:
+        p = subprocess.run([ffmpeg_link, 
+                              '-loglevel', 
+                              'error', 
+                              '-buildconf'], 
+                             stdout=subprocess.PIPE, 
+                             stderr=subprocess.STDOUT,)
+        build = p.stdout
+    except FileNotFoundError as e:
+        return('Not found', e)
+    
     conf = []
-
-    for vers in err[1].split(b'\n'):
-        #if vers.startswith(b'ffmpeg version'):
-        if b'ffmpeg version' in vers:
-            info.append(vers.decode())
-        if b'built with' in vers:
-            info.append(vers.decode())
-        if b'configuration' in vers:
-            conf.append(vers.decode())
+    for c in build.split(b'\n'):
+        conf.append(c.strip().decode())
 
     enable = []
     disable = []
     others = []
-    #print(conf[0].split())
-    for e in conf[0].split():
-        if e.startswith('--enable'):
-            enable.append(e.split('--enable')[1])
-        elif e.startswith('--disable'):
-            disable.append(e.split('--disable')[1])
+
+    for en in conf:
+        if en.startswith('--enable'):
+            enable.append(en.split('--enable-')[1])
+        elif en.startswith('--disable'):
+            disable.append(en.split('--disable-')[1])
         else:
-            others.append(e)
+            others.append(en)
     if 'configuration:' in others:
         others.remove('configuration:')
-            
-    #print(enable)
-    #print(disable)
-    #print(others)
+    #if '' in others:
+        #others.remove('')
     
     return(info, others, enable, disable)
