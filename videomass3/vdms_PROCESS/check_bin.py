@@ -29,6 +29,8 @@
 
 import subprocess
 
+#-----------------------------------------------------------#
+
 def ffmpeg_conf(ffmpeg_link, OS):
     """
     Execute FFmpeg without arguments to parse output 
@@ -91,3 +93,37 @@ def ffmpeg_conf(ffmpeg_link, OS):
         #others.remove('')
     
     return(info, others, enable, disable)
+
+#-------------------------------------------------------------------#
+
+def ff_formats(ffmpeg_link):
+    """
+    bla bla bla
+    """
+    
+    try: # grab buildconf:
+        p = subprocess.run([ffmpeg_link, 
+                                '-loglevel', 
+                                'error', 
+                                '-formats'], 
+                                stdout=subprocess.PIPE, 
+                                stderr=subprocess.STDOUT,)
+        _f = p.stdout
+    except FileNotFoundError as e:
+        return('Not found', e)
+            
+    frmt = _f.split(b'\n')
+    
+    diz = {'Demuxing Supported':[], 
+           'Muxing Supported':[], 
+           'Mux/Demux Supported':[]}
+    
+    for f in frmt:
+        if f.strip().startswith(b'D '):
+            diz['Demuxing Supported'].append(f.replace(b'D', b'', 1).strip())
+        elif f.strip().startswith(b'E '):
+            diz['Muxing Supported'].append(f.replace(b'E', b'', 1).strip())
+        elif f.strip().startswith(b'DE '):
+            diz['Mux/Demux Supported'].append(f.replace(b'DE', b'', 1).strip())
+            
+    return(diz)

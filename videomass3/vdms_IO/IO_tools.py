@@ -40,7 +40,7 @@ if platform.system() == 'Windows':
     from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproductionWin32 import Play
     from videomass3.vdms_PROCESS.ffprobe_parserWin32 import FFProbe
-    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf
+    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf, ff_formats
 else:
     from videomass3.vdms_PROCESS.task_processing import GeneralProcess
     from videomass3.vdms_PROCESS.task_processing import ProcThread
@@ -51,10 +51,11 @@ else:
     from videomass3.vdms_PROCESS.volumedetect import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproduction import Play
     from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
-    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf
+    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf, ff_formats
     
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
 from videomass3.vdms_DIALOGS import checkconf
+from videomass3.vdms_DIALOGS import ffmpeg_formats
 
 #-----------------------------------------------------------------------#
 def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
@@ -191,5 +192,24 @@ def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
         dlg = checkconf.Checkconf(out, ffmpeg_link, 
                                   ffprobe_link, ffplay_link
                                   )
+        dlg.Show()
+#-------------------------------------------------------------------------#
+def ffmpeg_formats(ffmpeg_link):
+    """
+    Call *check_bin.ff_formats* to get available formats by 
+    imported FFmpeg executable and send it to dialog box.
+    
+    
+    """
+    dictionary = ff_formats(ffmpeg_link)
+    if 'Not found' in dictionary[0]:
+        wx.MessageBox(_("FFmpeg executable not found !"
+                        "\n\n{0}".format(dictionary[1])), 
+                      "Videomass: error",
+                      wx.ICON_ERROR, 
+                      None)
+        return
+    else:
+        dlg = ffmpeg_formats.FFmpeg_formats(dictionary)
         dlg.Show()
         

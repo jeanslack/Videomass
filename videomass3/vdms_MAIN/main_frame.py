@@ -618,10 +618,9 @@ class MainFrame(wx.Frame):
         ####------------------ tools button
         toolsButton = wx.Menu()
         
-        #checkexec= toolsButton.Append( wx.ID_ANY, _(
-                        #"Check installed executables"), 
-                        #"Check for ffmpeg, ffprobe and ffplay executables.")
-        #toolsButton.AppendSeparator()
+        ckformats= toolsButton.Append( wx.ID_ANY, _(
+                        "FFmpeg available formats"),"")
+        toolsButton.AppendSeparator()
         checkconf = toolsButton.Append( wx.ID_ANY, _("FFmpeg specifications"), 
                                 "Shows the configuration features of FFmpeg")
         self.menuBar.Append(toolsButton,_(u"&Tools"))
@@ -670,7 +669,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
-        #self.Bind(wx.EVT_MENU, self.Check_exec, checkexec)
+        self.Bind(wx.EVT_MENU, self.check_Formats, ckformats)
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
@@ -780,12 +779,14 @@ class MainFrame(wx.Frame):
         setup_dlg.ShowModal()
     
     #--------------------------- Menu Tools ---------------------------#
-    def Check_exec(self, event):
+    def check_Formats(self, event):
         """
-        Run a dialog to check the installed executables by IO_tools
+        Run a dialog to check the ffmpeg available 
+        formats by IO_tools
         
         """
-        print('TODO: do something')
+        IO_tools.ffmpeg_formats(self.ffmpeg_link,)
+        
     #------------------------------------------------------------------#
     def Check_conf(self, event):
         """

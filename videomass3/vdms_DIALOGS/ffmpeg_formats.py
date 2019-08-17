@@ -1,0 +1,169 @@
+# -*- coding: UTF-8 -*-
+
+#########################################################
+# Name: checkconf.py
+# Porpose: Dialog to show the build configuration of the FFmpeg
+# Compatibility: Python3, wxPython Phoenix
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# license: GPL3
+# Rev: Aug.14 2019
+#########################################################
+
+# This file is part of Videomass.
+
+#    Videomass is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    Videomass is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+
+#########################################################
+
+import wx
+
+class FFmpeg_formats(wx.Dialog):
+    """
+    View the features of the build configuration of 
+    FFmpeg on different notebook panels
+    
+    """
+    def __init__(self, dict_formats):
+        # with 'None' not depend from videomass. With 'parent, -1' if close
+        # videomass also close mediainfo window:
+        #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        notebook_1 = wx.Notebook(self, wx.ID_ANY)
+        notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
+        dmx = wx.ListCtrl(notebook_1_pane_1, wx.ID_ANY, 
+                                    style=wx.LC_REPORT | 
+                                    wx.SUNKEN_BORDER
+                                    )
+        notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
+        mx = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
+                                     style=wx.LC_REPORT | 
+                                     wx.SUNKEN_BORDER
+                                     )
+        notebook_1_pane_3 = wx.Panel(notebook_1, wx.ID_ANY)
+        dmx_mx = wx.ListCtrl(notebook_1_pane_3, wx.ID_ANY, 
+                                       style=wx.LC_REPORT | 
+                                       wx.SUNKEN_BORDER
+                                       )
+        #button_help = wx.Button(self, wx.ID_HELP, "")
+        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        
+        #----------------------Properties----------------------#
+        self.SetTitle(_("Videomass: FFmpeg specifications"))
+        dmx.SetMinSize((700, 400))
+        dmx.InsertColumn(0, _('Flags'), width=300)
+        dmx.InsertColumn(1, _('Options'), width=450)
+        #dmx.SetBackgroundColour(wx.Colour(217, 255, 255))
+        mx.SetMinSize((700, 400))
+        mx.InsertColumn(0, _('Status'), width=300)
+        mx.InsertColumn(1, _('Options'), width=450)
+        #mx.SetBackgroundColour(wx.Colour(217, 255, 255))
+        dmx_mx.SetMinSize((700, 400))
+        dmx_mx.InsertColumn(0, _('Status'), width=300)
+        dmx_mx.InsertColumn(1, _('Options'), width=450)
+        #dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
+        
+        #----------------------Layout--------------------------#
+        sizer_1 = wx.BoxSizer(wx.VERTICAL)
+        grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
+        grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
+        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
+        
+        sizer_tab1.Add(dmx, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_1_pane_2.SetSizer(sizer_tab1)
+        
+        sizer_tab2.Add(mx, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_1_pane_3.SetSizer(sizer_tab2)
+        sizer_tab3.Add(dmx_mx, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_1.AddPage(notebook_1_pane_1, (_("Overview")))
+        notebook_1.AddPage(notebook_1_pane_2, (_("System Options")))
+        notebook_1.AddPage(notebook_1_pane_3, (_("Options Enabled")))
+        grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
+        grid_buttons.Add(button_close, 0, wx.ALL, 5)
+        grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+
+        sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
+        self.SetSizer(sizer_1)
+        sizer_1.Fit(self)
+        self.Layout()
+        
+        # delete previous append:
+        dmx.DeleteAllItems()
+        mx.DeleteAllItems()
+        dmx_mx.DeleteAllItems()
+        
+        # create lists by out:
+        print(dict_formats)
+        
+            
+        #### populate dmx listctrl output:
+        #index = 0 
+        #if not others:
+            #print ('No others option found')
+        #else:
+            #dmx.InsertItem(index, _('Specific compilation options'))
+            #dmx.SetItemBackgroundColour(index, "blue")
+            #n = len(others)
+            #for a in range(n):
+                #if '=' in others[a]:
+                    #(key, value) = others[a].strip().split('=')
+                    ##(key, value) = others[a][0].strip().split('=')
+                    #num_items = dmx.GetItemCount()
+                    #index +=1
+                    #dmx.InsertItem(index, key)
+                    #dmx.SetItem(index, 1, value)
+                
+        ##### populate mx listctrl output:
+        #index = 0
+        #if not enable:
+            #print ('No options enabled')
+        #else:
+            #mx.InsertItem(index, _('ENABLED:'))
+            #mx.SetItemBackgroundColour(index, "green")
+            #n = len(enable)
+            #for a in range(n):
+                #(key, value) = _('Enabled'), enable[a]
+                #num_items = mx.GetItemCount()
+                #index +=1
+                #mx.InsertItem(index, key)
+                #mx.SetItem(index, 1, value)
+        
+        ##### populate dmx_mx listctrl output:
+        #index = 0 
+        #if not disable:
+            #print ('No options disabled')
+        #else:
+            #dmx_mx.InsertItem(index, _('DISABLED:'))
+            #dmx_mx.SetItemBackgroundColour(index, "red")
+            #n = len(disable)
+            #for a in range(n):
+                #(key, value) = _('Disabled'), disable[a]
+                #num_items = dmx_mx.GetItemCount()
+                #index +=1
+                #dmx_mx.InsertItem(index, key)
+                #dmx_mx.SetItem(index, 1, value)
+                    
+        #----------------------Binding (EVT)----------------------#
+        self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
+        self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
+        #self.Bind(wx.EVT_BUTTON, self.on_help, button_help)
+
+    #----------------------Event handler (callback)----------------------#
+    def on_close(self, event):
+        self.Destroy()
+        #event.Skip()
+
+    #-------------------------------------------------------------------#

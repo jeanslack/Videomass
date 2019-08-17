@@ -124,24 +124,6 @@ class Checkconf(wx.Dialog):
         # create lists by out:
         info, others, enable, disable = out
         
-        ffmpeg_text = _(u"FFmpeg is a very fast video and audio converter "
-                        u"that can also grab from a live audio/video source. "
-                        u"It can also convert between arbitrary sample rates "
-                        u"and resize video on the fly with a high quality "
-                        u"polyphase filter.")
-        
-        ffprobe_text = _(u"FFprobe is a simple multimedia stream analyzer. "
-                         u"You can use it to output all kinds of information "
-                         u"about an input including duration, frame rate, "
-                         u"frame size, etc. It is also useful for gathering "
-                         u"specific information about an input to be used "
-                         u"in a script. ")
-        
-        ffplay_text = _(u"FFplay is a very simple and portable media player "
-                        u"using the FFmpeg libraries and the SDL library. "
-                        u"It is mostly used as a testbed for the various "
-                        u"FFmpeg APIs. ")
-        
         if which(ffmpeg_link):
             ffmpeg = _(u"FFmpeg ..installed")
         else:
@@ -166,28 +148,19 @@ class Checkconf(wx.Dialog):
         
         #### populate txtinfo TextCtrl output:
         for t in info:
-            txtinfo.AppendText('\n      %s\n' % t.strip())
+            txtinfo.AppendText("\n      %s\n" % t.strip())
             
-        txtinfo.AppendText('\n--------------------------------------------')
-        txtinfo.AppendText('\n%s\n' % ffmpeg_text)
-        txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN
-                                            ))
-        txtinfo.AppendText('\n      %s\n' % ffmpeg)
+        txtinfo.AppendText("\n\n      -------------------------------------")
         
-        txtinfo.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-        txtinfo.AppendText('--------------------------------------------')
-        txtinfo.AppendText('\n%s\n' % ffprobe_text)
+        txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN))
+        txtinfo.AppendText('\n\n      %s\n' % ffmpeg)
+
         if "FFprobe not found !" in ffprobe:
             txtinfo.SetDefaultStyle(wx.TextAttr(wx.RED))
             txtinfo.AppendText('\n      %s\n' % ffprobe)
         else:
-            txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN))
-            #txtinfo.SetForegroundColour('#8aab3c')
             txtinfo.AppendText('\n      %s\n' % ffprobe)
-            
-        txtinfo.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-        txtinfo.AppendText('--------------------------------------------')
-        txtinfo.AppendText('\n%s\n' % ffplay_text)
+
         if "FFplay not found !" in ffplay:
             txtinfo.SetDefaultStyle(wx.TextAttr(wx.RED))
             txtinfo.AppendText('\n      %s\n' % ffplay)
