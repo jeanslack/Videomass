@@ -40,7 +40,7 @@ if platform.system() == 'Windows':
     from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproductionWin32 import Play
     from videomass3.vdms_PROCESS.ffprobe_parserWin32 import FFProbe
-    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf, ff_formats
+    from videomass3.vdms_PROCESS.check_bin import ff_conf, ff_formats
 else:
     from videomass3.vdms_PROCESS.task_processing import GeneralProcess
     from videomass3.vdms_PROCESS.task_processing import ProcThread
@@ -51,7 +51,7 @@ else:
     from videomass3.vdms_PROCESS.volumedetect import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproduction import Play
     from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
-    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf, ff_formats
+    from videomass3.vdms_PROCESS.check_bin import ff_conf, ff_formats
     
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
 from videomass3.vdms_DIALOGS import checkconf
@@ -172,21 +172,20 @@ def volumeDetectProcess(ffmpeg, filelist, OS):
     
     return data
 #-------------------------------------------------------------------------#
-def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
+def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
     """
     Call *check_bin.ffmpeg_conf* to get data to test the building 
     configurations of the installed or imported FFmpeg executable 
     and send it to dialog box.
     
-    
     """
-    out = ffmpeg_conf(ffmpeg_link, OS)
+    out = ff_conf(ffmpeg_link, OS)
     if 'Not found' in out[0]:
         wx.MessageBox(_("FFmpeg executable not found !"
                         "\n\n{0}".format(out[1])), 
-                      "Videomass: error",
-                      wx.ICON_ERROR, 
-                      None)
+                        "Videomass: error",
+                        wx.ICON_ERROR, 
+                        None)
         return
     else:
         dlg = checkconf.Checkconf(out, ffmpeg_link, 
@@ -194,22 +193,21 @@ def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
                                   )
         dlg.Show()
 #-------------------------------------------------------------------------#
-def ffmpeg_formats(ffmpeg_link):
+def test_formats(ffmpeg_link):
     """
     Call *check_bin.ff_formats* to get available formats by 
     imported FFmpeg executable and send it to dialog box.
     
-    
     """
-    dictionary = ff_formats(ffmpeg_link)
-    if 'Not found' in dictionary[0]:
+    diction = ff_formats(ffmpeg_link)
+    if 'Not found' in diction.keys():
         wx.MessageBox(_("FFmpeg executable not found !"
-                        "\n\n{0}".format(dictionary[1])), 
-                      "Videomass: error",
-                      wx.ICON_ERROR, 
-                      None)
+                        "\n\n{0}".format(diction['Not found'])), 
+                        "Videomass: error",
+                        wx.ICON_ERROR, 
+                        None)
         return
     else:
-        dlg = ffmpeg_formats.FFmpeg_formats(dictionary)
+        dlg = ffmpeg_formats.FFmpeg_formats(diction)
         dlg.Show()
         

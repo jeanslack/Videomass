@@ -31,9 +31,9 @@ import subprocess
 
 #-----------------------------------------------------------#
 
-def ffmpeg_conf(ffmpeg_link, OS):
+def ff_conf(ffmpeg_link, OS):
     """
-    Execute FFmpeg without arguments to parse output 
+    Execute FFmpeg -version command to parse output 
     configuration  messages
     
     ...Returns lists of:
@@ -98,7 +98,14 @@ def ffmpeg_conf(ffmpeg_link, OS):
 
 def ff_formats(ffmpeg_link):
     """
-    bla bla bla
+    Parse output of *ffmpeg -formats* command (see p = subprocess below)
+    and return a ditionary with the follow keys and values:
+    
+        * KEYS                  * VALUES 
+        'Demuxing Supported' :  [list of (D)emuxing formats support]
+        'Muxing Supported' :    [list of (M)uxing formats support]
+        'Mux/Demux Supported' : [list of (D)emuxing(M)uxing formats support]
+    
     """
     
     try: # grab buildconf:
@@ -110,7 +117,8 @@ def ff_formats(ffmpeg_link):
                                 stderr=subprocess.STDOUT,)
         _f = p.stdout
     except FileNotFoundError as e:
-        return('Not found', e)
+        return({'Not found':e, '':'', '':''})
+        #return('Not found', e,)
             
     frmt = _f.split(b'\n')
     
@@ -120,10 +128,13 @@ def ff_formats(ffmpeg_link):
     
     for f in frmt:
         if f.strip().startswith(b'D '):
-            diz['Demuxing Supported'].append(f.replace(b'D', b'', 1).strip())
+            diz['Demuxing Supported'].append(f.replace(
+                                      b'D', b'', 1).strip().decode())
         elif f.strip().startswith(b'E '):
-            diz['Muxing Supported'].append(f.replace(b'E', b'', 1).strip())
+            diz['Muxing Supported'].append(f.replace(
+                                    b'E', b'', 1).strip().decode())
         elif f.strip().startswith(b'DE '):
-            diz['Mux/Demux Supported'].append(f.replace(b'DE', b'', 1).strip())
+            diz['Mux/Demux Supported'].append(f.replace(
+                                       b'DE', b'', 1).strip().decode())
             
     return(diz)

@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: checkconf.py
-# Porpose: Dialog to show the build configuration of the FFmpeg
+# Porpose: Dialog to show the available formats on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -28,11 +28,12 @@
 #########################################################
 
 import wx
+import itertools
 
 class FFmpeg_formats(wx.Dialog):
     """
-    View the features of the build configuration of 
-    FFmpeg on different notebook panels
+    It shows a dialog box with a pretty kind of GUI to view 
+    the formats available on FFmpeg
     
     """
     def __init__(self, dict_formats):
@@ -60,18 +61,18 @@ class FFmpeg_formats(wx.Dialog):
         button_close = wx.Button(self, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: FFmpeg specifications"))
+        self.SetTitle(_("Videomass: FFmpeg file formats"))
         dmx.SetMinSize((700, 400))
-        dmx.InsertColumn(0, _('Flags'), width=300)
-        dmx.InsertColumn(1, _('Options'), width=450)
+        dmx.InsertColumn(0, _('Formats'), width=300)
+        dmx.InsertColumn(1, _('Descriptions'), width=450)
         #dmx.SetBackgroundColour(wx.Colour(217, 255, 255))
         mx.SetMinSize((700, 400))
-        mx.InsertColumn(0, _('Status'), width=300)
-        mx.InsertColumn(1, _('Options'), width=450)
+        mx.InsertColumn(0, _('Formats'), width=300)
+        mx.InsertColumn(1, _('Descriptions'), width=450)
         #mx.SetBackgroundColour(wx.Colour(217, 255, 255))
         dmx_mx.SetMinSize((700, 400))
-        dmx_mx.InsertColumn(0, _('Status'), width=300)
-        dmx_mx.InsertColumn(1, _('Options'), width=450)
+        dmx_mx.InsertColumn(0, _('Formats'), width=300)
+        dmx_mx.InsertColumn(1, _('Descriptions'), width=450)
         #dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
         
         #----------------------Layout--------------------------#
@@ -83,14 +84,17 @@ class FFmpeg_formats(wx.Dialog):
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         
         sizer_tab1.Add(dmx, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_2.SetSizer(sizer_tab1)
+        notebook_1_pane_1.SetSizer(sizer_tab1)
         
         sizer_tab2.Add(mx, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_3.SetSizer(sizer_tab2)
+        notebook_1_pane_2.SetSizer(sizer_tab2)
         sizer_tab3.Add(dmx_mx, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1.AddPage(notebook_1_pane_1, (_("Overview")))
-        notebook_1.AddPage(notebook_1_pane_2, (_("System Options")))
-        notebook_1.AddPage(notebook_1_pane_3, (_("Options Enabled")))
+        notebook_1_pane_3.SetSizer(sizer_tab3)
+
+        
+        notebook_1.AddPage(notebook_1_pane_1, (_("Demuxing Support")))
+        notebook_1.AddPage(notebook_1_pane_2, (_("Muxing Support")))
+        notebook_1.AddPage(notebook_1_pane_3, (_("Demuxing/Muxing Support")))
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
         grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
@@ -106,25 +110,28 @@ class FFmpeg_formats(wx.Dialog):
         dmx_mx.DeleteAllItems()
         
         # create lists by out:
-        print(dict_formats)
+        #print(dict_formats)
         
             
         #### populate dmx listctrl output:
-        #index = 0 
-        #if not others:
-            #print ('No others option found')
-        #else:
-            #dmx.InsertItem(index, _('Specific compilation options'))
-            #dmx.SetItemBackgroundColour(index, "blue")
-            #n = len(others)
-            #for a in range(n):
-                #if '=' in others[a]:
-                    #(key, value) = others[a].strip().split('=')
-                    ##(key, value) = others[a][0].strip().split('=')
-                    #num_items = dmx.GetItemCount()
-                    #index +=1
-                    #dmx.InsertItem(index, key)
-                    #dmx.SetItem(index, 1, value)
+        
+        index = 0 
+        demux = dict_formats['Demuxing Supported']
+        if not demux:
+            print ('No options enabled')
+        else:
+            dmx.InsertItem(index, _('----'))
+            #dmx.SetItemBackgroundColour(index, "green")
+            for a in demux:
+                s = " ".join(a.split()).split(None,1)
+                if len(s) == 1:
+                    key, value = s[0],''
+                else:
+                    key , value = s[0], s[1]
+                num_items = dmx.GetItemCount()
+                index +=1
+                dmx.InsertItem(index, key)
+                dmx.SetItem(index, 1, value)
                 
         ##### populate mx listctrl output:
         #index = 0

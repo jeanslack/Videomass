@@ -781,19 +781,18 @@ class MainFrame(wx.Frame):
     #--------------------------- Menu Tools ---------------------------#
     def check_Formats(self, event):
         """
-        Run a dialog to check the ffmpeg available 
-        formats by IO_tools
+        IO_tools.test_formats
         
         """
-        IO_tools.ffmpeg_formats(self.ffmpeg_link,)
+        IO_tools.test_formats(self.ffmpeg_link,)
         
     #------------------------------------------------------------------#
     def Check_conf(self, event):
         """
-        Call IO_tools.testFFmpeg_conf to test features of FFmpeg
+        Call IO_tools.test_conf
         
         """
-        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.ffprobe_link, 
+        IO_tools.test_conf(self.ffmpeg_link, self.ffprobe_link, 
                                  self.ffplay_link, self.OS,
                                  )
         
