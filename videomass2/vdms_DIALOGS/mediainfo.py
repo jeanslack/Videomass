@@ -57,12 +57,12 @@ class Mediainfo(wx.Dialog):
         self.SetTitle(title)
         format_info.SetMinSize((640, 300))
         #format_info.SetBackgroundColour(wx.Colour(217, 255, 255))
-        format_info.InsertColumn(0, _(u'Type'), width=200)
-        format_info.InsertColumn(1, _(u'Parameters'), width=450)
+        format_info.InsertColumn(0, _(u'names'), width=200)
+        format_info.InsertColumn(1, _(u'parameters'), width=450)
         streams_info.SetMinSize((640, 300))
         #streams_info.SetBackgroundColour(wx.Colour(217, 255, 255))
-        streams_info.InsertColumn(0, _(u'Type'), width=200)
-        streams_info.InsertColumn(1, _(u'Parameters'), width=450)
+        streams_info.InsertColumn(0, _(u'names'), width=200)
+        streams_info.InsertColumn(1, _(u'parameters'), width=450)
         
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
@@ -74,8 +74,8 @@ class Mediainfo(wx.Dialog):
         notebook_1_pane_1.SetSizer(sizer_tab1)
         sizer_tab2.Add(streams_info, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_2.SetSizer(sizer_tab2)
-        notebook_1.AddPage(notebook_1_pane_1, (_(u"Overview")))
-        notebook_1.AddPage(notebook_1_pane_2, (_(u"All Information Details")))
+        notebook_1.AddPage(notebook_1_pane_1, (_(u"Format Overview")))
+        notebook_1.AddPage(notebook_1_pane_2, (_(u"All Format Streams")))
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
         grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
@@ -114,7 +114,7 @@ class Mediainfo(wx.Dialog):
             for a in range(n):
                 (key, value) = format_list[a][0].strip().split('=')
                 num_items = format_info.GetItemCount()
-                format_info.InsertStringItem(num_items, 'General format:')
+                format_info.InsertStringItem(num_items, 'FORMAT STREAM:')
                 format_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in format_list[a]:
@@ -133,7 +133,7 @@ class Mediainfo(wx.Dialog):
                 (key, value) = video_list[a][0].strip().split('=')
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
-                               'Video media stream (index %s):' % (value[0]))
+                               'VIDEO STREAM (index %s):' % (value[0]))
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in video_list[a]:
@@ -150,7 +150,7 @@ class Mediainfo(wx.Dialog):
                 (key, value) = audio_list[a][0].strip().split('=')
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
-                               'Audio media stream (index %s):' % (value[0]))
+                               'AUDIO STREAM (index %s):' % (value[0]))
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in audio_list[a]:
@@ -167,7 +167,7 @@ class Mediainfo(wx.Dialog):
                 (key, value) = subtitle_list[a][0].strip().split('=')
                 num_items = streams_info.GetItemCount()
                 streams_info.InsertStringItem(num_items, 
-                            'Subtitle media stream (index %s):' % (value[0]))
+                            'SUBTITLE STREAM (index %s):' % (value[0]))
                 streams_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 for b in subtitle_list[a]:

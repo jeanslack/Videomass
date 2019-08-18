@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-18 16:21+0200\n"
-"PO-Revision-Date: 2019-08-18 17:21+0200\n"
+"POT-Creation-Date: 2019-08-18 22:20+0200\n"
+"PO-Revision-Date: 2019-08-18 22:25+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -797,25 +797,25 @@ msgstr ""
 #: ../videomass2/vdms_DIALOGS/mediainfo.py:64
 #: ../videomass3/vdms_DIALOGS/mediainfo.py:62
 #: ../videomass3/vdms_DIALOGS/mediainfo.py:66
-msgid "Type"
-msgstr "Generalità"
+msgid "names"
+msgstr "nomi"
 
 #: ../videomass2/vdms_DIALOGS/mediainfo.py:61
 #: ../videomass2/vdms_DIALOGS/mediainfo.py:65
 #: ../videomass3/vdms_DIALOGS/mediainfo.py:63
 #: ../videomass3/vdms_DIALOGS/mediainfo.py:67
-msgid "Parameters"
+msgid "parameters"
 msgstr "Parametri"
 
 #: ../videomass2/vdms_DIALOGS/mediainfo.py:77
 #: ../videomass3/vdms_DIALOGS/mediainfo.py:79
-msgid "Overview"
-msgstr "Panoramica"
+msgid "Format Overview"
+msgstr "Panoramica Formato"
 
 #: ../videomass2/vdms_DIALOGS/mediainfo.py:78
 #: ../videomass3/vdms_DIALOGS/mediainfo.py:80
-msgid "All Information Details"
-msgstr "Tutti i Dettagli Informativi"
+msgid "All Format Streams"
+msgstr "Tutti i Flussi del Formato"
 
 #: ../videomass2/vdms_DIALOGS/presets_addnew.py:57
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:230
@@ -2734,15 +2734,29 @@ msgstr ""
 "Questa è una versione di prova.\n"
 "E' scritta in Python3 con il toolkit grafico wxPython Phoenix."
 
-#: ../videomass3/vdms_DIALOGS/mediainfo.py:119
-#, fuzzy
-#| msgid "General Informations"
-msgid "General format:"
-msgstr "Informazioni Generali"
-
 #: ../videomass3/vdms_MAIN/main_frame.py:624
 msgid "FFmpeg file formats"
 msgstr "Formati File di FFmpeg"
+
+#~ msgid "Type"
+#~ msgstr "Generalità"
+
+#~ msgid "Parameters"
+#~ msgstr "Parametri"
+
+#~ msgid "Overview"
+#~ msgstr "Panoramica"
+
+#~ msgid "All Information Details"
+#~ msgstr "Tutti i Dettagli Informativi"
+
+#~ msgid "Names"
+#~ msgstr "Nomi"
+
+#, fuzzy
+#~| msgid "General Informations"
+#~ msgid "General format:"
+#~ msgstr "Informazioni Generali"
 
 #~ msgid "Extensive Report"
 #~ msgstr "Tutte le informazioni"
