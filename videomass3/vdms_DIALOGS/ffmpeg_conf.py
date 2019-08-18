@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.14 2019
+# Rev: Aug.18 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -44,12 +44,10 @@ class Checkconf(wx.Dialog):
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
-        #txtinfo = wx.TextCtrl(notebook_1_pane_1, wx.ID_ANY, "", 
-                                    #style = wx.TE_MULTILINE | 
-                                    #wx.TE_READONLY | 
-                                    #wx.TE_RICH2
-                                    #)
         txtinfo = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
+        txtffmpeg = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
+        txtffprobe = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
+        txtffplay = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
         notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
         others_opt = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
                                     style=wx.LC_REPORT | 
@@ -93,7 +91,12 @@ class Checkconf(wx.Dialog):
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         
-        sizer_tab1.Add(txtinfo, 1, wx.ALL | wx.EXPAND, 5)
+        grid_tab1 = wx.FlexGridSizer(4, 1, 0, 0)
+        sizer_tab1.Add(grid_tab1)
+        grid_tab1.Add(txtinfo, 1, wx.ALL , 5)
+        grid_tab1.Add(txtffmpeg, 1, wx.ALL , 5)
+        grid_tab1.Add(txtffplay, 1, wx.ALL , 5)
+        grid_tab1.Add(txtffprobe, 1, wx.ALL , 5)
         notebook_1_pane_1.SetSizer(sizer_tab1)
         
         sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
@@ -103,7 +106,7 @@ class Checkconf(wx.Dialog):
         notebook_1_pane_3.SetSizer(sizer_tab3)
         sizer_tab4.Add(disabled_opt, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_4.SetSizer(sizer_tab4)
-        notebook_1.AddPage(notebook_1_pane_1, (_("Overview")))
+        notebook_1.AddPage(notebook_1_pane_1, (_("Informations")))
         notebook_1.AddPage(notebook_1_pane_2, (_("System Options")))
         notebook_1.AddPage(notebook_1_pane_3, (_("Options Enabled")))
         notebook_1.AddPage(notebook_1_pane_4, (_("Options Disabled")))
@@ -117,7 +120,10 @@ class Checkconf(wx.Dialog):
         self.Layout()
         
         # delete previous append:
-        txtinfo.SetLabel('')# reset text before close
+        txtinfo.SetLabel('')
+        txtffmpeg.SetLabel('')
+        txtffplay.SetLabel('')
+        txtffprobe.SetLabel('')
         others_opt.DeleteAllItems()
         enable_opt.DeleteAllItems()
         disabled_opt.DeleteAllItems()
@@ -126,41 +132,49 @@ class Checkconf(wx.Dialog):
         info, others, enable, disable = out
         
         if which(ffmpeg_link):
-            ffmpeg = _("FFmpeg ..installed")
+            txtffmpeg.SetForegroundColour((45,208,28))
+            ffmpeg = _("FFmpeg   ...installed")
         else:
             if os.path.exists(ffmpeg_link):
-                ffmpeg = _("FFmpeg was imported locally")
+                txtffmpeg.SetForegroundColour((208,198,28))
+                ffmpeg = _("FFmpeg   ...was imported locally")
             
         if which(ffprobe_link):
-            ffprobe = _("FFprobe ..installed")
+            txtffprobe.SetForegroundColour((45,208,28))
+            ffprobe = _("FFprobe   ...installed")
         else:
             if os.path.exists(ffprobe_link):
-                ffprobe = _("FFprobe was imported locally")
+                txtffprobe.SetForegroundColour((208,198,28))
+                ffprobe = _("FFprobe   ...was imported locally")
             else:
-                ffprobe = _("FFprobe not found !")
+                txtffprobe.SetForegroundColour((209,28,28))
+                ffprobe = _("FFprobe   ...not found !")
                 
         if which(ffplay_link):
-            ffplay = _("FFplay ..installed")
+            txtffplay.SetForegroundColour((45,208,28))
+            ffplay = _("FFplay   ...installed")
         else:
             if os.path.exists(ffplay_link):
-                ffplay = _("FFplay was imported locally")
+                txtffplay.SetForegroundColour((208,198,28))
+                ffplay = _("FFplay   ...was imported locally")
             else:
-                ffplay = _("FFplay not found !")
+                txtffplay.SetForegroundColour((200,28,28))
+                ffplay = _("FFplay   ...not found !")
         
         #### populate txtinfo TextCtrl output:
-        t = """
+        txtinfo.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        txtinfo.SetLabel( """\n
             %s\n
             %s\n
-            -------------------------------------\n
-            %s\n     
-            %s\n      
-            %s\n
-            """ % (info[0].strip(), 
-                   info[1].strip(), 
-                   ffmpeg, 
-                   ffprobe, 
-                   ffplay)
-        txtinfo.SetLabel(t)
+            -------------------------------------\n""" % (info[0].strip(),
+                                                           info[1].strip(),
+                                                           ))
+        txtffmpeg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+        txtffmpeg.SetLabel("          - %s" % ffmpeg)
+        txtffprobe.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+        txtffprobe.SetLabel("                  - %s" % ffprobe)
+        txtffplay.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+        txtffplay.SetLabel("              - %s" % ffplay)
             
         #### populate others_opt listctrl output:
         index = 0 

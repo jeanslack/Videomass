@@ -106,7 +106,7 @@ class Checkconf(wx.Dialog):
         notebook_1_pane_3.SetSizer(sizer_tab3)
         #sizer_tab4.Add(optconf, 1, wx.ALL | wx.EXPAND, 5)
         #notebook_1_pane_4.SetSizer(sizer_tab4)
-        notebook_1.AddPage(notebook_1_pane_1, (_(u"Overview")))
+        notebook_1.AddPage(notebook_1_pane_1, (_(u"Informations")))
         notebook_1.AddPage(notebook_1_pane_2, (_(u"System Options")))
         notebook_1.AddPage(notebook_1_pane_3, (_(u"Support Options")))
         #notebook_1.AddPage(notebook_1_pane_4, (_("Options Disabled")))
@@ -134,7 +134,7 @@ class Checkconf(wx.Dialog):
         
         if which(ffmpeg_link):
             txtffmpeg.SetForegroundColour((45,208,28))
-            ffmpeg = _(u"FFmpeg   ..installed")
+            ffmpeg = _(u"FFmpeg   ...installed")
         else:
             if os.path.exists(ffmpeg_link):
                 txtffmpeg.SetForegroundColour((208,198,28))
@@ -163,19 +163,19 @@ class Checkconf(wx.Dialog):
                 ffplay = _(u"FFplay   ...not found !")
         
         #### populate txtinfo TextCtrl output:
-        txtinfo.SetFont(wx.Font(10, wx.ROMAN, wx.ITALIC, wx.NORMAL))
+        txtinfo.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL))
         txtinfo.SetLabel( """\n
             %s\n
             %s\n
             -------------------------------------\n""" % (info[0].strip(),
                                                            info[1].strip(),
                                                            ))
-        txtffmpeg.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        txtffmpeg.SetLabel("          %s" % ffmpeg)
-        txtffprobe.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        txtffprobe.SetLabel("          %s" % ffprobe)
-        txtffplay.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-        txtffplay.SetLabel("          %s" % ffplay)
+        txtffmpeg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+        txtffmpeg.SetLabel("          - %s" % ffmpeg)
+        txtffprobe.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+        txtffprobe.SetLabel("                  - %s" % ffprobe)
+        txtffplay.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+        txtffplay.SetLabel("              - %s" % ffplay)
             
         #### populate others_opt listctrl output:
         index = 0 
