@@ -29,7 +29,7 @@
 
 import subprocess
 
-def ffmpeg_conf(ffmpeg_link):
+def ff_conf(ffmpeg_link):
     """
     Execute FFmpeg without arguments to parse output 
     configuration  messages

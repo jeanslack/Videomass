@@ -76,8 +76,8 @@ class Mediainfo(wx.Dialog):
         notebook_1_pane_1.SetSizer(sizer_tab1)
         sizer_tab2.Add(streams_info, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_2.SetSizer(sizer_tab2)
-        notebook_1.AddPage(notebook_1_pane_1, (_("General Informations")))
-        notebook_1.AddPage(notebook_1_pane_2, (_("Extensive Report")))
+        notebook_1.AddPage(notebook_1_pane_1, (_("Overview")))
+        notebook_1.AddPage(notebook_1_pane_2, (_("All Information Details")))
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
         grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
@@ -116,7 +116,7 @@ class Mediainfo(wx.Dialog):
             for a in range(n):
                 (key, value) = format_list[a][0].strip().split('=')
                 num_items = format_info.GetItemCount()
-                format_info.InsertItem(num_items, 'General format:')
+                format_info.InsertItem(num_items, _('General format:'))
                 format_info.SetItemBackgroundColour(index, "green")
                 index +=1
                 print (format_list[a])

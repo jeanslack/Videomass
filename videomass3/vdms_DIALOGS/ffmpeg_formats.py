@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: checkconf.py
+# Name: ffmpeg_conf.py
 # Porpose: Dialog to show the available formats on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.14 2019
+# Rev: Aug.18 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -62,17 +62,17 @@ class FFmpeg_formats(wx.Dialog):
         
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: FFmpeg file formats"))
-        dmx.SetMinSize((700, 400))
-        dmx.InsertColumn(0, _('Formats'), width=300)
-        dmx.InsertColumn(1, _('Descriptions'), width=450)
+        dmx.SetMinSize((500, 400))
+        dmx.InsertColumn(0, _('Format'), width=150)
+        dmx.InsertColumn(1, _('Description'), width=450)
         #dmx.SetBackgroundColour(wx.Colour(217, 255, 255))
-        mx.SetMinSize((700, 400))
-        mx.InsertColumn(0, _('Formats'), width=300)
-        mx.InsertColumn(1, _('Descriptions'), width=450)
+        mx.SetMinSize((500, 400))
+        mx.InsertColumn(0, _('Format'), width=300)
+        mx.InsertColumn(1, _('Description'), width=450)
         #mx.SetBackgroundColour(wx.Colour(217, 255, 255))
-        dmx_mx.SetMinSize((700, 400))
-        dmx_mx.InsertColumn(0, _('Formats'), width=300)
-        dmx_mx.InsertColumn(1, _('Descriptions'), width=450)
+        dmx_mx.SetMinSize((500, 400))
+        dmx_mx.InsertColumn(0, _('Format'), width=300)
+        dmx_mx.InsertColumn(1, _('Description'), width=450)
         #dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
         
         #----------------------Layout--------------------------#
@@ -82,16 +82,12 @@ class FFmpeg_formats(wx.Dialog):
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
-        
         sizer_tab1.Add(dmx, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_1.SetSizer(sizer_tab1)
-        
         sizer_tab2.Add(mx, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_2.SetSizer(sizer_tab2)
         sizer_tab3.Add(dmx_mx, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_3.SetSizer(sizer_tab3)
-
-        
         notebook_1.AddPage(notebook_1_pane_1, (_("Demuxing Support")))
         notebook_1.AddPage(notebook_1_pane_2, (_("Muxing Support")))
         notebook_1.AddPage(notebook_1_pane_3, (_("Demuxing/Muxing Support")))
@@ -108,60 +104,63 @@ class FFmpeg_formats(wx.Dialog):
         dmx.DeleteAllItems()
         mx.DeleteAllItems()
         dmx_mx.DeleteAllItems()
-        
-        # create lists by out:
-        #print(dict_formats)
-        
             
         #### populate dmx listctrl output:
-        
         index = 0 
-        demux = dict_formats['Demuxing Supported']
-        if not demux:
-            print ('No options enabled')
+        l = dict_formats['Demuxing Supported']
+        
+        if not l:
+            print ('No ffmpeg formats available')
         else:
-            dmx.InsertItem(index, _('----'))
-            #dmx.SetItemBackgroundColour(index, "green")
-            for a in demux:
+            dmx.InsertItem(index, ('----'))
+            dmx.SetItemBackgroundColour(index, "grey")
+            for a in l:
                 s = " ".join(a.split()).split(None,1)
                 if len(s) == 1:
                     key, value = s[0],''
                 else:
                     key , value = s[0], s[1]
-                num_items = dmx.GetItemCount()
                 index +=1
                 dmx.InsertItem(index, key)
                 dmx.SetItem(index, 1, value)
                 
-        ##### populate mx listctrl output:
-        #index = 0
-        #if not enable:
-            #print ('No options enabled')
-        #else:
-            #mx.InsertItem(index, _('ENABLED:'))
-            #mx.SetItemBackgroundColour(index, "green")
-            #n = len(enable)
-            #for a in range(n):
-                #(key, value) = _('Enabled'), enable[a]
-                #num_items = mx.GetItemCount()
-                #index +=1
-                #mx.InsertItem(index, key)
-                #mx.SetItem(index, 1, value)
+        #### populate mx listctrl output:
+        index = 0
+        l = dict_formats['Muxing Supported']
+        
+        if not l:
+            print ('No ffmpeg formats available')
+        else:
+            mx.InsertItem(index, ('----'))
+            mx.SetItemBackgroundColour(index, "grey")
+            for a in l:
+                s = " ".join(a.split()).split(None,1)
+                if len(s) == 1:
+                    key, value = s[0],''
+                else:
+                    key , value = s[0], s[1]
+                index +=1
+                mx.InsertItem(index, key)
+                mx.SetItem(index, 1, value)
         
         ##### populate dmx_mx listctrl output:
-        #index = 0 
-        #if not disable:
-            #print ('No options disabled')
-        #else:
-            #dmx_mx.InsertItem(index, _('DISABLED:'))
-            #dmx_mx.SetItemBackgroundColour(index, "red")
-            #n = len(disable)
-            #for a in range(n):
-                #(key, value) = _('Disabled'), disable[a]
-                #num_items = dmx_mx.GetItemCount()
-                #index +=1
-                #dmx_mx.InsertItem(index, key)
-                #dmx_mx.SetItem(index, 1, value)
+        index = 0 
+        l = dict_formats["Mux/Demux Supported"]
+        
+        if not l:
+            print ('No ffmpeg formats available')
+        else:
+            dmx_mx.InsertItem(index, ('----'))
+            dmx_mx.SetItemBackgroundColour(index, "grey")
+            for a in l:
+                s = " ".join(a.split()).split(None,1)
+                if len(s) == 1:
+                    key, value = s[0],''
+                else:
+                    key , value = s[0], s[1]
+                index +=1
+                dmx_mx.InsertItem(index, key)
+                dmx_mx.SetItem(index, 1, value)
                     
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)

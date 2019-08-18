@@ -14,10 +14,11 @@ BUG FIXES:
     - fixed wrong main window size when run on FreeBSD O.S.
 
 ADD:
-	- added new tools menu with a new displayer to watch the 
-      building configurations of the installed or imported FFmpeg 
-      executables 
-
+    - adding a new menu tools item on the menu bar
+    - Added dialog box for displaying the FFmpeg compilation specifications
+    - Added dialog box for displaying file formats available on FFmpeg (
+      only for Pytohn3)
+    
 IMPROVEMENTS:
     - Messages output from command line during start-up
 

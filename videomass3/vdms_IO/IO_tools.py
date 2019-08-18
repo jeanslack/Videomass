@@ -54,7 +54,7 @@ else:
     from videomass3.vdms_PROCESS.check_bin import ff_conf, ff_formats
     
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
-from videomass3.vdms_DIALOGS import checkconf
+from videomass3.vdms_DIALOGS import ffmpeg_conf
 from videomass3.vdms_DIALOGS import ffmpeg_formats
 
 #-----------------------------------------------------------------------#
@@ -188,9 +188,9 @@ def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
                         None)
         return
     else:
-        dlg = checkconf.Checkconf(out, ffmpeg_link, 
-                                  ffprobe_link, ffplay_link
-                                  )
+        dlg = ffmpeg_conf.Checkconf(out, ffmpeg_link, 
+                                    ffprobe_link, ffplay_link
+                                    )
         dlg.Show()
 #-------------------------------------------------------------------------#
 def test_formats(ffmpeg_link):

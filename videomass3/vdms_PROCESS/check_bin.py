@@ -3,7 +3,7 @@
 #########################################################
 # Name: check_bin.py
 # Porpose: Test the binaries of ffmpeg, ffprobe and ffplay
-# Compatibility: Python3, wxPython Phoenix on Unix like only
+# Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3

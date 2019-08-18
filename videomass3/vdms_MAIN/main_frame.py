@@ -618,11 +618,11 @@ class MainFrame(wx.Frame):
         ####------------------ tools button
         toolsButton = wx.Menu()
         
-        ckformats= toolsButton.Append( wx.ID_ANY, _(
-                        "FFmpeg available formats"),"")
-        toolsButton.AppendSeparator()
         checkconf = toolsButton.Append( wx.ID_ANY, _("FFmpeg specifications"), 
                                 "Shows the configuration features of FFmpeg")
+        toolsButton.AppendSeparator()
+        ckformats= toolsButton.Append( wx.ID_ANY, _("FFmpeg file formats"),
+                                "Shows file formats available on FFmpeg")
         self.menuBar.Append(toolsButton,_(u"&Tools"))
         
         ####------------------ setup button
@@ -669,8 +669,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
-        self.Bind(wx.EVT_MENU, self.check_Formats, ckformats)
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
+        self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
         self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
@@ -779,14 +779,7 @@ class MainFrame(wx.Frame):
         setup_dlg.ShowModal()
     
     #--------------------------- Menu Tools ---------------------------#
-    def check_Formats(self, event):
-        """
-        IO_tools.test_formats
-        
-        """
-        IO_tools.test_formats(self.ffmpeg_link,)
-        
-    #------------------------------------------------------------------#
+    
     def Check_conf(self, event):
         """
         Call IO_tools.test_conf
@@ -795,6 +788,14 @@ class MainFrame(wx.Frame):
         IO_tools.test_conf(self.ffmpeg_link, self.ffprobe_link, 
                                  self.ffplay_link, self.OS,
                                  )
+    #------------------------------------------------------------------#
+    
+    def Check_formats(self, event):
+        """
+        IO_tools.test_formats
+        
+        """
+        IO_tools.test_formats(self.ffmpeg_link,)
         
     #---------------------------- Menu Edit ----------------------------#
     def Helpme(self, event):

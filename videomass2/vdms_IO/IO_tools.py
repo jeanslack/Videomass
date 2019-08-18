@@ -49,10 +49,10 @@ else:
     from videomass2.vdms_PROCESS.volumedetect import PopupDialog
     from videomass2.vdms_PROCESS.ffplay_reproduction import Play
     from videomass2.vdms_PROCESS.ffprobe_parser import FFProbe
-    from videomass2.vdms_PROCESS.check_bin import ffmpeg_conf
+    from videomass2.vdms_PROCESS.check_bin import ff_conf
     
 from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
-from videomass2.vdms_DIALOGS import checkconf
+from videomass2.vdms_DIALOGS import ffmpeg_conf
 
 
 #-----------------------------------------------------------------------#
@@ -97,6 +97,7 @@ def stream_info(title, filepath , ffprobe_link):
     Show media information of the streams content.
     This function make a bit control of file existance.
     """
+    
     try:
         with open(filepath):
             dialog = Mediainfo(title, filepath, ffprobe_link)
@@ -111,6 +112,7 @@ def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
     """
     Thread for media reproduction with ffplay
     """
+    
     try:
         with open(filepath):
             thread = Play(filepath, param, ffplay_link, loglevel_type, OS)
@@ -129,6 +131,7 @@ def probeDuration(path_list, ffprobe_link):
     chiamata nella MyListCtrl(wx.ListCtrl) con il pannello dragNdrop.
     Se i file non sono supportati da ffprobe e quindi da ffmpeg, avvisa
     con un messaggio di errore.
+    
     """
     metadata = FFProbe(path_list, ffprobe_link, 'no_pretty') 
         # first execute a control for errors:
@@ -157,6 +160,7 @@ def volumeDetectProcess(ffmpeg, filelist, OS):
     """
     Run a thread for get audio peak level data and show a pop-up dialog 
     with message. 
+    
     """
     thread = VolumeDetectThread(ffmpeg, filelist, OS) 
     loadDlg = PopupDialog(None, 
@@ -176,9 +180,8 @@ def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
     configurations of the installed or imported FFmpeg executable 
     and send it to dialog box.
     
-    
     """
-    out = ffmpeg_conf(ffmpeg_link)
+    out = ff_conf(ffmpeg_link)
     if 'Not found' in out[0]:
         wx.MessageBox(_("FFmpeg executable not found !"
                         "\n\n{0}".format(out[1])), 
@@ -187,9 +190,9 @@ def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
                       None)
         return
     else:
-        dlg = checkconf.Checkconf(out, ffmpeg_link, 
-                                  ffprobe_link, ffplay_link
-                                  )
+        dlg = ffmpeg_conf.Checkconf(out, ffmpeg_link, 
+                                    ffprobe_link, ffplay_link
+                                    )
         dlg.Show()
     
 

@@ -3,7 +3,7 @@
 #########################################################
 # Name: checkconf.py
 # Porpose: Dialog to show the build configuration of the FFmpeg
-# Compatibility: Python3, wxPython Phoenix
+# Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
