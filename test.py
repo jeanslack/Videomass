@@ -4,42 +4,33 @@
 
 import subprocess
 
-def funz(ffmpeg_link):
+def ff_encoders(ffmpeg_link):
     try: # grab buildconf:
         p = subprocess.run([ffmpeg_link, 
                                 '-loglevel', 
                                 'error', 
-                                '-formats'], 
+                                '-encoders'], 
                                 stdout=subprocess.PIPE, 
                                 stderr=subprocess.STDOUT,)
         _f = p.stdout
     except FileNotFoundError as e:
         return('Not found', e)
             
-    frmt = _f.split(b'\n')
+    encoders = _f.split(b'\n')
     
-    demux_supp = []
-    mux_supp = []
-    demux_mux_supp = []
+    #demux_supp = []
+    #mux_supp = []
+    #demux_mux_supp = []
     
-    diz = {'Demuxing Supported':[], 'Muxing Supported':[], 'Mux/Demux Supported':[]}
+    diz = {'Video':[], 'Audio':[], 'Subtitle':[]}
     
-    
-    #for f in frmt:
-        #if f.strip().startswith(b'D '):
-            #demux_supp.append(f)
-        #elif f.strip().startswith(b'E '):
-            #mux_supp.append(f)
-        #elif f.strip().startswith(b'DE '):
-            #demux_mux_supp.append(f)
-    
-    for f in frmt:
-        if f.strip().startswith(b'D '):
-            diz['Demuxing Supported'].append(f.replace(b'D', b'', 1).strip())
-        elif f.strip().startswith(b'E '):
-            diz['Muxing Supported'].append(f.replace(b'E', b'', 1).strip())
-        elif f.strip().startswith(b'DE '):
-            diz['Mux/Demux Supported'].append(f.replace(b'DE', b'', 1).strip())
+    for f in encoders:
+        if f.strip().startswith(b'V'):
+            diz['Video'].append(f.strip().decode())
+        elif f.strip().startswith(b'A'):
+            diz['Audio'].append(f.strip().decode())
+        elif f.strip().startswith(b'S'):
+            diz['Subtitle'].append(f.strip().decode())
     print(diz)
 
     #for b in demux_mux_supp:
@@ -77,4 +68,4 @@ def funz(ffmpeg_link):
     #for x in enable:
         #print(x.split('--enable')[1])
 
-Formats('ffmpeg')
+ff_encoders('ffmpeg')

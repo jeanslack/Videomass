@@ -44,11 +44,12 @@ class Checkconf(wx.Dialog):
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
-        txtinfo = wx.TextCtrl(notebook_1_pane_1, wx.ID_ANY, "", 
-                                    style = wx.TE_MULTILINE | 
-                                    wx.TE_READONLY | 
-                                    wx.TE_RICH2
-                                    )
+        #txtinfo = wx.TextCtrl(notebook_1_pane_1, wx.ID_ANY, "", 
+                                    #style = wx.TE_MULTILINE | 
+                                    #wx.TE_READONLY | 
+                                    #wx.TE_RICH2
+                                    #)
+        txtinfo = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
         notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
         others_opt = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
                                     style=wx.LC_REPORT | 
@@ -116,7 +117,7 @@ class Checkconf(wx.Dialog):
         self.Layout()
         
         # delete previous append:
-        txtinfo.Clear()# reset textctrl before close
+        txtinfo.SetLabel('')# reset text before close
         others_opt.DeleteAllItems()
         enable_opt.DeleteAllItems()
         disabled_opt.DeleteAllItems()
@@ -147,28 +148,19 @@ class Checkconf(wx.Dialog):
                 ffplay = _("FFplay not found !")
         
         #### populate txtinfo TextCtrl output:
-        for t in info:
-            txtinfo.AppendText("\n      %s\n" % t.strip())
-            
-        txtinfo.AppendText("\n\n      -------------------------------------")
-        
-        txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN))
-        txtinfo.AppendText('\n\n      %s\n' % ffmpeg)
-
-        if "FFprobe not found !" in ffprobe:
-            txtinfo.SetDefaultStyle(wx.TextAttr(wx.RED))
-            txtinfo.AppendText('\n      %s\n' % ffprobe)
-        else:
-            txtinfo.AppendText('\n      %s\n' % ffprobe)
-
-        if "FFplay not found !" in ffplay:
-            txtinfo.SetDefaultStyle(wx.TextAttr(wx.RED))
-            txtinfo.AppendText('\n      %s\n' % ffplay)
-        else:
-            txtinfo.SetDefaultStyle(wx.TextAttr(wx.GREEN))
-            txtinfo.AppendText('\n      %s\n' % ffplay)
-        
-        txtinfo.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+        t = """
+            %s\n
+            %s\n
+            -------------------------------------\n
+            %s\n     
+            %s\n      
+            %s\n
+            """ % (info[0].strip(), 
+                   info[1].strip(), 
+                   ffmpeg, 
+                   ffprobe, 
+                   ffplay)
+        txtinfo.SetLabel(t)
             
         #### populate others_opt listctrl output:
         index = 0 
