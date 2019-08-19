@@ -122,19 +122,70 @@ def ff_formats(ffmpeg_link):
             
     frmt = _f.split(b'\n')
     
-    diz = {'Demuxing Supported':[], 
+    dic = {'Demuxing Supported':[], 
            'Muxing Supported':[], 
            'Mux/Demux Supported':[]}
     
     for f in frmt:
         if f.strip().startswith(b'D '):
-            diz['Demuxing Supported'].append(f.replace(
+            dic['Demuxing Supported'].append(f.replace(
                                       b'D', b'', 1).strip().decode())
         elif f.strip().startswith(b'E '):
-            diz['Muxing Supported'].append(f.replace(
+            dic['Muxing Supported'].append(f.replace(
                                     b'E', b'', 1).strip().decode())
         elif f.strip().startswith(b'DE '):
-            diz['Mux/Demux Supported'].append(f.replace(
+            dic['Mux/Demux Supported'].append(f.replace(
                                        b'DE', b'', 1).strip().decode())
             
-    return(diz)
+    return(dic)
+
+#-------------------------------------------------------------------#
+
+def ff_codecs(ffmpeg_link, type_opt):
+    """
+    Parse output of *ffmpeg -encoders* or *ffmpeg -decoders* commands 
+    (see p = subprocess below) and return a ditionary with the follow 
+    keys and values:
+    
+        * KEYS                  * VALUES 
+        'Video' :    [list of V.....   name    descrition]
+        'Audio' :    [list of A.....   name    descrition]
+        'Subtitle' : [list of S.....   name    descrition]
+    
+    Accept two arguments: the call to FFmpeg and the type of 
+    option used to obtain data on the encoding and decoding 
+    capabilities of FFmpeg. The options to pass as arguments 
+    are the following:
+    
+    -encoders
+    -decoders
+    
+    """
+    try: # grab buildconf:
+        p = subprocess.run([ffmpeg_link, 
+                                '-loglevel', 
+                                'error', 
+                                '%s' % type_opt], 
+                                stdout=subprocess.PIPE, 
+                                stderr=subprocess.STDOUT,)
+        _f = p.stdout
+    except FileNotFoundError as e:
+        return('Not found', e)
+            
+    codecs = _f.split(b'\n')
+    
+    dic = {'Video':[], 'Audio':[], 'Subtitle':[]}
+    
+    for f in codecs:
+        if f.strip().startswith(b'V'):
+            if not b'V..... = Video' in f:
+                dic['Video'].append(f.strip().decode())
+        elif f.strip().startswith(b'A'):
+            if not b'A..... = Audio' in f:
+                dic['Audio'].append(f.strip().decode())
+        elif f.strip().startswith(b'S'):
+            if not b'S..... = Subtitle' in f:
+                dic['Subtitle'].append(f.strip().decode())
+            
+    return(dic)
+

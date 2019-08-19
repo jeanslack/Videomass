@@ -620,8 +620,13 @@ class MainFrame(wx.Frame):
         checkconf = toolsButton.Append( wx.ID_ANY, _("FFmpeg specifications"), 
                                 "Shows the configuration features of FFmpeg")
         toolsButton.AppendSeparator()
-        ckformats= toolsButton.Append( wx.ID_ANY, _("FFmpeg file formats"),
+        ckformats = toolsButton.Append( wx.ID_ANY, _("FFmpeg file formats"),
                                 "Shows file formats available on FFmpeg")
+        toolsButton.AppendSeparator()
+        ckcoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg encoders"),
+                                "Shows available encoders on FFmpeg")
+        ckdecoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg decoders"),
+                                "Shows available decoders on FFmpeg")
         self.menuBar.Append(toolsButton,_(u"&Tools"))
         
         ####------------------ setup button
@@ -670,6 +675,9 @@ class MainFrame(wx.Frame):
         #----TOOLS----
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
+        self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
+        self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
+        
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
         self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
@@ -778,7 +786,6 @@ class MainFrame(wx.Frame):
         setup_dlg.ShowModal()
     
     #--------------------------- Menu Tools ---------------------------#
-    
     def Check_conf(self, event):
         """
         Call IO_tools.test_conf
@@ -788,13 +795,26 @@ class MainFrame(wx.Frame):
                                  self.ffplay_link, self.OS,
                                  )
     #------------------------------------------------------------------#
-    
     def Check_formats(self, event):
         """
         IO_tools.test_formats
         
         """
         IO_tools.test_formats(self.ffmpeg_link,)
+    #------------------------------------------------------------------#
+    def Check_enc(self, event):
+        """
+        IO_tools.test_encoders
+        
+        """
+        IO_tools.test_codecs(self.ffmpeg_link, '-encoders')
+    #------------------------------------------------------------------#
+    def Check_dec(self, event):
+        """
+        IO_tools.test_encoders
+        
+        """
+        IO_tools.test_codecs(self.ffmpeg_link, '-decoders')
         
     #---------------------------- Menu Edit ----------------------------#
     def Helpme(self, event):

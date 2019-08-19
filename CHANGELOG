@@ -14,11 +14,15 @@ BUG FIXES:
     - fixed wrong main window size when run on FreeBSD O.S.
 
 ADD:
-    - adding a new menu tools item on the menu bar
-    - Added dialog box for displaying the FFmpeg compilation specifications
-    - Added dialog box for displaying file formats available on FFmpeg (
+    - Added a new menu tools item on the menu bar
+    - Added dialog box to displaying the FFmpeg compilation specifications
+    - Added dialog box to displaying file formats available on FFmpeg (
       only for Pytohn3)
-    - Add a summary dialog before start conversion
+    - Add a summary dialog before start conversion on Presets Manager
+    - Added dialog box to displaying available encoders and ability
+      by FFmpeg
+    - Added dialog box to displaying available decoders and capability
+      by FFmpeg
     
 IMPROVEMENTS:
     - Messages output from command line during start-up

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ffmpeg_conf.py
+# Name: ffmpeg_formats.py
 # Porpose: Dialog to show the available formats on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -28,7 +28,6 @@
 #########################################################
 
 import wx
-import itertools
 
 class FFmpeg_formats(wx.Dialog):
     """
