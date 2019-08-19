@@ -18,9 +18,15 @@ ADD:
     - Added dialog box for displaying the FFmpeg compilation specifications
     - Added dialog box for displaying file formats available on FFmpeg (
       only for Pytohn3)
+    - Add a summary dialog before start conversion
     
 IMPROVEMENTS:
     - Messages output from command line during start-up
+    - Presets Manager panel: if the FFmpeg command is modified manually, 
+      a confirmation message will appear before performing the conversion
+    - Improvement of some message in tooltips
+    - Improved name resolution and word definitions in some windows, 
+      for greater understanding.
 
 +------------------------------------+
 August 2, 2019 V.1.4.6

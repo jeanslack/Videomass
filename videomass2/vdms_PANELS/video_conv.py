@@ -1612,6 +1612,7 @@ class Video_Conv(wx.Panel):
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(lenghmax)
+            print(valupdate[0], valupdate[1], title)
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:

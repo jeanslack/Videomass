@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (12) December 28 2018
+# Rev: Dec 28 2018. Aug 19 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -32,9 +32,12 @@ import os
 from videomass3.vdms_IO.presets_manager_properties import parser_xml
 from videomass3.vdms_IO.presets_manager_properties import delete_profiles
 from videomass3.vdms_IO.presets_manager_properties import supported_formats
-from videomass3.vdms_SYS.os_interaction import copy_restore, copy_backup, copy_on
+from videomass3.vdms_SYS.os_interaction import copy_restore
+from videomass3.vdms_SYS.os_interaction import copy_backup
+from videomass3.vdms_SYS.os_interaction import copy_on
 from videomass3.vdms_IO.filedir_control import inspect
 from videomass3.vdms_DIALOGS import presets_addnew
+from videomass3.vdms_DIALOGS.epilogue import Formula
 
 array = []# all parameters of the selected profile
 # this dictionary content all presets in ~/.videomass:
@@ -134,8 +137,7 @@ class PresetsPanel(wx.Panel):
         self.list_ctrl.SetToolTip(_("List selection profiles"))
         self.txt_cmd.SetMinSize((430, 60))
         self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        self.txt_cmd.SetToolTip(_("FFmpeg command output of each selected "
-                                      "profile."))
+        self.txt_cmd.SetToolTip(_("Command of the selected profile"))
 
         #----------------------Build Layout----------------------#
         #siz1 = wx.BoxSizer(wx.VERTICAL)
@@ -157,8 +159,8 @@ class PresetsPanel(wx.Panel):
         grid_siz7.Add(self.cmbx_prst, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
         nb1_p1.SetSizer(grid_siz7)
         nb1_p2.SetSizer(grd_s3)
-        nb1.AddPage(nb1_p1, (_("Selecting Presets")))
-        nb1.AddPage(nb1_p2, (_("Command Line FFmpeg")))
+        nb1.AddPage(nb1_p1, (_("Selecting presets")))
+        nb1.AddPage(nb1_p2, (_("Command line FFmpeg")))
         grd_s2.Add(nb1, 1, wx.EXPAND, 0)
         grd_s2.Add(grd_s4, 1, wx.EXPAND, 0)
         grd_s1.Add(grd_s2, 1, wx.ALL | wx.EXPAND, 15)
@@ -495,6 +497,16 @@ class PresetsPanel(wx.Panel):
             self.parent.statusbar_msg(_("Select a profile in the list "
                                       "before start encoding"), yellow)
             return
+        
+        if array[2].strip() != self.txt_cmd.GetValue().strip():
+            if wx.MessageBox(_("The selected profile command has been "
+                               "changed manually.\nDo you want to apply it "
+                               "during the conversion process?"), 
+                             _("Videomass: Please confirm"), 
+                                 wx.ICON_QUESTION | 
+                                 wx.YES_NO, self) == wx.NO:
+                return
+            
         array3, array4 = array[3], array[4]
         file_sources = supported_formats(array3, file_sources)
         checking = inspect(file_sources, dir_destin, array4)
@@ -508,65 +520,88 @@ class PresetsPanel(wx.Panel):
         filename, base_name, lenghmax = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
-        if 'DOUBLE_PASS' in comcheck:
-            
-            split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
-            passOne = split[0].strip()
-            passTwo = split[1].strip()
-            
-            command1 = ("-loglevel %s %s %s %s %s -f rawvideo" % (
-                                                    self.loglevel_type, 
-                                                    passOne, 
-                                                    self.threads, 
-                                                    self.cpu_used,
-                                                    self.time_seq,)
-                        )
-            command2 = ("-loglevel %s %s %s %s %s" % (self.loglevel_type, 
-                                                      passTwo, 
-                                                      self.threads, 
-                                                      self.cpu_used,
-                                                      self.time_seq,
-                                                      )
-                        )
-            pass1 = " ".join(command1.split())# mi formatta la stringa
-            pass2 = " ".join(command2.split())# mi formatta la stringa
+        valupdate = self.update_dict(lenghmax)
+        ending = Formula(self, valupdate[0], valupdate[1], 'Presets Manager')
+        
+        if ending.ShowModal() == wx.ID_OK:
+            if 'DOUBLE_PASS' in comcheck:
+                
+                split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
+                passOne = split[0].strip()
+                passTwo = split[1].strip()
+                
+                command1 = ("-loglevel %s %s %s %s %s -f rawvideo" % (
+                                                        self.loglevel_type, 
+                                                        passOne, 
+                                                        self.threads, 
+                                                        self.cpu_used,
+                                                        self.time_seq,)
+                            )
+                command2 = ("-loglevel %s %s %s %s %s" % (self.loglevel_type, 
+                                                        passTwo, 
+                                                        self.threads, 
+                                                        self.cpu_used,
+                                                        self.time_seq,
+                                                        )
+                            )
+                pass1 = " ".join(command1.split())# mi formatta la stringa
+                pass2 = " ".join(command2.split())# mi formatta la stringa
 
-            self.parent.switch_Process('doublepass',
-                                        file_sources, 
-                                        array[4], 
-                                        dir_destin, 
-                                        None, 
-                                        [pass1, pass2], 
-                                        self.ffmpeg_link,
-                                        '', 
-                                        logname, 
-                                        lenghmax, 
-                                        )
-            #used for play preview and mediainfo:
-            f = os.path.basename(file_sources[0]).split('.')[0]
-            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                            array[4]))
+                self.parent.switch_Process('doublepass',
+                                            file_sources, 
+                                            array[4], 
+                                            dir_destin, 
+                                            None, 
+                                            [pass1, pass2], 
+                                            self.ffmpeg_link,
+                                            '', 
+                                            logname, 
+                                            lenghmax, 
+                                            )
+                #used for play preview and mediainfo:
+                f = os.path.basename(file_sources[0]).split('.')[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                                array[4]))
 
-        else:
-            command = ("-loglevel %s %s "
-                        "%s %s %s -y" % (self.loglevel_type, 
-                                        self.txt_cmd.GetValue(), 
-                                        self.threads, 
-                                        self.cpu_used,
-                                        self.time_seq)
-                                        )
-            self.parent.switch_Process('normal',
-                                        file_sources, 
-                                        array[4], 
-                                        dir_destin, 
-                                        command, 
-                                        None, 
-                                        self.ffmpeg_link,
-                                        '', 
-                                        logname, 
-                                        lenghmax, 
-                                        )
-            f = os.path.basename(file_sources[0]).split('.')[0]
-            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                            array[4]))
+            else:
+                command = ("-loglevel %s %s "
+                            "%s %s %s -y" % (self.loglevel_type, 
+                                            self.txt_cmd.GetValue(), 
+                                            self.threads, 
+                                            self.cpu_used,
+                                            self.time_seq)
+                                            )
+                self.parent.switch_Process('normal',
+                                            file_sources, 
+                                            array[4], 
+                                            dir_destin, 
+                                            command, 
+                                            None, 
+                                            self.ffmpeg_link,
+                                            '', 
+                                            logname, 
+                                            lenghmax, 
+                                            )
+                f = os.path.basename(file_sources[0]).split('.')[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                                array[4]))
+#------------------------------------------------------------------#
+    #------------------------------------------------------------------#
+    def update_dict(self, lenghmax):
+        """
+        This method is required for update info before send at epilogue
+        """
+        numfile = "%s file in pending" % str(lenghmax)
+                    
+        formula = (_(u"SUMMARY:\n\nFile to Queue\
+                      \nProfile Used:\nOut Format:\
+                      \nTime selection:"
+                      ))
+        dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
+                                            array[0], 
+                                            array[4],
+                                            self.time_seq)
+                    )
+
+        return formula, dictions
 

@@ -31,8 +31,14 @@ import wx
 
 class Formula(wx.Dialog):
     """
-    Class for show epilogue dialog before run process (if all ok 
-    (validations?)). It not return usable values.
+   Show a epilogue dialog box before run process. It accept a 
+   couple of tuples which represent the formula names with 
+   corresponding diction names:
+   
+   Example:
+            formula = ("\nEXAMPLES:\n\\nExample 1:\nExample 2:\n etc."
+            diction = ("type 1\ntype 2\ntype 3\n etc."
+   
     """
     def __init__(self, parent, formula, diction, title):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
