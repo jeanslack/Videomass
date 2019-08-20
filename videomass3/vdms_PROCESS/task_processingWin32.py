@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: os_processing.py (for wxpython >= 2.8)
-# Porpose: module for system processing commands for Ms Windows
-# Compatibility: Python3, wxPython Phoenix
+# Name: task_processing.py
+# Porpose: module for system processing commands
+# Compatibility: Python3, wxPython4 Phoenix (for Ms Windows only)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (10) December 27 2018
+# Rev: Dec 27 2018, Aug 20 2019
 #########################################################
 
 # This file is part of Videomass.

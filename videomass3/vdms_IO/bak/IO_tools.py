@@ -32,10 +32,10 @@ import platform
 
 if platform.system() == 'Windows':
     from videomass3.vdms_PROCESS.task_processingWin32 import GeneralProcess
-    #from videomass3.vdms_PROCESS.task_processingWin32 import ProcThread
-    #from videomass3.vdms_PROCESS.task_processingWin32 import DoublePassThread
-    #from videomass3.vdms_PROCESS.task_processingWin32 import GrabAudioProc
-    #from videomass3.vdms_PROCESS.task_processingWin32 import SingleProcThread
+    from videomass3.vdms_PROCESS.task_processingWin32 import ProcThread
+    from videomass3.vdms_PROCESS.task_processingWin32 import DoublePassThread
+    from videomass3.vdms_PROCESS.task_processingWin32 import GrabAudioProc
+    from videomass3.vdms_PROCESS.task_processingWin32 import SingleProcThread
     from videomass3.vdms_PROCESS.volumedetectWin32 import VolumeDetectThread
     from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproductionWin32 import Play
@@ -45,6 +45,10 @@ if platform.system() == 'Windows':
     from videomass3.vdms_PROCESS.check_bin import ff_codecs
 else:
     from videomass3.vdms_PROCESS.task_processing import GeneralProcess
+    from videomass3.vdms_PROCESS.task_processing import ProcThread
+    from videomass3.vdms_PROCESS.task_processing import DoublePassThread
+    from videomass3.vdms_PROCESS.task_processing import GrabAudioProc
+    from videomass3.vdms_PROCESS.task_processing import SingleProcThread
     from videomass3.vdms_PROCESS.volumedetect import VolumeDetectThread
     from videomass3.vdms_PROCESS.volumedetect import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproduction import Play
@@ -82,13 +86,21 @@ def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
             newDuration.append(totalsum)
         duration = newDuration
     
-    self.ProcessPanel = GeneralProcess(self, 
-                                       path_log, 
-                                       panelshown, 
-                                       varargs, 
-                                       duration, 
-                                       OS
-                                       )
+    self.ProcessPanel = GeneralProcess(self, path_log, panelshown, varargs)
+    
+    if varargs[0] == 'normal':# video conv and audio conv panels
+        ProcThread(varargs, duration, OS) 
+        
+    elif varargs[0] == 'doublepass': # video conv panel
+        DoublePassThread(varargs, duration, OS)
+        
+    elif varargs[0] == 'saveimages': # video conv panel
+        SingleProcThread(varargs, duration, OS)
+        
+    elif varargs[0] == 'grabaudio':# audio conv panel
+        GrabAudioProc(varargs, duration, OS)
+
+    #self.ProcessPanel = GeneralProcess(self, path_log, panelshown, varargs)
 #-----------------------------------------------------------------------#
 def stream_info(title, filepath , ffprobe_link):
     """

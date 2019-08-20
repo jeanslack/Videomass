@@ -132,11 +132,11 @@ class Checkconf(wx.Dialog):
         info, others, enable, disable = out
         
         if which(ffmpeg_link):
-            txtffmpeg.SetForegroundColour((45,208,28))
+            txtffmpeg.SetForegroundColour((45,208,28))# green
             ffmpeg = _("FFmpeg   ...installed")
         else:
             if os.path.exists(ffmpeg_link):
-                txtffmpeg.SetForegroundColour((208,198,28))
+                txtffmpeg.SetForegroundColour((208,198,28))# yellow
                 ffmpeg = _("FFmpeg   ...was imported locally")
             
         if which(ffprobe_link):
@@ -147,7 +147,7 @@ class Checkconf(wx.Dialog):
                 txtffprobe.SetForegroundColour((208,198,28))
                 ffprobe = _("FFprobe   ...was imported locally")
             else:
-                txtffprobe.SetForegroundColour((209,28,28))
+                txtffprobe.SetForegroundColour((209,28,28))# red
                 ffprobe = _("FFprobe   ...not found !")
                 
         if which(ffplay_link):
@@ -182,7 +182,7 @@ class Checkconf(wx.Dialog):
             print ('No others option found')
         else:
             others_opt.InsertItem(index, _('Specific compilation options'))
-            others_opt.SetItemBackgroundColour(index, "blue")
+            others_opt.SetItemBackgroundColour(index, "NAVY")
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:
@@ -199,7 +199,7 @@ class Checkconf(wx.Dialog):
             print ('No options enabled')
         else:
             enable_opt.InsertItem(index, _('ENABLED:'))
-            enable_opt.SetItemBackgroundColour(index, "green")
+            enable_opt.SetItemBackgroundColour(index, "GREEN")
             n = len(enable)
             for a in range(n):
                 (key, value) = _('Enabled'), enable[a]
@@ -214,7 +214,7 @@ class Checkconf(wx.Dialog):
             print ('No options disabled')
         else:
             disabled_opt.InsertItem(index, _('DISABLED:'))
-            disabled_opt.SetItemBackgroundColour(index, "red")
+            disabled_opt.SetItemBackgroundColour(index, "RED")
             n = len(disable)
             for a in range(n):
                 (key, value) = _('Disabled'), disable[a]

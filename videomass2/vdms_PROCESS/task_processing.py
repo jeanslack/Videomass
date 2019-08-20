@@ -122,8 +122,8 @@ class GeneralProcess(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         
         #------------------------------------------
-        initlog = ('[VIDEOMASS]\n\nInitial LOG:\n')
-        print '\n%s' % initlog
+        initlog = ('\nInitial log:\n')
+        print '[VIDEOMASS]\n%s' % initlog
         self.OutText.AppendText("%s" % initlog)
         write_log(self.logname) # set initial file LOG
         
@@ -182,7 +182,7 @@ class GeneralProcess(wx.Panel):
         Receive message from 'for' loop in thread process.
         """
         self.count += 1 # per ogni ciclo for aumenta di uno
-        textlog = ('\nQueue file: %s of %s\n'
+        textlog = ('\nFile %s/%s\n'
                    '---------------------------\n'
                    '%s\n---------------------------\n' % (self.count, 
                                                           self.lenghmax, 
@@ -223,23 +223,24 @@ class GeneralProcess(wx.Panel):
         if self.STATUS_ERROR == 1 or STATUS_ERROR == 1:
             self.STATUS_ERROR = None
             STATUS_ERROR = None
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.RED))
-            self.OutText.AppendText('\n Failed!\n\n exit status %s' % msg)
+            print('\n  Failed ! exit status %s' % msg)
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(181, 28, 19)))
+            self.OutText.AppendText('\n  Failed !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         elif CHANGE_STATUS == 1:
             CHANGE_STATUS = None
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.RED))
-            s = '\n ..Interrupted Process!\n\n exit status %s' % msg
-            self.OutText.AppendText(s)
+            print('\n ..Interrupted Process! exit status %s' % msg)
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(178, 161, 19)))
+            self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         else:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.BLUE))#GREEN
-            s = '\n Done!\n\n exit status %s' % msg
-            self.OutText.AppendText(s)
+            print('\n Done ! exit status %s' % msg)
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(44, 130, 44)))
+            self.OutText.AppendText('\n  Done !\n\n')
             self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
             self.button_close.Enable(True)

@@ -183,7 +183,7 @@ class Checkconf(wx.Dialog):
             print('No others option found')
         else:
             others_opt.InsertStringItem(index, _(u'Specific compilation options'))
-            others_opt.SetItemBackgroundColour(index, "blue")
+            others_opt.SetItemBackgroundColour(index, "NAVY")
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:
@@ -200,7 +200,7 @@ class Checkconf(wx.Dialog):
             print('No options enabled')
         else:
             optconf.InsertStringItem(index, _(u'ENABLED:'))
-            optconf.SetItemBackgroundColour(index, "green")
+            optconf.SetItemBackgroundColour(index, "GREEN")
             n = len(enable)
             for a in range(n):
                 (key, value) = _(u'Enabled'), enable[a]
@@ -215,7 +215,7 @@ class Checkconf(wx.Dialog):
             print('No options disabled')
         else:
             optconf.InsertStringItem(index, _(u'DISABLED:'))
-            optconf.SetItemBackgroundColour(index, "red")
+            optconf.SetItemBackgroundColour(index, "RED")
             n = len(disable)
             for a in range(n):
                 (key, value) = _(u'Disabled'), disable[a]

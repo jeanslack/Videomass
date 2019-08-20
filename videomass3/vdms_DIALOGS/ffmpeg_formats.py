@@ -112,7 +112,7 @@ class FFmpeg_formats(wx.Dialog):
             print ('No ffmpeg formats available')
         else:
             dmx.InsertItem(index, ('----'))
-            dmx.SetItemBackgroundColour(index, "grey")
+            dmx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
                 if len(s) == 1:
@@ -131,7 +131,7 @@ class FFmpeg_formats(wx.Dialog):
             print ('No ffmpeg formats available')
         else:
             mx.InsertItem(index, ('----'))
-            mx.SetItemBackgroundColour(index, "grey")
+            mx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
                 if len(s) == 1:
@@ -150,7 +150,7 @@ class FFmpeg_formats(wx.Dialog):
             print ('No ffmpeg formats available')
         else:
             dmx_mx.InsertItem(index, ('----'))
-            dmx_mx.SetItemBackgroundColour(index, "grey")
+            dmx_mx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
                 if len(s) == 1:

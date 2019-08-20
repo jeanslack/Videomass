@@ -516,8 +516,9 @@ class PresetsPanel(wx.Panel):
         # filename: nome file senza ext.
         # base_name: nome file con ext.
         # lenghmax: count processing cicles for batch mode
-        typeproc, file_sources, dir_destin,\
-        filename, base_name, lenghmax = checking
+        (typeproc, file_sources, 
+         dir_destin, filename, 
+         base_name, lenghmax) = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
         valupdate = self.update_dict(lenghmax)

@@ -60,7 +60,7 @@ class GeneralProcess(wx.Panel):
     It also implements the buttons to stop the current process and 
     close the panel during final activities.
     """
-    def __init__(self, parent, path_log, panel, varargs,  duration, OS):
+    def __init__(self, parent, path_log, panel, varargs):
         """
         In the 'previous' attribute is stored an ID string used to recover 
         the previous panel from which the process is started.
@@ -75,10 +75,6 @@ class GeneralProcess(wx.Panel):
         self.path_log = path_log # for save a copy if user want
         self.STATUS_ERROR = None # used if error in err_list
         self.CHANGE_STATUS = None #  1 = process interrupted 
-        
-        self.duration = duration
-        self.OS = OS
-        self.varargs = varargs
         
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
@@ -128,31 +124,19 @@ class GeneralProcess(wx.Panel):
         #self.OutText.AppendText("%s" % initlog)
         write_log(self.logname) # set initial file LOG
         
-        time.sleep(.1)
+        time.sleep(.5)
         
+        self.initProcess()
+        
+    def initProcess(self):
+        """
+        """
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
-        
-        self.startThread()
-        
-    def startThread(self):
-        """
-        """
-        if self.varargs[0] == 'normal':# video conv and audio conv panels
-            ProcThread(self.varargs, self.duration, self.OS, self.logname) 
-        
-        elif self.varargs[0] == 'doublepass': # video conv panel
-            DoublePassThread(self.varargs, self.duration, self.OS)
-            
-        elif self.varargs[0] == 'saveimages': # video conv panel
-            SingleProcThread(self.varargs, self.duration, self.OS)
-            
-        elif self.varargs[0] == 'grabaudio':# audio conv panel
-            GrabAudioProc(self.varargs, self.duration, self.OS)
     #-------------------------------------------------------------------#
     def update_display(self, output, duration):
         """
@@ -200,14 +184,18 @@ class GeneralProcess(wx.Panel):
         self.barProg.SetRange(duration)#set la durata complessiva
         self.barProg.SetValue(0)# resetto la prog bar
         self.labPerc.SetLabel("Percentage: 100%")
+        #print('\n%s\n%s\n' % (logcount,cmd))
         self.OutText.AppendText("\n  %s\n  '%s'\n" % (logcount,fname))
+        # write all ffmpeg commands
+        #with open("%s/.videomass/%s" % (DIRNAME, 
+                                        #self.logname), "a") as log:
+            #log.write("%s\n\n" % (cmd))
 
     #-------------------------------------------------------------------#
     def on_stop(self, event):
         """
         The user change idea and was stop process
         """
-        self.CHANGE_STATUS = 1
         global CHANGE_STATUS
         CHANGE_STATUS = 1
         event.Skip()
@@ -215,14 +203,7 @@ class GeneralProcess(wx.Panel):
     def on_close(self, event):
         """
         close dialog and show main frame
-        
         """
-        self.STATUS_ERROR = None
-        self.CHANGE_STATUS = None
-        global CHANGE_STATUS
-        global STATUS_ERROR
-        STATUS_ERROR = None
-        CHANGE_STATUS = None
         self.OutText.Clear()# reset textctrl before close
         self.parent.panelShown(self.previus)# retrieve at previusly panel
         event.Skip()
@@ -236,20 +217,22 @@ class GeneralProcess(wx.Panel):
         if self.STATUS_ERROR == 1 or STATUS_ERROR == 1:
             self.STATUS_ERROR = None
             STATUS_ERROR = None
+            print('\n  Failed ! exit status %s' % msg)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
             self.OutText.AppendText('\n  Failed !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
-        elif self.CHANGE_STATUS == 1 or CHANGE_STATUS == 1:
+        elif CHANGE_STATUS == 1:
             CHANGE_STATUS = None
-            self.CHANGE_STATUS = None
+            print('\n ..Interrupted Process! exit status %s' % msg)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
             self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         else:
+            print('\n Done ! exit status %s' % msg)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 164, 30)))
             self.OutText.AppendText('\n  Done !\n\n')
             self.labPerc.SetLabel("Percentage: 100%")
@@ -273,7 +256,7 @@ class ProcThread(Thread):
     This class represents a separate thread for running processes, which 
     need to read the stdout/stderr in real time.
     """
-    def __init__(self, varargs, duration, OS, logname):
+    def __init__(self, varargs, duration, OS):
         """
         Some attribute can be empty, this depend from conversion type. 
         If the format/container is not changed on a conversion, the 
@@ -294,7 +277,6 @@ class ProcThread(Thread):
         self.OS = OS
         self.count = 0
         self.lenghmax = len(varargs[1])
-        self.logname = logname
 
         self.start() # start the thread (va in self.run())
 
@@ -350,22 +332,18 @@ class ProcThread(Thread):
                                       bufsize=1, 
                                       universal_newlines=True) as p:
                     self.count += 1
-                    print('\nFile %s/%s\n%s\n' % (self.count,
-                                                  self.lenghmax,
-                                                  cmd
-                                                  ))
+                    print('\nFile %s/%s\n%s\n' % (self.count,self.lenghmax,cmd))
                     wx.CallAfter(pub.sendMessage,
                                  "COUNT_EVT", 
                                  cmd=cmd, 
                                  duration=duration,
                                  fname=files
                                  )
-                    self.logWrite(cmd)
 
                     for line in p.stderr:
                         #sys.stdout.write(line)
                         #sys.stdout.flush()
-                        print(line, end=''),
+                        print (line, end=''),
                         wx.CallAfter(pub.sendMessage, 
                                      "UPDATE_EVT", 
                                      output=line, 
@@ -393,21 +371,7 @@ class ProcThread(Thread):
 
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT", msg=status)
-        self.endProc(status)
-    #----------------------------------------------------------------#    
-    def logWrite(self, cmd):
-        """
-        write all ffmpeg commands
-        
-        """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
-            log.write("%s\n\n" % (cmd))
-    #----------------------------------------------------------------#
-    def endProc(self, status):
-        """
-        print end messagess to console
-        """
-        print('\n...End, exit status %s\n' % status)
+                                 
 ########################################################################
 
 class DoublePassThread(Thread):

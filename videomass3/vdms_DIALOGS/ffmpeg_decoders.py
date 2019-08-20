@@ -135,7 +135,7 @@ class FFmpeg_decoders(wx.Dialog):
             print ('No ffmpeg codecs available')
         else:
             vid.InsertItem(index, _('DECODING CAPABILITY'))
-            vid.SetItemBackgroundColour(index, "orange")
+            vid.SetItemBackgroundColour(index, "SIENNA")
             for a in l:
                 index+=1
                 vid.InsertItem(index, a[6:].split(' ')[1])
@@ -162,7 +162,7 @@ class FFmpeg_decoders(wx.Dialog):
             print ('No ffmpeg codecs available')
         else:
             aud.InsertItem(index, _('DECODING CAPABILITY'))
-            aud.SetItemBackgroundColour(index, "orange")
+            aud.SetItemBackgroundColour(index, "SIENNA")
             for a in l:
                 index+=1
                 aud.InsertItem(index, a[6:].split(' ')[1])
@@ -189,7 +189,7 @@ class FFmpeg_decoders(wx.Dialog):
             print ('No ffmpeg codecs available')
         else:
             sub.InsertItem(index, _('DECODING CAPABILITY'))
-            sub.SetItemBackgroundColour(index, "orange")
+            sub.SetItemBackgroundColour(index, "SIENNA")
             for a in l:
                 index+=1
                 sub.InsertItem(index, a[6:].split(' ')[1])
