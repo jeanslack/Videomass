@@ -1662,7 +1662,7 @@ class Video_Conv(wx.Panel):
             
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('saveimages',
-                                        None, 
+                                        file_sources, 
                                         None, 
                                         None, 
                                         command, 
