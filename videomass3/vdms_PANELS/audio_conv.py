@@ -263,8 +263,7 @@ class Audio_Conv(wx.Panel):
                 self.ckb_norm.Enable(), self.ckb_onlynorm.Enable(), 
                 self.txt_options.Enable(), self.btn_param.Enable()
             cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
-            cmd_opt["AudioCodec"] = \
-                                    acodecs[self.cmbx_a.GetValue()]
+            cmd_opt["AudioCodec"] = acodecs[self.cmbx_a.GetValue()]
             ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
             cmd_opt["ExportExt"] = ext
         
@@ -551,6 +550,8 @@ class Audio_Conv(wx.Panel):
         Update _allentries is callaed by on_ok method.
         """
         self.time_seq = self.parent.time_seq
+        if self.cmbx_a.GetValue() == _("Save audio from movie"):
+            self.audioFormats(self)
     #------------------------------------------------------------------#
     def on_ok(self):
         """

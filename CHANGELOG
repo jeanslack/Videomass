@@ -7,11 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-August 16, 2019 V.1.5.0
+August 21, 2019 V.1.5.0
 +------------------------------------+
 
 BUG FIXES:
-    - fixed wrong main window size when run on FreeBSD O.S.
+    - Fixed wrong main window size when run on FreeBSD O.S.
+    - Fixed the annoying bug when you save the audio from the movie 
+      and at the end of the conversion drag other files into the DnD 
+      panel to save the audio from the movie again.
+    - Fixed the bug of multiple additions when writing the log file 
+      during the processes
+      
 
 ADD:
     - Added a new menu tools item on the menu bar
@@ -26,11 +32,13 @@ ADD:
     
 IMPROVEMENTS:
     - Messages output from command line during start-up
-    - Presets Manager panel: if the FFmpeg command is modified manually, 
+    - Presets Manager panel: if the FFmpeg command is modified manually 
       a confirmation message will appear before performing the conversion
     - Improvement of some message in tooltips
     - Improved name word definitions in some windows, for greater understanding.
     - Improve color messages on the process panel
+    - Improve log message in the list-control on the process panel
+    - Improve log messagge in the conlole during processes for debug
 
 +------------------------------------+
 August 2, 2019 V.1.4.6

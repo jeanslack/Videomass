@@ -302,10 +302,10 @@ class ProcThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
-        self.OS = OS
-        self.count = 0
-        self.lenghmax = len(varargs[1])
-        self.logname = logname
+        self.OS = OS # operative sistem Identifier
+        self.count = 0 # count number loop
+        self.lenghmax = len(varargs[1]) # lengh file list
+        self.logname = logname # title name of file log
 
         self.start() # start the thread (va in self.run())
 
@@ -453,10 +453,10 @@ class DoublePassThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
-        self.OS = OS
-        self.count = 0
-        self.lenghmax = len(varargs[1])
-        self.logname = logname
+        self.OS = OS # operative sistem Identifier
+        self.count = 0 # count number loop
+        self.lenghmax = len(varargs[1]) # lengh file list
+        self.logname = logname # title name of file log
         
         if self.OS == 'Windows':
             self.nul = 'NUL'
@@ -644,8 +644,8 @@ class SingleProcThread(Thread):
         self.cmd = varargs[4] # comand set on single pass
         self.duration = 0 # duration list
         self.OS = OS
-        self.logname = logname
-        self.fname = varargs[1][0]
+        self.logname = logname # title name of file log
+        self.fname = varargs[1][0] # file name
 
         self.start() # start the thread (va in self.run())
 
@@ -752,9 +752,9 @@ class GrabAudioProc(Thread):
         self.logname = varargs[8] #  ~/.videomass/self.logname
         self.duration = duration # duration values list (items)
         self.OS = OS
-        self.count = 0
-        self.logname = logname
-        self.lenghmax = len(varargs[2])
+        self.count = 0 # count number loop
+        self.lenghmax = len(varargs[2]) # lengh file list
+        self.logname = logname # title name of file log
         
         self.start() # start the thread (va in self.run())
 
