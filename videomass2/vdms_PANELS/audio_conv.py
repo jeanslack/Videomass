@@ -549,6 +549,8 @@ class Audio_Conv(wx.Panel):
         Update _allentries is callaed by on_ok method.
         """
         self.time_seq = self.parent.time_seq
+        if self.cmbx_a.GetValue() == _(u"Save audio from movie"):
+            self.audioFormats(self)
     #------------------------------------------------------------------#
     def on_ok(self):
         """

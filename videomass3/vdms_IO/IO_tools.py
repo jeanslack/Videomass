@@ -32,10 +32,6 @@ import platform
 
 if platform.system() == 'Windows':
     from videomass3.vdms_PROCESS.task_processingWin32 import GeneralProcess
-    #from videomass3.vdms_PROCESS.task_processingWin32 import ProcThread
-    #from videomass3.vdms_PROCESS.task_processingWin32 import DoublePassThread
-    #from videomass3.vdms_PROCESS.task_processingWin32 import GrabAudioProc
-    #from videomass3.vdms_PROCESS.task_processingWin32 import SingleProcThread
     from videomass3.vdms_PROCESS.volumedetectWin32 import VolumeDetectThread
     from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproductionWin32 import Play

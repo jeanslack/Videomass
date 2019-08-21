@@ -63,7 +63,7 @@ class GeneralProcess(wx.Panel):
     It also implements the buttons to stop the current process and 
     close the panel during final activities.
     """
-    def __init__(self, parent, path_log, panel, varargs):
+    def __init__(self, parent, path_log, panel, varargs,  duration, OS):
         """
         In the 'previous' attribute is stored an ID string used to recover 
         the previous panel from which the process is started.
@@ -78,6 +78,10 @@ class GeneralProcess(wx.Panel):
         self.path_log = path_log # for save a copy if user want
         self.STATUS_ERROR = None # used if error in err_list
         self.CHANGE_STATUS = None #  1 = process interrupted 
+        
+        self.duration = duration
+        self.OS = OS
+        self.varargs = varargs
         
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
@@ -107,9 +111,9 @@ class GeneralProcess(wx.Panel):
         # set_properties:
         #self.OutText.SetBackgroundColour((217, 255, 255))
         self.ckbx_text.SetToolTipString(_(u"Show FFmpeg messages in real time "
-                                        "in the log view console, useful for "
-                                        "knowledge the all exit status as "
-                                        "errors and warnings."
+                                    u"in the log view console, useful for "
+                                    u"knowledge the all exit status as "
+                                    u"errors and warnings."
                                            ))
         #self.button_stop.SetMinSize((200, 30))
         self.button_stop.SetToolTipString(_(u"Stops current process"))
@@ -123,22 +127,40 @@ class GeneralProcess(wx.Panel):
         
         #------------------------------------------
         initlog = ('\nInitial log:\n')
-        print '[VIDEOMASS]\n%s' % initlog
-        self.OutText.AppendText("%s" % initlog)
+        print ('\n\n[VIDEOMASS]\n%s' % initlog)
+        #self.OutText.AppendText("%s" % initlog)
         write_log(self.logname) # set initial file LOG
         
         time.sleep(.1)
-        self.initProcess()
         
-    def initProcess(self):
-        """
-        """
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
+        
+        self.startThread()
+        
+    def startThread(self):
+        """
+        """
+        if self.varargs[0] == 'normal':# from video and audio conv panels
+            ProcThread(self.varargs, self.duration,
+                       self.OS, self.logname,
+                       ) 
+        elif self.varargs[0] == 'doublepass': # from video conv panel
+            DoublePassThread(self.varargs, self.duration,
+                             self.OS, self.logname,
+                             )
+        elif self.varargs[0] == 'saveimages': # from video conv panel
+            SingleProcThread(self.varargs, self.duration,
+                             self.OS, self.logname,
+                             )
+        elif self.varargs[0] == 'grabaudio':# from audio conv panel
+            GrabAudioProc(self.varargs, self.duration,
+                          self.OS, self.logname,
+                          )
     #-------------------------------------------------------------------#
     def update_display(self, output, duration):
         """
@@ -157,6 +179,7 @@ class GeneralProcess(wx.Panel):
             self.barProg.SetValue(timesum)
             percentage = timesum / duration * 100
             self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
+            del output, duration
 
         elif self.STATUS_ERROR == None:
             err_list = ('not found', 
@@ -166,42 +189,44 @@ class GeneralProcess(wx.Panel):
                         'Option not found', 
                         'Unknown',
                         'No such file or directory')
+            
             for err in err_list:
+                global STATUS_ERROR
                 if err in output:
                     self.STATUS_ERROR = 1
+                    STATUS_ERROR = 1
             if self.STATUS_ERROR == 1:
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 
+                                                                   183, 
+                                                                   47)))
                 self.OutText.AppendText('\n%s' % output)
+                
                 # write a row error into file log:
                 with open("%s/.videomass/%s" % (DIRNAME, self.logname), 
-                                                        "a") as logerr:
+                                                 "a") as logerr:
                     logerr.write("[FFMPEG] ERRORS:\n%s" % (output))
 
     #-------------------------------------------------------------------#
-    def update_count(self, cmd, duration):
+    def update_count(self, count, duration, fname):
         """
-        Receive message from 'for' loop in thread process.
+        Receive message from 'for' loop in the thread process.
         """
-        self.count += 1 # per ogni ciclo for aumenta di uno
-        textlog = ('\nFile %s/%s\n'
-                   '---------------------------\n'
-                   '%s\n---------------------------\n' % (self.count, 
-                                                          self.lenghmax, 
-                                                          cmd))
-        self.barProg.SetRange(duration)#set la durata complessiva
-        self.barProg.SetValue(0)# resetto la prog bar
-        self.labPerc.SetLabel("Percentage: 100%")
-        print '%s' % textlog
-        self.OutText.AppendText("%s" % textlog)
-        # write all ffmpeg commands
-        with open("%s/.videomass/%s" % (DIRNAME, 
-                                        self.logname), "a") as log:
-            log.write("%s\n\n" % (cmd))
+        if STATUS_ERROR == 1:
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
+            self.OutText.AppendText("\n  %s\n" % (count))
+            self.labPerc.SetLabel("Percentage: 0%")
+        else:
+            self.barProg.SetRange(duration)#set la durata complessiva
+            self.barProg.SetValue(0)# resetto la prog bar
+            self.labPerc.SetLabel("Percentage: 100%")
+            self.OutText.AppendText("\n  %s\n  '%s'\n" % (count,fname))
 
     #-------------------------------------------------------------------#
     def on_stop(self, event):
         """
         The user change idea and was stop process
         """
+        self.CHANGE_STATUS = 1
         global CHANGE_STATUS
         CHANGE_STATUS = 1
         event.Skip()
@@ -209,37 +234,37 @@ class GeneralProcess(wx.Panel):
     def on_close(self, event):
         """
         close dialog and show main frame
+        
         """
+        self.STATUS_ERROR = None
+        self.CHANGE_STATUS = None
+        global CHANGE_STATUS
+        global STATUS_ERROR
+        STATUS_ERROR = None
+        CHANGE_STATUS = None
         self.OutText.Clear()# reset textctrl before close
         self.parent.panelShown(self.previus)# retrieve at previusly panel
         event.Skip()
     #-------------------------------------------------------------------#
-    def end_proc(self, msg):
+    def end_proc(self):
         """
         At the end of the process
         """
-        global CHANGE_STATUS
-        global STATUS_ERROR
         if self.STATUS_ERROR == 1 or STATUS_ERROR == 1:
-            self.STATUS_ERROR = None
-            STATUS_ERROR = None
-            print('\n  Failed ! exit status %s' % msg)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(181, 28, 19)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
             self.OutText.AppendText('\n  Failed !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
-        elif CHANGE_STATUS == 1:
-            CHANGE_STATUS = None
-            print('\n ..Interrupted Process! exit status %s' % msg)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(178, 161, 19)))
+        elif self.CHANGE_STATUS == 1 or CHANGE_STATUS == 1:
+            self.CHANGE_STATUS = None
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
             self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         else:
-            print('\n Done ! exit status %s' % msg)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(44, 130, 44)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 164, 30)))
             self.OutText.AppendText('\n  Done !\n\n')
             self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
@@ -258,7 +283,7 @@ class GeneralProcess(wx.Panel):
 #          strings unaltered.
 non_ascii_msg = _(u'Non-ASCII/UTF-8 character string not supported. '
                   u'Please, check the filename and correct it.')
-not_exist_msg =  _(u'exist in your system?')
+not_exist_msg =  _("Is 'ffmpeg' installed on your system?")
 ########################################################################
 
 #------------------------------ THREADS -------------------------------#
@@ -267,7 +292,7 @@ class ProcThread(Thread):
     This class represents a separate thread for running processes, which 
     need to read the stdout/stderr in real time.
     """
-    def __init__(self, varargs, duration, OS):
+    def __init__(self, varargs, duration, OS, logname):
         """
         Some attribute can be empty, this depend from conversion type. 
         If the format/container is not changed on a conversion, the 
@@ -285,7 +310,10 @@ class ProcThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
-        self.OS = OS
+        self.OS = OS # operative sistem Identifier
+        self.count = 0 # count number loop
+        self.lenghmax = len(varargs[1]) # lengh file list
+        self.logname = logname # title name of file log
 
         self.start() # start the thread (va in self.run())
 
@@ -335,32 +363,44 @@ class ProcThread(Thread):
                                      bufsize=1, 
                                      universal_newlines=True,
                                      )
+                
             except OSError as err:
-                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg), 
-                wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         cmd=e, 
-                         duration=0
-                         )
-                STATUS_ERROR = 1
-                break
-            
-            except UnicodeEncodeError as err:
-                e = (non_ascii_msg
-                     )
+                e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
-                             cmd=e, 
-                             duration=0
+                             count=e, 
+                             duration=0,
+                             fname=files
                              )
                 STATUS_ERROR = 1
                 break
             
-            wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         cmd=cmd, 
-                         duration=duration
-                         )
+            except UnicodeEncodeError as err:
+                e = "%s" % (non_ascii_msg)
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             count=e, 
+                             duration=0,
+                             fname=files
+                             )
+                STATUS_ERROR = 1
+                break
+            
+            self.count += 1
+            count = 'File %s/%s' % (self.count,
+                                    self.lenghmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("\n%s\n" % com)
+            
+            
+            
+            wx.CallAfter(pub.sendMessage,
+                            "COUNT_EVT", 
+                            count=count, 
+                            duration=duration,
+                            fname=files
+                            )
+            self.logWrite(com)
             # < https://stackoverflow.com/questions/1388753/how-to-get-output-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1 >
             with p.stderr:
                 for line in iter(p.stderr.readline, b''):
@@ -377,7 +417,28 @@ class ProcThread(Thread):
             status = p.wait()
 
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=status)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+        
+        if STATUS_ERROR == 1:
+            self.endProc('Error:', status)
+        elif CHANGE_STATUS == 1:
+            self.endProc('Interrupted:', status)
+        else:
+            self.endProc('Done,',status)
+    #----------------------------------------------------------------#    
+    def logWrite(self, cmd):
+        """
+        write all ffmpeg commands
+        
+        """
+        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+            log.write("%s\n\n" % (cmd))
+    #----------------------------------------------------------------#
+    def endProc(self, mess, status):
+        """
+        print end messagess to console
+        """
+        print('\n...%s exit status %s\n' % (mess,status))
 ########################################################################
 
 class DoublePassThread(Thread):
@@ -387,7 +448,7 @@ class DoublePassThread(Thread):
     twice for two different tasks: the process on the first video pass and 
     the process on the second video pass for video only.
     """
-    def __init__(self, varargs, duration, OS):
+    def __init__(self, varargs, duration, OS, logname):
         """
         The 'volume' attribute may have an empty value, but it will 
         have no influence on the type of conversion.
@@ -546,7 +607,7 @@ class SingleProcThread(Thread):
           viene esclusa l'opzione -stats al suo interno ma vi è ancora la 
           presenza di 'error'.
     """
-    def __init__(self, varargs, duration, OS):
+    def __init__(self, varargs, duration, OS, logname):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -632,7 +693,7 @@ class GrabAudioProc(Thread):
     It is reserved for extracting multiple audio files with codecs and 
     different formats from different video formats.
     """
-    def __init__(self, varargs, duration, OS):
+    def __init__(self, varargs, duration, OS, logname):
         """
         """
         Thread.__init__(self)
