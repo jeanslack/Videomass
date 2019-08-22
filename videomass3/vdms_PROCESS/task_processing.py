@@ -254,7 +254,6 @@ class GeneralProcess(wx.Panel):
             self.button_close.Enable(True)
 
         elif self.CHANGE_STATUS == 1 or CHANGE_STATUS == 1:
-            self.CHANGE_STATUS = None
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
             self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
             self.button_stop.Enable(False)
@@ -346,12 +345,25 @@ class ProcThread(Thread):
                                                        folders, 
                                                        filename, 
                                                        self.extoutput
-                                                       )          
+                                                       )
+            if self.OS == 'Windows':
+                args = cmd
+            else:
+                args = shlex.split(cmd)
+                
+            self.count += 1
+            count = 'File %s/%s' % (self.count, self.lenghmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("\n%s\n" % com)
+            wx.CallAfter(pub.sendMessage,
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files
+                         )
+            self.logWrite(com)
+            
             try:
-                if self.OS == 'Windows':
-                    args = cmd
-                else:
-                    args = shlex.split(cmd)
                 '''
                 https://stackoverflow.com/questions/1388753/how-to-get-output-
                 from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
@@ -360,22 +372,6 @@ class ProcThread(Thread):
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True) as p:
-                    self.count += 1
-                    count = 'File %s/%s' % (self.count,
-                                            self.lenghmax,)
-                    com = "%s\n%s" % (count, cmd)
-                    print("\n%s\n" % com)
-                    
-                    
-                    
-                    wx.CallAfter(pub.sendMessage,
-                                 "COUNT_EVT", 
-                                 count=count, 
-                                 duration=duration,
-                                 fname=files
-                                 )
-                    self.logWrite(com)
-
                     for line in p.stderr:
                         #sys.stdout.write(line)
                         #sys.stdout.flush()
@@ -495,26 +491,24 @@ class DoublePassThread(Thread):
                                        self.nul,
                                        )
                      ) 
-            try:
-                if self.OS == 'Windows':
-                    args = pass1
-                else:
-                    args = shlex.split(pass1)
-                #--
-                self.count += 1
-                count = 'File %s/%s - Pass 1' % (self.count,
-                                                 self.lenghmax,)
-                cmd = "%s\n%s" % (count, pass1)
-                print("\n%s\n" % cmd)
-                #--
-                wx.CallAfter(pub.sendMessage, 
-                             "COUNT_EVT", 
-                             count=count, 
-                             duration=duration,
-                             fname=files,
-                             )
-                self.logWrite(cmd)
+            if self.OS == 'Windows':
+                args = pass1
+            else:
+                args = shlex.split(pass1)
 
+            self.count += 1
+            count = 'File %s/%s - Pass 1' % (self.count, self.lenghmax,)
+            cmd = "%s\n%s" % (count, pass1)
+            print("\n%s\n" % cmd)
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files,
+                         )
+            self.logWrite(cmd)
+            
+            try:
                 with subprocess.Popen(args, 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
@@ -559,18 +553,15 @@ class DoublePassThread(Thread):
                                                folders, 
                                                filename,
                                                self.extoutput,
-                                                )
-                     )
+                                                ))
             if self.OS == 'Windows':
                 args = pass2
             else:
                 args = shlex.split(pass2)
                 
-            count = 'File %s/%s - Pass 2' % (self.count,
-                                              self.lenghmax,)
+            count = 'File %s/%s - Pass 2' % (self.count, self.lenghmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("\n%s\n" % cmd)
-                
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          count=count, 
@@ -578,7 +569,7 @@ class DoublePassThread(Thread):
                          fname=files,
                          )
             self.logWrite(cmd)
-
+            
             with subprocess.Popen(args, 
                                   stderr=subprocess.PIPE, 
                                   bufsize=1, 
@@ -655,19 +646,25 @@ class SingleProcThread(Thread):
         """
         global STATUS_ERROR
         
+        if self.OS == 'Windows':
+            args = self.cmd
+        else:
+            args = shlex.split(self.cmd)
+            
+        count = 'File %s/%s' % ('1','1',)
+        com = "%s\n%s" % (count, self.cmd)
+        print("\n%s\n" % com)
+        wx.CallAfter(pub.sendMessage, 
+                     "COUNT_EVT", 
+                     count=count, 
+                     duration=self.duration,
+                     fname=self.fname
+                     )
+        self.logWrite(com)
+        
         try:
-            if self.OS == 'Windows':
-                args = self.cmd
-            else:
-                args = shlex.split(self.cmd)
-                
             p = subprocess.Popen(args, stderr=subprocess.PIPE,)
             error =  p.communicate()
-            
-            count = 'File %s/%s' % ('1',
-                                    '1',)
-            com = "%s\n%s" % (count, self.cmd)
-            print("\n%s\n" % com)
             
         except OSError as err_0:
             if err_0[1] == 'No such file or directory':
@@ -676,11 +673,11 @@ class SingleProcThread(Thread):
                 e = "%s: " % (err_0)
                 
             wx.CallAfter(pub.sendMessage, 
-                            "COUNT_EVT", 
-                            count=count, 
-                            duration=self.duration,
-                            fname=self.fname
-                            )
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=self.duration,
+                         fname=self.fname
+                         )
             STATUS_ERROR = 1
             wx.CallAfter(pub.sendMessage, "END_EVT")
             return
@@ -697,14 +694,6 @@ class SingleProcThread(Thread):
                 STATUS_ERROR = 1
                 wx.CallAfter(pub.sendMessage, "END_EVT")
                 return
-        
-        wx.CallAfter(pub.sendMessage, 
-                     "COUNT_EVT", 
-                     count=count, 
-                     duration=self.duration,
-                     fname=self.fname
-                     )
-        self.logWrite(com)
         
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
@@ -787,26 +776,24 @@ class GrabAudioProc(Thread):
                                                    out,
                                                    ext,
                                                     )
+            if self.OS == 'Windows':
+                args = cmd
+            else:
+                args = shlex.split(cmd)
+            
+            self.count += 1
+            count = 'File %s/%s' % (self.count, self.lenghmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("\n%s\n" % com)
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files
+                         )
+            self.logWrite(com)
+            
             try:
-                if self.OS == 'Windows':
-                    args = cmd
-                else:
-                    args = shlex.split(cmd)
-                
-                self.count += 1
-                count = 'File %s/%s' % (self.count,
-                                        self.lenghmax,)
-                com = "%s\n%s" % (count, cmd)
-                print("\n%s\n" % com)
-                
-                wx.CallAfter(pub.sendMessage, 
-                             "COUNT_EVT", 
-                             count=count, 
-                             duration=duration,
-                             fname=files
-                             )
-                self.logWrite(com)
-                
                 with subprocess.Popen(args, 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 

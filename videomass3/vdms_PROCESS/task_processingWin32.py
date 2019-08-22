@@ -250,7 +250,6 @@ class GeneralProcess(wx.Panel):
             self.button_close.Enable(True)
 
         elif self.CHANGE_STATUS == 1 or CHANGE_STATUS == 1:
-            self.CHANGE_STATUS = None
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
             self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
             self.button_stop.Enable(False)
@@ -345,6 +344,19 @@ class ProcThread(Thread):
                                                        filename, 
                                                        self.extoutput
                                                        )
+            self.count += 1
+            count = 'File %s/%s' % (self.count,
+                                    self.lenghmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("\n%s\n" % com)
+            wx.CallAfter(pub.sendMessage,
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files
+                         )
+            self.logWrite(com)
+            
             try:    
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -354,20 +366,6 @@ class ProcThread(Thread):
                                       universal_newlines=True,
                                       startupinfo=startupinfo,
                                       ) as p:
-                     
-                    self.count += 1
-                    count = 'File %s/%s' % (self.count,
-                                            self.lenghmax,)
-                    com = "%s\n%s" % (count, cmd)
-                    print("\n%s\n" % com)
-                    wx.CallAfter(pub.sendMessage,
-                                 "COUNT_EVT", 
-                                 count=count, 
-                                 duration=duration,
-                                 fname=files
-                                 )
-                    self.logWrite(com)
-
                     for line in p.stderr:
                         #sys.stdout.write(line)
                         #sys.stdout.flush()
@@ -480,23 +478,20 @@ class DoublePassThread(Thread):
                                        folders, 
                                        filename,
                                        self.nul,
-                                       )
-                     ) 
+                                       )) 
+            self.count += 1
+            count = 'File %s/%s - Pass 1' % (self.count, self.lenghmax,)
+            cmd = "%s\n%s" % (count, pass1)
+            print("\n%s\n" % cmd)
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files,
+                         )
+            self.logWrite(cmd)
+            
             try:
-                self.count += 1
-                count = 'File %s/%s - Pass 1' % (self.count,
-                                                 self.lenghmax,)
-                cmd = "%s\n%s" % (count, pass1)
-                print("\n%s\n" % cmd)
-                #--
-                wx.CallAfter(pub.sendMessage, 
-                             "COUNT_EVT", 
-                             count=count, 
-                             duration=duration,
-                             fname=files,
-                             )
-                self.logWrite(cmd)
-                
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 with subprocess.Popen(cmd, 
@@ -547,11 +542,9 @@ class DoublePassThread(Thread):
                                                 )
                      )
             
-            count = 'File %s/%s - Pass 2' % (self.count,
-                                             self.lenghmax,)
+            count = 'File %s/%s - Pass 2' % (self.count, self.lenghmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("\n%s\n" % cmd)
-                
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          count=count, 
@@ -640,7 +633,18 @@ class SingleProcThread(Thread):
         a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         global STATUS_ERROR
-
+        
+        count = 'File %s/%s' % ('1','1',)
+        com = "%s\n%s" % (count, self.cmd)
+        print("\n%s\n" % com)
+        wx.CallAfter(pub.sendMessage, 
+                     "COUNT_EVT", 
+                     count=count, 
+                     duration=self.duration,
+                     fname=self.fname
+                     )
+        self.logWrite(com)
+            
         try:
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -649,11 +653,6 @@ class SingleProcThread(Thread):
                                  startupinfo=startupinfo,
                                  )
             error =  p.communicate()
-            
-            count = 'File %s/%s' % ('1',
-                                    '1',)
-            com = "%s\n%s" % (count, self.cmd)
-            print("\n%s\n" % com)
             
         except OSError as err_0:
             if err_0[1] == 'No such file or directory':
@@ -683,14 +682,6 @@ class SingleProcThread(Thread):
                 STATUS_ERROR = 1
                 wx.CallAfter(pub.sendMessage, "END_EVT")
                 return
-        
-        wx.CallAfter(pub.sendMessage, 
-                     "COUNT_EVT", 
-                     count=count, 
-                     duration=self.duration,
-                     fname=self.fname
-                     )
-        self.logWrite(com)
         
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
@@ -775,21 +766,19 @@ class GrabAudioProc(Thread):
                                                    out,
                                                    ext,
                                                     )
+            self.count += 1
+            count = 'File %s/%s' % (self.count, self.lenghmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("\n%s\n" % com)
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files
+                         )
+            self.logWrite(com)
+            
             try:
-                self.count += 1
-                count = 'File %s/%s' % (self.count,
-                                        self.lenghmax,)
-                com = "%s\n%s" % (count, cmd)
-                print("\n%s\n" % com)
-                
-                wx.CallAfter(pub.sendMessage, 
-                             "COUNT_EVT", 
-                             count=count, 
-                             duration=duration,
-                             fname=files
-                             )
-                self.logWrite(com)
-                
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 with subprocess.Popen(cmd, 

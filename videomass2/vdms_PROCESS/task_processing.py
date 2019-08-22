@@ -62,7 +62,7 @@ class GeneralProcess(wx.Panel):
     It also implements the buttons to stop the current process and 
     close the panel during final activities.
     """
-    def __init__(self, parent, path_log, panel, varargs,  duration, OS):
+    def __init__(self, parent, path_log, panel, varargs, duration, OS):
         """
         In the 'previous' attribute is stored an ID string used to recover 
         the previous panel from which the process is started.
@@ -256,7 +256,6 @@ class GeneralProcess(wx.Panel):
             self.button_close.Enable(True)
 
         elif self.CHANGE_STATUS == 1 or CHANGE_STATUS == 1:
-            self.CHANGE_STATUS = None
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
             self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
             self.button_stop.Enable(False)
@@ -350,19 +349,30 @@ class ProcThread(Thread):
                                                        folders, 
                                                        filename, 
                                                        self.extoutput
-                                                       )          
+                                                       ) 
+            if self.OS == 'Windows':
+                args = cmd
+            else:
+                args = shlex.split(cmd)
+            
+            self.count += 1
+            count = 'File %s/%s' % (self.count, self.lenghmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("\n%s\n" % com)
+            wx.CallAfter(pub.sendMessage,
+                            "COUNT_EVT", 
+                            count=count, 
+                            duration=duration,
+                            fname=files
+                            )
+            self.logWrite(com)
+                
             try:
-                if self.OS == 'Windows':
-                    args = cmd
-                else:
-                    args = shlex.split(cmd)
-                    
                 p = subprocess.Popen(args, 
                                      stderr=subprocess.PIPE, 
                                      bufsize=1, 
                                      universal_newlines=True,
                                      )
-                
             except OSError as err:
                 e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
@@ -385,21 +395,6 @@ class ProcThread(Thread):
                 STATUS_ERROR = 1
                 break
             
-            self.count += 1
-            count = 'File %s/%s' % (self.count,
-                                    self.lenghmax,)
-            com = "%s\n%s" % (count, cmd)
-            print("\n%s\n" % com)
-            
-            
-            
-            wx.CallAfter(pub.sendMessage,
-                            "COUNT_EVT", 
-                            count=count, 
-                            duration=duration,
-                            fname=files
-                            )
-            self.logWrite(com)
             # < https://stackoverflow.com/questions/1388753/how-to-get-output-from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1 >
             with p.stderr:
                 for line in iter(p.stderr.readline, b''):
@@ -463,6 +458,9 @@ class DoublePassThread(Thread):
         self.duration = duration # duration list
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
         self.OS = OS
+        self.count = 0 # count number loop
+        self.lenghmax = len(varargs[1]) # lengh file list
+        self.logname = logname # title name of file log
         if self.OS == 'Windows':
             self.nul = 'NUL'
         else:
@@ -496,45 +494,52 @@ class DoublePassThread(Thread):
                                        folders, 
                                        filename,
                                        self.nul,
-                                       )
-                     ) 
+                                       )) 
+            if self.OS == 'Windows':
+                args = pass1
+            else:
+                args = shlex.split(pass1)
+            
+            self.count += 1
+            count = 'File %s/%s - Pass 1' % (self.count, self.lenghmax,)
+            cmd = "%s\n%s" % (count, pass1)
+            print("\n%s\n" % cmd)
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files,
+                         )
+            self.logWrite(cmd)
+            
             try:
-                if self.OS == 'Windows':
-                    args = pass1
-                else:
-                    args = shlex.split(pass1)
-                    
                 p1 = subprocess.Popen(args, 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True,
                                       )
             except OSError as err:
-                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg)
+                e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
-                             cmd=e, 
-                             duration=0
+                             count=e, 
+                             duration=0,
+                             fname=files
                              )
                 STATUS_ERROR = 1
                 break
             
             except UnicodeEncodeError as err:
-                e = (non_ascii_msg
-                     )
+                e = "%s" % (non_ascii_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
-                             cmd=e, 
-                             duration=0
+                             count=e, 
+                             duration=0,
+                             fname=files
                              )
                 STATUS_ERROR = 1
                 break
             
-            wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         cmd=pass1, 
-                         duration=duration
-                         )
             with p1.stderr:
                 for line in iter(p1.stderr.readline, b''):
                     print line,
@@ -562,18 +567,23 @@ class DoublePassThread(Thread):
                                                folders, 
                                                filename,
                                                self.extoutput,
-                                                )
-                     )
+                                                ))
             if self.OS == 'Windows':
                 args = pass2
             else:
                 args = shlex.split(pass2)
                 
+            count = 'File %s/%s - Pass 2' % (self.count, self.lenghmax,)
+            cmd = "%s\n%s" % (count, pass2)
+            print("\n%s\n" % cmd)
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
-                         cmd=pass2, 
-                         duration=duration
+                         count=count, 
+                         duration=duration,
+                         fname=files,
                          )
+            self.logWrite(cmd)
+            
             p2 = subprocess.Popen(args, 
                                   stderr=subprocess.PIPE, 
                                   bufsize=1, 
@@ -593,7 +603,28 @@ class DoublePassThread(Thread):
             status = p2.wait()
             
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=status)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+        
+        if STATUS_ERROR == 1:
+            self.endProc('Error:', status)
+        elif CHANGE_STATUS == 1:
+            self.endProc('Interrupted:', status)
+        else:
+            self.endProc('Done,',status)
+    #----------------------------------------------------------------#    
+    def logWrite(self, cmd):
+        """
+        write all ffmpeg commands
+        
+        """
+        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+            log.write("%s\n\n" % (cmd))
+    #----------------------------------------------------------------#
+    def endProc(self, mess, status):
+        """
+        print end messagess to console
+        """
+        print('\n...%s exit status %s\n' % (mess,status))
         
 ########################################################################
 class SingleProcThread(Thread):
@@ -616,6 +647,8 @@ class SingleProcThread(Thread):
         self.cmd = varargs[4] # comand set on single pass
         self.duration = 0 # duration list
         self.OS = OS
+        self.logname = logname # title name of file log
+        self.fname = varargs[1][0] # file name
 
         self.start() # start the thread (va in self.run())
 
@@ -625,64 +658,89 @@ class SingleProcThread(Thread):
         """
         global STATUS_ERROR
         
+        if self.OS == 'Windows':
+            args = self.cmd
+        else:
+            args = shlex.split(self.cmd)
+        
+        count = 'File %s/%s' % ('1','1',)
+        com = "%s\n%s" % (count, self.cmd)
+        print("\n%s\n" % com)
+        wx.CallAfter(pub.sendMessage, 
+                     "COUNT_EVT", 
+                     count=count, 
+                     duration=self.duration,
+                     fname=self.fname
+                     )
+        self.logWrite(com)
+        
         try:
-            if self.OS == 'Windows':
-                args = self.cmd
-            else:
-                args = shlex.split(self.cmd)
                 
-            p = subprocess.Popen(args, 
-                                 stderr=subprocess.PIPE,
-                                 )
+            p = subprocess.Popen(args,stderr=subprocess.PIPE,)
             error =  p.communicate()
             
         except OSError as err_0:
             if err_0[1] == 'No such file or directory':
-                e = "%s: \n'%s' %s" % (
-                err_0, self.cmd.split()[0], not_exist_msg)
+                e = "%s\n  %s" % (err_0, not_exist_msg)
             else:
                 e = "%s: " % (err_0)
                 
             wx.CallAfter(pub.sendMessage, 
-                            "COUNT_EVT", 
-                            cmd=e, 
-                            duration=self.duration
-                            )
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=self.duration,
+                         fname=self.fname
+                         )
             STATUS_ERROR = 1
-            wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
+            wx.CallAfter(pub.sendMessage, "END_EVT")
             return
         
         except UnicodeEncodeError as err:
-                e = (non_ascii_msg
-                     )
+                e = "%s" % (non_ascii_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
-                             cmd=e, 
-                             duration=0
+                             count=e, 
+                             duration=0,
+                             fname=files
                              )
                 STATUS_ERROR = 1
-                wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
+                wx.CallAfter(pub.sendMessage, "END_EVT")
                 return
         
         else:
             if error[1]:# ffmpeg error
-                e = "%s\n\n%s" % (self.cmd, error[1])
+                e = "%s\n  %s" % (self.cmd, error[1])
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
-                             cmd=e, 
-                             duration=self.duration
+                             count=count, 
+                             duration=self.duration,
+                             fname=self.fname
                              )
                 STATUS_ERROR = 1
-                wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
+                wx.CallAfter(pub.sendMessage, "END_EVT")
                 return
-        
-        wx.CallAfter(pub.sendMessage, 
-                     "COUNT_EVT", 
-                     cmd=self.cmd, 
-                     duration=self.duration
-                     )
+            
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg='..end')
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+        
+        if STATUS_ERROR == 1:
+            self.endProc('Error:', '1')
+        else:
+            self.endProc('Done,','0')
+    #----------------------------------------------------------------#    
+    def logWrite(self, cmd):
+        """
+        write all ffmpeg commands
+        
+        """
+        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+            log.write("%s\n\n" % (cmd))
+    #----------------------------------------------------------------#
+    def endProc(self, mess, status):
+        """
+        print end messagess to console
+        """
+        print('\n...%s exit status %s\n' % (mess,status))
 
 ########################################################################
 class GrabAudioProc(Thread):
@@ -708,6 +766,9 @@ class GrabAudioProc(Thread):
         self.logname = varargs[8] #  ~/.videomass/self.logname
         self.duration = duration # duration values list (items)
         self.OS = OS
+        self.count = 0 # count number loop
+        self.lenghmax = len(varargs[2]) # lengh file list
+        self.logname = logname # title name of file log
         
         self.start() # start the thread (va in self.run())
 
@@ -735,14 +796,25 @@ class GrabAudioProc(Thread):
                                                    codec, 
                                                    self.cmd_2,
                                                    out,
-                                                   ext,
-                                                    )
+                                                   ext,)
+            if self.OS == 'Windows':
+                args = cmd
+            else:
+                args = shlex.split(cmd)
+            self.count += 1
+            count = 'File %s/%s' % (self.count,
+                                    self.lenghmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("\n%s\n" % com)
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files
+                         )
+            self.logWrite(com)
+            
             try:
-                if self.OS == 'Windows':
-                    args = cmd
-                else:
-                    args = shlex.split(cmd)
-                    
                 p = subprocess.Popen(args, 
                                      stderr=subprocess.PIPE, 
                                      bufsize=1, # if 1 means line buffered
@@ -752,28 +824,24 @@ class GrabAudioProc(Thread):
                 e = "%s\n'ffmpeg' %s" % (err, not_exist_msg), 
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
-                             cmd=e, 
-                             duration=0
+                             count=e, 
+                             duration=0,
+                             fname=files
                              )
                 STATUS_ERROR = 1
                 break
             
             except UnicodeEncodeError as err:
-                e = (non_ascii_msg
-                     )
+                e = "%s" % (non_ascii_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
-                             cmd=e, 
-                             duration=0
+                             count=e, 
+                             duration=0,
+                             fname=files
                              )
                 STATUS_ERROR = 1
                 break
             
-            wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         cmd=cmd, 
-                         duration=duration
-                         )
             with p.stderr:
                 for line in iter(p.stderr.readline, b''):
                     print line,
@@ -788,7 +856,29 @@ class GrabAudioProc(Thread):
             status = p.wait()
             
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=status)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+        
+        if STATUS_ERROR == 1:
+            self.endProc('Error:', status)
+        elif CHANGE_STATUS == 1:
+            self.endProc('Interrupted:', status)
+        else:
+            self.endProc('Done,',status)
+    #----------------------------------------------------------------#    
+    def logWrite(self, cmd):
+        """
+        write all ffmpeg commands
+        
+        """
+        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+            log.write("%s\n\n" % (cmd))
+    #----------------------------------------------------------------#
+    def endProc(self, mess, status):
+        """
+        print end messagess to console
+        
+        """
+        print('\n...%s exit status %s\n' % (mess,status))
 
 ########################################################################
 
