@@ -87,9 +87,9 @@ class GeneralProcess(wx.Panel):
         row = "%s" % p.stdout.decode()
         #print(row)
         
-        if search:
+        if search: # if vuoi una ricerca specifica (è come grep)
             find = []
-            for a in row.split('\n'): # if vuoi una ricerca specifica
+            for a in row.split('\n'): 
                 if 'filters' in a:
                     find.append(a)
             if not find:
