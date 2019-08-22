@@ -68,7 +68,7 @@ class GeneralProcess(wx.Panel):
         ffmpeg_link = 'ffmpeg'
         type_opt = '-filters'
         #search = None
-        search = 'ght'
+        search = 'si'
         
         try: # grab buildconf:
             #--------------- 1)
@@ -88,14 +88,15 @@ class GeneralProcess(wx.Panel):
         #print(row)
         
         if search:
+            find = []
             for a in row.split('\n'): # if vuoi una ricerca specifica
-                if 'aperms' in a:
-                    find = a
-                    break
-                else:
-                    find = 'Not found....'
-
-            self.OutText.AppendText(find)
+                if 'filters' in a:
+                    find.append(a)
+            if not find:
+                self.OutText.AppendText('\n  Not found....')
+            else:
+                for x in find:
+                    self.OutText.AppendText('\n  %s' % x)
         else:
             
             self.OutText.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.NORMAL))
