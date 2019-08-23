@@ -176,8 +176,11 @@ def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
                       None)
         return
     else:
-        dlg = ffmpeg_conf.Checkconf(out, ffmpeg_link, 
-                                    ffprobe_link, ffplay_link
+        dlg = ffmpeg_conf.Checkconf(out, 
+                                    ffmpeg_link, 
+                                    ffprobe_link, 
+                                    ffplay_link,
+                                    OS,
                                     )
         dlg.Show()
     
