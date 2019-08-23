@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-23 13:16+0200\n"
-"PO-Revision-Date: 2019-08-23 13:17+0200\n"
+"POT-Creation-Date: 2019-08-23 13:24+0200\n"
+"PO-Revision-Date: 2019-08-23 13:26+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -2497,7 +2497,7 @@ msgid "The search function allows you to find entries in the current topic"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/ffmpeg_search.py:96
-msgid "Videomass: FFmpeg help, information, capabilities"
+msgid "Videomass: FFmpeg search topics"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/ffmpeg_search.py:139
