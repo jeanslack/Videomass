@@ -39,6 +39,7 @@ if platform.system() == 'Windows':
     from videomass3.vdms_PROCESS.check_bin import ff_conf
     from videomass3.vdms_PROCESS.check_bin import ff_formats
     from videomass3.vdms_PROCESS.check_bin import ff_codecs
+    from videomass3.vdms_PROCESS.check_bin import ff_topics
 else:
     from videomass3.vdms_PROCESS.task_processing import GeneralProcess
     from videomass3.vdms_PROCESS.volumedetect import VolumeDetectThread
@@ -48,6 +49,7 @@ else:
     from videomass3.vdms_PROCESS.check_bin import ff_conf
     from videomass3.vdms_PROCESS.check_bin import ff_formats
     from videomass3.vdms_PROCESS.check_bin import ff_codecs
+    from videomass3.vdms_PROCESS.check_bin import ff_topics
     
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
 from videomass3.vdms_DIALOGS import ffmpeg_conf
@@ -226,4 +228,16 @@ def test_codecs(ffmpeg_link, type_opt):
             dlg = ffmpeg_decoders.FFmpeg_decoders(diction)
             dlg.Show()
 #-------------------------------------------------------------------------#
-        
+def findtopic(ffmpeg_link, topic):
+    """
+    Call * check_bin.ff_topic * to run the ffmpeg command to search
+    a certain topic. The ffmpeg_link is given by ffmpeg-search dialog.
+    
+    """
+    retcod = ff_topics(ffmpeg_link, topic)
+    
+    if 'Not found' in retcod[0]:
+        s = (_("\n  FFmpeg executable not found !\n\n  {0}".format(retcod[1])))
+        return(s)
+    else:
+        return(retcod[1])

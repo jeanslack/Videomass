@@ -23,12 +23,6 @@ URGENCY: high
 -------------
 URGENCY: low
 -------------
-- make a displayer -filters ? *
-    Oppure fare una finestra con menu a tendina per passare i comandi
-    di aiuto a un processo, catturare l'output e passarlo raw in una 
-    textctrl. Si potrebbe implementare una funzione di ricerca specifica
-    all'interno? Comunque una piccola textctrl per inserire una particolare 
-    opzione di ricerca?
 
 ---------------
 URGENCY: medium

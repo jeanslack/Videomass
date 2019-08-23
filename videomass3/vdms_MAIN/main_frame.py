@@ -31,6 +31,7 @@ import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
 from videomass3.vdms_DIALOGS import dialog_tools, settings, infoprg
+from videomass3.vdms_DIALOGS import ffmpeg_search
 from videomass3.vdms_PANELS import dragNdrop, presets_mng_panel
 from videomass3.vdms_PANELS import video_conv, audio_conv
 from videomass3.vdms_IO import IO_tools
@@ -618,15 +619,18 @@ class MainFrame(wx.Frame):
         toolsButton = wx.Menu()
         
         checkconf = toolsButton.Append( wx.ID_ANY, _("FFmpeg specifications"), 
-                                "Shows the configuration features of FFmpeg")
+                            _("Shows the configuration features of FFmpeg"))
         toolsButton.AppendSeparator()
         ckformats = toolsButton.Append( wx.ID_ANY, _("FFmpeg file formats"),
-                                "Shows file formats available on FFmpeg")
+                                _("Shows file formats available on FFmpeg"))
         toolsButton.AppendSeparator()
         ckcoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg encoders"),
-                                "Shows available encoders on FFmpeg")
+                                _("Shows available encoders on FFmpeg"))
         ckdecoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg decoders"),
-                                "Shows available decoders on FFmpeg")
+                                _("Shows available decoders on FFmpeg"))
+        toolsButton.AppendSeparator()
+        searchtopic = toolsButton.Append( wx.ID_ANY, _("FFmpeg search topics"),
+                        _("Show a dialog box to help you find FFmpeg topics"))
         self.menuBar.Append(toolsButton,_(u"&Tools"))
         
         ####------------------ setup button
@@ -677,6 +681,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
         self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
         self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
+        self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
@@ -815,6 +820,14 @@ class MainFrame(wx.Frame):
         
         """
         IO_tools.test_codecs(self.ffmpeg_link, '-decoders')
+    #------------------------------------------------------------------#
+    def Search_topic(self, event):
+        """
+        Show a dialog box to help you find FFmpeg topics
+        
+        """
+        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link)
+        dlg.Show()
         
     #---------------------------- Menu Edit ----------------------------#
     def Helpme(self, event):

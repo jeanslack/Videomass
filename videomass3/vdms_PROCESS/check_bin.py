@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.15 2019
+# Rev: Aug.23 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -188,4 +188,23 @@ def ff_codecs(ffmpeg_link, type_opt):
                 dic['Subtitle'].append(f.strip().decode())
             
     return(dic)
+
+#-------------------------------------------------------------------#
+
+def ff_topics(ffmpeg_link, topic):
+    """
+    Get output of topic command of FFmpeg
+    
+    """
+    try:
+        p = subprocess.run([ffmpeg_link, topic],
+                            capture_output=True,)
+        
+    except FileNotFoundError as e:
+        return('Not found', e)
+    
+    #row = (p.stdout.split(b'\n'))
+    row = "%s" % p.stdout.decode()
+    return ('None', row)
+    
 

@@ -18,7 +18,6 @@ BUG FIXES:
     - Fixed the bug of multiple additions when writing the log file 
       during the processes
       
-
 ADD:
     - Added a new menu tools item on the menu bar
     - Added dialog box to displaying the FFmpeg compilation specifications
@@ -29,6 +28,7 @@ ADD:
           by FFmpeg
         - Added dialog box to displaying available decoders and capability
           by FFmpeg
+        - Added dialog box to search and view all the FFmpeg help options.
     
 IMPROVEMENTS:
     - Messages output from command line during start-up
