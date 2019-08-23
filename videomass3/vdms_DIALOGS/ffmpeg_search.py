@@ -46,6 +46,15 @@ class FFmpeg_Search(wx.Dialog):
         self.row = None
         
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        """
+        with 'None' not depend from parent:
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        
+        With parent, -1:
+        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        if close videomass also close parent window:
+        
+        """
 
         #lbl = wx.StaticText(self, label=(_("FFmpeg: help, information, "
                                            #"capabilities:")))

@@ -36,9 +36,15 @@ class FFmpeg_decoders(wx.Dialog):
     
     """
     def __init__(self, dict_decoders):
-        # with 'None' not depend from videomass. With 'parent, -1' if close
-        # videomass also close mediainfo window:
-        #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        """
+        with 'None' not depend from parent:
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        
+        With parent, -1:
+        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        if close videomass also close parent window:
+        
+        """
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY,)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
@@ -123,11 +129,6 @@ class FFmpeg_decoders(wx.Dialog):
         sizer_1.Fit(self)
         self.Layout()
         
-        # delete previous append:
-        vid.DeleteAllItems()
-        aud.DeleteAllItems()
-        sub.DeleteAllItems()
-            
         #### populate vid listctrl output:
         index = 0 
         l = dict_decoders['Video']

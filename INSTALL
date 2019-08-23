@@ -17,12 +17,12 @@ https://sourceforge.net/projects/videomass2/
 Base Dependencies:
     
     - Python >=3.7
-    - wxPython Phoenix *
+    - wxPython4 Phoenix *
     - pip
     - ffmpeg
     
-    * Also make sure that the pubsub module is installed, if it is not 
-      installed you need to install it:
+    * With Python3 also make sure that the pubsub module is installed.
+      if it is not installed you need to install it:
       
             pip install PyPubSub
     
@@ -38,9 +38,10 @@ executing the "launcher" script in the root of the un-tarred directory.
 
     python launcher
     
-Alternatively, however, if you want the setup.py script to allow you to build 
-an executable for your operating system or if you simply want to install 
-Videomass from the python Package Index (aka PyPi) follow the Options below.
+If you want the setup.py script to allow you to build 
+an executable for your operating system or if you simply 
+want to install Videomass from the python Package Index
+ (aka PyPi) follow the Options below.
 
 #--------------------------------------------------------------------------#
 Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]

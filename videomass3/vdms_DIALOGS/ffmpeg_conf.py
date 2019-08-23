@@ -38,9 +38,15 @@ class Checkconf(wx.Dialog):
     
     """
     def __init__(self, out, ffmpeg_link, ffprobe_link, ffplay_link, OS):
-        # with 'None' not depend from videomass. With 'parent, -1' if close
-        # videomass also close mediainfo window:
-        #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        """
+        with 'None' not depend from parent:
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        
+        With parent, -1:
+        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        if close videomass also close parent window:
+        
+        """
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY,)
@@ -147,27 +153,25 @@ class Checkconf(wx.Dialog):
                 ffplay = _("FFplay   ...not found !")
         
         #### populate txtinfo TextCtrl output:
-        #txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
-        txtinfo.SetLabel( """\n
-            %s\n
-            %s\n
-            -------------------------------------\n
-            - %s\n
-            - %s\n
-            - %s\n
-            
-                                                    """ % (info[0].strip(),
-                                                           info[1].strip(),
-                                                           ffmpeg,
-                                                           ffprobe,
-                                                           ffplay))
+        txtinfo.SetLabel("\n\n\n\n"
+                         "              %s\n"
+                         "              %s\n"
+                         "\n\n\n"
+                         "             - %s\n"
+                         "             - %s\n"
+                         "             - %s\n" % (info[0].strip(),
+                                                  info[1].strip(),
+                                                  ffmpeg,
+                                                  ffprobe,
+                                                  ffplay,
+                                                  ))
         #### populate others_opt listctrl output:
         index = 0 
         if not others:
             print ('No others option found')
         else:
             others_opt.InsertItem(index, _('Specific compilation options'))
-            others_opt.SetItemBackgroundColour(index, "WHEAT")
+            others_opt.SetItemBackgroundColour(index, "CORAL")
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:
