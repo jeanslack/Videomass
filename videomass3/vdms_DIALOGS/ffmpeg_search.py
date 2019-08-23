@@ -93,7 +93,7 @@ class FFmpeg_Search(wx.Dialog):
         sizer.Add(grid, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
         
-        self.SetTitle(_("Videomass: FFmpeg help, information, capabilities"))
+        self.SetTitle(_("Videomass: FFmpeg search topics"))
         # set_properties:
         #self.texthelp.SetBackgroundColour((217, 255, 255))
         #self.SetSizer(sizer)
@@ -113,21 +113,22 @@ class FFmpeg_Search(wx.Dialog):
         The topic options are values of the dicdef dictionary.
         """
         dicdef = {"--":'None',
-                  _("print basic options"): '-h',
-                  _("print more options"):'-h long',
-                  _("show available devices"):'-devices',
-                  _("show available bit stream filters"):'-bsfs',
-                  _("show available protocols"):'-protocols',
-                  _("show available filters"):'-filters',
-                  _("show available pixel formats"):'-pix_fmts',
-                  _("show available audio sample formats"):'-sample_fmts',
-                  _("show available color names"):'colors',
-                  _("list sources of the input device"):'-sources device',
-                  _("list sinks of the output device"):'-sinks device',
-                  _("show available HW acceleration methods"):'-hwaccels',
+                  _("print basic options"): ['-h'],
+                  _("print more options"):['-h', 'long'],
+                  _("show available devices"):['-devices'],
+                  _("show available bit stream filters"):['-bsfs'],
+                  _("show available protocols"):['-protocols'],
+                  _("show available filters"):['-filters'],
+                  _("show available pixel formats"):['-pix_fmts'],
+                  _("show available audio sample formats"):['-sample_fmts'],
+                  _("show available color names"):['colors'],
+                  _("list sources of the input device"):['-sources', 'device'],
+                  _("list sinks of the output device"):['-sinks', 'device'],
+                  _("show available HW acceleration methods"):['-hwaccels'],
                   }
         if "None" in dicdef[self.cmbx_choice.GetValue()]:
             self.row = None
+            self.texthelp.Clear()# reset textctrl
         else:
             self.texthelp.Clear()# reset textctrl
             topic = dicdef[self.cmbx_choice.GetValue()]

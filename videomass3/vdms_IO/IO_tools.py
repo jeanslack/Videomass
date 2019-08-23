@@ -173,7 +173,7 @@ def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
     and send it to dialog box.
     
     """
-    out = ff_conf(ffmpeg_link, OS)
+    out = ff_conf(ffmpeg_link)
     if 'Not found' in out[0]:
         wx.MessageBox(_("FFmpeg executable not found !"
                         "\n\n{0}".format(out[1])), 
@@ -182,8 +182,11 @@ def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
                         None)
         return
     else:
-        dlg = ffmpeg_conf.Checkconf(out, ffmpeg_link, 
-                                    ffprobe_link, ffplay_link
+        dlg = ffmpeg_conf.Checkconf(out, 
+                                    ffmpeg_link, 
+                                    ffprobe_link,
+                                    ffplay_link, 
+                                    OS
                                     )
         dlg.Show()
 #-------------------------------------------------------------------------#

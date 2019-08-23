@@ -83,15 +83,15 @@ class Checkconf(wx.Dialog):
         #disabled_opt.SetBackgroundColour(wx.Colour(217, 255, 255))
         
         #----------------------Layout--------------------------#
-        Base = wx.BoxSizer(wx.VERTICAL)
-
+        sizer_1 = wx.BoxSizer(wx.VERTICAL)
+        grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
         grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
-        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
-
-        grid_tab1 = wx.FlexGridSizer(4, 1, 10, 10)
+        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
+        
+        grid_tab1 = wx.GridSizer(4, 1, 0, 0)
         sizer_tab1.Add(grid_tab1)
         grid_tab1.Add(txtinfo, 1, wx.ALL , 5)
         grid_tab1.Add(txtffmpeg, 1, wx.ALL , 5)
@@ -104,22 +104,19 @@ class Checkconf(wx.Dialog):
         
         sizer_tab3.Add(enable_opt, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_3.SetSizer(sizer_tab3)
-        
         sizer_tab4.Add(disabled_opt, 1, wx.ALL | wx.EXPAND, 5)
         notebook_1_pane_4.SetSizer(sizer_tab4)
-        
         notebook_1.AddPage(notebook_1_pane_1, (_("Informations")))
         notebook_1.AddPage(notebook_1_pane_2, (_("System options")))
         notebook_1.AddPage(notebook_1_pane_3, (_("Options enabled")))
         notebook_1.AddPage(notebook_1_pane_4, (_("Options disabled")))
-
-        Base.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)####
+        grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
+        grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
 
-        Base.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)####
-
-        self.SetSizer(Base)
-        Base.Fit(self)
+        sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
+        self.SetSizer(sizer_1)
+        sizer_1.Fit(self)
         self.Layout()
         
         # delete previous append:

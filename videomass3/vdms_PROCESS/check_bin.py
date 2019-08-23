@@ -31,7 +31,7 @@ import subprocess
 
 #-----------------------------------------------------------#
 
-def ff_conf(ffmpeg_link, OS):
+def ff_conf(ffmpeg_link):
     """
     Execute FFmpeg -version command to parse output 
     configuration  messages
@@ -193,12 +193,16 @@ def ff_codecs(ffmpeg_link, type_opt):
 
 def ff_topics(ffmpeg_link, topic):
     """
-    Get output of topic command of FFmpeg
+    Get output of the options help command of FFmpeg. 
+    the 'topic' parameter is always a list
     
     """
+    args = [ffmpeg_link] 
+    for opt in topic:
+        args.append(opt)
+        
     try:
-        p = subprocess.run([ffmpeg_link, topic],
-                            capture_output=True,)
+        p = subprocess.run(args, capture_output=True,)
         
     except FileNotFoundError as e:
         return('Not found', e)
