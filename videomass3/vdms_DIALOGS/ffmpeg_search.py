@@ -150,7 +150,7 @@ class FFmpeg_Search(wx.Dialog):
         
         if self.row and not strsrc:
             self.texthelp.Clear()# reset textctrl
-            self.texthelp.AppendText(self.row)
+            self.texthelp.AppendText('%s' % self.row)
         
         if self.row: # if vuoi una ricerca specifica (è come grep)
             find = []

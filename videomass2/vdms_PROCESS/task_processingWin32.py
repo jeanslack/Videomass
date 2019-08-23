@@ -382,7 +382,7 @@ class ProcThread(Thread):
                 break
             
             except UnicodeEncodeError as err:
-               e = "%s" % (non_ascii_msg)
+                e = "%s" % (non_ascii_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              count=e, 
@@ -520,7 +520,7 @@ class DoublePassThread(Thread):
                 break
 
             except UnicodeEncodeError as err:
-                 e = "%s" % (non_ascii_msg)
+                e = "%s" % (non_ascii_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              count=e, 

@@ -492,9 +492,10 @@ class DoublePassThread(Thread):
             self.logWrite(cmd)
             
             try:
+                
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                with subprocess.Popen(cmd, 
+                with subprocess.Popen(pass1, 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True,
@@ -514,6 +515,7 @@ class DoublePassThread(Thread):
                             break
                     
             except OSError as err:
+                print('\nsono qui\n')
                 e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
@@ -539,9 +541,7 @@ class DoublePassThread(Thread):
                                                folders, 
                                                filename,
                                                self.extoutput,
-                                                )
-                     )
-            
+                                                ))
             count = 'File %s/%s - Pass 2' % (self.count, self.lenghmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("\n%s\n" % cmd)
@@ -555,7 +555,7 @@ class DoublePassThread(Thread):
             
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            with subprocess.Popen(cmd, 
+            with subprocess.Popen(pass2, 
                                   stderr=subprocess.PIPE, 
                                   bufsize=1, 
                                   universal_newlines=True,
@@ -577,7 +577,7 @@ class DoublePassThread(Thread):
             status = p2.wait()
             
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=status)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
         
         if STATUS_ERROR == 1:
             self.endProc('Error:', status)
@@ -611,7 +611,7 @@ class SingleProcThread(Thread):
           viene esclusa l'opzione -stats al suo interno ma vi è ancora la 
           presenza di 'error'.
     """
-    def __init__(self, varargs, duration,):
+    def __init__(self, varargs, duration, logname):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -667,7 +667,7 @@ class SingleProcThread(Thread):
                             fname=self.fname
                             )
             STATUS_ERROR = 1
-            wx.CallAfter(pub.sendMessage, "END_EVT"))
+            wx.CallAfter(pub.sendMessage, "END_EVT")
             return
         
         else:
@@ -713,7 +713,7 @@ class GrabAudioProc(Thread):
     It is reserved for extracting multiple audio files with codecs and 
     different formats from different video formats.
     """
-    def __init__(self, varargs, duration,):
+    def __init__(self, varargs, duration, logname):
         """
         """
         Thread.__init__(self)
@@ -818,7 +818,7 @@ class GrabAudioProc(Thread):
             status = p.wait()
             
         time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT", msg=status)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
         
         if STATUS_ERROR == 1:
             self.endProc('Error:', status)

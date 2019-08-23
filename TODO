@@ -16,9 +16,6 @@ URGENCY: to do soon
 --------------
 URGENCY: high
 --------------
-- fare compatibilità Windows con python2 e python3 per: 
-        displayer to watch the building configurations of 
-        the installed or imported FFmpeg executables
         
 -------------
 URGENCY: low

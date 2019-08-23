@@ -34,17 +34,18 @@ if platform.system() == 'Windows':
     from videomass2.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass2.vdms_PROCESS.ffplay_reproductionWin32 import Play
     from videomass2.vdms_PROCESS.ffprobe_parserWin32 import FFProbe
-    from videomass3.vdms_PROCESS.check_bin import ffmpeg_conf
+    
 else:
     from videomass2.vdms_PROCESS.task_processing import GeneralProcess
     from videomass2.vdms_PROCESS.volumedetect import VolumeDetectThread
     from videomass2.vdms_PROCESS.volumedetect import PopupDialog
     from videomass2.vdms_PROCESS.ffplay_reproduction import Play
     from videomass2.vdms_PROCESS.ffprobe_parser import FFProbe
-    from videomass2.vdms_PROCESS.check_bin import ff_conf
     
 from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
+from videomass2.vdms_PROCESS.check_bin import ff_conf
 from videomass2.vdms_DIALOGS import ffmpeg_conf
+
 
 
 #-----------------------------------------------------------------------#

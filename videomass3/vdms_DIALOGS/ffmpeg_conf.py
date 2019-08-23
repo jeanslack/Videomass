@@ -43,11 +43,8 @@ class Checkconf(wx.Dialog):
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
-        notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
+        notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY,)
         txtinfo = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
-        txtffmpeg = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
-        txtffprobe = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
-        txtffplay = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
         notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
         others_opt = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
                                     style=wx.LC_REPORT | 
@@ -86,17 +83,14 @@ class Checkconf(wx.Dialog):
         Base = wx.BoxSizer(wx.VERTICAL)
 
         grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
-        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab1 = wx.BoxSizer(wx.HORIZONTAL)
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
 
-        grid_tab1 = wx.FlexGridSizer(4, 1, 10, 10)
+        grid_tab1 = wx.FlexGridSizer(1, 1, 10, 10)
         sizer_tab1.Add(grid_tab1)
         grid_tab1.Add(txtinfo, 1, wx.ALL , 5)
-        grid_tab1.Add(txtffmpeg, 1, wx.ALL , 5)
-        grid_tab1.Add(txtffplay, 1, wx.ALL , 5)
-        grid_tab1.Add(txtffprobe, 1, wx.ALL , 5)
         notebook_1_pane_1.SetSizer(sizer_tab1)
         
         sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
@@ -122,15 +116,6 @@ class Checkconf(wx.Dialog):
         Base.Fit(self)
         self.Layout()
         
-        # delete previous append:
-        txtinfo.SetLabel('')
-        txtffmpeg.SetLabel('')
-        txtffplay.SetLabel('')
-        txtffprobe.SetLabel('')
-        others_opt.DeleteAllItems()
-        enable_opt.DeleteAllItems()
-        disabled_opt.DeleteAllItems()
-        
         # create lists by out:
         info, others, enable, disable = out
         
@@ -140,57 +125,49 @@ class Checkconf(wx.Dialog):
             biname = ['ffmpeg','ffprobe','ffplay']
         
         if which(biname[0]):
-            txtffmpeg.SetForegroundColour((45,208,28))# green
             ffmpeg = _("FFmpeg   ...installed")
         else:
             if os.path.exists(ffmpeg_link):
-                txtffmpeg.SetForegroundColour((208,198,28))# yellow
                 ffmpeg = _("FFmpeg   ...was imported locally")
             
         if which(biname[1]):
-            txtffprobe.SetForegroundColour((45,208,28))
             ffprobe = _("FFprobe   ...installed")
         else:
             if os.path.exists(ffprobe_link):
-                txtffprobe.SetForegroundColour((208,198,28))
                 ffprobe = _("FFprobe   ...was imported locally")
             else:
-                txtffprobe.SetForegroundColour((209,28,28))# red
                 ffprobe = _("FFprobe   ...not found !")
                 
         if which(biname[2]):
-            txtffplay.SetForegroundColour((45,208,28))
             ffplay = _("FFplay   ...installed")
         else:
             if os.path.exists(ffplay_link):
-                txtffplay.SetForegroundColour((208,198,28))
                 ffplay = _("FFplay   ...was imported locally")
             else:
-                txtffplay.SetForegroundColour((200,28,28))
                 ffplay = _("FFplay   ...not found !")
         
         #### populate txtinfo TextCtrl output:
-        txtinfo.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        #txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
         txtinfo.SetLabel( """\n
             %s\n
             %s\n
-            -------------------------------------\n""" % (info[0].strip(),
-                                                           info[1].strip(),
-                                                           ))
-        txtffmpeg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
-        txtffmpeg.SetLabel("          - %s" % ffmpeg)
-        txtffprobe.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
-        txtffprobe.SetLabel("                  - %s" % ffprobe)
-        txtffplay.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
-        txtffplay.SetLabel("              - %s" % ffplay)
+            -------------------------------------\n
+            - %s\n
+            - %s\n
+            - %s\n
             
+                                                    """ % (info[0].strip(),
+                                                           info[1].strip(),
+                                                           ffmpeg,
+                                                           ffprobe,
+                                                           ffplay))
         #### populate others_opt listctrl output:
         index = 0 
         if not others:
             print ('No others option found')
         else:
             others_opt.InsertItem(index, _('Specific compilation options'))
-            others_opt.SetItemBackgroundColour(index, "NAVY")
+            others_opt.SetItemBackgroundColour(index, "WHEAT")
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:

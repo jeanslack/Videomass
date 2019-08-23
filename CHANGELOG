@@ -17,6 +17,9 @@ BUG FIXES:
       panel to save the audio from the movie again.
     - Fixed the bug of multiple additions when writing the log file 
       during the processes
+    - Fixed bug when using double pass encoding 
+      in Python3: NameError: name 'cmd' is not defined
+      
       
 ADD:
     - Added a new menu tools item on the menu bar
