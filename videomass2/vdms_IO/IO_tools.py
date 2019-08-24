@@ -44,7 +44,13 @@ else:
     
 from videomass2.vdms_DIALOGS.mediainfo import Mediainfo
 from videomass2.vdms_PROCESS.check_bin import ff_conf
+from videomass2.vdms_PROCESS.check_bin import ff_formats
+from videomass2.vdms_PROCESS.check_bin import ff_codecs
+from videomass2.vdms_PROCESS.check_bin import ff_topics
 from videomass2.vdms_DIALOGS import ffmpeg_conf
+from videomass2.vdms_DIALOGS import ffmpeg_formats
+from videomass2.vdms_DIALOGS import ffmpeg_encoders
+from videomass2.vdms_DIALOGS import ffmpeg_decoders
 
 
 
@@ -161,20 +167,20 @@ def volumeDetectProcess(ffmpeg, filelist, OS):
     
     return data
 #-------------------------------------------------------------------------#
-def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
+def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
     """
     Call *check_bin.ffmpeg_conf* to get data to test the building 
     configurations of the installed or imported FFmpeg executable 
     and send it to dialog box.
     
     """
-    out = ff_conf(ffmpeg_link)
+    out = ff_conf(ffmpeg_link, OS)
+    
     if 'Not found' in out[0]:
-        wx.MessageBox(_("FFmpeg executable not found !"
-                        "\n\n{0}".format(out[1])), 
-                      "Videomass: error",
-                      wx.ICON_ERROR, 
-                      None)
+        wx.MessageBox(_("\n{0}".format(out[1])), 
+                        "Videomass: error",
+                        wx.ICON_ERROR, 
+                        None)
         return
     else:
         dlg = ffmpeg_conf.Checkconf(out, 
@@ -184,5 +190,56 @@ def testFFmpeg_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
                                     OS,
                                     )
         dlg.Show()
+#-------------------------------------------------------------------------#
+def test_formats(ffmpeg_link, OS):
+    """
+    Call *check_bin.ff_formats* to get available formats by 
+    imported FFmpeg executable and send it to dialog box.
     
-
+    """
+    diction = ff_formats(ffmpeg_link, OS)
+    if 'Not found' in diction.keys():
+        wx.MessageBox(_("\n{0}".format(diction['Not found'])), 
+                        "Videomass: error",
+                        wx.ICON_ERROR, 
+                        None)
+        return
+    else:
+        dlg = ffmpeg_formats.FFmpeg_formats(diction)
+        dlg.Show()
+#-------------------------------------------------------------------------#
+def test_codecs(ffmpeg_link, type_opt, OS):
+    """
+    Call *check_bin.ff_codecs* to get available encoders 
+    and decoders by FFmpeg executable and send it to
+    corresponding dialog box.
+    
+    """
+    diction = ff_codecs(ffmpeg_link, type_opt, OS)
+    if 'Not found' in diction.keys():
+        wx.MessageBox(_("\n{0}".format(diction['Not found'])), 
+                        "Videomass: error",
+                        wx.ICON_ERROR, 
+                        None)
+        return
+    else:
+        if type_opt == '-encoders':
+            dlg = ffmpeg_encoders.FFmpeg_encoders(diction)
+            dlg.Show()
+        else:
+            dlg = ffmpeg_decoders.FFmpeg_decoders(diction)
+            dlg.Show()
+#-------------------------------------------------------------------------#
+def findtopic(ffmpeg_link, topic, OS):
+    """
+    Call * check_bin.ff_topic * to run the ffmpeg command to search
+    a certain topic. The ffmpeg_link is given by ffmpeg-search dialog.
+    
+    """
+    retcod = ff_topics(ffmpeg_link, topic, OS)
+    
+    if 'Not found' in retcod[0]:
+        s = (_("\n{0}".format(retcod[1])))
+        return(s)
+    else:
+        return(retcod[1])

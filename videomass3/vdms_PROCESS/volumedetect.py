@@ -33,7 +33,7 @@ from threading import Thread
 ########################################################################
 not_exist_msg =  _('exist in your system?')
 unrecognized_msg = _("Unrecognized Error (not in err_list):")
-not_exist_msg = _("File does not exist:")
+not_exist_file = _("File does not exist:")
 #########################################################################
 
 class PopupDialog(wx.Dialog):
@@ -170,17 +170,18 @@ class VolumeDetectThread(Thread):
                         self.status = e
                         break
                     
-            except IOError:
-                e = "%s  %s" % (not_exist_msg, filepath)
+            except IOError:# if file do not exist
+                e = "%s  %s" % (not_exist_file, filepath)
                 self.status = e
                 break
             
-            except OSError:
+            except OSError:# if ffmpeg do not exist
                 e = "%s\n'ffmpeg' %s" % (err, not_exist_msg) 
                 self.status = e
                 break
                 
-            except UnboundLocalError: # local variable 'e' referenced before assignment
+            except UnboundLocalError: # local variable 'e' referenced 
+                                      # before assignment
                 """
                 dovrebbe riportare tutti gli errori di ffmpeg dal momento 
                 che la variabile `e` sarà referenziata prima di essere assegnata.

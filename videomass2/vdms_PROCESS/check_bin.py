@@ -2,12 +2,12 @@
 
 #########################################################
 # Name: check_bin.py
-# Porpose: Test the binaries of ffmpeg, ffprobe and ffplay
-# Compatibility: Python2, wxPython classic on Unix like only
+# Porpose: Gets the output to display the features of FFmpeg
+# Compatibility: Python2 (Unix, Windows)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.15 2019
+# Rev: Aug.23 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -29,10 +29,78 @@
 
 import subprocess
 
-def ff_conf(ffmpeg_link):
+#------------------------------------------------------#
+#------------------------------------------------------#
+def subp_win32(args):
     """
-    Execute FFmpeg without arguments to parse output 
-    configuration  messages
+    Execute commands received by args parameter on Windows 
+    OS only.
+    This function uses 'Popen' to invoke the subprocess, since 
+    on Windows it is necessary to use the STARTUPINFO class, 
+    therefore the following constants are available only on 
+    Windows.
+    
+    """
+    cmd = [] 
+    for opt in args:
+        cmd.append(opt)
+    cmd = ' '.join(cmd)
+        
+    try:
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        p = subprocess.Popen(cmd, 
+                             stdout=subprocess.PIPE, 
+                             stderr=subprocess.PIPE,
+                             #startupinfo=startupinfo,
+                             )
+        out, err =  p.communicate()
+    
+    except OSError as e:# if ffmpeg do not exist
+        return('Not found', "'%s'\n%s" %(args[0], e))
+        
+    if err: # if has error on args
+        e = err.split(b'\n')
+        n = len(e)
+        s = "FFmpeg:\n%s\n%s" %(e[n-3].decode(),e[n-2].decode())
+        return('Not found', s)
+
+    return ('None', out)
+#-----------------------------------------------------------#
+
+def subp(args):
+    """
+    Execute commands received by args parameter on Unix-like 
+    OS only.
+    This function uses 'check_output' to invoke the subprocess, 
+    since these are not advanced use cases on Python2.
+    
+    """
+    cmd = [] 
+    for opt in args:
+        cmd.append(opt)
+    ###############################################################
+    try:
+        p = subprocess.check_output(cmd, stderr=subprocess.STDOUT,)
+    except OSError as oserr: # ffmpeg do not exist
+        return('Not found', "'%s' %s" %(cmd[0], oserr))
+    except subprocess.CalledProcessError as e: # args command error
+        #print(e.cmd) # se vuoi la lista con i comandi input
+        #print(e.returncode) # se vuoi il codice di ritorno
+        #print(e.output) # se vuoi l'output dello stderr
+        err = e.output.split(b'\n')
+        n = len(err)
+        s = "FFmpeg\n%s\n%s" %(err[n-3].decode(),err[n-2].decode())
+        return('Not found', s)
+    
+    return ('None', p)
+    
+#-----------------------------------------------------------#
+
+def ff_conf(ffmpeg_link, OS):
+    """
+    Receive output of the passed command to parse 
+    configuration messages of FFmpeg
     
     ...Returns lists of:
         - info = [version number etc, release and building]
@@ -43,29 +111,33 @@ def ff_conf(ffmpeg_link):
     ...If errors returns 'Not found'
     
     """
-    try: # grab generic informations:
-        p = subprocess.check_output([ffmpeg_link, '-version']) 
-    except OSError as e:
-        return('Not found', e)
+    # grab generic informations:
+    if OS == 'Windows':
+        vers = subp_win32([ffmpeg_link, '-version'])
+    else:
+        vers = subp([ffmpeg_link, '-version'])
+        
+    if 'Not found' in vers[0]:
+        return(vers[0], vers[1])
 
     info = []
-
-    for v in p.split('\n'):
-        if 'ffmpeg version' in v:
-            info.append(v.strip())
-        if 'built with' in v:
-            info.append(v.strip())
-
-    try: # grab buildconf:
-        p = subprocess.check_output([ffmpeg_link, 
-                                     '-loglevel', 
-                                     'error', 
-                                     '-buildconf'],)
-    except OSError as e:
-        return('Not found', e)
+    for v in vers[1].split(b'\n'):
+        if b'ffmpeg version' in v:
+            info.append(v.strip().decode())
+        if b'built with' in v:
+            info.append(v.strip().decode())
+            
+    # grab buildconf:
+    if OS == 'Windows':
+        build = subp_win32([ffmpeg_link, '-loglevel', 'error', '-buildconf'])
+    else:
+        build = subp([ffmpeg_link, '-loglevel', 'error', '-buildconf'])
     
+    if 'Not found' in build[0]:
+        return(build[0], build[1])
+
     conf = []
-    for c in p.split('\n'):
+    for c in build[1].split(b'\n'):
         conf.append(c.strip().decode())
 
     enable = []
@@ -79,9 +151,120 @@ def ff_conf(ffmpeg_link):
             disable.append(en.split('--disable-')[1])
         else:
             others.append(en)
-
     if 'configuration:' in others:
         others.remove('configuration:')
     
     return(info, others, enable, disable)
+
+#-------------------------------------------------------------------#
+
+def ff_formats(ffmpeg_link, OS):
+    """
+    Receive output of *ffmpeg -formats* command and return a 
+    ditionary with the follow keys and values:
+    
+        * KEYS                  * VALUES 
+        'Demuxing Supported' :  [list of (D)emuxing formats support]
+        'Muxing Supported' :    [list of (M)uxing formats support]
+        'Mux/Demux Supported' : [list of (D)emuxing(M)uxing formats support]
+    
+    """
+    # grab buildconf:
+    if OS == 'Windows':
+        ret = subp_win32([ffmpeg_link, '-loglevel', 'error', '-formats'])
+    else:
+        ret = subp([ffmpeg_link, '-loglevel', 'error', '-formats'])
+    
+    if 'Not found' in ret[0]:
+        return({ret[0]:ret[1], '':'', '':''})
+    
+    frmt = ret[1].split(b'\n')
+    
+    
+    dic = {'Demuxing Supported':[], 
+           'Muxing Supported':[], 
+           'Mux/Demux Supported':[]}
+    
+    for f in frmt:
+        if f.strip().startswith(b'D '):
+            dic['Demuxing Supported'].append(f.replace(
+                                      b'D', b'', 1).strip().decode())
+        elif f.strip().startswith(b'E '):
+            dic['Muxing Supported'].append(f.replace(
+                                    b'E', b'', 1).strip().decode())
+        elif f.strip().startswith(b'DE '):
+            dic['Mux/Demux Supported'].append(f.replace(
+                                       b'DE', b'', 1).strip().decode())
+            
+    return(dic)
+
+#-------------------------------------------------------------------#
+
+def ff_codecs(ffmpeg_link, type_opt, OS):
+    """
+    Receive output of *ffmpeg -encoders* or *ffmpeg -decoders*
+    command and return a ditionary with the follow keys and values:
+    
+        * KEYS                  * VALUES 
+        'Video' :    [list of V.....   name    descrition]
+        'Audio' :    [list of A.....   name    descrition]
+        'Subtitle' : [list of S.....   name    descrition]
+    
+    Accept two arguments: the call to FFmpeg and the type of 
+    option used to obtain data on the encoding and decoding 
+    capabilities of FFmpeg. The options to pass as arguments 
+    are the following:
+    
+    -encoders
+    -decoders
+    
+    """
+    # grab encoders or decoders output:
+    if OS == 'Windows':
+        ret = subp_win32([ffmpeg_link, '-loglevel', 'error', type_opt])
+    else:
+        ret = subp([ffmpeg_link, '-loglevel', 'error', type_opt])
+    
+    if 'Not found' in ret[0]:
+        return({ret[0], ret[1]})
+    
+    codecs = ret[1].split(b'\n')
+    
+    dic = {'Video':[], 'Audio':[], 'Subtitle':[]}
+    
+    for f in codecs:
+        if f.strip().startswith(b'V'):
+            if not b'V..... = Video' in f:
+                dic['Video'].append(f.strip().decode())
+        elif f.strip().startswith(b'A'):
+            if not b'A..... = Audio' in f:
+                dic['Audio'].append(f.strip().decode())
+        elif f.strip().startswith(b'S'):
+            if not b'S..... = Subtitle' in f:
+                dic['Subtitle'].append(f.strip().decode())
+            
+    return(dic)
+
+#-------------------------------------------------------------------#
+
+def ff_topics(ffmpeg_link, topic, OS):
+    """
+    Get output of the options help command of FFmpeg. 
+    Note that the 'topic' parameter is always a list.
+    
+    """
+    # get output:
+    arr = [ffmpeg_link] + topic 
+    
+    if OS == 'Windows':
+        ret = subp_win32(arr)
+    else:
+        ret = subp(arr)
+    
+    if 'Not found' in ret[0]:
+        return({ret[0], ret[1]})
+    
+    row = "%s" % ret[1].decode()
+    
+    return ('None', row)
 

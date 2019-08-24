@@ -29,6 +29,7 @@ import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
 from videomass2.vdms_DIALOGS import dialog_tools, settings, infoprg
+from videomass2.vdms_DIALOGS import ffmpeg_search
 from videomass2.vdms_PANELS import dragNdrop, presets_mng_panel
 from videomass2.vdms_PANELS import video_conv, audio_conv
 from videomass2.vdms_IO import IO_tools
@@ -615,13 +616,20 @@ class MainFrame(wx.Frame):
         
         ####------------------ tools button
         toolsButton = wx.Menu()
-        
-        #checkexec= toolsButton.Append( wx.ID_ANY, _(
-                        #"Check installed executables"), 
-                        #"Check for ffmpeg, ffprobe and ffplay executables.")
-        #toolsButton.AppendSeparator()
+
         checkconf = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg specifications"), 
                                 u"Shows the configuration features of FFmpeg")
+        toolsButton.AppendSeparator()
+        ckformats = toolsButton.Append( wx.ID_ANY, _("FFmpeg file formats"),
+                                _("Shows file formats available on FFmpeg"))
+        toolsButton.AppendSeparator()
+        ckcoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg encoders"),
+                                _("Shows available encoders on FFmpeg"))
+        ckdecoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg decoders"),
+                                _("Shows available decoders on FFmpeg"))
+        toolsButton.AppendSeparator()
+        searchtopic = toolsButton.Append( wx.ID_ANY, _("FFmpeg search topics"),
+                        _("Show a dialog box to help you find FFmpeg topics"))
         self.menuBar.Append(toolsButton,_(u"&Tools"))
         
         ####------------------ setup button
@@ -668,8 +676,11 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
-        #self.Bind(wx.EVT_MENU, self.Check_exec, checkexec)
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
+        self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
+        self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
+        self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
+        self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
         self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
@@ -739,21 +750,43 @@ class MainFrame(wx.Frame):
         """
         self.Destroy()
     #--------------------------- Menu Tools ---------------------------#
-    def Check_exec(self, event):
-        """
-        Run a dialog to check the installed executables by IO_tools
-        
-        """
-        print('TODO: do something')
-    #------------------------------------------------------------------#
     def Check_conf(self, event):
         """
         Call IO_tools.testFFmpeg_conf to test features of FFmpeg
         
         """
-        IO_tools.testFFmpeg_conf(self.ffmpeg_link, self.ffprobe_link, 
+        IO_tools.test_conf(self.ffmpeg_link, self.ffprobe_link, 
                                  self.ffplay_link, self.OS,
                                  )
+    #------------------------------------------------------------------#
+    def Check_formats(self, event):
+        """
+        IO_tools.test_formats
+        
+        """
+        IO_tools.test_formats(self.ffmpeg_link, self.OS)
+    #------------------------------------------------------------------#
+    def Check_enc(self, event):
+        """
+        IO_tools.test_encoders
+        
+        """
+        IO_tools.test_codecs(self.ffmpeg_link, '-encoders', self.OS)
+    #------------------------------------------------------------------#
+    def Check_dec(self, event):
+        """
+        IO_tools.test_encoders
+        
+        """
+        IO_tools.test_codecs(self.ffmpeg_link, '-decoders', self.OS)
+    #------------------------------------------------------------------#
+    def Search_topic(self, event):
+        """
+        Show a dialog box to help you find FFmpeg topics
+        
+        """
+        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link, self.OS)
+        dlg.Show()
                 
     #------------------------ Menu  Preferences -------------------------#
     def Show_toolbar(self, event):

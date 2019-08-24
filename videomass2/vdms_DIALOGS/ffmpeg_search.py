@@ -3,7 +3,7 @@
 #########################################################
 # Name: ffmpeg_search.py
 # Porpose: Show a dialog box to search FFmpeg topics
-# Compatibility: Python3, wxPython4
+# Compatibility: Python2, wxPython3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -27,7 +27,7 @@
 
 #########################################################
 
-from videomass3.vdms_IO import IO_tools
+from videomass2.vdms_IO import IO_tools
 import wx
 
 class FFmpeg_Search(wx.Dialog):
@@ -77,7 +77,7 @@ class FFmpeg_Search(wx.Dialog):
                         style=wx.CB_DROPDOWN | wx.CB_READONLY
                         )
         self.cmbx_choice.SetSelection(0)
-        self.cmbx_choice.SetToolTip(_("Choose one of the topics in the list"))
+        self.cmbx_choice.SetToolTipString(_("Choose one of the topics in the list"))
         self.texthelp = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     size=(550,400),
                                     style = wx.TE_MULTILINE |
@@ -86,7 +86,7 @@ class FFmpeg_Search(wx.Dialog):
         self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         self.search = wx.SearchCtrl(self, wx.ID_ANY, size=(200,30),
                                     style=wx.TE_PROCESS_ENTER,)
-        self.search.SetToolTip(_("The search function allows you to find "
+        self.search.SetToolTipString(_("The search function allows you to find "
                                "entries in the current topic"))
         
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")

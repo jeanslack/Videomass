@@ -805,28 +805,28 @@ class MainFrame(wx.Frame):
         IO_tools.test_formats
         
         """
-        IO_tools.test_formats(self.ffmpeg_link,)
+        IO_tools.test_formats(self.ffmpeg_link, self.OS)
     #------------------------------------------------------------------#
     def Check_enc(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-encoders')
+        IO_tools.test_codecs(self.ffmpeg_link, '-encoders', self.OS)
     #------------------------------------------------------------------#
     def Check_dec(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-decoders')
+        IO_tools.test_codecs(self.ffmpeg_link, '-decoders', self.OS)
     #------------------------------------------------------------------#
     def Search_topic(self, event):
         """
         Show a dialog box to help you find FFmpeg topics
         
         """
-        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link)
+        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link, self.OS)
         dlg.Show()
         
     #---------------------------- Menu Edit ----------------------------#

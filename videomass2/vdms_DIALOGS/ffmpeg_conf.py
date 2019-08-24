@@ -148,26 +148,25 @@ class Checkconf(wx.Dialog):
         
         #### populate txtinfo TextCtrl output:
         txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
-        txtinfo.SetLabel( """\n
-            %s\n
-            %s\n
-            -------------------------------------\n
-            - %s\n
-            - %s\n
-            - %s\n
-            
-                                                    """ % (info[0].strip(),
-                                                           info[1].strip(),
-                                                           ffmpeg,
-                                                           ffprobe,
-                                                           ffplay))
+        txtinfo.SetLabel("\n\n\n\n"
+                         "              %s\n"
+                         "              %s\n"
+                         "\n\n\n"
+                         "             - %s\n"
+                         "             - %s\n"
+                         "             - %s\n" % (info[0].strip(),
+                                                  info[1].strip(),
+                                                  ffmpeg,
+                                                  ffprobe,
+                                                  ffplay,
+                                                  ))
         #### populate others_opt listctrl output:
         index = 0 
         if not others:
             print('No others option found')
         else:
             others_opt.InsertStringItem(index, _('Specific compilation options'))
-            others_opt.SetItemBackgroundColour(index, "WHEAT")
+            others_opt.SetItemBackgroundColour(index, "CORAL")
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:
