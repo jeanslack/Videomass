@@ -124,12 +124,12 @@ class Checkconf(wx.Dialog):
         
         # create lists by out:
         info, others, enable, disable = out
-        
+        #---------
         if OS == 'Windows':
             biname = ['ffmpeg.exe','ffprobe.exe','ffplay.exe']
         else:
             biname = ['ffmpeg','ffprobe','ffplay']
-        
+        #---------
         if which(biname[0]):
             ffmpeg = _("FFmpeg   ...installed")
         else:

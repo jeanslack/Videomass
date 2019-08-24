@@ -60,12 +60,10 @@ def subp_win32(args):
         return('Not found', "'%s'\n%s" %(args[0], e))
         
     if err: # if has error on args
-        e = err.split(b'\n')
-        n = len(e)
-        s = "FFmpeg:\n%s\n%s" %(e[n-3].decode(),e[n-2].decode())
-        return('Not found', s)
+        e = err.decode()
+        return('Not found', e)
 
-    return ('None', out)
+    return ('None', out.decode())
 #-----------------------------------------------------------#
 
 def subp(args):
@@ -79,7 +77,7 @@ def subp(args):
     cmd = [] 
     for opt in args:
         cmd.append(opt)
-    ###############################################################
+        
     try:
         p = subprocess.check_output(cmd, stderr=subprocess.STDOUT,)
     except OSError as oserr: # ffmpeg do not exist
@@ -88,12 +86,10 @@ def subp(args):
         #print(e.cmd) # se vuoi la lista con i comandi input
         #print(e.returncode) # se vuoi il codice di ritorno
         #print(e.output) # se vuoi l'output dello stderr
-        err = e.output.split(b'\n')
-        n = len(err)
-        s = "FFmpeg\n%s\n%s" %(err[n-3].decode(),err[n-2].decode())
-        return('Not found', s)
+        err = e.output.decode()
+        return('Not found', err)
     
-    return ('None', p)
+    return ('None', p.decode())
     
 #-----------------------------------------------------------#
 
@@ -113,19 +109,19 @@ def ff_conf(ffmpeg_link, OS):
     """
     # grab generic informations:
     if OS == 'Windows':
-        vers = subp_win32([ffmpeg_link, '-version'])
+        vers = subp_win32([ffmpeg_link, '-loglevel', 'error', '-version'])
     else:
-        vers = subp([ffmpeg_link, '-version'])
+        vers = subp([ffmpeg_link, '-loglevel', 'error', '-version'])
         
     if 'Not found' in vers[0]:
         return(vers[0], vers[1])
 
     info = []
-    for v in vers[1].split(b'\n'):
-        if b'ffmpeg version' in v:
-            info.append(v.strip().decode())
-        if b'built with' in v:
-            info.append(v.strip().decode())
+    for v in vers[1].split('\n'):
+        if 'ffmpeg version' in v:
+            info.append(v.strip())
+        if 'built with' in v:
+            info.append(v.strip())
             
     # grab buildconf:
     if OS == 'Windows':
@@ -137,8 +133,8 @@ def ff_conf(ffmpeg_link, OS):
         return(build[0], build[1])
 
     conf = []
-    for c in build[1].split(b'\n'):
-        conf.append(c.strip().decode())
+    for c in build[1].split('\n'):
+        conf.append(c.strip())
 
     enable = []
     disable = []
@@ -178,7 +174,7 @@ def ff_formats(ffmpeg_link, OS):
     if 'Not found' in ret[0]:
         return({ret[0]:ret[1], '':'', '':''})
     
-    frmt = ret[1].split(b'\n')
+    frmt = ret[1].split('\n')
     
     
     dic = {'Demuxing Supported':[], 
@@ -186,15 +182,15 @@ def ff_formats(ffmpeg_link, OS):
            'Mux/Demux Supported':[]}
     
     for f in frmt:
-        if f.strip().startswith(b'D '):
+        if f.strip().startswith('D '):
             dic['Demuxing Supported'].append(f.replace(
-                                      b'D', b'', 1).strip().decode())
-        elif f.strip().startswith(b'E '):
+                                      'D', '', 1).strip())
+        elif f.strip().startswith('E '):
             dic['Muxing Supported'].append(f.replace(
-                                    b'E', b'', 1).strip().decode())
-        elif f.strip().startswith(b'DE '):
+                                    'E', '', 1).strip())
+        elif f.strip().startswith('DE '):
             dic['Mux/Demux Supported'].append(f.replace(
-                                       b'DE', b'', 1).strip().decode())
+                                       'DE', '', 1).strip())
             
     return(dic)
 
@@ -228,20 +224,20 @@ def ff_codecs(ffmpeg_link, type_opt, OS):
     if 'Not found' in ret[0]:
         return({ret[0], ret[1]})
     
-    codecs = ret[1].split(b'\n')
+    codecs = ret[1].split('\n')
     
     dic = {'Video':[], 'Audio':[], 'Subtitle':[]}
     
     for f in codecs:
-        if f.strip().startswith(b'V'):
-            if not b'V..... = Video' in f:
-                dic['Video'].append(f.strip().decode())
-        elif f.strip().startswith(b'A'):
-            if not b'A..... = Audio' in f:
-                dic['Audio'].append(f.strip().decode())
-        elif f.strip().startswith(b'S'):
-            if not b'S..... = Subtitle' in f:
-                dic['Subtitle'].append(f.strip().decode())
+        if f.strip().startswith('V'):
+            if not 'V..... = Video' in f:
+                dic['Video'].append(f.strip())
+        elif f.strip().startswith('A'):
+            if not 'A..... = Audio' in f:
+                dic['Audio'].append(f.strip())
+        elif f.strip().startswith('S'):
+            if not 'S..... = Subtitle' in f:
+                dic['Subtitle'].append(f.strip())
             
     return(dic)
 
@@ -254,7 +250,7 @@ def ff_topics(ffmpeg_link, topic, OS):
     
     """
     # get output:
-    arr = [ffmpeg_link] + topic 
+    arr = [ffmpeg_link, '-loglevel', 'error'] + topic 
     
     if OS == 'Windows':
         ret = subp_win32(arr)
@@ -264,7 +260,7 @@ def ff_topics(ffmpeg_link, topic, OS):
     if 'Not found' in ret[0]:
         return({ret[0], ret[1]})
     
-    row = "%s" % ret[1].decode()
+    row = "%s" % ret[1]
     
     return ('None', row)
 

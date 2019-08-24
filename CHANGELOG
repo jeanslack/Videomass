@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-August 21, 2019 V.1.5.0
+August 24, 2019 V.1.5.5
 +------------------------------------+
 
 BUG FIXES:
@@ -23,15 +23,14 @@ BUG FIXES:
       
 ADD:
     - Added a new menu tools item on the menu bar
+    - Add a summary dialog before start conversion on Presets Manager
     - Added dialog box to displaying the FFmpeg compilation specifications
-    - Only for Pytohn3:
-        - Added dialog box to displaying file formats available on FFmpeg 
-        - Add a summary dialog before start conversion on Presets Manager
-        - Added dialog box to displaying available encoders and ability
-          by FFmpeg
-        - Added dialog box to displaying available decoders and capability
-          by FFmpeg
-        - Added dialog box to search and view all the FFmpeg help options.
+    - Added dialog box to displaying file formats available on FFmpeg 
+    - Added dialog box to displaying available encoders and ability
+      by FFmpeg
+    - Added dialog box to displaying available decoders and capability
+      by FFmpeg
+    - Added dialog box to search and view all the FFmpeg help options.
     
 IMPROVEMENTS:
     - Messages output from command line during start-up

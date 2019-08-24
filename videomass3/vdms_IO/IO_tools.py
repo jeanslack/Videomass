@@ -3,7 +3,7 @@
 #########################################################
 # Name: streams_tools.py
 # Porpose: Redirect any input/output resources to process
-# Compatibility: Python3, wxPython Phoenix
+# Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -172,7 +172,7 @@ def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
     """
     out = ff_conf(ffmpeg_link, OS)
     if 'Not found' in out[0]:
-        wx.MessageBox(_("\n{0}".format(out[1])), 
+        wx.MessageBox("\n{0}".format(out[1]), 
                         "Videomass: error",
                         wx.ICON_ERROR, 
                         None)
@@ -194,7 +194,7 @@ def test_formats(ffmpeg_link, OS):
     """
     diction = ff_formats(ffmpeg_link, OS)
     if 'Not found' in diction.keys():
-        wx.MessageBox(_("\n{0}".format(diction['Not found'])), 
+        wx.MessageBox("\n{0}".format(diction['Not found']), 
                         "Videomass: error",
                         wx.ICON_ERROR, 
                         None)
@@ -212,7 +212,7 @@ def test_codecs(ffmpeg_link, type_opt, OS):
     """
     diction = ff_codecs(ffmpeg_link, type_opt, OS)
     if 'Not found' in diction.keys():
-        wx.MessageBox(_("\n{0}".format(diction['Not found'])), 
+        wx.MessageBox("\n{0}".format(diction['Not found']), 
                         "Videomass: error",
                         wx.ICON_ERROR, 
                         None)
@@ -234,7 +234,7 @@ def findtopic(ffmpeg_link, topic, OS):
     retcod = ff_topics(ffmpeg_link, topic, OS)
     
     if 'Not found' in retcod[0]:
-        s = (_("\n{0}".format(retcod[1])))
+        s = ("\n{0}".format(retcod[1]))
         return(s)
     else:
         return(retcod[1])
