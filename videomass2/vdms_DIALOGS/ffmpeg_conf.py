@@ -147,7 +147,7 @@ class Checkconf(wx.Dialog):
                 ffplay = _("FFplay   ...not found !")
         
         #### populate txtinfo TextCtrl output:
-        #txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
+        txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
         txtinfo.SetLabel( """\n
             %s\n
             %s\n

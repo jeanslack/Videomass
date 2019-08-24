@@ -82,6 +82,7 @@ class FFmpeg_Search(wx.Dialog):
                                     style = wx.TE_MULTILINE |
                                     wx.TE_READONLY | wx.TE_RICH2
                                     )
+        self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         self.search = wx.SearchCtrl(self, wx.ID_ANY, size=(200,30),
                                     style=wx.TE_PROCESS_ENTER,)
         self.search.SetToolTip(_("The search function allows you to find "

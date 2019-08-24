@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: checkconf.py
+# Name: ffmpeg_conf.py
 # Porpose: Dialog to show the build configuration of the FFmpeg
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -153,6 +153,7 @@ class Checkconf(wx.Dialog):
                 ffplay = _("FFplay   ...not found !")
         
         #### populate txtinfo TextCtrl output:
+        txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
         txtinfo.SetLabel("\n\n\n\n"
                          "              %s\n"
                          "              %s\n"
