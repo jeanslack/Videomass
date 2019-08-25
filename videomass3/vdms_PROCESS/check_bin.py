@@ -257,6 +257,4 @@ def ff_topics(ffmpeg_link, topic, OS):
     if 'Not found' in ret[0]:
         return(ret[0], ret[1])
     
-    row = "%s" % ret[1]
-    
-    return ('None', row)
+    return ('None', ret[1])

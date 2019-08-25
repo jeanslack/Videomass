@@ -19,6 +19,8 @@ BUG FIXES:
       during the processes
     - Fixed bug when using double pass encoding 
       in Python3: NameError: name 'cmd' is not defined
+    - Fix a short command promp display when use ffmpeg specifications 
+      dialog on MS Windows
       
       
 ADD:
@@ -31,6 +33,8 @@ ADD:
     - Added dialog box to displaying available decoders and capability
       by FFmpeg
     - Added dialog box to search and view all the FFmpeg help options.
+    - Added resize border to ffmpeg_search dialog
+    - Added hscroll to textctrl in the ffmpeg_search
     
 IMPROVEMENTS:
     - Messages output from command line during start-up

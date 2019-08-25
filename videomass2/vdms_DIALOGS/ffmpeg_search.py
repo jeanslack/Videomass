@@ -46,7 +46,9 @@ class FFmpeg_Search(wx.Dialog):
         self.OS = OS
         self.row = None
         
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE|
+                                             wx.RESIZE_BORDER
+                                             )
         """
         with 'None' not depend from parent:
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
@@ -82,7 +84,9 @@ class FFmpeg_Search(wx.Dialog):
         self.texthelp = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     size=(550,400),
                                     style = wx.TE_MULTILINE |
-                                    wx.TE_READONLY | wx.TE_RICH2
+                                            wx.TE_READONLY | 
+                                            wx.TE_RICH2 |
+                                            wx.HSCROLL
                                     )
         self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         self.search = wx.SearchCtrl(self, wx.ID_ANY, size=(200,30),

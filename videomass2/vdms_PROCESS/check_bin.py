@@ -52,7 +52,7 @@ def subp_win32(args):
         p = subprocess.Popen(cmd, 
                              stdout=subprocess.PIPE, 
                              stderr=subprocess.PIPE,
-                             #startupinfo=startupinfo,
+                             startupinfo=startupinfo,
                              )
         out, err =  p.communicate()
     
@@ -260,7 +260,5 @@ def ff_topics(ffmpeg_link, topic, OS):
     if 'Not found' in ret[0]:
         return({ret[0], ret[1]})
     
-    row = "%s" % ret[1]
-    
-    return ('None', row)
+    return ('None', ret[1])
 
