@@ -2,6 +2,7 @@
 *.pyc
 dist
 build
+videomass.egg-info
 deb_dist
 *.egg-info
 Pipfile

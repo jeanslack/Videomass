@@ -3,11 +3,11 @@ Videomass Builds and Installation Instructions
 ...
 
 Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are 
-available. These installation programs contain everything needed to be used 
-in standalone mode, without the need for anything else. Visit the sourceforge 
-page at the following link: 
 
-https://sourceforge.net/projects/videomass2/
+available at https://sourceforge.net/projects/videomass2/ 
+
+These installation programs contain everything needed to be used 
+in standalone mode, without the need for anything else. 
 
 ...
 
@@ -78,7 +78,7 @@ https://github.com/jeanslack/Videomass/wiki/MacOs,-build-from-source
 #--------------------------------------------------------------------------#
 Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
 
-python setup.py bdist_wheel
+python3 setup.py sdist bdist_wheel
 
 Please, Visit the Wiki page for more info:
 
