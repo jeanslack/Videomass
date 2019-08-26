@@ -14,7 +14,11 @@ IMPROVEMENTS:
     - Translation improvements
     - Improved fonts depending on the type of operating system
     - code thinning in some dialog box
-
+    
+BUG FIXES:
+    - Fixed append text issue when use dialog box to search 
+      FFmpeg options on Windows
+      
 +------------------------------------+
 August 24, 2019 V.1.5.5
 +------------------------------------+

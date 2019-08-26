@@ -11,7 +11,7 @@ Now also compatible with Python3 and wxPython-Phoenix.
 
 ## Features
 
-- Drag n' Drop interface
+- Drag n' Drop with multiple files at once
 - Presets manager interface with fully customizable and expandable profiles  
 - Displaying metadata streams information 
 - Preview of exported media
@@ -21,9 +21,8 @@ Now also compatible with Python3 and wxPython-Phoenix.
 - Independent audio conversions interface
 - Save jpg images from a video sequence
 - Audio peak level analysis with normalization process   
-- Grabbing audio streams from video with multilingual selection  
+- Ability to get audio streams from videos with multilingual selection
 - Selection of the time interval (for exports, previews, reproduction, tests)
-- Convert multiple files at once 
 - Log management
 - Multi language (English and Italian Languages support for now)
 - Work on many platforms where Python and wxPython are supported, 
