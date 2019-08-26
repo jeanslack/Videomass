@@ -34,7 +34,7 @@ class Mediainfo(wx.Dialog):
     """
     Show dialog for display metadata info. 
     """
-    def __init__(self, title, path, ffprobe_link):
+    def __init__(self, title, path, ffprobe_link, OS):
         # with 'None' not depend from videomass. With 'parent, -1' if close
         # videomass also close mediainfo window:
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
@@ -63,6 +63,12 @@ class Mediainfo(wx.Dialog):
         #streams_info.SetBackgroundColour(wx.Colour(217, 255, 255))
         streams_info.InsertColumn(0, _(u'names'), width=200)
         streams_info.InsertColumn(1, _(u'parameters'), width=450)
+        if OS == 'Darwin':
+            format_info.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            streams_info.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            streams_info.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            format_info.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)

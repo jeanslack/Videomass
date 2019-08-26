@@ -72,18 +72,18 @@ class FFmpeg_formats(wx.Dialog):
         dmx.InsertColumn(1, _('description'), width=450)
         #dmx.SetBackgroundColour(wx.Colour(217, 255, 255))
         mx.SetMinSize((500, 400))
-        mx.InsertColumn(0, _('format'), width=300)
+        mx.InsertColumn(0, _('format'), width=150)
         mx.InsertColumn(1, _('description'), width=450)
         #mx.SetBackgroundColour(wx.Colour(217, 255, 255))
         dmx_mx.SetMinSize((500, 400))
-        dmx_mx.InsertColumn(0, _('format'), width=300)
+        dmx_mx.InsertColumn(0, _('format'), width=150)
         dmx_mx.InsertColumn(1, _('description'), width=450)
         #dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
         
         if OS == 'Darwin':
-            dmx.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            mx.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            dmx_mx.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            dmx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            mx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            dmx_mx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             dmx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             mx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))

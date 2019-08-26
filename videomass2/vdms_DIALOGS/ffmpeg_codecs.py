@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ffmpeg_encoders.py
-# Porpose: Dialog to show the available encoders on the FFmpeg
-# Compatibility: Python2, wxPython3
+# Name: ffmpeg_decoders.py
+# Porpose: Dialog to show the available decoders on the FFmpeg
+# Compatibility: Python2, wxPython3 classic
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -29,13 +29,13 @@
 
 import wx
 
-class FFmpeg_encoders(wx.Dialog):
+class FFmpeg_Codecs(wx.Dialog):
     """
     It shows a dialog box with a pretty kind of GUI to view 
     the formats available on FFmpeg
     
     """
-    def __init__(self, dict_encoders):
+    def __init__(self, dict_decoders, OS, type_opt):
         """
         with 'None' not depend from parent:
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
@@ -45,6 +45,15 @@ class FFmpeg_encoders(wx.Dialog):
         if close videomass also close parent window:
         
         """
+        if type_opt == '-encoders':
+            cod =  _('CODING ABILITY')
+            colctrl = 'ORANGE'
+            title = _("Videomass: FFmpeg encoders")
+        else:
+            cod =  _('DECODING CAPABILITY')
+            colctrl = 'SIENNA'
+            title = _("Videomass: FFmpeg decoders")
+            
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY,)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
@@ -67,9 +76,9 @@ class FFmpeg_encoders(wx.Dialog):
         button_close = wx.Button(self, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: FFmpeg encoders"))
-        vid.SetMinSize((500, 300))
-        vid.InsertColumn(0, ('codec'), width=140)
+        self.SetTitle(title)
+        vid.SetMinSize((600, 300))
+        vid.InsertColumn(0, ('codec'), width=150)
         vid.InsertColumn(1, ('F'), width=40)
         vid.InsertColumn(2, ('S'), width=40)
         vid.InsertColumn(3, ('X'), width=40)
@@ -77,8 +86,8 @@ class FFmpeg_encoders(wx.Dialog):
         vid.InsertColumn(5, ('D'), width=40)
         vid.InsertColumn(6, _('description'), width=450)
         #vid.SetBackgroundColour(wx.Colour(217, 255, 255))
-        aud.SetMinSize((500, 300))
-        aud.InsertColumn(0, ('codec'), width=140)
+        aud.SetMinSize((600, 300))
+        aud.InsertColumn(0, ('codec'), width=150)
         aud.InsertColumn(1, ('F'), width=40)
         aud.InsertColumn(2, ('S'), width=40)
         aud.InsertColumn(3, ('X'), width=40)
@@ -86,8 +95,8 @@ class FFmpeg_encoders(wx.Dialog):
         aud.InsertColumn(5, ('D'), width=40)
         aud.InsertColumn(6, _('description'), width=450)
         #aud.SetBackgroundColour(wx.Colour(217, 255, 255))
-        sub.SetMinSize((500, 300))
-        sub.InsertColumn(0, ('codec'), width=140)
+        sub.SetMinSize((600, 300))
+        sub.InsertColumn(0, ('codec'), width=150)
         sub.InsertColumn(1, ('F'), width=40)
         sub.InsertColumn(2, ('S'), width=40)
         sub.InsertColumn(3, ('X'), width=40)
@@ -96,9 +105,27 @@ class FFmpeg_encoders(wx.Dialog):
         sub.InsertColumn(6, _('description'), width=450)
         #sub.SetBackgroundColour(wx.Colour(217, 255, 255))
         
+        if OS == 'Darwin':
+            vid.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            aud.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            sub.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            stext.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        else:
+            vid.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            aud.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            sub.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            stext.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        
+        leg = ("F = frame-level multithreading\n"
+               "S = slice-level multithreading\n"
+               "X = Codec is experimental\n"
+               "B = Supports draw_horiz_band\n"
+               "D = Supports direct rendering method 1")
+        stext.SetLabel(leg)
+        
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_1 = wx.FlexGridSizer(3, 1, 0, 0)
+        grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
         grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
@@ -115,105 +142,91 @@ class FFmpeg_encoders(wx.Dialog):
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
         grid_sizer_1.Add(stext, 1, wx.ALL, 5)
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
-        grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-        leg = ("F = frame-level multithreading\n"
-               "S = slice-level multithreading\n"
-               "X = Codec is experimental\n"
-               "B = Supports draw_horiz_band\n"
-               "D = Supports direct rendering method 1")
-        stext.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
-        stext.SetLabel(leg)
-        self.SetSizer(sizer_1)
-        sizer_1.Fit(self)
-        self.Layout()
+        sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+
+        self.SetSizerAndFit(sizer_1)
         
-        # delete previous append:
-        vid.DeleteAllItems()
-        aud.DeleteAllItems()
-        sub.DeleteAllItems()
-            
         #### populate vid listctrl output:
         index = 0 
-        l = dict_encoders['Video']
+        l = dict_decoders['Video']
         if not l:
             print ('No ffmpeg codecs available')
         else:
-            vid.InsertStringItem(index, _('CODING ABILITY'))
-            vid.SetItemBackgroundColour(index, "orange")
+            vid.InsertItem(index, cod)
+            vid.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
-                vid.InsertStringItem(index, a[6:].split(' ')[1])
+                vid.InsertItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
-                    vid.SetStringItem(index, 1, 'YES')
+                    vid.SetItem(index, 1, 'YES')
                 if 'S' in a[2]:
-                    vid.SetStringItem(index, 2, 'YES')
+                    vid.SetItem(index, 2, 'YES')
                 if 'X' in a[3]:
-                    vid.SetStringItem(index, 3, 'YES')
+                    vid.SetItem(index, 3, 'YES')
                 if 'B' in [4]:
-                    vid.SetStringItem(index, 4, 'YES')
+                    vid.SetItem(index, 4, 'YES')
                 if 'D' in [5]:
-                    vid.SetStringItem(index, 5, 'YES')
+                    vid.SetItem(index, 5, 'YES')
                 d = " ".join(a.split()).split(None,2)[2]
                 if len(d):
-                    vid.SetStringItem(index, 6, d)
+                    vid.SetItem(index, 6, d)
                 else:
-                    vid.SetStringItem(index, 6, '')
+                    vid.SetItem(index, 6, '')
                 
         ##### populate aud listctrl output:
         index = 0 
-        l = dict_encoders['Audio']
+        l = dict_decoders['Audio']
         if not l:
             print ('No ffmpeg codecs available')
         else:
-            aud.InsertStringItem(index, _('CODING ABILITY'))
-            aud.SetItemBackgroundColour(index, "orange")
+            aud.InsertItem(index, cod)
+            aud.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
-                aud.InsertStringItem(index, a[6:].split(' ')[1])
+                aud.InsertItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
-                    aud.SetStringItem(index, 1, 'YES')
+                    aud.SetItem(index, 1, 'YES')
                 if 'S' in a[2]:
-                    aud.SetStringItem(index, 2, 'YES')
+                    aud.SetItem(index, 2, 'YES')
                 if 'X' in a[3]:
-                    aud.SetStringItem(index, 3, 'YES')
+                    aud.SetItem(index, 3, 'YES')
                 if 'B' in [4]:
-                    aud.SetStringItem(index, 4, 'YES')
+                    aud.SetItem(index, 4, 'YES')
                 if 'D' in [5]:
-                    aud.SetStringItem(index, 5, 'YES')
+                    aud.SetItem(index, 5, 'YES')
                 d = " ".join(a.split()).split(None,2)[2]
                 if len(d):
-                    aud.SetStringItem(index, 6, d)
+                    aud.SetItem(index, 6, d)
                 else:
-                    aud.SetStringItem(index, 6, '')
+                    aud.SetItem(index, 6, '')
         
         ###### populate sub listctrl output:
         index = 0 
-        l = dict_encoders['Subtitle']
+        l = dict_decoders['Subtitle']
         if not l:
-            print ('No ffmpeg codecs available')
+            print('No ffmpeg codecs available')
         else:
-            sub.InsertStringItem(index, _('CODING ABILITY'))
-            sub.SetItemBackgroundColour(index, "orange")
+            sub.InsertItem(index, cod)
+            sub.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
-                sub.InsertStringItem(index, a[6:].split(' ')[1])
+                sub.InsertItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
-                    sub.SetStringItem(index, 1, 'YES')
+                    sub.SetItem(index, 1, 'YES')
                 if 'S' in a[2]:
-                    sub.SetStringItem(index, 2, 'YES')
+                    sub.SetItem(index, 2, 'YES')
                 if 'X' in a[3]:
-                    sub.SetStringItem(index, 3, 'YES')
+                    sub.SetItem(index, 3, 'YES')
                 if 'B' in [4]:
-                    sub.SetStringItem(index, 4, 'YES')
+                    sub.SetItem(index, 4, 'YES')
                 if 'D' in [5]:
-                    sub.SetStringItem(index, 5, 'YES')
+                    sub.SetItem(index, 5, 'YES')
                 d = " ".join(a.split()).split(None,2)[2]
                 if len(d):
-                    sub.SetStringItem(index, 6, d)
+                    sub.SetItem(index, 6, d)
                 else:
-                    sub.SetStringItem(index, 6, '')
+                    sub.SetItem(index, 6, '')
                     
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
@@ -225,4 +238,4 @@ class FFmpeg_encoders(wx.Dialog):
         self.Destroy()
         #event.Skip()
 
-    #-------------------------------------------------------------------#
+    #-------------------------------------------------------------------# 

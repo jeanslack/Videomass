@@ -3,7 +3,7 @@
 #########################################################
 # Name: ffmpeg_formats.py
 # Porpose: Dialog to show the available formats on the FFmpeg
-# Compatibility: Python2, wxPython3
+# Compatibility: Python2, wxPython3 classic
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -35,7 +35,7 @@ class FFmpeg_formats(wx.Dialog):
     the formats available on FFmpeg
     
     """
-    def __init__(self, dict_formats):
+    def __init__(self, dict_formats, OS):
         """
         with 'None' not depend from parent:
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
@@ -72,13 +72,22 @@ class FFmpeg_formats(wx.Dialog):
         dmx.InsertColumn(1, _('description'), width=450)
         #dmx.SetBackgroundColour(wx.Colour(217, 255, 255))
         mx.SetMinSize((500, 400))
-        mx.InsertColumn(0, _('format'), width=300)
+        mx.InsertColumn(0, _('format'), width=150)
         mx.InsertColumn(1, _('description'), width=450)
         #mx.SetBackgroundColour(wx.Colour(217, 255, 255))
         dmx_mx.SetMinSize((500, 400))
-        dmx_mx.InsertColumn(0, _('format'), width=300)
+        dmx_mx.InsertColumn(0, _('format'), width=150)
         dmx_mx.InsertColumn(1, _('description'), width=450)
         #dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
+        
+        if OS == 'Darwin':
+            dmx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            mx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            dmx_mx.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            dmx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            mx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            dmx_mx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
@@ -117,7 +126,7 @@ class FFmpeg_formats(wx.Dialog):
         if not l:
             print ('No ffmpeg formats available')
         else:
-            dmx.InsertStringItem(index, ('----'))
+            dmx.InsertItem(index, ('----'))
             dmx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
@@ -126,8 +135,8 @@ class FFmpeg_formats(wx.Dialog):
                 else:
                     key , value = s[0], s[1]
                 index +=1
-                dmx.InsertStringItem(index, key)
-                dmx.SetStringItem(index, 1, value)
+                dmx.InsertItem(index, key)
+                dmx.SetItem(index, 1, value)
                 
         #### populate mx listctrl output:
         index = 0
@@ -136,7 +145,7 @@ class FFmpeg_formats(wx.Dialog):
         if not l:
             print ('No ffmpeg formats available')
         else:
-            mx.InsertStringItem(index, ('----'))
+            mx.InsertItem(index, ('----'))
             mx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
@@ -145,8 +154,8 @@ class FFmpeg_formats(wx.Dialog):
                 else:
                     key , value = s[0], s[1]
                 index +=1
-                mx.InsertStringItem(index, key)
-                mx.SetStringItem(index, 1, value)
+                mx.InsertItem(index, key)
+                mx.SetItem(index, 1, value)
         
         ##### populate dmx_mx listctrl output:
         index = 0 
@@ -155,7 +164,7 @@ class FFmpeg_formats(wx.Dialog):
         if not l:
             print ('No ffmpeg formats available')
         else:
-            dmx_mx.InsertStringItem(index, ('----'))
+            dmx_mx.InsertItem(index, ('----'))
             dmx_mx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
@@ -164,8 +173,8 @@ class FFmpeg_formats(wx.Dialog):
                 else:
                     key , value = s[0], s[1]
                 index +=1
-                dmx_mx.InsertStringItem(index, key)
-                dmx_mx.SetStringItem(index, 1, value)
+                dmx_mx.InsertItem(index, key)
+                dmx_mx.SetItem(index, 1, value)
                     
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)

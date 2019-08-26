@@ -482,7 +482,7 @@ class MainFrame(wx.Frame):
             wx.MessageBox(_(u"No file selected into Drag and Drop list"), 
                           'Videomass', wx.ICON_EXCLAMATION, self)
             return
-        title = 'Videomass: Media Streams'
+        title = _('Videomass: media streams')
         IO_tools.stream_info(title, 
                              filepath, 
                              self.ffprobe_link,

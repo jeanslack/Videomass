@@ -203,7 +203,7 @@ class Video_Conv(wx.Panel):
         self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25),
                                             bitmap=denoiserbmp,
-                                            label=_(u"Denoisers"))
+                                            label=u"Denoisers")
         self.btn_denois.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                         foregroundcolour=wx.Colour(28,28,28))
         self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -239,7 +239,7 @@ class Video_Conv(wx.Panel):
         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, ("Video Aspect")
+                                        wx.ID_ANY, (_("Video Aspect"))
                                         )
         self.cmbx_vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
         choices=[(u"Set default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
@@ -248,7 +248,7 @@ class Video_Conv(wx.Panel):
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
         self.sizer_videorate_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, ("Video Rate")
+                                        wx.ID_ANY, (_("Video Rate"))
                                                     )
         self.notebook_1_pane_3 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_a = wx.RadioBox(self.notebook_1_pane_3, wx.ID_ANY, (
@@ -757,10 +757,10 @@ class Video_Conv(wx.Panel):
             self.UI_set()
             
         elif vcodec[selected][0] == "save images":
-            msg = (_(u"Tip: set a short time progress duration with `Duration` "
-                   u"button, then try set the `Video Rate` at low values "
-                   u"(0.2 fps); More is low, the lower will be the extracted "
-                   u"images. "))
+            msg = (_("Tip: try setting a progress time in seconds with the " 
+                     "'Duration' tool, then set the `Video Rate` at low values "
+                     "(0.2 fps); More is low, the lower will be the extracted "
+                     "images. "))
             self.parent.statusbar_msg(_(u"Output format: Save images"),None)
             wx.MessageBox(msg, "Videomass: info", wx.ICON_INFORMATION
                           )

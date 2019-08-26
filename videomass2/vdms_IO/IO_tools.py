@@ -49,8 +49,7 @@ from videomass2.vdms_PROCESS.check_bin import ff_codecs
 from videomass2.vdms_PROCESS.check_bin import ff_topics
 from videomass2.vdms_DIALOGS import ffmpeg_conf
 from videomass2.vdms_DIALOGS import ffmpeg_formats
-from videomass2.vdms_DIALOGS import ffmpeg_encoders
-from videomass2.vdms_DIALOGS import ffmpeg_decoders
+from videomass2.vdms_DIALOGS import ffmpeg_codecs
 
 
 
@@ -93,7 +92,7 @@ def stream_info(title, filepath , ffprobe_link):
     
     try:
         with open(filepath):
-            dialog = Mediainfo(title, filepath, ffprobe_link)
+            dialog = Mediainfo(title, filepath, ffprobe_link, platform.system())
             dialog.Show()
 
     except IOError:
@@ -223,12 +222,9 @@ def test_codecs(ffmpeg_link, type_opt, OS):
                         None)
         return
     else:
-        if type_opt == '-encoders':
-            dlg = ffmpeg_encoders.FFmpeg_encoders(diction)
-            dlg.Show()
-        else:
-            dlg = ffmpeg_decoders.FFmpeg_decoders(diction)
-            dlg.Show()
+        dlg = ffmpeg_encoders.FFmpeg_encoders(diction, type_opt, OS)
+        dlg.Show()
+
 #-------------------------------------------------------------------------#
 def findtopic(ffmpeg_link, topic, OS):
     """

@@ -106,9 +106,9 @@ class FFmpeg_Codecs(wx.Dialog):
         #sub.SetBackgroundColour(wx.Colour(217, 255, 255))
         
         if OS == 'Darwin':
-            vid.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            aud.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            sub.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            vid.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            aud.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            sub.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
             stext.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
             vid.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
@@ -205,7 +205,7 @@ class FFmpeg_Codecs(wx.Dialog):
         index = 0 
         l = dict_decoders['Subtitle']
         if not l:
-            print ('No ffmpeg codecs available')
+            print('No ffmpeg codecs available')
         else:
             sub.InsertItem(index, cod)
             sub.SetItemBackgroundColour(index, colctrl)

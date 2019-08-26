@@ -86,10 +86,10 @@ class Checkconf(wx.Dialog):
         #disabled_opt.SetBackgroundColour(wx.Colour(217, 255, 255))
         
         if OS == 'Darwin':
-            txtinfo.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
-            others_opt.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            enable_opt.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            disabled_opt.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            txtinfo.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            others_opt.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            enable_opt.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            disabled_opt.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
             others_opt.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))

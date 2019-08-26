@@ -87,7 +87,7 @@ class FFmpeg_Search(wx.Dialog):
                                             wx.HSCROLL
                                     )
         if OS == 'Darwin':
-            self.texthelp.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         self.search = wx.SearchCtrl(self, wx.ID_ANY, size=(200,30),
