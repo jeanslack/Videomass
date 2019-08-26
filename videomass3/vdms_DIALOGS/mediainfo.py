@@ -36,11 +36,12 @@ class Mediainfo(wx.Dialog):
     """
     Show dialog for display metadata info. 
     """
-    def __init__(self, title, path, ffprobe_link):
+    def __init__(self, title, path, ffprobe_link, OS):
         # with 'None' not depend from videomass. With 'parent, -1' if close
         # videomass also close mediainfo window:
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE|
+                                             wx.RESIZE_BORDER)
         
         notebook_1 = wx.Notebook(self, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
@@ -66,6 +67,13 @@ class Mediainfo(wx.Dialog):
         streams_info.InsertColumn(0, _('names'), width=200)
         streams_info.InsertColumn(1, _('parameters'), width=450)
         
+        print(OS)
+        if OS == 'Darwin':
+            format_info.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            streams_info.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            streams_info.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            format_info.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)

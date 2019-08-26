@@ -51,8 +51,7 @@ from videomass3.vdms_PROCESS.check_bin import ff_codecs
 from videomass3.vdms_PROCESS.check_bin import ff_topics
 from videomass3.vdms_DIALOGS import ffmpeg_conf
 from videomass3.vdms_DIALOGS import ffmpeg_formats
-from videomass3.vdms_DIALOGS import ffmpeg_encoders
-from videomass3.vdms_DIALOGS import ffmpeg_decoders
+from videomass3.vdms_DIALOGS import ffmpeg_codecs
 
 #-----------------------------------------------------------------------#
 def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
@@ -92,7 +91,11 @@ def stream_info(title, filepath , ffprobe_link):
     """
     try:
         with open(filepath):
-            dialog = Mediainfo(title, filepath, ffprobe_link)
+            dialog = Mediainfo(title, 
+                               filepath, 
+                               ffprobe_link, 
+                               platform.system()
+                               )
             dialog.Show()
 
     except IOError:
@@ -200,7 +203,7 @@ def test_formats(ffmpeg_link, OS):
                         None)
         return
     else:
-        dlg = ffmpeg_formats.FFmpeg_formats(diction)
+        dlg = ffmpeg_formats.FFmpeg_formats(diction, OS)
         dlg.Show()
 #-------------------------------------------------------------------------#
 def test_codecs(ffmpeg_link, type_opt, OS):
@@ -218,12 +221,12 @@ def test_codecs(ffmpeg_link, type_opt, OS):
                         None)
         return
     else:
-        if type_opt == '-encoders':
-            dlg = ffmpeg_encoders.FFmpeg_encoders(diction)
-            dlg.Show()
-        else:
-            dlg = ffmpeg_decoders.FFmpeg_decoders(diction)
-            dlg.Show()
+        #if type_opt == '-encoders':
+        #dlg = ffmpeg_encoders.FFmpeg_encoders(diction, OS,)
+        #dlg.Show()
+        #else:
+        dlg = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
+        dlg.Show()
 #-------------------------------------------------------------------------#
 def findtopic(ffmpeg_link, topic, OS):
     """

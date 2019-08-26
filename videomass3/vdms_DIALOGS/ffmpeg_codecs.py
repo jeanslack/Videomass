@@ -29,13 +29,13 @@
 
 import wx
 
-class FFmpeg_decoders(wx.Dialog):
+class FFmpeg_Codecs(wx.Dialog):
     """
     It shows a dialog box with a pretty kind of GUI to view 
     the formats available on FFmpeg
     
     """
-    def __init__(self, dict_decoders):
+    def __init__(self, dict_decoders, OS, type_opt):
         """
         with 'None' not depend from parent:
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
@@ -45,6 +45,15 @@ class FFmpeg_decoders(wx.Dialog):
         if close videomass also close parent window:
         
         """
+        if type_opt == '-encoders':
+            cod =  _('CODING ABILITY')
+            colctrl = 'ORANGE'
+            title = _("Videomass: FFmpeg encoders")
+        else:
+            cod =  _('DECODING CAPABILITY')
+            colctrl = 'SIENNA'
+            title = _("Videomass: FFmpeg decoders")
+            
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         notebook_1 = wx.Notebook(self, wx.ID_ANY,)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
@@ -67,8 +76,8 @@ class FFmpeg_decoders(wx.Dialog):
         button_close = wx.Button(self, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: FFmpeg decoders"))
-        vid.SetMinSize((500, 300))
+        self.SetTitle(title)
+        vid.SetMinSize((600, 300))
         vid.InsertColumn(0, ('codec'), width=150)
         vid.InsertColumn(1, ('F'), width=40)
         vid.InsertColumn(2, ('S'), width=40)
@@ -77,7 +86,7 @@ class FFmpeg_decoders(wx.Dialog):
         vid.InsertColumn(5, ('D'), width=40)
         vid.InsertColumn(6, _('description'), width=450)
         #vid.SetBackgroundColour(wx.Colour(217, 255, 255))
-        aud.SetMinSize((500, 300))
+        aud.SetMinSize((600, 300))
         aud.InsertColumn(0, ('codec'), width=150)
         aud.InsertColumn(1, ('F'), width=40)
         aud.InsertColumn(2, ('S'), width=40)
@@ -86,7 +95,7 @@ class FFmpeg_decoders(wx.Dialog):
         aud.InsertColumn(5, ('D'), width=40)
         aud.InsertColumn(6, _('description'), width=450)
         #aud.SetBackgroundColour(wx.Colour(217, 255, 255))
-        sub.SetMinSize((500, 300))
+        sub.SetMinSize((600, 300))
         sub.InsertColumn(0, ('codec'), width=150)
         sub.InsertColumn(1, ('F'), width=40)
         sub.InsertColumn(2, ('S'), width=40)
@@ -96,9 +105,27 @@ class FFmpeg_decoders(wx.Dialog):
         sub.InsertColumn(6, _('description'), width=450)
         #sub.SetBackgroundColour(wx.Colour(217, 255, 255))
         
+        if OS == 'Darwin':
+            vid.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            aud.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            sub.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            stext.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        else:
+            vid.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            aud.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            sub.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            stext.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        
+        leg = ("F = frame-level multithreading\n"
+               "S = slice-level multithreading\n"
+               "X = Codec is experimental\n"
+               "B = Supports draw_horiz_band\n"
+               "D = Supports direct rendering method 1")
+        stext.SetLabel(leg)
+        
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_1 = wx.FlexGridSizer(3, 1, 0, 0)
+        grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
         grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
@@ -115,19 +142,10 @@ class FFmpeg_decoders(wx.Dialog):
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
         grid_sizer_1.Add(stext, 1, wx.ALL, 5)
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
-        grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-        leg = ("F = frame-level multithreading\n"
-               "S = slice-level multithreading\n"
-               "X = Codec is experimental\n"
-               "B = Supports draw_horiz_band\n"
-               "D = Supports direct rendering method 1")
-        stext.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
-        stext.SetLabel(leg)
-        self.SetSizer(sizer_1)
-        sizer_1.Fit(self)
-        self.Layout()
+        sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+
+        self.SetSizerAndFit(sizer_1)
         
         #### populate vid listctrl output:
         index = 0 
@@ -135,8 +153,8 @@ class FFmpeg_decoders(wx.Dialog):
         if not l:
             print ('No ffmpeg codecs available')
         else:
-            vid.InsertItem(index, _('DECODING CAPABILITY'))
-            vid.SetItemBackgroundColour(index, "SIENNA")
+            vid.InsertItem(index, cod)
+            vid.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
                 vid.InsertItem(index, a[6:].split(' ')[1])
@@ -162,8 +180,8 @@ class FFmpeg_decoders(wx.Dialog):
         if not l:
             print ('No ffmpeg codecs available')
         else:
-            aud.InsertItem(index, _('DECODING CAPABILITY'))
-            aud.SetItemBackgroundColour(index, "SIENNA")
+            aud.InsertItem(index, cod)
+            aud.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
                 aud.InsertItem(index, a[6:].split(' ')[1])
@@ -189,8 +207,8 @@ class FFmpeg_decoders(wx.Dialog):
         if not l:
             print ('No ffmpeg codecs available')
         else:
-            sub.InsertItem(index, _('DECODING CAPABILITY'))
-            sub.SetItemBackgroundColour(index, "SIENNA")
+            sub.InsertItem(index, cod)
+            sub.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
                 sub.InsertItem(index, a[6:].split(' ')[1])

@@ -96,7 +96,7 @@ class Cut_Range(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         #----------------------Properties ----------------------#
-        self.SetTitle('Videomass: duration')
+        self.SetTitle(_('Videomass: duration'))
         #self.start_hour_ctrl.SetMinSize((100,-1 ))
         #self.start_minute_ctrl.SetMinSize((100, -1))
         #self.start_second_ctrl.SetMinSize((100, -1))
@@ -273,7 +273,7 @@ class VideoRotate(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         #----------------------Properties------------------------------------#
 
-        self.SetTitle(_("Videomass: Set Video/Image Rotation"))
+        self.SetTitle(_("Videomass: Set video/image rotation"))
         #self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTip(_("Reverses visual movie from bottom to top"))
         #self.button_left.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -505,7 +505,7 @@ class VideoCrop(wx.Dialog):
         self.Layout()
         
         #----------------------Properties------------------------------------#
-        self.SetTitle("Videomass: Video/Image Crop")
+        self.SetTitle(_("Videomass: video/image crop"))
         #self.crop_width.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_height.SetBackgroundColour(wx.Colour(122, 239, 255))
         #self.crop_X.SetBackgroundColour(wx.Colour(122, 239, 255))
@@ -751,7 +751,7 @@ class VideoResolution(wx.Dialog):
         self.Layout()
         
         # Properties
-        self.SetTitle(_("Videomass: Resize (change resolution)"))
+        self.SetTitle(_("Videomass: resize (change resolution)"))
 
         scale_str = (_('Scale (resize) the input video or image.'))
         self.spin_scale_width.SetToolTip(_('WIDTH:\n%s') % scale_str)
@@ -948,7 +948,7 @@ class Lacing(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         
         # set Properties
-        self.SetTitle(_("Videomass: Deinterlace/Interlace"))
+        self.SetTitle(_("Videomass: deinterlace/interlace"))
         self.rdbx_W3fdif_filter.Hide()
         self.rdbx_W3fdif_deint.Hide()
         self.rdbx_Yadif_mode.Hide()
@@ -1414,7 +1414,7 @@ class Denoisers(wx.Dialog):
         self.Layout()
         
         # set Properties
-        self.SetTitle(_("Videomass: Denoisers filters"))
+        self.SetTitle(_("Videomass: denoisers filters"))
         self.ckbx_nlmeans.SetToolTip(_('nlmeans:\n '
             '(Denoise frames using Non-Local Means algorithm '
             'is capable of restoring video sequences with even strong '

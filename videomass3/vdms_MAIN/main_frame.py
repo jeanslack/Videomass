@@ -229,7 +229,6 @@ class MainFrame(wx.Frame):
                                                 )
 
         self.DnD = dragNdrop.DnDPanel(self, self.ffprobe_link) # dragNdrop panel
-        
         self.PrstsPanel.Hide()
         self.VconvPanel.Hide()
         self.AconvPanel.Hide()
@@ -269,8 +268,8 @@ class MainFrame(wx.Frame):
         self.Layout()
         
         # Tooltips:
-        self.btn_duration.SetToolTip(_('Sets a global time sequences to '
-                                        'apply at any media file with duration.'
+        self.btn_duration.SetToolTip(_('Set a global timeline to apply to '
+                                       'any media file with duration.'
                                            ))
         self.btn_metaI.SetToolTip(_("Show information about the metadata "
                                         "of the selected imported file." 
@@ -483,7 +482,7 @@ class MainFrame(wx.Frame):
             wx.MessageBox(_("No file selected into Drag and Drop list"), 
                           'Videomass', wx.ICON_EXCLAMATION, self)
             return
-        title = 'Videomass: Media Streams'
+        title = _('Videomass: media streams')
         IO_tools.stream_info(title, 
                              filepath, 
                              self.ffprobe_link,

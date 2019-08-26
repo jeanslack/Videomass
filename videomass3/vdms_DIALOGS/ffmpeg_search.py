@@ -29,6 +29,7 @@
 
 from videomass3.vdms_IO import IO_tools
 import wx
+import re
 
 class FFmpeg_Search(wx.Dialog):
     """
@@ -46,7 +47,7 @@ class FFmpeg_Search(wx.Dialog):
         self.OS = OS
         self.row = None
         
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE|
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
                                              wx.RESIZE_BORDER
                                              )
         """
@@ -58,9 +59,6 @@ class FFmpeg_Search(wx.Dialog):
         if close videomass also close parent window:
         
         """
-
-        #lbl = wx.StaticText(self, label=(_("FFmpeg: help, information, "
-                                           #"capabilities:")))
         self.cmbx_choice = wx.ComboBox(self,wx.ID_ANY, choices=[
                         ("--"),
                         (_("print basic options")),
@@ -88,24 +86,30 @@ class FFmpeg_Search(wx.Dialog):
                                             wx.TE_RICH | 
                                             wx.HSCROLL
                                     )
-        self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        if OS == 'Darwin':
+            self.texthelp.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         self.search = wx.SearchCtrl(self, wx.ID_ANY, size=(200,30),
                                     style=wx.TE_PROCESS_ENTER,)
         self.search.SetToolTip(_("The search function allows you to find "
-                               "entries in the current topic"))
-        
+                                 "entries in the current topic"
+                                 ))
+        self.case = wx.CheckBox(self, wx.ID_ANY, (_("Ignore-case"))
+                                )
+        self.case.SetToolTip(_("Ignore case distinctions, so that characters "
+                               "that differ only in case match each other."
+                                 ))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        #grid_src = wx.GridSizer(1, 2, 0, 0)
-        #grid_src.Add(self.cmbx_choice,)
-        #grid_src.Add(self.search, 0, wx.ALIGN_CENTER, 5)
+        grid_src = wx.GridSizer(1, 2, 5, 5)
         grid = wx.GridSizer(1, 1, 0, 0)
-        #sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add(self.texthelp, 1, wx.EXPAND|wx.ALL, 5)
         sizer.Add(self.cmbx_choice, 0, wx.ALL, 5)
-        sizer.Add(self.search, 0, wx.ALL, 5)
-        #sizer.Add(grid_src, 0, wx.ALL, 5)
+        grid_src.Add(self.search, 0, wx.ALL, 5)
+        grid_src.Add(self.case, 0,  wx.ALIGN_CENTER_VERTICAL, 5)
+        sizer.Add(grid_src, 0, wx.ALL, 5)
         sizer.Add(grid, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
         
@@ -115,7 +119,6 @@ class FFmpeg_Search(wx.Dialog):
         #self.SetSizer(sizer)
         self.SetSizerAndFit(sizer)
         
-        #self.Bind(wx.EVT_BUTTON, self.on_stop, self.button_stop)
         self.Bind(wx.EVT_COMBOBOX, self.on_Selected, self.cmbx_choice)
         self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.on_Search, self.search)
         self.Bind(wx.EVT_TEXT_ENTER, self.on_Search, self.search)
@@ -161,28 +164,38 @@ class FFmpeg_Search(wx.Dialog):
         """
         Search the string typed on the search control and find 
         on the current self.row output. The result is very similar 
-        to `ffmpeg -*option* | grep string` on the shell.
+        to 
+        `ffmpeg -*option* | grep string` 
+        or (if checkbox is True)
+        `ffmpeg -*option* | grep -i string` on the shell.
         """
         strsrc = event.GetString()
         
         if self.row and not strsrc:
             self.texthelp.Clear()# reset textctrl
             self.texthelp.AppendText('%s' % self.row)
+            return
         
-        if self.row: # if vuoi una ricerca specifica (è come grep)
+        if self.row: # se vuoi una ricerca specifica (è come grep)
             find = []
-            for lines in self.row.split('\n'): 
-                if strsrc in lines:
-                    find.append(lines)
+
+            if self.case.GetValue() == True:# include tutto Hello/hello
+                
+                for lines in self.row.split('\n'): 
+                    if re.search(strsrc, lines, re.IGNORECASE):
+                        find.append("%s\n" % lines)
+            else:
+                for lines in self.row.split('\n'): # case sensitive
+                    if strsrc in lines:
+                        find.append("%s\n" % lines)
+                    
             if not find:
                 self.texthelp.Clear()# reset textctrl
                 self.texthelp.AppendText(_('\n  ...Not found'))
             else:
                 self.texthelp.Clear()# reset textctrl
-                for items in find:
-                    self.texthelp.AppendText('\n  %s' % items)
+                self.texthelp.AppendText(' '.join(find))
         else:
-            #self.texthelp.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.texthelp.Clear()# reset textctrl
             self.texthelp.AppendText(_(
                                 "\n  Choose a topic in the drop down first"))

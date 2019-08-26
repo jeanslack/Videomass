@@ -85,6 +85,17 @@ class Checkconf(wx.Dialog):
         disabled_opt.InsertColumn(1, _('options'), width=450)
         #disabled_opt.SetBackgroundColour(wx.Colour(217, 255, 255))
         
+        if OS == 'Darwin':
+            txtinfo.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            others_opt.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            enable_opt.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            disabled_opt.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            others_opt.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            enable_opt.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            disabled_opt.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        
         #----------------------Layout--------------------------#
         Base = wx.BoxSizer(wx.VERTICAL)
 
@@ -153,7 +164,6 @@ class Checkconf(wx.Dialog):
                 ffplay = _("FFplay   ...not found !")
         
         #### populate txtinfo TextCtrl output:
-        txtinfo.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.NORMAL))
         txtinfo.SetLabel("\n\n\n\n"
                          "              %s\n"
                          "              %s\n"

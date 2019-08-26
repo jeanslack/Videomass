@@ -35,7 +35,7 @@ class FFmpeg_formats(wx.Dialog):
     the formats available on FFmpeg
     
     """
-    def __init__(self, dict_formats):
+    def __init__(self, dict_formats, OS):
         """
         with 'None' not depend from parent:
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
@@ -79,6 +79,15 @@ class FFmpeg_formats(wx.Dialog):
         dmx_mx.InsertColumn(0, _('format'), width=300)
         dmx_mx.InsertColumn(1, _('description'), width=450)
         #dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
+        
+        if OS == 'Darwin':
+            dmx.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            mx.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            dmx_mx.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            dmx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            mx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            dmx_mx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
