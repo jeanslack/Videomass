@@ -7,6 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+August 25, 2019 V.1.5.6
++------------------------------------+
+    
+IMPROVEMENTS:
+    - Translation improvements
+    - Improved fonts depending on the type of operating system
+    - code thinning in some dialog box
+
++------------------------------------+
 August 24, 2019 V.1.5.5
 +------------------------------------+
 
