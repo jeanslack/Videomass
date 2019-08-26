@@ -153,26 +153,26 @@ class FFmpeg_Codecs(wx.Dialog):
         if not l:
             print ('No ffmpeg codecs available')
         else:
-            vid.InsertItem(index, cod)
+            vid.InsertStringItem(index, cod)
             vid.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
-                vid.InsertItem(index, a[6:].split(' ')[1])
+                vid.InsertStringItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
-                    vid.SetItem(index, 1, 'YES')
+                    vid.SetStringItem(index, 1, 'YES')
                 if 'S' in a[2]:
-                    vid.SetItem(index, 2, 'YES')
+                    vid.SetStringItem(index, 2, 'YES')
                 if 'X' in a[3]:
-                    vid.SetItem(index, 3, 'YES')
+                    vid.SetStringItem(index, 3, 'YES')
                 if 'B' in [4]:
-                    vid.SetItem(index, 4, 'YES')
+                    vid.SetStringItem(index, 4, 'YES')
                 if 'D' in [5]:
-                    vid.SetItem(index, 5, 'YES')
+                    vid.SetStringItem(index, 5, 'YES')
                 d = " ".join(a.split()).split(None,2)[2]
                 if len(d):
-                    vid.SetItem(index, 6, d)
+                    vid.SetStringItem(index, 6, d)
                 else:
-                    vid.SetItem(index, 6, '')
+                    vid.SetStringItem(index, 6, '')
                 
         ##### populate aud listctrl output:
         index = 0 
@@ -180,26 +180,26 @@ class FFmpeg_Codecs(wx.Dialog):
         if not l:
             print ('No ffmpeg codecs available')
         else:
-            aud.InsertItem(index, cod)
+            aud.InsertStringItem(index, cod)
             aud.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
-                aud.InsertItem(index, a[6:].split(' ')[1])
+                aud.InsertStringItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
-                    aud.SetItem(index, 1, 'YES')
+                    aud.SetStringItem(index, 1, 'YES')
                 if 'S' in a[2]:
-                    aud.SetItem(index, 2, 'YES')
+                    aud.SetStringItem(index, 2, 'YES')
                 if 'X' in a[3]:
-                    aud.SetItem(index, 3, 'YES')
+                    aud.SetStringItem(index, 3, 'YES')
                 if 'B' in [4]:
-                    aud.SetItem(index, 4, 'YES')
+                    aud.SetStringItem(index, 4, 'YES')
                 if 'D' in [5]:
-                    aud.SetItem(index, 5, 'YES')
+                    aud.SetStringItem(index, 5, 'YES')
                 d = " ".join(a.split()).split(None,2)[2]
                 if len(d):
-                    aud.SetItem(index, 6, d)
+                    aud.SetStringItem(index, 6, d)
                 else:
-                    aud.SetItem(index, 6, '')
+                    aud.SetStringItem(index, 6, '')
         
         ###### populate sub listctrl output:
         index = 0 
@@ -207,26 +207,26 @@ class FFmpeg_Codecs(wx.Dialog):
         if not l:
             print('No ffmpeg codecs available')
         else:
-            sub.InsertItem(index, cod)
+            sub.InsertStringItem(index, cod)
             sub.SetItemBackgroundColour(index, colctrl)
             for a in l:
                 index+=1
-                sub.InsertItem(index, a[6:].split(' ')[1])
+                sub.InsertStringItem(index, a[6:].split(' ')[1])
                 if 'F' in a[1]:
-                    sub.SetItem(index, 1, 'YES')
+                    sub.SetStringItem(index, 1, 'YES')
                 if 'S' in a[2]:
-                    sub.SetItem(index, 2, 'YES')
+                    sub.SetStringItem(index, 2, 'YES')
                 if 'X' in a[3]:
-                    sub.SetItem(index, 3, 'YES')
+                    sub.SetStringItem(index, 3, 'YES')
                 if 'B' in [4]:
-                    sub.SetItem(index, 4, 'YES')
+                    sub.SetStringItem(index, 4, 'YES')
                 if 'D' in [5]:
-                    sub.SetItem(index, 5, 'YES')
+                    sub.SetStringItem(index, 5, 'YES')
                 d = " ".join(a.split()).split(None,2)[2]
                 if len(d):
-                    sub.SetItem(index, 6, d)
+                    sub.SetStringItem(index, 6, d)
                 else:
-                    sub.SetItem(index, 6, '')
+                    sub.SetStringItem(index, 6, '')
                     
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)

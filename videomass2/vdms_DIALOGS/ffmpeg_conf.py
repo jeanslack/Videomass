@@ -29,7 +29,7 @@
 
 import wx
 import os
-from shutil import which
+from videomass2.vdms_SYS.whichcraft import which
 
 class Checkconf(wx.Dialog):
     """
@@ -181,7 +181,7 @@ class Checkconf(wx.Dialog):
         if not others:
             print ('No others option found')
         else:
-            others_opt.InsertItem(index, _('Specific compilation options'))
+            others_opt.InsertStringItem(index, _('Specific compilation options'))
             others_opt.SetItemBackgroundColour(index, "CORAL")
             n = len(others)
             for a in range(n):
@@ -190,38 +190,38 @@ class Checkconf(wx.Dialog):
                     #(key, value) = others[a][0].strip().split('=')
                     num_items = others_opt.GetItemCount()
                     index +=1
-                    others_opt.InsertItem(index, key)
-                    others_opt.SetItem(index, 1, value)
+                    others_opt.InsertStringItem(index, key)
+                    others_opt.SetStringItem(index, 1, value)
                 
         #### populate enable_opt listctrl output:
         index = 0
         if not enable:
             print ('No options enabled')
         else:
-            enable_opt.InsertItem(index, _('ENABLED:'))
+            enable_opt.InsertStringItem(index, _('ENABLED:'))
             enable_opt.SetItemBackgroundColour(index, "GREEN")
             n = len(enable)
             for a in range(n):
                 (key, value) = _('Enabled'), enable[a]
                 num_items = enable_opt.GetItemCount()
                 index +=1
-                enable_opt.InsertItem(index, key)
-                enable_opt.SetItem(index, 1, value)
+                enable_opt.InsertStringItem(index, key)
+                enable_opt.SetStringItem(index, 1, value)
         
         #### populate disabled_opt listctrl output:
         index = 0 
         if not disable:
             print ('No options disabled')
         else:
-            disabled_opt.InsertItem(index, _('DISABLED:'))
+            disabled_opt.InsertStringItem(index, _('DISABLED:'))
             disabled_opt.SetItemBackgroundColour(index, "RED")
             n = len(disable)
             for a in range(n):
                 (key, value) = _('Disabled'), disable[a]
                 num_items = disabled_opt.GetItemCount()
                 index +=1
-                disabled_opt.InsertItem(index, key)
-                disabled_opt.SetItem(index, 1, value)
+                disabled_opt.InsertStringItem(index, key)
+                disabled_opt.SetStringItem(index, 1, value)
                     
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)

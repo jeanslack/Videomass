@@ -221,10 +221,6 @@ def test_codecs(ffmpeg_link, type_opt, OS):
                         None)
         return
     else:
-        #if type_opt == '-encoders':
-        #dlg = ffmpeg_encoders.FFmpeg_encoders(diction, OS,)
-        #dlg.Show()
-        #else:
         dlg = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
         dlg.Show()
 #-------------------------------------------------------------------------#

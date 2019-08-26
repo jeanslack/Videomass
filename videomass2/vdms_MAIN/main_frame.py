@@ -267,8 +267,8 @@ class MainFrame(wx.Frame):
         self.Layout()
         
         # Tooltips:
-        self.btn_duration.SetToolTipString(_(u'Sets a global time sequences to '
-                                        u'apply at any media file with duration.'
+        self.btn_duration.SetToolTipString(_(u'Set a global timeline to apply '
+                                             u'to any media file with duration.'
                                            ))
         self.btn_metaI.SetToolTipString(_(u"Show information about the metadata "
                                         u"of the selected imported file." 

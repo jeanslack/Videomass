@@ -204,7 +204,7 @@ def test_formats(ffmpeg_link, OS):
                         None)
         return
     else:
-        dlg = ffmpeg_formats.FFmpeg_formats(diction)
+        dlg = ffmpeg_formats.FFmpeg_formats(diction, OS)
         dlg.Show()
 #-------------------------------------------------------------------------#
 def test_codecs(ffmpeg_link, type_opt, OS):
@@ -222,7 +222,7 @@ def test_codecs(ffmpeg_link, type_opt, OS):
                         None)
         return
     else:
-        dlg = ffmpeg_encoders.FFmpeg_encoders(diction, type_opt, OS)
+        dlg = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
         dlg.Show()
 
 #-------------------------------------------------------------------------#

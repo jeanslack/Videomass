@@ -27,7 +27,7 @@
 
 #########################################################
 
-from videomass3.vdms_IO import IO_tools
+from videomass2.vdms_IO import IO_tools
 import wx
 import re
 
@@ -78,28 +78,28 @@ class FFmpeg_Search(wx.Dialog):
                         style=wx.CB_DROPDOWN | wx.CB_READONLY
                         )
         self.cmbx_choice.SetSelection(0)
-        self.cmbx_choice.SetToolTip(_("Choose one of the topics in the list"))
+        self.cmbx_choice.SetToolTipString(_(
+                                      "Choose one of the topics in the list"))
         self.texthelp = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     size=(550,400),
                                     style = wx.TE_READONLY |
                                             wx.TE_MULTILINE | 
                                             wx.TE_RICH | 
-                                            wx.HSCROLL
-                                    )
+                                            wx.HSCROLL)
         if OS == 'Darwin':
             self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         self.search = wx.SearchCtrl(self, wx.ID_ANY, size=(200,30),
                                     style=wx.TE_PROCESS_ENTER,)
-        self.search.SetToolTip(_("The search function allows you to find "
-                                 "entries in the current topic"
-                                 ))
-        self.case = wx.CheckBox(self, wx.ID_ANY, (_("Ignore-case"))
-                                )
-        self.case.SetToolTip(_("Ignore case distinctions, so that characters "
-                               "that differ only in case match each other."
-                                 ))
+        self.search.SetToolTipString(_("The search function allows you to "
+                                       "find entries in the current topic"
+                                       ))
+        self.case = wx.CheckBox(self, wx.ID_ANY, (_("Ignore-case")))
+        self.case.SetToolTipString(_("Ignore case distinctions, so that "
+                                     "characters that differ only in case "
+                                     "match each other."
+                                    ))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
 
         sizer = wx.BoxSizer(wx.VERTICAL)

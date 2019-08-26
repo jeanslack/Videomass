@@ -126,7 +126,7 @@ class FFmpeg_formats(wx.Dialog):
         if not l:
             print ('No ffmpeg formats available')
         else:
-            dmx.InsertItem(index, ('----'))
+            dmx.InsertStringItem(index, ('----'))
             dmx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
@@ -135,8 +135,8 @@ class FFmpeg_formats(wx.Dialog):
                 else:
                     key , value = s[0], s[1]
                 index +=1
-                dmx.InsertItem(index, key)
-                dmx.SetItem(index, 1, value)
+                dmx.InsertStringItem(index, key)
+                dmx.SetStringItem(index, 1, value)
                 
         #### populate mx listctrl output:
         index = 0
@@ -145,7 +145,7 @@ class FFmpeg_formats(wx.Dialog):
         if not l:
             print ('No ffmpeg formats available')
         else:
-            mx.InsertItem(index, ('----'))
+            mx.InsertStringItem(index, ('----'))
             mx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
@@ -154,8 +154,8 @@ class FFmpeg_formats(wx.Dialog):
                 else:
                     key , value = s[0], s[1]
                 index +=1
-                mx.InsertItem(index, key)
-                mx.SetItem(index, 1, value)
+                mx.InsertStringItem(index, key)
+                mx.SetStringItem(index, 1, value)
         
         ##### populate dmx_mx listctrl output:
         index = 0 
@@ -164,7 +164,7 @@ class FFmpeg_formats(wx.Dialog):
         if not l:
             print ('No ffmpeg formats available')
         else:
-            dmx_mx.InsertItem(index, ('----'))
+            dmx_mx.InsertStringItem(index, ('----'))
             dmx_mx.SetItemBackgroundColour(index, "CORAL")
             for a in l:
                 s = " ".join(a.split()).split(None,1)
@@ -173,8 +173,8 @@ class FFmpeg_formats(wx.Dialog):
                 else:
                     key , value = s[0], s[1]
                 index +=1
-                dmx_mx.InsertItem(index, key)
-                dmx_mx.SetItem(index, 1, value)
+                dmx_mx.InsertStringItem(index, key)
+                dmx_mx.SetStringItem(index, 1, value)
                     
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
