@@ -67,7 +67,7 @@ def info(parent, videomass_icon):
                               "audio and video conversion through FFmpeg\n"
                               "\n"
                               "This is a candidate release version.\n"
-                              "It is based on Python3 and wxPython Phoenix")
+                              "It is based on Python3 and wxPython4 phoenix")
                             )
         info.SetCopyright("Copyright %s %s" %(Copyright, Author))
         

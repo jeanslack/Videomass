@@ -44,18 +44,18 @@ array = []# all parameters of the selected profile
 dict_presets = {
 _("Audio Conversions") : ("preset-v1-Audio", "Audio Conversions"), 
 _("Extract audio from video"): ("preset-v1-VideoAudio", 
-                                 "Extract audio from video"),
+                                "Extract audio from video"),
 _("Convert to AVI") : ("preset-v1-AVI", "Convert to AVI"),
 _("Mobile Phones multimedia") : ("preset-v1-MobilePhones", 
-                                  "Mobile Phones multimedia"),
-_("iPod iTunes") : ("preset-v1-iPod-iTunes", "iPod iTunes"),
+                                 "Mobile Phones multimedia"),
+"iPod iTunes" : ("preset-v1-iPod-iTunes", "iPod iTunes"),
 _("Convert to VCD (mpg)") : ("preset-v1-VCD", "Convert to VCD (mpg)"),
 _("Convert DVD VOB") : ("preset-v1-VOB", "Convert DVD VOB"),
 _("Convert to quicktime (mov)") : ("preset-v1-quicktime", 
-                                    "Convert to quicktime (mov)"),
+                                   "Convert to quicktime (mov)"),
 _("Convert to DV") : ("preset-v1-DV", "Convert to DV"),
-_("Google Android") : ("preset-v1-GoogleAndroid", "Google Android"),
-_("Google webm") : ("preset-v1-GoogleWebm", "Google webm"),
+"Google Android" : ("preset-v1-GoogleAndroid", "Google Android"),
+"Google webm" : ("preset-v1-GoogleWebm", "Google webm"),
 _("DVD Conversions") : ("preset-v1-DVD", "DVD Conversions"),
 _("MPEG-4 Conversions") : ("preset-v1-MPEG-4", "MPEG-4 Conversions"),
 _("PS3 Compatible") : ("preset-v1-PS3", "PS3 Compatible"),
@@ -110,13 +110,13 @@ class PresetsPanel(wx.Panel):
                         (_("Extract audio from video")),
                         (_("Convert to AVI")),
                         (_("Mobile Phones multimedia")),
-                        (_("iPod iTunes")),
+                        ("iPod iTunes"),
                         (_("Convert to VCD (mpg)")),
                         (_("Convert DVD VOB")),
                         (_("Convert to quicktime (mov)")),
                         (_("Convert to DV")),
-                        (_("Google Android")),
-                        (_("Google webm")),
+                        ("Google Android"),
+                        ("Google webm"),
                         (_("DVD Conversions")),
                         (_("MPEG-4 Conversions")),
                         (_("PS3 Compatible")),
@@ -288,7 +288,7 @@ class PresetsPanel(wx.Panel):
         
         self.txt_cmd.AppendText(lista[2]) # this is cmd show in text ctrl
         
-        self.parent.statusbar_msg(_('Pofile Name Selected:  %s') % (array[0]),
+        self.parent.statusbar_msg(_('Selected profile name:  %s') % (array[0]),
                                                                         None)
 
     #------------------------------------------------------------------#
@@ -325,7 +325,7 @@ class PresetsPanel(wx.Panel):
             dirname = dialsave.GetPath()
             copy_backup(filedir, '%s/%s.vdms' % (dirname, filename))
             dialsave.Destroy()
-            wx.MessageBox(_("The preset is saved"), "Info", wx.OK, self)
+            wx.MessageBox(_("Successfully saved"), "Info", wx.OK, self)
     #------------------------------------------------------------------#
     def Restore(self):
         """
@@ -346,19 +346,21 @@ class PresetsPanel(wx.Panel):
             dialfile.Destroy()
             
             if tail != '%s.vdms' % filename:
-                wx.MessageBox(_("'{0}' \n\ndoes not match with the one in use:\n\n"
-                              "'{1}'\n\nPlease, select a corresponding preset "
-                              "in the \ncombobox, first").format(dirname, 
-                                                                  filename), 
-                              "Videomass: warning!",  wx.ICON_WARNING, self
+                wx.MessageBox(_("'{0}' \n\ndoes not match with the one in use:"
+                                "\n\n'{1}'\n\nPlease, select a corresponding "
+                                " preset in the \ncombobox, first").format(
+                                                                    dirname, 
+                                                                    filename), 
+                                "Videomass: warning!",  wx.ICON_WARNING, self
                                 )
                 return
             
             if wx.MessageBox(_('The preset "%s" will be imported and will '
-                    'overwrite the one in use ! Proceed ?') % (tail), 
-                    _('Videomass: Please confirm'), wx.ICON_QUESTION | 
-                                                  wx.YES_NO, 
-                                                  self) == wx.NO:
+                               'overwrite the one in use ! Proceed ?') % (tail), 
+                             _('Videomass: Please confirm'), 
+                                                wx.ICON_QUESTION | 
+                                                wx.YES_NO, 
+                                                self) == wx.NO:
                 return
             
             copy_restore('%s' % (dirname), filedir)
@@ -372,9 +374,10 @@ class PresetsPanel(wx.Panel):
         """ 
         #copy_restore('%s/share/av_presets.xml' % (self.PWD), '%s' % (self.dirconf))
         if wx.MessageBox(_("The current preset will be overwritten to "
-                         "default values! proceed?"), 
-                         _("Videomass: Please confirm"), wx.ICON_QUESTION | 
-                         wx.YES_NO, self) == wx.NO:
+                           "default values! proceed?"), 
+                           _("Videomass: Please confirm"), 
+                            wx.ICON_QUESTION | 
+                            wx.YES_NO, self) == wx.NO:
             return
         
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
@@ -390,10 +393,10 @@ class PresetsPanel(wx.Panel):
         restore all preset files in the path presets of the program
         """
         if wx.MessageBox(_("WARNING: you are going to restore all default "
-                         "presets from videomass! Proceed?"), 
-                         _("Videomass: Please confirm"), 
-                         wx.ICON_QUESTION | 
-                         wx.YES_NO, self) == wx.NO:
+                           "presets from videomass! Proceed?"), 
+                           _("Videomass: Please confirm"), 
+                            wx.ICON_QUESTION | 
+                            wx.YES_NO, self) == wx.NO:
             return
 
         copy_on('vdms', self.path_srcShare, self.path_confdir)
@@ -418,7 +421,7 @@ class PresetsPanel(wx.Panel):
         prstdialog = presets_addnew.MemPresets(self, 'newprofile', 
                                                full_pathname, filename, 
                                                None, _('Create a new '
-                                'profile on the selected "%s" preset') % (
+                                'profile on the selected  preset "%s"') % (
                                                 name_preset)
                                                 )
         ret = prstdialog.ShowModal()
@@ -432,9 +435,8 @@ class PresetsPanel(wx.Panel):
         in the dialog.
         """
         if array == []:
-            self.parent.statusbar_msg(_("Select a profile in the list "
-                                      "before to edit profile itself"), 
-                                      yellow)
+            self.parent.statusbar_msg(_("First select a profile in the list"), 
+                                        yellow)
             return
         else:
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
@@ -457,9 +459,8 @@ class PresetsPanel(wx.Panel):
         profile of the preset used
         """
         if array == []:
-            self.parent.statusbar_msg(_("Select a profile in the list "
-                                      "before deleting profile itself"), 
-                                      yellow)
+            self.parent.statusbar_msg(_("First select a profile in the list"), 
+                                         yellow)
         else:
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             if wx.MessageBox(_("Are you sure you want to delete the "
@@ -494,8 +495,8 @@ class PresetsPanel(wx.Panel):
 
         ######## ------------ VALIDAZIONI: --------------
         if array == []:
-            self.parent.statusbar_msg(_("Select a profile in the list "
-                                      "before start encoding"), yellow)
+            self.parent.statusbar_msg(_("First select a profile in the list"),  
+                                        yellow)
             return
         
         if array[2].strip() != self.txt_cmd.GetValue().strip():

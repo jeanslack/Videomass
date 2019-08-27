@@ -132,14 +132,14 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
         
-        self.lab_volmax = wx.StaticText(self, wx.ID_ANY, (_("Max Volume db.")))
+        self.lab_volmax = wx.StaticText(self, wx.ID_ANY, (_("Max volume db")))
         self.txt_volmax = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         self.lab_volmid = wx.StaticText(self, wx.ID_ANY, 
-                                                   (_("Average Volume db."))
+                                                   (_("Average volume db"))
                                         )
         self.txt_volmid = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
-                                    _("Max Peak Level Threshold:   ")))
+                                    _("Max peak level threshold   ")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
@@ -336,7 +336,7 @@ class Audio_Conv(wx.Panel):
             cmd_opt["AudioRate"] = data[1]
             cmd_opt["AudioBitrate"] = data[2]
             if audio_type in ('wav','aiff'):
-                if 'Not set' in data[3][0]:
+                if 'Default' in data[3][0]:
                     cmd_opt["AudioCodec"] = "-c:a pcm_s16le"
                 else:
                     cmd_opt["AudioCodec"] = data[3][1]

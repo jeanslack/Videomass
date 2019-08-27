@@ -47,14 +47,14 @@ _(u"Extract audio from video"): ("preset-v1-VideoAudio",
 _(u"Convert to AVI") : ("preset-v1-AVI", "Convert to AVI"),
 _(u"Mobile Phones multimedia") : ("preset-v1-MobilePhones", 
                                   "Mobile Phones multimedia"),
-_(u"iPod iTunes") : ("preset-v1-iPod-iTunes", "iPod iTunes"),
+u"iPod iTunes" : ("preset-v1-iPod-iTunes", "iPod iTunes"),
 _(u"Convert to VCD (mpg)") : ("preset-v1-VCD", "Convert to VCD (mpg)"),
 _(u"Convert DVD VOB") : ("preset-v1-VOB", "Convert DVD VOB"),
 _(u"Convert to quicktime (mov)") : ("preset-v1-quicktime", 
                                     "Convert to quicktime (mov)"),
 _(u"Convert to DV") : ("preset-v1-DV", "Convert to DV"),
-_(u"Google Android") : ("preset-v1-GoogleAndroid", "Google Android"),
-_(u"Google webm") : ("preset-v1-GoogleWebm", "Google webm"),
+u"Google Android" : ("preset-v1-GoogleAndroid", "Google Android"),
+u"Google webm" : ("preset-v1-GoogleWebm", "Google webm"),
 _(u"DVD Conversions") : ("preset-v1-DVD", "DVD Conversions"),
 _(u"MPEG-4 Conversions") : ("preset-v1-MPEG-4", "MPEG-4 Conversions"),
 _(u"PS3 Compatible") : ("preset-v1-PS3", "PS3 Compatible"),
@@ -109,13 +109,13 @@ class PresetsPanel(wx.Panel):
                         (_(u"Extract audio from video")),
                         (_(u"Convert to AVI")),
                         (_(u"Mobile Phones multimedia")),
-                        (_(u"iPod iTunes")),
+                        (u"iPod iTunes"),
                         (_(u"Convert to VCD (mpg)")),
                         (_(u"Convert DVD VOB")),
                         (_(u"Convert to quicktime (mov)")),
                         (_(u"Convert to DV")),
-                        (_(u"Google Android")),
-                        (_(u"Google webm")),
+                        (u"Google Android"),
+                        (u"Google webm"),
                         (_(u"DVD Conversions")),
                         (_(u"MPEG-4 Conversions")),
                         (_(u"PS3 Compatible")),
@@ -290,7 +290,7 @@ class PresetsPanel(wx.Panel):
         
         self.txt_cmd.AppendText(lista[2]) # this is cmd show in text ctrl
         
-        self.parent.statusbar_msg(_(u'Pofile Name Selected:  %s') % (array[0]),
+        self.parent.statusbar_msg(_(u'Selected profile name:  %s') % (array[0]),
                                                                         None)
     #------------------------------------------------------------------#
     def enter_command(self, event): # text command view
@@ -327,7 +327,7 @@ class PresetsPanel(wx.Panel):
             dirname = dialsave.GetPath()
             copy_backup(filedir, '%s/%s.vdms' % (dirname, filename))
             dialsave.Destroy()
-            wx.MessageBox(_(u"The preset is saved"), "Info", wx.OK, self)
+            wx.MessageBox(_(u"Successfully saved"), "Info", wx.OK, self)
     #------------------------------------------------------------------#
     def Restore(self):
         """
@@ -421,7 +421,7 @@ class PresetsPanel(wx.Panel):
         prstdialog = presets_addnew.MemPresets(self, 'newprofile', 
                                                full_pathname, filename, 
                                                None, _(u'Create a new '
-                                u'profile on the selected "%s" preset') % (
+                                u'profile on the selected  preset "%s"') % (
                                                 name_preset)
                                                 )
         ret = prstdialog.ShowModal()
@@ -436,9 +436,8 @@ class PresetsPanel(wx.Panel):
         """
         print 'editprof'
         if array == []:
-            self.parent.statusbar_msg(_(u"Select a profile in the list "
-                                      u"before to edit profile itself"), 
-                                      yellow)
+            self.parent.statusbar_msg(_(u"First select a profile in the list"), 
+                                        yellow)
             return
         else:
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
@@ -462,9 +461,8 @@ class PresetsPanel(wx.Panel):
         """
         print 'delprof'
         if array == []:
-            self.parent.statusbar_msg(_(u"Select a profile in the list "
-                                      u"before deleting profile itself"), 
-                                      yellow)
+            self.parent.statusbar_msg(_(u"First select a profile in the list"), 
+                                        yellow)
         else:
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             if wx.MessageBox(_(u"Are you sure you want to delete the "
@@ -499,8 +497,8 @@ class PresetsPanel(wx.Panel):
 
         ######## ------------ VALIDAZIONI: --------------
         if array == []:
-            self.parent.statusbar_msg(_(u"Select a profile in the list "
-                                      u"before start encoding"), yellow)
+            self.parent.statusbar_msg(_(u"First select a profile in the list"), 
+                                        yellow)
             return
         
         if array[2].strip() != self.txt_cmd.GetValue().strip():

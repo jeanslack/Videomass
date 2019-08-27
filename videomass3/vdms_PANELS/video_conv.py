@@ -132,7 +132,7 @@ class Video_Conv(wx.Panel):
                                    (_('Improves low-quality export'))
                                                 )
         self.ckbx_pass = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
-                                     (_("2-pass encoding."))
+                                     (_("2-pass encoding"))
                                      )
         self.ckbx_pass.SetValue(False) # setto in modo spento
 
@@ -237,14 +237,14 @@ class Video_Conv(wx.Panel):
                                          wx.ID_ANY, (_("Filters Section"))
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-        size=(200, -1), choices=[("Set default "), ("4:3"), ("16:9")], 
+        size=(200, -1), choices=[("Default "), ("4:3"), ("16:9")], 
         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, (_("Video Aspect"))
                                         )
         self.cmbx_vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
-        choices=[("Set default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
+        choices=[("Default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
         ("30 fps (30p) Progessive"),("0.2 fps for images"), ("0.5 fps for images"),
         ("1 fps for images"), ("1.5 fps for images"), ("2 fps for images")], 
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
@@ -291,17 +291,17 @@ class Video_Conv(wx.Panel):
         
         
         self.label_dbMax = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                (_("Max Volume db.  "))
+                                (_("Max volume db  "))
                                 )
         self.text_dbMax = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_dbMedium = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    (_("Average Volume db."))
+                                    (_("Average volume db"))
                                     )
         self.text_dbMedium = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
                                 style=wx.TE_READONLY)
         self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    (_("Max Peak Level Threshold:  "))
+                                    (_("Max peak level threshold  "))
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
             wx.ID_ANY, min_val=-99.0, max_val=0.0, increment=1.0, value=-1.0, 
@@ -567,13 +567,13 @@ class Video_Conv(wx.Panel):
         self.cmbx_Vaspect.SetSelection(0)
         self.cmbx_Vaspect.SetToolTip(_("Video aspect (Aspect Ratio) "
                         "is the video width and video height ratio. "
-                        "Leave on 'Set default' to copy the original settings."
+                        "Leave on 'Default' to copy the original settings."
                                                 ))
         self.cmbx_vrate.SetSelection(0)
         self.cmbx_vrate.SetToolTip(_("Video Rate: A any video consists "
                     "of images displayed as frames, repeated a given number "
                     "of times per second. In countries are 30 NTSC, PAL "
-                    "countries (like Italy) are 25. Leave on 'Set default' "
+                    "countries (like Italy) are 25. Leave on 'Default' "
                     "to copy the original settings.")
                                             )
         
@@ -594,11 +594,11 @@ class Video_Conv(wx.Panel):
         self.rdb_a.SetToolTip(_("Choose the appropriate Audio Codec. "
                                     "Some Audio Codecs are disabled for "
                                     "certain Video Containers. " ))
-        self.rdb_h264preset.SetToolTip(_("presets h.264"))
+        self.rdb_h264preset.SetToolTip("presets h.264")
         self.rdb_h264preset.SetSelection(0)
-        self.rdb_h264profile.SetToolTip(_("profile h.264"))
+        self.rdb_h264profile.SetToolTip("profile h.264")
         self.rdb_h264profile.SetSelection(0)
-        self.rdb_h264tune.SetToolTip(_("tune h.264"))
+        self.rdb_h264tune.SetToolTip("tune h.264")
         self.rdb_h264tune.SetSelection(0)
         self.notebook_1_pane_4.SetToolTip(_("The parameters on this tab "
                         "are enabled only for the video-codec h.264. Although "
@@ -1038,7 +1038,7 @@ class Video_Conv(wx.Panel):
         """
         Set aspect parameter (16:9, 4:3)
         """
-        if self.cmbx_Vaspect.GetValue() == "Set default":
+        if self.cmbx_Vaspect.GetValue() == "Default ":
             cmd_opt["VideoAspect"] = ""
             
         else:
@@ -1050,7 +1050,7 @@ class Video_Conv(wx.Panel):
         Set video rate parameter with fps values
         """
         val = self.cmbx_vrate.GetValue()
-        if val == "Set default ":
+        if val == "Default ":
             cmd_opt["VideoRate"] = ""
         else:
             cmd_opt["VideoRate"] = "-r %s" % val.split(' ')[0]
@@ -1280,7 +1280,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["AudioRate"] = data[1]
             cmd_opt["AudioBitrate"] = data[2]
             if audio_type in  ('wav','aiff'):
-                if 'Not set' in data[3][0]:
+                if 'Default' in data[3][0]:
                     cmd_opt["AudioCodec"] = "-c:a pcm_s16le"
                 else:
                     cmd_opt["AudioCodec"] = data[3][1]

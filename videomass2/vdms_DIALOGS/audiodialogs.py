@@ -225,16 +225,16 @@ The audio channels are represented by monophonic,
 stereophonic and quadraphonic techniques reproduction.
 For some codecs can only assign an audio stream
 monaural or stereo, for others even polyphonic.
-If you are insecure you set to "Not set", will be copied
-source values.\
+If you are not sure set to "Default" and source values 
+will be copied.\
 """))
     sample_rate_tooltip = (_(u"""\
 The audio Rate (or sample-rate) is the sound sampling 
 frequency and is measured in hertz. The higher the frequency, 
 plus the audio signal will be true to the sound source, but 
 the file will increase its size. For normal playback with 
-audio CD set a sample rate of 44100kHz. If you are insecure 
-you set to "Not set", will be copied source values.\
+audio CD set a sample rate of 44100kHz. If you are not sure 
+set to "Default" and source values will be copied.\
 """))
     bitrate_tooltip = (_(u"""\
 The audio bitrate affects on file compression
@@ -256,7 +256,7 @@ compression formats, do not have associated bit depths.\
         Each attribute is instantiable with this class and returns the 
         data object for each dictionary.
         """
-        self.sample_rate = {0:("Not set", ""), 
+        self.sample_rate = {0:("Default", ""), 
                             1:("44100 Hz ","-ar 44100 "), 
                             2:("48000 Hz ","-ar 48000"), 
                             3:("88200 Hz ","-ar 88200"), 
@@ -287,10 +287,10 @@ compression formats, do not have associated bit depths.\
               codec name and not as separated -sample_fmts option.
         """
         self.sample_rate
-        self.channels = {0:("Not set",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-c:a pcm_s16le"),
+        self.bitdepth = {0:("Default",""),1:("16 bit","-c:a pcm_s16le"),
                          2:("24 bit","-c:a pcm_s24le"),
                          4:("32 bit","-c:a pcm_s32le")
                          }
@@ -299,10 +299,10 @@ compression formats, do not have associated bit depths.\
         """
         """
         self.sample_rate
-        self.channels = {0:("Not set",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitrate = {0:("Not set",""), 
+        self.bitrate = {0:("Default",""), 
                         1:("very high quality", "-compression_level 0"), 
                         2:("quality 1", "-compression_level 1"), 
                         3:("quality 2", "-compression_level 2"), 
@@ -313,7 +313,7 @@ compression formats, do not have associated bit depths.\
                         8:("quality 7", "-compression_level 7"), 
                         9:("low quality", "-compression_level 8")
                         }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-sample_fmt s16"),
+        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
                          2:("24 bit","-sample_fmt s24"),
                          4:("32 bit","-sample_fmt s32")
                          } 
@@ -322,10 +322,10 @@ compression formats, do not have associated bit depths.\
         """
         """
         self.sample_rate 
-        self.channels = {0:("Not set",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-sample_fmt s16"),
+        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
                          2:("24 bit","-sample_fmt s24"),
                          4:("32 bit","-sample_fmt s32")
                          } 
@@ -334,20 +334,20 @@ compression formats, do not have associated bit depths.\
         """
         """
         self.sample_rate 
-        self.channels = {0:("Not set",""), 
+        self.channels = {0:("Default",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
                          3:("MultiChannel 5.1", "-ac 6")
                          }
         self.bitrate = {
-            0:("Not set",""), 
+            0:("Default",""), 
             1:("low quality", "-b:a 128k"), 
             2:("medium/low quality", "-b:a 160k"), 
             3:("medium quality", "-b:a 192k"), 
             4:("good quality", "-b:a 260k"), 
             5:("very good quality", "-b:a 320k")
             }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-sample_fmt s16"),
+        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
                          2:("24 bit","-sample_fmt s24"),
                          4:("32 bit","-sample_fmt s32")
                          }
@@ -357,12 +357,12 @@ compression formats, do not have associated bit depths.\
         """
         """
         self.sample_rate 
-        self.channels = {0:("Not set",""), 
+        self.channels = {0:("Default",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
                          3:("MultiChannel 5.1", "-ac 6")
                          }
-        self.bitrate = {0:("Not set",""), 
+        self.bitrate = {0:("Default",""), 
                         1:("low quality", "-b:a 192k"), 
                         2:("224 kbit/s", "-b:a 224k"), 
                         3:("256 kbit/s", "-b:a 256k"), 
@@ -373,7 +373,7 @@ compression formats, do not have associated bit depths.\
                         8:("576 kbit/s", "-b:a 576k"), 
                         9:("very good quality", "-b:a 640k")
                         }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-sample_fmt s16"),
+        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
                          2:("24 bit","-sample_fmt s24"),
                          4:("32 bit","-sample_fmt s32")
                          }
@@ -383,10 +383,10 @@ compression formats, do not have associated bit depths.\
         """
         self.sample_rate 
         
-        self.channels = {0:("Not set",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitrate = {0:("Not set", ""), 
+        self.bitrate = {0:("Default", ""), 
                         1:("very poor quality", "-aq 1"), 
                         2:("VBR 92 kbit/s", "-aq 2"), 
                         3:("VBR 128 kbit/s", "-aq 3"), 
@@ -398,7 +398,7 @@ compression formats, do not have associated bit depths.\
                         9:("VBR 320 kbit/s", "-aq 9"), 
                         10:("very good quality", "-aq 10")
                         }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-sample_fmt s16"),
+        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
                          2:("24 bit","-sample_fmt s24"),
                          4:("32 bit","-sample_fmt s32")
                          }
@@ -408,18 +408,18 @@ compression formats, do not have associated bit depths.\
         """
         self.sample_rate 
         
-        self.channels = {0:("Not set",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
         self.bitrate = {
-            0:("Not set", ""), 
+            0:("Default", ""), 
             1:("VBR 128 kbit/s (low quality)", "-b:a 128k"), 
             2:("VBR 160 kbit/s", "-b:a 160k"), 
             3:("VBR 192 kbit/s", "-b:a 192k"), 
             4:("VBR 260 kbit/s", "-b:a 260k"), 
             5:("CBR 320 kbit/s (very good quality)", "-b:a 320k")
                         }
-        self.bitdepth = {0:("Not set",""),1:("16 bit","-sample_fmt s16"),
+        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
                          2:("24 bit","-sample_fmt s24"),
                          4:("32 bit","-sample_fmt s32")
                          }
