@@ -31,14 +31,15 @@ import os
 
 class Appearance(object):
     """
-    This class determines the paths to use to set icons on the 
-    graphic appearance of the Videomass program.
+    This class determines the paths to use to set icons 
+    on the graphic appearance of the Videomass program.
     """
     def __init__(self, IS_LOCAL, iconset):
         """
-        The paths where the icon sets are located depend on where the program 
-        is run and on which operating system.
-        Each icons set is defined by the name of the folder that contains it.  
+        The paths where the icon sets are located depend where 
+        the program is run and on which operating system.
+        Each icons set is defined by the name of the folder that 
+        contains it.  
         """
         if IS_LOCAL:
             url = '%s/art/icons' % os.getcwd() # work current directory
@@ -50,17 +51,19 @@ class Appearance(object):
             import platform
             OS = platform.system()
             
-            if OS == 'Windows':
-                #Installed with 'pip install videomass' cmd
+            if OS == 'Windows':#Installed with 'pip install videomass'
+                
                 pythonpath = os.path.dirname(sys.executable)
                 url = pythonpath + '\\share\\videomass\\icons'
                 self.videomass_icon = url + "\\videomass.png" 
                 self.wizard_icon = url + "\\videomass_wizard.png"
             else:
+                
                 from shutil import which
                 binarypath = which('videomass')
                 
                 if binarypath == '/usr/local/bin/videomass':
+                    #Installed with super user 'pip install videomass'
                     #usually Linux,MacOs,Unix
                     url = '/usr/local/share/videomass/icons'
                     share = '/usr/local/share/pixmaps'
@@ -68,14 +71,14 @@ class Appearance(object):
                     self.wizard_icon = url + '/videomass_wizard.png'
                     
                 elif binarypath == '/usr/bin/videomass':
-                    #usually Linux 
+                    #usually Linux from a custom binary installation
                     url = '/usr/share/videomass/icons'
                     share = '/usr/share/pixmaps'
                     self.videomass_icon = share + "/videomass.png"
                     self.wizard_icon = url + "/videomass_wizard.png"
                     
                 else: 
-                    #installed with 'pip install --user videomass' cmd
+                    #installed for the user 'pip install --user videomass'
                     import site
                     userbase = site.getuserbase()
                     url = userbase + '/share/videomass/icons'
