@@ -31,18 +31,13 @@ import wx
 import os
 import webbrowser
 
-dirname = os.path.expanduser('~/') # /home/user/
-filename = '%s/.videomass/videomass.conf' % (dirname)
-PWD = os.getcwd()
-
 class Setup(wx.Dialog):
     """
     Main settings of the videomass program and configuration storing.
     """
     def __init__(self, parent, threads, cpu_used, save_log, path_log, 
                  ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
-                 ffplay_link, ffplay_check, OS,
-                 iconset,
+                 ffplay_link, ffplay_check, OS, iconset, fileconf, PWD
                  ):
         """
         NOTE 0): self.rowsNum attribute is a sorted list with a exatly number 
@@ -57,10 +52,11 @@ class Setup(wx.Dialog):
         """
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor"""
+        
         # Make a items list of
         self.rowsNum = []#rows number list
         dic = {} # used for debug
-        with open (filename, 'r') as f:
+        with open (fileconf, 'r') as f:
             self.full_list = f.readlines()
         for a,b in enumerate(self.full_list):
             if not b.startswith('#'):
@@ -86,6 +82,8 @@ class Setup(wx.Dialog):
         self.ffplay_check = ffplay_check
         self.OS = OS
         self.iconset = iconset
+        self.FILEconf = fileconf
+        self.PWD = PWD
         
         if self.OS == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
@@ -604,28 +602,28 @@ class Setup(wx.Dialog):
         #     if not self.txtctrl_ffmpeg.GetValue() == '':
         #         ffmpeg_src = self.txtctrl_ffmpeg.GetValue()
         #         if not self.ffmpeg_link == ffmpeg_src:# if not modified
-        #             if os.path.exists("%s/FFMPEG_BIN/bin" % PWD):
-        #                 os.symlink(ffmpeg_src, "%s/FFMPEG_BIN/bin/ffmpeg" % PWD)
+        #             if os.path.exists("%s/FFMPEG_BIN/bin" % self.PWD):
+        #                 os.symlink(ffmpeg_src, "%s/FFMPEG_BIN/bin/ffmpeg" % self.PWD)
         #             
         # if self.checkbox_exeFFprobe.IsChecked():
         #     if not self.txtctrl_ffprobe.GetValue() == '':
         #         ffprobe_src = self.txtctrl_ffprobe.GetValue()
         #         if not self.ffprobe_link == ffprobe_src:# if not modified
-        #             if os.path.exists("%s/FFMPEG_BIN" % PWD):
-        #                 os.symlink(ffprobe_src, "%s/FFMPEG_BIN/bin/ffprobe" % PWD)
+        #             if os.path.exists("%s/FFMPEG_BIN" % self.PWD):
+        #                 os.symlink(ffprobe_src, "%s/FFMPEG_BIN/bin/ffprobe" % self.PWD)
         # 
         # if self.checkbox_exeFFplay.IsChecked():
         #     if not self.txtctrl_ffplay.GetValue() == '':
         #         ffplay_src = self.txtctrl_ffplay.GetValue()
         #         if not self.ffplay_link == ffplay_src:# if not modified
-        #             if os.path.exists("%s/FFMPEG_BIN" % PWD):
-        #                 os.symlink(ffplay_src, "%s/FFMPEG_BIN/bin/ffplay" % PWD)
+        #             if os.path.exists("%s/FFMPEG_BIN" % self.PWD):
+        #                 os.symlink(ffplay_src, "%s/FFMPEG_BIN/bin/ffplay" % self.PWD)
 
         if self.check_cmdlog.IsChecked() and self.txt_pathlog.GetValue() == "":
             wx.MessageBox(_("Warning, The log command has no set path name "), 
                             "Videomass: warning", wx.ICON_WARNING)
         else:
-            with open (filename, 'w') as fileconf:
+            with open (self.FILEconf, 'w') as fileconf:
                 for i in self.full_list:
                     fileconf.write('%s' % i)
             wx.MessageBox(_("Changes will take affect once the program " 

@@ -215,14 +215,11 @@ class PresetsPanel(wx.Panel):
             
     def set_listctrl(self):
         """
-        Make a order list of preset (Name/Descript.) from reads xml (vdms)
+        Order list of preset (Name/Descript.) from reading xml (vdms)
         """
         try:
-            #self.parent.statusbar_msg('Preset Name:  %s' % ( 
-                           #dict_presets[self.cmbx_prst.GetValue()][1]),None
-            #)
             av_presets = dict_presets[self.cmbx_prst.GetValue()][0]
-            dati = parser_xml(av_presets) # function for parsing
+            dati = parser_xml(av_presets, self.path_confdir) # xml parsing
             
             self.list_ctrl.InsertColumn(0, _('Profile Name'), width=230)
             self.list_ctrl.InsertColumn(1, _('Description'), width=350)
@@ -266,7 +263,7 @@ class PresetsPanel(wx.Panel):
         are content it on presets and are selected in list_ctrl
         """
         combvalue = dict_presets[self.cmbx_prst.GetValue()][0] # name xml
-        dati = parser_xml(combvalue) # call module. All data go in dict
+        dati = parser_xml(combvalue, self.path_confdir) # All data go in dict
         if array != []:
             del array[0:5] # delete all: lista [0],[1],[2],[3],[4]
             
@@ -472,7 +469,7 @@ class PresetsPanel(wx.Panel):
         
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             # call module-function and pass list as argument
-            delete_profiles(array, filename)
+            delete_profiles(array, filename, self.path_confdir)
             self.reset_list()
     #------------------------------------------------------------------#
     def on_ok(self):

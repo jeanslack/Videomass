@@ -8,7 +8,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (10) December 27 2018
+# Rev: Dec 27 2018, Aug.28 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -43,30 +43,28 @@ PWD = os.getcwd()
 
 class Videomass(wx.App):
     """
-    Before starting the application, a check is performed to evaluate if 
-    the current state is suitable. If everything works, the program 
-    initialization passes the necessary values to the main frame.
+    Before starting the application, check for the essentials
+    and send to main frame.
     TODO:Make a logging with python standard library logging
     """
     def __init__(self, redirect=True, filename=None):
         """
-        Creating attributes that will be used after in other class
-        with GetApp()
+        Creating attributes that will be used after in 
+        other class with GetApp()
         """
         print ("App __init__")
-        #self.setui = system_check() # for user-space settings
-        #self.fileconf = parsing_fileconf() # for user interface settings
-        wx.App.__init__(self, redirect, filename) # Call the base class constructor
+
+        wx.App.__init__(self, redirect, filename) # constructor
     #-------------------------------------------------------------------
         
     def OnInit(self):
         """
         This is a bootstrap interface. The 'setui' calls the function that 
-        prepares the environment configuration. The 'fileconf' take all 
+        prepares the environment configuration. The 'DATAconf' take all 
         values of the file configuration.
         """
         setui = system_check() # for user-space settings
-        fileconf = setui[4] # for user interface settings
+        DATAconf = setui[4] # for user interface settings
         
         lang = ''
         self.locale = None
@@ -80,12 +78,12 @@ class Videomass(wx.App):
             print ('Videomass: Fatal Error, file configuration not found')
             return False
         
-        icons = Appearance(setui[3], fileconf[13])# set appearance instance
+        icons = Appearance(setui[3], DATAconf[13])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-            for link in [fileconf[8],fileconf[10],fileconf[12]]:
+            for link in [DATAconf[8],DATAconf[10],DATAconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -95,12 +93,12 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = fileconf[8]
-                ffprobe_link = fileconf[10]
-                ffplay_link = fileconf[12]
+                ffmpeg_link = DATAconf[8]
+                ffprobe_link = DATAconf[10]
+                ffplay_link = DATAconf[12]
 
         elif setui[0] == 'Windows':
-            for link in [fileconf[8],fileconf[10],fileconf[12]]:
+            for link in [DATAconf[8],DATAconf[10],DATAconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -110,21 +108,24 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = fileconf[8]
-                ffprobe_link = fileconf[10]
-                ffplay_link = fileconf[12]
+                ffmpeg_link = DATAconf[8]
+                ffprobe_link = DATAconf[10]
+                ffplay_link = DATAconf[12]
                 
         else: # is Linux 
-            ffmpeg_link = fileconf[8]
-            ffprobe_link = fileconf[10]
-            ffplay_link = fileconf[12]
+            ffmpeg_link = DATAconf[8]
+            ffprobe_link = DATAconf[10]
+            ffplay_link = DATAconf[12]
             # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True
             
         from videomass3.vdms_MAIN.main_frame import MainFrame
-        main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 
-                               ffmpeg_link, ffprobe_link, ffplay_link,
+        main_frame = MainFrame(setui, 
+                               DATAconf, 
+                               ffmpeg_link, 
+                               ffprobe_link, 
+                               ffplay_link,
                                pathicons
                                )
         main_frame.Show()

@@ -31,8 +31,6 @@ import wx
 import os
 from xml.dom.minidom import parseString
 
-DIRNAME = os.path.expanduser('~') # /home/user
-
 #------------------------------------------------------------------#
 def supported_formats(array3, file_sources):
     """
@@ -70,7 +68,7 @@ def supported_formats(array3, file_sources):
 # PARSINGS XML FILES AND FUNCTION FOR DELETING
 ########################################################################
 
-def parser_xml(arg):
+def parser_xml(arg, dirconf):
     """
     Used by presets_mng_panel.py to make parsing and read the xml data 
     on vdms files (the vdms files are xml files with extension '.vdms').
@@ -80,7 +78,8 @@ def parser_xml(arg):
     {name: {filesupport:?, descript:?, command:?, extens:?}, else: {etc etc}}
     
     """
-    with open('%s/.videomass/%s.vdms' %(DIRNAME, arg),'r') as fread:
+    prst = os.path.join('%s' % dirconf, '%s.vdms' % arg)
+    with open(prst,'r') as fread:
         data = fread.read()
 
     parser = parseString(data) # fa il parsing del file xml ed esce: 
@@ -113,7 +112,7 @@ def parser_xml(arg):
     return dati
 #------------------------------------------------------------------#
 
-def delete_profiles(array, filename):
+def delete_profiles(array, filename, DIRconf):
     """
     Funzione usata nel modulo presets_mng_panel.py per cancellare singole 
     voci (i profili) dei presets selezionati nella listcontrol.
@@ -129,7 +128,7 @@ def delete_profiles(array, filename):
     
     dati = parser_xml(filename)
     #dirconf = os.path.expanduser('~/.videomass/%s.vdms' % (filename))
-    dirconf = '%s/.videomass/%s.vdms' % (DIRNAME, filename)
+    dirconf = os.path.join('%s' % DIRconf, '%s.vdms' % filename)
     
     """
     Posso anche usare i dizionari al posto degli indici lista (sotto i cicli 
