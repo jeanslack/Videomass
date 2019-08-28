@@ -44,6 +44,11 @@ if OS == 'Windows':
     bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + "\\AppData\\Roaming\\videomass")
+
+elif OS == "Darwin":
+    bpath = "/Library/Application Support/videomass/videomass.conf"
+    FILEconf = os.path.join(USERName + bpath)
+    DIRconf = os.path.join(USERName + os.path.dirname(bpath))
     
 else:
     bpath = "/.config/videomass/videomass.conf"
