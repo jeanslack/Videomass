@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec 27 2018, Aug 20 2019
+# Rev: Dec 27 2018, Aug 28 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -44,11 +44,12 @@ from pubsub import pub
 from videomass3.vdms_SYS.os_interaction import copy_restore
 from videomass3.vdms_IO.make_filelog import write_log
 
-# Set a global variables for some communication from threads process:
+# Setting global variables to communicate status between processes:
 CHANGE_STATUS = None
 STATUS_ERROR = None
-
-DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
+# setting the path to the configuration directory:
+get = wx.GetApp()
+DIRconf = get.DIRconf
 
 ########################################################################
 class GeneralProcess(wx.Panel):
@@ -126,7 +127,7 @@ class GeneralProcess(wx.Panel):
         initlog = ('\nInitial log:\n')
         print ('\n\n[VIDEOMASS]\n%s' % initlog)
         #self.OutText.AppendText("%s" % initlog)
-        write_log(self.logname) # set initial file LOG
+        write_log(self.logname, DIRconf) # set initial file LOG
         
         time.sleep(.1)
         
@@ -195,8 +196,7 @@ class GeneralProcess(wx.Panel):
                 self.OutText.AppendText('\n%s' % output)
                 
                 # write a row error into file log:
-                with open("%s/.videomass/%s" % (DIRNAME, self.logname), 
-                                                 "a") as logerr:
+                with open("%s/%s" % (DIRconf, self.logname), "a") as logerr:
                     logerr.write("[FFMPEG] ERRORS:\n%s" % (output))
 
     #-------------------------------------------------------------------#
@@ -265,8 +265,8 @@ class GeneralProcess(wx.Panel):
 
         #if user want file log in a specified path
         if not 'none' in self.path_log : 
-            copy_restore("%s/.videomass/%s" % (DIRNAME, self.logname),
-                            "%s/%s" % (self.path_log, self.logname))
+            copy_restore("%s/%s" % (DIRconf, self.logname),
+                         "%s/%s" % (self.path_log, self.logname))
 
 
 ########################################################################
@@ -411,7 +411,7 @@ class ProcThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -591,7 +591,7 @@ class DoublePassThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -696,7 +696,7 @@ class SingleProcThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -832,7 +832,7 @@ class GrabAudioProc(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):

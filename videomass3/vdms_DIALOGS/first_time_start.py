@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (01) December 28 2018
+# Rev: Dec 28 2018, Aug. 28 2109
 #########################################################
 
 # This file is part of Videomass.
@@ -29,22 +29,27 @@
 #
 import wx
 import os
-import platform
 
 from shutil import which
 
-dirname = os.path.expanduser('~/') # /home/user/
-filename = '%s/.videomass/videomass.conf' % (dirname)
-PWD = os.getcwd()
-OS = platform.system()
+
 
 class FirstStart(wx.Dialog):
     """
     Shows a dialog wizard to locate FFmpeg executables
     """
     def __init__(self, img):
-        """constructor"""
+        """
+        Set attribute with GetApp (see Videomass.py __init__)
+        """
+        get = wx.GetApp()
+        self.FILEconf = get.FILEconf
+        self.WORKdir = get.WORKdir
+        self.OS = get.OS
+        
+        
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        """constructor"""
         
         msg1 = (_(
             u"This wizard will attempt to automatically detect FFmpeg in\n"
@@ -123,7 +128,7 @@ class FirstStart(wx.Dialog):
         ffplay.exe inside on Windows NT.
         """
         
-        if OS == 'Windows':
+        if self.OS == 'Windows':
             listFF = {'ffmpeg.exe':"",'ffprobe.exe':"",'ffplay.exe':""}
         else:
             listFF = {'ffmpeg':"",'ffprobe':"",'ffplay':""}
@@ -172,7 +177,7 @@ class FirstStart(wx.Dialog):
         otherwise write the executable pathname in the configuration file.
         """
         local = False
-        if OS == 'Windows':
+        if self.OS == 'Windows':
             biname = ['ffmpeg.exe','ffprobe.exe','ffplay.exe']
         else:
             biname = ['ffmpeg','ffprobe','ffplay']
@@ -183,7 +188,7 @@ class FirstStart(wx.Dialog):
                 no_which = False
             else:
                 print ("Check for: '%s' ..Not Installed" % required)
-                if OS == 'Darwin':
+                if self.OS == 'Darwin':
                     if os.path.isfile("/usr/local/bin/%s" % required):
                         local = True
                         no_which = False
@@ -192,12 +197,12 @@ class FirstStart(wx.Dialog):
                         local = False
                         no_which = True
                         break
-                elif OS == 'Windows':
+                elif self.OS == 'Windows':
                     no_which = True
                     break
         if no_which:
             for x in biname:
-                if not os.path.isfile("%s/FFMPEG_BIN/bin/%s" % (PWD, x)):
+                if not os.path.isfile("%s/FFMPEG_BIN/bin/%s" %(self.WORKdir, x)):
                     noexists = True
                     break
                 else:
@@ -218,9 +223,9 @@ class FirstStart(wx.Dialog):
                         wx.ICON_QUESTION |
                         wx.YES_NO, 
                         None) == wx.YES:
-                    ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (PWD, biname[0])
-                    ffprobe = "%s/FFMPEG_BIN/bin/%s" % (PWD, biname[1])
-                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (PWD, biname[2])
+                    ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir, biname[0])
+                    ffprobe = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir, biname[1])
+                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir, biname[2])
                 else:
                     return
         else:
@@ -245,7 +250,7 @@ class FirstStart(wx.Dialog):
         ffplay = FFmpeg[2]
         rowsNum = []#rows number list
         dic = {} # used for debug
-        with open (filename, 'r') as f:
+        with open (self.FILEconf, 'r') as f:
             full_list = f.readlines()
         for a,b in enumerate(full_list):
             if not b.startswith('#'):
@@ -256,7 +261,7 @@ class FirstStart(wx.Dialog):
         full_list[rowsNum[10]] = '%s\n' % ffprobe
         full_list[rowsNum[12]] = '%s\n' % ffplay
         
-        with open (filename, 'w') as fileconf:
+        with open (self.FILEconf, 'w') as fileconf:
             for i in full_list:
                 fileconf.write('%s' % i)
             

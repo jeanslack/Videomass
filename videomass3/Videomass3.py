@@ -37,9 +37,6 @@ from videomass3.vdms_SYS.appearance import Appearance
 import builtins
 builtins.__dict__['_'] = wx.GetTranslation
 from videomass3.vdms_SYS import app_const as appC
-# set pathname:
-path_confdir = os.path.expanduser('~/.videomass/')# presets path
-PWD = os.getcwd()
 
 class Videomass(wx.App):
     """
@@ -50,8 +47,14 @@ class Videomass(wx.App):
     def __init__(self, redirect=True, filename=None):
         """
         Creating attributes that will be used after in 
-        other class with GetApp()
+        other class with wx.GetApp()
+    
         """
+        self.DIRconf = None # set pathname folder
+        self.FILEconf = None
+        self.WORKdir = None
+        self.OS = None
+        
         print ("App __init__")
 
         wx.App.__init__(self, redirect, filename) # constructor
@@ -80,6 +83,10 @@ class Videomass(wx.App):
         
         icons = Appearance(setui[3], DATAconf[13])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
+        self.OS = setui[0]
+        self.FILEconf = setui[6]
+        self.WORKdir = setui[7]
+        self.DIRconf = setui[8]
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"

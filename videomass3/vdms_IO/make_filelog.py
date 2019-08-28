@@ -28,11 +28,8 @@
 #########################################################
 
 import time
-import os
 
-DIRNAME = os.path.expanduser('~') # /home/user
-
-def write_log(logname):
+def write_log(logname, dirconf):
     """
     During the process, it write log about what the program does,
     command output and including errors.
@@ -42,7 +39,7 @@ def write_log(logname):
     """
     current_date =  time.strftime("%c") # date/time
 
-    with open("%s/.videomass/%s" % (DIRNAME, logname),"w") as log:
+    with open("%s/%s" % (dirconf, logname),"w") as log:
         log.write("""[PYTHON] CURRENT DATE/TIME:
 %s\n
 -----------------------------------------

@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec 28 2018. Aug 19 2019
+# Rev: Dec 28 2018, Aug.28 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -314,7 +314,7 @@ class PresetsPanel(wx.Panel):
         same name where is saved to restore it correctly
         """
         combvalue = dict_presets[self.cmbx_prst.GetValue()][0]
-        filedir = '%s%s.vdms' % (self.path_confdir, combvalue)
+        filedir = '%s/%s.vdms' % (self.path_confdir, combvalue)
         filename = combvalue
         
         dialsave = wx.DirDialog(self, _("Select a directory to save it"))
@@ -329,7 +329,7 @@ class PresetsPanel(wx.Panel):
         Replace the selected preset with other saved custom preset.
         """
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
-        filedir = '%s%s.vdms' % (self.path_confdir, filename)
+        filedir = '%s/%s.vdms' % (self.path_confdir, filename)
 
         wildcard = "Source (*.vdms)|*.vdms| All files (*.*)|*.*"
         dialfile = wx.FileDialog(self, 
@@ -381,7 +381,7 @@ class PresetsPanel(wx.Panel):
         copy_restore('%s/%s.vdms' % (self.path_srcShare, 
                                      filename
                                      ), 
-                                    '%s%s.vdms' % (self.path_confdir, 
+                                    '%s/%s.vdms' % (self.path_confdir, 
                                                    filename))
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
@@ -413,7 +413,7 @@ class PresetsPanel(wx.Panel):
         """
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
         name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
-        full_pathname = '%s%s.vdms' % (self.path_confdir, filename)
+        full_pathname = '%s/%s.vdms' % (self.path_confdir, filename)
 
         prstdialog = presets_addnew.MemPresets(self, 'newprofile', 
                                                full_pathname, filename, 
@@ -438,7 +438,7 @@ class PresetsPanel(wx.Panel):
         else:
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
-            full_pathname = '%s%s.vdms' % (self.path_confdir, filename)
+            full_pathname = '%s/%s.vdms' % (self.path_confdir, filename)
             
             prstdialog = presets_addnew.MemPresets(self, 'edit', 
                                                    full_pathname, 

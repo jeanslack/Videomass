@@ -89,7 +89,7 @@ class Video_Conv(wx.Panel):
     def __init__(self, parent, ffmpeg_link, ffplay_link, threads, 
                  cpu_used, loglevel_type, OS, iconplay, iconreset, 
                  iconresize, iconcrop, iconrotate, icondeinterlace,
-                 icondenoiser, iconanalyzes, iconsettings,):
+                 icondenoiser, iconanalyzes, iconsettings):
 
         wx.Panel.__init__(self, parent)
 
@@ -1363,7 +1363,7 @@ class Video_Conv(wx.Panel):
         self.parent.statusbar_msg("",None)
         normalize = self.spin_ctrl_audionormalize.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
+        data = volumeDetectProcess(self.ffmpeg_link, file_sources)
 
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
@@ -1748,6 +1748,8 @@ class Video_Conv(wx.Panel):
         (escamotage), but work .
         """
         self.update_allentries()# aggiorno gli imput
+        get = wx.GetApp()
+        dirconf = get.DIRconf
         
         if cmd_opt["Normalize"]:
             normalize = cmd_opt["Normalize"][0]
@@ -1812,7 +1814,7 @@ class Video_Conv(wx.Panel):
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
-        full_pathname = '%s/.videomass/preset-v1-Personal.vdms' % dirname
+        full_pathname = os.path.join(dirconf, 'preset-v1-Personal.vdms')
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                             filename, list, 

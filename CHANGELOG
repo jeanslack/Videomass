@@ -15,9 +15,17 @@ IMPROVEMENTS:
     - Improved fonts depending on the operating system
     - code thinning in some dialog box
     
+    
 BUG FIXES:
     - Fixed append text issue when use dialog box to search 
       FFmpeg options on Windows
+      
+REMOVALS and DISPLACEMENTS: 
+  Only for Python3:
+    - Changed default location of the 'videomass' configuration directory 
+      on the user space.
+        On *nix OS's: '/home/user/.config/videomass'
+        On Windows: 'C:\Users\username\AppData\Roaming\videomass'
       
 +------------------------------------+
 August 24, 2019 V.1.5.5

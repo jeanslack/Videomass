@@ -29,8 +29,11 @@
 
 import wx
 import platform
+# setting the path to the configuration directory:
+get = wx.GetApp()
+OS = get.OS
 
-if platform.system() == 'Windows':
+if OS == 'Windows':
     from videomass3.vdms_PROCESS.task_processingWin32 import GeneralProcess
     from videomass3.vdms_PROCESS.volumedetectWin32 import VolumeDetectThread
     from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
@@ -54,7 +57,7 @@ from videomass3.vdms_DIALOGS import ffmpeg_formats
 from videomass3.vdms_DIALOGS import ffmpeg_codecs
 
 #-----------------------------------------------------------------------#
-def process(self, varargs, path_log, panelshown, duration, OS, time_seq):
+def process(self, varargs, path_log, panelshown, duration, time_seq):
     """
     1) TIME DEFINITION FOR THE PROGRESS BAR
         For a suitable and efficient progress bar, if a specific 
@@ -94,7 +97,7 @@ def stream_info(title, filepath , ffprobe_link):
             dialog = Mediainfo(title, 
                                filepath, 
                                ffprobe_link, 
-                               platform.system()
+                               OS
                                )
             dialog.Show()
 
@@ -103,7 +106,7 @@ def stream_info(title, filepath , ffprobe_link):
             filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
         
 #-----------------------------------------------------------------------#
-def stream_play(filepath, param, ffplay_link, loglevel_type, OS):
+def stream_play(filepath, param, ffplay_link, loglevel_type):
     """
     Thread for media reproduction with ffplay
     """
@@ -149,15 +152,14 @@ def probeDuration(path_list, ffprobe_link):
     
     return duration , None
 #-------------------------------------------------------------------------#
-def volumeDetectProcess(ffmpeg, filelist, OS):
+def volumeDetectProcess(ffmpeg, filelist):
     """
     Run a thread for get audio peak level data and show a pop-up dialog 
     with message. 
     """
     thread = VolumeDetectThread(ffmpeg, filelist, OS) 
-    loadDlg = PopupDialog(None, 
-                          _("Videomass - Loading..."), 
-                          _("\nWait....\nAudio peak analysis.\n")
+    loadDlg = PopupDialog(None, _("Videomass - Loading..."), 
+                                _("\nWait....\nAudio peak analysis.\n")
                           )
     loadDlg.ShowModal()
     #thread.join()
@@ -166,7 +168,7 @@ def volumeDetectProcess(ffmpeg, filelist, OS):
     
     return data
 #-------------------------------------------------------------------------#
-def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
+def test_conf(ffmpeg_link, ffprobe_link, ffplay_link):
     """
     Call *check_bin.ffmpeg_conf* to get data to test the building 
     configurations of the installed or imported FFmpeg executable 
@@ -189,7 +191,7 @@ def test_conf(ffmpeg_link, ffprobe_link, ffplay_link, OS):
                                     )
         dlg.Show()
 #-------------------------------------------------------------------------#
-def test_formats(ffmpeg_link, OS):
+def test_formats(ffmpeg_link):
     """
     Call *check_bin.ff_formats* to get available formats by 
     imported FFmpeg executable and send it to dialog box.
@@ -206,7 +208,7 @@ def test_formats(ffmpeg_link, OS):
         dlg = ffmpeg_formats.FFmpeg_formats(diction, OS)
         dlg.Show()
 #-------------------------------------------------------------------------#
-def test_codecs(ffmpeg_link, type_opt, OS):
+def test_codecs(ffmpeg_link, type_opt):
     """
     Call *check_bin.ff_codecs* to get available encoders 
     and decoders by FFmpeg executable and send it to
@@ -224,7 +226,7 @@ def test_codecs(ffmpeg_link, type_opt, OS):
         dlg = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
         dlg.Show()
 #-------------------------------------------------------------------------#
-def findtopic(ffmpeg_link, topic, OS):
+def findtopic(ffmpeg_link, topic):
     """
     Call * check_bin.ff_topic * to run the ffmpeg command to search
     a certain topic. The ffmpeg_link is given by ffmpeg-search dialog.

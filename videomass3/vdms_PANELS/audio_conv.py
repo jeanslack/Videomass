@@ -73,7 +73,7 @@ class Audio_Conv(wx.Panel):
     """
     def __init__(self, parent, ffmpeg_link, threads, 
                  cpu_used, loglevel_type, ffprobe_link, OS,
-                 iconanalyzes, iconsettings,):
+                 iconanalyzes, iconsettings):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
@@ -82,6 +82,7 @@ class Audio_Conv(wx.Panel):
         self.loglevel_type = loglevel_type
         self.ffprobe_link = ffprobe_link
         self.OS = OS
+        #self.DIRconf = DIRconf
         # others attributes:
         self.file_sources = []
         self.file_destin = ''
@@ -490,7 +491,7 @@ class Audio_Conv(wx.Panel):
         self.parent.statusbar_msg("",None)
         normalize = self.spin_amplitude.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
+        data = volumeDetectProcess(self.ffmpeg_link, file_sources)
 
         if data[1]:
             wx.MessageBox(data[1], "Videomass: ERROR!", wx.ICON_ERROR)
@@ -747,6 +748,9 @@ class Audio_Conv(wx.Panel):
         (like && for ffmpeg double pass), so there is some to get around it 
         (escamotage), but work .
         """
+        get = wx.GetApp()
+        dirconf = get.DIRconf
+        
         if cmd_opt["Normalize"]:
             
             if wx.MessageBox(_("Audio normalization is a specific process "
@@ -784,7 +788,7 @@ class Audio_Conv(wx.Panel):
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
-        full_pathname = '%s/.videomass/preset-v1-Personal.vdms' % dirname
+        full_pathname = os.path.join(dirconf, 'preset-v1-Personal.vdms')
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                             filename, list, 

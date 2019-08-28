@@ -473,8 +473,7 @@ class MainFrame(wx.Frame):
         IO_tools.stream_play(filepath, 
                              self.time_seq, 
                              self.ffplay_link, 
-                             self.loglevel_type, 
-                             self.OS,
+                             self.loglevel_type,
                              )
     #------------------------------------------------------------------#
     def ImportInfo(self, event):
@@ -506,7 +505,6 @@ class MainFrame(wx.Frame):
                              '', 
                              self.ffplay_link, 
                              self.loglevel_type,
-                             self.OS,
                              )
     #------------------------------------------------------------------#
     def Saveprofile(self, event):
@@ -801,7 +799,7 @@ class MainFrame(wx.Frame):
         
         """
         IO_tools.test_conf(self.ffmpeg_link, self.ffprobe_link, 
-                                 self.ffplay_link, self.OS,
+                                 self.ffplay_link
                                  )
     #------------------------------------------------------------------#
     def Check_formats(self, event):
@@ -809,28 +807,28 @@ class MainFrame(wx.Frame):
         IO_tools.test_formats
         
         """
-        IO_tools.test_formats(self.ffmpeg_link, self.OS)
+        IO_tools.test_formats(self.ffmpeg_link)
     #------------------------------------------------------------------#
     def Check_enc(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-encoders', self.OS)
+        IO_tools.test_codecs(self.ffmpeg_link, '-encoders')
     #------------------------------------------------------------------#
     def Check_dec(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-decoders', self.OS)
+        IO_tools.test_codecs(self.ffmpeg_link, '-decoders')
     #------------------------------------------------------------------#
     def Search_topic(self, event):
         """
         Show a dialog box to help you find FFmpeg topics
         
         """
-        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link, self.OS)
+        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link)
         dlg.Show()
         
     #---------------------------- Menu Edit ----------------------------#
@@ -1106,7 +1104,6 @@ class MainFrame(wx.Frame):
                          self.path_log, 
                          self.panelshown, 
                          duration,
-                         self.OS,
                          self.time_seq,
                          )
         #make the positioning:
