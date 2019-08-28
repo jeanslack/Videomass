@@ -74,14 +74,13 @@ class PresetsPanel(wx.Panel):
     """
     The Presets manager panel is used for the direct execution of profiles 
     with the ffmpeg commands, for editing, restoring and storing them.
+    
     """
 
     def __init__(self, parent, path_srcShare, path_confdir,
                  PWD, threads, cpu_used, loglevel_type, 
                  ffmpeg_link, OS):
-        """
-        constructor
-        """
+        
         self.path_srcShare = path_srcShare
         self.path_confdir = path_confdir
         self.PWD = PWD
@@ -94,7 +93,8 @@ class PresetsPanel(wx.Panel):
         self.file_sources = []
         self.file_destin = ''
         
-        wx.Panel.__init__(self, parent, -1)
+        wx.Panel.__init__(self, parent, -1) 
+        """constructor"""
 
         self.panel_1 = wx.Panel(self, wx.ID_ANY)
 
@@ -380,9 +380,8 @@ class PresetsPanel(wx.Panel):
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
         copy_restore('%s/%s.vdms' % (self.path_srcShare, 
                                      filename
-                                     ), 
-                                    '%s/%s.vdms' % (self.path_confdir, 
-                                                   filename))
+                                     ), '%s/%s.vdms' % (self.path_confdir, 
+                                                        filename))
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
     def Default_all(self):
@@ -415,8 +414,10 @@ class PresetsPanel(wx.Panel):
         name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
         full_pathname = '%s/%s.vdms' % (self.path_confdir, filename)
 
-        prstdialog = presets_addnew.MemPresets(self, 'newprofile', 
-                                               full_pathname, filename, 
+        prstdialog = presets_addnew.MemPresets(self, 
+                                               'newprofile', 
+                                               full_pathname, 
+                                               filename, 
                                                None, _('Create a new '
                                 'profile on the selected  preset "%s"') % (
                                                 name_preset)
@@ -440,9 +441,11 @@ class PresetsPanel(wx.Panel):
             name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
             full_pathname = '%s/%s.vdms' % (self.path_confdir, filename)
             
-            prstdialog = presets_addnew.MemPresets(self, 'edit', 
+            prstdialog = presets_addnew.MemPresets(self, 
+                                                   'edit', 
                                                    full_pathname, 
-                                                   filename, array, 
+                                                   filename, 
+                                                   array, 
                                             _('Edit profile on "%s" preset: ') 
                                                    % (name_preset)
                                                    )

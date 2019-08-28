@@ -35,8 +35,6 @@ from videomass3.vdms_IO.IO_tools import volumeDetectProcess, FFProbe
 from videomass3.vdms_IO.filedir_control import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import  audiodialogs, presets_addnew
-                    
-dirname = os.path.expanduser('~') # /home/user
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -747,6 +745,7 @@ class Audio_Conv(wx.Panel):
         FIXME have any problem with xml escapes in special character
         (like && for ffmpeg double pass), so there is some to get around it 
         (escamotage), but work .
+        
         """
         get = wx.GetApp()
         dirconf = get.DIRconf

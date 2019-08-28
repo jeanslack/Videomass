@@ -28,8 +28,7 @@
 #########################################################
 
 import wx
-import platform
-# setting the path to the configuration directory:
+
 get = wx.GetApp()
 OS = get.OS
 

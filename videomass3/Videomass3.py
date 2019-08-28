@@ -83,10 +83,10 @@ class Videomass(wx.App):
         
         icons = Appearance(setui[3], DATAconf[13])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
-        self.OS = setui[0]
-        self.FILEconf = setui[6]
-        self.WORKdir = setui[7]
-        self.DIRconf = setui[8]
+        self.OS = setui[0] # set OS type
+        self.FILEconf = setui[6] # set file conf. pathname 
+        self.WORKdir = setui[7] # set PWD current dir
+        self.DIRconf = setui[8] # set dir conf pathname
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -172,8 +172,6 @@ class Videomass(wx.App):
         else:
             selLang = wx.LANGUAGE_DEFAULT
             #print ("Set language default\n%s" % appC.supLang)
-            
-            
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2
             del self.locale

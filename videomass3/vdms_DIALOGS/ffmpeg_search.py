@@ -152,7 +152,7 @@ class FFmpeg_Search(wx.Dialog):
         else:
             self.texthelp.Clear()# reset textctrl
             topic = dicdef[self.cmbx_choice.GetValue()]
-            out = IO_tools.findtopic(self.ffmpeg, topic, self.OS)
+            out = IO_tools.findtopic(self.ffmpeg, topic)
             self.row = out
             if self.row:
                 self.texthelp.AppendText(self.row)

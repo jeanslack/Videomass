@@ -3,6 +3,7 @@
 #########################################################
 # Name: os_processing.py (for wxpython >= 2.8)
 # Porpose: module for system processing commands
+# Compatibility: Python2, wxPython3 classic (OS Unix-like only)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2018/19 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -21,8 +22,6 @@
 
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-
 
 # Rev: july 12 2018, Dec 14 2018, Aug 21 2019
 #########################################################
@@ -46,13 +45,15 @@ from wx.lib.pubsub import pub # work on wxPython >= 2.9 = 3.0
 from videomass2.vdms_SYS.os_interaction import copy_restore
 from videomass2.vdms_IO.make_filelog import write_log
 
-# Set a global variables for some communication from threads process:
+# Setting global variables to communicate status between processes:
 CHANGE_STATUS = None
 STATUS_ERROR = None
-
-DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
+# setting the path to the configuration directory:
+get = wx.GetApp()
+DIRconf = get.DIRconf
 
 ########################################################################
+
 class GeneralProcess(wx.Panel):
     """
     This panel is shown in all conversion finalization processes. 
@@ -128,7 +129,7 @@ class GeneralProcess(wx.Panel):
         initlog = ('\nInitial log:\n')
         print ('\n\n[VIDEOMASS]\n%s' % initlog)
         #self.OutText.AppendText("%s" % initlog)
-        write_log(self.logname) # set initial file LOG
+        write_log(self.logname, DIRconf) # set initial file LOG
         
         time.sleep(.1)
         
@@ -201,8 +202,7 @@ class GeneralProcess(wx.Panel):
                 self.OutText.AppendText('\n%s' % output)
                 
                 # write a row error into file log:
-                with open("%s/.videomass/%s" % (DIRNAME, self.logname), 
-                                                 "a") as logerr:
+                with open("%s/%s" %(DIRconf, self.logname),"a") as logerr:
                     logerr.write("[FFMPEG] ERRORS:\n%s" % (output))
 
     #-------------------------------------------------------------------#
@@ -425,7 +425,7 @@ class ProcThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -617,7 +617,7 @@ class DoublePassThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -733,7 +733,7 @@ class SingleProcThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -870,7 +870,7 @@ class GrabAudioProc(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/.videomass/%s" % (DIRNAME, self.logname), "a") as log:
+        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):

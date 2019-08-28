@@ -828,7 +828,7 @@ class MainFrame(wx.Frame):
         Show a dialog box to help you find FFmpeg topics
         
         """
-        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link)
+        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link, self.OS)
         dlg.Show()
         
     #---------------------------- Menu Edit ----------------------------#

@@ -126,8 +126,7 @@ def delete_profiles(array, filename, DIRconf):
 
     """
     
-    dati = parser_xml(filename)
-    #dirconf = os.path.expanduser('~/.videomass/%s.vdms' % (filename))
+    dati = parser_xml(filename, DIRconf)
     dirconf = os.path.join('%s' % DIRconf, '%s.vdms' % filename)
     
     """

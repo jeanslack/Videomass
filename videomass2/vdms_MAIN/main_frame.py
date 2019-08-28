@@ -3,10 +3,11 @@
 #########################################################
 # Name: main_frame.py
 # Porpose: top window main frame
+# Compatibility: Python2, wxPython3 classic
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019) Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec 7 2018, Aug 14 2019
+# Rev: Dec 7 2018, Aug 28 2019
 
 # This file is part of Videomass.
 
@@ -49,11 +50,11 @@ class MainFrame(wx.Frame):
     in the init constructor. The fourth panel is instantiated in an 
     appropriate instance method. (see switch_Process method doc strings)
     """
-    def __init__(self, setui, fileconf, path_confdir, PWD, 
-                 ffmpeg_link, ffprobe_link, ffplay_link,
-                 pathicons):
+    def __init__(self, setui, DATAconf, 
+                 ffmpeg_link, ffprobe_link, 
+                 ffplay_link, pathicons):
         """
-        NOTE: 'path_srcShare' is a current work directory of Videomass 
+        NOTE: 'SRCpath' is a current work directory of Videomass 
                program. How it can be localized depend if Videomass is 
                run as portable program or installated program.
         """
@@ -65,30 +66,33 @@ class MainFrame(wx.Frame):
         self.icon_help = pathicons[4]
         self.icon_headphones = pathicons[5]
         self.icon_import = pathicons[6]
-        barC = fileconf[14].split(',') 
+        barC = DATAconf[14].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) # toolbar panel colour
-        bBtnC = fileconf[15].split(',')
+        bBtnC = DATAconf[15].split(',')
         self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2])) # toolbar buttons colour
         
         #self.helping = setui[5]# path contestual help for helping:
         self.OS = setui[0]# ID of the operative system:
-        path_srcShare = setui[1]# share dir (are where the origin files?):
+        SRCpath = setui[1]# share dir (are where the origin files?):
+        self.PATHconf = setui[6]
+        self.WORKdir = setui[7]
+        self.DIRconf = setui[8]
         
         #---------------------------#
-        self.threads = fileconf[2]#ffmpeg option, set the cpu threads
-        self.cpu_used = fileconf[3]
-        self.ffmpeg_log = ''#fileconf[3]
-        self.save_log = fileconf[4]
-        self.path_log = fileconf[5]
-        self.loglevel_type = fileconf[6]# marks as single process
-        self.loglevel_batch = ''#fileconf[7]# marks as batch process
-        self.ffmpeg_check = fileconf[7]
-        self.ffprobe_check = fileconf[9]
-        self.ffplay_check = fileconf[11]
+        self.threads = DATAconf[2]#ffmpeg option, set the cpu threads
+        self.cpu_used = DATAconf[3]
+        self.ffmpeg_log = ''#DATAconf[3]
+        self.save_log = DATAconf[4]
+        self.path_log = DATAconf[5]
+        self.loglevel_type = DATAconf[6]# marks as single process
+        self.loglevel_batch = ''#DATAconf[7]# marks as batch process
+        self.ffmpeg_check = DATAconf[7]
+        self.ffprobe_check = DATAconf[9]
+        self.ffplay_check = DATAconf[11]
         self.ffmpeg_link = ffmpeg_link
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
-        self.iconset = fileconf[13]
+        self.iconset = DATAconf[13]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
         self.post_process = []# at the end of any process put file for play/metadata
@@ -192,8 +196,9 @@ class MainFrame(wx.Frame):
         self.btnpanel.SetBackgroundColour(barColor)
         #self.btnpanel.SetBackgroundColour(wx.Colour(205, 235, 222))
         #---------- others panel instances:
-        self.PrstsPanel = presets_mng_panel.PresetsPanel(self, path_srcShare, 
-                                                         path_confdir, PWD, 
+        self.PrstsPanel = presets_mng_panel.PresetsPanel(self, SRCpath, 
+                                                         self.DIRconf, 
+                                                         self.WORKdir, 
                                                          self.threads, 
                                                          self.cpu_used,
                                                          self.loglevel_type, 
@@ -469,8 +474,7 @@ class MainFrame(wx.Frame):
         IO_tools.stream_play(filepath, 
                              self.time_seq, 
                              self.ffplay_link, 
-                             self.loglevel_type, 
-                             self.OS,
+                             self.loglevel_type,
                              )
     #------------------------------------------------------------------#
     def ImportInfo(self, event):
@@ -502,7 +506,6 @@ class MainFrame(wx.Frame):
                              '', 
                              self.ffplay_link, 
                              self.loglevel_type,
-                             self.OS,
                              )
     #------------------------------------------------------------------#
     def Saveprofile(self, event):
@@ -756,7 +759,7 @@ class MainFrame(wx.Frame):
         
         """
         IO_tools.test_conf(self.ffmpeg_link, self.ffprobe_link, 
-                                 self.ffplay_link, self.OS,
+                                 self.ffplay_link,
                                  )
     #------------------------------------------------------------------#
     def Check_formats(self, event):
@@ -764,21 +767,21 @@ class MainFrame(wx.Frame):
         IO_tools.test_formats
         
         """
-        IO_tools.test_formats(self.ffmpeg_link, self.OS)
+        IO_tools.test_formats(self.ffmpeg_link)
     #------------------------------------------------------------------#
     def Check_enc(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-encoders', self.OS)
+        IO_tools.test_codecs(self.ffmpeg_link, '-encoders')
     #------------------------------------------------------------------#
     def Check_dec(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-decoders', self.OS)
+        IO_tools.test_codecs(self.ffmpeg_link, '-decoders')
     #------------------------------------------------------------------#
     def Search_topic(self, event):
         """
@@ -821,7 +824,8 @@ class MainFrame(wx.Frame):
                                      self.ffmpeg_link, self.ffmpeg_check,
                                      self.ffprobe_link, self.ffprobe_check, 
                                      self.ffplay_link, self.ffplay_check, 
-                                     self.OS, self.iconset,
+                                     self.OS, self.iconset, self.PATHconf,
+                                     self.WORKdir
                                      )
         setup_dlg.ShowModal()
         
@@ -1095,7 +1099,6 @@ class MainFrame(wx.Frame):
                          self.path_log, 
                          self.panelshown, 
                          duration,
-                         self.OS,
                          self.time_seq,)
         #make the positioning:
         self.DnDsizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)

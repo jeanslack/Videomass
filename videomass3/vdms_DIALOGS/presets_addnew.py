@@ -32,6 +32,10 @@ import string
 from videomass3.vdms_IO.presets_manager_properties import delete_profiles
 import webbrowser
 
+# setting the path to the configuration directory:
+get = wx.GetApp()
+DIRconf = get.DIRconf
+
 class MemPresets(wx.Dialog):
     """
     Class for show dialog and store or edit single profiles of 
@@ -222,7 +226,7 @@ class MemPresets(wx.Dialog):
 
         if self.arg == 'edit':
             # call module-function in os_processing and pass list
-            delete_profiles(self.array, self.filename)
+            delete_profiles(self.array, self.filename, DIRconf)
             # riapro e leggo il file
             with open('%s' % (self.path_xml),'r') as open_xml: # leggo il file
                 rlist = open_xml.readlines() # metto in lista il contenuto

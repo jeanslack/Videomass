@@ -21,12 +21,11 @@ BUG FIXES:
       FFmpeg options on Windows
       
 REMOVALS and DISPLACEMENTS: 
-  Only for Python3:
     - Changed default location of the 'videomass' configuration directory 
       on the user space, following the typical conventions of the OS.
-        On *nix OS's: '/home/user/.config/videomass'
-        On MacOs: '~/Library/Application Support'
-        On Windows: 'C:\Users\username\AppData\Roaming\videomass'
+        On *nix OS's:  '~/.config/videomass'
+        On MacOs:      '~/Library/Application Support/videomass'
+        On Windows:    'C:\Users\username\AppData\Roaming\videomass'
       
 +------------------------------------+
 August 24, 2019 V.1.5.5

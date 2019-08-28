@@ -34,9 +34,6 @@ from videomass2.vdms_IO.filedir_control import inspect
 from videomass2.vdms_DIALOGS.epilogue import Formula
 from videomass2.vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
 
-                    
-dirname = os.path.expanduser('~') # /home/user
-
 """
 The following dictionaries are used for define the generated 
 choices from the events. Some keys's values has not empty to 
@@ -1746,6 +1743,8 @@ class Video_Conv(wx.Panel):
         (escamotage), but work .
         """
         self.update_allentries()# aggiorno gli imput
+        get = wx.GetApp()
+        dirconf = get.DIRconf
         
         if cmd_opt["Normalize"]:
             normalize = cmd_opt["Normalize"][0]
@@ -1810,7 +1809,7 @@ class Video_Conv(wx.Panel):
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
-        full_pathname = '%s/.videomass/preset-v1-Personal.vdms' % dirname
+        full_pathname = os.path.join(dirconf, 'preset-v1-Personal.vdms')
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                             filename, list, 

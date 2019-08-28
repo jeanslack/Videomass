@@ -33,8 +33,6 @@ from videomass2.vdms_IO.IO_tools import volumeDetectProcess, FFProbe
 from videomass2.vdms_IO.filedir_control import inspect
 from videomass2.vdms_DIALOGS.epilogue import Formula
 from videomass2.vdms_DIALOGS import  audiodialogs, presets_addnew
-                    
-dirname = os.path.expanduser('~') # /home/user
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -745,7 +743,11 @@ class Audio_Conv(wx.Panel):
         FIXME have any problem with xml escapes in special character
         (like && for ffmpeg double pass), so there is some to get around it 
         (escamotage), but work .
+        
         """
+        get = wx.GetApp()
+        dirconf = get.DIRconf
+        
         if cmd_opt["Normalize"]:
             
             if wx.MessageBox(_(u"Audio normalization is a specific process "
@@ -783,7 +785,7 @@ class Audio_Conv(wx.Panel):
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'
-        full_pathname = '%s/.videomass/preset-v1-Personal.vdms' % dirname
+        full_pathname = os.path.join(dirconf, 'preset-v1-Personal.vdms')
         
         prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
                                             filename, list, 

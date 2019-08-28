@@ -4,16 +4,17 @@ NOTE FOR share/ folder:
 
 This directory contains the configuration files of videomass:
 the *.vdms files, are simple xml files need for presets list;
-the videomass.conf is the main configuration file.
+the videomass.conf and the videomassWin32.conf are the main 
+configuration files to store the user preferences.
 
-When you run the program as first run, this folder content is 
-copied to the /home/user/.videomass folder.
+When running the program as the first run, the contents of this folder 
+is copied to the default location of the 'videomass' configuration 
+directory, according to the conventions typical of each Operating 
+System.
+        On *nix OS's:   '~/.config/videomass'
+        On MacOs:       '~/Library/Application Support/videomass'
+        On Windows:     'C:\Users\username\AppData\Roaming\videomass'
+
 Also, is used to store the log files of the conversion processes
-and to store the personal saved presets.
-
-In the full installation of videomass on Gnu/Linux systems, also 
-this content is stored in /usr/share/videomass and copied when need 
-into /home/user/.videomass (for restoration cases if the home
-configuration folder is deleted)
-
+and to store the new personal profiles.
 

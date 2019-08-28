@@ -26,13 +26,11 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-#
+
 import wx
 import os
-
 from shutil import which
-
-
+#---------------------------------------------------------------#
 
 class FirstStart(wx.Dialog):
     """

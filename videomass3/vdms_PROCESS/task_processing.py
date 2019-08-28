@@ -3,7 +3,7 @@
 #########################################################
 # Name: task_processing.py 
 # Porpose: module for system processing commands
-# Compatibility: Python3, wxPython4 Phoenix (OS Unix like only)
+# Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -52,6 +52,7 @@ get = wx.GetApp()
 DIRconf = get.DIRconf
 
 ########################################################################
+
 class GeneralProcess(wx.Panel):
     """
     This panel is shown in all conversion finalization processes. 
@@ -60,6 +61,7 @@ class GeneralProcess(wx.Panel):
     combination with separate threads for process tasks.
     It also implements the buttons to stop the current process and 
     close the panel during final activities.
+    
     """
     def __init__(self, parent, path_log, panel, varargs,  duration, OS):
         """
@@ -67,6 +69,7 @@ class GeneralProcess(wx.Panel):
         the previous panel from which the process is started.
         The 'logname' attribute contains the name of the log in the which
         write the log text
+        
         """
         self.parent = parent # this window is a child of a window parent
         self.previus = panel # memorizza il pannello da cui parte

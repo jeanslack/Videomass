@@ -6,6 +6,7 @@
 #########################################################
 # Name: videomass2.py
 # Porpose: bootstrap for the videomass
+# Compatibility: Python2, Python3
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2013-2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -25,7 +26,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev December/14/2018
+# Rev: Dec.14 2018, Aug.28 2019
 #########################################################
 import wx
 import os
@@ -37,36 +38,37 @@ from videomass2.vdms_SYS.appearance import Appearance
 import __builtin__
 __builtin__.__dict__['_'] = wx.GetTranslation
 from videomass2.vdms_SYS import app_const as appC
-# set pathname:
-path_confdir = os.path.expanduser('~/.videomass/')# presets path
-PWD = os.getcwd()
-
+#----------------------------------------------------------------#
 class Videomass(wx.App):
     """
-    Before starting the application, a check is performed to evaluate if 
-    the current state is suitable. If everything works, the program 
-    initialization passes the necessary values to the main frame.
+    Before starting the application, check for the essentials
+    and send to main frame.
     TODO:Make a logging with python standard library logging
     """
     def __init__(self, redirect=True, filename=None):
         """
-        Creating attributes that will be used after in other class
-        with GetApp()
+        Creating attributes that will be used after in 
+        other class with wx.GetApp()
+    
         """
-        print "App __init__"
-        #self.setui = system_check() # for user-space settings
-        #self.fileconf = parsing_fileconf() # for user interface settings
-        wx.App.__init__(self, redirect, filename) # Call the base class constructor
+        self.DIRconf = None # set pathname folder
+        self.FILEconf = None
+        self.WORKdir = None
+        self.OS = None
+        
+        print ("App __init__")
+
+        wx.App.__init__(self, redirect, filename) # constructor
     #-------------------------------------------------------------------
         
     def OnInit(self):
         """
         This is a bootstrap interface. The 'setui' calls the function that 
-        prepares the environment configuration. The 'fileconf' take all 
+        prepares the environment configuration. The 'DATAconf' take all 
         values of the file configuration.
         """
         setui = system_check() # for user-space settings
-        fileconf = setui[4] # for user interface settings
+        DATAconf = setui[4] # for user interface settings
         
         lang = ''
         self.locale = None
@@ -74,18 +76,22 @@ class Videomass(wx.App):
         self.updateLanguage(lang)
         
         if setui[2]: # if source /share is missing and .videomass is corrupted
-            wx.MessageBox(_(u'Can not find the configuration file\n\n'
-                            u'Sorry, cannot continue..'),
+            wx.MessageBox(_('Can not find the configuration file\n\n'
+                            'Sorry, cannot continue..'),
                              'Videomass: Fatal Error', wx.ICON_STOP)
-            print 'Videomass: Fatal Error, file configuration not found'
+            print ('Videomass: Fatal Error, file configuration not found')
             return False
         
-        icons = Appearance(setui[3], fileconf[13])# set appearance instance
+        icons = Appearance(setui[3], DATAconf[13])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
+        self.OS = setui[0] # set OS type
+        self.FILEconf = setui[6] # set file conf. pathname 
+        self.WORKdir = setui[7] # set PWD current dir
+        self.DIRconf = setui[8] # set dir conf pathname
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-            for link in [fileconf[8],fileconf[10],fileconf[12]]:
+            for link in [DATAconf[8],DATAconf[10],DATAconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -95,12 +101,12 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = fileconf[8]
-                ffprobe_link = fileconf[10]
-                ffplay_link = fileconf[12]
+                ffmpeg_link = DATAconf[8]
+                ffprobe_link = DATAconf[10]
+                ffplay_link = DATAconf[12]
 
         elif setui[0] == 'Windows':
-            for link in [fileconf[8],fileconf[10],fileconf[12]]:
+            for link in [DATAconf[8],DATAconf[10],DATAconf[12]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -110,21 +116,24 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = fileconf[8]
-                ffprobe_link = fileconf[10]
-                ffplay_link = fileconf[12]
+                ffmpeg_link = DATAconf[8]
+                ffprobe_link = DATAconf[10]
+                ffplay_link = DATAconf[12]
                 
         else: # is Linux 
-            ffmpeg_link = fileconf[8]
-            ffprobe_link = fileconf[10]
-            ffplay_link = fileconf[12]
+            ffmpeg_link = DATAconf[8]
+            ffprobe_link = DATAconf[10]
+            ffplay_link = DATAconf[12]
             # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True
             
         from videomass2.vdms_MAIN.main_frame import MainFrame
-        main_frame = MainFrame(setui, fileconf, path_confdir, PWD, 
-                               ffmpeg_link, ffprobe_link, ffplay_link,
+        main_frame = MainFrame(setui, 
+                               DATAconf, 
+                               ffmpeg_link, 
+                               ffprobe_link, 
+                               ffplay_link,
                                pathicons
                                )
         main_frame.Show()
@@ -160,12 +169,10 @@ class Videomass(wx.App):
         # if an unsupported language is requested default to English
         if lang in appC.supLang:
             selLang = appC.supLang[lang]
-            print 'set a custom language: %s' % selLang
+            #print ('set a custom language: %s' % selLang)
         else:
             selLang = wx.LANGUAGE_DEFAULT
-            print "Set language default\n%s" % appC.supLang
-            
-            
+            #print ("Set language default\n%s" % appC.supLang)
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2
             del self.locale
@@ -181,14 +188,14 @@ class Videomass(wx.App):
     def OnExit(self):
         """
         """
-        print "OnExit"
-    #-------------------------------------------------------------------
-    
+        print ("OnExit")
+        return True
+    #-------------------------------------------------------------------    
 
 def main():
     app = Videomass(False)
     #app.MainLoop()
     fred = app.MainLoop()
-    print "after MainLoop", fred
+    print ("after MainLoop", fred)
     
 

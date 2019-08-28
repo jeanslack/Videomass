@@ -36,9 +36,6 @@ from videomass3.vdms_IO.filedir_control import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
 
-                    
-dirname = os.path.expanduser('~') # /home/user
-
 """
 The following dictionaries are used for define the generated 
 choices from the events. Some keys's values has not empty to 

@@ -3,7 +3,7 @@
 #########################################################
 # Name: ctrl_run.py
 # Porpose: Program boot data
-# Compatibility: Python3
+# Compatibility: Python2, Python3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -32,14 +32,13 @@ import os
 import shutil
 import platform
 
-PWD = os.getcwd() # work current directory (where is Videomsass?)
-DIRNAME = os.path.expanduser('~') # /home/user (current user directory)
-
 # Set default variables
 WORKdir = os.getcwd() # work current directory (where is Videomsass?)
 USERName = os.path.expanduser('~') # /home/user (current user directory)
 OS = platform.system()# What is the OS ??
 
+# Establish the conventional paths on the different OS where 
+# the videomass configuration directory will be stored:
 if OS == 'Windows':
     bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
     FILEconf = os.path.join(USERName + bpath)
@@ -50,7 +49,7 @@ elif OS == "Darwin":
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + os.path.dirname(bpath))
     
-else:
+else: # Linux, FreeBsd, etc.
     bpath = "/.config/videomass/videomass.conf"
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + "/.config/videomass")
@@ -77,6 +76,7 @@ def system_check():
     """
     assigning shared data paths and 
     checking the configuration folder  
+    
     """
     copyerr = False
     existfileconf = True # il file conf esiste (True) o non esiste (False)
