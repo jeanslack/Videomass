@@ -50,7 +50,7 @@ from videomass2.vdms_PROCESS.check_bin import ff_conf
 from videomass2.vdms_PROCESS.check_bin import ff_formats
 from videomass2.vdms_PROCESS.check_bin import ff_codecs
 from videomass2.vdms_PROCESS.check_bin import ff_topics
-from videomass3.vdms_PROCESS.opendir import browse
+from videomass2.vdms_PROCESS.opendir import browse
 from videomass2.vdms_DIALOGS import ffmpeg_conf
 from videomass2.vdms_DIALOGS import ffmpeg_formats
 from videomass2.vdms_DIALOGS import ffmpeg_codecs
@@ -253,6 +253,12 @@ def openpath(mod):
     Call vdms_PROCESS.opendir.browse
     """
     if mod == 'dirconf':
-        browse(OS, DIRconf)
+        ret = browse(OS, DIRconf)
+        
     else:
-        browse(OS, "%s/log" % DIRconf)
+        ret = browse(OS, "%s/log" % DIRconf)
+        
+    if ret:
+        wx.MessageBox(ret, 'Videomass', wx.ICON_INFORMATION, None)
+#-------------------------------------------------------------------------#
+

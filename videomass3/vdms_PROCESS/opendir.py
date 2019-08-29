@@ -37,15 +37,20 @@ def browse(OS, pathname):
     """
     if OS == 'Windows':
         os.startfile(pathname)
+        
     elif OS == 'Darwin':
-        subprocess.Popen(['open', pathname])
+        p = subprocess.run(['open', pathname], capture_output=True)
+        if p.stderr:
+            return(p.stderr.decode())
+        
     else:
         try:
-            subprocess.Popen(['xdg-open', pathname])
+            p = subprocess.Popen(['xdg-open', pathname])
         except OSError:
-            print('er, think of something else to try\n'
+            print('error, think of something else to try\n'
                   'xdg-open *should* be supported by recent Gnome, KDE, Xfce\n'
                   )
             # er, think of something else to try
             # xdg-open *should* be supported by recent Gnome, KDE, Xfce
+    return
 #------------------------------------------------------#

@@ -3,7 +3,7 @@
 #########################################################
 # Name: opendir.py
 # Porpose: open file browser in a specific location (platform independent)
-# Compatibility: Python3 (Unix, Windows)
+# Compatibility: Python2 (Unix, Windows)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -35,17 +35,26 @@ def browse(OS, pathname):
     file manager of the OS
     
     """
+    path = '/home/gianluca/BEST'
+    
     if OS == 'Windows':
         os.startfile(pathname)
+        
     elif OS == 'Darwin':
-        subprocess.Popen(['open', pathname])
+        try:
+            p = subprocess.check_output(['open', pathname], 
+                                        stderr=subprocess.STDOUT,
+                                        )
+        except subprocess.CalledProcessError as e:
+            return(e.output.decode())
     else:
         try:
-            subprocess.Popen(['xdg-open', pathname])
+            subprocess.Popen(['xdg-open', path])
         except OSError:
             print('er, think of something else to try\n'
                   'xdg-open *should* be supported by recent Gnome, KDE, Xfce\n'
                   )
             # er, think of something else to try
             # xdg-open *should* be supported by recent Gnome, KDE, Xfce
+    return
 #------------------------------------------------------#
