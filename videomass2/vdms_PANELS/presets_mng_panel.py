@@ -331,39 +331,49 @@ class PresetsPanel(wx.Panel):
     #------------------------------------------------------------------#
     def Restore(self):
         """
-        Replace the selected preset with other saved custom preset.
+        Replace preset by another with saved custom profiles.
         """
-        filename = dict_presets[self.cmbx_prst.GetValue()][0]
-        filedir = '%s/%s.vdms' % (self.path_confdir, filename)
-
         wildcard = "Source (*.vdms)|*.vdms| All files (*.*)|*.*"
-        dialfile = wx.FileDialog(self, 
-                                 _(u"Preset restore (%s.vdms) - Videomass ")
-                                 % (filename), "%s" % (filename), "", 
-                                 wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+        
+        dialfile = wx.FileDialog(self,
+                                 _(u"Videomass: Choose a videomass preset "
+                                   u"to restore "), '', "", wildcard, 
+                                   wx.FD_OPEN | 
+                                   wx.FD_FILE_MUST_EXIST
                                      )
         if dialfile.ShowModal() == wx.ID_OK:
             dirname = dialfile.GetPath()
-            tail = os.path.basename(dirname) # take a filename for valuated
+            tail = os.path.basename(dirname)
             dialfile.Destroy()
             
-            if tail != '%s.vdms' % filename:
-                wx.MessageBox(_(u"'{0}' \n\ndoes not match with the one in use:\n\n"
-                              u"'{1}'\n\nPlease, select a corresponding preset "
-                              u"in the \ncombobox, first").format(dirname, 
-                                                                  filename), 
-                              "Videomass: warning!",  wx.ICON_WARNING, self
-                                )
+            for k,v in dict_presets.items():
+                if tail in "%s.vdms" % v[0]:
+                    vdms = True
+                    name = v[1]
+                    break
+                else:
+                    vdms = False
+            
+            if not vdms:
+                wx.MessageBox(_(u"'{0}' \n\nThis file does not match those "
+                                u"used by Videomass:").format(dirname), 
+                                u"Videomass",  wx.ICON_INFORMATION, self)
                 return
             
-            if wx.MessageBox(_(u'The preset "%s" will be imported and will '
-                    u'overwrite the one in use ! Proceed ?') % (tail), 
-                    _(u'Videomass: Please confirm'), wx.ICON_QUESTION | 
-                                                  wx.YES_NO, 
-                                                  self) == wx.NO:
+            if wx.MessageBox(_(u"The following preset:\n\n"
+                               u"'%s'   (%s)\n\n"
+                               u"will be imported and will overwrite "
+                               u"the one in use.\n"
+                               u"Proceed ?") % (tail, name), 
+                             _(u'Videomass: Please confirm'), 
+                                                wx.ICON_QUESTION | 
+                                                wx.YES_NO, 
+                                                self) == wx.NO:
                 return
             
-            copy_restore('%s' % (dirname), filedir)
+            copy_restore('%s' % (dirname), 
+                         '%s/%s' % (self.path_confdir, tail))
+            
             self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
     def Default(self):
@@ -374,7 +384,7 @@ class PresetsPanel(wx.Panel):
         """ 
         #copy_restore('%s/share/av_presets.xml' % (self.PWD), '%s' % (self.dirconf))
         if wx.MessageBox(_(u"The current preset will be overwritten to "
-                         u"default values! proceed?"), 
+                         u"default values!\nproceed?"), 
                          _(u"Videomass: Please confirm"), wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
@@ -391,13 +401,15 @@ class PresetsPanel(wx.Panel):
         restore all preset files in the path presets of the program
         """
         if wx.MessageBox(_(u"WARNING: you are going to restore all default "
-                           u"presets from videomass! Proceed?"), 
+                           u"presets from videomass!\nProceed?"), 
                          _(u"Videomass: Please confirm"), 
                          wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
             return
 
         copy_on('vdms', self.path_srcShare, self.path_confdir)
+        
+        self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
     def Refresh(self):
         """ 
@@ -512,7 +524,7 @@ class PresetsPanel(wx.Panel):
                                  wx.ICON_QUESTION | 
                                  wx.YES_NO, self) == wx.NO:
                 return
-            
+
         array3, array4 = array[3], array[4]
         file_sources = supported_formats(array3, file_sources)
         checking = inspect(file_sources, dir_destin, array4)

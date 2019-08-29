@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (10) December 28 2018
+# Rev: Dec.28 2018, Aug.29 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -28,15 +28,23 @@
 #########################################################
 
 import time
+import os
 
 def write_log(logname, dirconf):
     """
     During the process, it write log about what the program does,
     command output and including errors.
-    The log is stored in ~/user/.videomass by default.
+    The log is stored in 'videomass/log' by default.
 
     - logname è il nome del pannello da cui è stato composto il comando
     """
+    if not os.path.isdir(dirconf):
+        try:
+            os.mkdir(dirconf)
+        except OSError as e:
+            print(e)
+            print ("Creation of the directory %s failed" % dirconf)
+            
     current_date =  time.strftime("%c") # date/time
 
     with open("%s/%s" % (dirconf, logname),"w") as log:

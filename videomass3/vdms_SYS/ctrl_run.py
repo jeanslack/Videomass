@@ -3,7 +3,7 @@
 #########################################################
 # Name: ctrl_run.py
 # Porpose: Program boot data
-# Compatibility: Python2, Python3
+# Compatibility: Python3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -78,16 +78,16 @@ def system_check():
     checking the configuration folder  
     
     """
-    copyerr = False
-    existfileconf = True # il file conf esiste (True) o non esiste (False)
-
+    #----------------------------------------------------------- #
+    #### Set locale path and source data for restoring if needed #
+    #------------------------------------------------------------#
     if os.path.isdir('%s/art' % WORKdir):
-        #launch without installing on any OS or .exe and .app
+        #launch in local on any OS or as .exe and .app also
         localepath = 'locale'
         SRCpath = '%s/share' % WORKdir
         IS_LOCAL = True
         
-    else: # Path system installation (usr, usr/local, ~/.local, \python27\)
+    else: # Path system installation (usr, usr/local, ~/.local)
         if OS == 'Windows':
             #Installed with 'pip install videomass' command
             pythonpath = os.path.USERName(sys.executable)
@@ -114,9 +114,14 @@ def system_check():
                 localepath = userbase + '/share/locale'
                 SRCpath = userbase + '/share/videomass/config'
                 IS_LOCAL = False
-
-    #### check videomass.conf and config. folder
-    if os.path.exists(os.path.dirname(FILEconf)):#if exist folder ~/.videomass
+                
+    #--------------------------------------------#
+    #### check videomass.conf and config. folder #
+    #--------------------------------------------#
+    copyerr = False
+    existfileconf = True # file conf esiste (True) o non esiste (False)
+    
+    if os.path.exists(os.path.dirname(FILEconf)): # if exist conf. folder
         if os.path.isfile(FILEconf):
             DATAconf = parsing_fileconf() # fileconf data
             if DATAconf == 'corrupted':
@@ -135,14 +140,14 @@ def system_check():
                 elif OS == ('Windows'):
                     shutil.copyfile('%s/videomassWin32.conf' % SRCpath, 
                                     FILEconf)
-                DATAconf = parsing_fileconf() # DATAconf data, reread the file
+                DATAconf = parsing_fileconf() # read again file conf
             except IOError:
                 copyerr = True
                 DATAconf = 'corrupted'
     else:
         try:
             shutil.copytree(SRCpath, DIRconf)
-            DATAconf = parsing_fileconf() # DATAconf data, reread the file
+            DATAconf = parsing_fileconf() #  read again file conf
         except OSError:
             copyerr = True
             DATAconf = 'corrupted'

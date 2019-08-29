@@ -215,14 +215,14 @@ class MemPresets(wx.Dialog):
         if nameprofile == '' or descriptprofile == '' or\
                                 paramprofile == '' or extprofile ==  '':
                                     
-            wx.MessageBox(_(u"Incomplete profile assignement. I can't save"),
-                        "Videomass: warning", wx.ICON_EXCLAMATION, self)
+            wx.MessageBox(_(u"Incomplete profile assignements"),
+                             "Videomass", wx.ICON_INFORMATION, self)
             return
                                             
         elif cod_names in raw_list and self.arg == 'newprofile': # if exist name
                 
-            wx.MessageBox(_(u"Profile already stored with the same name."), 
-                          "Videomass: warning", wx.ICON_EXCLAMATION, self)
+            wx.MessageBox(_(u"Profile already stored with the same name"), 
+                             "Videomass", wx.ICON_INFORMATION, self)
             return
 
         if self.arg == 'edit':
@@ -259,19 +259,19 @@ class MemPresets(wx.Dialog):
             #rlist.close()
         
         if self.arg == 'newprofile':
-            wx.MessageBox(_(u"Successfull storing !"))
+            wx.MessageBox(_(u"Successfull storing!"))
             self.txt_name.SetValue(''), self.txt_descript.SetValue(''),
             self.txt_cmd.SetValue(''), self.txt_ext.SetValue('')
             self.txt_supp.SetValue('')
             
         elif self.arg == 'edit':
-            wx.MessageBox(_(u"Successfull modified !"))
+            wx.MessageBox(_(u"Successfull changes!"))
             #self.Destroy() # con ID_OK e ID_CANCEL non serve
             
         elif self.arg == 'addprofile':
-            wx.MessageBox(_(u"Successfull storing !\n\n"
-                          u"You will find this profile in the 'User Profiles' "
-                          u"preset in the 'Presets Manager' panel.\n"
+            wx.MessageBox(_(u"Successfull storing!\n\n"
+                          u"You will find this profile in the 'User "
+                          u"Profile' preset in the 'Presets Manager' panel.\n"
                           u"Use the 'Reload presets list' on File menu to "
                           u"update profile list."))
                 

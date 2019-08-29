@@ -22,19 +22,27 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (09) 16 july 2018
+# Rev: july 6 2018, Aug.29 2019
 #########################################################
 
 import time
+import os
 
 def write_log(logname, dirconf):
     """
     During the process, it write log about what the program does,
     command output and including errors.
-    The log is stored in ~/user/.videomass by default.
+    The log is stored in 'videomass/log' by default.
 
     - logname è il nome del pannello da cui è stato composto il comando
     """
+    if not os.path.isdir(dirconf):
+        try:
+            os.mkdir(dirconf)
+        except OSError as e:
+            print(e)
+            print ("Creation of the directory %s failed" % dirconf)
+            
     current_date =  time.strftime("%c") # date/time
 
     with open("%s/%s" % (dirconf, logname),"w") as log:

@@ -29,6 +29,7 @@ import wx
 
 get = wx.GetApp()
 OS = get.OS
+DIRconf = get.DIRconf
 
 if OS == 'Windows':
     from videomass2.vdms_PROCESS.task_processingWin32 import GeneralProcess
@@ -49,6 +50,7 @@ from videomass2.vdms_PROCESS.check_bin import ff_conf
 from videomass2.vdms_PROCESS.check_bin import ff_formats
 from videomass2.vdms_PROCESS.check_bin import ff_codecs
 from videomass2.vdms_PROCESS.check_bin import ff_topics
+from videomass3.vdms_PROCESS.opendir import browse
 from videomass2.vdms_DIALOGS import ffmpeg_conf
 from videomass2.vdms_DIALOGS import ffmpeg_formats
 from videomass2.vdms_DIALOGS import ffmpeg_codecs
@@ -245,3 +247,12 @@ def findtopic(ffmpeg_link, topic):
         return(s)
     else:
         return(retcod[1])
+#-------------------------------------------------------------------------#
+def openpath(mod):
+    """
+    Call vdms_PROCESS.opendir.browse
+    """
+    if mod == 'dirconf':
+        browse(OS, DIRconf)
+    else:
+        browse(OS, "%s/log" % DIRconf)

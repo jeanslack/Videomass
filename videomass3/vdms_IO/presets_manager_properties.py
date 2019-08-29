@@ -82,6 +82,7 @@ def parser_xml(arg, dirconf):
     with open(prst,'r') as fread:
         data = fread.read()
 
+
     parser = parseString(data) # fa il parsing del file xml ed esce: 
                             # <xml.dom.minidom.Document instance at 0x8141eec>
     dati = dict() 
@@ -107,6 +108,7 @@ def parser_xml(arg, dirconf):
 
             dati[name] = { "type": types, "parametri": params, 
                            "filesupport": support, "estensione": ext }
+            
     #return dati[name]
 
     return dati

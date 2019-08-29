@@ -127,7 +127,7 @@ class GeneralProcess(wx.Panel):
         initlog = ('\nInitial log:\n')
         print ('\n\n[VIDEOMASS]\n%s' % initlog)
         #self.OutText.AppendText("%s" % initlog)
-        write_log(self.logname, DIRconf) # set initial file LOG
+        write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
         time.sleep(.1)
         
@@ -196,7 +196,7 @@ class GeneralProcess(wx.Panel):
                 self.OutText.AppendText('\n%s' % output)
                 
                 # write a row error into file log:
-                with open("%s/%s" % (DIRconf, self.logname), "a") as logerr:
+                with open("%s/log/%s" % (DIRconf, self.logname), "a") as logerr:
                     logerr.write("[FFMPEG] ERRORS:\n%s" % (output))
 
     #-------------------------------------------------------------------#
@@ -411,7 +411,7 @@ class ProcThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
+        with open("%s/log/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -591,7 +591,7 @@ class DoublePassThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
+        with open("%s/log/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -696,7 +696,7 @@ class SingleProcThread(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
+        with open("%s/log/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):
@@ -832,7 +832,7 @@ class GrabAudioProc(Thread):
         write all ffmpeg commands
         
         """
-        with open("%s/%s" % (DIRconf, self.logname), "a") as log:
+        with open("%s/log/%s" % (DIRconf, self.logname), "a") as log:
             log.write("%s\n\n" % (cmd))
     #----------------------------------------------------------------#
     def endProc(self, mess, status):

@@ -632,7 +632,14 @@ class MainFrame(wx.Frame):
         toolsButton.AppendSeparator()
         searchtopic = toolsButton.Append( wx.ID_ANY, _("FFmpeg search topics"),
                         _("Show a dialog box to help you find FFmpeg topics"))
-        self.menuBar.Append(toolsButton,_(u"&Tools"))
+        toolsButton.AppendSeparator()
+        openlogdir = toolsButton.Append( wx.ID_ANY,
+                                         _("Open the log directory"),
+                                    _("Opens the log directory if it exists"))
+        openconfdir = toolsButton.Append( wx.ID_ANY,
+                                         _("Videomass configuration directory"),
+                                        _("Opens the configuration directory"))
+        self.menuBar.Append(toolsButton,_("&Tools"))
         
         ####------------------ setup button
         setupButton = wx.Menu()
@@ -653,17 +660,17 @@ class MainFrame(wx.Frame):
         
         ####------------------ help buton
         helpButton = wx.Menu()
-        helpItem = helpButton.Append( wx.ID_HELP, _(u"User Guide"), "")
-        wikiItem = helpButton.Append( wx.ID_ANY, _(u"Wiki"), "")
-        issueItem = helpButton.Append( wx.ID_ANY, _(u"Issue tracker"), "")
+        helpItem = helpButton.Append( wx.ID_HELP, _("User Guide"), "")
+        wikiItem = helpButton.Append( wx.ID_ANY, _("Wiki"), "")
+        issueItem = helpButton.Append( wx.ID_ANY, _("Issue tracker"), "")
         helpButton.AppendSeparator()
         DonationItem = helpButton.Append( wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()
-        docFFmpeg = helpButton.Append(wx.ID_ANY, _(u"FFmpeg documentation"), "")
+        docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
         helpButton.AppendSeparator()
-        checkItem = helpButton.Append(wx.ID_ANY, _(u"Check new releases"), "")
-        infoItem = helpButton.Append(wx.ID_ABOUT, _(u"About Videomass"), "")
-        self.menuBar.Append(helpButton, _(u"&Help"))
+        checkItem = helpButton.Append(wx.ID_ANY, _("Check new releases"), "")
+        infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
+        self.menuBar.Append(helpButton, _("&Help"))
 
         self.SetMenuBar(self.menuBar)
         
@@ -683,6 +690,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
         self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
+        self.Bind(wx.EVT_MENU, self.Openlog, openlogdir)
+        self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
         
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
@@ -830,6 +839,20 @@ class MainFrame(wx.Frame):
         """
         dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link, self.OS)
         dlg.Show()
+    #------------------------------------------------------------------#
+    def Openlog(self, event):
+        """
+        Open the log diretctory with file manager
+        
+        """
+        IO_tools.openpath('openlog')
+    #------------------------------------------------------------------#
+    def Openconf(self, event):
+        """
+        Open the configuration folder with file manager
+        
+        """
+        IO_tools.openpath('dirconf')
         
     #---------------------------- Menu Edit ----------------------------#
     def Helpme(self, event):

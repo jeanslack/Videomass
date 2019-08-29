@@ -12,10 +12,12 @@ August 25, 2019 V.1.5.6
     
 IMPROVEMENTS:
     - Translation improvements
-    - Improved fonts depending on the operating system
+    - Improved fonts depending on the operating system in some dialog
     - code thinning in some dialog box
-    
-    
+    - When you import a previously saved preset to replace it with another 
+      one, you no longer need to select it in the drop-down menu
+    - Automatic reload presets list after restore presets 
+        
 BUG FIXES:
     - Fixed append text issue when use dialog box to search 
       FFmpeg options on Windows
@@ -26,7 +28,16 @@ REMOVALS and DISPLACEMENTS:
         On *nix OS's:  '~/.config/videomass'
         On MacOs:      '~/Library/Application Support/videomass'
         On Windows:    'C:\Users\username\AppData\Roaming\videomass'
-      
+    - During processes conversion the new default logs directory is
+      located to videomass directory configuration;log
+
+ADD:
+    - new function to open the file manager on the Videomass configuration 
+      directory and on the logs directory (platform independent)
+    - Add the "Don't show this dialog again" on dialog before start 
+      conversion on the Presets_Manager when profile command has been
+      changed manually (Python3 only)
+
 +------------------------------------+
 August 24, 2019 V.1.5.5
 +------------------------------------+

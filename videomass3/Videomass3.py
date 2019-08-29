@@ -65,6 +65,7 @@ class Videomass(wx.App):
         This is a bootstrap interface. The 'setui' calls the function that 
         prepares the environment configuration. The 'DATAconf' take all 
         values of the file configuration.
+        
         """
         setui = system_check() # for user-space settings
         DATAconf = setui[4] # for user interface settings

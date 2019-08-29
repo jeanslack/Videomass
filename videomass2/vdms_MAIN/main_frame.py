@@ -623,16 +623,23 @@ class MainFrame(wx.Frame):
         checkconf = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg specifications"), 
                                 u"Shows the configuration features of FFmpeg")
         toolsButton.AppendSeparator()
-        ckformats = toolsButton.Append( wx.ID_ANY, _("FFmpeg file formats"),
-                                _("Shows file formats available on FFmpeg"))
+        ckformats = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg file formats"),
+                                _(u"Shows file formats available on FFmpeg"))
         toolsButton.AppendSeparator()
-        ckcoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg encoders"),
-                                _("Shows available encoders on FFmpeg"))
-        ckdecoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg decoders"),
-                                _("Shows available decoders on FFmpeg"))
+        ckcoders = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg encoders"),
+                                _(u"Shows available encoders on FFmpeg"))
+        ckdecoders = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg decoders"),
+                                _(u"Shows available decoders on FFmpeg"))
         toolsButton.AppendSeparator()
-        searchtopic = toolsButton.Append( wx.ID_ANY, _("FFmpeg search topics"),
-                        _("Show a dialog box to help you find FFmpeg topics"))
+        searchtopic = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg search topics"),
+                        _(u"Show a dialog box to help you find FFmpeg topics"))
+        toolsButton.AppendSeparator()
+        openlogdir = toolsButton.Append( wx.ID_ANY,
+                                         _(u"Open the log directory"),
+                                    _(u"Opens the log directory if it exists"))
+        openconfdir = toolsButton.Append( wx.ID_ANY,
+                                         _(u"Videomass configuration directory"),
+                                        _(u"Opens the configuration directory"))
         self.menuBar.Append(toolsButton,_(u"&Tools"))
         
         ####------------------ setup button
@@ -684,6 +691,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
         self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
+        self.Bind(wx.EVT_MENU, self.Openlog, openlogdir)
+        self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
         self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
@@ -790,6 +799,20 @@ class MainFrame(wx.Frame):
         """
         dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link, self.OS)
         dlg.Show()
+    #------------------------------------------------------------------#
+    def Openlog(self, event):
+        """
+        Open the log diretctory with file manager
+        
+        """
+        IO_tools.openpath('openlog')
+    #------------------------------------------------------------------#
+    def Openconf(self, event):
+        """
+        Open the configuration folder with file manager
+        
+        """
+        IO_tools.openpath('dirconf')
                 
     #------------------------ Menu  Preferences -------------------------#
     def Show_toolbar(self, event):
