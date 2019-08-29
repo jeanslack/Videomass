@@ -28,28 +28,42 @@
 #########################################################
 
 import subprocess
+import os
 
-def browse(OS, pathname):
+def browse(OS, pathname, mod):
     """
     open file browser in a specific location with
     file manager of the OS
     
     """
-    if OS == 'Windows':
-        os.startfile(pathname)
+    if mod != 'dirconf':
+        path = os.path.join(pathname, "log") # normalize os pathname
+    
+    else:
+        path = pathname
         
+    #--------------------- OS:
+    if OS == 'Windows':
+        try:
+            os.startfile(path)
+        except FileNotFoundError as e:
+            return(str(e))
+                
     elif OS == 'Darwin':
-        p = subprocess.run(['open', pathname], capture_output=True)
+        p = subprocess.run(['open', path], capture_output=True)
         if p.stderr:
             return(p.stderr.decode())
         
-    else:
+    else: # Gnome, KDE, Xfce, Mate
         try:
-            p = subprocess.Popen(['xdg-open', pathname])
-        except OSError:
-            print('error, think of something else to try\n'
-                  'xdg-open *should* be supported by recent Gnome, KDE, Xfce\n'
-                  )
+            p = subprocess.Popen(['xdg-open', path], stderr=subprocess.PIPE)
+            out, err = p.communicate()
+        
+            if err:
+                return(err)
+            
+        except OSError as e:
+            return(e)
             # er, think of something else to try
             # xdg-open *should* be supported by recent Gnome, KDE, Xfce
     return

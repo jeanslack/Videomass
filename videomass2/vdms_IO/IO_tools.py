@@ -251,14 +251,10 @@ def findtopic(ffmpeg_link, topic):
 def openpath(mod):
     """
     Call vdms_PROCESS.opendir.browse
+    
     """
-    if mod == 'dirconf':
-        ret = browse(OS, DIRconf)
-        
-    else:
-        ret = browse(OS, "%s/log" % DIRconf)
-        
+    ret = browse(OS, DIRconf, mod)
     if ret:
-        wx.MessageBox(ret, 'Videomass', wx.ICON_INFORMATION, None)
+        wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
 #-------------------------------------------------------------------------#
 
