@@ -355,13 +355,13 @@ class PresetsPanel(wx.Panel):
                     vdms = False
             
             if not vdms:
-                wx.MessageBox(_(u"'{0}' \n\nThis file does not match those "
-                                u"used by Videomass:").format(dirname), 
+                wx.MessageBox(_(u"This file does not match those used "
+                                u"by Videomass:\n\n'{0}'").format(dirname), 
                                 u"Videomass",  wx.ICON_INFORMATION, self)
                 return
             
             if wx.MessageBox(_(u"The following preset:\n\n"
-                               u"'%s'   (%s)\n\n"
+                               u"'{0}'   ({1})\n\n"
                                u"will be imported and will overwrite "
                                u"the one in use.\n"
                                u"Proceed ?") % (tail, name), 
@@ -383,7 +383,7 @@ class PresetsPanel(wx.Panel):
         selected preset.
         """ 
         #copy_restore('%s/share/av_presets.xml' % (self.PWD), '%s' % (self.dirconf))
-        if wx.MessageBox(_(u"The current preset will be overwritten to "
+        if wx.MessageBox(_(u"The selected preset will be overwritten to "
                          u"default values!\nproceed?"), 
                          _(u"Videomass: Please confirm"), wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:
@@ -400,8 +400,8 @@ class PresetsPanel(wx.Panel):
         """
         restore all preset files in the path presets of the program
         """
-        if wx.MessageBox(_(u"WARNING: you are going to restore all default "
-                           u"presets from videomass!\nProceed?"), 
+        if wx.MessageBox(_(u"WARNING: you are restoring all the "
+                           u"default presets!\nProceed?"), 
                          _(u"Videomass: Please confirm"), 
                          wx.ICON_QUESTION | 
                          wx.YES_NO, self) == wx.NO:

@@ -188,21 +188,18 @@ class GeneralProcess(wx.Panel):
                         'Unknown',
                         'No such file or directory')
             
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+            self.OutText.AppendText('\n%s' % output)
+            with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
+                logerr.write("[FFMPEG] ERRORS:\n%s\n\n" % (output))
+                # write a row error into file log
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            
             for err in err_list:
                 global STATUS_ERROR
                 if err in output:
                     self.STATUS_ERROR = 1
                     STATUS_ERROR = 1
-            if self.STATUS_ERROR == 1:
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 
-                                                                   183, 
-                                                                   47)))
-                self.OutText.AppendText('\n%s' % output)
-                
-                # write a row error into file log:
-                with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
-                    logerr.write("[FFMPEG] ERRORS:\n%s" % (output))
-
     #-------------------------------------------------------------------#
     def update_count(self, count, duration, fname):
         """
@@ -254,7 +251,7 @@ class GeneralProcess(wx.Panel):
             self.button_close.Enable(True)
 
         elif self.CHANGE_STATUS == 1 or CHANGE_STATUS == 1:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(164, 30, 164)))
             self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
@@ -269,7 +266,7 @@ class GeneralProcess(wx.Panel):
 
         #if user want file log in a specified path
         if not 'none' in self.path_log : 
-            copy_restore("%s/%s" % (DIRconf, self.logname),
+            copy_restore("%s/log/%s" % (DIRconf, self.logname),
                          "%s/%s" % (self.path_log, self.logname))
 
 

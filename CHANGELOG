@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-August 25, 2019 V.1.5.6
+August 30, 2019 V.1.5.8
 +------------------------------------+
     
 IMPROVEMENTS:
@@ -17,10 +17,17 @@ IMPROVEMENTS:
     - When you import a previously saved preset to replace it with another 
       one, you no longer need to select it in the drop-down menu
     - Automatic reload presets list after restore presets 
+    - Added the video name in the "save audio stream from video" dialog when 
+      multiple languages ​​are available. This is good when you import more videos 
+      with more audio streams.
+    - Improved log view in the Process panel
+    - Improved writing log during the processes
         
 BUG FIXES:
     - Fixed append text issue when use dialog box to search 
       FFmpeg options on Windows
+    - Set default when the user cancels the "save audio stream from video" 
+      dialog to avoid errors.
       
 REMOVALS and DISPLACEMENTS: 
     - Changed default location of the 'videomass' configuration directory 

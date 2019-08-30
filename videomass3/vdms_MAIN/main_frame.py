@@ -633,12 +633,11 @@ class MainFrame(wx.Frame):
         searchtopic = toolsButton.Append( wx.ID_ANY, _("FFmpeg search topics"),
                         _("Show a dialog box to help you find FFmpeg topics"))
         toolsButton.AppendSeparator()
-        openlogdir = toolsButton.Append( wx.ID_ANY,
-                                         _("Open the log directory"),
-                                    _("Opens the log directory if it exists"))
+        openlogdir = toolsButton.Append( wx.ID_ANY, _("Log directory"),
+                            _("Opens the Videomass log directory if it exists"))
         openconfdir = toolsButton.Append( wx.ID_ANY,
-                                         _("Videomass configuration directory"),
-                                        _("Opens the configuration directory"))
+                                         _("Configuration directory"),
+                            _("Opens the Videomass configuration directory"))
         self.menuBar.Append(toolsButton,_("&Tools"))
         
         ####------------------ setup button

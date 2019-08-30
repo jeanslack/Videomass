@@ -246,6 +246,7 @@ class Audio_Conv(wx.Panel):
 
     #----------------------Event handler (callback)----------------------#
     #------------------------------------------------------------------#
+    
     def audioFormats(self, evt):
         """
         Get selected container from combobox
@@ -255,8 +256,6 @@ class Audio_Conv(wx.Panel):
                 self.normalization_disabled()
             self.ckb_norm.Disable(), self.ckb_onlynorm.Disable()
             self.txt_options.Disable(), self.btn_param.Disable()
-            file_sources = self.parent.file_sources[:]
-            self.audiocopy(file_sources)
         else:
             if not self.ckb_norm.IsChecked():# è l'unico caso questo
                 self.ckb_norm.Enable(), self.ckb_onlynorm.Enable(), 
@@ -366,9 +365,10 @@ class Audio_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def audiocopy(self,file_sources):
         """
-        Try copying and saving the audio stream on a video by recognizing 
-        the codec and then assigning a container/format. If there is more than
-        one audio stream in a video, a choice is made to the user.
+        Try copying and saving the audio stream on a video by 
+        recognizing the codec and then assigning a container/format. 
+        If there is more than one audio stream in a video, a choice 
+        is made to the user.
         """
         cmd_opt["ExportExt"] = []
         cmd_opt["AudioCodec"] = []
@@ -383,18 +383,21 @@ class Audio_Conv(wx.Panel):
                 wx.ICON_ERROR, self)
                 return
             # Proceed with the istance method call:
-            audio_list = metadata.get_audio_codec_name()
-            # ...and proceed to checkout:
+            datastream = metadata.get_audio_codec_name()
+            audio_list = datastream[0]
+
             if audio_list == None:
                 wx.MessageBox(_("There are no audio streams:\n%s ") % (files), 
-                            'Videomass: warning', wx.ICON_EXCLAMATION, self)
+                            'Videomass', wx.ICON_INFORMATION, self)
                 return
 
             elif len(audio_list) > 1:
+                title = datastream[1]
                 dlg = wx.SingleChoiceDialog(self, 
-                        _("The imported video contains multiple audio\n" 
-                        "streams. Select which stream you want to\n"
-                        "export between these:"), 
+                        _("{0}\n\n"
+                          "Contains multiple audio streams. " 
+                          "Select which audio stream you want to "
+                          "export between these:").format(title), 
                         _("Videomass: Stream choice"),
                         audio_list, wx.CHOICEDLG_STYLE
                                             )
@@ -407,13 +410,21 @@ class Audio_Conv(wx.Panel):
                         cmd_opt["CodecCopied"].append(cn)#used for epilogue
                         if cn in ('aac','alac'): cn = 'm4a'
                         if cn in ('ogg','vorbis'): cn = 'oga'
+                        if cn.startswith('pcm_'): cn = 'wav'
                         cmd_opt["ExportExt"].append(cn)
                     else:
-                        wx.MessageBox(_("Nothing choice:\n%s ") % (files), 
+                        wx.MessageBox(_(u"Nothing choice:\n%s ") % (files), 
                             'Videomass: Error', wx.ICON_ERROR, self)
                         return
-                else:
-                    pass
+                else: # there must be some choice (default first item list)
+                    cn = ''.join(audio_list[0]).split()[4]
+                    indx = ''.join(audio_list[0]).split()[1]
+                    cmd_opt["AudioCodec"].append("-map 0:%s -c copy" % indx)
+                    cmd_opt["CodecCopied"].append(cn)#used for epilogue
+                    if cn in ('aac','alac'): cn = 'm4a'
+                    if cn in ('ogg','vorbis'): cn = 'oga'
+                    if cn.startswith('pcm_'): cn = 'wav'
+                    cmd_opt["ExportExt"].append(cn)
                 dlg.Destroy()
             else:
                 cn = ''.join(audio_list[0]).split()[4]
@@ -422,6 +433,7 @@ class Audio_Conv(wx.Panel):
                 cmd_opt["CodecCopied"].append(cn)#used for epilogue
                 if cn in ('aac','alac'): cn = 'm4a'
                 if cn in ('ogg','vorbis'): cn = 'oga'
+                if cn.startswith('pcm_'): cn = 'wav'
                 cmd_opt["ExportExt"].append(cn)
 
     #------------------------------------------------------------------#
@@ -550,7 +562,8 @@ class Audio_Conv(wx.Panel):
         """
         self.time_seq = self.parent.time_seq
         if self.cmbx_a.GetValue() == _("Save audio from movie"):
-            self.audioFormats(self)
+            file_sources = self.parent.file_sources[:]
+            self.audiocopy(file_sources)
     #------------------------------------------------------------------#
     def on_ok(self):
         """

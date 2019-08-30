@@ -250,7 +250,7 @@ class MemPresets(wx.Dialog):
             rlist.writelines(model)
         
         if self.arg == 'newprofile':
-            wx.MessageBox(_("Successfull storing!"))
+            wx.MessageBox(_("Successful storing!"))
             self.txt_name.SetValue(''), self.txt_descript.SetValue(''),
             self.txt_cmd.SetValue(''), self.txt_ext.SetValue('')
             self.txt_supp.SetValue('')
@@ -260,7 +260,7 @@ class MemPresets(wx.Dialog):
             #self.Destroy() # con ID_OK e ID_CANCEL non serve
             
         elif self.arg == 'addprofile':
-            wx.MessageBox(_("Successfull storing!\n\n"
+            wx.MessageBox(_("Successful storing!\n\n"
                           "You will find this profile in the 'User "
                           "Profiles'preset in the 'Presets Manager' panel.\n"
                           "Use the 'Reload presets list' on File menu to "
