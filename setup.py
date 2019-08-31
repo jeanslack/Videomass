@@ -174,7 +174,7 @@ def SOURCE_BUILD():
 
     """
     DATA_FILES = [  # even path must be relative-path
-            ('share/videomass/config', glob_files('share/*.vdms')),
+            ('share/videomass/config', glob_files('share/vdms/*.vdms')),
             ('share/videomass/config', ['share/videomass.conf',
                                         'share/videomassWin32.conf',
                                         'share/README']),
@@ -219,7 +219,7 @@ def OSX():
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
 
     # place sources even path must be relative-path
-    data = [('share', glob_files('share/*.vdms')),
+    data = [('share', glob_files('share/vdms/*.vdms')),
             ('share', ['share/videomass.conf']),
             ('art/icons', glob_files('art/icons/*.png')),
             ('', ['AUTHORS', 'BUGS',
@@ -285,7 +285,7 @@ def WIN32():
                         '%s/bin/Videomass.py' % PWD
                         )
 
-    data = [('share', glob_files('share/*.vdms')),
+    data = [('share', glob_files('share/vdms/*.vdms')),
             ('share', glob_files('share/*.conf')),
             ('art/icons', glob_files('art/icons/*.png')),
             ('', ['art/videomass.ico']),

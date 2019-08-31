@@ -82,7 +82,7 @@ class PresetsPanel(wx.Panel):
                  ffmpeg_link, OS):
         
         self.path_srcShare = path_srcShare
-        self.path_confdir = path_confdir
+        self.src_vdms = os.path.join(path_confdir,'vdms')
         self.PWD = PWD
         self.threads = threads
         self.cpu_used = cpu_used
@@ -220,7 +220,7 @@ class PresetsPanel(wx.Panel):
         """
         try:
             av_presets = dict_presets[self.cmbx_prst.GetValue()][0]
-            dati = parser_xml(av_presets, self.path_confdir) # xml parsing
+            dati = parser_xml(av_presets, self.src_vdms) # xml parsing
             
             self.list_ctrl.InsertColumn(0, _('Profile Name'), width=230)
             self.list_ctrl.InsertColumn(1, _('Description'), width=350)
@@ -264,7 +264,7 @@ class PresetsPanel(wx.Panel):
         are content it on presets and are selected in list_ctrl
         """
         combvalue = dict_presets[self.cmbx_prst.GetValue()][0] # name xml
-        dati = parser_xml(combvalue, self.path_confdir) # All data go in dict
+        dati = parser_xml(combvalue, self.src_vdms) # All data go in dict
         if array != []:
             del array[0:5] # delete all: lista [0],[1],[2],[3],[4]
             
@@ -315,7 +315,7 @@ class PresetsPanel(wx.Panel):
         same name where is saved to restore it correctly
         """
         combvalue = dict_presets[self.cmbx_prst.GetValue()][0]
-        filedir = '%s/%s.vdms' % (self.path_confdir, combvalue)
+        filedir = '%s/%s.vdms' % (self.src_vdms, combvalue)
         filename = combvalue
         
         dialsave = wx.DirDialog(self, _("Select a directory to save it"))
@@ -368,7 +368,7 @@ class PresetsPanel(wx.Panel):
                 return
             
             copy_restore('%s' % (dirname), 
-                         '%s/%s' % (self.path_confdir, tail))
+                         '%s/%s' % (self.src_vdms, tail))
             
             self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
@@ -389,7 +389,7 @@ class PresetsPanel(wx.Panel):
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
         copy_restore('%s/%s.vdms' % (self.path_srcShare, 
                                      filename
-                                     ), '%s/%s.vdms' % (self.path_confdir, 
+                                     ), '%s/%s.vdms' % (self.src_vdms, 
                                                         filename))
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
@@ -404,7 +404,7 @@ class PresetsPanel(wx.Panel):
                             wx.YES_NO, self) == wx.NO:
             return
 
-        copy_on('vdms', self.path_srcShare, self.path_confdir)
+        copy_on('vdms', self.path_srcShare, self.src_vdms)
         
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
@@ -423,7 +423,7 @@ class PresetsPanel(wx.Panel):
         """
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
         name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
-        full_pathname = '%s/%s.vdms' % (self.path_confdir, filename)
+        full_pathname = '%s/%s.vdms' % (self.src_vdms, filename)
 
         prstdialog = presets_addnew.MemPresets(self, 
                                                'newprofile', 
@@ -450,7 +450,7 @@ class PresetsPanel(wx.Panel):
         else:
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
-            full_pathname = '%s/%s.vdms' % (self.path_confdir, filename)
+            full_pathname = '%s/%s.vdms' % (self.src_vdms, filename)
             
             prstdialog = presets_addnew.MemPresets(self, 
                                                    'edit', 
@@ -483,7 +483,7 @@ class PresetsPanel(wx.Panel):
         
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             # call module-function and pass list as argument
-            delete_profiles(array, filename, self.path_confdir)
+            delete_profiles(array, filename, self.src_vdms)
             self.reset_list()
     #------------------------------------------------------------------#
     def on_ok(self):

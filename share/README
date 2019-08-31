@@ -3,6 +3,8 @@ NOTE FOR share/ folder:
 =======================
 
 This directory contains the configuration files of videomass:
+the 'vdms' folder contains Videomass presets files with the 
+extension '* .vdms'.
 the *.vdms files, are simple xml files need for presets list;
 the videomass.conf and the videomassWin32.conf are the main 
 configuration files to store the user preferences.
