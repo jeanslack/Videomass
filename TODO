@@ -15,6 +15,8 @@ URGENCY: to do soon
 - also the presets can be added and deleted
 - Aplphanurical order profiles list
 - Main window to choose topic
+- Normalization: when import more files and analyzes button is clicked 
+                 open a wx.TextCtrl and list all normalization parameters
 --------------
 URGENCY: high
 --------------
