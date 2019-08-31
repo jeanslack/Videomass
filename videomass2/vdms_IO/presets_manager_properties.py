@@ -68,7 +68,7 @@ def supported_formats(array3, file_sources):
 # PARSINGS XML FILES AND FUNCTION FOR DELETING
 ########################################################################
 
-def parser_xml(arg, dirconf): # arg é il nome del file xml (vdms) 
+def parser_xml(arg, src): # arg é il nome del file xml (vdms) 
     """
     Used by presets_mng_panel.py to make parsing and read the xml data 
     on vdms files (the vdms files are xml files with extension '.vdms').
@@ -78,7 +78,7 @@ def parser_xml(arg, dirconf): # arg é il nome del file xml (vdms)
     {name: {filesupport:?, descript:?, command:?, extens:?}, else: {etc etc}}
     
     """
-    prst = os.path.join('%s' % dirconf, '%s.vdms' % arg)
+    prst = os.path.join('%s' % src, '%s.vdms' % arg)
     with open(prst,'r') as fread:
         data = fread.read()
 

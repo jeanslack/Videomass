@@ -80,8 +80,8 @@ class PresetsPanel(wx.Panel):
                  PWD, threads, cpu_used, loglevel_type, 
                  ffmpeg_link, OS):
 
-        self.path_srcShare = path_srcShare
-        self.src_vdms = os.path.join(path_confdir, 'vdms')
+        self.src_vdms = os.path.join(path_srcShare, 'vdms')
+        self.user_vdms = os.path.join(path_confdir, 'vdms')
         self.PWD = PWD
         self.threads = threads
         self.cpu_used = cpu_used
@@ -224,7 +224,7 @@ class PresetsPanel(wx.Panel):
                            #dict_presets[self.cmbx_prst.GetValue()][1]),None
             #)
             av_presets = dict_presets[self.cmbx_prst.GetValue()][0]
-            dati = parser_xml(av_presets, self.src_vdms) # xml parsing
+            dati = parser_xml(av_presets, self.user_vdms) # xml parsing
             
             self.list_ctrl.InsertColumn(0, _(u'Profile Name'), width=230)
             self.list_ctrl.InsertColumn(1, _(u'Description'), width=350)
@@ -268,7 +268,7 @@ class PresetsPanel(wx.Panel):
         are content it on presets and are selected in list_ctrl
         """
         combvalue = dict_presets[self.cmbx_prst.GetValue()][0] # name xml
-        dati = parser_xml(combvalue, self.src_vdms) # All data go in dict
+        dati = parser_xml(combvalue, self.user_vdms) # All data go in dict
         if array != []:
             del array[0:5] # delete all: lista [0],[1],[2],[3],[4]
             
@@ -319,7 +319,7 @@ class PresetsPanel(wx.Panel):
         """
         print 'saveme'
         combvalue = dict_presets[self.cmbx_prst.GetValue()][0]
-        filedir = '%s/%s.vdms' % (self.src_vdms, combvalue)
+        filedir = '%s/%s.vdms' % (self.user_vdms, combvalue)
         filename = combvalue
         
         dialsave = wx.DirDialog(self, _(u"Select a directory to save it"))
@@ -364,7 +364,7 @@ class PresetsPanel(wx.Panel):
                                u"'{0}'   ({1})\n\n"
                                u"will be imported and will overwrite "
                                u"the one in use.\n"
-                               u"Proceed ?") % (tail, name), 
+                               u"Proceed ?").format(tail, name), 
                              _(u'Videomass: Please confirm'), 
                                                 wx.ICON_QUESTION | 
                                                 wx.YES_NO, 
@@ -372,7 +372,7 @@ class PresetsPanel(wx.Panel):
                 return
             
             copy_restore('%s' % (dirname), 
-                         '%s/%s' % (self.src_vdms, tail))
+                         '%s/%s' % (self.user_vdms, tail))
             
             self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
@@ -390,10 +390,10 @@ class PresetsPanel(wx.Panel):
             return
         
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
-        copy_restore('%s/%s.vdms' % (self.path_srcShare, 
-                                     filename
-                                     ), '%s/%s.vdms' % (self.src_vdms,
-                                                        filename))
+        copy_restore('%s/%s.vdms' % (self.src_vdms, 
+                                     filename), 
+                                     '%s/%s.vdms' % (self.user_vdms,
+                                                     filename))
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
     def Default_all(self):
@@ -407,7 +407,7 @@ class PresetsPanel(wx.Panel):
                          wx.YES_NO, self) == wx.NO:
             return
 
-        copy_on('vdms', self.path_srcShare, self.src_vdms)
+        copy_on('vdms', self.src_vdms, self.user_vdms)
         
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
@@ -427,7 +427,7 @@ class PresetsPanel(wx.Panel):
         print 'addprof'
         filename = dict_presets[self.cmbx_prst.GetValue()][0]
         name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
-        full_pathname = '%s/%s.vdms' % (self.src_vdms, filename)
+        full_pathname = '%s/%s.vdms' % (self.user_vdms, filename)
 
         prstdialog = presets_addnew.MemPresets(self, 
                                                'newprofile', 
@@ -455,7 +455,7 @@ class PresetsPanel(wx.Panel):
         else:
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
-            full_pathname = '%s/%s.vdms' % (self.src_vdms, filename)
+            full_pathname = '%s/%s.vdms' % (self.user_vdms, filename)
             
             prstdialog = presets_addnew.MemPresets(self, 
                                                    'edit', 
@@ -489,7 +489,7 @@ class PresetsPanel(wx.Panel):
         
             filename = dict_presets[self.cmbx_prst.GetValue()][0]
             # call module-function and pass list as argument
-            delete_profiles(array, filename, self.src_vdms)
+            delete_profiles(array, filename, self.user_vdms)
             self.reset_list()
     #------------------------------------------------------------------#
     def on_ok(self):

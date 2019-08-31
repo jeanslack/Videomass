@@ -1746,7 +1746,7 @@ class Video_Conv(wx.Panel):
         """
         self.update_allentries()# aggiorno gli imput
         get = wx.GetApp()
-        dirconf = get.DIRconf
+        dirconf = os.path.join(get.DIRconf, 'vdms')
         
         if cmd_opt["Normalize"]:
             normalize = cmd_opt["Normalize"][0]

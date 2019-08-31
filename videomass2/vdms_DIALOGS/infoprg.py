@@ -57,7 +57,7 @@ def info(parent, videomass_icon):
         
         info.SetName("%s" % Name)
         
-        info.SetVersion("- %s" % Version)
+        info.SetVersion("%s" % Version)
         
         info.SetDescription(_(u"Videomass provides a graphical interface for\n"
                               u"audio and video conversion through FFmpeg\n"

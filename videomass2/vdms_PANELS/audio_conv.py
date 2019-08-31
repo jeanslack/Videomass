@@ -499,7 +499,7 @@ class Audio_Conv(wx.Panel):
         self.parent.statusbar_msg("",None)
         normalize = self.spin_amplitude.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
+        data = volumeDetectProcess(self.ffmpeg_link, file_sources)
 
         if data[1]:
             wx.MessageBox(data[1], "Videomass: ERROR!", wx.ICON_ERROR)
@@ -761,7 +761,7 @@ class Audio_Conv(wx.Panel):
         
         """
         get = wx.GetApp()
-        dirconf = get.DIRconf
+        dirconf = os.path.join(get.DIRconf, 'vdms')
         
         if cmd_opt["Normalize"]:
             

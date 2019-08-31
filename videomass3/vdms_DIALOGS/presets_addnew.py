@@ -28,13 +28,14 @@
 #########################################################
 
 import wx
+import os
 import string
 from videomass3.vdms_IO.presets_manager_properties import delete_profiles
 import webbrowser
 
 # setting the path to the configuration directory:
 get = wx.GetApp()
-DIRconf = get.DIRconf
+DIRconf = os.path.join(get.DIRconf, 'vdms')
 
 class MemPresets(wx.Dialog):
     """

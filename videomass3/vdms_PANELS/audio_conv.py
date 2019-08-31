@@ -761,7 +761,7 @@ class Audio_Conv(wx.Panel):
         
         """
         get = wx.GetApp()
-        dirconf = get.DIRconf
+        dirconf = os.path.join(get.DIRconf, 'vdms')
         
         if cmd_opt["Normalize"]:
             

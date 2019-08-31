@@ -1358,7 +1358,7 @@ class Video_Conv(wx.Panel):
         self.parent.statusbar_msg("",None)
         normalize = self.spin_ctrl_audionormalize.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources, self.OS)
+        data = volumeDetectProcess(self.ffmpeg_link, file_sources,)
 
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
@@ -1744,7 +1744,7 @@ class Video_Conv(wx.Panel):
         """
         self.update_allentries()# aggiorno gli imput
         get = wx.GetApp()
-        dirconf = get.DIRconf
+        dirconf = os.path.join(get.DIRconf, 'vdms')
         
         if cmd_opt["Normalize"]:
             normalize = cmd_opt["Normalize"][0]
