@@ -153,12 +153,12 @@ def probeDuration(path_list, ffprobe_link):
     
     return duration , None
 #-------------------------------------------------------------------------#
-def volumeDetectProcess(ffmpeg, filelist):
+def volumeDetectProcess(ffmpeg, filelist, time_seq):
     """
     Run a thread for get audio peak level data and show a pop-up dialog 
     with message. 
     """
-    thread = VolumeDetectThread(ffmpeg, filelist, OS) 
+    thread = VolumeDetectThread(ffmpeg, time_seq, filelist, OS) 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."), 
                                 _("\nWait....\nAudio peak analysis.\n")
                           )

@@ -711,9 +711,9 @@ class Audio_Conv(wx.Panel):
         """
         numfile = "%s file in pending" % str(lenghmax)
         if cmd_opt["Normalize"]:
-            normalize = 'Enable'
+            normalize = _('Enable')
         else:
-            normalize = 'Disable'
+            normalize = _('Disable')
             
         if self.ckb_onlynorm.IsChecked():
             formula = (_("SUMMARY:\n\nFile Queue:\

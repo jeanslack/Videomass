@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (03) December 27 2018
+# Rev: Dec. 27 2018. Aug.31 2019
 #########################################################
 # This file is part of Videomass.
 
@@ -28,6 +28,7 @@
 import wx
 from pubsub import pub
 import subprocess
+import shlex
 from threading import Thread
 
 ########################################################################
@@ -98,7 +99,7 @@ class VolumeDetectThread(Thread):
     volume peak level when required for audio normalization process.
     The volume data is a list sended to the dialog with wx.callafter.
     """
-    def __init__(self, ffmpeg_bin, filelist, OS):
+    def __init__(self, ffmpeg_bin, timeseq, filelist, OS):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -107,6 +108,7 @@ class VolumeDetectThread(Thread):
         """initialize"""
         self.filelist = filelist
         self.ffmpeg = ffmpeg_bin
+        self.time_seq = timeseq
         self.status = None
         self.data = None
         if OS == 'Windows':#Replace /dev/null with NUL on Windows.
@@ -134,19 +136,14 @@ class VolumeDetectThread(Thread):
                     'does not contain any stream',
                     ]
         for files in self.filelist:
-            cmnd = [self.ffmpeg, 
-                    '-i', 
-                    files, 
-                    '-hide_banner', 
-                    '-af', 
-                    'volumedetect', 
-                    '-vn', 
-                    '-sn', 
-                    '-dn', 
-                    '-f', 
-                    'null', 
-                    self.nul,
-                    ]
+            args = ("{0} {1} -i '{2}' -hide_banner -af volumedetect "
+                    "-vn -sn -dn -f null {3}").format(self.ffmpeg, 
+                                                      self.time_seq,
+                                                      files,
+                                                      self.nul)
+                                                                  
+            cmnd = shlex.split(args)
+
             try:
                 p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, 
                                      stderr=subprocess.PIPE,

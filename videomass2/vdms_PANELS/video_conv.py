@@ -831,8 +831,7 @@ class Video_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq
         filters = '%s %s' % (self.time_seq, cmd_opt["Filters"])
         first_path = self.file_sources[0]
-        stream_play(first_path, filters, self.ffplay_link, 
-                    self.loglevel_type, self.OS)
+        stream_play(first_path, filters, self.ffplay_link, self.loglevel_type)
     #------------------------------------------------------------------#
     def on_FiltersClear(self, event):
         """
