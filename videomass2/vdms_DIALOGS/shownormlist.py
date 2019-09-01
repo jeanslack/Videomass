@@ -35,12 +35,12 @@ class NormalizationList(wx.Dialog):
     require or not a normalization process.
     
     """
-    def __init__(self, parent, title, detailslist, OS):
+    def __init__(self, title, detailslist, OS):
         """
         detailslist is a list of items list.
         
         """
-        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE |
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
                                              wx.RESIZE_BORDER)
         """
         constructor:
@@ -95,7 +95,7 @@ class NormalizationList(wx.Dialog):
             normlist.SetStringItem(index, 1, i[1])
             normlist.SetStringItem(index, 2, i[2])
             if not ' ' in i[3]:
-                normlist.SetItemBackgroundColour(index, '#ea312d')
+                normlist.SetItemBackgroundColour(index, '#e9504d')
                 normlist.SetStringItem(index, 3, i[3])
             normlist.SetStringItem(index, 4, _(i[4]))
             

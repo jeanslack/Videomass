@@ -1398,11 +1398,10 @@ class Video_Conv(wx.Panel):
         Show a wx.ListCtrl dialog to list data of peak levels
         """
         title = _('Audio normalization details list')
-        audionormlist = shownormlist.NormalizationList(self, 
-                                                       title, 
+        audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)
-        audionormlist.ShowModal()
+        audionormlist.Show()
 
     #------------------------------------------------------------------#
     def on_h264Presets(self, event):

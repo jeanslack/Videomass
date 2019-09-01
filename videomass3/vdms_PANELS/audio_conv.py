@@ -236,7 +236,8 @@ class Audio_Conv(wx.Panel):
         dragNdrop panel. Also, if enable 'Perform only normalization' enable 
         conversion widgets.
         """
-        self.ckb_norm.SetValue(False), self.btn_analyzes.Disable(), self.btn_details.Disable()
+        self.ckb_norm.SetValue(False), self.btn_analyzes.Disable(), 
+        self.btn_details.Disable()
         self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
         self.lab_amplitude.Disable()
         self.spin_amplitude.Disable(), self.spin_amplitude.SetValue(-1.0)
@@ -554,11 +555,10 @@ class Audio_Conv(wx.Panel):
         Show a wx.ListCtrl dialog to list data of peak levels
         """
         title = _('Audio normalization details list')
-        audionormlist = shownormlist.NormalizationList(self, 
-                                                       title, 
+        audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)
-        audionormlist.ShowModal()
+        audionormlist.Show()
     #-----------------------------------------------------------------------#
     def disableParent(self):
         """
