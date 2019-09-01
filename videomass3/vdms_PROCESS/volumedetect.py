@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec. 27 2018. Aug.31 2019
+# Rev: Dec.27.2018. Aug.31.2019
 #########################################################
 # This file is part of Videomass.
 
@@ -141,7 +141,6 @@ class VolumeDetectThread(Thread):
                                                       self.time_seq,
                                                       files,
                                                       self.nul)
-                                                                  
             cmnd = shlex.split(args)
 
             try:

@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (14) August 2 2019
+# Rev: Aug.02.2019, Sept.01.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -277,7 +277,7 @@ class Video_Conv(wx.Panel):
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25),
                                             bitmap=analyzebmp,
-                                            label=_("Analyzes"))
+                                            label=_("Volumedetect"))
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -286,8 +286,8 @@ class Video_Conv(wx.Panel):
         self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.btn_details = GB.GradientButton(self.notebook_1_pane_3,
-                                            size=(-1,25),
-                                            bitmap=analyzebmp,
+                                            #size=(-1,25),
+                                            #bitmap=analyzebmp,
                                             label=_("Details list"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
@@ -1291,9 +1291,9 @@ class Video_Conv(wx.Panel):
         Enable or disable functionality for volume normalization of
         the video.
         """
-        msg = (_("Tip: check the volume peak by pressing the Analyzess button; "
-               "set the normalize maximum amplitude or accept "
-               "default dB value (-1.0)"))
+        msg = (_("Tip: set the maximum peak level threshold or accept default "
+                 "dB value (-1.0); then check peak level by pressing the "
+                 "'Volumedetect' button"))
         if self.ckbx_a_normalize.GetValue():# is checked
             self.parent.statusbar_msg(msg, greenolive)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
@@ -1302,8 +1302,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Map"] = '-map 0'
 
         elif not self.ckbx_a_normalize.GetValue():# is not checked
-            self.parent.statusbar_msg(_("Disable audio normalization "
-                                        "inside video"), None)
+            self.parent.statusbar_msg(_("Disable audio normalization"), None)
             self.spin_ctrl_audionormalize.SetValue(-1.0)
             self.label_normalize.Disable()
             self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
@@ -1329,10 +1328,10 @@ class Video_Conv(wx.Panel):
         Get audio peak level analyzes data for the offset calculation 
         need to normalization process.
         """
-        msg1 = (_("The audio stream peak level is equal to or higher " 
-               "than the level set on the threshold. If you proceed, "
-               "there will be no changes."))
+        msg1 = (_("Audio normalization will be applied"))
         msg2 = (_("Audio normalization is required only for some files"))
+        msg3 = (_("Audio normalization is not required in relation to "
+                  "the set threshold"))
         
         self.parent.statusbar_msg("",None)
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
@@ -1352,24 +1351,27 @@ class Video_Conv(wx.Panel):
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(normalize)
                 if float(maxvol) >= float(normalize):
-                    volume.append(" ")
+                    volume.append('  ')
                     self.normdetails.append((f, 
-                                            maxvol, 
-                                            meanvol,
-                                            ' ',
-                                            'Not_Required'
-                                            ))
+                                             maxvol, 
+                                             meanvol,
+                                             ' ',
+                                             _('Not Required')
+                                             ))
                 else:
                     volume.append("-af volume=%sdB" % (str(offset)[1:]))
                     self.normdetails.append((f, 
-                                            maxvol,
-                                            meanvol,
-                                            str(offset)[1:],
-                                            'Required'
-                                            ))
-        if " " in volume:
-            if len(volume) == 1:
-                self.parent.statusbar_msg(msg1, yellow)
+                                             maxvol,
+                                             meanvol,
+                                             str(offset)[1:],
+                                             _('Required')
+                                             ))
+                    
+        if [a for a in volume if not '  ' in a] == []:
+             self.parent.statusbar_msg(msg3, yellow)
+        else:
+            if len(volume) == 1 or not '  ' in volume:
+                 self.parent.statusbar_msg(msg1, yellow)
             else:
                 self.parent.statusbar_msg(msg2, yellow)
                 
@@ -1382,6 +1384,7 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Show_normlist(self, event):
         """
+        Show a wx.ListCtrl dialog to list data of peak levels
         """
         title = _('Audio normalization details list')
         audionormlist = shownormlist.NormalizationList(self, 
@@ -1476,8 +1479,8 @@ class Video_Conv(wx.Panel):
         if self.ckbx_a_normalize.IsChecked():
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_("Missing volume dectect!\n"
-                              "Press the analyze button before proceeding."),
-                                "Videomass: Warning!", wx.ICON_WARNING)
+                              "Press the Volumedected button before proceeding."),
+                                "Videomass", wx.ICON_INFORMATION)
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]

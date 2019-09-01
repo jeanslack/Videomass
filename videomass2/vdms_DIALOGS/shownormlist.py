@@ -3,7 +3,7 @@
 #########################################################
 # Name: shownormlist.py
 # Porpose: Show a list with data normalization
-# Compatibility: Python3, wxPython4
+# Compatibility: Python2, wxPython3 classic
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -91,13 +91,13 @@ class NormalizationList(wx.Dialog):
         index = 0 
 
         for i in detailslist:
-            normlist.InsertItem(index, i[0])
-            normlist.SetItem(index, 1, i[1])
-            normlist.SetItem(index, 2, i[2])
+            normlist.InsertStringItem(index, i[0])
+            normlist.SetStringItem(index, 1, i[1])
+            normlist.SetStringItem(index, 2, i[2])
             if not ' ' in i[3]:
                 normlist.SetItemBackgroundColour(index, '#ea312d')
-                normlist.SetItem(index, 3, i[3])
-            normlist.SetItem(index, 4, _(i[4]))
+                normlist.SetStringItem(index, 3, i[3])
+            normlist.SetStringItem(index, 4, _(i[4]))
             
     #--------------------------------------------------------------# 
     def on_close(self, event):

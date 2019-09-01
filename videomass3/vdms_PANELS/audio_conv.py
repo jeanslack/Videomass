@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev August 2 2019
+# Rev: Aug.02.2019, Sept.01.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -31,10 +31,13 @@ import wx
 import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
-from videomass3.vdms_IO.IO_tools import volumeDetectProcess, FFProbe
+from videomass3.vdms_IO.IO_tools import volumeDetectProcess
+from videomass3.vdms_IO.IO_tools import FFProbe
 from videomass3.vdms_IO.filedir_control import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
-from videomass3.vdms_DIALOGS import  audiodialogs, presets_addnew
+from videomass3.vdms_DIALOGS import  audiodialogs
+from videomass3.vdms_DIALOGS import presets_addnew
+from videomass3.vdms_DIALOGS import shownormlist
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -84,6 +87,7 @@ class Audio_Conv(wx.Panel):
         # others attributes:
         self.file_sources = []
         self.file_destin = ''
+        self.normdetails = []
 
         wx.Panel.__init__(self, parent, -1)
         """ constructor"""
@@ -122,7 +126,7 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes = GB.GradientButton(self,
                                            size=(-1,25),
                                            bitmap=analyzebmp,
-                                           label=_("Analyzes"))
+                                           label=_("Volumedected"))
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -130,13 +134,17 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
+        self.btn_details = GB.GradientButton(self,
+                                            #size=(-1,25),
+                                            #bitmap=analyzebmp,
+                                            label=_("Details list"))
+        self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                    foregroundcolour=wx.Colour(165,165, 165))
+        self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_details.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_details.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
-        self.lab_volmax = wx.StaticText(self, wx.ID_ANY, (_("Max volume db")))
-        self.txt_volmax = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
-        self.lab_volmid = wx.StaticText(self, wx.ID_ANY, 
-                                                   (_("Average volume db"))
-                                        )
-        self.txt_volmid = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_READONLY)
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
                                     _("Max peak level threshold   ")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
@@ -149,7 +157,7 @@ class Audio_Conv(wx.Panel):
         sizer_global = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                 "")), wx.VERTICAL)
         sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
-        grid_sizer_3 = wx.FlexGridSizer(7, 2, 0, 0)
+        grid_sizer_3 = wx.FlexGridSizer(5, 2, 0, 0)
         grid_sizer_1 = wx.GridSizer(2, 1, 0, 0)
         grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
         grid_sizer_4 = wx.FlexGridSizer(2, 4, 0, 0)
@@ -175,10 +183,8 @@ class Audio_Conv(wx.Panel):
         grid_sizer_3.Add(self.ckb_onlynorm, 0, wx.TOP, 5)
         grid_sizer_3.Add(self.btn_analyzes, 0, wx.TOP, 10)
         grid_sizer_3.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_3.Add(self.lab_volmax, 0, wx.TOP, 10)
-        grid_sizer_3.Add(self.txt_volmax, 0, wx.TOP, 5)
-        grid_sizer_3.Add(self.lab_volmid, 0, wx.TOP, 10)
-        grid_sizer_3.Add(self.txt_volmid, 0, wx.TOP, 5)
+        grid_sizer_3.Add(self.btn_details, 0, wx.TOP, 10)
+        grid_sizer_3.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_3.Add(self.lab_amplitude, 0, wx.TOP, 10)
         grid_sizer_3.Add(self.spin_amplitude, 0, wx.TOP, 5)
         #--------------------------------------------------------------
@@ -201,13 +207,10 @@ class Audio_Conv(wx.Panel):
                                     "bit-rate, audio channel and audio rate "
                                     "of the selected audio codec.")
                                               )
-        self.btn_analyzes.SetToolTip(_("Calculate the maximum and average "
-                                    "peak in dB values of the one audio track "
-                                    "imported. This feature is disabled for "
-                                    "multiple file to process.")
+        self.btn_analyzes.SetToolTip(_("Calculates the maximum and average "
+                                       "peak level of audio streams expressed "
+                                       "in dB values")
                                               )
-        self.txt_volmax.SetToolTip(_("Maximum peak scanned in dB values."))
-        self.txt_volmid.SetToolTip(_("Average peak scanned in dB values."))
         self.spin_amplitude.SetToolTip(_("Threshold for the maximum peak "
                                     "level in dB values. The default setting "
                                     "is -1.0 dB and is good for most of the "
@@ -219,6 +222,7 @@ class Audio_Conv(wx.Panel):
         self.Bind(wx.EVT_CHECKBOX, self.on_Enable_norm, self.ckb_norm)
         self.Bind(wx.EVT_CHECKBOX, self.on_OnlyNorm, self.ckb_onlynorm)
         self.Bind(wx.EVT_BUTTON, self.on_Analyzes, self.btn_analyzes)
+        self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
         #self.Bind(wx.EVT_SPINCTRL, self.enter_normalize, self.spin_amplitude)
         
         # set default :
@@ -232,13 +236,12 @@ class Audio_Conv(wx.Panel):
         dragNdrop panel. Also, if enable 'Perform only normalization' enable 
         conversion widgets.
         """
-        self.ckb_norm.SetValue(False),
-        self.btn_analyzes.Disable(), self.lab_volmax.Disable()
-        self.txt_volmax.Disable(), self.lab_volmid.Disable()
-        self.txt_volmid.Disable(), self.lab_amplitude.Disable()
-        self.txt_volmax.SetValue(""), self.txt_volmid.SetValue("")
+        self.ckb_norm.SetValue(False), self.btn_analyzes.Disable(), self.btn_details.Disable()
+        self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
+        self.lab_amplitude.Disable()
         self.spin_amplitude.Disable(), self.spin_amplitude.SetValue(-1.0)
         cmd_opt["Normalize"] = ""
+        del self.normdetails[:]
         if self.ckb_onlynorm.IsChecked():
             self.ckb_onlynorm.SetValue(False)
             self.cmbx_a.Enable(), self.btn_param.Enable(),
@@ -441,28 +444,25 @@ class Audio_Conv(wx.Panel):
         """
         Choice if use or not audio normalization
         """
-        msg = (_("Tip: check the volume peak by pressing the Analyzes button; "
-               "set the normalize maximum amplitude or accept "
-               "default dB value (-1.0)"))
+        msg = (_("Tip: set the maximum peak level threshold or accept default "
+                 "dB value (-1.0); then check peak level by pressing the "
+                 "'Volumedetect' button"))
         if self.ckb_norm.IsChecked():# if checked
             self.parent.statusbar_msg(msg, greenolive)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
             self.btn_analyzes.Enable(), self.spin_amplitude.Enable(),
             self.lab_amplitude.Enable(), 
-            if len(self.parent.file_sources) == 1:# se solo un file
-                self.lab_volmid.Enable(), self.txt_volmid.Enable(),
-                self.lab_volmax.Enable(), self.txt_volmax.Enable(),
 
         else:# is not checked
             self.parent.statusbar_msg(_("Disable audio normalization"), None)
             self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
-            self.btn_analyzes.Disable(), self.lab_volmax.Disable()
-            self.txt_volmax.SetValue(""), self.txt_volmid.SetValue("")
-            self.txt_volmax.Disable(), self.lab_volmid.Disable()
-            self.txt_volmid.Disable(), self.lab_amplitude.Disable()
+            self.btn_analyzes.Disable(), self.lab_amplitude.Disable()
             self.spin_amplitude.Disable(), self.spin_amplitude.SetValue(-1.0)
+            self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
+            self.btn_details.Disable()
             
         cmd_opt["Normalize"] = ""
+        del self.normdetails[:]
     #------------------------------------------------------------------#
     def on_OnlyNorm(self, evt):
         """
@@ -495,39 +495,70 @@ class Audio_Conv(wx.Panel):
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
         """
-        msg = (_("The audio stream peak level is equal to or higher " 
-               "than the level set on the threshold. If you proceed, "
-               "there will be no changes."))
+        msg1 = (_("Audio normalization will be applied"))
+        msg2 = (_("Audio normalization is required only for some files"))
+        msg3 = (_("Audio normalization is not required in relation to "
+                  "the set threshold"))
+        
         self.parent.statusbar_msg("",None)
+        self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         normalize = self.spin_amplitude.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources)
-
+        data = volumeDetectProcess(self.ffmpeg_link, 
+                                   file_sources, 
+                                   self.time_seq)
         if data[1]:
-            wx.MessageBox(data[1], "Videomass: ERROR!", wx.ICON_ERROR)
+            wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()
 
-            for v in data[0]:
+            for f, v in zip(file_sources, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(normalize)
                 if float(maxvol) >= float(normalize):
-                    self.parent.statusbar_msg(msg, yellow)
-
-                volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    volume.append('  ')
+                    self.normdetails.append((f, 
+                                             maxvol, 
+                                             meanvol,
+                                             ' ',
+                                             _('Not Required')
+                                             ))
+                else:
+                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    self.normdetails.append((f, 
+                                             maxvol,
+                                             meanvol,
+                                             str(offset)[1:],
+                                             _('Required')
+                                             ))
                     
-                if len(data[0]) == 1:# append in textctrl
-                    self.txt_volmax.SetValue("")
-                    self.txt_volmid.SetValue("")
-                    self.txt_volmax.AppendText(v[0])
-                    self.txt_volmid.AppendText(v[1])
-        print (volume)
+        if [a for a in volume if not '  ' in a] == []:
+             self.parent.statusbar_msg(msg3, yellow)
+        else:
+            if len(volume) == 1 or not '  ' in volume:
+                 self.parent.statusbar_msg(msg1, yellow)
+            else:
+                self.parent.statusbar_msg(msg2, yellow)
+                
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+        self.btn_details.Enable()
+        self.btn_details.SetForegroundColour(wx.Colour(28,28,28))
         
+    #------------------------------------------------------------------#
+    def on_Show_normlist(self, event):
+        """
+        Show a wx.ListCtrl dialog to list data of peak levels
+        """
+        title = _('Audio normalization details list')
+        audionormlist = shownormlist.NormalizationList(self, 
+                                                       title, 
+                                                       self.normdetails, 
+                                                       self.OS)
+        audionormlist.ShowModal()
     #-----------------------------------------------------------------------#
     def disableParent(self):
         """
@@ -574,8 +605,8 @@ class Audio_Conv(wx.Panel):
         if self.ckb_norm.IsChecked():
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_("Missing volume dectect!\n"
-                              "Press the analyze button before proceeding."),
-                                "Videomass: Warning!", wx.ICON_WARNING)
+                              "Press the Volumedected button before proceeding."),
+                                "Videomass", wx.ICON_INFORMATION)
                 return
         self.update_allentries()# last update of all setting interface
         # make a different id need to avoid attribute overwrite:
@@ -709,7 +740,7 @@ class Audio_Conv(wx.Panel):
         This method is required for update all cmd_opt
         dictionary values before send at epilogue
         """
-        numfile = "%s file in pending" % str(lenghmax)
+        numfile = _("%s file in pending") % str(lenghmax)
         if cmd_opt["Normalize"]:
             normalize = _('Enable')
         else:
@@ -764,16 +795,7 @@ class Audio_Conv(wx.Panel):
         dirconf = os.path.join(get.DIRconf, 'vdms')
         
         if cmd_opt["Normalize"]:
-            
-            if wx.MessageBox(_("Audio normalization is a specific process "
-                             "applied track by track.\n\n"
-                             "Are you sure to proceed ?"), 
-                             _('Videomass: Audio normalization enabled!'), 
-                             wx.ICON_QUESTION | wx.YES_NO, 
-                            None) == wx.NO:
-                return #Se L'utente risponde no
-            else:
-                normalize = cmd_opt["Normalize"][0]# tengo il primo valore lista
+            normalize = cmd_opt["Normalize"][0]# tengo il primo valore lista
         else:
             normalize = ''
         

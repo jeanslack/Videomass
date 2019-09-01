@@ -22,17 +22,21 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (13) August 2 2019
+# Rev: Aug.02.2019, Sept.01.2019
 #########################################################
 
 import wx
 import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
-from videomass2.vdms_IO.IO_tools import volumeDetectProcess, stream_play
+from videomass2.vdms_IO.IO_tools import volumeDetectProcess
+from videomass2.vdms_IO.IO_tools import stream_play
 from videomass2.vdms_IO.filedir_control import inspect
 from videomass2.vdms_DIALOGS.epilogue import Formula
-from videomass2.vdms_DIALOGS import audiodialogs, presets_addnew, dialog_tools
+from videomass2.vdms_DIALOGS import audiodialogs
+from videomass2.vdms_DIALOGS import presets_addnew
+from videomass2.vdms_DIALOGS import dialog_tools
+from videomass2.vdms_DIALOGS import shownormlist
 
 """
 The following dictionaries are used for define the generated 
@@ -98,6 +102,7 @@ class Video_Conv(wx.Panel):
         # set others attributes;
         self.file_sources = []
         self.file_destin = ''
+        self.normdetails = []
         self.OS = OS
         
         self.panel_base = wx.Panel(self, wx.ID_ANY)
@@ -132,13 +137,8 @@ class Video_Conv(wx.Panel):
         self.ckbx_pass.SetValue(False) # setto in modo spento
 
         self.sizer_automations_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, ("")
-        )
-        #self.rdb_automations = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, "", 
-                            #choices=[("Disabled"),
-                                     #("Save images from Video"),
-                                     #("Set visual Rotation")], 
-                            #majorDimension=0, style=wx.RA_SPECIFY_ROWS)
+                                                        wx.ID_ANY, ("")
+                                                        )
         self.spin_ctrl_bitrate = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
         "1500", min=0, max=25000, style=wx.TE_PROCESS_ENTER
         )
@@ -275,7 +275,7 @@ class Video_Conv(wx.Panel):
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25),
                                             bitmap=analyzebmp,
-                                            label=_(u"Analyzes"))
+                                            label=_(u"Volumedected"))
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -283,18 +283,17 @@ class Video_Conv(wx.Panel):
         self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
+        self.btn_details = GB.GradientButton(self.notebook_1_pane_3,
+                                            #size=(-1,25),
+                                            #bitmap=analyzebmp,
+                                            label=_("Details list"))
+        self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                    foregroundcolour=wx.Colour(165,165, 165))
+        self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_details.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_details.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
-        
-        self.label_dbMax = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                (_(u"Max volume db  "))
-                                )
-        self.text_dbMax = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
-                                style=wx.TE_READONLY)
-        self.label_dbMedium = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    (_(u"Average volume db"))
-                                    )
-        self.text_dbMedium = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, "", 
-                                style=wx.TE_READONLY)
         self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
                                     (_(u"Max peak level threshold  "))
                                     )
@@ -355,7 +354,7 @@ class Video_Conv(wx.Panel):
         sizer_pane3_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane3_base = wx.FlexGridSizer(2, 2, 0, 0)
         sizer_pane3_audio_column2 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_in_column2 = wx.FlexGridSizer(5, 2, 0, 0)
+        grid_sizer_in_column2 = wx.FlexGridSizer(4, 2, 0, 0)
         #sizer_pane3_audio_column1 = wx.BoxSizer(wx.VERTICAL)
         sizer_pane2_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane2_base = wx.GridSizer(1, 2, 0, 0)
@@ -472,10 +471,8 @@ class Video_Conv(wx.Panel):
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_in_column2.Add(self.btn_analyzes, 0, wx.TOP, 10)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_in_column2.Add(self.label_dbMax, 0, wx.TOP, 10)
-        grid_sizer_in_column2.Add(self.text_dbMax, 0, wx.TOP, 5)
-        grid_sizer_in_column2.Add(self.label_dbMedium, 0, wx.TOP, 10)
-        grid_sizer_in_column2.Add(self.text_dbMedium, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.btn_details, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_in_column2.Add(self.label_normalize, 0, wx.TOP, 10)
         grid_sizer_in_column2.Add(self.spin_ctrl_audionormalize, 0, wx.TOP, 5)
         sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.ALL, 15)
@@ -528,24 +525,21 @@ class Video_Conv(wx.Panel):
         self.Layout()
         
         #----------------------Set Properties----------------------#
-        self.cmbx_vidContainers.SetToolTipString(_(u"Video container that will "
-                                        u"be used in the conversion. NOTE: for "
-                                        u"any container change, all settings "
-                                        u"there be reset."))
+        self.cmbx_vidContainers.SetToolTipString(_("Video container that will " 
+                                             "be used in the conversion. "
+                                             "When the container is changed, " 
+                                             "all settings are restored."))
         self.cmbx_vidContainers.SetSelection(6)
 
 
-        self.ckbx_pass.SetToolTipString(_(u"If use double pass, can improve "
-                                            u"the video quality, but it take "
-                                            u"more time. We recommend using "
-                                            u"it in high video compression.")
-                                                 )
+        self.ckbx_pass.SetToolTipString(_("It can improve the video quality, "
+                                    "but takes longer. Use it with high "
+                                    "video compression."))
         self.spin_ctrl_bitrate.SetToolTipString(_(u"The bit rate determines the "
                                             u"quality and the final video "
                                             u"size. A larger value correspond "
                                             u"to greater quality and size of "
-                                            u"the file.")
-                                                 )
+                                            u"the file."))
         self.slider_CRF.SetValue(23)# this is a default rate
         self.slider_CRF.SetMinSize((230, -1))
         self.slider_CRF.SetToolTipString(_(u"CRF (constant rate factor) Affects "
@@ -572,23 +566,20 @@ class Video_Conv(wx.Panel):
                     u"to copy the original settings.")
                                             )
         
-        self.ckbx_a_normalize.SetToolTipString(_(u"Performs audio "
-                u"normalization in the video audio stream. "
-                u"NOTE: this feature is disabled for "
-                u"'Try to copy audio source' and 'No audio stream (silent)' "
-                u"selections." ))
-        self.btn_analyzes.SetToolTipString(_(u"Calculate the maximum and "
-                                    u"average peak in dB values, of the audio "
-                                    u"stream on the video imported."))
+        self.ckbx_a_normalize.SetToolTipString(_(u"Performs audio normalization "
+                                           u"on the video audio stream"))
+        self.btn_analyzes.SetToolTipString(_(u"Calculates the maximum and average "
+                                       u"peak level of audio streams expressed "
+                                       u"in dB values"))
         #self.spin_ctrl_audionormalize.SetMinSize((70, -1))
         self.spin_ctrl_audionormalize.SetToolTipString(_(u"Threshold for the "
                                 u"maximum peak level in dB values. The default " 
                                 u"setting is -1.0 dB and is good for most of "
                                 u"the processes"))
         
-        self.rdb_a.SetToolTipString(_(u"Choose the appropriate Audio Codec. "
-                                    u"Some Audio Codecs are disabled for "
-                                    u"certain Video Containers. " ))
+        self.rdb_a.SetToolTipString(_(u"Choose an audio codec. Some audio "
+                                      u"codecs are disabled for certain "
+                                      u"video containers"))
         self.rdb_h264preset.SetToolTipString(u"presets h.264")
         self.rdb_h264preset.SetSelection(0)
         self.rdb_h264profile.SetToolTipString(u"profile h.264")
@@ -596,9 +587,7 @@ class Video_Conv(wx.Panel):
         self.rdb_h264tune.SetToolTipString(u"tune h.264")
         self.rdb_h264tune.SetSelection(0)
         self.notebook_1_pane_4.SetToolTipString(_(u"The parameters on this tab "
-                        u"are enabled only for the video-codec h.264. Although "
-                        u"optional, is set to 'preset medium' as default "
-                        u"parameter."))
+                             u"are enabled only for the video-codec h.264."))
 
         #----------------------Binding (EVT)----------------------#
         """
@@ -627,6 +616,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Presets, self.rdb_h264preset)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Profiles, self.rdb_h264profile)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Tunes, self.rdb_h264tune)
+        self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
         #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
     #----------------------used methods----------------------#
@@ -709,13 +699,15 @@ class Video_Conv(wx.Panel):
         container in the combobox.
         """
         self.ckbx_a_normalize.SetValue(False)
-        self.btn_analyzes.Disable(), self.spin_ctrl_audionormalize.Disable()
+        self.btn_analyzes.Disable() 
+        self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+        self.spin_ctrl_audionormalize.Disable()
         self.spin_ctrl_audionormalize.SetValue(-1.0)
-        self.text_dbMax.SetValue(""), self.text_dbMedium.SetValue("")
-        self.text_dbMax.Disable(), self.text_dbMedium.Disable()
-        self.label_dbMax.Disable(), self.label_dbMedium.Disable()
+        self.btn_details.Disable()
+        self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
         self.label_normalize.Disable()
         cmd_opt["Normalize"] = ""
+        del self.normdetails[:]
     
     #----------------------Event handler (callback)----------------------#
     #------------------------------------------------------------------#
@@ -1308,34 +1300,30 @@ class Video_Conv(wx.Panel):
     def onNormalize(self, event):  # check box
         """
         Enable or disable functionality for volume normalization of
-        the video. Not enable if batch mode is enable
+        the video.
         """
-        msg = (_(u"Tip: check the volume peak by pressing the Analyzess button; "
-               u"set the normalize maximum amplitude or accept "
-               u"default dB value (-1.0)"))
+        msg = (_(u"Tip: set the maximum peak level threshold or accept default "
+                 u"dB value (-1.0); then check peak level by pressing the "
+                 u"'Volumedetect' button"))
         if self.ckbx_a_normalize.GetValue():# is checked
             self.parent.statusbar_msg(msg, greenolive)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
             self.btn_analyzes.Enable(), self.spin_ctrl_audionormalize.Enable()
             self.label_normalize.Enable()
             cmd_opt["Map"] = '-map 0'
-            
-            if len(self.parent.file_sources) == 1:# se solo un file
-                self.text_dbMax.Enable(), self.text_dbMedium.Enable()
-                self.label_dbMax.Enable(), self.label_dbMedium.Enable()
 
         elif not self.ckbx_a_normalize.GetValue():# is not checked
-            self.parent.statusbar_msg(_(u"Disable audio normalization "
-                                        u"inside video"), None)
+            self.parent.statusbar_msg(_(u"Disable audio normalization"), None)
             self.spin_ctrl_audionormalize.SetValue(-1.0)
             self.label_normalize.Disable()
             self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_analyzes.Disable(), self.spin_ctrl_audionormalize.Disable()
-            self.text_dbMax.SetValue(""), self.text_dbMedium.SetValue("")
-            self.text_dbMax.Disable(), self.text_dbMedium.Disable()
-            self.label_dbMax.Disable(), self.label_dbMedium.Disable()
+            self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
+            self.btn_details.Disable()
+            
             cmd_opt["Map"] = ''
         cmd_opt["Normalize"] = ""
+        del self.normdetails[:]
         
     #------------------------------------------------------------------#
     def on_Audio_analyzes(self, event):  # analyzes button
@@ -1351,37 +1339,70 @@ class Video_Conv(wx.Panel):
         Get audio peak level analyzes data for the offset calculation 
         need to normalization process.
         """
-        msg = (_(u"The audio stream peak level is equal to or higher " 
-               u"than the level set on the threshold. If you proceed, "
-               u"there will be no changes."))
+        msg1 = (_(u"Audio normalization will be applied"))
+        msg2 = (_(u"Audio normalization is required only for some files"))
+        msg3 = (_(u"Audio normalization is not required in relation to "
+                  u"the set threshold"))
+        
         self.parent.statusbar_msg("",None)
+        self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         normalize = self.spin_ctrl_audionormalize.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, file_sources,)
-
+        data = volumeDetectProcess(self.ffmpeg_link, 
+                                   file_sources, 
+                                   self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()
 
-            for v in data[0]:
+            for f, v in zip(file_sources, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(normalize)
                 if float(maxvol) >= float(normalize):
-                    self.parent.statusbar_msg(msg, yellow)
-
-                volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    volume.append('  ')
+                    self.normdetails.append((f, 
+                                             maxvol, 
+                                             meanvol,
+                                             ' ',
+                                             _('Not Required')
+                                             ))
+                else:
+                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    self.normdetails.append((f, 
+                                             maxvol,
+                                             meanvol,
+                                             str(offset)[1:],
+                                             _('Required')
+                                             ))
                     
-                if len(data[0]) == 1:# append in textctrl
-                    self.text_dbMax.SetValue(""), 
-                    self.text_dbMedium.SetValue("")
-                    self.text_dbMax.AppendText(v[0])
-                    self.text_dbMedium.AppendText(v[1])
+        if [a for a in volume if not '  ' in a] == []:
+             self.parent.statusbar_msg(msg3, yellow)
+        else:
+            if len(volume) == 1 or not '  ' in volume:
+                 self.parent.statusbar_msg(msg1, yellow)
+            else:
+                self.parent.statusbar_msg(msg2, yellow)
+                
         cmd_opt["Normalize"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+        self.btn_details.Enable()
+        self.btn_details.SetForegroundColour(wx.Colour(28,28,28))
+        
+     #------------------------------------------------------------------#
+    def on_Show_normlist(self, event):
+        """
+        Show a wx.ListCtrl dialog to list data of peak levels
+        """
+        title = _('Audio normalization details list')
+        audionormlist = shownormlist.NormalizationList(self, 
+                                                       title, 
+                                                       self.normdetails, 
+                                                       self.OS)
+        audionormlist.ShowModal()
 
     #------------------------------------------------------------------#
     def on_h264Presets(self, event):
@@ -1469,8 +1490,8 @@ class Video_Conv(wx.Panel):
         if self.ckbx_a_normalize.IsChecked():
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_(u"Missing volume dectect!\n"
-                              u"Press the analyze button before proceeding."),
-                                "Videomass: Warning!", wx.ICON_WARNING)
+                        u"Press the Volumedected button before proceeding."),
+                                "Videomass", wx.ICON_INFORMATION)
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]
@@ -1673,11 +1694,11 @@ class Video_Conv(wx.Panel):
         This method is required for update all cmd_opt
         dictionary values before send at epilogue
         """
-        numfile = "%s file in pending" % str(lenghmax)
+        numfile = _("%s file in pending") % str(lenghmax)
         if cmd_opt["Normalize"]:
-            normalize = 'Enable'
+            normalize = _('Enable')
         else:
-            normalize = 'Disable'
+            normalize = _('Disable')
         
         if self.cmbx_vidContainers.GetValue() == _(u"Copy Video Codec"):
             formula = (_(u"SUMMARY:\n\nFile to Queue\

@@ -22,12 +22,17 @@ IMPROVEMENTS:
       with more audio streams.
     - Improved log view in the Process panel
     - Improved writing log during the processes
+    - Now the audio normalization is applied only on the sequence in relation 
+      to the duration if set before volume dected, otherwise is applied to
+      entire file.
         
 BUG FIXES:
     - Fixed append text issue when use dialog box to search 
       FFmpeg options on Windows
     - Set default when the user cancels the "save audio stream from video" 
       dialog to avoid errors.
+    - The '-af volume = .0dB' parameter is omitted from the command to the 
+      audio streams which does not requires the audio normalization process
       
 REMOVALS and DISPLACEMENTS: 
     - Changed default location of the 'videomass' configuration directory 
@@ -37,9 +42,13 @@ REMOVALS and DISPLACEMENTS:
         On Windows:    'C:\Users\username\AppData\Roaming\videomass'
     - During processes conversion the new default logs directory is
       located to videomass directory configuration;log
+    - Removed the control of the text of the maximum audio peak level and the 
+      average audio peak level in the normalization sections.
+    - Added a new dialog to show the list of volumes detected for audio 
+      normalization
 
 ADD:
-    - new function to open the file manager on the Videomass configuration 
+    - new features to open the file manager on the Videomass configuration 
       directory and on the logs directory (platform independent)
     - Add the "Don't show this dialog again" on dialog before start 
       conversion on the Presets_Manager when profile command has been
