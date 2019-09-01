@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-01 15:05+0200\n"
-"PO-Revision-Date: 2019-09-01 15:07+0200\n"
+"POT-Creation-Date: 2019-09-01 15:20+0200\n"
+"PO-Revision-Date: 2019-09-01 15:23+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -915,7 +915,7 @@ msgid ""
 "Videomass provides a graphical interface for\n"
 "audio and video conversion through FFmpeg\n"
 "\n"
-"This is a candidate release version.\n"
+"This is a release version.\n"
 "It is based on Python2 and wxPython3 classic"
 msgstr ""
 
@@ -1897,6 +1897,14 @@ msgstr ""
 msgid "Save audio from movies"
 msgstr ""
 
+#: ../videomass2/vdms_PANELS/audio_conv.py:744
+#: ../videomass2/vdms_PANELS/video_conv.py:1697
+#: ../videomass3/vdms_PANELS/audio_conv.py:743
+#: ../videomass3/vdms_PANELS/video_conv.py:1686
+#, python-format
+msgid "%s file in pending"
+msgstr ""
+
 #: ../videomass2/vdms_PANELS/audio_conv.py:746
 #: ../videomass2/vdms_PANELS/video_conv.py:1699
 #: ../videomass3/vdms_PANELS/audio_conv.py:745
@@ -2512,12 +2520,6 @@ msgstr ""
 msgid "Save Images from video"
 msgstr ""
 
-#: ../videomass2/vdms_PANELS/video_conv.py:1697
-#: ../videomass3/vdms_PANELS/video_conv.py:1686
-#, python-format
-msgid "%s file in pending"
-msgstr ""
-
 #: ../videomass2/vdms_PANELS/video_conv.py:1704
 #: ../videomass3/vdms_PANELS/video_conv.py:1693
 msgid ""
@@ -2680,7 +2682,7 @@ msgid ""
 "Videomass provides a graphical interface for\n"
 "audio and video conversion through FFmpeg\n"
 "\n"
-"This is a candidate release version.\n"
+"This is a release version.\n"
 "It is based on Python3 and wxPython4 phoenix"
 msgstr ""
 

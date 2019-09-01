@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-01 15:05+0200\n"
-"PO-Revision-Date: 2019-09-01 15:06+0200\n"
+"POT-Creation-Date: 2019-09-01 15:20+0200\n"
+"PO-Revision-Date: 2019-09-01 15:26+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -999,7 +999,7 @@ msgstr ""
 #: ../videomass3/vdms_DIALOGS/first_time_start.py:220
 #: ../videomass3/vdms_IO/filedir_control.py:88
 msgid "Videomass: Please Confirm"
-msgstr "Videomass2: Prego confermare"
+msgstr "Videomass: Prego confermare"
 
 #: ../videomass2/vdms_DIALOGS/first_time_start.py:265
 #: ../videomass3/vdms_DIALOGS/first_time_start.py:266
@@ -1026,14 +1026,14 @@ msgid ""
 "Videomass provides a graphical interface for\n"
 "audio and video conversion through FFmpeg\n"
 "\n"
-"This is a candidate release version.\n"
+"This is a release version.\n"
 "It is based on Python2 and wxPython3 classic"
 msgstr ""
 "Videomass è un'interfaccia grafica multi-piattaforma\n"
 "per conversioni audio e video basata su FFmpeg\n"
 "\n"
-"Questa è una versione candidata al rilascio.\n"
-"E' scritta in Python2 con il toolkit grafico wxPython3 classic"
+"Questa è una versione di rilascio.\n"
+"E' scritta in Python2 con il toolkit grafico wxPython classic"
 
 #: ../videomass2/vdms_DIALOGS/mediainfo.py:60
 #: ../videomass2/vdms_DIALOGS/mediainfo.py:64
@@ -2087,6 +2087,14 @@ msgstr ""
 msgid "Save audio from movies"
 msgstr "Salva l'audio dal filmato"
 
+#: ../videomass2/vdms_PANELS/audio_conv.py:744
+#: ../videomass2/vdms_PANELS/video_conv.py:1697
+#: ../videomass3/vdms_PANELS/audio_conv.py:743
+#: ../videomass3/vdms_PANELS/video_conv.py:1686
+#, python-format
+msgid "%s file in pending"
+msgstr "%s file in attesa"
+
 #: ../videomass2/vdms_PANELS/audio_conv.py:746
 #: ../videomass2/vdms_PANELS/video_conv.py:1699
 #: ../videomass3/vdms_PANELS/audio_conv.py:745
@@ -2775,12 +2783,6 @@ msgstr "Nessun filtro attivato"
 msgid "Save Images from video"
 msgstr "Esporta le immagini dal video"
 
-#: ../videomass2/vdms_PANELS/video_conv.py:1697
-#: ../videomass3/vdms_PANELS/video_conv.py:1686
-#, python-format
-msgid "%s file in pending"
-msgstr "%s file in attesa"
-
 #: ../videomass2/vdms_PANELS/video_conv.py:1704
 #: ../videomass3/vdms_PANELS/video_conv.py:1693
 msgid ""
@@ -2996,14 +2998,14 @@ msgid ""
 "Videomass provides a graphical interface for\n"
 "audio and video conversion through FFmpeg\n"
 "\n"
-"This is a candidate release version.\n"
+"This is a release version.\n"
 "It is based on Python3 and wxPython4 phoenix"
 msgstr ""
 "Videomass è un'interfaccia grafica multi-piattaforma\n"
 "per conversioni audio e video basata su FFmpeg\n"
 "\n"
-"Questa è una versione candidata al rilascio.\n"
-"E' scritta in Python3 con il toolkit grafico wxPython4 phoenix"
+"Questa è una versione di rilascio.\n"
+"E' scritta in Python3 con il toolkit grafico wxPython phoenix"
 
 #: ../videomass3/vdms_DIALOGS/presets_addnew.py:218
 msgid "Incomplete profile assignments"
@@ -3038,6 +3040,32 @@ msgstr "Codifica a 2 passaggi"
 #: ../videomass3/vdms_PANELS/video_conv.py:280
 msgid "Volumedetect"
 msgstr "Volumedected"
+
+#~ msgid ""
+#~ "Videomass provides a graphical interface for\n"
+#~ "audio and video conversion through FFmpeg\n"
+#~ "\n"
+#~ "This is a candidate release version.\n"
+#~ "It is based on Python2 and wxPython3 classic"
+#~ msgstr ""
+#~ "Videomass è un'interfaccia grafica multi-piattaforma\n"
+#~ "per conversioni audio e video basata su FFmpeg\n"
+#~ "\n"
+#~ "Questa è una versione candidata al rilascio.\n"
+#~ "E' scritta in Python2 con il toolkit grafico wxPython3 classic"
+
+#~ msgid ""
+#~ "Videomass provides a graphical interface for\n"
+#~ "audio and video conversion through FFmpeg\n"
+#~ "\n"
+#~ "This is a candidate release version.\n"
+#~ "It is based on Python3 and wxPython4 phoenix"
+#~ msgstr ""
+#~ "Videomass è un'interfaccia grafica multi-piattaforma\n"
+#~ "per conversioni audio e video basata su FFmpeg\n"
+#~ "\n"
+#~ "Questa è una versione candidata al rilascio.\n"
+#~ "E' scritta in Python3 con il toolkit grafico wxPython4 phoenix"
 
 #~ msgid "Analyzes"
 #~ msgstr "Analizza"
@@ -3608,19 +3636,6 @@ msgstr "Volumedected"
 #~ "\n"
 #~ "Grazie!"
 
-#~ msgid ""
-#~ "Videomass2 provides a graphical interface for\n"
-#~ "audio and video conversion through FFmpeg\n"
-#~ "\n"
-#~ "This is a test release version.\n"
-#~ "It is based on Python2 and wxPython Classic"
-#~ msgstr ""
-#~ "Videomass2 è un'interfaccia grafica multi-piattaforma\n"
-#~ "per conversioni audio e video basata su FFmpeg\n"
-#~ "\n"
-#~ "Questa è una versione di prova.\n"
-#~ "E' scritta in Python2 con il toolkit grafico wxPython Classic."
-
 #~ msgid "Videomass2: setup"
 #~ msgstr "Videomass2: Impostazioni"
 
@@ -3678,19 +3693,6 @@ msgstr "Volumedected"
 #~ "Proceed?"
 #~ msgstr ""
 #~ "ATTENZIONE: stai per ripristinare tutti i preset predefiniti! Procedere?"
-
-#~ msgid ""
-#~ "Videomass2 provides a graphical interface for\n"
-#~ "audio and video conversion through FFmpeg\n"
-#~ "\n"
-#~ "This is a test release version.\n"
-#~ "It is based on Python3 and wxPython Phoenix"
-#~ msgstr ""
-#~ "Videomass2 è un'interfaccia grafica multi-piattaforma\n"
-#~ "per conversioni audio e video basata su FFmpeg\n"
-#~ "\n"
-#~ "Questa è una versione di prova.\n"
-#~ "E' scritta in Python3 con il toolkit grafico wxPython Phoenix."
 
 #~ msgid ""
 #~ "Videomass2 provides a graphical interface for\n"

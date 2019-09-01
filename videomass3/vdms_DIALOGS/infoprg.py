@@ -66,7 +66,7 @@ def info(parent, videomass_icon):
         info.SetDescription(_("Videomass provides a graphical interface for\n"
                               "audio and video conversion through FFmpeg\n"
                               "\n"
-                              "This is a candidate release version.\n"
+                              "This is a release version.\n"
                               "It is based on Python3 and wxPython4 phoenix")
                             )
         info.SetCopyright("Copyright %s %s" %(Copyright, Author))
