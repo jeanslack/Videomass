@@ -558,18 +558,17 @@ class PresetsPanel(wx.Panel):
                 passOne = split[0].strip()
                 passTwo = split[1].strip()
                 
-                command1 = ("-loglevel %s %s %s %s %s -f rawvideo" % (
+                command1 = ("-loglevel %s %s %s %s -f rawvideo" % (
                                                         self.loglevel_type, 
                                                         passOne, 
                                                         self.threads, 
                                                         self.cpu_used,
-                                                        self.time_seq,)
+                                                                   )
                             )
-                command2 = ("-loglevel %s %s %s %s %s" % (self.loglevel_type, 
-                                                        passTwo, 
-                                                        self.threads, 
-                                                        self.cpu_used,
-                                                        self.time_seq,
+                command2 = ("-loglevel %s %s %s %s" % (self.loglevel_type, 
+                                                       passTwo, 
+                                                       self.threads, 
+                                                       self.cpu_used,
                                                         )
                             )
                 pass1 = " ".join(command1.split())# mi formatta la stringa
@@ -593,11 +592,10 @@ class PresetsPanel(wx.Panel):
 
             else:
                 command = ("-loglevel %s %s "
-                            "%s %s %s -y" % (self.loglevel_type, 
+                            "%s %s -y" % (self.loglevel_type, 
                                             self.txt_cmd.GetValue(), 
                                             self.threads, 
-                                            self.cpu_used,
-                                            self.time_seq)
+                                            self.cpu_used,)
                                             )
                 self.parent.switch_Process('normal',
                                             file_sources, 

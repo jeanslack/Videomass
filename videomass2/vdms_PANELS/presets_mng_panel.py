@@ -610,7 +610,7 @@ class PresetsPanel(wx.Panel):
         """
         This method is required for update info before send at epilogue
         """
-        numfile = "%s file in pending" % str(lenghmax)
+        numfile = _("%s file in pending") % str(lenghmax)
                     
         formula = (_(u"SUMMARY:\n\nFile to Queue\
                       \nProfile Used:\nOut Format:\

@@ -1522,9 +1522,8 @@ class Video_Conv(wx.Panel):
         """
         title = 'Video Conversions'
         if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
-            command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
+            command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
                        self.loglevel_type, 
-                       self.time_seq, 
                        cmd_opt["VideoCodec"], 
                        cmd_opt["VideoAspect"],
                        cmd_opt["VideoRate"],
@@ -1558,9 +1557,9 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
-            cmd1 = ('-loglevel %s %s -an %s %s %s %s '
+            cmd1 = ('-loglevel %s -an %s %s %s %s '
                      '%s %s %s %s %s %s -f rawvideo' % (
-                      self.loglevel_type, self.time_seq, 
+                      self.loglevel_type,
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
                       cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -1568,9 +1567,9 @@ class Video_Conv(wx.Panel):
                       self.threads, self.cpu_used),
                     )
             pass1 = " ".join(cmd1[0].split())# mi formatta la stringa
-            cmd2= ('-loglevel %s %s %s %s %s %s %s '
+            cmd2= ('-loglevel %s %s %s %s %s %s '
                      '%s %s %s %s %s %s %s %s %s %s %s' % (
-                     self.loglevel_type, self.time_seq, 
+                     self.loglevel_type, 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -1603,9 +1602,9 @@ class Video_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ("-loglevel %s %s %s %s %s %s %s %s "
+            command = ("-loglevel %s %s %s %s %s %s %s "
                        "%s %s %s %s %s %s %s %s %s %s -y" % (
-                        self.loglevel_type, self.time_seq, 
+                        self.loglevel_type, 
                         cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                         cmd_opt["Presets"], cmd_opt["Profile"],
                         cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -1647,11 +1646,11 @@ class Video_Conv(wx.Panel):
         """
         title = _('Save Images from video')
         fileout = "image%d.jpg"
-        cmd = ('%s -i "%s" -loglevel %s %s %s %s -an %s %s -y "%s/%s"' % (
+        cmd = ('%s %s -i "%s" -loglevel %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
+               self.time_seq,
                file_sources[0], 
                'error', # non imposto l'opzione -stats
-               self.time_seq, 
                cmd_opt["VideoRate"],
                cmd_opt["Filters"],
                self.threads, 

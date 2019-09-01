@@ -260,10 +260,14 @@ class Audio_Conv(wx.Panel):
                 self.normalization_disabled()
             self.ckb_norm.Disable(), self.ckb_onlynorm.Disable()
             self.txt_options.Disable(), self.btn_param.Disable()
+            self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
+            
         else:
             if not self.ckb_norm.IsChecked():# è l'unico caso questo
                 self.ckb_norm.Enable(), self.ckb_onlynorm.Enable(), 
                 self.txt_options.Enable(), self.btn_param.Enable()
+                self.btn_param.SetForegroundColour(wx.Colour(28,28,28))
+                
             cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
             cmd_opt["AudioCodec"] = acodecs[self.cmbx_a.GetValue()]
             ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
@@ -476,8 +480,10 @@ class Audio_Conv(wx.Panel):
             self.ckb_norm.Disable()
             self.cmbx_a.Disable(), self.btn_param.Disable(),
             self.txt_options.Disable(),
+            self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
         else:
             self.cmbx_a.Enable(), self.btn_param.Enable(),
+            self.btn_param.SetForegroundColour(wx.Colour(28,28, 28))
             self.ckb_norm.Enable(),
             self.txt_options.Enable(),
     #------------------------------------------------------------------#
@@ -644,8 +650,7 @@ class Audio_Conv(wx.Panel):
         """
         if self.ckb_onlynorm.IsChecked():
             title = 'Audio Normalization'
-            cmd = ("-loglevel %s %s -vn %s %s -y" % (self.loglevel_type, 
-                                                  self.time_seq, 
+            cmd = ("-loglevel %s -vn %s %s -y" % (self.loglevel_type, 
                                                   self.threads,
                                                   self.cpu_used,)
                                                   )
@@ -670,9 +675,8 @@ class Audio_Conv(wx.Panel):
                 self.exportStreams(f)#call function more above
         else:
             title = 'Audio Conversion'
-            command = ("-loglevel %s %s -vn %s %s %s %s %s %s %s -y" % (
-                                                self.loglevel_type, 
-                                                self.time_seq,
+            command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
+                                                self.loglevel_type,
                                                 cmd_opt["AudioCodec"],
                                                 cmd_opt["AudioBitrate"][1], 
                                                 cmd_opt["AudioDepth"][1], 
@@ -709,9 +713,7 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch_process_changes.
         """
         title = _('Save audio from movies')
-        cmdsplit1 = ("-loglevel %s %s -vn" % (self.loglevel_type, 
-                                              self.time_seq)
-                                              )
+        cmdsplit1 = ("-loglevel %s -vn" % (self.loglevel_type,))
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 
         valupdate = self.update_dict(lenghmax)

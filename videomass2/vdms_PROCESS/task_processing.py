@@ -80,6 +80,7 @@ class GeneralProcess(wx.Panel):
         self.CHANGE_STATUS = None #  1 = process interrupted 
         
         self.duration = duration
+        self.time_seq = self.parent.time_seq
         self.OS = OS
         self.varargs = varargs
         
@@ -147,11 +148,11 @@ class GeneralProcess(wx.Panel):
         """
         if self.varargs[0] == 'normal':# from video and audio conv panels
             ProcThread(self.varargs, self.duration,
-                       self.OS, self.logname,
+                       self.OS, self.logname, self.time_seq
                        ) 
         elif self.varargs[0] == 'doublepass': # from video conv panel
             DoublePassThread(self.varargs, self.duration,
-                             self.OS, self.logname,
+                             self.OS, self.logname, self.time_seq
                              )
         elif self.varargs[0] == 'saveimages': # from video conv panel
             SingleProcThread(self.varargs, self.duration,
@@ -159,7 +160,7 @@ class GeneralProcess(wx.Panel):
                              )
         elif self.varargs[0] == 'grabaudio':# from audio conv panel
             GrabAudioProc(self.varargs, self.duration,
-                          self.OS, self.logname,
+                          self.OS, self.logname, self.time_seq
                           )
     #-------------------------------------------------------------------#
     def update_display(self, output, duration):
@@ -288,7 +289,7 @@ class ProcThread(Thread):
     This class represents a separate thread for running processes, which 
     need to read the stdout/stderr in real time.
     """
-    def __init__(self, varargs, duration, OS, logname):
+    def __init__(self, varargs, duration, OS, logname, timeseq):
         """
         Some attribute can be empty, this depend from conversion type. 
         If the format/container is not changed on a conversion, the 
@@ -305,6 +306,7 @@ class ProcThread(Thread):
         self.extoutput = varargs[2] # format (extension)
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
+        self.time_seq = timeseq
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
         self.OS = OS # operative sistem Identifier
         self.count = 0 # count number loop
@@ -332,22 +334,24 @@ class ProcThread(Thread):
                 volume = '' #altrimenti inserisce None nei comandi sotto
                 
             if self.extoutput == '': # Copy Video Codec and only norm.
-                cmd = '%s -i "%s" %s %s "%s/%s"' % (self.ffmpeg_link, 
-                                                    files, 
-                                                    volume, 
-                                                    self.command,
-                                                    folders, 
-                                                    os.path.basename(files)
-                                                    )
-            else:# single pass
-                cmd = '%s -i "%s" %s %s "%s/%s.%s"' % (self.ffmpeg_link,
+                cmd = '%s %s -i "%s" %s %s "%s/%s"' % (self.ffmpeg_link, 
+                                                       self.time_seq,
                                                        files, 
                                                        volume, 
-                                                       self.command, 
+                                                       self.command,
                                                        folders, 
-                                                       filename, 
-                                                       self.extoutput
-                                                       ) 
+                                                       os.path.basename(files)
+                                                       )
+            else:# single pass
+                cmd = '%s %s -i "%s" %s %s "%s/%s.%s"' % (self.ffmpeg_link,
+                                                          self.time_seq,
+                                                          files, 
+                                                          volume, 
+                                                          self.command, 
+                                                          folders, 
+                                                          filename, 
+                                                          self.extoutput
+                                                          ) 
             if self.OS == 'Windows':
                 args = cmd
             else:
@@ -440,7 +444,7 @@ class DoublePassThread(Thread):
     twice for two different tasks: the process on the first video pass and 
     the process on the second video pass for video only.
     """
-    def __init__(self, varargs, duration, OS, logname):
+    def __init__(self, varargs, duration, OS, logname, timeseq):
         """
         The 'volume' attribute may have an empty value, but it will 
         have no influence on the type of conversion.
@@ -454,6 +458,7 @@ class DoublePassThread(Thread):
         self.extoutput = varargs[2] # format (extension)
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
+        self.time_seq = timeseq
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
         self.OS = OS
         self.count = 0 # count number loop
@@ -485,8 +490,9 @@ class DoublePassThread(Thread):
                 volume = '' #altrimenti inserisce None nei comandi sotto
             
             #--------------- first pass
-            pass1 = ('%s -i "%s" %s -passlogfile "%s/%s.log" '
+            pass1 = ('%s %s -i "%s" %s -passlogfile "%s/%s.log" '
                     '-pass 1 -y %s' % (self.ffmpeg_link, 
+                                       self.time_seq,
                                        files, 
                                        self.passList[0],
                                        folders, 
@@ -555,16 +561,17 @@ class DoublePassThread(Thread):
                 break # fermo il ciclo for, altrimenti passa avanti
             
             #--------------- second pass
-            pass2 = ('%s -i "%s" %s %s -passlogfile "%s/%s.log" '
+            pass2 = ('%s %s -i "%s" %s %s -passlogfile "%s/%s.log" '
                      '-pass 2 -y "%s/%s.%s"' % (self.ffmpeg_link, 
-                                               files, 
-                                               volume,
-                                               self.passList[1], 
-                                               folders, 
-                                               filename,
-                                               folders, 
-                                               filename,
-                                               self.extoutput,
+                                                self.time_seq,
+                                                files, 
+                                                volume,
+                                                self.passList[1], 
+                                                folders, 
+                                                filename,
+                                                folders, 
+                                                filename,
+                                                self.extoutput,
                                                 ))
             if self.OS == 'Windows':
                 args = pass2
@@ -748,7 +755,7 @@ class GrabAudioProc(Thread):
     It is reserved for extracting multiple audio files with codecs and 
     different formats from different video formats.
     """
-    def __init__(self, varargs, duration, OS, logname):
+    def __init__(self, varargs, duration, OS, logname, timeseq):
         """
         """
         Thread.__init__(self)
@@ -763,6 +770,7 @@ class GrabAudioProc(Thread):
         self.ext = varargs[7] # format/extension list (items)
         self.logname = varargs[8] #  ~/.videomass/self.logname
         self.duration = duration # duration values list (items)
+        self.time_seq = timeseq
         self.OS = OS
         self.count = 0 # count number loop
         self.lenghmax = len(varargs[2]) # lengh file list
@@ -788,13 +796,15 @@ class GrabAudioProc(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
             out = os.path.join(folders, filename)
 
-            cmd = '%s -i "%s" %s %s %s "%s.%s"' % (self.ffmpeg_link, 
-                                                   files, 
-                                                   self.cmd_1, 
-                                                   codec, 
-                                                   self.cmd_2,
-                                                   out,
-                                                   ext,)
+            cmd = '%s %s -i "%s" %s %s %s "%s.%s"' % (self.ffmpeg_link,
+                                                      self.time_seq,
+                                                      files, 
+                                                      self.cmd_1, 
+                                                      codec, 
+                                                      self.cmd_2,
+                                                      out,
+                                                      ext,
+                                                      )
             if self.OS == 'Windows':
                 args = cmd
             else:
