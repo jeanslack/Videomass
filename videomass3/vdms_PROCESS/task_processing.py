@@ -190,7 +190,9 @@ class GeneralProcess(wx.Panel):
                         'Invalid', 
                         'Option not found', 
                         'Unknown',
-                        'No such file or directory')
+                        'No such file or directory',
+                        'does not contain any stream',
+                        'Output file is empty, nothing was encoded',)
             
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
             self.OutText.AppendText('\n%s' % output)

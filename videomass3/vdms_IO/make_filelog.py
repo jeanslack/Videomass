@@ -57,7 +57,8 @@ If you want to save the log file in other places of
 your drives, set it by videomass preferences dialog.
 -----------------------------------------
 Videomass default ffmpeg loglevel fixed to 'error'.
-See ~/.videomass/videomass.conf for more details.
+For more details, see videomass.conf or videomassWin32.conf 
+into configuration directory.
 -----------------------------------------
 
 [VIDEOMASS] COMMAND LINE:

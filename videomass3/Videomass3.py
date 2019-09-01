@@ -54,6 +54,7 @@ class Videomass(wx.App):
         self.FILEconf = None
         self.WORKdir = None
         self.OS = None
+        self.path_log = None # save copy of file log to specific folder
         
         print ("App __init__")
 
@@ -88,6 +89,7 @@ class Videomass(wx.App):
         self.FILEconf = setui[6] # set file conf. pathname 
         self.WORKdir = setui[7] # set PWD current dir
         self.DIRconf = setui[8] # set dir conf pathname
+        self.path_log = DATAconf[5]
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
