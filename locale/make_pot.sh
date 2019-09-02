@@ -17,6 +17,7 @@ xgettext -d videomass "../videomass2/Videomass2.py" \
 "../videomass2/vdms_DIALOGS/presets_addnew.py" \
 "../videomass2/vdms_DIALOGS/settings.py" \
 "../videomass2/vdms_DIALOGS/shownormlist.py" \
+"../videomass2/vdms_DIALOGS/while_playing.py" \
 "../videomass2/vdms_IO/filedir_control.py" \
 "../videomass2/vdms_IO/IO_tools.py" \
 "../videomass2/vdms_IO/presets_manager_properties.py" \
@@ -46,6 +47,7 @@ xgettext -d videomass "../videomass2/Videomass2.py" \
 "../videomass3/vdms_DIALOGS/presets_addnew.py" \
 "../videomass3/vdms_DIALOGS/settings.py" \
 "../videomass3/vdms_DIALOGS/shownormlist.py" \
+"../videomass3/vdms_DIALOGS/while_playing.py" \
 "../videomass3/vdms_IO/filedir_control.py" \
 "../videomass3/vdms_IO/IO_tools.py" \
 "../videomass3/vdms_IO/presets_manager_properties.py" \

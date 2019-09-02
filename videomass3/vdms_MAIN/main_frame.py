@@ -30,7 +30,10 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
-from videomass3.vdms_DIALOGS import dialog_tools, settings, infoprg
+from videomass3.vdms_DIALOGS import dialog_tools
+from videomass3.vdms_DIALOGS import settings
+from videomass3.vdms_DIALOGS import infoprg
+from videomass3.vdms_DIALOGS import while_playing
 from videomass3.vdms_DIALOGS import ffmpeg_search
 from videomass3.vdms_PANELS import dragNdrop, presets_mng_panel
 from videomass3.vdms_PANELS import video_conv, audio_conv
@@ -623,6 +626,9 @@ class MainFrame(wx.Frame):
         ####------------------ tools button
         toolsButton = wx.Menu()
         
+        playing = toolsButton.Append( wx.ID_ANY, _("While playing"), 
+        _("Show dialog box with keyboard shortcuts useful during playback"))
+        toolsButton.AppendSeparator()
         checkconf = toolsButton.Append( wx.ID_ANY, _("FFmpeg specifications"), 
                             _("Shows the configuration features of FFmpeg"))
         toolsButton.AppendSeparator()
@@ -688,6 +694,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
+        self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
         self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
@@ -805,6 +812,14 @@ class MainFrame(wx.Frame):
         setup_dlg.ShowModal()
     
     #--------------------------- Menu Tools ---------------------------#
+    def durinPlayng(self, event):
+        """
+        show dialog with shortcuts keyboard for FFplay
+        """
+        dlg = while_playing.While_Playing(self.OS)
+        dlg.Show()
+        
+    #------------------------------------------------------------------#
     def Check_conf(self, event):
         """
         Call IO_tools.test_conf

@@ -29,8 +29,11 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
-from videomass2.vdms_DIALOGS import dialog_tools, settings, infoprg
+from videomass2.vdms_DIALOGS import dialog_tools
+from videomass2.vdms_DIALOGS import settings
+from videomass2.vdms_DIALOGS import infoprg
 from videomass2.vdms_DIALOGS import ffmpeg_search
+from videomass2.vdms_DIALOGS import while_playing
 from videomass2.vdms_PANELS import dragNdrop, presets_mng_panel
 from videomass2.vdms_PANELS import video_conv, audio_conv
 from videomass2.vdms_IO import IO_tools
@@ -623,7 +626,10 @@ class MainFrame(wx.Frame):
         
         ####------------------ tools button
         toolsButton = wx.Menu()
-
+        
+        playing = toolsButton.Append( wx.ID_ANY, _(u"While playing"), 
+           _(u"Show dialog box with keyboard shortcuts useful during playback"))
+        toolsButton.AppendSeparator()
         checkconf = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg specifications"), 
                                 u"Shows the configuration features of FFmpeg")
         toolsButton.AppendSeparator()
@@ -689,6 +695,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
+        self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
         self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
@@ -765,6 +772,15 @@ class MainFrame(wx.Frame):
         """
         self.Destroy()
     #--------------------------- Menu Tools ---------------------------#
+    
+    def durinPlayng(self, event):
+        """
+        show dialog with shortcuts keyboard for FFplay
+        """
+        dlg = while_playing.While_Playing(self.OS)
+        dlg.Show()
+        
+    #------------------------------------------------------------------#
     def Check_conf(self, event):
         """
         Call IO_tools.testFFmpeg_conf to test features of FFmpeg
