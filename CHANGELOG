@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-August 30, 2019 V.1.5.8
+August 30, 2019 V.1.6.0
 +------------------------------------+
     
 IMPROVEMENTS:
@@ -21,7 +21,7 @@ IMPROVEMENTS:
       multiple languages ​​are available. This is good when you import more videos 
       with more audio streams.
     - Improved log view in the Process panel
-    - Improved writing log during the processes
+    - Improved writing log during on almost all processes
     - Now the audio normalization is applied only on the sequence in relation 
       to the duration if set before volume dected, otherwise is applied to
       entire file.
@@ -33,6 +33,8 @@ BUG FIXES:
       dialog to avoid errors.
     - The '-af volume = .0dB' parameter is omitted from the command to the 
       audio streams which does not requires the audio normalization process
+    - Fixed message "File does not exist or not a valid file:" when playing
+      exported files with more dot on filename .
       
 REMOVALS and DISPLACEMENTS: 
     - Changed default location of the 'videomass' configuration directory 

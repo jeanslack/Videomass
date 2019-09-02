@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.27.2018. Aug.31.2019
+# Rev: Dec.27.2018. Sept.02.2019
 #########################################################
 # This file is part of Videomass.
 
@@ -38,7 +38,7 @@ not_exist_msg =  _('exist in your system?')
 unrecognized_msg = _("Unrecognized Error (not in err_list):")
 not_exist_file = _("File does not exist:")
 
-# setting the path to the configuration directory:
+# path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
 PATH_log = get.path_log
@@ -206,12 +206,10 @@ class VolumeDetectThread(Thread):
         if self.status:
             self.logError()
             
-        
         wx.CallAfter(pub.sendMessage, 
                      "RESULT_EVT",  
                       status=''
                       )
-
         self.pathLog()
         
     #----------------------------------------------------------------#    

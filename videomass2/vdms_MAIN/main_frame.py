@@ -67,9 +67,11 @@ class MainFrame(wx.Frame):
         self.icon_headphones = pathicons[5]
         self.icon_import = pathicons[6]
         barC = DATAconf[14].split(',') 
-        barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) # toolbar panel colour
+        barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
+        # toolbar panel colour
         bBtnC = DATAconf[15].split(',')
-        self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2])) # toolbar buttons colour
+        self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2])) 
+        # toolbar buttons colour
         
         #self.helping = setui[5]# path contestual help for helping:
         self.OS = setui[0]# ID of the operative system:
@@ -95,7 +97,7 @@ class MainFrame(wx.Frame):
         self.iconset = DATAconf[13]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
-        self.post_process = []# at the end of any process put file for play/metadata
+        self.post_process = []# post-pocess set first file for play/metadata
         self.file_sources = []# list of items in list control
         self.file_destin = ''# path name for file saved destination
         self.panelshown = '' # gives current (previusly) panel shown
@@ -474,6 +476,7 @@ class MainFrame(wx.Frame):
         IO_tools.stream_play(filepath, 
                              self.time_seq, 
                              self.ffplay_link, 
+                             '', # parameters
                              self.loglevel_type,
                              )
     #------------------------------------------------------------------#
@@ -484,7 +487,7 @@ class MainFrame(wx.Frame):
         filepath = self.import_clicked
         if not filepath:
             wx.MessageBox(_(u"No file selected into Drag and Drop list"), 
-                          'Videomass', wx.ICON_EXCLAMATION, self)
+                          'Videomass', wx.ICON_INFORMATION, self)
             return
         title = _('Videomass: media streams')
         IO_tools.stream_info(title, 
@@ -499,12 +502,13 @@ class MainFrame(wx.Frame):
         """
         if not self.post_process:
             wx.MessageBox(_(u"No files exported with `Start Encoding` yet"), 
-                          'Videomass', wx.ICON_EXCLAMATION, self)
+                            'Videomass', wx.ICON_INFORMATION, self)
             return
 
         IO_tools.stream_play(self.post_process,
-                             '', 
+                             '', # time_seq is useless for the exported file
                              self.ffplay_link, 
+                             '', # no others parameters are needed
                              self.loglevel_type,
                              )
     #------------------------------------------------------------------#

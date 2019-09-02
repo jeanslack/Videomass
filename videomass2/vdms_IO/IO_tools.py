@@ -22,7 +22,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev: july/21/2018, Dec/20/2018, Aug 21 2019
+# Rev: july.21.2018, Dec.20.2018, Aug.21.2019, Sept.02.2019
 #########################################################
 
 import wx
@@ -85,7 +85,7 @@ def process(self, varargs, path_log, panelshown, duration, time_seq):
                                        panelshown, 
                                        varargs, 
                                        duration, 
-                                       OS
+                                       OS,
                                        )
 #-----------------------------------------------------------------------#
 def stream_info(title, filepath , ffprobe_link):
@@ -108,14 +108,20 @@ def stream_info(title, filepath , ffprobe_link):
             filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
         
 #-----------------------------------------------------------------------#
-def stream_play(filepath, param, ffplay_link, loglevel_type):
+def stream_play(filepath, timeseq, ffplay_link, param, loglevel_type):
     """
     Thread for media reproduction with ffplay
-    """
     
+    """
     try:
         with open(filepath):
-            thread = Play(filepath, param, ffplay_link, loglevel_type, OS)
+            thread = Play(filepath, 
+                          timeseq, 
+                          ffplay_link, 
+                          param, 
+                          loglevel_type, 
+                          OS,
+                          )
             #thread.join()# attende che finisca il thread (se no ritorna subito)
             #error = thread.data
     except IOError:

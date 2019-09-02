@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (03) December 27 2018
+# Rev:  Dec.27.2018. Sept.02.2019
 #########################################################
 # This file is part of Videomass.
 
@@ -37,9 +37,10 @@ not_exist_msg =  _('exist in your system?')
 unrecognized_msg = _("Unrecognized Error (not in err_list):")
 not_exist_msg = _("File does not exist:")
 
-# setting the path to the configuration directory:
+# path to the configuration directory
 get = wx.GetApp()
 DIRconf = get.DIRconf
+PATH_log = get.path_log
 #########################################################################
 
 class PopupDialog(wx.Dialog):
@@ -94,6 +95,7 @@ class PopupDialog(wx.Dialog):
         vedi: https://github.com/wxWidgets/Phoenix/issues/672
         Penso sia fattibile anche implementare un'interfaccia GetValue
         su questo dialogo, ma si perderebbe un po' di portabilità.
+        
         """
         #self.Destroy() # do not work
         self.EndModal(1)

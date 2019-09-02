@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (10) December 27 2018
+# Rev: Dec.27.2018, Sept.02.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -31,16 +31,23 @@ import subprocess
 import shlex
 import time
 from threading import Thread
+from videomass3.vdms_SYS.os_interaction import copy_restore # if copy fiile log
+from videomass3.vdms_IO.make_filelog import write_log # write initial log
 
 #########################################################################
 not_exist_msg =  _('exist in your system?')
+
+# get data from bootstrap
+get = wx.GetApp()
+DIRconf = get.DIRconf # path to the configuration directory
+PATH_log = get.path_log # if not 'none' save the log in other place
 #########################################################################
 
 def Messages(msg):
     """
     Receive error messages from Play(Thread) via wxCallafter
+    
     """
-
     wx.MessageBox("[playback] ERROR:  %s" % (msg), 
                       "Videomass: FFplay", 
                       wx.ICON_ERROR
@@ -53,7 +60,8 @@ class Play(Thread):
     NOTE: the loglevel is set on 'error'. Do not use 'self.loglevel_type' 
           because -stats option do not work.
     """
-    def __init__(self, filepath, param, ffplay_link, loglevel_type, OS):
+    def __init__(self, filepath, timeseq, 
+                 ffplay_link, param, loglevel_type, OS):
         """
         costructor
         """
@@ -62,19 +70,28 @@ class Play(Thread):
         self.filename = filepath # file name selected
         self.ffplay = ffplay_link # command process
         self.loglevel_type = loglevel_type # not used (used error)
-        self.param = param # parametri aggiuntivi
+        self.time_seq = timeseq # seeking
+        self.param = param # additional parameters if present
         self.OS = OS # tipo di sistema operativo
+        self.logf = "%s/log/%s" %(DIRconf, 'Videomass_FFplay.log')
+        
+        write_log('Videomass_FFplay.log', "%s/log" % DIRconf) 
+        # set initial file LOG
 
         self.start() # start the thread (va in self.run())
-
+        
+    #----------------------------------------------------------------#
     def run(self):
         #time.sleep(.5)
         loglevel_type = 'error'
-        cmd = '%s -i "%s" %s -loglevel %s' % (self.ffplay,
-                                              self.filename,
-                                              self.param,
-                                              loglevel_type,
-                                              )
+        cmd = '%s %s -i "%s" %s -loglevel %s' % (self.ffplay,
+                                                 self.time_seq,
+                                                 self.filename,
+                                                 self.param,
+                                                 loglevel_type,
+                                                 )
+        self.logWrite(cmd)
+        
         try:
             if self.OS == 'Windows':
                 command = cmd
@@ -86,7 +103,10 @@ class Play(Thread):
             error =  p.communicate()
             
             if error[1]:
-                wx.CallAfter(Messages, error[1])
+                err = error[1].decode()
+                wx.CallAfter(Messages, err)
+                self.logError(err) # append log error
+                self.pathLog() # log in other place?
                 return
         
         except OSError as err_0:
@@ -97,4 +117,37 @@ class Play(Thread):
                 pyerror = "%s: " % (err_0)
                 
             wx.CallAfter(Messages, pyerror)
+            self.logError(pyerror) # append log error
+            self.pathLog() # log in other place?
             return
+        
+        self.pathLog() # log in other place?
+        
+    #----------------------------------------------------------------#    
+    def logWrite(self, cmd):
+        """
+        write ffmpeg command log
+        
+        """
+        with open(self.logf, "a") as log:
+            log.write("%s\n\n" % (cmd))
+            
+    #----------------------------------------------------------------# 
+    def logError(self, error):
+        """
+        write ffmpeg volumedected errors
+        
+        """
+        print(error)
+        with open(self.logf,"a") as logerr:
+            logerr.write("[FFMPEG] FFplay "
+                         "ERRORS:\n%s\n\n" % (error))
+    #----------------------------------------------------------------#
+    def pathLog(self):
+        """
+        if user want file log in a specified path
+        
+        """
+        if not 'none' in PATH_log: 
+            copy_restore(self.logf, "%s/%s" % (PATH_log, 
+                                               'Videomass_FFplay.log'))

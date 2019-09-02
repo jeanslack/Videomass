@@ -85,7 +85,7 @@ def process(self, varargs, path_log, panelshown, duration, time_seq):
                                        panelshown, 
                                        varargs, 
                                        duration, 
-                                       OS
+                                       OS,
                                        )
 #-----------------------------------------------------------------------#
 def stream_info(title, filepath , ffprobe_link):
@@ -98,7 +98,7 @@ def stream_info(title, filepath , ffprobe_link):
             dialog = Mediainfo(title, 
                                filepath, 
                                ffprobe_link, 
-                               OS
+                               OS,
                                )
             dialog.Show()
 
@@ -107,13 +107,20 @@ def stream_info(title, filepath , ffprobe_link):
             filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
         
 #-----------------------------------------------------------------------#
-def stream_play(filepath, param, ffplay_link, loglevel_type):
+def stream_play(filepath, timeseq, ffplay_link, param, loglevel_type):
     """
     Thread for media reproduction with ffplay
     """
+    print(filepath)
     try:
         with open(filepath):
-            thread = Play(filepath, param, ffplay_link, loglevel_type, OS)
+            thread = Play(filepath, 
+                          timeseq, 
+                          ffplay_link, 
+                          param, 
+                          loglevel_type, 
+                          OS,
+                          )
             #thread.join()# attende che finisca il thread (se no ritorna subito)
             #error = thread.data
     except IOError:
@@ -188,7 +195,7 @@ def test_conf(ffmpeg_link, ffprobe_link, ffplay_link):
                                     ffmpeg_link, 
                                     ffprobe_link,
                                     ffplay_link, 
-                                    OS
+                                    OS,
                                     )
         dlg.Show()
 #-------------------------------------------------------------------------#

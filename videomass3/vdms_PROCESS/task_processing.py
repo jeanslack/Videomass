@@ -47,7 +47,7 @@ from videomass3.vdms_IO.make_filelog import write_log
 # Setting global variables to communicate status between processes:
 CHANGE_STATUS = None
 STATUS_ERROR = None
-# setting the path to the configuration directory:
+# path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
 

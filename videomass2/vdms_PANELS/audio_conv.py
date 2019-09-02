@@ -700,9 +700,9 @@ class Audio_Conv(wx.Panel):
                                            lenghmax,
                                            )
                 #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).split('.')[0]
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                              cmd_opt["ExportExt"]))
+                                                 cmd_opt["ExportExt"]))
         
     #------------------------------------------------------------------#
     def grabaudioProc(self, file_sources, dir_destin, 
@@ -730,7 +730,7 @@ class Audio_Conv(wx.Panel):
                                        lenghmax, #list
                                        )
             # used for play preview and mediainfo:
-            f = os.path.basename(file_sources[0]).split('.')[0]
+            f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
             self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                              cmd_opt["ExportExt"][0]))
 

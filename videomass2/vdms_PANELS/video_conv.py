@@ -818,12 +818,18 @@ class Video_Conv(wx.Panel):
         """
         if not cmd_opt["Filters"]:
             wx.MessageBox(_(u"No filter enabled"), "Videomass: Info", 
-                          wx.ICON_INFORMATION)
+                            wx.ICON_INFORMATION)
             return
+        
         self.time_seq = self.parent.time_seq
-        filters = '%s %s' % (self.time_seq, cmd_opt["Filters"])
         first_path = self.file_sources[0]
-        stream_play(first_path, filters, self.ffplay_link, self.loglevel_type)
+        
+        stream_play(first_path, 
+                    self.time_seq, 
+                    self.ffplay_link, 
+                    cmd_opt["Filters"], 
+                    self.loglevel_type,
+                    )
     #------------------------------------------------------------------#
     def on_FiltersClear(self, event):
         """
@@ -1607,9 +1613,9 @@ class Video_Conv(wx.Panel):
                                            lenghmax, 
                                            )
                 #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).split('.')[0]
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                              cmd_opt["VideoFormat"]))
+                                                 cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
@@ -1642,9 +1648,9 @@ class Video_Conv(wx.Panel):
                                            lenghmax, 
                                            )
                 #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).split('.')[0]
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                              cmd_opt["VideoFormat"]))
+                                                 cmd_opt["VideoFormat"]))
     #--------------------------------------------------------------------#
     def saveimages(self, file_sources, dir_destin, 
                    filename, logname, lenghmax):

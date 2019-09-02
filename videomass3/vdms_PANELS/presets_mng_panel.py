@@ -586,9 +586,9 @@ class PresetsPanel(wx.Panel):
                                             lenghmax, 
                                             )
                 #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).split('.')[0]
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                array[4]))
+                                                 array[4]))
 
             else:
                 command = ("-loglevel %s %s "
@@ -608,10 +608,10 @@ class PresetsPanel(wx.Panel):
                                             logname, 
                                             lenghmax, 
                                             )
-                f = os.path.basename(file_sources[0]).split('.')[0]
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                array[4]))
-#------------------------------------------------------------------#
+                                                 array[4]))
+    #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     def update_dict(self, lenghmax):
         """

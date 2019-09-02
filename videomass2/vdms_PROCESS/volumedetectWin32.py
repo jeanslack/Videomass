@@ -22,23 +22,28 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
-# Rev (01) 21/july/2018, (02) October 13 2018
+# Rev: july.21.2018, Oct.13.2018, Sept.02.2019
 #########################################################
 import wx
 from wx.lib.pubsub import setupkwargs
 from wx.lib.pubsub import pub # work on wxPython >= 2.9 = 3.0
 import subprocess
 from threading import Thread
+from videomass2.vdms_SYS.os_interaction import copy_restore # if copy fiile log
+from videomass2.vdms_IO.make_filelog import write_log # write initial log
 
 ########################################################################
-# message strings for all the following Classes.
-# WARNING: For translation reasons, try to keep the position of these 
-#          strings unaltered.
+# message strings
 non_ascii_msg = _(u'Non-ASCII/UTF-8 character string not supported. '
                   u'Please, check the filename and correct it.')
 not_exist_msg =  _(u'exist in your system?')
 unrecognized_msg = _(u"Unrecognized Error (not in err_list):")
 not_exist_msg = _(u"File does not exist:")
+
+# path to the configuration directory:
+get = wx.GetApp()
+DIRconf = get.DIRconf
+PATH_log = get.path_log
 #########################################################################
 
 class PopupDialog(wx.Dialog):
@@ -92,6 +97,7 @@ class PopupDialog(wx.Dialog):
         vedi: https://github.com/wxWidgets/Phoenix/issues/672
         Penso sia fattibile anche implementare un'interfaccia GetValue
         su questo dialogo, ma si perderebbe un po' di portabilità.
+        
         """
         #self.Destroy() # do not work
         self.EndModal(1)
@@ -102,7 +108,7 @@ class VolumeDetectThread(Thread):
     volume peak level when required for audio normalization process.
     The volume data is a list sended to the dialog with wx.callafter.
     """
-    def __init__(self, ffmpeg_bin, filelist, OS):
+    def __init__(self, ffmpeg_bin, timeseq, filelist, OS):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -111,13 +117,14 @@ class VolumeDetectThread(Thread):
         """initialize"""
         self.filelist = filelist
         self.ffmpeg = ffmpeg_bin
+        self.time_seq = timeseq
         self.status = None
         self.data = None
-        if OS == 'Windows':#Replace /dev/null with NUL on Windows.
-            self.nul = 'NUL'
-        else:
-            self.nul = '/dev/null'
-
+        self.nul = 'NUL'
+        self.logf = "%s/log/%s" %(DIRconf, 'Videomass_volumedected.log')
+        
+        write_log('Videomass_volumedected.log', "%s/log" % DIRconf) 
+        # set initial file LOG
         self.start() # start the thread (va in self.run())
 
     def run(self):
@@ -139,22 +146,16 @@ class VolumeDetectThread(Thread):
                     'Option not found', 
                     'Unknown',
                     'No such file or directory',
-                    'does not contain any stream',
+                    'Output file is empty, nothing was encoded',
                     )
         for files in self.filelist:
-            cmnd = [self.ffmpeg, 
-                    '-i', 
-                    files, 
-                    '-hide_banner', 
-                    '-af', 
-                    'volumedetect', 
-                    '-vn', 
-                    '-sn', 
-                    '-dn', 
-                    '-f', 
-                    'null', 
-                    self.nul
-                    ]
+            cmnd = ("{0} {1} -i '{2}' -hide_banner -af volumedetect "
+                    "-vn -sn -dn -f null {3}").format(self.ffmpeg, 
+                                                      self.time_seq,
+                                                      files,
+                                                      self.nul)
+            self.logWrite(args)
+            
             try:
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -191,11 +192,10 @@ class VolumeDetectThread(Thread):
                 self.status = e
                 break
             
-            except UnboundLocalError: # local variable 'e' referenced before assignment
-                """
-                dovrebbe riportare tutti gli errori di ffmpeg dal momento 
-                che la variabile `e` sarà referenziata prima di essere assegnata.
-                """
+            except UnboundLocalError:
+                # local variable `e` referenced before assignment
+                # dovrebbe riportare tutti gli errori di ffmpeg dato che la 
+                # variabile `e` sarà referenziata prima di essere assegnata.
                 e = "%s\n\n%s" % (unrecognized_msg, error)
                 self.status = e
                 break
@@ -208,7 +208,41 @@ class VolumeDetectThread(Thread):
         
         self.data = (volume, self.status)
         
+        if self.status:
+            self.logError()
+        
         wx.CallAfter(pub.sendMessage, 
                      "RESULT_EVT",  
                       status=''
                       )
+        
+        self.pathLog()
+        
+    #----------------------------------------------------------------#    
+    def logWrite(self, cmd):
+        """
+        write ffmpeg command log
+        
+        """
+        with open(logf, "a") as log:
+            log.write("%s\n\n" % (cmd))
+            
+    #----------------------------------------------------------------# 
+    def logError(self):
+        """
+        write ffmpeg volumedected errors
+        
+        """
+        with open(logf,"a") as logerr:
+            logerr.write("[FFMPEG] volumedetect "
+                         "ERRORS:\n%s\n\n" % (self.status))
+            
+    #----------------------------------------------------------------#
+    def pathLog(self):
+        """
+        if user want file log in a specified path
+        
+        """
+        if not 'none' in PATH_log: 
+            copy_restore(self.logf, "%s/%s" % (PATH_log, 
+                                               'Videomass_volumedected.log'))

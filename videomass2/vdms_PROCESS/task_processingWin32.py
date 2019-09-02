@@ -48,7 +48,7 @@ from videomass2.vdms_IO.make_filelog import write_log
 # Setting global variables to communicate status between processes:
 CHANGE_STATUS = None
 STATUS_ERROR = None
-# setting the path to the configuration directory:
+# path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
 
@@ -186,7 +186,9 @@ class GeneralProcess(wx.Panel):
                         'Invalid', 
                         'Option not found', 
                         'Unknown',
-                        'No such file or directory')
+                        'No such file or directory',
+                        'does not contain any stream',
+                        'Output file is empty, nothing was encoded',)
             
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
             self.OutText.AppendText('\n%s' % output)

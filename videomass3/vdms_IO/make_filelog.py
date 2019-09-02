@@ -43,7 +43,7 @@ def write_log(logname, dirconf):
             os.mkdir(dirconf)
         except OSError as e:
             print(e)
-            print ("Creation of the directory %s failed" % dirconf)
+            print ("Directory creation failed '%s'" % dirconf)
             
     current_date =  time.strftime("%c") # date/time
 
