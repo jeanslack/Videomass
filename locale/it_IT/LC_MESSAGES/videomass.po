@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-02 18:00+0200\n"
-"PO-Revision-Date: 2019-09-02 18:32+0200\n"
+"POT-Creation-Date: 2019-09-03 11:26+0200\n"
+"PO-Revision-Date: 2019-09-03 11:29+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -30,8 +30,8 @@ msgstr ""
 "\n"
 "Spiacente, non posso continuare.."
 
-#: ../videomass2/vdms_DIALOGS/audiodialogs.py:223
-#: ../videomass3/vdms_DIALOGS/audiodialogs.py:225
+#: ../videomass2/vdms_DIALOGS/audiodialogs.py:229
+#: ../videomass3/vdms_DIALOGS/audiodialogs.py:234
 msgid ""
 "The audio channels are represented by monophonic, \n"
 "stereophonic and quadraphonic techniques reproduction.\n"
@@ -47,8 +47,8 @@ msgstr ""
 "Se non sicuri, lasciare su \"Default\", così verranno copiati \n"
 "i valori di origine."
 
-#: ../videomass2/vdms_DIALOGS/audiodialogs.py:231
-#: ../videomass3/vdms_DIALOGS/audiodialogs.py:233
+#: ../videomass2/vdms_DIALOGS/audiodialogs.py:237
+#: ../videomass3/vdms_DIALOGS/audiodialogs.py:242
 msgid ""
 "The audio Rate (or sample-rate) is the sound sampling \n"
 "frequency and is measured in hertz. The higher the frequency, \n"
@@ -66,8 +66,8 @@ msgstr ""
 "di campionamento a 44100kHz.  Se non sicuri, lasciare su \"Default\", \n"
 "così verranno copiati i valori di origine."
 
-#: ../videomass2/vdms_DIALOGS/audiodialogs.py:239
-#: ../videomass3/vdms_DIALOGS/audiodialogs.py:241
+#: ../videomass2/vdms_DIALOGS/audiodialogs.py:245
+#: ../videomass3/vdms_DIALOGS/audiodialogs.py:250
 msgid ""
 "The audio bitrate affects on file compression\n"
 "and on the quality of listening. The higher\n"
@@ -77,8 +77,8 @@ msgstr ""
 "sulla qualità dell'ascolto.\n"
 "Più alto è il suo valore e più alta sarà la qualità del suono."
 
-#: ../videomass2/vdms_DIALOGS/audiodialogs.py:244
-#: ../videomass3/vdms_DIALOGS/audiodialogs.py:246
+#: ../videomass2/vdms_DIALOGS/audiodialogs.py:250
+#: ../videomass3/vdms_DIALOGS/audiodialogs.py:255
 msgid ""
 "bit depth is the number of bits of information in each \n"
 "sample, and it directly corresponds to the resolution \n"
@@ -1418,8 +1418,6 @@ msgstr "Normalizzazione"
 #: ../videomass2/vdms_DIALOGS/while_playing.py:32
 #: ../videomass3/vdms_DIALOGS/while_playing.py:32
 msgid ""
-"SHORTCUTS:\n"
-"\n"
 "q, ESC\n"
 "f\n"
 "p, SPC\n"
@@ -1440,8 +1438,6 @@ msgid ""
 "right mouse click\n"
 "left mouse double-click"
 msgstr ""
-"SCORCIATOIE:\n"
-"\n"
 "q, ESC\n"
 "f\n"
 "p, SPC\n"
@@ -1465,12 +1461,10 @@ msgstr ""
 #: ../videomass2/vdms_DIALOGS/while_playing.py:36
 #: ../videomass3/vdms_DIALOGS/while_playing.py:36
 msgid ""
-"\n"
-"\n"
 "Quiet.\n"
-"Togle full screen\n"
+"Togle full screen.\n"
 "Pause.\n"
-"Togle mute\n"
+"Togle mute.\n"
 "Decrease and increase volume respectively.\n"
 "Decrease and increase volume respectively.\n"
 "Cycle audio channel in the current program.\n"
@@ -1487,8 +1481,6 @@ msgid ""
 "Seek to percentage in file corresponding to fraction of width.\n"
 "Toggle full screen."
 msgstr ""
-"\n"
-"\n"
 "Termina.\n"
 "schermo intero.\n"
 "Pausa.\n"
@@ -1511,8 +1503,8 @@ msgstr ""
 
 #: ../videomass2/vdms_DIALOGS/while_playing.py:71
 #: ../videomass3/vdms_DIALOGS/while_playing.py:71
-msgid "Videomass: While Playing"
-msgstr "Videomass: Durante la riproduzione"
+msgid "Videomass: Shortcuts while playing"
+msgstr "Videomass: Scorciatoie durante la riproduzione"
 
 #: ../videomass2/vdms_IO/filedir_control.py:84
 #: ../videomass3/vdms_IO/filedir_control.py:86
@@ -1565,16 +1557,16 @@ msgid "Videomass: Output folder error"
 msgstr "Videomass: Errore sulla cartella di destinazione"
 
 #: ../videomass2/vdms_IO/IO_tools.py:107 ../videomass2/vdms_IO/IO_tools.py:128
-#: ../videomass3/vdms_IO/IO_tools.py:106 ../videomass3/vdms_IO/IO_tools.py:127
+#: ../videomass3/vdms_IO/IO_tools.py:106 ../videomass3/vdms_IO/IO_tools.py:126
 #, python-format
 msgid "File does not exist or not a valid file:  %s"
 msgstr "File invalido o non esistente:  %s"
 
-#: ../videomass2/vdms_IO/IO_tools.py:173 ../videomass3/vdms_IO/IO_tools.py:169
+#: ../videomass2/vdms_IO/IO_tools.py:173 ../videomass3/vdms_IO/IO_tools.py:168
 msgid "Videomass - Loading..."
 msgstr "Caricamento in corso..."
 
-#: ../videomass2/vdms_IO/IO_tools.py:174 ../videomass3/vdms_IO/IO_tools.py:170
+#: ../videomass2/vdms_IO/IO_tools.py:174 ../videomass3/vdms_IO/IO_tools.py:169
 msgid ""
 "\n"
 "Wait....\n"
@@ -1790,6 +1782,11 @@ msgstr ""
 msgid "FFmpeg specifications"
 msgstr "Specifiche FFmpeg"
 
+#: ../videomass2/vdms_MAIN/main_frame.py:634
+#: ../videomass3/vdms_MAIN/main_frame.py:633
+msgid "Shows the configuration features of FFmpeg"
+msgstr "Mostra le funzionalità di configurazione di FFmpeg"
+
 #: ../videomass2/vdms_MAIN/main_frame.py:636
 #: ../videomass3/vdms_MAIN/main_frame.py:635
 msgid "FFmpeg file formats"
@@ -2003,10 +2000,10 @@ msgstr "...Codifica in Corso - Videomass"
 #: ../videomass2/vdms_PANELS/audio_conv.py:807
 #: ../videomass3/vdms_PANELS/audio_conv.py:104
 #: ../videomass3/vdms_PANELS/audio_conv.py:258
-#: ../videomass3/vdms_PANELS/audio_conv.py:601
-#: ../videomass3/vdms_PANELS/audio_conv.py:641
-#: ../videomass3/vdms_PANELS/audio_conv.py:759
-#: ../videomass3/vdms_PANELS/audio_conv.py:809
+#: ../videomass3/vdms_PANELS/audio_conv.py:602
+#: ../videomass3/vdms_PANELS/audio_conv.py:642
+#: ../videomass3/vdms_PANELS/audio_conv.py:760
+#: ../videomass3/vdms_PANELS/audio_conv.py:810
 msgid "Save audio from movie"
 msgstr "Salva file audio dal filmato"
 
@@ -2092,7 +2089,7 @@ msgstr ""
 "%s "
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:400
-#: ../videomass3/vdms_PANELS/audio_conv.py:405
+#: ../videomass3/vdms_PANELS/audio_conv.py:406
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -2106,12 +2103,12 @@ msgstr ""
 "esportare:"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:404
-#: ../videomass3/vdms_PANELS/audio_conv.py:409
+#: ../videomass3/vdms_PANELS/audio_conv.py:410
 msgid "Videomass: Stream choice"
 msgstr "Videomass: Scelta Flusso Audio"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:419
-#: ../videomass3/vdms_PANELS/audio_conv.py:424
+#: ../videomass3/vdms_PANELS/audio_conv.py:425
 #, python-format
 msgid ""
 "Nothing choice:\n"
@@ -2122,7 +2119,7 @@ msgstr ""
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:447
 #: ../videomass2/vdms_PANELS/video_conv.py:1311
-#: ../videomass3/vdms_PANELS/audio_conv.py:452
+#: ../videomass3/vdms_PANELS/audio_conv.py:453
 #: ../videomass3/vdms_PANELS/video_conv.py:1300
 msgid ""
 "Tip: set the maximum peak level threshold or accept default dB value (-1.0); "
@@ -2134,28 +2131,28 @@ msgstr ""
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:457
 #: ../videomass2/vdms_PANELS/video_conv.py:1322
-#: ../videomass3/vdms_PANELS/audio_conv.py:462
+#: ../videomass3/vdms_PANELS/audio_conv.py:463
 #: ../videomass3/vdms_PANELS/video_conv.py:1311
 msgid "Disable audio normalization"
 msgstr "Disattiva La normalizzazione audio"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:500
 #: ../videomass2/vdms_PANELS/video_conv.py:1348
-#: ../videomass3/vdms_PANELS/audio_conv.py:505
+#: ../videomass3/vdms_PANELS/audio_conv.py:506
 #: ../videomass3/vdms_PANELS/video_conv.py:1337
 msgid "Audio normalization will be applied"
 msgstr "Sarà applicata la normalizzazione audio"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:501
 #: ../videomass2/vdms_PANELS/video_conv.py:1349
-#: ../videomass3/vdms_PANELS/audio_conv.py:506
+#: ../videomass3/vdms_PANELS/audio_conv.py:507
 #: ../videomass3/vdms_PANELS/video_conv.py:1338
 msgid "Audio normalization is required only for some files"
 msgstr "La normalizzazione audio è richiesta solo per alcuni files"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:502
 #: ../videomass2/vdms_PANELS/video_conv.py:1350
-#: ../videomass3/vdms_PANELS/audio_conv.py:507
+#: ../videomass3/vdms_PANELS/audio_conv.py:508
 #: ../videomass3/vdms_PANELS/video_conv.py:1339
 msgid "Audio normalization is not required in relation to the set threshold"
 msgstr ""
@@ -2163,28 +2160,28 @@ msgstr ""
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:528
 #: ../videomass2/vdms_PANELS/video_conv.py:1376
-#: ../videomass3/vdms_PANELS/audio_conv.py:533
+#: ../videomass3/vdms_PANELS/audio_conv.py:534
 #: ../videomass3/vdms_PANELS/video_conv.py:1365
 msgid "Not Required"
 msgstr "Non Richiesta"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:536
 #: ../videomass2/vdms_PANELS/video_conv.py:1384
-#: ../videomass3/vdms_PANELS/audio_conv.py:541
+#: ../videomass3/vdms_PANELS/audio_conv.py:542
 #: ../videomass3/vdms_PANELS/video_conv.py:1373
 msgid "Required"
 msgstr "Richiesta"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:558
 #: ../videomass2/vdms_PANELS/video_conv.py:1406
-#: ../videomass3/vdms_PANELS/audio_conv.py:563
+#: ../videomass3/vdms_PANELS/audio_conv.py:564
 #: ../videomass3/vdms_PANELS/video_conv.py:1395
 msgid "Audio normalization details list"
 msgstr "Elenco dei dettagli per la normalizzazione audio"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:610
 #: ../videomass2/vdms_PANELS/video_conv.py:1497
-#: ../videomass3/vdms_PANELS/audio_conv.py:613
+#: ../videomass3/vdms_PANELS/audio_conv.py:614
 #: ../videomass3/vdms_PANELS/video_conv.py:1486
 msgid ""
 "Missing volume dectect!\n"
@@ -2194,14 +2191,14 @@ msgstr ""
 "Premi il pulsante Volumedected prima di procedere."
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:713
-#: ../videomass3/vdms_PANELS/audio_conv.py:715
+#: ../videomass3/vdms_PANELS/audio_conv.py:716
 msgid "Save audio from movies"
 msgstr "Salva l'audio dal filmato"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:743
 #: ../videomass2/vdms_PANELS/presets_mng_panel.py:610
 #: ../videomass2/vdms_PANELS/video_conv.py:1701
-#: ../videomass3/vdms_PANELS/audio_conv.py:745
+#: ../videomass3/vdms_PANELS/audio_conv.py:746
 #: ../videomass3/vdms_PANELS/video_conv.py:1690
 #, python-format
 msgid "%s file in pending"
@@ -2209,20 +2206,20 @@ msgstr "%s file in attesa"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:745
 #: ../videomass2/vdms_PANELS/video_conv.py:1703
-#: ../videomass3/vdms_PANELS/audio_conv.py:747
+#: ../videomass3/vdms_PANELS/audio_conv.py:748
 #: ../videomass3/vdms_PANELS/video_conv.py:1692
 msgid "Enable"
 msgstr "Abilitato"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:747
 #: ../videomass2/vdms_PANELS/video_conv.py:1705
-#: ../videomass3/vdms_PANELS/audio_conv.py:749
+#: ../videomass3/vdms_PANELS/audio_conv.py:750
 #: ../videomass3/vdms_PANELS/video_conv.py:1694
 msgid "Disable"
 msgstr "Disabilitato"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:750
-#: ../videomass3/vdms_PANELS/audio_conv.py:752
+#: ../videomass3/vdms_PANELS/audio_conv.py:753
 msgid ""
 "SUMMARY:\n"
 "\n"
@@ -2237,7 +2234,7 @@ msgstr ""
 "Tempo impostato (durata):"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:758
-#: ../videomass3/vdms_PANELS/audio_conv.py:760
+#: ../videomass3/vdms_PANELS/audio_conv.py:761
 msgid ""
 "SUMMARY:\n"
 "\n"
@@ -2254,7 +2251,7 @@ msgstr ""
 "Tempo impostato (durata):"
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:766
-#: ../videomass3/vdms_PANELS/audio_conv.py:768
+#: ../videomass3/vdms_PANELS/audio_conv.py:769
 msgid ""
 "SUMMARY:\n"
 "\n"
@@ -2282,7 +2279,7 @@ msgstr ""
 
 #: ../videomass2/vdms_PANELS/audio_conv.py:829
 #: ../videomass2/vdms_PANELS/video_conv.py:1840
-#: ../videomass3/vdms_PANELS/audio_conv.py:831
+#: ../videomass3/vdms_PANELS/audio_conv.py:832
 #: ../videomass3/vdms_PANELS/video_conv.py:1829
 #, python-format
 msgid "Videomass: Create a new profile on \"%s\" preset"
@@ -3012,7 +3009,7 @@ msgstr ""
 #: ../videomass2/vdms_PROCESS/ffplay_reproductionWin32.py:37
 #: ../videomass2/vdms_PROCESS/ffprobe_parser.py:35
 #: ../videomass2/vdms_PROCESS/ffprobe_parserWin32.py:38
-#: ../videomass2/vdms_PROCESS/task_processing.py:283
+#: ../videomass2/vdms_PROCESS/task_processing.py:282
 #: ../videomass2/vdms_PROCESS/task_processingWin32.py:279
 #: ../videomass2/vdms_PROCESS/volumedetect.py:38
 #: ../videomass2/vdms_PROCESS/volumedetectWin32.py:37
@@ -3043,28 +3040,28 @@ msgstr "è installato nel tuo sistema?"
 msgid "not found in your system"
 msgstr "non è stato trovato nel tuo sistema"
 
-#: ../videomass2/vdms_PROCESS/task_processing.py:90
+#: ../videomass2/vdms_PROCESS/task_processing.py:89
 #: ../videomass2/vdms_PROCESS/task_processingWin32.py:91
 #: ../videomass3/vdms_PROCESS/task_processing.py:91
 #: ../videomass3/vdms_PROCESS/task_processingWin32.py:88
 msgid "Log View Console:"
 msgstr "Console Visualizzazione Messaggi:"
 
-#: ../videomass2/vdms_PROCESS/task_processing.py:94
+#: ../videomass2/vdms_PROCESS/task_processing.py:93
 #: ../videomass2/vdms_PROCESS/task_processingWin32.py:95
 #: ../videomass3/vdms_PROCESS/task_processing.py:95
 #: ../videomass3/vdms_PROCESS/task_processingWin32.py:92
 msgid "Enable the FFmpeg scroll output in real time"
 msgstr "Abilita l'output di scorrimento FFmpeg in tempo reale"
 
-#: ../videomass2/vdms_PROCESS/task_processing.py:98
+#: ../videomass2/vdms_PROCESS/task_processing.py:97
 #: ../videomass2/vdms_PROCESS/task_processingWin32.py:99
 #: ../videomass3/vdms_PROCESS/task_processing.py:99
 #: ../videomass3/vdms_PROCESS/task_processingWin32.py:96
 msgid "Abort"
 msgstr "Interrompere"
 
-#: ../videomass2/vdms_PROCESS/task_processing.py:114
+#: ../videomass2/vdms_PROCESS/task_processing.py:113
 #: ../videomass2/vdms_PROCESS/task_processingWin32.py:115
 #: ../videomass3/vdms_PROCESS/task_processing.py:115
 #: ../videomass3/vdms_PROCESS/task_processingWin32.py:112
@@ -3075,14 +3072,14 @@ msgstr ""
 "Mostra i messaggi FFmpeg in tempo reale nella console di visualizzazione dei "
 "log, utile per conoscere tutti gli stati di uscita come errori e avvisi."
 
-#: ../videomass2/vdms_PROCESS/task_processing.py:120
+#: ../videomass2/vdms_PROCESS/task_processing.py:119
 #: ../videomass2/vdms_PROCESS/task_processingWin32.py:121
 #: ../videomass3/vdms_PROCESS/task_processing.py:121
 #: ../videomass3/vdms_PROCESS/task_processingWin32.py:118
 msgid "Stops current process"
 msgstr "Interrompe il processo corrente"
 
-#: ../videomass2/vdms_PROCESS/task_processing.py:285
+#: ../videomass2/vdms_PROCESS/task_processing.py:284
 #: ../videomass3/vdms_PROCESS/task_processing.py:281
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
@@ -3136,10 +3133,6 @@ msgstr ""
 "Troverai questo profilo nel preset 'Profili Utente' del Gestionale Presets.\n"
 "Usa la funzione 'Ricarica la lista dei presets' nel menu file per aggiornare "
 "tutti i profili."
-
-#: ../videomass3/vdms_MAIN/main_frame.py:633
-msgid "Shows the configuration features of FFmpeg"
-msgstr "Mostra le funzionalità di configurazione di FFmpeg"
 
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:525
 msgid "Don't show this dialog again"
