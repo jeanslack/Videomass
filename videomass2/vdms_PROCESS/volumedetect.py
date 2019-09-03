@@ -151,8 +151,8 @@ class VolumeDetectThread(Thread):
                     'does not contain any stream',
                     )
         for files in self.filelist:
-            args = ("{0} {1} -i '{2}' -hide_banner -af volumedetect "
-                    "-vn -sn -dn -f null {3}").format(self.ffmpeg, 
+            args = ('{0} {1} -i "{2}" -hide_banner -af volumedetect '
+                    '-vn -sn -dn -f null {3}').format(self.ffmpeg, 
                                                       self.time_seq,
                                                       files,
                                                       self.nul)

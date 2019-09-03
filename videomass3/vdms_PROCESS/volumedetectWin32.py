@@ -150,12 +150,12 @@ class VolumeDetectThread(Thread):
                     'Output file is empty, nothing was encoded',
                     )
         for files in self.filelist:
-            cmnd = ("{0} {1} -i '{2}' -hide_banner -af volumedetect "
-                    "-vn -sn -dn -f null {3}").format(self.ffmpeg, 
+            cmnd = ('{0} {1} -i "{2}" -hide_banner -af volumedetect '
+                    '-vn -sn -dn -f null {3}').format(self.ffmpeg, 
                                                       self.time_seq,
                                                       files,
                                                       self.nul)
-            self.logWrite(args)
+            self.logWrite(cmnd)
             
             try:
                 startupinfo = subprocess.STARTUPINFO()
@@ -220,7 +220,7 @@ class VolumeDetectThread(Thread):
         write ffmpeg command log
         
         """
-        with open(logf, "a") as log:
+        with open(self.logf, "a") as log:
             log.write("%s\n\n" % (cmd))
             
     #----------------------------------------------------------------# 
@@ -229,7 +229,7 @@ class VolumeDetectThread(Thread):
         write ffmpeg volumedected errors
         
         """
-        with open(logf,"a") as logerr:
+        with open(self.logf,"a") as logerr:
             logerr.write("[FFMPEG] volumedetect "
                          "ERRORS:\n%s\n\n" % (self.status))
             

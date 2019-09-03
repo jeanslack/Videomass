@@ -78,7 +78,6 @@ class GeneralProcess(wx.Panel):
         self.path_log = path_log # for save a copy if user want
         self.STATUS_ERROR = None # used if error in err_list
         self.CHANGE_STATUS = None #  1 = process interrupted 
-        
         self.duration = duration
         self.time_seq = self.parent.time_seq
         self.OS = OS

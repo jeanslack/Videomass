@@ -39,7 +39,7 @@ if __name__ == '__main__':
         
         except ImportError:
             sys.stderr.write("videomass: ERROR: 'wx' module is required.\n"
-                             "Videomass for Python3 need wxPython-Phoenix.\n"
+                             "Videomass for Python3 need wxPython4 (phoenix).\n"
                              "Visit the wxPython web page for more info:\n"
                              u"<https://wxpython.org/>\n"
                             )
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         
         except ImportError:
             sys.stderr.write("videomass: ERROR: 'wx' module is required.\n"
-                            "Videomass for Python2 need wxPython-Classic.\n"
+                            "Videomass for Python2 need wxPython3 (classic).\n"
                              )
             
             if platform.system() in ['Windows', 'Darwin']:

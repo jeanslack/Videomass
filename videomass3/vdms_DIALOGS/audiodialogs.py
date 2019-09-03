@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev December 28 2018
+# Rev: Dec.28.2018, Sept.03.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -59,14 +59,20 @@ class AudioSettings(wx.Dialog):
         bitdepth_list = []
 
         if self.bitrate == None:
-            self.bitrate = {0:('not suitable ',"")}
+            self.bitrate = {0:('not applicable ',"")}
+        
+        if self.bitdepth == None:
+            self.bitdepth = {0:('not applicable ',"")}
 
         for a in self.sample_rate.values():
             samplerate_list.append(a[0])
+            
         for b in self.channels.values():
             channel_list.append(b[0])
+            
         for c in self.bitrate.values():
             bitrate_list.append(c[0])
+            
         for d in self.bitdepth.values():
             bitdepth_list.append(d[0])
 
@@ -86,8 +92,11 @@ class AudioSettings(wx.Dialog):
             "Bit per Sample (bit depth)"), choices=bitdepth_list, 
              majorDimension=0, style=wx.RA_SPECIFY_ROWS)
         
-        if self.rdb_bitrate.GetStringSelection() == 'not suitable ':
+        if self.rdb_bitrate.GetStringSelection() == 'not applicable ':
             self.rdb_bitrate.Disable()
+            
+        if self.rdb_bitdepth.GetStringSelection() == 'not applicable ':
+            self.rdb_bitdepth.Disable()
             
         btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
@@ -315,10 +324,10 @@ compression formats, do not have associated bit depths.\
                         8:("quality 7", "-compression_level 7"), 
                         9:("low quality", "-compression_level 8")
                         }
-        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
-                         2:("24 bit","-sample_fmt s24"),
-                         4:("32 bit","-sample_fmt s32")
-                         } 
+        #self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
+                         #2:("24 bit","-sample_fmt s24"),
+                         #4:("32 bit","-sample_fmt s32")
+                         #} 
     #-----------------------------------------------------------------#
     def alac_param(self):
         """
@@ -327,10 +336,7 @@ compression formats, do not have associated bit depths.\
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
-                         2:("24 bit","-sample_fmt s24"),
-                         4:("32 bit","-sample_fmt s32")
-                         } 
+        
     #-----------------------------------------------------------------#
     def aac_param(self):
         """
@@ -349,10 +355,7 @@ compression formats, do not have associated bit depths.\
             4:("good quality", "-b:a 260k"), 
             5:("very good quality", "-b:a 320k")
             }
-        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
-                         2:("24 bit","-sample_fmt s24"),
-                         4:("32 bit","-sample_fmt s32")
-                         }
+
     #-----------------------------------------------------------------#
         
     def ac3_param(self):
@@ -375,10 +378,7 @@ compression formats, do not have associated bit depths.\
                         8:("576 kbit/s", "-b:a 576k"), 
                         9:("very good quality", "-b:a 640k")
                         }
-        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
-                         2:("24 bit","-sample_fmt s24"),
-                         4:("32 bit","-sample_fmt s32")
-                         }
+
     #-----------------------------------------------------------------#
     def ogg_param(self):
         """
@@ -400,10 +400,7 @@ compression formats, do not have associated bit depths.\
                         9:("VBR 320 kbit/s", "-aq 9"), 
                         10:("very good quality", "-aq 10")
                         }
-        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
-                         2:("24 bit","-sample_fmt s24"),
-                         4:("32 bit","-sample_fmt s32")
-                         }
+
     #-----------------------------------------------------------------#
     def mp3_param(self):
         """
@@ -421,8 +418,5 @@ compression formats, do not have associated bit depths.\
             4:("VBR 260 kbit/s", "-b:a 260k"), 
             5:("CBR 320 kbit/s (very good quality)", "-b:a 320k")
                         }
-        self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
-                         2:("24 bit","-sample_fmt s24"),
-                         4:("32 bit","-sample_fmt s32")
-                         }
+
     #-----------------------------------------------------------------#

@@ -25,6 +25,8 @@ IMPROVEMENTS:
     - Now the audio normalization is applied only on the sequence in relation 
       to the duration if set before volume dected, otherwise is applied to
       entire file.
+    - The choice of bit depth for compressed formats/codecs has been disabled 
+      on the audio parameters dialog
         
 BUG FIXES:
     - Fixed append text issue when use dialog box to search 

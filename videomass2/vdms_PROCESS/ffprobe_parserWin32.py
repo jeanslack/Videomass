@@ -196,38 +196,54 @@ class FFProbe(object):
 
     def get_audio_codec_name(self):
         """
-        Return a list of possible audio codec name and tag language into
-        a video with one or more audio streams. If not audio stream in video 
-        return None. This method is useful for exemple to saving audio 
-        content as audio track.
-        """
-        audio_list = self.audio_stream()
-        info_list = []
-        cn = ''#codec
-        st = ''#subtitle
-        i = ''# index
+        Return the title and a list of possible audio codec name and 
+        tag language into a video with one or more audio streams. 
+        If not audio stream in video return None. 
+        This method is useful for exemple to saving audio content as 
+        audio track.
         
-        if audio_list == []:
-            #info_list.append('no audio stream')
+        """
+        astream = self.audio_stream()#get audio stream
+        audio_lang = []
+        acod = ''# audio codec
+        lang = ''#language
+        indx = ''# index
+        
+        if astream == []:
+            #audio_lang.append('no audio stream')
             print ('No AUDIO stream metadata found')
-            return
+            return None, None
         else:    
-            n = len(audio_list)
+            n = len(astream)
             for a in range(n):
-                (key, value) = audio_list[a][0].strip().split('=')
-                for b in audio_list[a]:
+                (key, value) = astream[a][0].strip().split('=')
+                for b in astream[a]:
                     (key, value) = b.strip().split('=')
                     if "codec_name" in key:
-                        cn = value
+                        acod = value
                     if "stream_tags" in key:
-                        st = value
-                        #stream_tag.append(value)
+                        lang = value
+                    if "TAG:language" in key:
+                        lang = value
                     if "index" in key:
-                        i = value
-                        #stream_index.append(value)
-                info_list.append("index: %s | codec: %s | language: %s" % (
-                                    i,cn,st))
-        return info_list
+                        indx = value
+
+                if not lang:
+                    lang = 'unknown'
+
+                audio_lang.append("index: %s | codec: %s | language: %s" % (
+                                    indx, acod, lang))
+                
+        video_list = self.data_format()#get video format for video title
+
+        for t in video_list[0]:
+            if 'filename=' in t:
+                vtitle = t.split('=')[1]
+                break
+            else:
+                vtitle = 'Title unknown'
+                
+        return audio_lang, vtitle
 
     def ERROR(self):
         """
@@ -236,4 +252,4 @@ class FFProbe(object):
         as control interface before using all other methods of this class.
         """
         if self.error:
-            return self.error 
+            return self.error  

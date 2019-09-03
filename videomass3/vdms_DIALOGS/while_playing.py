@@ -29,11 +29,11 @@
 
 import wx
 
-keys = (_("SHORTCUTS:\n\nq, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
+keys = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
           "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
           "right mouse click\nleft mouse double-click"
           ))
-explan = (_("\n\nQuiet.\nTogle full screen\nPause.\nTogle mute\n"
+explan = (_("Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
             "Decrease and increase volume respectively.\n"
             "Decrease and increase volume respectively.\n"
             "Cycle audio channel in the current program.\n"
@@ -68,9 +68,10 @@ class While_Playing(wx.Dialog):
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: While Playing"))
-        #label2.SetForegroundColour(wx.Colour(255, 106, 249))
-        #panel.SetBackgroundColour(wx.Colour(212, 255, 249))
+        self.SetTitle(_("Videomass: Shortcuts while playing"))
+        label1.SetForegroundColour(wx.Colour('#008000'))
+        label2.SetForegroundColour(wx.Colour('#959595'))
+        panel.SetBackgroundColour(wx.Colour('#121212'))
         
         #if OS == 'Darwin':
             #label1.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
@@ -88,7 +89,8 @@ class While_Playing(wx.Dialog):
         btngrid = wx.FlexGridSizer(1,1,0,0)
         btngrid.Add(self.button_close, 0, wx.ALL, 5)
         panel.SetSizer(gr_s1)#
-        s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
+        #s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
+        s1.Add(panel, 1, )
         s1.Add(btngrid, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         
         #self.SetSizer(s1)

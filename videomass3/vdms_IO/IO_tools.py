@@ -111,7 +111,6 @@ def stream_play(filepath, timeseq, ffplay_link, param, loglevel_type):
     """
     Thread for media reproduction with ffplay
     """
-    print(filepath)
     try:
         with open(filepath):
             thread = Play(filepath, 

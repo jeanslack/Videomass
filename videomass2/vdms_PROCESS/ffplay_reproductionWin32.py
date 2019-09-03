@@ -92,11 +92,11 @@ class Play(Thread):
         #time.sleep(.5)
         loglevel_type = 'error'
         command = '%s %s -i "%s" %s -loglevel %s' % (self.ffplay,
-                                                 self.time_seq,
-                                                 self.filename,
-                                                 self.param,
-                                                 loglevel_type,
-                                                 )
+                                                     self.time_seq,
+                                                     self.filename,
+                                                     self.param,
+                                                     loglevel_type,
+                                                     )
         self.logWrite(command)
         
         try:

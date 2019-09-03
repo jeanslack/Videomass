@@ -631,7 +631,7 @@ class MainFrame(wx.Frame):
            _(u"Show dialog box with keyboard shortcuts useful during playback"))
         toolsButton.AppendSeparator()
         checkconf = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg specifications"), 
-                                u"Shows the configuration features of FFmpeg")
+                            _(u"Shows the configuration features of FFmpeg"))
         toolsButton.AppendSeparator()
         ckformats = toolsButton.Append( wx.ID_ANY, _(u"FFmpeg file formats"),
                                 _(u"Shows file formats available on FFmpeg"))

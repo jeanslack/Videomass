@@ -401,6 +401,7 @@ class Audio_Conv(wx.Panel):
 
             elif len(audio_list) > 1:
                 title = datastream[1]
+                
                 dlg = wx.SingleChoiceDialog(self, 
                         _("{0}\n\n"
                           "Contains multiple audio streams. " 
