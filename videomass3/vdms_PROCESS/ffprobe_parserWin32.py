@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (10) December 27 2018
+# Rev: Dec.27.2018, Sept.05.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -114,12 +114,12 @@ class FFProbe(object):
                                  )
             output, error =  p.communicate()
 
-            if error:
-                self.error = error
-
-        except OSError:
-            self.error = "'ffprobe.exe' %s" % not_exist_msg
+        except OSError as e:
+            self.error = e
             return
+        
+        if p.returncode:
+                self.error = error
         
         raw_list = output.split('\n') # create list with strings element
 

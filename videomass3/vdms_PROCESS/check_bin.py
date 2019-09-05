@@ -51,19 +51,19 @@ def subp_win32(args):
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         p = subprocess.Popen(cmd, 
                              stdout=subprocess.PIPE, 
-                             stderr=subprocess.PIPE,
+                             stderr=subprocess.STDOUT,
+                             universal_newlines=True, # mod text
                              startupinfo=startupinfo,
                              )
-        out, err =  p.communicate()
+        out =  p.communicate()
     
     except OSError as oserr:# if ffmpeg do not exist
         return('Not found', oserr)
         
-    if err: # if has error on args
-        e = p.stderr.decode()
-        return('Not found', e)
+    if p.returncode: # if returncode == 1
+        return('Not found', out[0])
     
-    return ('None', out.decode())
+    return ('None', out[0])
 #-----------------------------------------------------------#
 
 def subp(args):
@@ -79,16 +79,21 @@ def subp(args):
         cmd.append(opt)
         
     try:
-        p = subprocess.run(cmd, capture_output=True,)
+        p = subprocess.run(cmd, 
+                           capture_output=True, 
+                           universal_newlines=True
+                           # mod text, otherwise must be used p.stdout.decode()
+                           # for decode bytestring (b'')
+                           )
         
     except FileNotFoundError as err:# if ffmpeg do not exist
         return('Not found', err)
 
-    if p.stderr:# if has error on args
-        err = p.stderr.decode()
+    if p.returncode:# if has error on args
+        err = p.stderr
         return('Not found', err)
     
-    return ('None', p.stdout.decode())
+    return ('None', p.stdout)
 #-----------------------------------------------------------#
 
 def ff_conf(ffmpeg_link, OS):

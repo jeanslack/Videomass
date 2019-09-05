@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: December 27 2018, Aug.30 2019
+# Rev: December 27 2018, Sept.05 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -31,7 +31,7 @@ import subprocess
 import re
 
 ##################################################
-not_exist_msg =  _('not found in your system')
+not_exist_msg =  _('ffprobe not found')
 ##################################################
 
 class FFProbe(object):
@@ -41,7 +41,6 @@ class FFProbe(object):
     FFProbe wraps the ffprobe command and pulls the data into an object form:
     
     metadata = FFProbe(filename, ffprobe_link, option)
-    
     
     Arguments:
     ---------
@@ -107,12 +106,12 @@ class FFProbe(object):
                                  )
             output, error =  p.communicate()
 
-            if error:
-                self.error = error
-
-        except OSError:
-            self.error = "'ffprobe' %s" % not_exist_msg
+        except OSError as e:
+            self.error = e
             return
+        
+        if p.returncode:
+                self.error = error
 
         raw_list = output.split('\n') # create list with strings element
 

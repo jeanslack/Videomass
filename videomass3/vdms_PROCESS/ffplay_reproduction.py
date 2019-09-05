@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.27.2018, Sept.02.2019
+# Rev: Dec.27.2018, Sept.05.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -48,7 +48,7 @@ def Messages(msg):
     Receive error messages from Play(Thread) via wxCallafter
     
     """
-    wx.MessageBox("[playback] ERROR:  %s" % (msg), 
+    wx.MessageBox("FFplay ERROR:  %s" % (msg), 
                       "Videomass: FFplay", 
                       wx.ICON_ERROR
                       )
@@ -57,16 +57,18 @@ class Play(Thread):
     """
     Run a separate process thread for media reproduction with a called 
     at ffplay witch need x-window-terminal-emulator for show files streaming.
-    NOTE: the loglevel is set on 'error'. Do not use 'self.loglevel_type' 
-          because -stats option do not work.
+    
     """
-    def __init__(self, filepath, timeseq, 
-                 ffplay_link, param, loglevel_type, OS):
+    def __init__(self, filepath, timeseq, ffplay_link, 
+                 param, loglevel_type, OS):
         """
-        costructor
+        The self.loglevel_type has 'error -stats' (see conf. file)
+        then use error only with this class.
+        
         """
         Thread.__init__(self)
-        """initialize"""
+        ''' constructor'''
+
         self.filename = filepath # file name selected
         self.ffplay = ffplay_link # command process
         self.loglevel_type = loglevel_type # not used (used error)
@@ -82,6 +84,15 @@ class Play(Thread):
         
     #----------------------------------------------------------------#
     def run(self):
+        """
+        NOTE 1: the loglevel is set on 'error'. Do not use 
+               'self.loglevel_type' because -stats  option do not work.
+    
+        NOTE 2: The p.returncode always returns 0 value even when there 
+                is an error. But since ffplay always returns the error 
+                on the PIPE of the stderr, then I use the 'error' 
+                variable of p.communicate ()
+        """
         #time.sleep(.5)
         loglevel_type = 'error'
         cmd = '%s %s -i "%s" %s -loglevel %s' % (self.ffplay,
@@ -92,24 +103,20 @@ class Play(Thread):
                                                  )
         self.logWrite(cmd)
         
-        try:
-            if self.OS == 'Windows':
+        if self.OS == 'Windows':
                 command = cmd
-            else:
-                command = shlex.split(cmd)
+        else:
+            command = shlex.split(cmd)
+        
+        try:
             p = subprocess.Popen(command,
                                 stderr=subprocess.PIPE,
+                                universal_newlines=True,
                                 )
             error =  p.communicate()
-            
-            if error[1]:
-                err = error[1].decode()
-                wx.CallAfter(Messages, err)
-                self.logError(err) # append log error
-                self.pathLog() # log in other place?
-                return
         
         except OSError as err_0:
+            
             if err_0[1] == 'No such file or directory':
                 pyerror = ("%s: \n'%s' %s") % (err_0, command[0], 
                                                 not_exist_msg)
@@ -120,6 +127,13 @@ class Play(Thread):
             self.logError(pyerror) # append log error
             self.pathLog() # log in other place?
             return
+        
+        else:
+            if error[1]:
+                wx.CallAfter(Messages, error[1])
+                self.logError(error[1]) # append log error
+                self.pathLog() # log in other place?
+                return
         
         self.pathLog() # log in other place?
         

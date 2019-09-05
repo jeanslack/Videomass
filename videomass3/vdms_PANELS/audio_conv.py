@@ -516,7 +516,7 @@ class Audio_Conv(wx.Panel):
                                    file_sources, 
                                    self.time_seq)
         if data[1]:
-            wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
+            wx.MessageBox(data[1], "Volumedected error!", wx.ICON_ERROR)
             return
         else:
             volume = list()

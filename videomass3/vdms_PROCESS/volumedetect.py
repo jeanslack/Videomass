@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.27.2018. Sept.02.2019
+# Rev: Dec.27.2018. Sept.05.2019
 #########################################################
 # This file is part of Videomass.
 
@@ -34,10 +34,6 @@ from videomass3.vdms_SYS.os_interaction import copy_restore # if copy fiile log
 from videomass3.vdms_IO.make_filelog import write_log # write initial log
 
 ########################################################################
-not_exist_msg =  _('exist in your system?')
-unrecognized_msg = _("Unrecognized Error (not in err_list):")
-not_exist_file = _("File does not exist:")
-
 # path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
@@ -103,14 +99,26 @@ class PopupDialog(wx.Dialog):
 ##############################################################################
 class VolumeDetectThread(Thread):
     """
-    This class represents a separate subprocess thread for detect audio
-    volume peak level when required for audio normalization process.
-    The volume data is a list sended to the dialog with wx.callafter.
+    This class represents a separate subprocess thread to get 
+    audio volume peak level when required for audio normalization 
+    process.
+    
+    NOTE: all error handling (including verification of the 
+    existence of files) is entrusted to ffmpeg, except for the 
+    lack of ffmpeg of course.
+    
     """
     def __init__(self, ffmpeg_bin, timeseq, filelist, OS):
         """
-        self.cmd contains a unique string that comprend filename input
-        and filename output also.
+        Replace /dev/null with NUL on Windows.
+        
+        self.status: None, if nothing error,
+                     'str error' if errors.
+        self.data: it is a tuple containing the list of audio volume 
+                   parameters and the self.status of the error output,
+                   in the form: 
+                   ([[maxvol, medvol], [etc,etc]], None or "str errors") 
+        
         """
         Thread.__init__(self)
         """initialize"""
@@ -134,24 +142,17 @@ class VolumeDetectThread(Thread):
     #----------------------------------------------------------------#
     def run(self):
         """
-        File normalization process for get volume levels data.
-        It is used by normalize.py, audio_conv.py and video_conv.py
-        TODO: Replace /dev/null with NUL on Windows.
+        Audio volume data is getted by the thread's caller using 
+        the thread.data method (see IO_tools).
+        NOTE: wx.callafter(pub...) do not send data to pop-up 
+              dialog, but a empty string that is useful to get 
+              the end of the process to close of the pop-up .
         
         """
         volume = list()
-        err_list = ['not found',
-                    'Invalid data found when processing input',
-                    'Error', 
-                    'Invalid', 
-                    'Option not found', 
-                    'Unknown',
-                    'No such file or directory',
-                    'does not contain any stream',
-                    'Output file is empty, nothing was encoded'
-                    ]
+
         for files in self.filelist:
-            args = ('{0} {1} -i "{2}" -hide_banner -af volumedetect '
+            args = ('{0} {1} i "{2}" -hide_banner -af volumedetect '
                     '-vn -sn -dn -f null {3}').format(self.ffmpeg, 
                                                       self.time_seq,
                                                       files,
@@ -161,45 +162,33 @@ class VolumeDetectThread(Thread):
             cmnd = shlex.split(args)
 
             try:
-                p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, 
-                                     stderr=subprocess.PIPE,
+                p = subprocess.Popen(cmnd, 
+                                     stdout=subprocess.PIPE, 
+                                     stderr=subprocess.STDOUT,
                                      universal_newlines=True
                                      )
-                output, error =  p.communicate()
-                raw_list = error.split() # splitta tutti gli spazi 
-
-                if 'mean_volume:' in raw_list:
-                    mean_volume = raw_list.index("mean_volume:")# indx integear
-                    medvol = "%s dB" % raw_list[mean_volume + 1]
-                    max_volume = raw_list.index("max_volume:")# indx integear
-                    maxvol = "%s dB" % raw_list[max_volume + 1]
-                    volume.append([maxvol, medvol])
-
-                else:
-                    for err in err_list:
-                        if err in error:
-                            e = error.strip()
-                    if e:
-                        self.status = e
-                        break
-                    
-            except IOError:# if file do not exist
-                e = "%s  %s" % (not_exist_file, filepath)
+                output =  p.communicate()
+            
+            except OSError as e:# if ffmpeg do not exist
                 self.status = e
                 break
             
-            except OSError:# if ffmpeg do not exist
-                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg) 
-                self.status = e
-                break
+            else:
                 
-            except UnboundLocalError:
-                # local variable `e` referenced before assignment
-                # dovrebbe riportare tutti gli errori di ffmpeg dato che la 
-                # variabile `e` sarà referenziata prima di essere assegnata.
-                e = "%s\n\n%s" % (unrecognized_msg, error)
-                self.status = e
-                break
+                if p.returncode: # if error occurred
+                    self.status = output[0]
+                    break
+                
+                else:
+                    raw_list = output[0].split() # splitta tutti gli spazi 
+                    if 'mean_volume:' in raw_list:
+                        mean_volume = raw_list.index("mean_volume:")
+                        #mean_volume is indx integear
+                        medvol = "%s dB" % raw_list[mean_volume + 1]
+                        max_volume = raw_list.index("max_volume:")
+                        #max_volume is indx integear
+                        maxvol = "%s dB" % raw_list[max_volume + 1]
+                        volume.append([maxvol, medvol])
                 
         self.data = (volume, self.status)
         
