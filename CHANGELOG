@@ -11,12 +11,14 @@ September 05, 2019 V.1.6.1
 +------------------------------------+
 
 IMPROVEMENTS:
-    - enanced errors management on process python3:
-      volumedetect.py, volumedetect_Win32.py,
-      audio_panel changed wx.MessageBox(data[1], "Volumedected error!"
-      on audio_analyze(), IO_tools.py.volumedectedProcess change
-      comment.
-      changed check_bin.py
+    - enanced errors management on all processes in python3:
+    - improved messages on the status of any processes
+    - During conversion the ffmpeg errors do not stop all others tasks,
+      if an error occurred it will be marked with 'failed' but continue;
+      if it has finished without errors it will be marked with 'completed'. 
+      Since not all ffmpeg messages are errors, sometimes it happens
+      to see more output marked with yellow color.
+      
 
 +------------------------------------+
 September 02, 2019 V.1.6.0

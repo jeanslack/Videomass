@@ -55,7 +55,7 @@ DIRconf = get.DIRconf
 #----------------------------------------------------------------#    
 def logWrite(cmd, sterr, logname):
     """
-    write all ffmpeg commands and append status error
+    writes ffmpeg commands and status error during threads below
     
     """
     if sterr:
@@ -73,19 +73,19 @@ def logWrite(cmd, sterr, logname):
 class GeneralProcess(wx.Panel):
     """
     This panel is shown in all conversion finalization processes. 
-    It displays a text control for the output log, a progress bar, and 
-    a progressive percentage text label. This class must be used in 
-    combination with separate threads for process tasks.
+    It displays a text control for the output log, a progress bar, 
+    and a progressive percentage text label. This class must be used 
+    in combination with separate threads for process tasks.
     It also implements the buttons to stop the current process and 
     close the panel during final activities.
     
     """
     def __init__(self, parent, path_log, panel, varargs,  duration, OS):
         """
-        In the 'previous' attribute is stored an ID string used to recover 
-        the previous panel from which the process is started.
-        The 'logname' attribute contains the name of the log in the which
-        write the log text
+        In the 'previous' attribute is stored an ID string used to
+        recover the previous panel from which the process is started.
+        The 'logname' attribute is the name_of_panel.log file in which 
+        log messages will be written
         
         """
         self.parent = parent # this window is a child of a window parent
@@ -127,22 +127,16 @@ class GeneralProcess(wx.Panel):
         # set_properties:
         if OS == 'Darwin':
             self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
         else:
             self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
-        
-        
+            
         #self.OutText.SetBackgroundColour((217, 255, 255))
         self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
                                     "in the log view console, useful for "
                                     "knowledge the all exit status as "
                                     "errors and warnings."
                                            ))
-        #self.button_stop.SetMinSize((200, 30))
         self.button_stop.SetToolTip(_("Stops current process"))
-        #self.button_close.SetMinSize((200, 30))
-        #self.SetSizer(sizer)
         self.SetSizerAndFit(sizer)
 
         # bind
@@ -150,9 +144,7 @@ class GeneralProcess(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         
         #------------------------------------------
-        initlog = ('\nInitial log:\n')
-        print ('\n\n[VIDEOMASS]\n%s' % initlog)
-        #self.OutText.AppendText("%s" % initlog)
+        print ('[VIDEOMASS] Initial log:')
         write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
         time.sleep(.1)
@@ -168,6 +160,7 @@ class GeneralProcess(wx.Panel):
         
     def startThread(self):
         """
+        Thread redirection
         """
         if self.varargs[0] == 'normal':# from video and audio conv panels
             ProcThread(self.varargs, self.duration,
@@ -196,13 +189,13 @@ class GeneralProcess(wx.Panel):
         if self.ckbx_text.IsChecked(): # ffmpeg output messages in real time:
             self.OutText.AppendText(output)
             
-        if not status == 0:# if exit status of the p.wait is a error
+        if not status == 0:# error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
-            self.OutText.AppendText(' ...Failed !\n')
+            self.OutText.AppendText(_(' ...Failed !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             return # must be return here
             
-        if 'time=' in output:# ...sta processando
+        if 'time=' in output:# ...in processing
             i = output.index('time=')+5
             pos = output[i:i+8].split(':')
             hours, minutes, seconds = pos[0],pos[1],pos[2]
@@ -229,7 +222,7 @@ class GeneralProcess(wx.Panel):
         """
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 164, 30)))
-            self.OutText.AppendText(' ...Completed !\n')
+            self.OutText.AppendText(_(' ...Completed !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             return
             
@@ -270,27 +263,20 @@ class GeneralProcess(wx.Panel):
         At the end of the process
         """
         if STATUS_ERROR == 1:
-            txt = '\n     %s\n  %s\n     %s' % ('-'*25,
-                                          '   Sorry, all tasks failed !', 
-                                          '-'*25)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
-            self.OutText.AppendText(txt)
+            self.OutText.AppendText(_('\n\n Sorry, tasks failed !'))
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         elif CHANGE_STATUS == 1:
-            txt = '\n     %s\n  %s\n     %s' % ('-'*21,
-                                          '   Interrupted Process !', 
-                                          '-'*21)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(164, 30, 164)))
-            self.OutText.AppendText(txt)
+            self.OutText.AppendText(_('\n\n Interrupted Process !'))
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         else:
-            txt = '\n     %s\n  %s\n     %s' % ('-'*10,'   All Done !', '-'*10)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
-            self.OutText.AppendText(txt)
+            self.OutText.AppendText(_('\n\n Finished !'))
             self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
@@ -847,7 +833,7 @@ class GrabAudioProc(Thread):
         self.codec = varargs[5] # codec type list (items)
         self.cmd_2 = varargs[6] # command 2
         self.ext = varargs[7] # format/extension list (items)
-        self.logname = varargs[8] #  ~/.videomass/self.logname
+        #self.logname = varargs[8] #  videomass/logname.log
         self.duration = duration # duration values list (items)
         self.time_seq = timeseq
         self.OS = OS
