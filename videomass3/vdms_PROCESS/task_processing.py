@@ -111,13 +111,6 @@ class GeneralProcess(wx.Panel):
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
         # set_properties:
-        if OS == 'Darwin':
-            self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
-        else:
-            self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
-        
         
         #self.OutText.SetBackgroundColour((217, 255, 255))
         self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
@@ -259,22 +252,29 @@ class GeneralProcess(wx.Panel):
         """
         if STATUS_ERROR == 1:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
-            self.OutText.AppendText('\n  Sorry, all tasks failed !\n\n')
+            txt = '\n  %s\n  %s\n  %s' % ('-'*25,
+                                          '   Sorry, all tasks failed !  ', 
+                                          '-'*25)
+            self.OutText.AppendText(txt)
+            #self.OutText.AppendText('\n  Sorry, all tasks failed !\n\n')
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         #elif self.CHANGE_STATUS == 1 or CHANGE_STATUS == 1:
         elif CHANGE_STATUS == 1:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(164, 30, 164)))
-            self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
+            txt = '\n  %s\n  %s\n  %s' % ('-'*25,
+                                          '   Interrupted Process !  ', 
+                                          '-'*25)
+            #self.OutText.AppendText('\n  ..Interrupted Process !\n\n')
+            self.OutText.AppendText(txt)
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         else:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
-            #done = ('\n  -'*11, '\n|  All Done ! |', '\n  -'*11)
-            done = '\n  %s\n  %s\n  %s' % ('-'*18,'|   All Done!  |', '-'*18)
-            self.OutText.AppendText(done)
+            txt = '\n  %s\n  %s\n  %s' % ('-'*14,'   All Done !  ', '-'*14)
+            self.OutText.AppendText(txt)
             self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
