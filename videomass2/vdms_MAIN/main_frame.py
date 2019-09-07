@@ -489,8 +489,9 @@ class MainFrame(wx.Frame):
         """
         filepath = self.import_clicked
         if not filepath:
-            wx.MessageBox(_(u"No file selected into Drag and Drop list"), 
-                          'Videomass', wx.ICON_INFORMATION, self)
+            wx.MessageBox(_(u"First select one of the files dragged to "
+                            "the add files tab"), 
+                            'Videomass', wx.ICON_INFORMATION, self)
             return
         title = _('Videomass: media streams')
         IO_tools.stream_info(title, 

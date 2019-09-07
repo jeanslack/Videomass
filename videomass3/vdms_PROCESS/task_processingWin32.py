@@ -125,8 +125,7 @@ class GeneralProcess(wx.Panel):
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
         # set_properties:
-        self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            
+        #self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
         #self.OutText.SetBackgroundColour((217, 255, 255))
         self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
                                     "in the log view console, useful for "
@@ -298,8 +297,6 @@ class GeneralProcess(wx.Panel):
                          "%s/%s" % (self.path_log, self.logname))
 
 ########################################################################
-not_exist_msg =  _("Is 'ffmpeg' installed on your system?")
-########################################################################
 
 #------------------------------ THREADS -------------------------------#
 class ProcThread(Thread):
@@ -429,7 +426,7 @@ class ProcThread(Thread):
                                  #append exit error number
                         
             except OSError as err:
-                e = "%s\n  %s" % (err, not_exist_msg)
+                e = "%s: 'ffmpeg.exe'" % (err)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              count=e, 
@@ -579,7 +576,7 @@ class DoublePassThread(Thread):
                                  #append exit error number
                     
             except OSError as err:
-                e = "%s\n  %s" % (err, not_exist_msg)
+                e = "%s: 'ffmpeg.exe'" % (err)
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              count=e, 
@@ -754,7 +751,7 @@ class SingleProcThread(Thread):
             STATUS_ERROR = 1
             
             if err_0[1] == 'No such file or directory':
-                e = "%s\n  %s" % (err_0, not_exist_msg)
+                e = "%s: 'ffmpeg.exe'" % (err_0)
             else:
                 e = "%s: " % (err_0)
                 
@@ -921,7 +918,7 @@ class GrabAudioProc(Thread):
                                  #append exit error number
                         
             except OSError as err:
-                e = "%s\n'ffmpeg' %s" % (err, not_exist_msg), 
+                e = "%s: 'ffmpeg.exe'" % (err), 
                 wx.CallAfter(pub.sendMessage, 
                              "COUNT_EVT", 
                              count=e, 

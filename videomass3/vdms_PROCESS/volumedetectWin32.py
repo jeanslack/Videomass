@@ -170,7 +170,7 @@ class VolumeDetectThread(Thread):
                 output =  p.communicate()
             
             except OSError as e:# if ffmpeg do not exist
-                self.status = e
+                self.status = "%s: 'ffmpeg.exe'" % e
                 break
             
             else:

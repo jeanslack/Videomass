@@ -115,7 +115,7 @@ class FFProbe(object):
             output, error =  p.communicate()
 
         except OSError as e:
-            self.error = e
+            self.error = "%s: 'ffprobe.exe'" % e
             return
         
         if p.returncode:

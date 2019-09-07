@@ -35,8 +35,6 @@ from videomass3.vdms_SYS.os_interaction import copy_restore # if copy fiile log
 from videomass3.vdms_IO.make_filelog import write_log # write initial log
 
 ########################################################################
-not_exist_msg =  _('exist in your system?')
-
 # get data from bootstrap
 get = wx.GetApp()
 DIRconf = get.DIRconf # path to the configuration directory
@@ -71,7 +69,7 @@ class Play(Thread):
         ''' constructor'''
 
         self.filename = filepath # file name selected
-        self.ffplay = ffplay_link # command process
+        self.ffplay = ffplay_link, # command process
         self.loglevel_type = loglevel_type # not used (used error)
         self.time_seq = timeseq # seeking
         self.param = param # additional parameters if present
@@ -119,13 +117,7 @@ class Play(Thread):
             error =  p.communicate()
         
         except OSError as err_0:
-            
-            if err_0[1] == 'No such file or directory':
-                pyerror = ("%s: \n'%s' %s") % (err_0, command[0], 
-                                                not_exist_msg)
-            else:
-                pyerror = "%s: " % (err_0)
-                
+            pyerror = ("%s: 'ffplay.exe'") % (err_0)
             wx.CallAfter(Messages, pyerror)
             self.logError(pyerror) # append log error
             self.pathLog() # log in other place?
