@@ -38,7 +38,6 @@ import sys
 import shlex
 import os
 from threading import Thread
-import re
 import time
 from pubsub import pub
 from videomass3.vdms_SYS.os_interaction import copy_restore
@@ -104,7 +103,9 @@ class GeneralProcess(wx.Panel):
 
         lbl = wx.StaticText(self, label=_("Log View Console:"))
         self.OutText = wx.TextCtrl(self, wx.ID_ANY, "",
-                        style = wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2
+                                   style = wx.TE_MULTILINE | 
+                                   wx.TE_READONLY | 
+                                   wx.TE_RICH2
                                     )
         self.ckbx_text = wx.CheckBox(self, wx.ID_ANY,(_("Enable the FFmpeg "
                                             "scroll output in real time")))
@@ -181,9 +182,22 @@ class GeneralProcess(wx.Panel):
     #-------------------------------------------------------------------#
     def update_display(self, output, duration, status):
         """
-        Receive message from thread of the loops process. 
+        Receive message from thread of the second loops process
+        by wxCallafter and pubsub UPDATE_EVT.
         The received 'output' is parsed for calculate the bar 
         progress value, percentage label and errors management.
+        This method can be used even for non-loop threads.
+        
+        NOTE: During conversion the ffmpeg errors do not stop all 
+              others tasks, if an error occurred it will be marked 
+              with 'failed' but continue; if it has finished without 
+              errors it will be marked with 'completed' on update_count
+              method. Since not all ffmpeg messages are errors, sometimes 
+              it happens to see more output marked with yellow color. 
+              
+        This strategy consists first of capturing all the output and 
+        marking it in yellow, then in capturing the error if present, 
+        but exiting immediately after the function.
         
         """
         if self.ckbx_text.IsChecked(): # ffmpeg output messages in real time:
@@ -191,7 +205,7 @@ class GeneralProcess(wx.Panel):
             
         if not status == 0:# error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
-            self.OutText.AppendText(_(' ...Failed !\n'))
+            self.OutText.AppendText(_(' ...Failed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             return # must be return here
             
@@ -205,7 +219,7 @@ class GeneralProcess(wx.Panel):
             self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
             del output, duration
 
-        else:# append all error lines on the textctrl and log file
+        else:# append all others lines on the textctrl and log file
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
             self.OutText.AppendText(' %s' % output)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
@@ -217,12 +231,13 @@ class GeneralProcess(wx.Panel):
     #-------------------------------------------------------------------#
     def update_count(self, count, duration, fname, end):
         """
-        Receive message from 'for' loop in the thread process.
+        Receive message from first 'for' loop in the thread process.
+        This method can be used even for non-loop threads.
         
         """
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 164, 30)))
-            self.OutText.AppendText(_(' ...Completed !\n'))
+            self.OutText.AppendText(_(' ...Completed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             return
             
@@ -498,7 +513,6 @@ class DoublePassThread(Thread):
         Subprocess initialize thread.
         """
         global STATUS_ERROR
-        status = None
         
         for (files,
              folders,
