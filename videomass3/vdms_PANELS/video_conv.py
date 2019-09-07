@@ -1646,17 +1646,21 @@ class Video_Conv(wx.Panel):
         """
         Save file (jpg) image from any video input. The saved images 
         are named image1.jpg, image2.jpg, image3...
-        NOTE: non imposto 'loglevel_type' con l'opzione -stats sul loglevel 
-              perchè non serve la lettura dell'output in real time e inoltre 
-              voglio controllare solo l'uscita degli errori, se ci sono.
         """
+        if not self.parent.import_clicked:
+            wx.MessageBox(_("To export images you need to select "
+                            "which files to convert in the 'Add file' "
+                            "panel (drag and drop)"), 'Videomass', 
+                            wx.ICON_INFORMATION, self)
+            return
+            
         title = _('Save Images from video')
         fileout = "image%d.jpg"
         cmd = ('%s %s -i "%s" -loglevel %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
                self.time_seq,
-               file_sources[0], 
-               'error', # non imposto l'opzione -stats
+               self.parent.import_clicked, 
+               self.loglevel_type,
                cmd_opt["VideoRate"],
                cmd_opt["Filters"],
                self.threads, 
@@ -1670,7 +1674,7 @@ class Video_Conv(wx.Panel):
             
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('saveimages',
-                                        file_sources, 
+                                        self.parent.import_clicked, 
                                         None, 
                                         None, 
                                         command, 

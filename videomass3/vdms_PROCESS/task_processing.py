@@ -173,7 +173,7 @@ class GeneralProcess(wx.Panel):
                              )
         elif self.varargs[0] == 'saveimages': # from video conv panel
             SingleProcThread(self.varargs, self.duration,
-                             self.OS, self.logname,
+                             self.OS, self.logname, self.time_seq
                              )
         elif self.varargs[0] == 'grabaudio':# from audio conv panel
             GrabAudioProc(self.varargs, self.duration,
@@ -441,11 +441,13 @@ class ProcThread(Thread):
                              fname=files,
                              end='',
                              )
+                print('\n...%s' % (e))
                 STATUS_ERROR = 1
                 break
             
             if CHANGE_STATUS == 1:# break first 'for' loop
                 p.terminate()
+                print('\n...Interrupted process')
                 break
                     
             if p.wait() == 0:
@@ -456,21 +458,11 @@ class ProcThread(Thread):
                                 fname='',
                                 end='ok'
                                 )
+                print('\n...Done')
+                
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
-        
-        if STATUS_ERROR == 1:
-            self.endProc('Error')
-        elif CHANGE_STATUS == 1:
-            self.endProc('Interrupted process')
-        else:
-            self.endProc('Done')
-    #----------------------------------------------------------------#
-    def endProc(self, mess):
-        """
-        print end messagess to console
-        """
-        print('\n...%s' % (mess))
+
 ########################################################################
 
 class DoublePassThread(Thread):
@@ -694,7 +686,7 @@ class DoublePassThread(Thread):
         wx.CallAfter(pub.sendMessage, "END_EVT")
         
         if STATUS_ERROR == 1:
-            self.endProc('Error')
+            self.endProc(e)
         elif CHANGE_STATUS == 1:
             self.endProc('Interrupted process')
         else:
@@ -711,13 +703,8 @@ class SingleProcThread(Thread):
     """
     This class represents a separate thread for running simple single 
     processes, it is used by 'saveimages' feature in video conversion.
-    NOTE: Quando di un processo non si necessita della lettura dell'output 
-          in tempo reale ma solo di una gestione dei log e degli errori,
-          questa classe ne è la risposta. Dal 'loglevel_type' predefinito
-          viene esclusa l'opzione -stats al suo interno ma vi è ancora la 
-          presenza di 'error'.
     """
-    def __init__(self, varargs, duration, OS, logname):
+    def __init__(self, varargs, duration, OS, logname, timeseq):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -725,10 +712,12 @@ class SingleProcThread(Thread):
         Thread.__init__(self)
         """initialize"""
         self.cmd = varargs[4] # comand set on single pass
-        self.duration = 0 # duration list
+        self.duration = duration[0]+10# duration list
+        self.time_seq = timeseq
         self.OS = OS
+        self.count = 0 # count number loop
         self.logname = logname # title name of file log
-        self.fname = varargs[1][0] # file name
+        self.fname = varargs[1] # file name
 
         self.start() # start the thread (va in self.run())
 
@@ -757,21 +746,54 @@ class SingleProcThread(Thread):
         logWrite(com, '', self.logname)# write n/n + command only
         
         try:
-            p = subprocess.Popen(args, 
-                                 stderr=subprocess.PIPE,
-                                 universal_newlines=True,
-                                 )
-            error =  p.communicate()
-            
-        except OSError as err_0:
-            
-            STATUS_ERROR = 1
-            
-            if err_0[1] == 'No such file or directory':
-                e = "%s\n  %s" % (err_0, not_exist_msg)
-            else:
-                e = "%s: " % (err_0)
+            '''
+            https://stackoverflow.com/questions/1388753/how-to-get-output-
+            from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
+            '''
+            with subprocess.Popen(args,
+                                  stderr=subprocess.PIPE, 
+                                  bufsize=1, 
+                                  universal_newlines=True) as p:
+                for line in p.stderr:
+                    #sys.stdout.write(line)
+                    #sys.stdout.flush()
+                    print(line, end=''),
+                    
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=self.duration,
+                                status=0,
+                                )
+                    if CHANGE_STATUS == 1:# break second 'for' loop
+                        p.terminate()
+                        print('\n...Interrupted process')
+                        break
+                    
+                if p.wait(): # error
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=self.duration,
+                                status=p.wait(),
+                                )
+                    logWrite('', 
+                            "Exit status: %s" % p.wait(),
+                            self.logname)
+                            #append exit error number
                 
+                else: # status ok
+                    wx.CallAfter(pub.sendMessage, 
+                                "COUNT_EVT", 
+                                count='', 
+                                duration='',
+                                fname='',
+                                end='ok'
+                                )
+                    print('\n...Done')
+            
+        except OSError as err:
+            e = "%s\n  %s" % (err, not_exist_msg)
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
                          count=e, 
@@ -779,52 +801,12 @@ class SingleProcThread(Thread):
                          fname=self.fname,
                          end='',
                          )
-            
-            wx.CallAfter(pub.sendMessage, "END_EVT")
-            return
+            print('\n...%s' % (e))
+            STATUS_ERROR = 1
         
-        wx.CallAfter(pub.sendMessage, 
-                     "UPDATE_EVT", 
-                     output=error[1], 
-                     duration=self.duration,
-                     status=0,
-                     )
-        
-        if p.returncode:# status error =>1 
-            
-            e = "%s\n  %s" % (self.cmd, error[1])
-            wx.CallAfter(pub.sendMessage, 
-                            "UPDATE_EVT", 
-                            output='', 
-                            duration='',
-                            status=p.returncode,
-                            )
-            print(error[1])
-            logWrite('', "Exit status: %s" % p.returncode, self.logname)
-                          #append exit error number
-                          
-        else:# all done with status error 0
-            wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         count='', 
-                         duration='',
-                         fname='',
-                         end='ok',
-                         )
+                
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
-        
-        if STATUS_ERROR == 1:
-            self.endProc('Error')
-        else:
-            self.endProc('Done')
-            
-    #----------------------------------------------------------------#
-    def endProc(self, mess):
-        """
-        print end messagess to console
-        """
-        print('\n...%s' % (mess))
 
 ########################################################################
 class GrabAudioProc(Thread):

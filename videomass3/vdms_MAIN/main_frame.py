@@ -487,9 +487,11 @@ class MainFrame(wx.Frame):
         Redirect input file clicked at stream_info for metadata display
         """
         filepath = self.import_clicked
+        
         if not filepath:
-            wx.MessageBox(_("First select one of the files dragged to "
-                            "the add files tab"), 
+            wx.MessageBox(_("To view the information from multimedia "
+                            "streams, select one of the files in the "
+                            "'Add files' panel (drag and drop)"), 
                             'Videomass', wx.ICON_INFORMATION, self)
             return
         title = _('Videomass: media streams')
@@ -504,7 +506,7 @@ class MainFrame(wx.Frame):
         testing. The first one exported of the list will be reproduced.
         """
         if not self.post_process:
-            wx.MessageBox(_("No files exported with `Start Encoding` yet"), 
+            wx.MessageBox(_("No files exported with yet"), 
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
@@ -999,7 +1001,7 @@ class MainFrame(wx.Frame):
         self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
         
         #-------- Import button
-        icn_import = self.toolbar.AddTool(wx.ID_FILE3, _('Add File'),
+        icn_import = self.toolbar.AddTool(wx.ID_FILE3, _('Add Files'),
                                          wx.Bitmap(self.icon_import),
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE3, False)

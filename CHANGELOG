@@ -7,17 +7,21 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-September 05, 2019 V.1.6.1
+September 07, 2019 V.1.6.1
 +------------------------------------+
 
-IMPROVEMENTS:
-    * enanced errors management on all processes in python3:
-    * improved messages on the status of any processes
-    * During conversion the ffmpeg errors do not stop all others tasks,
-      if an error occurred it will be marked with 'failed' but continue;
-      if it has finished without errors it will be marked with 'completed'. 
-      Since not all ffmpeg messages are errors, sometimes it happens
-      to see more output marked with yellow color.
+IMPROVEMENTS (Python3 only):
+    * enanced errors management on all processes.
+    * improved messages on the status of any processes.
+    * During the conversion ffmpeg errors will no longer interrupt all 
+      other activities in the queue; if an error occurred it will be marked 
+      with 'failed' but continue; if it has finished without errors it will 
+      be marked with 'completed'. Since not all ffmpeg messages are errors, 
+      sometimes it happens to see more output marked with yellow color.
+    * The export of images from a movie now has the progress bar and all 
+      the normal functions such as process stop and real-time output display.
+    * Now to export images you need to select which files to convert in the 
+      'Add file' panel (drag and drop).
       
 
 +------------------------------------+
