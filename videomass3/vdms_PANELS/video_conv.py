@@ -77,11 +77,12 @@ _("Copy Video Codec"):("","-c:v copy"),
 _("Save Images From Video"):("save images",""),
             }
 # set widget colours in some case with html rappresentetion:
-azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
+azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
-greenolive = '#8aab3c'
+greenolive = '#6aaf23'
+ciano = '#61ccc7' # rgb 97, 204, 199
 
 class Video_Conv(wx.Panel):
     """
@@ -735,13 +736,10 @@ class Video_Conv(wx.Panel):
             self.UI_set()
             
         elif vcodec[selected][0] == "save images":
-            msg = (_("Tip: try setting a progress time in seconds with the " 
-                     "'Duration' tool, then set the `Video Rate` at low values "
-                     "(0.2 fps); More is low, the lower will be the extracted "
-                     "images. "))
-            self.parent.statusbar_msg(_("Output format: Save images"),None)
-            wx.MessageBox(msg, "Videomass: info", wx.ICON_INFORMATION
-                          )
+            msg = (_('Tip: use the "Duration" tool, then try setting '
+                     'the "Video Rate" to low values ​​(0.2 fps)'))
+            self.parent.statusbar_msg(msg, greenolive)
+
             self.ckbx_pass.SetValue(False)
             self.UI_set()
 
@@ -1297,11 +1295,11 @@ class Video_Conv(wx.Panel):
         Enable or disable functionality for volume normalization of
         the video.
         """
-        msg = (_("Tip: set the maximum peak level threshold or accept default "
-                 "dB value (-1.0); then check peak level by pressing the "
-                 "'Volumedetect' button"))
+        msg = (_('Tip: set the maximum peak level threshold or accept default '
+                 'dB value (-1.0); then check peak level by pressing the '
+                 '"Volumedetect" button'))
         if self.ckbx_a_normalize.GetValue():# is checked
-            self.parent.statusbar_msg(msg, greenolive)
+            self.parent.statusbar_msg(msg, azure)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
             self.btn_analyzes.Enable(), self.spin_ctrl_audionormalize.Enable()
             self.label_normalize.Enable()
@@ -1374,10 +1372,10 @@ class Video_Conv(wx.Panel):
                                              ))
                     
         if [a for a in volume if not '  ' in a] == []:
-             self.parent.statusbar_msg(msg3, yellow)
+             self.parent.statusbar_msg(msg3, orange)
         else:
             if len(volume) == 1 or not '  ' in volume:
-                 self.parent.statusbar_msg(msg1, yellow)
+                 self.parent.statusbar_msg(msg1, greenolive)
             else:
                 self.parent.statusbar_msg(msg2, yellow)
                 
@@ -1526,7 +1524,7 @@ class Video_Conv(wx.Panel):
         In double pass mode, split command in two part (see  os_processing.py 
         at proc_batch_thread Class(Thread).
         """
-        title = 'Video Conversions'
+        title = _('Start video conversion')
         if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
             command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
                        self.loglevel_type, 
@@ -1646,7 +1644,9 @@ class Video_Conv(wx.Panel):
         """
         Save file (jpg) image from any video input. The saved images 
         are named asfilename + a progressive number + .jpg.
-        all saved images are placed in a folder with the same file name + a progressive number that is saved in the chosen output path.
+        all saved images are placed in a folder with the same file name 
+        + a progressive number that is saved in the chosen output path.
+        
         """
         if not self.parent.import_clicked:
             wx.MessageBox(_("To export images you need to select "
@@ -1655,7 +1655,7 @@ class Video_Conv(wx.Panel):
                             wx.ICON_INFORMATION, self)
             return
             
-        title = _('Save Images from video')
+        title = _('Start image export')
         fname = os.path.basename(self.parent.import_clicked.rsplit('.', 1)[0])
         
         try: 
@@ -1685,7 +1685,7 @@ class Video_Conv(wx.Panel):
                outputdir, 
                fileout)
                )
-        command = " ".join(cmd.split())# mi formatta la stringa
+        command = " ".join(cmd.split())# compact string
         valupdate = self.update_dict(lenghmax)
         ending = Formula(self, valupdate[0], valupdate[1], title)
             

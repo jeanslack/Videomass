@@ -64,7 +64,7 @@ _("Websites") : ("preset-v1-websites", "Websites"),
 _("User Profiles") : ("preset-v1-Personal", "User Profiles"),
                     }
 # set widget colours in some case with html rappresentetion:
-azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
+azure = '#15a6a6'# rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
@@ -549,7 +549,7 @@ class PresetsPanel(wx.Panel):
 
         ######## ------------FINE VALIDAZIONI: --------------
         valupdate = self.update_dict(lenghmax)
-        ending = Formula(self, valupdate[0], valupdate[1], 'Presets Manager')
+        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         
         if ending.ShowModal() == wx.ID_OK:
             if 'DOUBLE_PASS' in comcheck:

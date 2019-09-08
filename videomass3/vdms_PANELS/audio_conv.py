@@ -40,11 +40,11 @@ from videomass3.vdms_DIALOGS import presets_addnew
 from videomass3.vdms_DIALOGS import shownormlist
 
 # set widget colours in some case with html rappresentetion:
-azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
+azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
-greenolive = '#8aab3c'
+greenolive = '#6aaf23'
 ciano = '#61ccc7' # rgb 97, 204, 199
 
 cmd_opt = {"AudioContainer":"MP3 [.mp3]", 
@@ -450,11 +450,11 @@ class Audio_Conv(wx.Panel):
         """
         Choice if use or not audio normalization
         """
-        msg = (_("Tip: set the maximum peak level threshold or accept default "
-                 "dB value (-1.0); then check peak level by pressing the "
-                 "'Volumedetect' button"))
+        msg = (_('Tip: set the maximum peak level threshold or accept default '
+                 'dB value (-1.0); then check peak level by pressing the '
+                 '"Volumedetect" button'))
         if self.ckb_norm.IsChecked():# if checked
-            self.parent.statusbar_msg(msg, greenolive)
+            self.parent.statusbar_msg(msg, azure)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
             self.btn_analyzes.Enable(), self.spin_amplitude.Enable(),
             self.lab_amplitude.Enable(), 
@@ -543,10 +543,10 @@ class Audio_Conv(wx.Panel):
                                              ))
                     
         if [a for a in volume if not '  ' in a] == []:
-             self.parent.statusbar_msg(msg3, yellow)
+             self.parent.statusbar_msg(msg3, orange)
         else:
             if len(volume) == 1 or not '  ' in volume:
-                 self.parent.statusbar_msg(msg1, yellow)
+                 self.parent.statusbar_msg(msg1, greenolive)
             else:
                 self.parent.statusbar_msg(msg2, yellow)
                 
@@ -650,7 +650,7 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch mode processing.
         """
         if self.ckb_onlynorm.IsChecked():
-            title = 'Audio Normalization'
+            title = _('Start audio norm.')
             cmd = ("-loglevel %s -vn %s %s -y" % (self.loglevel_type, 
                                                   self.threads,
                                                   self.cpu_used,)
@@ -675,7 +675,7 @@ class Audio_Conv(wx.Panel):
                 f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
                 self.exportStreams(f)#call function more above
         else:
-            title = 'Audio Conversion'
+            title = _('Start audio conversion')
             command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
                                                 self.loglevel_type,
                                                 cmd_opt["AudioCodec"],
@@ -713,7 +713,7 @@ class Audio_Conv(wx.Panel):
         """
         Composes the ffmpeg command strings for the batch_process_changes.
         """
-        title = _('Save audio from movies')
+        title = _('Start audio export')
         cmdsplit1 = ("-loglevel %s -vn" % (self.loglevel_type,))
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 

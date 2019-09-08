@@ -36,7 +36,7 @@ duration = []
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
 yellow = '#a29500'
-greenolive = '#8aab3c'
+greenolive = '#6aaf23'
 orange = '#f28924'
 
 ########################################################################

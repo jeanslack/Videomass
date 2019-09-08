@@ -31,7 +31,7 @@ import wx
 
 class Formula(wx.Dialog):
     """
-   Show a epilogue dialog box before run process. It accept a 
+   Show an final dialog box before run process. It accept a 
    couple of tuples which represent the formula names with 
    corresponding diction names:
    
@@ -50,7 +50,7 @@ class Formula(wx.Dialog):
         self.button_2 = wx.Button(self, wx.ID_OK, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle("%s - Videomass" % title)
+        self.SetTitle(title)
         label2.SetForegroundColour(wx.Colour(255, 106, 249))
         #panel.SetBackgroundColour(wx.Colour(212, 255, 249))
         

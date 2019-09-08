@@ -44,7 +44,7 @@ azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
-greenolive = '#8aab3c'
+greenolive = '#6aaf23'
 
 ########################################################################
 class MainFrame(wx.Frame):
@@ -317,7 +317,7 @@ class MainFrame(wx.Frame):
         #self.DnDPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
         #-----------------------------------------------------------#
-        self.statusbar_msg('Drag and Drop',None)#set default statusmsg
+        self.statusbar_msg(_('Add Files'),None)#set default statusmsg
         
     #-------------------Status bar popolate--------------------#
     def statusbar_msg(self, msg, color):
@@ -1059,7 +1059,7 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide(), self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.DnD.Show()
         self.Layout()
-        self.statusbar_msg('Drag and Drop', None)
+        self.statusbar_msg(_('Add Files'), None)
         
         self.toolbar.EnableTool(wx.ID_FILE5, True)
         self.toolbar.EnableTool(wx.ID_FILE6, True)
@@ -1081,7 +1081,7 @@ class MainFrame(wx.Frame):
         self.DnD.Hide(), self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.PrstsPanel.Show(), self.Layout()
 
-        self.statusbar_msg('Presets Manager', None)
+        self.statusbar_msg(_('Presets Manager'), None)
         self.Setup_items_bar()
     
         self.PrstsPanel.file_destin = self.file_destin
@@ -1100,7 +1100,7 @@ class MainFrame(wx.Frame):
         self.DnD.Hide(), self.PrstsPanel.Hide(), self.AconvPanel.Hide()
         self.VconvPanel.Show(), self.Layout()
         
-        self.statusbar_msg('Video Conversion', None)
+        self.statusbar_msg(_('Video Conversions'), None)
         self.Setup_items_bar()
 
         self.VconvPanel.file_destin = self.file_destin
@@ -1122,7 +1122,7 @@ class MainFrame(wx.Frame):
         self.DnD.Hide(), self.PrstsPanel.Hide(), self.VconvPanel.Hide()
         self.AconvPanel.Show(), self.Layout()
         
-        self.statusbar_msg('Audio Conversion', None)
+        self.statusbar_msg(_('Audio Conversions'), None)
         self.Setup_items_bar()
 
         self.AconvPanel.file_destin = self.file_destin
