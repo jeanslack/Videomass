@@ -506,7 +506,7 @@ class MainFrame(wx.Frame):
         testing. The first one exported of the list will be reproduced.
         """
         if not self.post_process:
-            wx.MessageBox(_("No files exported with yet"), 
+            wx.MessageBox(_("No files exported yet"), 
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 

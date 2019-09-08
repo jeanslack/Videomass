@@ -385,7 +385,7 @@ class ProcThread(Thread):
             self.count += 1
             count = 'File %s/%s' % (self.count, self.lenghmax,)
             com = "%s\n%s" % (count, cmd)
-            print("\n%s\n" % com)
+            print("%s" % com)
             
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT", 
@@ -441,13 +441,13 @@ class ProcThread(Thread):
                              fname=files,
                              end='',
                              )
-                print('\n...%s' % (e))
+                print('...%s' % (e))
                 STATUS_ERROR = 1
                 break
             
             if CHANGE_STATUS == 1:# break first 'for' loop
                 p.terminate()
-                print('\n...Interrupted process')
+                print('...Interrupted process')
                 break
                     
             if p.wait() == 0:
@@ -458,7 +458,7 @@ class ProcThread(Thread):
                                 fname='',
                                 end='ok'
                                 )
-                print('\n...Done')
+                print('...Done\n')
                 
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
@@ -537,7 +537,7 @@ class DoublePassThread(Thread):
             self.count += 1
             count = 'File %s/%s - Pass 1' % (self.count, self.lenghmax,)
             cmd = "%s\n%s" % (count, pass1)
-            print("\n%s\n" % cmd)
+            print("%s" % cmd)
             
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
@@ -626,7 +626,7 @@ class DoublePassThread(Thread):
                 
             count = 'File %s/%s - Pass 2' % (self.count, self.lenghmax,)
             cmd = "%s\n%s" % (count, pass2)
-            print("\n%s\n" % cmd)
+            print("%s" % cmd)
             
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
@@ -696,7 +696,7 @@ class DoublePassThread(Thread):
         """
         print end messagess to console
         """
-        print('\n...%s' % (mess))
+        print('...%s' % (mess))
         
 ########################################################################
 class SingleProcThread(Thread):
@@ -734,7 +734,7 @@ class SingleProcThread(Thread):
             
         count = 'File %s/%s' % ('1','1',)
         com = "%s\n%s" % (count, self.cmd)
-        print("\n%s\n" % com)
+        print("%s" % com)
         
         wx.CallAfter(pub.sendMessage, 
                      "COUNT_EVT", 
@@ -767,7 +767,7 @@ class SingleProcThread(Thread):
                                 )
                     if CHANGE_STATUS == 1:# break second 'for' loop
                         p.terminate()
-                        print('\n...Interrupted process')
+                        print('...Interrupted process')
                         break
                     
                 if p.wait(): # error
@@ -790,7 +790,7 @@ class SingleProcThread(Thread):
                                 fname='',
                                 end='ok'
                                 )
-                    print('\n...Done')
+                    print('...Done')
             
         except OSError as err:
             e = "%s\n  %s" % (err, not_exist_msg)
@@ -801,7 +801,7 @@ class SingleProcThread(Thread):
                          fname=self.fname,
                          end='',
                          )
-            print('\n...%s' % (e))
+            print('...%s' % (e))
             STATUS_ERROR = 1
         
                 
@@ -876,7 +876,7 @@ class GrabAudioProc(Thread):
             self.count += 1
             count = 'File %s/%s' % (self.count, self.lenghmax,)
             com = "%s\n%s" % (count, cmd)
-            print("\n%s\n" % com)
+            print("%s" % com)
             
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
@@ -959,7 +959,7 @@ class GrabAudioProc(Thread):
         """
         print end messagess to console
         """
-        print('\n...%s' % (mess))
+        print('...%s' % (mess))
 
 ########################################################################
 
