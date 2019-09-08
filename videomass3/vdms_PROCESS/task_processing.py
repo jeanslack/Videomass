@@ -87,16 +87,16 @@ class GeneralProcess(wx.Panel):
         log messages will be written
         
         """
-        self.parent = parent # this window is a child of a window parent
-        self.previus = panel # memorizza il pannello da cui parte
+        self.parent = parent # this is a child of a window parent (main)
+        self.previus = panel # stores the panel from which  it starts
         self.lenghmax = varargs[9]# the multiple task number
         self.count = 0 # setting iniziale del contatore
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
         self.path_log = path_log # for save a copy if user want
-        self.duration = duration
-        self.time_seq = self.parent.time_seq
-        self.OS = OS
-        self.varargs = varargs
+        self.duration = duration # total duration or partial if set timeseq
+        self.time_seq = self.parent.time_seq # setting duration data
+        self.OS = OS # operative sistem name Identifier
+        self.varargs = varargs # tuple data
         
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
@@ -165,19 +165,19 @@ class GeneralProcess(wx.Panel):
         """
         if self.varargs[0] == 'normal':# from video and audio conv panels
             ProcThread(self.varargs, self.duration,
-                       self.OS, self.logname, self.time_seq,
+                       self.logname, self.time_seq,
                        ) 
         elif self.varargs[0] == 'doublepass': # from video conv panel
             DoublePassThread(self.varargs, self.duration,
-                             self.OS, self.logname, self.time_seq
+                             self.logname, self.time_seq
                              )
         elif self.varargs[0] == 'saveimages': # from video conv panel
             SingleProcThread(self.varargs, self.duration,
-                             self.OS, self.logname, self.time_seq
+                             self.logname, self.time_seq
                              )
         elif self.varargs[0] == 'grabaudio':# from audio conv panel
             GrabAudioProc(self.varargs, self.duration,
-                          self.OS, self.logname, self.time_seq
+                          self.logname, self.time_seq
                           )
     #-------------------------------------------------------------------#
     def update_display(self, output, duration, status):
@@ -305,14 +305,27 @@ class GeneralProcess(wx.Panel):
 ########################################################################
 not_exist_msg =  _("Is 'ffmpeg' installed on your system?")
 ########################################################################
-
 #------------------------------ THREADS -------------------------------#
+"""
+NOTE MS Windows:
+
+subprocess.STARTUPINFO() 
+
+https://stackoverflow.com/questions/1813872/running-
+a-process-in-pythonw-with-popen-without-a-console?lq=1>
+
+NOTE capturing output in real-time (Windows, Unix):
+
+https://stackoverflow.com/questions/1388753/how-to-get-output-
+from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
+
+"""
 class ProcThread(Thread):
     """
     This class represents a separate thread for running processes, which 
     need to read the stdout/stderr in real time.
     """
-    def __init__(self, varargs, duration, OS, logname, timeseq):
+    def __init__(self, varargs, duration, logname, timeseq):
         """
         Some attribute can be empty, this depend from conversion type. 
         If the format/container is not changed on a conversion, the 
@@ -330,7 +343,6 @@ class ProcThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
-        self.OS = OS # operative sistem Identifier
         self.count = 0 # count number loop
         self.lenghmax = len(varargs[1]) # lengh file list
         self.logname = logname # title name of file log
@@ -377,11 +389,6 @@ class ProcThread(Thread):
                                                           filename, 
                                                           self.extoutput
                                                           )
-            if self.OS == 'Windows':
-                args = cmd
-            else:
-                args = shlex.split(cmd)
-                
             self.count += 1
             count = 'File %s/%s' % (self.count, self.lenghmax,)
             com = "%s\n%s" % (count, cmd)
@@ -397,11 +404,7 @@ class ProcThread(Thread):
             logWrite(com, '', self.logname)# write n/n + command only
             
             try:
-                '''
-                https://stackoverflow.com/questions/1388753/how-to-get-output-
-                from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-                '''
-                with subprocess.Popen(args,
+                with subprocess.Popen(shlex.split(cmd),
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True) as p:
@@ -431,6 +434,15 @@ class ProcThread(Thread):
                                  "Exit status: %s" % p.wait(),
                                  self.logname)
                                  #append exit error number
+                    else: # ok
+                        wx.CallAfter(pub.sendMessage, 
+                                        "COUNT_EVT", 
+                                        count='', 
+                                        duration='',
+                                        fname='',
+                                        end='ok'
+                                        )
+                        print('...Done\n')
                         
             except OSError as err:
                 e = "%s\n  %s" % (err, not_exist_msg)
@@ -449,16 +461,6 @@ class ProcThread(Thread):
                 p.terminate()
                 print('...Interrupted process')
                 break
-                    
-            if p.wait() == 0:
-                wx.CallAfter(pub.sendMessage, 
-                                "COUNT_EVT", 
-                                count='', 
-                                duration='',
-                                fname='',
-                                end='ok'
-                                )
-                print('...Done\n')
                 
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
@@ -472,7 +474,7 @@ class DoublePassThread(Thread):
     twice for two different tasks: the process on the first video pass and 
     the process on the second video pass for video only.
     """
-    def __init__(self, varargs, duration, OS, logname, timeseq):
+    def __init__(self, varargs, duration, logname, timeseq):
         """
         The 'volume' attribute may have an empty value, but it will 
         have no influence on the type of conversion.
@@ -488,15 +490,10 @@ class DoublePassThread(Thread):
         self.duration = duration # duration list
         self.time_seq = timeseq
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
-        self.OS = OS # operative sistem Identifier
         self.count = 0 # count number loop
         self.lenghmax = len(varargs[1]) # lengh file list
         self.logname = logname # title name of file log
-        
-        if self.OS == 'Windows':
-            self.nul = 'NUL'
-        else:
-            self.nul = '/dev/null'
+        self.nul = '/dev/null'
         
         self.start()# start the thread (va in self.run())
 
@@ -529,11 +526,6 @@ class DoublePassThread(Thread):
                                        filename,
                                        self.nul,
                                        )) 
-            if self.OS == 'Windows':
-                args = pass1
-            else:
-                args = shlex.split(pass1)
-
             self.count += 1
             count = 'File %s/%s - Pass 1' % (self.count, self.lenghmax,)
             cmd = "%s\n%s" % (count, pass1)
@@ -549,7 +541,7 @@ class DoublePassThread(Thread):
             logWrite(cmd, '', self.logname)# write n/n + command only
             
             try:
-                with subprocess.Popen(args, 
+                with subprocess.Popen(shlex.split(pass1), 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True) as p1:
@@ -619,11 +611,6 @@ class DoublePassThread(Thread):
                                                 filename,
                                                 self.extoutput,
                                                 ))
-            if self.OS == 'Windows':
-                args = pass2
-            else:
-                args = shlex.split(pass2)
-                
             count = 'File %s/%s - Pass 2' % (self.count, self.lenghmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
@@ -637,7 +624,7 @@ class DoublePassThread(Thread):
                          )
             logWrite(cmd, '', self.logname)
             
-            with subprocess.Popen(args, 
+            with subprocess.Popen(shlex.split(pass2), 
                                   stderr=subprocess.PIPE, 
                                   bufsize=1, 
                                   universal_newlines=True) as p2:
@@ -704,7 +691,7 @@ class SingleProcThread(Thread):
     This class represents a separate thread for running simple single 
     processes, it is used by 'saveimages' feature in video conversion.
     """
-    def __init__(self, varargs, duration, OS, logname, timeseq):
+    def __init__(self, varargs, duration, logname, timeseq):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
@@ -714,7 +701,6 @@ class SingleProcThread(Thread):
         self.cmd = varargs[4] # comand set on single pass
         self.duration = duration[0]+10# duration list
         self.time_seq = timeseq
-        self.OS = OS
         self.count = 0 # count number loop
         self.logname = logname # title name of file log
         self.fname = varargs[1] # file name
@@ -726,12 +712,7 @@ class SingleProcThread(Thread):
         Subprocess initialize thread.
         """
         global STATUS_ERROR
-        
-        if self.OS == 'Windows':
-            args = self.cmd
-        else:
-            args = shlex.split(self.cmd)
-            
+
         count = 'File %s/%s' % ('1','1',)
         com = "%s\n%s" % (count, self.cmd)
         print("%s" % com)
@@ -746,11 +727,7 @@ class SingleProcThread(Thread):
         logWrite(com, '', self.logname)# write n/n + command only
         
         try:
-            '''
-            https://stackoverflow.com/questions/1388753/how-to-get-output-
-            from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-            '''
-            with subprocess.Popen(args,
+            with subprocess.Popen(shlex.split(self.cmd),
                                   stderr=subprocess.PIPE, 
                                   bufsize=1, 
                                   universal_newlines=True) as p:
@@ -816,7 +793,7 @@ class GrabAudioProc(Thread):
     It is reserved for extracting multiple audio files from different 
     video formats.
     """
-    def __init__(self, varargs, duration, OS, logname, timeseq):
+    def __init__(self, varargs, duration, logname, timeseq):
         """
         """
         Thread.__init__(self)
@@ -832,7 +809,6 @@ class GrabAudioProc(Thread):
         #self.logname = varargs[8] #  videomass/logname.log
         self.duration = duration # duration values list (items)
         self.time_seq = timeseq
-        self.OS = OS
         self.count = 0 # count number loop
         self.lenghmax = len(varargs[2]) # lengh file list
         self.logname = logname # title name of file log
@@ -868,11 +844,6 @@ class GrabAudioProc(Thread):
                                                       out,
                                                       ext,
                                                       )
-            if self.OS == 'Windows':
-                args = cmd
-            else:
-                args = shlex.split(cmd)
-            
             self.count += 1
             count = 'File %s/%s' % (self.count, self.lenghmax,)
             com = "%s\n%s" % (count, cmd)
@@ -888,7 +859,7 @@ class GrabAudioProc(Thread):
             logWrite(com, '', self.logname)# write n/n + command only
             
             try:
-                with subprocess.Popen(args, 
+                with subprocess.Popen(shlex.split(cmd), 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True) as p:
@@ -918,6 +889,15 @@ class GrabAudioProc(Thread):
                                  "Exit status: %s" % p.wait(), 
                                  self.logname)
                                  #append exit error number
+                    else: # ok
+                        wx.CallAfter(pub.sendMessage, 
+                                    "COUNT_EVT", 
+                                    count='', 
+                                    duration='',
+                                    fname='',
+                                    end='ok'
+                                    )
+                        print('...Done\n')
                         
             except OSError as err:
                 e = "%s\n'ffmpeg' %s" % (err, not_exist_msg), 
@@ -928,38 +908,17 @@ class GrabAudioProc(Thread):
                              fname=files,
                              end='',
                              )
+                print('...%s' % (e))
                 STATUS_ERROR = 1
                 break
 
             if CHANGE_STATUS == 1:
                 p.terminate()
+                print('...Interrupted process')
                 break
-            
-            if p.wait() == 0:
-                wx.CallAfter(pub.sendMessage, 
-                             "COUNT_EVT", 
-                             count='', 
-                             duration='',
-                             fname='',
-                             end='ok'
-                             )
             
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
-        
-        if STATUS_ERROR == 1:
-            self.endProc('Error')
-        elif CHANGE_STATUS == 1:
-            self.endProc('Interrupted process')
-        else:
-            self.endProc('Done')
-    #----------------------------------------------------------------#    
-
-    def endProc(self, mess):
-        """
-        print end messagess to console
-        """
-        print('...%s' % (mess))
 
 ########################################################################
 
