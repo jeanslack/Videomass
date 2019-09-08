@@ -1645,7 +1645,8 @@ class Video_Conv(wx.Panel):
                    filename, logname, lenghmax):
         """
         Save file (jpg) image from any video input. The saved images 
-        are named image1.jpg, image2.jpg, image3...
+        are named asfilename + a progressive number + .jpg.
+        all saved images are placed in a folder with the same file name + a progressive number that is saved in the chosen output path.
         """
         if not self.parent.import_clicked:
             wx.MessageBox(_("To export images you need to select "
@@ -1655,7 +1656,23 @@ class Video_Conv(wx.Panel):
             return
             
         title = _('Save Images from video')
-        fileout = "image%d.jpg"
+        fname = os.path.basename(self.parent.import_clicked.rsplit('.', 1)[0])
+        
+        try: 
+            outputdir = "%s/%s-IMAGES_0" % (dir_destin[0], fname)
+            os.mkdir(outputdir)
+            
+        except FileExistsError:
+            lista = []
+            for dir_ in os.listdir(dir_destin[0]):
+                if "%s-IMAGES_" % fname in dir_:
+                    lista.append(int(dir_.split('IMAGES_')[1]))
+                    
+            prog = max(lista) +1
+            outputdir = "%s/%s-IMAGES_%d" % (dir_destin[0], fname, prog)
+            os.mkdir(outputdir)
+
+        fileout = "{0}-%d.jpg".format(fname)
         cmd = ('%s %s -i "%s" -loglevel %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
                self.time_seq,
@@ -1665,7 +1682,7 @@ class Video_Conv(wx.Panel):
                cmd_opt["Filters"],
                self.threads, 
                self.cpu_used,
-               dir_destin[0], 
+               outputdir, 
                fileout)
                )
         command = " ".join(cmd.split())# mi formatta la stringa

@@ -22,6 +22,10 @@ IMPROVEMENTS (Python3 only):
       the normal functions such as process stop and real-time output display.
     * Now to export images you need to select which files to convert in the 
       'Add file' panel (drag and drop).
+    * Now the images saved by the movies are named as filename + a progressive 
+      number + .jpg.
+      All saved images are placed in a folder with the same file name + a 
+      progressive number that is saved in the selected output path.
       
 
 +------------------------------------+
