@@ -1511,8 +1511,11 @@ class Video_Conv(wx.Panel):
         filename, base_name, lenghmax = checking
     
         if self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
-            self.saveimages(file_sources, dir_destin, filename, 
-                            logname, lenghmax)
+            self.saveimages(dir_destin, 
+                            logname, 
+                            '%s %s' % (cmd_opt["VideoRate"], 
+                                       cmd_opt["Filters"],)
+                                       )
         else:
             self.stdProc(file_sources, dir_destin, lenghmax, logname)
 
@@ -1543,7 +1546,7 @@ class Video_Conv(wx.Panel):
                        cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax)
+            valupdate = self.update_dict(lenghmax, "Copy Video Codec" )
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1586,7 +1589,7 @@ class Video_Conv(wx.Panel):
                      self.cpu_used, cmd_opt["Map"])
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax)
+            valupdate = self.update_dict(lenghmax, '')
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1621,7 +1624,7 @@ class Video_Conv(wx.Panel):
                         self.cpu_used, cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax)
+            valupdate = self.update_dict(lenghmax, '')
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1641,8 +1644,7 @@ class Video_Conv(wx.Panel):
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                                  cmd_opt["VideoFormat"]))
     #--------------------------------------------------------------------#
-    def saveimages(self, file_sources, dir_destin, 
-                   filename, logname, lenghmax):
+    def saveimages(self, dir_destin, logname, com):
         """
         Save file (jpg) image from any video input. The saved images 
         are named asfilename + a progressive number + .jpg.
@@ -1675,20 +1677,22 @@ class Video_Conv(wx.Panel):
             os.mkdir(outputdir)
 
         fileout = "{0}-%d.jpg".format(fname)
-        cmd = ('%s %s -i "%s" -loglevel %s %s %s -an %s %s -y "%s/%s"' % (
+        cmd = ('%s %s -i "%s" -loglevel %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
-               self.time_seq,
+               self.parent.time_seq,
+               #self.time_seq,,
                self.parent.import_clicked, 
                self.ffmpeg_loglev,
-               cmd_opt["VideoRate"],
-               cmd_opt["Filters"],
+               com,
+               #cmd_opt["VideoRate"],
+               #cmd_opt["Filters"],
                self.threads, 
                self.cpu_used,
                outputdir, 
                fileout)
                )
         command = " ".join(cmd.split())# compact string
-        valupdate = self.update_dict(lenghmax)
+        valupdate = self.update_dict('1', 'Start image export')
         ending = Formula(self, valupdate[0], valupdate[1], title)
             
         if ending.ShowModal() == wx.ID_OK:
@@ -1701,11 +1705,11 @@ class Video_Conv(wx.Panel):
                                         None, 
                                         None, 
                                         logname, 
-                                        lenghmax, 
+                                        '1', 
                                         )
     #------------------------------------------------------------------#
     #------------------------------------------------------------------#
-    def update_dict(self, lenghmax):
+    def update_dict(self, lenghmax, prof):
         """
         This method is required for update all cmd_opt
         dictionary values before send at epilogue
@@ -1716,7 +1720,7 @@ class Video_Conv(wx.Panel):
         else:
             normalize = _('Disable')
         
-        if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
+        if prof == "Copy Video Codec":
             formula = (_("SUMMARY:\n\nFile to Queue\
                 \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
                 \nAudio Format:\nAudio codec:\nAudio channel:\
@@ -1729,9 +1733,9 @@ class Video_Conv(wx.Panel):
                 cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
                 cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
-                self.time_seq))
+                self.parent.time_seq))
                     
-        elif self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
+        elif prof == "Start image export":
             formula = (_("SUMMARY:\n\nFile to Queue\
                          \nImages Format:\nVideo rate:\
                          \nFilters:\nTime selection:"
@@ -1739,7 +1743,7 @@ class Video_Conv(wx.Panel):
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile, 'jpeg', 
                                                     cmd_opt["VideoRate"], 
                                                     cmd_opt["Filters"],
-                                                    self.time_seq)
+                                                    self.parent.time_seq)
                         )
         else:
             formula = (_("SUMMARY:\n\nFile to Queue\
@@ -1763,7 +1767,7 @@ class Video_Conv(wx.Panel):
                         cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
                         cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                         cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
-                        self.time_seq)
+                        self.parent.time_seq)
                         )
         return formula, dictions
 

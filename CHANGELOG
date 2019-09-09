@@ -26,6 +26,21 @@ IMPROVEMENTS (Python3 only):
       number + .jpg.
       All saved images are placed in a folder with the same file name + a 
       progressive number that is saved in the selected output path.
+    * the logging level can now be optional, no longer mandatory with the 
+      "error" flag, since the management of the output and errors has been 
+      improved.
+    * Changed the videomass.conf/videomassWin32.conf to 1.4 version.
+
+ADD (Python 3 only):
+    * The option to set the ffmpeg and ffplay loglevel flag has been added 
+      to the settings dialog.
+    * Added check box to disable or enable the "-cpu-used" flag as sometimes 
+      it is not supported and causes more output to read.
+
+REMOVALS and DISPLACEMENTS: 
+    * removed the setting to save the log file in another directory chosen 
+      by the user since the option to open the log directory had been 
+      implemented in the previous version of Videomass. 
       
 
 +------------------------------------+
