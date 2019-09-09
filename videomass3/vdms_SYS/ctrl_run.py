@@ -127,7 +127,7 @@ def system_check():
             if DATAconf == 'corrupted':
                 print ("The file configuration is corrupted! try to restore..")
                 existfileconf = False
-            if float(DATAconf[0]) != 1.3:
+            if float(DATAconf[0]) != 1.4:
                 existfileconf = False
         else:
             existfileconf = False

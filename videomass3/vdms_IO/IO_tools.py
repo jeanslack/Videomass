@@ -58,7 +58,7 @@ from videomass3.vdms_DIALOGS import ffmpeg_formats
 from videomass3.vdms_DIALOGS import ffmpeg_codecs
 
 #-----------------------------------------------------------------------#
-def process(self, varargs, path_log, panelshown, duration, time_seq):
+def process(self, varargs, panelshown, duration, time_seq):
     """
     1) TIME DEFINITION FOR THE PROGRESS BAR
         For a suitable and efficient progress bar, if a specific 
@@ -81,7 +81,6 @@ def process(self, varargs, path_log, panelshown, duration, time_seq):
         duration = newDuration
     
     self.ProcessPanel = GeneralProcess(self, 
-                                       path_log, 
                                        panelshown, 
                                        varargs, 
                                        duration, 

@@ -35,7 +35,7 @@ class Setup(wx.Dialog):
     """
     Main settings of the videomass program and configuration storing.
     """
-    def __init__(self, parent, threads, cpu_used, save_log, path_log, 
+    def __init__(self, parent, threads, cpu_used, ffplay_loglev, ffmpeg_loglev, 
                  ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
                  ffplay_link, ffplay_check, OS, iconset, fileconf, PWD
                  ):
@@ -72,8 +72,8 @@ class Setup(wx.Dialog):
 
         self.threads = threads
         self.cpu_used = cpu_used
-        self.save_log = save_log
-        self.path_log = path_log
+        self.ffplay_loglevel = ffplay_loglev
+        self.ffmpeg_loglevel = ffmpeg_loglev
         self.ffmpeg_link = ffmpeg_link
         self.ffmpeg_check = ffmpeg_check
         self.ffprobe_link = ffprobe_link
@@ -100,7 +100,7 @@ class Setup(wx.Dialog):
         notebook.AddPage(tabOne, _("General"))
         
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
-        notebook.AddPage(tabTwo, _("Log"))
+        notebook.AddPage(tabTwo, _("Loglevel"))
         
         tabThree = wx.Panel(notebook, wx.ID_ANY)
         notebook.AddPage(tabThree, _("Executables"))
@@ -141,28 +141,39 @@ class Setup(wx.Dialog):
                                         size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                              )
         gridctrl.Add(self.spinctrl_cpu, 0, wx.ALL, 5)
+        self.ckbx_cpu = wx.CheckBox(tabOne, wx.ID_ANY, (_("Disable")))
+        gridctrl.Add(self.ckbx_cpu, 1, wx.ALL, border=10 )
         #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
         #--------------------------------------------------TAB 2
         gridLog = wx.FlexGridSizer(4, 1, 0, 0)
         tabTwo.SetSizer(gridLog)#aggiungo il sizer su tab 2
-        #self.check_ffmpeglog = wx.CheckBox(tabTwo, wx.ID_ANY, 
-                                           #(" Generates ffmpeg log files"))
-        #gridLog.Add(self.check_ffmpeglog, 0, wx.ALL, 15)
-        self.check_cmdlog = wx.CheckBox(tabTwo, wx.ID_ANY, 
-                            (_(" Specifies a custom path to save the log")))
-        gridLog.Add(self.check_cmdlog, 0, wx.ALL, 15)
         lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, 
-                               (_("Where do you want to save the log?")))
+                               (_("These settings affect output messages "
+                                  "during processes.")))
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
-        grid_logBtn = wx.FlexGridSizer(1, 2, 0, 0)
-        gridLog.Add(grid_logBtn)
-        self.btn_log = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
-        grid_logBtn.Add(self.btn_log, 0, wx.ALL, 15)
-        self.txt_pathlog = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
-                                       style=wx.TE_READONLY
-                                       )
-        grid_logBtn.Add(self.txt_pathlog, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 15)
+        self.rdbFFmpeg = wx.RadioBox(tabTwo, wx.ID_ANY,
+                                    ("Set logging level flags used by FFmpeg"), 
+                            choices=[("quiet (Show nothing at all)"), 
+                                    ("fatal (Only show fatal errors)"), 
+                                    ("error (Show all errors)"), 
+                                    ("warning (Show all warnings and errors)"), 
+                                    ("info (Show informative messages "
+                                            "during processing)"),], 
+                                    majorDimension=1, style=wx.RA_SPECIFY_COLS
+                                    )
+        gridLog.Add(self.rdbFFmpeg, 0, wx.ALL, 15)
+        self.rdbFFplay = wx.RadioBox(tabTwo, wx.ID_ANY,
+                                    ("Set logging level flags used by FFplay"), 
+                            choices=[("quiet (Show nothing at all)"), 
+                                    ("fatal (Only show fatal errors)"), 
+                                    ("error (Show all errors)"), 
+                                    ("warning (Show all warnings and errors)"), 
+                                    ("info (Show informative messages "
+                                            "during processing)"),], 
+                                    majorDimension=1, style=wx.RA_SPECIFY_COLS
+                                    )
+        gridLog.Add(self.rdbFFplay, 0, wx.ALL, 15)
         #--------------------------------------------------TAB 3
         gridExec = wx.FlexGridSizer(6, 1, 0, 0)
         tabThree.SetSizer(gridExec)#aggiungo il sizer su tab 3
@@ -274,14 +285,11 @@ class Setup(wx.Dialog):
                                             "(from -16 to 16) (default 1)")
                                     )
 
-        self.check_cmdlog.SetToolTip(_("Generates a log file command in "
-                              "the directory specified below. Log file is a "
-                              "file containing the parameters of the "
-                              "execution process, info and error messages.")
-                                           )
-        self.btn_log.SetToolTip(_("Open Path"))
-        self.txt_pathlog.SetMinSize((200, -1))
-        self.txt_pathlog.SetToolTip(_("Path generation file"))
+        #self.check_cmdlog.SetToolTip(_("Generates a log file command in "
+                              #"the directory specified below. Log file is a "
+                              #"file containing the parameters of the "
+                              #"execution process, info and error messages.")
+                                           #)
         
         self.checkbox_exeFFmpeg.SetToolTip(_("Enable custom search for "
                        "the executable FFmpeg. If the checkbox is disabled or "
@@ -317,12 +325,12 @@ class Setup(wx.Dialog):
         self.txtctrl_ffplay.SetToolTip(
                                      _("path to executable binary FFplay"))
         #----------------------Binding (EVT)----------------------#
-        #self.Bind(wx.EVT_CHECKBOX, self.log_ffmpeg, self.check_ffmpeglog)
-        self.Bind(wx.EVT_CHECKBOX, self.log_command, self.check_cmdlog)
-        self.Bind(wx.EVT_BUTTON, self.save_path_log, self.btn_log)
-        #self.Bind(wx.EVT_TEXT, self.text_save, self.txt_pathlog)
+
+        self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
+        self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
         self.Bind(wx.EVT_SPINCTRL, self.on_cpu_used, self.spinctrl_cpu)
+        self.Bind(wx.EVT_CHECKBOX, self.on_cpu_used, self.ckbx_cpu)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffmpeg, self.txtctrl_ffmpeg)
@@ -348,18 +356,27 @@ class Setup(wx.Dialog):
     def current_settings(self):
         """
         Setto l'abilitazione/disabilitazione in funzione del file di conf.
-        Setting enable/disable on according to the configuration file
+        Setting enable/disable in according to the configuration file
         """
-            
-        if self.save_log == 'true':
-            self.check_cmdlog.SetValue(True) # set on
-            self.txt_pathlog.AppendText(self.path_log)
-            self.btn_log.Enable(), self.txt_pathlog.Enable()
-            
-        elif self.save_log == 'false': 
-            # Button and textctrl for file log set disable
-            self.btn_log.Disable(), self.txt_pathlog.Disable()
-            self.txt_pathlog.SetValue("")
+        
+        for s in range(self.rdbFFplay.GetCount()):
+            if (self.ffplay_loglevel.split()[0] in 
+                                self.rdbFFplay.GetString(s).split()[0]
+                                ):
+                self.rdbFFplay.SetSelection(s)
+        
+        for s in range(self.rdbFFmpeg.GetCount()):
+            if (self.ffmpeg_loglevel.split()[0] in 
+                                self.rdbFFmpeg.GetString(s).split()[0]
+                                ):
+                self.rdbFFmpeg.SetSelection(s)
+        
+        if self.cpu_used == 'Disabled':
+            self.ckbx_cpu.SetValue(True)
+            self.spinctrl_cpu.Disable()
+        #else:
+            #self.ckbx_cpu.SetValue(False)
+            #self.spinctrl_cpu.Enable()
             
         if self.ffmpeg_check == 'false':
             self.btn_pathFFmpeg.Disable()
@@ -396,40 +413,26 @@ class Setup(wx.Dialog):
     #--------------------------------------------------------------------#
     def on_cpu_used(self, event):
         """set cpu number threads used as option on ffmpeg"""
-        sett = self.spinctrl_cpu.GetValue()
-        self.full_list[self.rowsNum[3]] = '-cpu-used %s\n' % sett
-    #--------------------------------------------------------------------#
-    #--------------------------------------------------------------------#
-    def log_command(self, event):
-        """if true, it allow set a specified save of the log."""
-        if self.check_cmdlog.IsChecked():
-            self.full_list[self.rowsNum[4]] = 'true\n'
-            self.btn_log.Enable(), self.txt_pathlog.Enable()
-            
+        if self.ckbx_cpu.IsChecked():
+            self.spinctrl_cpu.Disable()
+            self.full_list[self.rowsNum[3]] = 'Disabled\n'
         else:
-            self.full_list[self.rowsNum[4]] = 'false\n'
-            self.txt_pathlog.SetValue("")
-            self.full_list[self.rowsNum[5]] = 'none'
-            self.btn_log.Disable(), self.txt_pathlog.Disable()
+            if not self.spinctrl_cpu.IsEnabled():
+                self.spinctrl_cpu.Enable()
+            sett = self.spinctrl_cpu.GetValue()
+            self.full_list[self.rowsNum[3]] = '-cpu-used %s\n' % sett
+    #--------------------------------------------------------------------#
+    #--------------------------------------------------------------------#
+    def logging_ffplay(self, event):
+        """specifies loglevel type for ffplay."""
+        s = self.rdbFFplay.GetStringSelection().split()[0]
+        self.full_list[self.rowsNum[4]] = '%s -hide_banner\n' % s
 
     #--------------------------------------------------------------------#
-    def save_path_log(self, event):
-        """specifies a path to save the log"""
-        dialdir = wx.DirDialog(self, 
-                               _("Where do you want to save the log file?"))
-            
-        if dialdir.ShowModal() == wx.ID_OK:
-            self.txt_pathlog.SetValue("")
-            self.txt_pathlog.AppendText(dialdir.GetPath())
-            self.full_list[self.rowsNum[5]] = '%s\n' % (dialdir.GetPath())
-            dialdir.Destroy()
-
-    #--------------------------------------------------------------------#
-    #def text_save(self, event):
-        
-        ##save = self.txt_pathlog.GetValue()
-        ##self.full_list[28] = 'PATH = %s\n' % (save)
-        #event.Skip()
+    def logging_ffmpeg(self, event):
+        """specifies loglevel type for ffmpeg"""
+        s = self.rdbFFmpeg.GetStringSelection().split()[0]
+        self.full_list[self.rowsNum[5]] = '%s -stats\n' % s
         
     #----------------------ffmpeg path checkbox--------------------------#
     def exeFFmpeg(self, event):
@@ -619,17 +622,13 @@ class Setup(wx.Dialog):
         #             if os.path.exists("%s/FFMPEG_BIN" % self.PWD):
         #                 os.symlink(ffplay_src, "%s/FFMPEG_BIN/bin/ffplay" % self.PWD)
 
-        if self.check_cmdlog.IsChecked() and self.txt_pathlog.GetValue() == "":
-            wx.MessageBox(_("Warning, The log command has no set path name "), 
-                            "Videomass: warning", wx.ICON_WARNING)
-        else:
-            with open (self.FILEconf, 'w') as fileconf:
-                for i in self.full_list:
-                    fileconf.write('%s' % i)
-            wx.MessageBox(_("Changes will take affect once the program " 
-                            "has been restarted"))
-            
-            #self.Destroy() # WARNING on mac not close corretly, on linux ok
-            self.Close()
+        with open (self.FILEconf, 'w') as fileconf:
+            for i in self.full_list:
+                fileconf.write('%s' % i)
+        wx.MessageBox(_("Changes will take affect once the program " 
+                        "has been restarted"))
+        
+        #self.Destroy() # WARNING on mac not close corretly, on linux ok
+        self.Close()
         event.Skip()
         

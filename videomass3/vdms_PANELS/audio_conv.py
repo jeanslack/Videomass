@@ -73,14 +73,14 @@ class Audio_Conv(wx.Panel):
     with preset storing feature (TODO)
     """
     def __init__(self, parent, ffmpeg_link, threads, 
-                 cpu_used, loglevel_type, ffprobe_link, OS,
+                 cpu_used, ffmpeg_loglev, ffprobe_link, OS,
                  iconanalyzes, iconsettings):
         # passed attributes
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
         self.threads = threads
-        self.cpu_used = cpu_used
-        self.loglevel_type = loglevel_type
+        self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
+        self.ffmpeg_loglevel = ffmpeg_loglev
         self.ffprobe_link = ffprobe_link
         self.OS = OS
         #self.DIRconf = DIRconf
@@ -651,7 +651,7 @@ class Audio_Conv(wx.Panel):
         """
         if self.ckb_onlynorm.IsChecked():
             title = _('Start audio norm.')
-            cmd = ("-loglevel %s -vn %s %s -y" % (self.loglevel_type, 
+            cmd = ("-loglevel %s -vn %s %s -y" % (self.ffmpeg_loglevel, 
                                                   self.threads,
                                                   self.cpu_used,)
                                                   )
@@ -677,7 +677,7 @@ class Audio_Conv(wx.Panel):
         else:
             title = _('Start audio conversion')
             command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
-                                                self.loglevel_type,
+                                                self.ffmpeg_loglevel,
                                                 cmd_opt["AudioCodec"],
                                                 cmd_opt["AudioBitrate"][1], 
                                                 cmd_opt["AudioDepth"][1], 
@@ -714,7 +714,7 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch_process_changes.
         """
         title = _('Start audio export')
-        cmdsplit1 = ("-loglevel %s -vn" % (self.loglevel_type,))
+        cmdsplit1 = ("-loglevel %s -vn" % (self.ffmpeg_loglevel,))
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 
         valupdate = self.update_dict(lenghmax)

@@ -34,7 +34,7 @@ from videomass3.vdms_IO.IO_tools import FFProbe
 
 class Mediainfo(wx.Dialog):
     """
-    Show dialog for display metadata info. 
+    Show dialog for display tag and metadata info. 
     """
     def __init__(self, title, path, ffprobe_link, OS):
         # with 'None' not depend from videomass. With 'parent, -1' if close

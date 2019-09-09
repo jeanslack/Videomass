@@ -70,10 +70,10 @@ class MainFrame(wx.Frame):
         self.icon_help = pathicons[4]
         self.icon_headphones = pathicons[5]
         self.icon_import = pathicons[6]
-        barC = DATAconf[14].split(',') 
+        barC = DATAconf[13].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
         # toolbar panel colour
-        bBtnC = DATAconf[15].split(',')
+        bBtnC = DATAconf[14].split(',')
         self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2]))
         # toolbar buttons colour
         
@@ -87,18 +87,16 @@ class MainFrame(wx.Frame):
         #---------------------------#
         self.threads = DATAconf[2]#ffmpeg option, set the cpu threads
         self.cpu_used = DATAconf[3]
-        self.ffmpeg_log = ''#DATAconf[3]
-        self.save_log = DATAconf[4]
-        self.path_log = DATAconf[5]
-        self.loglevel_type = DATAconf[6]# marks as single process
+        self.ffplay_loglevel = DATAconf[4]
+        self.ffmpeg_loglevel = DATAconf[5]
         self.loglevel_batch = ''#DATAconf[7]# marks as batch process
-        self.ffmpeg_check = DATAconf[7]
-        self.ffprobe_check = DATAconf[9]
-        self.ffplay_check = DATAconf[11]
+        self.ffmpeg_check = DATAconf[6]
+        self.ffprobe_check = DATAconf[8]
+        self.ffplay_check = DATAconf[10]
         self.ffmpeg_link = ffmpeg_link
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
-        self.iconset = DATAconf[13]
+        self.iconset = DATAconf[12]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
         self.post_process = []# post-pocess set first file for play/metadata
@@ -207,7 +205,7 @@ class MainFrame(wx.Frame):
                                                          self.WORKdir, 
                                                          self.threads, 
                                                          self.cpu_used,
-                                                         self.loglevel_type, 
+                                                         self.ffmpeg_loglevel, 
                                                          self.ffmpeg_link, 
                                                          self.OS,
                                                          )
@@ -215,7 +213,8 @@ class MainFrame(wx.Frame):
                                                 self.ffplay_link,
                                                 self.threads, 
                                                 self.cpu_used,
-                                                self.loglevel_type,
+                                                self.ffmpeg_loglevel,
+                                                self.ffplay_loglevel,
                                                 self.OS,
                                                 pathicons[10],# icon playfilters
                                                 pathicons[11],# icon resetfilters
@@ -230,7 +229,7 @@ class MainFrame(wx.Frame):
         self.AconvPanel = audio_conv.Audio_Conv(self, self.ffmpeg_link, 
                                                 self.threads,
                                                 self.cpu_used,
-                                                self.loglevel_type, 
+                                                self.ffmpeg_loglevel, 
                                                 self.ffprobe_link,
                                                 self.OS,
                                                 pathicons[21],# icon analyzes
@@ -283,7 +282,8 @@ class MainFrame(wx.Frame):
         self.btn_metaI.SetToolTip(_("Show information about the metadata "
                                         "of the selected imported file." 
                                         ))
-        self.btn_playO.SetToolTip(_("Play a file exported in the last encoding."
+        self.btn_playO.SetToolTip(_("Play the file exported in the "
+                                    "last encoding."
                                         ))
         self.btn_saveprf.SetToolTip(_("Save as profile with the current "
                                         "settings of this panel."
@@ -479,7 +479,7 @@ class MainFrame(wx.Frame):
                              self.time_seq, 
                              self.ffplay_link,
                              '', # parameters
-                             self.loglevel_type,
+                             self.ffplay_loglevel,
                              )
     #------------------------------------------------------------------#
     def ImportInfo(self, event):
@@ -514,7 +514,7 @@ class MainFrame(wx.Frame):
                              '', # time_seq is useless for the exported file
                              self.ffplay_link, 
                              '', # no others parameters are needed
-                             self.loglevel_type,
+                             self.ffplay_loglevel,
                              )
     #------------------------------------------------------------------#
     def Saveprofile(self, event):
@@ -805,12 +805,12 @@ class MainFrame(wx.Frame):
         """
         #self.parent.Setup(self)
         setup_dlg = settings.Setup(self, self.threads, self.cpu_used,
-                                     self.save_log, self.path_log, 
-                                     self.ffmpeg_link, self.ffmpeg_check,
-                                     self.ffprobe_link, self.ffprobe_check, 
-                                     self.ffplay_link, self.ffplay_check, 
-                                     self.OS, self.iconset, self.PATHconf,
-                                     self.WORKdir
+                                   self.ffplay_loglevel, self.ffmpeg_loglevel,
+                                   self.ffmpeg_link, self.ffmpeg_check,
+                                   self.ffprobe_link, self.ffprobe_check, 
+                                   self.ffplay_link, self.ffplay_check, 
+                                   self.OS, self.iconset, self.PATHconf,
+                                   self.WORKdir
                                      )
         setup_dlg.ShowModal()
     
@@ -1145,7 +1145,6 @@ class MainFrame(wx.Frame):
             self.btnpanel.Hide()# hide buttons bar if the user has shown it:
 
         IO_tools.process(self, varargs, 
-                         self.path_log, 
                          self.panelshown, 
                          duration,
                          self.time_seq,

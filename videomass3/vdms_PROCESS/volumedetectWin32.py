@@ -200,8 +200,6 @@ class VolumeDetectThread(Thread):
                       status=''
                       )
         
-        self.pathLog()
-        
     #----------------------------------------------------------------#    
     def logWrite(self, cmd):
         """
@@ -222,12 +220,4 @@ class VolumeDetectThread(Thread):
                          "ERRORS:\n%s\n\n" % (self.status))
             
     #----------------------------------------------------------------#
-    def pathLog(self):
-        """
-        if user want file log in a specified path
-        
-        """
-        if not 'none' in PATH_log: 
-            copy_restore(self.logf, "%s/%s" % (PATH_log, 
-                                               'Videomass_volumedected.log'))
-            
+    

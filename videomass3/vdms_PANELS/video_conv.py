@@ -89,8 +89,8 @@ class Video_Conv(wx.Panel):
     Interface panel for video conversions
     """
     def __init__(self, parent, ffmpeg_link, ffplay_link, threads, 
-                 cpu_used, loglevel_type, OS, iconplay, iconreset, 
-                 iconresize, iconcrop, iconrotate, icondeinterlace,
+                 cpu_used, ffmpeg_loglev, ffplay_loglev, OS, iconplay,
+                 iconreset, iconresize, iconcrop, iconrotate, icondeinterlace,
                  icondenoiser, iconanalyzes, iconsettings):
 
         wx.Panel.__init__(self, parent)
@@ -100,8 +100,9 @@ class Video_Conv(wx.Panel):
         self.ffmpeg_link = ffmpeg_link
         self.ffplay_link = ffplay_link
         self.threads = threads
-        self.cpu_used = cpu_used
-        self.loglevel_type = loglevel_type
+        self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
+        self.ffmpeg_loglev = ffmpeg_loglev
+        self.ffplay_loglev = ffplay_loglev
         # set others attributes;
         self.file_sources = []
         self.file_destin = ''
@@ -815,7 +816,7 @@ class Video_Conv(wx.Panel):
                     self.time_seq, 
                     self.ffplay_link, 
                     cmd_opt["Filters"], 
-                    self.loglevel_type,
+                    self.ffplay_loglev,
                     )
     #------------------------------------------------------------------#
     def on_FiltersClear(self, event):
@@ -1523,11 +1524,12 @@ class Video_Conv(wx.Panel):
         Composes the ffmpeg command strings for batch process. 
         In double pass mode, split command in two part (see  os_processing.py 
         at proc_batch_thread Class(Thread).
+        
         """
         title = _('Start video conversion')
         if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
             command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
-                       self.loglevel_type, 
+                       self.ffmpeg_loglev, 
                        cmd_opt["VideoCodec"], 
                        cmd_opt["VideoAspect"],
                        cmd_opt["VideoRate"],
@@ -1563,7 +1565,7 @@ class Video_Conv(wx.Panel):
         elif cmd_opt["Passing"] == "double":
             cmd1 = ('-loglevel %s -an %s %s %s %s '
                      '%s %s %s %s %s %s -f rawvideo' % (
-                      self.loglevel_type,
+                      self.ffmpeg_loglev,
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
                       cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -1573,7 +1575,7 @@ class Video_Conv(wx.Panel):
             pass1 = " ".join(cmd1[0].split())# mi formatta la stringa
             cmd2= ('-loglevel %s %s %s %s %s %s '
                      '%s %s %s %s %s %s %s %s %s %s %s' % (
-                     self.loglevel_type, 
+                     self.ffmpeg_loglev, 
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -1608,7 +1610,7 @@ class Video_Conv(wx.Panel):
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
             command = ("-loglevel %s %s %s %s %s %s %s "
                        "%s %s %s %s %s %s %s %s %s %s -y" % (
-                        self.loglevel_type, 
+                        self.ffmpeg_loglev, 
                         cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                         cmd_opt["Presets"], cmd_opt["Profile"],
                         cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -1677,7 +1679,7 @@ class Video_Conv(wx.Panel):
                self.ffmpeg_link, 
                self.time_seq,
                self.parent.import_clicked, 
-               self.loglevel_type,
+               self.ffmpeg_loglev,
                cmd_opt["VideoRate"],
                cmd_opt["Filters"],
                self.threads, 

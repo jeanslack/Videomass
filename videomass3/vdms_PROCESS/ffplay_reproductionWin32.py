@@ -59,9 +59,9 @@ class Play(Thread):
     
     """
     def __init__(self, filepath, timeseq, ffplay_link, 
-                 param, loglevel_type, OS):
+                 param, ffplay_loglevel, OS):
         """
-        The self.loglevel_type has 'error -stats' (see conf. file)
+        The self.ffplay_loglevel has 'error -stats' (see conf. file)
         then use error only with this class.
         
         """
@@ -70,7 +70,7 @@ class Play(Thread):
 
         self.filename = filepath # file name selected
         self.ffplay = ffplay_link, # command process
-        self.loglevel_type = loglevel_type # not used (used error)
+        self.ffplay_loglevel = ffplay_loglevel 
         self.time_seq = timeseq # seeking
         self.param = param # additional parameters if present
         self.OS = OS # tipo di sistema operativo
@@ -85,7 +85,7 @@ class Play(Thread):
     def run(self):
         """
         NOTE 1: the loglevel is set on 'error'. Do not use 
-               'self.loglevel_type' because -stats  option do not work.
+               'self.ffplay_loglevel' because -stats  option do not work.
     
         NOTE 2: The p.returncode always returns 0 value even when there 
                 is an error. But since ffplay always returns the error 
@@ -97,12 +97,11 @@ class Play(Thread):
                 a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         #time.sleep(.5)
-        loglevel_type = 'error'
-        command = '%s %s -i "%s" %s -loglevel %s' % (self.ffplay,
-                                                 self.time_seq,
-                                                 self.filename,
-                                                 self.param,
-                                                 loglevel_type,
+        command = '%s -loglevel %s %s -i "%s" %s' % (self.ffplay,
+                                                     self.ffplay_loglevel,
+                                                     self.time_seq,
+                                                     self.filename,
+                                                     self.param,
                                                  )
         self.logWrite(command)
         
@@ -120,18 +119,14 @@ class Play(Thread):
             pyerror = ("%s: 'ffplay.exe'") % (err_0)
             wx.CallAfter(Messages, pyerror)
             self.logError(pyerror) # append log error
-            self.pathLog() # log in other place?
             return
         
         else:
             if error[1]:
                 wx.CallAfter(Messages, error[1])
                 self.logError(error[1]) # append log error
-                self.pathLog() # log in other place?
                 return
-        
-        self.pathLog() # log in other place?
-        
+            
     #----------------------------------------------------------------#    
     def logWrite(self, cmd):
         """
@@ -152,12 +147,4 @@ class Play(Thread):
             logerr.write("[FFMPEG] FFplay "
                          "ERRORS:\n%s\n\n" % (error))
     #----------------------------------------------------------------#
-    def pathLog(self):
-        """
-        if user want file log in a specified path
-        
-        """
-        if not 'none' in PATH_log: 
-            copy_restore(self.logf, "%s/%s" % (PATH_log, 
-                                               'Videomass_FFplay.log'))
         

@@ -83,17 +83,17 @@ class Videomass(wx.App):
             print ('Videomass: Fatal Error, file configuration not found')
             return False
         
-        icons = Appearance(setui[3], DATAconf[13])# set appearance instance
+        icons = Appearance(setui[3], DATAconf[12])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
         self.OS = setui[0] # set OS type
         self.FILEconf = setui[6] # set file conf. pathname 
         self.WORKdir = setui[7] # set PWD current dir
         self.DIRconf = setui[8] # set dir conf pathname
-        self.path_log = DATAconf[5]
+        self.path_log = DATAconf[4]
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-            for link in [DATAconf[8],DATAconf[10],DATAconf[12]]:
+            for link in [DATAconf[7],DATAconf[9],DATAconf[11]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -103,12 +103,12 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = DATAconf[8]
-                ffprobe_link = DATAconf[10]
-                ffplay_link = DATAconf[12]
+                ffmpeg_link = DATAconf[7]
+                ffprobe_link = DATAconf[9]
+                ffplay_link = DATAconf[11]
 
         elif setui[0] == 'Windows':
-            for link in [DATAconf[8],DATAconf[10],DATAconf[12]]:
+            for link in [DATAconf[7],DATAconf[9],DATAconf[11]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -118,14 +118,14 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = DATAconf[8]
-                ffprobe_link = DATAconf[10]
-                ffplay_link = DATAconf[12]
+                ffmpeg_link = DATAconf[7]
+                ffprobe_link = DATAconf[9]
+                ffplay_link = DATAconf[11]
                 
         else: # is Linux 
-            ffmpeg_link = DATAconf[8]
-            ffprobe_link = DATAconf[10]
-            ffplay_link = DATAconf[12]
+            ffmpeg_link = DATAconf[7]
+            ffprobe_link = DATAconf[9]
+            ffplay_link = DATAconf[11]
             # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True

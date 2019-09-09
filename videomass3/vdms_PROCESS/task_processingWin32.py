@@ -40,7 +40,6 @@ import os
 from threading import Thread
 import time
 from pubsub import pub
-from videomass3.vdms_SYS.os_interaction import copy_restore
 from videomass3.vdms_IO.make_filelog import write_log
 
 # Setting global variables to communicate status between processes:
@@ -78,7 +77,7 @@ class GeneralProcess(wx.Panel):
     close the panel during final activities.
     
     """
-    def __init__(self, parent, path_log, panel, varargs,  duration, OS):
+    def __init__(self, parent, panel, varargs,  duration, OS):
         """
         In the 'previous' attribute is stored an ID string used to
         recover the previous panel from which the process is started.
@@ -91,7 +90,6 @@ class GeneralProcess(wx.Panel):
         self.lenghmax = varargs[9]# the multiple task number
         self.count = 0 # setting iniziale del contatore
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
-        self.path_log = path_log # for save a copy if user want
         self.duration = duration # total duration or partial if set timeseq
         self.time_seq = self.parent.time_seq # setting duration data
         self.OS = OS # operative sistem name Identifier
@@ -291,11 +289,6 @@ class GeneralProcess(wx.Panel):
             self.button_close.Enable(True)
             self.barProg.SetValue(0)
 
-        #if user want file log in a specified path
-        if not 'none' in self.path_log : 
-            copy_restore("%s/log/%s" % (DIRconf, self.logname),
-                         "%s/%s" % (self.path_log, self.logname))
-
 ########################################################################
 #------------------------------ THREADS -------------------------------#
 """
@@ -355,13 +348,11 @@ class ProcThread(Thread):
              duration) in itertools.zip_longest(self.filelist, 
                                                 self.outputdir, 
                                                 self.volume, 
-                                                self.duration):
-
+                                                self.duration,
+                                                fillvalue='',
+                                                ):
             basename = os.path.basename(files) #nome file senza path
             filename = os.path.splitext(basename)[0]#nome senza estensione
-            
-            if volume == None:
-                volume = '' #altrimenti inserisce None nei comandi sotto
                 
             if self.extoutput == '': # Copy Video Codec and only norm.
                 cmd = '%s %s -i "%s" %s %s "%s/%s"' % (self.ffmpeg_link, 
@@ -505,12 +496,11 @@ class DoublePassThread(Thread):
              duration) in itertools.zip_longest(self.filelist, 
                                                 self.outputdir, 
                                                 self.volume, 
-                                                self.duration):
+                                                self.duration,
+                                                fillvalue='',
+                                                ):
             basename = os.path.basename(files) #nome file senza path
             filename = os.path.splitext(basename)[0]#nome senza estensione
-
-            if volume == None:
-                volume = ''
             
             #--------------- first pass
             pass1 = ('%s %s -i "%s" %s -passlogfile "%s/%s.log" '

@@ -78,15 +78,15 @@ class PresetsPanel(wx.Panel):
     """
 
     def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, threads, cpu_used, loglevel_type, 
+                 PWD, threads, cpu_used, ffmpeg_loglev, 
                  ffmpeg_link, OS):
         
         self.src_vdms = os.path.join(path_srcShare, 'vdms')#origine share/vdms
         self.user_vdms = os.path.join(path_confdir, 'vdms')#conf/videomass/vdms
         self.PWD = PWD #current work of videomass
         self.threads = threads
-        self.cpu_used = cpu_used
-        self.loglevel_type = loglevel_type
+        self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
+        self.ffmpeg_loglev = ffmpeg_loglev
         self.ffmpeg_link = ffmpeg_link
         self.OS = OS
         self.parent = parent
@@ -502,7 +502,7 @@ class PresetsPanel(wx.Panel):
         # comcheck, cut string in spaces and become list:
         comcheck = self.txt_cmd.GetValue().split()#ffmpeg command
         # used for file name log 
-        logname = 'Videomass_PresetsManager.log'
+        self.logname = 'Videomass_PresetsManager.log'
 
         ######## ------------ VALIDAZIONI: --------------
         if array == []:
@@ -548,31 +548,37 @@ class PresetsPanel(wx.Panel):
          base_name, lenghmax) = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
-        valupdate = self.update_dict(lenghmax)
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        if 'image%d.jpg' in array[4]:
+            self.saveimages(dir_destin)
         
-        if ending.ShowModal() == wx.ID_OK:
-            if 'DOUBLE_PASS' in comcheck:
-                
-                split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
-                passOne = split[0].strip()
-                passTwo = split[1].strip()
-                
-                command1 = ("-loglevel %s %s %s %s -f rawvideo" % (
-                                                        self.loglevel_type, 
-                                                        passOne, 
-                                                        self.threads, 
-                                                        self.cpu_used,
-                                                                   )
-                            )
-                command2 = ("-loglevel %s %s %s %s" % (self.loglevel_type, 
-                                                       passTwo, 
-                                                       self.threads, 
-                                                       self.cpu_used,
-                                                        )
-                            )
-                pass1 = " ".join(command1.split())# mi formatta la stringa
-                pass2 = " ".join(command2.split())# mi formatta la stringa
+        
+        
+        
+        elif 'DOUBLE_PASS' in comcheck:
+            
+            split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
+            passOne = split[0].strip()
+            passTwo = split[1].strip()
+            
+            command1 = ("-loglevel %s %s %s %s -f rawvideo" % (
+                                                    self.ffmpeg_loglev, 
+                                                    passOne, 
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                                )
+                        )
+            command2 = ("-loglevel %s %s %s %s" % (self.ffmpeg_loglev, 
+                                                    passTwo, 
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                    )
+                        )
+            pass1 = " ".join(command1.split())# mi formatta la stringa
+            pass2 = " ".join(command2.split())# mi formatta la stringa
+            
+            valupdate = self.update_dict(lenghmax)
+            ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+            if ending.ShowModal() == wx.ID_OK:
 
                 self.parent.switch_Process('doublepass',
                                             file_sources, 
@@ -582,21 +588,23 @@ class PresetsPanel(wx.Panel):
                                             [pass1, pass2], 
                                             self.ffmpeg_link,
                                             '', 
-                                            logname, 
+                                            self.logname, 
                                             lenghmax, 
                                             )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                 array[4]))
+                                                    array[4]))
 
-            else:
-                command = ("-loglevel %s %s "
-                            "%s %s -y" % (self.loglevel_type, 
-                                            self.txt_cmd.GetValue(), 
-                                            self.threads, 
-                                            self.cpu_used,)
-                                            )
+        else:
+            command = ("-loglevel %s %s %s %s -y" % (self.ffmpeg_loglev, 
+                                                    self.txt_cmd.GetValue(), 
+                                                    self.threads, 
+                                                    self.cpu_used,)
+                                                    )
+            valupdate = self.update_dict(lenghmax)
+            ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+            if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
                                             file_sources, 
                                             array[4], 
@@ -605,12 +613,74 @@ class PresetsPanel(wx.Panel):
                                             None, 
                                             self.ffmpeg_link,
                                             '', 
-                                            logname, 
+                                            self.logname, 
                                             lenghmax, 
                                             )
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                 array[4]))
+                                                    array[4]))
+    #------------------------------------------------------------------#
+    #--------------------------------------------------------------------#
+    def saveimages(self, dir_destin):
+        """
+        Save file (jpg) image from any video input. The saved images 
+        are named asfilename + a progressive number + .jpg.
+        all saved images are placed in a folder with the same file name 
+        + a progressive number that is saved in the chosen output path.
+        
+        """
+        if not self.parent.import_clicked:
+            wx.MessageBox(_("To export images you need to select "
+                            "which files to convert in the 'Add file' "
+                            "panel (drag and drop)"), 'Videomass', 
+                            wx.ICON_INFORMATION, self)
+            return
+            
+        title = _('Start image export')
+        fname = os.path.basename(self.parent.import_clicked.rsplit('.', 1)[0])
+        
+        try: 
+            outputdir = "%s/%s-IMAGES_0" % (dir_destin[0], fname)
+            os.mkdir(outputdir)
+            
+        except FileExistsError:
+            lista = []
+            for dir_ in os.listdir(dir_destin[0]):
+                if "%s-IMAGES_" % fname in dir_:
+                    lista.append(int(dir_.split('IMAGES_')[1]))
+                    
+            prog = max(lista) +1
+            outputdir = "%s/%s-IMAGES_%d" % (dir_destin[0], fname, prog)
+            os.mkdir(outputdir)
+
+        fileout = "{0}-%d.jpg".format(fname)
+        cmd = ('%s %s -i "%s" -loglevel %s %s -an %s %s -y "%s/%s"' % (
+               self.ffmpeg_link, 
+               self.time_seq,
+               self.parent.import_clicked, 
+               self.ffmpeg_loglev,
+               self.txt_cmd.GetValue(),
+               self.threads, 
+               self.cpu_used,
+               outputdir, 
+               fileout)
+               )
+        command = " ".join(cmd.split())# compact string
+        valupdate = self.update_dict('1')
+        ending = Formula(self, valupdate[0], valupdate[1], title)
+            
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('saveimages',
+                                        self.parent.import_clicked, 
+                                        None, 
+                                        None, 
+                                        command, 
+                                        None, 
+                                        None, 
+                                        None, 
+                                        self.logname, 
+                                        '1', 
+                                        )
     #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     def update_dict(self, lenghmax):
