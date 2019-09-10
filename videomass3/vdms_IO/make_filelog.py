@@ -53,10 +53,13 @@ def write_log(logname, dirconf):
 -----------------------------------------
 [VIDEOMASS] INFO FOR USERS: 
 -----------------------------------------
-If you want to save the log file in other places of
-your drives, set it by videomass preferences dialog.
+All FFmpeg and FFplay output messages are on stderr (excluse ffprobe), 
+and include both information messages and error messages.
+Changing the logging level into setting dialog would also change the 
+behavior of the output on log messages.
 -----------------------------------------
-Videomass default ffmpeg loglevel fixed to 'error'.
+On Videomass default ffmpeg loglevel is fixed to 'warning';
+ffplay to 'error' .
 For more details, see videomass.conf or videomassWin32.conf 
 into configuration directory.
 -----------------------------------------

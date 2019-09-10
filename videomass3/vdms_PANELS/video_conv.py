@@ -1511,11 +1511,9 @@ class Video_Conv(wx.Panel):
         filename, base_name, lenghmax = checking
     
         if self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
-            self.saveimages(dir_destin, 
-                            logname, 
+            self.saveimages(dir_destin, logname, 
                             '%s %s' % (cmd_opt["VideoRate"], 
-                                       cmd_opt["Filters"],)
-                                       )
+                                       cmd_opt["Filters"],), 'jpg',)
         else:
             self.stdProc(file_sources, dir_destin, lenghmax, logname)
 
@@ -1546,7 +1544,7 @@ class Video_Conv(wx.Panel):
                        cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax, "Copy Video Codec" )
+            valupdate = self.update_dict(lenghmax, ["Copy Video Codec"] )
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1589,7 +1587,7 @@ class Video_Conv(wx.Panel):
                      self.cpu_used, cmd_opt["Map"])
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax, '')
+            valupdate = self.update_dict(lenghmax, [''])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1624,7 +1622,7 @@ class Video_Conv(wx.Panel):
                         self.cpu_used, cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax, '')
+            valupdate = self.update_dict(lenghmax, [''])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1644,7 +1642,7 @@ class Video_Conv(wx.Panel):
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                                  cmd_opt["VideoFormat"]))
     #--------------------------------------------------------------------#
-    def saveimages(self, dir_destin, logname, com):
+    def saveimages(self, dir_destin, logname, com, frmt):
         """
         Save file (jpg) image from any video input. The saved images 
         are named asfilename + a progressive number + .jpg.
@@ -1676,7 +1674,7 @@ class Video_Conv(wx.Panel):
             outputdir = "%s/%s-IMAGES_%d" % (dir_destin[0], fname, prog)
             os.mkdir(outputdir)
 
-        fileout = "{0}-%d.jpg".format(fname)
+        fileout = "{0}-%d.{1}".format(fname,frmt)
         cmd = ('%s %s -i "%s" -loglevel %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
                self.parent.time_seq,
@@ -1692,7 +1690,7 @@ class Video_Conv(wx.Panel):
                fileout)
                )
         command = " ".join(cmd.split())# compact string
-        valupdate = self.update_dict('1', 'Start image export')
+        valupdate = self.update_dict('1', ['Start image export', frmt])
         ending = Formula(self, valupdate[0], valupdate[1], title)
             
         if ending.ShowModal() == wx.ID_OK:
@@ -1720,7 +1718,7 @@ class Video_Conv(wx.Panel):
         else:
             normalize = _('Disable')
         
-        if prof == "Copy Video Codec":
+        if prof[0] == "Copy Video Codec":
             formula = (_("SUMMARY:\n\nFile to Queue\
                 \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
                 \nAudio Format:\nAudio codec:\nAudio channel:\
@@ -1735,12 +1733,12 @@ class Video_Conv(wx.Panel):
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
                 self.parent.time_seq))
                     
-        elif prof == "Start image export":
+        elif prof[0] == "Start image export":
             formula = (_("SUMMARY:\n\nFile to Queue\
                          \nImages Format:\nVideo rate:\
                          \nFilters:\nTime selection:"
                        ))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile, 'jpeg', 
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile, prof[1], 
                                                     cmd_opt["VideoRate"], 
                                                     cmd_opt["Filters"],
                                                     self.parent.time_seq)
@@ -1807,7 +1805,7 @@ class Video_Conv(wx.Panel):
                             cmd_opt["Map"])
                                 )
             elif self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
-                outext = "image%d.jpg"
+                outext = "jpg"
                 command = ('%s %s -an' % (
                            cmd_opt["VideoRate"],
                            cmd_opt["Filters"],)

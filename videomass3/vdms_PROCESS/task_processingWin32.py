@@ -283,7 +283,7 @@ class GeneralProcess(wx.Panel):
 
         else:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
-            self.OutText.AppendText(_('\n\n Finished !'))
+            self.OutText.AppendText(_('\n\n Done !'))
             self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
             self.button_close.Enable(True)

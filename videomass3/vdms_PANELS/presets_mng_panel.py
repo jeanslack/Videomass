@@ -551,11 +551,12 @@ class PresetsPanel(wx.Panel):
          base_name, lenghmax) = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
-        if 'image%d.jpg' in array[4]:
+        if array[4] in ['jpg','png','bmp']:
             #self.saveimages(dir_destin)
             self.parent.VconvPanel.saveimages(dir_destin, 
                                               self.logname, 
                                               self.txt_cmd.GetValue(),
+                                              array[4],
                                               )
         elif 'DOUBLE_PASS' in comcheck:
             
