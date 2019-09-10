@@ -38,7 +38,6 @@ from videomass3.vdms_IO.make_filelog import write_log # write initial log
 # get data from bootstrap
 get = wx.GetApp()
 DIRconf = get.DIRconf # path to the configuration directory
-PATH_log = get.path_log # if not 'none' save the log in other place
 #########################################################################
 
 def Messages(msg):

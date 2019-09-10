@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec 28 2018, Aug 14 2019
+# Rev: Dec 28 2018, Sept 10 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -54,9 +54,9 @@ class MainFrame(wx.Frame):
     in the init constructor. The fourth panel is instantiated in an 
     appropriate instance method. (see switch_Process method doc strings)
     """
-    def __init__(self, setui, DATAconf, 
-                 ffmpeg_link, ffprobe_link, 
-                 ffplay_link, pathicons):
+    def __init__(self, setui, ffmpeg_link,
+                 ffprobe_link, ffplay_link, 
+                 pathicons):
         """
         NOTE: 'SRCpath' is a current work directory of Videomass 
                program. How it can be localized depend if Videomass is 
@@ -70,10 +70,10 @@ class MainFrame(wx.Frame):
         self.icon_help = pathicons[4]
         self.icon_headphones = pathicons[5]
         self.icon_import = pathicons[6]
-        barC = DATAconf[13].split(',') 
+        barC = setui[4][13].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
         # toolbar panel colour
-        bBtnC = DATAconf[14].split(',')
+        bBtnC = setui[4][14].split(',')
         self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2]))
         # toolbar buttons colour
         
@@ -85,18 +85,18 @@ class MainFrame(wx.Frame):
         self.DIRconf = setui[8]
         
         #---------------------------#
-        self.threads = DATAconf[2]#ffmpeg option, set the cpu threads
-        self.cpu_used = DATAconf[3]
-        self.ffplay_loglevel = DATAconf[4]
-        self.ffmpeg_loglevel = DATAconf[5]
-        self.loglevel_batch = ''#DATAconf[7]# marks as batch process
-        self.ffmpeg_check = DATAconf[6]
-        self.ffprobe_check = DATAconf[8]
-        self.ffplay_check = DATAconf[10]
+        self.threads = setui[4][2]#ffmpeg option, set the cpu threads
+        self.cpu_used = setui[4][3]
+        self.ffplay_loglevel = setui[4][4]
+        self.ffmpeg_loglevel = setui[4][5]
+        self.loglevel_batch = ''#setui[4][7]# marks as batch process
+        self.ffmpeg_check = setui[4][6]
+        self.ffprobe_check = setui[4][8]
+        self.ffplay_check = setui[4][10]
         self.ffmpeg_link = ffmpeg_link
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
-        self.iconset = DATAconf[12]
+        self.iconset = setui[4][12]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
         self.post_process = []# post-pocess set first file for play/metadata

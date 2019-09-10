@@ -37,7 +37,6 @@ from videomass3.vdms_IO.make_filelog import write_log # write initial log
 # path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
-PATH_log = get.path_log
 #########################################################################
 
 class PopupDialog(wx.Dialog):

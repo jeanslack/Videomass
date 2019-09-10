@@ -45,6 +45,8 @@ dict_presets = {
 _("Audio Conversions") : ("preset-v1-Audio", "Audio Conversions"), 
 _("Extract audio from video"): ("preset-v1-VideoAudio", 
                                 "Extract audio from video"),
+_("Extract images from video"): ("preset-v1-VideoImages", 
+                                "Extract images from video"),
 _("Convert to AVI") : ("preset-v1-AVI", "Convert to AVI"),
 _("Mobile Phones multimedia") : ("preset-v1-MobilePhones", 
                                  "Mobile Phones multimedia"),
@@ -109,6 +111,7 @@ class PresetsPanel(wx.Panel):
         self.cmbx_prst = wx.ComboBox(nb1_p1,wx.ID_ANY, choices=[
                         (_("Audio Conversions")),
                         (_("Extract audio from video")),
+                        (_("Extract images from video")),
                         (_("Convert to AVI")),
                         (_("Mobile Phones multimedia")),
                         ("iPod iTunes"),

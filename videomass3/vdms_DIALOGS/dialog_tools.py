@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev December 28 2018
+# Rev: Dec.28.2018, Sept.10.2019,
 #########################################################
 
 # This file is part of Videomass.
@@ -228,6 +228,22 @@ class Cut_Range(wx.Dialog):
         Event.Skip(), work correctly here. Sometimes needs to disable it for
         needs to maintain the view of the window (for exemple).
         """
+        ss = "%s:%s:%s" %(self.init_hour, self.init_minute, self.init_seconds)
+        t = "%s:%s:%s" %(self.cut_hour, self.cut_minute, self.cut_seconds)
+        if ss != "00:00:00":
+            if t == "00:00:00":
+                wx.MessageBox(_("Length of cut missing: "
+                                "Cut (end point) [hh,mm,ss]\n\n"
+                                "You should calculate the time amount between "
+                                "the Seeking (start point) and the cut point, "
+                                "then insert it in 'Cut (end point)'. Always "
+                                "consider the total duration of the flow in "
+                                "order to avoid entering incorrect values."),
+                                "Duration", 
+                              wx.ICON_INFORMATION, self
+                              )
+                return
+            
         self.GetValue()
         #self.Destroy()
         event.Skip()

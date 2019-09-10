@@ -30,6 +30,9 @@ IMPROVEMENTS (Python3 only):
       "error" flag, since the management of the output and errors has been 
       improved.
     * Changed the videomass.conf/videomassWin32.conf to 1.4 version.
+    * When setting the seek point with the duration tool, the cutting time 
+      must also be set. Not vice versa.
+      
 
 ADD (Python 3 only):
     * The option to set the ffmpeg and ffplay loglevel flag has been added 

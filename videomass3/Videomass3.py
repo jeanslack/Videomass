@@ -54,7 +54,6 @@ class Videomass(wx.App):
         self.FILEconf = None
         self.WORKdir = None
         self.OS = None
-        self.path_log = None # save copy of file log to specific folder
         
         print ("App __init__")
 
@@ -64,36 +63,34 @@ class Videomass(wx.App):
     def OnInit(self):
         """
         This is a bootstrap interface. The 'setui' calls the function that 
-        prepares the environment configuration. The 'DATAconf' take all 
+        prepares the environment configuration. The 'setui' take all 
         values of the file configuration.
         
         """
-        setui = system_check() # for user-space settings
-        DATAconf = setui[4] # for user interface settings
+        setui = system_check() # user-space and interface settings
         
         lang = ''
         self.locale = None
         wx.Locale.AddCatalogLookupPathPrefix(setui[5])
         self.updateLanguage(lang)
         
-        if setui[2]: # if source /share is missing and .videomass is corrupted
+        if setui[2]: # if source /share is missing and videomass is corrupted
             wx.MessageBox(_('Can not find the configuration file\n\n'
                             'Sorry, cannot continue..'),
                              'Videomass: Fatal Error', wx.ICON_STOP)
             print ('Videomass: Fatal Error, file configuration not found')
             return False
         
-        icons = Appearance(setui[3], DATAconf[12])# set appearance instance
+        icons = Appearance(setui[3], setui[4][12])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
         self.OS = setui[0] # set OS type
         self.FILEconf = setui[6] # set file conf. pathname 
         self.WORKdir = setui[7] # set PWD current dir
         self.DIRconf = setui[8] # set dir conf pathname
-        self.path_log = DATAconf[4]
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-            for link in [DATAconf[7],DATAconf[9],DATAconf[11]]:
+            for link in [setui[4][7],setui[4][9],setui[4][11]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -103,12 +100,12 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = DATAconf[7]
-                ffprobe_link = DATAconf[9]
-                ffplay_link = DATAconf[11]
+                ffmpeg_link = setui[4][7]
+                ffprobe_link = setui[4][9]
+                ffplay_link = setui[4][11]
 
         elif setui[0] == 'Windows':
-            for link in [DATAconf[7],DATAconf[9],DATAconf[11]]:
+            for link in [setui[4][7],setui[4][9],setui[4][11]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -118,21 +115,20 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = DATAconf[7]
-                ffprobe_link = DATAconf[9]
-                ffplay_link = DATAconf[11]
+                ffmpeg_link = setui[4][7]
+                ffprobe_link = setui[4][9]
+                ffplay_link = setui[4][11]
                 
         else: # is Linux 
-            ffmpeg_link = DATAconf[7]
-            ffprobe_link = DATAconf[9]
-            ffplay_link = DATAconf[11]
+            ffmpeg_link = setui[4][7]
+            ffprobe_link = setui[4][9]
+            ffplay_link = setui[4][11]
             # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True
             
         from videomass3.vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, 
-                               DATAconf, 
                                ffmpeg_link, 
                                ffprobe_link, 
                                ffplay_link,
