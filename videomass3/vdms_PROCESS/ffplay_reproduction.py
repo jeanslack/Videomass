@@ -35,14 +35,12 @@ from videomass3.vdms_SYS.os_interaction import copy_restore # if copy fiile log
 from videomass3.vdms_IO.make_filelog import write_log # write initial log
 
 #########################################################################
-not_exist_msg =  _('exist in your system?')
-
 # get data from bootstrap
 get = wx.GetApp()
 DIRconf = get.DIRconf # path to the configuration directory
 #########################################################################
 
-def Messages(msg):
+def msg_Error(msg):
     """
     Receive error messages from Play(Thread) via wxCallafter
     
@@ -51,18 +49,30 @@ def Messages(msg):
                       "Videomass: FFplay", 
                       wx.ICON_ERROR
                       )
+#-----------------------------------------------------------------#
+def msg_Info(msg):
+    """
+    Receive info messages from Play(Thread) via wxCallafter
+    
+    """
+    wx.MessageBox("FFplay INFORMATION:  %s" % (msg), 
+                      "Videomass: FFplay", 
+                      wx.ICON_INFORMATION
+                      )
 #########################################################################
 class Play(Thread):
     """
-    Run a separate process thread for media reproduction with a called 
-    at ffplay witch need x-window-terminal-emulator for show files streaming.
+    Run a separate process thread for media reproduction with
+    a called at ffplay witch need x-window-terminal-emulator 
+    to show files streaming.
     
     """
     def __init__(self, filepath, timeseq, ffplay_link, 
                  param, ffplay_loglevel, OS):
         """
-        The self.ffplay_loglevel has 'error -stats' (see conf. file)
-        then use error only with this class.
+        The self.ffplay_loglevel has flag 'error -hide_banner' 
+        by default (see conf. file).
+        NOTE: Do not use '-stats' option do not work.
         
         """
         Thread.__init__(self)
@@ -84,52 +94,48 @@ class Play(Thread):
     #----------------------------------------------------------------#
     def run(self):
         """
-        NOTE 1: the loglevel is set on 'error'. Do not use 
-               'self.ffplay_loglevel' because -stats  option do not work.
-    
-        NOTE 2: The p.returncode always returns 0 value even when there 
-                is an error. But since ffplay always returns the error 
-                on the PIPE of the stderr, then I use the 'error' 
-                variable of p.communicate ()
+        In this thread the ffplay subprocess is managed so as to direct
+        the output of "p.returncode" and the "OSError" exception on the 
+        errors, while all the rest of the output as information given by 
+        "error [1]" .
+        
         """
         #time.sleep(.5)
-        cmd = '%s -loglevel %s %s -i "%s" %s' % (self.ffplay,
-                                                    self.ffplay_loglevel,
-                                                    self.time_seq,
-                                                    self.filename,
-                                                    self.param,
-                                                    )
+        cmd = '%s %s -loglevel %s -i "%s" %s' % (self.ffplay,
+                                                 self.time_seq,
+                                                 self.ffplay_loglevel,
+                                                 self.filename,
+                                                 self.param,)
         self.logWrite(cmd)
-        
-        if self.OS == 'Windows':
-                command = cmd
-        else:
-            command = shlex.split(cmd)
+        command = shlex.split(cmd)
         
         try:
             p = subprocess.Popen(command,
-                                stderr=subprocess.PIPE,
-                                universal_newlines=True,
-                                )
+                                 stderr=subprocess.PIPE,
+                                 universal_newlines=True,
+                                 )
             error =  p.communicate()
         
-        except OSError as err_0:
-            
-            if err_0[1] == 'No such file or directory':
-                pyerror = ("%s: \n'%s' %s") % (err_0, command[0], 
-                                                not_exist_msg)
-            else:
-                pyerror = "%s: " % (err_0)
-                
-            wx.CallAfter(Messages, pyerror)
-            self.logError(pyerror) # append log error
+        except OSError as err: # subprocess error
+            wx.CallAfter(msg_Error, err)
+            self.logError(err) # append log error
             return
         
-        else:
-            if error[1]:
-                wx.CallAfter(Messages, error[1])
+        else: # WARNING else fa parte del blocco try
+            if p.returncode: # ffplay error 
+                if error[1]:
+                    msg = error[1]
+                else: 
+                    msg = "Unrecognized error"
+                
+                wx.CallAfter(msg_Error, error[1])
                 self.logError(error[1]) # append log error
                 return
+            
+        if error[1]: # ffplay info
+            wx.CallAfter(msg_Info, error[1])
+            self.logWrite(error[1]) # append log info
+            return
             
     #----------------------------------------------------------------#    
     def logWrite(self, cmd):
