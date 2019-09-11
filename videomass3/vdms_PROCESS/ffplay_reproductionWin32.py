@@ -96,7 +96,7 @@ class Play(Thread):
                 a-process-in-pythonw-with-popen-without-a-console?lq=1>
         """
         #time.sleep(.5)
-        command = '%s -loglevel %s %s -i "%s" %s' % (self.ffplay,
+        command = '%s -loglevel %s %s -i "%s" %s' % (self.ffplay[0],
                                                      self.ffplay_loglevel,
                                                      self.time_seq,
                                                      self.filename,

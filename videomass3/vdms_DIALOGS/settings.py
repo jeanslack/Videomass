@@ -286,12 +286,6 @@ class Setup(wx.Dialog):
         self.spinctrl_cpu.SetToolTip(_("Quality/Speed ratio modifier "
                                             "(from -16 to 16) (default 1)")
                                     )
-
-        #self.check_cmdlog.SetToolTip(_("Generates a log file command in "
-                              #"the directory specified below. Log file is a "
-                              #"file containing the parameters of the "
-                              #"execution process, info and error messages.")
-                                           #)
         
         self.checkbox_exeFFmpeg.SetToolTip(_("Enable custom search for "
                        "the executable FFmpeg. If the checkbox is disabled or "
@@ -443,14 +437,14 @@ class Setup(wx.Dialog):
             self.btn_pathFFmpeg.Enable()
             self.txtctrl_ffmpeg.Enable()
             self.txtctrl_ffmpeg.SetValue("")
-            self.full_list[self.rowsNum[7]] = 'true\n'
+            self.full_list[self.rowsNum[6]] = 'true\n'
 
         else:
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.SetValue("")
-            self.full_list[self.rowsNum[7]] = 'false\n'
-            self.full_list[self.rowsNum[8]] = '%s\n' % self.ffmpeg
+            self.full_list[self.rowsNum[6]] = 'false\n'
+            self.full_list[self.rowsNum[7]] = '%s\n' % self.ffmpeg
 
     #----------------------ffmpeg path open dialog----------------------#
     def open_path_ffmpeg(self, event):
@@ -464,13 +458,13 @@ class Setup(wx.Dialog):
         if dialogfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffmpeg.SetValue("")
             self.txtctrl_ffmpeg.AppendText(dialogfile.GetPath())
-            self.full_list[self.rowsNum[8]] = '%s\n' % (dialogfile.GetPath())
+            self.full_list[self.rowsNum[7]] = '%s\n' % (dialogfile.GetPath())
             dialogfile.Destroy()
     #---------------------------------------------------------------------#
     def txtffmpeg(self, event):
         """write ffmpeg pathname"""
         t = self.txtctrl_ffmpeg.GetValue()
-        self.full_list[self.rowsNum[8]] = '%s\n' % (t)
+        self.full_list[self.rowsNum[7]] = '%s\n' % (t)
 
     #----------------------ffprobe path checkbox--------------------------#
     def exeFFprobe(self, event):
@@ -479,14 +473,14 @@ class Setup(wx.Dialog):
             self.btn_pathFFprobe.Enable()
             self.txtctrl_ffprobe.Enable()
             self.txtctrl_ffprobe.SetValue("")
-            self.full_list[self.rowsNum[9]] = 'true\n'
+            self.full_list[self.rowsNum[8]] = 'true\n'
 
         else:
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.SetValue("")
-            self.full_list[self.rowsNum[9]] = 'false\n'
-            self.full_list[self.rowsNum[10]] = '%s\n' % self.ffprobe
+            self.full_list[self.rowsNum[8]] = 'false\n'
+            self.full_list[self.rowsNum[9]] = '%s\n' % self.ffprobe
 
     #----------------------ffprobe path open dialog----------------------#
     def open_path_ffprobe(self, event):
@@ -500,13 +494,13 @@ class Setup(wx.Dialog):
         if dialfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffprobe.SetValue("")
             self.txtctrl_ffprobe.AppendText(dialfile.GetPath())
-            self.full_list[self.rowsNum[10]] = '%s\n' % (dialfile.GetPath())
+            self.full_list[self.rowsNum[9]] = '%s\n' % (dialfile.GetPath())
             dialfile.Destroy()
     #---------------------------------------------------------------------#
     def txtffprobe(self, event):
         """write ffprobe pathname"""
         t = self.txtctrl_ffprobe.GetValue()
-        self.full_list[self.rowsNum[10]] = '%s\n' % (t)
+        self.full_list[self.rowsNum[9]] = '%s\n' % (t)
 
     #----------------------ffplay path checkbox--------------------------#
     def exeFFplay(self, event):
@@ -515,14 +509,14 @@ class Setup(wx.Dialog):
             self.btn_pathFFplay.Enable()
             self.txtctrl_ffplay.Enable()
             self.txtctrl_ffplay.SetValue("")
-            self.full_list[self.rowsNum[11]] = 'true\n'
+            self.full_list[self.rowsNum[10]] = 'true\n'
 
         else:
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.SetValue("")
-            self.full_list[self.rowsNum[11]] = 'false\n'
-            self.full_list[self.rowsNum[12]] = '%s\n' % self.ffplay
+            self.full_list[self.rowsNum[10]] = 'false\n'
+            self.full_list[self.rowsNum[11]] = '%s\n' % self.ffplay
 
     #----------------------ffplay path open dialog----------------------#
     def open_path_ffplay(self, event):
@@ -536,14 +530,14 @@ class Setup(wx.Dialog):
         if dialfile.ShowModal() == wx.ID_OK:
             self.txtctrl_ffplay.SetValue("")
             self.txtctrl_ffplay.AppendText(dialfile.GetPath())
-            self.full_list[self.rowsNum[12]] = '%s\n' % (dialfile.GetPath())
+            self.full_list[self.rowsNum[11]] = '%s\n' % (dialfile.GetPath())
             
             dialfile.Destroy()
     #---------------------------------------------------------------------#
     def txtffplay(self, event):
         """write ffplay pathname"""
         t = self.txtctrl_ffplay.GetValue()
-        self.full_list[self.rowsNum[12]] = '%s\n' % (t)
+        self.full_list[self.rowsNum[11]] = '%s\n' % (t)
             
     #--------------------------------------------------------------------#
     def on_Iconthemes(self, event):
@@ -551,7 +545,7 @@ class Setup(wx.Dialog):
         Set themes of icons
         """
         choice = "%s\n" % self.cmbx_icons.GetStringSelection()
-        self.full_list[self.rowsNum[13]] = choice
+        self.full_list[self.rowsNum[12]] = choice
     #------------------------------------------------------------------#
     def onColorDlg(self, event):
         """
@@ -572,9 +566,9 @@ class Setup(wx.Dialog):
             choice = rgb.replace('(','').replace(')','').strip()
             
             if identify == _('Bar Colour'):
-                self.full_list[self.rowsNum[14]] = "%s\n" % choice
+                self.full_list[self.rowsNum[13]] = "%s\n" % choice
             elif identify == _('Buttons Colour'):
-                self.full_list[self.rowsNum[15]] = "%s\n" % choice
+                self.full_list[self.rowsNum[14]] = "%s\n" % choice
  
         dlg.Destroy()
     #----------------------------------------------------------------------#
@@ -582,9 +576,9 @@ class Setup(wx.Dialog):
         """
         Restore to default settings colors and icons set
         """
-        self.full_list[self.rowsNum[13]] = "Videomass_Sign_Icons\n"
-        self.full_list[self.rowsNum[14]] = '205,235,222\n'
-        self.full_list[self.rowsNum[15]] = '255,255,255\n'
+        self.full_list[self.rowsNum[12]] = "Videomass_Sign_Icons\n"
+        self.full_list[self.rowsNum[13]] = '205,235,222\n'
+        self.full_list[self.rowsNum[14]] = '255,255,255\n'
         
     #----------------------------------------------------------------------#
     def on_help(self, event):
