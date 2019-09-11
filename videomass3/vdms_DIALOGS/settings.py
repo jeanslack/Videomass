@@ -150,8 +150,8 @@ class Setup(wx.Dialog):
         tabTwo.SetSizer(gridLog)#aggiungo il sizer su tab 2
         lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, 
                                (_("These settings affect output messages "
-                                  "and the log\nmessages during processes.\n"
-                                  "Change only if you know what you are "
+                                  "and the log\nmessages during processes. "
+                                  "Change only if you\nknow what you are "
                                   "doing.")))
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
         self.rdbFFmpeg = wx.RadioBox(tabTwo, wx.ID_ANY,
