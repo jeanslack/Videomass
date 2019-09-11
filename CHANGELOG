@@ -11,11 +11,12 @@ September 11, 2019 V.1.6.1
 +------------------------------------+
 
 NOTICE:
-    * From this version Videomass is compatible only with Python3 and 
-      wxPython4 (phoenix). For some inconvenient reasons, such as the end of 
-      Python2 support by January 1 2020, with practical management and time 
-      investment for porting, Python2 will no longer be compatible with
-      Videomass.
+    * From this version Videomass is compatible only with Python3 and therefore 
+      with wxPython4 (phoenix). For some reasons, such as the end of Python2 
+      support by 1 January 2020, the technical difficulties in the practical 
+      management of the code of both Python versions and the time investments 
+      for porting, Videomass will cease development for compatibility on 
+      Python2 .
 
 IMPROVEMENTS:
     * enanced errors management on all processes.
@@ -32,11 +33,11 @@ IMPROVEMENTS:
     * Now the images saved by the movies are named as filename + a progressive 
       number + .jpg.
       All saved images are placed in a folder with the same file name + a 
-      progressive number that is saved in the selected output path.
-    * the logging level can now be optional, no longer mandatory with the 
-      "error" flag, since the management of the output and errors has been 
-      improved.
-    * Changed the videomass.conf/videomassWin32.conf to 1.4 version.
+      progressive number that is saved in the selected output path to avoid
+      over writtings.
+    * the logging level can now be optional, no longer mandatory the "error"
+      flag, since the management of the output and errors has been improved.
+    * Changed version to the videomass.conf and videomassWin32.conf to 1.4.
     * When setting the seek point with the duration tool, the cutting time 
       must also be set. Not vice versa.
     * 
