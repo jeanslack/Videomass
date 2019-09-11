@@ -30,7 +30,6 @@ from pubsub import pub
 import subprocess
 import shlex
 from threading import Thread
-from videomass3.vdms_SYS.os_interaction import copy_restore # if copy fiile log
 from videomass3.vdms_IO.make_filelog import write_log # write initial log
 
 ########################################################################

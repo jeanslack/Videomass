@@ -26,13 +26,8 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import subprocess
 import re
-
-##################################################
-not_exist_msg =  _('ffprobe not found')
-##################################################
 
 class FFProbe(object):
     """

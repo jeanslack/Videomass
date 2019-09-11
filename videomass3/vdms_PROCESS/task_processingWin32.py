@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: task_processing.py
-# Porpose: module for system processing commands
+# Porpose: module for long processing task
 # Compatibility: Python3, wxPython4 Phoenix (for Ms Windows only)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -26,12 +26,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
-"""
-This module rapresent the main unit of videomas program for all processes 
-that involve the subprocess module, classes for separate threads and all 
-dialogs and windows for show information on progress process.
-"""
 import wx
 import subprocess
 import itertools
@@ -85,13 +79,13 @@ class GeneralProcess(wx.Panel):
         log messages will be written
         
         """
-        self.parent = parent # this is a child of a window parent (main)
-        self.previus = panel # stores the panel from which  it starts
+        self.parent = parent # main frame
+        self.previus = panel # stores the panel from which it starts
         self.lenghmax = varargs[9]# the multiple task number
-        self.count = 0 # setting iniziale del contatore
+        self.count = 0 # initial setting of the counter
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
         self.duration = duration # total duration or partial if set timeseq
-        self.time_seq = self.parent.time_seq # setting duration data
+        self.time_seq = self.parent.time_seq # a time segment
         self.OS = OS # operative sistem name Identifier
         self.varargs = varargs # tuple data
         
@@ -331,7 +325,7 @@ class ProcThread(Thread):
         self.count = 0 # count number loop
         self.lenghmax = len(varargs[1]) # lengh file list
         self.logname = logname # title name of file log
-        self.time_seq = timeseq
+        self.time_seq = timeseq # a time segment
 
         self.start() # start the thread (va in self.run())
 
@@ -475,7 +469,7 @@ class DoublePassThread(Thread):
         self.extoutput = varargs[2] # format (extension)
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
-        self.time_seq = timeseq
+        self.time_seq = timeseq # a time segment
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
         self.count = 0 # count number loop
         self.lenghmax = len(varargs[1]) # lengh file list
@@ -687,12 +681,14 @@ class SingleProcThread(Thread):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
+        The duration adds another 10 seconds due to problems with the 
+        progress bar
         """
         Thread.__init__(self)
         """initialize"""
         self.cmd = varargs[4] # comand set on single pass
         self.duration = duration[0]+10# duration list
-        self.time_seq = timeseq
+        self.time_seq = timeseq # a time segment
         self.count = 0 # count number loop
         self.logname = logname # title name of file log
         self.fname = varargs[1] # file name
@@ -803,7 +799,7 @@ class GrabAudioProc(Thread):
         self.ext = varargs[7] # format/extension list (items)
         #self.logname = varargs[8] #  videomass/logname.log
         self.duration = duration # duration values list (items)
-        self.time_seq = timeseq
+        self.time_seq = timeseq # a time segment
         self.count = 0 # count number loop
         self.lenghmax = len(varargs[2]) # lengh file list
         self.logname = logname # title name of file log
