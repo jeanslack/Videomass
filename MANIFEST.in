@@ -1,5 +1,4 @@
 include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
-recursive-include videomass2 *
 recursive-include videomass3 *
 recursive-include docs *
 recursive-include art *

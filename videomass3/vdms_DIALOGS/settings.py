@@ -100,10 +100,10 @@ class Setup(wx.Dialog):
         notebook.AddPage(tabOne, _("General"))
         
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
-        notebook.AddPage(tabTwo, _("Loglevel"))
+        notebook.AddPage(tabTwo, _("Logging levels"))
         
         tabThree = wx.Panel(notebook, wx.ID_ANY)
-        notebook.AddPage(tabThree, _("Executables"))
+        notebook.AddPage(tabThree, _("Executable paths"))
         
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         notebook.AddPage(tabFour, _("Appearance"))
@@ -150,7 +150,9 @@ class Setup(wx.Dialog):
         tabTwo.SetSizer(gridLog)#aggiungo il sizer su tab 2
         lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, 
                                (_("These settings affect output messages "
-                                  "during processes.")))
+                                  "and the log\nmessages during processes.\n"
+                                  "Change only if you know what you are "
+                                  "doing.")))
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
         self.rdbFFmpeg = wx.RadioBox(tabTwo, wx.ID_ANY,
                                     ("Set logging level flags used by FFmpeg"), 

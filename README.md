@@ -1,6 +1,4 @@
-# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.
-
-Now also compatible with Python3 and wxPython-Phoenix.    
+# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.   
 
 * [View progect on PyPi](https://pypi.org/project/videomass/)
 * [GitHub Page](https://github.com/jeanslack/Videomass)
@@ -27,13 +25,13 @@ Now also compatible with Python3 and wxPython-Phoenix.
 - Multi language (English and Italian Languages support for now)
 - Work on many platforms where Python and wxPython are supported, 
   including Linux, Unix, MacOs and Windows.
-- Compatible with Python 2 and 3
+- Compatible with Python 3 only
 
 ## Essential Dependencies
 
 **Required:**   
-- Python (2/3)     
-- wxPython  (Classic/Phoenix)  
+- Python3     
+- wxPython4 (phoenix)   
 
 **Optionals:**   
 - ffmpeg >= 3.2   

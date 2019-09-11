@@ -4,12 +4,13 @@
 #########################################################
 # Name: setup.py
 # Porpose: script to setup Videomass.
-# Compatibility: Python3, Python2
+# Compatibility: Python3
 # Platform: all
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (13) August 2 2019 (PEP8 compatible)
+# Rev: Aug.2.2019, Sept.11.2019
+# PEP8 compatible
 #########################################################
 
 # This file is part of Videomass.
@@ -56,31 +57,33 @@ import sys
 import shutil
 
 # ---- Version Check(s) ----#
-if sys.version_info[0] == 2:
-    from videomass2.vdms_SYS.msg_info import current_release
-    from videomass2.vdms_SYS.msg_info import descriptions_release
-
-    EXCLUDE = ["*.videomass3", "*.videomass3.*",
-               "videomass3.*", "videomass3"]
-    REQUIRES = []
-
-elif sys.version_info[0] == 3:
+if sys.version_info[0] == 3:
     from videomass3.vdms_SYS.msg_info import current_release
     from videomass3.vdms_SYS.msg_info import descriptions_release
 
-    EXCLUDE = ["*.videomass2", "*.videomass2.*",
-               "videomass2.*", "videomass2"]
-
     if platform.system() in ['Windows', 'Darwin']:
+        EXCLUDE = []
         REQUIRES = ['wxpython>=4.0.3"', 'PyPubSub>=4.0.0']
     else:
+        EXCLUDE = []
         REQUIRES = ['PyPubSub>=4.0.0']
+else:
+    sys.stderr.write(
+                    "ERROR: Python3 is required.\n"
+                    "Since version 1.6.1 videomass is compatible only "
+                    "with Python3.\nYou are using Python version %s\n" % 
+                    sys.version[0]
+                         )
+    sys.exit(1)
 try:
     import wx
 except ImportError:
     if 'bdist_wheel' not in sys.argv:  # with py2app and py2exe only
-        sys.stderr.write("[ERROR] 'wx' module is required.\n"
-                         "Please, before proceeding, install it.\n")
+        sys.stderr.write("ERROR: 'wx' module is required; "
+                         "need wxPython4 (phoenix).\n"
+                         "Visit the wxPython web page for more info:\n"
+                         "<https://wxpython.org/>\n"
+                            )
         sys.exit(1)
 
 # ---- current work directory path ----#
@@ -105,8 +108,13 @@ LONG_DESCRIPTION = dr[1]
 
 # ---- categorize with ----#
 CLASSIFIERS = [
-            'Development Status :: 4 - Beta',
-            'Environment :: MacOS X :: Cocoa',
+            'Development Status :: 5 - Production/Stable',
+            'Operating System :: MacOS',
+            'Operating System :: Microsoft :: Windows :: Windows 7',
+            'Operating System :: Microsoft :: Windows :: Windows 8',
+            'Operating System :: Microsoft :: Windows :: Windows 10',
+            'Operating System :: POSIX :: BSD :: FreeBSD',
+            'Operating System :: POSIX :: Linux',
             'Environment :: Win32 (MS Windows)',
             'Environment :: X11 Applications :: GTK',
             'Intended Audience :: End Users/Desktop',
@@ -116,8 +124,6 @@ CLASSIFIERS = [
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX',
-            'Programming Language :: Python :: 2',
-            'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.5',
             'Programming Language :: Python :: 3.6',
@@ -210,7 +216,7 @@ def SOURCE_BUILD():
 # ---------------------------------------------------------------------#
 
 
-def OSX():
+def MacOS():
     """
     build videomass.app
 
@@ -339,6 +345,6 @@ if __name__ == '__main__':
     if platform.system() == 'Windows' and 'py2exe' in sys.argv:
         WIN32()
     elif platform.system() == 'Darwin' and 'py2app' in sys.argv:
-        OSX()
+        MacOS()
     else:
         SOURCE_BUILD()

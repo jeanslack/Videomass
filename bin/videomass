@@ -8,7 +8,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Gen 14-2019, Aug 14-2019
+# Rev: Gen 14-2019, Aug 14-2019, Sept.11.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -38,42 +38,23 @@ if __name__ == '__main__':
             import wx
         
         except ImportError:
-            sys.stderr.write("videomass: ERROR: 'wx' module is required.\n"
-                             "Videomass for Python3 need wxPython4 (phoenix).\n"
+            sys.stderr.write("videomass: ERROR: 'wx' module is required; "
+                             "need wxPython4 (phoenix).\n"
                              "Visit the wxPython web page for more info:\n"
-                             u"<https://wxpython.org/>\n"
+                             "<https://wxpython.org/>\n"
                             )
+            if platform.system() not in ['Windows', 'Darwin']:
+                sys.stderr.write('Please, install wxPython4 with your package '
+                                 'manager.\n')
             sys.exit(1)
         
         from videomass3 import Videomass3
         Videomass3.main()
-        
-    elif sys.version_info[0] == 2:
-
-        try:
-            import wx
-        
-        except ImportError:
-            sys.stderr.write("videomass: ERROR: 'wx' module is required.\n"
-                            "Videomass for Python2 need wxPython3 (classic).\n"
-                             )
-            
-            if platform.system() in ['Windows', 'Darwin']:
-                sys.stderr.write("You could find it here:\n"
-                u"<https://sourceforge.net/projects/wxpython/files/wxPython/>\n"
-                                )
-            else:
-                sys.stderr.write('Please, install wxPython with your package '
-                                'manager.\n')
-            sys.exit(1)
-        
-        from videomass2 import Videomass2
-        Videomass2.main()
     
     else:
-        sys.stderr.write(
-                    "videomass: ERROR: Not a supported Python version. "
-                    "Need Python2 or Python3\n"
-                    "You are using Python version %s\n" % sys.version
+        sys.stderr.write("videomass: ERROR: Not a supported Python version.\n"
+                         "Since version 1.6.1 Videomass is compatible only "
+                         "with Python3 .\nYou are using Python version %s\n" % 
+                         sys.version[0]
                          )
         sys.exit(1)

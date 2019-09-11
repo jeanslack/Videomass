@@ -25,13 +25,6 @@ Base Dependencies:
       if it is not installed you need to install it:
       
             pip install PyPubSub
-    
-    OR (if you still use Python2)
-
-    - Python >=2.7
-    - wxPython Classic
-    - pip 
-    - ffmpeg
 
 Videomass can be run without installing by un-tarring the source package and 
 executing the "launcher" script in the root of the un-tarred directory.

@@ -738,7 +738,7 @@ class Video_Conv(wx.Panel):
             
         elif vcodec[selected][0] == "save images":
             msg = (_('Tip: use the "Duration" tool, then try setting '
-                     'the "Video Rate" to low values ​​(0.2 fps)'))
+                     'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
             self.parent.statusbar_msg(msg, greenolive)
 
             self.ckbx_pass.SetValue(False)
@@ -1644,16 +1644,15 @@ class Video_Conv(wx.Panel):
     #--------------------------------------------------------------------#
     def saveimages(self, dir_destin, logname, com, frmt):
         """
-        Save file (jpg) image from any video input. The saved images 
-        are named asfilename + a progressive number + .jpg.
+        Save as files image from any video input. The saved images 
+        are named as filename + a progressive number + .jpg.
         all saved images are placed in a folder with the same file name 
         + a progressive number that is saved in the chosen output path.
         
         """
         if not self.parent.import_clicked:
-            wx.MessageBox(_("To export images you need to select "
-                            "which files to convert in the 'Add file' "
-                            "panel (drag and drop)"), 'Videomass', 
+            wx.MessageBox(_('To export images, select one of the files '
+                            'in the "Add files" panel'), 'Videomass', 
                             wx.ICON_INFORMATION, self)
             return
             
@@ -1710,7 +1709,7 @@ class Video_Conv(wx.Panel):
     def update_dict(self, lenghmax, prof):
         """
         This method is required for update all cmd_opt
-        dictionary values before send at epilogue
+        dictionary values before send to epilogue
         """
         numfile = _("%s file in pending") % str(lenghmax)
         if cmd_opt["Normalize"]:

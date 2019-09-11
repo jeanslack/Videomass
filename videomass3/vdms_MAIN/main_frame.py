@@ -489,9 +489,9 @@ class MainFrame(wx.Frame):
         filepath = self.import_clicked
         
         if not filepath:
-            wx.MessageBox(_("To view the information from multimedia "
-                            "streams, select one of the files in the "
-                            "'Add files' panel (drag and drop)"), 
+            wx.MessageBox(_('To view the information from multimedia '
+                            'streams, select one of the files in the '
+                            '"Add files" panel'), 
                             'Videomass', wx.ICON_INFORMATION, self)
             return
         title = _('Videomass: media streams')

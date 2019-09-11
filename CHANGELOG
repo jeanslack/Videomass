@@ -7,10 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-September 07, 2019 V.1.6.1
+September 11, 2019 V.1.6.1
 +------------------------------------+
 
-IMPROVEMENTS (Python3 only):
+NOTICE:
+    * From this version Videomass is compatible only with Python3 and 
+      wxPython4 (phoenix). For some inconvenient reasons, such as the end of 
+      Python2 support by January 1 2020, with practical management and time 
+      investment for porting, Python2 will no longer be compatible with
+      Videomass.
+
+IMPROVEMENTS:
     * enanced errors management on all processes.
     * improved messages on the status of any processes.
     * During the conversion ffmpeg errors will no longer interrupt all 
@@ -32,13 +39,14 @@ IMPROVEMENTS (Python3 only):
     * Changed the videomass.conf/videomassWin32.conf to 1.4 version.
     * When setting the seek point with the duration tool, the cutting time 
       must also be set. Not vice versa.
+    * 
       
-
-ADD (Python 3 only):
+ADD:
     * The option to set the ffmpeg and ffplay loglevel flag has been added 
       to the settings dialog.
     * Added check box to disable or enable the "-cpu-used" flag as sometimes 
       it is not supported and causes more output to read.
+    * Added new preset to save images from movie in jpg/png/bmp formats
 
 REMOVALS and DISPLACEMENTS: 
     * removed the setting to save the log file in another directory chosen 
