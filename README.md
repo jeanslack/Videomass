@@ -9,12 +9,11 @@
 
 ### Notice:
 
-From 1.6.1 version, Videomass is compatible only with Python3 and therefore 
+Since version 1.6.1, Videomass is compatible only with Python3 and therefore 
 with wxPython4 (phoenix). For some reasons, such as the end of Python2 
 support by 1 January 2020, the technical difficulties in the practical 
 management of the code of both Python versions and the time investments 
-for porting, Videomass will cease development for compatibility on 
-Python2 .
+for porting, Videomass will cease development for compatibility with Python2 .
 
 ## Features
 
