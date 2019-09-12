@@ -555,11 +555,8 @@ class PresetsPanel(wx.Panel):
         ######## ------------FINE VALIDAZIONI: --------------
         if array[4] in ['jpg','png','bmp']:
             #self.saveimages(dir_destin)
-            self.parent.VconvPanel.saveimages(dir_destin, 
-                                              self.logname, 
-                                              self.txt_cmd.GetValue(),
-                                              array[4],
-                                              )
+            self.saveimages(dir_destin)
+            
         elif 'DOUBLE_PASS' in comcheck:
             
             split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
@@ -625,7 +622,68 @@ class PresetsPanel(wx.Panel):
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                                     array[4]))
-                
+    #--------------------------------------------------------------------#
+    def saveimages(self, dest):
+        """
+        Save as files image from any video input. The saved images 
+        are named as filename + a progressive number + .jpg.
+        all saved images are placed in a folder with the same file name 
+        + a progressive number that is saved in the chosen output path.
+        
+        """
+        if not self.parent.import_clicked:
+            wx.MessageBox(_('To export images, select one of the files '
+                            'in the "Add files" panel'), 'Videomass', 
+                            wx.ICON_INFORMATION, self)
+            return
+        
+        clicked = self.parent.import_clicked
+        fname = os.path.basename(clicked.rsplit('.', 1)[0])
+        dir_destin = dest[self.file_sources.index(clicked)]# specified dest
+        
+        try: 
+            outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
+            os.mkdir(outputdir)
+            
+        except FileExistsError:
+            lista = []
+            for dir_ in os.listdir(dir_destin):
+                if "%s-IMAGES_" % fname in dir_:
+                    lista.append(int(dir_.split('IMAGES_')[1]))
+                    
+            prog = max(lista) +1
+            outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
+            os.mkdir(outputdir)
+
+        fileout = "{0}-%d.{1}".format(fname,array[4])
+        cmd = ('%s %s -i "%s" -loglevel %s %s %s %s -y "%s/%s"' % (
+                                                self.ffmpeg_link, 
+                                                self.parent.time_seq,
+                                                clicked, 
+                                                self.ffmpeg_loglev,
+                                                self.txt_cmd.GetValue(),
+                                                self.threads, 
+                                                self.cpu_used,
+                                                outputdir, 
+                                                fileout)
+                                                )
+        command = " ".join(cmd.split())# compact string
+        
+        valupdate = self.update_dict('1')
+        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('saveimages',
+                                        clicked, 
+                                        None, 
+                                        None, 
+                                        command, 
+                                        None, 
+                                        None, 
+                                        None, 
+                                        self.logname, 
+                                        '1', 
+                                        )
     #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     
