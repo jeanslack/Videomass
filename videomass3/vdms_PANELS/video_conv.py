@@ -1518,9 +1518,11 @@ class Video_Conv(wx.Panel):
         filename, base_name, lenghmax = checking
     
         if self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
-            self.saveimages(dir_destin, logname, 
-                            '%s %s' % (cmd_opt["VideoRate"], 
-                                       cmd_opt["Filters"],), 'jpg',)
+            self.saveimages(dir_destin, 
+                            logname, 
+                            '', 
+                            'jpg',
+                            )
         else:
             self.stdProc(file_sources, dir_destin, lenghmax, logname)
 
@@ -1649,7 +1651,7 @@ class Video_Conv(wx.Panel):
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                                  cmd_opt["VideoFormat"]))
     #--------------------------------------------------------------------#
-    def saveimages(self, dir_destin, logname, com, frmt):
+    def saveimages(self, dir_destin, logname, param, frmt):
         """
         Save as files image from any video input. The saved images 
         are named as filename + a progressive number + .jpg.
@@ -1662,6 +1664,11 @@ class Video_Conv(wx.Panel):
                             'in the "Add files" panel'), 'Videomass', 
                             wx.ICON_INFORMATION, self)
             return
+        
+        if logname == 'Videomass_PresetsManager.log':
+            vrate, flt = '', ''
+        elif logname == 'Videomass_VideoConversion.log':
+            vrate, flt = cmd_opt["VideoRate"], cmd_opt["Filters"]
             
         title = _('Start image export')
         fname = os.path.basename(self.parent.import_clicked.rsplit('.', 1)[0])
@@ -1683,22 +1690,21 @@ class Video_Conv(wx.Panel):
             os.mkdir(outputdir)
 
         fileout = "{0}-%d.{1}".format(fname,frmt)
-        cmd = ('%s %s -i "%s" -loglevel %s %s -an %s %s -y "%s/%s"' % (
+        cmd = ('%s %s -i "%s" -loglevel %s %s %s %s -an %s %s -y "%s/%s"' % (
                self.ffmpeg_link, 
                self.parent.time_seq,
-               #self.time_seq,,
                self.parent.import_clicked, 
                self.ffmpeg_loglev,
-               com,
-               #cmd_opt["VideoRate"],
-               #cmd_opt["Filters"],
+               param,
+               vrate,
+               flt,
                self.threads, 
                self.cpu_used,
                outputdir, 
                fileout)
                )
         command = " ".join(cmd.split())# compact string
-        valupdate = self.update_dict('1', ['Start image export', frmt])
+        valupdate = self.update_dict_images(frmt, param, vrate, flt)
         ending = Formula(self, valupdate[0], valupdate[1], title)
             
         if ending.ShowModal() == wx.ID_OK:
@@ -1714,6 +1720,23 @@ class Video_Conv(wx.Panel):
                                         '1', 
                                         )
     #------------------------------------------------------------------#
+    def update_dict_images(self, frmt, param, vidrate, filters):
+        """
+        Update epilog dialog for exporting images
+        
+        """
+        #elif prof[0] == "Start image export":
+        formula = (_("SUMMARY:\n\nFile to Queue\
+                        \nImages Format:\nCommand:\nVideo rate:\
+                        \nFilters:\nTime selection:"
+                    ))
+        dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s" % ('1', frmt, 
+                                                    param,
+                                                    vidrate, 
+                                                    filters,
+                                                    self.parent.time_seq))
+        return formula, dictions
+            
     #------------------------------------------------------------------#
     def update_dict(self, lenghmax, prof):
         """
@@ -1740,17 +1763,6 @@ class Video_Conv(wx.Panel):
                 cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
                 self.parent.time_seq))
-                    
-        elif prof[0] == "Start image export":
-            formula = (_("SUMMARY:\n\nFile to Queue\
-                         \nImages Format:\nVideo rate:\
-                         \nFilters:\nTime selection:"
-                       ))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile, prof[1], 
-                                                    cmd_opt["VideoRate"], 
-                                                    cmd_opt["Filters"],
-                                                    self.parent.time_seq)
-                        )
         else:
             formula = (_("SUMMARY:\n\nFile to Queue\
                     \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\

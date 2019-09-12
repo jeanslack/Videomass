@@ -10,6 +10,10 @@ Change Log:
 September 12, 2019 V.1.6.1
 +------------------------------------+
 
+BUG FIXES:
+    * The overwrite message 'file already exists' that appeared when exporting 
+      images was fixed
+
 IMPROVEMENTS:
     * enanced errors management on all processes.
     * improved messages on the status of any processes.
