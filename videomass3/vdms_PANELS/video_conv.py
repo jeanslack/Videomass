@@ -57,7 +57,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "AudioCodec":"", "AudioChannel":["",""], 
            "AudioRate":["",""], "AudioBitrate":["",""], 
            "AudioDepth":["",""], "Normalize":"", 
-           "Deinterlace":"", "Interlace":"", "file":"", "Map":"", 
+           "Deinterlace":"", "Interlace":"", "file":"", "Map":"-map 0", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
            "Filters":""
@@ -1304,7 +1304,7 @@ class Video_Conv(wx.Panel):
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
             self.btn_analyzes.Enable(), self.spin_ctrl_audionormalize.Enable()
             self.label_normalize.Enable()
-            cmd_opt["Map"] = '-map 0'
+            #cmd_opt["Map"] = '-map 0'
 
         elif not self.ckbx_a_normalize.GetValue():# is not checked
             self.parent.statusbar_msg(_("Disable audio normalization"), None)
@@ -1315,7 +1315,7 @@ class Video_Conv(wx.Panel):
             self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_details.Disable()
 
-            cmd_opt["Map"] = ''
+            #cmd_opt["Map"] = ''
         cmd_opt["Normalize"] = ""
         del self.normdetails[:]
         
@@ -1475,15 +1475,19 @@ class Video_Conv(wx.Panel):
     def on_ok(self):
         """
         Involves the files existence verification procedures and
-        overwriting control.
-        TODO: fare dizionario anche per map 0 da usare con normalization
-        o aggiungi widget che lo spunti.
+        overwriting control, return:
+        - typeproc: batch or single process
+        - filename: nome file senza ext.
+        - base_name: nome file con ext.
+        - lenghmax: count processing cicles for batch mode
+
         """
         # check normalization data offset, if enable
         if self.ckbx_a_normalize.IsChecked():
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_("Missing volume dectect!\n"
-                              "Press the Volumedected button before proceeding."),
+                                "Press the Volumedected button before "
+                                "proceeding."),
                                 "Videomass", wx.ICON_INFORMATION)
                 return
         # make a different id need to avoid attribute overwrite:
@@ -1493,20 +1497,23 @@ class Video_Conv(wx.Panel):
         # used for file log name
         logname = 'Videomass_VideoConversion.log'
 
-        ######## ------------ VALIDAZIONI: --------------
+        # CHECKING:
         if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, '')
+            
+        elif self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
+            self.time_seq = self.parent.time_seq
+            checking = inspect(file_sources, dir_destin, 'jpg')
+            
         else:
             self.update_allentries()# last update of all setting interface
             checking = inspect(file_sources, dir_destin, 
                             cmd_opt["VideoFormat"])
-        if not checking[0]:# l'utente non vuole continuare o files assenti
+        if not checking[0]:
+            # the user does not want to continue or not such files exist
             return
-        # typeproc: batch or single process
-        # filename: nome file senza ext.
-        # base_name: nome file con ext.
-        # lenghmax: count processing cicles for batch mode
+        
         typeproc, file_sources, dir_destin,\
         filename, base_name, lenghmax = checking
     
@@ -1658,19 +1665,21 @@ class Video_Conv(wx.Panel):
             
         title = _('Start image export')
         fname = os.path.basename(self.parent.import_clicked.rsplit('.', 1)[0])
+        dir_destin = dir_destin[self.file_sources.index(
+                                self.parent.import_clicked)]#specified dest
         
         try: 
-            outputdir = "%s/%s-IMAGES_0" % (dir_destin[0], fname)
+            outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
             os.mkdir(outputdir)
             
         except FileExistsError:
             lista = []
-            for dir_ in os.listdir(dir_destin[0]):
+            for dir_ in os.listdir(dir_destin):
                 if "%s-IMAGES_" % fname in dir_:
                     lista.append(int(dir_.split('IMAGES_')[1]))
                     
             prog = max(lista) +1
-            outputdir = "%s/%s-IMAGES_%d" % (dir_destin[0], fname, prog)
+            outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
             os.mkdir(outputdir)
 
         fileout = "{0}-%d.{1}".format(fname,frmt)

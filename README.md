@@ -7,6 +7,15 @@
 * [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
 * [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
 
+### Notice:
+
+From 1.6.1 version, Videomass is compatible only with Python3 and therefore 
+with wxPython4 (phoenix). For some reasons, such as the end of Python2 
+support by 1 January 2020, the technical difficulties in the practical 
+management of the code of both Python versions and the time investments 
+for porting, Videomass will cease development for compatibility on 
+Python2 .
+
 ## Features
 
 - Drag n' Drop with multiple files at once
