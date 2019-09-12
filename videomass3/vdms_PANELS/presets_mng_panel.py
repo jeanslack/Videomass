@@ -178,11 +178,13 @@ class PresetsPanel(wx.Panel):
         grd_s2.AddGrowableRow(0)
         grd_s2.AddGrowableCol(0)
         self.Layout()
-
+        
         #----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.Editprof, self.list_ctrl)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.Run_Coding, 
+                                              self.list_ctrl
+                                              )
         self.Bind(wx.EVT_TEXT, self.enter_command, self.txt_cmd)
         
         #----------------------Create preset list----------------------#

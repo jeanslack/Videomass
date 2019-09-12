@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev December 28 2018
+# Rev: Dec.28.2018, Sept.12.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -187,11 +187,13 @@ class DnDPanel(wx.Panel):
             self.itemThreeId = wx.NewId()
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.itemTwoId)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.itemThreeId)
  
         # build the menu
         menu = wx.Menu()
         itemOne = menu.Append(self.popupID1, _("Play selected file"))
         itemTwo = menu.Append(self.itemTwoId, _("Show metadata window"))
+        itemThree = menu.Append(self.itemThreeId, _("Remove the selected file"))
  
         # show the popup menu
         self.PopupMenu(menu)
@@ -205,17 +207,30 @@ class DnDPanel(wx.Panel):
         itemId = event.GetId()
         menu = event.GetEventObject()
         menuItem = menu.FindItemById(itemId)
+        
 
         if not self.selected:
             self.parent.statusbar_msg(_('No file selected to `%s` yet') % 
                                       menuItem.GetLabel(), yellow)
         else:
-            self.parent.statusbar_msg('Drag and Drop - panel', None)
+            self.parent.statusbar_msg('Add Files', None)
             if menuItem.GetLabel() == _("Play selected file"):
                 self.parent.ImportPlay()
+                
             elif menuItem.GetLabel() == _("Show metadata window"):
                 #self.on_doubleClick(self)
                 self.parent.ImportInfo(self)
+                
+            elif menuItem.GetLabel() == _("Remove the selected file"):
+                if self.fileListCtrl.GetItemCount() == 1:
+                    self.deleteAll(self)
+                else:
+                    item = self.fileListCtrl.GetFocusedItem()
+                    self.fileListCtrl.DeleteItem(item)
+                    self.parent.importClicked_disable()
+                    self.selected = False
+                    self.fileList.pop(item)
+                    self.duration.pop(item)
                 
     #----------------------------------------------------------------------
     def btn_enable(self, fileList, invalid):

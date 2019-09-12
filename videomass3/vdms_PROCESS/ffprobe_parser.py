@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: December 27 2018, Sept.05 2019
+# Rev: December 27 2018, Sept.12 2019
 #########################################################
 
 # This file is part of Videomass.
@@ -181,8 +181,13 @@ class FFProbe(object):
         astream = self.audio_stream()#get audio stream
         audio_lang = []
         acod = ''# audio codec
-        lang = ''#language
+        lang = 'unknown'# language
         indx = ''# index
+        srate = ''# smple_rate
+        bits = ''# bit_per_sample (raw only)
+        chan = ''# channel_layout
+        bitr = ''# bit_rate (codec compressed only)
+        
         
         if astream == []:
             #audio_lang.append('no audio stream')
@@ -202,13 +207,21 @@ class FFProbe(object):
                         lang = value
                     if "index" in key:
                         indx = value
+                    if key == "sample_rate":
+                        srate = value
+                    if key == "bits_per_sample":
+                        bits = value
+                    if key == "channel_layout":
+                        chan = value
+                    if key == "bit_rate":
+                        bitr = value
 
-                if not lang:
-                    lang = 'unknown'
-
-                audio_lang.append("index: %s | codec: %s | language: %s" % (
-                                    indx, acod, lang))
-                
+                audio_lang.append("index: %s | codec: %s | language: %s "
+                                  "| sampe rate: %s | bit: %s | channels: %s "
+                                  "| bit rate: %s" % (indx, acod, lang,
+                                                      srate, bits, chan, 
+                                                      bitr)
+                                  )
         video_list = self.data_format()#get video format for video title
 
         for t in video_list[0]:
