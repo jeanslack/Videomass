@@ -1480,7 +1480,7 @@ class Video_Conv(wx.Panel):
         - typeproc: batch or single process
         - filename: nome file senza ext.
         - base_name: nome file con ext.
-        - lenghmax: count processing cicles for batch mode
+        - countmax: count processing cicles for batch mode
 
         """
         # check normalization data offset, if enable
@@ -1516,21 +1516,21 @@ class Video_Conv(wx.Panel):
             return
         
         typeproc, file_sources, dir_destin,\
-        filename, base_name, lenghmax = checking
+        filename, base_name, countmax = checking
     
         if self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
             self.saveimages(file_sources, dir_destin, logname)
         else:
-            self.stdProc(file_sources, dir_destin, lenghmax, logname)
+            self.stdProc(file_sources, dir_destin, countmax, logname)
 
         return
 
     #------------------------------------------------------------------#
-    def stdProc(self, file_sources, dir_destin, lenghmax, logname):
+    def stdProc(self, file_sources, dir_destin, countmax, logname):
         """
         Composes the ffmpeg command strings for batch process. 
-        In double pass mode, split command in two part (see  os_processing.py 
-        at proc_batch_thread Class(Thread).
+        In double pass mode, split command in two part (see  
+        os_processing.py at proc_batch_thread Class(Thread) ).
         
         """
         title = _('Start video conversion')
@@ -1550,7 +1550,7 @@ class Video_Conv(wx.Panel):
                        cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax, ["Copy Video Codec"] )
+            valupdate = self.update_dict(countmax, ["Copy Video Codec"] )
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1563,7 +1563,7 @@ class Video_Conv(wx.Panel):
                                            self.ffmpeg_link,
                                            cmd_opt["Normalize"], 
                                            logname, 
-                                           lenghmax, 
+                                           countmax, 
                                            )
                 #used for play preview and mediainfo:
                 f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
@@ -1593,7 +1593,7 @@ class Video_Conv(wx.Panel):
                      self.cpu_used, cmd_opt["Map"])
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax, [''])
+            valupdate = self.update_dict(countmax, [''])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1606,7 +1606,7 @@ class Video_Conv(wx.Panel):
                                            self.ffmpeg_link,
                                            cmd_opt["Normalize"], 
                                            logname, 
-                                           lenghmax, 
+                                           countmax, 
                                            )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -1628,7 +1628,7 @@ class Video_Conv(wx.Panel):
                         self.cpu_used, cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax, [''])
+            valupdate = self.update_dict(countmax, [''])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1641,7 +1641,7 @@ class Video_Conv(wx.Panel):
                                            self.ffmpeg_link,
                                            cmd_opt["Normalize"], 
                                            logname, 
-                                           lenghmax, 
+                                           countmax, 
                                            )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -1650,15 +1650,12 @@ class Video_Conv(wx.Panel):
     #--------------------------------------------------------------------#
     def saveimages(self, file_sources, dest, logname):
         """
-        Save as files image from any video input. The saved images 
-        are named as filename + a progressive number + .jpg.
-        all saved images are placed in a folder with the same file name 
-        + a progressive number that is saved in the chosen output path.
+        Save as files image the selected video input. The saved 
+        images are named as file name + a progressive number + .jpg 
+        and placed in a folder with the same file name + a progressive 
+        number in the chosen output path.
         
         """
-        print('>>>  ',self.file_sources)
-        print('>>>  ',self.parent.import_clicked)
-        
         if not self.parent.import_clicked:
             wx.MessageBox(_('To export images, select one of the files '
                             'in the "Add files" panel'), 'Videomass', 
@@ -1666,42 +1663,42 @@ class Video_Conv(wx.Panel):
             return
         
         title = _('Start save as images')
-        clicked = self.parent.import_clicked
-        fname = os.path.basename(clicked.rsplit('.', 1)[0])
-        dir_destin = dest[file_sources.index(clicked)]# specified dest
-        
-        try: 
-            outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
-            os.mkdir(outputdir)
-            
-        except FileExistsError:
-            lista = []
-            for dir_ in os.listdir(dir_destin):
-                if "%s-IMAGES_" % fname in dir_:
-                    lista.append(int(dir_.split('IMAGES_')[1]))
-                    
-            prog = max(lista) +1
-            outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
-            os.mkdir(outputdir)
-
-        fileout = "{0}-%d.{1}".format(fname,'jpg')
-        cmd = ('%s %s -i "%s" -loglevel %s -an %s %s %s %s -y "%s/%s"' % (
-                                                self.ffmpeg_link, 
-                                                self.parent.time_seq,
-                                                clicked, 
-                                                self.ffmpeg_loglev,
-                                                cmd_opt["VideoRate"],
-                                                cmd_opt["Filters"],
-                                                self.threads, 
-                                                self.cpu_used,
-                                                outputdir, 
-                                                fileout)
-                                                )
-        command = " ".join(cmd.split())# compact string
-        
         valupdate = self.update_dict('1', ["Save as images"])
         ending = Formula(self, valupdate[0],valupdate[1], title)
+        
         if ending.ShowModal() == wx.ID_OK:
+            clicked = self.parent.import_clicked
+            fname = os.path.basename(clicked.rsplit('.', 1)[0])
+            dir_destin = dest[file_sources.index(clicked)]# specified dest
+            
+            try: 
+                outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
+                os.mkdir(outputdir)
+                
+            except FileExistsError:
+                lista = []
+                for dir_ in os.listdir(dir_destin):
+                    if "%s-IMAGES_" % fname in dir_:
+                        lista.append(int(dir_.split('IMAGES_')[1]))
+                        
+                prog = max(lista) +1
+                outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
+                os.mkdir(outputdir)
+
+            fileout = "{0}-%d.{1}".format(fname,'jpg')
+            cmd = ('%s %s -i "%s" -loglevel %s -an %s %s %s %s -y "%s/%s"' % (
+                                                    self.ffmpeg_link, 
+                                                    self.parent.time_seq,
+                                                    clicked, 
+                                                    self.ffmpeg_loglev,
+                                                    cmd_opt["VideoRate"],
+                                                    cmd_opt["Filters"],
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                    outputdir, 
+                                                    fileout)
+                                                    )
+            command = " ".join(cmd.split())# compact string
             self.parent.switch_Process('saveimages',
                                         clicked, 
                                         None, 
@@ -1715,12 +1712,12 @@ class Video_Conv(wx.Panel):
                                         )
     #------------------------------------------------------------------#
     #------------------------------------------------------------------#
-    def update_dict(self, lenghmax, prof):
+    def update_dict(self, countmax, prof):
         """
         This method is required for update all cmd_opt
         dictionary values before send to epilogue
         """
-        numfile = _("%s file in pending") % str(lenghmax)
+        numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["Normalize"]:
             normalize = _('Enable')
         else:

@@ -547,15 +547,15 @@ class PresetsPanel(wx.Panel):
         # typeproc: batch or single process
         # filename: nome file senza ext.
         # base_name: nome file con ext.
-        # lenghmax: count processing cicles for batch mode
+        # countmax: count processing cicles for batch mode
         (typeproc, file_sources, 
          dir_destin, filename, 
-         base_name, lenghmax) = checking
+         base_name, countmax) = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
         if array[4] in ['jpg','png','bmp']:
             #self.saveimages(dir_destin)
-            self.saveimages(dir_destin)
+            self.saveimages(dir_destin, file_sources)
             
         elif 'DOUBLE_PASS' in comcheck:
             
@@ -579,7 +579,7 @@ class PresetsPanel(wx.Panel):
             pass1 = " ".join(command1.split())# mi formatta la stringa
             pass2 = " ".join(command2.split())# mi formatta la stringa
             
-            valupdate = self.update_dict(lenghmax)
+            valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:
 
@@ -592,7 +592,7 @@ class PresetsPanel(wx.Panel):
                                             self.ffmpeg_link,
                                             '', 
                                             self.logname, 
-                                            lenghmax, 
+                                            countmax, 
                                             )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -605,7 +605,7 @@ class PresetsPanel(wx.Panel):
                                                     self.threads, 
                                                     self.cpu_used,)
                                                     )
-            valupdate = self.update_dict(lenghmax)
+            valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('normal',
@@ -617,18 +617,18 @@ class PresetsPanel(wx.Panel):
                                             self.ffmpeg_link,
                                             '', 
                                             self.logname, 
-                                            lenghmax, 
+                                            countmax, 
                                             )
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                                     array[4]))
     #--------------------------------------------------------------------#
-    def saveimages(self, dest):
+    def saveimages(self, dest, file_sources):
         """
-        Save as files image from any video input. The saved images 
-        are named as filename + a progressive number + .jpg.
-        all saved images are placed in a folder with the same file name 
-        + a progressive number that is saved in the chosen output path.
+        Save as files image the selected video input. The saved 
+        images are named as file name + a progressive number + .jpg 
+        and placed in a folder with the same file name + a progressive 
+        number in the chosen output path.
         
         """
         if not self.parent.import_clicked:
@@ -637,42 +637,41 @@ class PresetsPanel(wx.Panel):
                             wx.ICON_INFORMATION, self)
             return
         
-        clicked = self.parent.import_clicked
-        fname = os.path.basename(clicked.rsplit('.', 1)[0])
-        dir_destin = dest[self.file_sources.index(clicked)]# specified dest
-        
-        try: 
-            outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
-            os.mkdir(outputdir)
-            
-        except FileExistsError:
-            lista = []
-            for dir_ in os.listdir(dir_destin):
-                if "%s-IMAGES_" % fname in dir_:
-                    lista.append(int(dir_.split('IMAGES_')[1]))
-                    
-            prog = max(lista) +1
-            outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
-            os.mkdir(outputdir)
-
-        fileout = "{0}-%d.{1}".format(fname,array[4])
-        cmd = ('%s %s -i "%s" -loglevel %s %s %s %s -y "%s/%s"' % (
-                                                self.ffmpeg_link, 
-                                                self.parent.time_seq,
-                                                clicked, 
-                                                self.ffmpeg_loglev,
-                                                self.txt_cmd.GetValue(),
-                                                self.threads, 
-                                                self.cpu_used,
-                                                outputdir, 
-                                                fileout)
-                                                )
-        command = " ".join(cmd.split())# compact string
-        
         valupdate = self.update_dict('1')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         
         if ending.ShowModal() == wx.ID_OK:
+            clicked = self.parent.import_clicked
+            fname = os.path.basename(clicked.rsplit('.', 1)[0])
+            dir_destin = dest[file_sources.index(clicked)]# specified dest
+            
+            try: 
+                outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
+                os.mkdir(outputdir)
+                
+            except FileExistsError:
+                lista = []
+                for dir_ in os.listdir(dir_destin):
+                    if "%s-IMAGES_" % fname in dir_:
+                        lista.append(int(dir_.split('IMAGES_')[1]))
+                        
+                prog = max(lista) +1
+                outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
+                os.mkdir(outputdir)
+
+            fileout = "{0}-%d.{1}".format(fname,array[4])
+            cmd = ('%s %s -i "%s" -loglevel %s %s %s %s -y "%s/%s"' % (
+                                                    self.ffmpeg_link, 
+                                                    self.parent.time_seq,
+                                                    clicked, 
+                                                    self.ffmpeg_loglev,
+                                                    self.txt_cmd.GetValue(),
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                    outputdir, 
+                                                    fileout)
+                                                    )
+            command = " ".join(cmd.split())# compact string
             self.parent.switch_Process('saveimages',
                                         clicked, 
                                         None, 
@@ -687,11 +686,11 @@ class PresetsPanel(wx.Panel):
     #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     
-    def update_dict(self, lenghmax):
+    def update_dict(self, countmax):
         """
         This method is required for update info before send at epilogue
         """
-        numfile = "%s file in pending" % str(lenghmax)
+        numfile = "%s file in pending" % str(countmax)
                     
         formula = (_(u"SUMMARY:\n\nFile to Queue\
                       \nProfile Used:\nOut Format:\

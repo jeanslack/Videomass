@@ -82,7 +82,7 @@ class GeneralProcess(wx.Panel):
         """
         self.parent = parent # main frame
         self.previus = panel # stores the panel from which  it starts
-        self.lenghmax = varargs[9]# the multiple task number
+        self.countmax = varargs[9]# the multiple task number
         self.count = 0 # initial setting of the counter
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
         self.duration = duration # total duration or partial if set timeseq
@@ -332,7 +332,7 @@ class ProcThread(Thread):
         self.duration = duration # duration list
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
         self.count = 0 # count number loop
-        self.lenghmax = len(varargs[1]) # lengh file list
+        self.countmax = len(varargs[1]) # lengh file list
         self.logname = logname # title name of file log
         self.time_seq = timeseq # a time segment
 
@@ -376,7 +376,7 @@ class ProcThread(Thread):
                                                           self.extoutput
                                                           )
             self.count += 1
-            count = 'File %s/%s' % (self.count, self.lenghmax,)
+            count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
             print("%s" % com)
             
@@ -477,7 +477,7 @@ class DoublePassThread(Thread):
         self.time_seq = timeseq # a time segment
         self.volume = varargs[7]# lista norm, se non richiesto rimane None
         self.count = 0 # count number loop
-        self.lenghmax = len(varargs[1]) # lengh file list
+        self.countmax = len(varargs[1]) # lengh file list
         self.logname = logname # title name of file log
         self.nul = '/dev/null'
         
@@ -512,7 +512,7 @@ class DoublePassThread(Thread):
                                        self.nul,
                                        )) 
             self.count += 1
-            count = 'File %s/%s - Pass 1' % (self.count, self.lenghmax,)
+            count = 'File %s/%s - Pass 1' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
             print("%s" % cmd)
             
@@ -596,7 +596,7 @@ class DoublePassThread(Thread):
                                                 filename,
                                                 self.extoutput,
                                                 ))
-            count = 'File %s/%s - Pass 2' % (self.count, self.lenghmax,)
+            count = 'File %s/%s - Pass 2' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
             
@@ -798,7 +798,7 @@ class GrabAudioProc(Thread):
         self.duration = duration # duration values list (items)
         self.time_seq = timeseq
         self.count = 0 # count number loop
-        self.lenghmax = len(varargs[2]) # lengh file list
+        self.countmax = len(varargs[2]) # lengh file list
         self.logname = logname # title name of file log
         
         self.start() # start the thread (va in self.run())
@@ -833,7 +833,7 @@ class GrabAudioProc(Thread):
                                                       ext,
                                                       )
             self.count += 1
-            count = 'File %s/%s' % (self.count, self.lenghmax,)
+            count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
             print("%s" % com)
             

@@ -634,18 +634,18 @@ class Audio_Conv(wx.Panel):
         # typeproc: batch or single process
         # filename: nome file senza ext.
         # base_name: nome file con ext.
-        # lenghmax: count processing cicles for batch mode
+        # countmax: count processing cicles for batch mode
         typeproc, file_sources, dir_destin,\
-        filename, base_name, lenghmax = checking
+        filename, base_name, countmax = checking
 
 
         if self.cmbx_a.GetValue() == _("Save audio from movie"):
-            self.grabaudioProc(file_sources, dir_destin, lenghmax, logname)
+            self.grabaudioProc(file_sources, dir_destin, countmax, logname)
         else:
-            self.stdProc(file_sources, dir_destin, lenghmax, logname)
+            self.stdProc(file_sources, dir_destin, countmax, logname)
 
     #------------------------------------------------------------------#
-    def stdProc(self, file_sources, dir_destin, lenghmax, logname):
+    def stdProc(self, file_sources, dir_destin, countmax, logname):
         """
         Composes the ffmpeg command strings for the batch mode processing.
         """
@@ -656,7 +656,7 @@ class Audio_Conv(wx.Panel):
                                                   self.cpu_used,)
                                                   )
             command = " ".join(cmd.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax)
+            valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -669,7 +669,7 @@ class Audio_Conv(wx.Panel):
                                            self.ffmpeg_link,
                                            cmd_opt["Normalize"], 
                                            logname, 
-                                           lenghmax, 
+                                           countmax, 
                                            )
                 #used for play preview and mediainfo:
                 f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
@@ -687,7 +687,7 @@ class Audio_Conv(wx.Panel):
                                                 self.cpu_used,)
                                                                     )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(lenghmax)
+            valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
@@ -700,7 +700,7 @@ class Audio_Conv(wx.Panel):
                                            self.ffmpeg_link,
                                            cmd_opt["Normalize"],
                                            logname, 
-                                           lenghmax,
+                                           countmax,
                                            )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -709,7 +709,7 @@ class Audio_Conv(wx.Panel):
         
     #------------------------------------------------------------------#
     def grabaudioProc(self, file_sources, dir_destin, 
-                             lenghmax, logname):
+                             countmax, logname):
         """
         Composes the ffmpeg command strings for the batch_process_changes.
         """
@@ -717,7 +717,7 @@ class Audio_Conv(wx.Panel):
         cmdsplit1 = ("-loglevel %s -vn" % (self.ffmpeg_loglevel,))
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 
-        valupdate = self.update_dict(lenghmax)
+        valupdate = self.update_dict(countmax)
         ending = Formula(self, valupdate[0], valupdate[1], title)
         
         if ending.ShowModal() == wx.ID_OK:
@@ -730,7 +730,7 @@ class Audio_Conv(wx.Panel):
                                        cmdsplit2, 
                                        cmd_opt["ExportExt"],#list
                                        logname, 
-                                       lenghmax, #list
+                                       countmax, #list
                                        )
             # used for play preview and mediainfo:
             f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -738,12 +738,12 @@ class Audio_Conv(wx.Panel):
                                              cmd_opt["ExportExt"][0]))
 
     #------------------------------------------------------------------#
-    def update_dict(self, lenghmax):
+    def update_dict(self, countmax):
         """
         This method is required for update all cmd_opt
         dictionary values before send at epilogue
         """
-        numfile = _("%s file in pending") % str(lenghmax)
+        numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["Normalize"]:
             normalize = _('Enable')
         else:
