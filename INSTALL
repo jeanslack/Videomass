@@ -18,8 +18,7 @@ Base Dependencies:
     
     - Python >=3.7
     - wxPython4 Phoenix *
-    - pip
-    - ffmpeg
+    - ffmpeg (with ffplay and ffprobe)
     
     * With Python3 also make sure that the pubsub module is installed.
       if it is not installed you need to install it:
@@ -52,6 +51,9 @@ https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi
 #--------------------------------------------------------------------------#
 Option 2) Build a Windows executable (.exe): [Windows]
 
+* py2exe no longer works with python 3.7 use Pyinstaller, cx_Freeze, bbfreeze,
+  Nuitka or Briefcase.
+
 python setup.py py2exe
 
 Please, Visit the Wiki page for more info:
@@ -62,7 +64,7 @@ https://github.com/jeanslack/Videomass/wiki/Windows,-build-from-source
 
 Option 3) Build a MacOSX app: [Macintosh OSX]
 
-python setup.py py2app
+python setup.py py2app packages=wx
 
 Please, Visit the Wiki page for more info:
 
