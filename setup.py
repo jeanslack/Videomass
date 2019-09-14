@@ -235,7 +235,7 @@ def MacOS():
     DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
 
     OPTIONS = {'argv_emulation': False,
-               'excludes': EXCLUDE #list,
+               'excludes': EXCLUDE, #list,
                'includes': ['wx', ],
                'resources': RESOURCES,
                'iconfile': PATH_ICON,
