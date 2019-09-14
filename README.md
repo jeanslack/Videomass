@@ -19,19 +19,19 @@ for porting, Videomass will cease development for compatibility with Python2 .
 
 - Drag n' Drop with multiple files at once
 - Presets manager interface with fully customizable and expandable profiles  
-- Displaying metadata streams information 
-- Preview of exported media
+- Displaying streams information 
+- Preview exported
 - Preview video filters
-- Reproduction of imported media
+- Preview imported
 - Independent video conversions interface 
 - Independent audio conversions interface
-- Save jpg images from a video sequence
+- Save jpg images from movies
 - Audio peak level analysis with normalization process   
-- Ability to get audio streams from videos with multilingual selection
-- Selection of the time interval (for exports, previews, reproduction, tests)
+- Save audio streams from movies with language selection
+- Setting duration segments (for exports, previews, reproduction, tests)
 - Log management
 - Multi language (English and Italian Languages support for now)
-- Work on many platforms where Python and wxPython are supported, 
+- Work on many platforms where Python3 and wxPython4 are supported, 
   including Linux, Unix, MacOs and Windows.
 - Compatible with Python 3 only
 
