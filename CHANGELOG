@@ -15,7 +15,7 @@ BUG FIXES:
       images was fixed
 
 IMPROVEMENTS:
-    * enanced errors management on all processes.
+    * enhanced errors management on all processes.
     * improved messages on the status of any processes.
     * During the conversion ffmpeg errors will no longer interrupt all 
       other activities in the queue; if an error occurred it will be marked 
@@ -30,7 +30,7 @@ IMPROVEMENTS:
       number + .jpg.
       All saved images are placed in a folder with the same file name + a 
       progressive number that is saved in the selected output path to avoid
-      over writtings.
+      over writings.
     * the logging level can now be optional, no longer mandatory the "error"
       flag, since the management of the output and errors has been improved.
     * Changed version to the videomass.conf and videomassWin32.conf to 1.4.
