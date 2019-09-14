@@ -235,7 +235,7 @@ def MacOS():
     DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
 
     OPTIONS = {'argv_emulation': False,
-               'excludes': [EXCLUDE[3], ],
+               'excludes': EXCLUDE #list,
                'includes': ['wx', ],
                'resources': RESOURCES,
                'iconfile': PATH_ICON,
@@ -243,13 +243,15 @@ def MacOS():
                'optimize': '2',
                'plist': {
                    # 'LSEnvironment': '$0',
+                   'NSPrincipalClass': 'NSApplication',
+                   'NSAppleScriptEnabled': False,
                    'CFBundleName': RLS_NAME,
                    'CFBundleDisplayName': RLS_NAME,
                    'CFBundleGetInfoString': "Making Videomass",
                    'CFBundleIdentifier': "com.jeanslack.videomass",
                    'CFBundleVersion': "%s" % VERSION,
                    'CFBundleShortVersionString': "%s" % VERSION,
-                   'NSHumanReadableCopyright': u"Copyright %s, "
+                   'NSHumanReadableCopyright': "Copyright %s, "
                                             "Gianluca Pernigotto, "
                                             "All Rights Reserved" % COPYRIGHT,
                                             }}
@@ -307,7 +309,7 @@ def WIN32():
     includes = ["wx.lib.pubsub.*", "wx.lib.pubsub.core.*",
                 "wx.lib.pubsub.core.kwargs.*"
                 ]
-    excludes = [EXCLUDE[3], '_gtkagg', '_tkagg', 'bsddb', 'curses',
+    excludes = [EXCLUDE, '_gtkagg', '_tkagg', 'bsddb', 'curses',
                 'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
                 'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
                 ]

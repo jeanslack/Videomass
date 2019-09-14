@@ -29,11 +29,6 @@ Videomass can be run without installing by un-tarring the source package and
 executing the "launcher" script in the root of the un-tarred directory.
 
     python launcher
-    
-If you want the setup.py script to allow you to build 
-an executable for your operating system or if you simply 
-want to install Videomass from the python Package Index
- (aka PyPi) follow the Options below.
 
 #--------------------------------------------------------------------------#
 Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
