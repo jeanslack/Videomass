@@ -2,8 +2,8 @@
 
 ## Setup
 
-In the setup window you can set some parameters that will be saved for the next program openings. 
-Whenever you save these settings, the program must necessarily be restarted to make them effective.
+In the setup dialog you can set some parameters that will be saved for the next program openings. 
+Whenever you save these settings the program must necessarily be restarted to make them effective.
 
 ------------------
 ### General (tab)
@@ -21,15 +21,9 @@ by some FFmpeg encoder.
  - Quality/Speed ratio modifier(from -16 to 16)   
    _Contrary to its name, cpu-used doesn't actually control how much overall CPU is being used, it controls the 
    quality of the encode (ie. how much cpu is used for each frame in total)._   
-
-**Other Settings**
-
-- Enables writing of command line text   
-  _Allows you to make changes to the FFmpeg command line in the 'Command Line FFmpeg' table of the 'Presets Manager' panel. 
-  Any parameter changes will not be stored but will still be applied during the process._
   
 -------------------  
-### Log (tab)
+### Logging level(tab)
 
 Each export process involves writing a log file. A log file contains a report showing errors, commands and other 
 indications. Videomass generates three types of log files:   
