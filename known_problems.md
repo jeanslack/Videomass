@@ -1,6 +1,6 @@
 [Home](index.md)
 
-## Known problems and solutions of Videomass on Python3 and Python2
+## Known problems and solutions of Videomass
 
 - On Windows, with the version of FFmpeg 3.1.5 included in the installer, the 
 **nlmeans** denoiser filter is not implemented, as it exists only in the most 
