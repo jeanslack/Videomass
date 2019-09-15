@@ -1,29 +1,19 @@
-Videomass Builds and Installation Instructions
+Videomass Installation Instructions and buildings
 
-...
 
 Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are 
-
-available at https://sourceforge.net/projects/videomass2/ 
-
+available at <https://sourceforge.net/projects/videomass2/>
 These installation programs contain everything needed to be used 
 in standalone mode, without the need for anything else. 
-
-...
-
-
 #--------------------------------------------------------------------------#
 
 Base Dependencies:
     
     - Python >=3.7
-    - wxPython4 Phoenix *
-    - ffmpeg (with ffplay and ffprobe)
-    
-    * With Python3 also make sure that the pubsub module is installed.
-      if it is not installed you need to install it:
-      
-            pip install PyPubSub
+    - wxPython4
+    - PyPubSub (install it with pip)
+    - pip (On Windows and MacOS it is included with Python3.7)
+    - FFmpeg (with ffplay and ffprobe)
 
 Videomass can be run without installing by un-tarring the source package and 
 executing the "launcher" script in the root of the un-tarred directory.
@@ -31,7 +21,7 @@ executing the "launcher" script in the root of the un-tarred directory.
     python launcher
 
 #--------------------------------------------------------------------------#
-Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
+Installing with pip tool: [Linux/Macintosh/Unix/Windows]
 
     pip install videomass
     
@@ -41,32 +31,11 @@ Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
     
 Please, Visit the Wiki page for more info: 
 
-https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi
 
-#--------------------------------------------------------------------------#
-Option 2) Build a Windows executable (.exe): [Windows]
-
-* py2exe no longer works with python 3.7 use Pyinstaller, cx_Freeze, bbfreeze,
-  Nuitka or Briefcase.
-
-python setup.py py2exe
-
-Please, Visit the Wiki page for more info:
-
-https://github.com/jeanslack/Videomass/wiki/Windows,-build-from-source
-
+https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-tool
 #--------------------------------------------------------------------------#
 
-Option 3) Build a MacOSX app: [Macintosh OSX]
-
-python setup.py py2app packages=wx
-
-Please, Visit the Wiki page for more info:
-
-https://github.com/jeanslack/Videomass/wiki/MacOs,-build-from-source
-
-#--------------------------------------------------------------------------#
-Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
+Build as wheel: [Linux/Macintosh/Unix/Windows]
 
 python3 setup.py sdist bdist_wheel
 

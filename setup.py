@@ -30,18 +30,16 @@
 
 #########################################################
 """
- Videomass Setup Script
-
  USAGE:
 
    1) Windows:
-      - python setup.py py2exe
+      - python3 setup.py py2exe
 
    2) MacOSX:
-      - python setup.py py2app
+      - python3 setup.py py2app --packages==wx
 
    3) All
-      - python setup.py [options * ]
+      - python3 setup.py sdist bdist_wheel
 
  * See the INSTALL file in the sources for major details
 
