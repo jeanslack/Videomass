@@ -10,7 +10,7 @@ Each preset contains one or more profiles that can also be edited or deleted. A 
 organize them on certain presets.   
 
 A single click on a profile allows you to use it for a conversion process, or to modify or remove it.  
-Double-clicking on a profile start the process conversion.
+A double click on a profile starts the conversion.
 
 **Note**: each preset is an xml file with a _.vdms_ extension containing the entries of each profile stored on a 
 specific preset. All presets are located in the Videomass configuration folder.
