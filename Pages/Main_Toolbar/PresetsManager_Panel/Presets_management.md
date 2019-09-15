@@ -43,9 +43,7 @@ In this tab there is a list of all presets that can be selected from a drop-down
 Conversions and Audio Conversions interfaces are stored.
 
 ### The _Command Line FFmpeg_ tab
-By selecting the 'Command Line FFmpeg' tab you will see the command of each selected profile. To change a command on the 
-fly, you must first enable the write function on the [Setup dialog](https://github.com/jeanslack/Videomass/blob/gh-pages/Pages/Startup/Setup.md). Remember that a profile changed on the fly will only be applied in the conversion process but will 
-not be stored on the profile. To save a new profile, you will need to use the 'New..' function in the toolbar.
+By selecting the 'Command Line FFmpeg' tab you will see the command of each selected profile. Here you can change the command on the fly by adding new parameters and the conversion process will execute exactly the command you wrote. Remember that a profile changed on the fly will not be stored on the profile. To save a new profile, you will need to use the 'New..' or 'Edit..' functions in the toolbar.
 
 ### Start Encoding
 ![Image](../../../images/start_encoding_button.png)   
