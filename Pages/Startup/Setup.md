@@ -44,7 +44,7 @@ These log files are as follows:
 - Videomass_Volumedected.log
 
 The log files are saved in the Videomass configuration directory which can be opened directly with the appropriate 
-function in the menu bar 'Tools> Log directory'. In each new process the contents of a log file are completely erased 
+function in the menu bar > Tools > Log directory . In each new process the contents of a log file are completely erased 
 and rewritten and contain a report showing errors, warnings and commands.
 
 -------------------
