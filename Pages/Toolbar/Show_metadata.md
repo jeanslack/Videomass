@@ -16,7 +16,8 @@ Generally the following lists are marked in yellow:
 
 ![Image](../../images/metadata_window.png)    
 
-It can be opened from the context menu by right click or double-click on the item imported in the _Drag n Drop_ interface. It can also be opened with the Show Metadata button located on the secondary toolbar. 
+It can be opened from the context menu by right click or double-click on the item imported in the _Drag n Drop_ interface. 
+It can also be opened with the Show Metadata button located on the secondary toolbar. 
 
 ![Image](../../images/show_metadata_options.png)   
 

@@ -18,10 +18,10 @@ revert to default color.
 ----------------
 
 ### _How can I extract a segment from a media?_
-If you need to extract only a specific part of your media file, you will need to use the Seeking parameter to get 
-a specific part of the time position.
-To extract only a small segment in the middle of a movie, it can be used in conjunction with Cut, which specifies the 
-duration.   
+If you need to extract only a specific part of your media file, you will need to use the Seeking parameter and the Cut 
+parameter to get a specific section of the time position.   
+To extract only a small segment in the middle of a movie, it must be used in conjunction with Cut, which specifies the 
+duration; it is not possible to use the Seeking parameter alone as it needs to be used with the Cut parameter.   
 
 Example: if we have a film with a duration of one hour, to extract a segment from the twenty-third to forty-second 
 minutes from the beginning of the film, we have to set the Seeking parameter to 00.23.00 and the Cut parameter to 

@@ -21,7 +21,8 @@ It is composed of five text fields, four of which are mandatory.
   the dot '.' and any other punctuation mark.
 
 ### How to create a New profile
-To create a new profile it is necessary to move to the _Presets Manager_ interface by pressing the relative button in the main toolbar and then pressing the "_New_" button on the secondary toolbar.  
+To create a new profile it is necessary to move to the _Presets Manager_ interface by pressing the relative button in the 
+main toolbar and then pressing the "_New_" button on the secondary toolbar.  
 You will then see this window appear:   
 ![Image](../../../images/new_profile.png) 
 
@@ -31,10 +32,13 @@ secondary toolbar, when you are on the _Presets Manager_ interface. The rules ar
 new profile.
 
 ### How to delete a profile
-Go to the _Presets Manager_ interface by pressing the corresponding button on the main toolbar, select a profile to delete and then press the "Delete" button on the secondary toolbar. This will permanently delete the selected profile.
+Go to the _Presets Manager_ interface by pressing the corresponding button on the main toolbar, select a profile 
+to delete and then press the "Delete" button on the secondary toolbar. This will permanently delete the selected profile.
 
 ### Save new profiles from Video Conversions and Audio Conversions interfaces
-New profiles can also be added from the _Video Conversions_ and _Audio Conversions_ interfaces. Whenever you set a specific parameter configuration and press the 'Save as Profile' button, you will save those parameters in the 'User Profile' preset of the 'Presets Manager' interface.
+New profiles can also be added from the _Video Conversions_ and _Audio Conversions_ interfaces. Whenever you set a 
+specific parameter configuration and press the 'Save as Profile' button, you will save those parameters in the 
+'User Profile' preset of the 'Presets Manager' interface.
 ![Image](../../../images/save_as_profile.png) 
 
 [Back](../../../videomass_use.md)
