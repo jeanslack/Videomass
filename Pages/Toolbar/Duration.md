@@ -9,7 +9,8 @@ point (if set), and not from the beginning of the first scene of a movie.
 
 ![Image](../../images/duration.png) 
 
-When set with time values above zero and then confirmed with the Ok button, the Duration button in the secondary toolbar is turned with a green gradient.   
+When set with time values above zero and then confirmed with the Ok button, the Duration button in the secondary 
+toolbar is turned with a green gradient.   
 ![Image](../../images/btn_durationOn.png)   
 When all time values are reset with the Clear button and then confirmed with the Ok button, the Duration button will 
 revert to default color.   
@@ -43,8 +44,8 @@ of a whole process (which can sometimes be very long).
 ----------------
 
 ### _IMPORTANT NOTES:_ 
-The Duration tool, when set, generates a parameter that is extended globally, ie in all conversion processes with 
-the _Presets Manager_, _Video Conversions_, _Audio Conversions_ and _playback_ interfaces. 
+When set, the Duration tool generates a parameter that is extended globally, ie in all used conversion processes
+with the _Presets Manager_, _Video Conversions_, _Audio Conversions_, _playback_, _audio normalization_, _images extraction_, etc. 
 Keeping this principle in mind, it is possible to enable or disable this instrument as needed.
 
 ----------------
