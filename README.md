@@ -39,9 +39,11 @@ for porting, Videomass will cease development for compatibility with Python2 .
 
 **Required:**   
 - Python3     
-- wxPython4 (phoenix)   
+- wxPython4 (phoenix) 
+- PyPubSub
+- pip
 
-**Optionals:**   
+**Optionals:** but indispensable    
 - ffmpeg >= 3.2   
 - ffprobe (for multimedia streams analysis)  
 - ffplay (media player for media preview)   
