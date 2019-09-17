@@ -13,16 +13,16 @@ Alternatively, you can only convert the audio stream without encoding the video:
 
 ## Parameters not yet implemented on Videomass
 
-### Add audio stream to a image
+**Add audio stream to a image**   
 `ffmpeg -loop 1 -i "IMAGE.png" -i "AUDIO_STREAM.mp3" -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest "Output_Result1.mp4"`   
 
-## Create a slideshow
+## Create a slideshows   
 `ffmpeg -loop 1 -i "IMAGE_1.png" -i "IMAGE_2.png" -i "AUDIO_STREAM.mp3" -c:v libx264 -tune stillimage -c:a aac -b:a 192k -pix_fmt yuv420p -shortest "Output_Result2.mp4"`
 
-## Add more numbered images
+**Add more numbered images**   
 `ffmpeg -y -framerate 1/10 -start_number 1 -i "image_%0.jpg" -i "an_Audio_stream.mp3" -c:v libx264 -r 25 -pix_fmt yuv420p -c:a aac -strict experimental -shortest "result3.mp4"`   
 
-or   
+or    
 
 `ffmpeg -y -framerate 1/5 -start_number 1 -i "image_%0.jpg" -c:v libx264 -r 25 -pix_fmt yuv420p -c:a aac -shortest "result4.mp4"`   
 
