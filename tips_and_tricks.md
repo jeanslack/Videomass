@@ -5,7 +5,9 @@ Parameters for new profiles to be used with Videomass. They need to be added wit
 ## Add a new audio stream to a movie
 This replaces the current audio stream on the movie. Both streams will not be encoded and the duration of the new movie created will be equivalent to the duration of the added audio stream:   
 
-`-i "ADD_ONE_AUDIO_FILE_HERE" -map 0:v -map 1:a -c copy -shortest`   
+```
+-i "ADD_ONE_AUDIO_FILE_HERE" -map 0:v -map 1:a -c copy -shortest
+```   
 
 Alternatively, you can only convert the audio stream without encoding the video:
 
