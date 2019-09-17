@@ -14,7 +14,7 @@ of predefined presets, in order to facilitate their use with the potential
 of FFmpeg.   
 
 Videomass is a project created by Gianluca Pernigotto (jeanslack) and it was
-written in Python2 and Python3 with the wxPython-Classic and wxPython-Phoenix.   
+written in Python3 with the wxPython4 "Phoenix" .   
 
 ## What is FFmpeg?
 ![Image](/images/FFmpeg2.png)   
