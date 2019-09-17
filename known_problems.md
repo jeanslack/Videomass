@@ -2,9 +2,9 @@
 
 ## Known problems and solutions of Videomass
 
-- On Windows, with the version of FFmpeg 3.1.5 included in the installer, the 
-**nlmeans** denoiser filter is not implemented, as it exists only in the most 
-recent versions of FFmpeg. Use **hqdn3d** instead, or set Videomass to a path 
-with a newer version of FFmpeg.
+- On Windows, with the version 3.1.5 of FFmpeg included in the installation program, 
+the denoiser _nlmeans_ filter is not implemented, since it exists only in the most 
+recent versions of FFmpeg. Use _hqdn3d_ instead or set Videomass to a path with a 
+newer version of FFmpeg.
 
 [Home](index.md)
