@@ -9,5 +9,6 @@ header_pages:
     - LICENSE
     - download_installation.md
     - videomass_use.md
+    - tips_and_tricks.md
     - known_problems.md
     - donation.md
