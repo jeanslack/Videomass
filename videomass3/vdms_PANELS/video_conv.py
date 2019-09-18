@@ -73,8 +73,10 @@ vcodec = {
 "OGG theora":("-vcodec libtheora","ogg"), 
 "WebM (HTML5)":("-vcodec libvpx","webm"), 
 "FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
-_("Copy Video Codec"):("","-c:v copy"),
-_("Save Images From Video"):("save images",""),
+_("Copy video codec"):("","-c:v copy"),
+_("Save images from a movie"):("save images",""),
+_("Add new audio stream to a movie"):("add new audio",""),
+_("Create a simple slideshow"):("slideshow",""),
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
@@ -83,6 +85,7 @@ red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
 ciano = '#61ccc7' # rgb 97, 204, 199
+violet = '#A72EE6'
 
 class Video_Conv(wx.Panel):
     """
@@ -113,18 +116,20 @@ class Video_Conv(wx.Panel):
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, style=0)
         self.notebook_1_pane_1 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
-                                  choices=[("AVI (XVID mpeg4)"), 
-                                           ("AVI (FFmpeg mpeg4)"), 
-                                           ("AVI (ITU h264)"), 
-                                           ("MP4 (mpeg4)"), 
-                                           ("MP4 (HQ h264/AVC)"), 
-                                           ("M4V (HQ h264/AVC)"), 
-                                           ("MKV (h264)"), 
-                                           ("OGG theora"), 
-                                           ("WebM (HTML5)"), 
-                                           ("FLV (HQ h264/AVC)"),
-                                           (_("Copy Video Codec")),
-                                           (_("Save Images From Video"))], 
+                                choices=[("AVI (XVID mpeg4)"), 
+                                        ("AVI (FFmpeg mpeg4)"), 
+                                        ("AVI (ITU h264)"), 
+                                        ("MP4 (mpeg4)"), 
+                                        ("MP4 (HQ h264/AVC)"), 
+                                        ("M4V (HQ h264/AVC)"), 
+                                        ("MKV (h264)"), 
+                                        ("OGG theora"), 
+                                        ("WebM (HTML5)"), 
+                                        ("FLV (HQ h264/AVC)"),
+                                        (_("Copy video codec")),
+                                        (_("Save images from a movie")),
+                                        (_("Add new audio stream to a movie")),
+                                        (_("Create a simple slideshow"))], 
                             size=(200,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
                                                )
         self.sizer_combobox_formatv_staticbox = wx.StaticBox(
@@ -741,6 +746,23 @@ class Video_Conv(wx.Panel):
             msg = (_('Tip: use the "Duration" tool, then try setting '
                      'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
             self.parent.statusbar_msg(msg, greenolive)
+
+            self.ckbx_pass.SetValue(False)
+            self.UI_set()
+            
+        elif vcodec[selected][0] == "add new audio":
+            msg = (_('Tip: use an audio file'))
+            self.parent.statusbar_msg(msg, azure)
+
+            self.ckbx_pass.SetValue(False)
+            self.UI_set()
+        
+        elif vcodec[selected][0] == "slideshow":
+            msg = (_('Tip: go to the "Add Files" panel and only import all '
+                     'the images you want to use, then set "Duration" seconds '
+                     'for slide (cut). Use the "Resize > Scale" filter '
+                     'to resize all images'))
+            self.parent.statusbar_msg(msg, violet)
 
             self.ckbx_pass.SetValue(False)
             self.UI_set()
@@ -1499,13 +1521,17 @@ class Video_Conv(wx.Panel):
         logname = 'Videomass_VideoConversion.log'
 
         # CHECKING:
-        if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
+        if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, '')
             
-        elif self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
+        elif self.cmbx_vidContainers.GetValue() == _("Save images from a movie"):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, 'jpg')
+        
+        elif self.cmbx_vidContainers.GetValue() == _("Create a simple slideshow"):
+            self.time_seq = self.parent.time_seq
+            checking = inspect(file_sources, dir_destin, 'mp4')
             
         else:
             self.update_allentries()# last update of all setting interface
@@ -1520,6 +1546,15 @@ class Video_Conv(wx.Panel):
     
         if self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
             self.saveimages(file_sources, dir_destin, logname)
+    
+        elif self.cmbx_vidContainers.GetValue() == _("Create a simple slideshow"):
+            self.slideShow(file_sources, dir_destin, logname)
+            
+        elif (self.cmbx_vidContainers.GetValue() == 
+                                    _("Add new audio stream to a movie ")):
+            pass
+            
+            
         else:
             self.stdProc(file_sources, dir_destin, countmax, logname)
 
@@ -1534,7 +1569,7 @@ class Video_Conv(wx.Panel):
         
         """
         title = _('Start video conversion')
-        if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
+        if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
             command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s -y' % (
                        self.ffmpeg_loglev, 
                        cmd_opt["VideoCodec"], 
@@ -1550,7 +1585,7 @@ class Video_Conv(wx.Panel):
                        cmd_opt["Map"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(countmax, ["Copy Video Codec"] )
+            valupdate = self.update_dict(countmax, ["Copy video codec"] )
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1711,6 +1746,77 @@ class Video_Conv(wx.Panel):
                                         '1', 
                                         )
     #------------------------------------------------------------------#
+    def slideShow(self, file_sources, dest, logname):
+        """
+        method specialized for make a simple slideshow
+        
+        """
+        if not self.time_seq:
+            wx.MessageBox(_('You should set the duration in seconds '
+                            'between slides. Use the "Duration" tool '
+                            'and set ONLY the cut time on the seconds box.'), 
+                            'Videomass', 
+                            wx.ICON_INFORMATION, self)
+            return
+        else:# convert time seconds
+            dur = self.time_seq.split()[3] # the -t flag
+            h,m,s = dur.split(':')
+            totalsum = (int(h)*60+ int(m)*60+ int(s))
+        
+        if not cmd_opt["Scale"]:
+            if wx.MessageBox(_('If you are sure that the images all have '
+                               'the same size, proceed. Otherwise you have '
+                               'to set the Resize filter.\n\nDo the slideshow '
+                               'images have the same size?'), 
+                             _('Videomass: Please confirm'), 
+                                                wx.ICON_QUESTION | 
+                                                wx.YES_NO, 
+                                                self) == wx.NO:
+                return
+            else:
+                print('scale=w=450:h=234')
+
+        li = []
+        for dir_ in os.listdir(dest[0]):
+            if "Slideshow_" in dir_:
+                li.append(int(dir_.split('Slideshow_')[1].split('.')[0]))
+        if li:
+            prog = max(li) +1
+            outputdir = "%s/Slideshow_%d.mp4" % (dest[0], prog)
+        else:
+            outputdir = "%s/Slideshow_1.mp4" % (dest[0])
+            
+        cmd_1 = ['%s -loglevel %s' %(self.ffmpeg_link, self.ffmpeg_loglev),
+                 cmd_opt["Filters"]
+                 ]
+        cmd_2 = ['%s -loglevel %s -framerate '
+                 '1/%s -pattern_type glob' % (self.ffmpeg_link,
+                                              self.ffmpeg_loglev, 
+                                              str(totalsum),),
+                 '-c:v  libx264 -tune stillimage '
+                 '-vf fps=25 -pix_fmt yuv420p %s '
+                 '%s -y "%s"' % (self.threads, 
+                              self.cpu_used, 
+                              outputdir)
+                 ]
+        #command = " ".join(command.split())# mi formatta la stringa
+        valupdate = self.update_dict(1, ['Slideshow', str(totalsum)])
+        ending = Formula(self, valupdate[0], valupdate[1], 'Create a Slideshow')
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('slideshow',
+                                        file_sources, 
+                                        'mp4', 
+                                        cmd_1, 
+                                        cmd_2, 
+                                        None, 
+                                        '',
+                                        '', 
+                                        logname, 
+                                        1, 
+                                        )
+            #used for play preview and mediainfo:
+            self.exportStreams("%s" % outputdir)
+    #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     def update_dict(self, countmax, prof):
         """
@@ -1722,8 +1828,8 @@ class Video_Conv(wx.Panel):
             normalize = _('Enable')
         else:
             normalize = _('Disable')
-        
-        if prof[0] == "Copy Video Codec":
+        #------------------
+        if prof[0] == "Copy video codec":
             formula = (_("SUMMARY:\n\nFile to Queue\
                 \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
                 \nAudio Format:\nAudio codec:\nAudio channel:\
@@ -1737,7 +1843,7 @@ class Video_Conv(wx.Panel):
                 cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
                 self.parent.time_seq))
-                        
+        #-------------------
         elif prof[0] == "Save as images":
             formula = (_("SUMMARY:\n\nFile to Queue\
                          \nImages Format:\nVideo rate:\
@@ -1745,9 +1851,25 @@ class Video_Conv(wx.Panel):
                         ))
             dictions = ("\n\n1\njpg\n%s\n%s\n%s" % (cmd_opt["VideoRate"],   
                                                     cmd_opt["Filters"],
-                                                    self.parent.time_seq
-                                                    ))
-        
+                                                    self.parent.time_seq))
+        #-------------------
+        elif prof[0] == "Slideshow":
+            formula = (_("SUMMARY:\n\nFile to Queue\
+                         \nVideo Format:\nTime to slide between images:\
+                         \nNumber of images to slideshow:\nSize:"
+                        ))
+            if cmd_opt["Scale"]:
+                s = [x.split('=') for x in cmd_opt["Scale"].split() 
+                    if 'scale=' in x ]
+                size = '%s X %s' %(s[0][2].split(':')[0], s[0][3])
+            else:
+                size = 'Not set'
+                
+
+            dictions = ("\n\n1\nmp4\n%s sec.\n%s\n%s" %(prof[1],
+                                                        len(self.file_sources),
+                                                        size,))
+        #--------------------
         else:
             formula = (_("SUMMARY:\n\nFile to Queue\
                     \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
@@ -1795,7 +1917,7 @@ class Video_Conv(wx.Panel):
             normalize = ''
         
         if not self.ckbx_pass.IsChecked():
-            if self.cmbx_vidContainers.GetValue() == _("Copy Video Codec"):
+            if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
                 outext = cmd_opt["VideoFormat"]
                 command = ('%s %s %s %s %s %s %s %s %s %s' % (
                             normalize,
@@ -1809,7 +1931,7 @@ class Video_Conv(wx.Panel):
                             cmd_opt["AudioDepth"][1], 
                             cmd_opt["Map"])
                                 )
-            elif self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
+            elif self.cmbx_vidContainers.GetValue() == _("Save images from a movie"):
                 outext = "jpg"
                 command = ('%s %s -an' % (
                            cmd_opt["VideoRate"],
