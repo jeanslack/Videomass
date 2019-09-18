@@ -40,17 +40,21 @@ from videomass3.vdms_SYS import app_const as appC
 
 class Videomass(wx.App):
     """
-    Before starting the application, check for the essentials
-    and send to main frame.
-    TODO:Make a logging with python standard library logging
+    Check for the essentials Before starting the main frame
+    
     """
     def __init__(self, redirect=True, filename=None):
         """
-        Creating attributes that will be used after in 
-        other class with wx.GetApp()
+        The following attributes will be used in some class 
+        with wx.GetApp()
+        -------
+        self.DIRconf > location of the configuration directory
+        self.FILEconf > location and type of conf. file (Windows or Unix?)
+        self.WORKdir > location of the current program directory
+        self.OS > operating system name
     
         """
-        self.DIRconf = None # set pathname folder
+        self.DIRconf = None
         self.FILEconf = None
         self.WORKdir = None
         self.OS = None
@@ -62,7 +66,7 @@ class Videomass(wx.App):
         
     def OnInit(self):
         """
-        This is a bootstrap interface. The 'setui' calls the function that 
+        This is bootstrap interface. The 'setui' calls the function that 
         prepares the environment configuration. The 'setui' take all 
         values of the file configuration.
         
@@ -86,7 +90,7 @@ class Videomass(wx.App):
         self.OS = setui[0] # set OS type
         self.FILEconf = setui[6] # set file conf. pathname 
         self.WORKdir = setui[7] # set PWD current dir
-        self.DIRconf = setui[8] # set dir conf pathname
+        self.DIRconf = setui[8] # set location dir conf pathname
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -142,7 +146,7 @@ class Videomass(wx.App):
     def firstrun(self, icon):
         """
         Start a temporary dialog: this is showing during first time 
-        start the Videomass application on MaOS and Windows.
+        start Videomass application on MaOS and Windows.
         """
         from videomass3.vdms_DIALOGS.first_time_start import FirstStart
         main_frame = FirstStart(icon)
@@ -185,12 +189,16 @@ class Videomass(wx.App):
 
     def OnExit(self):
         """
+        OnExit provides an interface for exiting the application
         """
         print ("OnExit")
         return True
     #-------------------------------------------------------------------    
 
 def main():
+    """
+    Starts the wx.App mainloop
+    """
     app = Videomass(False)
     #app.MainLoop()
     fred = app.MainLoop()
