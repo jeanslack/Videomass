@@ -80,7 +80,8 @@ class MyListCtrl(wx.ListCtrl):
             if s[1]:
                 if s[1] == 'N/A':
                     msg = "%s; %s" %(s[1],_('duration is skipped'))
-                    self.parent.statusbar_msg(msg, greenolive)
+                    print(msg)
+                    #self.parent.statusbar_msg(msg, greenolive)
                 else:
                     self.parent.statusbar_msg(s[1], red)
         else:

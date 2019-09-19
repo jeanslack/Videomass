@@ -1748,13 +1748,14 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def slideShow(self, file_sources, dest, logname):
         """
-        method specialized for make a simple slideshow
+        this method allows to form the parameters for the realization 
+        of a simple presentation or a movie with a single image
         
         """
         if not self.time_seq:
-            wx.MessageBox(_('You should set the duration in seconds '
-                            'between slides. Use the "Duration" tool '
-                            'and set ONLY the cut time on the seconds box.'), 
+            wx.MessageBox(_('You should set a duration between the slides '
+                            'or to single image. Use the "Duration" tool '
+                            'and set ONLY the cut time boxes.'), 
                             'Videomass', 
                             wx.ICON_INFORMATION, self)
             return
@@ -1762,16 +1763,17 @@ class Video_Conv(wx.Panel):
             time = self.parent.time_read['time']
         
         if not cmd_opt["Scale"]:
-            if wx.MessageBox(_('If you are sure that the images all have '
-                               'the same resolution, proceed. Otherwise you '
-                               'have to set the Resize filter.\n\nDo '
-                               'the slideshow images have the same resolution?'), 
-                             _('Videomass: Please confirm'), 
-                                                wx.ICON_QUESTION | 
-                                                wx.YES_NO, 
-                                                self) == wx.NO:
-                return
-            
+            if not len(file_sources) == 1:
+                if wx.MessageBox(_('If you are sure that the images all have '
+                                   'the same resolution, proceed. Otherwise '
+                                   'you have to set the Resize filter.\n\n'
+                                   'Do the slideshow images have the same ' 
+                                   'resolution?'), 
+                                    _('Videomass: Please confirm'), 
+                                                    wx.ICON_QUESTION | 
+                                                    wx.YES_NO, 
+                                                    self) == wx.NO:
+                    return
         li = []
         for dir_ in os.listdir(dest[0]):
             if "Slideshow_" in dir_:
@@ -1791,13 +1793,12 @@ class Video_Conv(wx.Panel):
                            str(time[1]),
                            ),
                  '-c:v  libx264 -tune stillimage '
-                 '-vf fps=25 -pix_fmt yuv420p %s '
+                 '-vf fps=25,format=yuv420p %s '
                  '%s -y "%s"' % (self.threads, 
                                  self.cpu_used, 
                                  outputdir
                                  )
                  ]
-        #command = " ".join(command.split())# mi formatta la stringa
         valupdate = self.update_dict(1, ['Slideshow', ''])
         ending = Formula(self, valupdate[0], valupdate[1], 'Create a Slideshow')
         if ending.ShowModal() == wx.ID_OK:

@@ -213,6 +213,12 @@ class GeneralProcess(wx.Panel):
             percentage = timesum / duration * 100
             self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
             del output, duration
+        
+        elif output[0] == 'count cicles only':
+            self.barProg.SetValue(duration)
+            #self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
+            self.OutText.AppendText(' %s' % output[1])
+
 
         else:# append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():# if checked print already
@@ -914,13 +920,19 @@ class GrabAudioProc(Thread):
 ########################################################################
 class CreateSlideShow(Thread):
     """
-    This class represents a separate thread for running processes, which 
-    need to read the stdout/stderr in real time.
-    It is reserved for extracting multiple audio files from different 
-    video formats.
+    This thread is indispensable for creating movies starting from 
+    one or more photographic images supported by FFmpeg. It should 
+    resize the image resolution to a given size and convert it to png 
+    format using the default temporary directory on each O.S., then 
+    proceed to chaining in a numerical order (given by the sequence 
+    of files) and save the output to the chosen folder.
     """
     def __init__(self, varargs, duration, logname):
         """
+        NOTE: the self.duration attribute is the result of the sum 
+        of the duration set on the 'duration' tool for the number of 
+        images imported for concatenation. This should manage the 
+        progress bar effectively.
         """
         Thread.__init__(self)
         """initialize"""
@@ -939,13 +951,30 @@ class CreateSlideShow(Thread):
     def run(self):
         """
         Subprocess initialize thread.
+        TODO: make the code of this thread better
+        
         """
         global STATUS_ERROR
+        existanerror = 0
+        
+        wx.CallAfter(pub.sendMessage, 
+                    "COUNT_EVT", 
+                    count='Task 1', 
+                    duration=len(self.filelist),
+                    fname='Temporary conversion of uploaded images',
+                    end='',
+                    )
+        logWrite('Temporary conversion of uploaded images', '', self.logname)
         
         with tempfile.TemporaryDirectory() as tmpdirname:# make tmp dir
             prognum = 0
             for files in self.filelist:
                 prognum += 1
+                line = ['count cicles only',
+                        '%s  >>  %s/IMAGE_%d.png\n' %(files,
+                                                      tmpdirname,
+                                                      prognum)
+                        ]
                 cmd_1 = '%s -i "%s" %s "%s/IMAGE_%d.png"' %(
                                                         self.cmd_1[0],
                                                         files, 
@@ -953,13 +982,75 @@ class CreateSlideShow(Thread):
                                                         tmpdirname,
                                                         prognum,
                                                         )
-                psize = subprocess.Popen(shlex.split(cmd_1),
-                                         stderr=subprocess.PIPE, 
-                                         universal_newlines=True
-                                         )
-                err = psize.communicate()
-                print(err)
+                try:
+                    p_1 = subprocess.Popen(shlex.split(cmd_1),
+                                           stderr=subprocess.PIPE, 
+                                           universal_newlines=True
+                                           )
+                    error = p_1.communicate()
+                    
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=prognum,
+                                status=0,
+                                )
+                    
+                    if CHANGE_STATUS == 1:
+                            p_1.terminate()
+                            print('...Interrupted process')
+                            existanerror = 1
+                            break
+                        
+                    print('Resizing and conversion','\n',error)
+                        
+                except OSError as err:
+                    e = "%s\n  %s" % (err, not_exist_msg)
+                    wx.CallAfter(pub.sendMessage, 
+                                "COUNT_EVT", 
+                                count=e, 
+                                duration=0,
+                                fname='make slideshow',
+                                end='',
+                                )
+                    print('...%s' % (e))
+                    STATUS_ERROR = 1
+                    existanerror = 1
+                    break
                 
+            if existanerror:
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT")
+                return
+
+            elif p_1.wait(): # error
+                wx.CallAfter(pub.sendMessage, 
+                            "UPDATE_EVT", 
+                            output=error[1], 
+                            duration=prognum,
+                            status=0,
+                            )
+                wx.CallAfter(pub.sendMessage, 
+                            "UPDATE_EVT", 
+                            output='', 
+                            duration=prognum,
+                            status=p_1.wait(),
+                            )
+                logWrite('', "Exit status: %s" % p_1.wait(),
+                            self.logname) #append exit error number
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT")
+                return
+            
+            else: # status ok
+                wx.CallAfter(pub.sendMessage, 
+                            "COUNT_EVT", 
+                            count='', 
+                            duration='',
+                            fname='',
+                            end='ok'
+                            )
+            #------------------------------- make video
             cmd_2 = '{0} -i "{1}/IMAGE_%d.png" {2}'.format(self.cmd_2[0], 
                                                            tmpdirname, 
                                                            self.cmd_2[1],
@@ -970,68 +1061,54 @@ class CreateSlideShow(Thread):
             
             wx.CallAfter(pub.sendMessage, 
                         "COUNT_EVT", 
-                        count=count, 
+                        count='Task 2', 
                         duration=self.duration,
-                        fname='This file',
+                        fname='Slideshow creation in mp4 format',
                         end='',
                         )
             logWrite(com, '', self.logname)# write n/n + command only
             
-            try:
-                with subprocess.Popen(shlex.split(cmd_2),
-                                      stderr=subprocess.PIPE, 
-                                      bufsize=1, 
-                                      universal_newlines=True) as p:
-                    for line in p.stderr:
-                        #sys.stdout.write(line)
-                        #sys.stdout.flush()
-                        print(line, end=''),
-                        
-                        wx.CallAfter(pub.sendMessage, 
-                                    "UPDATE_EVT", 
-                                    output=line, 
-                                    duration=self.duration,
-                                    status=0,
-                                    )
-                        if CHANGE_STATUS == 1:# break second 'for' loop
-                            p.terminate()
-                            print('...Interrupted process')
-                            break
-                        
-                    if p.wait(): # error
-                        wx.CallAfter(pub.sendMessage, 
-                                    "UPDATE_EVT", 
-                                    output=line, 
-                                    duration=self.duration,
-                                    status=p.wait(),
-                                    )
-                        logWrite('', 
-                                "Exit status: %s" % p.wait(),
-                                self.logname)
-                                #append exit error number
+            with subprocess.Popen(shlex.split(cmd_2),
+                                    stderr=subprocess.PIPE, 
+                                    bufsize=1, 
+                                    universal_newlines=True) as p_2:
+                for line in p_2.stderr:
+                    #sys.stdout.write(line)
+                    #sys.stdout.flush()
+                    print(line, end=''),
                     
-                    else: # status ok
-                        wx.CallAfter(pub.sendMessage, 
-                                    "COUNT_EVT", 
-                                    count='', 
-                                    duration='',
-                                    fname='',
-                                    end='ok'
-                                    )
-                        print('...Done')
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=self.duration,
+                                status=0,
+                                )
+                    if CHANGE_STATUS == 1:# break second 'for' loop
+                        p_2.terminate()
+                        print('...Interrupted process')
+                        break
+                    
+                if p_2.wait(): # error
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=self.duration,
+                                status=p_2.wait(),
+                                )
+                    logWrite('', 
+                            "Exit status: %s" % p_2.wait(),
+                            self.logname)
+                            #append exit error number
                 
-            except OSError as err:
-                e = "%s\n  %s" % (err, not_exist_msg)
-                wx.CallAfter(pub.sendMessage, 
-                            "COUNT_EVT", 
-                            count=e, 
-                            duration=0,
-                            fname='this file',
-                            end='',
-                            )
-                print('...%s' % (e))
-                STATUS_ERROR = 1
-            
+                else: # status ok
+                    wx.CallAfter(pub.sendMessage, 
+                                "COUNT_EVT", 
+                                count='', 
+                                duration='',
+                                fname='',
+                                end='ok'
+                                )
+                    print('...Done')
                     
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
