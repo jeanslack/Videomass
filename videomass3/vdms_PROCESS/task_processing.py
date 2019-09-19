@@ -929,7 +929,7 @@ class CreateSlideShow(Thread):
         self.cmd_1 = varargs[3] # command 1 
         self.cmd_2 = varargs[4] # command 2
         #self.logname = varargs[8] #  videomass/logname.log
-        self.duration = duration[0] +10 # duration values list (items)
+        self.duration = duration[0] * len(varargs[1]) # time sum
         self.count = 0 # count number loop
         self.countmax = varargs[9] # lengh file list
         self.logname = logname # title name of file log
@@ -960,14 +960,10 @@ class CreateSlideShow(Thread):
                 err = psize.communicate()
                 print(err)
                 
-            cmd_2 = '%s -i %s/*.png %s' %(self.cmd_2[0], 
-                                            tmpdirname, 
-                                            self.cmd_2[1],
-                                            )
-
-                
-                
-                
+            cmd_2 = '{0} -i "{1}/IMAGE_%d.png" {2}'.format(self.cmd_2[0], 
+                                                           tmpdirname, 
+                                                           self.cmd_2[1],
+                                                           )
             count = 'File %s/%s' % ('1','1',)
             com = "%s\n%s" % (count, cmd_2)
             print("%s" % com)
@@ -983,9 +979,9 @@ class CreateSlideShow(Thread):
             
             try:
                 with subprocess.Popen(shlex.split(cmd_2),
-                                    stderr=subprocess.PIPE, 
-                                    bufsize=1, 
-                                    universal_newlines=True) as p:
+                                      stderr=subprocess.PIPE, 
+                                      bufsize=1, 
+                                      universal_newlines=True) as p:
                     for line in p.stderr:
                         #sys.stdout.write(line)
                         #sys.stdout.flush()

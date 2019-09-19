@@ -103,8 +103,9 @@ class MainFrame(wx.Frame):
         self.file_sources = []# list of items in list control
         self.file_destin = ''# path name for file saved destination
         self.panelshown = '' # gives current (previusly) panel shown
-        self.time_seq = ''
-        self.duration = []
+        self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
+        self.time_read = {'start seek':['',''],'time':['','']}
+        self.duration = [] # empty if not file imported
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
         #----------- panel toolbar buttons
@@ -450,8 +451,8 @@ class MainFrame(wx.Frame):
     #-------------------------------- Options ----------------------------#
     def Cut_range(self, event):
         """
-        Call dialog for Set a time selection cutting on all imported
-        media. The values persist so that they are not reset.
+        Call dialog to Set a global time sequence on all imported
+        media. Here set self.time_seq and self.time_read attributes
         """
         data = ''
 
@@ -461,9 +462,21 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
+                self.time_read['start seek'] = ['','']
+                self.time_read['time'] = ['','']
                 self.btn_duration.SetBottomEndColour(self.bBtnC)
             else:
                 self.btn_duration.SetBottomEndColour(wx.Colour(0, 240, 0))
+                # set a more readable time
+                ss = data.split()[1] # the -ss flag
+                h,m,s = ss.split(':')
+                start = (int(h)*60+ int(m)*60+ int(s))
+                t = data.split()[3] # the -t flag
+                h,m,s = t.split(':')
+                time = (int(h)*60+ int(m)*60+ int(s))
+                self.time_read['start seek'] = [ss,start]
+                self.time_read['time'] = [t,time]
+                
             self.time_seq = data
         else:
             dial.Destroy()
@@ -1148,6 +1161,7 @@ class MainFrame(wx.Frame):
                          self.panelshown, 
                          duration,
                          self.time_seq,
+                         self.time_read,
                          )
         #make the positioning:
         self.DnDsizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)

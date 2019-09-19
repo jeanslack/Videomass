@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (02) December 28 2018
+# Rev Dec.28.2018, Sept.19.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -58,26 +58,23 @@ from videomass3.vdms_DIALOGS import ffmpeg_formats
 from videomass3.vdms_DIALOGS import ffmpeg_codecs
 
 #-----------------------------------------------------------------------#
-def process(self, varargs, panelshown, duration, time_seq):
+def process(self, varargs, panelshown, duration, time_seq, time_read):
     """
     1) TIME DEFINITION FOR THE PROGRESS BAR
         For a suitable and efficient progress bar, if a specific 
-        time sequence has been set with the duration tool, the total duration 
-        of each media file will be replaced with the set time sequence. 
-        Otherwise the duration of each media will be the one originated from 
-        its real duration.
+        time sequence has been set with the duration tool, the total 
+        duration of each media file will be replaced with the set time 
+        sequence. Otherwise the duration of each media will be the one 
+        originated from its real duration.
         
     2) STARTING THE PROCESS
-        Than, the process is assigned to the most suitable thread and at 
-        the same time the panel with the progress bar is instantiated.
+        Here the panel with the progress bar is instantiated which will 
+        assign a corresponding thread.
     """
     if time_seq:
         newDuration = []
-        dur = time_seq.split()[3] # the -t flag
-        h,m,s = dur.split(':')
-        totalsum = (int(h)*60+ int(m)*60+ int(s))
         for n in duration:
-            newDuration.append(totalsum)
+            newDuration.append(time_read['time'][1])
         duration = newDuration
     
     self.ProcessPanel = GeneralProcess(self, 

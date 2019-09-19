@@ -3,7 +3,7 @@
 #########################################################
 # FileName: video_conv.py
 # Porpose: Intarface for video conversions
-# Compatibility: Python3, wxPython Phoenix
+# Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -865,8 +865,8 @@ class Video_Conv(wx.Panel):
     def video_filter_checker(self):
         """
         evaluates whether video filters (-vf) are enabled or not and 
-        sorts them according to an appropriate syntax. If not filters strings,
-        the -vf option will be removed
+        sorts them according to an appropriate syntax. If not filters 
+        strings, the -vf option will be removed
         """
         if cmd_opt['Crop']:
             crop = '%s,' % cmd_opt['Crop']
@@ -1759,23 +1759,19 @@ class Video_Conv(wx.Panel):
                             wx.ICON_INFORMATION, self)
             return
         else:# convert time seconds
-            dur = self.time_seq.split()[3] # the -t flag
-            h,m,s = dur.split(':')
-            totalsum = (int(h)*60+ int(m)*60+ int(s))
+            time = self.parent.time_read['time']
         
         if not cmd_opt["Scale"]:
             if wx.MessageBox(_('If you are sure that the images all have '
-                               'the same size, proceed. Otherwise you have '
-                               'to set the Resize filter.\n\nDo the slideshow '
-                               'images have the same size?'), 
+                               'the same resolution, proceed. Otherwise you '
+                               'have to set the Resize filter.\n\nDo '
+                               'the slideshow images have the same resolution?'), 
                              _('Videomass: Please confirm'), 
                                                 wx.ICON_QUESTION | 
                                                 wx.YES_NO, 
                                                 self) == wx.NO:
                 return
-            else:
-                print('scale=w=450:h=234')
-
+            
         li = []
         for dir_ in os.listdir(dest[0]):
             if "Slideshow_" in dir_:
@@ -1790,17 +1786,19 @@ class Video_Conv(wx.Panel):
                  cmd_opt["Filters"]
                  ]
         cmd_2 = ['%s -loglevel %s -framerate '
-                 '1/%s -pattern_type glob' % (self.ffmpeg_link,
-                                              self.ffmpeg_loglev, 
-                                              str(totalsum),),
+                 '1/%s' % (self.ffmpeg_link,
+                           self.ffmpeg_loglev, 
+                           str(time[1]),
+                           ),
                  '-c:v  libx264 -tune stillimage '
                  '-vf fps=25 -pix_fmt yuv420p %s '
                  '%s -y "%s"' % (self.threads, 
-                              self.cpu_used, 
-                              outputdir)
+                                 self.cpu_used, 
+                                 outputdir
+                                 )
                  ]
         #command = " ".join(command.split())# mi formatta la stringa
-        valupdate = self.update_dict(1, ['Slideshow', str(totalsum)])
+        valupdate = self.update_dict(1, ['Slideshow', ''])
         ending = Formula(self, valupdate[0], valupdate[1], 'Create a Slideshow')
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('slideshow',
@@ -1828,6 +1826,12 @@ class Video_Conv(wx.Panel):
             normalize = _('Enable')
         else:
             normalize = _('Disable')
+        if not self.parent.time_seq:
+            time = _('Disable')
+        else:
+            t = list(self.parent.time_read.items())
+            time = _('%s %s | %s %s') %(t[0][0], t[0][1][0], 
+                                        t[1][0], t[1][1][0])
         #------------------
         if prof[0] == "Copy video codec":
             formula = (_("SUMMARY:\n\nFile to Queue\
@@ -1842,7 +1846,7 @@ class Video_Conv(wx.Panel):
                 cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
                 cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
-                self.parent.time_seq))
+                time))
         #-------------------
         elif prof[0] == "Save as images":
             formula = (_("SUMMARY:\n\nFile to Queue\
@@ -1851,24 +1855,23 @@ class Video_Conv(wx.Panel):
                         ))
             dictions = ("\n\n1\njpg\n%s\n%s\n%s" % (cmd_opt["VideoRate"],   
                                                     cmd_opt["Filters"],
-                                                    self.parent.time_seq))
+                                                    time))
         #-------------------
         elif prof[0] == "Slideshow":
-            formula = (_("SUMMARY:\n\nFile to Queue\
-                         \nVideo Format:\nTime to slide between images:\
-                         \nNumber of images to slideshow:\nSize:"
+            formula = (_("SUMMARY:\n\nNumber of images to slideshow:\
+                         \nOutput video format:\nTime to slide between images:\
+                         \nResolution (size):"
                         ))
             if cmd_opt["Scale"]:
                 s = [x.split('=') for x in cmd_opt["Scale"].split() 
                     if 'scale=' in x ]
                 size = '%s X %s' %(s[0][2].split(':')[0], s[0][3])
             else:
-                size = 'Not set'
+                size = _('As from source')
                 
-
-            dictions = ("\n\n1\nmp4\n%s sec.\n%s\n%s" %(prof[1],
-                                                        len(self.file_sources),
-                                                        size,))
+            dictions = ("\n\n%s\nmp4\n%s\n%s" %(len(self.file_sources),
+                                                time,
+                                                size,))
         #--------------------
         else:
             formula = (_("SUMMARY:\n\nFile to Queue\
@@ -1892,7 +1895,7 @@ class Video_Conv(wx.Panel):
                         cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
                         cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                         cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
-                        self.parent.time_seq)
+                        time)
                         )
         return formula, dictions
 

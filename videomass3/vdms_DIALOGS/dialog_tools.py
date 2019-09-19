@@ -34,14 +34,14 @@ import webbrowser
 ####################################################################
 class Cut_Range(wx.Dialog):
     """
-    This class show a simple dialog with a timer selection for
-    cutting a time range of audio and video streams. 
+    This class show a simple dialog with a timer selection
+    to set duration. 
     FIXME: replace spinctrl with a timer spin float ctrl if exist
     """
     def __init__(self, parent, hasSet):
         """
-        FFmpeg use this format of a time range to specifier a media cutting
-        range: "-ss 00:00:00 -t 00:00:00". The -ss flag is the initial
+        FFmpeg use this format to specifier a duration range:
+        "-ss 00:00:00 -t 00:00:00". The -ss flag is the initial
         start selection time; the -t flag is the duration time amount 
         starting from -ss. All this one is specified by hours, minutes and 
         seconds values.
@@ -221,12 +221,12 @@ class Cut_Range(wx.Dialog):
     #------------------------------------------------------------------#
     def on_ok(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data event and
-        no return correctly. It has the right behavior if not used here, because 
-        it is called in the main frame. 
+        if you enable self.Destroy(), it delete from memory all data 
+        event and no return correctly. It has the right behavior if 
+        not used here, because it is called in the main frame. 
         
-        Event.Skip(), work correctly here. Sometimes needs to disable it for
-        needs to maintain the view of the window (for exemple).
+        Event.Skip(), work correctly here. Sometimes needs to disable 
+        it for needs to maintain the view of the window (for exemple).
         """
         ss = "%s:%s:%s" %(self.init_hour, self.init_minute, self.init_seconds)
         t = "%s:%s:%s" %(self.cut_hour, self.cut_minute, self.cut_seconds)
