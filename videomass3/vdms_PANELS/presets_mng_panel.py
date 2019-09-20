@@ -689,7 +689,15 @@ class PresetsPanel(wx.Panel):
     def update_dict(self, countmax):
         """
         This method is required for update info before send at epilogue
+        
         """
+        if not self.parent.time_seq:
+            time = _('Disable')
+        else:
+            t = list(self.parent.time_read.items())
+            time = _('%s: %s | %s: %s') %(t[0][0], t[0][1][0], 
+                                        t[1][0], t[1][1][0])
+            
         numfile = "%s file in pending" % str(countmax)
                     
         formula = (_(u"SUMMARY:\n\nFile to Queue\
@@ -699,7 +707,7 @@ class PresetsPanel(wx.Panel):
         dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
                                             array[0], 
                                             array[4],
-                                            self.time_seq)
+                                            time,)
                     )
 
         return formula, dictions

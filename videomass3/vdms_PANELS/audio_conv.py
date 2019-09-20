@@ -749,13 +749,19 @@ class Audio_Conv(wx.Panel):
         else:
             normalize = _('Disable')
             
+        if not self.parent.time_seq:
+            time = _('Disable')
+        else:
+            t = list(self.parent.time_read.items())
+            time = _('%s: %s | %s: %s') %(t[0][0], t[0][1][0], 
+                                        t[1][0], t[1][1][0])
+            
         if self.ckb_onlynorm.IsChecked():
             formula = (_("SUMMARY:\n\nFile Queue:\
                        \nAudio Normalization:\nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s" % (numfile, 
                                             normalize, 
-                                            self.time_seq
-                                            )
+                                            time,)
                         )
         elif self.cmbx_a.GetValue() == _("Save audio from movie"):
             formula = (_("SUMMARY:\n\nFile Queue:\
@@ -763,8 +769,8 @@ class Audio_Conv(wx.Panel):
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
                                                 cmd_opt["ExportExt"],
                                                 cmd_opt["CodecCopied"], 
-                                                self.time_seq)
-                                                )
+                                                time,)
+                        )
         else:
             formula = (_("SUMMARY:\n\nFile Queue:\
                     \nAudio Container:\nAudio Codec:\nAudio bit-rate:\
@@ -774,7 +780,7 @@ class Audio_Conv(wx.Panel):
                     numfile, cmd_opt["AudioContainer"], 
                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][0], 
                     cmd_opt["AudioChannel"][0], cmd_opt["AudioRate"][0], 
-                    cmd_opt["AudioDepth"][0] , normalize, self.time_seq)
+                    cmd_opt["AudioDepth"][0] , normalize, time)
                         )
         return formula, dictions
     

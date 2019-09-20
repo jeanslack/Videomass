@@ -11,11 +11,11 @@ September 19, 2019 V.1.6.2
 +------------------------------------+
 
 ADD:
-    * New feature added to create simple slideshows. This new feature allows 
-      you to add one or more images in the formats supported by FFmpeg (jpg, 
-      png, bmp) to memorize the order in which they were added and to create 
-      simple slideshows or a video with a single image. Audio can be added 
-      later with a new process.
+    * New feature added to create simple video presentation. This new feature
+      allows you to add one or more images in the formats supported by FFmpeg 
+      (jpg, png, bmp) to memorize the order in which they were added and to 
+      create simple slideshows or a video with a single image. Audio can be 
+      added later with a new process.
       See the online documentation for use.
 
 

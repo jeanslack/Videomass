@@ -75,8 +75,8 @@ vcodec = {
 "FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
 _("Copy video codec"):("","-c:v copy"),
 _("Save images from a movie"):("save images",""),
-_("Add new audio stream to a movie"):("add new audio",""),
-_("Create a simple slideshow"):("slideshow",""),
+_("Add audio stream to a movie"):("add new audio",""),
+_("Slide show from images"):("slideshow",""),
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
@@ -128,8 +128,8 @@ class Video_Conv(wx.Panel):
                                         ("FLV (HQ h264/AVC)"),
                                         (_("Copy video codec")),
                                         (_("Save images from a movie")),
-                                        (_("Add new audio stream to a movie")),
-                                        (_("Create a simple slideshow"))], 
+                                        (_("Add audio stream to a movie")),
+                                        (_("Slide show from images"))], 
                             size=(200,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
                                                )
         self.sizer_combobox_formatv_staticbox = wx.StaticBox(
@@ -758,10 +758,9 @@ class Video_Conv(wx.Panel):
             self.UI_set()
         
         elif vcodec[selected][0] == "slideshow":
-            msg = (_('Tip: go to the "Add Files" panel and only import all '
-                     'the images you want to use, then set "Duration" seconds '
-                     'for slide (cut). Use the "Resize > Scale" filter '
-                     'to resize all images'))
+            msg = (_('Tip: upload ONLY the images you want to use, then set '
+                     'the "Duration" tool for slide between images. Use the '
+                     '"Resize > Scale" filter to resize same resolution'))
             self.parent.statusbar_msg(msg, violet)
 
             self.ckbx_pass.SetValue(False)
@@ -1529,7 +1528,7 @@ class Video_Conv(wx.Panel):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, 'jpg')
         
-        elif self.cmbx_vidContainers.GetValue() == _("Create a simple slideshow"):
+        elif self.cmbx_vidContainers.GetValue() == _("Slide show from images"):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, 'mp4')
             
@@ -1547,11 +1546,11 @@ class Video_Conv(wx.Panel):
         if self.cmbx_vidContainers.GetValue() == _("Save Images From Video"):
             self.saveimages(file_sources, dir_destin, logname)
     
-        elif self.cmbx_vidContainers.GetValue() == _("Create a simple slideshow"):
+        elif self.cmbx_vidContainers.GetValue() == _("Slide show from images"):
             self.slideShow(file_sources, dir_destin, logname)
             
         elif (self.cmbx_vidContainers.GetValue() == 
-                                    _("Add new audio stream to a movie ")):
+                                    _("Add audio stream to a movie")):
             pass
             
             
@@ -1755,7 +1754,10 @@ class Video_Conv(wx.Panel):
         if not self.time_seq:
             wx.MessageBox(_('You should set a duration between the slides '
                             'or to single image. Use the "Duration" tool '
-                            'and set ONLY the cut time boxes.'), 
+                            'and set ONLY the "Cut (end point)" not '
+                            '"Seeking (start point)".\n\nThe final '
+                            'presentation video will have that duration '
+                            'multiplied by the number of pictures uploaded.'), 
                             'Videomass', 
                             wx.ICON_INFORMATION, self)
             return
@@ -1767,8 +1769,8 @@ class Video_Conv(wx.Panel):
                 if wx.MessageBox(_('If you are sure that the images all have '
                                    'the same resolution, proceed. Otherwise '
                                    'you have to set the Resize filter.\n\n'
-                                   'Do the slideshow images have the same ' 
-                                   'resolution?'), 
+                                   'Do the pictures uploaded for the '
+                                   'presentation have the same resolution?'), 
                                     _('Videomass: Please confirm'), 
                                                     wx.ICON_QUESTION | 
                                                     wx.YES_NO, 
@@ -1800,7 +1802,11 @@ class Video_Conv(wx.Panel):
                                  )
                  ]
         valupdate = self.update_dict(1, ['Slideshow', ''])
-        ending = Formula(self, valupdate[0], valupdate[1], 'Create a Slideshow')
+        ending = Formula(self, 
+                         valupdate[0], 
+                         valupdate[1], 
+                         'Create a video presentation'
+                         )
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('slideshow',
                                         file_sources, 
@@ -1831,15 +1837,15 @@ class Video_Conv(wx.Panel):
             time = _('Disable')
         else:
             t = list(self.parent.time_read.items())
-            time = _('%s %s | %s %s') %(t[0][0], t[0][1][0], 
+            time = _('%s: %s | %s: %s') %(t[0][0], t[0][1][0], 
                                         t[1][0], t[1][1][0])
         #------------------
         if prof[0] == "Copy video codec":
-            formula = (_("SUMMARY:\n\nFile to Queue\
-                \nVideo Format:\nVideo codec:\nVideo aspect:\nVideo rate:\
-                \nAudio Format:\nAudio codec:\nAudio channel:\
-                \nAudio rate:\nAudio bit-rate:\nBit per Sample:\
-                \nAudio Normalization:\nMap:\nTime selection:"))
+            formula = (_("SUMMARY\n\nFile to Queue\
+                \nVideo Format\nVideo codec\nVideo aspect\nVideo rate\
+                \nAudio Format\nAudio codec\nAudio channel\
+                \nAudio rate\nAudio bit-rate\nBit per Sample\
+                \nAudio Normalization\nMap\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s" % (
                 numfile, cmd_opt["FormatChoice"], cmd_opt["VideoCodec"], 
@@ -1850,23 +1856,21 @@ class Video_Conv(wx.Panel):
                 time))
         #-------------------
         elif prof[0] == "Save as images":
-            formula = (_("SUMMARY:\n\nFile to Queue\
-                         \nImages Format:\nVideo rate:\
-                         \nFilters:\nTime selection:"
+            formula = (_("SUMMARY\n\nFile to Queue\
+                         \nImages Format\nVideo rate\
+                         \nFilters\nTime selection"
                         ))
             dictions = ("\n\n1\njpg\n%s\n%s\n%s" % (cmd_opt["VideoRate"],   
                                                     cmd_opt["Filters"],
                                                     time))
         #-------------------
         elif prof[0] == "Slideshow":
-            formula = (_("SUMMARY:\n\nNumber of images to slideshow:\
-                         \nOutput video format:\nTime to slide between images:\
-                         \nResolution (size):"
-                        ))
+            formula = (_("SUMMARY\n\nUploaded images\nDefault video format\
+                         \nTime to slide between images\nResolution (size)")
+                        )
             if cmd_opt["Scale"]:
-                s = [x.split('=') for x in cmd_opt["Scale"].split() 
-                    if 'scale=' in x ]
-                size = '%s X %s' %(s[0][2].split(':')[0], s[0][3])
+                res = cmd_opt["Scale"].split('=')
+                size = '%s X %s' %(res[2].split(':')[0], res[3])
             else:
                 size = _('As from source')
                 
@@ -1875,7 +1879,7 @@ class Video_Conv(wx.Panel):
                                                 size,))
         #--------------------
         else:
-            formula = (_("SUMMARY:\n\nFile to Queue\
+            formula = (_("SUMMARY\n\nFile to Queue\
                     \nVideo Format:\nVideo codec:\nVideo bit-rate:\nCRF:\
                     \nDouble/Single Pass:\nDeinterlacing:\
                     \nInterlacing:\nApplied Filters:\
