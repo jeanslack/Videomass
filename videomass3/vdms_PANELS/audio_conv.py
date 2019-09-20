@@ -101,7 +101,7 @@ class Audio_Conv(wx.Panel):
                  ("AAC [.m4a]"), 
                  ("ALAC [.m4a]"), 
                  ("AC3 [.ac3]"),
-                 (_("Save audio from movie"))], style=wx.CB_DROPDOWN | 
+                 (_("Save audio from movies"))], style=wx.CB_DROPDOWN | 
                                                        wx.CB_READONLY)
         self.cmbx_a.SetSelection(4)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
@@ -255,7 +255,7 @@ class Audio_Conv(wx.Panel):
         """
         Get selected container from combobox
         """
-        if self.cmbx_a.GetValue() == _("Save audio from movie"):
+        if self.cmbx_a.GetValue() == _("Save audio from movies"):
             if self.ckb_norm.IsChecked():
                 self.normalization_disabled()
             self.ckb_norm.Disable(), self.ckb_onlynorm.Disable()
@@ -313,7 +313,7 @@ class Audio_Conv(wx.Panel):
         elif cmd_opt["AudioContainer"] == "AC3 [.ac3]":
             self.audio_parameters("ac3", "Audio AC3 Parameters - Videomass")
             
-        #elif self.cmbx_a.GetValue() == "Save audio from movie":
+        #elif self.cmbx_a.GetValue() == "Save audio from movies":
             #self.audiocopy()
     #-------------------------------------------------------------------#
     def audio_parameters(self, audio_type, title):
@@ -599,7 +599,7 @@ class Audio_Conv(wx.Panel):
         Update _allentries is callaed by on_ok method.
         """
         self.time_seq = self.parent.time_seq
-        if self.cmbx_a.GetValue() == _("Save audio from movie"):
+        if self.cmbx_a.GetValue() == _("Save audio from movies"):
             file_sources = self.parent.file_sources[:]
             self.audiocopy(file_sources)
     #------------------------------------------------------------------#
@@ -639,7 +639,7 @@ class Audio_Conv(wx.Panel):
         filename, base_name, countmax = checking
 
 
-        if self.cmbx_a.GetValue() == _("Save audio from movie"):
+        if self.cmbx_a.GetValue() == _("Save audio from movies"):
             self.grabaudioProc(file_sources, dir_destin, countmax, logname)
         else:
             self.stdProc(file_sources, dir_destin, countmax, logname)
@@ -763,7 +763,7 @@ class Audio_Conv(wx.Panel):
                                             normalize, 
                                             time,)
                         )
-        elif self.cmbx_a.GetValue() == _("Save audio from movie"):
+        elif self.cmbx_a.GetValue() == _("Save audio from movies"):
             formula = (_("SUMMARY:\n\nFile Queue:\
                       \nAudio Container:\nCodec copied:\nTime selection:"))
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
@@ -813,7 +813,7 @@ class Audio_Conv(wx.Panel):
             command = ' '.join(command.split())# sistemo gli spazi
             list = [command, cmd_opt["ExportExt"]]
             
-        elif self.cmbx_a.GetValue() == _("Save audio from movie"):
+        elif self.cmbx_a.GetValue() == _("Save audio from movies"):
             command = ("-vn %s" % cmd_opt["AudioCodec"][0])
             command = ' '.join(command.split())# sistemo gli spazi
             list = [command, cmd_opt["ExportExt"][0]]

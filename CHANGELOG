@@ -11,12 +11,16 @@ September 19, 2019 V.1.6.2
 +------------------------------------+
 
 ADD:
-    * New feature added to create simple video presentation. This new feature
-      allows you to add one or more images in the formats supported by FFmpeg 
-      (jpg, png, bmp) to memorize the order in which they were added and to 
-      create simple slideshows or a video with a single image. Audio can be 
-      added later with a new process.
-      See the online documentation for use.
+    * Added new box for automations on Video Conversion panel which 
+      includes the following features:
+      
+        * New - create simple video presentation. This new feature
+          allows you to add one or more images in the formats supported by FFmpeg 
+          (jpg, png, bmp) to memorize the order in which they were added and to 
+          create simple slideshows or a video with a single image. Audio can be 
+          added later with a new process.
+          See the online documentation for use.
+        * New - add audio stream on a movie .
 
 
 +------------------------------------+
