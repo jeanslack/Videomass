@@ -921,11 +921,11 @@ class GrabAudioProc(Thread):
 class CreateSlideShow(Thread):
     """
     This thread is indispensable for creating movies starting from 
-    one or more photographic images supported by FFmpeg. It should 
-    resize the image resolution to a given size and convert it to png 
-    format using the default temporary directory on each O.S., then 
-    proceed to chaining in a numerical order (given by the sequence 
-    of files) and save the output to the chosen folder.
+    one or more pictures supported by FFmpeg. It should resize the 
+    image resolution to a given size and convert it to png format
+    using the default temporary directory on each O.S., then proceed 
+    to chaining in a numerical order (given by the sequence 
+    of files) convert and saving the output to the chosen folder.
     """
     def __init__(self, varargs, duration, logname):
         """
@@ -940,7 +940,7 @@ class CreateSlideShow(Thread):
         self.filelist = varargs[1] # input file list (items)
         self.cmd_1 = varargs[3] # command 1 
         self.cmd_2 = varargs[4] # command 2
-        #self.logname = varargs[8] #  videomass/logname.log
+        self.outformat = varargs[5] # final output format
         self.duration = duration[0] * len(varargs[1]) # time sum
         self.count = 0 # count number loop
         self.countmax = varargs[9] # lengh file list
@@ -959,7 +959,7 @@ class CreateSlideShow(Thread):
         
         wx.CallAfter(pub.sendMessage, 
                     "COUNT_EVT", 
-                    count='Task 1', 
+                    count='Task One', 
                     duration=len(self.filelist),
                     fname='Temporary conversion of uploaded images',
                     end='',
@@ -1058,12 +1058,13 @@ class CreateSlideShow(Thread):
             count = 'File %s/%s' % ('1','1',)
             com = "%s\n%s" % (count, cmd_2)
             print("%s" % com)
+            task_2 = 'Slideshow creation in %s format' % self.outformat
             
             wx.CallAfter(pub.sendMessage, 
                         "COUNT_EVT", 
-                        count='Task 2', 
+                        count='Task Two', 
                         duration=self.duration,
-                        fname='Slideshow creation in mp4 format',
+                        fname=task_2,
                         end='',
                         )
             logWrite(com, '', self.logname)# write n/n + command only

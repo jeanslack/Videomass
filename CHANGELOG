@@ -21,7 +21,8 @@ ADD:
           added later with a new process.
           See the online documentation for use.
         * New - add audio stream on a movie .
-        * New - extract images from movie with format selection (jpg,png,bmp)
+        * New - extract images from movies with format selection 
+          (jpg, png, bmp) also in the Video Conversions panel
 
 
 +------------------------------------+
