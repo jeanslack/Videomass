@@ -61,6 +61,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
            "Filters":"", "Shortest":"", "AddAudioStream":"",
+           "PicturesFormat":"",
            }
 vcodec = {
 "AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
@@ -74,9 +75,6 @@ vcodec = {
 "WebM (HTML5)":("-vcodec libvpx","webm"), 
 "FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
 _("Copy video codec"):("","-c:v copy"),
-_("Save images from a movie"):("save images",""),
-_("Add audio stream to a movie"):("add new audio",""),
-_("Slide show from images"):("slideshow",""),
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
@@ -146,24 +144,36 @@ class Video_Conv(wx.Panel):
         self.sizer_automations_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
                                             wx.ID_ANY, ("")
                                             )
-        self.rdb_aut = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
-                                          (_("Automations")), choices=[
-                                            (_("Disabled")), 
+        self.rdb_aut = wx.RadioBox(self.notebook_1_pane_1, 
+                                   wx.ID_ANY, 
+                                   (_("Automations")), 
+                                   choices=[(_("Disabled")), 
                                     (_("Save images from a selected movie")), 
-                                        (_("Add audio stream to a movie")), 
-                                            (_("Slide show from images")),
-                                                                      ], 
+                                    (_("Add audio stream to a movie")), 
+                                    (_("Slide show from images")),
+                                            ], 
                                     majorDimension=0, style=wx.RA_SPECIFY_ROWS
                                             )
         self.shortest = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                      (_("Use shortest"))
                                      )
-        self.spin_ctrl_bitrate = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
-        "1500", min=0, max=25000, style=wx.TE_PROCESS_ENTER
-        )
+        self.audiostrm = wx.Button(self.notebook_1_pane_1, wx.ID_OPEN, 
+                                    _("Add audio track"), size=(-1,-1)
+                                   )
+        self.cmbx_pictformat = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
+                                             choices=[("jpg"), ("png"),
+                                                      ("bmp"),], 
+                            size=(100,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                               )
+        self.spin_ctrl_bitrate = wx.SpinCtrl(self.notebook_1_pane_1, 
+                                             wx.ID_ANY, 
+                                             "1500", min=0, max=25000, 
+                                             style=wx.TE_PROCESS_ENTER
+                                             )
         self.sizer_bitrate_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, (_("Video Bit-Rate Value"))
-        )
+                                                    wx.ID_ANY, 
+                                                 (_("Video Bit-Rate Value"))
+                                                    )
         self.slider_CRF = wx.Slider(self.notebook_1_pane_1, wx.ID_ANY, 1, 0, 51, 
         style=wx.SL_HORIZONTAL | wx.SL_AUTOTICKS | wx.SL_LABELS
         )
@@ -257,7 +267,7 @@ class Video_Conv(wx.Panel):
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                         wx.ID_ANY, (_("Video Aspect"))
                                         )
-        self.cmbx_vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
+        self.cmbx_Vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
         choices=[("Default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
         ("30 fps (30p) Progessive"),("0.2 fps for images"), ("0.5 fps for images"),
         ("1 fps for images"), ("1.5 fps for images"), ("2 fps for images")], 
@@ -393,19 +403,27 @@ class Video_Conv(wx.Panel):
         self.sizer_automations_staticbox.Lower()
         sizer_automations = wx.StaticBoxSizer(self.sizer_automations_staticbox, 
                                               wx.VERTICAL)
-        grid_sizer_automations = wx.GridSizer(3, 1, 0, 0)
-        grid_sizer_automations.Add(self.rdb_aut, 0, wx.ALL| 
+        grid_sizer_automations = wx.GridSizer(4, 1, 0, 0)
+        grid_sizer_automations.Add(self.rdb_aut, 0, wx.TOP| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
                                                      )
-        grid_sizer_automations.Add(self.shortest, 0, wx.ALL| 
+        grid_sizer_automations.Add(self.audiostrm, 0, wx.TOP| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
                                                      )
-        
-
+        grid_sizer_automations.Add(self.shortest, 0, wx.TOP| 
+                                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                                     wx.ALIGN_CENTER_VERTICAL, 
+                                                     20
+                                                     )
+        grid_sizer_automations.Add(self.cmbx_pictformat, 0, wx.TOP| 
+                                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                                     wx.ALIGN_CENTER_VERTICAL, 
+                                                     20
+                                                     )
         grid_sizer_pane1_left = wx.GridSizer(2, 1, 0, 0)
         self.sizer_dir_staticbox.Lower()
         sizer_dir = wx.StaticBoxSizer(self.sizer_dir_staticbox, wx.VERTICAL)
@@ -476,7 +494,7 @@ class Video_Conv(wx.Panel):
                                                     15
                                                     )
         grid_sizer_1.Add(sizer_videoaspect, 1, wx.ALL | wx.EXPAND, 15)
-        sizer_videorate.Add(self.cmbx_vrate, 0, wx.ALL | 
+        sizer_videorate.Add(self.cmbx_Vrate, 0, wx.ALL | 
                                                 wx.ALIGN_CENTER_HORIZONTAL, 15
                                                 )
         grid_sizer_1.Add(sizer_videorate, 1, wx.ALL | wx.EXPAND, 15)
@@ -579,8 +597,8 @@ class Video_Conv(wx.Panel):
                         "is the video width and video height ratio. "
                         "Leave on 'Default' to copy the original settings."
                                                 ))
-        self.cmbx_vrate.SetSelection(0)
-        self.cmbx_vrate.SetToolTip(_("Video Rate: A any video consists "
+        self.cmbx_Vrate.SetSelection(0)
+        self.cmbx_Vrate.SetToolTip(_("Video Rate: A any video consists "
                     "of images displayed as frames, repeated a given number "
                     "of times per second. In countries are 30 NTSC, PAL "
                     "countries (like Italy) are 25. Leave on 'Default' "
@@ -620,6 +638,8 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
         self.Bind(wx.EVT_RADIOBOX, self.on_Automation, self.rdb_aut)
         self.Bind(wx.EVT_CHECKBOX, self.on_Shortest, self.shortest)
+        self.Bind(wx.EVT_BUTTON, self.on_AddaudioStr, self.audiostrm)
+        self.Bind(wx.EVT_COMBOBOX, self.on_PicturesFormat, self.cmbx_pictformat)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_ctrl_bitrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
@@ -630,7 +650,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmbx_Vaspect)
-        self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_vrate)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_Vrate)
         self.Bind(wx.EVT_RADIOBOX, self.on_AudioFormats, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
         self.Bind(wx.EVT_CHECKBOX, self.onNormalize, self.ckbx_a_normalize)
@@ -652,9 +672,11 @@ class Video_Conv(wx.Panel):
         self.normalize_default()
 
     def default_videosettings(self):
-        self.cmbx_vrate.SetSelection(0),self.cmbx_Vaspect.SetSelection(0),
+        self.cmbx_Vrate.SetSelection(0),self.cmbx_Vaspect.SetSelection(0),
         self.rdb_aut.SetSelection(0)
         self.shortest.Hide()
+        self.audiostrm.Hide()
+        self.cmbx_pictformat.Hide()
         self.cmbx_Vaspect.Enable()
         cmd_opt["VideoAspect"] = ""
         cmd_opt["VideoRate"] = ""
@@ -679,7 +701,7 @@ class Video_Conv(wx.Panel):
             self.btn_preview.Disable(), self.notebook_1_pane_4.Disable(), 
             self.ckbx_pass.Disable(), self.ckbx_pass.SetValue(False)
             self.rdb_a.EnableItem(4,enable=True)# se disable lo abilita
-            self.slider_CRF.Disable(), self.rdb_h264preset.SetSelection(0)
+            self.slider_CRF.Hide(), self.rdb_h264preset.SetSelection(0)
             self.rdb_h264profile.SetSelection(0)
             self.rdb_h264tune.SetSelection(0)
             self.on_h264Presets(self), self.on_h264Profiles(self)
@@ -787,57 +809,77 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Automation(self, event):
         """
-        Enable or disable automation functionality
+        Enable or disable automation functionality. Can hide,
+        show, enable or disable some widget in this panel.
         
         """
+        #----------------------- First revert to default
+        self.ckbx_pass.Show(), self.ckbx_pass.SetValue(False),
+        self.cmbx_pictformat.Hide(), self.cmbx_vidContainers.Show(),
+        self.ckbx_pass.Show(), self.spin_ctrl_bitrate.Show(),
+        self.slider_CRF.Show(),self.cmbx_Vaspect.Show(),
+        self.cmbx_Vrate.Show(), self.notebook_1_pane_3.Enable(), 
+        self.notebook_1_pane_4.Enable(), self.cmbx_vidContainers.Clear()
+        self.shortest.Hide(), self.shortest.SetValue(False),
+        self.audiostrm.Hide()
+        cmd_opt["Shortest"], cmd_opt["Map"] = '', "-map 0"
+        cmd_opt["PicturesFormat"], cmd_opt["AddAudioStream"] = "", ""
+        cod = ["AVI (XVID mpeg4)", "AVI (FFmpeg mpeg4)", "AVI (ITU h264)", 
+        "MP4 (mpeg4)", "MP4 (HQ h264/AVC)", "M4V (HQ h264/AVC)", 
+        "MKV (h264)", "OGG theora", "WebM (HTML5)", "FLV (HQ h264/AVC)",
+        _("Copy video codec")]
+        for x in cod:
+            self.cmbx_vidContainers.Append((x),)
+        
+        #------------------------- start widgets settings
         sel_1 = _("Disabled")
         sel_2 = _("Save images from a selected movie")
         sel_3 = _("Add audio stream to a movie")
         sel_4 = _("Slide show from images")
         
-        if self.rdb_aut.GetStringSelection() == sel_1:
-            msg = (_('Automations are disabled'))
+        if self.rdb_aut.GetStringSelection() == sel_1:# disable
+            msg = (_('Automations disabled'))
             self.parent.statusbar_msg(msg, '')
             
-        elif self.rdb_aut.GetStringSelection() == sel_2:
+        elif self.rdb_aut.GetStringSelection() == sel_2:# extract images
             msg = (_('Tip: use the "Duration" tool, then try setting '
                      'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
             self.parent.statusbar_msg(msg, greenolive)
-            self.ckbx_pass.SetValue(False)
             
-        elif self.rdb_aut.GetStringSelection() == sel_3:
-            msg = (_('Tip: use "Copy video codec"'))
+            self.cmbx_pictformat.Show(), self.cmbx_pictformat.SetSelection(0),
+            self.cmbx_vidContainers.Hide(),self.ckbx_pass.Hide(),
+            self.spin_ctrl_bitrate.Hide(), self.slider_CRF.Hide(),
+            self.cmbx_Vaspect.Hide(), self.notebook_1_pane_3.Disable(),
+            self.notebook_1_pane_4.Disable(),
+            cmd_opt["PicturesFormat"] = "jpg"
+            
+        elif self.rdb_aut.GetStringSelection() == sel_3:# add audio track
+            msg = (_('Tip: Use "Copy source video codec" and "Try to copy '
+                     'the source" of the audio file to speed up the process '
+                     'without re-encoding all'))
             self.parent.statusbar_msg(msg, azure)
-            self.ckbx_pass.SetValue(False)
-            #wildcard = "Source (*.vdms)|*.vdms| All files (*.*)|*.*"
-        
-            dialfile = wx.FileDialog(self, _("Videomass: Choose an audio file "
-                                             "to add on movie"),
-                                     '', "", '',#wildcard, 
-                                    wx.FD_OPEN | 
-                                    wx.FD_FILE_MUST_EXIST
-                                        )
-            if dialfile.ShowModal() == wx.ID_OK:
-                filename = dialfile.GetPath()
-            else:
-                filename = 'no audio file imported'
-            self.shortest.Show(), self.shortest.SetValue(False)
+            self.shortest.Show(), self.audiostrm.Show()
+            self.shortest.SetValue(False)
             cmd_opt["Shortest"], cmd_opt["Map"] = '', "-map 0:v:0 -map 1:a:0"
-            cmd_opt["AddAudioStream"] = '-i "%s"' % filename
+            cmd_opt["AddAudioStream"] = '-i "NO AUDIO TRACK IMPORTED"'
         
-        elif self.rdb_aut.GetStringSelection() == sel_4:
+        elif self.rdb_aut.GetStringSelection() == sel_4:#slaide show
+            self.ckbx_pass.SetValue(False), self.ckbx_pass.Hide(),
+            self.cmbx_vidContainers.Clear()
+            cod = ["AVI (ITU h264)", "MP4 (HQ h264/AVC)", "M4V (HQ h264/AVC)", 
+                   "MKV (h264)", "FLV (HQ h264/AVC)"]
+            for x in cod:
+                self.cmbx_vidContainers.Append((x),)
+            self.cmbx_vidContainers.SetSelection(1)
+            self.vidContainers(self)#this set from 
+            self.spin_ctrl_bitrate.Hide()
             msg = (_('Tip: upload ONLY the images you want to use, then set '
                      'the "Duration" tool for slide between images. Use the '
                      '"Resize > Scale" filter to resize same resolution'))
             self.parent.statusbar_msg(msg, violet)
-
-            self.ckbx_pass.SetValue(False)
-        
-        if not self.rdb_aut.GetStringSelection() == sel_3:
-            self.shortest.Hide(), self.shortest.SetValue(False)
-            cmd_opt["Shortest"], cmd_opt["Map"] = '', "-map 0"
-            cmd_opt["AddAudioStream"] = ''
-            
+            self.notebook_1_pane_3.Disable(),self.notebook_1_pane_4.Disable()
+            self.cmbx_Vaspect.Hide(), self.cmbx_Vrate.Hide()
+                
     #------------------------------------------------------------------#
     def on_Shortest(self, event):
         """
@@ -849,7 +891,39 @@ class Video_Conv(wx.Panel):
             cmd_opt["Shortest"] = '-shortest'
         else:
             cmd_opt["Shortest"] = ''
+    #------------------------------------------------------------------#
             
+    def on_AddaudioStr(self, event):
+        """
+        Add audio track to cmd_opt["AddAudioStream"] value
+        
+        """
+        frmt = ["*.%s;" % (a) for a in ['wav','aiff','flac','oga',
+                                        'm4a','ac3','mp3'
+                                        ]]
+        f = ''.join(frmt)
+        
+        with wx.FileDialog(self, "Videomass: Open an audio file", 
+                           wildcard="Audio source (%s)|%s" % (f, f),
+                           style=wx.FD_OPEN | 
+                           wx.FD_FILE_MUST_EXIST) as fileDialog:
+
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                cmd_opt["AddAudioStream"] = '-i "NO AUDIO TRACK IMPORTED"'
+                return     # the user changed their mind
+
+            # Proceed loading the file chosen by the user
+            pathname = fileDialog.GetPath()
+            cmd_opt["AddAudioStream"] = '-i "%s"' % pathname
+
+    #------------------------------------------------------------------#
+    def on_PicturesFormat(self, event):
+        """
+        Set output format to save images fro movie. Values are jpg,
+        png and bmp
+        
+        """
+        cmd_opt["PicturesFormat"] = self.cmbx_pictformat.GetValue()
     #------------------------------------------------------------------#
     def on_Pass(self, event):
         """
@@ -1121,7 +1195,7 @@ class Video_Conv(wx.Panel):
         """
         Set video rate parameter with fps values
         """
-        val = self.cmbx_vrate.GetValue()
+        val = self.cmbx_Vrate.GetValue()
         if val == "Default ":
             cmd_opt["VideoRate"] = ""
         else:
@@ -1597,12 +1671,8 @@ class Video_Conv(wx.Panel):
         elif (self.rdb_aut.GetStringSelection() == 
                                     _("Save images from a selected movie")):
             self.time_seq = self.parent.time_seq
-            checking = inspect(file_sources, dir_destin, 'jpg')
-        
-        elif self.rdb_aut.GetStringSelection() == _("Slide show from images"):
-            self.time_seq = self.parent.time_seq
-            checking = inspect(file_sources, dir_destin, 'mp4')
-            
+            checking = inspect(file_sources, dir_destin, 
+                               cmd_opt["PicturesFormat"])
         else:
             self.update_allentries()# last update of all setting interface
             checking = inspect(file_sources, dir_destin, 
@@ -1755,7 +1825,7 @@ class Video_Conv(wx.Panel):
     def saveimages(self, file_sources, dest, logname):
         """
         Save as files image the selected video input. The saved 
-        images are named as file name + a progressive number + .jpg 
+        images are named as file name + a progressive number + .format 
         and placed in a folder with the same file name + a progressive 
         number in the chosen output path.
         
@@ -1789,7 +1859,7 @@ class Video_Conv(wx.Panel):
                 outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
                 os.mkdir(outputdir)
 
-            fileout = "{0}-%d.{1}".format(fname,'jpg')
+            fileout = "{0}-%d.{1}".format(fname,cmd_opt["PicturesFormat"])
             cmd = ('%s %s -i "%s" -loglevel %s -an %s %s %s %s -y "%s/%s"' % (
                                                     self.ffmpeg_link, 
                                                     self.parent.time_seq,
@@ -1852,9 +1922,10 @@ class Video_Conv(wx.Panel):
                 li.append(int(dir_.split('Slideshow_')[1].split('.')[0]))
         if li:
             prog = max(li) +1
-            outputdir = "%s/Slideshow_%d.mp4" % (dest[0], prog)
+            outputdir = "%s/Slideshow_%d.%s" % (dest[0], prog, 
+                                                 cmd_opt["VideoFormat"],)
         else:
-            outputdir = "%s/Slideshow_1.mp4" % (dest[0])
+            outputdir = "%s/Slideshow_1.%s" % (dest[0],cmd_opt["VideoFormat"],)
             
         cmd_1 = ['%s -loglevel %s' %(self.ffmpeg_link, self.ffmpeg_loglev),
                  cmd_opt["Filters"]
@@ -1864,13 +1935,15 @@ class Video_Conv(wx.Panel):
                            self.ffmpeg_loglev, 
                            str(time[1]),
                            ),
-                 '-c:v  libx264 -tune stillimage '
+                 '-c:v libx264 %s -tune stillimage '
                  '-vf fps=25,format=yuv420p %s '
-                 '%s -y "%s"' % (self.threads, 
+                 '%s -y "%s"' % (cmd_opt["CRF"],
+                                 self.threads, 
                                  self.cpu_used, 
                                  outputdir
                                  )
                  ]
+        print(cmd_2)
         valupdate = self.update_dict(1, ['Slideshow', ''])
         ending = Formula(self, 
                          valupdate[0], 
@@ -1880,14 +1953,14 @@ class Video_Conv(wx.Panel):
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('slideshow',
                                         file_sources, 
-                                        'mp4', 
+                                        cmd_opt["VideoFormat"], 
                                         cmd_1, 
                                         cmd_2, 
                                         None, 
                                         '',
                                         '', 
                                         logname, 
-                                        1, 
+                                        '1', 
                                         )
             #used for play preview and mediainfo:
             self.exportStreams("%s" % outputdir)
@@ -1933,13 +2006,15 @@ class Video_Conv(wx.Panel):
                          \nImages Format\nVideo rate\
                          \nFilters\nTime selection"
                         ))
-            dictions = ("\n\n1\njpg\n%s\n%s\n%s" % (cmd_opt["VideoRate"],   
-                                                    cmd_opt["Filters"],
-                                                    time))
+            dictions = ("\n\n1\n%s\n%s\n%s\n%s" % (cmd_opt["PicturesFormat"], 
+                                                   cmd_opt["VideoRate"],   
+                                                   cmd_opt["Filters"],
+                                                   time))
         #-------------------
         elif prof[0] == "Slideshow":
-            formula = (_("SUMMARY\n\nUploaded images\nDefault video format\
-                         \nTime to slide between images\nResolution (size)")
+            formula = (_("SUMMARY\n\nUploaded images\nVideo format\
+                         \nCFR\nTime to slide between images\
+                         \nResolution (size)")
                         )
             if cmd_opt["Scale"]:
                 res = cmd_opt["Scale"].split('=')
@@ -1947,9 +2022,11 @@ class Video_Conv(wx.Panel):
             else:
                 size = _('As from source')
                 
-            dictions = ("\n\n%s\nmp4\n%s\n%s" %(len(self.file_sources),
-                                                time,
-                                                size,))
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s" %(len(self.file_sources),
+                                                   cmd_opt["VideoFormat"],
+                                                   cmd_opt["CRF"],
+                                                   time,
+                                                   size,))
         #--------------------
         else:
             formula = (_("SUMMARY\n\nFile to Queue\
