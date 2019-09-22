@@ -631,17 +631,21 @@ class PresetsPanel(wx.Panel):
         number in the chosen output path.
         
         """
-        if not self.parent.import_clicked:
+        if len(file_sources) == 1:
+            clicked = file_sources[0]
+            
+        elif not self.parent.import_clicked:
             wx.MessageBox(_('To export images, select one of the files '
                             'in the "Add files" panel'), 'Videomass', 
                             wx.ICON_INFORMATION, self)
             return
+        else:
+            clicked = self.parent.import_clicked
         
         valupdate = self.update_dict('1')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         
         if ending.ShowModal() == wx.ID_OK:
-            clicked = self.parent.import_clicked
             fname = os.path.basename(clicked.rsplit('.', 1)[0])
             dir_destin = dest[file_sources.index(clicked)]# specified dest
             

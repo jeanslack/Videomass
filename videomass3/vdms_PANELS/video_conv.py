@@ -61,7 +61,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
            "Filters":"", "Shortest":"", "AddAudioStream":"",
-           "PicturesFormat":"",
+           "PicturesFormat":"", "YUV":"",
            }
 vcodec = {
 "AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
@@ -666,6 +666,7 @@ class Video_Conv(wx.Panel):
         cmd_opt["FormatChoice"] = "MKV (h264)"
         cmd_opt["VideoFormat"] = "mkv"
         cmd_opt["VideoCodec"] = "-vcodec libx264"
+        cmd_opt["YUV"] = "-pix_fmt yuv420p"
         self.default_videosettings()
         self.UI_set()
         self.audio_default()
@@ -701,7 +702,7 @@ class Video_Conv(wx.Panel):
             self.btn_preview.Disable(), self.notebook_1_pane_4.Disable(), 
             self.ckbx_pass.Disable(), self.ckbx_pass.SetValue(False)
             self.rdb_a.EnableItem(4,enable=True)# se disable lo abilita
-            self.slider_CRF.Hide(), self.rdb_h264preset.SetSelection(0)
+            self.slider_CRF.Disable(), self.rdb_h264preset.SetSelection(0)
             self.rdb_h264profile.SetSelection(0)
             self.rdb_h264tune.SetSelection(0)
             self.on_h264Presets(self), self.on_h264Profiles(self)
@@ -772,12 +773,12 @@ class Video_Conv(wx.Panel):
         print (vcodec[selected][0])
         
         if vcodec[selected][0] == "-vcodec libx264":
-            cmd_opt["FormatChoice"] = "%s" % (selected)
-            # avi,mkv,mp4,flv,etc.:
-            cmd_opt['VideoFormat'] = "%s" % (vcodec[selected][1])
+            cmd_opt["FormatChoice"] = "%s" % (selected)# output form.
+            cmd_opt['VideoFormat'] = "%s" % (vcodec[selected][1])# format
             cmd_opt["VideoCodec"] = "-vcodec libx264"
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
+            cmd_opt["YUV"] = "-pix_fmt yuv420p"
             self.parent.statusbar_msg("Output format: %s" % (
                                       cmd_opt['VideoFormat']),None)
             self.UI_set()
@@ -785,21 +786,20 @@ class Video_Conv(wx.Panel):
         elif vcodec[selected][0] == "":# copy video codec
             cmd_opt["Passing"] = "single"
             cmd_opt["FormatChoice"] = "%s" % (selected)
-            # avi,mkv,mp4,flv,etc.:
             cmd_opt['VideoFormat'] = "%s" % ( vcodec[selected][1])
             cmd_opt["VideoCodec"] = "-c:v copy"
+            cmd_opt["YUV"] = ""
             self.parent.statusbar_msg("Output format: %s" % (
                                       cmd_opt['VideoFormat']),None)
             self.UI_set()
 
-        else:
+        else: # not x264/h264
             cmd_opt["FormatChoice"] = "%s" % (selected)
-            # avi,mkv,mp4,flv,etc.:
             cmd_opt['VideoFormat'] = "%s" % (vcodec[selected][1])
-            # -vcodec libx264 o altro:
             cmd_opt["VideoCodec"] = "%s" %(vcodec[selected][0])
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
+            cmd_opt["YUV"] = ""
             self.parent.statusbar_msg(_("Output format: %s") % (
                                     cmd_opt['VideoFormat']),None)
             self.UI_set()
@@ -824,13 +824,13 @@ class Video_Conv(wx.Panel):
         self.audiostrm.Hide(), self.rdb_h264tune.SetSelection(0)
         cmd_opt["Shortest"], cmd_opt["Map"] = '', "-map 0"
         cmd_opt["PicturesFormat"], cmd_opt["AddAudioStream"] = "", ""
+        cmd_opt["Tune"], cmd_opt["YUV"] = "", ""
         cod = ["AVI (XVID mpeg4)", "AVI (FFmpeg mpeg4)", "AVI (ITU h264)", 
         "MP4 (mpeg4)", "MP4 (HQ h264/AVC)", "M4V (HQ h264/AVC)", 
         "MKV (h264)", "OGG theora", "WebM (HTML5)", "FLV (HQ h264/AVC)",
         _("Copy video codec")]
         for x in cod:
             self.cmbx_vidContainers.Append((x),)
-        cmd_opt["Tune"] = ""
         
         #------------------------- start widgets settings
         sel_1 = _("Default")
@@ -843,16 +843,16 @@ class Video_Conv(wx.Panel):
             self.parent.statusbar_msg(msg, '')
             
         elif self.rdb_aut.GetStringSelection() == sel_2:# extract images
-            msg = (_('Tip: use the "Duration" tool, then try setting '
-                     'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
-            self.parent.statusbar_msg(msg, greenolive)
-            
+            self.cmbx_vidContainers.SetSelection(6), self.vidContainers(self)
             self.cmbx_pictformat.Show(), self.cmbx_pictformat.SetSelection(0),
             self.cmbx_vidContainers.Hide(),self.ckbx_pass.Hide(),
             self.spin_ctrl_bitrate.Hide(), self.slider_CRF.Hide(),
             self.cmbx_Vaspect.Hide(), self.notebook_1_pane_3.Disable(),
             self.notebook_1_pane_4.Disable(),
-            cmd_opt["PicturesFormat"] = "jpg"
+            cmd_opt["PicturesFormat"], cmd_opt["YUV"] = "jpg","-pix_fmt yuv420p"
+            msg = (_('Tip: use the "Duration" tool, then try setting '
+                     'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
+            self.parent.statusbar_msg(msg, greenolive)
             
         elif self.rdb_aut.GetStringSelection() == sel_3:# add audio track
             msg = (_('Tip: Use "Copy source video codec" and "Try to copy '
@@ -1748,26 +1748,27 @@ class Video_Conv(wx.Panel):
                 
         elif cmd_opt["Passing"] == "double":
             cmd1 = ('-loglevel %s -an %s %s %s %s '
-                     '%s %s %s %s %s %s -f rawvideo' % (
-                      self.ffmpeg_loglev,
-                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
-                      cmd_opt["Presets"], cmd_opt["Profile"],
-                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 
-                      cmd_opt["VideoRate"], cmd_opt["Filters"],
-                      self.threads, self.cpu_used),
+                     '%s %s %s %s %s %s %s -f rawvideo' % (
+                      self.ffmpeg_loglev, cmd_opt["VideoCodec"], 
+                      cmd_opt["Bitrate"], cmd_opt["Presets"], 
+                      cmd_opt["Profile"], cmd_opt["Tune"], 
+                      cmd_opt["VideoAspect"], cmd_opt["VideoRate"], 
+                      cmd_opt["Filters"], cmd_opt["YUV"], 
+                      self.threads, self.cpu_used,),
                     )
             pass1 = " ".join(cmd1[0].split())# mi formatta la stringa
-            cmd2= ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                   '%s %s %s %s %s %s' % (
+            cmd2= ('-loglevel %s %s %s %s %s %s %s %s %s '
+                   '%s %s %s %s %s %s %s %s %s %s %s' % (
                      self.ffmpeg_loglev, cmd_opt["AddAudioStream"],
                      cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                      cmd_opt["Presets"], cmd_opt["Profile"],
                      cmd_opt["Tune"], cmd_opt["VideoAspect"], 
                      cmd_opt["VideoRate"], cmd_opt["Filters"],
-                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
-                     cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-                     cmd_opt["AudioDepth"][1], self.threads, 
-                     self.cpu_used, cmd_opt["Map"], cmd_opt["Shortest"])
+                     cmd_opt["YUV"], cmd_opt["AudioCodec"], 
+                     cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
+                     cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
+                     self.threads, self.cpu_used, 
+                     cmd_opt["Map"], cmd_opt["Shortest"])
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
             valupdate = self.update_dict(countmax, [''])
@@ -1792,17 +1793,18 @@ class Video_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ("-loglevel %s %s %s %s %s %s %s %s "
+            command = ("-loglevel %s %s %s %s %s %s %s %s %s "
                        "%s %s %s %s %s %s %s %s %s %s %s -y" % (
                         self.ffmpeg_loglev, cmd_opt["AddAudioStream"],
                         cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                         cmd_opt["Presets"], cmd_opt["Profile"],
                         cmd_opt["Tune"], cmd_opt["VideoAspect"], 
                         cmd_opt["VideoRate"], cmd_opt["Filters"],
-                        cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
-                        cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-                        cmd_opt["AudioDepth"][1], self.threads, 
-                        self.cpu_used, cmd_opt["Map"], cmd_opt["Shortest"])
+                        cmd_opt["YUV"], cmd_opt["AudioCodec"], 
+                        cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
+                        cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
+                        self.threads, self.cpu_used, 
+                        cmd_opt["Map"], cmd_opt["Shortest"])
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(countmax, [''])
@@ -1833,18 +1835,22 @@ class Video_Conv(wx.Panel):
         number in the chosen output path.
         
         """
-        if not self.parent.import_clicked:
+        if len(file_sources) == 1:
+            clicked = file_sources[0]
+            
+        elif not self.parent.import_clicked:
             wx.MessageBox(_('To export images, select one of the files '
                             'in the "Add files" panel'), 'Videomass', 
                             wx.ICON_INFORMATION, self)
             return
+        else:
+            clicked = self.parent.import_clicked
         
         title = _('Start save as images')
         valupdate = self.update_dict('1', ["Save as images"])
         ending = Formula(self, valupdate[0],valupdate[1], title)
         
         if ending.ShowModal() == wx.ID_OK:
-            clicked = self.parent.import_clicked
             fname = os.path.basename(clicked.rsplit('.', 1)[0])
             dir_destin = dest[file_sources.index(clicked)]# specified dest
             
@@ -1863,13 +1869,15 @@ class Video_Conv(wx.Panel):
                 os.mkdir(outputdir)
 
             fileout = "{0}-%d.{1}".format(fname,cmd_opt["PicturesFormat"])
-            cmd = ('%s %s -i "%s" -loglevel %s -an %s %s %s %s -y "%s/%s"' % (
+            cmd = ('%s %s -i "%s" -loglevel %s -an %s %s %s %s %s -y "%s/%s"' 
+                                                    % (
                                                     self.ffmpeg_link, 
                                                     self.parent.time_seq,
                                                     clicked, 
                                                     self.ffmpeg_loglev,
                                                     cmd_opt["VideoRate"],
                                                     cmd_opt["Filters"],
+                                                    cmd_opt["YUV"],
                                                     self.threads, 
                                                     self.cpu_used,
                                                     outputdir, 
@@ -2087,7 +2095,7 @@ class Video_Conv(wx.Panel):
         if not self.ckbx_pass.IsChecked():
             if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
                 outext = cmd_opt["VideoFormat"]
-                command = ('%s %s %s %s %s %s %s %s %s %s' % (
+                command = ('%s %s %s %s %s %s %s %s %s %s %s' % (
                             normalize,
                             cmd_opt["VideoCodec"], 
                             cmd_opt["VideoAspect"],
@@ -2097,43 +2105,63 @@ class Video_Conv(wx.Panel):
                             cmd_opt["AudioRate"][1], 
                             cmd_opt["AudioChannel"][1], 
                             cmd_opt["AudioDepth"][1], 
-                            cmd_opt["Map"])
+                            cmd_opt["Map"],
+                            cmd_opt["Shortest"],)
                                 )
-            elif self.cmbx_vidContainers.GetValue() == _("Save images from a movie"):
-                outext = "jpg"
-                command = ('%s %s -an' % (
+            elif (self.rdb_aut.GetStringSelection() == 
+                                            _("Video to images converter")):
+                outext = cmd_opt["PicturesFormat"]
+                command = ('%s %s %s -an' % (
                            cmd_opt["VideoRate"],
-                           cmd_opt["Filters"],)
+                           cmd_opt["Filters"],
+                           cmd_opt["YUV"],)
                            )
+            elif (self.rdb_aut.GetStringSelection() == 
+                                            _("Picture slideshow maker")):
+                outext = cmd_opt["VideoFormat"]
+                cmd_1 = [cmd_opt["Filters"]]
+                time = self.parent.time_read['time']
+                cmd_2 = ['-framerate 1/%s' % (str(time[1]),),
+                         '-c:v libx264 %s %s %s %s '
+                         '-vf fps=25,format=yuv420p' % (cmd_opt["CRF"],
+                                                        cmd_opt["Presets"],
+                                                        cmd_opt["Profile"],
+                                                        cmd_opt["Tune"],)]
+                command = ("%s SLAIDESHOW %s" % (cmd_1,cmd_2))
             else:
                 outext = cmd_opt["VideoFormat"]
-                command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (
-                            normalize,
-                            cmd_opt["VideoCodec"], cmd_opt["CRF"], 
-                            cmd_opt["Presets"], cmd_opt["Profile"],
-                            cmd_opt["Tune"], cmd_opt["VideoAspect"], 
-                            cmd_opt["VideoRate"], cmd_opt["Filters"],
-                            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
-                            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-                            cmd_opt["AudioDepth"][1], cmd_opt["Map"])
+                command = ("%s %s %s %s %s %s %s %s %s "
+                           "%s %s %s %s %s %s %s %s %s" % (
+                           normalize, cmd_opt["AddAudioStream"],
+                           cmd_opt["VideoCodec"], cmd_opt["CRF"], 
+                           cmd_opt["Presets"], cmd_opt["Profile"],
+                           cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                           cmd_opt["VideoRate"], cmd_opt["Filters"],
+                           cmd_opt["YUV"], cmd_opt["AudioCodec"], 
+                           cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
+                           cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
+                           cmd_opt["Map"], cmd_opt["Shortest"],)
                             )
         else:
             outext = cmd_opt["VideoFormat"]
-            cmd1 = ('-an %s %s %s %s %s %s %s %s -f rawvideo' % (
+            cmd1 = ('-an %s %s %s %s %s %s %s %s %s -f rawvideo' % (
                       cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                       cmd_opt["Presets"], cmd_opt["Profile"],
                       cmd_opt["Tune"], cmd_opt["VideoAspect"], 
-                      cmd_opt["VideoRate"], cmd_opt["Filters"])
+                      cmd_opt["VideoRate"], cmd_opt["Filters"],
+                      cmd_opt["YUV"],)
                     )
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
-                     normalize,
-                     cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
-                     cmd_opt["Presets"], cmd_opt["Profile"],
-                     cmd_opt["Tune"], cmd_opt["VideoAspect"], 
-                     cmd_opt["VideoRate"], cmd_opt["Filters"],
-                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
-                     cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-                     cmd_opt["AudioDepth"][1], cmd_opt["Map"])
+            cmd2= ('%s %s %s %s %s %s %s %s %s '
+                   '%s %s %s %s %s %s %s %s %s' % (
+                    normalize, cmd_opt["AddAudioStream"],
+                    cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
+                    cmd_opt["Presets"], cmd_opt["Profile"],
+                    cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                    cmd_opt["VideoRate"], cmd_opt["Filters"],
+                    cmd_opt["YUV"], cmd_opt["AudioCodec"], 
+                    cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
+                    cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
+                    cmd_opt["Map"], cmd_opt["Shortest"],)
                     )
             command = ("%s DOUBLE_PASS %s" % (cmd1,cmd2))
                        

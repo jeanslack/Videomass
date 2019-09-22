@@ -28,6 +28,7 @@
 #########################################################
 import wx
 import subprocess
+import tempfile
 import itertools
 import sys
 import os
@@ -71,7 +72,7 @@ class GeneralProcess(wx.Panel):
     close the panel during final activities.
     
     """
-    def __init__(self, parent, panel, varargs,  duration, OS):
+    def __init__(self, parent, panel, varargs, duration, OS):
         """
         In the 'previous' attribute is stored an ID string used to
         recover the previous panel from which the process is started.
@@ -80,7 +81,7 @@ class GeneralProcess(wx.Panel):
         
         """
         self.parent = parent # main frame
-        self.previus = panel # stores the panel from which it starts
+        self.previus = panel # stores the panel from which  it starts
         self.countmax = varargs[9]# the multiple task number
         self.count = 0 # initial setting of the counter
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
@@ -116,7 +117,12 @@ class GeneralProcess(wx.Panel):
         grid.Add(self.button_stop, 0, wx.ALL, 5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
-        #self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        # set_properties:
+        if OS == 'Darwin':
+            self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            
         #self.OutText.SetBackgroundColour((217, 255, 255))
         self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
                                     "in the log view console, useful for "
@@ -165,6 +171,8 @@ class GeneralProcess(wx.Panel):
             GrabAudioProc(self.varargs, self.duration,
                           self.logname, self.time_seq
                           )
+        elif self.varargs[0] == 'slideshow':# from video conv panel
+            CreateSlideShow(self.varargs, self.duration, self.logname)
     #-------------------------------------------------------------------#
     def update_display(self, output, duration, status):
         """
@@ -204,11 +212,16 @@ class GeneralProcess(wx.Panel):
             percentage = timesum / duration * 100
             self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
             del output, duration
+        
+        elif output[0] == 'count cicles only':
+            self.barProg.SetValue(duration)
+            self.OutText.AppendText(' %s' % output[1])
 
         else:# append all others lines on the textctrl and log file
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
-            self.OutText.AppendText(' %s' % output)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            if not self.ckbx_text.IsChecked():# if checked print already
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+                self.OutText.AppendText(' %s' % output)
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             
             with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
                 logerr.write("[FFMPEG] ERRORS: %s" % (output))
@@ -507,7 +520,7 @@ class DoublePassThread(Thread):
                                        self.nul,
                                        )) 
             self.count += 1
-            count = 'File %s/%s - Pass 1' % (self.count, self.countmax,)
+            count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
             print("%s" % cmd)
             
@@ -594,7 +607,7 @@ class DoublePassThread(Thread):
                                                 filename,
                                                 self.extoutput,
                                                 ))
-            count = 'File %s/%s - Pass 2' % (self.count, self.countmax,)
+            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
             
@@ -915,4 +928,205 @@ class GrabAudioProc(Thread):
         wx.CallAfter(pub.sendMessage, "END_EVT")
 
 ########################################################################
+class CreateSlideShow(Thread):
+    """
+    This thread is indispensable for creating movies starting from 
+    one or more pictures supported by FFmpeg. It should resize the 
+    image resolution to a given size and convert it to png format
+    using the default temporary directory on each O.S., then proceed 
+    to chaining in a numerical order (given by the sequence 
+    of files) convert and saving the output to the chosen folder.
+    """
+    def __init__(self, varargs, duration, logname):
+        """
+        NOTE: the self.duration attribute is the result of the sum 
+        of the duration set on the 'duration' tool for the number of 
+        images imported for concatenation. This should manage the 
+        progress bar effectively.
+        """
+        Thread.__init__(self)
+        """initialize"""
+        
+        self.filelist = varargs[1] # input file list (items)
+        self.cmd_1 = varargs[3] # command 1 
+        self.cmd_2 = varargs[4] # command 2
+        self.outformat = varargs[5] # final output format
+        self.duration = duration[0] * len(varargs[1]) # time sum
+        self.count = 0 # count number loop
+        self.countmax = varargs[9] # lengh file list
+        self.logname = logname # title name of file log
+        
+        self.start() # start the thread (va in self.run())
+
+    def run(self):
+        """
+        Subprocess initialize thread.
+        TODO: make the code of this thread better
+        
+        """
+        global STATUS_ERROR
+        existanerror = 0
+        
+        wx.CallAfter(pub.sendMessage, 
+                    "COUNT_EVT", 
+                    count='Task One', 
+                    duration=len(self.filelist),
+                    fname='Temporary conversion of uploaded images',
+                    end='',
+                    )
+        logWrite('Temporary conversion of uploaded images', '', self.logname)
+        
+        with tempfile.TemporaryDirectory() as tmpdirname:# make tmp dir
+            prognum = 0
+            for files in self.filelist:
+                prognum += 1
+                line = ['count cicles only',
+                        '%s  >>  %s/IMAGE_%d.png\n' %(files,
+                                                      tmpdirname,
+                                                      prognum)
+                        ]
+                cmd_1 = '%s -i "%s" %s "%s/IMAGE_%d.png"' %(
+                                                        self.cmd_1[0],
+                                                        files, 
+                                                        self.cmd_1[1],
+                                                        tmpdirname,
+                                                        prognum,
+                                                        )
+                try:
+                    startupinfo = subprocess.STARTUPINFO()
+                    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                    p_1 = subprocess.Popen(cmd_1,
+                                           stderr=subprocess.PIPE, 
+                                           universal_newlines=True,
+                                           startupinfo=startupinfo,
+                                           )
+                    error = p_1.communicate()
+                    
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=prognum,
+                                status=0,
+                                )
+                    
+                    if CHANGE_STATUS == 1:
+                            p_1.terminate()
+                            print('...Interrupted process')
+                            existanerror = 1
+                            break
+                        
+                    print('Resizing and conversion','\n',error)
+                        
+                except OSError as err:
+                    e = "%s\n  %s" % (err, not_exist_msg)
+                    wx.CallAfter(pub.sendMessage, 
+                                "COUNT_EVT", 
+                                count=e, 
+                                duration=0,
+                                fname='make slideshow',
+                                end='',
+                                )
+                    print('...%s' % (e))
+                    STATUS_ERROR = 1
+                    existanerror = 1
+                    break
+                
+            if existanerror:
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT")
+                return
+
+            elif p_1.wait(): # error
+                wx.CallAfter(pub.sendMessage, 
+                            "UPDATE_EVT", 
+                            output=error[1], 
+                            duration=prognum,
+                            status=0,
+                            )
+                wx.CallAfter(pub.sendMessage, 
+                            "UPDATE_EVT", 
+                            output='', 
+                            duration=prognum,
+                            status=p_1.wait(),
+                            )
+                logWrite('', "Exit status: %s" % p_1.wait(),
+                            self.logname) #append exit error number
+                time.sleep(.5)
+                wx.CallAfter(pub.sendMessage, "END_EVT")
+                return
+            
+            else: # status ok
+                wx.CallAfter(pub.sendMessage, 
+                            "COUNT_EVT", 
+                            count='', 
+                            duration='',
+                            fname='',
+                            end='ok'
+                            )
+            #------------------------------- make video
+            cmd_2 = '{0} -i "{1}/IMAGE_%d.png" {2}'.format(self.cmd_2[0], 
+                                                           tmpdirname, 
+                                                           self.cmd_2[1],
+                                                           )
+            count = 'File %s/%s' % ('1','1',)
+            com = "%s\n%s" % (count, cmd_2)
+            print("%s" % com)
+            task_2 = 'Slideshow creation in %s format' % self.outformat
+            
+            wx.CallAfter(pub.sendMessage, 
+                        "COUNT_EVT", 
+                        count='Task Two', 
+                        duration=self.duration,
+                        fname=task_2,
+                        end='',
+                        )
+            logWrite(com, '', self.logname)# write n/n + command only
+            
+            startupinfo = subprocess.STARTUPINFO()
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            with subprocess.Popen(cmd_2,
+                                  stderr=subprocess.PIPE, 
+                                  bufsize=1, 
+                                  universal_newlines=True
+                                  startupinfo=startupinfo,) as p_2:
+                for line in p_2.stderr:
+                    #sys.stdout.write(line)
+                    #sys.stdout.flush()
+                    print(line, end=''),
+                    
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=self.duration,
+                                status=0,
+                                )
+                    if CHANGE_STATUS == 1:# break second 'for' loop
+                        p_2.terminate()
+                        print('...Interrupted process')
+                        break
+                    
+                if p_2.wait(): # error
+                    wx.CallAfter(pub.sendMessage, 
+                                "UPDATE_EVT", 
+                                output=line, 
+                                duration=self.duration,
+                                status=p_2.wait(),
+                                )
+                    logWrite('', 
+                            "Exit status: %s" % p_2.wait(),
+                            self.logname)
+                            #append exit error number
+                
+                else: # status ok
+                    wx.CallAfter(pub.sendMessage, 
+                                "COUNT_EVT", 
+                                count='', 
+                                duration='',
+                                fname='',
+                                end='ok'
+                                )
+                    print('...Done')
+                    
+        time.sleep(.5)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
 

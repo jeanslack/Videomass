@@ -216,9 +216,7 @@ class GeneralProcess(wx.Panel):
         
         elif output[0] == 'count cicles only':
             self.barProg.SetValue(duration)
-            #self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
             self.OutText.AppendText(' %s' % output[1])
-
 
         else:# append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():# if checked print already
@@ -521,7 +519,7 @@ class DoublePassThread(Thread):
                                        self.nul,
                                        )) 
             self.count += 1
-            count = 'File %s/%s - Pass 1' % (self.count, self.countmax,)
+            count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
             print("%s" % cmd)
             
@@ -605,7 +603,7 @@ class DoublePassThread(Thread):
                                                 filename,
                                                 self.extoutput,
                                                 ))
-            count = 'File %s/%s - Pass 2' % (self.count, self.countmax,)
+            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
             

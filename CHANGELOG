@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-September 19, 2019 V.1.6.2
+September 22, 2019 V.1.6.5
 +------------------------------------+
 
 ADD:
@@ -23,6 +23,10 @@ ADD:
         * New - add audio stream on a movie .
         * New - extract images from movies with format selection 
           (jpg, png, bmp) also in the Video Conversions panel
+    
+    * Added "-pix_fmt yuv420p" option to any video conversion with x264/h264
+      on Video Conversions panel, to ensure compatibility so crappy players 
+      can decode the video
 
 
 +------------------------------------+
