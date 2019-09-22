@@ -670,6 +670,7 @@ class Audio_Conv(wx.Panel):
                                            cmd_opt["Normalize"], 
                                            logname, 
                                            countmax, 
+                                           None,
                                            )
                 #used for play preview and mediainfo:
                 f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
@@ -701,6 +702,7 @@ class Audio_Conv(wx.Panel):
                                            cmd_opt["Normalize"],
                                            logname, 
                                            countmax,
+                                           None,
                                            )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -731,6 +733,7 @@ class Audio_Conv(wx.Panel):
                                        cmd_opt["ExportExt"],#list
                                        logname, 
                                        countmax, #list
+                                       None,
                                        )
             # used for play preview and mediainfo:
             f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]

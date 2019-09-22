@@ -70,13 +70,20 @@ def process(self, varargs, panelshown, duration, time_seq, time_read):
     2) STARTING THE PROCESS
         Here the panel with the progress bar is instantiated which will 
         assign a corresponding thread.
+        
     """
+    if varargs[10]:# shortest or not on Videoconversion panel
+        newDuration = []
+        for n in duration:
+            newDuration.append(varargs[10])
+        duration = newDuration
+        
     if time_seq:
         newDuration = []
         for n in duration:
             newDuration.append(time_read['time'][1])
         duration = newDuration
-    
+        
     self.ProcessPanel = GeneralProcess(self, 
                                        panelshown, 
                                        varargs, 

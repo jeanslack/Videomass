@@ -60,7 +60,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "Deinterlace":"", "Interlace":"", "file":"", "Map":"-map 0", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
-           "Filters":"", "Shortest":"", "AddAudioStream":"",
+           "Filters":"", "Shortest":["",""], "AddAudioStream":"",
            "PicturesFormat":"", "YUV":"",
            }
 vcodec = {
@@ -89,10 +89,9 @@ class Video_Conv(wx.Panel):
     """
     Interface panel for video conversions
     """
-    def __init__(self, parent, ffmpeg_link, ffplay_link, threads, 
-                 cpu_used, ffmpeg_loglev, ffplay_loglev, OS, iconplay,
-                 iconreset, iconresize, iconcrop, iconrotate, icondeinterlace,
-                 icondenoiser, iconanalyzes, iconsettings):
+    def __init__(self, parent, ffmpeg_link, ffplay_link, ffprobe_link, 
+                 threads, cpu_used, ffmpeg_loglev, ffplay_loglev, OS, 
+                 iconplay, iconreset, iconresize, iconcrop, iconrotate, icondeinterlace, icondenoiser, iconanalyzes, iconsettings):
 
         wx.Panel.__init__(self, parent)
 
@@ -100,6 +99,7 @@ class Video_Conv(wx.Panel):
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
         self.ffplay_link = ffplay_link
+        self.ffprobe_link = ffprobe_link
         self.threads = threads
         self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
         self.ffmpeg_loglev = ffmpeg_loglev
@@ -571,7 +571,7 @@ class Video_Conv(wx.Panel):
                                     "video compression.")
                                                  )
         self.shortest.SetToolTip(_('Use "shortest" if you want stop after '
-                                   'the audio stream is finished')
+                                   'the video stream is finished')
                                  )
         self.spin_ctrl_bitrate.SetToolTip(_("The bit rate determines the "
                                             "quality and the final video "
@@ -822,7 +822,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_4.Enable(), self.cmbx_vidContainers.Clear()
         self.shortest.Hide(), self.shortest.SetValue(False),
         self.audiostrm.Hide(), self.rdb_h264tune.SetSelection(0)
-        cmd_opt["Shortest"], cmd_opt["Map"] = '', "-map 0"
+        cmd_opt["Shortest"], cmd_opt["Map"] = ['',''], "-map 0"
         cmd_opt["PicturesFormat"], cmd_opt["AddAudioStream"] = "", ""
         cmd_opt["Tune"], cmd_opt["YUV"] = "", ""
         cod = ["AVI (XVID mpeg4)", "AVI (FFmpeg mpeg4)", "AVI (ITU h264)", 
@@ -861,7 +861,8 @@ class Video_Conv(wx.Panel):
             self.parent.statusbar_msg(msg, azure)
             self.shortest.Show(), self.audiostrm.Show()
             self.shortest.SetValue(False)
-            cmd_opt["Shortest"], cmd_opt["Map"] = '', "-map 0:v:0 -map 1:a:0"
+            cmd_opt["Shortest"] = ['','']
+            cmd_opt["Map"] = "-map 0:v:0 -map 1:a:0"
             cmd_opt["AddAudioStream"] = '-i "NO AUDIO TRACK IMPORTED"'
         
         elif self.rdb_aut.GetStringSelection() == sel_4:#slaide show
@@ -885,14 +886,20 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Shortest(self, event):
         """
-        Enable or disable shortest option. The shortest option
-        enable to stop encoding when an audio stream finished
+        Enable or disable shortest option.  If checked, will take 
+        the video stream duration. If un-checked, will take the 
+        audio track duration.
         
         """
+        if cmd_opt["AddAudioStream"] == '-i "NO AUDIO TRACK IMPORTED"':
+            return
         if self.shortest.IsChecked():
-            cmd_opt["Shortest"] = '-shortest'
+            cmd_opt["Shortest"] = ['', '-shortest']
         else:
-            cmd_opt["Shortest"] = ''
+            from videomass3.vdms_IO import IO_tools
+            path = cmd_opt["AddAudioStream"].replace('-i ', '').replace('"','')
+            s = IO_tools.probeDuration(path, self.ffprobe_link)
+            cmd_opt["Shortest"] = [s[0], '']
     #------------------------------------------------------------------#
             
     def on_AddaudioStr(self, event):
@@ -917,6 +924,8 @@ class Video_Conv(wx.Panel):
             # Proceed loading the file chosen by the user
             pathname = fileDialog.GetPath()
             cmd_opt["AddAudioStream"] = '-i "%s"' % pathname
+            
+        self.on_Shortest(self)
 
     #------------------------------------------------------------------#
     def on_PicturesFormat(self, event):
@@ -1724,7 +1733,7 @@ class Video_Conv(wx.Panel):
                        self.threads, 
                        self.cpu_used,
                        cmd_opt["Map"],
-                       cmd_opt["Shortest"])
+                       cmd_opt["Shortest"][1])
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(countmax, ["Copy video codec"] )
@@ -1740,7 +1749,8 @@ class Video_Conv(wx.Panel):
                                            self.ffmpeg_link,
                                            cmd_opt["Normalize"], 
                                            logname, 
-                                           countmax, 
+                                           countmax,
+                                           cmd_opt["Shortest"][0],
                                            )
                 #used for play preview and mediainfo:
                 f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
@@ -1768,7 +1778,7 @@ class Video_Conv(wx.Panel):
                      cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
                      cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
                      self.threads, self.cpu_used, 
-                     cmd_opt["Map"], cmd_opt["Shortest"])
+                     cmd_opt["Map"], cmd_opt["Shortest"][1])
                     )
             pass2 =  " ".join(cmd2.split())# mi formatta la stringa
             valupdate = self.update_dict(countmax, [''])
@@ -1785,6 +1795,7 @@ class Video_Conv(wx.Panel):
                                            cmd_opt["Normalize"], 
                                            logname, 
                                            countmax, 
+                                           cmd_opt["Shortest"][0],
                                            )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -1804,7 +1815,7 @@ class Video_Conv(wx.Panel):
                         cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
                         cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
                         self.threads, self.cpu_used, 
-                        cmd_opt["Map"], cmd_opt["Shortest"])
+                        cmd_opt["Map"], cmd_opt["Shortest"][1])
                         )
             command = " ".join(command.split())# mi formatta la stringa
             valupdate = self.update_dict(countmax, [''])
@@ -1821,6 +1832,7 @@ class Video_Conv(wx.Panel):
                                            cmd_opt["Normalize"], 
                                            logname, 
                                            countmax, 
+                                           cmd_opt["Shortest"][0],
                                            )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -1894,6 +1906,7 @@ class Video_Conv(wx.Panel):
                                         None, 
                                         logname, 
                                         '1', 
+                                        cmd_opt["Shortest"][0],
                                         )
     #------------------------------------------------------------------#
     def slideShow(self, file_sources, dest, logname):
@@ -1974,6 +1987,7 @@ class Video_Conv(wx.Panel):
                                         '', 
                                         logname, 
                                         '1', 
+                                        cmd_opt["Shortest"][0],
                                         )
             #used for play preview and mediainfo:
             self.exportStreams("%s" % outputdir)
@@ -2012,7 +2026,7 @@ class Video_Conv(wx.Panel):
                 cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
                 cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
-                time, cmd_opt["Shortest"]))
+                time, cmd_opt["Shortest"][1]))
         #-------------------
         elif prof[0] == "Save as images":
             formula = (_("SUMMARY\n\nFile to Queue\
@@ -2068,7 +2082,7 @@ class Video_Conv(wx.Panel):
                         cmd_opt["Audio"], cmd_opt["AudioCodec"], 
                         cmd_opt["AudioChannel"][0], cmd_opt["AudioRate"][0], 
                         cmd_opt["AudioBitrate"][0], cmd_opt["AudioDepth"][0],
-                        normalize, cmd_opt["Map"], time, cmd_opt["Shortest"])
+                        normalize, cmd_opt["Map"], time, cmd_opt["Shortest"][1])
                         )
         return formula, dictions
 
@@ -2106,7 +2120,7 @@ class Video_Conv(wx.Panel):
                             cmd_opt["AudioChannel"][1], 
                             cmd_opt["AudioDepth"][1], 
                             cmd_opt["Map"],
-                            cmd_opt["Shortest"],)
+                            cmd_opt["Shortest"][1],)
                                 )
             elif (self.rdb_aut.GetStringSelection() == 
                                             _("Video to images converter")):
@@ -2140,7 +2154,7 @@ class Video_Conv(wx.Panel):
                            cmd_opt["YUV"], cmd_opt["AudioCodec"], 
                            cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
                            cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                           cmd_opt["Map"], cmd_opt["Shortest"],)
+                           cmd_opt["Map"], cmd_opt["Shortest"][1],)
                             )
         else:
             outext = cmd_opt["VideoFormat"]
@@ -2161,7 +2175,7 @@ class Video_Conv(wx.Panel):
                     cmd_opt["YUV"], cmd_opt["AudioCodec"], 
                     cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
                     cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                    cmd_opt["Map"], cmd_opt["Shortest"],)
+                    cmd_opt["Map"], cmd_opt["Shortest"][1],)
                     )
             command = ("%s DOUBLE_PASS %s" % (cmd1,cmd2))
                        

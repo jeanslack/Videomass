@@ -201,7 +201,8 @@ class MainFrame(wx.Frame):
         self.btnpanel.SetBackgroundColour(barColor)
         #self.btnpanel.SetBackgroundColour(wx.Colour(205, 235, 222))
         #---------- others panel instances:
-        self.PrstsPanel = presets_mng_panel.PresetsPanel(self, SRCpath, 
+        self.PrstsPanel = presets_mng_panel.PresetsPanel(self, 
+                                                         SRCpath, 
                                                          self.DIRconf, 
                                                          self.WORKdir, 
                                                          self.threads, 
@@ -210,8 +211,10 @@ class MainFrame(wx.Frame):
                                                          self.ffmpeg_link, 
                                                          self.OS,
                                                          )
-        self.VconvPanel = video_conv.Video_Conv(self, self.ffmpeg_link,
+        self.VconvPanel = video_conv.Video_Conv(self, 
+                                                self.ffmpeg_link,
                                                 self.ffplay_link,
+                                                self.ffprobe_link,
                                                 self.threads, 
                                                 self.cpu_used,
                                                 self.ffmpeg_loglevel,
@@ -227,7 +230,8 @@ class MainFrame(wx.Frame):
                                                 pathicons[21],# icon analyzes
                                                 pathicons[22],# icon settings
                                                 )
-        self.AconvPanel = audio_conv.Audio_Conv(self, self.ffmpeg_link, 
+        self.AconvPanel = audio_conv.Audio_Conv(self, 
+                                                self.ffmpeg_link, 
                                                 self.threads,
                                                 self.cpu_used,
                                                 self.ffmpeg_loglevel, 
