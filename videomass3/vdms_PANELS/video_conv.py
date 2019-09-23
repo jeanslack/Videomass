@@ -147,7 +147,7 @@ class Video_Conv(wx.Panel):
         self.rdb_aut = wx.RadioBox(self.notebook_1_pane_1, 
                                    wx.ID_ANY, 
                                    (_("Automations")), 
-                                   choices=[(_("Default")), 
+                                   choices=[(_("Default (clear all)")), 
                                     (_("Video to images converter")), 
                                     (_("Add audio stream to a movie")), 
                                     (_("Picture slideshow maker")),
@@ -871,6 +871,7 @@ class Video_Conv(wx.Panel):
             self.notebook_1_pane_4.Disable(),
             cmd_opt["PicturesFormat"], cmd_opt["YUV"] = "jpg","-pix_fmt yuv420p"
             self.parent.statusbar_msg(msg_2, greenolive)
+            
             return
         
         ####----------- add audio track
@@ -880,11 +881,10 @@ class Video_Conv(wx.Panel):
             self.btn_audioAdd.Show()
             cmd_opt["Shortest"] = [False,'-shortest']
             if cmd_opt["AddAudioStream"]:
-                print('---  ',cmd_opt["AddAudioStream"])
                 self.notebook_1_pane_3.Enable()
             else:
                 self.notebook_1_pane_3.Disable()
-            print('>>>>>> audio  ',cmd_opt["AddAudioStream"])
+
             return
         
         ####-----------     slaideshow
@@ -904,12 +904,11 @@ class Video_Conv(wx.Panel):
             cmd_opt["Tune"] = "-tune:v stillimage"
             self.shortest.Show(), self.btn_audioAdd.Show()
             if cmd_opt["AddAudioStream"]:
-                print('---  ',cmd_opt["AddAudioStream"])
                 self.notebook_1_pane_3.Enable()
             else:
                 self.notebook_1_pane_3.Disable()
-            print('>>>>><  ',cmd_opt["AddAudioStream"])
             self.parent.statusbar_msg(msg_4, violet)
+            
             return
         #-------------- on EXIT first revert to default --------------#
         self.btn_audioAdd.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -917,9 +916,10 @@ class Video_Conv(wx.Panel):
         cmd_opt["Shortest"], cmd_opt["Map"] = [False,''], "-map 0"
         cmd_opt["PicturesFormat"], cmd_opt["AddAudioStream"] = "", ""
         cmd_opt["Tune"] = ""
+        if not self.notebook_1_pane_3.IsEnabled():
+            self.notebook_1_pane_3.Enable()
         self.vidContainers(self)
         
-                
     #------------------------------------------------------------------#
     def on_Shortest(self, event):
         """
@@ -2143,7 +2143,7 @@ class Video_Conv(wx.Panel):
                                              cmd_opt["AudioRate"][1],
                                              cmd_opt["AudioBitrate"][1],
                                              cmd_opt["AudioDepth"][1],
-                                             _('Not applicable'),
+                                             _('not applicable'),
                                              cmd_opt["Map"],
                                              time,
                                              cmd_opt["Shortest"][1],))
