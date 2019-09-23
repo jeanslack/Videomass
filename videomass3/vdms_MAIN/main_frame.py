@@ -1160,7 +1160,7 @@ class MainFrame(wx.Frame):
         
         if self.showpanelbar.IsChecked():
             self.btnpanel.Hide()# hide buttons bar if the user has shown it:
-
+        
         IO_tools.process(self, varargs, 
                          self.panelshown, 
                          duration,

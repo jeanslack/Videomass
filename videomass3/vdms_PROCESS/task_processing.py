@@ -957,7 +957,7 @@ class CreateSlideShow(Thread):
         
         wx.CallAfter(pub.sendMessage, 
                     "COUNT_EVT", 
-                    count='Task One', 
+                    count='- Task One', 
                     duration=len(self.filelist),
                     fname='Temporary conversion of uploaded images',
                     end='',
@@ -969,9 +969,7 @@ class CreateSlideShow(Thread):
             for files in self.filelist:
                 prognum += 1
                 line = ['count cicles only',
-                        '%s  >>  %s/IMAGE_%d.png\n' %(files,
-                                                      tmpdirname,
-                                                      prognum)
+                        '%s  >>  IMAGE_%d.png\n' %(files,prognum)
                         ]
                 cmd_1 = '%s -i "%s" %s "%s/IMAGE_%d.png"' %(
                                                         self.cmd_1[0],
@@ -980,6 +978,7 @@ class CreateSlideShow(Thread):
                                                         tmpdirname,
                                                         prognum,
                                                         )
+                print(cmd_1)
                 try:
                     p_1 = subprocess.Popen(shlex.split(cmd_1),
                                            stderr=subprocess.PIPE, 
@@ -1060,7 +1059,7 @@ class CreateSlideShow(Thread):
             
             wx.CallAfter(pub.sendMessage, 
                         "COUNT_EVT", 
-                        count='Task Two', 
+                        count='- Task Two', 
                         duration=self.duration,
                         fname=task_2,
                         end='',

@@ -593,7 +593,7 @@ class PresetsPanel(wx.Panel):
                                             '', 
                                             self.logname, 
                                             countmax, 
-                                            None,
+                                            False,# do not use is reserved
                                             )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -619,7 +619,7 @@ class PresetsPanel(wx.Panel):
                                             '', 
                                             self.logname, 
                                             countmax, 
-                                            None,
+                                            False,# do not use is reserved
                                             )
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
@@ -688,7 +688,7 @@ class PresetsPanel(wx.Panel):
                                         None, 
                                         self.logname, 
                                         '1', 
-                                        None,
+                                        False,# do not use is reserved
                                         )
     #------------------------------------------------------------------#
     #------------------------------------------------------------------#

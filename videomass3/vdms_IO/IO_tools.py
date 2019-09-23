@@ -78,7 +78,7 @@ def process(self, varargs, panelshown, duration, time_seq, time_read):
             newDuration.append(varargs[10])
         duration = newDuration
         
-    if time_seq:
+    elif time_seq:
         newDuration = []
         for n in duration:
             newDuration.append(time_read['time'][1])
