@@ -969,7 +969,7 @@ class CreateSlideShow(Thread):
             for files in self.filelist:
                 prognum += 1
                 line = ['count cicles only',
-                        'Num. %d  >>  %s\n' %(files,prognum)
+                        'Num. %d  >>  %s\n' %(prognum, files)
                         ]
                 cmd_1 = '%s -i "%s" %s "%s/IMAGE_%d.png"' %(
                                                         self.cmd_1[0],

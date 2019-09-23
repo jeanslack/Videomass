@@ -969,7 +969,7 @@ class CreateSlideShow(Thread):
         
         wx.CallAfter(pub.sendMessage, 
                     "COUNT_EVT", 
-                    count='Task One', 
+                    count='- Task One', 
                     duration=len(self.filelist),
                     fname='Temporary conversion of uploaded images',
                     end='',
@@ -981,9 +981,7 @@ class CreateSlideShow(Thread):
             for files in self.filelist:
                 prognum += 1
                 line = ['count cicles only',
-                        '%s  >>  %s/IMAGE_%d.png\n' %(files,
-                                                      tmpdirname,
-                                                      prognum)
+                        'Num. %d  >>  %s\n' %(prognum, files)
                         ]
                 cmd_1 = '%s -i "%s" %s "%s/IMAGE_%d.png"' %(
                                                         self.cmd_1[0],
@@ -992,6 +990,7 @@ class CreateSlideShow(Thread):
                                                         tmpdirname,
                                                         prognum,
                                                         )
+                print(cmd_1)
                 try:
                     startupinfo = subprocess.STARTUPINFO()
                     startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -1075,7 +1074,7 @@ class CreateSlideShow(Thread):
             
             wx.CallAfter(pub.sendMessage, 
                         "COUNT_EVT", 
-                        count='Task Two', 
+                        count='- Task Two', 
                         duration=self.duration,
                         fname=task_2,
                         end='',

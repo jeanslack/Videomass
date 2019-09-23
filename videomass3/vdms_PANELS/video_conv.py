@@ -879,11 +879,13 @@ class Video_Conv(wx.Panel):
             self.vidContainers(self)####
             self.parent.statusbar_msg(msg_3, azure)
             self.btn_audioAdd.Show()
-            cmd_opt["Shortest"] = [False,'-shortest']
+            
             if cmd_opt["AddAudioStream"]:
                 self.notebook_1_pane_3.Enable()
+                cmd_opt["Shortest"] = [False,'-shortest']
             else:
                 self.notebook_1_pane_3.Disable()
+                cmd_opt["Shortest"] = [False,'']
 
             return
         
