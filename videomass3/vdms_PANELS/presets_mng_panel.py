@@ -194,18 +194,7 @@ class PresetsPanel(wx.Panel):
         self.set_listctrl() # passo l'istanza al parsing e creo la lista
     
     #-----------------------------------------------------------------------#
-    def disableParent(self):
-        """
-        disabling the main fraim also automatically disables this panel
-        """
-        self.parent.Disable()
-    #-----------------------------------------------------------------------#
-    def enableParent(self):
-        """
-        Enabling the main fraim also automatically enable this panel
-        """
-        self.parent.Enable()
-    #-----------------------------------------------------------------------#
+    
     def reset_list(self):
         """
         Clear all memory presets and pass to set_listctrl() for 

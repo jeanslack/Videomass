@@ -174,9 +174,9 @@ class AudioSettings(wx.Dialog):
     #------------------------------------------------------------------#
     def on_cancel(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data event and
-        no return correctly. It has the right behavior if not used here, because 
-        it is called in the main frame. 
+        if you enable self.Destroy(), it delete from memory all data 
+        event and no return correctly. It has the right behavior if 
+        not used here, because it is called in the main frame. 
         
         Event.Skip(), work correctly here.
         
@@ -187,12 +187,10 @@ class AudioSettings(wx.Dialog):
     #------------------------------------------------------------------#
     def on_apply(self, event):
         """
-        if you enable self.Destroy(), it delete from memory all data event and
-        no return correctly. It has the right behavior if not used here, because 
-        it is called in the main frame. 
+        as on_cancel for destroy.
         
-        Event.Skip(), work correctly here. Sometimes needs to disable it for
-        needs to maintain the view of the window (for exemple).
+        Event.Skip(), work correctly here. Sometimes needs to disable 
+        it for needs to maintain the view of the window (for exemple).
         
         """
         self.GetValue()

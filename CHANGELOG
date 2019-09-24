@@ -27,6 +27,9 @@ ADD:
     * Added "-pix_fmt yuv420p" option to any video conversion with x264/h264
       on Video Conversions panel, to ensure compatibility so crappy players 
       can decode the video
+      
+IMPROVEMENTS:
+    * code thinning in some modules section in the old stuff
 
 
 +------------------------------------+

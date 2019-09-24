@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.02.2019, Sept.01.2019
+# Rev: Aug.02.2019, Sept.24.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -289,32 +289,12 @@ class Audio_Conv(wx.Panel):
         if not cmd_opt["AudioContainer"]:
             cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
         #--------------------------------------------#
-        if cmd_opt["AudioContainer"] == "WAV [.wav]":
-            self.audio_parameters("wav", "Audio WAV Parameters - Videomass")
-            
-        elif cmd_opt["AudioContainer"] == "AIFF [.aiff]":
-            self.audio_parameters("aiff", "Audio AIFF Parameters - Videomass")
-
-        elif cmd_opt["AudioContainer"] == "FLAC [.flac]":
-            self.audio_parameters("flac", "Audio FLAC Parameters - Videomass")
-            
-        elif cmd_opt["AudioContainer"] == "OGG [.ogg]":
-            self.audio_parameters("ogg", "Audio OGG Parameters - Videomass")
-            
-        elif cmd_opt["AudioContainer"] == "MP3 [.mp3]":
-            self.audio_parameters("mp3", "Audio MP3 Parameters - Videomass")
-        
-        elif cmd_opt["AudioContainer"] == "AAC [.m4a]":
-            self.audio_parameters("aac", "Audio AAC Parameters - Videomass")
-        
-        elif cmd_opt["AudioContainer"] == "ALAC [.m4a]":
-            self.audio_parameters("alac", "Audio ALAC Parameters - Videomass")
-            
-        elif cmd_opt["AudioContainer"] == "AC3 [.ac3]":
-            self.audio_parameters("ac3", "Audio AC3 Parameters - Videomass")
-            
-        #elif self.cmbx_a.GetValue() == "Save audio from movies":
-            #self.audiocopy()
+        for k,v in acodecs.items():
+            if cmd_opt["AudioContainer"] == k:
+                self.audio_parameters(k.split()[0].lower(),
+                                        "%s export parameters (%s)" 
+                                        %(k.split()[0].lower(),v.split()[1])
+                                        )
     #-------------------------------------------------------------------#
     def audio_parameters(self, audio_type, title):
         """
@@ -567,19 +547,7 @@ class Audio_Conv(wx.Panel):
                                                        self.OS)
         audionormlist.Show()
     #-----------------------------------------------------------------------#
-    def disableParent(self):
-        """
-        disabling the main fraim also automatically disables this panel.
-        Used on batch mode only with ProgressDialog gauge. 
-        """
-        self.parent.Disable()
-    #-----------------------------------------------------------------------#
-    def enableParent(self):
-        """
-        Enabling the main fraim also automatically enable this panel
-        """
-        self.parent.Enable()
-    #------------------------------------------------------------------#
+
     def exportStreams(self, exported):
         """
         Set the parent.post_process attribute for communicate it the

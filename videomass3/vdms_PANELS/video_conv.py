@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.02.2019, Sept.01.2019
+# Rev: Aug.02.2019, Sept.24.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -40,15 +40,7 @@ from videomass3.vdms_DIALOGS import presets_addnew
 from videomass3.vdms_DIALOGS import dialog_tools
 from videomass3.vdms_DIALOGS import shownormlist
 
-"""
-The following dictionaries are used for define the generated 
-choices from the events. Some keys's values has not empty to 
-accord with default parameters on program start. The cmd_opt 
-contain all values need for ffmpeg command construction; the 
-vcodec contain a tuple with two values (codec, container) and 
-is useful to determine the video codec/container ratio and 
-audio codec compatibility.
-"""
+# Dictionary definition for command settings:
 cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"", 
            "ext_input":"", "Passing":"single", "InputDir":"", 
            "OutputDir":"",  "VideoSize":"", "VideoAspect":"", 
@@ -63,19 +55,54 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "Filters":"", "Shortest":[False,""], "AddAudioStream":"",
            "PicturesFormat":"", "YUV":"",
            }
-vcodec = {
-"AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
-"AVI (FFmpeg mpeg4)":("-vcodec mpeg4","avi"), 
-"AVI (ITU h264)":("-vcodec libx264","avi"),
-"MP4 (mpeg4)":("-vcodec mpeg4","mp4"), 
-"MP4 (HQ h264/AVC)":("-vcodec libx264","mp4"), 
-"M4V (HQ h264/AVC)":("-vcodec libx264","m4v"), 
-"MKV (h264)":("-vcodec libx264","mkv"),
-"OGG theora":("-vcodec libtheora","ogg"), 
-"WebM (HTML5)":("-vcodec libvpx","webm"), 
-"FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
-_("Copy video codec"):("","-c:v copy"),
+# Namings in the video container selection combo box:
+vcodecs = {"AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
+            "AVI (FFmpeg mpeg4)":("-vcodec mpeg4","avi"), 
+            "AVI (ITU h264)":("-vcodec libx264","avi"),
+            "MP4 (mpeg4)":("-vcodec mpeg4","mp4"), 
+            "MP4 (HQ h264/AVC)":("-vcodec libx264","mp4"), 
+            "M4V (HQ h264/AVC)":("-vcodec libx264","m4v"), 
+            "MKV (h264)":("-vcodec libx264","mkv"),
+            "OGG theora":("-vcodec libtheora","ogg"), 
+            "WebM (HTML5)":("-vcodec libvpx","webm"), 
+            "FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
+            _("Copy video codec"):("","-c:v copy"),
             }
+# compatibility between video formats and related audio codecs:
+av_formats = {'avi':['default','wav','','','','ac3','','mp3','copy','silent'],
+              'flv':['default','','','aac','','ac3','','mp3','copy','silent'],
+              'mp4':['default','','','aac','','ac3','','mp3','copy','silent'],
+              'm4v':['default','','','aac','alac','','','','copy','silent'],
+              'mkv':['default','wav','flac','aac','','ac3','ogg','mp3',
+                     'copy','silent'],
+              'webm':['default','','','','','','ogg','','copy','silent'],
+              'ogg':['default','','flac','','','','ogg','','copy','silent']
+              }
+# presets used by x264 an h264:
+x264_opt = {"Presets":["Disabled","ultrafast","superfast",
+                       "veryfast","faster","fast","medium",
+                       "slow","slower","veryslow","placebo"
+                       ], 
+            "Profiles":["Disabled","baseline","main","high",
+                       "high10","high444"
+                       ],
+            "Tunes":["Disabled","film","animation","grain",
+                    "stillimage","psnr","ssim","fastecode",
+                    "zerolatency"
+                    ]
+            }
+# Namings in the audio format selection on audio radio box:
+acodecs = {'default':(_("Default (managed by FFmpeg)"),''),
+           'wav':("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
+           'flac':("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
+           'aac':("Aac (Lossy, MultiChannel)", "-c:a aac"), 
+           'm4v':("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
+           'ac3':("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
+           'ogg':("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
+           'mp3':("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
+           'copy':(_("Try to copy audio source"), "-c:a copy"),
+           'silent':(_("No audio stream (silent)"), "-an")
+           }
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
@@ -91,7 +118,8 @@ class Video_Conv(wx.Panel):
     """
     def __init__(self, parent, ffmpeg_link, ffplay_link, ffprobe_link, 
                  threads, cpu_used, ffmpeg_loglev, ffplay_loglev, OS, 
-                 iconplay, iconreset, iconresize, iconcrop, iconrotate, icondeinterlace, icondenoiser, iconanalyzes, iconsettings):
+                 iconplay, iconreset, iconresize, iconcrop, iconrotate, 
+                 icondeinterlace, icondenoiser, iconanalyzes, iconsettings):
 
         wx.Panel.__init__(self, parent)
 
@@ -104,55 +132,46 @@ class Video_Conv(wx.Panel):
         self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
         self.ffmpeg_loglev = ffmpeg_loglev
         self.ffplay_loglev = ffplay_loglev
-        # set others attributes;
         self.file_sources = []
         self.file_destin = ''
         self.normdetails = []
         self.OS = OS
-        
+        #------------
         self.panel_base = wx.Panel(self, wx.ID_ANY)
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, style=0)
         self.notebook_1_pane_1 = wx.Panel(self.notebook_1, wx.ID_ANY)
-        self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
-                                choices=[("AVI (XVID mpeg4)"), 
-                                        ("AVI (FFmpeg mpeg4)"), 
-                                        ("AVI (ITU h264)"), 
-                                        ("MP4 (mpeg4)"), 
-                                        ("MP4 (HQ h264/AVC)"), 
-                                        ("M4V (HQ h264/AVC)"), 
-                                        ("MKV (h264)"), 
-                                        ("OGG theora"), 
-                                        ("WebM (HTML5)"), 
-                                        ("FLV (HQ h264/AVC)"),
-                                        (_("Copy video codec")),
-                                        ], 
-                            size=(200,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                               )
+        self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, 
+                                              wx.ID_ANY,
+                                             choices=[x for x in vcodecs.keys()],
+                                             size=(200,-1),
+                                             style=wx.CB_DROPDOWN | 
+                                             wx.CB_READONLY
+                                             )
         self.sizer_combobox_formatv_staticbox = wx.StaticBox(
-                                             self.notebook_1_pane_1, wx.ID_ANY, 
-                                            (_("Video Container Selection"))
+                                                        self.notebook_1_pane_1, 
+                                                        wx.ID_ANY, 
+                                               (_("Video Container Selection"))
                                                              )
         self.sizer_dir_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-                                   wx.ID_ANY, 
-                                   (_('Improves low-quality export'))
+                                                wx.ID_ANY, 
+                                           (_('Improves low-quality export'))
                                                 )
-        self.ckbx_pass = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
+        self.ckbx_pass = wx.CheckBox(self.notebook_1_pane_1, 
+                                     wx.ID_ANY, 
                                      (_("2-pass encoding"))
                                      )
-        self.ckbx_pass.SetValue(False) # setto in modo spento
-
         self.sizer_automations_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-                                            wx.ID_ANY, ("")
-                                            )
-        self.rdb_aut = wx.RadioBox(self.notebook_1_pane_1, 
-                                   wx.ID_ANY, 
-                                   (_("Automations")), 
-                                   choices=[(_("Default (clear all)")), 
-                                    (_("Video to images converter")), 
-                                    (_("Add audio stream to a movie")), 
-                                    (_("Picture slideshow maker")),
-                                            ], 
-                                    majorDimension=0, style=wx.RA_SPECIFY_ROWS
+                                                        wx.ID_ANY, ("")
+                                                        )
+        self.rdb_aut = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
+                                   (_("Automations")), choices=[
+                                            (_("Default (clear all)")), 
+                                            (_("Video to images converter")), 
+                                            (_("Add audio stream to a movie")), 
+                                            (_("Picture slideshow maker")),
+                                                                ], 
+                                    majorDimension=0, 
+                                    style=wx.RA_SPECIFY_ROWS
                                             )
         self.shortest = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                      (_("Shortest"))
@@ -168,14 +187,14 @@ class Video_Conv(wx.Panel):
         self.btn_audioAdd.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_audioAdd.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_audioAdd.SetTopEndColour(wx.Colour(205, 235, 222))
-
+        
         self.cmbx_pictformat = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
-                                             choices=[("jpg"), ("png"),
-                                                      ("bmp"),], 
-                            size=(100,-1),style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                               )
-        self.spin_ctrl_bitrate = wx.SpinCtrl(self.notebook_1_pane_1, 
-                                             wx.ID_ANY, 
+                                           choices=[("jpg"),("png"),("bmp"),], 
+                                           size=(100,-1),
+                                           style=wx.CB_DROPDOWN | 
+                                           wx.CB_READONLY
+                                           )
+        self.spin_ctrl_bitrate = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
                                              "1500", min=0, max=25000, 
                                              style=wx.TE_PROCESS_ENTER
                                              )
@@ -183,12 +202,15 @@ class Video_Conv(wx.Panel):
                                                     wx.ID_ANY, 
                                                  (_("Video Bit-Rate Value"))
                                                     )
-        self.slider_CRF = wx.Slider(self.notebook_1_pane_1, wx.ID_ANY, 1, 0, 51, 
-        style=wx.SL_HORIZONTAL | wx.SL_AUTOTICKS | wx.SL_LABELS
-        )
+        self.slider_CRF = wx.Slider(self.notebook_1_pane_1, wx.ID_ANY, 
+                                    1, 0, 51, size=(230, -1),style=wx.SL_HORIZONTAL | 
+                                                    wx.SL_AUTOTICKS | 
+                                                    wx.SL_LABELS
+                                    )
         self.sizer_crf_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
-        wx.ID_ANY, (_("Video CRF Value"))
-        )
+                                                wx.ID_ANY, 
+                                                (_("Video CRF Value"))
+                                                )
         self.notebook_1_pane_2 = wx.Panel(self.notebook_1, wx.ID_ANY)
         resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
         self.btn_videosize = GB.GradientButton(self.notebook_1_pane_2,
@@ -267,38 +289,44 @@ class Video_Conv(wx.Panel):
         self.btn_reset.SetTopEndColour(wx.Colour(97, 204, 153))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                         wx.ID_ANY, (_("Filters Section"))
+                                                      wx.ID_ANY, 
+                                                      (_("Filters Section"))
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-        size=(200, -1), choices=[("Default "), ("4:3"), ("16:9")], 
-        style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                        size=(200, -1), choices=[
+                                                        ("Default "), 
+                                                        ("4:3"), 
+                                                        ("16:9")], 
+                                        style=wx.CB_DROPDOWN | 
+                                        wx.CB_READONLY
                                         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, (_("Video Aspect"))
-                                        )
+                                                        wx.ID_ANY, 
+                                                        (_("Video Aspect"))
+                                                        )
         self.cmbx_Vrate = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY, 
-        choices=[("Default "), ("25 fps (50i) PAL"), ("29.97 fps (60i) NTSC"),
-        ("30 fps (30p) Progessive"),("0.2 fps for images"), ("0.5 fps for images"),
-        ("1 fps for images"), ("1.5 fps for images"), ("2 fps for images")], 
-                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                      choices=[("Default "), 
+                                               ("25 fps (50i) PAL"), 
+                                               ("29.97 fps (60i) NTSC"),
+                                               ("30 fps (30p) Progessive"),
+                                               ("0.2 fps for images"), 
+                                               ("0.5 fps for images"),
+                                               ("1 fps for images"), 
+                                               ("1.5 fps for images"), 
+                                               ("2 fps for images")
+                                               ], 
+                                      style=wx.CB_DROPDOWN | 
+                                      wx.CB_READONLY
                                       )
         self.sizer_videorate_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
-                                        wx.ID_ANY, (_("Video Rate"))
-                                                    )
+                                                      wx.ID_ANY, 
+                                                      (_("Video Rate"))
+                                                      )
         self.notebook_1_pane_3 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.rdb_a = wx.RadioBox(self.notebook_1_pane_3, wx.ID_ANY, (
-                                 _("Audio Codec Selecting")), 
-                            choices=[(_("Default (managed by FFmpeg)")), 
-                                    ("Wav (Raw, No_MultiChannel)"), 
-                                    ("Flac (Lossless, No_MultiChannel)"), 
-                                    ("Aac (Lossy, MultiChannel)"), 
-                                    ("Alac (Lossless, m4v, No_MultiChannel)"),
-                                    ("Ac3 (Lossy, MultiChannel)"), 
-                                    ("Ogg (Lossy, No_MultiChannel)"),
-                                    ("Mp3 (Lossy, No_MultiChannel)"), 
-                                    (_("Try to copy audio source")),
-                                    (_("No audio stream (silent)"))], 
-                                    majorDimension=2, style=wx.RA_SPECIFY_COLS
+                                 _("Audio Codec Selecting")),
+                                 choices=[x[0] for x in acodecs.values()],
+                                 majorDimension=2, style=wx.RA_SPECIFY_COLS
                                     )
         self.rdb_a.EnableItem(0,enable=True),self.rdb_a.EnableItem(1,enable=True)
         self.rdb_a.EnableItem(2,enable=True),self.rdb_a.EnableItem(3,enable=True)
@@ -354,32 +382,27 @@ class Video_Conv(wx.Panel):
         self.btn_aparam.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_aparam.SetTopEndColour(wx.Colour(205, 235, 222))
         self.txt_audio_options = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, 
-                                       size=(300,-1), style=wx.TE_READONLY)
-        
+                                             size=(300,-1), 
+                                             style=wx.TE_READONLY
+                                             )
         self.notebook_1_pane_4 = wx.Panel(self.notebook_1, wx.ID_ANY)
-        self.rdb_h264preset = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-                                    "presets"), choices=[("Disabled"), 
-                                                ("ultrafast"), ("superfast"), 
-                                                ("veryfast"), ("faster"), 
-                                                ("fast"), ("medium"), 
-                                                ("slow"), ("slower"), 
-                                                ("veryslow"), ("placebo")],  
-                                majorDimension=0, style=wx.RA_SPECIFY_ROWS
+        self.rdb_h264preset = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, 
+                                          ("presets"),  
+                                    choices=[p for p in x264_opt["Presets"]],
+                                          majorDimension=0, 
+                                          style=wx.RA_SPECIFY_ROWS
                                             )
-        self.rdb_h264profile = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-                                    "Profile"), choices=[("Disabled"), 
-                                                    ("baseline"), ("main"), 
-                                                    ("high"), ("high10"), 
-                                                    ("high444")], 
-                                majorDimension=0, style=wx.RA_SPECIFY_ROWS
+        self.rdb_h264profile = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, 
+                                           ("Profile"),  
+                                    choices=[p for p in x264_opt["Profiles"]],
+                                           majorDimension=0, 
+                                           style=wx.RA_SPECIFY_ROWS
                                             )
-        self.rdb_h264tune = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, (
-                                        "Tune"), choices=[("Disabled"), 
-                                                ("film"), ("animation"),
-                                                ("grain"), ("stillimage"), 
-                                                ("psnr"), ("ssim"), 
-                                                ("fastecode"), ("zerolatency")], 
-                                    majorDimension=0, style=wx.RA_SPECIFY_ROWS
+        self.rdb_h264tune = wx.RadioBox(self.notebook_1_pane_4, wx.ID_ANY, 
+                                        ("Tune"),
+                                        choices=[p for p in x264_opt["Tunes"]],
+                                        majorDimension=0, 
+                                        style=wx.RA_SPECIFY_ROWS
                                          )
         #----------------------Build Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -399,7 +422,8 @@ class Video_Conv(wx.Panel):
                                             wx.VERTICAL)
         self.sizer_videoaspect_staticbox.Lower()
         sizer_videoaspect = wx.StaticBoxSizer(self.sizer_videoaspect_staticbox, 
-                                              wx.VERTICAL)
+                                              wx.VERTICAL
+                                              )
         self.sizer_videosize_staticbox.Lower()
         sizer_2 = wx.StaticBoxSizer(self.sizer_videosize_staticbox, wx.VERTICAL)
         grid_sizer_2 = wx.GridSizer(6, 2, 0, 0)
@@ -408,10 +432,13 @@ class Video_Conv(wx.Panel):
         self.sizer_crf_staticbox.Lower()
         sizer_crf = wx.StaticBoxSizer(self.sizer_crf_staticbox, wx.VERTICAL)
         self.sizer_bitrate_staticbox.Lower()
-        sizer_bitrate = wx.StaticBoxSizer(self.sizer_bitrate_staticbox, wx.VERTICAL)
+        sizer_bitrate = wx.StaticBoxSizer(self.sizer_bitrate_staticbox, 
+                                          wx.VERTICAL
+                                          )
         self.sizer_automations_staticbox.Lower()
         sizer_automations = wx.StaticBoxSizer(self.sizer_automations_staticbox, 
-                                              wx.VERTICAL)
+                                              wx.VERTICAL
+                                              )
         grid_sizer_automations = wx.GridSizer(4, 1, 0, 0)
         grid_sizer_automations.Add(self.rdb_aut, 0, wx.TOP| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
@@ -440,7 +467,8 @@ class Video_Conv(wx.Panel):
         self.sizer_combobox_formatv_staticbox.Lower()
         sizer_combobox_formatv = wx.StaticBoxSizer(
                                         self.sizer_combobox_formatv_staticbox, 
-                                        wx.VERTICAL)
+                                        wx.VERTICAL
+                                        )
         sizer_combobox_formatv.Add(self.cmbx_vidContainers, 0, 
                                    wx.ALL |
                                    wx.ALIGN_CENTER_HORIZONTAL | 
@@ -554,10 +582,14 @@ class Video_Conv(wx.Panel):
                                   )
         sizer_pane4_base.Add(grid_sizer_pane4_base, 1, wx.EXPAND, 0)
         self.notebook_1_pane_4.SetSizer(sizer_pane4_base)
-        self.notebook_1.AddPage(self.notebook_1_pane_1, (_("Video Container")))
-        self.notebook_1.AddPage(self.notebook_1_pane_2, (_("Video Settings")))
-        self.notebook_1.AddPage(self.notebook_1_pane_3, (_("Audio Settings")))
-        self.notebook_1.AddPage(self.notebook_1_pane_4, (_("H.264/X.264 Options")))
+        self.notebook_1.AddPage(self.notebook_1_pane_1, 
+                                (_("Video Container")))
+        self.notebook_1.AddPage(self.notebook_1_pane_2, 
+                                (_("Video Settings")))
+        self.notebook_1.AddPage(self.notebook_1_pane_3, 
+                                (_("Audio Settings")))
+        self.notebook_1.AddPage(self.notebook_1_pane_4, 
+                                (_("H.264/X.264 Options")))
         grid_sizer_base.Add(self.notebook_1, 1, wx.ALL | wx.EXPAND, 5)
         self.panel_base.SetSizer(grid_sizer_base)
         grid_sizer_base.AddGrowableRow(0)
@@ -590,8 +622,6 @@ class Video_Conv(wx.Panel):
                                             "to greater quality and size of "
                                             "the file.")
                                                  )
-        self.slider_CRF.SetValue(23)# this is a default rate
-        self.slider_CRF.SetMinSize((230, -1))
         self.slider_CRF.SetToolTip(_("CRF (constant rate factor) Affects "
                                  "the quality of the final video. Used for "
                                  "h264 codec on single pass only, 2-pass "
@@ -603,40 +633,35 @@ class Video_Conv(wx.Panel):
                                           "by playing a video preview")
                                           )
         self.btn_reset.SetToolTip(_("Clear all enabled filters "))
-        self.cmbx_Vaspect.SetSelection(0)
+        
         self.cmbx_Vaspect.SetToolTip(_("Video aspect (Aspect Ratio) "
                         "is the video width and video height ratio. "
                         "Leave on 'Default' to copy the original settings."
                                                 ))
-        self.cmbx_Vrate.SetSelection(0)
+        
         self.cmbx_Vrate.SetToolTip(_("Video Rate: A any video consists "
                     "of images displayed as frames, repeated a given number "
                     "of times per second. In countries are 30 NTSC, PAL "
                     "countries (like Italy) are 25. Leave on 'Default' "
-                    "to copy the original settings.")
-                                            )
-        
+                    "to copy the original settings."
+                                   ))
         self.ckbx_a_normalize.SetToolTip(_("Performs audio normalization "
-                                           "on the video audio stream"))
+                                           "on the video audio stream"
+                                           ))
         self.btn_analyzes.SetToolTip(_("Calculates the maximum and average "
                                        "peak level of audio streams expressed "
-                                       "in dB values"))
-        #self.spin_ctrl_audionormalize.SetMinSize((70, -1))
+                                       "in dB values"
+                                       ))
         self.spin_ctrl_audionormalize.SetToolTip(_("Threshold for the "
                                 "maximum peak level in dB values. The default " 
                                 "setting is -1.0 dB and is good for most of "
-                                "the processes"))
-        
+                                "the processes"
+                                ))
         self.rdb_a.SetToolTip(_("Choose an audio codec. Some audio codecs "
-                                "are disabled for certain video containers"))
-        self.rdb_h264preset.SetToolTip("presets h.264")
-        self.rdb_h264preset.SetSelection(0)
-        self.rdb_h264profile.SetToolTip("profile h.264")
-        self.rdb_h264profile.SetSelection(0)
-        self.rdb_h264tune.SetToolTip("tune h.264")
-        self.rdb_h264tune.SetSelection(0)
-        self.notebook_1_pane_4.SetToolTip(_("The parameters on this tab "
-                        "are enabled only for the video-codec h.264."))
+                                "are disabled for certain video containers"
+                                ))
+        self.notebook_1_pane_4.SetToolTip(_('These parameters are enabled '
+                                            'for the codecs h.264/x.264'))
 
         #----------------------Binding (EVT)----------------------#
         """
@@ -672,28 +697,23 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
         #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
-    #----------------------used methods----------------------#
-        # initialize default layout:
+        #-------------------------------------- initialize default layout:
         cmd_opt["FormatChoice"] = "MKV (h264)"
         cmd_opt["VideoFormat"] = "mkv"
         cmd_opt["VideoCodec"] = "-vcodec libx264"
         cmd_opt["YUV"] = "-pix_fmt yuv420p"
-        self.default_videosettings()
+        cmd_opt["VideoAspect"] = ""
+        cmd_opt["VideoRate"] = ""
+        self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
+        self.rdb_h264preset.SetSelection(0), self.rdb_h264profile.SetSelection(0)
+        self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0),
+        self.cmbx_Vaspect.SetSelection(0), self.rdb_aut.SetSelection(0), 
+        self.shortest.Hide(), self.btn_audioAdd.Hide(), 
+        self.cmbx_pictformat.Hide(), self.cmbx_Vaspect.Enable()
         self.UI_set()
         self.audio_default()
         self.normalize_default()
 
-    def default_videosettings(self):
-        self.cmbx_Vrate.SetSelection(0),self.cmbx_Vaspect.SetSelection(0),
-        self.rdb_aut.SetSelection(0)
-        self.shortest.Hide()
-        self.btn_audioAdd.Hide()
-        self.cmbx_pictformat.Hide()
-        self.cmbx_Vaspect.Enable()
-        cmd_opt["VideoAspect"] = ""
-        cmd_opt["VideoRate"] = ""
-        #self.rdbx_interlace.Hide() # TODO QUESTO E' IN SVILUPPO
-        
     #-------------------------------------------------------------------#
     def UI_set(self):
         """
@@ -781,11 +801,11 @@ class Video_Conv(wx.Panel):
         self.audio_default() # reset audio radiobox and dict
 
         selected = self.cmbx_vidContainers.GetValue()
-        print (vcodec[selected][0])
+        #print (vcodecs[selected][0])
         
-        if vcodec[selected][0] == "-vcodec libx264":
+        if vcodecs[selected][0] == "-vcodec libx264":
             cmd_opt["FormatChoice"] = "%s" % (selected)# output form.
-            cmd_opt['VideoFormat'] = "%s" % (vcodec[selected][1])# format
+            cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])# format
             cmd_opt["VideoCodec"] = "-vcodec libx264"
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
@@ -794,10 +814,10 @@ class Video_Conv(wx.Panel):
                                       cmd_opt['VideoFormat']),None)
             self.UI_set()
             
-        elif vcodec[selected][0] == "":# copy video codec
+        elif vcodecs[selected][0] == "":# copy video codec
             cmd_opt["Passing"] = "single"
             cmd_opt["FormatChoice"] = "%s" % (selected)
-            cmd_opt['VideoFormat'] = "%s" % ( vcodec[selected][1])
+            cmd_opt['VideoFormat'] = "%s" % ( vcodecs[selected][1])
             cmd_opt["VideoCodec"] = "-c:v copy"
             cmd_opt["YUV"] = ""
             self.parent.statusbar_msg("Output format: %s" % (
@@ -806,8 +826,8 @@ class Video_Conv(wx.Panel):
 
         else: # not x264/h264
             cmd_opt["FormatChoice"] = "%s" % (selected)
-            cmd_opt['VideoFormat'] = "%s" % (vcodec[selected][1])
-            cmd_opt["VideoCodec"] = "%s" %(vcodec[selected][0])
+            cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])
+            cmd_opt["VideoCodec"] = "%s" %(vcodecs[selected][0])
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
             cmd_opt["YUV"] = ""
@@ -843,20 +863,13 @@ class Video_Conv(wx.Panel):
         self.ckbx_pass.Show(), self.spin_ctrl_bitrate.Show(),
         self.slider_CRF.Show(),self.cmbx_Vaspect.Show(),
         self.cmbx_Vrate.Show(), self.shortest.Hide(), 
-        self.shortest.SetValue(True), self.btn_audioAdd.Hide(), self.rdb_h264tune.SetSelection(0)
+        self.shortest.SetValue(True), self.btn_audioAdd.Hide(), 
+        self.rdb_h264tune.SetSelection(0)
         self.cmbx_vidContainers.Clear()
-        cod = ["AVI (XVID mpeg4)", "AVI (FFmpeg mpeg4)", 
-               "AVI (ITU h264)", "MP4 (mpeg4)",
-               "MP4 (HQ h264/AVC)", "M4V (HQ h264/AVC)", 
-               "MKV (h264)", "OGG theora", 
-               "WebM (HTML5)", "FLV (HQ h264/AVC)", 
-               _("Copy video codec")
-               ]
-        for x in cod:
-            self.cmbx_vidContainers.Append((x),)
-        
+        for n in vcodecs.keys():
+            self.cmbx_vidContainers.Append((n),)
+            
         #------------------- start widgets settings ------------------#
-        
         ####----------- Default
         if self.rdb_aut.GetStringSelection() == sel_1:
             self.parent.statusbar_msg(msg_1, '')
@@ -873,7 +886,6 @@ class Video_Conv(wx.Panel):
             self.parent.statusbar_msg(msg_2, greenolive)
             
             return
-        
         ####----------- add audio track
         elif self.rdb_aut.GetStringSelection() == sel_3:
             self.vidContainers(self)####
@@ -888,16 +900,13 @@ class Video_Conv(wx.Panel):
                 cmd_opt["Shortest"] = [False,'']
 
             return
-        
         ####-----------     slaideshow
         elif self.rdb_aut.GetStringSelection() == sel_4:
             self.ckbx_pass.SetValue(False), self.ckbx_pass.Hide(),
             self.cmbx_vidContainers.Clear()
-            cod = ["AVI (ITU h264)", "MP4 (HQ h264/AVC)", 
-                   "M4V (HQ h264/AVC)", "MKV (h264)", 
-                   "FLV (HQ h264/AVC)"]
-            for x in cod:
-                self.cmbx_vidContainers.Append((x),)
+            for n in vcodecs.keys():
+                if 'h264' in n:
+                    self.cmbx_vidContainers.Append((n),)
             self.cmbx_vidContainers.SetSelection(1)
             self.vidContainers(self)#### 
             self.spin_ctrl_bitrate.Hide()
@@ -1121,7 +1130,7 @@ class Video_Conv(wx.Panel):
         else:
             cmd_opt['Filters'] = ""
             
-        print (cmd_opt["Filters"])
+        #print (cmd_opt["Filters"])
     #------------------------------------------------------------------#
     def on_Enable_vsize(self, event):
         """
@@ -1275,105 +1284,42 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def setAudioRadiobox(self, event):
         """
-        set audio radiobox selection with compatible audio codec
+        set the compatible audio formats with selected video format 
+        on audio radiobox (see av_formats dict.) 
+        * except when 'Copy video codec' is selected
         """
         cmb_value = self.cmbx_vidContainers.GetValue()
         
-        if vcodec[cmb_value][1] == "avi":
-            self.rdb_a.EnableItem(0,enable=True)## dafault
-            self.rdb_a.EnableItem(1,enable=True)## wav
-            self.rdb_a.EnableItem(2,enable=False)# flac
-            self.rdb_a.EnableItem(3,enable=False)# aac
-            self.rdb_a.EnableItem(4,enable=False) # alac
-            self.rdb_a.EnableItem(5,enable=True) ## ac3
-            self.rdb_a.EnableItem(6,enable=False) # ogg
-            self.rdb_a.EnableItem(7,enable=True) ## mp3
-            self.rdb_a.EnableItem(8,enable=True)# copy
-            self.rdb_a.EnableItem(9,enable=True) # no audio
-            self.rdb_a.SetSelection(0)
-            
-        elif vcodec[cmb_value][1] == "flv" or \
-                                    vcodec[cmb_value][1] == "mp4":
-            self.rdb_a.EnableItem(0,enable=True)## dafault #
-            self.rdb_a.EnableItem(1,enable=False)## wav
-            self.rdb_a.EnableItem(2,enable=False)# flac
-            self.rdb_a.EnableItem(3,enable=True)# aac #
-            self.rdb_a.EnableItem(4,enable=False) # alac
-            self.rdb_a.EnableItem(5,enable=True) ## ac3 #
-            self.rdb_a.EnableItem(6,enable=False) # ogg
-            self.rdb_a.EnableItem(7,enable=True) ## mp3 #
-            self.rdb_a.EnableItem(8,enable=True)# copy
-            self.rdb_a.EnableItem(9,enable=True) # no audio
-            self.rdb_a.SetSelection(0)
-        elif vcodec[cmb_value][1] == "m4v":
-            self.rdb_a.EnableItem(0,enable=True)# dafault #
-            self.rdb_a.EnableItem(1,enable=False)# wav
-            self.rdb_a.EnableItem(2,enable=False)# flac
-            self.rdb_a.EnableItem(3,enable=True)# aac #
-            self.rdb_a.EnableItem(4,enable=True)# alac #
-            self.rdb_a.EnableItem(5,enable=False)# ac3
-            self.rdb_a.EnableItem(6,enable=False)# ogg
-            self.rdb_a.EnableItem(7,enable=False)# mp3
-            self.rdb_a.EnableItem(8,enable=True)# copy
-            self.rdb_a.EnableItem(9,enable=True) # no audio
-            self.rdb_a.SetSelection(0)
-        elif vcodec[cmb_value][1] == "mkv":
-            self.rdb_a.EnableItem(0,enable=True)# dafault #
-            self.rdb_a.EnableItem(1,enable=True)# wav
-            self.rdb_a.EnableItem(2,enable=True)# flac
-            self.rdb_a.EnableItem(3,enable=True)# aac #
-            self.rdb_a.EnableItem(4,enable=False)# alac #
-            self.rdb_a.EnableItem(5,enable=True)# ac3
-            self.rdb_a.EnableItem(6,enable=True)# ogg
-            self.rdb_a.EnableItem(7,enable=True)# mp3
-            self.rdb_a.EnableItem(8,enable=True)# copy
-            self.rdb_a.EnableItem(9,enable=True) # no audio
-            self.rdb_a.SetSelection(0)
-        elif vcodec[cmb_value][1] == "webm":
-            self.rdb_a.EnableItem(0,enable=True)# dafault #
-            self.rdb_a.EnableItem(1,enable=False)# wav
-            self.rdb_a.EnableItem(2,enable=False)# flac
-            self.rdb_a.EnableItem(3,enable=False)# aac #
-            self.rdb_a.EnableItem(4,enable=False)# alac #
-            self.rdb_a.EnableItem(5,enable=False)# ac3
-            self.rdb_a.EnableItem(6,enable=True)# ogg
-            self.rdb_a.EnableItem(7,enable=False)# mp3
-            self.rdb_a.EnableItem(8,enable=True)# copy
-            self.rdb_a.EnableItem(9,enable=True) # no audio
-            self.rdb_a.SetSelection(0)
-        elif vcodec[cmb_value][1] == "ogg":
-            self.rdb_a.EnableItem(0,enable=True)# dafault #
-            self.rdb_a.EnableItem(1,enable=False)# wav
-            self.rdb_a.EnableItem(2,enable=True)# flac
-            self.rdb_a.EnableItem(3,enable=False)# aac #
-            self.rdb_a.EnableItem(4,enable=False)# alac #
-            self.rdb_a.EnableItem(5,enable=False)# ac3
-            self.rdb_a.EnableItem(6,enable=True)# ogg
-            self.rdb_a.EnableItem(7,enable=False)# mp3
-            self.rdb_a.EnableItem(8,enable=True)# copy
-            self.rdb_a.EnableItem(9,enable=True) # no audio
-            self.rdb_a.SetSelection(0)
-            
+        if not cmb_value == 'Copy video codec':
+            for x,v in zip(range(10), av_formats[vcodecs[cmb_value][1]]):
+                if v:
+                    self.rdb_a.EnableItem(x,enable=True)
+                else:
+                    self.rdb_a.EnableItem(x,enable=False)
+                    
+        self.rdb_a.SetSelection(0)
+        
     #------------------------------------------------------------------#
     def on_AudioFormats(self, event):
         """
-        Qualche formato video supporta una limitata scelta di codec audio,
-        quindi imposto le liste dei formati audio supportati in base al 
-        formato video scelto
+        When choose an item on audio radiobox list, set the audio format 
+        name and audio codec command (see acodecs dict.). Also  set the 
+        view of the audio normalize widgets and reset values some cmd_opt 
+        keys.
         """
         audioformat = self.rdb_a.GetStringSelection()
-
+        #------------------------------------------------------
         def param(enablenormalization, enablebuttonparameters):
             cmd_opt["AudioBitrate"] = ["",""]
             cmd_opt["AudioChannel"] = ["",""]
             cmd_opt["AudioRate"] = ["",""]
             cmd_opt["AudioDepth"] = ["",""]
 
-            if enablenormalization == 'yes':
+            if enablenormalization:
                 self.ckbx_a_normalize.Enable()
             else:
                 self.ckbx_a_normalize.Disable()
-            if enablebuttonparameters == 'yes':
+            if enablebuttonparameters:
                 self.btn_aparam.Enable()
                 self.txt_audio_options.SetValue('')
                 self.btn_aparam.SetForegroundColour(wx.Colour(28,28,28))
@@ -1383,102 +1329,53 @@ class Video_Conv(wx.Panel):
                 self.txt_audio_options.SetValue('')
                 self.btn_aparam.SetForegroundColour(wx.Colour(165,165,165))
                 self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
-                
-        #--------------------------------------------#
-        if audioformat == _("Default (managed by FFmpeg)"):
-            self.audio_default()
-            # reset parametrs
-            self.ckbx_a_normalize.Enable()
-            
-        elif audioformat == "Wav (Raw, No_MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a pcm_s16le"
-            cmd_opt["Audio"] = audioformat
-            param('yes', 'yes')
-            
-        elif audioformat == "Flac (Lossless, No_MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a flac"
-            cmd_opt["Audio"] = audioformat
-            param('yes', 'yes')
-            
-        elif audioformat == "Aac (Lossy, MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a aac"
-            cmd_opt["Audio"] = audioformat
-            param('yes', 'yes')
-            
-        elif audioformat == "Alac (Lossless, m4v, No_MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a alac"
-            cmd_opt["Audio"] = audioformat
-            param('yes', 'yes')
-            
-        elif audioformat == "Ac3 (Lossy, MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a ac3"
-            cmd_opt["Audio"] = audioformat
-            param('yes', 'yes')
-        
-        elif audioformat == "Ogg (Lossy, No_MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a libvorbis"
-            cmd_opt["Audio"] = audioformat
-            param('yes', 'yes')
-        
-        elif audioformat == "Mp3 (Lossy, No_MultiChannel)":
-            cmd_opt["AudioCodec"] = "-c:a libmp3lame"
-            cmd_opt["Audio"] = audioformat
-            param('yes', 'yes')
+        #--------------------------------------------------------
+        for n in acodecs.values():
+            if audioformat in n[0]:
+                if audioformat == _("Default (managed by FFmpeg)"):
+                    self.audio_default()
+                    self.ckbx_a_normalize.Enable()
 
-        elif audioformat == _("Try to copy audio source"):
-            # reset parametrs
-            self.normalize_default()
-            self.rdb_a.SetSelection(8)
-            param('no', 'no')
-            cmd_opt["Audio"] = audioformat
-            cmd_opt["AudioCodec"] = "-c:a copy"
+                elif audioformat == _("Try to copy audio source"):
+                    self.normalize_default()
+                    param(False, False)
 
-        elif audioformat == _("No audio stream (silent)"):
-            # reset parametrs
-            self.normalize_default()
-            self.rdb_a.SetSelection(9)
-            param('no', 'no')
-            cmd_opt["Audio"] = audioformat
-            cmd_opt["AudioCodec"] = "-an"
+                elif audioformat == _("No audio stream (silent)"):
+                    self.normalize_default()
+                    param(False, False)
+                    break
+                else:
+                    param(True, True)
+                    
+                cmd_opt["Audio"] = audioformat
+                cmd_opt["AudioCodec"] = n[1]
             
     #-------------------------------------------------------------------#
     def on_AudioParam(self, event):
         """
-        Check which audio codec has been set before starting the 
-        corresponding dialog box
+        Call audio_dialog method and pass the respective parameters 
+        of the selected audio codec 
         """ 
         pcm = ["-c:a pcm_s16le","-c:a pcm_s24le","-c:a pcm_s32le",]
-
-        if cmd_opt["AudioCodec"] in pcm:
-            self.audio_dialog("wav", "Audio WAV Codec Parameters")
-            
-        elif cmd_opt["AudioCodec"] == "-c:a flac":
-            self.audio_dialog("flac", "Audio FLAC Codec Parameters")
-            
-        elif cmd_opt["AudioCodec"] == "-c:a aac":
-            self.audio_dialog("aac", "Audio AAC Codec Parameters")
-            
-        elif cmd_opt["AudioCodec"] == "-c:a alac":
-            self.audio_dialog("alac", "Audio ALAC Codec Parameters")
-            
-        elif cmd_opt["AudioCodec"] == "-c:a ac3":
-            self.audio_dialog("ac3", "Audio AC3 Codec Parameters")
-            
-        elif cmd_opt["AudioCodec"] == "-c:a libvorbis":
-            self.audio_dialog("ogg", "Audio OGG Codec Parameters")
-            
-        elif cmd_opt["AudioCodec"] == "-c:a libmp3lame":
-            self.audio_dialog("mp3", "Audio MP3 Codec Parameters")
         
-        print (cmd_opt["AudioCodec"])
+        if cmd_opt["AudioCodec"] in pcm:
+            self.audio_dialog("wav", "Audio wav parameter (%s)"
+                              % cmd_opt["AudioCodec"])
+        else:
+            for k,v in acodecs.items():
+                if cmd_opt["AudioCodec"] == v[1]:
+                    self.audio_dialog(k, "%s encoding parameters (%s)" 
+                                      % (k,v[1].split()[1]))
+        
+        #print (cmd_opt["AudioCodec"])
             
     #-------------------------------------------------------------------#
     def audio_dialog(self, audio_type, title):
         """
-        Run a dialogs to choices audio parameters then set dictionary 
-        at proper values.
-        NOTE: The data[X] tuple contains the command parameters on the index [1] 
-              and the descriptive parameters on the index [0].
+        Starts a dialog to select the audio parameters, then sets the values 
+        on the cmd_opt dictionary.
+        NOTE: The data[X] tuple contains the command parameters on the 
+              index [1] and the descriptive parameters on the index [0].
               exemple: data[0] contains parameters for channel then
               data[0][1] is ffmpeg option command for audio channels and
               data[0][0] is a simple description for view.
@@ -1670,19 +1567,7 @@ class Video_Conv(wx.Panel):
         else:
             cmd_opt["Tune"] = "-tune:v %s" % (select)
     #-----------------------------------------------------------------------#
-    def disableParent(self):
-        """
-        disabling the main fraim also automatically disables this panel.
-        Used on batch mode only with ProgressDialog gauge. 
-        """
-        self.parent.Disable()
-    #-----------------------------------------------------------------------#
-    def enableParent(self):
-        """
-        Enabling the main fraim also automatically enable this panel
-        """
-        self.parent.Enable()
-    #------------------------------------------------------------------#
+
     def exportStreams(self, exported):
         """
         Set the parent.post_process attribute for communicate it the
@@ -2227,12 +2112,22 @@ class Video_Conv(wx.Panel):
                 cmd_1 = [cmd_opt["Filters"]]
                 time = self.parent.time_read['time']
                 cmd_2 = ['-framerate 1/%s' % (str(time[1]),),
-                         '-c:v libx264 %s %s %s %s '
-                         '-vf fps=25,format=yuv420p' % (cmd_opt["CRF"],
-                                                        cmd_opt["Presets"],
-                                                        cmd_opt["Profile"],
-                                                        cmd_opt["Tune"],)]
-                command = ("%s SLAIDESHOW %s" % (cmd_1,cmd_2))
+                         '%s -c:v libx264 %s %s %s %s -vf '
+                         'fps=25,format=yuv420p %s %s %s %s %s %s %s' %(
+                                                   cmd_opt["AddAudioStream"],
+                                                   cmd_opt["CRF"],
+                                                   cmd_opt["Presets"],
+                                                   cmd_opt["Profile"],
+                                                   cmd_opt["Tune"],
+                                                   cmd_opt["AudioCodec"], 
+                                                   cmd_opt["AudioBitrate"][1], 
+                                                   cmd_opt["AudioRate"][1], 
+                                                   cmd_opt["AudioChannel"][1], 
+                                                   cmd_opt["AudioDepth"][1],
+                                                   cmd_opt["Map"], 
+                                                   cmd_opt["Shortest"][1],)]
+                         
+                command = ("%s id_SLAIDESHOW %s" % (cmd_1,cmd_2))
             else:
                 outext = cmd_opt["VideoFormat"]
                 command = ("%s %s %s %s %s %s %s %s %s "
