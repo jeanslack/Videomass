@@ -797,9 +797,7 @@ class Video_Conv(wx.Panel):
         vengono abilitate o disabilitate funzioni dipendentemente
         dal tipo di codec scelto.
         """
-        #### Audio settings panel
         self.audio_default() # reset audio radiobox and dict
-
         selected = self.cmbx_vidContainers.GetValue()
         #print (vcodecs[selected][0])
         
@@ -868,7 +866,8 @@ class Video_Conv(wx.Panel):
         self.cmbx_vidContainers.Clear()
         for n in vcodecs.keys():
             self.cmbx_vidContainers.Append((n),)
-            
+        self.cmbx_vidContainers.SetStringSelection(cmd_opt["FormatChoice"])
+        
         #------------------- start widgets settings ------------------#
         ####----------- Default
         if self.rdb_aut.GetStringSelection() == sel_1:
@@ -876,13 +875,15 @@ class Video_Conv(wx.Panel):
             
         ####-----------  extract images
         elif self.rdb_aut.GetStringSelection() == sel_2:
-            self.cmbx_vidContainers.SetSelection(6), self.vidContainers(self)
-            self.cmbx_pictformat.Show(), self.cmbx_pictformat.SetSelection(0),
+            if self.cmbx_vidContainers.GetValue() == 'Copy video codec':
+                self.cmbx_vidContainers.SetSelection(6)
+                self.vidContainers(self)
+            self.cmbx_pictformat.Show(), self.cmbx_pictformat.SetSelection(0)
             self.cmbx_vidContainers.Hide(),self.ckbx_pass.Hide(),
             self.spin_ctrl_bitrate.Hide(), self.slider_CRF.Hide(),
             self.cmbx_Vaspect.Hide(), self.notebook_1_pane_3.Disable(),
             self.notebook_1_pane_4.Disable(),
-            cmd_opt["PicturesFormat"], cmd_opt["YUV"] = "jpg","-pix_fmt yuv420p"
+            cmd_opt["PicturesFormat"] = "jpg"
             self.parent.statusbar_msg(msg_2, greenolive)
             
             return
@@ -1832,22 +1833,26 @@ class Video_Conv(wx.Panel):
                 prog = max(lista) +1
                 outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
                 os.mkdir(outputdir)
-
+            
+            YUV = {'jpg':'-pix_fmt yuvj420p', 'png': '-pix_fmt rgb24', 
+                   'bmp': '-pix_fmt bgr24' 
+                       }
             fileout = "{0}-%d.{1}".format(fname,cmd_opt["PicturesFormat"])
             cmd = ('%s %s -i "%s" -loglevel %s -an %s %s %s %s %s -y "%s/%s"' 
-                                                    % (
-                                                    self.ffmpeg_link, 
-                                                    self.parent.time_seq,
-                                                    clicked, 
-                                                    self.ffmpeg_loglev,
-                                                    cmd_opt["VideoRate"],
-                                                    cmd_opt["Filters"],
-                                                    cmd_opt["YUV"],
-                                                    self.threads, 
-                                                    self.cpu_used,
-                                                    outputdir, 
-                                                    fileout)
-                                                    )
+                                                % (
+                                                self.ffmpeg_link, 
+                                                self.parent.time_seq,
+                                                clicked, 
+                                                self.ffmpeg_loglev,
+                                                cmd_opt["VideoRate"],
+                                                cmd_opt["Filters"],
+                                                #cmd_opt["YUV"],
+                                                YUV[cmd_opt["PicturesFormat"]],
+                                                self.threads, 
+                                                self.cpu_used,
+                                                outputdir, 
+                                                fileout)
+                                                )
             command = " ".join(cmd.split())# compact string
             self.parent.switch_Process('saveimages',
                                         clicked, 
