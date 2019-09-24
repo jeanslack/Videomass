@@ -14,19 +14,21 @@ ADD:
     * Added new box for automations on Video Conversion panel which 
       includes the following features:
       
-        * New - create simple video presentation. This new feature
+        * Simple video presentation maker. This new feature
           allows you to add one or more images in the formats supported by FFmpeg 
           (jpg, png, bmp) to memorize the order in which they were added and to 
-          create simple slideshows or a video with a single image. Audio can be 
-          added later with a new process.
-          See the online documentation for use.
-        * New - add audio stream on a movie .
-        * New - extract images from movies with format selection 
+          create simple slideshows or a video with a single image. It also 
+          includes the possibility to add an audio track to the creation of 
+          the video with all the conversion features.
+        * Add new audio stream to a movie.
+        * Images extractor from movies with format selection 
           (jpg, png, bmp) also in the Video Conversions panel
     
     * Added "-pix_fmt yuv420p" option to any video conversion with x264/h264
       on Video Conversions panel, to ensure compatibility so crappy players 
       can decode the video
+    * Added dedicated thread with two subprocess calls to convert images
+      and convert video.
       
 IMPROVEMENTS:
     * code thinning in some modules section in the old stuff

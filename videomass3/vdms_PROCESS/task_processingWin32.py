@@ -213,7 +213,7 @@ class GeneralProcess(wx.Panel):
             self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
             del output, duration
         
-        elif output[0] == 'count cicles only':
+        elif output[0] == 'count cicles only':#used for images conv.
             self.barProg.SetValue(duration)
             self.OutText.AppendText(' %s' % output[1])
 
