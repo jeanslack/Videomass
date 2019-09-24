@@ -611,7 +611,7 @@ class Video_Conv(wx.Panel):
                                     "but takes longer. Use it with high "
                                     "video compression.")
                                                  )
-        self.shortest.SetToolTip(_('if checked the "Shortest" option stop '
+        self.shortest.SetToolTip(_('if checked, the "Shortest" option stop '
                                    'after the video stream is finished. '
                                    'The audio track duration will take the '
                                    'video stream duration.')
@@ -732,7 +732,6 @@ class Video_Conv(wx.Panel):
             self.btn_lacing.Disable(), self.btn_denois.Disable(), 
             self.btn_preview.Disable(), self.notebook_1_pane_4.Disable(), 
             self.ckbx_pass.Disable(), self.ckbx_pass.SetValue(False)
-            self.rdb_a.EnableItem(4,enable=True)# se disable lo abilita
             self.slider_CRF.Disable(), self.rdb_h264preset.SetSelection(0)
             self.rdb_h264profile.SetSelection(0)
             self.rdb_h264tune.SetSelection(0)
@@ -791,11 +790,10 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def vidContainers(self, event):
         """
-        L'evento scelta nella combobox dei formati video scatena
-        il setting ai valori predefiniti. Questo determina lo stato 
-        di default ogni volta che si cambia codec video. Inoltre
-        vengono abilitate o disabilitate funzioni dipendentemente
-        dal tipo di codec scelto.
+        The event chosen in the video format combobox triggers the 
+        setting to the default values. The selection of a new format 
+        determines the default status, enabling or disabling some 
+        functions depending on the type of video format chosen.
         """
         self.audio_default() # reset audio radiobox and dict
         selected = self.cmbx_vidContainers.GetValue()
@@ -838,8 +836,8 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Automation(self, event):
         """
-        Enable or disable automation functionality. Can hide,
-        show, enable or disable some widget in this panel.
+        This event allows you to select some functional automations, 
+        sometimes with independent features and modes.
         
         """
         sel_1, msg_1 = _("Default"), (_('Automations disabled'))
@@ -954,21 +952,12 @@ class Video_Conv(wx.Panel):
             
     def on_AddaudioStr(self, event):
         """
-        Add audio track to cmd_opt["AddAudioStream"] value
+        Add audio track on video or to slideshow and sets the 
+        `cmd_opt["AddAudioStream"]` value with audio pathname, the
+        `cmd_opt["Map"]` value with new mapping. With slideshow
+        option selected it also calls the `on_Shortest` method.
         
         """
-        #if self.rdb_aut.GetStringSelection() == _("Picture slideshow maker"):
-            #f = {'avi':['wav','ac3','mp3',], 
-                #'mp4':['aac','ac3','mp3'],
-                #'m4v':['m4a','aac'], 
-                #'mkv':['wav','aiff','flac','aac','ac3','ogg','oga','mp3'], 
-                #'webm':['ogg','oga'], 
-                #'flv':['aac','ac3','mp3'], 
-                #'ogv':['ogg','oga','flac']
-                #}
-            #frmt = ["*.%s;" % (a) for a in f[cmd_opt["VideoFormat"]]]
-            
-        #else:
         frmt = ["*.%s;" % (a) for a in ['wav','aiff','flac','oga',
                                         'ogg','m4a','aac','ac3','mp3']
                    ]
@@ -1030,7 +1019,7 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Bitrate(self, event):
         """
-        Reset CRF at empty (this depend if is h264 two-pass encoding
+        Reset a empty CRF (this depend if is h264 two-pass encoding
         or if not codec h264)
         """
         cmd_opt["CRF"] = ""
@@ -1289,14 +1278,17 @@ class Video_Conv(wx.Panel):
         on audio radiobox (see av_formats dict.) 
         * except when 'Copy video codec' is selected
         """
-        cmb_value = self.cmbx_vidContainers.GetValue()
+        cmb_str = self.cmbx_vidContainers.GetValue()
         
-        if not cmb_value == 'Copy video codec':
-            for x,v in zip(range(10), av_formats[vcodecs[cmb_value][1]]):
+        if cmb_str == 'Copy video codec':# enable all audio sel.
+            for n,v in enumerate(av_formats.keys()):
+                self.rdb_a.EnableItem(n,enable=True)
+        else:
+            for n,v in enumerate(av_formats[vcodecs[cmb_str][1]]):
                 if v:
-                    self.rdb_a.EnableItem(x,enable=True)
+                    self.rdb_a.EnableItem(n,enable=True)
                 else:
-                    self.rdb_a.EnableItem(x,enable=False)
+                    self.rdb_a.EnableItem(n,enable=False)
                     
         self.rdb_a.SetSelection(0)
         
