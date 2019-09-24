@@ -56,52 +56,52 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "PicturesFormat":"", "YUV":"",
            }
 # Namings in the video container selection combo box:
-vcodecs = {"AVI (XVID mpeg4)":("-vcodec mpeg4 -vtag xvid","avi"), 
-            "AVI (FFmpeg mpeg4)":("-vcodec mpeg4","avi"), 
-            "AVI (ITU h264)":("-vcodec libx264","avi"),
-            "MP4 (mpeg4)":("-vcodec mpeg4","mp4"), 
-            "MP4 (HQ h264/AVC)":("-vcodec libx264","mp4"), 
-            "M4V (HQ h264/AVC)":("-vcodec libx264","m4v"), 
-            "MKV (h264)":("-vcodec libx264","mkv"),
-            "OGG theora":("-vcodec libtheora","ogg"), 
-            "WebM (HTML5)":("-vcodec libvpx","webm"), 
-            "FLV (HQ h264/AVC)":("-vcodec libx264","flv"),
-            _("Copy video codec"):("","-c:v copy"),
+vcodecs = {("AVI (XVID mpeg4)"):("-vcodec mpeg4 -vtag xvid","avi"), 
+            ("AVI (FFmpeg mpeg4)"):("-vcodec mpeg4","avi"), 
+            ("AVI (ITU h264)"):("-vcodec libx264","avi"),
+            ("MP4 (mpeg4)"):("-vcodec mpeg4","mp4"), 
+            ("MP4 (HQ h264/AVC)"):("-vcodec libx264","mp4"), 
+            ("M4V (HQ h264/AVC)"):("-vcodec libx264","m4v"), 
+            ("MKV (h264)"):("-vcodec libx264","mkv"),
+            ("OGG theora"):("-vcodec libtheora","ogg"), 
+            ("WebM (HTML5)"):("-vcodec libvpx","webm"), 
+            ("FLV (HQ h264/AVC)"):("-vcodec libx264","flv"),
+            (_("Copy video codec")):("","-c:v copy"),
             }
 # compatibility between video formats and related audio codecs:
-av_formats = {'avi':['default','wav','','','','ac3','','mp3','copy','silent'],
-              'flv':['default','','','aac','','ac3','','mp3','copy','silent'],
-              'mp4':['default','','','aac','','ac3','','mp3','copy','silent'],
-              'm4v':['default','','','aac','alac','','','','copy','silent'],
-              'mkv':['default','wav','flac','aac','','ac3','ogg','mp3',
-                     'copy','silent'],
-              'webm':['default','','','','','','ogg','','copy','silent'],
-              'ogg':['default','','flac','','','','ogg','','copy','silent']
+av_formats = {('avi'):('default','wav','','','','ac3','','mp3','copy','silent'),
+              ('flv'):('default','','','aac','','ac3','','mp3','copy','silent'),
+              ('mp4'):('default','','','aac','','ac3','','mp3','copy','silent'),
+              ('m4v'):('default','','','aac','alac','','','','copy','silent'),
+              ('mkv'):('default','wav','flac','aac','','ac3','ogg','mp3',
+                       'copy','silent'),
+              ('webm'):('default','','','','','','ogg','','copy','silent'),
+              ('ogg'):('default','','flac','','','','ogg','','copy','silent')
               }
 # presets used by x264 an h264:
-x264_opt = {"Presets":["Disabled","ultrafast","superfast",
+x264_opt = {("Presets"):("Disabled","ultrafast","superfast",
                        "veryfast","faster","fast","medium",
                        "slow","slower","veryslow","placebo"
-                       ], 
-            "Profiles":["Disabled","baseline","main","high",
+                       ), 
+            ("Profiles"):("Disabled","baseline","main","high",
                        "high10","high444"
-                       ],
-            "Tunes":["Disabled","film","animation","grain",
+                       ),
+            ("Tunes"):("Disabled","film","animation","grain",
                     "stillimage","psnr","ssim","fastecode",
                     "zerolatency"
-                    ]
+                    )
             }
 # Namings in the audio format selection on audio radio box:
-acodecs = {'default':(_("Default (managed by FFmpeg)"),''),
-           'wav':("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
-           'flac':("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
-           'aac':("Aac (Lossy, MultiChannel)", "-c:a aac"), 
-           'm4v':("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
-           'ac3':("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
-           'ogg':("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
-           'mp3':("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
-           'copy':(_("Try to copy audio source"), "-c:a copy"),
-           'silent':(_("No audio stream (silent)"), "-an")
+acodecs = {('default'):(_("Default (managed by FFmpeg)"),''),
+           ('wav'):("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
+           ('flac'):("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
+           ('aac'):("Aac (Lossy, MultiChannel)", "-c:a aac"), 
+           ('m4v'):("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
+           ('ac3'):("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
+           ('ogg'):("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
+           ('mp3'):("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
+           ('copy'):(_("Try to copy audio source"), "-c:a copy"),
+           ('silent'):(_("No audio stream (silent)"), "-an")
            }
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))

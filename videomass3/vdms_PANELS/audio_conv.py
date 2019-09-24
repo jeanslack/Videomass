@@ -57,14 +57,14 @@ cmd_opt = {"AudioContainer":"MP3 [.mp3]",
            "ExportExt":"mp3", 
            "CodecCopied":[],
            }
-acodecs = {"WAV [.wav]":"-c:a pcm_s16le",
-           "AIFF [.aiff]":"-c:a pcm_s16le",
-           "FLAC [.flac]":"-c:a flac",
-           "OGG [.ogg]":"-c:a libvorbis",
-           "MP3 [.mp3]":"-c:a libmp3lame",
-           "AAC [.m4a]":"-c:a aac",
-           "ALAC [.m4a]":"-c:a alac",
-           "AC3 [.ac3]":"-c:a ac3"
+acodecs = {("WAV [.wav]"):("-c:a pcm_s16le"),
+           ("AIFF [.aiff]"):("-c:a pcm_s16le"),
+           ("FLAC [.flac]"):("-c:a flac"),
+           ("OGG [.ogg]"):("-c:a libvorbis"),
+           ("MP3 [.mp3]"):("-c:a libmp3lame"),
+           ("AAC [.m4a]"):("-c:a aac"),
+           ("ALAC [.m4a]"):("-c:a alac"),
+           ("AC3 [.ac3]"):("-c:a ac3")
            }
 
 class Audio_Conv(wx.Panel):
