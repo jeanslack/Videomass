@@ -368,9 +368,12 @@ class Video_Conv(wx.Panel):
                                     (_("Max peak level threshold  "))
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
-            wx.ID_ANY, min_val=-99.0, max_val=0.0, increment=1.0, value=-1.0, 
-                        agwStyle=FS.FS_LEFT, size=(-1,-1)
-                        )
+                                                     wx.ID_ANY, 
+                                                     min_val=-99.0, 
+                                                     max_val=0.0, 
+                                                     increment=1.0, value=-1.0, 
+                                            agwStyle=FS.FS_LEFT, size=(-1,-1)
+                                            )
         self.spin_ctrl_audionormalize.SetFormat("%f")
         self.spin_ctrl_audionormalize.SetDigits(1)
         
@@ -443,23 +446,25 @@ class Video_Conv(wx.Panel):
         sizer_automations = wx.StaticBoxSizer(self.sizer_automations_staticbox, 
                                               wx.VERTICAL
                                               )
-        grid_sizer_automations = wx.GridSizer(4, 1, 0, 0)
-        grid_sizer_automations.Add(self.rdb_aut, 0, wx.TOP| 
+        grid_sizer_automations = wx.GridSizer(6, 1, 0, 0)
+        grid_sizer_automations.Add((20, 20), 0, wx.EXPAND | wx.ALL, 5)
+        grid_sizer_automations.Add(self.rdb_aut, 0, wx.ALL| 
+                                                    wx.ALIGN_CENTER_HORIZONTAL| 
+                                                    wx.ALIGN_CENTER_VERTICAL, 
+                                                    20
+                                                    )
+        grid_sizer_automations.Add((20, 20), 0, wx.EXPAND | wx.ALL, 5)
+        grid_sizer_automations.Add(self.btn_audioAdd, 0, wx.ALL| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
                                                      )
-        grid_sizer_automations.Add(self.btn_audioAdd, 0, wx.TOP| 
+        grid_sizer_automations.Add(self.shortest, 0, wx.ALL| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
                                                      )
-        grid_sizer_automations.Add(self.shortest, 0, wx.TOP| 
-                                                     wx.ALIGN_CENTER_HORIZONTAL| 
-                                                     wx.ALIGN_CENTER_VERTICAL, 
-                                                     20
-                                                     )
-        grid_sizer_automations.Add(self.cmbx_pictformat, 0, wx.TOP| 
+        grid_sizer_automations.Add(self.cmbx_pictformat, 0, wx.ALL| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
@@ -467,7 +472,7 @@ class Video_Conv(wx.Panel):
         grid_sizer_pane1_left = wx.GridSizer(2, 1, 0, 0)
         self.sizer_dir_staticbox.Lower()
         sizer_dir = wx.StaticBoxSizer(self.sizer_dir_staticbox, wx.VERTICAL)
-        grid_sizer_dir = wx.GridSizer(1, 1, 0, 0)# vuoto
+        grid_sizer_dir = wx.GridSizer(1, 1, 0, 0)
         self.sizer_combobox_formatv_staticbox.Lower()
         sizer_combobox_formatv = wx.StaticBoxSizer(
                                         self.sizer_combobox_formatv_staticbox, 
