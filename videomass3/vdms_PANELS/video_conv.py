@@ -173,7 +173,7 @@ class Video_Conv(wx.Panel):
         self.rdb_auto = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                    (_("Automations")), choices=[
                                             (_("Default (clear all)")), 
-                                            (_("Video to Pictures converter")), 
+                                            (_("Pictures from Video")), 
                                             (_("Add audio stream to a movie")), 
                                             (_("Picture slideshow maker")),
                                                                 ], 
@@ -621,10 +621,8 @@ class Video_Conv(wx.Panel):
                                     "but takes longer. Use it with high "
                                     "video compression.")
                                                  )
-        self.shortest.SetToolTip(_('if checked, the "Shortest" option stop '
-                                   'after the video stream is finished. '
-                                   'The audio track duration will take the '
-                                   'video stream duration.')
+        self.shortest.SetToolTip(_('Selecting "Shortest" option, the audio '
+                                   'will be cut to the video duration')
                                  )
         self.cmbx_pictformat.SetToolTip(_('Output format of the extracted '
                                         'pictures'))
@@ -854,7 +852,7 @@ class Video_Conv(wx.Panel):
         
         """
         sel_1, msg_1 = _("Default"), (_('Automations disabled'))
-        sel_2 = _("Video to Pictures converter")
+        sel_2 = _("Pictures from Video")
         msg_2 = (_('Tip: use the "Duration" tool, then try setting '
                    'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
         sel_3 = _("Add audio stream to a movie")
@@ -863,7 +861,7 @@ class Video_Conv(wx.Panel):
                      'without re-encoding all'))
         sel_4 = _("Picture slideshow maker")
         msg_4 = (_('Tip: Import pictures ONLY (preferably in the same format), '
-                   'then set the "Duration" tool to timming between images. '
+                   'then use the "Duration" tool to set pictures duration. '
                    'Use the "Resize > Scale" filter to resize same resolution'))
         
         #-------------- On ACCESS first revert to default ----------------#
@@ -1645,7 +1643,7 @@ class Video_Conv(wx.Panel):
             checking = inspect(file_sources, dir_destin, '')
             
         elif (self.rdb_auto.GetStringSelection() == 
-                                    _("Video to Pictures converter")):
+                                    _("Pictures from Video")):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, 
                                cmd_opt["PicturesFormat"])
@@ -1661,7 +1659,7 @@ class Video_Conv(wx.Panel):
         filename, base_name, countmax = checking
     
         if (self.rdb_auto.GetStringSelection() == 
-                                    _("Video to Pictures converter")):
+                                    _("Pictures from Video")):
             self.saveimages(file_sources, dir_destin, logname)
     
         elif self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
@@ -2121,7 +2119,7 @@ class Video_Conv(wx.Panel):
                             cmd_opt["Shortest"][1],)
                                 )
             elif (self.rdb_auto.GetStringSelection() == 
-                                            _("Video to Pictures converter")):
+                                            _("Pictures from Video")):
                 outext = cmd_opt["PicturesFormat"]
                 command = ('%s %s %s -an' % (
                            cmd_opt["VideoRate"],

@@ -1055,7 +1055,7 @@ class CreateSlideShow(Thread):
             count = ' File %s/%s' % ('1','1',)
             com = "%s\n%s" % (count, cmd_2)
             print("%s" % com)
-            task_2 = 'Slideshow production, output format %s' % self.outformat
+            task_2 = 'Slideshow creation, output format %s' % self.outformat
             
             wx.CallAfter(pub.sendMessage, 
                         "COUNT_EVT", 

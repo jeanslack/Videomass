@@ -4,7 +4,7 @@
 CWD=$(pwd)
 
 
-xgettext -d videomass "../videomass3/Videomass3.py" \
+/usr/local/Cellar/gettext/0.20.1/bin/xgettext -d videomass "../videomass3/Videomass3.py" \
 "../videomass3/vdms_DIALOGS/audiodialogs.py" \
 "../videomass3/vdms_DIALOGS/dialog_tools.py" \
 "../videomass3/vdms_DIALOGS/ffmpeg_conf.py" \
