@@ -64,7 +64,8 @@ acodecs = {("WAV [.wav]"):("-c:a pcm_s16le"),
            ("MP3 [.mp3]"):("-c:a libmp3lame"),
            ("AAC [.m4a]"):("-c:a aac"),
            ("ALAC [.m4a]"):("-c:a alac"),
-           ("AC3 [.ac3]"):("-c:a ac3")
+           ("AC3 [.ac3]"):("-c:a ac3"),
+           (_("Save audio from movies")):(""),
            }
 
 class Audio_Conv(wx.Panel):
@@ -93,16 +94,10 @@ class Audio_Conv(wx.Panel):
         """ constructor"""
         # Widgets definitions:
         self.cmbx_a = wx.ComboBox(self, wx.ID_ANY,
-        choices=[("WAV [.wav]"), 
-                 ("AIFF [.aiff]"), 
-                 ("FLAC [.flac]"), 
-                 ("OGG [.ogg]"), 
-                 ("MP3 [.mp3]"), 
-                 ("AAC [.m4a]"), 
-                 ("ALAC [.m4a]"), 
-                 ("AC3 [.ac3]"),
-                 (_("Save audio from movies"))], style=wx.CB_DROPDOWN | 
-                                                       wx.CB_READONLY)
+                                  choices=[x for x in acodecs.keys()],
+                                  style=wx.CB_DROPDOWN | 
+                                  wx.CB_READONLY
+                                  )
         self.cmbx_a.SetSelection(4)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
         self.btn_param = GB.GradientButton(self,
@@ -292,8 +287,8 @@ class Audio_Conv(wx.Panel):
         for k,v in acodecs.items():
             if cmd_opt["AudioContainer"] == k:
                 self.audio_parameters(k.split()[0].lower(),
-                                        "%s export parameters (%s)" 
-                                        %(k.split()[0].lower(),v.split()[1])
+                                      "%s export parameters (%s)" 
+                                      %(k.split()[0].lower(),v.split()[1])
                                         )
     #-------------------------------------------------------------------#
     def audio_parameters(self, audio_type, title):
@@ -376,7 +371,7 @@ class Audio_Conv(wx.Panel):
 
             if audio_list == None:
                 wx.MessageBox(_("There are no audio streams:\n%s ") % (files), 
-                            'Videomass', wx.ICON_INFORMATION, self)
+                                'Videomass', wx.ICON_INFORMATION, self)
                 return
 
             elif len(audio_list) > 1:
@@ -402,8 +397,9 @@ class Audio_Conv(wx.Panel):
                         if cn.startswith('pcm_'): cn = 'wav'
                         cmd_opt["ExportExt"].append(cn)
                     else:
-                        wx.MessageBox(_(u"Nothing choice:\n%s ") % (files), 
-                            'Videomass: Error', wx.ICON_ERROR, self)
+                        wx.MessageBox(_("Nothing choice:\n%s ") % (files), 
+                                        'Videomass: Error', wx.ICON_ERROR, 
+                                        self)
                         return
                 else: # there must be some choice (default first item list)
                     cn = ''.join(audio_list[0]).split()[4]

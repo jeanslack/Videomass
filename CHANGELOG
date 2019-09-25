@@ -32,6 +32,10 @@ ADD:
       
 IMPROVEMENTS:
     * code thinning in some modules section in the old stuff
+    
+BUG FIXES:
+    * fixed bug when choosing to copy the video codec that always enabled 
+      the audio alac format and left the other audio formats disabled
 
 
 +------------------------------------+

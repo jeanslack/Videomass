@@ -41,7 +41,7 @@ from videomass3.vdms_DIALOGS import dialog_tools
 from videomass3.vdms_DIALOGS import shownormlist
 
 # Dictionary definition for command settings:
-cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"", 
+cmd_opt = {"VidCmbxStr":"", "VideoFormat":"", "VideoCodec":"", 
            "ext_input":"", "Passing":"single", "InputDir":"", 
            "OutputDir":"",  "VideoSize":"", "VideoAspect":"", 
            "VideoRate":"", "Presets":"", "Profile":"", 
@@ -49,7 +49,7 @@ cmd_opt = {"FormatChoice":"", "VideoFormat":"", "VideoCodec":"",
            "AudioCodec":"", "AudioChannel":["",""], 
            "AudioRate":["",""], "AudioBitrate":["",""], 
            "AudioDepth":["",""], "Normalize":"", 
-           "Deinterlace":"", "Interlace":"", "file":"", "Map":"-map 0", 
+           "Deinterlace":"", "Interlace":"", "Map":"-map 0", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
            "Filters":"", "Shortest":[False,""], "AddAudioStream":"",
@@ -68,15 +68,33 @@ vcodecs = {("AVI (XVID mpeg4)"):("-vcodec mpeg4 -vtag xvid","avi"),
             ("FLV (HQ h264/AVC)"):("-vcodec libx264","flv"),
             (_("Copy video codec")):("","-c:v copy"),
             }
+# Namings in the audio format selection on audio radio box:
+acodecs = {('default'):(_("Default (managed by FFmpeg)"),''),
+           ('wav'):("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
+           ('flac'):("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
+           ('aac'):("Aac (Lossy, MultiChannel)", "-c:a aac"), 
+           ('m4v'):("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
+           ('ac3'):("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
+           ('ogg'):("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
+           ('mp3'):("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
+           ('copy'):(_("Try to copy audio source"), "-c:a copy"),
+           ('silent'):(_("No audio stream (silent)"), "-an")
+           }
 # compatibility between video formats and related audio codecs:
-av_formats = {('avi'):('default','wav','','','','ac3','','mp3','copy','silent'),
-              ('flv'):('default','','','aac','','ac3','','mp3','copy','silent'),
-              ('mp4'):('default','','','aac','','ac3','','mp3','copy','silent'),
-              ('m4v'):('default','','','aac','alac','','','','copy','silent'),
-              ('mkv'):('default','wav','flac','aac','','ac3','ogg','mp3',
+av_formats = {('avi'):('default','wav',None,None,None,'ac3',None,'mp3',
                        'copy','silent'),
-              ('webm'):('default','','','','','','ogg','','copy','silent'),
-              ('ogg'):('default','','flac','','','','ogg','','copy','silent')
+              ('flv'):('default',None,None,'aac',None,'ac3',None,'mp3',
+                       'copy','silent'),
+              ('mp4'):('default',None,None,'aac',None,'ac3',None,'mp3',
+                       'copy','silent'),
+              ('m4v'):('default',None,None,'aac','alac',None,None,None,
+                       'copy','silent'),
+              ('mkv'):('default','wav','flac','aac',None,'ac3','ogg','mp3',
+                       'copy','silent'),
+              ('webm'):('default',None,None,None,None,None,'ogg',None,
+                        'copy','silent'),
+              ('ogg'):('default',None,'flac',None,None,None,'ogg',None,
+                       'copy','silent')
               }
 # presets used by x264 an h264:
 x264_opt = {("Presets"):("Disabled","ultrafast","superfast",
@@ -91,18 +109,6 @@ x264_opt = {("Presets"):("Disabled","ultrafast","superfast",
                     "zerolatency"
                     )
             }
-# Namings in the audio format selection on audio radio box:
-acodecs = {('default'):(_("Default (managed by FFmpeg)"),''),
-           ('wav'):("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
-           ('flac'):("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
-           ('aac'):("Aac (Lossy, MultiChannel)", "-c:a aac"), 
-           ('m4v'):("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
-           ('ac3'):("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
-           ('ogg'):("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
-           ('mp3'):("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
-           ('copy'):(_("Try to copy audio source"), "-c:a copy"),
-           ('silent'):(_("No audio stream (silent)"), "-an")
-           }
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
@@ -328,12 +334,10 @@ class Video_Conv(wx.Panel):
                                  choices=[x[0] for x in acodecs.values()],
                                  majorDimension=2, style=wx.RA_SPECIFY_COLS
                                     )
-        self.rdb_a.EnableItem(0,enable=True),self.rdb_a.EnableItem(1,enable=True)
-        self.rdb_a.EnableItem(2,enable=True),self.rdb_a.EnableItem(3,enable=True)
-        self.rdb_a.EnableItem(4,enable=False),self.rdb_a.EnableItem(5,enable=True)
-        self.rdb_a.EnableItem(6,enable=True),self.rdb_a.EnableItem(7,enable=True)
-        self.rdb_a.EnableItem(8,enable=True),self.rdb_a.EnableItem(9,enable=True)
-        self.rdb_a.SetSelection(0)
+        for n,v in enumerate(av_formats["mkv"]):
+            if not v:#disable only not compatible with mkv 
+                self.rdb_a.EnableItem(n,enable=False
+                                      )
         self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
                       wx.ID_ANY, (_("Audio Normalization"))
                                 )
@@ -698,17 +702,18 @@ class Video_Conv(wx.Panel):
         #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
         #-------------------------------------- initialize default layout:
-        cmd_opt["FormatChoice"] = "MKV (h264)"
+        cmd_opt["VidCmbxStr"] = "MKV (h264)"
         cmd_opt["VideoFormat"] = "mkv"
         cmd_opt["VideoCodec"] = "-vcodec libx264"
         cmd_opt["YUV"] = "-pix_fmt yuv420p"
         cmd_opt["VideoAspect"] = ""
         cmd_opt["VideoRate"] = ""
+        self.rdb_a.SetSelection(0)
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
         self.rdb_h264preset.SetSelection(0), self.rdb_h264profile.SetSelection(0)
-        self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0),
-        self.cmbx_Vaspect.SetSelection(0), self.rdb_aut.SetSelection(0), 
-        self.shortest.Hide(), self.btn_audioAdd.Hide(), 
+        self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0)
+        self.cmbx_Vaspect.SetSelection(0), self.rdb_aut.SetSelection(0)
+        self.shortest.Hide(), self.btn_audioAdd.Hide()
         self.cmbx_pictformat.Hide(), self.cmbx_Vaspect.Enable()
         self.UI_set()
         self.audio_default()
@@ -800,7 +805,7 @@ class Video_Conv(wx.Panel):
         #print (vcodecs[selected][0])
         
         if vcodecs[selected][0] == "-vcodec libx264":
-            cmd_opt["FormatChoice"] = "%s" % (selected)# output form.
+            cmd_opt["VidCmbxStr"] = "%s" % (selected)# output form.
             cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])# format
             cmd_opt["VideoCodec"] = "-vcodec libx264"
             cmd_opt["Bitrate"] = ""
@@ -812,7 +817,7 @@ class Video_Conv(wx.Panel):
             
         elif vcodecs[selected][0] == "":# copy video codec
             cmd_opt["Passing"] = "single"
-            cmd_opt["FormatChoice"] = "%s" % (selected)
+            cmd_opt["VidCmbxStr"] = "%s" % (selected)
             cmd_opt['VideoFormat'] = "%s" % ( vcodecs[selected][1])
             cmd_opt["VideoCodec"] = "-c:v copy"
             cmd_opt["YUV"] = ""
@@ -821,7 +826,7 @@ class Video_Conv(wx.Panel):
             self.UI_set()
 
         else: # not x264/h264
-            cmd_opt["FormatChoice"] = "%s" % (selected)
+            cmd_opt["VidCmbxStr"] = "%s" % (selected)
             cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])
             cmd_opt["VideoCodec"] = "%s" %(vcodecs[selected][0])
             cmd_opt["Bitrate"] = ""
@@ -864,7 +869,7 @@ class Video_Conv(wx.Panel):
         self.cmbx_vidContainers.Clear()
         for n in vcodecs.keys():
             self.cmbx_vidContainers.Append((n),)
-        self.cmbx_vidContainers.SetStringSelection(cmd_opt["FormatChoice"])
+        self.cmbx_vidContainers.SetStringSelection(cmd_opt["VidCmbxStr"])
         
         #------------------- start widgets settings ------------------#
         ####----------- Default
@@ -1977,7 +1982,7 @@ class Video_Conv(wx.Panel):
                         \nEnable stopping to shortest"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (numfile,
-                cmd_opt["FormatChoice"], cmd_opt["VideoCodec"],
+                cmd_opt["VidCmbxStr"], cmd_opt["VideoCodec"],
                 cmd_opt["VideoAspect"], cmd_opt["VideoRate"], 
                 cmd_opt["AddAudioStream"], cmd_opt["Audio"], 
                 cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
@@ -2044,7 +2049,7 @@ class Video_Conv(wx.Panel):
                          \nTime selection\nEnable stopping to shortest"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s\n%s\n%s" % (numfile, cmd_opt["FormatChoice"], 
+                        \n%s\n%s\n%s" % (numfile, cmd_opt["VidCmbxStr"], 
                         cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                         cmd_opt["CRF"], cmd_opt["Passing"], 
                         cmd_opt["Deinterlace"], cmd_opt["Interlace"], 

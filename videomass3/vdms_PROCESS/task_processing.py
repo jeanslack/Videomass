@@ -957,19 +957,19 @@ class CreateSlideShow(Thread):
         
         wx.CallAfter(pub.sendMessage, 
                     "COUNT_EVT", 
-                    count='- Task One', 
+                    count='Task One', 
                     duration=len(self.filelist),
-                    fname='Temporary conversion of uploaded images',
+                    fname='Temporary processing of the pictures',
                     end='',
                     )
-        logWrite('Temporary conversion of uploaded images', '', self.logname)
+        logWrite('Temporary processing of the pictures', '', self.logname)
         
         with tempfile.TemporaryDirectory() as tmpdirname:# make tmp dir
             prognum = 0
             for files in self.filelist:
                 prognum += 1
                 line = ['count cicles only',
-                        'Num. %d  >>  %s\n' %(prognum, files)
+                        ' |%d|  >  %s\n' %(prognum, files)
                         ]
                 cmd_1 = '%s -i "%s" %s "%s/IMAGE_%d.png"' %(
                                                         self.cmd_1[0],
@@ -1052,14 +1052,14 @@ class CreateSlideShow(Thread):
                                                            tmpdirname, 
                                                            self.cmd_2[1],
                                                            )
-            count = 'File %s/%s' % ('1','1',)
+            count = ' File %s/%s' % ('1','1',)
             com = "%s\n%s" % (count, cmd_2)
             print("%s" % com)
-            task_2 = 'Slideshow creation in %s format' % self.outformat
+            task_2 = 'Slideshow production, output format %s' % self.outformat
             
             wx.CallAfter(pub.sendMessage, 
                         "COUNT_EVT", 
-                        count='- Task Two', 
+                        count='Task Two', 
                         duration=self.duration,
                         fname=task_2,
                         end='',
