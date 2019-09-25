@@ -144,7 +144,8 @@ class Video_Conv(wx.Panel):
         self.OS = OS
         #------------
         self.panel_base = wx.Panel(self, wx.ID_ANY)
-        self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, style=0)
+        self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, 
+                                      style=wx.NB_NOPAGETHEME|wx.NB_LEFT)
         self.notebook_1_pane_1 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, 
                                               wx.ID_ANY,
@@ -169,10 +170,10 @@ class Video_Conv(wx.Panel):
         self.sizer_automations_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
                                                         wx.ID_ANY, ("")
                                                         )
-        self.rdb_aut = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
+        self.rdb_auto = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                    (_("Automations")), choices=[
                                             (_("Default (clear all)")), 
-                                            (_("Video to images converter")), 
+                                            (_("Video to Pictures converter")), 
                                             (_("Add audio stream to a movie")), 
                                             (_("Picture slideshow maker")),
                                                                 ], 
@@ -448,7 +449,7 @@ class Video_Conv(wx.Panel):
                                               )
         grid_sizer_automations = wx.GridSizer(6, 1, 0, 0)
         grid_sizer_automations.Add((20, 20), 0, wx.EXPAND | wx.ALL, 5)
-        grid_sizer_automations.Add(self.rdb_aut, 0, wx.ALL| 
+        grid_sizer_automations.Add(self.rdb_auto, 0, wx.ALL| 
                                                     wx.ALIGN_CENTER_HORIZONTAL| 
                                                     wx.ALIGN_CENTER_VERTICAL, 
                                                     20
@@ -625,6 +626,8 @@ class Video_Conv(wx.Panel):
                                    'The audio track duration will take the '
                                    'video stream duration.')
                                  )
+        self.cmbx_pictformat.SetToolTip(_('Output format of the extracted '
+                                        'pictures'))
         self.spin_ctrl_bitrate.SetToolTip(_("The bit rate determines the "
                                             "quality and the final video "
                                             "size. A larger value correspond "
@@ -681,7 +684,7 @@ class Video_Conv(wx.Panel):
         #self.Bind(wx.EVT_COMBOBOX, self.vidContainers, self.cmbx_vidContainers)
         self.cmbx_vidContainers.Bind(wx.EVT_COMBOBOX, self.vidContainers)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Automation, self.rdb_aut)
+        self.Bind(wx.EVT_RADIOBOX, self.on_Automation, self.rdb_auto)
         self.Bind(wx.EVT_CHECKBOX, self.on_Shortest, self.shortest)
         self.Bind(wx.EVT_BUTTON, self.on_AddaudioStr, self.btn_audioAdd)
         self.Bind(wx.EVT_COMBOBOX, self.on_PicturesFormat, self.cmbx_pictformat)
@@ -717,7 +720,7 @@ class Video_Conv(wx.Panel):
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
         self.rdb_h264preset.SetSelection(0), self.rdb_h264profile.SetSelection(0)
         self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0)
-        self.cmbx_Vaspect.SetSelection(0), self.rdb_aut.SetSelection(0)
+        self.cmbx_Vaspect.SetSelection(0), self.rdb_auto.SetSelection(0)
         self.shortest.Hide(), self.btn_audioAdd.Hide()
         self.cmbx_pictformat.Hide(), self.cmbx_Vaspect.Enable()
         self.UI_set()
@@ -851,7 +854,7 @@ class Video_Conv(wx.Panel):
         
         """
         sel_1, msg_1 = _("Default"), (_('Automations disabled'))
-        sel_2 = _("Video to images converter")
+        sel_2 = _("Video to Pictures converter")
         msg_2 = (_('Tip: use the "Duration" tool, then try setting '
                    'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
         sel_3 = _("Add audio stream to a movie")
@@ -859,16 +862,16 @@ class Video_Conv(wx.Panel):
                    'the source" of the audio file to speed up the process '
                      'without re-encoding all'))
         sel_4 = _("Picture slideshow maker")
-        msg_4 = (_('Tip: upload ONLY the images you want to use, then set '
-                   'the "Duration" tool for slide between images. Use the '
-                   '"Resize > Scale" filter to resize same resolution'))
+        msg_4 = (_('Tip: Import pictures ONLY (preferably in the same format), '
+                   'then set the "Duration" tool to timming between images. '
+                   'Use the "Resize > Scale" filter to resize same resolution'))
         
         #-------------- On ACCESS first revert to default ----------------#
         self.ckbx_pass.Show(), self.ckbx_pass.SetValue(False),
         self.cmbx_pictformat.Hide(), self.cmbx_vidContainers.Show(),
         self.ckbx_pass.Show(), self.spin_ctrl_bitrate.Show(),
         self.slider_CRF.Show(),self.cmbx_Vaspect.Show(),
-        self.cmbx_Vrate.Show(), self.shortest.Hide(), 
+        self.shortest.Hide(), 
         self.shortest.SetValue(True), self.btn_audioAdd.Hide(), 
         self.rdb_h264tune.SetSelection(0)
         self.cmbx_vidContainers.Clear()
@@ -878,11 +881,11 @@ class Video_Conv(wx.Panel):
         
         #------------------- start widgets settings ------------------#
         ####----------- Default
-        if self.rdb_aut.GetStringSelection() == sel_1:
+        if self.rdb_auto.GetStringSelection() == sel_1:
             self.parent.statusbar_msg(msg_1, '')
             
         ####-----------  extract images
-        elif self.rdb_aut.GetStringSelection() == sel_2:
+        elif self.rdb_auto.GetStringSelection() == sel_2:
             if self.cmbx_vidContainers.GetValue() == 'Copy video codec':
                 self.cmbx_vidContainers.SetSelection(6)
                 self.vidContainers(self)
@@ -890,16 +893,19 @@ class Video_Conv(wx.Panel):
             self.cmbx_vidContainers.Hide(),self.ckbx_pass.Hide(),
             self.spin_ctrl_bitrate.Hide(), self.slider_CRF.Hide(),
             self.cmbx_Vaspect.Hide(), self.notebook_1_pane_3.Disable(),
-            self.notebook_1_pane_4.Disable(),
+            self.notebook_1_pane_4.Disable()
+            self.cmbx_Vrate.SetSelection(4), self.on_Vrate(self)
+
             cmd_opt["PicturesFormat"] = "jpg"
             self.parent.statusbar_msg(msg_2, greenolive)
             
             return
         ####----------- add audio track
-        elif self.rdb_aut.GetStringSelection() == sel_3:
+        elif self.rdb_auto.GetStringSelection() == sel_3:
             self.vidContainers(self)####
             self.parent.statusbar_msg(msg_3, azure)
             self.btn_audioAdd.Show()
+            self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
             
             if cmd_opt["AddAudioStream"]:
                 self.notebook_1_pane_3.Enable()
@@ -907,10 +913,10 @@ class Video_Conv(wx.Panel):
             else:
                 self.notebook_1_pane_3.Disable()
                 cmd_opt["Shortest"] = [False,'']
-
+            
             return
         ####-----------     slaideshow
-        elif self.rdb_aut.GetStringSelection() == sel_4:
+        elif self.rdb_auto.GetStringSelection() == sel_4:
             self.ckbx_pass.SetValue(False), self.ckbx_pass.Hide(),
             self.cmbx_vidContainers.Clear()
             for n in vcodecs.keys():
@@ -920,9 +926,10 @@ class Video_Conv(wx.Panel):
             self.vidContainers(self)#### 
             self.spin_ctrl_bitrate.Hide()
             self.rdb_h264tune.SetSelection(4)
-            self.cmbx_Vaspect.Hide(), self.cmbx_Vrate.Hide()
+            self.cmbx_Vaspect.Hide()
             cmd_opt["Tune"] = "-tune:v stillimage"
             self.shortest.Show(), self.btn_audioAdd.Show()
+            self.cmbx_Vrate.SetSelection(1), self.on_Vrate(self)
             if cmd_opt["AddAudioStream"]:
                 self.notebook_1_pane_3.Enable()
             else:
@@ -939,6 +946,7 @@ class Video_Conv(wx.Panel):
         if not self.notebook_1_pane_3.IsEnabled():
             self.notebook_1_pane_3.Enable()
         self.vidContainers(self)
+        self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
         
     #------------------------------------------------------------------#
     def on_Shortest(self, event):
@@ -992,7 +1000,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_3.Enable()
         cmd_opt["Map"] = "-map 0:v:0 -map 1:a:0"
 
-        if self.rdb_aut.GetStringSelection() == _("Picture slideshow maker"):
+        if self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
             self.on_Shortest(self)
 
     #------------------------------------------------------------------#
@@ -1617,7 +1625,7 @@ class Video_Conv(wx.Panel):
                                 'otherwise disable audio normalization.'),
                                 'Videomass', wx.ICON_INFORMATION)
                 return
-        if (self.rdb_aut.GetStringSelection() == 
+        if (self.rdb_auto.GetStringSelection() == 
                                            _("Add audio stream to a movie")):
             if not cmd_opt["AddAudioStream"]:
                 wx.MessageBox(_('To add audio stream to a movie please '
@@ -1636,8 +1644,8 @@ class Video_Conv(wx.Panel):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, '')
             
-        elif (self.rdb_aut.GetStringSelection() == 
-                                    _("Video to images converter")):
+        elif (self.rdb_auto.GetStringSelection() == 
+                                    _("Video to Pictures converter")):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, 
                                cmd_opt["PicturesFormat"])
@@ -1652,11 +1660,11 @@ class Video_Conv(wx.Panel):
         typeproc, file_sources, dir_destin,\
         filename, base_name, countmax = checking
     
-        if (self.rdb_aut.GetStringSelection() == 
-                                    _("Video to images converter")):
+        if (self.rdb_auto.GetStringSelection() == 
+                                    _("Video to Pictures converter")):
             self.saveimages(file_sources, dir_destin, logname)
     
-        elif self.rdb_aut.GetStringSelection() == _("Picture slideshow maker"):
+        elif self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
             self.slideShow(file_sources, dir_destin, logname)
             
         else:
@@ -1855,6 +1863,8 @@ class Video_Conv(wx.Panel):
                                                 outputdir, 
                                                 fileout)
                                                 )
+            print(cmd)
+            return
             command = " ".join(cmd.split())# compact string
             self.parent.switch_Process('saveimages',
                                         clicked, 
@@ -1919,12 +1929,14 @@ class Video_Conv(wx.Panel):
                            self.ffmpeg_loglev, 
                            str(time[1]),
                            ),
-                 '%s -c:v libx264 %s %s %s %s -vf fps=25,format=yuv420p %s %s '
+                 #'%s -c:v libx264 %s %s %s %s -vf fps=25,format=yuv420p %s %s '
+                 '%s -c:v libx264 %s %s %s %s %s -vf format=yuv420p %s %s '
                  '%s %s %s %s %s %s %s -y "%s"' % (cmd_opt["AddAudioStream"],
                                                    cmd_opt["CRF"],
                                                    cmd_opt["Presets"],
                                                    cmd_opt["Profile"],
                                                    cmd_opt["Tune"],
+                                                   cmd_opt["VideoRate"],
                                                    cmd_opt["AudioCodec"], 
                                                    cmd_opt["AudioBitrate"][1], 
                                                    cmd_opt["AudioRate"][1], 
@@ -1943,6 +1955,8 @@ class Video_Conv(wx.Panel):
                          valupdate[1], 
                          'Create a video presentation'
                          )
+        print(cmd_2)
+        return
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('slideshow',
                                         file_sources, 
@@ -2021,7 +2035,7 @@ class Video_Conv(wx.Panel):
             else:
                 size = _('As from source')
                 
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s"
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s"
                         "\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" %(
                                              len(self.file_sources),
                                              cmd_opt["VideoFormat"],
@@ -2030,6 +2044,7 @@ class Video_Conv(wx.Panel):
                                              cmd_opt["Presets"],
                                              cmd_opt["Profile"],
                                              cmd_opt["Tune"],
+                                             cmd_opt["VideoRate"],
                                              cmd_opt["AddAudioStream"],
                                              cmd_opt["Audio"],
                                              cmd_opt["AudioCodec"],
@@ -2105,15 +2120,15 @@ class Video_Conv(wx.Panel):
                             cmd_opt["Map"],
                             cmd_opt["Shortest"][1],)
                                 )
-            elif (self.rdb_aut.GetStringSelection() == 
-                                            _("Video to images converter")):
+            elif (self.rdb_auto.GetStringSelection() == 
+                                            _("Video to Pictures converter")):
                 outext = cmd_opt["PicturesFormat"]
                 command = ('%s %s %s -an' % (
                            cmd_opt["VideoRate"],
                            cmd_opt["Filters"],
                            cmd_opt["YUV"],)
                            )
-            elif (self.rdb_aut.GetStringSelection() == 
+            elif (self.rdb_auto.GetStringSelection() == 
                                             _("Picture slideshow maker")):
                 outext = cmd_opt["VideoFormat"]
                 cmd_1 = [cmd_opt["Filters"]]
