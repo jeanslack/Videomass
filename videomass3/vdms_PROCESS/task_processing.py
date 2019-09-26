@@ -507,7 +507,7 @@ class DoublePassThread(Thread):
                                                 ):
             basename = os.path.basename(files) #nome file senza path
             filename = os.path.splitext(basename)[0]#nome senza estensione
-            
+
             #--------------- first pass
             pass1 = ('%s %s -i "%s" %s -passlogfile "%s/%s.log" '
                     '-pass 1 -y %s' % (self.ffmpeg_link, 

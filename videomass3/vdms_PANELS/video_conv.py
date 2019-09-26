@@ -1617,7 +1617,7 @@ class Video_Conv(wx.Panel):
         # check normalization data offset, if enable
         if self.ckbx_a_normalize.IsChecked():
             if self.btn_analyzes.IsEnabled():
-                wx.MessageBox(_('Peak values not detected! Press the '
+                wx.MessageBox(_('Peak values not detected! use the '
                                 '"Volumedetect" button before proceeding, '
                                 'otherwise disable audio normalization.'),
                                 'Videomass', wx.ICON_INFORMATION)

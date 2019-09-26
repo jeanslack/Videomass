@@ -63,8 +63,6 @@ class AudioSettings(wx.Dialog):
         
         if self.bitdepth == None:
             self.bitdepth = {0:('not applicable ',"")}
-        
-        print(self.channels)
 
         for a in self.sample_rate.values():
             samplerate_list.append(a[0])

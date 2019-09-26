@@ -65,7 +65,8 @@ acodecs = {("WAV [.wav]"):("-c:a pcm_s16le"),
            ("AAC [.m4a]"):("-c:a aac"),
            ("ALAC [.m4a]"):("-c:a alac"),
            ("AC3 [.ac3]"):("-c:a ac3"),
-           (_("Save audio from movies")):(""),
+           (_("Extract audio stream from movies")):(""),
+           (_("Perform normalization only")):(""),
            }
 
 class Audio_Conv(wx.Panel):
@@ -112,11 +113,15 @@ class Audio_Conv(wx.Panel):
         self.btn_param.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
-                                          style=wx.TE_READONLY)
-        self.ckb_onlynorm = wx.CheckBox(self, wx.ID_ANY, (
-                                               _("Only Normalization")))
-        self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
-                                               _("Peak and RMS Normalization")))
+                                          style=wx.TE_READONLY
+                                          )
+        self.rdbx_norm = wx.RadioBox(self, wx.ID_ANY, 
+                                     (_("Audio Normalization")), choices=[
+                                     (_('Off')), 
+                                     (_('Peak and RMS Normalization')), 
+                                     (_('Loudness Normalization (EBU R128)')),], majorDimension=0, 
+                                     style=wx.RA_SPECIFY_ROWS,
+                                            )
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self,
                                            size=(-1,25),
@@ -141,7 +146,7 @@ class Audio_Conv(wx.Panel):
         self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
-                                    _("Target level (max peak threshold) ")))
+                                    _("Target level (maximum peak threshold):")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
@@ -158,7 +163,7 @@ class Audio_Conv(wx.Panel):
         grid_sizer_4 = wx.FlexGridSizer(2, 4, 0, 0)
         #grid_sizer_5 = wx.FlexGridSizer(1, 3, 0, 0)
         sizer_3 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    _("Audio Container Selection"))), 
+                                _("Audio format selection and other utilities"))), 
                                                        wx.VERTICAL
                                                        )
         sizer_3.Add(self.cmbx_a, 0, wx.ALIGN_CENTER | wx.ALL, 20)
@@ -174,8 +179,8 @@ class Audio_Conv(wx.Panel):
         #grid_sizer_2.Add(grid_sizer_4, 0, wx.TOP, 5)
         grid_sizer_1.Add(grid_sizer_2, 1, 0, 0)
         sizer_2.Add(grid_sizer_1, 1, wx.ALL | wx.EXPAND, 20)
-        grid_sizer_3.Add(self.ckb_norm, 0, wx.TOP, 5)
-        grid_sizer_3.Add(self.ckb_onlynorm, 0, wx.TOP, 5)
+        grid_sizer_3.Add(self.rdbx_norm, 0, wx.TOP, 5)
+        grid_sizer_3.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_3.Add(self.btn_analyzes, 0, wx.TOP, 10)
         grid_sizer_3.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_3.Add(self.btn_details, 0, wx.TOP, 10)
@@ -198,9 +203,9 @@ class Audio_Conv(wx.Panel):
         sizer_base.Add(sizer_global, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
         # Set tooltip:
-        self.ckb_norm.SetToolTip(_('Performs peak and RMS audio normalization '
-                                   'on all imported audio files'
-                                           ))
+        #self.rdbx_norm.SetToolTip(_('Performs peak and RMS audio normalization '
+                                   #'on all imported audio files'
+                                           #))
         self.btn_param.SetToolTip(_("Enable advanced settings as audio "
                                     "bit-rate, audio channel and audio rate "
                                     "of the selected audio codec.")
@@ -216,8 +221,7 @@ class Audio_Conv(wx.Panel):
         #----------------------Binding (EVT)----------------------#
         self.cmbx_a.Bind(wx.EVT_COMBOBOX, self.audioFormats)
         self.Bind(wx.EVT_BUTTON, self.on_Param, self.btn_param)
-        self.Bind(wx.EVT_CHECKBOX, self.on_Enable_norm, self.ckb_norm)
-        self.Bind(wx.EVT_CHECKBOX, self.on_OnlyNorm, self.ckb_onlynorm)
+        self.Bind(wx.EVT_RADIOBOX, self.on_Enable_norm, self.rdbx_norm)
         self.Bind(wx.EVT_BUTTON, self.on_Analyzes, self.btn_analyzes)
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
         #self.Bind(wx.EVT_SPINCTRL, self.enter_normalize, self.spin_amplitude)
@@ -233,38 +237,35 @@ class Audio_Conv(wx.Panel):
         dragNdrop panel. Also, if enable 'Perform only normalization' enable 
         conversion widgets.
         """
-        self.ckb_norm.SetValue(False), self.btn_analyzes.Disable(), 
+        self.rdbx_norm.SetSelection(0), 
+        self.btn_analyzes.Disable(), 
         self.btn_details.Disable()
         self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
         self.lab_amplitude.Disable()
         self.spin_amplitude.Disable(), self.spin_amplitude.SetValue(-1.0)
         cmd_opt["Normalize"] = ""
         del self.normdetails[:]
-        if self.ckb_onlynorm.IsChecked():
-            self.ckb_onlynorm.SetValue(False)
-            self.cmbx_a.Enable(), self.btn_param.Enable(),
-            self.ckb_norm.Enable(), self.txt_options.Enable(),
 
     #----------------------Event handler (callback)----------------------#
-    #------------------------------------------------------------------#
-    
+
     def audioFormats(self, evt):
         """
-        Get selected container from combobox
+        Get selected option from combobox
         """
-        if self.cmbx_a.GetValue() == _("Save audio from movies"):
-            if self.ckb_norm.IsChecked():
-                self.normalization_disabled()
-            self.ckb_norm.Disable(), self.ckb_onlynorm.Disable()
+        if self.cmbx_a.GetValue() == _("Extract audio stream from movies"):
+            self.normalization_disabled(), self.rdbx_norm.Disable(), 
             self.txt_options.Disable(), self.btn_param.Disable()
             self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
             
+        elif self.cmbx_a.GetValue() == _("Perform normalization only"):
+            self.txt_options.Disable(), self.btn_param.Disable()
+            self.rdbx_norm.Enable()
+            self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
+            
         else:
-            if not self.ckb_norm.IsChecked():# è l'unico caso questo
-                self.ckb_norm.Enable(), self.ckb_onlynorm.Enable(), 
-                self.txt_options.Enable(), self.btn_param.Enable()
-                self.btn_param.SetForegroundColour(wx.Colour(28,28,28))
-                
+            self.rdbx_norm.Enable()
+            self.txt_options.Enable(), self.btn_param.Enable()
+            self.btn_param.SetForegroundColour(wx.Colour(28,28,28))
             cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
             cmd_opt["AudioCodec"] = acodecs[self.cmbx_a.GetValue()]
             ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
@@ -348,7 +349,7 @@ class Audio_Conv(wx.Panel):
         
         audiodialog.Destroy()
     #------------------------------------------------------------------#
-    def audiocopy(self,file_sources):
+    def audiocopy(self, file_sources):
         """
         Try copying and saving the audio stream on a video by 
         recognizing the codec and then assigning a container/format. 
@@ -426,18 +427,29 @@ class Audio_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Enable_norm(self, evt):
         """
-        Choice if use or not audio normalization
+        Sets a corresponding choice for audio normalization
+        
         """
-        msg = (_('Tip: set a target level and check peak level with the '
+        msg_1 = (_('Tip: set a target level and check peak level with the '
                  '"Volumedetect" button'))
-        if self.ckb_norm.IsChecked():# if checked
-            self.parent.statusbar_msg(msg, azure)
+        msg_2 = (_('normalization the perceived loudness using the "​loudnorm" '
+                   'filter, which implements the EBU R128 algorithm'))
+        if self.rdbx_norm.GetSelection() == 1:
+            self.parent.statusbar_msg(msg_1, azure)
             self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
             self.btn_analyzes.Enable(), self.spin_amplitude.Enable(),
-            self.lab_amplitude.Enable(), 
+            self.lab_amplitude.Enable()
+            
+        elif self.rdbx_norm.GetSelection() == 2:
+            self.parent.statusbar_msg(msg_2, '#268826')
+            self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+            self.btn_analyzes.Disable(), self.spin_amplitude.Enable()
+            self.lab_amplitude.Enable()
+            self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
+            self.btn_details.Disable()
 
-        else:# is not checked
-            self.parent.statusbar_msg(_("Disable audio normalization"), None)
+        else: # usually it is 0
+            self.parent.statusbar_msg(_("Audio normalization disabled"), None)
             self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
             self.btn_analyzes.Disable(), self.lab_amplitude.Disable()
             self.spin_amplitude.Disable(), self.spin_amplitude.SetValue(-1.0)
@@ -447,24 +459,7 @@ class Audio_Conv(wx.Panel):
         cmd_opt["Normalize"] = ""
         del self.normdetails[:]
     #------------------------------------------------------------------#
-    def on_OnlyNorm(self, evt):
-        """
-        If checked, disable audio conversion and use only normalization
-        process to audio file
-        """
-        if self.ckb_onlynorm.IsChecked():# if checked
-            if not self.ckb_norm.IsChecked():
-                self.ckb_norm.SetValue(True), self.on_Enable_norm(self)
-            self.ckb_norm.Disable()
-            self.cmbx_a.Disable(), self.btn_param.Disable(),
-            self.txt_options.Disable(),
-            self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
-        else:
-            self.cmbx_a.Enable(), self.btn_param.Enable(),
-            self.btn_param.SetForegroundColour(wx.Colour(28,28, 28))
-            self.ckb_norm.Enable(),
-            self.txt_options.Enable(),
-    #------------------------------------------------------------------#
+    
     def on_Analyzes(self, evt):  # analyzes button
         """
         If check, send to audio_analyzes.
@@ -564,7 +559,7 @@ class Audio_Conv(wx.Panel):
         Update _allentries is callaed by on_ok method.
         """
         self.time_seq = self.parent.time_seq
-        if self.cmbx_a.GetValue() == _("Save audio from movies"):
+        if self.cmbx_a.GetValue() == _("Extract audio stream from movies"):
             file_sources = self.parent.file_sources[:]
             self.audiocopy(file_sources)
     #------------------------------------------------------------------#
@@ -574,9 +569,9 @@ class Audio_Conv(wx.Panel):
         data redirecting .
         """
         # check normalization data offset, if enable.
-        if self.ckb_norm.IsChecked():
+        if self.rdbx_norm.GetSelection() == 1: # Norm RMS
             if self.btn_analyzes.IsEnabled():
-                wx.MessageBox(_('Peak values not detected! Press the '
+                wx.MessageBox(_('Peak values not detected! use the '
                                 '"Volumedetect" button before proceeding, '
                                 'otherwise disable audio normalization.'),
                                 "Videomass", wx.ICON_INFORMATION)
@@ -590,7 +585,7 @@ class Audio_Conv(wx.Panel):
         logname = 'Videomass_AudioConversion.log'
 
         ######## ------------ VALIDAZIONI: --------------
-        if self.ckb_onlynorm.IsChecked():
+        if self.cmbx_a.GetSelection == 9: # Only norm.
             checking = inspect(file_sources, dir_destin, '')
         else:
             checking = inspect(file_sources, dir_destin, 
@@ -601,11 +596,10 @@ class Audio_Conv(wx.Panel):
         # filename: nome file senza ext.
         # base_name: nome file con ext.
         # countmax: count processing cicles for batch mode
-        typeproc, file_sources, dir_destin,\
-        filename, base_name, countmax = checking
+        (typeproc, file_sources, dir_destin, filename, base_name, 
+         countmax) = checking
 
-
-        if self.cmbx_a.GetValue() == _("Save audio from movies"):
+        if self.cmbx_a.GetSelection() == 8: # save audio stream from movies
             self.grabaudioProc(file_sources, dir_destin, countmax, logname)
         else:
             self.stdProc(file_sources, dir_destin, countmax, logname)
@@ -615,7 +609,7 @@ class Audio_Conv(wx.Panel):
         """
         Composes the ffmpeg command strings for the batch mode processing.
         """
-        if self.ckb_onlynorm.IsChecked():
+        if self.cmbx_a.GetSelection() == 9 and rdbx_norm.GetSelection() == 1:
             title = _('Start audio normalization')
             cmd = ("-loglevel %s -vn %s %s -y" % (self.ffmpeg_loglevel, 
                                                   self.threads,
@@ -725,14 +719,14 @@ class Audio_Conv(wx.Panel):
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
                                                 t[1][0], t[1][1][0])
             
-        if self.ckb_onlynorm.IsChecked():
+        if self.cmbx_a.GetSelection == 9: # Only norm.
             formula = (_("SUMMARY\n\nFile Queue\
                        \nAudio Normalization\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s" % (numfile, 
                                             normalize, 
                                             time,)
                         )
-        elif self.cmbx_a.GetValue() == _("Save audio from movies"):
+        elif self.cmbx_a.GetSelection == 8: # audio from movies
             formula = (_("SUMMARY\n\nFile Queue\
                       \nAudio Container\nCodec copied\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
@@ -777,12 +771,12 @@ class Audio_Conv(wx.Panel):
         else:
             normalize = ''
         
-        if self.ckb_onlynorm.IsChecked():
+        if self.cmbx_a.GetSelection == 9: # Only norm.
             command = ("-vn %s" % normalize)
             command = ' '.join(command.split())# sistemo gli spazi
             list = [command, cmd_opt["ExportExt"]]
             
-        elif self.cmbx_a.GetValue() == _("Save audio from movies"):
+        elif self.cmbx_a.GetSelection == 8: # audio from movies
             command = ("-vn %s" % cmd_opt["AudioCodec"][0])
             command = ' '.join(command.split())# sistemo gli spazi
             list = [command, cmd_opt["ExportExt"][0]]
