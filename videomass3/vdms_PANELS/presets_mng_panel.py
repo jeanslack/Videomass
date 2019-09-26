@@ -691,8 +691,8 @@ class PresetsPanel(wx.Panel):
             time = _('Disable')
         else:
             t = list(self.parent.time_read.items())
-            time = _('%s: %s | %s: %s') %(t[0][0], t[0][1][0], 
-                                        t[1][0], t[1][1][0])
+            time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
+                                                t[1][0], t[1][1][0])
             
         numfile = "%s file in pending" % str(countmax)
                     

@@ -614,7 +614,7 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch mode processing.
         """
         if self.ckb_onlynorm.IsChecked():
-            title = _('Start audio norm.')
+            title = _('Start audio normalization')
             cmd = ("-loglevel %s -vn %s %s -y" % (self.ffmpeg_loglevel, 
                                                   self.threads,
                                                   self.cpu_used,)
@@ -720,8 +720,8 @@ class Audio_Conv(wx.Panel):
             time = _('Disable')
         else:
             t = list(self.parent.time_read.items())
-            time = _('%s: %s | %s: %s') %(t[0][0], t[0][1][0], 
-                                        t[1][0], t[1][1][0])
+            time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
+                                                t[1][0], t[1][1][0])
             
         if self.ckb_onlynorm.IsChecked():
             formula = (_("SUMMARY:\n\nFile Queue:\

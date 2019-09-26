@@ -145,7 +145,7 @@ class Video_Conv(wx.Panel):
         #------------
         self.panel_base = wx.Panel(self, wx.ID_ANY)
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, 
-                                      style=wx.NB_NOPAGETHEME|wx.NB_LEFT)
+                                      style=wx.NB_NOPAGETHEME)
         self.notebook_1_pane_1 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, 
                                               wx.ID_ANY,
@@ -851,19 +851,19 @@ class Video_Conv(wx.Panel):
         sometimes with independent features and modes.
         
         """
-        sel_1, msg_1 = _("Default"), (_('Automations disabled'))
-        sel_2 = _("Pictures from Video")
+        msg_1 = (_('Automations disabled'
+                   ))
         msg_2 = (_('Tip: use the "Duration" tool, then try setting '
-                   'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'))
-        sel_3 = _("Add audio stream to a movie")
+                   'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'
+                   ))
         msg_3 = (_('Tip: Use "Copy source video codec" and "Try to copy '
                    'the source" of the audio file to speed up the process '
-                     'without re-encoding all'))
-        sel_4 = _("Picture slideshow maker")
+                     'without re-encoding all'
+                   ))
         msg_4 = (_('Tip: Import pictures ONLY (preferably in the same format), '
                    'then use the "Duration" tool to set pictures duration. '
-                   'Use the "Resize > Scale" filter to resize same resolution'))
-        
+                   'Use the "Resize > Scale" filter to resize same resolution'
+                   ))
         #-------------- On ACCESS first revert to default ----------------#
         self.ckbx_pass.Show(), self.ckbx_pass.SetValue(False),
         self.cmbx_pictformat.Hide(), self.cmbx_vidContainers.Show(),
@@ -879,11 +879,11 @@ class Video_Conv(wx.Panel):
         
         #------------------- start widgets settings ------------------#
         ####----------- Default
-        if self.rdb_auto.GetStringSelection() == sel_1:
+        if self.rdb_auto.GetSelection() == 0:
             self.parent.statusbar_msg(msg_1, '')
             
-        ####-----------  extract images
-        elif self.rdb_auto.GetStringSelection() == sel_2:
+        ####-----------  Pictures from Video
+        elif self.rdb_auto.GetSelection() == 1:
             if self.cmbx_vidContainers.GetValue() == 'Copy video codec':
                 self.cmbx_vidContainers.SetSelection(6)
                 self.vidContainers(self)
@@ -898,8 +898,8 @@ class Video_Conv(wx.Panel):
             self.parent.statusbar_msg(msg_2, greenolive)
             
             return
-        ####----------- add audio track
-        elif self.rdb_auto.GetStringSelection() == sel_3:
+        ####----------- Add audio stream to a movie
+        elif self.rdb_auto.GetSelection() == 2:
             self.vidContainers(self)####
             self.parent.statusbar_msg(msg_3, azure)
             self.btn_audioAdd.Show()
@@ -913,8 +913,8 @@ class Video_Conv(wx.Panel):
                 cmd_opt["Shortest"] = [False,'']
             
             return
-        ####-----------     slaideshow
-        elif self.rdb_auto.GetStringSelection() == sel_4:
+        ####----------- Picture slideshow maker
+        elif self.rdb_auto.GetSelection() == 3:
             self.ckbx_pass.SetValue(False), self.ckbx_pass.Hide(),
             self.cmbx_vidContainers.Clear()
             for n in vcodecs.keys():
@@ -1642,8 +1642,7 @@ class Video_Conv(wx.Panel):
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, '')
             
-        elif (self.rdb_auto.GetStringSelection() == 
-                                    _("Pictures from Video")):
+        elif self.rdb_auto.GetSelection() == 1:# video to pictures
             self.time_seq = self.parent.time_seq
             checking = inspect(file_sources, dir_destin, 
                                cmd_opt["PicturesFormat"])
@@ -1655,14 +1654,13 @@ class Video_Conv(wx.Panel):
             # the user does not want to continue or not such files exist
             return
         
-        typeproc, file_sources, dir_destin,\
-        filename, base_name, countmax = checking
+        (typeproc, file_sources, dir_destin,
+        filename, base_name, countmax) = checking
     
-        if (self.rdb_auto.GetStringSelection() == 
-                                    _("Pictures from Video")):
+        if self.rdb_auto.GetSelection() ==  1:
             self.saveimages(file_sources, dir_destin, logname)
     
-        elif self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
+        elif self.rdb_auto.GetSelection() == 3:
             self.slideShow(file_sources, dir_destin, logname)
             
         else:
@@ -1861,8 +1859,6 @@ class Video_Conv(wx.Panel):
                                                 outputdir, 
                                                 fileout)
                                                 )
-            print(cmd)
-            return
             command = " ".join(cmd.split())# compact string
             self.parent.switch_Process('saveimages',
                                         clicked, 
@@ -1884,12 +1880,12 @@ class Video_Conv(wx.Panel):
         
         """
         if not self.time_seq:
-            wx.MessageBox(_('You should set a duration between the slides '
-                            'or to single image. Use the "Duration" tool '
-                            'and set ONLY the "Cut (end point)" not '
-                            '"Seeking (start point)".\n\nThe final '
-                            'presentation video will have that duration '
-                            'multiplied by the number of pictures uploaded.'), 
+            wx.MessageBox(_('You should set a length of time for the images '
+                            'or for a single image. Use the "Duration" tool '
+                            'setting ONLY "Cut (end point)" and NOT "Search '
+                            '(start point)".\n\nThe final video will have that ' 
+                            'duration multiplied by the number of pictures '
+                            'uploaded.'), 
                             'Videomass', 
                             wx.ICON_INFORMATION, self)
             return
@@ -1898,11 +1894,11 @@ class Video_Conv(wx.Panel):
         
         if not cmd_opt["Scale"]:
             if not len(file_sources) == 1:
-                if wx.MessageBox(_('If you are sure that the images all have '
-                                   'the same resolution, proceed. Otherwise '
-                                   'you have to set the Resize filter.\n\n'
-                                   'Do the pictures uploaded for the '
-                                   'presentation have the same resolution?'), 
+                if wx.MessageBox(_('Make sure all imported images have the '
+                                   'same resolution, otherwise you should set '
+                                   'it with the Resize filter.\n\n'
+                                   'Do the slideshow images have the same '
+                                   'resolution?'), 
                                     _('Videomass: Please confirm'), 
                                                     wx.ICON_QUESTION | 
                                                     wx.YES_NO, 
@@ -1953,8 +1949,6 @@ class Video_Conv(wx.Panel):
                          valupdate[1], 
                          'Create a video presentation'
                          )
-        print(cmd_2)
-        return
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('slideshow',
                                         file_sources, 
@@ -1986,8 +1980,8 @@ class Video_Conv(wx.Panel):
             time = _('Disable')
         else:
             t = list(self.parent.time_read.items())
-            time = _('%s: %s | %s: %s') %(t[0][0], t[0][1][0], 
-                                        t[1][0], t[1][1][0])
+            time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
+                                                t[1][0], t[1][1][0])
         #------------------
         if prof[0] == "Copy video codec":
             formula = (_("SUMMARY\n\nFile to Queue\nVideo Format\
@@ -2018,14 +2012,13 @@ class Video_Conv(wx.Panel):
                                                    time))
         #-------------------
         elif prof[0] == "Slideshow":
-            formula = (_("SUMMARY\n\nUploaded images\nVideo format\
-                        \nResolution (size)\nCFR\nPreset h264\
-                        \nProfile h264\nTune h264\nAudio stream added\
+            formula = (_("SUMMARY\n\nPictures imported\nVideo format\
+                        \nResolution (size)\nCFR\nPreset h/x 264\
+                        \nProfile h/x 264\nTune h/x 264\nAudio stream added\
                         \nAudio Format\nAudio codec\nAudio channel\
                         \nAudio rate\nAudio bit-rate\nBit per Sample\
                         \nAudio Normalization\nMap\
-                        \nTime to slide between images\
-                        \nEnable stopping to shortest")
+                        \nPictures Timing\nEnable stopping to shortest")
                         )
             if cmd_opt["Scale"]:
                 res = cmd_opt["Scale"].split('=')
@@ -2060,7 +2053,8 @@ class Video_Conv(wx.Panel):
                          \nVideo Format\nVideo codec\nVideo bit-rate\nCRF\
                          \nDouble/Single Pass\nDeinterlacing\nInterlacing\
                          \nApplied Filters\nVideo aspect\nVideo rate\
-                         \nPreset h264\nProfile h264\nTune h264\nOrientation\
+                         \nPreset h/x 264\nProfile h/x 264\nTune h/x 264\
+                         \nOrientation point\
                          \nAudio stream added\nAudio Format\nAudio codec\
                          \nAudio channel\nAudio rate\nAudio bit-rate\
                          \nBit per Sample:\nAudio Normalization\nMap\
@@ -2118,16 +2112,14 @@ class Video_Conv(wx.Panel):
                             cmd_opt["Map"],
                             cmd_opt["Shortest"][1],)
                                 )
-            elif (self.rdb_auto.GetStringSelection() == 
-                                            _("Pictures from Video")):
+            elif self.rdb_auto.GetSelection() == 1:# video to pictures
                 outext = cmd_opt["PicturesFormat"]
                 command = ('%s %s %s -an' % (
                            cmd_opt["VideoRate"],
                            cmd_opt["Filters"],
                            cmd_opt["YUV"],)
                            )
-            elif (self.rdb_auto.GetStringSelection() == 
-                                            _("Picture slideshow maker")):
+            elif self.rdb_auto.GetSelection() ==  3:# slideshow maker
                 outext = cmd_opt["VideoFormat"]
                 cmd_1 = [cmd_opt["Filters"]]
                 time = self.parent.time_read['time']
