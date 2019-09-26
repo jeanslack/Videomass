@@ -116,7 +116,7 @@ class Audio_Conv(wx.Panel):
         self.ckb_onlynorm = wx.CheckBox(self, wx.ID_ANY, (
                                                _("Only Normalization")))
         self.ckb_norm = wx.CheckBox(self, wx.ID_ANY, (
-                                               _("Audio Normalization")))
+                                               _("Peak and RMS Normalization")))
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self,
                                            size=(-1,25),
@@ -141,7 +141,7 @@ class Audio_Conv(wx.Panel):
         self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
-                                    _("Max peak level threshold   ")))
+                                    _("Target level (max peak threshold) ")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
@@ -198,13 +198,15 @@ class Audio_Conv(wx.Panel):
         sizer_base.Add(sizer_global, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
         # Set tooltip:
+        self.ckb_norm.SetToolTip(_('Performs peak and RMS audio normalization '
+                                   'on all imported audio files'
+                                           ))
         self.btn_param.SetToolTip(_("Enable advanced settings as audio "
                                     "bit-rate, audio channel and audio rate "
                                     "of the selected audio codec.")
                                               )
         self.btn_analyzes.SetToolTip(_("Calculates the maximum and average "
-                                       "peak level of audio streams expressed "
-                                       "in dB values")
+                                       "peak level in dB values")
                                               )
         self.spin_amplitude.SetToolTip(_("Threshold for the maximum peak "
                                     "level in dB values. The default setting "
@@ -426,8 +428,7 @@ class Audio_Conv(wx.Panel):
         """
         Choice if use or not audio normalization
         """
-        msg = (_('Tip: set the maximum peak level threshold or accept default '
-                 'dB value (-1.0); then check peak level by pressing the '
+        msg = (_('Tip: set a target level and check peak level with the '
                  '"Volumedetect" button'))
         if self.ckb_norm.IsChecked():# if checked
             self.parent.statusbar_msg(msg, azure)
@@ -575,8 +576,9 @@ class Audio_Conv(wx.Panel):
         # check normalization data offset, if enable.
         if self.ckb_norm.IsChecked():
             if self.btn_analyzes.IsEnabled():
-                wx.MessageBox(_("Missing volume dectect!\n"
-                              "Press the Volumedected button before proceeding."),
+                wx.MessageBox(_('Peak values not detected! Press the '
+                                '"Volumedetect" button before proceeding, '
+                                'otherwise disable audio normalization.'),
                                 "Videomass", wx.ICON_INFORMATION)
                 return
         self.update_allentries()# last update of all setting interface

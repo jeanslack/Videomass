@@ -340,7 +340,7 @@ class Video_Conv(wx.Panel):
                 self.rdb_a.EnableItem(n,enable=False
                                       )
         self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
-                      wx.ID_ANY, (_("Audio Normalization"))
+                      wx.ID_ANY, (_("Peak and RMS Normalization"))
                                 )
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
@@ -366,7 +366,7 @@ class Video_Conv(wx.Panel):
         self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    (_("Max peak level threshold  "))
+                                    (_("Target level (max peak threshold) "))
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
                                                      wx.ID_ANY, 
@@ -655,8 +655,8 @@ class Video_Conv(wx.Panel):
                     "countries (like Italy) are 25. Leave on 'Default' "
                     "to copy the original settings."
                                    ))
-        self.ckbx_a_normalize.SetToolTip(_("Performs audio normalization "
-                                           "on the video audio stream"
+        self.ckbx_a_normalize.SetToolTip(_('Performs peak and RMS audio '
+                                           'normalization on the audio stream'
                                            ))
         self.btn_analyzes.SetToolTip(_("Calculates the maximum and average "
                                        "peak level of audio streams expressed "
@@ -1441,8 +1441,7 @@ class Video_Conv(wx.Panel):
         Enable or disable functionality for volume normalization of
         the video.
         """
-        msg = (_('Tip: set the maximum peak level threshold or accept default '
-                 'dB value (-1.0); then check peak level by pressing the '
+        msg = (_('Tip: set a target level and check peak level with the '
                  '"Volumedetect" button'))
         if self.ckbx_a_normalize.GetValue():# is checked
             self.parent.statusbar_msg(msg, azure)
