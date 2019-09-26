@@ -696,9 +696,9 @@ class PresetsPanel(wx.Panel):
             
         numfile = "%s file in pending" % str(countmax)
                     
-        formula = (_(u"SUMMARY:\n\nFile to Queue\
-                      \nProfile Used:\nOut Format:\
-                      \nTime selection:"
+        formula = (_(u"SUMMARY\n\nFile to Queue\
+                      \nProfile Used\nOut Format\
+                      \nTime selection"
                       ))
         dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
                                             array[0], 

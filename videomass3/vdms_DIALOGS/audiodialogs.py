@@ -40,19 +40,19 @@ class AudioSettings(wx.Dialog):
         """
         The given 'audio_type' parameter is a string that represents the 
         audio format without punctuation, which it is passed creating the 
-        instance at 'datastr = TypeAudioParameters(audio_type)' class.
+        instance at 'data = TypeAudioParameters(audio_type)' class.
         This class has the same attributes as the TypeAudioParameters class 
         but here they are assigned by reference with the instance-object.
         """
         wx.Dialog.__init__(self, parent, -1, title=title, 
                            style=wx.DEFAULT_DIALOG_STYLE
                            )
-        datastr = TypeAudioParameters(audio_type)# instance for audio param
+        data = TypeAudioParameters(audio_type)# instance for audio param
         # set attributes:
-        self.sample_rate = datastr.sample_rate
-        self.channels = datastr.channels
-        self.bitrate = datastr.bitrate
-        self.bitdepth = datastr.bitdepth
+        self.sample_rate = data.sample_rate
+        self.channels = data.channels
+        self.bitrate = data.bitrate
+        self.bitdepth = data.bitdepth
         samplerate_list = []
         channel_list = []
         bitrate_list = []
@@ -63,6 +63,8 @@ class AudioSettings(wx.Dialog):
         
         if self.bitdepth == None:
             self.bitdepth = {0:('not applicable ',"")}
+        
+        print(self.channels)
 
         for a in self.sample_rate.values():
             samplerate_list.append(a[0])
@@ -105,13 +107,13 @@ class AudioSettings(wx.Dialog):
         
         """----------------------Properties----------------------"""
         self.rdb_bitrate.SetSelection(0)
-        self.rdb_bitrate.SetToolTip(datastr.bitrate_tooltip)
+        self.rdb_bitrate.SetToolTip(data.bitrate_tooltip)
         self.rdb_channels.SetSelection(0)
-        self.rdb_channels.SetToolTip(datastr.channel_tooltip)
+        self.rdb_channels.SetToolTip(data.channel_tooltip)
         self.rdb_sample_r.SetSelection(0)
-        self.rdb_sample_r.SetToolTip(datastr.sample_rate_tooltip)
+        self.rdb_sample_r.SetToolTip(data.sample_rate_tooltip)
         self.rdb_bitdepth.SetSelection(0)
-        self.rdb_bitdepth.SetToolTip(datastr.bitdepth_tooltip)
+        self.rdb_bitdepth.SetToolTip(data.bitdepth_tooltip)
         # Set previusly settings:
         if arate[0]:
             self.rdb_sample_r.SetSelection(samplerate_list.index(arate[0]))
@@ -279,7 +281,7 @@ compression formats, do not have associated bit depths.\
             self.wav_param()
         elif audio_format in ('flac'):
             self.flac_param()
-        elif audio_format in ('alac'):
+        elif audio_format in ('alac', 'm4v'):
             self.alac_param()
         elif audio_format == 'aac':
             self.aac_param()

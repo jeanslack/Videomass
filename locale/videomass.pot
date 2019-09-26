@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-26 01:54+0200\n"
+"POT-Creation-Date: 2019-09-26 10:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -873,8 +873,8 @@ msgstr ""
 #: ../videomass3/vdms_PANELS/audio_conv.py:717
 #: ../videomass3/vdms_PANELS/audio_conv.py:720
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:691
-#: ../videomass3/vdms_PANELS/video_conv.py:1982
-#: ../videomass3/vdms_PANELS/video_conv.py:1984
+#: ../videomass3/vdms_PANELS/video_conv.py:1978
+#: ../videomass3/vdms_PANELS/video_conv.py:1980
 msgid "Disable"
 msgstr ""
 
@@ -1596,52 +1596,52 @@ msgid "Start audio export"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:713
-#: ../videomass3/vdms_PANELS/video_conv.py:1978
+#: ../videomass3/vdms_PANELS/video_conv.py:1974
 #, python-format
 msgid "%s file in pending"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:715
-#: ../videomass3/vdms_PANELS/video_conv.py:1980
+#: ../videomass3/vdms_PANELS/video_conv.py:1976
 msgid "Enable"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:727
 msgid ""
-"SUMMARY:\n"
+"SUMMARY\n"
 "\n"
-"File Queue:                       \n"
-"Audio Normalization:\n"
-"Time selection:"
+"File Queue                       \n"
+"Audio Normalization\n"
+"Time selection"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:734
 msgid ""
-"SUMMARY:\n"
+"SUMMARY\n"
 "\n"
-"File Queue:                      \n"
-"Audio Container:\n"
-"Codec copied:\n"
-"Time selection:"
+"File Queue                      \n"
+"Audio Container\n"
+"Codec copied\n"
+"Time selection"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:742
 msgid ""
-"SUMMARY:\n"
+"SUMMARY\n"
 "\n"
-"File Queue:                    \n"
-"Audio Container:\n"
-"Audio Codec:\n"
-"Audio bit-rate:                    \n"
-"Audio channel:\n"
-"Audio sample rate:\n"
-"Bit per Sample:                    \n"
-"Audio Normalization:\n"
-"Time selection:"
+"File Queue                    \n"
+"Audio Container\n"
+"Audio Codec\n"
+"Audio bit-rate                    \n"
+"Audio Channels\n"
+"Audio Rate\n"
+"Bit per Sample                    \n"
+"Audio Normalization\n"
+"Time selection"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:805
-#: ../videomass3/vdms_PANELS/video_conv.py:2193
+#: ../videomass3/vdms_PANELS/video_conv.py:2189
 #, python-format
 msgid "Videomass: Create a new profile on \"%s\" preset"
 msgstr ""
@@ -1843,7 +1843,7 @@ msgstr ""
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:396
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:473
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:515
-#: ../videomass3/vdms_PANELS/video_conv.py:1904
+#: ../videomass3/vdms_PANELS/video_conv.py:1902
 msgid "Videomass: Please confirm"
 msgstr ""
 
@@ -1902,18 +1902,18 @@ msgstr ""
 
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:699
 msgid ""
-"SUMMARY:\n"
+"SUMMARY\n"
 "\n"
 "File to Queue                      \n"
-"Profile Used:\n"
-"Out Format:                      \n"
-"Time selection:"
+"Profile Used\n"
+"Out Format                      \n"
+"Time selection"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:69
 #: ../videomass3/vdms_PANELS/video_conv.py:1641
 #: ../videomass3/vdms_PANELS/video_conv.py:1680
-#: ../videomass3/vdms_PANELS/video_conv.py:2104
+#: ../videomass3/vdms_PANELS/video_conv.py:2100
 msgid "Copy video codec"
 msgstr ""
 
@@ -2174,7 +2174,7 @@ msgstr ""
 msgid "Start save as images"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1885
+#: ../videomass3/vdms_PANELS/video_conv.py:1883
 msgid ""
 "You should set a length of time for the images or for a single image. Use "
 "the \"Duration\" tool setting ONLY \"Cut (end point)\" and NOT \"Search "
@@ -2184,7 +2184,7 @@ msgid ""
 "uploaded."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1899
+#: ../videomass3/vdms_PANELS/video_conv.py:1897
 msgid ""
 "Make sure all imported images have the same resolution, otherwise you should "
 "set it with the Resize filter.\n"
@@ -2192,20 +2192,20 @@ msgid ""
 "Do the slideshow images have the same resolution?"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1991
+#: ../videomass3/vdms_PANELS/video_conv.py:1987
 msgid ""
 "SUMMARY\n"
 "\n"
 "File to Queue\n"
 "Video Format                        \n"
-"Video codec\n"
-"Video aspect\n"
-"Video rate                        \n"
+"Video Codec\n"
+"Video Aspect\n"
+"Video Rate                        \n"
 "Audio stream added\n"
 "Audio Format                        \n"
-"Audio codec\n"
-"Audio channel\n"
-"Audio rate                        \n"
+"Audio Codec\n"
+"Audio Channels\n"
+"Audio Rate                        \n"
 "Audio bit-rate\n"
 "Bit per Sample                        \n"
 "Audio Normalization\n"
@@ -2214,23 +2214,23 @@ msgid ""
 "Enable stopping to shortest"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2009
+#: ../videomass3/vdms_PANELS/video_conv.py:2005
 msgid ""
 "SUMMARY\n"
 "\n"
 "File to Queue                         \n"
 "Images Format\n"
-"Video rate                         \n"
+"Video Rate                         \n"
 "Filters\n"
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2019
+#: ../videomass3/vdms_PANELS/video_conv.py:2015
 msgid ""
 "SUMMARY\n"
 "\n"
 "Pictures imported\n"
-"Video format                        \n"
+"Video Format                        \n"
 "Resolution (size)\n"
 "CFR\n"
 "Preset h/x 264                        \n"
@@ -2238,54 +2238,54 @@ msgid ""
 "Tune h/x 264\n"
 "Audio stream added                        \n"
 "Audio Format\n"
-"Audio codec\n"
-"Audio channel                        \n"
-"Audio rate\n"
+"Audio Codec\n"
+"Audio Channels                        \n"
+"Audio Rate\n"
 "Audio bit-rate\n"
 "Bit per Sample                        \n"
 "Audio Normalization\n"
-"Map                        \n"
-"Pictures Timing\n"
+"Map\n"
+"Pictures Timing                        \n"
 "Enable stopping to shortest"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2031
+#: ../videomass3/vdms_PANELS/video_conv.py:2027
 msgid "As from source"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2050
+#: ../videomass3/vdms_PANELS/video_conv.py:2046
 msgid "not applicable"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2056
+#: ../videomass3/vdms_PANELS/video_conv.py:2052
 msgid ""
 "SUMMARY\n"
 "\n"
 "File to Queue                         \n"
 "Video Format\n"
-"Video codec\n"
+"Video Codec\n"
 "Video bit-rate\n"
 "CRF                         \n"
-"Double/Single Pass\n"
+"Pass Encoding\n"
 "Deinterlacing\n"
 "Interlacing                         \n"
 "Applied Filters\n"
-"Video aspect\n"
-"Video rate                         \n"
+"Video Aspect\n"
+"Video Rate                         \n"
 "Preset h/x 264\n"
 "Profile h/x 264\n"
 "Tune h/x 264                         \n"
-"Orientation point                         \n"
-"Audio stream added\n"
+"Orientation point\n"
+"Audio stream added                         \n"
 "Audio Format\n"
-"Audio codec                         \n"
-"Audio channel\n"
-"Audio rate\n"
-"Audio bit-rate                         \n"
-"Bit per Sample:\n"
+"Audio codec\n"
+"Audio Channels                         \n"
+"Audio Rate\n"
+"Audio bit-rate\n"
+"Bit per Sample                         \n"
 "Audio Normalization\n"
-"Map                         \n"
-"Time selection\n"
+"Map\n"
+"Time selection                         \n"
 "Enable stopping to shortest"
 msgstr ""
 

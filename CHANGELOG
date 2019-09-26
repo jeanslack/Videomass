@@ -31,7 +31,7 @@ ADD:
       and convert video.
       
 IMPROVEMENTS:
-    * code thinning in some modules section in the old stuff
+    * code thinning in some file section in the old stuff
     
 BUG FIXES:
     * fixed bug when choosing to copy the video codec that always enabled 

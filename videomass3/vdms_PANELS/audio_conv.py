@@ -724,25 +724,25 @@ class Audio_Conv(wx.Panel):
                                                 t[1][0], t[1][1][0])
             
         if self.ckb_onlynorm.IsChecked():
-            formula = (_("SUMMARY:\n\nFile Queue:\
-                       \nAudio Normalization:\nTime selection:"))
+            formula = (_("SUMMARY\n\nFile Queue\
+                       \nAudio Normalization\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s" % (numfile, 
                                             normalize, 
                                             time,)
                         )
         elif self.cmbx_a.GetValue() == _("Save audio from movies"):
-            formula = (_("SUMMARY:\n\nFile Queue:\
-                      \nAudio Container:\nCodec copied:\nTime selection:"))
+            formula = (_("SUMMARY\n\nFile Queue\
+                      \nAudio Container\nCodec copied\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
                                                 cmd_opt["ExportExt"],
                                                 cmd_opt["CodecCopied"], 
                                                 time,)
                         )
         else:
-            formula = (_("SUMMARY:\n\nFile Queue:\
-                    \nAudio Container:\nAudio Codec:\nAudio bit-rate:\
-                    \nAudio channel:\nAudio sample rate:\nBit per Sample:\
-                    \nAudio Normalization:\nTime selection:"))
+            formula = (_("SUMMARY\n\nFile Queue\
+                    \nAudio Container\nAudio Codec\nAudio bit-rate\
+                    \nAudio Channels\nAudio Rate\nBit per Sample\
+                    \nAudio Normalization\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
                     numfile, cmd_opt["AudioContainer"], 
                     cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][0], 

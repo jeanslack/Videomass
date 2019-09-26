@@ -66,7 +66,7 @@ vcodecs = {("AVI (XVID mpeg4)"):("-vcodec mpeg4 -vtag xvid","avi"),
             ("OGG theora"):("-vcodec libtheora","ogg"), 
             ("WebM (HTML5)"):("-vcodec libvpx","webm"), 
             ("FLV (HQ h264/AVC)"):("-vcodec libx264","flv"),
-            (_("Copy video codec")):("","-c:v copy"),
+            (_("Copy video codec")):("-c:v copy",""),
             }
 # Namings in the audio format selection on audio radio box:
 acodecs = {('default'):(_("Default (managed by FFmpeg)"),''),
@@ -145,7 +145,7 @@ class Video_Conv(wx.Panel):
         #------------
         self.panel_base = wx.Panel(self, wx.ID_ANY)
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, 
-                                      style=wx.NB_NOPAGETHEME)
+                                      style=wx.NB_NOPAGETHEME|wx.NB_BOTTOM)
         self.notebook_1_pane_1 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, 
                                               wx.ID_ANY,
@@ -884,7 +884,7 @@ class Video_Conv(wx.Panel):
             
         ####-----------  Pictures from Video
         elif self.rdb_auto.GetSelection() == 1:
-            if self.cmbx_vidContainers.GetValue() == 'Copy video codec':
+            if self.cmbx_vidContainers.GetValue() == _('Copy video codec'):
                 self.cmbx_vidContainers.SetSelection(6)
                 self.vidContainers(self)
             self.cmbx_pictformat.Show(), self.cmbx_pictformat.SetSelection(0)
@@ -1296,7 +1296,7 @@ class Video_Conv(wx.Panel):
         """
         cmb_str = self.cmbx_vidContainers.GetValue()
         
-        if cmb_str == 'Copy video codec':# enable all audio sel.
+        if cmb_str == _('Copy video codec'):# enable all audio sel.
             for n,v in enumerate(av_formats.keys()):
                 self.rdb_a.EnableItem(n,enable=True)
         else:
@@ -1985,9 +1985,9 @@ class Video_Conv(wx.Panel):
         #------------------
         if prof[0] == "Copy video codec":
             formula = (_("SUMMARY\n\nFile to Queue\nVideo Format\
-                        \nVideo codec\nVideo aspect\nVideo rate\
+                        \nVideo Codec\nVideo Aspect\nVideo Rate\
                         \nAudio stream added\nAudio Format\
-                        \nAudio codec\nAudio channel\nAudio rate\
+                        \nAudio Codec\nAudio Channels\nAudio Rate\
                         \nAudio bit-rate\nBit per Sample\
                         \nAudio Normalization\nMap\nTime selection\
                         \nEnable stopping to shortest"))
@@ -2003,7 +2003,7 @@ class Video_Conv(wx.Panel):
         #-------------------
         elif prof[0] == "Save as images":
             formula = (_("SUMMARY\n\nFile to Queue\
-                         \nImages Format\nVideo rate\
+                         \nImages Format\nVideo Rate\
                          \nFilters\nTime selection"
                         ))
             dictions = ("\n\n1\n%s\n%s\n%s\n%s" % (cmd_opt["PicturesFormat"], 
@@ -2012,13 +2012,13 @@ class Video_Conv(wx.Panel):
                                                    time))
         #-------------------
         elif prof[0] == "Slideshow":
-            formula = (_("SUMMARY\n\nPictures imported\nVideo format\
+            formula = (_("SUMMARY\n\nPictures imported\nVideo Format\
                         \nResolution (size)\nCFR\nPreset h/x 264\
                         \nProfile h/x 264\nTune h/x 264\nAudio stream added\
-                        \nAudio Format\nAudio codec\nAudio channel\
-                        \nAudio rate\nAudio bit-rate\nBit per Sample\
-                        \nAudio Normalization\nMap\
-                        \nPictures Timing\nEnable stopping to shortest")
+                        \nAudio Format\nAudio Codec\nAudio Channels\
+                        \nAudio Rate\nAudio bit-rate\nBit per Sample\
+                        \nAudio Normalization\nMap\nPictures Timing\
+                        \nEnable stopping to shortest")
                         )
             if cmd_opt["Scale"]:
                 res = cmd_opt["Scale"].split('=')
@@ -2050,15 +2050,15 @@ class Video_Conv(wx.Panel):
         #--------------------
         else:
             formula = (_("SUMMARY\n\nFile to Queue\
-                         \nVideo Format\nVideo codec\nVideo bit-rate\nCRF\
-                         \nDouble/Single Pass\nDeinterlacing\nInterlacing\
-                         \nApplied Filters\nVideo aspect\nVideo rate\
+                         \nVideo Format\nVideo Codec\nVideo bit-rate\nCRF\
+                         \nPass Encoding\nDeinterlacing\nInterlacing\
+                         \nApplied Filters\nVideo Aspect\nVideo Rate\
                          \nPreset h/x 264\nProfile h/x 264\nTune h/x 264\
-                         \nOrientation point\
-                         \nAudio stream added\nAudio Format\nAudio codec\
-                         \nAudio channel\nAudio rate\nAudio bit-rate\
-                         \nBit per Sample:\nAudio Normalization\nMap\
-                         \nTime selection\nEnable stopping to shortest"))
+                         \nOrientation point\nAudio stream added\
+                         \nAudio Format\nAudio codec\nAudio Channels\
+                         \nAudio Rate\nAudio bit-rate\nBit per Sample\
+                         \nAudio Normalization\nMap\nTime selection\
+                         \nEnable stopping to shortest"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s" % (numfile, cmd_opt["VidCmbxStr"], 
@@ -2114,32 +2114,36 @@ class Video_Conv(wx.Panel):
                                 )
             elif self.rdb_auto.GetSelection() == 1:# video to pictures
                 outext = cmd_opt["PicturesFormat"]
+                YUV = {'jpg':'-pix_fmt yuvj420p', 
+                       'png': '-pix_fmt rgb24', 
+                       'bmp': '-pix_fmt bgr24'}
                 command = ('%s %s %s -an' % (
                            cmd_opt["VideoRate"],
                            cmd_opt["Filters"],
-                           cmd_opt["YUV"],)
+                           YUV[outext],)
                            )
             elif self.rdb_auto.GetSelection() ==  3:# slideshow maker
                 outext = cmd_opt["VideoFormat"]
-                cmd_1 = [cmd_opt["Filters"]]
-                time = self.parent.time_read['time']
-                cmd_2 = ['-framerate 1/%s' % (str(time[1]),),
-                         '%s -c:v libx264 %s %s %s %s -vf '
-                         'fps=25,format=yuv420p %s %s %s %s %s %s %s' %(
-                                                   cmd_opt["AddAudioStream"],
-                                                   cmd_opt["CRF"],
-                                                   cmd_opt["Presets"],
-                                                   cmd_opt["Profile"],
-                                                   cmd_opt["Tune"],
-                                                   cmd_opt["AudioCodec"], 
-                                                   cmd_opt["AudioBitrate"][1], 
-                                                   cmd_opt["AudioRate"][1], 
-                                                   cmd_opt["AudioChannel"][1], 
-                                                   cmd_opt["AudioDepth"][1],
-                                                   cmd_opt["Map"], 
-                                                   cmd_opt["Shortest"][1],)]
+                #cmd_1 = [cmd_opt["Filters"]]
+                #time = self.parent.time_read['time']
+                #cmd_2 = ['-framerate 1/%s' % (str(time[1]),),
+                         #'%s -c:v libx264 %s %s %s %s -vf '
+                         #'fps=25,format=yuv420p %s %s %s %s %s %s %s' %(
+                                                   #cmd_opt["AddAudioStream"],
+                                                   #cmd_opt["CRF"],
+                                                   #cmd_opt["Presets"],
+                                                   #cmd_opt["Profile"],
+                                                   #cmd_opt["Tune"],
+                                                   #cmd_opt["AudioCodec"], 
+                                                   #cmd_opt["AudioBitrate"][1], 
+                                                   #cmd_opt["AudioRate"][1], 
+                                                   #cmd_opt["AudioChannel"][1], 
+                                                   #cmd_opt["AudioDepth"][1],
+                                                   #cmd_opt["Map"], 
+                                                   #cmd_opt["Shortest"][1],)]
                          
-                command = ("%s id_SLAIDESHOW %s" % (cmd_1,cmd_2))
+                #command = ("%s id_SLIDESHOW %s" % (cmd_1,cmd_2))
+                command = ("NOT YET IMPLEMENTED")
             else:
                 outext = cmd_opt["VideoFormat"]
                 command = ("%s %s %s %s %s %s %s %s %s "
