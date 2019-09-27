@@ -896,6 +896,7 @@ class Video_Conv(wx.Panel):
 
             cmd_opt["PicturesFormat"] = "jpg"
             self.parent.statusbar_msg(msg_2, greenolive)
+            self.Layout()
             
             return
         ####----------- Add audio stream to a movie
@@ -911,6 +912,7 @@ class Video_Conv(wx.Panel):
             else:
                 self.notebook_1_pane_3.Disable()
                 cmd_opt["Shortest"] = [False,'']
+            self.Layout()
             
             return
         ####----------- Picture slideshow maker
@@ -933,6 +935,7 @@ class Video_Conv(wx.Panel):
             else:
                 self.notebook_1_pane_3.Disable()
             self.parent.statusbar_msg(msg_4, violet)
+            self.Layout()
             
             return
         #-------------- on EXIT first revert to default --------------#
@@ -945,6 +948,7 @@ class Video_Conv(wx.Panel):
             self.notebook_1_pane_3.Enable()
         self.vidContainers(self)
         self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
+        self.Layout()
         
     #------------------------------------------------------------------#
     def on_Shortest(self, event):

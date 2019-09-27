@@ -1145,7 +1145,7 @@ class MainFrame(wx.Frame):
         self.AconvPanel.file_destin = self.file_destin
         if self.file_sources != self.AconvPanel.file_sources:
             self.AconvPanel.file_sources = self.file_sources
-            self.AconvPanel.normalization_disabled()
+            self.AconvPanel.normalization_default()
             self.duration = self.DnD.duration
             
     #------------------------------------------------------------------#
