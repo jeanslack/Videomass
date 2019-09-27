@@ -53,7 +53,8 @@ cmd_opt = {"AudioContainer":"MP3 [.mp3]",
            "AudioRate":("",""), 
            "AudioDepth":("",""),
            "AudioBitrate":("",""), 
-           "Normalize":"", 
+           "NormRMS":"", 
+           "NormEBU":"",
            "ExportExt":"mp3", 
            "CodecCopied":[],
            }
@@ -157,21 +158,21 @@ class Audio_Conv(wx.Panel):
         self.lab_i = wx.StaticText(self, wx.ID_ANY, (
                                     _("Set integrated loudness target (I):")))
         self.spin_i = FS.FloatSpin(self, wx.ID_ANY, min_val=-70.0, 
-                                    max_val=-5.0, increment=1.0, value=-24.0, 
+                                    max_val=-5.0, increment=0.5, value=-24.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
         
         self.lab_tp = wx.StaticText(self, wx.ID_ANY, (
                                     _("Set maximum true peak (TP):")))
         self.spin_tp = FS.FloatSpin(self, wx.ID_ANY, min_val=-9.0, 
-                                    max_val=0.0, increment=1.0, value=-2.0, 
+                                    max_val=0.0, increment=0.5, value=-2.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
         
         self.lab_lra = wx.StaticText(self, wx.ID_ANY, (
                                     _("Set loudness range target (LRA):")))
         self.spin_lra = FS.FloatSpin(self, wx.ID_ANY, min_val=1.0, 
-                                    max_val=20.0, increment=1.0, value=7.0, 
+                                    max_val=20.0, increment=0.5, value=7.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         #------------p1
@@ -272,7 +273,7 @@ class Audio_Conv(wx.Panel):
         self.spin_amplitude.Hide(), self.spin_amplitude.SetValue(-1.0)
         self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
         self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
-        cmd_opt["Normalize"] = ""
+        cmd_opt["NormRMS"], cmd_opt["NormEBU"] = "", ""
         del self.normdetails[:]
         
     #----------------------Event handler (callback)----------------------#
@@ -471,7 +472,7 @@ class Audio_Conv(wx.Panel):
             self.lab_amplitude.Show()
             self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
             self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
-            cmd_opt["Normalize"] = ""
+            cmd_opt["NormRMS"], cmd_opt["NormEBU"] = "", ""
             del self.normdetails[:]
             
         elif self.rdbx_norm.GetSelection() == 2: # EBU
@@ -480,6 +481,7 @@ class Audio_Conv(wx.Panel):
             self.spin_amplitude.Hide(), self.btn_details.Hide()
             self.lab_i.Show(), self.spin_i.Show(), self.lab_lra.Show(),
             self.spin_lra.Show(), self.lab_tp.Show(), self.spin_tp.Show()
+            cmd_opt["NormRMS"], cmd_opt["NormEBU"] = "", ""
 
         else: # usually it is 0
             self.parent.statusbar_msg(_("Audio normalization disabled"), None)
@@ -561,7 +563,7 @@ class Audio_Conv(wx.Panel):
             else:
                 self.parent.statusbar_msg(msg2, yellow)
                 
-        cmd_opt["Normalize"] = volume
+        cmd_opt["NormRMS"] = volume
         self.btn_analyzes.Disable(), self.btn_details.Show()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
         self.Layout()
@@ -626,7 +628,7 @@ class Audio_Conv(wx.Panel):
             checking = inspect(file_sources, dir_destin, '')
         else:
             checking = inspect(file_sources, dir_destin, 
-                            cmd_opt["ExportExt"])
+                               cmd_opt["ExportExt"])
         if not checking[0]:#user non vuole continuare o files assenti
             return
         # typeproc: batch or single process
@@ -638,6 +640,14 @@ class Audio_Conv(wx.Panel):
 
         if self.cmbx_a.GetSelection() == 8: # save audio stream from movies
             self.grabaudioProc(file_sources, dir_destin, countmax, logname)
+            
+        elif self.rdbx_norm.GetSelection() == 2:
+            cmd_opt["NormEBU"] = {'i':str(self.spin_i.GetValue()),
+                                  'tp':str(self.spin_tp.GetValue()),
+                                  'lra':str(self.spin_lra.GetValue())}
+            
+            self.ebu_Doublepass(file_sources, dir_destin, countmax, logname)
+            
         else:
             self.stdProc(file_sources, dir_destin, countmax, logname)
 
@@ -645,10 +655,12 @@ class Audio_Conv(wx.Panel):
     def stdProc(self, file_sources, dir_destin, countmax, logname):
         """
         Composes the ffmpeg command strings for the batch mode processing.
+        
         """
+        #-------- Only normalization
         if (self.cmbx_a.GetSelection() == 9 and 
                                      self.rdbx_norm.GetSelection() == 1):
-            title = _('Start audio normalization')
+            title = _('Only RMS normalization')
             cmd = ("-loglevel %s -vn %s %s -y" % (self.ffmpeg_loglevel, 
                                                   self.threads,
                                                   self.cpu_used,)
@@ -665,7 +677,7 @@ class Audio_Conv(wx.Panel):
                                            command, 
                                            None, 
                                            self.ffmpeg_link,
-                                           cmd_opt["Normalize"], 
+                                           cmd_opt["NormRMS"], 
                                            logname, 
                                            countmax, 
                                            False,# do not use is reserved
@@ -697,7 +709,88 @@ class Audio_Conv(wx.Panel):
                                            command,
                                            None,
                                            self.ffmpeg_link,
-                                           cmd_opt["Normalize"],
+                                           cmd_opt["NormRMS"],
+                                           logname, 
+                                           countmax,
+                                           False,# do not use is reserved
+                                           )
+                #used for play preview and mediainfo:
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                                 cmd_opt["ExportExt"]))
+                
+    #------------------------------------------------------------------#
+    def ebu_Doublepass(self, file_sources, dir_destin, countmax, logname):
+        """
+        Perform EBU R128 normalization as 'only norm.' and as 
+        standard conversion
+        
+        """
+        ext_list = []
+        for x in file_sources:
+            ext_list.append(os.path.basename(x).rsplit('.', 1)[1])
+            
+        if self.cmbx_a.GetSelection() == 9:
+            title = _('Only loudness normalization')
+            cmd_1 = ('-vn -af loudnorm=I=%s:TP=%s:LRA=%s:print_format=json '
+                     '%s %s -f' % (cmd_opt["NormEBU"]['i'],
+                                   cmd_opt["NormEBU"]['tp'],
+                                   cmd_opt["NormEBU"]['lra'],
+                                   self.threads,
+                                   self.cpu_used,)
+                   )
+            #cmd_2 = ('-vn -af loudnorm=I=%s:TP=%s:LRA=%s:print_format=json '
+                     #'%s %s -y' % (cmd_opt["NormEBU"]['i'],
+                                   #cmd_opt["NormEBU"]['tp'],
+                                   #cmd_opt["NormEBU"]['lra'],
+                                   #self.threads,
+                                   #self.cpu_used,)
+                   #)
+            command = " ".join(cmd_1.split())# mi formatta la stringa
+            valupdate = self.update_dict(countmax)
+            ending = Formula(self, valupdate[0], valupdate[1], title)
+            
+            if ending.ShowModal() == wx.ID_OK:
+                self.parent.switch_Process('EBU normalization',
+                                           file_sources, 
+                                           '', 
+                                           dir_destin, 
+                                           ext_list, 
+                                           command, 
+                                           self.ffmpeg_link,
+                                           '', 
+                                           logname, 
+                                           countmax, 
+                                           False,# do not use is reserved
+                                           )
+                #used for play preview and mediainfo:
+                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
+                self.exportStreams(f)#call function more above
+        else:
+            title = _('Start audio conversion')
+            command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
+                                                self.ffmpeg_loglevel,
+                                                cmd_opt["AudioCodec"],
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioDepth"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1], 
+                                                self.threads,
+                                                self.cpu_used,)
+                                                                    )
+            command = " ".join(command.split())# mi formatta la stringa
+            valupdate = self.update_dict(countmax)
+            ending = Formula(self, valupdate[0], valupdate[1], title)
+
+            if ending.ShowModal() == wx.ID_OK:
+                self.parent.switch_Process('normal',
+                                           file_sources,
+                                           cmd_opt["ExportExt"],
+                                           dir_destin,
+                                           command,
+                                           None,
+                                           self.ffmpeg_link,
+                                           cmd_opt["NormEBU"],
                                            logname, 
                                            countmax,
                                            False,# do not use is reserved
@@ -745,26 +838,28 @@ class Audio_Conv(wx.Panel):
         dictionary values before send at epilogue
         """
         numfile = _("%s file in pending") % str(countmax)
-        if cmd_opt["Normalize"]:
-            normalize = _('Enabled RMS Normalization')
+        if cmd_opt["NormRMS"]:
+            normalize = _('RMS')
+        elif cmd_opt["NormEBU"]:
+            normalize = _('EBU R128')
         else:
-            normalize = _('Disable')
+            normalize = _('Not set')
             
         if not self.parent.time_seq:
-            time = _('Disable')
+            time = _('Not set')
         else:
             t = list(self.parent.time_read.items())
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
                                                 t[1][0], t[1][1][0])
             
-        if self.cmbx_a.GetSelection == 9: # Only norm.
+        if self.cmbx_a.GetSelection() == 9: # Only norm.
             formula = (_("SUMMARY\n\nFile Queue\
                        \nAudio Normalization\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s" % (numfile, 
                                             normalize, 
                                             time,)
                         )
-        elif self.cmbx_a.GetSelection == 8: # audio from movies
+        elif self.cmbx_a.GetSelection() == 8: # audio from movies
             formula = (_("SUMMARY\n\nFile Queue\
                       \nAudio Container\nCodec copied\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
@@ -804,8 +899,8 @@ class Audio_Conv(wx.Panel):
         get = wx.GetApp()
         dirconf = os.path.join(get.DIRconf, 'vdms')
         
-        if cmd_opt["Normalize"]:
-            normalize = cmd_opt["Normalize"][0]# tengo il primo valore lista
+        if cmd_opt["NormRMS"]:
+            normalize = cmd_opt["NormRMS"][0]# tengo il primo valore lista
         else:
             normalize = ''
         
