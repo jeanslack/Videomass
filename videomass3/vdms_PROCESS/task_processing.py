@@ -100,8 +100,8 @@ class GeneralProcess(wx.Panel):
                                    wx.TE_READONLY | 
                                    wx.TE_RICH2
                                     )
-        self.ckbx_text = wx.CheckBox(self, wx.ID_ANY,(_("Enable the FFmpeg "
-                                            "scroll output in real time")))
+        self.ckbx_text = wx.CheckBox(self, wx.ID_ANY,(_("Suppress excess "
+                                                        "output")))
         self.barProg = wx.Gauge(self, wx.ID_ANY, range = 0)
         self.labPerc = wx.StaticText(self, label="Percentage: 0%")
         self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
@@ -200,8 +200,8 @@ class GeneralProcess(wx.Panel):
         but exiting immediately after the function.
         
         """
-        if self.ckbx_text.IsChecked(): # ffmpeg output messages in real time:
-            self.OutText.AppendText(output)
+        #if self.ckbx_text.IsChecked(): # ffmpeg output messages in real time:
+            #self.OutText.AppendText(output)
             
         if not status == 0:# error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
@@ -224,13 +224,14 @@ class GeneralProcess(wx.Panel):
             self.OutText.AppendText(' %s' % output[1])
 
         else:# append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():# if checked print already
+            if not self.ckbx_text.IsChecked():# not print the output of ffmpeg
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
                 self.OutText.AppendText(' %s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                
             
             with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
-                logerr.write("[FFMPEG] ERRORS: %s" % (output))
+                logerr.write("[FFMPEG]: %s" % (output))
                 # write a row error into file log
             
     #-------------------------------------------------------------------#
@@ -343,8 +344,8 @@ class ProcThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
-        self.count = 0 # count number loop
-        self.countmax = len(varargs[1]) # lengh file list
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[1]) # length file list
         self.logname = logname # title name of file log
         self.time_seq = timeseq # a time segment
 
@@ -487,9 +488,9 @@ class DoublePassThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
-        self.volume = varargs[7]# lista norm, se non richiesto rimane None
-        self.count = 0 # count number loop
-        self.countmax = len(varargs[1]) # lengh file list
+        self.volume = varargs[7]# volume compensation data
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[1]) # length file list
         self.logname = logname # title name of file log
         self.nul = '/dev/null'
         
@@ -701,7 +702,7 @@ class SingleProcThread(Thread):
         self.cmd = varargs[4] # comand set on single pass
         self.duration = duration[0]+10# duration list
         self.time_seq = timeseq # a time segment
-        self.count = 0 # count number loop
+        self.count = 0 # count first for loop
         self.logname = logname # title name of file log
         self.fname = varargs[1] # file name
 
@@ -809,8 +810,8 @@ class GrabAudioProc(Thread):
         #self.logname = varargs[8] #  videomass/logname.log
         self.duration = duration # duration values list (items)
         self.time_seq = timeseq
-        self.count = 0 # count number loop
-        self.countmax = len(varargs[2]) # lengh file list
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[2]) # length file list
         self.logname = logname # title name of file log
         
         self.start() # start the thread (va in self.run())
@@ -945,8 +946,8 @@ class CreateSlideShow(Thread):
         self.cmd_2 = varargs[4] # command 2
         self.outformat = varargs[5] # final output format
         self.duration = duration[0] * len(varargs[1]) # time sum
-        self.count = 0 # count number loop
-        self.countmax = varargs[9] # lengh file list
+        self.count = 0 # count first for loop
+        self.countmax = varargs[9] # length file list
         self.logname = logname # title name of file log
         
         self.start() # start the thread (va in self.run())
@@ -1125,7 +1126,7 @@ class EBU_Norm_DoublePass(Thread):
     twice for two different tasks: the process on the first video pass and 
     the process on the second video pass for video only.
     """
-    def __init__(self, varargs, duration, logname, timeseq):
+    def __init__(self, var, duration, logname, timeseq):
         """
         The 'volume' attribute may have an empty value, but it will 
         have no influence on the type of conversion.
@@ -1133,17 +1134,15 @@ class EBU_Norm_DoublePass(Thread):
         Thread.__init__(self)
         """initialize"""
 
-        self.filelist = varargs[1] # list of files (elements)
-        self.ext = varargs[4] # list extension or empty
-        self.passList = varargs[5] # comand list set for double-pass
-        self.outputdir = varargs[3] # output path
-        self.extoutput = varargs[2] # format (extension)
-        self.ffmpeg_link = varargs[6] # bin executable path-name
+        self.filelist = var[1] # list of files (elements)
+        self.ext = var[4] if len(var[4]) > 1 else var[4] * len(var[1])
+        self.passList = var[5] # comand list set for double-pass
+        self.outputdir = var[3] # output path
+        self.ffmpeg_link = var[6] # bin executable path-name
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
-        self.volume = varargs[7]# lista norm, se non richiesto rimane None
-        self.count = 0 # count number loop
-        self.countmax = len(varargs[1]) # lengh file list
+        self.count = 0 # count first for loop 
+        self.countmax = len(var[1]) # length file list
         self.logname = logname # title name of file log
         self.nul = '/dev/null'
         
@@ -1155,13 +1154,17 @@ class EBU_Norm_DoublePass(Thread):
         """
         global STATUS_ERROR
         
+        
+        mod = ['Input Integrated:','Input True Peak:','Input LRA:',
+               'Input Threshold:','Output Integrated:','Output True Peak:',
+               'Output LRA:','Output Threshold:','Normalization Type:',
+               'Target Offset:']
+        
         for (files,
              folders,
-             volume,
              duration,
              ext) in itertools.zip_longest(self.filelist, 
                                                 self.outputdir, 
-                                                self.volume, 
                                                 self.duration,
                                                 self.ext,
                                                 fillvalue='',
@@ -1170,16 +1173,17 @@ class EBU_Norm_DoublePass(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
 
             #--------------- first pass
-            pass1 = ('%s -loglevel info -stats -hide_banner %s -y -i "%s" '
-                     '-pass 1 %s %s %s' % (self.ffmpeg_link, 
-                                            self.time_seq,
-                                            files, 
-                                            self.passList,
-                                            ext,
-                                            self.nul,
-                                            )) 
+            pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
+                     '-pass 1 %s %s -y %s' % (self.ffmpeg_link, 
+                                              self.time_seq,
+                                              files, 
+                                              self.passList[0],
+                                              ext,
+                                              self.nul,
+                                              )) 
             self.count += 1
-            count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
+            count = ('Getting statistics for measurement...\n  '
+                     'File %s/%s - Pass One' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass1)
             print("%s" % cmd)
             
@@ -1197,12 +1201,10 @@ class EBU_Norm_DoublePass(Thread):
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True) as p1:
-                    
+                    index = 0
+                    summary = dict()
                     for line in p1.stderr:
-                        #sys.stdout.write(line)
-                        #sys.stdout.flush()
                         print (line, end=''),
-                        
                         wx.CallAfter(pub.sendMessage, 
                                      "UPDATE_EVT", 
                                      output=line, 
@@ -1211,6 +1213,14 @@ class EBU_Norm_DoublePass(Thread):
                                      )
                         if CHANGE_STATUS == 1:# break second 'for' loop
                             p1.terminate()
+                            break
+                        
+                        if line.startswith(mod[index]):
+                            summary[line.split(':')[0]] =  (line.split(':')
+                                                           [1].strip())
+                            index += 1
+                            
+                        if index == 10:
                             break
                         
                     if p1.wait(): # will add '..failed' to txtctrl
@@ -1249,78 +1259,86 @@ class EBU_Norm_DoublePass(Thread):
                              fname='',
                              end='ok'
                              )
-            
+                
             #--------------- second pass ----------------#
-            #pass2 = ('%s %s -i "%s" %s %s -passlogfile "%s/%s.log" '
-                     #'-pass 2 -y "%s/%s.%s"' % (self.ffmpeg_link, 
-                                                #self.time_seq,
-                                                #files, 
-                                                #volume,
-                                                #self.passList[1], 
-                                                #folders, 
-                                                #filename,
-                                                #folders, 
-                                                #filename,
-                                                #self.extoutput,
-                                                #))
-            #count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
-            #cmd = "%s\n%s" % (count, pass2)
-            #print("%s" % cmd)
+            filters = ('%s:measured_I=%s:measured_LRA=%s:measured_TP=%s:'
+                       'measured_thresh=%s:offset=%s:linear=true:dual_mono='
+                       'true' %(self.passList[2],
+                                summary["Input Integrated"].split()[0], 
+                                summary["Input True Peak"].split()[0], 
+                                summary["Input LRA"].split()[0], 
+                                summary["Input Threshold"].split()[0], 
+                                summary["Target Offset"].split()[0]))
+            time.sleep(.5)
+            pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" %s '
+                        '-pass 2 -af %s -y "%s/%s.%s"' % (self.ffmpeg_link, 
+                                                        self.time_seq,
+                                                        files,
+                                                        self.passList[1],
+                                                        filters,
+                                                        folders, 
+                                                        filename,
+                                                        ext,
+                                                        ))
+            print(pass2)
+            count = ('Loudness normalization process (EBU R128 algorithm)...\n  '
+                     'File %s/%s - Pass Two' % (self.count, self.countmax,))
+            cmd = "%s\n%s" % (count, pass2)
+            print("%s" % cmd)
             
-            #wx.CallAfter(pub.sendMessage, 
-                         #"COUNT_EVT", 
-                         #count=count, 
-                         #duration=duration,
-                         #fname=files,
-                         #end='',
-                         #)
-            #logWrite(cmd, '', self.logname)
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files,
+                         end='',
+                         )
+            logWrite(cmd, '', self.logname)
             
-            #with subprocess.Popen(shlex.split(pass2), 
-                                  #stderr=subprocess.PIPE, 
-                                  #bufsize=1, 
-                                  #universal_newlines=True) as p2:
+            with subprocess.Popen(shlex.split(pass2), 
+                                  stderr=subprocess.PIPE, 
+                                  bufsize=1, 
+                                  universal_newlines=True) as p2:
                     
-                    #for line2 in p2.stderr:
-                        ##sys.stdout.write(line)
-                        ##sys.stdout.flush()
-                        #print (line2, end=''),
+                    for line2 in p2.stderr:
+                        #sys.stdout.write(line)
+                        #sys.stdout.flush()
+                        print (line2, end=''),
                         
-                        #wx.CallAfter(pub.sendMessage, 
-                                     #"UPDATE_EVT", 
-                                     #output=line2, 
-                                     #duration=duration,
-                                     #status=0,
-                                     #)
-                        #if CHANGE_STATUS == 1:
-                            #p2.terminate()
-                            #break
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_EVT", 
+                                     output=line2, 
+                                     duration=duration,
+                                     status=0,
+                                     )
+                        if CHANGE_STATUS == 1:
+                            p2.terminate()
+                            break
                     
-                    #if p2.wait(): # will add '..failed' to txtctrl
-                        #wx.CallAfter(pub.sendMessage, 
-                                     #"UPDATE_EVT", 
-                                     #output=line, 
-                                     #duration=duration,
-                                     #status=p2.wait(),
-                                     #)
-                        #logWrite('', 
-                                 #"Exit status: %s" % p2.wait(), 
-                                 #self.logname)
-                                 ##append exit error number
+                    if p2.wait(): # will add '..failed' to txtctrl
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_EVT", 
+                                     output=line, 
+                                     duration=duration,
+                                     status=p2.wait(),
+                                     )
+                        logWrite('', 
+                                 "Exit status: %s" % p2.wait(), 
+                                 self.logname)
+                                 #append exit error number
                         
-            #if CHANGE_STATUS == 1:# break first 'for' loop
-                #p2.terminate()
-                #break # fermo il ciclo for, altrimenti passa avanti
+            if CHANGE_STATUS == 1:# break first 'for' loop
+                p2.terminate()
+                break # fermo il ciclo for, altrimenti passa avanti
             
-            #if p2.wait() == 0: # will add '..terminated' to txtctrl
-                #wx.CallAfter(pub.sendMessage, 
-                             #"COUNT_EVT", 
-                             #count='', 
-                             #duration='',
-                             #fname='',
-                             #end='ok'
-                             #)
-            
+            if p2.wait() == 0: # will add '..terminated' to txtctrl
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             count='', 
+                             duration='',
+                             fname='',
+                             end='ok'
+                             )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
         

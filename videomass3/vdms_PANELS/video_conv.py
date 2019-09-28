@@ -357,7 +357,7 @@ class Video_Conv(wx.Panel):
         self.btn_details = GB.GradientButton(self.notebook_1_pane_3,
                                             #size=(-1,25),
                                             #bitmap=analyzebmp,
-                                            label=_("Details list"))
+                                            label=_("Peak levels index"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
         self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -1539,7 +1539,7 @@ class Video_Conv(wx.Panel):
         """
         Show a wx.ListCtrl dialog to list data of peak levels
         """
-        title = _('Audio normalization details list')
+        title = _('peak levels details index')
         audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)

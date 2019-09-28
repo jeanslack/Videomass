@@ -335,8 +335,8 @@ class ProcThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
-        self.count = 0 # count number loop
-        self.countmax = len(varargs[1]) # lengh file list
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[1]) # length file list
         self.logname = logname # title name of file log
         self.time_seq = timeseq # a time segment
 
@@ -483,9 +483,9 @@ class DoublePassThread(Thread):
         self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
-        self.volume = varargs[7]# lista norm, se non richiesto rimane None
-        self.count = 0 # count number loop
-        self.countmax = len(varargs[1]) # lengh file list
+        self.volume = varargs[7]# volume compensation data
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[1]) # length file list
         self.logname = logname # title name of file log
         self.nul = 'NUL' # only for Windows (/dev/null for Unix like)
         
@@ -702,7 +702,7 @@ class SingleProcThread(Thread):
         self.cmd = varargs[4] # comand set on single pass
         self.duration = duration[0]+10# duration list
         self.time_seq = timeseq # a time segment
-        self.count = 0 # count number loop
+        self.count = 0 # count first for loop
         self.logname = logname # title name of file log
         self.fname = varargs[1] # file name
 
@@ -813,8 +813,8 @@ class GrabAudioProc(Thread):
         #self.logname = varargs[8] #  videomass/logname.log
         self.duration = duration # duration values list (items)
         self.time_seq = timeseq # a time segment
-        self.count = 0 # count number loop
-        self.countmax = len(varargs[2]) # lengh file list
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[2]) # length file list
         self.logname = logname # title name of file log
         
         self.start() # start the thread (va in self.run())
@@ -952,8 +952,8 @@ class CreateSlideShow(Thread):
         self.cmd_2 = varargs[4] # command 2
         self.outformat = varargs[5] # final output format
         self.duration = duration[0] * len(varargs[1]) # time sum
-        self.count = 0 # count number loop
-        self.countmax = varargs[9] # lengh file list
+        self.count = 0 # count first for loop
+        self.countmax = varargs[9] # length file list
         self.logname = logname # title name of file log
         
         self.start() # start the thread (va in self.run())

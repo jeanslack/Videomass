@@ -139,7 +139,7 @@ class Audio_Conv(wx.Panel):
         self.btn_details = GB.GradientButton(self,
                                             #size=(-1,25),
                                             #bitmap=analyzebmp,
-                                            label=_("Details list"))
+                                            label=_("Peak levels index"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28,28))
         self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -572,7 +572,7 @@ class Audio_Conv(wx.Panel):
         """
         Show a wx.ListCtrl dialog to list data of peak levels
         """
-        title = _('Audio normalization details list')
+        title = _('peak levels details index')
         audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)
@@ -726,27 +726,23 @@ class Audio_Conv(wx.Panel):
         standard conversion
         
         """
-        ext_list = []
-        for x in file_sources:
-            ext_list.append(os.path.basename(x).rsplit('.', 1)[1])
-            
+        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' 
+                                              %(cmd_opt["NormEBU"]['i'],
+                                                cmd_opt["NormEBU"]['tp'],
+                                                cmd_opt["NormEBU"]['lra'])
+                     )
         if self.cmbx_a.GetSelection() == 9:
-            title = _('Only loudness normalization')
-            cmd_1 = ('-vn -af loudnorm=I=%s:TP=%s:LRA=%s:print_format=json '
-                     '%s %s -f' % (cmd_opt["NormEBU"]['i'],
-                                   cmd_opt["NormEBU"]['tp'],
-                                   cmd_opt["NormEBU"]['lra'],
-                                   self.threads,
-                                   self.cpu_used,)
-                   )
-            #cmd_2 = ('-vn -af loudnorm=I=%s:TP=%s:LRA=%s:print_format=json '
-                     #'%s %s -y' % (cmd_opt["NormEBU"]['i'],
-                                   #cmd_opt["NormEBU"]['tp'],
-                                   #cmd_opt["NormEBU"]['lra'],
-                                   #self.threads,
-                                   #self.cpu_used,)
-                   #)
-            command = " ".join(cmd_1.split())# mi formatta la stringa
+            ext_list = []
+            for x in file_sources:
+                ext_list.append(os.path.basename(x).rsplit('.', 1)[1])
+            title = _('Only EBU normalization')
+            cmd_1 = ('-c:v copy -af %s %s %s -f' % (loudfilter,
+                                                    self.threads,
+                                                    self.cpu_used,)
+                    )
+            cmd_2 = ('-c:v copy %s %s' % (self.threads,self.cpu_used,))
+            pass1 = " ".join(cmd_1.split())
+            pass2 = " ".join(cmd_2.split())
             valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
@@ -756,7 +752,7 @@ class Audio_Conv(wx.Panel):
                                            '', 
                                            dir_destin, 
                                            ext_list, 
-                                           command, 
+                                           [pass1,pass2,loudfilter],
                                            self.ffmpeg_link,
                                            '', 
                                            logname, 
@@ -768,29 +764,31 @@ class Audio_Conv(wx.Panel):
                 self.exportStreams(f)#call function more above
         else:
             title = _('Start audio conversion')
-            command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
-                                                self.ffmpeg_loglevel,
-                                                cmd_opt["AudioCodec"],
-                                                cmd_opt["AudioBitrate"][1], 
-                                                cmd_opt["AudioDepth"][1], 
-                                                cmd_opt["AudioRate"][1], 
-                                                cmd_opt["AudioChannel"][1], 
-                                                self.threads,
-                                                self.cpu_used,)
-                                                                    )
-            command = " ".join(command.split())# mi formatta la stringa
+            cmd_1 = ('-vn -af %s %s %s -f' % (loudfilter,
+                                              self.threads,
+                                              self.cpu_used,)
+                    )
+            cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
+                                                   cmd_opt["AudioBitrate"][1], 
+                                                   cmd_opt["AudioDepth"][1], 
+                                                   cmd_opt["AudioRate"][1], 
+                                                   cmd_opt["AudioChannel"][1], 
+                                                   self.threads,
+                                                   self.cpu_used,))
+            pass1 = " ".join(cmd_1.split())
+            pass2 = " ".join(cmd_2.split())
             valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('normal',
+                self.parent.switch_Process('EBU normalization',
                                            file_sources,
-                                           cmd_opt["ExportExt"],
+                                           '',
                                            dir_destin,
-                                           command,
-                                           None,
+                                           list([cmd_opt["ExportExt"]]),
+                                           [pass1,pass2,loudfilter],
                                            self.ffmpeg_link,
-                                           cmd_opt["NormEBU"],
+                                           '',
                                            logname, 
                                            countmax,
                                            False,# do not use is reserved

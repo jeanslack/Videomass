@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-September 22, 2019 V.1.6.5
+September 22, 2019 V.1.6.6
 +------------------------------------+
 
 ADD:
@@ -27,8 +27,12 @@ ADD:
     * Added "-pix_fmt yuv420p" option to any video conversion with x264/h264
       on Video Conversions panel, to ensure compatibility so crappy players 
       can decode the video
-    * Added dedicated thread with two subprocess calls to convert images
-      and convert video.
+    * Added a dedicated processing thread with two subprocess calls to make 
+      slideshows (first convert images then make a video).
+    * Added a dedicated processing thread to perform loudness normalization
+      according to EBU R128 algorithm. 
+    * New graphical interface for normalization management in the Audio 
+      Conversions panel
       
 IMPROVEMENTS:
     * code thinning in some file section in the old stuff
