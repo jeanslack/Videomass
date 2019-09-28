@@ -125,9 +125,9 @@ def system_check():
         if os.path.isfile(FILEconf):
             DATAconf = parsing_fileconf() # fileconf data
             if DATAconf == 'corrupted':
-                print ("The file configuration is corrupted! try to restore..")
+                print("The file configuration is corrupted! try to restore..")
                 existfileconf = False
-            if float(DATAconf[0]) != 1.4:
+            if float(DATAconf[0]) != 1.5:
                 existfileconf = False
         else:
             existfileconf = False

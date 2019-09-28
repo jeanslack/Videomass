@@ -340,7 +340,7 @@ class Video_Conv(wx.Panel):
                 self.rdb_a.EnableItem(n,enable=False
                                       )
         self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
-                      wx.ID_ANY, (_("Peak and RMS Normalization"))
+                      wx.ID_ANY, (_("Peak Level Normalization"))
                                 )
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
@@ -366,7 +366,7 @@ class Video_Conv(wx.Panel):
         self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    (_("Target level (max peak threshold) "))
+                                    (_("Target level (dB level limiter)"))
                                     )
         self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
                                                      wx.ID_ANY, 
@@ -655,18 +655,17 @@ class Video_Conv(wx.Panel):
                     "countries (like Italy) are 25. Leave on 'Default' "
                     "to copy the original settings."
                                    ))
-        self.ckbx_a_normalize.SetToolTip(_('Performs peak and RMS audio '
+        self.ckbx_a_normalize.SetToolTip(_('Performs peak level audio '
                                            'normalization on the audio stream'
                                            ))
-        self.btn_analyzes.SetToolTip(_("Calculates the maximum and average "
-                                       "peak level of audio streams expressed "
-                                       "in dB values"
+        self.btn_analyzes.SetToolTip(_("Find the maximum and average peak "
+                                       "levels in dB values and calculates"
+                                       "the normalization data offset"
                                        ))
-        self.spin_ctrl_audionormalize.SetToolTip(_("Threshold for the "
-                                "maximum peak level in dB values. The default " 
-                                "setting is -1.0 dB and is good for most of "
-                                "the processes"
-                                ))
+        self.spin_ctrl_audionormalize.SetToolTip(_("Limiter for the maximum "
+                                        "peak level in dB values. From -99.0 "
+                                        "to +0.0 dB, default is -1.0"
+                                                 ))
         self.rdb_a.SetToolTip(_("Choose an audio codec. Some audio codecs "
                                 "are disabled for certain video containers"
                                 ))

@@ -118,7 +118,7 @@ class Audio_Conv(wx.Panel):
         self.rdbx_norm = wx.RadioBox(self,wx.ID_ANY,(_("Audio Normalization")), 
                                      choices=[
                                      (_('Off')), 
-                                     (_('Peak and RMS Normalization')), 
+                                     (_('Peak Level Normalization')), 
                                      (_('Loudness Normalization (EBU R128)')),
                                               ], 
                                      majorDimension=0, 
@@ -148,7 +148,7 @@ class Audio_Conv(wx.Panel):
         self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
-                                    _("Target level (maximum peak threshold):")))
+                            _("Target level (dB level limiter):")))
         self.spin_amplitude = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=1.0, value=-1.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
@@ -156,21 +156,21 @@ class Audio_Conv(wx.Panel):
         
         #------------p1
         self.lab_i = wx.StaticText(self, wx.ID_ANY, (
-                                    _("Set integrated loudness target (I):")))
+                             _("Set integrated loudness target:")))
         self.spin_i = FS.FloatSpin(self, wx.ID_ANY, min_val=-70.0, 
                                     max_val=-5.0, increment=0.5, value=-24.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
         
         self.lab_tp = wx.StaticText(self, wx.ID_ANY, (
-                                    _("Set maximum true peak (TP):")))
+                                    _("Set maximum true peak:")))
         self.spin_tp = FS.FloatSpin(self, wx.ID_ANY, min_val=-9.0, 
                                     max_val=0.0, increment=0.5, value=-2.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
         
         self.lab_lra = wx.StaticText(self, wx.ID_ANY, (
-                                    _("Set loudness range target (LRA):")))
+                                    _("Set loudness range target:")))
         self.spin_lra = FS.FloatSpin(self, wx.ID_ANY, min_val=1.0, 
                                     max_val=20.0, increment=0.5, value=7.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
@@ -181,9 +181,9 @@ class Audio_Conv(wx.Panel):
         sizer_global = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                 "")), wx.VERTICAL)
         sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
-        grid_sizer_3 = wx.FlexGridSizer(8, 2, 0, 0)
+        grid_sizer_3 = wx.FlexGridSizer(7, 2, 0, 0)
         grid_sizer_1 = wx.GridSizer(2, 1, 0, 0)
-        grid_sizer_2 = wx.FlexGridSizer(1, 2, 0, 0)
+        grid_sizer_2 = wx.FlexGridSizer(2, 2, 0, 0)
         grid_sizer_4 = wx.FlexGridSizer(2, 4, 0, 0)
         #grid_sizer_5 = wx.FlexGridSizer(1, 3, 0, 0)
         sizer_3 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -192,15 +192,10 @@ class Audio_Conv(wx.Panel):
                                                        )
         sizer_3.Add(self.cmbx_a, 0, wx.ALIGN_CENTER | wx.ALL, 20)
         grid_sizer_1.Add(sizer_3, 1, wx.ALL | wx.EXPAND, 5)
+        grid_sizer_2.Add((0, 20), 0, wx.EXPAND | wx.TOP, 5)
+        grid_sizer_2.Add((0, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_2.Add(self.btn_param, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         grid_sizer_2.Add(self.txt_options, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_4.Add(self.lab_bitdepth, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_4.Add(self.txt_bitdepth, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_4.Add(self.lab_bitrate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_4.Add(self.txt_bitrate, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_4.Add(self.lab_channel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_4.Add(self.txt_channel, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_2.Add(grid_sizer_4, 0, wx.TOP, 5)
         grid_sizer_1.Add(grid_sizer_2, 1, 0, 0)
         sizer_2.Add(grid_sizer_1, 1, wx.ALL | wx.EXPAND, 20)
         grid_sizer_3.Add(self.rdbx_norm, 0, wx.TOP, 5)
@@ -217,36 +212,26 @@ class Audio_Conv(wx.Panel):
         grid_sizer_3.Add(self.spin_tp, 0, wx.TOP, 5)
         grid_sizer_3.Add(self.lab_lra, 0, wx.TOP, 10)
         grid_sizer_3.Add(self.spin_lra, 0, wx.TOP, 5)
-        #--------------------------------------------------------------
-        grid_sizer_3.Add((0, 55), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_3.Add((0, 55), 0, wx.EXPAND | wx.TOP, 5)
-        #sizer_4 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    #"Export Preferences")), wx.VERTICAL)
-        #sizer_4.Add(grid_sizer_5, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_sizer_5.Add(self.ckb_test, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        #grid_sizer_5.Add(self.label_sec, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        #grid_sizer_5.Add(self.spin_ctrl_test, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        #grid_sizer_3.Add(sizer_4, 0, wx.TOP|wx.BOTTOM, 20)
-        #--------------------------------------------------------------
+
         sizer_2.Add(grid_sizer_3, 1, wx.ALL | wx.EXPAND, 20)
         sizer_global.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 5)
         sizer_base.Add(sizer_global, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
         # Set tooltip:
-        #self.rdbx_norm.SetToolTip(_('Performs peak and RMS audio normalization '
-                                   #'on all imported audio files'
-                                           #))
         self.btn_param.SetToolTip(_("Enable advanced settings as audio "
                                     "bit-rate, audio channel and audio rate "
                                     "of the selected audio codec.")
                                               )
-        self.btn_analyzes.SetToolTip(_("Calculates the maximum and average "
-                                       "peak level in dB values")
+        self.btn_analyzes.SetToolTip(_("Find the maximum and average peak "
+                                       "levels in dB values and calculates"
+                                       "the normalization data offset")
                                               )
-        self.spin_amplitude.SetToolTip(_("Threshold for the maximum peak "
-                                    "level in dB values. The default setting "
-                                    "is -1.0 dB and is good for most of the "
-                                    "processes."))
+        self.spin_amplitude.SetToolTip(_("Limiter for the maximum peak "
+                                         "level in dB values. From -99.0 "
+                                         "to +0.0 dB, default is -1.0"))
+        self.spin_i.SetToolTip(_("From -70.0 to -5.0, default is -24.0"))
+        self.spin_tp.SetToolTip(_("From -9.0 to +0.0, default is -2.0"))
+        self.spin_lra.SetToolTip(_("From +1.0 to +20.0, default is +7.0"))
         
         #----------------------Binding (EVT)----------------------#
         self.cmbx_a.Bind(wx.EVT_COMBOBOX, self.audioFormats)
@@ -607,6 +592,13 @@ class Audio_Conv(wx.Panel):
         File existence verification procedures, overwriting control and 
         data redirecting .
         """
+        if self.cmbx_a.GetSelection() == 9:
+            if self.rdbx_norm.GetSelection() == 0:
+                wx.MessageBox(_('Not yet option selected for audio '
+                                'normalization.'),
+                                "Videomass", wx.ICON_INFORMATION)
+                return
+                
         # check normalization data offset, if enable.
         if self.rdbx_norm.GetSelection() == 1: # Norm RMS
             if self.btn_analyzes.IsEnabled():
