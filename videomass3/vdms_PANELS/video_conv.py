@@ -351,9 +351,6 @@ class Video_Conv(wx.Panel):
                                      majorDimension=0, 
                                      style=wx.RA_SPECIFY_ROWS,
                                             )
-        #self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
-                      #wx.ID_ANY, (_("Peak Level Normalization"))
-                                #)
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25),
@@ -584,7 +581,22 @@ class Video_Conv(wx.Panel):
         sizer_pane2_base.Add(grid_sizer_pane2_base, 1, wx.EXPAND, 0)
         self.notebook_1_pane_2.SetSizer(sizer_pane2_base)
         
-        grid_sizer_pane3_base.Add(self.rdb_a, 0, wx.ALL | wx.EXPAND, 15)
+        grid_a_param = wx.FlexGridSizer(2, 1, 20, 20)
+        grid_a_param.Add(self.rdb_a, 0, wx.ALL|
+                                            wx.ALIGN_CENTER_VERTICAL|
+                                            wx.ALIGN_CENTER_HORIZONTAL, 5
+                                            )
+        grid_a_ctrl = wx.FlexGridSizer(1, 2, 0, 0)
+        grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL|
+                                            wx.ALIGN_CENTER_VERTICAL|
+                                            wx.ALIGN_CENTER_HORIZONTAL, 5
+                        )
+        grid_a_ctrl.Add(self.txt_audio_options, 0, wx.ALL|
+                                                   wx.ALIGN_CENTER_VERTICAL|
+                                                   wx.ALIGN_CENTER_HORIZONTAL,5
+                        )
+        grid_a_param.Add(grid_a_ctrl)
+        grid_sizer_pane3_base.Add(grid_a_param, 1, wx.ALL, 15)
         grid_sizer_in_column2.Add(self.rdbx_normalize, 0, wx.TOP, 5)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_in_column2.Add(self.btn_analyzes, 0, wx.TOP, 10)
@@ -603,18 +615,11 @@ class Video_Conv(wx.Panel):
         
         sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.ALL, 15)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.ALL, 0)
-        grid_a_param = wx.FlexGridSizer(1, 2, 0, 0)
-        grid_a_param.Add(self.btn_aparam, 0, wx.ALL|
-                                             wx.ALIGN_CENTER_VERTICAL, 5
-                                             )
-        grid_a_param.Add(self.txt_audio_options, 0, wx.ALL|
-                                                    wx.ALIGN_CENTER_VERTICAL, 5
-                                                    )
-        grid_sizer_pane3_base.Add(grid_a_param, 0, wx.ALL, 10)
-        sizer_pane3_base.Add(grid_sizer_pane3_base, 1, 
-                                        wx.ALL | 
-                                        wx.ALIGN_CENTER_HORIZONTAL | 
-                                        wx.ALIGN_CENTER_VERTICAL, 15
+        sizer_pane3_base.Add(grid_sizer_pane3_base, 0, 
+                                        wx.ALL,
+                                        #wx.ALIGN_CENTER_HORIZONTAL,
+                                        #wx.ALIGN_CENTER_VERTICAL,
+                                        50
                                         )
         self.notebook_1_pane_3.SetSizer(sizer_pane3_base)
         
