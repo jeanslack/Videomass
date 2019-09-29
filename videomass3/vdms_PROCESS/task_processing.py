@@ -1153,13 +1153,12 @@ class EBU_Norm_DoublePass(Thread):
         Subprocess initialize thread.
         """
         global STATUS_ERROR
-        
-        
-        mod = ['Input Integrated:','Input True Peak:','Input LRA:',
-               'Input Threshold:','Output Integrated:','Output True Peak:',
-               'Output LRA:','Output Threshold:','Normalization Type:',
-               'Target Offset:']
-        
+        summary = {'Input Integrated:': None, 'Input True Peak:': None, 
+                   'Input LRA:': None, 'Input Threshold:': None, 
+                   'Output Integrated:': None, 'Output True Peak:': None, 
+                   'Output LRA:': None, 'Output Threshold:': None, 
+                   'Normalization Type:': None, 'Target Offset:': None
+                   }
         for (files,
              folders,
              duration,
@@ -1201,8 +1200,7 @@ class EBU_Norm_DoublePass(Thread):
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True) as p1:
-                    index = 0
-                    summary = dict()
+                    
                     for line in p1.stderr:
                         print (line, end=''),
                         wx.CallAfter(pub.sendMessage, 
@@ -1215,13 +1213,9 @@ class EBU_Norm_DoublePass(Thread):
                             p1.terminate()
                             break
                         
-                        if line.startswith(mod[index]):
-                            summary[line.split(':')[0]] =  (line.split(':')
-                                                           [1].strip())
-                            index += 1
-                            
-                        if index == 10:
-                            break
+                        for k in summary.keys():
+                            if line.startswith(k):
+                                summary[k] = line.split(':')[1].split()[0]
                         
                     if p1.wait(): # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage, 
@@ -1264,11 +1258,13 @@ class EBU_Norm_DoublePass(Thread):
             filters = ('%s:measured_I=%s:measured_LRA=%s:measured_TP=%s:'
                        'measured_thresh=%s:offset=%s:linear=true:dual_mono='
                        'true' %(self.passList[2],
-                                summary["Input Integrated"].split()[0], 
-                                summary["Input True Peak"].split()[0], 
-                                summary["Input LRA"].split()[0], 
-                                summary["Input Threshold"].split()[0], 
-                                summary["Target Offset"].split()[0]))
+                                summary["Input Integrated:"], 
+                                summary["Input True Peak:"], 
+                                summary["Input LRA:"], 
+                                summary["Input Threshold:"], 
+                                summary["Target Offset:"]
+                                )
+                       )
             time.sleep(.5)
             pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" %s '
                         '-pass 2 -af %s -y "%s/%s.%s"' % (self.ffmpeg_link, 
@@ -1301,8 +1297,6 @@ class EBU_Norm_DoublePass(Thread):
                                   universal_newlines=True) as p2:
                     
                     for line2 in p2.stderr:
-                        #sys.stdout.write(line)
-                        #sys.stdout.flush()
                         print (line2, end=''),
                         
                         wx.CallAfter(pub.sendMessage, 

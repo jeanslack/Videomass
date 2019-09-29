@@ -47,27 +47,27 @@ orange = '#f28924'
 greenolive = '#6aaf23'
 ciano = '#61ccc7' # rgb 97, 204, 199
 
-cmd_opt = {"AudioContainer":"MP3 [.mp3]", 
-           "AudioCodec":"-c:a libmp3lame", 
-           "AudioChannel":("",""), 
-           "AudioRate":("",""), 
-           "AudioDepth":("",""),
-           "AudioBitrate":("",""), 
-           "NormPEAK":"", 
-           "NormEBU":"",
-           "ExportExt":"mp3", 
-           "CodecCopied":[],
+cmd_opt = {"AudioContainer": "MP3 [.mp3]", 
+           "AudioCodec": "-c:a libmp3lame", 
+           "AudioChannel": ("",""), 
+           "AudioRate": ("",""), 
+           "AudioDepth": ("",""),
+           "AudioBitrate": ("",""), 
+           "NormPEAK": "", 
+           "NormEBU": "",
+           "ExportExt": "mp3", 
+           "CodecCopied": [],
            }
-acodecs = {("WAV [.wav]"):("-c:a pcm_s16le"),
-           ("AIFF [.aiff]"):("-c:a pcm_s16le"),
-           ("FLAC [.flac]"):("-c:a flac"),
-           ("OGG [.ogg]"):("-c:a libvorbis"),
-           ("MP3 [.mp3]"):("-c:a libmp3lame"),
-           ("AAC [.m4a]"):("-c:a aac"),
-           ("ALAC [.m4a]"):("-c:a alac"),
-           ("AC3 [.ac3]"):("-c:a ac3"),
-           (_("Extract audio stream from movies")):(""),
-           (_("Perform normalization only")):(""),
+acodecs = {("WAV [.wav]"): ("-c:a pcm_s16le"),
+           ("AIFF [.aiff]"): ("-c:a pcm_s16le"),
+           ("FLAC [.flac]"): ("-c:a flac"),
+           ("OGG [.ogg]"): ("-c:a libvorbis"),
+           ("MP3 [.mp3]"): ("-c:a libmp3lame"),
+           ("AAC [.m4a]"): ("-c:a aac"),
+           ("ALAC [.m4a]"): ("-c:a alac"),
+           ("AC3 [.ac3]"): ("-c:a ac3"),
+           (_("Extract audio stream from movies")): (""),
+           (_("Perform normalization only")): (""),
            }
 
 class Audio_Conv(wx.Panel):
@@ -228,7 +228,8 @@ class Audio_Conv(wx.Panel):
                                               )
         self.spin_amplitude.SetToolTip(_("Limiter for the maximum peak "
                                          "level in dB values. From -99.0 "
-                                         "to +0.0 dB, default is -1.0"))
+                                         "to +0.0 dB, default is -1.0")
+                                       )
         self.spin_i.SetToolTip(_("From -70.0 to -5.0, default is -24.0"))
         self.spin_tp.SetToolTip(_("From -9.0 to +0.0, default is -2.0"))
         self.spin_lra.SetToolTip(_("From +1.0 to +20.0, default is +7.0"))

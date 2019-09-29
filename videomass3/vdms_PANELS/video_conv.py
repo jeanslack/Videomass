@@ -41,70 +41,70 @@ from videomass3.vdms_DIALOGS import dialog_tools
 from videomass3.vdms_DIALOGS import shownormlist
 
 # Dictionary definition for command settings:
-cmd_opt = {"VidCmbxStr":"", "VideoFormat":"", "VideoCodec":"", 
-           "ext_input":"", "Passing":"single", "InputDir":"", 
-           "OutputDir":"",  "VideoSize":"", "VideoAspect":"", 
-           "VideoRate":"", "Presets":"", "Profile":"", 
-           "Tune":"", "Bitrate":"", "CRF":"", "Audio":"", 
-           "AudioCodec":"", "AudioChannel":["",""], 
-           "AudioRate":["",""], "AudioBitrate":["",""], 
-           "AudioDepth":["",""], "NormPEAK":"", "NormEBU":"",
-           "Deinterlace":"", "Interlace":"", "Map":"-map 0", 
-           "PixelFormat":"", "Orientation":["",""],"Crop":"",
-           "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
-           "Filters":"", "Shortest":[False,""], "AddAudioStream":"",
-           "PicturesFormat":"", "YUV":"",
+cmd_opt = {"VidCmbxStr": "", "VideoFormat": "", "VideoCodec": "", 
+           "ext_input": "", "Passing": "single", "InputDir": "", 
+           "OutputDir": "",  "VideoSize": "", "VideoAspect": "", 
+           "VideoRate": "", "Presets": "", "Profile": "", 
+           "Tune": "", "Bitrate": "", "CRF": "", "Audio": "", 
+           "AudioCodec": "", "AudioChannel": ["",""], 
+           "AudioRate": ["",""], "AudioBitrate": ["",""], 
+           "AudioDepth": ["",""], "NormPEAK": "", "NormEBU": "",
+           "Deinterlace": "", "Interlace": "", "Map": "-map 0", 
+           "PixelFormat": "", "Orientation": ["",""],"Crop": "",
+           "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
+           "Filters": "", "Shortest": [False,""], "AddAudioStream": "",
+           "PicturesFormat": "", "YUV": "",
            }
 # Namings in the video container selection combo box:
-vcodecs = {("AVI (XVID mpeg4)"):("-vcodec mpeg4 -vtag xvid","avi"), 
-            ("AVI (FFmpeg mpeg4)"):("-vcodec mpeg4","avi"), 
-            ("AVI (ITU h264)"):("-vcodec libx264","avi"),
-            ("MP4 (mpeg4)"):("-vcodec mpeg4","mp4"), 
-            ("MP4 (HQ h264/AVC)"):("-vcodec libx264","mp4"), 
-            ("M4V (HQ h264/AVC)"):("-vcodec libx264","m4v"), 
-            ("MKV (h264)"):("-vcodec libx264","mkv"),
-            ("OGG theora"):("-vcodec libtheora","ogg"), 
-            ("WebM (HTML5)"):("-vcodec libvpx","webm"), 
-            ("FLV (HQ h264/AVC)"):("-vcodec libx264","flv"),
-            (_("Copy video codec")):("-c:v copy",""),
+vcodecs = {("AVI (XVID mpeg4)"): ("-vcodec mpeg4 -vtag xvid","avi"), 
+            ("AVI (FFmpeg mpeg4)"): ("-vcodec mpeg4","avi"), 
+            ("AVI (ITU h264)"): ("-vcodec libx264","avi"),
+            ("MP4 (mpeg4)"): ("-vcodec mpeg4","mp4"), 
+            ("MP4 (HQ h264/AVC)"): ("-vcodec libx264","mp4"), 
+            ("M4V (HQ h264/AVC)"): ("-vcodec libx264","m4v"), 
+            ("MKV (h264)"): ("-vcodec libx264","mkv"),
+            ("OGG theora"): ("-vcodec libtheora","ogg"), 
+            ("WebM (HTML5)"): ("-vcodec libvpx","webm"), 
+            ("FLV (HQ h264/AVC)"): ("-vcodec libx264","flv"),
+            (_("Copy video codec")): ("-c:v copy",""),
             }
 # Namings in the audio format selection on audio radio box:
-acodecs = {('default'):(_("Default (managed by FFmpeg)"),''),
-           ('wav'):("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
-           ('flac'):("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
-           ('aac'):("Aac (Lossy, MultiChannel)", "-c:a aac"), 
-           ('m4v'):("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
-           ('ac3'):("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
-           ('ogg'):("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
-           ('mp3'):("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
-           ('copy'):(_("Try to copy audio source"), "-c:a copy"),
-           ('silent'):(_("No audio stream (silent)"), "-an")
+acodecs = {('default'): (_("Default (managed by FFmpeg)"),''),
+           ('wav'): ("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
+           ('flac'): ("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
+           ('aac'): ("Aac (Lossy, MultiChannel)", "-c:a aac"), 
+           ('m4v'): ("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
+           ('ac3'): ("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
+           ('ogg'): ("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
+           ('mp3'): ("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
+           ('copy'): (_("Try to copy audio source"), "-c:a copy"),
+           ('silent'): (_("No audio stream (silent)"), "-an")
            }
 # compatibility between video formats and related audio codecs:
-av_formats = {('avi'):('default','wav',None,None,None,'ac3',None,'mp3',
+av_formats = {('avi'): ('default','wav',None,None,None,'ac3',None,'mp3',
                        'copy','silent'),
-              ('flv'):('default',None,None,'aac',None,'ac3',None,'mp3',
+              ('flv'): ('default',None,None,'aac',None,'ac3',None,'mp3',
                        'copy','silent'),
-              ('mp4'):('default',None,None,'aac',None,'ac3',None,'mp3',
+              ('mp4'): ('default',None,None,'aac',None,'ac3',None,'mp3',
                        'copy','silent'),
-              ('m4v'):('default',None,None,'aac','alac',None,None,None,
+              ('m4v'): ('default',None,None,'aac','alac',None,None,None,
                        'copy','silent'),
-              ('mkv'):('default','wav','flac','aac',None,'ac3','ogg','mp3',
+              ('mkv'): ('default','wav','flac','aac',None,'ac3','ogg','mp3',
                        'copy','silent'),
-              ('webm'):('default',None,None,None,None,None,'ogg',None,
+              ('webm'): ('default',None,None,None,None,None,'ogg',None,
                         'copy','silent'),
-              ('ogg'):('default',None,'flac',None,None,None,'ogg',None,
+              ('ogg'): ('default',None,'flac',None,None,None,'ogg',None,
                        'copy','silent')
               }
 # presets used by x264 an h264:
-x264_opt = {("Presets"):("Disabled","ultrafast","superfast",
+x264_opt = {("Presets"): ("Disabled","ultrafast","superfast",
                        "veryfast","faster","fast","medium",
                        "slow","slower","veryslow","placebo"
                        ), 
-            ("Profiles"):("Disabled","baseline","main","high",
+            ("Profiles"): ("Disabled","baseline","main","high",
                        "high10","high444"
                        ),
-            ("Tunes"):("Disabled","film","animation","grain",
+            ("Tunes"): ("Disabled","film","animation","grain",
                     "stillimage","psnr","ssim","fastecode",
                     "zerolatency"
                     )
@@ -177,6 +177,7 @@ class Video_Conv(wx.Panel):
                                             (_("Pictures from video")), 
                                             (_("Add audio to video")), 
                                             (_("Picture slideshow maker")),
+                                            (_("Extract audio from movies")),
                                                                 ], 
                                     majorDimension=0, 
                                     style=wx.RA_SPECIFY_ROWS
@@ -708,6 +709,9 @@ class Video_Conv(wx.Panel):
                                         "peak level in dB values. From -99.0 "
                                         "to +0.0 dB, default is -1.0"
                                                  ))
+        self.spin_i.SetToolTip(_("From -70.0 to -5.0, default is -24.0"))
+        self.spin_tp.SetToolTip(_("From -9.0 to +0.0, default is -2.0"))
+        self.spin_lra.SetToolTip(_("From +1.0 to +20.0, default is +7.0"))
         self.rdb_a.SetToolTip(_("Choose an audio codec. Some audio codecs "
                                 "are disabled for certain video containers"
                                 ))
@@ -983,6 +987,10 @@ class Video_Conv(wx.Panel):
             self.Layout()
             
             return
+        ####----------- Extract audio from video
+        elif self.rdb_auto.GetSelection() == 4:
+            print('goodbye pork pie hat')
+            
         #-------------- on EXIT first revert to default --------------#
         self.btn_audioAdd.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_audioAdd.SetLabel(_("Add audio track"))
@@ -1491,20 +1499,23 @@ class Video_Conv(wx.Panel):
         Enable or disable functionality for volume normalization of
         the video.
         """
-        msg = (_('Tip: set a target level and check peak level with the '
+        msg_1 = (_('Tip: set a target level and check peak level with the '
                  '"Volumedetect" control'))
+        msg_2 = (_('Normalization the perceived loudness using the "​loudnorm" '
+                   'filter, which implements the EBU R128 algorithm'))
         if self.rdbx_normalize.GetSelection() == 1:# is checked
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg, azure)
+            self.parent.statusbar_msg(msg_1, azure)
             self.btn_analyzes.Show(), self.spin_amplitude.Show()
             self.lab_amplitude.Show()
         
         elif self.rdbx_normalize.GetSelection() == 2:
+            self.parent.statusbar_msg(msg_2, '#268826')
             self.normalize_default(False)
             self.lab_i.Show(), self.lab_tp.Show(), self.lab_lra.Show(),
             self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
 
-        elif self.rdbx_normalize.GetSelection() == (0):# is not checked
+        else:
             self.parent.statusbar_msg(_("Disable audio normalization"), None)
             self.normalize_default(False)
 
@@ -1663,7 +1674,7 @@ class Video_Conv(wx.Panel):
 
         """
         # check normalization data offset, if enable
-        if self.rdbx_normalize.GetSelection(1):
+        if self.rdbx_normalize.GetSelection() == 1:
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_('Peak values not detected! use the '
                                 '"Volumedetect" button before proceeding, '
