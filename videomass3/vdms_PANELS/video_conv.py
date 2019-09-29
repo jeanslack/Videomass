@@ -659,7 +659,7 @@ class Video_Conv(wx.Panel):
                                            'normalization on the audio stream'
                                            ))
         self.btn_analyzes.SetToolTip(_("Find the maximum and average peak "
-                                       "levels in dB values and calculates"
+                                       "levels in dB values and calculates "
                                        "the normalization data offset"
                                        ))
         self.spin_ctrl_audionormalize.SetToolTip(_("Limiter for the maximum "

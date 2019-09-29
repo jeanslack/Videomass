@@ -223,7 +223,7 @@ class Audio_Conv(wx.Panel):
                                     "of the selected audio codec.")
                                               )
         self.btn_analyzes.SetToolTip(_("Find the maximum and average peak "
-                                       "levels in dB values and calculates"
+                                       "levels in dB values and calculates "
                                        "the normalization data offset")
                                               )
         self.spin_amplitude.SetToolTip(_("Limiter for the maximum peak "

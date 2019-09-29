@@ -1234,6 +1234,7 @@ class EBU_Norm_DoublePass(Thread):
                                  "Exit status: %s" % p1.wait(),
                                  self.logname)
                                  #append exit error number
+                        break
                     
             except OSError as err:
                 e = "%s\n  %s" % (err, not_exist_msg)
@@ -1259,7 +1260,6 @@ class EBU_Norm_DoublePass(Thread):
                              fname='',
                              end='ok'
                              )
-                
             #--------------- second pass ----------------#
             filters = ('%s:measured_I=%s:measured_LRA=%s:measured_TP=%s:'
                        'measured_thresh=%s:offset=%s:linear=true:dual_mono='

@@ -116,7 +116,7 @@ def system_check():
                 IS_LOCAL = False
                 
     #--------------------------------------------#
-    #### check videomass.conf and config. folder #
+    #### check videomass.conf and configuration folder #
     #--------------------------------------------#
     copyerr = False
     existfileconf = True # file conf esiste (True) o non esiste (False)
