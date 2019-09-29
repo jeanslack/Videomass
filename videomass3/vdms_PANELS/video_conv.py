@@ -48,7 +48,7 @@ cmd_opt = {"VidCmbxStr":"", "VideoFormat":"", "VideoCodec":"",
            "Tune":"", "Bitrate":"", "CRF":"", "Audio":"", 
            "AudioCodec":"", "AudioChannel":["",""], 
            "AudioRate":["",""], "AudioBitrate":["",""], 
-           "AudioDepth":["",""], "Normalize":"", 
+           "AudioDepth":["",""], "NormPEAK":"", "NormEBU":"",
            "Deinterlace":"", "Interlace":"", "Map":"-map 0", 
            "PixelFormat":"", "Orientation":["",""],"Crop":"",
            "Scale":"", "Setdar":"", "Setsar":"", "Denoiser":"", 
@@ -125,7 +125,8 @@ class Video_Conv(wx.Panel):
     def __init__(self, parent, ffmpeg_link, ffplay_link, ffprobe_link, 
                  threads, cpu_used, ffmpeg_loglev, ffplay_loglev, OS, 
                  iconplay, iconreset, iconresize, iconcrop, iconrotate, 
-                 icondeinterlace, icondenoiser, iconanalyzes, iconsettings):
+                 icondeinterlace, icondenoiser, iconanalyzes, iconsettings,
+                 iconpeaklevel):
 
         wx.Panel.__init__(self, parent)
 
@@ -172,9 +173,9 @@ class Video_Conv(wx.Panel):
                                                         )
         self.rdb_auto = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                    (_("Automations")), choices=[
-                                            (_("Default (clear all)")), 
-                                            (_("Pictures from Video")), 
-                                            (_("Add audio stream to a movie")), 
+                                            (_("Disable")), 
+                                            (_("Pictures from video")), 
+                                            (_("Add audio to video")), 
                                             (_("Picture slideshow maker")),
                                                                 ], 
                                     majorDimension=0, 
@@ -339,44 +340,77 @@ class Video_Conv(wx.Panel):
             if not v:#disable only not compatible with mkv 
                 self.rdb_a.EnableItem(n,enable=False
                                       )
-        self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
-                      wx.ID_ANY, (_("Peak Level Normalization"))
-                                )
+        self.rdbx_normalize = wx.RadioBox(self.notebook_1_pane_3,wx.ID_ANY,
+                                     (_("Audio Normalization")), 
+                                     choices=[
+                                     (_('Disable')), 
+                                     (_('Peak Level Normalization')), 
+                                     (_('Loudness Normalization (EBU R128)')),
+                                              ], 
+                                     majorDimension=0, 
+                                     style=wx.RA_SPECIFY_ROWS,
+                                            )
+        #self.ckbx_a_normalize = wx.CheckBox(self.notebook_1_pane_3, 
+                      #wx.ID_ANY, (_("Peak Level Normalization"))
+                                #)
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25),
                                             bitmap=analyzebmp,
                                             label=_("Volumedetect"))
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    foregroundcolour=wx.Colour(165,165, 165))
+                                    foregroundcolour=wx.Colour(28,28, 28))
         self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
+        peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
         self.btn_details = GB.GradientButton(self.notebook_1_pane_3,
-                                            #size=(-1,25),
-                                            #bitmap=analyzebmp,
+                                            size=(-1,25),
+                                            bitmap=peaklevelbmp,
                                             label=_("Peak levels index"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    foregroundcolour=wx.Colour(165,165, 165))
+                                    foregroundcolour=wx.Colour(28,28, 28))
         self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_details.SetBottomStartColour(wx.Colour(205, 235, 222))
         self.btn_details.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
-        self.label_normalize = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
+        self.lab_amplitude = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
                                     (_("Target level (dB level limiter)"))
                                     )
-        self.spin_ctrl_audionormalize = FS.FloatSpin(self.notebook_1_pane_3, 
+        self.spin_amplitude = FS.FloatSpin(self.notebook_1_pane_3, 
                                                      wx.ID_ANY, 
                                                      min_val=-99.0, 
                                                      max_val=0.0, 
                                                      increment=1.0, value=-1.0, 
                                             agwStyle=FS.FS_LEFT, size=(-1,-1)
                                             )
-        self.spin_ctrl_audionormalize.SetFormat("%f")
-        self.spin_ctrl_audionormalize.SetDigits(1)
+        self.spin_amplitude.SetFormat("%f"), self.spin_amplitude.SetDigits(1)
+        self.lab_i = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, (
+                             _("Set integrated loudness target:")))
+        self.spin_i = FS.FloatSpin(self.notebook_1_pane_3, wx.ID_ANY, 
+                                   min_val=-70.0, max_val=-5.0, 
+                                   increment=0.5, value=-24.0, 
+                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
+        self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
+        
+        self.lab_tp = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, (
+                                    _("Set maximum true peak:")))
+        self.spin_tp = FS.FloatSpin(self.notebook_1_pane_3, wx.ID_ANY, 
+                                    min_val=-9.0, max_val=0.0,
+                                    increment=0.5, value=-2.0, 
+                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
+        self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
+        
+        self.lab_lra = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, (
+                                    _("Set loudness range target:")))
+        self.spin_lra = FS.FloatSpin(self.notebook_1_pane_3, wx.ID_ANY,
+                                     min_val=1.0, max_val=20.0, 
+                                     increment=0.5, value=7.0, 
+                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
+        self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
         self.btn_aparam = GB.GradientButton(self.notebook_1_pane_3,
@@ -413,14 +447,14 @@ class Video_Conv(wx.Panel):
                                         style=wx.RA_SPECIFY_ROWS
                                          )
         #----------------------Build Layout----------------------#
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        self.sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
         sizer_pane4_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane4_base = wx.GridSizer(1, 3, 0, 0)
         sizer_pane3_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane3_base = wx.FlexGridSizer(2, 2, 0, 0)
         sizer_pane3_audio_column2 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_in_column2 = wx.FlexGridSizer(4, 2, 0, 0)
+        grid_sizer_in_column2 = wx.FlexGridSizer(7, 2, 0, 0)
         #sizer_pane3_audio_column1 = wx.BoxSizer(wx.VERTICAL)
         sizer_pane2_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_pane2_base = wx.GridSizer(1, 2, 0, 0)
@@ -550,14 +584,22 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_2.SetSizer(sizer_pane2_base)
         
         grid_sizer_pane3_base.Add(self.rdb_a, 0, wx.ALL | wx.EXPAND, 15)
-        grid_sizer_in_column2.Add(self.ckbx_a_normalize, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.rdbx_normalize, 0, wx.TOP, 5)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_in_column2.Add(self.btn_analyzes, 0, wx.TOP, 10)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_in_column2.Add(self.btn_details, 0, wx.TOP, 10)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_in_column2.Add(self.label_normalize, 0, wx.TOP, 10)
-        grid_sizer_in_column2.Add(self.spin_ctrl_audionormalize, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.lab_amplitude, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.spin_amplitude, 0, wx.TOP, 5)
+        
+        grid_sizer_in_column2.Add(self.lab_i, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.spin_i, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.lab_tp, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.spin_tp, 0, wx.TOP, 5)
+        grid_sizer_in_column2.Add(self.lab_lra, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.spin_lra, 0, wx.TOP, 5)
+        
         sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.ALL, 15)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.ALL, 0)
         grid_a_param = wx.FlexGridSizer(1, 2, 0, 0)
@@ -605,8 +647,8 @@ class Video_Conv(wx.Panel):
         grid_sizer_base.AddGrowableRow(0)
         grid_sizer_base.AddGrowableRow(1)
         grid_sizer_base.AddGrowableCol(0)
-        sizer_base.Add(self.panel_base, 1, wx.EXPAND, 0)
-        self.SetSizer(sizer_base)
+        self.sizer_base.Add(self.panel_base, 1, wx.EXPAND, 0)
+        self.SetSizer(self.sizer_base)
         self.Layout()
         
         #----------------------Set Properties----------------------#
@@ -655,14 +697,14 @@ class Video_Conv(wx.Panel):
                     "countries (like Italy) are 25. Leave on 'Default' "
                     "to copy the original settings."
                                    ))
-        self.ckbx_a_normalize.SetToolTip(_('Performs peak level audio '
-                                           'normalization on the audio stream'
-                                           ))
+        #self.rdbx_normalize.SetToolTip(_('Performs peak level audio '
+                                    #'normalization on the audio stream'
+                                           #))
         self.btn_analyzes.SetToolTip(_("Find the maximum and average peak "
                                        "levels in dB values and calculates "
                                        "the normalization data offset"
                                        ))
-        self.spin_ctrl_audionormalize.SetToolTip(_("Limiter for the maximum "
+        self.spin_amplitude.SetToolTip(_("Limiter for the maximum "
                                         "peak level in dB values. From -99.0 "
                                         "to +0.0 dB, default is -1.0"
                                                  ))
@@ -698,7 +740,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_Vrate)
         self.Bind(wx.EVT_RADIOBOX, self.on_AudioFormats, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
-        self.Bind(wx.EVT_CHECKBOX, self.onNormalize, self.ckbx_a_normalize)
+        self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_analyzes)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Presets, self.rdb_h264preset)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Profiles, self.rdb_h264profile)
@@ -775,25 +817,29 @@ class Video_Conv(wx.Panel):
         self.btn_aparam.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.txt_audio_options.SetValue('')
-        self.ckbx_a_normalize.Enable()
+        #self.rdbx_normalize.Enable()
     #-------------------------------------------------------------------#
-    def normalize_default(self):
+    def normalize_default(self, setoff=True):
         """
         Set default normalization parameters of the audio panel. This method 
         is called by preset_manager.switch_video_conv() on first run and
         switch in this panel, or if there are changing on dragNdrop panel,
         (when make a clear file list or append new file), or if change video 
         container in the combobox.
+        
         """
-        self.ckbx_a_normalize.SetValue(False)
-        self.btn_analyzes.Disable() 
-        self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
-        self.spin_ctrl_audionormalize.Disable()
-        self.spin_ctrl_audionormalize.SetValue(-1.0)
-        self.btn_details.Disable()
-        self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
-        self.label_normalize.Disable()
-        cmd_opt["Normalize"] = ""
+        if setoff:
+            self.rdbx_normalize.SetSelection(0)
+        if not self.btn_analyzes.IsEnabled():
+                self.btn_analyzes.Enable()
+        
+        self.btn_analyzes.Hide()
+        self.spin_amplitude.Hide(), self.spin_amplitude.SetValue(-1.0)
+        self.btn_details.Hide(), self.lab_amplitude.Hide() 
+        self.lab_i.Hide(), self.lab_tp.Hide(), self.lab_lra.Hide() 
+        self.spin_i.Hide(), self.spin_tp.Hide(), self.spin_lra.Hide()
+        self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
+        cmd_opt["NormPEAK"], cmd_opt["NormEBU"] = "", ""
         del self.normdetails[:]
     
     #----------------------Event handler (callback)----------------------#
@@ -855,9 +901,9 @@ class Video_Conv(wx.Panel):
         msg_2 = (_('Tip: use the "Duration" tool, then try setting '
                    'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'
                    ))
-        msg_3 = (_('Tip: Use "Copy source video codec" and "Try to copy '
-                   'the source" of the audio file to speed up the process '
-                     'without re-encoding all'
+        msg_3 = (_('Tip: If audio format is supported by video format, use '
+                   'audio and video copy options to speed up the process '
+                   'without re-encoding all'
                    ))
         msg_4 = (_('Tip: Import pictures ONLY (preferably in the same format), '
                    'then use the "Duration" tool to set pictures duration. '
@@ -1000,6 +1046,7 @@ class Video_Conv(wx.Panel):
                                                pathname.rsplit('.', 1)[1]))
         self.notebook_1_pane_3.Enable()
         cmd_opt["Map"] = "-map 0:v:0 -map 1:a:0"
+        self.normalize_default()
 
         if self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
             self.on_Shortest(self)
@@ -1328,9 +1375,9 @@ class Video_Conv(wx.Panel):
             cmd_opt["AudioDepth"] = ["",""]
 
             if enablenormalization:
-                self.ckbx_a_normalize.Enable()
+                self.rdbx_normalize.Enable()
             else:
-                self.ckbx_a_normalize.Disable()
+                self.rdbx_normalize.Disable()
             if enablebuttonparameters:
                 self.btn_aparam.Enable()
                 self.txt_audio_options.SetValue('')
@@ -1346,7 +1393,7 @@ class Video_Conv(wx.Panel):
             if audioformat in n[0]:
                 if audioformat == _("Default (managed by FFmpeg)"):
                     self.audio_default()
-                    self.ckbx_a_normalize.Enable()
+                    self.rdbx_normalize.Enable()
 
                 elif audioformat == _("Try to copy audio source"):
                     self.normalize_default()
@@ -1445,26 +1492,23 @@ class Video_Conv(wx.Panel):
         the video.
         """
         msg = (_('Tip: set a target level and check peak level with the '
-                 '"Volumedetect" button'))
-        if self.ckbx_a_normalize.GetValue():# is checked
+                 '"Volumedetect" control'))
+        if self.rdbx_normalize.GetSelection() == 1:# is checked
+            self.normalize_default(False)
             self.parent.statusbar_msg(msg, azure)
-            self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
-            self.btn_analyzes.Enable(), self.spin_ctrl_audionormalize.Enable()
-            self.label_normalize.Enable()
-            #cmd_opt["Map"] = '-map 0'
+            self.btn_analyzes.Show(), self.spin_amplitude.Show()
+            self.lab_amplitude.Show()
+        
+        elif self.rdbx_normalize.GetSelection() == 2:
+            self.normalize_default(False)
+            self.lab_i.Show(), self.lab_tp.Show(), self.lab_lra.Show(),
+            self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
 
-        elif not self.ckbx_a_normalize.GetValue():# is not checked
+        elif self.rdbx_normalize.GetSelection() == (0):# is not checked
             self.parent.statusbar_msg(_("Disable audio normalization"), None)
-            self.spin_ctrl_audionormalize.SetValue(-1.0)
-            self.label_normalize.Disable()
-            self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
-            self.btn_analyzes.Disable(), self.spin_ctrl_audionormalize.Disable()
-            self.btn_details.SetForegroundColour(wx.Colour(165,165, 165))
-            self.btn_details.Disable()
+            self.normalize_default(False)
 
-            #cmd_opt["Map"] = ''
-        cmd_opt["Normalize"] = ""
-        del self.normdetails[:]
+        self.notebook_1_pane_3.Layout()
         
     #------------------------------------------------------------------#
     def on_Audio_analyzes(self, event):  # analyzes button
@@ -1487,7 +1531,7 @@ class Video_Conv(wx.Panel):
         
         self.parent.statusbar_msg("",None)
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
-        normalize = self.spin_ctrl_audionormalize.GetValue()
+        normalize = self.spin_amplitude.GetValue()
 
         data = volumeDetectProcess(self.ffmpeg_link, 
                                    file_sources, 
@@ -1527,11 +1571,12 @@ class Video_Conv(wx.Panel):
             else:
                 self.parent.statusbar_msg(msg2, yellow)
                 
-        cmd_opt["Normalize"] = volume
+        cmd_opt["NormPEAK"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
-        self.btn_details.Enable()
-        self.btn_details.SetForegroundColour(wx.Colour(28,28,28))
+        self.btn_details.Show()
+        self.notebook_1_pane_3.Layout()
+        #self.btn_details.SetForegroundColour(wx.Colour(28,28,28))
 
     #------------------------------------------------------------------#
     def on_Show_normlist(self, event):
@@ -1618,15 +1663,14 @@ class Video_Conv(wx.Panel):
 
         """
         # check normalization data offset, if enable
-        if self.ckbx_a_normalize.IsChecked():
+        if self.rdbx_normalize.GetSelection(1):
             if self.btn_analyzes.IsEnabled():
                 wx.MessageBox(_('Peak values not detected! use the '
                                 '"Volumedetect" button before proceeding, '
                                 'otherwise disable audio normalization.'),
                                 'Videomass', wx.ICON_INFORMATION)
                 return
-        if (self.rdb_auto.GetStringSelection() == 
-                                           _("Add audio stream to a movie")):
+        if self.rdb_auto.GetSelection() == 2:
             if not cmd_opt["AddAudioStream"]:
                 wx.MessageBox(_('To add audio stream to a movie please '
                                 'import an audio track with "Add audio track" '
@@ -1709,7 +1753,7 @@ class Video_Conv(wx.Panel):
                                            command, 
                                            None, 
                                            self.ffmpeg_link,
-                                           cmd_opt["Normalize"], 
+                                           cmd_opt["NormPEAK"], 
                                            logname, 
                                            countmax,
                                            cmd_opt["Shortest"][0],
@@ -1754,7 +1798,7 @@ class Video_Conv(wx.Panel):
                                            None, 
                                            [pass1, pass2], 
                                            self.ffmpeg_link,
-                                           cmd_opt["Normalize"], 
+                                           cmd_opt["NormPEAK"], 
                                            logname, 
                                            countmax, 
                                            cmd_opt["Shortest"][0],
@@ -1791,7 +1835,7 @@ class Video_Conv(wx.Panel):
                                            command, 
                                            None, 
                                            self.ffmpeg_link,
-                                           cmd_opt["Normalize"], 
+                                           cmd_opt["NormPEAK"], 
                                            logname, 
                                            countmax, 
                                            cmd_opt["Shortest"][0],
@@ -1974,7 +2018,7 @@ class Video_Conv(wx.Panel):
         dictionary values before send to epilogue
         """
         numfile = _("%s file in pending") % str(countmax)
-        if cmd_opt["Normalize"]:
+        if cmd_opt["NormPEAK"]:
             normalize = _('Enable')
         else:
             normalize = _('Disable')
@@ -2016,11 +2060,11 @@ class Video_Conv(wx.Panel):
         elif prof[0] == "Slideshow":
             formula = (_("SUMMARY\n\nPictures imported\nVideo Format\
                         \nResolution (size)\nCFR\nPreset h/x 264\
-                        \nProfile h/x 264\nTune h/x 264\nAudio stream added\
-                        \nAudio Format\nAudio Codec\nAudio Channels\
-                        \nAudio Rate\nAudio bit-rate\nBit per Sample\
-                        \nAudio Normalization\nMap\nPictures Timing\
-                        \nEnable stopping to shortest")
+                        \nProfile h/x 264\nTune h/x 264\nVideo Rate\
+                        \nAudio stream added\nAudio Format\nAudio Codec\
+                        \nAudio Channels\nAudio Rate\nAudio bit-rate\
+                        \nBit per Sample\nAudio Normalization\nMap\
+                        \nPictures Timing\nEnable stopping to shortest")
                         )
             if cmd_opt["Scale"]:
                 res = cmd_opt["Scale"].split('=')
@@ -2093,8 +2137,8 @@ class Video_Conv(wx.Panel):
         get = wx.GetApp()
         dirconf = os.path.join(get.DIRconf, 'vdms')
         
-        if cmd_opt["Normalize"]:
-            normalize = cmd_opt["Normalize"][0]
+        if cmd_opt["NormPEAK"]:
+            normalize = cmd_opt["NormPEAK"][0]
         else:
             normalize = ''
         

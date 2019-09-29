@@ -53,7 +53,7 @@ cmd_opt = {"AudioContainer":"MP3 [.mp3]",
            "AudioRate":("",""), 
            "AudioDepth":("",""),
            "AudioBitrate":("",""), 
-           "NormRMS":"", 
+           "NormPEAK":"", 
            "NormEBU":"",
            "ExportExt":"mp3", 
            "CodecCopied":[],
@@ -77,7 +77,7 @@ class Audio_Conv(wx.Panel):
     """
     def __init__(self, parent, ffmpeg_link, threads, 
                  cpu_used, ffmpeg_loglev, ffprobe_link, OS,
-                 iconanalyzes, iconsettings):
+                 iconanalyzes, iconsettings, iconpeaklevel):
 
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
@@ -117,7 +117,7 @@ class Audio_Conv(wx.Panel):
                                           )
         self.rdbx_norm = wx.RadioBox(self,wx.ID_ANY,(_("Audio Normalization")), 
                                      choices=[
-                                     (_('Off')), 
+                                     (_('Disable')), 
                                      (_('Peak Level Normalization')), 
                                      (_('Loudness Normalization (EBU R128)')),
                                               ], 
@@ -136,9 +136,10 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
         
+        peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
         self.btn_details = GB.GradientButton(self,
-                                            #size=(-1,25),
-                                            #bitmap=analyzebmp,
+                                            size=(-1,25),
+                                            bitmap=peaklevelbmp,
                                             label=_("Peak levels index"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28,28))
@@ -154,7 +155,6 @@ class Audio_Conv(wx.Panel):
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_amplitude.SetFormat("%f"), self.spin_amplitude.SetDigits(1)
         
-        #------------p1
         self.lab_i = wx.StaticText(self, wx.ID_ANY, (
                              _("Set integrated loudness target:")))
         self.spin_i = FS.FloatSpin(self, wx.ID_ANY, min_val=-70.0, 
@@ -175,7 +175,7 @@ class Audio_Conv(wx.Panel):
                                     max_val=20.0, increment=0.5, value=7.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
-        #------------p1
+        
         #----------------------Set Properties----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_global = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -258,7 +258,7 @@ class Audio_Conv(wx.Panel):
         self.spin_amplitude.Hide(), self.spin_amplitude.SetValue(-1.0)
         self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
         self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
-        cmd_opt["NormRMS"], cmd_opt["NormEBU"] = "", ""
+        cmd_opt["NormPEAK"], cmd_opt["NormEBU"] = "", ""
         del self.normdetails[:]
         
     #----------------------Event handler (callback)----------------------#
@@ -446,7 +446,7 @@ class Audio_Conv(wx.Panel):
         
         """
         msg_1 = (_('Tip: set a target level and check peak level with the '
-                 '"Volumedetect" button'))
+                 '"Volumedetect" control'))
         msg_2 = (_('Normalization the perceived loudness using the "​loudnorm" '
                    'filter, which implements the EBU R128 algorithm'))
         if self.rdbx_norm.GetSelection() == 1: # RMS
@@ -457,7 +457,7 @@ class Audio_Conv(wx.Panel):
             self.lab_amplitude.Show()
             self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
             self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
-            cmd_opt["NormRMS"], cmd_opt["NormEBU"] = "", ""
+            cmd_opt["NormPEAK"], cmd_opt["NormEBU"] = "", ""
             del self.normdetails[:]
             
         elif self.rdbx_norm.GetSelection() == 2: # EBU
@@ -466,7 +466,7 @@ class Audio_Conv(wx.Panel):
             self.spin_amplitude.Hide(), self.btn_details.Hide()
             self.lab_i.Show(), self.spin_i.Show(), self.lab_lra.Show(),
             self.spin_lra.Show(), self.lab_tp.Show(), self.spin_tp.Show()
-            cmd_opt["NormRMS"], cmd_opt["NormEBU"] = "", ""
+            cmd_opt["NormPEAK"], cmd_opt["NormEBU"] = "", ""
 
         else: # usually it is 0
             self.parent.statusbar_msg(_("Audio normalization disabled"), None)
@@ -548,7 +548,7 @@ class Audio_Conv(wx.Panel):
             else:
                 self.parent.statusbar_msg(msg2, yellow)
                 
-        cmd_opt["NormRMS"] = volume
+        cmd_opt["NormPEAK"] = volume
         self.btn_analyzes.Disable(), self.btn_details.Show()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
         self.Layout()
@@ -669,7 +669,7 @@ class Audio_Conv(wx.Panel):
                                            command, 
                                            None, 
                                            self.ffmpeg_link,
-                                           cmd_opt["NormRMS"], 
+                                           cmd_opt["NormPEAK"], 
                                            logname, 
                                            countmax, 
                                            False,# do not use is reserved
@@ -701,7 +701,7 @@ class Audio_Conv(wx.Panel):
                                            command,
                                            None,
                                            self.ffmpeg_link,
-                                           cmd_opt["NormRMS"],
+                                           cmd_opt["NormPEAK"],
                                            logname, 
                                            countmax,
                                            False,# do not use is reserved
@@ -828,7 +828,7 @@ class Audio_Conv(wx.Panel):
         dictionary values before send at epilogue
         """
         numfile = _("%s file in pending") % str(countmax)
-        if cmd_opt["NormRMS"]:
+        if cmd_opt["NormPEAK"]:
             normalize = _('RMS')
         elif cmd_opt["NormEBU"]:
             normalize = _('EBU R128')
@@ -889,8 +889,8 @@ class Audio_Conv(wx.Panel):
         get = wx.GetApp()
         dirconf = os.path.join(get.DIRconf, 'vdms')
         
-        if cmd_opt["NormRMS"]:
-            normalize = cmd_opt["NormRMS"][0]# tengo il primo valore lista
+        if cmd_opt["NormPEAK"]:
+            normalize = cmd_opt["NormPEAK"][0]# tengo il primo valore lista
         else:
             normalize = ''
         

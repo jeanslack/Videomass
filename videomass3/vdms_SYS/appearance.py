@@ -140,6 +140,7 @@ class Appearance(object):
         ic_denoiser = '%s/denoiser.png' % self.x18
         ic_analyzes = '%s/analyzes.png' % self.x18
         ic_settings = '%s/settings.png' % self.x18
+        ic_peaklevel = '%s/peaklevel.png' % self.x18
         
         return [os.path.join(norm) for norm in [self.videomass_icon, # 0
                                                 icon_presets, # 1
@@ -165,6 +166,7 @@ class Appearance(object):
                                                 ic_analyzes, # 21
                                                 ic_settings, # 22
                                                 self.wizard_icon, # 23
+                                                ic_peaklevel, # 24
                                                 ]]
             
         

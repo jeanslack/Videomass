@@ -229,6 +229,7 @@ class MainFrame(wx.Frame):
                                                 pathicons[20],# icon ic_denoiser
                                                 pathicons[21],# icon analyzes
                                                 pathicons[22],# icon settings
+                                                pathicons[24],# icon peaklevel
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, 
                                                 self.ffmpeg_link, 
@@ -239,6 +240,7 @@ class MainFrame(wx.Frame):
                                                 self.OS,
                                                 pathicons[21],# icon analyzes
                                                 pathicons[22],# icon settings
+                                                pathicons[24],# icon peaklevel
                                                 )
 
         self.DnD = dragNdrop.DnDPanel(self, self.ffprobe_link) # dragNdrop panel
