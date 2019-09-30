@@ -1885,13 +1885,9 @@ class Video_Conv(wx.Panel):
         loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %( 
                                               str(self.spin_i.GetValue()),
                                               str(self.spin_tp.GetValue()),
-                                              str(self.spin_lra.GetValue()),)
-                      )
+                                              str(self.spin_lra.GetValue()),))
+        
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            ext_list = []
-            for x in file_sources:
-                ext_list.append(os.path.basename(x).rsplit('.', 1)[1])
-                
             cmd_1 = ('%s %s %s %s %s %s %s %s' %(cmd_opt["AddAudioStream"],
                                                  cmd_opt["VideoCodec"], 
                                                  cmd_opt["VideoAspect"],
@@ -1926,7 +1922,7 @@ class Video_Conv(wx.Panel):
                                            file_sources, 
                                            '', 
                                            dir_destin, 
-                                           ext_list, 
+                                           cmd_opt["VideoFormat"], 
                                            [pass1,pass2,loudfilter,None], 
                                            '',
                                            '', 
@@ -1940,26 +1936,41 @@ class Video_Conv(wx.Panel):
                 
         elif cmd_opt["Passing"] == "double":
             cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
-                      cmd_opt["AddAudioStream"], cmd_opt["VideoCodec"], 
-                      cmd_opt["Bitrate"], cmd_opt["Presets"], 
-                      cmd_opt["Profile"], cmd_opt["Tune"], 
-                      cmd_opt["VideoAspect"], cmd_opt["VideoRate"], 
-                      cmd_opt["Filters"], cmd_opt["YUV"], 
-                      self.threads, self.cpu_used,
-                      cmd_opt["Map"], cmd_opt["Shortest"][1])
+                                                    cmd_opt["AddAudioStream"], 
+                                                    cmd_opt["VideoCodec"], 
+                                                    cmd_opt["Bitrate"], 
+                                                    cmd_opt["Presets"], 
+                                                    cmd_opt["Profile"], 
+                                                    cmd_opt["Tune"], 
+                                                    cmd_opt["VideoAspect"], 
+                                                    cmd_opt["VideoRate"], 
+                                                    cmd_opt["Filters"], 
+                                                    cmd_opt["YUV"], 
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                    cmd_opt["Map"], 
+                                                    cmd_opt["Shortest"][1])
                     )
-            cmd_2= ('%s %s %s %s %s %s %s %s '
-                   '%s %s %s %s %s %s %s %s %s %s %s' % (
-                     cmd_opt["AddAudioStream"],
-                     cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
-                     cmd_opt["Presets"], cmd_opt["Profile"],
-                     cmd_opt["Tune"], cmd_opt["VideoAspect"], 
-                     cmd_opt["VideoRate"], cmd_opt["Filters"],
-                     cmd_opt["YUV"], cmd_opt["AudioCodec"], 
-                     cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
-                     cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                     self.threads, self.cpu_used, 
-                     cmd_opt["Map"], cmd_opt["Shortest"][1])
+            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                    '%s %s' % (cmd_opt["AddAudioStream"],
+                               cmd_opt["VideoCodec"], 
+                               cmd_opt["Bitrate"], 
+                               cmd_opt["Presets"], 
+                               cmd_opt["Profile"],
+                               cmd_opt["Tune"], 
+                               cmd_opt["VideoAspect"], 
+                               cmd_opt["VideoRate"], 
+                               cmd_opt["Filters"],
+                               cmd_opt["YUV"], 
+                               cmd_opt["AudioCodec"], 
+                               cmd_opt["AudioBitrate"][1], 
+                               cmd_opt["AudioRate"][1], 
+                               cmd_opt["AudioChannel"][1], 
+                               cmd_opt["AudioDepth"][1], 
+                               self.threads, 
+                               self.cpu_used, 
+                               cmd_opt["Map"], 
+                               cmd_opt["Shortest"][1])
                     )
             pass1 = " ".join(cmd_1.split())
             pass2 =  " ".join(cmd_2.split())# mi formatta la stringa
@@ -1971,7 +1982,7 @@ class Video_Conv(wx.Panel):
                                            file_sources, 
                                            '', 
                                            dir_destin, 
-                                           list([cmd_opt["VideoFormat"]]), 
+                                           cmd_opt["VideoFormat"], 
                                            [pass1, pass2, loudfilter,'2Vpass'], 
                                            '',
                                            '', 

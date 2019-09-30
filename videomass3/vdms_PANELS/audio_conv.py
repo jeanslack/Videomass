@@ -273,11 +273,6 @@ class Audio_Conv(wx.Panel):
             self.txt_options.Disable(), self.btn_param.Disable()
             self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
             
-        elif self.cmbx_a.GetValue() == _("Perform normalization only"):
-            self.txt_options.Disable(), self.btn_param.Disable()
-            self.rdbx_norm.Enable()
-            self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
-            
         else:
             self.rdbx_norm.Enable()
             self.txt_options.Enable(), self.btn_param.Enable()
@@ -592,14 +587,8 @@ class Audio_Conv(wx.Panel):
         """
         File existence verification procedures, overwriting control and 
         data redirecting .
+        
         """
-        if self.cmbx_a.GetSelection() == 9:
-            if self.rdbx_norm.GetSelection() == 0:
-                wx.MessageBox(_('Not yet option selected for audio '
-                                'normalization.'),
-                                "Videomass", wx.ICON_INFORMATION)
-                return
-                
         # check normalization data offset, if enable.
         if self.rdbx_norm.GetSelection() == 1: # Norm RMS
             if self.btn_analyzes.IsEnabled():
@@ -617,11 +606,9 @@ class Audio_Conv(wx.Panel):
         logname = 'Videomass_AudioConversion.log'
 
         ######## ------------ VALIDAZIONI: --------------
-        if self.cmbx_a.GetSelection == 9: # Only norm.
-            checking = inspect(file_sources, dir_destin, '')
-        else:
-            checking = inspect(file_sources, dir_destin, 
-                               cmd_opt["ExportExt"])
+
+        checking = inspect(file_sources, dir_destin, 
+                           cmd_opt["ExportExt"])
         if not checking[0]:#user non vuole continuare o files assenti
             return
         # typeproc: batch or single process
@@ -646,67 +633,38 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch mode processing.
         
         """
-        #-------- Only normalization
-        if (self.cmbx_a.GetSelection() == 9 and 
-                                     self.rdbx_norm.GetSelection() == 1):
-            title = _('Only RMS normalization')
-            cmd = ("-loglevel %s -vn %s %s -y" % (self.ffmpeg_loglevel, 
-                                                  self.threads,
-                                                  self.cpu_used,)
-                                                  )
-            command = " ".join(cmd.split())# mi formatta la stringa
-            valupdate = self.update_dict(countmax)
-            ending = Formula(self, valupdate[0], valupdate[1], title)
-            
-            if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('normal',
-                                           file_sources, 
-                                           '', 
-                                           dir_destin, 
-                                           command, 
-                                           None, 
-                                           '',
-                                           cmd_opt["NormPEAK"], 
-                                           logname, 
-                                           countmax, 
-                                           False,# do not use is reserved
-                                           )
-                #used for play preview and mediainfo:
-                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
-                self.exportStreams(f)#call function more above
-        else:
-            title = _('Start audio conversion')
-            command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
-                                                self.ffmpeg_loglevel,
-                                                cmd_opt["AudioCodec"],
-                                                cmd_opt["AudioBitrate"][1], 
-                                                cmd_opt["AudioDepth"][1], 
-                                                cmd_opt["AudioRate"][1], 
-                                                cmd_opt["AudioChannel"][1], 
-                                                self.threads,
-                                                self.cpu_used,)
-                                                                    )
-            command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(countmax)
-            ending = Formula(self, valupdate[0], valupdate[1], title)
+        title = _('Start audio conversion')
+        command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
+                                            self.ffmpeg_loglevel,
+                                            cmd_opt["AudioCodec"],
+                                            cmd_opt["AudioBitrate"][1], 
+                                            cmd_opt["AudioDepth"][1], 
+                                            cmd_opt["AudioRate"][1], 
+                                            cmd_opt["AudioChannel"][1], 
+                                            self.threads,
+                                            self.cpu_used,)
+                                                                )
+        command = " ".join(command.split())# mi formatta la stringa
+        valupdate = self.update_dict(countmax)
+        ending = Formula(self, valupdate[0], valupdate[1], title)
 
-            if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('normal',
-                                           file_sources,
-                                           cmd_opt["ExportExt"],
-                                           dir_destin,
-                                           command,
-                                           None,
-                                           '',
-                                           cmd_opt["NormPEAK"],
-                                           logname, 
-                                           countmax,
-                                           False,# do not use is reserved
-                                           )
-                #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                 cmd_opt["ExportExt"]))
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('normal',
+                                        file_sources,
+                                        cmd_opt["ExportExt"],
+                                        dir_destin,
+                                        command,
+                                        None,
+                                        '',
+                                        cmd_opt["NormPEAK"],
+                                        logname, 
+                                        countmax,
+                                        False,# do not use is reserved
+                                        )
+            #used for play preview and mediainfo:
+            f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
+            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                                cmd_opt["ExportExt"]))
                 
     #------------------------------------------------------------------#
     def ebu_Doublepass(self, file_sources, dir_destin, countmax, logname):
@@ -721,66 +679,37 @@ class Audio_Conv(wx.Panel):
                                                 str(self.spin_tp.GetValue()),
                                                 str(self.spin_lra.GetValue()))
                      )
-        if self.cmbx_a.GetSelection() == 9:
-            ext_list = []
-            for x in file_sources:
-                ext_list.append(os.path.basename(x).rsplit('.', 1)[1])
-            title = _('Only EBU normalization')
-            cmd_1 = ('-vn %s %s' %(self.threads, self.cpu_used,))
-            cmd_2 = ('-vn %s %s' %(self.threads, self.cpu_used,))
-            pass1 = " ".join(cmd_1.split())
-            pass2 = " ".join(cmd_2.split())
-            valupdate = self.update_dict(countmax)
-            ending = Formula(self, valupdate[0], valupdate[1], title)
-            
-            if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('EBU normalization',
-                                           file_sources, 
-                                           '', 
-                                           dir_destin, 
-                                           ext_list, 
-                                           [pass1,pass2,loudfilter,None],
-                                           self.ffmpeg_link,
-                                           '', 
-                                           logname, 
-                                           countmax, 
-                                           False,# do not use is reserved
-                                           )
-                #used for play preview and mediainfo:
-                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
-                self.exportStreams(f)#call function more above
-        else:
-            title = _('Start audio conversion')
-            cmd_1 = ('-vn %s %s' % (self.threads, self.cpu_used,))
-            cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
-                                                   cmd_opt["AudioBitrate"][1], 
-                                                   cmd_opt["AudioDepth"][1], 
-                                                   cmd_opt["AudioRate"][1], 
-                                                   cmd_opt["AudioChannel"][1], 
-                                                   self.threads,
-                                                   self.cpu_used,))
-            pass1 = " ".join(cmd_1.split())
-            pass2 = " ".join(cmd_2.split())
-            valupdate = self.update_dict(countmax)
-            ending = Formula(self, valupdate[0], valupdate[1], title)
+        title = _('Start audio conversion')
+        cmd_1 = ('-vn %s %s' % (self.threads, self.cpu_used,))
+        cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioDepth"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1], 
+                                                self.threads,
+                                                self.cpu_used,))
+        pass1 = " ".join(cmd_1.split())
+        pass2 = " ".join(cmd_2.split())
+        valupdate = self.update_dict(countmax)
+        ending = Formula(self, valupdate[0], valupdate[1], title)
 
-            if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('EBU normalization',
-                                           file_sources,
-                                           '',
-                                           dir_destin,
-                                           list([cmd_opt["ExportExt"]]),
-                                           [pass1,pass2,loudfilter,None],
-                                           self.ffmpeg_link,
-                                           '',
-                                           logname, 
-                                           countmax,
-                                           False,# do not use is reserved
-                                           )
-                #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                 cmd_opt["ExportExt"]))
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('EBU normalization',
+                                        file_sources,
+                                        '',
+                                        dir_destin,
+                                        cmd_opt["ExportExt"],
+                                        [pass1,pass2,loudfilter,None],
+                                        self.ffmpeg_link,
+                                        '',
+                                        logname, 
+                                        countmax,
+                                        False,# do not use is reserved
+                                        )
+            #used for play preview and mediainfo:
+            f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
+            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                                cmd_opt["ExportExt"]))
         
     #------------------------------------------------------------------#
     def grabaudioProc(self, file_sources, dir_destin, 

@@ -369,26 +369,18 @@ class ProcThread(Thread):
                                                 ):
             basename = os.path.basename(files) #nome file senza path
             filename = os.path.splitext(basename)[0]#nome senza estensione
+            source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
+            outext = source_ext if not self.extoutput else self.extoutput
                 
-            if self.extoutput == '': # Copy Video Codec and only norm.
-                cmd = '%s %s -i "%s" %s %s "%s/%s"' % (ffmpeg_url, 
-                                                       self.time_seq,
-                                                       files, 
-                                                       self.command,
-                                                       volume,
-                                                       folders, 
-                                                       basename,
-                                                       )
-            else:# single pass
-                cmd = '%s %s -i "%s" %s %s "%s/%s.%s"' % (ffmpeg_url,
-                                                          self.time_seq,
-                                                          files, 
-                                                          self.command, 
-                                                          volume,
-                                                          folders, 
-                                                          filename, 
-                                                          self.extoutput
-                                                          )
+            cmd = '%s %s -i "%s" %s %s "%s/%s.%s"' % (ffmpeg_url, 
+                                                    self.time_seq,
+                                                    files, 
+                                                    self.command,
+                                                    volume,
+                                                    folders, 
+                                                    filename,
+                                                    outext,
+                                                    )
             self.count += 1
             count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
@@ -598,19 +590,19 @@ class DoublePassThread(Thread):
                              )
             
             #--------------- second pass ----------------#
-            pass2 = ('%s -loglevel %s %s -i "%s" %s %s -passlogfile "%s/%s.log" '
-                     '-pass 2 -y "%s/%s.%s"' % (ffmpeg_url,
-                                                ffmpeg_loglev,
-                                                self.time_seq,
-                                                files, 
-                                                self.passList[1], 
-                                                volume,
-                                                folders, 
-                                                filename,
-                                                folders, 
-                                                filename,
-                                                self.extoutput,
-                                                ))
+            pass2 = ('%s -loglevel %s %s -i "%s" %s %s -passlogfile '
+                     '"%s/%s.log" -pass 2 -y "%s/%s.%s"' % (ffmpeg_url,
+                                                            ffmpeg_loglev,
+                                                            self.time_seq,
+                                                            files, 
+                                                            self.passList[1], 
+                                                            volume,
+                                                            folders, 
+                                                            filename,
+                                                            folders, 
+                                                            filename,
+                                                            self.extoutput,
+                                                            ))
             count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
@@ -1136,7 +1128,7 @@ class EBU_Norm_DoublePass(Thread):
         """initialize"""
 
         self.filelist = var[1] # list of files (elements)
-        self.ext = var[4] if len(var[4]) > 1 else var[4] * len(var[1])
+        self.ext = var[4]
         self.passList = var[5] # comand list set for double-pass
         self.outputdir = var[3] # output path
         self.duration = duration # duration list
@@ -1161,19 +1153,18 @@ class EBU_Norm_DoublePass(Thread):
                    }
         for (files,
              folders,
-             duration,
-             ext) in itertools.zip_longest(self.filelist, 
-                                           self.outputdir, 
-                                           self.duration,
-                                           self.ext,
-                                           fillvalue='',
-                                            ):
-            basename = os.path.basename(files) #nome file senza path
-            filename = os.path.splitext(basename)[0]#nome senza estensione
-            source_ext = os.path.splitext(basename)[1].split('.')[1]# src ext
+             duration) in itertools.zip_longest(self.filelist, 
+                                                self.outputdir, 
+                                                self.duration,
+                                                fillvalue='',
+                                                ):
+            basename = os.path.basename(files) # name.ext 
+            filename = os.path.splitext(basename)[0]# name
+            source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
+            outext = source_ext if not self.ext else self.ext
             
             #--------------- first pass
-            if self.passList[3]: # double pass video with double pass ebu
+            if self.passList[3]: # for double pass video with ebu
                 pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
                          '%s -passlogfile "%s/%s.log" -pass 1 '
                          '-af %s -f %s -y %s' % (ffmpeg_url, 
@@ -1186,14 +1177,14 @@ class EBU_Norm_DoublePass(Thread):
                                                  source_ext,# -f 
                                                  self.nul,
                                                  ))
-            else:
+            else: # for copy codec and std convert
                 pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
                          '%s -pass 1 -af %s -f %s -y %s' % (ffmpeg_url, 
                                                             self.time_seq,
                                                             files, 
                                                             self.passList[0],
                                                             self.passList[2],
-                                                            ext,
+                                                            outext,
                                                             self.nul,
                                                             )) 
             self.count += 1
@@ -1275,8 +1266,8 @@ class EBU_Norm_DoublePass(Thread):
                        'measured_thresh=%s:offset=%s:linear=true:dual_mono='
                        'true' %(self.passList[2],
                                 summary["Input Integrated:"], 
+                                summary["Input LRA:"],
                                 summary["Input True Peak:"], 
-                                summary["Input LRA:"], 
                                 summary["Input Threshold:"], 
                                 summary["Target Offset:"]
                                 )
@@ -1295,7 +1286,7 @@ class EBU_Norm_DoublePass(Thread):
                                          filters,
                                          folders, 
                                          filename,
-                                         ext,
+                                         outext,
                                          ))
             else:
                 pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" %s '
@@ -1306,7 +1297,7 @@ class EBU_Norm_DoublePass(Thread):
                                                            filters,
                                                            folders, 
                                                            filename,
-                                                           ext,
+                                                           outext,
                                                            ))
             print(pass2)
             count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
