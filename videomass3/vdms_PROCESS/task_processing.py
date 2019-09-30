@@ -377,7 +377,7 @@ class ProcThread(Thread):
                                                        self.command,
                                                        volume,
                                                        folders, 
-                                                       os.path.basename(files)
+                                                       basename,
                                                        )
             else:# single pass
                 cmd = '%s %s -i "%s" %s %s "%s/%s.%s"' % (ffmpeg_url,
@@ -516,7 +516,7 @@ class DoublePassThread(Thread):
 
             #--------------- first pass
             pass1 = ('%s -loglevel %s %s -i "%s" %s -passlogfile "%s/%s.log" '
-                    '-pass 1 -y %s' % (ffmpeg_url, 
+                     '-pass 1 -y %s' %(ffmpeg_url, 
                                        ffmpeg_loglev,
                                        self.time_seq,
                                        files, 
@@ -1163,24 +1163,39 @@ class EBU_Norm_DoublePass(Thread):
              folders,
              duration,
              ext) in itertools.zip_longest(self.filelist, 
-                                                self.outputdir, 
-                                                self.duration,
-                                                self.ext,
-                                                fillvalue='',
-                                                ):
+                                           self.outputdir, 
+                                           self.duration,
+                                           self.ext,
+                                           fillvalue='',
+                                            ):
             basename = os.path.basename(files) #nome file senza path
             filename = os.path.splitext(basename)[0]#nome senza estensione
-
+            source_ext = os.path.splitext(basename)[1].split('.')[1]# src ext
+            
             #--------------- first pass
-            pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
-                     '%s -pass 1 -af %s -f %s -y %s' % (ffmpeg_url, 
-                                                        self.time_seq,
-                                                        files, 
-                                                        self.passList[0],
-                                                        self.passList[2],
-                                                        ext,
-                                                        self.nul,
-                                                        )) 
+            if self.passList[3]: # double pass video with double pass ebu
+                pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
+                         '%s -passlogfile "%s/%s.log" -pass 1 '
+                         '-af %s -f %s -y %s' % (ffmpeg_url, 
+                                                 self.time_seq,
+                                                 files, 
+                                                 self.passList[0],
+                                                 folders,
+                                                 filename,
+                                                 self.passList[2],#Loudnorm
+                                                 source_ext,# -f 
+                                                 self.nul,
+                                                 ))
+            else:
+                pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
+                         '%s -pass 1 -af %s -f %s -y %s' % (ffmpeg_url, 
+                                                            self.time_seq,
+                                                            files, 
+                                                            self.passList[0],
+                                                            self.passList[2],
+                                                            ext,
+                                                            self.nul,
+                                                            )) 
             self.count += 1
             count = ('Loudnorm af: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
@@ -1267,16 +1282,32 @@ class EBU_Norm_DoublePass(Thread):
                                 )
                        )
             time.sleep(.5)
-            pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" %s '
-                        '-pass 2 -af %s -y "%s/%s.%s"' % (ffmpeg_url, 
-                                                        self.time_seq,
-                                                        files,
-                                                        self.passList[1],
-                                                        filters,
-                                                        folders, 
-                                                        filename,
-                                                        ext,
-                                                        ))
+            
+            if self.passList[3]: # double pass video with ebu
+                pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
+                         '%s -passlogfile "%s/%s.log" -pass 2 -af %s -y '
+                         '"%s/%s.%s"' % (ffmpeg_url, 
+                                         self.time_seq,
+                                         files, 
+                                         self.passList[1],
+                                         folders,
+                                         filename,
+                                         filters,
+                                         folders, 
+                                         filename,
+                                         ext,
+                                         ))
+            else:
+                pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" %s '
+                         '-pass 2 -af %s -y "%s/%s.%s"' % (ffmpeg_url, 
+                                                           self.time_seq,
+                                                           files,
+                                                           self.passList[1],
+                                                           filters,
+                                                           folders, 
+                                                           filename,
+                                                           ext,
+                                                           ))
             print(pass2)
             count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
