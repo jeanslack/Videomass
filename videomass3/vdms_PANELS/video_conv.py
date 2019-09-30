@@ -959,6 +959,7 @@ class Video_Conv(wx.Panel):
             self.parent.statusbar_msg(msg_3, azure)
             self.btn_audioAdd.Show()
             self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
+            self.rdbx_normalize.EnableItem(2,enable=True)
             
             if cmd_opt["AddAudioStream"]:
                 self.notebook_1_pane_3.Enable()
@@ -988,6 +989,7 @@ class Video_Conv(wx.Panel):
                 self.notebook_1_pane_3.Enable()
             else:
                 self.notebook_1_pane_3.Disable()
+            self.rdbx_normalize.EnableItem(2,enable=False)
             self.parent.statusbar_msg(msg_4, violet)
             self.Layout()
             
@@ -1006,6 +1008,7 @@ class Video_Conv(wx.Panel):
             self.notebook_1_pane_3.Enable()
         self.vidContainers(self)
         self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
+        self.normalize_default()
         self.Layout()
         
     #------------------------------------------------------------------#
@@ -1055,13 +1058,17 @@ class Video_Conv(wx.Panel):
         
         self.btn_audioAdd.SetBottomEndColour(wx.Colour(0, 240, 0))
         
-        self.btn_audioAdd.SetLabel(_("Imported '%s'") %(
+        self.btn_audioAdd.SetLabel(_("Imported  '.%s'") %(
                                                pathname.rsplit('.', 1)[1]))
         self.notebook_1_pane_3.Enable()
         cmd_opt["Map"] = "-map 0:v:0 -map 1:a:0"
         self.normalize_default()
-
-        if self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
+        
+        if self.rdb_auto.GetStringSelection() == _("Add audio to video"):
+            cmd_opt["Shortest"] = [False,'-shortest']
+            
+        elif self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
+            #self.rdbx_normalize.EnableItem(1,enable=False)
             self.on_Shortest(self)
 
     #------------------------------------------------------------------#
@@ -1531,8 +1538,13 @@ class Video_Conv(wx.Panel):
         """
         If check, send to audio_analyzes.
         """
-        file_sources = self.parent.file_sources[:]
-        self.audio_analyzes(file_sources)
+        if self.rdb_auto.GetSelection() in [2,3] and cmd_opt["AddAudioStream"]:
+            path = cmd_opt["AddAudioStream"].replace('-i ', '').replace('"','')
+            print([path])
+            self.audio_analyzes([path])
+        else:
+            file_sources = self.parent.file_sources[:]
+            self.audio_analyzes(file_sources)
 
     #------------------------------------------------------------------#
     def audio_analyzes(self, file_sources):  # analyzes button
@@ -1725,9 +1737,12 @@ class Video_Conv(wx.Panel):
         elif self.rdb_auto.GetSelection() == 3:
             self.slideShow(file_sources, dir_destin, logname)
             
+        elif self.rdbx_normalize.GetSelection() == 2: # EBU
+            self.ebu_2pass(file_sources, dir_destin, countmax, logname)
+            
         else:
             self.stdProc(file_sources, dir_destin, countmax, logname)
-
+        
         return
 
     #------------------------------------------------------------------#
@@ -1768,8 +1783,154 @@ class Video_Conv(wx.Panel):
                                            dir_destin, 
                                            command, 
                                            None, 
-                                           self.ffmpeg_link,
+                                           '',
                                            cmd_opt["NormPEAK"], 
+                                           logname, 
+                                           countmax,
+                                           cmd_opt["Shortest"][0],
+                                           )
+                #used for play preview and mediainfo:
+                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
+                self.exportStreams(f)#call function more above
+                
+        elif cmd_opt["Passing"] == "double":
+            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s -f rawvideo' %(
+                                cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
+                                cmd_opt["Presets"], cmd_opt["Profile"], 
+                                cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                                cmd_opt["VideoRate"], cmd_opt["Filters"], 
+                                cmd_opt["YUV"], self.threads, self.cpu_used,),
+                    )
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                   '%s %s' % (cmd_opt["AddAudioStream"], cmd_opt["VideoCodec"], 
+                              cmd_opt["Bitrate"], cmd_opt["Presets"], 
+                              cmd_opt["Profile"], cmd_opt["Tune"], 
+                              cmd_opt["VideoAspect"], cmd_opt["VideoRate"], 
+                              cmd_opt["Filters"], cmd_opt["YUV"], 
+                              cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
+                              cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
+                              cmd_opt["AudioDepth"][1], self.threads, 
+                              self.cpu_used, cmd_opt["Map"], 
+                              cmd_opt["Shortest"][1])
+                    )
+            pass1 = " ".join(cmd1[0].split())
+            pass2 =  " ".join(cmd2.split())
+            valupdate = self.update_dict(countmax, [''])
+            ending = Formula(self, valupdate[0], valupdate[1], title)
+            
+            if ending.ShowModal() == wx.ID_OK:
+                self.parent.switch_Process('doublepass',
+                                           file_sources, 
+                                           cmd_opt['VideoFormat'], 
+                                           dir_destin, 
+                                           None, 
+                                           [pass1, pass2], 
+                                           '',
+                                           cmd_opt["NormPEAK"], 
+                                           logname, 
+                                           countmax, 
+                                           cmd_opt["Shortest"][0],
+                                           )
+                #used for play preview and mediainfo:
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                              cmd_opt["VideoFormat"]))
+            #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
+
+        elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
+            command = ("%s -loglevel %s %s %s %s %s %s %s %s "
+                       "%s %s %s %s %s %s %s %s %s %s %s -y" % (
+                        cmd_opt["AddAudioStream"], self.ffmpeg_loglev,
+                        cmd_opt["VideoCodec"], cmd_opt["CRF"], 
+                        cmd_opt["Presets"], cmd_opt["Profile"],
+                        cmd_opt["Tune"], cmd_opt["VideoAspect"], 
+                        cmd_opt["VideoRate"], cmd_opt["Filters"],
+                        cmd_opt["YUV"], cmd_opt["AudioCodec"], 
+                        cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
+                        cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
+                        self.threads, self.cpu_used, 
+                        cmd_opt["Map"], cmd_opt["Shortest"][1])
+                        )
+            command = " ".join(command.split())# mi formatta la stringa
+            valupdate = self.update_dict(countmax, [''])
+            ending = Formula(self, valupdate[0], valupdate[1], title)
+            
+            if ending.ShowModal() == wx.ID_OK:
+                self.parent.switch_Process('normal',
+                                           file_sources, 
+                                           cmd_opt['VideoFormat'], 
+                                           dir_destin, 
+                                           command, 
+                                           None, 
+                                           '',
+                                           cmd_opt["NormPEAK"], 
+                                           logname, 
+                                           countmax, 
+                                           cmd_opt["Shortest"][0],
+                                           )
+                #used for play preview and mediainfo:
+                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
+                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                                                 cmd_opt["VideoFormat"]))
+
+    #------------------------------------------------------------------#
+    def ebu_2pass(self, file_sources, dir_destin, countmax, logname):
+        """
+        Composes the ffmpeg command strings for batch process. 
+        In double pass mode, split command in two part (see  
+        os_processing.py at proc_batch_thread Class(Thread) ).
+        
+        """
+        cmd_opt["NormEBU"] = 'EBU R128'
+        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %( 
+                                              str(self.spin_i.GetValue()),
+                                              str(self.spin_tp.GetValue()),
+                                              str(self.spin_lra.GetValue()),)
+                      )
+        title = _('Start video conversion')
+        if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
+            ext_list = []
+            for x in file_sources:
+                ext_list.append(os.path.basename(x).rsplit('.', 1)[1])
+                
+            cmd_1 = ('%s %s %s %s %s %s %s %s' %(
+                                                    cmd_opt["AddAudioStream"],
+                                                    cmd_opt["VideoCodec"], 
+                                                    cmd_opt["VideoAspect"],
+                                                    cmd_opt["VideoRate"],
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                    cmd_opt["Map"],
+                                                    cmd_opt["Shortest"][1])
+                                                        )
+            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s' %(
+                                                    cmd_opt["AddAudioStream"],
+                                                    cmd_opt["VideoCodec"], 
+                                                    cmd_opt["VideoAspect"],
+                                                    cmd_opt["VideoRate"],
+                                                    cmd_opt["AudioCodec"], 
+                                                    cmd_opt["AudioBitrate"][1], 
+                                                    cmd_opt["AudioRate"][1], 
+                                                    cmd_opt["AudioChannel"][1], 
+                                                    cmd_opt["AudioDepth"][1], 
+                                                    self.threads, 
+                                                    self.cpu_used,
+                                                    cmd_opt["Map"],
+                                                    cmd_opt["Shortest"][1]))
+            pass1 = " ".join(cmd_1.split())
+            pass2 = " ".join(cmd_2.split())
+            valupdate = self.update_dict(countmax, ["Copy video codec"] )
+            ending = Formula(self, valupdate[0], valupdate[1], title)
+            
+            if ending.ShowModal() == wx.ID_OK:
+                self.parent.switch_Process('EBU normalization',
+                                           file_sources, 
+                                           '', 
+                                           dir_destin, 
+                                           ext_list, 
+                                           [pass1,pass2,loudfilter], 
+                                           '',
+                                           '', 
                                            logname, 
                                            countmax,
                                            cmd_opt["Shortest"][0],
@@ -1813,7 +1974,7 @@ class Video_Conv(wx.Panel):
                                            dir_destin, 
                                            None, 
                                            [pass1, pass2], 
-                                           self.ffmpeg_link,
+                                           '',
                                            cmd_opt["NormPEAK"], 
                                            logname, 
                                            countmax, 
@@ -1850,7 +2011,7 @@ class Video_Conv(wx.Panel):
                                            dir_destin, 
                                            command, 
                                            None, 
-                                           self.ffmpeg_link,
+                                           '',
                                            cmd_opt["NormPEAK"], 
                                            logname, 
                                            countmax, 
@@ -1860,7 +2021,6 @@ class Video_Conv(wx.Panel):
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                                  cmd_opt["VideoFormat"]))
-    #--------------------------------------------------------------------#
     def saveimages(self, file_sources, dest, logname):
         """
         Save as files image the selected video input. The saved 
@@ -1977,12 +2137,11 @@ class Video_Conv(wx.Panel):
         else:
             outputdir = "%s/Slideshow_1.%s" % (dest[0],cmd_opt["VideoFormat"],)
             
-        cmd_1 = ['%s -loglevel %s' %(self.ffmpeg_link, self.ffmpeg_loglev),
+        cmd_1 = ['-loglevel %s' %(self.ffmpeg_loglev),
                  cmd_opt["Filters"]
                  ]
-        cmd_2 = ['%s -loglevel %s -framerate '
-                 '1/%s' % (self.ffmpeg_link,
-                           self.ffmpeg_loglev, 
+        cmd_2 = ['-loglevel %s -framerate '
+                 '1/%s' % (self.ffmpeg_loglev, 
                            str(time[1]),
                            ),
                  #'%s -c:v libx264 %s %s %s %s -vf fps=25,format=yuv420p %s %s '
@@ -2019,7 +2178,7 @@ class Video_Conv(wx.Panel):
                                         cmd_2, 
                                         cmd_opt["VideoFormat"], 
                                         '',
-                                        '', 
+                                        cmd_opt["NormPEAK"], 
                                         logname, 
                                         '1', 
                                         cmd_opt["Shortest"][0],
@@ -2035,11 +2194,13 @@ class Video_Conv(wx.Panel):
         """
         numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["NormPEAK"]:
-            normalize = _('Enable')
+            normalize = _('Peak level Norm.')
+        elif cmd_opt["NormEBU"]:
+            normalize = _('EBU R128 Loudnorm')
         else:
-            normalize = _('Disable')
+            normalize = _('Disabled')
         if not self.parent.time_seq:
-            time = _('Disable')
+            time = _('Disabled')
         else:
             t = list(self.parent.time_read.items())
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
@@ -2105,7 +2266,7 @@ class Video_Conv(wx.Panel):
                                              cmd_opt["AudioRate"][1],
                                              cmd_opt["AudioBitrate"][1],
                                              cmd_opt["AudioDepth"][1],
-                                             _('not applicable'),
+                                             normalize,
                                              cmd_opt["Map"],
                                              time,
                                              cmd_opt["Shortest"][1],))

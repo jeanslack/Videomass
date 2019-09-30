@@ -58,6 +58,11 @@ class Videomass(wx.App):
         self.FILEconf = None
         self.WORKdir = None
         self.OS = None
+        self.ffmpeg_url = None
+        self.ffplay_url = None
+        self.ffprobe_url = None
+        self.ffmpeg_loglev = None
+        self.ffplay_loglev = None
         
         print ("App __init__")
 
@@ -91,6 +96,8 @@ class Videomass(wx.App):
         self.FILEconf = setui[6] # set file conf. pathname 
         self.WORKdir = setui[7] # set PWD current dir
         self.DIRconf = setui[8] # set location dir conf pathname
+        self.ffmpeg_loglev = setui[4][5]
+        self.ffplay_loglev = setui[4][4]
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -104,9 +111,9 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = setui[4][7]
-                ffprobe_link = setui[4][9]
-                ffplay_link = setui[4][11]
+                self.ffmpeg_url = setui[4][7]
+                self.ffprobe_url = setui[4][9]
+                self.ffplay_url = setui[4][11]
 
         elif setui[0] == 'Windows':
             for link in [setui[4][7],setui[4][9],setui[4][11]]:
@@ -119,23 +126,23 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                ffmpeg_link = setui[4][7]
-                ffprobe_link = setui[4][9]
-                ffplay_link = setui[4][11]
+                self.ffmpeg_url = setui[4][7]
+                self.ffprobe_url = setui[4][9]
+                self.ffplay_url = setui[4][11]
                 
         else: # is Linux 
-            ffmpeg_link = setui[4][7]
-            ffprobe_link = setui[4][9]
-            ffplay_link = setui[4][11]
+            self.ffmpeg_url = setui[4][7]
+            self.ffprobe_url = setui[4][9]
+            self.ffplay_url = setui[4][11]
             # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True
             
         from videomass3.vdms_MAIN.main_frame import MainFrame
         main_frame = MainFrame(setui, 
-                               ffmpeg_link, 
-                               ffprobe_link, 
-                               ffplay_link,
+                               self.ffmpeg_url, 
+                               self.ffprobe_url, 
+                               self.ffplay_url,
                                pathicons
                                )
         main_frame.Show()

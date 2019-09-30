@@ -635,10 +635,6 @@ class Audio_Conv(wx.Panel):
             self.grabaudioProc(file_sources, dir_destin, countmax, logname)
             
         elif self.rdbx_norm.GetSelection() == 2:
-            cmd_opt["NormEBU"] = {'i':str(self.spin_i.GetValue()),
-                                  'tp':str(self.spin_tp.GetValue()),
-                                  'lra':str(self.spin_lra.GetValue())}
-            
             self.ebu_Doublepass(file_sources, dir_destin, countmax, logname)
             
         else:
@@ -669,7 +665,7 @@ class Audio_Conv(wx.Panel):
                                            dir_destin, 
                                            command, 
                                            None, 
-                                           self.ffmpeg_link,
+                                           '',
                                            cmd_opt["NormPEAK"], 
                                            logname, 
                                            countmax, 
@@ -701,7 +697,7 @@ class Audio_Conv(wx.Panel):
                                            dir_destin,
                                            command,
                                            None,
-                                           self.ffmpeg_link,
+                                           '',
                                            cmd_opt["NormPEAK"],
                                            logname, 
                                            countmax,
@@ -719,21 +715,19 @@ class Audio_Conv(wx.Panel):
         standard conversion
         
         """
+        cmd_opt["NormEBU"] = True
         loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' 
-                                              %(cmd_opt["NormEBU"]['i'],
-                                                cmd_opt["NormEBU"]['tp'],
-                                                cmd_opt["NormEBU"]['lra'])
+                                              %(str(self.spin_i.GetValue()),
+                                                str(self.spin_tp.GetValue()),
+                                                str(self.spin_lra.GetValue()))
                      )
         if self.cmbx_a.GetSelection() == 9:
             ext_list = []
             for x in file_sources:
                 ext_list.append(os.path.basename(x).rsplit('.', 1)[1])
             title = _('Only EBU normalization')
-            cmd_1 = ('-c:v copy -af %s %s %s -f' % (loudfilter,
-                                                    self.threads,
-                                                    self.cpu_used,)
-                    )
-            cmd_2 = ('-c:v copy %s %s' % (self.threads,self.cpu_used,))
+            cmd_1 = ('-vn %s %s' %(self.threads, self.cpu_used,))
+            cmd_2 = ('-vn %s %s' %(self.threads, self.cpu_used,))
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
             valupdate = self.update_dict(countmax)
@@ -757,10 +751,7 @@ class Audio_Conv(wx.Panel):
                 self.exportStreams(f)#call function more above
         else:
             title = _('Start audio conversion')
-            cmd_1 = ('-vn -af %s %s %s -f' % (loudfilter,
-                                              self.threads,
-                                              self.cpu_used,)
-                    )
+            cmd_1 = ('-vn %s %s' % (self.threads, self.cpu_used,))
             cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
                                                    cmd_opt["AudioBitrate"][1], 
                                                    cmd_opt["AudioDepth"][1], 
@@ -806,7 +797,7 @@ class Audio_Conv(wx.Panel):
         
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('grabaudio',
-                                       self.ffmpeg_link, 
+                                       '', 
                                        file_sources, #list
                                        dir_destin, #list
                                        cmdsplit1, 
@@ -830,9 +821,9 @@ class Audio_Conv(wx.Panel):
         """
         numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["NormPEAK"]:
-            normalize = _('RMS')
+            normalize = _('Peak level Norm.')
         elif cmd_opt["NormEBU"]:
-            normalize = _('EBU R128')
+            normalize = _('EBU R128 Loudnorm')
         else:
             normalize = _('Not set')
             

@@ -41,9 +41,11 @@ from videomass3.vdms_IO.make_filelog import write_log
 CHANGE_STATUS = None
 STATUS_ERROR = None
 
-# path to the configuration directory:
+# get videomass wx.App attribute
 get = wx.GetApp()
-DIRconf = get.DIRconf
+DIRconf = get.DIRconf # path to the configuration directory:
+ffmpeg_url = get.ffmpeg_url
+ffmpeg_loglev = get.ffmpeg_loglev
 
 #----------------------------------------------------------------#    
 def logWrite(cmd, sterr, logname):
@@ -341,7 +343,6 @@ class ProcThread(Thread):
         self.command = varargs[4] # comand set on single pass
         self.outputdir = varargs[3] # output path
         self.extoutput = varargs[2] # format (extension)
-        self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.volume = varargs[7]# (lista norm.)se non richiesto rimane None
         self.count = 0 # count first for loop
@@ -370,20 +371,20 @@ class ProcThread(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
                 
             if self.extoutput == '': # Copy Video Codec and only norm.
-                cmd = '%s %s -i "%s" %s %s "%s/%s"' % (self.ffmpeg_link, 
+                cmd = '%s %s -i "%s" %s %s "%s/%s"' % (ffmpeg_url, 
                                                        self.time_seq,
                                                        files, 
-                                                       volume, 
                                                        self.command,
+                                                       volume,
                                                        folders, 
                                                        os.path.basename(files)
                                                        )
             else:# single pass
-                cmd = '%s %s -i "%s" %s %s "%s/%s.%s"' % (self.ffmpeg_link,
+                cmd = '%s %s -i "%s" %s %s "%s/%s.%s"' % (ffmpeg_url,
                                                           self.time_seq,
                                                           files, 
-                                                          volume, 
                                                           self.command, 
+                                                          volume,
                                                           folders, 
                                                           filename, 
                                                           self.extoutput
@@ -485,7 +486,6 @@ class DoublePassThread(Thread):
         self.passList = varargs[5] # comand list set for double-pass
         self.outputdir = varargs[3] # output path
         self.extoutput = varargs[2] # format (extension)
-        self.ffmpeg_link = varargs[6] # bin executable path-name
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
         self.volume = varargs[7]# volume compensation data
@@ -515,8 +515,9 @@ class DoublePassThread(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
 
             #--------------- first pass
-            pass1 = ('%s %s -i "%s" %s -passlogfile "%s/%s.log" '
-                    '-pass 1 -y %s' % (self.ffmpeg_link, 
+            pass1 = ('%s -loglevel %s %s -i "%s" %s -passlogfile "%s/%s.log" '
+                    '-pass 1 -y %s' % (ffmpeg_url, 
+                                       ffmpeg_loglev,
                                        self.time_seq,
                                        files, 
                                        self.passList[0],
@@ -597,12 +598,13 @@ class DoublePassThread(Thread):
                              )
             
             #--------------- second pass ----------------#
-            pass2 = ('%s %s -i "%s" %s %s -passlogfile "%s/%s.log" '
-                     '-pass 2 -y "%s/%s.%s"' % (self.ffmpeg_link, 
+            pass2 = ('%s -loglevel %s %s -i "%s" %s %s -passlogfile "%s/%s.log" '
+                     '-pass 2 -y "%s/%s.%s"' % (ffmpeg_url,
+                                                ffmpeg_loglev,
                                                 self.time_seq,
                                                 files, 
-                                                volume,
                                                 self.passList[1], 
+                                                volume,
                                                 folders, 
                                                 filename,
                                                 folders, 
@@ -799,8 +801,6 @@ class GrabAudioProc(Thread):
         """
         Thread.__init__(self)
         """initialize"""
-
-        self.ffmpeg_link = varargs[1] # bin executable path-name
         self.filelist = varargs[2] # input file list (items)
         self.outputdir = varargs[3] # output path list (items)
         self.cmd_1 = varargs[4] # comand 1
@@ -836,7 +836,7 @@ class GrabAudioProc(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
             out = os.path.join(folders, filename)
 
-            cmd = '%s %s -i "%s" %s %s %s "%s.%s"' % (self.ffmpeg_link,
+            cmd = '%s %s -i "%s" %s %s %s "%s.%s"' % (ffmpeg_url,
                                                       self.time_seq,
                                                       files, 
                                                       self.cmd_1, 
@@ -977,7 +977,8 @@ class CreateSlideShow(Thread):
                 line = ['count cicles only',
                         ' |%d|  >  %s\n' %(prognum, files)
                         ]
-                cmd_1 = '%s -i "%s" %s "%s/IMAGE_%d.png"' %(
+                cmd_1 = '%s %s -i "%s" %s "%s/IMAGE_%d.png"' %(
+                                                        ffmpeg_url,
                                                         self.cmd_1[0],
                                                         files, 
                                                         self.cmd_1[1],
@@ -1054,10 +1055,10 @@ class CreateSlideShow(Thread):
                             end='ok'
                             )
             #------------------------------- make video
-            cmd_2 = '{0} -i "{1}/IMAGE_%d.png" {2}'.format(self.cmd_2[0], 
-                                                           tmpdirname, 
-                                                           self.cmd_2[1],
-                                                           )
+            cmd_2 = '{0} {1} -i "{2}/IMAGE_%d.png" {3}'.format(ffmpeg_url,
+                                                               self.cmd_2[0], 
+                                                               tmpdirname, 
+                                                               self.cmd_2[1],)
             count = ' File %s/%s' % ('1','1',)
             com = "%s\n%s" % (count, cmd_2)
             print("%s" % com)
@@ -1138,7 +1139,6 @@ class EBU_Norm_DoublePass(Thread):
         self.ext = var[4] if len(var[4]) > 1 else var[4] * len(var[1])
         self.passList = var[5] # comand list set for double-pass
         self.outputdir = var[3] # output path
-        self.ffmpeg_link = var[6] # bin executable path-name
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
         self.count = 0 # count first for loop 
@@ -1173,15 +1173,16 @@ class EBU_Norm_DoublePass(Thread):
 
             #--------------- first pass
             pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
-                     '-pass 1 %s %s -y %s' % (self.ffmpeg_link, 
-                                              self.time_seq,
-                                              files, 
-                                              self.passList[0],
-                                              ext,
-                                              self.nul,
-                                              )) 
+                     '%s -pass 1 -af %s -f %s -y %s' % (ffmpeg_url, 
+                                                        self.time_seq,
+                                                        files, 
+                                                        self.passList[0],
+                                                        self.passList[2],
+                                                        ext,
+                                                        self.nul,
+                                                        )) 
             self.count += 1
-            count = ('Getting statistics for measurement...\n  '
+            count = ('Loudnorm af: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass1)
             print("%s" % cmd)
@@ -1267,7 +1268,7 @@ class EBU_Norm_DoublePass(Thread):
                        )
             time.sleep(.5)
             pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" %s '
-                        '-pass 2 -af %s -y "%s/%s.%s"' % (self.ffmpeg_link, 
+                        '-pass 2 -af %s -y "%s/%s.%s"' % (ffmpeg_url, 
                                                         self.time_seq,
                                                         files,
                                                         self.passList[1],
@@ -1277,7 +1278,7 @@ class EBU_Norm_DoublePass(Thread):
                                                         ext,
                                                         ))
             print(pass2)
-            count = ('Loudness normalization process (EBU R128 algorithm)...\n  '
+            count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
