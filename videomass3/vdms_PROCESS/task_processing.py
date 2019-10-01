@@ -127,11 +127,13 @@ class GeneralProcess(wx.Panel):
             self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             
         #self.OutText.SetBackgroundColour((217, 255, 255))
-        self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
-                                    "in the log view console, useful for "
-                                    "knowledge the all exit status as "
-                                    "errors and warnings."
-                                           ))
+        #self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
+                                    #"in the log view console, useful for "
+                                    #"knowledge the all exit status as "
+                                    #"errors and warnings."
+                                           #))
+        self.ckbx_text.SetToolTip(_('If activated, hides all FFmpeg '
+                                    'output messages.'))
         self.button_stop.SetToolTip(_("Stops current process"))
         self.SetSizerAndFit(sizer)
 

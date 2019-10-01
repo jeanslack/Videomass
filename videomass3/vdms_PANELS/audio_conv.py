@@ -32,7 +32,6 @@ import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
 from videomass3.vdms_IO.IO_tools import volumeDetectProcess
-from videomass3.vdms_IO.IO_tools import FFProbe
 from videomass3.vdms_IO.filedir_control import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import  audiodialogs
@@ -66,8 +65,6 @@ acodecs = {("WAV [.wav]"): ("-c:a pcm_s16le"),
            ("AAC [.m4a]"): ("-c:a aac"),
            ("ALAC [.m4a]"): ("-c:a alac"),
            ("AC3 [.ac3]"): ("-c:a ac3"),
-           (_("Extract audio stream from movies")): (""),
-           (_("Perform normalization only")): (""),
            }
 
 class Audio_Conv(wx.Panel):
@@ -187,7 +184,7 @@ class Audio_Conv(wx.Panel):
         grid_sizer_4 = wx.FlexGridSizer(2, 4, 0, 0)
         #grid_sizer_5 = wx.FlexGridSizer(1, 3, 0, 0)
         sizer_3 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                _("Audio format selection and other utilities"))), 
+                                _("Audio format selection"))), 
                                                        wx.VERTICAL
                                                        )
         sizer_3.Add(self.cmbx_a, 0, wx.ALIGN_CENTER | wx.ALL, 20)
@@ -267,20 +264,15 @@ class Audio_Conv(wx.Panel):
     def audioFormats(self, evt):
         """
         Get selected option from combobox
+        
         """
-        if self.cmbx_a.GetValue() == _("Extract audio stream from movies"):
-            self.normalization_default(), self.rdbx_norm.Disable(), 
-            self.txt_options.Disable(), self.btn_param.Disable()
-            self.btn_param.SetForegroundColour(wx.Colour(165,165, 165))
-            
-        else:
-            self.rdbx_norm.Enable()
-            self.txt_options.Enable(), self.btn_param.Enable()
-            self.btn_param.SetForegroundColour(wx.Colour(28,28,28))
-            cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
-            cmd_opt["AudioCodec"] = acodecs[self.cmbx_a.GetValue()]
-            ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
-            cmd_opt["ExportExt"] = ext
+        self.rdbx_norm.Enable()
+        self.txt_options.Enable(), self.btn_param.Enable()
+        self.btn_param.SetForegroundColour(wx.Colour(28,28,28))
+        cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
+        cmd_opt["AudioCodec"] = acodecs[self.cmbx_a.GetValue()]
+        ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
+        cmd_opt["ExportExt"] = ext
         
         self.txt_options.SetValue("")
         cmd_opt["AudioChannel"] = ["",""]
@@ -359,82 +351,7 @@ class Audio_Conv(wx.Panel):
             self.btn_param.SetBottomEndColour(wx.Colour(0, 240, 0))
         
         audiodialog.Destroy()
-    #------------------------------------------------------------------#
-    def audiocopy(self, file_sources):
-        """
-        Try copying and saving the audio stream on a video by 
-        recognizing the codec and then assigning a container/format. 
-        If there is more than one audio stream in a video, a choice 
-        is made to the user.
-        """
-        cmd_opt["ExportExt"] = []
-        cmd_opt["AudioCodec"] = []
-        cmd_opt["CodecCopied"] = []
-
-        for files in file_sources:
-            metadata = FFProbe(files, self.ffprobe_link, '-pretty') 
-            # first execute a control for errors:
-            if metadata.ERROR():
-                wx.MessageBox("[FFprobe] Error:  %s" % (metadata.error), 
-                              "ERROR - Videomass",
-                wx.ICON_ERROR, self)
-                return
-            # Proceed with the istance method call:
-            datastream = metadata.get_audio_codec_name()
-            audio_list = datastream[0]
-
-            if audio_list == None:
-                wx.MessageBox(_("There are no audio streams:\n%s ") % (files), 
-                                'Videomass', wx.ICON_INFORMATION, self)
-                return
-
-            elif len(audio_list) > 1:
-                title = datastream[1]
-                
-                dlg = wx.SingleChoiceDialog(self, 
-                        _("{0}\n\n"
-                          "Contains multiple audio streams. " 
-                          "Select which audio stream you want to "
-                          "export between these:").format(title), 
-                        _("Videomass: Stream choice"),
-                        audio_list, wx.CHOICEDLG_STYLE
-                                            )
-                if dlg.ShowModal() == wx.ID_OK:
-                    if dlg.GetStringSelection() in audio_list:
-                        cn = ''.join(dlg.GetStringSelection()).split()[4]
-                        indx = ''.join(dlg.GetStringSelection()).split()[1]
-                        cmd_opt["AudioCodec"].append(
-                                            "-map 0:%s -c copy" % indx)
-                        cmd_opt["CodecCopied"].append(cn)#used for epilogue
-                        if cn in ('aac','alac'): cn = 'm4a'
-                        if cn in ('ogg','vorbis'): cn = 'oga'
-                        if cn.startswith('pcm_'): cn = 'wav'
-                        cmd_opt["ExportExt"].append(cn)
-                    else:
-                        wx.MessageBox(_("Nothing choice:\n%s ") % (files), 
-                                        'Videomass: Error', wx.ICON_ERROR, 
-                                        self)
-                        return
-                else: # there must be some choice (default first item list)
-                    cn = ''.join(audio_list[0]).split()[4]
-                    indx = ''.join(audio_list[0]).split()[1]
-                    cmd_opt["AudioCodec"].append("-map 0:%s -c copy" % indx)
-                    cmd_opt["CodecCopied"].append(cn)#used for epilogue
-                    if cn in ('aac','alac'): cn = 'm4a'
-                    if cn in ('ogg','vorbis'): cn = 'oga'
-                    if cn.startswith('pcm_'): cn = 'wav'
-                    cmd_opt["ExportExt"].append(cn)
-                dlg.Destroy()
-            else:
-                cn = ''.join(audio_list[0]).split()[4]
-                indx = ''.join(audio_list[0]).split()[1]
-                cmd_opt["AudioCodec"].append("-map 0:%s -c copy" % indx)
-                cmd_opt["CodecCopied"].append(cn)#used for epilogue
-                if cn in ('aac','alac'): cn = 'm4a'
-                if cn in ('ogg','vorbis'): cn = 'oga'
-                if cn.startswith('pcm_'): cn = 'wav'
-                cmd_opt["ExportExt"].append(cn)
-
+        
     #------------------------------------------------------------------#
     def on_Enable_norm(self, evt):
         """
@@ -577,11 +494,10 @@ class Audio_Conv(wx.Panel):
         Last step for set definitively all values before to proceed
         with std_conv or batch_conv methods.
         Update _allentries is callaed by on_ok method.
+        
         """
         self.time_seq = self.parent.time_seq
-        if self.cmbx_a.GetValue() == _("Extract audio stream from movies"):
-            file_sources = self.parent.file_sources[:]
-            self.audiocopy(file_sources)
+
     #------------------------------------------------------------------#
     def on_ok(self):
         """
@@ -618,10 +534,7 @@ class Audio_Conv(wx.Panel):
         (typeproc, file_sources, dir_destin, filename, base_name, 
          countmax) = checking
 
-        if self.cmbx_a.GetSelection() == 8: # save audio stream from movies
-            self.grabaudioProc(file_sources, dir_destin, countmax, logname)
-            
-        elif self.rdbx_norm.GetSelection() == 2:
+        if self.rdbx_norm.GetSelection() == 2:
             self.ebu_Doublepass(file_sources, dir_destin, countmax, logname)
             
         else:
@@ -709,36 +622,6 @@ class Audio_Conv(wx.Panel):
                                                 cmd_opt["ExportExt"]))
         
     #------------------------------------------------------------------#
-    def grabaudioProc(self, file_sources, dir_destin, 
-                             countmax, logname):
-        """
-        Composes the ffmpeg command strings for the batch_process_changes.
-        """
-        title = _('Extract audio from video')
-        cmdsplit1 = ("-vn")
-        cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
-
-        valupdate = self.update_dict(countmax)
-        ending = Formula(self, valupdate[0], valupdate[1], title)
-        
-        if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('grabaudio',
-                                       '', 
-                                       file_sources, #list
-                                       dir_destin, #list
-                                       cmdsplit1, 
-                                       cmd_opt["AudioCodec"],#list
-                                       cmdsplit2, 
-                                       cmd_opt["ExportExt"],#list
-                                       logname, 
-                                       countmax, #list
-                                       False,# do not use is reserved
-                                       )
-            # used for play preview and mediainfo:
-            f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                             cmd_opt["ExportExt"][0]))
-
     #------------------------------------------------------------------#
     def update_dict(self, countmax):
         """
@@ -759,33 +642,16 @@ class Audio_Conv(wx.Panel):
             t = list(self.parent.time_read.items())
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
                                                 t[1][0], t[1][1][0])
-            
-        if self.cmbx_a.GetSelection() == 9: # Only norm.
-            formula = (_("SUMMARY\n\nFile Queue\
-                       \nAudio Normalization\nTime selection"))
-            dictions = ("\n\n%s\n%s\n%s" % (numfile, 
-                                            normalize, 
-                                            time,)
-                        )
-        elif self.cmbx_a.GetSelection() == 8: # audio from movies
-            formula = (_("SUMMARY\n\nFile Queue\
-                      \nAudio Container\nCodec copied\nTime selection"))
-            dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
-                                                cmd_opt["ExportExt"],
-                                                cmd_opt["CodecCopied"], 
-                                                time,)
-                        )
-        else:
-            formula = (_("SUMMARY\n\nFile Queue\
-                    \nAudio Container\nAudio Codec\nAudio bit-rate\
-                    \nAudio Channels\nAudio Rate\nBit per Sample\
-                    \nAudio Normalization\nTime selection"))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
-                    numfile, cmd_opt["AudioContainer"], 
-                    cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][0], 
-                    cmd_opt["AudioChannel"][0], cmd_opt["AudioRate"][0], 
-                    cmd_opt["AudioDepth"][0] , normalize, time)
-                        )
+        formula = (_("SUMMARY\n\nFile Queue\
+                \nAudio Container\nAudio Codec\nAudio bit-rate\
+                \nAudio Channels\nAudio Rate\nBit per Sample\
+                \nAudio Normalization\nTime selection"))
+        dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
+                numfile, cmd_opt["AudioContainer"], 
+                cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][0], 
+                cmd_opt["AudioChannel"][0], cmd_opt["AudioRate"][0], 
+                cmd_opt["AudioDepth"][0] , normalize, time)
+                    )
         return formula, dictions
     
 #------------------------------------------------------------------#
