@@ -1748,9 +1748,7 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def stdProc(self, file_sources, dir_destin, countmax, logname):
         """
-        Composes the ffmpeg command strings for batch process. 
-        In double pass mode, split command in two part (see  
-        os_processing.py at proc_batch_thread Class(Thread) ).
+        Define the ffmpeg command strings for batch process.
         
         """
         title = _('Start video conversion')
@@ -1838,10 +1836,11 @@ class Video_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ("%s -loglevel %s %s %s %s %s %s %s %s "
-                       "%s %s %s %s %s %s %s %s %s %s %s -y" % (
-                        cmd_opt["AddAudioStream"], self.ffmpeg_loglev,
-                        cmd_opt["VideoCodec"], cmd_opt["CRF"], 
+            command = ("%s %s %s %s %s %s %s %s "
+                       "%s %s %s %s %s %s %s %s %s %s %s %s -y" % (
+                        cmd_opt["AddAudioStream"],
+                        cmd_opt["VideoCodec"], cmd_opt["CRF"],
+                        cmd_opt["Bitrate"],
                         cmd_opt["Presets"], cmd_opt["Profile"],
                         cmd_opt["Tune"], cmd_opt["VideoAspect"], 
                         cmd_opt["VideoRate"], cmd_opt["Filters"],
@@ -1881,6 +1880,7 @@ class Video_Conv(wx.Panel):
         os_processing.py at proc_batch_thread Class(Thread) ).
         
         """
+        title = _('Video conversion')
         cmd_opt["NormEBU"] = 'EBU R128'
         loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %( 
                                               str(self.spin_i.GetValue()),
@@ -1914,7 +1914,6 @@ class Video_Conv(wx.Panel):
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
             valupdate = self.update_dict(countmax, ["Copy video codec"])
-            title = _('Video conversion')
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1933,12 +1932,16 @@ class Video_Conv(wx.Panel):
                 #used for play preview and mediainfo:
                 f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
                 self.exportStreams(f)#pass arg to function above
-                
-        elif cmd_opt["Passing"] == "double":
+        
+        else:
+
+            Vpass = True if cmd_opt["Passing"] == "double" else Vpass == False
+
             cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
                                                     cmd_opt["AddAudioStream"], 
                                                     cmd_opt["VideoCodec"], 
-                                                    cmd_opt["Bitrate"], 
+                                                    cmd_opt["Bitrate"],
+                                                    cmd_opt["CRF"],
                                                     cmd_opt["Presets"], 
                                                     cmd_opt["Profile"], 
                                                     cmd_opt["Tune"], 
@@ -1955,6 +1958,7 @@ class Video_Conv(wx.Panel):
                     '%s %s' % (cmd_opt["AddAudioStream"],
                                cmd_opt["VideoCodec"], 
                                cmd_opt["Bitrate"], 
+                               cmd_opt["CRF"],
                                cmd_opt["Presets"], 
                                cmd_opt["Profile"],
                                cmd_opt["Tune"], 
@@ -1983,7 +1987,7 @@ class Video_Conv(wx.Panel):
                                            '', 
                                            dir_destin, 
                                            cmd_opt["VideoFormat"], 
-                                           [pass1, pass2, loudfilter,'2Vpass'], 
+                                           [pass1, pass2, loudfilter, Vpass], 
                                            '',
                                            '', 
                                            logname, 
@@ -1996,41 +2000,6 @@ class Video_Conv(wx.Panel):
                                                  cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
-        elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ("%s -loglevel %s %s %s %s %s %s %s %s "
-                       "%s %s %s %s %s %s %s %s %s %s %s -y" % (
-                        cmd_opt["AddAudioStream"], self.ffmpeg_loglev,
-                        cmd_opt["VideoCodec"], cmd_opt["CRF"], 
-                        cmd_opt["Presets"], cmd_opt["Profile"],
-                        cmd_opt["Tune"], cmd_opt["VideoAspect"], 
-                        cmd_opt["VideoRate"], cmd_opt["Filters"],
-                        cmd_opt["YUV"], cmd_opt["AudioCodec"], 
-                        cmd_opt["AudioBitrate"][1], cmd_opt["AudioRate"][1], 
-                        cmd_opt["AudioChannel"][1], cmd_opt["AudioDepth"][1], 
-                        self.threads, self.cpu_used, 
-                        cmd_opt["Map"], cmd_opt["Shortest"][1])
-                        )
-            command = " ".join(command.split())# mi formatta la stringa
-            valupdate = self.update_dict(countmax, [''])
-            ending = Formula(self, valupdate[0], valupdate[1], title)
-            
-            if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('normal',
-                                           file_sources, 
-                                           cmd_opt['VideoFormat'], 
-                                           dir_destin, 
-                                           command, 
-                                           None, 
-                                           '',
-                                           cmd_opt["NormPEAK"], 
-                                           logname, 
-                                           countmax, 
-                                           cmd_opt["Shortest"][0],
-                                           )
-                #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                 cmd_opt["VideoFormat"]))
     def saveimages(self, file_sources, dest, logname):
         """
         Save as files image the selected video input. The saved 

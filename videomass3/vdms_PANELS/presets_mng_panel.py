@@ -552,18 +552,11 @@ class PresetsPanel(wx.Panel):
             passOne = split[0].strip()
             passTwo = split[1].strip()
             
-            command1 = ("-loglevel %s %s %s %s -f rawvideo" % (
-                                                    self.ffmpeg_loglev, 
-                                                    passOne, 
-                                                    self.threads, 
-                                                    self.cpu_used,
-                                                                )
+            command1 = ("%s %s %s -f rawvideo" % (passOne,
+                                                  self.threads, 
+                                                  self.cpu_used,)
                         )
-            command2 = ("-loglevel %s %s %s %s" % (self.ffmpeg_loglev, 
-                                                    passTwo, 
-                                                    self.threads, 
-                                                    self.cpu_used,
-                                                    )
+            command2 = ("%s %s %s" % (passTwo, self.threads,self.cpu_used,)
                         )
             pass1 = " ".join(command1.split())# mi formatta la stringa
             pass2 = " ".join(command2.split())# mi formatta la stringa
@@ -590,11 +583,10 @@ class PresetsPanel(wx.Panel):
                                                     array[4]))
 
         else:
-            command = ("-loglevel %s %s %s %s -y" % (self.ffmpeg_loglev, 
-                                                    self.txt_cmd.GetValue(), 
-                                                    self.threads, 
-                                                    self.cpu_used,)
-                                                    )
+            command = ("%s %s %s -y" % (self.txt_cmd.GetValue(), 
+                                        self.threads, 
+                                        self.cpu_used,
+                                        ))
             valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:

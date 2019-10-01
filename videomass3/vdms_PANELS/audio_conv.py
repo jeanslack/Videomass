@@ -633,17 +633,15 @@ class Audio_Conv(wx.Panel):
         Composes the ffmpeg command strings for the batch mode processing.
         
         """
-        title = _('Start audio conversion')
-        command = ("-loglevel %s -vn %s %s %s %s %s %s %s -y" % (
-                                            self.ffmpeg_loglevel,
-                                            cmd_opt["AudioCodec"],
-                                            cmd_opt["AudioBitrate"][1], 
-                                            cmd_opt["AudioDepth"][1], 
-                                            cmd_opt["AudioRate"][1], 
-                                            cmd_opt["AudioChannel"][1], 
-                                            self.threads,
-                                            self.cpu_used,)
-                                                                )
+        title = _('Audio conversions')
+        command = ("-vn %s %s %s %s %s %s %s -y" % (cmd_opt["AudioCodec"],
+                                                    cmd_opt["AudioBitrate"][1], 
+                                                    cmd_opt["AudioDepth"][1], 
+                                                    cmd_opt["AudioRate"][1], 
+                                                    cmd_opt["AudioChannel"][1], 
+                                                    self.threads,
+                                                    self.cpu_used,
+                                                    ))
         command = " ".join(command.split())# mi formatta la stringa
         valupdate = self.update_dict(countmax)
         ending = Formula(self, valupdate[0], valupdate[1], title)
@@ -677,9 +675,8 @@ class Audio_Conv(wx.Panel):
         loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' 
                                               %(str(self.spin_i.GetValue()),
                                                 str(self.spin_tp.GetValue()),
-                                                str(self.spin_lra.GetValue()))
-                     )
-        title = _('Start audio conversion')
+                                                str(self.spin_lra.GetValue())))
+        title = _('Audio conversions')
         cmd_1 = ('-vn %s %s' % (self.threads, self.cpu_used,))
         cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
                                                 cmd_opt["AudioBitrate"][1], 
@@ -717,8 +714,8 @@ class Audio_Conv(wx.Panel):
         """
         Composes the ffmpeg command strings for the batch_process_changes.
         """
-        title = _('Start audio export')
-        cmdsplit1 = ("-loglevel %s -vn" % (self.ffmpeg_loglevel,))
+        title = _('Extract audio from video')
+        cmdsplit1 = ("-vn")
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 
         valupdate = self.update_dict(countmax)

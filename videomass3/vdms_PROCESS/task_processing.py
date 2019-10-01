@@ -144,7 +144,7 @@ class GeneralProcess(wx.Panel):
         write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
         time.sleep(.1)
-        
+        self.ckbx_text.SetValue(True)
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
@@ -372,15 +372,17 @@ class ProcThread(Thread):
             source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
             outext = source_ext if not self.extoutput else self.extoutput
                 
-            cmd = '%s %s -i "%s" %s %s "%s/%s.%s"' % (ffmpeg_url, 
-                                                    self.time_seq,
-                                                    files, 
-                                                    self.command,
-                                                    volume,
-                                                    folders, 
-                                                    filename,
-                                                    outext,
-                                                    )
+            cmd = '%s %s -loglevel %s -i "%s" %s %s "%s/%s.%s"' %(
+                                                            ffmpeg_url, 
+                                                            self.time_seq,
+                                                            ffmpeg_loglev,
+                                                            files, 
+                                                            self.command,
+                                                            volume,
+                                                            folders, 
+                                                            filename,
+                                                            outext,
+                                                            )
             self.count += 1
             count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
@@ -507,16 +509,16 @@ class DoublePassThread(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
 
             #--------------- first pass
-            pass1 = ('%s -loglevel %s %s -i "%s" %s -passlogfile "%s/%s.log" '
-                     '-pass 1 -y %s' %(ffmpeg_url, 
-                                       ffmpeg_loglev,
-                                       self.time_seq,
-                                       files, 
-                                       self.passList[0],
-                                       folders, 
-                                       filename,
-                                       self.nul,
-                                       )) 
+            pass1 = ('%s -loglevel %s %s -i "%s" %s -passlogfile '
+                     '"%s/%s.log" -pass 1 -y %s' % (ffmpeg_url, 
+                                                    ffmpeg_loglev,
+                                                    self.time_seq,
+                                                    files, 
+                                                    self.passList[0],
+                                                    folders, 
+                                                    filename,
+                                                    self.nul,
+                                                    )) 
             self.count += 1
             count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
@@ -828,15 +830,16 @@ class GrabAudioProc(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
             out = os.path.join(folders, filename)
 
-            cmd = '%s %s -i "%s" %s %s %s "%s.%s"' % (ffmpeg_url,
-                                                      self.time_seq,
-                                                      files, 
-                                                      self.cmd_1, 
-                                                      codec, 
-                                                      self.cmd_2,
-                                                      out,
-                                                      ext,
-                                                      )
+            cmd = '%s %s -loglevel %s -i "%s" %s %s %s "%s.%s"' %(ffmpeg_url,
+                                                                  self.time_seq,
+                                                                  ffmpeg_loglev,
+                                                                  files, 
+                                                                  self.cmd_1, 
+                                                                  codec, 
+                                                                  self.cmd_2,
+                                                                  out,
+                                                                  ext,
+                                                                    )
             self.count += 1
             count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
@@ -1164,7 +1167,7 @@ class EBU_Norm_DoublePass(Thread):
             outext = source_ext if not self.ext else self.ext
             
             #--------------- first pass
-            if self.passList[3]: # for double pass video with ebu
+            if self.passList[3]: # True or False
                 pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
                          '%s -passlogfile "%s/%s.log" -pass 1 '
                          '-af %s -f %s -y %s' % (ffmpeg_url, 
