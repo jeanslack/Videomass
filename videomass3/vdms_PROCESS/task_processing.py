@@ -146,7 +146,6 @@ class GeneralProcess(wx.Panel):
         write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
         time.sleep(.1)
-        self.ckbx_text.SetValue(True)
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
@@ -172,7 +171,7 @@ class GeneralProcess(wx.Panel):
             SingleProcThread(self.varargs, self.duration,
                              self.logname, self.time_seq
                              )
-        elif self.varargs[0] == 'grabaudio':# from audio conv panel
+        elif self.varargs[0] == 'audioextract':# from audio conv panel
             GrabAudioProc(self.varargs, self.duration,
                           self.logname, self.time_seq
                           )

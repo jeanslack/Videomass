@@ -230,6 +230,7 @@ class MainFrame(wx.Frame):
                                                 pathicons[21],# icon analyzes
                                                 pathicons[22],# icon settings
                                                 pathicons[24],# icon peaklevel
+                                                pathicons[25],# icon audiotrack
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, 
                                                 self.ffmpeg_link, 

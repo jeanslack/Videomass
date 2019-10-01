@@ -589,15 +589,15 @@ class Audio_Conv(wx.Panel):
                                               %(str(self.spin_i.GetValue()),
                                                 str(self.spin_tp.GetValue()),
                                                 str(self.spin_lra.GetValue())))
-        title = _('Audio conversions')
+        title = _('Two pass Audio Loudnorm')
         cmd_1 = ('-vn %s %s' % (self.threads, self.cpu_used,))
         cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
-                                                cmd_opt["AudioBitrate"][1], 
-                                                cmd_opt["AudioDepth"][1], 
-                                                cmd_opt["AudioRate"][1], 
-                                                cmd_opt["AudioChannel"][1], 
-                                                self.threads,
-                                                self.cpu_used,))
+                                               cmd_opt["AudioBitrate"][1], 
+                                               cmd_opt["AudioDepth"][1], 
+                                               cmd_opt["AudioRate"][1], 
+                                               cmd_opt["AudioChannel"][1], 
+                                               self.threads,
+                                               self.cpu_used,))
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
         valupdate = self.update_dict(countmax)
@@ -674,30 +674,19 @@ class Audio_Conv(wx.Panel):
         dirconf = os.path.join(get.DIRconf, 'vdms')
         
         if cmd_opt["NormPEAK"]:
-            normalize = cmd_opt["NormPEAK"][0]# tengo il primo valore lista
+            normalize = cmd_opt["NormPEAK"][0]# tengo il primo valore lista 
         else:
             normalize = ''
-        
-        if self.cmbx_a.GetSelection == 9: # Only norm.
-            command = ("-vn %s" % normalize)
-            command = ' '.join(command.split())# sistemo gli spazi
-            list = [command, cmd_opt["ExportExt"]]
-            
-        elif self.cmbx_a.GetSelection == 8: # audio from movies
-            command = ("-vn %s" % cmd_opt["AudioCodec"][0])
-            command = ' '.join(command.split())# sistemo gli spazi
-            list = [command, cmd_opt["ExportExt"][0]]
   
-        else:
-            command = ("-vn %s %s %s %s %s %s" % (normalize, 
-                                                  cmd_opt["AudioCodec"], 
-                                                  cmd_opt["AudioBitrate"][1], 
-                                                  cmd_opt["AudioDepth"][1], 
-                                                  cmd_opt["AudioRate"][1], 
-                                                  cmd_opt["AudioChannel"][1],
-                                                  ))
-            command = ' '.join(command.split())# sistemo gli spazi
-            list = [command, cmd_opt["ExportExt"]]
+        command = ("-vn %s %s %s %s %s %s" % (normalize, 
+                                              cmd_opt["AudioCodec"], 
+                                              cmd_opt["AudioBitrate"][1], 
+                                              cmd_opt["AudioDepth"][1], 
+                                              cmd_opt["AudioRate"][1], 
+                                              cmd_opt["AudioChannel"][1],
+                                              ))
+        command = ' '.join(command.split())# sistemo gli spazi
+        list = [command, cmd_opt["ExportExt"]]
 
         filename = 'preset-v1-Personal'# nome del file preset senza ext
         name_preset = 'User Profiles'

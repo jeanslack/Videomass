@@ -128,7 +128,7 @@ class Video_Conv(wx.Panel):
                  threads, cpu_used, ffmpeg_loglev, ffplay_loglev, OS, 
                  iconplay, iconreset, iconresize, iconcrop, iconrotate, 
                  icondeinterlace, icondenoiser, iconanalyzes, iconsettings,
-                 iconpeaklevel):
+                 iconpeaklevel, iconatrack):
 
         wx.Panel.__init__(self, parent)
 
@@ -187,10 +187,11 @@ class Video_Conv(wx.Panel):
         self.shortest = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                      (_("Shortest"))
                                      )
+        audiotrack = wx.Bitmap(iconatrack, wx.BITMAP_TYPE_ANY)
         self.btn_audioAdd = GB.GradientButton(self.notebook_1_pane_1,
                                               wx.ID_OPEN,
-                                            #size=(-1,25),
-                                            #bitmap=analyzebmp,
+                                            size=(-1,25),
+                                            bitmap=audiotrack,
                                             label=_("Add audio track"))
         self.btn_audioAdd.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28, 28))
@@ -301,7 +302,7 @@ class Video_Conv(wx.Panel):
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                                       wx.ID_ANY, 
-                                                      (_("Filters Section"))
+                                                      (_("Video Filters"))
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
                                         size=(200, -1), choices=[
@@ -618,10 +619,10 @@ class Video_Conv(wx.Panel):
         sizer_pane3_audio_column2.Add(grid_sizer_in_column2, 1, wx.ALL, 15)
         grid_sizer_pane3_base.Add(sizer_pane3_audio_column2, 1, wx.ALL, 0)
         sizer_pane3_base.Add(grid_sizer_pane3_base, 0, 
-                                        wx.ALL,
-                                        #wx.ALIGN_CENTER_HORIZONTAL,
-                                        #wx.ALIGN_CENTER_VERTICAL,
-                                        50
+                                        wx.ALL|
+                                        wx.ALIGN_CENTER_HORIZONTAL|
+                                        wx.ALIGN_CENTER_VERTICAL,
+                                        20
                                         )
         self.notebook_1_pane_3.SetSizer(sizer_pane3_base)
         
@@ -920,8 +921,8 @@ class Video_Conv(wx.Panel):
                    'then use the "Duration" tool to set pictures duration. '
                    'Use the "Resize > Scale" filter to resize same resolution'
                    ))
-        msg_5 = (_('Extract audio from all imported videos which contain '
-                   'at least one audio stream'
+        msg_5 = (_('Tip: Import only video files that contain at least one '
+                   'audio stream'
                    ))
         #-------------- On ACCESS first revert to default ----------------#
         self.ckbx_pass.Show(), self.ckbx_pass.SetValue(False),
@@ -930,7 +931,8 @@ class Video_Conv(wx.Panel):
         self.slider_CRF.Show(),self.cmbx_Vaspect.Show(),
         self.shortest.Hide(), self.shortest.SetValue(True), 
         self.btn_audioAdd.Hide(), self.rdb_h264tune.SetSelection(0)
-        self.notebook_1_pane_2.Enable()
+        self.notebook_1_pane_2.Enable(), 
+        self.rdbx_normalize.EnableItem(2,enable=True)
         self.cmbx_vidContainers.Clear()
         for n in vcodecs.keys():
             self.cmbx_vidContainers.Append((n),)
@@ -2299,7 +2301,7 @@ class Video_Conv(wx.Panel):
         ending = Formula(self, valupdate[0], valupdate[1], title)
         
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('grabaudio',
+            self.parent.switch_Process('audioextract',
                                        '', 
                                        file_sources, #list
                                        dir_destin, #list
@@ -2459,7 +2461,11 @@ class Video_Conv(wx.Panel):
         else:
             normalize = ''
         
-        if not self.ckbx_pass.IsChecked():
+        if self.rdb_auto.GetSelection == 8: # audio extract from video
+            outext = cmd_opt["A_exportExt"]
+            command = ("-vn %s" % cmd_opt["A_CodecCopied"][0])
+        
+        elif not self.ckbx_pass.IsChecked():
             if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
                 outext = cmd_opt["VideoFormat"]
                 command = ('%s %s %s %s %s %s %s %s %s %s %s' % (
