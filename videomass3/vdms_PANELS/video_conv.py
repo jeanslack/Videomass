@@ -1070,8 +1070,8 @@ class Video_Conv(wx.Panel):
         
         self.btn_audioAdd.SetBottomEndColour(wx.Colour(0, 240, 0))
         
-        self.btn_audioAdd.SetLabel(_("Imported  '.%s'") %(
-                                               pathname.rsplit('.', 1)[1]))
+        self.btn_audioAdd.SetLabel(_("%s audio") %(
+                                        pathname.rsplit('.', 1)[1]).upper())
         self.notebook_1_pane_3.Enable()
         cmd_opt["Map"] = "-map 0:v:0 -map 1:a:0"
         self.normalize_default()
