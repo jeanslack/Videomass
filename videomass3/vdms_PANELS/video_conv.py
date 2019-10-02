@@ -348,8 +348,8 @@ class Video_Conv(wx.Panel):
                                      (_("Audio Normalization")), 
                                      choices=[
                                      (_('Disable')), 
-                                     (_('Peak Level Normalization')), 
-                                     (_('Loudness Normalization (EBU R128)')),
+                                     (_('Peak Level-based')), 
+                                     (_('Loudness using EBU R128')),
                                               ], 
                                      majorDimension=0, 
                                      style=wx.RA_SPECIFY_ROWS,
@@ -2054,9 +2054,9 @@ class Video_Conv(wx.Panel):
         
         else:
 
-            Vpass = True if cmd_opt["Passing"] == "double" else Vpass == False
+            Vpass = True if cmd_opt["Passing"] == "double" else False
 
-            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
+            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
                                                     cmd_opt["AddAudioStream"], 
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["Bitrate"],
@@ -2073,7 +2073,7 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["Map"], 
                                                     cmd_opt["Shortest"][1])
                     )
-            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s'
                     '%s %s' % (cmd_opt["AddAudioStream"],
                                cmd_opt["VideoCodec"], 
                                cmd_opt["Bitrate"], 

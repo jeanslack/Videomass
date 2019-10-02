@@ -3,3 +3,21 @@ Please report Videomass bugs, suggests or feedback to:
 <jeanlucperni@gmail.com>.
 
 Thanks ! 
+
+VIDEO:
+    CODEC COPY:
+        test loudnorm with copy codec ..OK
+    STD PASS VIDEO:
+        
+    TWO PASS VIDEO: 
+        test loudnorm with 
+                    AVI (h264) ..OK
+                    MP4 (h264) ..OK
+                    M4V (h264) ..OK
+                    MKV (h264) ..OK
+                    OGG ..OK
+                    WEBM ..OK
+                    FLV ..OK
+                   
+                   
+                   

@@ -1155,6 +1155,8 @@ class TwoPass_Loudnorm(Thread):
                    'Output LRA:': None, 'Output Threshold:': None, 
                    'Normalization Type:': None, 'Target Offset:': None
                    }
+        muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
+                  'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',}
         for (files,
              folders,
              duration) in itertools.zip_longest(self.filelist, 
@@ -1178,17 +1180,16 @@ class TwoPass_Loudnorm(Thread):
                                                  folders,
                                                  filename,
                                                  self.passList[2],#Loudnorm
-                                                 source_ext,# -f 
+                                                 muxers[outext],# -f 
                                                  self.nul,
                                                  ))
             else: # for copy codec and std convert
                 pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
-                         '%s -pass 1 -af %s -f %s -y %s' % (ffmpeg_url, 
+                         '%s -pass 1 -af %s -f null -y %s' % (ffmpeg_url, 
                                                             self.time_seq,
                                                             files, 
                                                             self.passList[0],
                                                             self.passList[2],
-                                                            outext,
                                                             self.nul,
                                                             )) 
             self.count += 1
