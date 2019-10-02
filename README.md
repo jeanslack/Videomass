@@ -7,27 +7,28 @@
 * [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
 * [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
 
-### Notice:
+## News
 
-Since version 1.6.1, Videomass is compatible only with Python3 and therefore 
-with wxPython4 (phoenix). For some reasons, such as the end of Python2 
-support by 1 January 2020, the technical difficulties in the practical 
-management of the code of both Python versions and the time investments 
-for porting, Videomass will cease development for compatibility with Python2 .
+- October 2019: Videomass now also supports a slideshows maker, 
+  merging audio-video, and Loudness-based normalization (EBU R128)
 
 ## Features
 
 - Drag n' Drop with multiple files at once
-- Batch mode conversions (except for exporting images)
+- Batch processing for all included features (except for exporting images and 
+  slideshow maker)
 - Presets manager interface with fully customizable and expandable profiles 
-- Independent video and audio conversions interface 
+- Dedicated interfaces: presets manager, video and audio conversions
 - Displaying streams information 
-- Playback the files imported and last exported file
-- Real-time filters preview (only with video conversion interface)
-- Save jpg images from movies
-- Audio peak level analysis with normalization process (only gain for now) 
-- Save audio streams from movies with language selection
-- Setting duration segments for imported files, filters, export and tests
+- Playback for imported files and last exported file
+- Real-time video filters preview (only with video conversion interface)
+- Save pictures from video in jpg, png and bmp formats
+- Audio to video merging with peak level or loudness normalization 
+- Slideshows maker with audio optional merging and peak level normalization
+- Perform audio peak level-based normalization
+- Perform audio Loudness-based normalization using EBU R128 algorithm
+- Save audio tracks from video with language selection (if multi audio streams)
+- Setting duration portions for imported files, filters, export and tests
 - Log management
 - Multi language (English and Italian Languages support for now)
 - Work on many platforms where Python3 and wxPython4 are supported, 
@@ -35,16 +36,13 @@ for porting, Videomass will cease development for compatibility with Python2 .
 - Compatible with Python 3 only
 - ...And more
 
-## Essential Dependencies
-
-**Required:**   
+## Requirements
+   
 - Python3     
 - wxPython4 (phoenix) 
 - PyPubSub
-- pip
-
-**Optionals:** but indispensable    
+- pip   
 - ffmpeg >= 3.2   
 - ffprobe (for multimedia streams analysis)  
-- ffplay (media player for media preview)   
+- ffplay (for playback)   
 

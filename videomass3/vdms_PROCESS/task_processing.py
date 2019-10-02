@@ -159,29 +159,29 @@ class GeneralProcess(wx.Panel):
         """
         Thread redirection
         """
-        if self.varargs[0] == 'normal':# from video and audio conv panels
-            ProcThread(self.varargs, self.duration,
-                       self.logname, self.time_seq,
-                       ) 
-        elif self.varargs[0] == 'doublepass': # from video conv panel
-            DoublePassThread(self.varargs, self.duration,
-                             self.logname, self.time_seq
-                             )
-        elif self.varargs[0] == 'saveimages': # from video conv panel
-            SingleProcThread(self.varargs, self.duration,
-                             self.logname, self.time_seq
-                             )
-        elif self.varargs[0] == 'audioextract':# from audio conv panel
-            GrabAudioProc(self.varargs, self.duration,
+        if self.varargs[0] == 'common':# from all panels
+            Common_Thread(self.varargs, self.duration,
+                          self.logname, self.time_seq,
+                          ) 
+        elif self.varargs[0] == 'doublepass': # from Vidconv/Prstmng panels
+            TwoPass_Video(self.varargs, self.duration,
                           self.logname, self.time_seq
                           )
+        elif self.varargs[0] == 'saveimages': # from Vidconv/Prstmng panels
+            Save_Pictures(self.varargs, self.duration,
+                          self.logname, self.time_seq
+                          )
+        elif self.varargs[0] == 'audioextract':# from Vidconv/Prstmng panels
+            Audio_Extact(self.varargs, self.duration,
+                         self.logname, self.time_seq
+                         )
         elif self.varargs[0] == 'slideshow':# from video conv panel
-            CreateSlideShow(self.varargs, self.duration, self.logname)
+            Slideshow_Maker(self.varargs, self.duration, self.logname)
             
-        elif self.varargs[0] == 'EBU normalization':# from audio conv panel
-            EBU_Norm_DoublePass(self.varargs, self.duration, 
-                                self.logname, self.time_seq
-                                )
+        elif self.varargs[0] == 'EBU normalization':# from Vidconv/Aconv panels
+            TwoPass_Loudnorm(self.varargs, self.duration, 
+                             self.logname, self.time_seq
+                            )
     #-------------------------------------------------------------------#
     def update_display(self, output, duration, status):
         """
@@ -324,7 +324,7 @@ https://stackoverflow.com/questions/1388753/how-to-get-output-
 from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
 """
-class ProcThread(Thread):
+class Common_Thread(Thread):
     """
     This class represents a separate thread for running processes, which 
     need to read the stdout/stderr in real time.
@@ -462,7 +462,7 @@ class ProcThread(Thread):
 
 ########################################################################
 
-class DoublePassThread(Thread):
+class TwoPass_Video(Thread):
     """
     This class represents a separate thread which need to read the 
     stdout/stderr in real time mode. The subprocess module is instantiated 
@@ -681,10 +681,10 @@ class DoublePassThread(Thread):
         print('...%s' % (mess))
         
 ########################################################################
-class SingleProcThread(Thread):
+class Save_Pictures(Thread):
     """
     This class represents a separate thread for running simple single 
-    processes, it is used by 'saveimages' feature in video conversion
+    processes, it is used to save as 'pictures' feature in video conversion
     and Presets Manager panels.
     """
     def __init__(self, varargs, duration, logname, timeseq):
@@ -784,12 +784,12 @@ class SingleProcThread(Thread):
         wx.CallAfter(pub.sendMessage, "END_EVT")
 
 ########################################################################
-class GrabAudioProc(Thread):
+class Audio_Extact(Thread):
     """
-    This class represents a separate thread for running processes, which 
-    need to read the stdout/stderr in real time.
-    It is reserved for extracting multiple audio files from different 
-    video formats.
+    This class extracts audio tracks on videos even from different 
+    formats and represents a separate thread for running processes, 
+    which need to read the stdout/stderr in real time.
+    
     """
     def __init__(self, varargs, duration, logname, timeseq):
         """
@@ -918,7 +918,7 @@ class GrabAudioProc(Thread):
         wx.CallAfter(pub.sendMessage, "END_EVT")
 
 ########################################################################
-class CreateSlideShow(Thread):
+class Slideshow_Maker(Thread):
     """
     This thread is indispensable for creating movies starting from 
     one or more pictures supported by FFmpeg. It should resize the 
@@ -1116,7 +1116,7 @@ class CreateSlideShow(Thread):
 
 ########################################################################
 
-class EBU_Norm_DoublePass(Thread):
+class TwoPass_Loudnorm(Thread):
     """
     This class represents a separate thread which need to read the 
     stdout/stderr in real time mode. The subprocess module is instantiated 

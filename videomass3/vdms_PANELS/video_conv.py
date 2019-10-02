@@ -1663,7 +1663,7 @@ class Video_Conv(wx.Panel):
         else:
             cmd_opt["Tune"] = "-tune:v %s" % (select)
     #------------------------------------------------------------------#
-    def audiocopy(self, file_sources):
+    def audiocopy_extract(self, file_sources):
         """
         Try copying and saving the audio stream on a video by 
         recognizing the codec and then assigning a container/format. 
@@ -1766,9 +1766,6 @@ class Video_Conv(wx.Panel):
             cmd_opt["CRF"] = ''
             cmd_opt["Bitrate"] = ''
             
-        if self.rdb_auto.GetSelection() == 4:
-            file_sources = self.parent.file_sources[:]
-            self.audiocopy(file_sources)
     #------------------------------------------------------------------#
     def on_ok(self):
         """
@@ -1803,7 +1800,8 @@ class Video_Conv(wx.Panel):
 
         # CHECKING:
         if self.rdb_auto.GetSelection() == 4:
-            self.update_allentries()
+            file_sources = self.parent.file_sources[:]
+            self.audiocopy_extract(file_sources)
             checking = inspect(file_sources, dir_destin, cmd_opt["A_exportExt"])
             
         elif self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
@@ -2291,8 +2289,6 @@ class Video_Conv(wx.Panel):
         Define the ffmpeg command strings for audio tracks extract
         from video.
         """
-        #print(file_sources, dir_destin, countmax, logname)
-        #return
         title = _('Audio extract from video')
         cmdsplit1 = ("-vn")
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
@@ -2461,9 +2457,9 @@ class Video_Conv(wx.Panel):
         else:
             normalize = ''
         
-        if self.rdb_auto.GetSelection == 8: # audio extract from video
-            outext = cmd_opt["A_exportExt"]
-            command = ("-vn %s" % cmd_opt["A_CodecCopied"][0])
+        if self.rdb_auto.GetSelection() == 4: # audio extract from video
+            outext = ''
+            command = ("-vn -map 0:1 -c copy")
         
         elif not self.ckbx_pass.IsChecked():
             if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
