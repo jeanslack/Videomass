@@ -176,10 +176,10 @@ class Video_Conv(wx.Panel):
         self.rdb_auto = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                    (_("Automations")), choices=[
                                             (_("Disable")), 
-                                            (_("Pictures from video")), 
-                                            (_("Add audio to video")), 
+                                            (_("Pictures from Video")), 
+                                            (_("Merging Audio and Video ")), 
                                             (_("Picture slideshow maker")),
-                                            (_("Extract audio from movies")),
+                                            (_("Extract Audio from Video")),
                                                                 ], 
                                     majorDimension=0, 
                                     style=wx.RA_SPECIFY_ROWS
@@ -915,7 +915,7 @@ class Video_Conv(wx.Panel):
                    ))
         msg_3 = (_('Tip: If audio format is supported by video format, use '
                    'audio and video copy options to speed up the process '
-                   'without re-encoding all'
+                   'without re-encoding'
                    ))
         msg_4 = (_('Tip: Import pictures ONLY (preferably in the same format), '
                    'then use the "Duration" tool to set pictures duration. '
@@ -1076,7 +1076,7 @@ class Video_Conv(wx.Panel):
         cmd_opt["Map"] = "-map 0:v:0 -map 1:a:0"
         self.normalize_default()
         
-        if self.rdb_auto.GetStringSelection() == _("Add audio to video"):
+        if self.rdb_auto.GetStringSelection() == _("Merging Audio and Video "):
             cmd_opt["Shortest"] = [False,'-shortest']
             
         elif self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
@@ -1523,10 +1523,14 @@ class Video_Conv(wx.Panel):
         Enable or disable functionality for volume normalization of
         the video.
         """
-        msg_1 = (_('Tip: set a target level and check peak level with the '
-                 '"Volumedetect" control'))
-        msg_2 = (_('Normalization the perceived loudness using the "​loudnorm" '
-                   'filter, which implements the EBU R128 algorithm'))
+        msg_1 = (_('Performs the Peak level normalization to a certain '
+                   'target level by analyzing the audio stream to get the '
+                   'maximum volume data.'
+                   ))
+        msg_2 = (_('Two pass Normalization. Normalize the perceived loudness '
+                   'using the "​loudnorm" filter, which implements the '
+                   'EBU R128 algorithm.'
+                   ))
         if self.rdbx_normalize.GetSelection() == 1:# is checked
             self.normalize_default(False)
             self.parent.statusbar_msg(msg_1, azure)

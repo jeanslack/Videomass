@@ -93,7 +93,7 @@ class Audio_Conv(wx.Panel):
         # Widgets definitions:
         self.cmbx_a = wx.ComboBox(self, wx.ID_ANY,
                                   choices=[x for x in acodecs.keys()],
-                                  style=wx.CB_DROPDOWN | 
+                                  size=(120,-1),style=wx.CB_DROPDOWN | 
                                   wx.CB_READONLY
                                   )
         self.cmbx_a.SetSelection(4)
@@ -115,8 +115,8 @@ class Audio_Conv(wx.Panel):
         self.rdbx_norm = wx.RadioBox(self,wx.ID_ANY,(_("Audio Normalization")), 
                                      choices=[
                                      (_('Disable')), 
-                                     (_('Peak Level Normalization')), 
-                                     (_('Loudness Normalization (EBU R128)')),
+                                     (_('Peak Level-based')), 
+                                     (_('Loudness using EBU R128')),
                                               ], 
                                      majorDimension=0, 
                                      style=wx.RA_SPECIFY_ROWS,
@@ -358,10 +358,14 @@ class Audio_Conv(wx.Panel):
         Sets a corresponding choice for audio normalization
         
         """
-        msg_1 = (_('Tip: set a target level and check peak level with the '
-                 '"Volumedetect" control'))
-        msg_2 = (_('Normalization the perceived loudness using the "​loudnorm" '
-                   'filter, which implements the EBU R128 algorithm'))
+        msg_1 = (_('Performs the Peak level normalization to a certain '
+                   'target level by analyzing the audio stream to get the '
+                   'maximum volume data.'
+                   ))
+        msg_2 = (_('Two pass Normalization. Normalize the perceived loudness '
+                   'using the "​loudnorm" filter, which implements the '
+                   'EBU R128 algorithm.'
+                   ))
         if self.rdbx_norm.GetSelection() == 1: # RMS
             self.parent.statusbar_msg(msg_1, azure)
             self.btn_analyzes.Enable()

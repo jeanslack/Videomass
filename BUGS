@@ -4,20 +4,32 @@ Please report Videomass bugs, suggests or feedback to:
 
 Thanks ! 
 
-VIDEO:
-    CODEC COPY:
-        test loudnorm with copy codec ..OK
-    STD PASS VIDEO:
+- error checking with LOUDNORM FILTER:
+
+    VIDEO:
+        COPY CODEC VIDEO:
+            test loudnorm with copy codec ..OK
+            
+        STD PASS VIDEO:
+            
+        TWO PASS VIDEO: 
+            test loudnorm with 
+                        AVI (h264) ..OK
+                        MP4 (h264) ..OK
+                        M4V (h264) ..OK
+                        MKV (h264) ..OK
+                        OGG ..OK
+                        WEBM ..OK
+                        FLV ..OK
+                        
+        AUDIO/VIDEO MERGING:
         
-    TWO PASS VIDEO: 
-        test loudnorm with 
-                    AVI (h264) ..OK
-                    MP4 (h264) ..OK
-                    M4V (h264) ..OK
-                    MKV (h264) ..OK
-                    OGG ..OK
-                    WEBM ..OK
-                    FLV ..OK
+            COPY CODEC VIDEO:
+            
+            STD PASS VIDEO:
+            
+            TWO PASS VIDEO:
+        
                    
                    
                    
