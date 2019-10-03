@@ -219,7 +219,7 @@ class Audio_Conv(wx.Panel):
                                     "bit-rate, audio channel and audio rate "
                                     "of the selected audio codec.")
                                               )
-        self.btn_analyzes.SetToolTip(_("Get the maximum and average peak "
+        self.btn_analyzes.SetToolTip(_("Gets the maximum and average peak "
                                        "levels in dB and calculates "
                                        "the normalization data offset")
                                               )
@@ -480,7 +480,7 @@ class Audio_Conv(wx.Panel):
         """
         Show a wx.ListCtrl dialog to list data of peak levels
         """
-        title = _('peak levels details index')
+        title = _('peak levels index')
         audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)
@@ -599,7 +599,7 @@ class Audio_Conv(wx.Panel):
                                               %(str(self.spin_i.GetValue()),
                                                 str(self.spin_tp.GetValue()),
                                                 str(self.spin_lra.GetValue())))
-        title = _('Two pass Audio Loudnorm')
+        title = _('Audio loudness normalization')
         cmd_1 = ('-vn %s %s' % (self.threads, self.cpu_used,))
         cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
                                                cmd_opt["AudioBitrate"][1], 
@@ -640,7 +640,7 @@ class Audio_Conv(wx.Panel):
         """
         numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["NormPEAK"]:
-            normalize = _('Peak level Norm.')
+            normalize = _('Peak level')
         elif cmd_opt["NormEBU"]:
             normalize = _('EBU R128 Loudnorm')
         else:

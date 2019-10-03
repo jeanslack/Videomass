@@ -179,7 +179,7 @@ class Video_Conv(wx.Panel):
                                             (_("Pictures from Video")), 
                                             (_("Merging Audio and Video ")), 
                                             (_("Picture slideshow maker")),
-                                            (_("Extract Audio from Video")),
+                                            (_("Extract Audio from Videos")),
                                                                 ], 
                                     majorDimension=0, 
                                     style=wx.RA_SPECIFY_ROWS
@@ -379,7 +379,7 @@ class Video_Conv(wx.Panel):
         self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
         
         self.lab_amplitude = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
-                                    (_("Target level (dB level limiter)"))
+                                    (_("Target level (dB level limiter):"))
                                     )
         self.spin_amplitude = FS.FloatSpin(self.notebook_1_pane_3, 
                                                      wx.ID_ANY, 
@@ -709,8 +709,8 @@ class Video_Conv(wx.Panel):
         #self.rdbx_normalize.SetToolTip(_('Performs peak level audio '
                                     #'normalization on the audio stream'
                                            #))
-        self.btn_analyzes.SetToolTip(_("Find the maximum and average peak "
-                                       "levels in dB values and calculates "
+        self.btn_analyzes.SetToolTip(_("Gets the maximum and average peak "
+                                       "levels in dB and calculates "
                                        "the normalization data offset"
                                        ))
         self.spin_amplitude.SetToolTip(_("Limiter for the maximum "
@@ -920,12 +920,12 @@ class Video_Conv(wx.Panel):
                    'the "Video Rate" to low values ​​0.2 fps / 0.5 fps'
                    ))
         msg_3 = (_('Tip: If audio format is supported by video format, use '
-                   'audio and video copy options to speed up the process '
+                   'audio or video copy options to speed up the process '
                    'without re-encoding'
                    ))
-        msg_4 = (_('Tip: Import pictures ONLY (preferably in the same format), '
-                   'then use the "Duration" tool to set pictures duration. '
-                   'Use the "Resize > Scale" filter to resize same resolution'
+        msg_4 = (_('Tip: import one or more pictures then use the "Duration" '
+                   'tool to set pictures duration and "Resize > Scale" '
+                   'filter to resize same resolution'
                    ))
         msg_5 = (_('Tip: Import only video files that contain at least one '
                    'audio stream'
@@ -1550,7 +1550,7 @@ class Video_Conv(wx.Panel):
             self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
 
         else:
-            self.parent.statusbar_msg(_("Disable audio normalization"), None)
+            self.parent.statusbar_msg(_("Audio normalization disabled"), None)
             self.normalize_default(False)
 
         self.notebook_1_pane_3.Layout()
@@ -1632,7 +1632,7 @@ class Video_Conv(wx.Panel):
         """
         Show a wx.ListCtrl dialog to list data of peak levels
         """
-        title = _('peak levels details index')
+        title = _('peak levels index')
         audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)
@@ -1690,7 +1690,7 @@ class Video_Conv(wx.Panel):
                 wx.MessageBox("[FFprobe] Error:  %s" % (metadata.error), 
                               "ERROR - Videomass",
                 wx.ICON_ERROR, self)
-                return
+                return True
             # Proceed with the istance method call:
             datastream = metadata.get_audio_codec_name()
             audio_list = datastream[0]
@@ -1698,7 +1698,7 @@ class Video_Conv(wx.Panel):
             if audio_list == None:
                 wx.MessageBox(_("There are no audio streams:\n%s ") % (files), 
                                 'Videomass', wx.ICON_INFORMATION, self)
-                return
+                return True
 
             elif len(audio_list) > 1:
                 title = datastream[1]
@@ -1726,7 +1726,7 @@ class Video_Conv(wx.Panel):
                         wx.MessageBox(_("Nothing choice:\n%s ") % (files), 
                                         'Videomass: Error', wx.ICON_ERROR, 
                                         self)
-                        return
+                        return True
                 else: # there must be some choice (default first item list)
                     cn = ''.join(audio_list[0]).split()[4]
                     indx = ''.join(audio_list[0]).split()[1]
@@ -1746,6 +1746,7 @@ class Video_Conv(wx.Panel):
                 if cn in ('ogg','vorbis'): cn = 'oga'
                 if cn.startswith('pcm_'): cn = 'wav'
                 cmd_opt["A_exportExt"].append(cn)
+        return    
     #-----------------------------------------------------------------------#
 
     def exportStreams(self, exported):
@@ -1808,9 +1809,11 @@ class Video_Conv(wx.Panel):
         logname = 'Videomass_VideoConversion.log'
 
         # CHECKING:
-        if self.rdb_auto.GetSelection() == 4:
+        if self.rdb_auto.GetSelection() == 4: # extract audio from videos
             file_sources = self.parent.file_sources[:]
-            self.audiocopy_extract(file_sources)
+            acopy = self.audiocopy_extract(file_sources)
+            if acopy:
+                return
             checking = inspect(file_sources, dir_destin, cmd_opt["A_exportExt"])
             
         elif self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
@@ -2008,7 +2011,7 @@ class Video_Conv(wx.Panel):
         os_processing.py at proc_batch_thread Class(Thread) ).
         
         """
-        title = _('Two pass AV Loudnorm')
+        title = _('Audio/Video loudness normalization')
         cmd_opt["NormEBU"] = 'EBU R128'
         loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %( 
                                               str(self.spin_i.GetValue()),
@@ -2306,7 +2309,7 @@ class Video_Conv(wx.Panel):
         Define the ffmpeg command strings for audio tracks extract
         from video.
         """
-        title = _('Audio extract from video')
+        title = _('Extract audio from videos')
         cmdsplit1 = ("-vn")
         cmdsplit2 = ("%s %s -y" % (self.threads, self.cpu_used,))
 
@@ -2340,7 +2343,7 @@ class Video_Conv(wx.Panel):
         """
         numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["NormPEAK"]:
-            normalize = _('Peak level Norm.')
+            normalize = _('Peak level')
         elif cmd_opt["NormEBU"]:
             normalize = _('EBU R128 Loudnorm')
         else:

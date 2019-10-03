@@ -40,8 +40,7 @@
    
 - Python3     
 - wxPython4 (phoenix) 
-- PyPubSub
-- pip   
+- PyPubSub  
 - ffmpeg >= 3.2   
 - ffprobe (for multimedia streams analysis)  
 - ffplay (for playback)   
