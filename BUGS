@@ -29,7 +29,27 @@ Thanks !
             STD PASS VIDEO:
             
             TWO PASS VIDEO:
+                AVI (h264) ..OK
         
                    
-                   
-                   
+
+- error checking with PEAK LEVEL NORM:
+    
+    VIDEO:
+        COPY CODEC VIDEO:
+            
+            
+        STD PASS VIDEO:
+            
+        TWO PASS VIDEO: 
+                        
+        AUDIO/VIDEO MERGING:
+        
+            COPY CODEC VIDEO:
+                ..OK
+            
+            STD PASS VIDEO:
+                AVI (xvid mpeg4) ..OK
+            
+            TWO PASS VIDEO:
+                AVI (h264) ..OK

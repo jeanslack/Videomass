@@ -590,7 +590,7 @@ class PresetsPanel(wx.Panel):
             valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('normal',
+                self.parent.switch_Process('common',
                                             file_sources, 
                                             array[4], 
                                             dir_destin, 

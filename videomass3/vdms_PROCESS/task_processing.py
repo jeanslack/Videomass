@@ -227,12 +227,12 @@ class GeneralProcess(wx.Panel):
             self.OutText.AppendText(' %s' % output[1])
 
         else:# append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():# not print the output of ffmpeg
+            if not self.ckbx_text.IsChecked():# not print the output
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
                 self.OutText.AppendText(' %s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
                 
-            
+                
             with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
                 logerr.write("[FFMPEG]: %s" % (output))
                 # write a row error into file log
@@ -288,19 +288,19 @@ class GeneralProcess(wx.Panel):
         """
         if STATUS_ERROR == 1:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
-            self.OutText.AppendText(_('\n\n Sorry, tasks failed !'))
+            self.OutText.AppendText(_('\n Sorry, tasks failed !\n'))
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         elif CHANGE_STATUS == 1:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(164, 30, 164)))
-            self.OutText.AppendText(_('\n\n Interrupted Process !'))
+            self.OutText.AppendText(_('\n Interrupted Process !\n'))
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
 
         else:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
-            self.OutText.AppendText(_('\n\n Done !'))
+            self.OutText.AppendText(_('\n Done !\n'))
             self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
@@ -1214,7 +1214,7 @@ class TwoPass_Loudnorm(Thread):
                                       universal_newlines=True) as p1:
                     
                     for line in p1.stderr:
-                        print (line, end=''),
+                        print (line, end='', ),
                         wx.CallAfter(pub.sendMessage, 
                                      "UPDATE_EVT", 
                                      output=line, 

@@ -714,12 +714,18 @@ class Video_Conv(wx.Panel):
                                        "the normalization data offset"
                                        ))
         self.spin_amplitude.SetToolTip(_("Limiter for the maximum "
-                                        "peak level in dB values. From -99.0 "
+                                        "peak level in dB. From -99.0 "
                                         "to +0.0 dB, default is -1.0"
                                                  ))
-        self.spin_i.SetToolTip(_("From -70.0 to -5.0, default is -24.0"))
-        self.spin_tp.SetToolTip(_("From -9.0 to +0.0, default is -2.0"))
-        self.spin_lra.SetToolTip(_("From +1.0 to +20.0, default is +7.0"))
+        self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
+                                 'From -70.0 to -5.0, default is -24.0'
+                                 ))
+        self.spin_tp.SetToolTip(_('Maximum True Peak in dBTP. From -9.0 '
+                                  'to +0.0, default is -2.0'
+                                  ))
+        self.spin_lra.SetToolTip(_('Loudness Range Target in LUFS. '
+                                   'From +1.0 to +20.0, default is +7.0'
+                                   ))
         self.rdb_a.SetToolTip(_("Choose an audio codec. Some audio codecs "
                                 "are disabled for certain video containers"
                                 ))
@@ -1527,9 +1533,9 @@ class Video_Conv(wx.Panel):
                    'target level by analyzing the audio stream to get the '
                    'maximum volume data.'
                    ))
-        msg_2 = (_('Two pass Normalization. Normalize the perceived loudness '
-                   'using the "​loudnorm" filter, which implements the '
-                   'EBU R128 algorithm.'
+        msg_2 = (_('Performs two passes normalization. It Normalizes the '
+                   'perceived loudness using the "​loudnorm" filter, which '
+                   'implements the EBU R128 algorithm.'
                    ))
         if self.rdbx_normalize.GetSelection() == 1:# is checked
             self.normalize_default(False)
@@ -1556,7 +1562,6 @@ class Video_Conv(wx.Panel):
         """
         if self.rdb_auto.GetSelection() in [2,3] and cmd_opt["AddAudioStream"]:
             path = cmd_opt["AddAudioStream"].replace('-i ', '').replace('"','')
-            print([path])
             self.audio_analyzes([path])
         else:
             file_sources = self.parent.file_sources[:]
@@ -1568,10 +1573,10 @@ class Video_Conv(wx.Panel):
         Get audio peak level analyzes data for the offset calculation 
         need to normalization process.
         """
-        msg1 = (_("Audio normalization will be applied"))
-        msg2 = (_("Audio normalization is required only for some files"))
-        msg3 = (_("Audio normalization is not required in relation to "
-                  "the set threshold"))
+        msg1 = (_('Audio normalization will be applied'))
+        msg2 = (_('Audio normalization is required only for some files'))
+        msg3 = (_('Audio normalization is not required in according to '
+                  'set target level'))
         
         self.parent.statusbar_msg("",None)
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
@@ -1873,7 +1878,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self,valupdate[0],valupdate[1],'Copy video codec')
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('normal',
+                self.parent.switch_Process('common',
                                            file_sources, 
                                            '', 
                                            dir_destin, 
@@ -1978,7 +1983,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('normal',
+                self.parent.switch_Process('common',
                                            file_sources, 
                                            cmd_opt['VideoFormat'], 
                                            dir_destin, 
@@ -2202,13 +2207,21 @@ class Video_Conv(wx.Panel):
         of a simple presentation or a movie with a single image
         
         """
+        nopict = [f for f in file_sources if os.path.splitext(f)[1] 
+                  not in ['.jpg','.png','.bmp','.JPG','.PNG','.BMP']]
+        if nopict:
+            wx.MessageBox(_('Please import only pictures in JPG, PNG or '
+                            'BMP formats.'), 
+                            'Videomass', 
+                             wx.ICON_INFORMATION, self)
+            return
+
         if not self.time_seq:
-            wx.MessageBox(_('You should set a length of time for the images '
-                            'or for a single image. Use the "Duration" tool '
-                            'setting ONLY "Cut (end point)" and NOT "Search '
-                            '(start point)".\n\nThe final video will have that ' 
-                            'duration multiplied by the number of pictures '
-                            'uploaded.'), 
+            wx.MessageBox(_('You should set a time length for the pictures: '
+                            'Use the "Duration" tool setting ONLY "Cut (end '
+                            'point)" and NOT "Search (start point)".\n\nThe '
+                            'final video will have that duration multiplied '
+                            'by the number of loaded pictures.'), 
                             'Videomass', 
                             wx.ICON_INFORMATION, self)
             return

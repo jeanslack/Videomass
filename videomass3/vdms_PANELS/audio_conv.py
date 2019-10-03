@@ -219,17 +219,23 @@ class Audio_Conv(wx.Panel):
                                     "bit-rate, audio channel and audio rate "
                                     "of the selected audio codec.")
                                               )
-        self.btn_analyzes.SetToolTip(_("Find the maximum and average peak "
-                                       "levels in dB values and calculates "
+        self.btn_analyzes.SetToolTip(_("Get the maximum and average peak "
+                                       "levels in dB and calculates "
                                        "the normalization data offset")
                                               )
         self.spin_amplitude.SetToolTip(_("Limiter for the maximum peak "
-                                         "level in dB values. From -99.0 "
+                                         "level in dB. From -99.0 "
                                          "to +0.0 dB, default is -1.0")
                                        )
-        self.spin_i.SetToolTip(_("From -70.0 to -5.0, default is -24.0"))
-        self.spin_tp.SetToolTip(_("From -9.0 to +0.0, default is -2.0"))
-        self.spin_lra.SetToolTip(_("From +1.0 to +20.0, default is +7.0"))
+        self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
+                                 'From -70.0 to -5.0, default is -24.0'
+                                 ))
+        self.spin_tp.SetToolTip(_('Maximum True Peak in dBTP. From -9.0 '
+                                  'to +0.0, default is -2.0'
+                                  ))
+        self.spin_lra.SetToolTip(_('Loudness Range Target in LUFS. '
+                                   'From +1.0 to +20.0, default is +7.0'
+                                   ))
         
         #----------------------Binding (EVT)----------------------#
         self.cmbx_a.Bind(wx.EVT_COMBOBOX, self.audioFormats)
@@ -362,9 +368,9 @@ class Audio_Conv(wx.Panel):
                    'target level by analyzing the audio stream to get the '
                    'maximum volume data.'
                    ))
-        msg_2 = (_('Two pass Normalization. Normalize the perceived loudness '
-                   'using the "​loudnorm" filter, which implements the '
-                   'EBU R128 algorithm.'
+        msg_2 = (_('Performs two passes normalization. It Normalizes the '
+                   'perceived loudness using the "​loudnorm" filter, which '
+                   'implements the EBU R128 algorithm.'
                    ))
         if self.rdbx_norm.GetSelection() == 1: # RMS
             self.parent.statusbar_msg(msg_1, azure)
@@ -418,10 +424,10 @@ class Audio_Conv(wx.Panel):
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
         """
-        msg1 = (_("Audio normalization will be applied"))
-        msg2 = (_("Audio normalization is required only for some files"))
-        msg3 = (_("Audio normalization is not required in relation to "
-                  "the set threshold"))
+        msg1 = (_('Audio normalization will be applied'))
+        msg2 = (_('Audio normalization is required only for some files'))
+        msg3 = (_('Audio normalization is not required in according to '
+                  'set target level'))
         
         self.parent.statusbar_msg("",None)
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
@@ -564,7 +570,7 @@ class Audio_Conv(wx.Panel):
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('normal',
+            self.parent.switch_Process('common',
                                         file_sources,
                                         cmd_opt["ExportExt"],
                                         dir_destin,
