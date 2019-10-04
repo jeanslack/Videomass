@@ -1304,7 +1304,6 @@ class TwoPass_Loudnorm(Thread):
                                                            filename,
                                                            outext,
                                                            ))
-            print(pass2)
             count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
