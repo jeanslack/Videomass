@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-04 00:53+0200\n"
-"PO-Revision-Date: 2019-10-04 00:55+0200\n"
+"POT-Creation-Date: 2019-10-05 18:32+0200\n"
+"PO-Revision-Date: 2019-10-05 18:36+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -492,8 +492,9 @@ msgid "DISABLED:"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/ffmpeg_conf.py:220
-#: ../videomass3/vdms_PANELS/video_conv.py:2347
-#: ../videomass3/vdms_PANELS/video_conv.py:2349
+#: ../videomass3/vdms_PANELS/audio_conv.py:732
+#: ../videomass3/vdms_PANELS/video_conv.py:2445
+#: ../videomass3/vdms_PANELS/video_conv.py:2447
 msgid "Disabled"
 msgstr ""
 
@@ -873,7 +874,7 @@ msgid "Quality/Speed ratio modifier (from -16 to 16)"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/settings.py:144
-#: ../videomass3/vdms_PANELS/audio_conv.py:117
+#: ../videomass3/vdms_PANELS/audio_conv.py:118
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:683
 #: ../videomass3/vdms_PANELS/video_conv.py:178
 #: ../videomass3/vdms_PANELS/video_conv.py:350
@@ -1008,19 +1009,19 @@ msgid "File name"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/shownormlist.py:63
-msgid "Max volume db"
+msgid "Max volume dB"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/shownormlist.py:64
-msgid "Average volume db"
+msgid "Mean volume dB"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/shownormlist.py:65
-msgid "Offset"
+msgid "Offset dB"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/shownormlist.py:66
-msgid "Normalization"
+msgid "Result dB"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/while_playing.py:32
@@ -1451,180 +1452,188 @@ msgstr ""
 msgid "..Start Encoding - Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:104
-#: ../videomass3/vdms_PANELS/video_conv.py:420
+#: ../videomass3/vdms_PANELS/audio_conv.py:105
+#: ../videomass3/vdms_PANELS/video_conv.py:421
 msgid "Audio Options"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:115
+#: ../videomass3/vdms_PANELS/audio_conv.py:116
 #: ../videomass3/vdms_PANELS/video_conv.py:348
 msgid "Audio Normalization"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:118
+#: ../videomass3/vdms_PANELS/audio_conv.py:119
 #: ../videomass3/vdms_PANELS/video_conv.py:351
 msgid "Peak Level-based"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:119
+#: ../videomass3/vdms_PANELS/audio_conv.py:120
+#: ../videomass3/vdms_PANELS/audio_conv.py:728
 #: ../videomass3/vdms_PANELS/video_conv.py:352
-msgid "Loudness using EBU R128"
+#: ../videomass3/vdms_PANELS/video_conv.py:2441
+msgid "RMS-based"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:128
+#: ../videomass3/vdms_PANELS/audio_conv.py:121
+#: ../videomass3/vdms_PANELS/video_conv.py:353
+msgid "EBU R128 algorithm"
+msgstr ""
+
+#: ../videomass3/vdms_PANELS/audio_conv.py:130
 msgid "Volumedected"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:140
-#: ../videomass3/vdms_PANELS/video_conv.py:373
-msgid "Peak levels index"
+#: ../videomass3/vdms_PANELS/audio_conv.py:142
+#: ../videomass3/vdms_PANELS/video_conv.py:374
+msgid "Volume Statistics"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:149
-#: ../videomass3/vdms_PANELS/video_conv.py:382
-msgid "Target level (dB level limiter):"
+#: ../videomass3/vdms_PANELS/audio_conv.py:151
+#: ../videomass3/vdms_PANELS/video_conv.py:383
+msgid "Target level:"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:156
-#: ../videomass3/vdms_PANELS/video_conv.py:393
-msgid "Set integrated loudness target:"
+#: ../videomass3/vdms_PANELS/audio_conv.py:158
+#: ../videomass3/vdms_PANELS/video_conv.py:394
+msgid "Set integrated loudness target:  "
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:163
-#: ../videomass3/vdms_PANELS/video_conv.py:401
+#: ../videomass3/vdms_PANELS/audio_conv.py:165
+#: ../videomass3/vdms_PANELS/video_conv.py:402
 msgid "Set maximum true peak:"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:170
-#: ../videomass3/vdms_PANELS/video_conv.py:409
+#: ../videomass3/vdms_PANELS/audio_conv.py:172
+#: ../videomass3/vdms_PANELS/video_conv.py:410
 msgid "Set loudness range target:"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:187
+#: ../videomass3/vdms_PANELS/audio_conv.py:189
 msgid "Audio format selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:218
+#: ../videomass3/vdms_PANELS/audio_conv.py:220
 msgid ""
 "Enable advanced settings as audio bit-rate, audio channel and audio rate of "
 "the selected audio codec."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:222
-#: ../videomass3/vdms_PANELS/video_conv.py:712
+#: ../videomass3/vdms_PANELS/audio_conv.py:224
+#: ../videomass3/vdms_PANELS/video_conv.py:713
 msgid ""
-"Gets the maximum and average peak levels in dB and calculates the "
+"Gets the maximum and average peak levels in dBFS and calculates the "
 "normalization data offset"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:226
-#: ../videomass3/vdms_PANELS/video_conv.py:716
+#: ../videomass3/vdms_PANELS/audio_conv.py:228
+#: ../videomass3/vdms_PANELS/video_conv.py:717
 msgid ""
-"Limiter for the maximum peak level in dB. From -99.0 to +0.0 dB, default is "
-"-1.0"
+"Limiter for the maximum volume and the mean volume (RMS) in dBFS. From -99.0 "
+"to +0.0 dBFS; default for PEAK level is -1.0; default for RMS is -20.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:230
-#: ../videomass3/vdms_PANELS/video_conv.py:720
+#: ../videomass3/vdms_PANELS/audio_conv.py:233
+#: ../videomass3/vdms_PANELS/video_conv.py:722
 msgid ""
 "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:233
-#: ../videomass3/vdms_PANELS/video_conv.py:723
+#: ../videomass3/vdms_PANELS/audio_conv.py:236
+#: ../videomass3/vdms_PANELS/video_conv.py:725
 msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:236
-#: ../videomass3/vdms_PANELS/video_conv.py:726
+#: ../videomass3/vdms_PANELS/audio_conv.py:239
+#: ../videomass3/vdms_PANELS/video_conv.py:728
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:367
-#: ../videomass3/vdms_PANELS/video_conv.py:1532
+#: ../videomass3/vdms_PANELS/audio_conv.py:371
+#: ../videomass3/vdms_PANELS/video_conv.py:1534
 msgid ""
-"Performs the Peak level normalization to a certain target level by analyzing "
-"the audio stream to get the maximum volume data."
+"Activate the PEAK level normalization, which will increase the maximum peak "
+"level until reaching the set target level."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:371
-#: ../videomass3/vdms_PANELS/video_conv.py:1536
+#: ../videomass3/vdms_PANELS/audio_conv.py:375
+#: ../videomass3/vdms_PANELS/video_conv.py:1538
 msgid ""
-"Performs two passes normalization. It Normalizes the perceived loudness "
+"Activate RMS-based normalization, which according to mean volume calculates "
+"the amount of gain to reach same average power signal."
+msgstr ""
+
+#: ../videomass3/vdms_PANELS/audio_conv.py:379
+#: ../videomass3/vdms_PANELS/video_conv.py:1542
+msgid ""
+"Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:395
+#: ../videomass3/vdms_PANELS/audio_conv.py:410
+#: ../videomass3/vdms_PANELS/video_conv.py:1566
 msgid "Audio normalization disabled"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:427
-#: ../videomass3/vdms_PANELS/video_conv.py:1576
-msgid "Audio normalization will be applied"
-msgstr ""
-
-#: ../videomass3/vdms_PANELS/audio_conv.py:428
-#: ../videomass3/vdms_PANELS/video_conv.py:1577
+#: ../videomass3/vdms_PANELS/audio_conv.py:451
+#: ../videomass3/vdms_PANELS/audio_conv.py:507
+#: ../videomass3/vdms_PANELS/video_conv.py:1610
+#: ../videomass3/vdms_PANELS/video_conv.py:1667
 msgid "Audio normalization is required only for some files"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:429
-#: ../videomass3/vdms_PANELS/video_conv.py:1578
-msgid "Audio normalization is not required in according to set target level"
+#: ../videomass3/vdms_PANELS/audio_conv.py:452
+#: ../videomass3/vdms_PANELS/audio_conv.py:508
+#: ../videomass3/vdms_PANELS/video_conv.py:1611
+#: ../videomass3/vdms_PANELS/video_conv.py:1668
+msgid "Audio normalization is not required based to set target level"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:455
-#: ../videomass3/vdms_PANELS/video_conv.py:1604
-msgid "Not Required"
+#: ../videomass3/vdms_PANELS/audio_conv.py:563
+#: ../videomass3/vdms_PANELS/video_conv.py:1724
+msgid "Maximum PEAK level statistics"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:463
-#: ../videomass3/vdms_PANELS/video_conv.py:1612
-msgid "Required"
+#: ../videomass3/vdms_PANELS/audio_conv.py:565
+#: ../videomass3/vdms_PANELS/video_conv.py:1726
+msgid "RMS-based statistics"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:483
-#: ../videomass3/vdms_PANELS/video_conv.py:1635
-msgid "peak levels index"
-msgstr ""
-
-#: ../videomass3/vdms_PANELS/audio_conv.py:521
-#: ../videomass3/vdms_PANELS/video_conv.py:1792
+#: ../videomass3/vdms_PANELS/audio_conv.py:604
+#: ../videomass3/vdms_PANELS/video_conv.py:1885
 msgid ""
 "Peak values not detected! use the \"Volumedetect\" button before proceeding, "
 "otherwise disable audio normalization."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:559
+#: ../videomass3/vdms_PANELS/audio_conv.py:641
 msgid "Audio conversions"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:602
-msgid "Audio loudness normalization"
+#: ../videomass3/vdms_PANELS/audio_conv.py:684
+msgid "Audio EBU normalization"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:641
-#: ../videomass3/vdms_PANELS/video_conv.py:2341
+#: ../videomass3/vdms_PANELS/audio_conv.py:723
+#: ../videomass3/vdms_PANELS/video_conv.py:2437
 #, python-format
 msgid "%s file in pending"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:643
-#: ../videomass3/vdms_PANELS/video_conv.py:2343
-msgid "Peak level"
+#: ../videomass3/vdms_PANELS/audio_conv.py:726
+#: ../videomass3/vdms_PANELS/video_conv.py:2439
+msgid "Max PEAK level"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:645
-#: ../videomass3/vdms_PANELS/video_conv.py:2345
+#: ../videomass3/vdms_PANELS/audio_conv.py:730
+#: ../videomass3/vdms_PANELS/video_conv.py:2443
 msgid "EBU R128 Loudnorm"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:647
-#: ../videomass3/vdms_PANELS/audio_conv.py:650
+#: ../videomass3/vdms_PANELS/audio_conv.py:735
 msgid "Not set"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:655
+#: ../videomass3/vdms_PANELS/audio_conv.py:740
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -1639,8 +1648,8 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:707
-#: ../videomass3/vdms_PANELS/video_conv.py:2575
+#: ../videomass3/vdms_PANELS/audio_conv.py:794
+#: ../videomass3/vdms_PANELS/video_conv.py:2675
 #, python-format
 msgid "Videomass: Create a new profile on \"%s\" preset"
 msgstr ""
@@ -1842,7 +1851,7 @@ msgstr ""
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:396
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:473
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:515
-#: ../videomass3/vdms_PANELS/video_conv.py:2238
+#: ../videomass3/vdms_PANELS/video_conv.py:2334
 msgid "Videomass: Please confirm"
 msgstr ""
 
@@ -1895,7 +1904,7 @@ msgid "Starts"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/presets_mng_panel.py:621
-#: ../videomass3/vdms_PANELS/video_conv.py:2143
+#: ../videomass3/vdms_PANELS/video_conv.py:2238
 msgid "To export images, select one of the files in the \"Add files\" panel"
 msgstr ""
 
@@ -1910,29 +1919,29 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:71
-#: ../videomass3/vdms_PANELS/video_conv.py:954
-#: ../videomass3/vdms_PANELS/video_conv.py:1387
-#: ../videomass3/vdms_PANELS/video_conv.py:1816
-#: ../videomass3/vdms_PANELS/video_conv.py:1858
-#: ../videomass3/vdms_PANELS/video_conv.py:2018
-#: ../videomass3/vdms_PANELS/video_conv.py:2482
+#: ../videomass3/vdms_PANELS/video_conv.py:956
+#: ../videomass3/vdms_PANELS/video_conv.py:1389
+#: ../videomass3/vdms_PANELS/video_conv.py:1911
+#: ../videomass3/vdms_PANELS/video_conv.py:1953
+#: ../videomass3/vdms_PANELS/video_conv.py:2113
+#: ../videomass3/vdms_PANELS/video_conv.py:2582
 msgid "Copy video codec"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:74
-#: ../videomass3/vdms_PANELS/video_conv.py:827
-#: ../videomass3/vdms_PANELS/video_conv.py:828
-#: ../videomass3/vdms_PANELS/video_conv.py:1432
+#: ../videomass3/vdms_PANELS/video_conv.py:830
+#: ../videomass3/vdms_PANELS/video_conv.py:831
+#: ../videomass3/vdms_PANELS/video_conv.py:1434
 msgid "Default (managed by FFmpeg)"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:82
-#: ../videomass3/vdms_PANELS/video_conv.py:1436
+#: ../videomass3/vdms_PANELS/video_conv.py:1438
 msgid "Try to copy audio source"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:83
-#: ../videomass3/vdms_PANELS/video_conv.py:1440
+#: ../videomass3/vdms_PANELS/video_conv.py:1442
 msgid "No audio stream (silent)"
 msgstr ""
 
@@ -1953,17 +1962,17 @@ msgid "Automations"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:179
-#: ../videomass3/vdms_PANELS/video_conv.py:2150
+#: ../videomass3/vdms_PANELS/video_conv.py:2245
 msgid "Pictures from Video"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:180
-#: ../videomass3/vdms_PANELS/video_conv.py:1085
+#: ../videomass3/vdms_PANELS/video_conv.py:1087
 msgid "Merging Audio and Video "
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:181
-#: ../videomass3/vdms_PANELS/video_conv.py:1088
+#: ../videomass3/vdms_PANELS/video_conv.py:1090
 msgid "Picture slideshow maker"
 msgstr ""
 
@@ -1976,7 +1985,7 @@ msgid "Shortest"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:195
-#: ../videomass3/vdms_PANELS/video_conv.py:1021
+#: ../videomass3/vdms_PANELS/video_conv.py:1023
 msgid "Add audio track"
 msgstr ""
 
@@ -2020,144 +2029,140 @@ msgstr ""
 msgid "Audio Codec Selecting"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:361
+#: ../videomass3/vdms_PANELS/video_conv.py:362
 msgid "Volumedetect"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:647
+#: ../videomass3/vdms_PANELS/video_conv.py:648
 msgid "Video Container"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:649
+#: ../videomass3/vdms_PANELS/video_conv.py:650
 msgid "Video Settings"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:651
+#: ../videomass3/vdms_PANELS/video_conv.py:652
 msgid "Audio Settings"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:653
+#: ../videomass3/vdms_PANELS/video_conv.py:654
 msgid "H.264/X.264 Options"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:664
+#: ../videomass3/vdms_PANELS/video_conv.py:665
 msgid ""
 "Video container that will be used in the conversion. When the container is "
 "changed, all settings are restored."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:671
+#: ../videomass3/vdms_PANELS/video_conv.py:672
 msgid ""
 "It can improve the video quality, but takes longer. Use it with high video "
 "compression."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:675
+#: ../videomass3/vdms_PANELS/video_conv.py:676
 msgid ""
 "Selecting \"Shortest\" option, the audio will be cut to the video duration"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:678
+#: ../videomass3/vdms_PANELS/video_conv.py:679
 msgid "Output format of the extracted pictures"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:680
+#: ../videomass3/vdms_PANELS/video_conv.py:681
 msgid ""
 "The bit rate determines the quality and the final video size. A larger value "
 "correspond to greater quality and size of the file."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:686
+#: ../videomass3/vdms_PANELS/video_conv.py:687
 msgid ""
 "CRF (constant rate factor) Affects the quality of the final video. Used for "
 "h264 codec on single pass only, 2-pass encoding swich to bitrate. With lower "
 "values the quality is higher and a larger file size."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:693
+#: ../videomass3/vdms_PANELS/video_conv.py:694
 msgid "Try the filters you've enabled by playing a video preview"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:696
+#: ../videomass3/vdms_PANELS/video_conv.py:697
 msgid "Clear all enabled filters "
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:698
+#: ../videomass3/vdms_PANELS/video_conv.py:699
 msgid ""
 "Video aspect (Aspect Ratio) is the video width and video height ratio. Leave "
 "on 'Default' to copy the original settings."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:703
+#: ../videomass3/vdms_PANELS/video_conv.py:704
 msgid ""
 "Video Rate: A any video consists of images displayed as frames, repeated a "
 "given number of times per second. In countries are 30 NTSC, PAL countries "
 "(like Italy) are 25. Leave on 'Default' to copy the original settings."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:729
+#: ../videomass3/vdms_PANELS/video_conv.py:731
 msgid ""
 "Choose an audio codec. Some audio codecs are disabled for certain video "
 "containers"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:732
+#: ../videomass3/vdms_PANELS/video_conv.py:734
 msgid "These parameters are enabled for the codecs h.264/x.264"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:904
+#: ../videomass3/vdms_PANELS/video_conv.py:906
 #, python-format
 msgid "Output format: %s"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:917
+#: ../videomass3/vdms_PANELS/video_conv.py:919
 msgid "Automations disabled"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:919
+#: ../videomass3/vdms_PANELS/video_conv.py:921
 msgid ""
 "Tip: use the \"Duration\" tool, then try setting the \"Video Rate\" to low "
 "values ​​0.2 fps / 0.5 fps"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:922
+#: ../videomass3/vdms_PANELS/video_conv.py:924
 msgid ""
 "Tip: If audio format is supported by video format, use audio or video copy "
 "options to speed up the process without re-encoding"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:926
+#: ../videomass3/vdms_PANELS/video_conv.py:928
 msgid ""
 "Tip: import one or more pictures then use the \"Duration\" tool to set "
 "pictures duration and \"Resize > Scale\" filter to resize same resolution"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:930
+#: ../videomass3/vdms_PANELS/video_conv.py:932
 msgid "Tip: Import only video files that contain at least one audio stream"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1079
+#: ../videomass3/vdms_PANELS/video_conv.py:1081
 #, python-format
 msgid "%s audio"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1148
-#: ../videomass3/vdms_PANELS/video_conv.py:1167
+#: ../videomass3/vdms_PANELS/video_conv.py:1150
+#: ../videomass3/vdms_PANELS/video_conv.py:1169
 msgid "No filter enabled"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1553
-msgid "Disable audio normalization"
-msgstr ""
-
-#: ../videomass3/vdms_PANELS/video_conv.py:1699
+#: ../videomass3/vdms_PANELS/video_conv.py:1791
 #, python-format
 msgid ""
 "There are no audio streams:\n"
 "%s "
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1707
+#: ../videomass3/vdms_PANELS/video_conv.py:1799
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -2166,32 +2171,32 @@ msgid ""
 "export between these:"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1711
+#: ../videomass3/vdms_PANELS/video_conv.py:1803
 msgid "Videomass: Stream choice"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1726
+#: ../videomass3/vdms_PANELS/video_conv.py:1818
 #, python-format
 msgid ""
 "Nothing choice:\n"
 "%s "
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1799
+#: ../videomass3/vdms_PANELS/video_conv.py:1892
 msgid ""
 "To add audio stream to a movie please import an audio track with \"Add audio "
 "track\" button."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2011
-msgid "Audio/Video loudness normalization"
+#: ../videomass3/vdms_PANELS/video_conv.py:2106
+msgid "Audio/Video EBU normalization"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2213
+#: ../videomass3/vdms_PANELS/video_conv.py:2309
 msgid "Please import only pictures in JPG, PNG or BMP formats."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2220
+#: ../videomass3/vdms_PANELS/video_conv.py:2316
 msgid ""
 "You should set a time length for the pictures: Use the \"Duration\" tool "
 "setting ONLY \"Cut (end point)\" and NOT \"Search (start point)\".\n"
@@ -2200,7 +2205,7 @@ msgid ""
 "pictures."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2233
+#: ../videomass3/vdms_PANELS/video_conv.py:2329
 msgid ""
 "Make sure all imported images have the same resolution, otherwise you should "
 "set it with the Resize filter.\n"
@@ -2208,11 +2213,11 @@ msgid ""
 "Do the slideshow images have the same resolution?"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2309
+#: ../videomass3/vdms_PANELS/video_conv.py:2405
 msgid "Extract audio from videos"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2356
+#: ../videomass3/vdms_PANELS/video_conv.py:2454
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2234,7 +2239,7 @@ msgid ""
 "Enable stopping to shortest"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2374
+#: ../videomass3/vdms_PANELS/video_conv.py:2472
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2245,7 +2250,7 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2384
+#: ../videomass3/vdms_PANELS/video_conv.py:2482
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2255,7 +2260,7 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2393
+#: ../videomass3/vdms_PANELS/video_conv.py:2491
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2280,11 +2285,11 @@ msgid ""
 "Enable stopping to shortest"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2405
+#: ../videomass3/vdms_PANELS/video_conv.py:2503
 msgid "As from source"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:2430
+#: ../videomass3/vdms_PANELS/video_conv.py:2528
 msgid ""
 "SUMMARY\n"
 "\n"

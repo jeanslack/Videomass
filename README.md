@@ -22,7 +22,7 @@
 - Dedicated interfaces: presets manager, video and audio conversions
 - Displaying streams information.
 - Playback for imported files and last exported file.
-- Real-time video filters preview on the video conversion interface.
+- Real-time video filters preview on the video conversions interface.
 - Three types of normalization: Peak level-based, rms-based and loudness using 
   EBU R128 algorithm, available on almost all processes.
 - Save pictures from video in jpg, png and bmp formats.

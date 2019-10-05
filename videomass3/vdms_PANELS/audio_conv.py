@@ -225,10 +225,10 @@ class Audio_Conv(wx.Panel):
                                        "levels in dBFS and calculates "
                                        "the normalization data offset")
                                               )
-        self.spin_target.SetToolTip(_('Limiter for the maximum volume (PEAK) '
-                                      'or mean volume (RMS) in dBFS. From '
-                                      '-99.0 to +0.0 dBFS, default PEAK is '
-                                      '-1.0, default RMS is -20.0'
+        self.spin_target.SetToolTip(_('Limiter for the maximum volume '
+                                      'and the mean volume (RMS) in dBFS. From '
+                                      '-99.0 to +0.0 dBFS; default for PEAK '
+                                      'level is -1.0; default for RMS is -20.0'
                                     ))
         self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
                                  'From -70.0 to -5.0, default is -24.0'
