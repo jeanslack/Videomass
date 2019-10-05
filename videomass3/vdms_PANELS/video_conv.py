@@ -54,7 +54,7 @@ cmd_opt = {"VidCmbxStr": "", "VideoFormat": "", "VideoCodec": "",
            "PixelFormat": "", "Orientation": ["",""],"Crop": "",
            "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
            "Filters": "", "Shortest": [False,""], "AddAudioStream": "",
-           "PicturesFormat": "", "YUV": "", "A_Copied": [],
+           "PictFormat": "", "YUV": "", "A_Copied": [],
            "A_exportExt": [], "A_CodecCopied": [],
            }
 # Namings in the video container selection combo box:
@@ -350,7 +350,7 @@ class Video_Conv(wx.Panel):
                                      (_('Disable')), 
                                      (_('Peak Level-based')), 
                                      (_('RMS-based')),
-                                     (_('Using EBU R128 algorithm')),
+                                     (_('EBU R128 algorithm')),
                                               ], 
                                      majorDimension=0, 
                                      style=wx.RA_SPECIFY_ROWS,
@@ -371,7 +371,7 @@ class Video_Conv(wx.Panel):
         self.btn_details = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25),
                                             bitmap=peaklevelbmp,
-                                            label=_("Peak signals levels"))
+                                            label=_("Volume Statistics"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28, 28))
         self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
@@ -391,7 +391,7 @@ class Video_Conv(wx.Panel):
                                             )
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         self.lab_i = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, (
-                             _("Set integrated loudness target:")))
+                             _("Set integrated loudness target:  ")))
         self.spin_i = FS.FloatSpin(self.notebook_1_pane_3, wx.ID_ANY, 
                                    min_val=-70.0, max_val=-5.0, 
                                    increment=0.5, value=-24.0, 
@@ -711,13 +711,14 @@ class Video_Conv(wx.Panel):
                                     #'normalization on the audio stream'
                                            #))
         self.btn_analyzes.SetToolTip(_("Gets the maximum and average peak "
-                                       "levels in dB and calculates "
+                                       "levels in dBFS and calculates "
                                        "the normalization data offset"
                                        ))
-        self.spin_target.SetToolTip(_("Limiter for the maximum "
-                                        "peak level in dB. From -99.0 "
-                                        "to +0.0 dB, default is -1.0"
-                                                 ))
+        self.spin_target.SetToolTip(_('Limiter for the maximum volume (PEAK) '
+                                      'or mean volume (RMS) in dBFS. From '
+                                      '-99.0 to +0.0 dBFS, default PEAK is'
+                                      '-1.0, default RMS is -20.0'
+                                    ))
         self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
                                  'From -70.0 to -5.0, default is -24.0'
                                  ))
@@ -760,6 +761,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.on_AudioFormats, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
+        self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_analyzes)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Presets, self.rdb_h264preset)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Profiles, self.rdb_h264profile)
@@ -841,10 +843,9 @@ class Video_Conv(wx.Panel):
     def normalize_default(self, setoff=True):
         """
         Set default normalization parameters of the audio panel. This method 
-        is called by preset_manager.switch_video_conv() on first run and
-        switch in this panel, or if there are changing on dragNdrop panel,
-        (when make a clear file list or append new file), or if change video 
-        container in the combobox.
+        is called by main_frame module on MainFrame.switch_video_conv() 
+        during first run and when there are changing on dragNdrop panel, 
+        (like make a clear file list or append new file, etc)
         
         """
         if setoff:
@@ -962,7 +963,7 @@ class Video_Conv(wx.Panel):
             self.notebook_1_pane_4.Disable()
             self.cmbx_Vrate.SetSelection(4), self.on_Vrate(self)
 
-            cmd_opt["PicturesFormat"] = "jpg"
+            cmd_opt["PictFormat"] = "jpg"
             self.parent.statusbar_msg(msg_2, greenolive)
             self.Layout()
             
@@ -1021,7 +1022,7 @@ class Video_Conv(wx.Panel):
         self.btn_audioAdd.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_audioAdd.SetLabel(_("Add audio track"))
         cmd_opt["Shortest"], cmd_opt["Map"] = [False,''], "-map 0"
-        cmd_opt["PicturesFormat"], cmd_opt["AddAudioStream"] = "", ""
+        cmd_opt["PictFormat"], cmd_opt["AddAudioStream"] = "", ""
         cmd_opt["Tune"] = ""
         if not self.notebook_1_pane_3.IsEnabled():
             self.notebook_1_pane_3.Enable()
@@ -1097,7 +1098,7 @@ class Video_Conv(wx.Panel):
         png and bmp
         
         """
-        cmd_opt["PicturesFormat"] = self.cmbx_pictformat.GetValue()
+        cmd_opt["PictFormat"] = self.cmbx_pictformat.GetValue()
         self.rdb_h264tune.SetSelection(4)
     #------------------------------------------------------------------#
     def on_Pass(self, event):
@@ -1525,20 +1526,20 @@ class Video_Conv(wx.Panel):
         audiodialog.Destroy()
 
     #------------------------------------------------------------------#
-    def onNormalize(self, event):  # check box
+    def onNormalize(self, event):
         """
         Enable or disable functionality for volume normalization of
         the video.
         """
-        msg_1 = (_('Performs the Peak level normalization to a certain '
-                   'target level by analyzing the audio stream to get the '
-                   'maximum volume data.'
+        msg_1 = (_('Activate the PEAK level normalization, which will '
+                   'increase the maximum peak level until reaching the '
+                   'set target level.'
                    ))
-        msg_2 = (_('Performs RMS-based normalization, which according to '
-                   'mean volume calculates the amount to reach same power '
-                   'average.'
+        msg_2 = (_('Activate RMS-based normalization, which according to '
+                   'mean volume calculates the amount of gain to reach same '
+                   'average power signal.'
                    ))
-        msg_3 = (_('Performs two passes normalization. It Normalizes the '
+        msg_3 = (_('Activate two passes normalization. It Normalizes the '
                    'perceived loudness using the "​loudnorm" filter, which '
                    'implements the EBU R128 algorithm.'
                    ))
@@ -1568,6 +1569,17 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_3.Layout()
         
     #------------------------------------------------------------------#
+    def on_enter_Ampl(self, event):
+        """
+        when spin_amplitude is changed enable 'Volumedected' to
+        update new incomming
+        
+        """
+        if not self.btn_analyzes.IsEnabled():
+            self.btn_analyzes.Enable()
+            self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
+        
+    #------------------------------------------------------------------#
     def on_Audio_analyzes(self, event):  # Volumedetect button
         """
         Evaluates the user's choices and directs them to the references 
@@ -1591,10 +1603,10 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def max_volume_PEAK(self, file_sources):  # Volumedetect button
         """
-        Analyzes to get MAXIMUM peak levels data to calculates offset in dB
-        need for audio normalization process.
+        Analyzes to get MAXIMUM peak levels data to calculates offset in
+        dBFS values need for audio normalization process.
+        
         """
-        msg1 = (_('Audio normalization will be applied'))
         msg2 = (_('Audio normalization is required only for some files'))
         msg3 = (_('Audio normalization is not required based to '
                   'set target level'))
@@ -1618,28 +1630,25 @@ class Video_Conv(wx.Panel):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(target)
+                result = float(maxvol) - offset
+                
                 if float(maxvol) >= float(target):
                     volume.append('  ')
-                    self.normdetails.append((f, 
-                                             maxvol, 
-                                             meanvol,
-                                             ' ',
-                                             _('Not Required')
-                                             ))
                 else:
                     volume.append("-af volume=%sdB" % (str(offset)[1:]))
-                    self.normdetails.append((f, 
-                                             maxvol,
-                                             meanvol,
-                                             str(offset)[1:],
-                                             _('Required')
-                                             ))
+                    
+                self.normdetails.append((f, 
+                                         maxvol,
+                                         meanvol,
+                                         str(offset),
+                                         str(result),
+                                         ))
                     
         if [a for a in volume if not '  ' in a] == []:
              self.parent.statusbar_msg(msg3, orange)
         else:
             if len(volume) == 1 or not '  ' in volume:
-                 self.parent.statusbar_msg(msg1, greenolive)
+                 pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
                 
@@ -1648,7 +1657,6 @@ class Video_Conv(wx.Panel):
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
         self.notebook_1_pane_3.Layout()
-        #self.btn_details.SetForegroundColour(wx.Colour(28,28,28))
 
     #------------------------------------------------------------------#
     def mean_volume_RMS(self, file_sources):  # Volumedetect button
@@ -1656,7 +1664,6 @@ class Video_Conv(wx.Panel):
         Analyzes to get MEAN peak levels data to calculates RMS offset in dB
         need for audio normalization process.
         """
-        msg1 = (_('Audio normalization will be applied'))
         msg2 = (_('Audio normalization is required only for some files'))
         msg3 = (_('Audio normalization is not required based to '
                   'set target level'))
@@ -1680,37 +1687,44 @@ class Video_Conv(wx.Panel):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(meanvol) - float(target)
-                gain = float(maxvol) - offset
-
-                volume.append("-af volume=%sdB" % (str(gain)[1:]))
+                result = float(maxvol) - offset
+                
+                if offset == 0.0:
+                    volume.append('  ')
+                else:
+                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    
                 self.normdetails.append((f, 
                                          maxvol,
                                          meanvol,
-                                         str(offset)[1:],
-                                         str(gain)[1:]
+                                         str(offset),
+                                         str(result),
                                          ))
                     
-        #if [a for a in volume if not '  ' in a] == []:
-             #self.parent.statusbar_msg(msg3, orange)
-        #else:
-            #if len(volume) == 1 or not '  ' in volume:
-                 #self.parent.statusbar_msg(msg1, greenolive)
-            #else:
-                #self.parent.statusbar_msg(msg2, yellow)
+        if [a for a in volume if not '  ' in a] == []:
+             self.parent.statusbar_msg(msg3, orange)
+        else:
+            if len(volume) == 1 or not '  ' in volume:
+                 pass
+            else:
+                self.parent.statusbar_msg(msg2, yellow)
                 
         cmd_opt["RMS"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
         self.notebook_1_pane_3.Layout()
-        #self.btn_details.SetForegroundColour(wx.Colour(28,28,28))
-
+        
     #------------------------------------------------------------------#
     def on_Show_normlist(self, event):
         """
-        Show a wx.ListCtrl dialog to list data of peak levels
+        Show a wx.ListCtrl dialog with volumedected data
         """
-        title = _('peak levels index')
+        if cmd_opt["PEAK"]:
+            title = _('Maximum PEAK level statistics')
+        elif cmd_opt["RMS"]:
+            title = _('RMS-based statistics')
+            
         audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)
@@ -1900,14 +1914,12 @@ class Video_Conv(wx.Panel):
             
         elif self.rdb_auto.GetSelection() == 1:# video to pictures
             self.time_seq = self.parent.time_seq
-            checking = inspect(file_sources, dir_destin, 
-                               cmd_opt["PicturesFormat"])
+            checking = inspect(file_sources, dir_destin, cmd_opt["PictFormat"])
         else:
             self.update_allentries()# last update of all setting interface
-            checking = inspect(file_sources, dir_destin, 
-                            cmd_opt["VideoFormat"])
-        if not checking[0]:
-            # the user does not want to continue or not such files exist
+            checking = inspect(file_sources, dir_destin, cmd_opt["VideoFormat"])
+            
+        if not checking[0]: # the user changing idea or not such files exist
             return
         
         (typeproc, file_sources, dir_destin,
@@ -1936,6 +1948,8 @@ class Video_Conv(wx.Panel):
         Define the ffmpeg command strings for batch process.
         
         """
+        audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
+            
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
             command = ('%s -loglevel %s %s %s %s %s %s %s %s %s %s %s %s '
                        '%s -y' %(
@@ -1966,7 +1980,7 @@ class Video_Conv(wx.Panel):
                                            command, 
                                            None, 
                                            '',
-                                           cmd_opt["PEAK"], 
+                                           audnorm, 
                                            logname, 
                                            countmax,
                                            cmd_opt["Shortest"][0],
@@ -2024,7 +2038,7 @@ class Video_Conv(wx.Panel):
                                            None, 
                                            [pass1, pass2], 
                                            '',
-                                           cmd_opt["PEAK"], 
+                                           audnorm, 
                                            logname, 
                                            countmax, 
                                            cmd_opt["Shortest"][0],
@@ -2071,7 +2085,7 @@ class Video_Conv(wx.Panel):
                                            command, 
                                            None, 
                                            '',
-                                           cmd_opt["PEAK"], 
+                                           audnorm, 
                                            logname, 
                                            countmax, 
                                            cmd_opt["Shortest"][0],
@@ -2089,7 +2103,7 @@ class Video_Conv(wx.Panel):
         os_processing.py at proc_batch_thread Class(Thread) ).
         
         """
-        title = _('Audio/Video loudness normalization')
+        title = _('Audio/Video EBU normalization')
         cmd_opt["EBU"] = 'EBU R128'
         loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %( 
                                               str(self.spin_i.GetValue()),
@@ -2253,7 +2267,7 @@ class Video_Conv(wx.Panel):
             YUV = {'jpg':'-pix_fmt yuvj420p', 'png': '-pix_fmt rgb24', 
                    'bmp': '-pix_fmt bgr24' 
                        }
-            fileout = "{0}-%d.{1}".format(fname,cmd_opt["PicturesFormat"])
+            fileout = "{0}-%d.{1}".format(fname,cmd_opt["PictFormat"])
             cmd = ('%s %s -i "%s" -loglevel %s -an %s %s %s '
                    '%s %s -y "%s/%s"' %(self.ffmpeg_link, 
                                         self.parent.time_seq,
@@ -2262,7 +2276,7 @@ class Video_Conv(wx.Panel):
                                         cmd_opt["VideoRate"],
                                         cmd_opt["Filters"],
                                         #cmd_opt["YUV"],
-                                        YUV[cmd_opt["PicturesFormat"]],
+                                        YUV[cmd_opt["PictFormat"]],
                                         self.threads, 
                                         self.cpu_used,
                                         outputdir, 
@@ -2288,6 +2302,7 @@ class Video_Conv(wx.Panel):
         of a simple presentation or a movie with a single image
         
         """
+        audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
         nopict = [f for f in file_sources if os.path.splitext(f)[1] 
                   not in ['.jpg','.png','.bmp','.JPG','.PNG','.BMP']]
         if nopict:
@@ -2373,7 +2388,7 @@ class Video_Conv(wx.Panel):
                                         cmd_2, 
                                         cmd_opt["VideoFormat"], 
                                         '',
-                                        cmd_opt["PEAK"], 
+                                        audnorm, 
                                         logname, 
                                         '1', 
                                         cmd_opt["Shortest"][0],
@@ -2421,7 +2436,9 @@ class Video_Conv(wx.Panel):
         """
         numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["PEAK"]:
-            normalize = _('Peak level')
+            normalize = _('Max PEAK level')
+        elif cmd_opt["RMS"]:
+            normalize = _('RMS-based')
         elif cmd_opt["EBU"]:
             normalize = _('EBU R128 Loudnorm')
         else:
@@ -2456,7 +2473,7 @@ class Video_Conv(wx.Panel):
                          \nImages Format\nVideo Rate\
                          \nFilters\nTime selection"
                         ))
-            dictions = ("\n\n1\n%s\n%s\n%s\n%s" % (cmd_opt["PicturesFormat"], 
+            dictions = ("\n\n1\n%s\n%s\n%s\n%s" % (cmd_opt["PictFormat"], 
                                                    cmd_opt["VideoRate"],   
                                                    cmd_opt["Filters"],
                                                    time))
@@ -2552,6 +2569,8 @@ class Video_Conv(wx.Panel):
         
         if cmd_opt["PEAK"]:
             normalize = cmd_opt["PEAK"][0]
+        elif cmd_opt["RMS"]:
+            normalize = cmd_opt["RMS"][0]# tengo il primo valore lista 
         else:
             normalize = ''
         
@@ -2576,7 +2595,7 @@ class Video_Conv(wx.Panel):
                             cmd_opt["Shortest"][1],)
                                 )
             elif self.rdb_auto.GetSelection() == 1:# video to pictures
-                outext = cmd_opt["PicturesFormat"]
+                outext = cmd_opt["PictFormat"]
                 YUV = {'jpg':'-pix_fmt yuvj420p', 
                        'png': '-pix_fmt rgb24', 
                        'bmp': '-pix_fmt bgr24'}

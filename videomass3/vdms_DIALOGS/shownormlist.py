@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: shownormlist.py
-# Porpose: Show a list with data normalization
+# Porpose: Show audio volume data list
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -31,11 +31,11 @@ import wx
 
 class NormalizationList(wx.Dialog):
     """
-    Show a dialog with a list control of files that 
-    require or not a normalization process.
+    Show a dialog with FFmpeg volumedetect command data and  report 
+    offset and gain results need for normalization process.
     
     """
-    def __init__(self, title, detailslist, OS):
+    def __init__(self, title, data, OS):
         """
         detailslist is a list of items list.
         
@@ -58,12 +58,12 @@ class NormalizationList(wx.Dialog):
                                     )
         #----------------------Properties----------------------#
         self.SetTitle(_(title))
-        normlist.SetMinSize((700, 200))
+        normlist.SetMinSize((800, 200))
         normlist.InsertColumn(0, _('File name'), width=300)
-        normlist.InsertColumn(1, _('Max volume db'), width=160)
-        normlist.InsertColumn(2, _('Average volume db'), width=150)
-        normlist.InsertColumn(3, _('Offset'), width=70)
-        normlist.InsertColumn(4, _('Normalization'), width=150)
+        normlist.InsertColumn(1, _('Max volume dB'), width=150)
+        normlist.InsertColumn(2, _('Mean volume dB'), width=150)
+        normlist.InsertColumn(3, _('Offset dB'), width=100)
+        normlist.InsertColumn(4, _('Result dB'), width=100)
         
         if OS == 'Darwin':
             normlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
@@ -86,18 +86,13 @@ class NormalizationList(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
 
-    #---------------------------------------------------------#
-    #### populate dmx listctrl output:
         index = 0 
-
-        for i in detailslist:
+        for i in data: #### populate dmx listctrl:
             normlist.InsertItem(index, i[0])
             normlist.SetItem(index, 1, i[1])
             normlist.SetItem(index, 2, i[2])
-            if not ' ' in i[3]:
-                normlist.SetItemBackgroundColour(index, '#e9504d')
-                normlist.SetItem(index, 3, i[3])
-            normlist.SetItem(index, 4, _(i[4]))
+            normlist.SetItem(index, 3, i[3])
+            normlist.SetItem(index, 4, i[4])
             
     #--------------------------------------------------------------# 
     def on_close(self, event):

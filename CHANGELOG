@@ -11,28 +11,36 @@ October 01, 2019 V.1.6.6
 +------------------------------------+
 
 NEWS:
-    * Audio normalization with EBU R128 algorithm (loudnorm) on Audio 
+    * Audio normalization with EBU R128 algorithm (loudnorm) on Audio .
       Conversions and Video Conversions panels.
-    * Slideshows maker
-    * Add audio to video
-    * Pictures from video
-    * Extrac audio from video
+    * Also added audio normalization in RMS .
+    * Slideshows maker.
+    * Add audio to video.
+    * Pictures from video.
+    * Extrac audio from video from video conversion panel.
+    
+REMOVED:
+    * Extrac audio from video from audio conversion panel.
+    * Only normalization on audio conversion panel.
+    
     
 ADD:
     * Added automations box on Video Conversion panel layout.
     * Added "-pix_fmt yuv420p" option to any video conversion with x264/h264
       on Video Conversions panel, to ensure compatibility so crappy players 
-      can decode the video
+      can decode the video.
     * Added new processing threads to make slideshows and to perform 
       loudness normalization according to EBU R128 algorithm.
       
 IMPROVEMENTS:
-    * code thinning in some file section in the old stuff
+    * code thinning in some file section in the old stuff.
+    * improved dialog box to show peak levels statistics.
     
 BUG FIXES:
     * fixed bug when choosing to copy the video codec that always enabled 
-      the audio alac format and left the other audio formats disabled
-    * Fixed issue of the video bitrate missing on single pass video
+      the audio alac format and left the other audio formats disabled.
+    * Fixed bitrate missing on single pass video (serius). This did not allow 
+      to choose the bitrate for the conversion.
 
 
 +------------------------------------+
