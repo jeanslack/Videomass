@@ -4,25 +4,23 @@ Please report Videomass bugs, suggests or feedback to:
 
 Thanks ! 
 
+--------------------------------------------------
 - error checking with LOUDNORM FILTER:
 
     VIDEO:
-        COPY CODEC VIDEO:
-            test loudnorm with copy codec ..OK
-            
-        STD PASS VIDEO:
-            AVI (ffmpeg mpeg4) ..OK
-            MKV (h264) ..ERROR: constant rate-factor is incompatible with 2pass.
-            
         TWO PASS VIDEO: 
-            test loudnorm with 
-                        AVI (h264) ..OK
-                        MP4 (h264) ..OK
-                        M4V (h264) ..OK
-                        MKV (h264) ..OK
-                        OGG ..OK
-                        WEBM ..OK
-                        FLV ..OK
+        
+            -copy codec video:
+                test loudnorm with copy codec ..OK
+            
+            -std conversion :
+                AVI (h264) ..OK
+                MP4 (h264) ..OK
+                M4V (h264) ..OK
+                MKV (h264) ..OK
+                OGG ..OK
+                WEBM ..OK
+                FLV ..OK
                         
         AUDIO/VIDEO MERGING:
         
@@ -32,8 +30,15 @@ Thanks !
             
             TWO PASS VIDEO:
                 AVI (h264) ..OK
+        ------------------------
+    AUDIO:
+        TWO PASS AUDIO: 
+            
+            -std conversion (-f null):
+                WAV to WAV ..OK
         
-                   
+----------------------------------------------------
+----------------------------------------------------
 
 - error checking with PEAK LEVEL NORM:
     

@@ -815,7 +815,6 @@ class Video_Conv(wx.Panel):
             self.rdb_h264profile.SetSelection(0)
             self.rdb_h264tune.SetSelection(0), self.on_h264Presets(self), 
             self.on_h264Profiles(self), self.on_h264Tunes(self)
-            print(cmd_opt["Passing"])
             
         else: # all others containers that not use h264
             self.notebook_1_pane_4.Disable()
