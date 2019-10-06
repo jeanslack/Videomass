@@ -701,7 +701,7 @@ class Audio_Conv(wx.Panel):
                                         '',
                                         dir_destin,
                                         cmd_opt["ExportExt"],
-                                        [pass1,pass2,loudfilter,None],
+                                        [pass1, pass2, loudfilter, False],
                                         self.ffmpeg_link,
                                         '',
                                         logname, 
@@ -723,11 +723,11 @@ class Audio_Conv(wx.Panel):
         numfile = _("%s file in pending") % str(countmax)
         
         if cmd_opt["PEAK"]:
-            normalize = _('Max PEAK level')
+            normalize = 'PEAK'
         elif cmd_opt["RMS"]:
-            normalize = _('RMS-based')
+            normalize = 'RMS'
         elif cmd_opt["EBU"]:
-            normalize = _('EBU R128 Loudnorm')
+            normalize = 'EBU R128'
         else:
             normalize = _('Disabled')
             

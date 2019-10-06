@@ -805,12 +805,18 @@ class Video_Conv(wx.Panel):
             self.btn_crop.Disable(), self.btn_rotate.Disable(), 
             self.btn_lacing.Disable(), self.btn_denois.Disable(), 
             self.btn_preview.Disable(), self.notebook_1_pane_4.Disable(), 
-            self.ckbx_pass.Disable(), self.ckbx_pass.SetValue(False)
-            self.slider_CRF.Disable(), self.rdb_h264preset.SetSelection(0)
+            if self.rdbx_normalize.GetSelection() == 3: 
+                self.ckbx_pass.SetValue(True)
+                cmd_opt["Passing"] = "double"
+            else:
+                self.ckbx_pass.SetValue(False)
+            self.ckbx_pass.Disable(), self.slider_CRF.Disable() 
+            self.rdb_h264preset.SetSelection(0)
             self.rdb_h264profile.SetSelection(0)
-            self.rdb_h264tune.SetSelection(0)
-            self.on_h264Presets(self), self.on_h264Profiles(self)
-            self.on_h264Tunes(self)
+            self.rdb_h264tune.SetSelection(0), self.on_h264Presets(self), 
+            self.on_h264Profiles(self), self.on_h264Tunes(self)
+            print(cmd_opt["Passing"])
+            
         else: # all others containers that not use h264
             self.notebook_1_pane_4.Disable()
             self.rdb_h264preset.SetSelection(0)
@@ -1119,7 +1125,7 @@ class Video_Conv(wx.Panel):
             self.slider_CRF.Disable()
             self.spin_Vbrate.Enable()
             
-        elif not self.ckbx_pass.IsChecked():
+        else:
             cmd_opt["Passing"] = "single"
             if cmd_opt["VideoCodec"] == "-vcodec libx264":
                 self.slider_CRF.Enable()
@@ -1570,9 +1576,10 @@ class Video_Conv(wx.Panel):
             self.normalize_default(False)
             self.lab_i.Show(), self.lab_tp.Show(), self.lab_lra.Show(),
             self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
-            self.ckbx_pass.Disable()
+            self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
+            cmd_opt["Passing"] = "double"
             if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
-                self.ckbx_pass.SetValue(True), self.on_Pass(self)
+                self.on_Pass(self)
         else:
             self.parent.statusbar_msg(_("Audio normalization disabled"), None)
             self.normalize_default(False)
@@ -1582,6 +1589,10 @@ class Video_Conv(wx.Panel):
         if not self.rdbx_normalize.GetSelection() == 3: 
             if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
                 self.ckbx_pass.Enable()
+                
+        if self.cmbx_vidContainers.GetSelection() == 10:#copycodec
+            if not self.rdbx_normalize.GetSelection() == 3: 
+                self.ckbx_pass.SetValue(False)
         
     #------------------------------------------------------------------#
     def on_enter_Ampl(self, event):
@@ -2160,7 +2171,7 @@ class Video_Conv(wx.Panel):
                                            '', 
                                            dir_destin, 
                                            cmd_opt["VideoFormat"], 
-                                           [pass1,pass2,loudfilter,None], 
+                                           [pass1, pass2, loudfilter, False], 
                                            '',
                                            '', 
                                            logname, 
@@ -2217,13 +2228,12 @@ class Video_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                Vpass = True if cmd_opt["Passing"] == "double" else False
                 self.parent.switch_Process('EBU normalization',
                                            file_sources, 
                                            '', 
                                            dir_destin, 
                                            cmd_opt["VideoFormat"], 
-                                           [pass1, pass2, loudfilter, Vpass], 
+                                           [pass1, pass2, loudfilter, True], 
                                            '',
                                            '', 
                                            logname, 
@@ -2449,11 +2459,11 @@ class Video_Conv(wx.Panel):
         """
         numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["PEAK"]:
-            normalize = _('Max PEAK level')
+            normalize = 'PEAK'
         elif cmd_opt["RMS"]:
-            normalize = _('RMS-based')
+            normalize = 'RMS'
         elif cmd_opt["EBU"]:
-            normalize = _('EBU R128 Loudnorm')
+            normalize = 'EBU R128'
         else:
             normalize = _('Disabled')
         if not self.parent.time_seq:
