@@ -175,7 +175,7 @@ class Video_Conv(wx.Panel):
                                                         )
         self.rdb_auto = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
                                    (_("Automations")), choices=[
-                                            (_("Disable")), 
+                                            ("Off"), 
                                             (_("Pictures from Video")), 
                                             (_("Merging Audio and Video ")), 
                                             (_("Picture slideshow maker")),
@@ -347,7 +347,7 @@ class Video_Conv(wx.Panel):
         self.rdbx_normalize = wx.RadioBox(self.notebook_1_pane_3,wx.ID_ANY,
                                      (_("Audio Normalization")), 
                                      choices=[
-                                     (_('Disable')), 
+                                       ('Off'), 
                                        ('PEAK'), 
                                        ('RMS'),
                                        ('EBU R128'),
@@ -662,45 +662,40 @@ class Video_Conv(wx.Panel):
         self.Layout()
         
         #----------------------Set Properties----------------------#
-        self.cmbx_vidContainers.SetToolTip(_("Video container that will " 
-                                             "be used in the conversion. "
-                                             "When the container is changed, " 
-                                             "all settings are restored."))
+        self.cmbx_vidContainers.SetToolTip(_('The output Video container'))
         self.cmbx_vidContainers.SetSelection(6)
 
 
-        self.ckbx_pass.SetToolTip(_("It can improve the video quality, "
-                                    "but takes longer. Use it with high "
-                                    "video compression.")
-                                                 )
+        self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
+                                    'reduce the file size, but takes longer.'
+                                    ))
         self.shortest.SetToolTip(_('Selecting "Shortest" option, the audio '
-                                   'will be cut to the video duration')
-                                 )
+                                   'will be cut to the video duration'
+                                   ))
         self.cmbx_pictformat.SetToolTip(_('Output format of the extracted '
-                                        'pictures'))
-        self.spin_Vbrate.SetToolTip(_("The bit rate determines the "
-                                            "quality and the final video "
-                                            "size. A larger value correspond "
-                                            "to greater quality and size of "
-                                            "the file.")
-                                                 )
+                                          'pictures'
+                                          ))
+        self.spin_Vbrate.SetToolTip(_('The bit rate determines the quality '
+                                      'and the final video size. A larger '
+                                      'value correspond to greater quality '
+                                      'and size of the file.'
+                                      ))
         self.slider_CRF.SetToolTip(_("CRF (constant rate factor) Affects "
                                  "the quality of the final video. Used for "
                                  "h264 codec on single pass only, 2-pass "
                                  "encoding swich to bitrate. With lower "
                                  "values the quality is higher and a larger "
-                                 "file size.")
-                                          )
-        self.btn_preview.SetToolTip(_("Try the filters you've enabled "
-                                          "by playing a video preview")
-                                          )
+                                 "file size."
+                                 ))
+        self.btn_preview.SetToolTip(_('Try the filters by playing a '
+                                      'video preview'
+                                      ))
         self.btn_reset.SetToolTip(_("Clear all enabled filters "))
         
         self.cmbx_Vaspect.SetToolTip(_("Video aspect (Aspect Ratio) "
                         "is the video width and video height ratio. "
                         "Leave on 'Default' to copy the original settings."
                                                 ))
-        
         self.cmbx_Vrate.SetToolTip(_("Video Rate: A any video consists "
                     "of images displayed as frames, repeated a given number "
                     "of times per second. In countries are 30 NTSC, PAL "
@@ -711,10 +706,11 @@ class Video_Conv(wx.Panel):
                                        "levels in dBFS and calculates "
                                        "the normalization data offset"
                                        ))
-        self.spin_target.SetToolTip(_('Limiter for the maximum volume '
-                                      'and the mean volume (RMS) in dBFS. From '
-                                      '-99.0 to +0.0 dBFS; default for PEAK '
-                                      'level is -1.0; default for RMS is -20.0'
+        self.spin_target.SetToolTip(_('Limiter for the maximum peak level '
+                                      'or the mean level when switch to RMS '
+                                      'in dBFS. From -99.0 to +0.0; default '
+                                      'for PEAK level is -1.0; default for '
+                                      'RMS is -20.0'
                                     ))
         self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
                                  'From -70.0 to -5.0, default is -24.0'
@@ -1546,9 +1542,8 @@ class Video_Conv(wx.Panel):
         the video.
         
         """
-        msg_1 = (_('Activate the PEAK level normalization, which will '
-                   'increase the maximum peak level until reaching the '
-                   'set target level.'
+        msg_1 = (_('Activate peak level normalization, which will produce '
+                   'a maximum peak level equal to the set target level.'
                    ))
         msg_2 = (_('Activate RMS-based normalization, which according to '
                    'mean volume calculates the amount of gain to reach same '
@@ -1580,7 +1575,7 @@ class Video_Conv(wx.Panel):
             if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
                 self.on_Pass(self)
         else:
-            self.parent.statusbar_msg(_("Audio normalization disabled"), None)
+            self.parent.statusbar_msg(_("Audio normalization switch off"), None)
             self.normalize_default(False)
 
         self.notebook_1_pane_3.Layout()
@@ -1746,7 +1741,7 @@ class Video_Conv(wx.Panel):
         Show a wx.ListCtrl dialog with volumedected data
         """
         if cmd_opt["PEAK"]:
-            title = _('Maximum PEAK level statistics')
+            title = _('PEAK-based statistics')
         elif cmd_opt["RMS"]:
             title = _('RMS-based statistics')
             
@@ -1907,16 +1902,17 @@ class Video_Conv(wx.Panel):
         # check normalization data offset, if enable
         if self.rdbx_normalize.GetSelection() in [1,2]:
             if self.btn_analyzes.IsEnabled():
-                wx.MessageBox(_('Peak values not detected! use the '
-                                '"Volumedetect" button before proceeding, '
-                                'otherwise disable audio normalization.'),
+                wx.MessageBox(_('Undetected volume values! use the '
+                                '"Volumedetect" control button to analyze '
+                                'the data on the audio volume.'),
                                 'Videomass', wx.ICON_INFORMATION)
                 return
         if self.rdb_auto.GetSelection() == 2:
             if not cmd_opt["Merging"]:
                 wx.MessageBox(_('To add audio stream to a movie please '
                                 'import an audio track with "Add audio track" '
-                                'button.'), 'Videomass', wx.ICON_INFORMATION)
+                                'control button.'), 
+                                'Videomass', wx.ICON_INFORMATION)
                 return
         # make a different id need to avoid attribute overwrite:
         file_sources = self.parent.file_sources[:]

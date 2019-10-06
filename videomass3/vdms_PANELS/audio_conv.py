@@ -115,7 +115,7 @@ class Audio_Conv(wx.Panel):
                                           )
         self.rdbx_norm = wx.RadioBox(self,wx.ID_ANY,(_("Audio Normalization")), 
                                      choices=[
-                                     (_('Disable')), 
+                                       ('Off'), 
                                        ('PEAK'), 
                                        ('RMS'),
                                        ('EBU R128'),
@@ -225,10 +225,11 @@ class Audio_Conv(wx.Panel):
                                        "levels in dBFS and calculates "
                                        "the normalization data offset")
                                               )
-        self.spin_target.SetToolTip(_('Limiter for the maximum volume '
-                                      'and the mean volume (RMS) in dBFS. From '
-                                      '-99.0 to +0.0 dBFS; default for PEAK '
-                                      'level is -1.0; default for RMS is -20.0'
+        self.spin_target.SetToolTip(_('Limiter for the maximum peak level '
+                                      'or the mean level when switch to RMS '
+                                      'in dBFS. From -99.0 to +0.0; default '
+                                      'for PEAK level is -1.0; default for '
+                                      'RMS is -20.0'
                                     ))
         self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
                                  'From -70.0 to -5.0, default is -24.0'
@@ -368,9 +369,8 @@ class Audio_Conv(wx.Panel):
         Sets a corresponding choice for audio normalization
         
         """
-        msg_1 = (_('Activate the PEAK level normalization, which will '
-                   'increase the maximum peak level until reaching the '
-                   'set target level.'
+        msg_1 = (_('Activate peak level normalization, which will produce '
+                   'a maximum peak level equal to the set target level.'
                    ))
         msg_2 = (_('Activate RMS-based normalization, which according to '
                    'mean volume calculates the amount of gain to reach same '
@@ -407,7 +407,7 @@ class Audio_Conv(wx.Panel):
             cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
 
         else: # usually it is 0
-            self.parent.statusbar_msg(_("Audio normalization disabled"), None)
+            self.parent.statusbar_msg(_("Audio normalization switch off"), None)
             self.normalization_default()
             
         self.Layout()
@@ -560,7 +560,7 @@ class Audio_Conv(wx.Panel):
         Show a wx.ListCtrl dialog with volumedected data
         """
         if cmd_opt["PEAK"]:
-            title = _('Maximum PEAK level statistics')
+            title = _('PEAK-based statistics')
         elif cmd_opt["RMS"]:
             title = _('RMS-based statistics')
             
@@ -601,9 +601,9 @@ class Audio_Conv(wx.Panel):
         # check normalization data offset, if enable.
         if self.rdbx_norm.GetSelection() in [1,2]: # PEAK or RMS
             if self.btn_analyzes.IsEnabled():
-                wx.MessageBox(_('Peak values not detected! use the '
-                                '"Volumedetect" button before proceeding, '
-                                'otherwise disable audio normalization.'),
+                wx.MessageBox(_('Undetected volume values! use the '
+                                '"Volumedetect" control button to analyze '
+                                'the data on the audio volume.'),
                                 "Videomass", wx.ICON_INFORMATION)
                 return
         self.update_allentries()# last update of all setting interface
