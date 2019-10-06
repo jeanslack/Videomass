@@ -53,7 +53,7 @@ cmd_opt = {"VidCmbxStr": "", "VideoFormat": "", "VideoCodec": "",
            "Deinterlace": "", "Interlace": "", "Map": "-map 0", 
            "PixelFormat": "", "Orientation": ["",""],"Crop": "",
            "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
-           "Filters": "", "Shortest": [False,""], "AddAudioStream": "",
+           "Filters": "", "Shortest": [False,""], "Merging": "",
            "PictFormat": "", "YUV": "", "A_Copied": [],
            "A_exportExt": [], "A_CodecCopied": [],
            }
@@ -206,7 +206,7 @@ class Video_Conv(wx.Panel):
                                            style=wx.CB_DROPDOWN | 
                                            wx.CB_READONLY
                                            )
-        self.spin_ctrl_bitrate = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
+        self.spin_Vbrate = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
                                              "1500", min=0, max=25000, 
                                              style=wx.TE_PROCESS_ENTER
                                              )
@@ -348,9 +348,9 @@ class Video_Conv(wx.Panel):
                                      (_("Audio Normalization")), 
                                      choices=[
                                      (_('Disable')), 
-                                     (_('Peak Level-based')), 
-                                     (_('RMS-based')),
-                                     (_('EBU R128 algorithm')),
+                                       ('PEAK'), 
+                                       ('RMS'),
+                                       ('EBU R128'),
                                               ], 
                                      majorDimension=0, 
                                      style=wx.RA_SPECIFY_ROWS,
@@ -533,7 +533,7 @@ class Video_Conv(wx.Panel):
 
         sizer_automations.Add(grid_sizer_automations, 1, wx.EXPAND, 0)
         grid_sizer_pane1_base.Add(sizer_automations, 1, wx.ALL | wx.EXPAND, 15)
-        sizer_bitrate.Add(self.spin_ctrl_bitrate, 0, wx.ALL| 
+        sizer_bitrate.Add(self.spin_Vbrate, 0, wx.ALL| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
@@ -678,7 +678,7 @@ class Video_Conv(wx.Panel):
                                  )
         self.cmbx_pictformat.SetToolTip(_('Output format of the extracted '
                                         'pictures'))
-        self.spin_ctrl_bitrate.SetToolTip(_("The bit rate determines the "
+        self.spin_Vbrate.SetToolTip(_("The bit rate determines the "
                                             "quality and the final video "
                                             "size. A larger value correspond "
                                             "to greater quality and size of "
@@ -707,9 +707,6 @@ class Video_Conv(wx.Panel):
                     "countries (like Italy) are 25. Leave on 'Default' "
                     "to copy the original settings."
                                    ))
-        #self.rdbx_normalize.SetToolTip(_('Performs peak level audio '
-                                    #'normalization on the audio stream'
-                                           #))
         self.btn_analyzes.SetToolTip(_("Gets the maximum and average peak "
                                        "levels in dBFS and calculates "
                                        "the normalization data offset"
@@ -747,7 +744,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_CHECKBOX, self.on_Shortest, self.shortest)
         self.Bind(wx.EVT_BUTTON, self.on_AddaudioStr, self.btn_audioAdd)
         self.Bind(wx.EVT_COMBOBOX, self.on_PicturesFormat, self.cmbx_pictformat)
-        self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_ctrl_bitrate)
+        self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
@@ -796,11 +793,15 @@ class Video_Conv(wx.Panel):
             self.notebook_1_pane_4.Enable(), self.btn_videosize.Enable(), 
             self.btn_crop.Enable(), self.btn_rotate.Enable(), 
             self.btn_lacing.Enable(), self.btn_denois.Enable(), 
-            self.btn_preview.Enable(), self.ckbx_pass.Enable(),
+            self.btn_preview.Enable() #self.ckbx_pass.Enable(),
+            if self.rdbx_normalize.GetSelection() == 3: 
+                self.ckbx_pass.SetValue(True)
+            else:
+                self.ckbx_pass.Enable()
             self.on_Pass(self)
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
-            self.spin_ctrl_bitrate.Disable(), self.btn_videosize.Disable(), 
+            self.spin_Vbrate.Disable(), self.btn_videosize.Disable(), 
             self.btn_crop.Disable(), self.btn_rotate.Disable(), 
             self.btn_lacing.Disable(), self.btn_denois.Disable(), 
             self.btn_preview.Disable(), self.notebook_1_pane_4.Disable(), 
@@ -819,8 +820,14 @@ class Video_Conv(wx.Panel):
             self.on_h264Tunes(self), self.btn_videosize.Enable(), 
             self.btn_crop.Enable(), self.btn_rotate.Enable(), 
             self.btn_lacing.Enable(), self.btn_denois.Enable(), 
-            self.btn_preview.Enable(), self.ckbx_pass.Enable(),
+            self.btn_preview.Enable() #self.ckbx_pass.Enable(),
+            if self.rdbx_normalize.GetSelection() == 3: 
+                self.ckbx_pass.SetValue(True)
+            else:
+                self.ckbx_pass.Enable()
             self.on_Pass(self)
+            
+        
     #-------------------------------------------------------------------#
     def audio_default(self):
         """
@@ -935,16 +942,19 @@ class Video_Conv(wx.Panel):
         #-------------- On ACCESS first revert to default ----------------#
         self.ckbx_pass.Show(), self.ckbx_pass.SetValue(False),
         self.cmbx_pictformat.Hide(), self.cmbx_vidContainers.Show(),
-        self.ckbx_pass.Show(), self.spin_ctrl_bitrate.Show(),
+        self.spin_Vbrate.Show(),
         self.slider_CRF.Show(),self.cmbx_Vaspect.Show(),
         self.shortest.Hide(), self.shortest.SetValue(True), 
         self.btn_audioAdd.Hide(), self.rdb_h264tune.SetSelection(0)
         self.notebook_1_pane_2.Enable(), 
-        self.rdbx_normalize.EnableItem(2,enable=True)
+        self.rdbx_normalize.EnableItem(3,enable=True)
         self.cmbx_vidContainers.Clear()
         for n in vcodecs.keys():
             self.cmbx_vidContainers.Append((n),)
         self.cmbx_vidContainers.SetStringSelection(cmd_opt["VidCmbxStr"])
+        self.on_Pass(self)
+        self.normalize_default()
+        self.Layout()
         
         #------------------- start widgets settings ------------------#
         ####----------- Default
@@ -958,7 +968,7 @@ class Video_Conv(wx.Panel):
                 self.vidContainers(self)
             self.cmbx_pictformat.Show(), self.cmbx_pictformat.SetSelection(0)
             self.cmbx_vidContainers.Hide(),self.ckbx_pass.Hide(),
-            self.spin_ctrl_bitrate.Hide(), self.slider_CRF.Hide(),
+            self.spin_Vbrate.Hide(), self.slider_CRF.Hide(),
             self.cmbx_Vaspect.Hide(), self.notebook_1_pane_3.Disable(),
             self.notebook_1_pane_4.Disable()
             self.cmbx_Vrate.SetSelection(4), self.on_Vrate(self)
@@ -974,10 +984,10 @@ class Video_Conv(wx.Panel):
             self.parent.statusbar_msg(msg_3, azure)
             self.btn_audioAdd.Show()
             self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
-            self.rdbx_normalize.EnableItem(2,enable=True)
             
-            if cmd_opt["AddAudioStream"]:
+            if cmd_opt["Merging"]:
                 self.notebook_1_pane_3.Enable()
+                self.rdbx_normalize.EnableItem(3,enable=True)
                 cmd_opt["Shortest"] = [False,'-shortest']
             else:
                 self.notebook_1_pane_3.Disable()
@@ -994,17 +1004,18 @@ class Video_Conv(wx.Panel):
                     self.cmbx_vidContainers.Append((n),)
             self.cmbx_vidContainers.SetSelection(1)
             self.vidContainers(self)#### 
-            self.spin_ctrl_bitrate.Hide()
+            self.spin_Vbrate.Hide(), self.slider_CRF.Enable()
             self.rdb_h264tune.SetSelection(4)
             self.cmbx_Vaspect.Hide()
             cmd_opt["Tune"] = "-tune:v stillimage"
             self.shortest.Show(), self.btn_audioAdd.Show()
             self.cmbx_Vrate.SetSelection(1), self.on_Vrate(self)
-            if cmd_opt["AddAudioStream"]:
+            
+            if cmd_opt["Merging"]:
                 self.notebook_1_pane_3.Enable()
+                self.rdbx_normalize.EnableItem(3,enable=False)
             else:
                 self.notebook_1_pane_3.Disable()
-            self.rdbx_normalize.EnableItem(2,enable=False)
             self.parent.statusbar_msg(msg_4, violet)
             self.Layout()
             
@@ -1012,7 +1023,7 @@ class Video_Conv(wx.Panel):
         ####----------- Extract audio from video
         elif self.rdb_auto.GetSelection() == 4:
             self.cmbx_vidContainers.Hide(), self.ckbx_pass.Hide(),
-            self.slider_CRF.Hide(), self.spin_ctrl_bitrate.Hide(),
+            self.slider_CRF.Hide(), self.spin_Vbrate.Hide(),
             self.notebook_1_pane_2.Disable(), self.notebook_1_pane_3.Disable(), 
             self.notebook_1_pane_4.Disable()
             self.parent.statusbar_msg(msg_5,wx.Colour('CORAL'))
@@ -1022,14 +1033,12 @@ class Video_Conv(wx.Panel):
         self.btn_audioAdd.SetBottomEndColour(wx.Colour(205, 235, 222))
         self.btn_audioAdd.SetLabel(_("Add audio track"))
         cmd_opt["Shortest"], cmd_opt["Map"] = [False,''], "-map 0"
-        cmd_opt["PictFormat"], cmd_opt["AddAudioStream"] = "", ""
+        cmd_opt["PictFormat"], cmd_opt["Merging"] = "", ""
         cmd_opt["Tune"] = ""
         if not self.notebook_1_pane_3.IsEnabled():
             self.notebook_1_pane_3.Enable()
         self.vidContainers(self)
         self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
-        self.normalize_default()
-        self.Layout()
         
     #------------------------------------------------------------------#
     def on_Shortest(self, event):
@@ -1039,13 +1048,13 @@ class Video_Conv(wx.Panel):
         duration.
         
         """
-        if not cmd_opt["AddAudioStream"]:
+        if not cmd_opt["Merging"]:
             return
         if self.shortest.IsChecked():
             cmd_opt["Shortest"] = [False, '-shortest']
         else:
             from videomass3.vdms_IO import IO_tools
-            path = cmd_opt["AddAudioStream"].replace('-i ', '').replace('"','')
+            path = cmd_opt["Merging"].replace('-i ', '').replace('"','')
             s = IO_tools.probeDuration(path, self.ffprobe_link)
             cmd_opt["Shortest"] = [s[0], '']
             
@@ -1054,7 +1063,7 @@ class Video_Conv(wx.Panel):
     def on_AddaudioStr(self, event):
         """
         Add audio track on video or to slideshow and sets the 
-        `cmd_opt["AddAudioStream"]` value with audio pathname, the
+        `cmd_opt["Merging"]` value with audio pathname, the
         `cmd_opt["Map"]` value with new mapping. With slideshow
         option selected it also calls the `on_Shortest` method.
         
@@ -1074,7 +1083,7 @@ class Video_Conv(wx.Panel):
 
             # Proceed loading the file chosen by the user
             pathname = fileDialog.GetPath()
-            cmd_opt["AddAudioStream"] = '-i "%s"' % pathname
+            cmd_opt["Merging"] = '-i "%s"' % pathname
         
         self.btn_audioAdd.SetBottomEndColour(wx.Colour(0, 240, 0))
         
@@ -1088,7 +1097,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Shortest"] = [False,'-shortest']
             
         elif self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
-            #self.rdbx_normalize.EnableItem(1,enable=False)
+            self.rdbx_normalize.EnableItem(3,enable=False)
             self.on_Shortest(self)
 
     #------------------------------------------------------------------#
@@ -1108,16 +1117,16 @@ class Video_Conv(wx.Panel):
         if self.ckbx_pass.IsChecked():
             cmd_opt["Passing"] = "double"
             self.slider_CRF.Disable()
-            self.spin_ctrl_bitrate.Enable()
+            self.spin_Vbrate.Enable()
             
         elif not self.ckbx_pass.IsChecked():
             cmd_opt["Passing"] = "single"
             if cmd_opt["VideoCodec"] == "-vcodec libx264":
                 self.slider_CRF.Enable()
-                self.spin_ctrl_bitrate.Disable()
+                self.spin_Vbrate.Disable()
             else:
                 self.slider_CRF.Disable()
-                self.spin_ctrl_bitrate.Enable()
+                self.spin_Vbrate.Enable()
 
         #self.parent.statusbar_msg("%s pass ready" % (
                                     #cmd_opt["Passing"]),None)
@@ -1129,7 +1138,7 @@ class Video_Conv(wx.Panel):
         or if not codec h264)
         """
         cmd_opt["CRF"] = ""
-        cmd_opt["Bitrate"] = "-b:v %sk" % (self.spin_ctrl_bitrate.GetValue())
+        cmd_opt["Bitrate"] = "-b:v %sk" % (self.spin_Vbrate.GetValue())
 
         
     #------------------------------------------------------------------#
@@ -1530,6 +1539,7 @@ class Video_Conv(wx.Panel):
         """
         Enable or disable functionality for volume normalization of
         the video.
+        
         """
         msg_1 = (_('Activate the PEAK level normalization, which will '
                    'increase the maximum peak level until reaching the '
@@ -1555,18 +1565,23 @@ class Video_Conv(wx.Panel):
             self.btn_analyzes.Show(), self.spin_target.Show()
             self.lab_amplitude.Show(), self.spin_target.SetValue(-20)
             
-        
         elif self.rdbx_normalize.GetSelection() == 3:
             self.parent.statusbar_msg(msg_3, '#268826')
             self.normalize_default(False)
             self.lab_i.Show(), self.lab_tp.Show(), self.lab_lra.Show(),
             self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
-
+            self.ckbx_pass.Disable()
+            if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
+                self.ckbx_pass.SetValue(True), self.on_Pass(self)
         else:
             self.parent.statusbar_msg(_("Audio normalization disabled"), None)
             self.normalize_default(False)
 
         self.notebook_1_pane_3.Layout()
+        
+        if not self.rdbx_normalize.GetSelection() == 3: 
+            if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
+                self.ckbx_pass.Enable()
         
     #------------------------------------------------------------------#
     def on_enter_Ampl(self, event):
@@ -1585,8 +1600,8 @@ class Video_Conv(wx.Panel):
         Evaluates the user's choices and directs them to the references 
         for audio normalizations based on PEAK or RMS .
         """
-        if self.rdb_auto.GetSelection() in [2,3] and cmd_opt["AddAudioStream"]:
-            path = cmd_opt["AddAudioStream"].replace('-i ', '').replace('"','')
+        if self.rdb_auto.GetSelection() in [2,3] and cmd_opt["Merging"]:
+            path = cmd_opt["Merging"].replace('-i ', '').replace('"','')
             if self.rdbx_normalize.GetSelection() == 1:
                 self.max_volume_PEAK([path])
             elif self.rdbx_normalize.GetSelection() == 2:
@@ -1860,9 +1875,9 @@ class Video_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq
         #self.on_Vrate(self), self.on_Vaspect(self)
         
-        if self.spin_ctrl_bitrate.IsEnabled():
+        if self.spin_Vbrate.IsEnabled() and self.spin_Vbrate.IsShown():
             self.on_Bitrate(self)
-        elif self.slider_CRF.IsEnabled():
+        elif self.slider_CRF.IsEnabled() and self.slider_CRF.IsShown():
             self.on_Crf(self)
         else:
             cmd_opt["CRF"] = ''
@@ -1888,7 +1903,7 @@ class Video_Conv(wx.Panel):
                                 'Videomass', wx.ICON_INFORMATION)
                 return
         if self.rdb_auto.GetSelection() == 2:
-            if not cmd_opt["AddAudioStream"]:
+            if not cmd_opt["Merging"]:
                 wx.MessageBox(_('To add audio stream to a movie please '
                                 'import an audio track with "Add audio track" '
                                 'button.'), 'Videomass', wx.ICON_INFORMATION)
@@ -1953,7 +1968,7 @@ class Video_Conv(wx.Panel):
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
             command = ('%s -loglevel %s %s %s %s %s %s %s %s %s %s %s %s '
                        '%s -y' %(
-                       cmd_opt["AddAudioStream"],
+                       cmd_opt["Merging"],
                        self.ffmpeg_loglev,
                        cmd_opt["VideoCodec"], 
                        cmd_opt["VideoAspect"],
@@ -2004,7 +2019,7 @@ class Video_Conv(wx.Panel):
                                     self.cpu_used,
                                     ))
             cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                   '%s %s' % (cmd_opt["AddAudioStream"], 
+                   '%s %s' % (cmd_opt["Merging"], 
                               cmd_opt["VideoCodec"], 
                               cmd_opt["Bitrate"], 
                               cmd_opt["Presets"], 
@@ -2051,7 +2066,7 @@ class Video_Conv(wx.Panel):
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
             command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                       '%s %s %s -y' % (cmd_opt["AddAudioStream"],
+                       '%s %s %s -y' % (cmd_opt["Merging"],
                                         cmd_opt["VideoCodec"], 
                                         cmd_opt["CRF"],
                                         cmd_opt["Bitrate"],
@@ -2111,7 +2126,7 @@ class Video_Conv(wx.Panel):
                                               str(self.spin_lra.GetValue()),))
         
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            cmd_1 = ('%s %s %s %s %s %s %s %s' %(cmd_opt["AddAudioStream"],
+            cmd_1 = ('%s %s %s %s %s %s %s %s' %(cmd_opt["Merging"],
                                                  cmd_opt["VideoCodec"], 
                                                  cmd_opt["VideoAspect"],
                                                  cmd_opt["VideoRate"],
@@ -2121,7 +2136,7 @@ class Video_Conv(wx.Panel):
                                                  cmd_opt["Shortest"][1])
                                                  )
             cmd_2 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s' %(
-                                                    cmd_opt["AddAudioStream"],
+                                                    cmd_opt["Merging"],
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["VideoAspect"],
                                                     cmd_opt["VideoRate"],
@@ -2157,14 +2172,11 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(f)#pass arg to function above
         
         else:
-
-            Vpass = True if cmd_opt["Passing"] == "double" else False
-
-            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
-                                                    cmd_opt["AddAudioStream"], 
+            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
+                                                    cmd_opt["Merging"], 
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["Bitrate"],
-                                                    cmd_opt["CRF"],
+                                                    #cmd_opt["CRF"],
                                                     cmd_opt["Presets"], 
                                                     cmd_opt["Profile"], 
                                                     cmd_opt["Tune"], 
@@ -2175,13 +2187,13 @@ class Video_Conv(wx.Panel):
                                                     self.threads, 
                                                     self.cpu_used,
                                                     cmd_opt["Map"], 
-                                                    cmd_opt["Shortest"][1])
-                    )
-            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s'
-                    '%s %s' % (cmd_opt["AddAudioStream"],
+                                                    cmd_opt["Shortest"][1]))
+                
+            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s'
+                    '%s %s' % (cmd_opt["Merging"],
                                cmd_opt["VideoCodec"], 
                                cmd_opt["Bitrate"], 
-                               cmd_opt["CRF"],
+                               #cmd_opt["CRF"],
                                cmd_opt["Presets"], 
                                cmd_opt["Profile"],
                                cmd_opt["Tune"], 
@@ -2205,6 +2217,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
+                Vpass = True if cmd_opt["Passing"] == "double" else False
                 self.parent.switch_Process('EBU normalization',
                                            file_sources, 
                                            '', 
@@ -2356,7 +2369,7 @@ class Video_Conv(wx.Panel):
                            ),
                  #'%s -c:v libx264 %s %s %s %s -vf fps=25,format=yuv420p %s %s '
                  '%s -c:v libx264 %s %s %s %s %s -vf format=yuv420p %s %s '
-                 '%s %s %s %s %s %s %s -y "%s"' % (cmd_opt["AddAudioStream"],
+                 '%s %s %s %s %s %s %s -y "%s"' % (cmd_opt["Merging"],
                                                    cmd_opt["CRF"],
                                                    cmd_opt["Presets"],
                                                    cmd_opt["Profile"],
@@ -2462,7 +2475,7 @@ class Video_Conv(wx.Panel):
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (numfile,
                 cmd_opt["VidCmbxStr"], cmd_opt["VideoCodec"],
                 cmd_opt["VideoAspect"], cmd_opt["VideoRate"], 
-                cmd_opt["AddAudioStream"], cmd_opt["Audio"], 
+                cmd_opt["Merging"], cmd_opt["Audio"], 
                 cmd_opt["AudioCodec"], cmd_opt["AudioChannel"][0], 
                 cmd_opt["AudioRate"][0], cmd_opt["AudioBitrate"][0],
                 cmd_opt["AudioDepth"][0], normalize, cmd_opt["Map"], 
@@ -2489,7 +2502,7 @@ class Video_Conv(wx.Panel):
         #-------------------
         elif prof[0] == "Slideshow":
             formula = (_("SUMMARY\n\nPictures imported\nVideo Format\
-                        \nResolution (size)\nCFR\nPreset h/x 264\
+                        \nVideo Codec\nResolution (size)\nCFR\nPreset h/x 264\
                         \nProfile h/x 264\nTune h/x 264\nVideo Rate\
                         \nAudio stream added\nAudio Format\nAudio Codec\
                         \nAudio Channels\nAudio Rate\nAudio bit-rate\
@@ -2503,16 +2516,17 @@ class Video_Conv(wx.Panel):
                 size = _('As from source')
                 
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s"
-                        "\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" %(
+                        "\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" %(
                                              len(self.file_sources),
                                              cmd_opt["VideoFormat"],
+                                             '-c:v libx264',
                                              size,
                                              cmd_opt["CRF"],
                                              cmd_opt["Presets"],
                                              cmd_opt["Profile"],
                                              cmd_opt["Tune"],
                                              cmd_opt["VideoRate"],
-                                             cmd_opt["AddAudioStream"],
+                                             cmd_opt["Merging"],
                                              cmd_opt["Audio"],
                                              cmd_opt["AudioCodec"],
                                              cmd_opt["AudioChannel"][1],
@@ -2544,7 +2558,7 @@ class Video_Conv(wx.Panel):
                         cmd_opt["Filters"], cmd_opt["VideoAspect"], 
                         cmd_opt["VideoRate"], cmd_opt["Presets"], 
                         cmd_opt["Profile"], cmd_opt["Tune"], 
-                        cmd_opt["Orientation"][1], cmd_opt["AddAudioStream"],
+                        cmd_opt["Orientation"][1], cmd_opt["Merging"],
                         cmd_opt["Audio"], cmd_opt["AudioCodec"], 
                         cmd_opt["AudioChannel"][0], cmd_opt["AudioRate"][0], 
                         cmd_opt["AudioBitrate"][0], cmd_opt["AudioDepth"][0],
@@ -2611,7 +2625,7 @@ class Video_Conv(wx.Panel):
                 #cmd_2 = ['-framerate 1/%s' % (str(time[1]),),
                          #'%s -c:v libx264 %s %s %s %s -vf '
                          #'fps=25,format=yuv420p %s %s %s %s %s %s %s' %(
-                                                   #cmd_opt["AddAudioStream"],
+                                                   #cmd_opt["Merging"],
                                                    #cmd_opt["CRF"],
                                                    #cmd_opt["Presets"],
                                                    #cmd_opt["Profile"],
@@ -2630,7 +2644,7 @@ class Video_Conv(wx.Panel):
                 outext = cmd_opt["VideoFormat"]
                 command = ("%s %s %s %s %s %s %s %s %s "
                            "%s %s %s %s %s %s %s %s %s" % (
-                           normalize, cmd_opt["AddAudioStream"],
+                           normalize, cmd_opt["Merging"],
                            cmd_opt["VideoCodec"], cmd_opt["CRF"], 
                            cmd_opt["Presets"], cmd_opt["Profile"],
                            cmd_opt["Tune"], cmd_opt["VideoAspect"], 
@@ -2651,7 +2665,7 @@ class Video_Conv(wx.Panel):
                     )
             cmd2= ('%s %s %s %s %s %s %s %s %s '
                    '%s %s %s %s %s %s %s %s %s' % (
-                    normalize, cmd_opt["AddAudioStream"],
+                    normalize, cmd_opt["Merging"],
                     cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
                     cmd_opt["Presets"], cmd_opt["Profile"],
                     cmd_opt["Tune"], cmd_opt["VideoAspect"], 

@@ -1,6 +1,6 @@
 # **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.   
 
-* [View progect on PyPi](https://pypi.org/project/videomass/)
+* [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [GitHub Page](https://github.com/jeanslack/Videomass)
 * [Support Page and Documentation](http://jeanslack.github.io/Videomass)
 * [Wiki page](https://github.com/jeanslack/Videomass/wiki)
@@ -10,8 +10,8 @@
 ## News
 
 - October 2019: Videomass now also supports a slideshows maker, 
-  merging audio-video, RMS-based normalization and Loudness-based 
-  normalization (EBU R128)
+  merging audio-video, RMS-based normalization and EBU R128
+  normalization.
 
 ## Features
 

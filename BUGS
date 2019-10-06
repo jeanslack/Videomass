@@ -11,6 +11,8 @@ Thanks !
             test loudnorm with copy codec ..OK
             
         STD PASS VIDEO:
+            AVI (ffmpeg mpeg4) ..OK
+            MKV (h264) ..ERROR: constant rate-factor is incompatible with 2pass.
             
         TWO PASS VIDEO: 
             test loudnorm with 

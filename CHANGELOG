@@ -7,15 +7,14 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-October 01, 2019 V.1.6.6
+October 06, 2019 V.1.7.0
 +------------------------------------+
 
 NEWS:
-    * Audio normalization with EBU R128 algorithm (loudnorm) on Audio .
-      Conversions and Video Conversions panels.
-    * Also added audio normalization in RMS .
+    * Audio normalization with EBU R128 algorithm (loudnorm) .
+    * Audio normalization in RMS .
     * Slideshows maker.
-    * Add audio to video.
+    * Merging audio to video.
     * Pictures from video.
     * Extrac audio from video from video conversion panel.
     

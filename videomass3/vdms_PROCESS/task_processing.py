@@ -1168,30 +1168,24 @@ class TwoPass_Loudnorm(Thread):
             filename = os.path.splitext(basename)[0]# name
             source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
             outext = source_ext if not self.ext else self.ext
+            if self.passList[3]: # True(2pass video) or False(copy/std)
+                force = '-f %s' % muxers[outext]
+            else:
+                force = '-f null'
             
             #--------------- first pass
-            if self.passList[3]: # True or False
-                pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
-                         '%s -passlogfile "%s/%s.log" -pass 1 '
-                         '-af %s -f %s -y %s' % (ffmpeg_url, 
+            pass1 = ('{0} -loglevel info -stats -hide_banner {1} '
+                     '-i "{2}" {3} -passlogfile "{4}/{5}.log" -pass 1 '
+                     '-af {6} {7} -y {8}'.format(ffmpeg_url, 
                                                  self.time_seq,
                                                  files, 
                                                  self.passList[0],
                                                  folders,
                                                  filename,
-                                                 self.passList[2],#Loudnorm
-                                                 muxers[outext],# -f 
+                                                 self.passList[2],#loudnorm
+                                                 force,# -f 
                                                  self.nul,
-                                                 ))
-            else: # for copy codec and std convert
-                pass1 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
-                         '%s -pass 1 -af %s -f null -y %s' % (ffmpeg_url, 
-                                                            self.time_seq,
-                                                            files, 
-                                                            self.passList[0],
-                                                            self.passList[2],
-                                                            self.nul,
-                                                            )) 
+                                                 )) 
             self.count += 1
             count = ('Loudnorm af: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
@@ -1278,32 +1272,17 @@ class TwoPass_Loudnorm(Thread):
                                 )
                        )
             time.sleep(.5)
-            
-            if self.passList[3]: # double pass video with ebu
-                pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" '
-                         '%s -passlogfile "%s/%s.log" -pass 2 -af %s -y '
-                         '"%s/%s.%s"' % (ffmpeg_url, 
-                                         self.time_seq,
-                                         files, 
-                                         self.passList[1],
-                                         folders,
-                                         filename,
-                                         filters,
-                                         folders, 
-                                         filename,
-                                         outext,
-                                         ))
-            else:
-                pass2 = ('%s -loglevel info -stats -hide_banner %s -i "%s" %s '
-                         '-pass 2 -af %s -y "%s/%s.%s"' % (ffmpeg_url, 
-                                                           self.time_seq,
-                                                           files,
-                                                           self.passList[1],
-                                                           filters,
-                                                           folders, 
-                                                           filename,
-                                                           outext,
-                                                           ))
+            pass2 = ('{0} -loglevel info -stats -hide_banner {1} -i '
+                     '"{2}" {3} -passlogfile "{5}/{6}.log" -pass 2 -af '
+                     '{4} -y "{5}/{6}.{7}"'.format(ffmpeg_url, 
+                                                   self.time_seq,
+                                                   files,
+                                                   self.passList[1],
+                                                   filters,
+                                                   folders, 
+                                                   filename,
+                                                   outext,
+                                                   ))
             count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)

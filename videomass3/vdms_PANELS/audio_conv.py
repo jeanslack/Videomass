@@ -116,9 +116,9 @@ class Audio_Conv(wx.Panel):
         self.rdbx_norm = wx.RadioBox(self,wx.ID_ANY,(_("Audio Normalization")), 
                                      choices=[
                                      (_('Disable')), 
-                                     (_('Peak Level-based')), 
-                                     (_('RMS-based')),
-                                     (_('EBU R128 algorithm')),
+                                       ('PEAK'), 
+                                       ('RMS'),
+                                       ('EBU R128'),
                                               ], 
                                      majorDimension=0, 
                                      style=wx.RA_SPECIFY_ROWS,
