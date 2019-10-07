@@ -66,7 +66,7 @@ class NormalizationList(wx.Dialog):
         normlist.InsertColumn(4, _('Result dBFS'), width=100)
         
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
-        txtred = wx.StaticText(self, wx.ID_ANY,  (_("Peak clipped =")))
+        txtred = wx.StaticText(self, wx.ID_ANY,  (_("Clipped peaks =")))
         red = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t")
         red.SetBackgroundColour(wx.Colour(233, 80, 77)) # #e9504d
         txtgrey = wx.StaticText(self, wx.ID_ANY, (_("No changes =")))

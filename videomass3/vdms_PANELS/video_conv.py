@@ -671,9 +671,9 @@ class Video_Conv(wx.Panel):
                 'the final video size. A larger value correspond to greater '
                 'quality and size of the file.'))
         self.slider_CRF.SetToolTip(_('CRF (constant rate factor) Affects the '
-                'quality of the final video. Used for x264/x265 codecs on '
-                'single pass only, 2-pass encoding swich to bitrate. With '
-                'lower values the quality is higher and a larger file size. '))
+                'quality of the final video. Only used with x264/x265 encoders '
+                'on one-pass (two-pass encoding switchs to bitrate). With '
+                'lower values the quality is higher and a larger file size.'))
         self.shortest.SetToolTip(_('Selecting "Shortest" option, the audio '
                                    'will be cut to the video duration'))
         self.btn_preview.SetToolTip(_('Try the filters by playing a '
@@ -1553,7 +1553,7 @@ class Video_Conv(wx.Panel):
             if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
                 self.on_Pass(self)
         else:
-            self.parent.statusbar_msg(_("Audio normalization switch off"), None)
+            self.parent.statusbar_msg(_("Audio normalization off"), None)
             self.normalize_default(False)
 
         self.notebook_1_pane_3.Layout()
@@ -1630,7 +1630,7 @@ class Video_Conv(wx.Panel):
                 offset = float(maxvol) - float(target)
                 result = float(maxvol) - offset
                 
-                if float(maxvol) >= float(target):
+                if float(maxvol) == float(target):
                     volume.append('  ')
                 else:
                     volume.append("-af volume=%sdB" % (str(offset)[1:]))

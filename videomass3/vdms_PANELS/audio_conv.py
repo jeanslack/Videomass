@@ -402,7 +402,7 @@ class Audio_Conv(wx.Panel):
             cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
 
         else: # usually it is 0
-            self.parent.statusbar_msg(_("Audio normalization switch off"), None)
+            self.parent.statusbar_msg(_("Audio normalization off"), None)
             self.normalization_default()
             
         self.Layout()
