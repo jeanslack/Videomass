@@ -200,7 +200,7 @@ class Video_Conv(wx.Panel):
         self.btn_audioAdd.SetTopStartColour(wx.Colour(205, 235, 222))
         self.btn_audioAdd.SetTopEndColour(wx.Colour(205, 235, 222))
         
-        self.cmbx_pictformat = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
+        self.cmbx_pictf = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
                                            choices=[("jpg"),("png"),("bmp"),], 
                                            size=(100,-1),
                                            style=wx.CB_DROPDOWN | 
@@ -356,16 +356,16 @@ class Video_Conv(wx.Panel):
                                      style=wx.RA_SPECIFY_ROWS,
                                             )
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
-        self.btn_analyzes = GB.GradientButton(self.notebook_1_pane_3,
+        self.btn_voldect = GB.GradientButton(self.notebook_1_pane_3,
                                             size=(-1,25),
                                             bitmap=analyzebmp,
                                             label=_("Volumedetect"))
-        self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
+        self.btn_voldect.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28, 28))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_voldect.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_voldect.SetBottomStartColour(wx.Colour(205, 235, 222))
+        self.btn_voldect.SetTopStartColour(wx.Colour(205, 235, 222))
+        self.btn_voldect.SetTopEndColour(wx.Colour(205, 235, 222))
         
         peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
         self.btn_details = GB.GradientButton(self.notebook_1_pane_3,
@@ -501,7 +501,7 @@ class Video_Conv(wx.Panel):
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
                                                      )
-        grid_sizer_automations.Add(self.cmbx_pictformat, 0, wx.ALL| 
+        grid_sizer_automations.Add(self.cmbx_pictf, 0, wx.ALL| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
@@ -603,7 +603,7 @@ class Video_Conv(wx.Panel):
         grid_sizer_pane3_base.Add(grid_a_param, 1, wx.ALL, 15)
         grid_sizer_in_column2.Add(self.rdbx_normalize, 0, wx.TOP, 5)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_in_column2.Add(self.btn_analyzes, 0, wx.TOP, 10)
+        grid_sizer_in_column2.Add(self.btn_voldect, 0, wx.TOP, 10)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
         grid_sizer_in_column2.Add(self.btn_details, 0, wx.TOP, 10)
         grid_sizer_in_column2.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
@@ -663,69 +663,47 @@ class Video_Conv(wx.Panel):
         
         #----------------------Set Properties----------------------#
         self.cmbx_vidContainers.SetToolTip(_('The output Video container'))
-        self.cmbx_vidContainers.SetSelection(6)
-
-
-        self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
-                                    'reduce the file size, but takes longer.'
-                                    ))
-        self.shortest.SetToolTip(_('Selecting "Shortest" option, the audio '
-                                   'will be cut to the video duration'
-                                   ))
-        self.cmbx_pictformat.SetToolTip(_('Output format of the extracted '
-                                          'pictures'
-                                          ))
-        self.spin_Vbrate.SetToolTip(_('The bit rate determines the quality '
-                                      'and the final video size. A larger '
-                                      'value correspond to greater quality '
-                                      'and size of the file.'
-                                      ))
-        self.slider_CRF.SetToolTip(_("CRF (constant rate factor) Affects "
-                                 "the quality of the final video. Used for "
-                                 "h264 codec on single pass only, 2-pass "
-                                 "encoding swich to bitrate. With lower "
-                                 "values the quality is higher and a larger "
-                                 "file size."
-                                 ))
-        self.btn_preview.SetToolTip(_('Try the filters by playing a '
-                                      'video preview'
-                                      ))
-        self.btn_reset.SetToolTip(_("Clear all enabled filters "))
         
-        self.cmbx_Vaspect.SetToolTip(_("Video aspect (Aspect Ratio) "
-                        "is the video width and video height ratio. "
-                        "Leave on 'Default' to copy the original settings."
-                                                ))
-        self.cmbx_Vrate.SetToolTip(_("Video Rate: A any video consists "
-                    "of images displayed as frames, repeated a given number "
-                    "of times per second. In countries are 30 NTSC, PAL "
-                    "countries (like Italy) are 25. Leave on 'Default' "
-                    "to copy the original settings."
-                                   ))
-        self.btn_analyzes.SetToolTip(_("Gets the maximum and average peak "
-                                       "levels in dBFS and calculates "
-                                       "the normalization data offset"
-                                       ))
-        self.spin_target.SetToolTip(_('Limiter for the maximum peak level '
-                                      'or the mean level when switch to RMS '
-                                      'in dBFS. From -99.0 to +0.0; default '
-                                      'for PEAK level is -1.0; default for '
-                                      'RMS is -20.0'
-                                    ))
+        self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
+                                    'reduce the file size, but takes longer.'))
+        self.cmbx_pictf.SetToolTip(_('Output format of the extracted pictures'))
+        self.spin_Vbrate.SetToolTip(_('The bit rate determines the quality and '
+                'the final video size. A larger value correspond to greater '
+                'quality and size of the file.'))
+        self.slider_CRF.SetToolTip(_('CRF (constant rate factor) Affects the '
+                'quality of the final video. Used for x264/x265 codecs on '
+                'single pass only, 2-pass encoding swich to bitrate. With '
+                'lower values the quality is higher and a larger file size. '))
+        self.shortest.SetToolTip(_('Selecting "Shortest" option, the audio '
+                                   'will be cut to the video duration'))
+        self.btn_preview.SetToolTip(_('Try the filters by playing a '
+                                      'video preview'))
+        self.btn_reset.SetToolTip(_("Clear all enabled filters "))
+        self.cmbx_Vaspect.SetToolTip(_('Video aspect (Aspect Ratio) is the '
+                'video width and video height ratio. Leave on "Default" to '
+                'copy the original settings.'))
+        self.cmbx_Vrate.SetToolTip(_('Video Rate: A any video consists of'
+                'of images displayed as frames, repeated a given number of '
+                'times per second. In countries are 30 NTSC, PAL countries '
+                '(like Italy) are 25. Leave on "Default" to copy the '
+                'original settings.'))
+        self.btn_voldect.SetToolTip(_('Gets maximum volume and average volume '
+                'data in dBFS, then calculates the offset amount for audio '
+                'normalization.'))
+        self.spin_target.SetToolTip(_('Limiter for the maximum peak level or '
+                'the mean level (when switch to RMS) in dBFS. From -99.0 to '
+                '+0.0; default for PEAK level is -1.0; default for RMS is '
+                '-20.0'))
         self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
-                                 'From -70.0 to -5.0, default is -24.0'
-                                 ))
+                                 'From -70.0 to -5.0, default is -24.0'))
         self.spin_tp.SetToolTip(_('Maximum True Peak in dBTP. From -9.0 '
-                                  'to +0.0, default is -2.0'
-                                  ))
+                                  'to +0.0, default is -2.0'))
         self.spin_lra.SetToolTip(_('Loudness Range Target in LUFS. '
-                                   'From +1.0 to +20.0, default is +7.0'
-                                   ))
-        self.rdb_a.SetToolTip(_("Choose an audio codec. Some audio codecs "
-                                "are disabled for certain video containers"
-                                ))
-        self.notebook_1_pane_4.SetToolTip(_('These parameters are enabled '
-                                            'for the codecs h.264/x.264'))
+                                   'From +1.0 to +20.0, default is +7.0'))
+        self.rdb_a.SetToolTip(_('Audio codecs compatible with the chosen '
+                                'video container'))
+        self.notebook_1_pane_4.SetToolTip(_('Options enabled for the codecs '
+                                            'x.264/x.265'))
 
         #----------------------Binding (EVT)----------------------#
         """
@@ -739,7 +717,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.on_Automation, self.rdb_auto)
         self.Bind(wx.EVT_CHECKBOX, self.on_Shortest, self.shortest)
         self.Bind(wx.EVT_BUTTON, self.on_AddaudioStr, self.btn_audioAdd)
-        self.Bind(wx.EVT_COMBOBOX, self.on_PicturesFormat, self.cmbx_pictformat)
+        self.Bind(wx.EVT_COMBOBOX, self.on_PicturesFormat, self.cmbx_pictf)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
@@ -755,7 +733,7 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
-        self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_analyzes)
+        self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Presets, self.rdb_h264preset)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Profiles, self.rdb_h264profile)
         self.Bind(wx.EVT_RADIOBOX, self.on_h264Tunes, self.rdb_h264tune)
@@ -769,13 +747,13 @@ class Video_Conv(wx.Panel):
         cmd_opt["YUV"] = "-pix_fmt yuv420p"
         cmd_opt["VideoAspect"] = ""
         cmd_opt["VideoRate"] = ""
-        self.rdb_a.SetSelection(0)
+        self.rdb_a.SetSelection(0), self.cmbx_vidContainers.SetSelection(6)
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
         self.rdb_h264preset.SetSelection(0), self.rdb_h264profile.SetSelection(0)
         self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0)
         self.cmbx_Vaspect.SetSelection(0), self.rdb_auto.SetSelection(0)
         self.shortest.Hide(), self.btn_audioAdd.Hide()
-        self.cmbx_pictformat.Hide(), self.cmbx_Vaspect.Enable()
+        self.cmbx_pictf.Hide(), self.cmbx_Vaspect.Enable()
         self.UI_set()
         self.audio_default()
         self.normalize_default()
@@ -858,15 +836,15 @@ class Video_Conv(wx.Panel):
         """
         if setoff:
             self.rdbx_normalize.SetSelection(0)
-        if not self.btn_analyzes.IsEnabled():
-                self.btn_analyzes.Enable()
+        if not self.btn_voldect.IsEnabled():
+                self.btn_voldect.Enable()
         
-        self.btn_analyzes.Hide()
+        self.btn_voldect.Hide()
         self.spin_target.Hide(), self.spin_target.SetValue(-1.0)
         self.btn_details.Hide(), self.lab_amplitude.Hide() 
         self.lab_i.Hide(), self.lab_tp.Hide(), self.lab_lra.Hide() 
         self.spin_i.Hide(), self.spin_tp.Hide(), self.spin_lra.Hide()
-        self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
+        self.btn_voldect.SetForegroundColour(wx.Colour(28,28,28))
         cmd_opt["PEAK"], cmd_opt["EBU"], cmd_opt["RMS"] = "", "", ""
         del self.normdetails[:]
     
@@ -942,7 +920,7 @@ class Video_Conv(wx.Panel):
                    ))
         #-------------- On ACCESS first revert to default ----------------#
         self.ckbx_pass.Show(), self.ckbx_pass.SetValue(False),
-        self.cmbx_pictformat.Hide(), self.cmbx_vidContainers.Show(),
+        self.cmbx_pictf.Hide(), self.cmbx_vidContainers.Show(),
         self.spin_Vbrate.Show(),
         self.slider_CRF.Show(),self.cmbx_Vaspect.Show(),
         self.shortest.Hide(), self.shortest.SetValue(True), 
@@ -967,7 +945,7 @@ class Video_Conv(wx.Panel):
             if self.cmbx_vidContainers.GetValue() == _('Copy video codec'):
                 self.cmbx_vidContainers.SetSelection(6)
                 self.vidContainers(self)
-            self.cmbx_pictformat.Show(), self.cmbx_pictformat.SetSelection(0)
+            self.cmbx_pictf.Show(), self.cmbx_pictf.SetSelection(0)
             self.cmbx_vidContainers.Hide(),self.ckbx_pass.Hide(),
             self.spin_Vbrate.Hide(), self.slider_CRF.Hide(),
             self.cmbx_Vaspect.Hide(), self.notebook_1_pane_3.Disable(),
@@ -1108,7 +1086,7 @@ class Video_Conv(wx.Panel):
         png and bmp
         
         """
-        cmd_opt["PictFormat"] = self.cmbx_pictformat.GetValue()
+        cmd_opt["PictFormat"] = self.cmbx_pictf.GetValue()
         self.rdb_h264tune.SetSelection(4)
     #------------------------------------------------------------------#
     def on_Pass(self, event):
@@ -1556,13 +1534,13 @@ class Video_Conv(wx.Panel):
         if self.rdbx_normalize.GetSelection() == 1:# is checked
             self.normalize_default(False)
             self.parent.statusbar_msg(msg_1, azure)
-            self.btn_analyzes.Show(), self.spin_target.Show()
+            self.btn_voldect.Show(), self.spin_target.Show()
             self.lab_amplitude.Show()
         
         elif self.rdbx_normalize.GetSelection() == 2:
             self.normalize_default(False)
             self.parent.statusbar_msg(msg_2, '#282C84')
-            self.btn_analyzes.Show(), self.spin_target.Show()
+            self.btn_voldect.Show(), self.spin_target.Show()
             self.lab_amplitude.Show(), self.spin_target.SetValue(-20)
             
         elif self.rdbx_normalize.GetSelection() == 3:
@@ -1595,9 +1573,9 @@ class Video_Conv(wx.Panel):
         update new incomming
         
         """
-        if not self.btn_analyzes.IsEnabled():
-            self.btn_analyzes.Enable()
-            self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
+        if not self.btn_voldect.IsEnabled():
+            self.btn_voldect.Enable()
+            self.btn_voldect.SetForegroundColour(wx.Colour(28,28,28))
         
     #------------------------------------------------------------------#
     def on_Audio_analyzes(self, event):  # Volumedetect button
@@ -1673,8 +1651,8 @@ class Video_Conv(wx.Panel):
                 self.parent.statusbar_msg(msg2, yellow)
                 
         cmd_opt["PEAK"] = volume
-        self.btn_analyzes.Disable()
-        self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+        self.btn_voldect.Disable()
+        self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
         self.notebook_1_pane_3.Layout()
 
@@ -1730,8 +1708,8 @@ class Video_Conv(wx.Panel):
                 self.parent.statusbar_msg(msg2, yellow)
                 
         cmd_opt["RMS"] = volume
-        self.btn_analyzes.Disable()
-        self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
+        self.btn_voldect.Disable()
+        self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
         self.notebook_1_pane_3.Layout()
         
@@ -1901,7 +1879,7 @@ class Video_Conv(wx.Panel):
         """
         # check normalization data offset, if enable
         if self.rdbx_normalize.GetSelection() in [1,2]:
-            if self.btn_analyzes.IsEnabled():
+            if self.btn_voldect.IsEnabled():
                 wx.MessageBox(_('Undetected volume values! use the '
                                 '"Volumedetect" control button to analyze '
                                 'the data on the audio volume.'),

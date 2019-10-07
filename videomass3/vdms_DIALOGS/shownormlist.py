@@ -60,39 +60,81 @@ class NormalizationList(wx.Dialog):
         self.SetTitle(_(title))
         normlist.SetMinSize((800, 200))
         normlist.InsertColumn(0, _('File name'), width=300)
-        normlist.InsertColumn(1, _('Max volume dB'), width=150)
-        normlist.InsertColumn(2, _('Mean volume dB'), width=150)
-        normlist.InsertColumn(3, _('Offset dB'), width=100)
-        normlist.InsertColumn(4, _('Result dB'), width=100)
-        
-        if OS == 'Darwin':
-            normlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        else:
-            normlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
+        normlist.InsertColumn(1, _('Max volume dBFS'), width=150)
+        normlist.InsertColumn(2, _('Mean volume dBFS'), width=150)
+        normlist.InsertColumn(3, _('Offset dBFS'), width=100)
+        normlist.InsertColumn(4, _('Result dBFS'), width=100)
         
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
+        txtred = wx.StaticText(self, wx.ID_ANY,  (_("Peak clipped =")))
+        red = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t")
+        red.SetBackgroundColour(wx.Colour(233, 80, 77)) # #e9504d
+        txtgrey = wx.StaticText(self, wx.ID_ANY, (_("No changes =")))
+        grey = wx.StaticText(self, wx.ID_ANY, "\t\t\t\t")
+        grey.SetBackgroundColour(wx.Colour(148, 166, 110))# #94A66E
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        grid_list = wx.GridSizer(1, 2, 5, 5)
+        
         gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(normlist, 1, wx.EXPAND|wx.ALL, 5)
+        
+        grid_list = wx.GridSizer(2, 2, 0, 0)
+        grid_list.Add(txtred, 1,wx.ALL, 5)
+        grid_list.Add(red, 1,wx.ALL, 5)
+        grid_list.Add(txtgrey, 1,wx.ALL, 5)
+        grid_list.Add(grey, 1,wx.ALL, 5)
         sizer.Add(grid_list, 0, wx.ALL, 5)
+        
         sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         gridbtn.Add(self.button_close, 1, wx.ALL, 5)
 
         self.SetSizerAndFit(sizer)
         
+        
+        if OS == 'Darwin':
+            normlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            txtred.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
+            txtgrey.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        else:
+            normlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            txtred.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
+            txtgrey.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
+        
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
 
         index = 0 
-        for i in data: #### populate dmx listctrl:
-            normlist.InsertItem(index, i[0])
-            normlist.SetItem(index, 1, i[1])
-            normlist.SetItem(index, 2, i[2])
-            normlist.SetItem(index, 3, i[3])
-            normlist.SetItem(index, 4, i[4])
+        if title == _('RMS-based statistics'):
+            for i in data: #### populate dmx listctrl:
+                normlist.InsertItem(index, i[0])
+                normlist.SetItem(index, 1, i[1])
+                normlist.SetItem(index, 2, i[2])
+                if float(i[3]) == 0.0:
+                    normlist.SetItemBackgroundColour(index, '#94A66E')
+                    normlist.SetItem(index, 3, i[3])
+                else:
+                    normlist.SetItem(index, 3, i[3])
+                if float(i[4]) > 0.0:
+                    normlist.SetItemBackgroundColour(index, '#e9504d')
+                    normlist.SetItem(index, 4, i[4])
+                else:
+                    normlist.SetItem(index, 4, i[4])
+                    
+        elif title == _('PEAK-based statistics'):
+            for i in data: #### populate dmx listctrl:
+                normlist.InsertItem(index, i[0])
+                if float(i[1]) > 0.0:
+                    normlist.SetItemBackgroundColour(index, '#e9504d')
+                    normlist.SetItem(index, 1, i[1])
+                else:
+                    normlist.SetItem(index, 1, i[1])
+                normlist.SetItem(index, 2, i[2])
+                normlist.SetItem(index, 3, i[3])
+                if float(i[4]) == float(i[1]):#target inf. to maxvol
+                    normlist.SetItemBackgroundColour(index, '#94A66E')
+                    normlist.SetItem(index, 4, i[4])
+                else:
+                    normlist.SetItem(index, 4, i[4])
             
     #--------------------------------------------------------------# 
     def on_close(self, event):

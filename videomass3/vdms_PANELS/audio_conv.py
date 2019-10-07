@@ -217,20 +217,15 @@ class Audio_Conv(wx.Panel):
         sizer_base.Add(sizer_global, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
         # Set tooltip:
-        self.btn_param.SetToolTip(_("Enable advanced settings as audio "
-                                    "bit-rate, audio channel and audio rate "
-                                    "of the selected audio codec.")
-                                              )
-        self.btn_analyzes.SetToolTip(_("Gets the maximum and average peak "
-                                       "levels in dBFS and calculates "
-                                       "the normalization data offset")
-                                              )
-        self.spin_target.SetToolTip(_('Limiter for the maximum peak level '
-                                      'or the mean level when switch to RMS '
-                                      'in dBFS. From -99.0 to +0.0; default '
-                                      'for PEAK level is -1.0; default for '
-                                      'RMS is -20.0'
-                                    ))
+        self.btn_param.SetToolTip(_('Audio bit-rate, audio channel and audio '
+                                    'rate of the selected audio codec.'))
+        self.btn_analyzes.SetToolTip(_('Gets maximum volume and average volume '
+                'data in dBFS, then calculates the offset amount for audio '
+                'normalization.'))
+        self.spin_target.SetToolTip(_('Limiter for the maximum peak level or '
+                'the mean level (when switch to RMS) in dBFS. From -99.0 to '
+                '+0.0; default for PEAK level is -1.0; default for RMS is '
+                '-20.0'))
         self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
                                  'From -70.0 to -5.0, default is -24.0'
                                  ))
@@ -473,7 +468,7 @@ class Audio_Conv(wx.Panel):
                 offset = float(maxvol) - float(target)
                 result = float(maxvol) - offset
                 
-                if float(maxvol) >= float(target):
+                if float(maxvol) == float(target):
                     volume.append('  ')
                 else:
                     volume.append("-af volume=%sdB" % (str(offset)[1:]))
