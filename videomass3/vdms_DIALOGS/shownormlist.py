@@ -81,7 +81,7 @@ class NormalizationList(wx.Dialog):
         gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(normlist, 1, wx.EXPAND|wx.ALL, 5)
         
-        grid_list = wx.GridSizer(1, 6, 0, 0)
+        grid_list = wx.FlexGridSizer(1, 6, 0, 0)
         grid_list.Add(txtred, 1,wx.ALL, 5)
         grid_list.Add(red, 1,wx.ALL, 5)
         grid_list.Add(txtgrey, 1,wx.ALL, 5)

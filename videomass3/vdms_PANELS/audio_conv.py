@@ -66,6 +66,7 @@ acodecs = {("WAV [.wav]"): ("-c:a pcm_s16le"),
            ("AAC [.m4a]"): ("-c:a aac"),
            ("ALAC [.m4a]"): ("-c:a alac"),
            ("AC3 [.ac3]"): ("-c:a ac3"),
+           ("OPUS [.opus]"): ("-c:a libopus"),
            }
 
 class Audio_Conv(wx.Panel):

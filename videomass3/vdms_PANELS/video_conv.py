@@ -58,16 +58,21 @@ cmd_opt = {"VidCmbxStr": "", "VideoFormat": "", "VideoCodec": "",
            "A_exportExt": [], "A_CodecCopied": [],
            }
 # Namings in the video container selection combo box:
-vcodecs = {("AVI (XVID mpeg4)"): ("-vcodec mpeg4 -vtag xvid","avi"), 
-            ("AVI (FFmpeg mpeg4)"): ("-vcodec mpeg4","avi"), 
-            ("AVI (ITU h264)"): ("-vcodec libx264","avi"),
-            ("MP4 (mpeg4)"): ("-vcodec mpeg4","mp4"), 
-            ("MP4 (HQ h264/AVC)"): ("-vcodec libx264","mp4"), 
-            ("M4V (HQ h264/AVC)"): ("-vcodec libx264","m4v"), 
-            ("MKV (h264)"): ("-vcodec libx264","mkv"),
-            ("OGG theora"): ("-vcodec libtheora","ogg"), 
-            ("WebM (HTML5)"): ("-vcodec libvpx","webm"), 
-            ("FLV (HQ h264/AVC)"): ("-vcodec libx264","flv"),
+vcodecs = {("AVI (XVID mpeg4)"): ("-c:v mpeg4 -vtag xvid","avi"), 
+            ("AVI (FFmpeg mpeg4)"): ("-c:v mpeg4","avi"), 
+            ("AVI (h.264/AVC)"): ("-c:v libx264","avi"),
+            ("AVI (h.265/HEVC)"): ("-c:v libx265","avi"),
+            ("MP4 (mpeg4)"): ("-c:v mpeg4","mp4"), 
+            ("MP4 (h.264/AVC)"): ("-c:v libx264","mp4"), 
+            ("MP4 (h.265/HEVC)"): ("-c:v libx265","mp4"), 
+            ("M4V (h.264/AVC)"): ("-c:v libx264","m4v"), 
+            ("M4V (h.265/HEVC)"): ("-c:v libx265","m4v"),
+            ("MKV (h.264/AVC)"): ("-c:v libx264","mkv"),
+            ("MKV (h.265/HEVC)"): ("-c:v libx265","mkv"),
+            ("OGG theora"): ("-c:v libtheora","ogg"), 
+            ("WebM vp8 (HTML5)"): ("-c:v libvpx","webm"), 
+            ("WebM vp9 (HTML5)"): ("-c:v libvpx-vp9","webm"),
+            ("FLV (h.264/AVC)"): ("-c:v libx264","flv"),
             (_("Copy video codec")): ("-c:v copy",""),
             }
 # Namings in the audio format selection on audio radio box:
@@ -79,37 +84,38 @@ acodecs = {('default'): (_("Default (managed by FFmpeg)"),''),
            ('ac3'): ("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
            ('ogg'): ("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
            ('mp3'): ("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
+           ('opus'): ("Opus (Lossy, No_MultiChannel)", "-c:a libopus"),
            ('copy'): (_("Try to copy audio source"), "-c:a copy"),
            ('silent'): (_("No audio stream (silent)"), "-an")
            }
 # compatibility between video formats and related audio codecs:
 av_formats = {('avi'): ('default','wav',None,None,None,'ac3',None,'mp3',
-                       'copy','silent'),
+                        None,'copy','silent'),
               ('flv'): ('default',None,None,'aac',None,'ac3',None,'mp3',
-                       'copy','silent'),
+                        None,'copy','silent'),
               ('mp4'): ('default',None,None,'aac',None,'ac3',None,'mp3',
-                       'copy','silent'),
+                        None,'copy','silent'),
               ('m4v'): ('default',None,None,'aac','alac',None,None,None,
-                       'copy','silent'),
+                        None,'copy','silent'),
               ('mkv'): ('default','wav','flac','aac',None,'ac3','ogg','mp3',
-                       'copy','silent'),
+                        'opus','copy','silent'),
               ('webm'): ('default',None,None,None,None,None,'ogg',None,
-                        'copy','silent'),
+                         'opus','copy','silent'),
               ('ogg'): ('default',None,'flac',None,None,None,'ogg',None,
-                       'copy','silent')
+                        'opus','copy','silent')
               }
 # presets used by x264 an h264:
 x264_opt = {("Presets"): ("Disabled","ultrafast","superfast",
-                       "veryfast","faster","fast","medium",
-                       "slow","slower","veryslow","placebo"
-                       ), 
+                          "veryfast","faster","fast","medium",
+                          "slow","slower","veryslow","placebo"
+                          ), 
             ("Profiles"): ("Disabled","baseline","main","high",
-                       "high10","high444"
-                       ),
+                           "high10","high444"
+                           ),
             ("Tunes"): ("Disabled","film","animation","grain",
-                    "stillimage","psnr","ssim","fastecode",
-                    "zerolatency"
-                    )
+                        "stillimage","psnr","ssim","fastecode",
+                        "zerolatency"
+                        )
             }
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
@@ -651,7 +657,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1.AddPage(self.notebook_1_pane_3, 
                                 (_("Audio Settings")))
         self.notebook_1.AddPage(self.notebook_1_pane_4, 
-                                (_("H.264/X.264 Options")))
+                                (_("h.264/h.265 Options")))
         grid_sizer_base.Add(self.notebook_1, 1, wx.ALL | wx.EXPAND, 5)
         self.panel_base.SetSizer(grid_sizer_base)
         grid_sizer_base.AddGrowableRow(0)
@@ -741,13 +747,13 @@ class Video_Conv(wx.Panel):
         #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
         #-------------------------------------- initialize default layout:
-        cmd_opt["VidCmbxStr"] = "MKV (h264)"
+        cmd_opt["VidCmbxStr"] = "MKV (h.264/AVC)"
         cmd_opt["VideoFormat"] = "mkv"
-        cmd_opt["VideoCodec"] = "-vcodec libx264"
+        cmd_opt["VideoCodec"] = "-c:v libx264"
         cmd_opt["YUV"] = "-pix_fmt yuv420p"
         cmd_opt["VideoAspect"] = ""
         cmd_opt["VideoRate"] = ""
-        self.rdb_a.SetSelection(0), self.cmbx_vidContainers.SetSelection(6)
+        self.rdb_a.SetSelection(0), self.cmbx_vidContainers.SetSelection(9)
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
         self.rdb_h264preset.SetSelection(0), self.rdb_h264profile.SetSelection(0)
         self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0)
@@ -763,8 +769,29 @@ class Video_Conv(wx.Panel):
         """
         Update all the GUI widgets based on the choices made by the user.
         """
-        if cmd_opt["VideoCodec"] == "-vcodec libx264":
+        if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
+            if cmd_opt["VideoCodec"] == "-c:v libx264":
+                self.slider_CRF.SetValue(23)
+            elif cmd_opt["VideoCodec"] == "-c:v libx265":
+                self.slider_CRF.SetValue(28)
             self.notebook_1_pane_4.Enable(), self.btn_videosize.Enable(), 
+            self.btn_crop.Enable(), self.btn_rotate.Enable(), 
+            self.btn_lacing.Enable(), self.btn_denois.Enable(), 
+            self.btn_preview.Enable(), self.slider_CRF.SetMax(51)
+            if self.rdbx_normalize.GetSelection() == 3: 
+                self.ckbx_pass.SetValue(True)
+            else:
+                self.ckbx_pass.Enable()
+            self.on_Pass(self)
+        
+        elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            if self.rdb_auto.GetSelection() == 3:
+                self.spin_Vbrate.Show(), self.spin_Vbrate.SetValue(0)
+            self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
+            self.notebook_1_pane_4.Disable(), self.btn_videosize.Enable(), 
+            self.rdb_h264preset.SetSelection(0)
+            self.rdb_h264profile.SetSelection(0)
+            self.rdb_h264tune.SetSelection(0)
             self.btn_crop.Enable(), self.btn_rotate.Enable(), 
             self.btn_lacing.Enable(), self.btn_denois.Enable(), 
             self.btn_preview.Enable() #self.ckbx_pass.Enable(),
@@ -861,10 +888,28 @@ class Video_Conv(wx.Panel):
         selected = self.cmbx_vidContainers.GetValue()
         #print (vcodecs[selected][0])
         
-        if vcodecs[selected][0] == "-vcodec libx264":
+        if vcodecs[selected][0] in ["-c:v libx264", "-c:v libx265"]:
+            if vcodecs[selected][0] == "-c:v libx264":
+                cmd_opt["VideoCodec"] = "-c:v libx264"
+            else:
+                cmd_opt["VideoCodec"] = "-c:v libx265"
+        
             cmd_opt["VidCmbxStr"] = "%s" % (selected)# output form.
             cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])# format
-            cmd_opt["VideoCodec"] = "-vcodec libx264"
+            cmd_opt["Bitrate"] = ""
+            cmd_opt["CRF"] = ""
+            cmd_opt["YUV"] = "-pix_fmt yuv420p"
+            self.parent.statusbar_msg("Output format: %s" % (
+                                      cmd_opt['VideoFormat']),None)
+            self.UI_set()
+            
+        elif vcodecs[selected][0] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            if vcodecs[selected][0] == "-c:v libvpx":
+                cmd_opt["VideoCodec"] = "-c:v libvpx"
+            else:
+                cmd_opt["VideoCodec"] = "-c:v libvpx-vp9"
+            cmd_opt["VidCmbxStr"] = "%s" % (selected)# output form.
+            cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])# format
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
             cmd_opt["YUV"] = "-pix_fmt yuv420p"
@@ -882,7 +927,7 @@ class Video_Conv(wx.Panel):
                                       cmd_opt['VideoFormat']),None)
             self.UI_set()
 
-        else: # not x264/h264
+        else: # not h264/h265
             cmd_opt["VidCmbxStr"] = "%s" % (selected)
             cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])
             cmd_opt["VideoCodec"] = "%s" %(vcodecs[selected][0])
@@ -943,7 +988,7 @@ class Video_Conv(wx.Panel):
         ####-----------  Pictures from Video
         elif self.rdb_auto.GetSelection() == 1:
             if self.cmbx_vidContainers.GetValue() == _('Copy video codec'):
-                self.cmbx_vidContainers.SetSelection(6)
+                self.cmbx_vidContainers.SetSelection(9)
                 self.vidContainers(self)
             self.cmbx_pictf.Show(), self.cmbx_pictf.SetSelection(0)
             self.cmbx_vidContainers.Hide(),self.ckbx_pass.Hide(),
@@ -979,10 +1024,13 @@ class Video_Conv(wx.Panel):
             self.ckbx_pass.SetValue(False), self.ckbx_pass.Hide(),
             self.cmbx_vidContainers.Clear()
             for n in vcodecs.keys():
-                if 'h264' in n:
+                if 'h.264' in n:
                     self.cmbx_vidContainers.Append((n),)
-            self.cmbx_vidContainers.SetSelection(1)
-            self.vidContainers(self)#### 
+                if 'WebM' in n:
+                    self.cmbx_vidContainers.Append((n),)
+            
+            self.cmbx_vidContainers.SetSelection(2)
+            self.vidContainers(self)####
             self.spin_Vbrate.Hide(), self.slider_CRF.Enable()
             self.rdb_h264tune.SetSelection(4)
             self.cmbx_Vaspect.Hide()
@@ -1095,14 +1143,20 @@ class Video_Conv(wx.Panel):
         """
         if self.ckbx_pass.IsChecked():
             cmd_opt["Passing"] = "double"
-            self.slider_CRF.Disable()
-            self.spin_Vbrate.Enable()
-            
+            if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+                self.slider_CRF.Enable()
+                self.spin_Vbrate.Enable()
+            else:   
+                self.slider_CRF.Disable()
+                self.spin_Vbrate.Enable()
         else:
             cmd_opt["Passing"] = "single"
-            if cmd_opt["VideoCodec"] == "-vcodec libx264":
+            if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Disable()
+            elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+                self.slider_CRF.Enable()
+                self.spin_Vbrate.Enable()
             else:
                 self.slider_CRF.Disable()
                 self.spin_Vbrate.Enable()
@@ -1116,7 +1170,8 @@ class Video_Conv(wx.Panel):
         Reset a empty CRF (this depend if is h264 two-pass encoding
         or if not codec h264)
         """
-        cmd_opt["CRF"] = ""
+        if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            cmd_opt["CRF"] = ""
         cmd_opt["Bitrate"] = "-b:v %sk" % (self.spin_Vbrate.GetValue())
 
         
@@ -1125,7 +1180,8 @@ class Video_Conv(wx.Panel):
         """
         Reset bitrate at empty (this depend if is h264 codec)
         """
-        cmd_opt["Bitrate"] = ""
+        if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            cmd_opt["Bitrate"] = ""
         cmd_opt["CRF"] = "-crf %s" % self.slider_CRF.GetValue()
         
     #------------------------------------------------------------------#
@@ -1550,7 +1606,7 @@ class Video_Conv(wx.Panel):
             self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
             cmd_opt["Passing"] = "double"
-            if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
+            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
                 self.on_Pass(self)
         else:
             self.parent.statusbar_msg(_("Audio normalization off"), None)
@@ -1559,10 +1615,10 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_3.Layout()
         
         if not self.rdbx_normalize.GetSelection() == 3: 
-            if not self.cmbx_vidContainers.GetSelection() == 10:#copycodec
+            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
                 self.ckbx_pass.Enable()
                 
-        if self.cmbx_vidContainers.GetSelection() == 10:#copycodec
+        if self.cmbx_vidContainers.GetSelection() == 15:#copycodec
             if not self.rdbx_normalize.GetSelection() == 3: 
                 self.ckbx_pass.SetValue(False)
         
@@ -1857,14 +1913,16 @@ class Video_Conv(wx.Panel):
         """
         self.time_seq = self.parent.time_seq
         #self.on_Vrate(self), self.on_Vaspect(self)
-        
-        if self.spin_Vbrate.IsEnabled() and self.spin_Vbrate.IsShown():
-            self.on_Bitrate(self)
-        elif self.slider_CRF.IsEnabled() and self.slider_CRF.IsShown():
-            self.on_Crf(self)
+        if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            self.on_Bitrate(self), self.on_Crf(self)
         else:
-            cmd_opt["CRF"] = ''
-            cmd_opt["Bitrate"] = ''
+            if self.spin_Vbrate.IsEnabled() and self.spin_Vbrate.IsShown():
+                self.on_Bitrate(self)
+            elif self.slider_CRF.IsEnabled() and self.slider_CRF.IsShown():
+                self.on_Crf(self)
+            else:
+                cmd_opt["CRF"] = ''
+                cmd_opt["Bitrate"] = ''
             
     #------------------------------------------------------------------#
     def on_ok(self):
@@ -1989,8 +2047,9 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
-            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s '
-                    '-f rawvideo' %(cmd_opt["VideoCodec"], 
+            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s '
+                    '-f rawvideo' %(cmd_opt["VideoCodec"],
+                                    cmd_opt["CRF"],
                                     cmd_opt["Bitrate"], 
                                     cmd_opt["Presets"], 
                                     cmd_opt["Profile"], 
@@ -2002,9 +2061,10 @@ class Video_Conv(wx.Panel):
                                     self.threads,
                                     self.cpu_used,
                                     ))
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                    '%s %s' % (cmd_opt["Merging"], 
-                              cmd_opt["VideoCodec"], 
+                              cmd_opt["VideoCodec"],
+                              cmd_opt["CRF"],
                               cmd_opt["Bitrate"], 
                               cmd_opt["Presets"], 
                               cmd_opt["Profile"], 
@@ -2156,11 +2216,11 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(f)#pass arg to function above
         
         else:
-            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
+            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
                                                     cmd_opt["Merging"], 
                                                     cmd_opt["VideoCodec"], 
+                                                    cmd_opt["CRF"],
                                                     cmd_opt["Bitrate"],
-                                                    #cmd_opt["CRF"],
                                                     cmd_opt["Presets"], 
                                                     cmd_opt["Profile"], 
                                                     cmd_opt["Tune"], 
@@ -2173,11 +2233,11 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["Map"], 
                                                     cmd_opt["Shortest"][1]))
                 
-            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s'
+            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s'
                     '%s %s' % (cmd_opt["Merging"],
                                cmd_opt["VideoCodec"], 
+                               cmd_opt["CRF"],
                                cmd_opt["Bitrate"], 
-                               #cmd_opt["CRF"],
                                cmd_opt["Presets"], 
                                cmd_opt["Profile"],
                                cmd_opt["Tune"], 
@@ -2342,6 +2402,11 @@ class Video_Conv(wx.Panel):
                                                  cmd_opt["VideoFormat"],)
         else:
             outputdir = "%s/Slideshow_1.%s" % (dest[0],cmd_opt["VideoFormat"],)
+        
+        if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            cmd_opt["Presets"], cmd_opt["Tune"], cmd_opt["Profile"]  = '','',''
+        else:
+            cmd_opt["Tune"] = "-tune:v stillimage"
             
         cmd_1 = ['-loglevel %s' %(self.ffmpeg_loglev),
                  cmd_opt["Filters"]
@@ -2351,24 +2416,27 @@ class Video_Conv(wx.Panel):
                            str(time[1]),
                            ),
                  #'%s -c:v libx264 %s %s %s %s -vf fps=25,format=yuv420p %s %s '
-                 '%s -c:v libx264 %s %s %s %s %s -vf format=yuv420p %s %s '
-                 '%s %s %s %s %s %s %s -y "%s"' % (cmd_opt["Merging"],
-                                                   cmd_opt["CRF"],
-                                                   cmd_opt["Presets"],
-                                                   cmd_opt["Profile"],
-                                                   cmd_opt["Tune"],
-                                                   cmd_opt["VideoRate"],
-                                                   cmd_opt["AudioCodec"], 
-                                                   cmd_opt["AudioBitrate"][1], 
-                                                   cmd_opt["AudioRate"][1], 
-                                                   cmd_opt["AudioChannel"][1], 
-                                                   cmd_opt["AudioDepth"][1],
-                                                   self.threads, 
-                                                   self.cpu_used,
-                                                   cmd_opt["Map"], 
-                                                   cmd_opt["Shortest"][1],
-                                                   outputdir,
-                                                   )
+                 '%s %s %s %s %s %s %s %s -vf format=yuv420p,fps=%s %s %s %s %s'
+                 '%s %s %s %s %s -y "%s"' %(cmd_opt["Merging"],
+                                            cmd_opt["VideoCodec"],
+                                            cmd_opt["CRF"],
+                                            cmd_opt["Bitrate"],
+                                            cmd_opt["Presets"],
+                                            cmd_opt["Profile"],
+                                            cmd_opt["Tune"],
+                                            cmd_opt["VideoRate"].split()[1],
+                                            cmd_opt["VideoRate"],
+                                            cmd_opt["AudioCodec"], 
+                                            cmd_opt["AudioBitrate"][1], 
+                                            cmd_opt["AudioRate"][1], 
+                                            cmd_opt["AudioChannel"][1], 
+                                            cmd_opt["AudioDepth"][1],
+                                            self.threads, 
+                                            self.cpu_used,
+                                            cmd_opt["Map"], 
+                                            cmd_opt["Shortest"][1],
+                                            outputdir,
+                                            )
                  ]
         valupdate = self.update_dict(1, ['Slideshow', ''])
         ending = Formula(self, 
@@ -2485,7 +2553,8 @@ class Video_Conv(wx.Panel):
         #-------------------
         elif prof[0] == "Slideshow":
             formula = (_("SUMMARY\n\nPictures imported\nVideo Format\
-                        \nVideo Codec\nResolution (size)\nCFR\nPreset h/x 264\
+                        \nVideo Codec\nResolution (size)\nCFR\nVideo bit-rate\
+                        \nPreset h/x 264\
                         \nProfile h/x 264\nTune h/x 264\nVideo Rate\
                         \nAudio stream added\nAudio Format\nAudio Codec\
                         \nAudio Channels\nAudio Rate\nAudio bit-rate\
@@ -2498,13 +2567,14 @@ class Video_Conv(wx.Panel):
             else:
                 size = _('As from source')
                 
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s"
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s"
                         "\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" %(
                                              len(self.file_sources),
                                              cmd_opt["VideoFormat"],
-                                             '-c:v libx264',
+                                             cmd_opt["VideoCodec"],
                                              size,
                                              cmd_opt["CRF"],
+                                             cmd_opt["Bitrate"],
                                              cmd_opt["Presets"],
                                              cmd_opt["Profile"],
                                              cmd_opt["Tune"],

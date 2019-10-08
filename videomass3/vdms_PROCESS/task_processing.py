@@ -510,16 +510,22 @@ class TwoPass_Video(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
 
             #--------------- first pass
-            pass1 = ('%s -loglevel %s %s -i "%s" %s -passlogfile '
-                     '"%s/%s.log" -pass 1 -y %s' % (ffmpeg_url, 
-                                                    ffmpeg_loglev,
-                                                    self.time_seq,
-                                                    files, 
-                                                    self.passList[0],
-                                                    folders, 
-                                                    filename,
-                                                    self.nul,
-                                                    )) 
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
+                
+            pass1 = ('%s -loglevel %s %s -i "%s" %s %s"%s/%s.log" '
+                     '-y %s' % (ffmpeg_url, 
+                                ffmpeg_loglev,
+                                self.time_seq,
+                                files, 
+                                self.passList[0],
+                                passpar,
+                                folders, 
+                                filename,
+                                self.nul,
+                                )) 
             self.count += 1
             count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
@@ -593,19 +599,25 @@ class TwoPass_Video(Thread):
                              )
             
             #--------------- second pass ----------------#
-            pass2 = ('%s -loglevel %s %s -i "%s" %s %s -passlogfile '
-                     '"%s/%s.log" -pass 2 -y "%s/%s.%s"' % (ffmpeg_url,
-                                                            ffmpeg_loglev,
-                                                            self.time_seq,
-                                                            files, 
-                                                            self.passList[1], 
-                                                            volume,
-                                                            folders, 
-                                                            filename,
-                                                            folders, 
-                                                            filename,
-                                                            self.extoutput,
-                                                            ))
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
+                
+            pass2 = ('%s -loglevel %s %s -i "%s" %s %s %s'
+                     '"%s/%s.log" -y "%s/%s.%s"' % (ffmpeg_url,
+                                                    ffmpeg_loglev,
+                                                    self.time_seq,
+                                                    files, 
+                                                    self.passList[1], 
+                                                    volume,
+                                                    passpar,
+                                                    folders, 
+                                                    filename,
+                                                    folders, 
+                                                    filename,
+                                                    self.extoutput,
+                                                    ))
             count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
@@ -1172,20 +1184,26 @@ class TwoPass_Loudnorm(Thread):
                 force = '-f %s' % muxers[outext]
             else:
                 force = '-f null'
+                
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
             
             #--------------- first pass
-            pass1 = ('{0} -loglevel info -stats -hide_banner {1} '
-                     '-i "{2}" {3} -passlogfile "{4}/{5}.log" -pass 1 '
-                     '-af {6} {7} -y {8}'.format(ffmpeg_url, 
-                                                 self.time_seq,
-                                                 files, 
-                                                 self.passList[0],
-                                                 folders,
-                                                 filename,
-                                                 self.passList[2],#loudnorm
-                                                 force,# -f 
-                                                 self.nul,
-                                                 )) 
+            pass1 = ('{0} -loglevel info -stats -hide_banner '
+                     '{1} -i "{2}" {3} {9}"{4}/{5}.log" -af {6} '
+                     '{7} -y {8}'.format(ffmpeg_url, 
+                                         self.time_seq,
+                                         files, 
+                                         self.passList[0],
+                                         folders,
+                                         filename,
+                                         self.passList[2],#loudnorm
+                                         force,# -f 
+                                         self.nul,
+                                         passpar,
+                                        )) 
             self.count += 1
             count = ('Loudnorm af: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
@@ -1272,8 +1290,14 @@ class TwoPass_Loudnorm(Thread):
                                 )
                        )
             time.sleep(.5)
-            pass2 = ('{0} -loglevel info -stats -hide_banner {1} -i '
-                     '"{2}" {3} -passlogfile "{5}/{6}.log" -pass 2 -af '
+            
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
+                
+            pass2 = ('{0} -loglevel info -stats -hide_banner '
+                     '{1} -i "{2}" {3} {8}"{5}/{6}.log" -af '
                      '{4} -y "{5}/{6}.{7}"'.format(ffmpeg_url, 
                                                    self.time_seq,
                                                    files,
@@ -1282,6 +1306,7 @@ class TwoPass_Loudnorm(Thread):
                                                    folders, 
                                                    filename,
                                                    outext,
+                                                   passpar,
                                                    ))
             count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))

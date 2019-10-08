@@ -63,6 +63,9 @@ class AudioSettings(wx.Dialog):
         
         if self.bitdepth == None:
             self.bitdepth = {0:('not applicable ',"")}
+            
+        if self.sample_rate  == None:
+            self.sample_rate  = {0:('not applicable ',"")}
 
         for a in self.sample_rate.values():
             samplerate_list.append(a[0])
@@ -97,6 +100,9 @@ class AudioSettings(wx.Dialog):
             
         if self.rdb_bitdepth.GetStringSelection() == 'not applicable ':
             self.rdb_bitdepth.Disable()
+            
+        if self.rdb_sample_r.GetStringSelection() == 'not applicable ':
+            self.rdb_sample_r.Disable()
             
         btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
@@ -265,12 +271,7 @@ compression formats, do not have associated bit depths.\
         Each attribute is instantiable with this class and returns the 
         data object for each dictionary.
         """
-        self.sample_rate = {0:("Default", ""), 
-                            1:("44100 Hz ","-ar 44100 "), 
-                            2:("48000 Hz ","-ar 48000"), 
-                            3:("88200 Hz ","-ar 88200"), 
-                            4:("96000 Hz ","-ar 96000 ")
-                            }
+        self.sample_rate = None
         self.channels = None
         self.bitrate = None
         self.bitdepth = None
@@ -289,13 +290,20 @@ compression formats, do not have associated bit depths.\
             self.ogg_param()
         elif audio_format == 'mp3':
             self.mp3_param()
+        elif audio_format == 'opus':
+            self.libopus_param()
     #-----------------------------------------------------------------#
     def wav_param(self):
         """
         NOTE: the wav and aiff bitdepth is used impicitly on the 
               codec name and not as separated -sample_fmts option.
         """
-        self.sample_rate
+        self.sample_rate = {0:("Default", ""), 
+                            1:("44100 Hz ","-ar 44100 "), 
+                            2:("48000 Hz ","-ar 48000"), 
+                            3:("88200 Hz ","-ar 88200"), 
+                            4:("96000 Hz ","-ar 96000 ")
+                            }
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
@@ -307,7 +315,12 @@ compression formats, do not have associated bit depths.\
     def flac_param(self):
         """
         """
-        self.sample_rate
+        self.sample_rate = {0:("Default", ""), 
+                            1:("44100 Hz ","-ar 44100 "), 
+                            2:("48000 Hz ","-ar 48000"), 
+                            3:("88200 Hz ","-ar 88200"), 
+                            4:("96000 Hz ","-ar 96000 ")
+                            }
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
@@ -330,16 +343,48 @@ compression formats, do not have associated bit depths.\
     def alac_param(self):
         """
         """
-        self.sample_rate 
+        self.sample_rate = {0:("Default", ""), 
+                            1:("44100 Hz ","-ar 44100 "), 
+                            2:("48000 Hz ","-ar 48000"), 
+                            3:("88200 Hz ","-ar 88200"), 
+                            4:("96000 Hz ","-ar 96000 ")
+                            }
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        
+    
+    #-----------------------------------------------------------------#
+    def libopus_param(self):
+        """
+        """
+        #self.sample_rate
+        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
+                         2:("Stereo","-ac 2")
+                         }
+        self.bitrate = {
+                0: ("Default",""), 
+                1: ("low quality 0", "-compression_level 0"),
+                2: ("low quality 1", "-compression_level 1"), 
+                3: ("quality 2", "-compression_level 2"), 
+                4: ("quality 3", "-compression_level 3"), 
+                5: ("quality 4", "-compression_level 4"), 
+                6: ("medium quality 5", "-compression_level 5"), 
+                7: ("quality 6", "-compression_level 6"), 
+                8: ("quality 7", "-compression_level 7"), 
+                9: ("quality 8", "-compression_level 8"), 
+                10: ("high quality 9", "-compression_level 9"),
+                11: ("highest quality 10 (default)", "-compression_level 10")
+                        }
     #-----------------------------------------------------------------#
     def aac_param(self):
         """
         """
-        self.sample_rate 
+        self.sample_rate = {0:("Default", ""), 
+                            1:("44100 Hz ","-ar 44100 "), 
+                            2:("48000 Hz ","-ar 48000"), 
+                            3:("88200 Hz ","-ar 88200"), 
+                            4:("96000 Hz ","-ar 96000 ")
+                            }
         self.channels = {0:("Default",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
@@ -359,7 +404,12 @@ compression formats, do not have associated bit depths.\
     def ac3_param(self):
         """
         """
-        self.sample_rate 
+        self.sample_rate = {0:("Default", ""), 
+                            1:("44100 Hz ","-ar 44100 "), 
+                            2:("48000 Hz ","-ar 48000"), 
+                            3:("88200 Hz ","-ar 88200"), 
+                            4:("96000 Hz ","-ar 96000 ")
+                            }
         self.channels = {0:("Default",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
@@ -381,7 +431,12 @@ compression formats, do not have associated bit depths.\
     def ogg_param(self):
         """
         """
-        self.sample_rate 
+        self.sample_rate = {0:("Default", ""), 
+                            1:("44100 Hz ","-ar 44100 "), 
+                            2:("48000 Hz ","-ar 48000"), 
+                            3:("88200 Hz ","-ar 88200"), 
+                            4:("96000 Hz ","-ar 96000 ")
+                            }
         
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
@@ -403,7 +458,12 @@ compression formats, do not have associated bit depths.\
     def mp3_param(self):
         """
         """
-        self.sample_rate 
+        self.sample_rate = {0:("Default", ""), 
+                            1:("44100 Hz ","-ar 44100 "), 
+                            2:("48000 Hz ","-ar 48000"), 
+                            3:("88200 Hz ","-ar 88200"), 
+                            4:("96000 Hz ","-ar 96000 ")
+                            } 
         
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
