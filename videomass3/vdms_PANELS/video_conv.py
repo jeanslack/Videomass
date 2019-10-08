@@ -190,9 +190,6 @@ class Video_Conv(wx.Panel):
                                     majorDimension=0, 
                                     style=wx.RA_SPECIFY_ROWS
                                             )
-        self.shortest = wx.CheckBox(self.notebook_1_pane_1, wx.ID_ANY, 
-                                     (_("Shortest"))
-                                     )
         audiotrack = wx.Bitmap(iconatrack, wx.BITMAP_TYPE_ANY)
         self.btn_audioAdd = GB.GradientButton(self.notebook_1_pane_1,
                                               wx.ID_OPEN,
@@ -502,11 +499,6 @@ class Video_Conv(wx.Panel):
                                                      wx.ALIGN_CENTER_VERTICAL, 
                                                      20
                                                      )
-        grid_sizer_automations.Add(self.shortest, 0, wx.ALL| 
-                                                     wx.ALIGN_CENTER_HORIZONTAL| 
-                                                     wx.ALIGN_CENTER_VERTICAL, 
-                                                     20
-                                                     )
         grid_sizer_automations.Add(self.cmbx_pictf, 0, wx.ALL| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
                                                      wx.ALIGN_CENTER_VERTICAL, 
@@ -680,8 +672,6 @@ class Video_Conv(wx.Panel):
                 'quality of the final video. Only used with x264/x265 encoders '
                 'on one-pass (two-pass encoding switchs to bitrate). With '
                 'lower values the quality is higher and a larger file size.'))
-        self.shortest.SetToolTip(_('Selecting "Shortest" option, the audio '
-                                   'will be cut to the video duration'))
         self.btn_preview.SetToolTip(_('Try the filters by playing a '
                                       'video preview'))
         self.btn_reset.SetToolTip(_("Clear all enabled filters "))
@@ -721,7 +711,6 @@ class Video_Conv(wx.Panel):
         self.cmbx_vidContainers.Bind(wx.EVT_COMBOBOX, self.vidContainers)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
         self.Bind(wx.EVT_RADIOBOX, self.on_Automation, self.rdb_auto)
-        self.Bind(wx.EVT_CHECKBOX, self.on_Shortest, self.shortest)
         self.Bind(wx.EVT_BUTTON, self.on_AddaudioStr, self.btn_audioAdd)
         self.Bind(wx.EVT_COMBOBOX, self.on_PicturesFormat, self.cmbx_pictf)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
@@ -758,7 +747,7 @@ class Video_Conv(wx.Panel):
         self.rdb_h264preset.SetSelection(0), self.rdb_h264profile.SetSelection(0)
         self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0)
         self.cmbx_Vaspect.SetSelection(0), self.rdb_auto.SetSelection(0)
-        self.shortest.Hide(), self.btn_audioAdd.Hide()
+        self.btn_audioAdd.Hide()
         self.cmbx_pictf.Hide(), self.cmbx_Vaspect.Enable()
         self.UI_set()
         self.audio_default()
@@ -785,8 +774,6 @@ class Video_Conv(wx.Panel):
             self.on_Pass(self)
         
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
-            if self.rdb_auto.GetSelection() == 3:
-                self.spin_Vbrate.Show(), self.spin_Vbrate.SetValue(0)
             self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
             self.notebook_1_pane_4.Disable(), self.btn_videosize.Enable(), 
             self.rdb_h264preset.SetSelection(0)
@@ -968,7 +955,6 @@ class Video_Conv(wx.Panel):
         self.cmbx_pictf.Hide(), self.cmbx_vidContainers.Show(),
         self.spin_Vbrate.Show(),
         self.slider_CRF.Show(),self.cmbx_Vaspect.Show(),
-        self.shortest.Hide(), self.shortest.SetValue(True), 
         self.btn_audioAdd.Hide(), self.rdb_h264tune.SetSelection(0)
         self.notebook_1_pane_2.Enable(), 
         self.rdbx_normalize.EnableItem(3,enable=True)
@@ -1012,10 +998,8 @@ class Video_Conv(wx.Panel):
             if cmd_opt["Merging"]:
                 self.notebook_1_pane_3.Enable()
                 self.rdbx_normalize.EnableItem(3,enable=True)
-                cmd_opt["Shortest"] = [False,'-shortest']
             else:
                 self.notebook_1_pane_3.Disable()
-                cmd_opt["Shortest"] = [False,'']
             self.Layout()
             
             return
@@ -1026,16 +1010,13 @@ class Video_Conv(wx.Panel):
             for n in vcodecs.keys():
                 if 'h.264' in n:
                     self.cmbx_vidContainers.Append((n),)
-                if 'WebM' in n:
-                    self.cmbx_vidContainers.Append((n),)
-            
             self.cmbx_vidContainers.SetSelection(2)
             self.vidContainers(self)####
             self.spin_Vbrate.Hide(), self.slider_CRF.Enable()
             self.rdb_h264tune.SetSelection(4)
             self.cmbx_Vaspect.Hide()
             cmd_opt["Tune"] = "-tune:v stillimage"
-            self.shortest.Show(), self.btn_audioAdd.Show()
+            self.btn_audioAdd.Show()
             self.cmbx_Vrate.SetSelection(1), self.on_Vrate(self)
             
             if cmd_opt["Merging"]:
@@ -1068,25 +1049,6 @@ class Video_Conv(wx.Panel):
         self.cmbx_Vrate.SetSelection(0), self.on_Vrate(self)
         
     #------------------------------------------------------------------#
-    def on_Shortest(self, event):
-        """
-        Enable or disable shortest option.  If checked, will take the 
-        video stream duration. If un-checked, will take the audio track
-        duration.
-        
-        """
-        if not cmd_opt["Merging"]:
-            return
-        if self.shortest.IsChecked():
-            cmd_opt["Shortest"] = [False, '-shortest']
-        else:
-            from videomass3.vdms_IO import IO_tools
-            path = cmd_opt["Merging"].replace('-i ', '').replace('"','')
-            s = IO_tools.probeDuration(path, self.ffprobe_link)
-            cmd_opt["Shortest"] = [s[0], '']
-            
-    #------------------------------------------------------------------#
-            
     def on_AddaudioStr(self, event):
         """
         Add audio track on video or to slideshow and sets the 
@@ -1120,12 +1082,16 @@ class Video_Conv(wx.Panel):
         cmd_opt["Map"] = "-map 0:v:0 -map 1:a:0"
         self.normalize_default()
         
-        if self.rdb_auto.GetStringSelection() == _("Merging Audio and Video "):
-            cmd_opt["Shortest"] = [False,'-shortest']
+        #if self.rdb_auto.GetStringSelection() == _("Merging Audio and Video "):
+            #cmd_opt["Shortest"] = [False, '-shortest']
             
-        elif self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
+        if self.rdb_auto.GetStringSelection() == _("Picture slideshow maker"):
             self.rdbx_normalize.EnableItem(3,enable=False)
-            self.on_Shortest(self)
+            
+        from videomass3.vdms_IO import IO_tools
+        path = cmd_opt["Merging"].replace('-i ', '').replace('"','')
+        s = IO_tools.probeDuration(path, self.ffprobe_link)
+        cmd_opt["Shortest"] = [s[0], '-shortest']
 
     #------------------------------------------------------------------#
     def on_PicturesFormat(self, event):
@@ -2368,7 +2334,7 @@ class Video_Conv(wx.Panel):
                              wx.ICON_INFORMATION, self)
             return
 
-        if not self.time_seq:
+        if not len(file_sources) == 1 and not self.time_seq:
             wx.MessageBox(_('You should set a time length for the pictures: '
                             'Use the "Duration" tool setting ONLY "Cut (end '
                             'point)" and NOT "Search (start point)".\n\nThe '
@@ -2402,30 +2368,24 @@ class Video_Conv(wx.Panel):
                                                  cmd_opt["VideoFormat"],)
         else:
             outputdir = "%s/Slideshow_1.%s" % (dest[0],cmd_opt["VideoFormat"],)
-        
-        if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
-            cmd_opt["Presets"], cmd_opt["Tune"], cmd_opt["Profile"]  = '','',''
-        else:
-            cmd_opt["Tune"] = "-tune:v stillimage"
             
-        cmd_1 = ['-loglevel %s' %(self.ffmpeg_loglev),
-                 cmd_opt["Filters"]
-                 ]
-        cmd_2 = ['-loglevel %s -framerate '
-                 '1/%s' % (self.ffmpeg_loglev, 
-                           str(time[1]),
-                           ),
-                 #'%s -c:v libx264 %s %s %s %s -vf fps=25,format=yuv420p %s %s '
-                 '%s %s %s %s %s %s %s %s -vf format=yuv420p,fps=%s %s %s %s %s'
-                 '%s %s %s %s %s -y "%s"' %(cmd_opt["Merging"],
+        cmd_1 = ['-loglevel %s' %(self.ffmpeg_loglev), cmd_opt["Filters"]]
+        
+        if len(file_sources) == 1:
+            amount = '-loglevel %s -loop 1' % self.ffmpeg_loglev
+        else:
+            amount = '-loglevel %s -framerate 1/%s' % (self.ffmpeg_loglev, 
+                                                       str(time[1])
+                                                       )
+        cmd_2 = [amount,
+                #'%s -c:v libx264 %s %s %s %s -vf fps=25,format=yuv420p %s %s '
+                '%s %s %s %s %s %s -pix_fmt yuv420p %s %s %s %s'
+                '%s %s %s %s %s -y "%s"' %(cmd_opt["Merging"],
                                             cmd_opt["VideoCodec"],
                                             cmd_opt["CRF"],
-                                            cmd_opt["Bitrate"],
                                             cmd_opt["Presets"],
                                             cmd_opt["Profile"],
                                             cmd_opt["Tune"],
-                                            cmd_opt["VideoRate"].split()[1],
-                                            cmd_opt["VideoRate"],
                                             cmd_opt["AudioCodec"], 
                                             cmd_opt["AudioBitrate"][1], 
                                             cmd_opt["AudioRate"][1], 
@@ -2436,8 +2396,8 @@ class Video_Conv(wx.Panel):
                                             cmd_opt["Map"], 
                                             cmd_opt["Shortest"][1],
                                             outputdir,
-                                            )
-                 ]
+                                            )]
+            
         valupdate = self.update_dict(1, ['Slideshow', ''])
         ending = Formula(self, 
                          valupdate[0], 

@@ -953,7 +953,10 @@ class Slideshow_Maker(Thread):
         self.cmd_1 = varargs[3] # command 1 
         self.cmd_2 = varargs[4] # command 2
         self.outformat = varargs[5] # final output format
-        self.duration = duration[0] * len(varargs[1]) # time sum
+        if varargs[10]:
+            self.duration = duration[0]
+        else:
+            self.duration = duration[0] * len(varargs[1]) # time sum
         self.count = 0 # count first for loop
         self.countmax = varargs[9] # length file list
         self.logname = logname # title name of file log

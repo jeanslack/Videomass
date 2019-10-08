@@ -10,30 +10,34 @@ Change Log:
 October 06, 2019 V.1.7.0
 +------------------------------------+
 
-NEWS:
-    * Audio normalization with EBU R128 algorithm (loudnorm) .
-    * Audio normalization in RMS .
-    * Slideshows maker.
-    * Merging audio to video.
-    * Pictures from video.
-    * Extrac audio from video from video conversion panel.
+NEWS
+    Additional implementations:
     
-REMOVED:
-    * Extrac audio from video from audio conversion panel.
-    * Only normalization on audio conversion panel.
+        * Audio normalization with EBU R128 algorithm (loudnorm) .
+        * Audio normalization in RMS .
+        
+    Addings automations group on Video Conversions panel with the following 
+    features:
     
-    
-ADD:
+        * Pictures from video.
+        * Merging audio to video.
+        * Slideshows maker.
+        * Extrac audio from video.
+        
+ADD
     * Added automations box on Video Conversion panel layout.
-    * Added "-pix_fmt yuv420p" option to any video conversion with x264/h264
-      on Video Conversions panel, to ensure compatibility so crappy players 
-      can decode the video.
-    * Added new processing threads to make slideshows and to perform 
+    * Added "-pix_fmt yuv420p" option for some encoding.
+    * Added new processing threads to make slideshows and to perform .
       loudness normalization according to EBU R128 algorithm.
-      
+    * Added some support for the h.265/HEVC encoder.
+    * Added some support for the libvpx/libvpx-vp9 (VP8, VP9) encoders.
+    * Added some support for the h.265 / HEVC encoder.
+    * The libopus audio encoder for the opus format has also been added.
+    
 IMPROVEMENTS:
     * code thinning in some file section in the old stuff.
-    * improved dialog box to show peak levels statistics.
+    * The dialog box to show the level statistics for audio normalization 
+      has been improved with more useful information.
     
 BUG FIXES:
     * fixed bug when choosing to copy the video codec that always enabled 
