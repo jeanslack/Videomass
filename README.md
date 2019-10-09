@@ -9,26 +9,20 @@
 
 ## News
 
-- October 2019: Videomass now also supports a slideshows maker, 
-  merging audio-video, RMS-based normalization and EBU R128
-  normalization.
+- October 2019: Added implementation for EBU R128 normalization and RMS-based normalization
 
 ## Features
 
 - Drag n' Drop with multiple files at once.
-- Batch processing for all included features (except for exporting images and 
-  slideshow maker).
+- Batch processing for all included features
 - Presets manager interface with fully customizable and expandable profiles.
 - Dedicated interfaces: presets manager, video and audio conversions
 - Displaying streams information.
 - Playback for imported files and last exported file.
 - Real-time video filters preview on the video conversions interface.
-- Three types of normalization: Peak level-based, rms-based and loudness using 
-  EBU R128 algorithm, available on almost all processes.
-- Save pictures from video in jpg, png and bmp formats.
-- Audio to video merging.
-- Slideshows maker.
-- Save audio tracks from video with language selection (if with multiple audio streams).
+- Peak level-based audio normalization.
+- RMS-based audio normalization.
+- EBU R128 audio normalization.
 - Setting duration portions for imported files, filters, export and tests.
 - Log management.
 - Multi language (English and Italian Languages support for now).

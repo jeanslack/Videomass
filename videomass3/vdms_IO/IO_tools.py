@@ -72,13 +72,7 @@ def process(self, varargs, panelshown, duration, time_seq, time_read):
         assign a corresponding thread.
         
     """
-    if varargs[10]:# shortest or not on Videoconversion panel
-        newDuration = []
-        for n in duration:
-            newDuration.append(varargs[10])
-        duration = newDuration
-        
-    elif time_seq:
+    if time_seq:
         newDuration = []
         for n in duration:
             newDuration.append(time_read['time'][1])

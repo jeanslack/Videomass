@@ -15,23 +15,10 @@ NEWS
     
         * Audio normalization with EBU R128 algorithm (loudnorm) .
         * Audio normalization in RMS .
-        
-    Addings automations group on Video Conversions panel with the following 
-    features:
-    
-        * Pictures from video.
-        * Merging audio to video.
-        * Slideshows maker.
-        * Extrac audio from video.
-        
 ADD
-    * Added automations box on Video Conversion panel layout.
     * Added "-pix_fmt yuv420p" option for some encoding.
-    * Added new processing threads to make slideshows and to perform .
-      loudness normalization according to EBU R128 algorithm.
     * Added some support for the h.265/HEVC encoder.
     * Added some support for the libvpx/libvpx-vp9 (VP8, VP9) encoders.
-    * Added some support for the h.265 / HEVC encoder.
     * The libopus audio encoder for the opus format has also been added.
     
 IMPROVEMENTS:

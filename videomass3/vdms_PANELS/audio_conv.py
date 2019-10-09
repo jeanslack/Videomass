@@ -472,7 +472,7 @@ class Audio_Conv(wx.Panel):
                 if float(maxvol) == float(target):
                     volume.append('  ')
                 else:
-                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    volume.append("-af volume=%fdB" % abs(offset))
                     
                 self.normdetails.append((f, 
                                          maxvol,
@@ -487,7 +487,7 @@ class Audio_Conv(wx.Panel):
                  pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
-                
+        print('PEAK: ',volume)
         cmd_opt["PEAK"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
@@ -528,7 +528,9 @@ class Audio_Conv(wx.Panel):
                 if offset == 0.0:
                     volume.append('  ')
                 else:
-                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    #print(str(offset))
+                    #volume.append("-af volume=%sdB" % str(offset))
+                    volume.append("-af volume=%fdB" % -offset)
                     
                 self.normdetails.append((f, 
                                          maxvol,
@@ -544,7 +546,7 @@ class Audio_Conv(wx.Panel):
                  pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
-                
+        print('RMS: ',volume)        
         cmd_opt["RMS"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
@@ -658,7 +660,6 @@ class Audio_Conv(wx.Panel):
                                         audnorm,
                                         logname, 
                                         countmax,
-                                        False,# do not use is reserved
                                         )
             #used for play preview and mediainfo:
             f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -702,7 +703,6 @@ class Audio_Conv(wx.Panel):
                                         '',
                                         logname, 
                                         countmax,
-                                        False,# do not use is reserved
                                         )
             #used for play preview and mediainfo:
             f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]

@@ -45,8 +45,6 @@ dict_presets = {
 (_("Audio Conversions")) : ("preset-v1-Audio", "Audio Conversions"), 
 (_("Extract audio from video")): ("preset-v1-VideoAudio", 
                                 "Extract audio from video"),
-(_("Extract images from video")): ("preset-v1-VideoImages", 
-                                "Extract images from video"),
 (_("Convert to AVI")) : ("preset-v1-AVI", "Convert to AVI"),
 (_("Mobile Phones multimedia")) : ("preset-v1-MobilePhones", 
                                  "Mobile Phones multimedia"),
@@ -111,7 +109,6 @@ class PresetsPanel(wx.Panel):
         self.cmbx_prst = wx.ComboBox(nb1_p1,wx.ID_ANY, choices=[
                         (_("Audio Conversions")),
                         (_("Extract audio from video")),
-                        (_("Extract images from video")),
                         (_("Convert to AVI")),
                         (_("Mobile Phones multimedia")),
                         ("iPod iTunes"),
@@ -542,11 +539,8 @@ class PresetsPanel(wx.Panel):
          base_name, countmax) = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
-        if array[4] in ['jpg','png','bmp']:
-            #self.saveimages(dir_destin)
-            self.saveimages(dir_destin, file_sources)
-            
-        elif 'DOUBLE_PASS' in comcheck:
+        
+        if 'DOUBLE_PASS' in comcheck:
             
             split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
             passOne = split[0].strip()
@@ -574,8 +568,7 @@ class PresetsPanel(wx.Panel):
                                             '',
                                             '', 
                                             self.logname, 
-                                            countmax, 
-                                            False,# do not use is reserved
+                                            countmax,
                                             )
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
@@ -599,79 +592,11 @@ class PresetsPanel(wx.Panel):
                                             '',
                                             '', 
                                             self.logname, 
-                                            countmax, 
-                                            False,# do not use is reserved
+                                            countmax,
                                             )
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
                                                     array[4]))
-    #--------------------------------------------------------------------#
-    def saveimages(self, dest, file_sources):
-        """
-        Save as files image the selected video input. The saved 
-        images are named as file name + a progressive number + .jpg 
-        and placed in a folder with the same file name + a progressive 
-        number in the chosen output path.
-        
-        """
-        if len(file_sources) == 1:
-            clicked = file_sources[0]
-            
-        elif not self.parent.import_clicked:
-            wx.MessageBox(_('To export images, select one of the files '
-                            'in the "Add files" panel'), 'Videomass', 
-                            wx.ICON_INFORMATION, self)
-            return
-        else:
-            clicked = self.parent.import_clicked
-        
-        valupdate = self.update_dict('1')
-        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
-        
-        if ending.ShowModal() == wx.ID_OK:
-            fname = os.path.basename(clicked.rsplit('.', 1)[0])
-            dir_destin = dest[file_sources.index(clicked)]# specified dest
-            
-            try: 
-                outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
-                os.mkdir(outputdir)
-                
-            except FileExistsError:
-                lista = []
-                for dir_ in os.listdir(dir_destin):
-                    if "%s-IMAGES_" % fname in dir_:
-                        lista.append(int(dir_.split('IMAGES_')[1]))
-                        
-                prog = max(lista) +1
-                outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
-                os.mkdir(outputdir)
-
-            fileout = "{0}-%d.{1}".format(fname,array[4])
-            cmd = ('%s %s -i "%s" -loglevel %s %s %s %s -y "%s/%s"' % (
-                                                    self.ffmpeg_link, 
-                                                    self.parent.time_seq,
-                                                    clicked, 
-                                                    self.ffmpeg_loglev,
-                                                    self.txt_cmd.GetValue(),
-                                                    self.threads, 
-                                                    self.cpu_used,
-                                                    outputdir, 
-                                                    fileout)
-                                                    )
-            command = " ".join(cmd.split())# compact string
-            self.parent.switch_Process('saveimages',
-                                        clicked, 
-                                        None, 
-                                        None, 
-                                        command, 
-                                        None, 
-                                        None, 
-                                        None, 
-                                        self.logname, 
-                                        '1', 
-                                        False,# do not use is reserved
-                                        )
-    #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     
     def update_dict(self, countmax):

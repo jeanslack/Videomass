@@ -954,7 +954,10 @@ class Slideshow_Maker(Thread):
         self.cmd_1 = varargs[3] # command 1 
         self.cmd_2 = varargs[4] # command 2
         self.outformat = varargs[5] # final output format
-        self.duration = duration[0] * len(varargs[1]) # time sum
+        if varargs[10]:
+            self.duration = duration[0]
+        else:
+            self.duration = duration[0] * len(varargs[1]) # time sum
         self.count = 0 # count first for loop
         self.countmax = varargs[9] # length file list
         self.logname = logname # title name of file log
@@ -974,10 +977,10 @@ class Slideshow_Maker(Thread):
                     "COUNT_EVT", 
                     count='Task One', 
                     duration=len(self.filelist),
-                    fname='Temporary processing of the pictures',
+                    fname='Temporary pictures processing',
                     end='',
                     )
-        logWrite('Temporary processing of the pictures', '', self.logname)
+        logWrite('Temporary pictures processing', '', self.logname)
         
         with tempfile.TemporaryDirectory() as tmpdirname:# make tmp dir
             prognum = 0
