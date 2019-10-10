@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Videomass
+Exec=videomass %U
+GenericName=GUI for FFmpeg
+GenericName[it]=GUI per FFmpeg
+Comment=GUI for FFmpeg
+Comment[it]=GUI per FFmpeg
+Icon=videomass
+Terminal=false
+Categories=AudioVideo

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- questo è un commento -->
+<presets>
+    <label name="WAV - raw" type="Convert to wav (stereo) any audio format">
+        <parameters>-acodec pcm_s16le -ac 2 -ar 44100 </parameters>
+        <filesupport> </filesupport>
+        <extension>wav</extension>
+    </label>
+
+    <label name="From WAV to MP3 - 160kbps" type="Convert wav files to mp3 with bitrate 160k">
+        <parameters>-acodec libmp3lame -b:a 160k -ac 2 -ar 44100 </parameters>
+        <filesupport>wav WAV</filesupport>
+        <extension>mp3</extension>
+    </label>
+
+    <label name="From WMA 9 to WAV" type="Convert wma9 files to a wav">
+        <parameters>-ar 44100 </parameters>
+        <filesupport>wma VMA</filesupport>
+        <extension>wav</extension>
+    </label>
+
+    <label name="WMA - 160kbps" type="Convert to VMA with bitrate 160, any audio format">
+        <parameters>-acodec wmav2 -b:a 160k -ac 2 -ar 44100 </parameters>
+        <filesupport> </filesupport>
+        <extension>wma</extension>
+    </label>
+
+    <label name="MP3 - 160kbps" type="Convert to MP3 with bitrate 160 vbr, any audio format">
+        <parameters>-acodec libmp3lame -b:a 160k -ac 2 -ar 44100 </parameters>
+        <filesupport> </filesupport>
+        <extension>mp3</extension>
+    </label>
+    
+    <label name="MPEG4 audio - 112kbps" type="Convert to MPEG4 with bitrate 112, stereo, frequenza 44100, any audio format">
+        <parameters>-acodec aac -b:a 112k -ac 2 -ar 48000 </parameters>
+        <filesupport> </filesupport>
+        <extension>m4a</extension>
+    </label>
+
+    <label name="OGG - 128kbps" type="Convert to OGG with bitrate 128, any audio format">
+        <parameters>-acodec libvorbis -aq 3 -vn -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>ogg</extension>
+    </label>
+
+    <label name="Ac3 DVD - 384kbps" type="Convert to AC3, any audio format">
+        <parameters>-f ac3 -acodec ac3 -b:a 384k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>ac3</extension>
+    </label>
+
+    <label name="Ac3 DVD - 192kbps" type="Convert to AC3, any audio format">
+        <parameters>-f ac3 -acodec ac3 -b:a 192k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>ac3</extension>
+    </label>
+
+   <label name="FLAC - stereo (lossless)" type="Convert flac audio tracks. Sets the compression level from 1 to 8 (5 is the default) ">
+        <parameters>-acodec flac -compression_level 5 -ac 2 -ar 44100</parameters>
+        <filesupport> </filesupport>
+        <extension>flac</extension>
+    </label>
+</presets> 

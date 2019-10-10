@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="QuickTime mov" type="Quicktime MOV">
+        <parameters>-f mov -acodec aac -b:v 1250k -r 25 -b:a 128k -vf scale=640:480 -ac 2 -ar 48000</parameters>
+        <filesupport> </filesupport>
+        <extension>mov</extension>
+    </label>
+
+    <label name="QuickTime mov HQ" type="Quicktime MOV ">
+        <parameters>-crf 35.0 -vcodec libx264 -preset slow -acodec aac -ar 48000 -b:a 128k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mov</extension>
+    </label>
+
+    <label name="QuickTime mov SHQ" type="Quicktime MOV super high quality">
+        <parameters>-crf 15.0 -vcodec libx264 -preset veryslow -acodec aac -ar 48000 -b:a 192k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mov</extension>
+    </label>
+
+    <label name="QuickTime mov VHQ" type="Quicktime MOV  very high quality">
+        <parameters>-crf 25.0 -vcodec libx264 -preset slower -acodec aac -ar 48000 -b:a 160k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mov</extension>
+    </label>
+</presets>  

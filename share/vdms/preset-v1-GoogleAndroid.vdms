@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="Android 1" type="Google Android compatible video">
+        <parameters>-vf scale=480:320 -vcodec mpeg4 -acodec aac -ac 1 -ar 16000 -r 13 -b:a 32000 -aspect 3:2</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="Android 2" type="Google Android compatible video. Video bitrate: 480 kb/s">
+        <parameters>-vf scale=480:320 -vcodec mpeg4 -b:v 480k -acodec aac -ac 1 -ar 16000 -r 13 -b:a 32000 -aspect 3:2</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="Android 3" type="Google Android video. VHQ 16:9 widescreen">
+        <parameters>-vf scale=480:272 -vcodec libx264 -preset medium -b:v 500k -acodec aac -b:a 96k</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="Android 4" type="Google Android video. VHQ 4:3 fullscreen">
+        <parameters>-vf scale=432:320 -vcodec libx264 -preset medium -b:v 500k -acodec aac -b:a 96k</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+</presets>  

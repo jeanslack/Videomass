@@ -1,5 +1,62 @@
-Please report Videomass2 bugs, suggests or feedback to:
+Please report Videomass bugs, suggests or feedback to:
 
 <jeanlucperni@gmail.com>.
 
 Thanks ! 
+
+--------------------------------------------------
+- error checking with LOUDNORM FILTER:
+
+    VIDEO:
+        TWO PASS VIDEO: 
+        
+            -copy codec video:
+                test loudnorm with copy codec ..OK
+            
+            -std conversion :
+                AVI (h264) ..OK
+                MP4 (h264) ..OK
+                M4V (h264) ..OK
+                MKV (h264) ..OK
+                OGG ..OK
+                WEBM ..OK
+                FLV ..OK
+                        
+        AUDIO/VIDEO MERGING:
+        
+            COPY CODEC VIDEO:
+            
+            STD PASS VIDEO:
+            
+            TWO PASS VIDEO:
+                AVI (h264) ..OK
+        ------------------------
+    AUDIO:
+        TWO PASS AUDIO: 
+            
+            -std conversion (-f null):
+                WAV to WAV ..OK
+        
+----------------------------------------------------
+----------------------------------------------------
+
+- error checking with PEAK LEVEL NORM:
+    
+    VIDEO:
+        COPY CODEC VIDEO:
+            
+            
+        STD PASS VIDEO:
+            
+        TWO PASS VIDEO: 
+                        
+        AUDIO/VIDEO MERGING:
+        
+            COPY CODEC VIDEO:
+                ..OK
+            
+            STD PASS VIDEO:
+                AVI (xvid mpeg4) ..OK
+            
+            TWO PASS VIDEO:
+                AVI (h264) ..OK

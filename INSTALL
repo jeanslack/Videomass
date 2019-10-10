@@ -1,53 +1,48 @@
-Videomass2 Builds and Installation Instructions
+Videomass Installation Instructions and buildings
+
+
+Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are 
+available at <https://sourceforge.net/projects/videomass2/>
+These installation programs contain everything needed to be used 
+in standalone mode, without the need for anything else. 
+#--------------------------------------------------------------------------#
 
 Base Dependencies:
-
-    - python 2.7 
-    - wxPython 3.0
-    - pip
-
-#--------------------------------------------------------------------------#
-NOTE: [Linux/Macintosh/Unix/Windows]
-
-Videomass2 can be run without installing by un-tarring the source package and 
-executing the "launcher" script in the root of the un-tarred directory.
-Alternatively, however, if you want the setup.py script to allow you to build 
-an executable for your operating system or if you simply want to install 
-Videomass2 from the python Package Index (aka PyPi) follow the Options below.
-
-#--------------------------------------------------------------------------#
-Option 1) Installing from Pypi: [Linux/Macintosh/Unix/Windows]
-
-pip install videomass2
-
-#--------------------------------------------------------------------------#
-Option 2) Build a Windows exe: [Windows]
-
-please, visit the following support page to Windows paragraph.
-
-https://jeanslack.github.io/Videomass2/building_package.html
-
-#--------------------------------------------------------------------------#
-Option 3) Build a MacOSX app: [Macintosh OSX]
-
-please, visit the following support page to MacOsX paragraph.
-
-https://jeanslack.github.io/Videomass2/building_package.html
-
-#--------------------------------------------------------------------------#
-Option 4) Build as wheel: [Linux/Macintosh/Unix/Windows]
-
-please, visit the following support page to Build distribution for Windows, 
-MacOsX, Linux, Unix paragraph.
-
-https://jeanslack.github.io/Videomass2/building_package.html
-
-#--------------------------------------------------------------------------#
-Option 5) Build as Debian package: [Linux/Macintosh/Unix/Windows]
-
-please, visit the following support page to Gnu/Linux Debian paragraph.
     
-https://jeanslack.github.io/Videomass2/building_package.html
+    - Python >=3.7
+    - wxPython4
+    - PyPubSub (install it with pip)
+    - pip (On Windows and MacOS it is included with Python3.7)
+    - FFmpeg (with ffplay and ffprobe)
+
+Videomass can be run without installing by un-tarring the source package and 
+executing the "launcher" script in the root of the un-tarred directory.
+
+    python launcher
+
+#--------------------------------------------------------------------------#
+Installing with pip tool: [Linux/Macintosh/Unix/Windows]
+
+    pip install videomass
+    
+- To uninstall:
+
+    pip uninstall videomass
+    
+Please, Visit the Wiki page for more info: 
+
+
+https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-tool
+#--------------------------------------------------------------------------#
+
+Build as wheel: [Linux/Macintosh/Unix/Windows]
+
+python3 setup.py sdist bdist_wheel
+
+Please, Visit the Wiki page for more info:
+
+https://github.com/jeanslack/Videomass/wiki/Make-pure-Python-wheels
+
 #--------------------------------------------------------------------------#
 
 

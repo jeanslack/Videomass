@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="Video per iPod e iPhone" type="Produces compatible video conversions for iPod/iPhone">
+        <parameters>-acodec aac -ab 96k -ac 2 -vcodec libx264 -vpre ipod320 -vf scale=480:-1 -crf 22</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+</presets>

@@ -1,41 +1,48 @@
+# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.   
 
-# **Videomass2** is a cross-platform GUI for FFmpeg   
-It provides a graphical interface for audio and video conversions through FFmpeg.
-
-* [View progect on PyPi](https://pypi.org/project/videomass2/)
-* [GitHub Page](https://github.com/jeanslack/Videomass2)
-* [Support Page and Documentation](http://jeanslack.github.io/Videomass2)
-* [Downloads Source Code](https://github.com/jeanslack/Videomass2/releases)
+* [Videomass on PyPi](https://pypi.org/project/videomass/)
+* [GitHub Page](https://github.com/jeanslack/Videomass)
+* [Support Page and Documentation](http://jeanslack.github.io/Videomass)
+* [Wiki page](https://github.com/jeanslack/Videomass/wiki)
+* [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
 * [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
+
+## News
+
+- October 2019: Videomass now also supports a slideshows maker, 
+  merging audio-video, RMS-based normalization and EBU R128
+  normalization.
 
 ## Features
 
-- Drag n' Drop interface
-- Presets manager interface with fully customizable and expandable profiles  
-- Displaying metadata streams information 
-- Preview of exported media
-- Preview video filters
-- Reproduction of imported media
-- Video conversions interface 
-- Audio conversions interface
-- Save jpg images from a video sequence
-- Audio peak level analysis with normalization process   
-- Grabbing audio streams from video with multilingual selection  
-- Selection of the time interval (for exports, previews, reproduction, tests)
-- Convert multiple files at once 
-- Log management
-- Italian and English Languages support
-- Work on many platforms where Python and wxPython are supported, 
-  including **Linux**, **MacOs** and **Windows**. 
+- Drag n' Drop with multiple files at once.
+- Batch processing for all included features (except for exporting images and 
+  slideshow maker).
+- Presets manager interface with fully customizable and expandable profiles.
+- Dedicated interfaces: presets manager, video and audio conversions
+- Displaying streams information.
+- Playback for imported files and last exported file.
+- Real-time video filters preview on the video conversions interface.
+- Three types of normalization: Peak level-based, rms-based and loudness using 
+  EBU R128 algorithm, available on almost all processes.
+- Save pictures from video in jpg, png and bmp formats.
+- Audio to video merging.
+- Slideshows maker.
+- Save audio tracks from video with language selection (if with multiple audio streams).
+- Setting duration portions for imported files, filters, export and tests.
+- Log management.
+- Multi language (English and Italian Languages support for now).
+- Work on many platforms where Python3 and wxPython4 are supported, 
+  including Linux, Unix, MacOs and Windows.
+- Compatible with Python 3 only
+- ...And more
 
-## Essential Dependencies
-
-**Required:**
-- Python >= 2.7 (not python >= 3)   
-- wxPython >= 3.0 (wxPython classic)
-
-**Optionals:**
-- ffmpeg >= 3.2
-- ffprobe (for multimedia streams analysis) (can be built-in into ffmpeg)
-- ffplay (media player for media preview) (can be built-in into ffmpeg)
+## Requirements
+   
+- Python3     
+- wxPython4 (phoenix) 
+- PyPubSub  
+- ffmpeg >= 3.2   
+- ffprobe (for multimedia streams analysis)  
+- ffplay (for playback)   
 

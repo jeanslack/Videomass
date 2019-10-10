@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="MPEG4 Video HQ" type="MPEG-4 H.264 video (high quality)">
+        <parameters>-crf 35.0 -vcodec libx264 -preset slow -acodec aac -ar 48000 -b:a 128k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="MPEG4 Video SHQ" type="MPEG-4 H.264 video (super high quality)">
+        <parameters>-crf 15.0 -vcodec libx264 -preset veryslow -acodec aac -ar 48000 -b:a 192k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="MPEG4 Video VHQ" type="MPEG-4 H.264 video (very high quality)">
+        <parameters>-crf 25.0 -vcodec libx264 -preset slower -acodec aac -ar 48000 -b:a 160k -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="x264 HQ FS" type="MP4 Fullscreen">
+        <parameters>-f mp4 -r 29.97 -vcodec libx264 -preset slow -vf scale=640:480 -b:v 1000k -aspect 4:3 -flags +loop -cmp chroma -b:v 1250k -maxrate 1500k -bufsize 4M -bt 256k -refs 1 -bf 3 -coder 1 -me_method umh -me_range 16 -subq 7 -partitions +parti4x4+parti8x8+partp8x8+partb8x8 -g 250 -keyint_min 25 -level 30 -qmin 10 -qmax 51 -qcomp 0.6 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -acodec aac -b:a 112k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="x264 HQ WS" type="MP4 Widescreen">
+        <parameters>-f mp4 -r 29.97 -vcodec libx264 -preset slow -vf scale=704:384 -b:v 1000k -aspect 16:9 -flags +loop -cmp chroma -b:v 1250k -maxrate 1500k -bufsize 4M -bt 256k -refs 1 -bf 3 -coder 1 -me_method umh -me_range 16 -subq 7 -partitions +parti4x4+parti8x8+partp8x8+partb8x8 -g 250 -keyint_min 25 -level 30 -qmin 10 -qmax 51 -qcomp 0.6 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -acodec aac -b:a 112k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+</presets>  

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="Mobile Phones 16:9" type="3GPP H.264 320x240 16:9 crop AAC stereo">
+        <parameters>-r 15 -b:v 128k -vf scale=426:240,crop=iw-52-54:ih:52 -ar 22050 -b:a 64k -acodec aac -vcodec libx264 -preset medium -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="Mobile Phones 4:3" type="3GPP H.264 320x240 4:3 AAC stereo">
+        <parameters>-r 15 -b:v 128k -vf scale=320:240 -ar 22050 -b:a 64k -acodec aac -vcodec libx264 -preset medium -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="Mobile Phones" type="3GPP H.264 320x240 16:9 crop AAC stereo">
+        <parameters>-r 15 -b:v 128k -vf scale=426:240,crop=iw-52-54:ih:52 -ar 22050 -b:a 64k -acodec aac -vcodec libx264 -preset medium -coder 1 -flags +loop -cmp chroma -partitions +parti4x4+partp8x8+partb8x8 -me_method hex -subq 6 -me_range 16 -g 250 -keyint_min 25 -sc_threshold 40 -i_qfactor 0.71 -b_strategy 1</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+</presets>

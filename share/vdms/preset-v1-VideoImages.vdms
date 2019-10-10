@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- this is a comment -->
+<presets>
+    <label name="Save JPG images from a movie" type="Extract 'jpg' images from each selected movie with 0.2 fps per images">
+        <parameters>-r 0.2 -an</parameters>
+        <filesupport> </filesupport>
+        <extension>jpg</extension>
+    </label>
+
+    <label name="Save PNG images from a movie" type="Extract 'png' images from each selected movie with 0.2 fps per images">
+        <parameters>-r 0.2 -an</parameters>
+        <filesupport> </filesupport>
+        <extension>png</extension>
+    </label>
+
+    <label name="Save BMP images from a movie" type="Extract 'bmp' images from each selected movie with 0.2 fps per images">
+        <parameters>-r 0.2 -an</parameters>
+        <filesupport> </filesupport>
+        <extension>bmp</extension>
+    </label>    
+</presets> 

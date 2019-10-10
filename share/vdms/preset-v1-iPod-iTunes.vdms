@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presets>
+    <label name="Video per iPod e iPhone" type="Produces compatible video conversions for iPod/iPhone">
+        <parameters>-acodec aac -ab 96k -ac 2 -vcodec libx264 -vpre ipod320 -vf scale=480:-1 -crf 22</parameters>
+        <filesupport> </filesupport>
+        <extension>mp4</extension>
+    </label>
+
+    <label name="iPodiTunesIphoneWS" type="iPhone WideScreen">
+        <parameters>-r 29.97 -vcodec libx264 -preset fast -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -vf scale=480:320 -aspect 16:9 -acodec aac -b:a 112k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesSmallCRF21FS" type="iPod Small Fullscreen">
+        <parameters>-r 29.97 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -vf scale=320:240 -aspect 4:3 -acodec aac -b:a 112k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesSmallCRF21WS" type="iPod Small WideScreen">
+        <parameters>-r 29.97 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -vf scale=320:176 -aspect 16:9 -acodec aac -b:a 112k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesSmallCRF21WSAna" type="iPod Small WideScreen Anamorphic">
+        <parameters>-r 29.97 -vf crop=iw:ih-2*60,scale=320:144 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -aspect 2.35 -acodec aac -b:a 112k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesSmallCRF21WSLBFix" type="iPod Small Converted to WideScreen">
+        <parameters>-r 29.97 -vf crop=iw:ih-2*64,scale=320:176 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -aspect 16:9 -acodec aac -b:a 112k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesTVOutCRF21FS" type="iPod TV Out Fullscreen">
+        <parameters>-r 29.97 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -vf scale=512:384 -aspect 4:3 -acodec aac -b:a 112k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesTVOutCRF21WS" type="iPod TV Out Widescreen">
+        <parameters>-r 29.97 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -vf scale=624:352 -aspect 16:9 -acodec aac -b:a 112k -ar 48000 -ac 2 </parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesTVOutCRF21WSAna" type="iPod TV Out Widescreen Anamorphic">
+        <parameters>-r 29.97 -vf crop=iw:ih-2*60,scale=640:272 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -aspect 2.35 -acodec aac -b:a 112k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+
+    <label name="iPodiTunesTVOutCRF21WSLBFix" type="iPod TV Out Converted to Widescreen">
+        <parameters>-r 29.97 -vf crop=iw:ih-2*64,scale=640:352 -vcodec libx264 -preset medium -flags +loop -cmp chroma -crf 21 -bt 256k -refs 1 -coder 0 -me_method full -me_range 16 -subq 5 -partitions +parti4x4+parti8x8+partp8x8 -g 250 -keyint_min 25 -level 30 -trellis 2 -sc_threshold 40 -i_qfactor 0.71 -aspect 16:9 -acodec aac -b:a 112k -ar 48000 -ac 2</parameters>
+        <filesupport> </filesupport>
+        <extension>m4v</extension>
+    </label>
+</presets>
