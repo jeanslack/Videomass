@@ -120,6 +120,7 @@ yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
+green = '#268826'
 ciano = '#61ccc7' # rgb 97, 204, 199
 violet = '#D64E93'
 
@@ -1383,12 +1384,12 @@ class Video_Conv(wx.Panel):
         
         elif self.rdbx_normalize.GetSelection() == 2:
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_2, '#282C84')
+            self.parent.statusbar_msg(msg_2, '#15A660')
             self.btn_voldect.Show(), self.spin_target.Show()
             self.lab_amplitude.Show(), self.spin_target.SetValue(-20)
             
         elif self.rdbx_normalize.GetSelection() == 3:
-            self.parent.statusbar_msg(msg_3, '#268826')
+            self.parent.statusbar_msg(msg_3, '#87A615')
             self.normalize_default(False)
             self.lab_i.Show(), self.lab_tp.Show(), self.lab_lra.Show(),
             self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
@@ -1470,7 +1471,7 @@ class Video_Conv(wx.Panel):
                 if float(maxvol) == float(target):
                     volume.append('  ')
                 else:
-                    volume.append("-af volume=%sdB" % (str(offset)[1:]))
+                    volume.append("-af volume=%fdB" % -offset)
                     
                 self.normdetails.append((f, 
                                          maxvol,
@@ -1527,7 +1528,7 @@ class Video_Conv(wx.Panel):
                 if offset == 0.0:
                     volume.append('  ')
                 else:
-                    volume.append("-af volume=%sdB" % str(offset))
+                    volume.append("-af volume=%fdB" % -offset)
                     
                 self.normdetails.append((f, 
                                          maxvol,
@@ -1556,9 +1557,9 @@ class Video_Conv(wx.Panel):
         Show a wx.ListCtrl dialog with volumedected data
         """
         if cmd_opt["PEAK"]:
-            title = _('PEAK-based statistics')
+            title = _('PEAK-based volume statistics')
         elif cmd_opt["RMS"]:
-            title = _('RMS-based statistics')
+            title = _('RMS-based volume statistics')
             
         audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
@@ -1828,9 +1829,8 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def ebu_2pass(self, file_sources, dir_destin, countmax, logname):
         """
-        Composes the ffmpeg command strings for batch process. 
-        In double pass mode, split command in two part (see  
-        os_processing.py at proc_batch_thread Class(Thread) ).
+        Define the ffmpeg command strings for batch process with
+        EBU two-passes conversion 
         
         """
         title = _('Audio/Video EBU normalization')

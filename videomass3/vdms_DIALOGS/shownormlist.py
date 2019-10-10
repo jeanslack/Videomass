@@ -72,7 +72,7 @@ class NormalizationList(wx.Dialog):
         txtgrey = wx.StaticText(self, wx.ID_ANY, (_("No changes =")))
         grey = wx.StaticText(self, wx.ID_ANY, "\t\t")
         grey.SetBackgroundColour(wx.Colour(77, 77, 77))# #4D4D4D
-        txtyell = wx.StaticText(self, wx.ID_ANY, (_("Is less than max =")))#lower peak
+        txtyell = wx.StaticText(self, wx.ID_ANY, (_("Below max peak =")))
         yell = wx.StaticText(self, wx.ID_ANY, "\t\t")
         yell.SetBackgroundColour(wx.Colour(198, 180, 38))# #C6B426
 

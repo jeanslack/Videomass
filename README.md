@@ -9,7 +9,7 @@
 
 ## News
 
-- October 2019: Added implementation for EBU R128 normalization and RMS-based normalization
+- October 2019 v.1.7.0: Added implementation for EBU R128 normalization and RMS-based normalization. See changelog for more details.
 
 ## Features
 

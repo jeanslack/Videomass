@@ -69,6 +69,7 @@ yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#8aab3c'
+green = '#268826'
 
 class PresetsPanel(wx.Panel):
     """

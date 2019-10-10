@@ -15,6 +15,10 @@ NEWS
     
         * Audio normalization with EBU R128 algorithm (loudnorm) .
         * Audio normalization in RMS .
+        
+    * Peak level normalization now has also target to below level .
+    * PEAK/RMS normalizations are not applied to unchanged levels, ie when 
+      the target does not ensure level changes.
 ADD
     * Added "-pix_fmt yuv420p" option for some encoding.
     * Added some support for the h.265/HEVC encoder.
@@ -22,9 +26,9 @@ ADD
     * The libopus audio encoder for the opus format has also been added.
     
 IMPROVEMENTS:
-    * code thinning in some file section in the old stuff.
     * The dialog box to show the level statistics for audio normalization 
       has been improved with more useful information.
+    * code thinning in some file section in the old stuff.
     
 BUG FIXES:
     * fixed bug when choosing to copy the video codec that always enabled 

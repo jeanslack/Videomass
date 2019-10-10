@@ -263,11 +263,18 @@ of each sample. Bit depth is only meaningful in reference
 to a PCM digital signal. Non-PCM formats, such as lossy 
 compression formats, do not have associated bit depths.\
 """))
+    sample_rate = {0:("Default", ""), 
+                   1:("44100 Hz ","-ar 44100 "), 
+                   2:("48000 Hz ","-ar 48000"), 
+                   3:("88200 Hz ","-ar 88200"), 
+                   4:("96000 Hz ","-ar 96000 ")
+                   }
+    #----------------------------------------------------------------#
     def __init__(self, audio_format):
         """
         Accept a type string object representing the name of the audio 
         format. For now there is support for these  audio formats: 
-        wav, aiff, flac, alac, aac, ac3, ogg, mp3.
+        wav, aiff, flac, alac, aac, ac3, ogg, mp3, opus.
         Each attribute is instantiable with this class and returns the 
         data object for each dictionary.
         """
@@ -315,12 +322,7 @@ compression formats, do not have associated bit depths.\
     def flac_param(self):
         """
         """
-        self.sample_rate = {0:("Default", ""), 
-                            1:("44100 Hz ","-ar 44100 "), 
-                            2:("48000 Hz ","-ar 48000"), 
-                            3:("88200 Hz ","-ar 88200"), 
-                            4:("96000 Hz ","-ar 96000 ")
-                            }
+        self.sample_rate = TypeAudioParameters.sample_rate
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
@@ -343,12 +345,7 @@ compression formats, do not have associated bit depths.\
     def alac_param(self):
         """
         """
-        self.sample_rate = {0:("Default", ""), 
-                            1:("44100 Hz ","-ar 44100 "), 
-                            2:("48000 Hz ","-ar 48000"), 
-                            3:("88200 Hz ","-ar 88200"), 
-                            4:("96000 Hz ","-ar 96000 ")
-                            }
+        self.sample_rate = TypeAudioParameters.sample_rate
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
@@ -379,12 +376,7 @@ compression formats, do not have associated bit depths.\
     def aac_param(self):
         """
         """
-        self.sample_rate = {0:("Default", ""), 
-                            1:("44100 Hz ","-ar 44100 "), 
-                            2:("48000 Hz ","-ar 48000"), 
-                            3:("88200 Hz ","-ar 88200"), 
-                            4:("96000 Hz ","-ar 96000 ")
-                            }
+        self.sample_rate = TypeAudioParameters.sample_rate
         self.channels = {0:("Default",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
@@ -404,12 +396,7 @@ compression formats, do not have associated bit depths.\
     def ac3_param(self):
         """
         """
-        self.sample_rate = {0:("Default", ""), 
-                            1:("44100 Hz ","-ar 44100 "), 
-                            2:("48000 Hz ","-ar 48000"), 
-                            3:("88200 Hz ","-ar 88200"), 
-                            4:("96000 Hz ","-ar 96000 ")
-                            }
+        self.sample_rate = TypeAudioParameters.sample_rate
         self.channels = {0:("Default",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
@@ -431,12 +418,7 @@ compression formats, do not have associated bit depths.\
     def ogg_param(self):
         """
         """
-        self.sample_rate = {0:("Default", ""), 
-                            1:("44100 Hz ","-ar 44100 "), 
-                            2:("48000 Hz ","-ar 48000"), 
-                            3:("88200 Hz ","-ar 88200"), 
-                            4:("96000 Hz ","-ar 96000 ")
-                            }
+        self.sample_rate = TypeAudioParameters.sample_rate
         
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
@@ -458,12 +440,7 @@ compression formats, do not have associated bit depths.\
     def mp3_param(self):
         """
         """
-        self.sample_rate = {0:("Default", ""), 
-                            1:("44100 Hz ","-ar 44100 "), 
-                            2:("48000 Hz ","-ar 48000"), 
-                            3:("88200 Hz ","-ar 88200"), 
-                            4:("96000 Hz ","-ar 96000 ")
-                            } 
+        self.sample_rate = TypeAudioParameters.sample_rate 
         
         self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")

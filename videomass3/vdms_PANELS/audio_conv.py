@@ -44,6 +44,7 @@ yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
+green = '#268826'
 ciano = '#61ccc7' # rgb 97, 204, 199
 
 cmd_opt = {"AudioContainer": "MP3 [.mp3]", 
@@ -382,7 +383,7 @@ class Audio_Conv(wx.Panel):
                 self.parent.statusbar_msg(msg_1, azure)
                 self.spin_target.SetValue(-1.0)
             else:
-                self.parent.statusbar_msg(msg_2, '#282C84')
+                self.parent.statusbar_msg(msg_2, '#15A660')
                 self.spin_target.SetValue(-20.0)
                 
             self.btn_analyzes.Enable()
@@ -395,7 +396,7 @@ class Audio_Conv(wx.Panel):
             del self.normdetails[:]
             
         elif self.rdbx_norm.GetSelection() == 3: # EBU
-            self.parent.statusbar_msg(msg_3, '#268826')
+            self.parent.statusbar_msg(msg_3, '#87A615')
             self.btn_analyzes.Hide(), self.lab_amplitude.Hide()
             self.spin_target.Hide(), self.btn_details.Hide()
             self.lab_i.Show(), self.spin_i.Show(), self.lab_lra.Show(),
@@ -472,7 +473,7 @@ class Audio_Conv(wx.Panel):
                 if float(maxvol) == float(target):
                     volume.append('  ')
                 else:
-                    volume.append("-af volume=%fdB" % abs(offset))
+                    volume.append("-af volume=%fdB" % -offset)
                     
                 self.normdetails.append((f, 
                                          maxvol,
@@ -487,7 +488,7 @@ class Audio_Conv(wx.Panel):
                  pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
-        print('PEAK: ',volume)
+
         cmd_opt["PEAK"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
@@ -528,8 +529,6 @@ class Audio_Conv(wx.Panel):
                 if offset == 0.0:
                     volume.append('  ')
                 else:
-                    #print(str(offset))
-                    #volume.append("-af volume=%sdB" % str(offset))
                     volume.append("-af volume=%fdB" % -offset)
                     
                 self.normdetails.append((f, 
@@ -546,7 +545,7 @@ class Audio_Conv(wx.Panel):
                  pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
-        print('RMS: ',volume)        
+       
         cmd_opt["RMS"] = volume
         self.btn_analyzes.Disable()
         self.btn_analyzes.SetForegroundColour(wx.Colour(165,165, 165))
@@ -558,14 +557,14 @@ class Audio_Conv(wx.Panel):
         Show a wx.ListCtrl dialog with volumedected data
         """
         if cmd_opt["PEAK"]:
-            title = _('PEAK-based statistics')
+            title = _('PEAK-based volume statistics')
         elif cmd_opt["RMS"]:
-            title = _('RMS-based statistics')
+            title = _('RMS-based volume statistics')
             
         audionormlist = shownormlist.NormalizationList(title, 
                                                        self.normdetails, 
                                                        self.OS)
-        audionormlist.Show()#, self.Layout()
+        audionormlist.Show()
     #-----------------------------------------------------------------------#
 
     def exportStreams(self, exported):

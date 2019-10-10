@@ -45,6 +45,7 @@ yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
+green = '#268826'
 
 ########################################################################
 class MainFrame(wx.Frame):
@@ -273,7 +274,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if self.OS == 'Darwin':
-            self.SetSize((920, 435))
+            self.SetSize((970, 500))
         elif self.OS == 'Windows':
             self.SetSize((900, 530))
         else:
