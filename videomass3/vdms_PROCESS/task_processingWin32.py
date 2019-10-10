@@ -28,7 +28,6 @@
 #########################################################
 import wx
 import subprocess
-import tempfile
 import itertools
 import sys
 import os
@@ -166,17 +165,6 @@ class GeneralProcess(wx.Panel):
             TwoPass_Video(self.varargs, self.duration,
                           self.logname, self.time_seq
                           )
-        elif self.varargs[0] == 'saveimages': # from Vidconv/Prstmng panels
-            Save_Pictures(self.varargs, self.duration,
-                          self.logname, self.time_seq
-                          )
-        elif self.varargs[0] == 'audioextract':# from Vidconv/Prstmng panels
-            Audio_Extact(self.varargs, self.duration,
-                         self.logname, self.time_seq
-                         )
-        elif self.varargs[0] == 'slideshow':# from video conv panel
-            Slideshow_Maker(self.varargs, self.duration, self.logname)
-            
         elif self.varargs[0] == 'EBU normalization':# from Vidconv/Aconv panels
             TwoPass_Loudnorm(self.varargs, self.duration, 
                              self.logname, self.time_seq
@@ -220,17 +208,12 @@ class GeneralProcess(wx.Panel):
             percentage = timesum / duration * 100
             self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
             del output, duration
-        
-        elif output[0] == 'count cicles only':
-            self.barProg.SetValue(duration)
-            self.OutText.AppendText(' %s' % output[1])
 
         else:# append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():# not print the output
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
                 self.OutText.AppendText(' %s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-                
                 
             with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
                 logerr.write("[FFMPEG]: %s" % (output))
@@ -511,16 +494,22 @@ class TwoPass_Video(Thread):
             filename = os.path.splitext(basename)[0]#nome senza estensione
             
             #--------------- first pass
-            pass1 = ('%s -loglevel %s %s -i "%s" %s -passlogfile '
-                     '"%s/%s.log" -pass 1 -y %s' % (ffmpeg_url, 
-                                                    ffmpeg_loglev,
-                                                    self.time_seq,
-                                                    files, 
-                                                    self.passList[0],
-                                                    folders, 
-                                                    filename,
-                                                    self.nul,
-                                                    )) 
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
+                
+            pass1 = ('%s -loglevel %s %s -i "%s" %s %s"%s/%s.log" '
+                     '-y %s' % (ffmpeg_url, 
+                                ffmpeg_loglev,
+                                self.time_seq,
+                                files, 
+                                self.passList[0],
+                                passpar,
+                                folders, 
+                                filename,
+                                self.nul,
+                                ))  
             self.count += 1
             count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
@@ -597,19 +586,25 @@ class TwoPass_Video(Thread):
                              )
             
             #--------------- second pass ----------------#
-            pass2 = ('%s -loglevel %s %s -i "%s" %s %s -passlogfile '
-                     '"%s/%s.log" -pass 2 -y "%s/%s.%s"' % (ffmpeg_url,
-                                                            ffmpeg_loglev,
-                                                            self.time_seq,
-                                                            files, 
-                                                            self.passList[1], 
-                                                            volume,
-                                                            folders, 
-                                                            filename,
-                                                            folders, 
-                                                            filename,
-                                                            self.extoutput,
-                                                            ))
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
+                
+            pass2 = ('%s -loglevel %s %s -i "%s" %s %s %s'
+                     '"%s/%s.log" -y "%s/%s.%s"' % (ffmpeg_url,
+                                                    ffmpeg_loglev,
+                                                    self.time_seq,
+                                                    files, 
+                                                    self.passList[1], 
+                                                    volume,
+                                                    passpar,
+                                                    folders, 
+                                                    filename,
+                                                    folders, 
+                                                    filename,
+                                                    self.extoutput,
+                                                    ))
             count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
@@ -686,457 +681,7 @@ class TwoPass_Video(Thread):
         print end messagess to console
         """
         print('...%s' % (mess))
-        
 ########################################################################
-class Save_Pictures(Thread):
-    """
-    This class represents a separate thread for running simple single 
-    processes, it is used to save as 'pictures' feature in video conversion
-    and Presets Manager panels.
-    """
-    def __init__(self, varargs, duration, logname, timeseq):
-        """
-        self.cmd contains a unique string that comprend filename input
-        and filename output also.
-        The duration adds another 10 seconds due to problems with the 
-        progress bar
-        """
-        Thread.__init__(self)
-        """initialize"""
-        self.cmd = varargs[4] # comand set on single pass
-        self.duration = duration[0]+10# duration list
-        self.time_seq = timeseq # a time segment
-        self.count = 0 # count first for loop
-        self.logname = logname # title name of file log
-        self.fname = varargs[1] # file name
-
-        self.start() # start the thread (va in self.run())
-
-    def run(self):
-        """
-        Subprocess initialize thread.
-        """
-        global STATUS_ERROR
-
-        count = 'File %s/%s' % ('1','1',)
-        com = "%s\n%s" % (count, self.cmd)
-        print("%s" % com)
-        
-        wx.CallAfter(pub.sendMessage, 
-                     "COUNT_EVT", 
-                     count=count, 
-                     duration=self.duration,
-                     fname=self.fname,
-                     end='',
-                     )
-        logWrite(com, '', self.logname)# write n/n + command only
-        
-        try:
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            with subprocess.Popen(self.cmd,
-                                  stderr=subprocess.PIPE, 
-                                  bufsize=1, 
-                                  universal_newlines=True,
-                                  startupinfo=startupinfo,) as p:
-                for line in p.stderr:
-                    #sys.stdout.write(line)
-                    #sys.stdout.flush()
-                    print(line, end=''),
-                    
-                    wx.CallAfter(pub.sendMessage, 
-                                "UPDATE_EVT", 
-                                output=line, 
-                                duration=self.duration,
-                                status=0,
-                                )
-                    if CHANGE_STATUS == 1:# break second 'for' loop
-                        p.terminate()
-                        print('...Interrupted process')
-                        break
-                    
-                if p.wait(): # error
-                    wx.CallAfter(pub.sendMessage, 
-                                "UPDATE_EVT", 
-                                output=line, 
-                                duration=self.duration,
-                                status=p.wait(),
-                                )
-                    logWrite('', 
-                            "Exit status: %s" % p.wait(),
-                            self.logname)
-                            #append exit error number
-                
-                else: # status ok
-                    wx.CallAfter(pub.sendMessage, 
-                                "COUNT_EVT", 
-                                count='', 
-                                duration='',
-                                fname='',
-                                end='ok'
-                                )
-                    print('...Done')
-            
-        except OSError as err:
-            e = "%s: 'ffmpeg.exe'" % (err)
-            wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         count=e, 
-                         duration=0,
-                         fname=self.fname,
-                         end='',
-                         )
-            print('...%s' % (e))
-            STATUS_ERROR = 1
-        
-                
-        time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
-
-########################################################################
-class Audio_Extact(Thread):
-    """
-    This class extracts audio tracks on videos even from different 
-    formats and represents a separate thread for running processes, 
-    which need to read the stdout/stderr in real time.
-    
-    """
-    def __init__(self, varargs, duration, logname, timeseq):
-        """
-        """
-        Thread.__init__(self)
-        """initialize"""
-        self.filelist = varargs[2] # input file list (items)
-        self.outputdir = varargs[3] # output path list (items)
-        self.cmd_1 = varargs[4] # comand 1
-        self.codec = varargs[5] # codec type list (items)
-        self.cmd_2 = varargs[6] # command 2
-        self.ext = varargs[7] # format/extension list (items)
-        #self.logname = varargs[8] #  videomass/logname.log
-        self.duration = duration # duration values list (items)
-        self.time_seq = timeseq # a time segment
-        self.count = 0 # count first for loop
-        self.countmax = len(varargs[2]) # length file list
-        self.logname = logname # title name of file log
-        
-        self.start() # start the thread (va in self.run())
-
-    def run(self):
-        """
-        Subprocess initialize thread.
-        """
-        global STATUS_ERROR
-
-        for (files,
-             codec,
-             folders,
-             ext,
-             duration) in itertools.zip_longest(self.filelist, 
-                                                self.codec, 
-                                                self.outputdir, 
-                                                self.ext,
-                                                self.duration,
-                                                ):
-            basename = os.path.basename(files) #nome file senza path
-            filename = os.path.splitext(basename)[0]#nome senza estensione
-            out = os.path.join(folders, filename)
-
-            cmd = '%s %s -loglevel %s -i "%s" %s %s %s "%s.%s"' %(ffmpeg_url,
-                                                                  self.time_seq,
-                                                                  ffmpeg_loglev,
-                                                                  files, 
-                                                                  self.cmd_1, 
-                                                                  codec, 
-                                                                  self.cmd_2,
-                                                                  out,
-                                                                  ext,
-                                                                    )
-            self.count += 1
-            count = 'File %s/%s' % (self.count, self.countmax,)
-            com = "%s\n%s" % (count, cmd)
-            print("%s" % com)
-            
-            wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         count=count, 
-                         duration=duration,
-                         fname=files,
-                         end='',
-                         )
-            logWrite(com, '', self.logname)# write n/n + command only
-            
-            try:
-                startupinfo = subprocess.STARTUPINFO()
-                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                with subprocess.Popen(cmd, 
-                                      stderr=subprocess.PIPE, 
-                                      bufsize=1, 
-                                      universal_newlines=True,
-                                      startupinfo=startupinfo,) as p:
-                    
-                    for line in p.stderr:
-                        #sys.stdout.write(line)
-                        #sys.stdout.flush()
-                        print (line, end=''),
-                        wx.CallAfter(pub.sendMessage, 
-                                     "UPDATE_EVT", 
-                                     output=line, 
-                                     duration=duration,
-                                     status=0
-                                     )
-                        if CHANGE_STATUS == 1:
-                            p.terminate()
-                            break
-                        
-                    if p.wait(): # error
-                        wx.CallAfter(pub.sendMessage, 
-                                    "UPDATE_EVT", 
-                                    output=line, 
-                                    duration=duration,
-                                    status=p.wait(),
-                                    )
-                        logWrite('', 
-                                 "Exit status: %s" % p.wait(), 
-                                 self.logname)
-                                 #append exit error number
-                    else: # ok
-                        wx.CallAfter(pub.sendMessage, 
-                                    "COUNT_EVT", 
-                                    count='', 
-                                    duration='',
-                                    fname='',
-                                    end='ok'
-                                    )
-                        print('...Done\n')
-                        
-            except OSError as err:
-                e = "%s: 'ffmpeg.exe'" % (err)
-                wx.CallAfter(pub.sendMessage, 
-                             "COUNT_EVT", 
-                             count=e, 
-                             duration=0,
-                             fname=files,
-                             end='',
-                             )
-                print('...%s' % (e))
-                STATUS_ERROR = 1
-                break
-
-            if CHANGE_STATUS == 1:
-                p.terminate()
-                print('...Interrupted process')
-                break
-            
-        time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
-
-########################################################################
-class Slideshow_Maker(Thread):
-    """
-    This thread is indispensable for creating movies starting from 
-    one or more pictures supported by FFmpeg. It should resize the 
-    image resolution to a given size and convert it to png format
-    using the default temporary directory on each O.S., then proceed 
-    to chaining in a numerical order (given by the sequence 
-    of files) convert and saving the output to the chosen folder.
-    """
-    def __init__(self, varargs, duration, logname):
-        """
-        NOTE: the self.duration attribute is the result of the sum 
-        of the duration set on the 'duration' tool for the number of 
-        images imported for concatenation. This should manage the 
-        progress bar effectively.
-        """
-        Thread.__init__(self)
-        """initialize"""
-        
-        self.filelist = varargs[1] # input file list (items)
-        self.cmd_1 = varargs[3] # command 1 
-        self.cmd_2 = varargs[4] # command 2
-        self.outformat = varargs[5] # final output format
-        if varargs[10]:
-            self.duration = duration[0]
-        else:
-            self.duration = duration[0] * len(varargs[1]) # time sum
-        self.count = 0 # count first for loop
-        self.countmax = varargs[9] # length file list
-        self.logname = logname # title name of file log
-        
-        self.start() # start the thread (va in self.run())
-
-    def run(self):
-        """
-        Subprocess initialize thread.
-        TODO: make the code of this thread better
-        
-        """
-        global STATUS_ERROR
-        existanerror = 0
-        
-        wx.CallAfter(pub.sendMessage, 
-                    "COUNT_EVT", 
-                    count='Task One', 
-                    duration=len(self.filelist),
-                    fname='Temporary pictures processing',
-                    end='',
-                    )
-        logWrite('Temporary pictures processing', '', self.logname)
-        
-        with tempfile.TemporaryDirectory() as tmpdirname:# make tmp dir
-            prognum = 0
-            for files in self.filelist:
-                prognum += 1
-                line = ['count cicles only',
-                        ' |%d|  >  %s\n' %(prognum, files)
-                        ]
-                cmd_1 = '%s %s -i "%s" %s "%s/IMAGE_%d.png"' %(
-                                                        ffmpeg_url,
-                                                        self.cmd_1[0],
-                                                        files, 
-                                                        self.cmd_1[1],
-                                                        tmpdirname,
-                                                        prognum,
-                                                        )
-                print(cmd_1)
-                try:
-                    startupinfo = subprocess.STARTUPINFO()
-                    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                    p_1 = subprocess.Popen(cmd_1,
-                                           stderr=subprocess.PIPE, 
-                                           universal_newlines=True,
-                                           startupinfo=startupinfo,
-                                           )
-                    error = p_1.communicate()
-                    
-                    wx.CallAfter(pub.sendMessage, 
-                                "UPDATE_EVT", 
-                                output=line, 
-                                duration=prognum,
-                                status=0,
-                                )
-                    
-                    if CHANGE_STATUS == 1:
-                            p_1.terminate()
-                            print('...Interrupted process')
-                            existanerror = 1
-                            break
-                        
-                    print('Resizing and conversion','\n',error)
-                        
-                except OSError as err:
-                    e = "%s\n  %s" % (err, not_exist_msg)
-                    wx.CallAfter(pub.sendMessage, 
-                                "COUNT_EVT", 
-                                count=e, 
-                                duration=0,
-                                fname='make slideshow',
-                                end='',
-                                )
-                    print('...%s' % (e))
-                    STATUS_ERROR = 1
-                    existanerror = 1
-                    break
-                
-            if existanerror:
-                time.sleep(.5)
-                wx.CallAfter(pub.sendMessage, "END_EVT")
-                return
-
-            elif p_1.wait(): # error
-                wx.CallAfter(pub.sendMessage, 
-                            "UPDATE_EVT", 
-                            output=error[1], 
-                            duration=prognum,
-                            status=0,
-                            )
-                wx.CallAfter(pub.sendMessage, 
-                            "UPDATE_EVT", 
-                            output='', 
-                            duration=prognum,
-                            status=p_1.wait(),
-                            )
-                logWrite('', "Exit status: %s" % p_1.wait(),
-                            self.logname) #append exit error number
-                time.sleep(.5)
-                wx.CallAfter(pub.sendMessage, "END_EVT")
-                return
-            
-            else: # status ok
-                wx.CallAfter(pub.sendMessage, 
-                            "COUNT_EVT", 
-                            count='', 
-                            duration='',
-                            fname='',
-                            end='ok'
-                            )
-            #------------------------------- make video
-            cmd_2 = '{0} {1} -i "{2}/IMAGE_%d.png" {3}'.format(ffmpeg_url,
-                                                               self.cmd_2[0], 
-                                                               tmpdirname, 
-                                                               self.cmd_2[1],)
-            count = ' File %s/%s' % ('1','1',)
-            com = "%s\n%s" % (count, cmd_2)
-            print("%s" % com)
-            task_2 = 'Slideshow creation, output format %s' % self.outformat
-            
-            wx.CallAfter(pub.sendMessage, 
-                        "COUNT_EVT", 
-                        count='Task Two', 
-                        duration=self.duration,
-                        fname=task_2,
-                        end='',
-                        )
-            logWrite(com, '', self.logname)# write n/n + command only
-            
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            with subprocess.Popen(cmd_2,
-                                  stderr=subprocess.PIPE, 
-                                  bufsize=1, 
-                                  universal_newlines=True
-                                  startupinfo=startupinfo,) as p_2:
-                for line in p_2.stderr:
-                    #sys.stdout.write(line)
-                    #sys.stdout.flush()
-                    print(line, end=''),
-                    
-                    wx.CallAfter(pub.sendMessage, 
-                                "UPDATE_EVT", 
-                                output=line, 
-                                duration=self.duration,
-                                status=0,
-                                )
-                    if CHANGE_STATUS == 1:# break second 'for' loop
-                        p_2.terminate()
-                        print('...Interrupted process')
-                        break
-                    
-                if p_2.wait(): # error
-                    wx.CallAfter(pub.sendMessage, 
-                                "UPDATE_EVT", 
-                                output=line, 
-                                duration=self.duration,
-                                status=p_2.wait(),
-                                )
-                    logWrite('', 
-                            "Exit status: %s" % p_2.wait(),
-                            self.logname)
-                            #append exit error number
-                
-                else: # status ok
-                    wx.CallAfter(pub.sendMessage, 
-                                "COUNT_EVT", 
-                                count='', 
-                                duration='',
-                                fname='',
-                                end='ok'
-                                )
-                    print('...Done')
-                    
-        time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
-
-#######################################################################
 
 class TwoPass_Loudnorm(Thread):
     """
@@ -1147,8 +692,6 @@ class TwoPass_Loudnorm(Thread):
     """
     def __init__(self, var, duration, logname, timeseq):
         """
-        The 'volume' attribute may have an empty value, but it will 
-        have no influence on the type of conversion.
         """
         Thread.__init__(self)
         """initialize"""
@@ -1195,19 +738,25 @@ class TwoPass_Loudnorm(Thread):
             else:
                 force = '-f null'
             
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
+            
             #--------------- first pass
-            pass1 = ('{0} -loglevel info -stats -hide_banner {1} '
-                     '-i "{2}" {3} -passlogfile "{4}/{5}.log" -pass 1 '
-                     '-af {6} {7} -y {8}'.format(ffmpeg_url, 
-                                                 self.time_seq,
-                                                 files, 
-                                                 self.passList[0],
-                                                 folders,
-                                                 filename,
-                                                 self.passList[2],#loudnorm
-                                                 force,# -f 
-                                                 self.nul,
-                                                 ))
+            pass1 = ('{0} -loglevel info -stats -hide_banner '
+                     '{1} -i "{2}" {3} {9}"{4}/{5}.log" -af {6} '
+                     '{7} -y {8}'.format(ffmpeg_url, 
+                                         self.time_seq,
+                                         files, 
+                                         self.passList[0],
+                                         folders,
+                                         filename,
+                                         self.passList[2],#loudnorm
+                                         force,# -f 
+                                         self.nul,
+                                         passpar,
+                                        )) 
             self.count += 1
             count = ('Loudnorm af: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
@@ -1226,7 +775,7 @@ class TwoPass_Loudnorm(Thread):
             try:
                 startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-                with subprocess.Popen(shlex.split(pass1), 
+                with subprocess.Popen(pass1, 
                                       stderr=subprocess.PIPE, 
                                       bufsize=1, 
                                       universal_newlines=True,
@@ -1297,8 +846,13 @@ class TwoPass_Loudnorm(Thread):
                                 )
                        )
             time.sleep(.5)
-            pass2 = ('{0} -loglevel info -stats -hide_banner {1} -i '
-                     '"{2}" {3} -passlogfile "{5}/{6}.log" -pass 2 -af '
+            if 'libx265' in self.passList[1]:
+                passpar = '-x265-params pass=1:stats='
+            else:
+                passpar = '-pass 1 -passlogfile '
+                
+            pass2 = ('{0} -loglevel info -stats -hide_banner '
+                     '{1} -i "{2}" {3} {8}"{5}/{6}.log" -af '
                      '{4} -y "{5}/{6}.{7}"'.format(ffmpeg_url, 
                                                    self.time_seq,
                                                    files,
@@ -1307,9 +861,10 @@ class TwoPass_Loudnorm(Thread):
                                                    folders, 
                                                    filename,
                                                    outext,
+                                                   passpar,
                                                    ))
             print(pass2)
-            count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
+            count = ('Loudnorm af: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
@@ -1325,7 +880,7 @@ class TwoPass_Loudnorm(Thread):
             
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            with subprocess.Popen(shlex.split(pass2), 
+            with subprocess.Popen(pass2, 
                                   stderr=subprocess.PIPE, 
                                   bufsize=1, 
                                   universal_newlines=True,
@@ -1383,4 +938,3 @@ class TwoPass_Loudnorm(Thread):
         print end messagess to console
         """
         print('...%s' % (mess))
-

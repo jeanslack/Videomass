@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 11:08+0200\n"
-"PO-Revision-Date: 2019-10-10 11:21+0200\n"
+"POT-Creation-Date: 2019-10-10 16:28+0200\n"
+"PO-Revision-Date: 2019-10-10 16:32+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -1021,24 +1021,32 @@ msgstr ""
 msgid "Result dBFS"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:69
-msgid "Clipped peaks ="
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:68
+msgid "Post-normalization references:"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:72
-msgid "No changes ="
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:71
+msgid "=  Clipped peaks"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/shownormlist.py:75
-msgid "Below max peak ="
+msgid "=  No changes"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:112
-msgid "RMS-based statistics"
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:79
+msgid "=  Below max peak"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:134
-msgid "PEAK-based statistics"
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:119
+#: ../videomass3/vdms_PANELS/audio_conv.py:562
+#: ../videomass3/vdms_PANELS/video_conv.py:1562
+msgid "RMS-based volume statistics"
+msgstr ""
+
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:141
+#: ../videomass3/vdms_PANELS/audio_conv.py:560
+#: ../videomass3/vdms_PANELS/video_conv.py:1560
+msgid "PEAK-based volume statistics"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/while_playing.py:32
@@ -1588,16 +1596,6 @@ msgstr ""
 msgid "Audio normalization is not required based to set target level"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/audio_conv.py:560
-#: ../videomass3/vdms_PANELS/video_conv.py:1560
-msgid "PEAK-based volume statistics"
-msgstr ""
-
-#: ../videomass3/vdms_PANELS/audio_conv.py:562
-#: ../videomass3/vdms_PANELS/video_conv.py:1562
-msgid "RMS-based volume statistics"
-msgstr ""
-
 #: ../videomass3/vdms_PANELS/audio_conv.py:601
 #: ../videomass3/vdms_PANELS/video_conv.py:1649
 msgid ""
@@ -2110,56 +2108,56 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:98
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:98
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:97
 msgid "Log View Console:"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:104
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:104
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:103
 msgid "Suppress excess output"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:108
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:108
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:107
 msgid "Abort"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:134
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:134
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:133
 msgid "If activated, hides all FFmpeg output messages."
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:136
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:136
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:135
 msgid "Stops current process"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:199
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:210
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:198
 msgid " ...Failed\n"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:232
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:248
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:231
 msgid " ...Completed\n"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:274
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:290
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:273
 msgid ""
 "\n"
 " Sorry, tasks failed !\n"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:280
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:296
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:279
 msgid ""
 "\n"
 " Interrupted Process !\n"
 msgstr ""
 
 #: ../videomass3/vdms_PROCESS/task_processing.py:286
-#: ../videomass3/vdms_PROCESS/task_processingWin32.py:302
+#: ../videomass3/vdms_PROCESS/task_processingWin32.py:285
 msgid ""
 "\n"
 " Done !\n"

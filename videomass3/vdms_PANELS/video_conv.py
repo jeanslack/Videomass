@@ -322,11 +322,11 @@ class Video_Conv(wx.Panel):
                                                ("25 fps (50i) PAL"), 
                                                ("29.97 fps (60i) NTSC"),
                                                ("30 fps (30p) Progessive"),
-                                               ("0.2 fps for images"), 
-                                               ("0.5 fps for images"),
-                                               ("1 fps for images"), 
-                                               ("1.5 fps for images"), 
-                                               ("2 fps for images")
+                                               ("0.2 fps"), 
+                                               ("0.5 fps"),
+                                               ("1 fps"), 
+                                               ("1.5 fps"), 
+                                               ("2 fps")
                                                ], 
                                       style=wx.CB_DROPDOWN | 
                                       wx.CB_READONLY

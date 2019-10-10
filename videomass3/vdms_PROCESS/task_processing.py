@@ -685,8 +685,6 @@ class TwoPass_Loudnorm(Thread):
     """
     def __init__(self, var, duration, logname, timeseq):
         """
-        The 'volume' attribute may have an empty value, but it will 
-        have no influence on the type of conversion.
         """
         Thread.__init__(self)
         """initialize"""
@@ -856,7 +854,7 @@ class TwoPass_Loudnorm(Thread):
                                                    outext,
                                                    passpar,
                                                    ))
-            count = ('Loudnorm af: apply EBU R128 algorithm...\n  '
+            count = ('Loudnorm af: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
             print("%s" % cmd)
@@ -927,4 +925,3 @@ class TwoPass_Loudnorm(Thread):
         print end messagess to console
         """
         print('...%s' % (mess))
-    

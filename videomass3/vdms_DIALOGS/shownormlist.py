@@ -64,30 +64,37 @@ class NormalizationList(wx.Dialog):
         normlist.InsertColumn(2, _('Mean volume dBFS'), width=150)
         normlist.InsertColumn(3, _('Offset dBFS'), width=100)
         normlist.InsertColumn(4, _('Result dBFS'), width=120)
-        
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
-        txtred = wx.StaticText(self, wx.ID_ANY,  (_("Clipped peaks =")))
+        descript = wx.StaticText(self, wx.ID_ANY,  (_("Post-normalization references:")))
         red = wx.StaticText(self, wx.ID_ANY, "\t\t")
         red.SetBackgroundColour(wx.Colour(233, 80, 77)) # #e9504d
-        txtgrey = wx.StaticText(self, wx.ID_ANY, (_("No changes =")))
+        txtred = wx.StaticText(self, wx.ID_ANY,  (_("=  Clipped peaks")))
+        
         grey = wx.StaticText(self, wx.ID_ANY, "\t\t")
-        grey.SetBackgroundColour(wx.Colour(77, 77, 77))# #4D4D4D
-        txtyell = wx.StaticText(self, wx.ID_ANY, (_("Below max peak =")))
+        grey.SetBackgroundColour(wx.Colour(100, 100, 100))# #646464
+        txtgrey = wx.StaticText(self, wx.ID_ANY, (_("=  No changes")))
+        
         yell = wx.StaticText(self, wx.ID_ANY, "\t\t")
         yell.SetBackgroundColour(wx.Colour(198, 180, 38))# #C6B426
+        txtyell = wx.StaticText(self, wx.ID_ANY, (_("=  Below max peak")))
+        
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         
         gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(normlist, 1, wx.EXPAND|wx.ALL, 5)
+        sizer.Add(descript, 0, wx.ALL, 10)
         
         grid_list = wx.FlexGridSizer(1, 6, 0, 0)
-        grid_list.Add(txtred, 1,wx.ALL, 5)
         grid_list.Add(red, 1,wx.ALL, 5)
-        grid_list.Add(txtgrey, 1,wx.ALL, 5)
+        grid_list.Add(txtred, 1,wx.ALL, 5)
+        
         grid_list.Add(grey, 1,wx.ALL, 5)
-        grid_list.Add(txtyell, 1,wx.ALL, 5)
+        grid_list.Add(txtgrey, 1,wx.ALL, 5)
+        
         grid_list.Add(yell, 1,wx.ALL, 5)
+        grid_list.Add(txtyell, 1,wx.ALL, 5)
+        
         sizer.Add(grid_list, 0, wx.ALL, 5)
         
         sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
@@ -109,13 +116,13 @@ class NormalizationList(wx.Dialog):
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
 
         index = 0 
-        if title == _('RMS-based statistics'):
+        if title == _('RMS-based volume statistics'):
             for i in data: #### populate dmx listctrl:
                 normlist.InsertItem(index, i[0])
                 normlist.SetItem(index, 1, i[1])
                 normlist.SetItem(index, 2, i[2])
                 if float(i[3]) == 0.0:# not changes
-                    normlist.SetItemBackgroundColour(index, '#4D4D4D')#grey
+                    normlist.SetItemBackgroundColour(index, '#646464')#grey
                     normlist.SetItem(index, 3, i[3])
                 else:
                     normlist.SetItem(index, 3, i[3])
@@ -131,14 +138,14 @@ class NormalizationList(wx.Dialog):
                 else:
                     normlist.SetItem(index, 4, i[4])
                     
-        elif title == _('PEAK-based statistics'):
+        elif title == _('PEAK-based volume statistics'):
             for i in data: #### populate dmx listctrl:
                 normlist.InsertItem(index, i[0])
                 normlist.SetItem(index, 1, i[1])
                 normlist.SetItem(index, 2, i[2])
                 normlist.SetItem(index, 3, i[3])
                 if float(i[4]) == float(i[1]):#not changes
-                    normlist.SetItemBackgroundColour(index, '#4D4D4D')# grey
+                    normlist.SetItemBackgroundColour(index, '#646464')# grey
                     normlist.SetItem(index, 4, i[4])
                 else:
                     normlist.SetItem(index, 4, i[4])
