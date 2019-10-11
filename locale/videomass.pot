@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 16:28+0200\n"
+"POT-Creation-Date: 2019-10-11 09:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -492,8 +492,8 @@ msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/ffmpeg_conf.py:220
 #: ../videomass3/vdms_PANELS/audio_conv.py:727
-#: ../videomass3/vdms_PANELS/video_conv.py:1958
-#: ../videomass3/vdms_PANELS/video_conv.py:1960
+#: ../videomass3/vdms_PANELS/video_conv.py:1919
+#: ../videomass3/vdms_PANELS/video_conv.py:1921
 msgid "Disabled"
 msgstr ""
 
@@ -748,8 +748,6 @@ msgstr ""
 msgid ""
 "Videomass provides a graphical interface for\n"
 "audio and video conversion through FFmpeg\n"
-"\n"
-"It is based on Python3 and wxPython4 phoenix"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/mediainfo.py:62
@@ -1024,27 +1022,27 @@ msgstr ""
 msgid "Post-normalization references:"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:71
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:72
 msgid "=  Clipped peaks"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:75
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:76
 msgid "=  No changes"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:79
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:80
 msgid "=  Below max peak"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:119
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:121
 #: ../videomass3/vdms_PANELS/audio_conv.py:562
-#: ../videomass3/vdms_PANELS/video_conv.py:1562
+#: ../videomass3/vdms_PANELS/video_conv.py:1523
 msgid "RMS-based volume statistics"
 msgstr ""
 
-#: ../videomass3/vdms_DIALOGS/shownormlist.py:141
+#: ../videomass3/vdms_DIALOGS/shownormlist.py:143
 #: ../videomass3/vdms_PANELS/audio_conv.py:560
-#: ../videomass3/vdms_PANELS/video_conv.py:1560
+#: ../videomass3/vdms_PANELS/video_conv.py:1521
 msgid "PEAK-based volume statistics"
 msgstr ""
 
@@ -1556,47 +1554,47 @@ msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:369
-#: ../videomass3/vdms_PANELS/video_conv.py:1368
+#: ../videomass3/vdms_PANELS/video_conv.py:1329
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:372
-#: ../videomass3/vdms_PANELS/video_conv.py:1371
+#: ../videomass3/vdms_PANELS/video_conv.py:1332
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:376
-#: ../videomass3/vdms_PANELS/video_conv.py:1375
+#: ../videomass3/vdms_PANELS/video_conv.py:1336
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:407
-#: ../videomass3/vdms_PANELS/video_conv.py:1401
+#: ../videomass3/vdms_PANELS/video_conv.py:1362
 msgid "Audio normalization off"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:448
 #: ../videomass3/vdms_PANELS/audio_conv.py:504
-#: ../videomass3/vdms_PANELS/video_conv.py:1446
-#: ../videomass3/vdms_PANELS/video_conv.py:1503
+#: ../videomass3/vdms_PANELS/video_conv.py:1407
+#: ../videomass3/vdms_PANELS/video_conv.py:1464
 msgid "Audio normalization is required only for some files"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:449
 #: ../videomass3/vdms_PANELS/audio_conv.py:505
-#: ../videomass3/vdms_PANELS/video_conv.py:1447
-#: ../videomass3/vdms_PANELS/video_conv.py:1504
+#: ../videomass3/vdms_PANELS/video_conv.py:1408
+#: ../videomass3/vdms_PANELS/video_conv.py:1465
 msgid "Audio normalization is not required based to set target level"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:601
-#: ../videomass3/vdms_PANELS/video_conv.py:1649
+#: ../videomass3/vdms_PANELS/video_conv.py:1610
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "the data on the audio volume."
@@ -1611,7 +1609,7 @@ msgid "Audio EBU normalization"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:718
-#: ../videomass3/vdms_PANELS/video_conv.py:1950
+#: ../videomass3/vdms_PANELS/video_conv.py:1911
 #, python-format
 msgid "%s file in pending"
 msgstr ""
@@ -1636,7 +1634,7 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/audio_conv.py:789
-#: ../videomass3/vdms_PANELS/video_conv.py:2105
+#: ../videomass3/vdms_PANELS/video_conv.py:2066
 #, python-format
 msgid "Videomass: Create a new profile on \"%s\" preset"
 msgstr ""
@@ -1894,28 +1892,28 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:73
-#: ../videomass3/vdms_PANELS/video_conv.py:1222
-#: ../videomass3/vdms_PANELS/video_conv.py:1663
-#: ../videomass3/vdms_PANELS/video_conv.py:1692
-#: ../videomass3/vdms_PANELS/video_conv.py:1843
-#: ../videomass3/vdms_PANELS/video_conv.py:2045
+#: ../videomass3/vdms_PANELS/video_conv.py:1183
+#: ../videomass3/vdms_PANELS/video_conv.py:1624
+#: ../videomass3/vdms_PANELS/video_conv.py:1653
+#: ../videomass3/vdms_PANELS/video_conv.py:1804
+#: ../videomass3/vdms_PANELS/video_conv.py:2006
 msgid "Copy video codec"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:76
-#: ../videomass3/vdms_PANELS/video_conv.py:827
-#: ../videomass3/vdms_PANELS/video_conv.py:828
-#: ../videomass3/vdms_PANELS/video_conv.py:1267
+#: ../videomass3/vdms_PANELS/video_conv.py:799
+#: ../videomass3/vdms_PANELS/video_conv.py:800
+#: ../videomass3/vdms_PANELS/video_conv.py:1228
 msgid "Default (managed by FFmpeg)"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:85
-#: ../videomass3/vdms_PANELS/video_conv.py:1271
+#: ../videomass3/vdms_PANELS/video_conv.py:1232
 msgid "Try to copy audio source"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/video_conv.py:86
-#: ../videomass3/vdms_PANELS/video_conv.py:1275
+#: ../videomass3/vdms_PANELS/video_conv.py:1236
 msgid "No audio stream (silent)"
 msgstr ""
 
@@ -2042,21 +2040,16 @@ msgstr ""
 msgid "Options enabled for the codecs x.264/x.265"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:921
-#, python-format
-msgid "Output format: %s"
-msgstr ""
-
-#: ../videomass3/vdms_PANELS/video_conv.py:983
-#: ../videomass3/vdms_PANELS/video_conv.py:1002
+#: ../videomass3/vdms_PANELS/video_conv.py:944
+#: ../videomass3/vdms_PANELS/video_conv.py:963
 msgid "No filter enabled"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1836
+#: ../videomass3/vdms_PANELS/video_conv.py:1797
 msgid "Audio/Video EBU normalization"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1967
+#: ../videomass3/vdms_PANELS/video_conv.py:1928
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2076,7 +2069,7 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/video_conv.py:1991
+#: ../videomass3/vdms_PANELS/video_conv.py:1952
 msgid ""
 "SUMMARY\n"
 "\n"
