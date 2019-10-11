@@ -66,6 +66,7 @@ vcodecs = {("AVI (XVID mpeg4)"): ("-c:v mpeg4 -vtag xvid","avi"),
             ("M4V (h.265/HEVC)"): ("-c:v libx265","m4v"),
             ("MKV (h.264/AVC)"): ("-c:v libx264","mkv"),
             ("MKV (h.265/HEVC)"): ("-c:v libx265","mkv"),
+            ("MKV (AV1/libaom)"): ("-c:v libaom-av1 -strict -2","mkv"),
             ("OGG theora"): ("-c:v libtheora","ogg"), 
             ("WebM vp8 (HTML5)"): ("-c:v libvpx","webm"), 
             ("WebM vp9 (HTML5)"): ("-c:v libvpx-vp9","webm"),
@@ -110,7 +111,7 @@ x264_opt = {("Presets"): ("Disabled","ultrafast","superfast",
                            "high10","high444"
                            ),
             ("Tunes"): ("Disabled","film","animation","grain",
-                        "stillimage","psnr","ssim","fastecode",
+                        "stillimage","psnr","ssim","fastedecode",
                         "zerolatency"
                         )
             }
@@ -744,7 +745,7 @@ class Video_Conv(wx.Panel):
         self.normalize_default()
 
     #-------------------------------------------------------------------#
-    def UI_set(self):
+    def UI_set(self, opt265=False):
         """
         Update all the GUI widgets based on the choices made by the user.
         """
@@ -759,7 +760,8 @@ class Video_Conv(wx.Panel):
             self.btn_preview.Enable(), self.slider_CRF.SetMax(51)
             self.ckbx_pass.Enable()
         
-        elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+        elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
+                                       "-c:v libaom-av1 -strict -2"]:
             self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
             self.notebook_1_pane_4.Disable(), self.btn_videosize.Enable()
             self.btn_crop.Enable(), self.btn_rotate.Enable()
@@ -785,7 +787,16 @@ class Video_Conv(wx.Panel):
             self.ckbx_pass.SetValue(True)
         else:
             self.ckbx_pass.SetValue(False)
-        self.on_Pass(self)
+        self.on_Pass(self) 
+        
+        if opt265:
+            if cmd_opt["VideoCodec"] == "-c:v libx265":
+                for n in [1,2,4]:
+                    self.rdb_h264tune.EnableItem(n,enable=False)
+            elif cmd_opt["VideoCodec"] == "-c:v libx264":
+                for n in [1,2,4]:
+                    self.rdb_h264tune.EnableItem(n,enable=True)
+            
         self.rdb_h264preset.SetSelection(0), self.on_h264Presets(self)
         self.rdb_h264profile.SetSelection(0), self.on_h264Profiles(self)
         self.rdb_h264tune.SetSelection(0), self.on_h264Tunes(self)
@@ -842,11 +853,16 @@ class Video_Conv(wx.Panel):
         """
         selected = self.cmbx_vidContainers.GetValue()
         
-        if vcodecs[selected][0] in ["-c:v libx264", "-c:v libx265"]:
+        if vcodecs[selected][0] in ["-c:v libx264", "-c:v libx265", 
+                                    "-c:v libaom-av1 -strict -2"]:
             if vcodecs[selected][0] == "-c:v libx264":
                 cmd_opt["VideoCodec"] = "-c:v libx264"
-            else:
+                
+            elif vcodecs[selected][0] == "-c:v libx265":
                 cmd_opt["VideoCodec"] = "-c:v libx265"
+                
+            elif vcodecs[selected][0] == "-c:v libaom-av1 -strict -2":
+                cmd_opt["VideoCodec"] = "-c:v libaom-av1 -strict -2"
         
             cmd_opt["VidCmbxStr"] = "%s" % (selected)# output form.
             cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])# format
@@ -880,7 +896,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["CRF"] = ""
             cmd_opt["YUV"] = ""
         
-        self.UI_set()
+        self.UI_set(True)
         self.audio_default() # reset audio radiobox and dict
         self.setAudioRadiobox(self)
         
@@ -904,7 +920,8 @@ class Video_Conv(wx.Panel):
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Disable()
                 
-            elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9",
+                                           "-c:v libaom-av1 -strict -2"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Enable()
                 
@@ -920,8 +937,14 @@ class Video_Conv(wx.Panel):
         Reset a empty CRF (this depend if is h264 two-pass encoding
         or if not codec h264)
         """
-        if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+        if cmd_opt["VideoCodec"] == "-c:v libaom-av1 -strict -2":
+            if self.ckbx_pass.IsChecked():
+                cmd_opt["CRF"] = ""
+                
+        if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
+                                         "-c:v libaom-av1 -strict -2"]:
             cmd_opt["CRF"] = ""
+            
         cmd_opt["Bitrate"] = "-b:v %sk" % (self.spin_Vbrate.GetValue())
 
         
@@ -930,7 +953,8 @@ class Video_Conv(wx.Panel):
         """
         Reset bitrate at empty (this depend if is h264 codec)
         """
-        if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+        if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
+                                         "-c:v libaom-av1 -strict -2"]:
             cmd_opt["Bitrate"] = ""
         cmd_opt["CRF"] = "-crf %s" % self.slider_CRF.GetValue()
         
@@ -1356,7 +1380,7 @@ class Video_Conv(wx.Panel):
             self.spin_i.Show(), self.spin_tp.Show(), self.spin_lra.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
             cmd_opt["Passing"] = "double"
-            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
+            if not self.cmbx_vidContainers.GetSelection() == 16:#copycodec
                 self.on_Pass(self)
         else:
             self.parent.statusbar_msg(_("Audio normalization off"), None)
@@ -1365,10 +1389,10 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_3.Layout()
         
         if not self.rdbx_normalize.GetSelection() == 3: 
-            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
+            if not self.cmbx_vidContainers.GetSelection() == 16:#copycodec
                 self.ckbx_pass.Enable()
                 
-        if self.cmbx_vidContainers.GetSelection() == 15:#copycodec
+        if self.cmbx_vidContainers.GetSelection() == 16:#copycodec
             if not self.rdbx_normalize.GetSelection() == 3: 
                 self.ckbx_pass.SetValue(False)
         
@@ -1582,16 +1606,20 @@ class Video_Conv(wx.Panel):
         """
         self.time_seq = self.parent.time_seq
         #self.on_Vrate(self), self.on_Vaspect(self)
-        if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+        #if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
+            #self.on_Bitrate(self), self.on_Crf(self)
+        #else:
+        if self.spin_Vbrate.IsEnabled() and not self.slider_CRF.IsEnabled():
+            self.on_Bitrate(self)
+            
+        elif self.slider_CRF.IsEnabled() and not self.spin_Vbrate.IsEnabled():
+            self.on_Crf(self)
+            
+        elif self.slider_CRF.IsEnabled() and self.spin_Vbrate.IsEnabled():
             self.on_Bitrate(self), self.on_Crf(self)
         else:
-            if self.spin_Vbrate.IsEnabled() and self.spin_Vbrate.IsShown():
-                self.on_Bitrate(self)
-            elif self.slider_CRF.IsEnabled() and self.slider_CRF.IsShown():
-                self.on_Crf(self)
-            else:
-                cmd_opt["CRF"] = ''
-                cmd_opt["Bitrate"] = ''
+            cmd_opt["CRF"] = ''
+            cmd_opt["Bitrate"] = ''
             
     #------------------------------------------------------------------#
     def on_ok(self):
