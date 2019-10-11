@@ -65,16 +65,17 @@ class NormalizationList(wx.Dialog):
         normlist.InsertColumn(3, _('Offset dBFS'), width=100)
         normlist.InsertColumn(4, _('Result dBFS'), width=120)
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
-        descript = wx.StaticText(self, wx.ID_ANY,  (_("Post-normalization references:")))
-        red = wx.StaticText(self, wx.ID_ANY, "\t\t")
+        descript = wx.StaticText(self, wx.ID_ANY,  (_('Post-normalization '
+                                                      'references:')))
+        red = wx.StaticText(self, wx.ID_ANY, "\t")
         red.SetBackgroundColour(wx.Colour(233, 80, 77)) # #e9504d
         txtred = wx.StaticText(self, wx.ID_ANY,  (_("=  Clipped peaks")))
         
-        grey = wx.StaticText(self, wx.ID_ANY, "\t\t")
+        grey = wx.StaticText(self, wx.ID_ANY, "\t")
         grey.SetBackgroundColour(wx.Colour(100, 100, 100))# #646464
         txtgrey = wx.StaticText(self, wx.ID_ANY, (_("=  No changes")))
         
-        yell = wx.StaticText(self, wx.ID_ANY, "\t\t")
+        yell = wx.StaticText(self, wx.ID_ANY, "\t")
         yell.SetBackgroundColour(wx.Colour(198, 180, 38))# #C6B426
         txtyell = wx.StaticText(self, wx.ID_ANY, (_("=  Below max peak")))
         
@@ -83,9 +84,10 @@ class NormalizationList(wx.Dialog):
         
         gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(normlist, 1, wx.EXPAND|wx.ALL, 5)
-        sizer.Add(descript, 0, wx.ALL, 10)
+        #sizer.Add(descript, 0, wx.ALL, 10)
         
-        grid_list = wx.FlexGridSizer(1, 6, 0, 0)
+        grid_list = wx.FlexGridSizer(1, 7, 0, 0)
+        grid_list.Add(descript, 1, wx.ALL, 5)
         grid_list.Add(red, 1,wx.ALL, 5)
         grid_list.Add(txtred, 1,wx.ALL, 5)
         

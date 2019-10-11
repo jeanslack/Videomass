@@ -707,9 +707,6 @@ class Video_Conv(wx.Panel):
         #self.Bind(wx.EVT_COMBOBOX, self.vidContainers, self.cmbx_vidContainers)
         self.cmbx_vidContainers.Bind(wx.EVT_COMBOBOX, self.vidContainers)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
-        #self.Bind(wx.EVT_RADIOBOX, self.on_Automation, self.rdb_auto)
-        #self.Bind(wx.EVT_BUTTON, self.on_AddaudioStr, self.btn_audioAdd)
-        #self.Bind(wx.EVT_COMBOBOX, self.on_PicturesFormat, self.cmbx_pictf)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
@@ -741,9 +738,7 @@ class Video_Conv(wx.Panel):
         cmd_opt["VideoRate"] = ""
         self.rdb_a.SetSelection(0), self.cmbx_vidContainers.SetSelection(9)
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
-        self.rdb_h264preset.SetSelection(0), self.rdb_h264profile.SetSelection(0)
-        self.rdb_h264tune.SetSelection(0), self.cmbx_Vrate.SetSelection(0)
-        self.cmbx_Vaspect.SetSelection(0), self.cmbx_Vaspect.Enable()
+        self.cmbx_Vrate.SetSelection(0), self.cmbx_Vaspect.SetSelection(0), 
         self.UI_set()
         self.audio_default()
         self.normalize_default()
@@ -758,67 +753,44 @@ class Video_Conv(wx.Panel):
                 self.slider_CRF.SetValue(23)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
                 self.slider_CRF.SetValue(28)
-            self.notebook_1_pane_4.Enable(), self.btn_videosize.Enable(), 
-            self.btn_crop.Enable(), self.btn_rotate.Enable(), 
-            self.btn_lacing.Enable(), self.btn_denois.Enable(), 
+            self.notebook_1_pane_4.Enable(), self.btn_videosize.Enable() 
+            self.btn_crop.Enable(), self.btn_rotate.Enable() 
+            self.btn_lacing.Enable(), self.btn_denois.Enable() 
             self.btn_preview.Enable(), self.slider_CRF.SetMax(51)
-            if self.rdbx_normalize.GetSelection() == 3: 
-                self.ckbx_pass.SetValue(True)
-            else:
-                self.ckbx_pass.Enable()
-            self.on_Pass(self)
+            self.ckbx_pass.Enable()
         
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
             self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
-            self.notebook_1_pane_4.Disable(), self.btn_videosize.Enable(), 
-            self.rdb_h264preset.SetSelection(0)
-            self.rdb_h264profile.SetSelection(0)
-            self.rdb_h264tune.SetSelection(0)
-            self.btn_crop.Enable(), self.btn_rotate.Enable(), 
-            self.btn_lacing.Enable(), self.btn_denois.Enable(), 
-            self.btn_preview.Enable() #self.ckbx_pass.Enable(),
-            if self.rdbx_normalize.GetSelection() == 3: 
-                self.ckbx_pass.SetValue(True)
-            else:
-                self.ckbx_pass.Enable()
-            self.on_Pass(self)
+            self.notebook_1_pane_4.Disable(), self.btn_videosize.Enable()
+            self.btn_crop.Enable(), self.btn_rotate.Enable()
+            self.btn_lacing.Enable(), self.btn_denois.Enable()
+            self.btn_preview.Enable(), self.ckbx_pass.Enable()
+
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
-            self.spin_Vbrate.Disable(), self.btn_videosize.Disable(), 
-            self.btn_crop.Disable(), self.btn_rotate.Disable(), 
-            self.btn_lacing.Disable(), self.btn_denois.Disable(), 
-            self.btn_preview.Disable(), self.notebook_1_pane_4.Disable(), 
-            if self.rdbx_normalize.GetSelection() == 3: 
-                self.ckbx_pass.SetValue(True)
-                cmd_opt["Passing"] = "double"
-            else:
-                self.ckbx_pass.SetValue(False)
-            self.ckbx_pass.Disable(), self.slider_CRF.Disable() 
-            self.rdb_h264preset.SetSelection(0)
-            self.rdb_h264profile.SetSelection(0)
-            self.rdb_h264tune.SetSelection(0)
+            self.spin_Vbrate.Disable(), self.btn_videosize.Disable() 
+            self.btn_crop.Disable(), self.btn_rotate.Disable()
+            self.btn_lacing.Disable(), self.btn_denois.Disable() 
+            self.btn_preview.Disable(), self.notebook_1_pane_4.Disable() 
+            self.ckbx_pass.Disable()
             
         else: # all others containers that not use h264
             self.notebook_1_pane_4.Disable()
-            self.rdb_h264preset.SetSelection(0)
-            self.rdb_h264profile.SetSelection(0)
-            self.rdb_h264tune.SetSelection(0)
             self.btn_videosize.Enable(), 
-            self.btn_crop.Enable(), self.btn_rotate.Enable(), 
-            self.btn_lacing.Enable(), self.btn_denois.Enable(), 
-            self.btn_preview.Enable() #self.ckbx_pass.Enable(),
-            if self.rdbx_normalize.GetSelection() == 3: 
-                self.ckbx_pass.SetValue(True)
-            else:
-                self.ckbx_pass.Enable()
-            self.on_Pass(self)
+            self.btn_crop.Enable(), self.btn_rotate.Enable() 
+            self.btn_lacing.Enable(), self.btn_denois.Enable()
+            self.btn_preview.Enable(), self.ckbx_pass.Enable()
         
-        self.on_h264Presets(self)
-        self.on_h264Profiles(self)
-        self.on_h264Tunes(self)
-            
-        
+        if self.rdbx_normalize.GetSelection() == 3: 
+            self.ckbx_pass.SetValue(True)
+        else:
+            self.ckbx_pass.SetValue(False)
+        self.on_Pass(self)
+        self.rdb_h264preset.SetSelection(0), self.on_h264Presets(self)
+        self.rdb_h264profile.SetSelection(0), self.on_h264Profiles(self)
+        self.rdb_h264tune.SetSelection(0), self.on_h264Tunes(self)
     #-------------------------------------------------------------------#
+    
     def audio_default(self):
         """
         Set default audio parameters. This method is called on first run and
@@ -868,9 +840,7 @@ class Video_Conv(wx.Panel):
         determines the default status, enabling or disabling some 
         functions depending on the type of video format chosen.
         """
-        self.audio_default() # reset audio radiobox and dict
         selected = self.cmbx_vidContainers.GetValue()
-        #print (vcodecs[selected][0])
         
         if vcodecs[selected][0] in ["-c:v libx264", "-c:v libx265"]:
             if vcodecs[selected][0] == "-c:v libx264":
@@ -883,9 +853,6 @@ class Video_Conv(wx.Panel):
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
             cmd_opt["YUV"] = "-pix_fmt yuv420p"
-            self.parent.statusbar_msg("Output format: %s" % (
-                                      cmd_opt['VideoFormat']),None)
-            self.UI_set()
             
         elif vcodecs[selected][0] in ["-c:v libvpx","-c:v libvpx-vp9"]:
             if vcodecs[selected][0] == "-c:v libvpx":
@@ -897,9 +864,6 @@ class Video_Conv(wx.Panel):
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
             cmd_opt["YUV"] = "-pix_fmt yuv420p"
-            self.parent.statusbar_msg("Output format: %s" % (
-                                      cmd_opt['VideoFormat']),None)
-            self.UI_set()
             
         elif vcodecs[selected][0] == "":# copy video codec
             cmd_opt["Passing"] = "single"
@@ -907,9 +871,6 @@ class Video_Conv(wx.Panel):
             cmd_opt['VideoFormat'] = "%s" % ( vcodecs[selected][1])
             cmd_opt["VideoCodec"] = "-c:v copy"
             cmd_opt["YUV"] = ""
-            self.parent.statusbar_msg("Output format: %s" % (
-                                      cmd_opt['VideoFormat']),None)
-            self.UI_set()
 
         else: # not h264/h265
             cmd_opt["VidCmbxStr"] = "%s" % (selected)
@@ -918,10 +879,9 @@ class Video_Conv(wx.Panel):
             cmd_opt["Bitrate"] = ""
             cmd_opt["CRF"] = ""
             cmd_opt["YUV"] = ""
-            self.parent.statusbar_msg(_("Output format: %s") % (
-                                    cmd_opt['VideoFormat']),None)
-            self.UI_set()
-            
+        
+        self.UI_set()
+        self.audio_default() # reset audio radiobox and dict
         self.setAudioRadiobox(self)
         
     #------------------------------------------------------------------#
@@ -943,16 +903,17 @@ class Video_Conv(wx.Panel):
             if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Disable()
+                
             elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Enable()
+                
+            elif cmd_opt["VideoCodec"] == "-c:v copy":
+                self.slider_CRF.Disable()
+                self.spin_Vbrate.Disable()
             else:
                 self.slider_CRF.Disable()
                 self.spin_Vbrate.Enable()
-
-        #self.parent.statusbar_msg("%s pass ready" % (
-                                    #cmd_opt["Passing"]),None)
-
     #------------------------------------------------------------------#
     def on_Bitrate(self, event):
         """
