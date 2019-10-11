@@ -63,7 +63,6 @@ class MainFrame(wx.Frame):
                program. How it can be localized depend if Videomass is 
                run as portable program or installated program.
         """
-
         self.videomass_icon = pathicons[0]
         self.icon_presets = pathicons[1]
         self.icon_switchvideomass = pathicons[2]
@@ -71,10 +70,10 @@ class MainFrame(wx.Frame):
         self.icon_help = pathicons[4]
         self.icon_headphones = pathicons[5]
         self.icon_import = pathicons[6]
-        barC = setui[4][13].split(',') 
+        barC = setui[4][12].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
         # toolbar panel colour
-        bBtnC = setui[4][14].split(',')
+        bBtnC = setui[4][13].split(',')
         self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2]))
         # toolbar buttons colour
         
@@ -87,17 +86,16 @@ class MainFrame(wx.Frame):
         
         #---------------------------#
         self.threads = setui[4][2]#ffmpeg option, set the cpu threads
-        self.cpu_used = setui[4][3]
-        self.ffplay_loglevel = setui[4][4]
-        self.ffmpeg_loglevel = setui[4][5]
+        self.ffplay_loglevel = setui[4][3]
+        self.ffmpeg_loglevel = setui[4][4]
         self.loglevel_batch = ''#setui[4][7]# marks as batch process
-        self.ffmpeg_check = setui[4][6]
-        self.ffprobe_check = setui[4][8]
-        self.ffplay_check = setui[4][10]
+        self.ffmpeg_check = setui[4][5]
+        self.ffprobe_check = setui[4][7]
+        self.ffplay_check = setui[4][9]
         self.ffmpeg_link = ffmpeg_link
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
-        self.iconset = setui[4][12]
+        self.iconset = setui[4][11]
         #-------------------------------#
         self.import_clicked = ''#when clicking on item in list control self-set 
         self.post_process = []# post-pocess set first file for play/metadata
@@ -207,7 +205,6 @@ class MainFrame(wx.Frame):
                                                          self.DIRconf, 
                                                          self.WORKdir, 
                                                          self.threads, 
-                                                         self.cpu_used,
                                                          self.ffmpeg_loglevel, 
                                                          self.ffmpeg_link, 
                                                          self.OS,
@@ -217,7 +214,6 @@ class MainFrame(wx.Frame):
                                                 self.ffplay_link,
                                                 self.ffprobe_link,
                                                 self.threads, 
-                                                self.cpu_used,
                                                 self.ffmpeg_loglevel,
                                                 self.ffplay_loglevel,
                                                 self.OS,
@@ -236,7 +232,6 @@ class MainFrame(wx.Frame):
         self.AconvPanel = audio_conv.Audio_Conv(self, 
                                                 self.ffmpeg_link, 
                                                 self.threads,
-                                                self.cpu_used,
                                                 self.ffmpeg_loglevel, 
                                                 self.ffprobe_link,
                                                 self.OS,
@@ -825,12 +820,12 @@ class MainFrame(wx.Frame):
         Call the module setup for setting preferences
         """
         #self.parent.Setup(self)
-        setup_dlg = settings.Setup(self, self.threads, self.cpu_used,
-                                   self.ffplay_loglevel, self.ffmpeg_loglevel,
-                                   self.ffmpeg_link, self.ffmpeg_check,
-                                   self.ffprobe_link, self.ffprobe_check, 
-                                   self.ffplay_link, self.ffplay_check, 
-                                   self.OS, self.iconset, self.PATHconf,
+        setup_dlg = settings.Setup(self, self.threads, self.ffplay_loglevel, 
+                                   self.ffmpeg_loglevel, self.ffmpeg_link, 
+                                   self.ffmpeg_check, self.ffprobe_link, 
+                                   self.ffprobe_check, self.ffplay_link, 
+                                   self.ffplay_check, self.OS, 
+                                   self.iconset, self.PATHconf,
                                    self.WORKdir
                                      )
         setup_dlg.ShowModal()

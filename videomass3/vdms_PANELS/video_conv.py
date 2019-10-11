@@ -52,7 +52,8 @@ cmd_opt = {"VidCmbxStr": "", "VideoFormat": "", "VideoCodec": "",
            "Deinterlace": "", "Interlace": "", "Map": "-map 0", 
            "PixelFormat": "", "Orientation": ["",""],"Crop": "",
            "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
-           "Filters": "", "YUV": "",
+           "Filters": "", "YUV": "", "Deadline": "", "CpuUsed": "",
+           "RowMthreading": "",
            }
 # Namings in the video container selection combo box:
 vcodecs = {("AVI (XVID mpeg4)"): ("-c:v mpeg4 -vtag xvid","avi"), 
@@ -66,7 +67,7 @@ vcodecs = {("AVI (XVID mpeg4)"): ("-c:v mpeg4 -vtag xvid","avi"),
             ("M4V (h.265/HEVC)"): ("-c:v libx265","m4v"),
             ("MKV (h.264/AVC)"): ("-c:v libx264","mkv"),
             ("MKV (h.265/HEVC)"): ("-c:v libx265","mkv"),
-            ("MKV (AV1/libaom)"): ("-c:v libaom-av1 -strict -2","mkv"),
+            #("MKV (AV1/libaom)"): ("-c:v libaom-av1 -strict -2","mkv"),
             ("OGG theora"): ("-c:v libtheora","ogg"), 
             ("WebM vp8 (HTML5)"): ("-c:v libvpx","webm"), 
             ("WebM vp9 (HTML5)"): ("-c:v libvpx-vp9","webm"),
@@ -130,10 +131,11 @@ class Video_Conv(wx.Panel):
     Interface panel for video conversions
     """
     def __init__(self, parent, ffmpeg_link, ffplay_link, ffprobe_link, 
-                 threads, cpu_used, ffmpeg_loglev, ffplay_loglev, OS, 
-                 iconplay, iconreset, iconresize, iconcrop, iconrotate, 
-                 icondeinterlace, icondenoiser, iconanalyzes, iconsettings,
-                 iconpeaklevel, iconatrack):
+                 threads, ffmpeg_loglev, ffplay_loglev, OS, iconplay,
+                 iconreset, iconresize, iconcrop, iconrotate, 
+                 icondeinterlace, icondenoiser, iconanalyzes, 
+                 iconsettings, iconpeaklevel, iconatrack
+                 ):
 
         wx.Panel.__init__(self, parent)
 
@@ -143,7 +145,7 @@ class Video_Conv(wx.Panel):
         self.ffplay_link = ffplay_link
         self.ffprobe_link = ffprobe_link
         self.threads = threads
-        self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
+        self.cpu_used = ''
         self.ffmpeg_loglev = ffmpeg_loglev
         self.ffplay_loglev = ffplay_loglev
         self.file_sources = []
@@ -178,17 +180,24 @@ class Video_Conv(wx.Panel):
         self.sizer_automations_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
                                                         wx.ID_ANY, ("")
                                                         )
-        #self.rdb_auto = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
-                                   #(_("Automations")), choices=[
-                                            #("Off"), 
-                                            #(_("Pictures from Video")), 
-                                            #(_("Merging Audio and Video ")), 
-                                            #(_("Picture slideshow maker")),
-                                            #(_("Extract Audio from Videos")),
-                                                                #], 
-                                    #majorDimension=0, 
-                                    #style=wx.RA_SPECIFY_ROWS
-                                            #)
+        self.rdb_deadline = wx.RadioBox(self.notebook_1_pane_1, wx.ID_ANY, 
+                                   (_("Deadline/Quality")), choices=[
+                                            ("best"), 
+                                            ("good"), 
+                                            ("realtime")], 
+                                    majorDimension=0, 
+                                    style=wx.RA_SPECIFY_ROWS
+                                            )
+        self.lab_cpu = wx.StaticText(self.notebook_1_pane_1, wx.ID_ANY, (
+                                        _("Quality/Speed ratio modifier:")))
+        self.spin_cpu = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
+                                        "0", min=-16, max=16, 
+                                        size=(-1,-1), style=wx.TE_PROCESS_ENTER
+                                             )
+        self.ckbx_multithread = wx.CheckBox(self.notebook_1_pane_1, 
+                                     wx.ID_ANY, 
+                                     (_('Enable Multithreading'))
+                                     )
         #audiotrack = wx.Bitmap(iconatrack, wx.BITMAP_TYPE_ANY)
         #self.btn_audioAdd = GB.GradientButton(self.notebook_1_pane_1,
                                               #wx.ID_OPEN,
@@ -485,24 +494,24 @@ class Video_Conv(wx.Panel):
         sizer_automations = wx.StaticBoxSizer(self.sizer_automations_staticbox, 
                                               wx.VERTICAL
                                               )
-        #grid_sizer_automations = wx.GridSizer(6, 1, 0, 0)
-        #grid_sizer_automations.Add((20, 20), 0, wx.EXPAND | wx.ALL, 5)
-        #grid_sizer_automations.Add(self.rdb_auto, 0, wx.ALL| 
-                                                    #wx.ALIGN_CENTER_HORIZONTAL| 
-                                                    #wx.ALIGN_CENTER_VERTICAL, 
-                                                    #20
-                                                    #)
-        #grid_sizer_automations.Add((20, 20), 0, wx.EXPAND | wx.ALL, 5)
-        #grid_sizer_automations.Add(self.btn_audioAdd, 0, wx.ALL| 
-                                                     #wx.ALIGN_CENTER_HORIZONTAL| 
-                                                     #wx.ALIGN_CENTER_VERTICAL, 
-                                                     #20
-                                                     #)
-        #grid_sizer_automations.Add(self.cmbx_pictf, 0, wx.ALL| 
-                                                     #wx.ALIGN_CENTER_HORIZONTAL| 
-                                                     #wx.ALIGN_CENTER_VERTICAL, 
-                                                     #20
-                                                     #)
+        grid_sizer_automations = wx.FlexGridSizer(6, 1, 0, 0)
+        grid_sizer_automations.Add(self.rdb_deadline, 0, wx.ALL| 
+                                                    wx.ALIGN_CENTER_HORIZONTAL| 
+                                                    wx.ALIGN_CENTER_VERTICAL, 
+                                                    5
+                                                    )
+        
+        grid_sizer_automations.Add(self.lab_cpu, 0, wx.ALL, 5)
+        grid_sizer_automations.Add(self.spin_cpu, 0, wx.ALL| 
+                                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                                     wx.ALIGN_CENTER_VERTICAL, 
+                                                     5
+                                                     )
+        grid_sizer_automations.Add(self.ckbx_multithread, 0, wx.ALL| 
+                                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                                     wx.ALIGN_CENTER_VERTICAL, 
+                                                     5
+                                                     )
         grid_sizer_pane1_left = wx.GridSizer(2, 1, 0, 0)
         self.sizer_dir_staticbox.Lower()
         sizer_dir = wx.StaticBoxSizer(self.sizer_dir_staticbox, wx.VERTICAL)
@@ -528,7 +537,10 @@ class Video_Conv(wx.Panel):
         grid_sizer_pane1_left.Add(sizer_dir, 1, wx.ALL | wx.EXPAND, 15)
         grid_sizer_pane1_base.Add(grid_sizer_pane1_left, 1, wx.EXPAND, 0)
 
-        #sizer_automations.Add(grid_sizer_automations, 1, wx.EXPAND, 0)
+        sizer_automations.Add(grid_sizer_automations, 0, wx.ALL| 
+                                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                                     wx.ALIGN_CENTER_VERTICAL, 
+                                                     5)####
         grid_sizer_pane1_base.Add(sizer_automations, 1, wx.ALL | wx.EXPAND, 15)
         sizer_bitrate.Add(self.spin_Vbrate, 0, wx.ALL| 
                                                      wx.ALIGN_CENTER_HORIZONTAL| 
@@ -663,6 +675,12 @@ class Video_Conv(wx.Panel):
         
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
                                     'reduce the file size, but takes longer.'))
+        self.rdb_deadline.SetToolTip(_('"Good" is the default and recommended '
+                'for most applications; "Best" is recommended if you have lots '
+                'of time and want the best compression efficiency; "Realtime" '
+                'is recommended for live/fast encoding'))
+        self.spin_cpu.SetToolTip(_('"cpu-used" sets how efficient the '
+                'compression will be. The meaning depends on the mode above.'))
         self.spin_Vbrate.SetToolTip(_('The bit rate determines the quality and '
                 'the final video size. A larger value correspond to greater '
                 'quality and size of the file.'))
@@ -707,6 +725,7 @@ class Video_Conv(wx.Panel):
         """
         #self.Bind(wx.EVT_COMBOBOX, self.vidContainers, self.cmbx_vidContainers)
         self.cmbx_vidContainers.Bind(wx.EVT_COMBOBOX, self.vidContainers)
+        self.Bind(wx.EVT_RADIOBOX, self.on_Deadline, self.rdb_deadline)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
@@ -750,6 +769,9 @@ class Video_Conv(wx.Panel):
         Update all the GUI widgets based on the choices made by the user.
         """
         if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
+            self.sizer_automations_staticbox.SetLabel(_(''))
+            self.spin_cpu.Hide(), self.lab_cpu.Hide(), self.rdb_deadline.Hide()
+            self.ckbx_multithread.Hide()
             if cmd_opt["VideoCodec"] == "-c:v libx264":
                 self.slider_CRF.SetValue(23)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
@@ -762,14 +784,23 @@ class Video_Conv(wx.Panel):
         
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                        "-c:v libaom-av1 -strict -2"]:
+            self.sizer_automations_staticbox.SetLabel(
+                                        _('Controlling Speed and Quality'))
+            self.spin_cpu.Show(), self.lab_cpu.Show(), self.rdb_deadline.Show()
+            self.ckbx_multithread.Show(), self.ckbx_multithread.SetValue(True)
+            self.rdb_deadline.SetSelection(1)
+            self.spin_cpu.SetRange(0, 5)
+            self.notebook_1_pane_1.Layout()
             self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
             self.notebook_1_pane_4.Disable(), self.btn_videosize.Enable()
             self.btn_crop.Enable(), self.btn_rotate.Enable()
             self.btn_lacing.Enable(), self.btn_denois.Enable()
             self.btn_preview.Enable(), self.ckbx_pass.Enable()
-
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
+            self.sizer_automations_staticbox.SetLabel(_(''))
+            self.spin_cpu.Hide(), self.lab_cpu.Hide(), self.rdb_deadline.Hide()
+            self.ckbx_multithread.Hide()
             self.spin_Vbrate.Disable(), self.btn_videosize.Disable() 
             self.btn_crop.Disable(), self.btn_rotate.Disable()
             self.btn_lacing.Disable(), self.btn_denois.Disable() 
@@ -777,6 +808,9 @@ class Video_Conv(wx.Panel):
             self.ckbx_pass.Disable()
             
         else: # all others containers that not use h264
+            self.sizer_automations_staticbox.SetLabel(_(''))
+            self.spin_cpu.Hide(), self.lab_cpu.Hide(), self.rdb_deadline.Hide()
+            self.ckbx_multithread.Hide()
             self.notebook_1_pane_4.Disable()
             self.btn_videosize.Enable(), 
             self.btn_crop.Enable(), self.btn_rotate.Enable() 
@@ -957,6 +991,18 @@ class Video_Conv(wx.Panel):
                                          "-c:v libaom-av1 -strict -2"]:
             cmd_opt["Bitrate"] = ""
         cmd_opt["CRF"] = "-crf %s" % self.slider_CRF.GetValue()
+        
+    #------------------------------------------------------------------#
+    def on_Deadline(self, event):
+        """
+        Sets range according to spin_cpu used
+        
+        """
+        if self.rdb_deadline.GetSelection() in [0,1]:
+            self.spin_cpu.SetRange(0, 5), self.spin_cpu.SetValue(0)
+        else:
+            self.spin_cpu.SetRange(0, 15), self.spin_cpu.SetValue(0)
+        
         
     #------------------------------------------------------------------#
     def on_FiltersPreview(self, event):
@@ -1620,6 +1666,19 @@ class Video_Conv(wx.Panel):
         else:
             cmd_opt["CRF"] = ''
             cmd_opt["Bitrate"] = ''
+        
+        if self.rdb_deadline.IsShown():
+            deadline = self.rdb_deadline.GetStringSelection()
+            cmd_opt["CpuUsed"] = '-cpu-used %s' % self.spin_cpu.GetValue()
+            cmd_opt["Deadline"] = '-deadline %s' % deadline
+            if self.ckbx_multithread.IsChecked():
+                cmd_opt["RowMthreading"] = '-row-mt 1'
+            else:
+                cmd_opt["RowMthreading"] = ''
+        else:
+            cmd_opt["CpuUsed"] = ''
+            cmd_opt["Deadline"] = ''
+            cmd_opt["RowMthreading"] = ''
             
     #------------------------------------------------------------------#
     def on_ok(self):
@@ -1714,10 +1773,13 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
-            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s '
+            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                     '-f rawvideo' %(cmd_opt["VideoCodec"],
                                     cmd_opt["CRF"],
                                     cmd_opt["Bitrate"], 
+                                    cmd_opt["Deadline"],
+                                    cmd_opt["CpuUsed"],
+                                    cmd_opt["RowMthreading"],
                                     cmd_opt["Presets"], 
                                     cmd_opt["Profile"], 
                                     cmd_opt["Tune"], 
@@ -1726,28 +1788,29 @@ class Video_Conv(wx.Panel):
                                     cmd_opt["Filters"], 
                                     cmd_opt["YUV"], 
                                     self.threads,
-                                    self.cpu_used,
                                     ))
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' %(
-                                                    cmd_opt["VideoCodec"],
-                                                    cmd_opt["CRF"],
-                                                    cmd_opt["Bitrate"], 
-                                                    cmd_opt["Presets"], 
-                                                    cmd_opt["Profile"], 
-                                                    cmd_opt["Tune"], 
-                                                    cmd_opt["VideoAspect"], 
-                                                    cmd_opt["VideoRate"], 
-                                                    cmd_opt["Filters"], 
-                                                    cmd_opt["YUV"], 
-                                                    cmd_opt["AudioCodec"], 
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1], 
-                                                    self.threads, 
-                                                    self.cpu_used, 
-                                                    cmd_opt["Map"],
-                                                    ))
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s '
+                   '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"],
+                                                  cmd_opt["CRF"],
+                                                  cmd_opt["Bitrate"], 
+                                                  cmd_opt["Deadline"],
+                                                  cmd_opt["CpuUsed"],
+                                                  cmd_opt["RowMthreading"],
+                                                  cmd_opt["Presets"], 
+                                                  cmd_opt["Profile"], 
+                                                  cmd_opt["Tune"], 
+                                                  cmd_opt["VideoAspect"], 
+                                                  cmd_opt["VideoRate"], 
+                                                  cmd_opt["Filters"], 
+                                                  cmd_opt["YUV"], 
+                                                  cmd_opt["AudioCodec"], 
+                                                  cmd_opt["AudioBitrate"][1], 
+                                                  cmd_opt["AudioRate"][1], 
+                                                  cmd_opt["AudioChannel"][1], 
+                                                  cmd_opt["AudioDepth"][1], 
+                                                  self.threads, 
+                                                  cmd_opt["Map"],
+                                                  ))
             pass1 = " ".join(cmd1.split())
             pass2 =  " ".join(cmd2.split())
             valupdate = self.update_dict(countmax, [''])
@@ -1773,10 +1836,13 @@ class Video_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s'
+            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                        '%s %s %s -y' % (cmd_opt["VideoCodec"], 
                                         cmd_opt["CRF"],
                                         cmd_opt["Bitrate"],
+                                        cmd_opt["Deadline"],
+                                        cmd_opt["CpuUsed"],
+                                        cmd_opt["RowMthreading"],
                                         cmd_opt["Presets"], 
                                         cmd_opt["Profile"],
                                         cmd_opt["Tune"], 
@@ -1790,7 +1856,6 @@ class Video_Conv(wx.Panel):
                                         cmd_opt["AudioChannel"][1], 
                                         cmd_opt["AudioDepth"][1], 
                                         self.threads, 
-                                        self.cpu_used, 
                                         cmd_opt["Map"],
                                         ))
             command = " ".join(command.split())# mi formatta la stringa
@@ -1830,26 +1895,23 @@ class Video_Conv(wx.Panel):
                                               str(self.spin_lra.GetValue()),))
         
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            cmd_1 = ('%s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
-                                           cmd_opt["VideoAspect"],
-                                           cmd_opt["VideoRate"],
-                                           self.threads, 
-                                           self.cpu_used,
-                                           cmd_opt["Map"],
-                                           ))
-            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s %s' %(
-                                                    cmd_opt["VideoCodec"], 
-                                                    cmd_opt["VideoAspect"],
-                                                    cmd_opt["VideoRate"],
-                                                    cmd_opt["AudioCodec"], 
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1], 
-                                                    self.threads, 
-                                                    self.cpu_used,
-                                                    cmd_opt["Map"],
-                                                    ))
+            cmd_1 = ('%s %s %s %s %s' %(cmd_opt["VideoCodec"], 
+                                        cmd_opt["VideoAspect"],
+                                        cmd_opt["VideoRate"],
+                                        self.threads,
+                                        cmd_opt["Map"],
+                                        ))
+            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
+                                                       cmd_opt["VideoAspect"],
+                                                       cmd_opt["VideoRate"],
+                                                       cmd_opt["AudioCodec"], 
+                                                       cmd_opt["AudioBitrate"][1], 
+                                                       cmd_opt["AudioRate"][1], 
+                                                       cmd_opt["AudioChannel"][1], 
+                                                       cmd_opt["AudioDepth"][1], 
+                                                       self.threads,
+                                                       cmd_opt["Map"],
+                                                       ))
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
             valupdate = self.update_dict(countmax, ["Copy video codec"])
@@ -1872,10 +1934,13 @@ class Video_Conv(wx.Panel):
                 self.exportStreams(f)#pass arg to function above
         
         else:
-            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s' % (
+            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["CRF"],
                                                     cmd_opt["Bitrate"],
+                                                    cmd_opt["Deadline"],
+                                                    cmd_opt["CpuUsed"],
+                                                    cmd_opt["RowMthreading"],
                                                     cmd_opt["Presets"], 
                                                     cmd_opt["Profile"], 
                                                     cmd_opt["Tune"], 
@@ -1883,31 +1948,32 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["VideoRate"], 
                                                     cmd_opt["Filters"], 
                                                     cmd_opt["YUV"], 
-                                                    self.threads, 
-                                                    self.cpu_used,
+                                                    self.threads,
                                                     cmd_opt["Map"],
                                                     ))
                 
-            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' %(
-                                                    cmd_opt["VideoCodec"], 
-                                                    cmd_opt["CRF"],
-                                                    cmd_opt["Bitrate"], 
-                                                    cmd_opt["Presets"], 
-                                                    cmd_opt["Profile"],
-                                                    cmd_opt["Tune"], 
-                                                    cmd_opt["VideoAspect"], 
-                                                    cmd_opt["VideoRate"], 
-                                                    cmd_opt["Filters"],
-                                                    cmd_opt["YUV"], 
-                                                    cmd_opt["AudioCodec"], 
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1], 
-                                                    self.threads, 
-                                                    self.cpu_used, 
-                                                    cmd_opt["Map"],
-                                                    ))
+            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s '
+                    '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
+                                                   cmd_opt["CRF"],
+                                                   cmd_opt["Bitrate"], 
+                                                   cmd_opt["Deadline"],
+                                                   cmd_opt["CpuUsed"],
+                                                   cmd_opt["RowMthreading"],
+                                                   cmd_opt["Presets"], 
+                                                   cmd_opt["Profile"],
+                                                   cmd_opt["Tune"], 
+                                                   cmd_opt["VideoAspect"], 
+                                                   cmd_opt["VideoRate"], 
+                                                   cmd_opt["Filters"],
+                                                   cmd_opt["YUV"], 
+                                                   cmd_opt["AudioCodec"], 
+                                                   cmd_opt["AudioBitrate"][1], 
+                                                   cmd_opt["AudioRate"][1], 
+                                                   cmd_opt["AudioChannel"][1], 
+                                                   cmd_opt["AudioDepth"][1], 
+                                                   self.threads, 
+                                                   cmd_opt["Map"],
+                                                   ))
             pass1 = " ".join(cmd_1.split())
             pass2 =  " ".join(cmd_2.split())# mi formatta la stringa
             valupdate = self.update_dict(countmax, [''])

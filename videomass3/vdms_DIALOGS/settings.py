@@ -35,7 +35,7 @@ class Setup(wx.Dialog):
     """
     Main settings of the videomass program and configuration storing.
     """
-    def __init__(self, parent, threads, cpu_used, ffplay_loglev, ffmpeg_loglev, 
+    def __init__(self, parent, threads, ffplay_loglev, ffmpeg_loglev, 
                  ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
                  ffplay_link, ffplay_check, OS, iconset, fileconf, PWD
                  ):
@@ -71,7 +71,6 @@ class Setup(wx.Dialog):
             #print(n, ' -------> ', k, ' --> ', dic[k])
 
         self.threads = threads
-        self.cpu_used = cpu_used
         self.ffplay_loglevel = ffplay_loglev
         self.ffmpeg_loglevel = ffmpeg_loglev
         self.ffmpeg_link = ffmpeg_link
@@ -131,18 +130,18 @@ class Setup(wx.Dialog):
         gridThreads.Add(self.spinctrl_threads, 0, wx.ALL |
                                                   wx.ALIGN_CENTER_VERTICAL, 
                                                   5)
-        lab2_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (
-                        _("Quality/Speed ratio modifier (from -16 to 16)")))
-        gridThreads.Add(lab2_pane1, 0, wx.ALL, 5)
-        gridctrl = wx.FlexGridSizer(1, 2, 0, 0)
-        gridThreads.Add(gridctrl)
-        self.spinctrl_cpu = wx.SpinCtrl(tabOne, wx.ID_ANY, 
-                                        "%s" % cpu_used[9:], min=-16, max=16, 
-                                        size=(-1,-1), style=wx.TE_PROCESS_ENTER
-                                             )
-        gridctrl.Add(self.spinctrl_cpu, 0, wx.ALL, 5)
-        self.ckbx_cpu = wx.CheckBox(tabOne, wx.ID_ANY, (_("Disable")))
-        gridctrl.Add(self.ckbx_cpu, 1, wx.ALL, border=10 )
+        #lab2_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (
+                        #_("Quality/Speed ratio modifier (from -16 to 16)")))
+        #gridThreads.Add(lab2_pane1, 0, wx.ALL, 5)
+        #gridctrl = wx.FlexGridSizer(1, 2, 0, 0)
+        #gridThreads.Add(gridctrl)
+        #self.spinctrl_cpu = wx.SpinCtrl(tabOne, wx.ID_ANY, 
+                                        #"%s" % cpu_used[9:], min=-16, max=16, 
+                                        #size=(-1,-1), style=wx.TE_PROCESS_ENTER
+                                             #)
+        #gridctrl.Add(self.spinctrl_cpu, 0, wx.ALL, 5)
+        #self.ckbx_cpu = wx.CheckBox(tabOne, wx.ID_ANY, (_("Disable")))
+        #gridctrl.Add(self.ckbx_cpu, 1, wx.ALL, border=10 )
         #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
         #--------------------------------------------------TAB 2
@@ -283,9 +282,9 @@ class Setup(wx.Dialog):
         
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
-        self.spinctrl_cpu.SetToolTip(_("Quality/Speed ratio modifier "
-                                            "(from -16 to 16) (default 1)")
-                                    )
+        #self.spinctrl_cpu.SetToolTip(_("Quality/Speed ratio modifier "
+                                            #"(from -16 to 16) (default 1)")
+                                    #)
         
         self.checkbox_exeFFmpeg.SetToolTip(_("Enable custom search for "
                        "the executable FFmpeg. If the checkbox is disabled or "
@@ -325,8 +324,8 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
-        self.Bind(wx.EVT_SPINCTRL, self.on_cpu_used, self.spinctrl_cpu)
-        self.Bind(wx.EVT_CHECKBOX, self.on_cpu_used, self.ckbx_cpu)
+        #self.Bind(wx.EVT_SPINCTRL, self.on_cpu_used, self.spinctrl_cpu)
+        #self.Bind(wx.EVT_CHECKBOX, self.on_cpu_used, self.ckbx_cpu)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffmpeg, self.txtctrl_ffmpeg)
@@ -366,13 +365,6 @@ class Setup(wx.Dialog):
                                 self.rdbFFmpeg.GetString(s).split()[0]
                                 ):
                 self.rdbFFmpeg.SetSelection(s)
-        
-        if self.cpu_used == 'Disabled':
-            self.ckbx_cpu.SetValue(True)
-            self.spinctrl_cpu.Disable()
-        #else:
-            #self.ckbx_cpu.SetValue(False)
-            #self.spinctrl_cpu.Enable()
             
         if self.ffmpeg_check == 'false':
             self.btn_pathFFmpeg.Disable()
@@ -406,18 +398,7 @@ class Setup(wx.Dialog):
         """set cpu number threads used as option on ffmpeg"""
         sett = self.spinctrl_threads.GetValue()
         self.full_list[self.rowsNum[2]] = '-threads %s\n' % sett
-    #--------------------------------------------------------------------#
-    def on_cpu_used(self, event):
-        """set cpu number threads used as option on ffmpeg"""
-        if self.ckbx_cpu.IsChecked():
-            self.spinctrl_cpu.Disable()
-            self.full_list[self.rowsNum[3]] = 'Disabled\n'
-        else:
-            if not self.spinctrl_cpu.IsEnabled():
-                self.spinctrl_cpu.Enable()
-            sett = self.spinctrl_cpu.GetValue()
-            self.full_list[self.rowsNum[3]] = '-cpu-used %s\n' % sett
-    #--------------------------------------------------------------------#
+
     #--------------------------------------------------------------------#
     def logging_ffplay(self, event):
         """specifies loglevel type for ffplay."""

@@ -75,14 +75,12 @@ class Audio_Conv(wx.Panel):
     Interface panel for audio conversions and volume normalizations,
     with preset storing feature (TODO)
     """
-    def __init__(self, parent, ffmpeg_link, threads, 
-                 cpu_used, ffmpeg_loglev, ffprobe_link, OS,
-                 iconanalyzes, iconsettings, iconpeaklevel):
+    def __init__(self, parent, ffmpeg_link, threads, ffmpeg_loglev, 
+                 ffprobe_link, OS, iconanalyzes, iconsettings, iconpeaklevel):
 
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
         self.threads = threads
-        self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
         self.ffmpeg_loglevel = ffmpeg_loglev
         self.ffprobe_link = ffprobe_link
         self.OS = OS
@@ -636,13 +634,12 @@ class Audio_Conv(wx.Panel):
         """
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
         title = _('Audio conversions')
-        command = ("-vn %s %s %s %s %s %s %s -y" % (cmd_opt["AudioCodec"],
+        command = ("-vn %s %s %s %s %s %s -y" % (cmd_opt["AudioCodec"],
                                                     cmd_opt["AudioBitrate"][1], 
                                                     cmd_opt["AudioDepth"][1], 
                                                     cmd_opt["AudioRate"][1], 
                                                     cmd_opt["AudioChannel"][1], 
                                                     self.threads,
-                                                    self.cpu_used,
                                                     ))
         command = " ".join(command.split())# mi formatta la stringa
         valupdate = self.update_dict(countmax)
@@ -678,14 +675,14 @@ class Audio_Conv(wx.Panel):
                                                 str(self.spin_tp.GetValue()),
                                                 str(self.spin_lra.GetValue())))
         title = _('Audio EBU normalization')
-        cmd_1 = ('-vn %s %s' % (self.threads, self.cpu_used,))
-        cmd_2 = ("-vn %s %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
+        cmd_1 = ('-vn %s' % (self.threads))
+        cmd_2 = ("-vn %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
                                                cmd_opt["AudioBitrate"][1], 
                                                cmd_opt["AudioDepth"][1], 
                                                cmd_opt["AudioRate"][1], 
                                                cmd_opt["AudioChannel"][1], 
                                                self.threads,
-                                               self.cpu_used,))
+                                               ))
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
         valupdate = self.update_dict(countmax)

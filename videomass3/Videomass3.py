@@ -90,18 +90,18 @@ class Videomass(wx.App):
             print ('Videomass: Fatal Error, file configuration not found')
             return False
         
-        icons = Appearance(setui[3], setui[4][12])# set appearance instance
+        icons = Appearance(setui[3], setui[4][11])# set appearance instance
         pathicons = icons.icons_set() # get paths icons
         self.OS = setui[0] # set OS type
         self.FILEconf = setui[6] # set file conf. pathname 
         self.WORKdir = setui[7] # set PWD current dir
         self.DIRconf = setui[8] # set location dir conf pathname
-        self.ffmpeg_loglev = setui[4][5]
-        self.ffplay_loglev = setui[4][4]
+        self.ffmpeg_loglev = setui[4][4]
+        self.ffplay_loglev = setui[4][3]
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-            for link in [setui[4][7],setui[4][9],setui[4][11]]:
+            for link in [setui[4][6],setui[4][8],setui[4][10]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -111,12 +111,12 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                self.ffmpeg_url = setui[4][7]
-                self.ffprobe_url = setui[4][9]
-                self.ffplay_url = setui[4][11]
+                self.ffmpeg_url = setui[4][6]
+                self.ffprobe_url = setui[4][8]
+                self.ffplay_url = setui[4][10]
 
         elif setui[0] == 'Windows':
-            for link in [setui[4][7],setui[4][9],setui[4][11]]:
+            for link in [setui[4][6],setui[4][8],setui[4][10]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
                 else:
@@ -126,14 +126,14 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[23])
                 return True
             else:
-                self.ffmpeg_url = setui[4][7]
-                self.ffprobe_url = setui[4][9]
-                self.ffplay_url = setui[4][11]
+                self.ffmpeg_url = setui[4][6]
+                self.ffprobe_url = setui[4][8]
+                self.ffplay_url = setui[4][10]
                 
         else: # is Linux 
-            self.ffmpeg_url = setui[4][7]
-            self.ffprobe_url = setui[4][9]
-            self.ffplay_url = setui[4][11]
+            self.ffmpeg_url = setui[4][6]
+            self.ffprobe_url = setui[4][8]
+            self.ffplay_url = setui[4][10]
             # --- used for debug only ---#
             #self.firstrun(pathicons[23])
             #return True

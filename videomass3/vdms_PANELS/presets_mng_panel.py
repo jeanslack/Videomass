@@ -79,14 +79,12 @@ class PresetsPanel(wx.Panel):
     """
 
     def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, threads, cpu_used, ffmpeg_loglev, 
-                 ffmpeg_link, OS):
+                 PWD, threads, ffmpeg_loglev, ffmpeg_link, OS):
         
         self.src_vdms = os.path.join(path_srcShare, 'vdms')#origine share/vdms
         self.user_vdms = os.path.join(path_confdir, 'vdms')#conf/videomass/vdms
         self.PWD = PWD #current work of videomass
         self.threads = threads
-        self.cpu_used = cpu_used if not cpu_used == 'Disabled' else ''
         self.ffmpeg_loglev = ffmpeg_loglev
         self.ffmpeg_link = ffmpeg_link
         self.OS = OS
@@ -547,11 +545,9 @@ class PresetsPanel(wx.Panel):
             passOne = split[0].strip()
             passTwo = split[1].strip()
             
-            command1 = ("%s %s %s -f rawvideo" % (passOne,
-                                                  self.threads, 
-                                                  self.cpu_used,)
+            command1 = ("%s %s -f rawvideo" % (passOne, self.threads,)
                         )
-            command2 = ("%s %s %s" % (passTwo, self.threads,self.cpu_used,)
+            command2 = ("%s %s" % (passTwo, self.threads,)
                         )
             pass1 = " ".join(command1.split())# mi formatta la stringa
             pass2 = " ".join(command2.split())# mi formatta la stringa
@@ -577,10 +573,7 @@ class PresetsPanel(wx.Panel):
                                                     array[4]))
 
         else:
-            command = ("%s %s %s -y" % (self.txt_cmd.GetValue(), 
-                                        self.threads, 
-                                        self.cpu_used,
-                                        ))
+            command = ("%s %s -y" % (self.txt_cmd.GetValue(), self.threads,))
             valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:

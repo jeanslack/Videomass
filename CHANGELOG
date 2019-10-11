@@ -19,10 +19,11 @@ NEWS
     * Peak level normalization now has also target to below level .
     * PEAK/RMS normalizations are not applied to unchanged levels, ie when 
       the target does not ensure level changes.
-ADD
-    * Added "-pix_fmt yuv420p" option for some encoding.
+ADDED:
+    * Added "-pix_fmt yuv420p" option for compatibilities.
     * Added some support for the h.265/HEVC encoder.
-    * Added some support for the libvpx/libvpx-vp9 (VP8, VP9) encoders.
+    * Added some support and controls for the libvpx/libvpx-vp9 (VP8, VP9) 
+      encoders.
     * The libopus audio encoder for the opus format has also been added.
     
 IMPROVEMENTS:
