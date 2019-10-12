@@ -52,10 +52,8 @@ class NormalizationList(wx.Dialog):
         if close videomass also close parent window:
         
         """
-        normlist = wx.ListCtrl(self, wx.ID_ANY, 
-                                style=wx.LC_REPORT | 
-                                wx.SUNKEN_BORDER
-                                    )
+        normlist = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | 
+                                                      wx.SUNKEN_BORDER)
         #----------------------Properties----------------------#
         self.SetTitle(_(title))
         normlist.SetMinSize((850, 200))
@@ -79,9 +77,8 @@ class NormalizationList(wx.Dialog):
         yell.SetBackgroundColour(wx.Colour(198, 180, 38))# #C6B426
         txtyell = wx.StaticText(self, wx.ID_ANY, (_("=  Below max peak")))
         
-
         sizer = wx.BoxSizer(wx.VERTICAL)
-        
+
         gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(normlist, 1, wx.EXPAND|wx.ALL, 5)
         #sizer.Add(descript, 0, wx.ALL, 10)
@@ -89,14 +86,20 @@ class NormalizationList(wx.Dialog):
         grid_list = wx.FlexGridSizer(1, 7, 0, 0)
         grid_list.Add(descript, 1, wx.ALL, 5)
         grid_list.Add(red, 1,wx.ALL, 5)
-        grid_list.Add(txtred, 1,wx.ALL, 5)
-        
+        grid_list.Add(txtred, 1, wx.ALL|
+                                 wx.ALIGN_CENTER_VERTICAL|
+                                 wx.ALIGN_CENTER_HORIZONTAL, 5
+                                 )
         grid_list.Add(grey, 1,wx.ALL, 5)
-        grid_list.Add(txtgrey, 1,wx.ALL, 5)
-        
+        grid_list.Add(txtgrey, 1, wx.ALL|
+                                  wx.ALIGN_CENTER_VERTICAL|
+                                  wx.ALIGN_CENTER_HORIZONTAL, 5
+                                 )
         grid_list.Add(yell, 1,wx.ALL, 5)
-        grid_list.Add(txtyell, 1,wx.ALL, 5)
-        
+        grid_list.Add(txtyell, 1, wx.ALL|
+                                  wx.ALIGN_CENTER_VERTICAL|
+                                  wx.ALIGN_CENTER_HORIZONTAL, 5
+                                 )
         sizer.Add(grid_list, 0, wx.ALL, 5)
         
         sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)

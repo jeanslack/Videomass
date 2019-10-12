@@ -50,31 +50,31 @@ class FirstStart(wx.Dialog):
         """constructor"""
         
         msg1 = (_(
-            u"This wizard will attempt to automatically detect FFmpeg in\n"
-            u"your system.\n\n"
-            u"In addition, it allows you to manually set a custom path\n"
-            u"to locate FFmpeg and its associated executables.\n\n"
-            u"Also, Remember that you can always change these settings\n"
-            u"later, through the Setup dialog.\n\n"
-            u"- Press 'Auto-detection' to start the system search now."
-            u"\n\n"
-            u"- Press 'Browse..' to indicate yourself where FFmpeg is located.\n")
+            "This wizard will attempt to automatically detect FFmpeg in\n"
+            "your system.\n\n"
+            "In addition, it allows you to manually set a custom path\n"
+            "to locate FFmpeg and its associated executables.\n\n"
+            "Also, Remember that you can always change these settings\n"
+            "later, through the Setup dialog.\n\n"
+            "- Press 'Auto-detection' to start the system search now."
+            "\n\n"
+            "- Press 'Browse..' to indicate yourself where FFmpeg is located.\n")
                )
         # widget:
         bitmap_drumsT = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(
                                         img,wx.BITMAP_TYPE_ANY))
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
-                                        _(u"Welcome to Videomass Wizard!")))
+                                        _("Welcome to Videomass Wizard!")))
         lab_welc2 = wx.StaticText(self, wx.ID_ANY, (msg1))
         
-        self.detectBtn = wx.Button(self, wx.ID_ANY, (_(u"Auto-detection")))
+        self.detectBtn = wx.Button(self, wx.ID_ANY, (_("Auto-detection")))
 
-        self.browseBtn = wx.Button(self, wx.ID_ANY, (_(u"Browse..")))
+        self.browseBtn = wx.Button(self, wx.ID_ANY, (_("Browse..")))
         
         close_btn = wx.Button(self, wx.ID_EXIT, "")
         
         # properties
-        self.SetTitle(_(u"Videomass: Wizard"))
+        self.SetTitle(_("Videomass: Wizard"))
         lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL,wx.BOLD, 0, ""))
         # layout:
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -132,12 +132,12 @@ class FirstStart(wx.Dialog):
             listFF = {'ffmpeg':"",'ffprobe':"",'ffplay':""}
             
         dirdialog = wx.DirDialog(self, 
-                _(u"Videomass: locate the ffmpeg folder"), "", 
+                _("Videomass: locate the ffmpeg folder"), "", 
                 wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST
                                 )
             
         if dirdialog.ShowModal() == wx.ID_OK:
-            path = u"%s" % dirdialog.GetPath()
+            path = "%s" % dirdialog.GetPath()
             dirdialog.Destroy()
             
             filelist = []
@@ -255,9 +255,9 @@ class FirstStart(wx.Dialog):
                 if not b == '\n':
                     rowsNum.append(a)
 
-        full_list[rowsNum[7]] = '%s\n' % ffmpeg
-        full_list[rowsNum[9]] = '%s\n' % ffprobe
-        full_list[rowsNum[11]] = '%s\n' % ffplay
+        full_list[rowsNum[6]] = '%s\n' % ffmpeg
+        full_list[rowsNum[8]] = '%s\n' % ffprobe
+        full_list[rowsNum[10]] = '%s\n' % ffplay
         
         with open (self.FILEconf, 'w') as fileconf:
             for i in full_list:

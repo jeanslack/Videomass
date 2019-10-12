@@ -189,36 +189,17 @@ class Video_Conv(wx.Panel):
                                     style=wx.RA_SPECIFY_ROWS
                                             )
         self.lab_cpu = wx.StaticText(self.notebook_1_pane_1, wx.ID_ANY, (
-                                        _("Quality/Speed ratio modifier:")))
+                            _("Quality/Speed ratio modifier:")))
         self.spin_cpu = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
                                         "0", min=-16, max=16, 
                                         size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                              )
         self.ckbx_multithread = wx.CheckBox(self.notebook_1_pane_1, 
                                      wx.ID_ANY, 
-                                     (_('Enable Multithreading'))
+                                     (_('Activates row-mt 1'))
                                      )
-        #audiotrack = wx.Bitmap(iconatrack, wx.BITMAP_TYPE_ANY)
-        #self.btn_audioAdd = GB.GradientButton(self.notebook_1_pane_1,
-                                              #wx.ID_OPEN,
-                                            #size=(-1,25),
-                                            #bitmap=audiotrack,
-                                            #label=_("Add audio track"))
-        #self.btn_audioAdd.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    #foregroundcolour=wx.Colour(28,28, 28))
-        #self.btn_audioAdd.SetBottomEndColour(wx.Colour(205, 235, 222))
-        #self.btn_audioAdd.SetBottomStartColour(wx.Colour(205, 235, 222))
-        #self.btn_audioAdd.SetTopStartColour(wx.Colour(205, 235, 222))
-        #self.btn_audioAdd.SetTopEndColour(wx.Colour(205, 235, 222))
-        
-        #self.cmbx_pictf = wx.ComboBox(self.notebook_1_pane_1, wx.ID_ANY,
-                                           #choices=[("jpg"),("png"),("bmp"),], 
-                                           #size=(100,-1),
-                                           #style=wx.CB_DROPDOWN | 
-                                           #wx.CB_READONLY
-                                           #)
         self.spin_Vbrate = wx.SpinCtrl(self.notebook_1_pane_1, wx.ID_ANY, 
-                                             "1500", min=0, max=25000, 
+                                             "1500", min=0, max=204800, 
                                              style=wx.TE_PROCESS_ENTER
                                              )
         self.sizer_bitrate_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
@@ -316,12 +297,12 @@ class Video_Conv(wx.Panel):
                                                       (_("Video Filters"))
                                                       )
         self.cmbx_Vaspect = wx.ComboBox(self.notebook_1_pane_2, wx.ID_ANY,
-                                        size=(200, -1), choices=[
-                                                        ("Default "), 
-                                                        ("4:3"), 
-                                                        ("16:9")], 
-                                        style=wx.CB_DROPDOWN | 
-                                        wx.CB_READONLY
+                                        size=(200, -1), choices=[("Default "), 
+                                                                 ("4:3"), 
+                                                                 ("16:9"),
+                                                                 ("1.3333"),
+                                                                 ("1.7777")], 
+                                        style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
         self.sizer_videoaspect_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                                         wx.ID_ANY, 
@@ -498,7 +479,7 @@ class Video_Conv(wx.Panel):
         grid_sizer_automations.Add(self.rdb_deadline, 0, wx.ALL| 
                                                     wx.ALIGN_CENTER_HORIZONTAL| 
                                                     wx.ALIGN_CENTER_VERTICAL, 
-                                                    5
+                                                    15
                                                     )
         
         grid_sizer_automations.Add(self.lab_cpu, 0, wx.ALL, 5)
@@ -675,9 +656,9 @@ class Video_Conv(wx.Panel):
         
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
                                     'reduce the file size, but takes longer.'))
-        self.rdb_deadline.SetToolTip(_('"Good" is the default and recommended '
-                'for most applications; "Best" is recommended if you have lots '
-                'of time and want the best compression efficiency; "Realtime" '
+        self.rdb_deadline.SetToolTip(_('"good" is the default and recommended '
+                'for most applications; "best" is recommended if you have lots '
+                'of time and want the best compression efficiency; "realtime" '
                 'is recommended for live/fast encoding'))
         self.spin_cpu.SetToolTip(_('"cpu-used" sets how efficient the '
                 'compression will be. The meaning depends on the mode above.'))
