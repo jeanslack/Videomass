@@ -178,9 +178,6 @@ class Audio_Conv(wx.Panel):
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         
-        #----------------------Set Properties----------------------#
-        self.txt_options.SetBackgroundColour(wx.Colour(18, 18, 18))
-        self.txt_options.SetForegroundColour(wx.Colour(0, 128, 0))
         #----------------------Set Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_global = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (

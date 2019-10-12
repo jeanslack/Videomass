@@ -136,9 +136,7 @@ class PresetsPanel(wx.Panel):
         #self.list_ctrl.SetBackgroundColour(azure)
         self.list_ctrl.SetToolTip(_("List selection profiles"))
         self.txt_cmd.SetMinSize((430, 60))
-        #self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        self.txt_cmd.SetBackgroundColour(wx.Colour(18, 18, 18))
-        self.txt_cmd.SetForegroundColour(wx.Colour(0, 128, 0))
+        self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.txt_cmd.SetToolTip(_("Command of the selected profile"))
 
         #----------------------Build Layout----------------------#

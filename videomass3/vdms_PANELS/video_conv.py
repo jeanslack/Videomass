@@ -655,8 +655,6 @@ class Video_Conv(wx.Panel):
         self.Layout()
         
         #----------------------Set Properties----------------------#
-        self.txt_audio_options.SetBackgroundColour(wx.Colour(18, 18, 18))
-        self.txt_audio_options.SetForegroundColour(wx.Colour(0, 128, 0))
         self.cmbx_vidContainers.SetToolTip(_('The output Video container'))
         
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '

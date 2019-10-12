@@ -123,7 +123,6 @@ class GeneralProcess(wx.Panel):
             self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        self.OutText.SetBackgroundColour(wx.Colour(18, 18, 18))
             
         #self.OutText.SetBackgroundColour((217, 255, 255))
         #self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
@@ -241,11 +240,9 @@ class GeneralProcess(wx.Panel):
             self.barProg.SetRange(duration)#set la durata complessiva
             self.barProg.SetValue(0)# resetto la prog bar
             self.labPerc.SetLabel("Percentage: 100%")
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 164, 30)))
             self.OutText.AppendText('\n  %s : "%s"\n' % (count,fname))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-
     #-------------------------------------------------------------------#
+    
     def on_stop(self, event):
         """
         The user change idea and was stop process

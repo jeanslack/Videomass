@@ -84,7 +84,10 @@ class NormalizationList(wx.Dialog):
         #sizer.Add(descript, 0, wx.ALL, 10)
         
         grid_list = wx.FlexGridSizer(1, 7, 0, 0)
-        grid_list.Add(descript, 1, wx.ALL, 5)
+        grid_list.Add(descript, 1, wx.ALL|
+                                   wx.ALIGN_CENTER_VERTICAL|
+                                   wx.ALIGN_CENTER_HORIZONTAL, 5
+                                   )
         grid_list.Add(red, 1,wx.ALL, 5)
         grid_list.Add(txtred, 1, wx.ALL|
                                  wx.ALIGN_CENTER_VERTICAL|
@@ -108,11 +111,13 @@ class NormalizationList(wx.Dialog):
         
         if OS == 'Darwin':
             normlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            descript.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
             txtred.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
             txtgrey.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
             txtyell.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:
             normlist.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            descript.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
             txtred.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
             txtgrey.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
             txtyell.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
