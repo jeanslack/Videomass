@@ -11,7 +11,7 @@ October 06, 2019 V.1.7.0
 +------------------------------------+
 
 NEWS
-    Additional implementations:
+    * Additional implementations:
     
         * Audio normalization with EBU R128 algorithm (loudnorm) .
         * Audio normalization in RMS .
@@ -21,16 +21,27 @@ NEWS
       the target does not ensure level changes.
 ADDED:
     * Added "-pix_fmt yuv420p" option for compatibilities.
-    * Added some support for the h.265/HEVC encoder.
+    * Added some support for the h.265/HEVC encoder for MKV, MP4, M4V and AVI 
+      formats.
     * Added some support and controls for the libvpx/libvpx-vp9 (VP8, VP9) 
-      encoders.
+      encoders for WEBM format.
     * The libopus audio encoder for the opus format has also been added.
+    
+REPLACEMENTS and REMOVALS:
+    * For ALL conversions that involve a double pass into Presets Manager panel,
+      the `DOUBLE_PASS` separator between the first and second pass it is
+      replaced by `-pass 1` for first pass and `-pass 2` for second pass.
+    * Removed the "Extract audio source from video" option on Videomass 
+      because it will be reprogrammed separately in the future.
     
 IMPROVEMENTS:
     * The dialog box to show the level statistics for audio normalization 
       has been improved with more useful information.
     * code thinning in some file section in the old stuff.
-    
+    * Disabled the interaction on standard input on the task_processings.py
+      processes adding `-nostdin` since the interaction could not happen. 
+    * Added some cosmetic improvement to interface.
+      
 BUG FIXES:
     * fixed bug when choosing to copy the video codec that always enabled 
       the audio alac format and left the other audio formats disabled.

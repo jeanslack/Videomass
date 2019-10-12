@@ -124,6 +124,7 @@ class GeneralProcess(wx.Panel):
             self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        self.OutText.SetBackgroundColour(wx.Colour(18, 18, 18))
             
         #self.OutText.SetBackgroundColour((217, 255, 255))
         #self.ckbx_text.SetToolTip(_("Show FFmpeg messages in real time "
@@ -241,7 +242,9 @@ class GeneralProcess(wx.Panel):
             self.barProg.SetRange(duration)#set la durata complessiva
             self.barProg.SetValue(0)# resetto la prog bar
             self.labPerc.SetLabel("Percentage: 100%")
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 164, 30)))
             self.OutText.AppendText('\n  %s : "%s"\n' % (count,fname))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
     #-------------------------------------------------------------------#
     def on_stop(self, event):
@@ -356,17 +359,17 @@ class Common_Thread(Thread):
             source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
             outext = source_ext if not self.extoutput else self.extoutput
                 
-            cmd = '%s %s -loglevel %s -i "%s" %s %s "%s/%s.%s"' %(
-                                                            ffmpeg_url, 
-                                                            self.time_seq,
-                                                            ffmpeg_loglev,
-                                                            files, 
-                                                            self.command,
-                                                            volume,
-                                                            folders, 
-                                                            filename,
-                                                            outext,
-                                                            )
+            cmd = ('%s -nostdin %s -loglevel %s -i "%s" %s '
+                   '%s -y "%s/%s.%s"' %(ffmpeg_url, 
+                                        self.time_seq,
+                                        ffmpeg_loglev,
+                                        files, 
+                                        self.command,
+                                        volume,
+                                        folders, 
+                                        filename,
+                                        outext,
+                                        ))
             self.count += 1
             count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
@@ -498,7 +501,7 @@ class TwoPass_Video(Thread):
             else:
                 passpar = '-pass 1 -passlogfile '
                 
-            pass1 = ('%s -loglevel %s %s -i "%s" %s %s"%s/%s.log" '
+            pass1 = ('%s -nostdin -loglevel %s %s -i "%s" %s %s"%s/%s.log" '
                      '-y %s' % (ffmpeg_url, 
                                 ffmpeg_loglev,
                                 self.time_seq,
@@ -587,7 +590,7 @@ class TwoPass_Video(Thread):
             else:
                 passpar = '-pass 1 -passlogfile '
                 
-            pass2 = ('%s -loglevel %s %s -i "%s" %s %s %s'
+            pass2 = ('%s -nostdin -loglevel %s %s -i "%s" %s %s %s'
                      '"%s/%s.log" -y "%s/%s.%s"' % (ffmpeg_url,
                                                     ffmpeg_loglev,
                                                     self.time_seq,
@@ -737,7 +740,7 @@ class TwoPass_Loudnorm(Thread):
                 passpar = '-pass 1 -passlogfile '
             
             #--------------- first pass
-            pass1 = ('{0} -loglevel info -stats -hide_banner '
+            pass1 = ('{0} -nostdin -loglevel info -stats -hide_banner '
                      '{1} -i "{2}" {3} {9}"{4}/{5}.log" -af {6} '
                      '{7} -y {8}'.format(ffmpeg_url, 
                                          self.time_seq,
@@ -842,7 +845,7 @@ class TwoPass_Loudnorm(Thread):
             else:
                 passpar = '-pass 1 -passlogfile '
                 
-            pass2 = ('{0} -loglevel info -stats -hide_banner '
+            pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
                      '{1} -i "{2}" {3} {8}"{5}/{6}.log" -af '
                      '{4} -y "{5}/{6}.{7}"'.format(ffmpeg_url, 
                                                    self.time_seq,

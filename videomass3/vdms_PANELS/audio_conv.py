@@ -76,7 +76,8 @@ class Audio_Conv(wx.Panel):
     with preset storing feature (TODO)
     """
     def __init__(self, parent, ffmpeg_link, threads, ffmpeg_loglev, 
-                 ffprobe_link, OS, iconanalyzes, iconsettings, iconpeaklevel):
+                 ffprobe_link, OS, iconanalyzes, iconsettings, 
+                 iconpeaklevel, btn_color, fontBtncolor):
 
         self.parent = parent
         self.ffmpeg_link = ffmpeg_link
@@ -84,6 +85,8 @@ class Audio_Conv(wx.Panel):
         self.ffmpeg_loglevel = ffmpeg_loglev
         self.ffprobe_link = ffprobe_link
         self.OS = OS
+        self.btnC = btn_color
+        self.fBtnC = fontBtncolor
         #self.DIRconf = DIRconf
         self.file_sources = []
         self.file_destin = ''
@@ -104,11 +107,11 @@ class Audio_Conv(wx.Panel):
                                            bitmap=setbmp,
                                            label=_("Audio Options"))
         self.btn_param.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    foregroundcolour=wx.Colour(28,28,28))
-        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_param.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_param.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_param.SetTopEndColour(wx.Colour(205, 235, 222))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_param.SetBottomEndColour(wx.Colour(self.btnC))
+        self.btn_param.SetBottomStartColour(wx.Colour(self.btnC))
+        self.btn_param.SetTopStartColour(wx.Colour(self.btnC))
+        self.btn_param.SetTopEndColour(wx.Colour(self.btnC))
         
         self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
                                           style=wx.TE_READONLY
@@ -129,11 +132,11 @@ class Audio_Conv(wx.Panel):
                                            bitmap=analyzebmp,
                                            label=_("Volumedected"))
         self.btn_analyzes.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    foregroundcolour=wx.Colour(28,28,28))
-        self.btn_analyzes.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_analyzes.SetTopEndColour(wx.Colour(205, 235, 222))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_analyzes.SetBottomEndColour(wx.Colour(self.btnC))
+        self.btn_analyzes.SetBottomStartColour(wx.Colour(self.btnC))
+        self.btn_analyzes.SetTopStartColour(wx.Colour(self.btnC))
+        self.btn_analyzes.SetTopEndColour(wx.Colour(self.btnC))
         
         peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
         self.btn_details = GB.GradientButton(self,
@@ -141,11 +144,11 @@ class Audio_Conv(wx.Panel):
                                             bitmap=peaklevelbmp,
                                             label=_("Volume Statistics"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    foregroundcolour=wx.Colour(28,28,28))
-        self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_details.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_details.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_details.SetBottomEndColour(wx.Colour(self.btnC))
+        self.btn_details.SetBottomStartColour(wx.Colour(self.btnC))
+        self.btn_details.SetTopStartColour(wx.Colour(self.btnC))
+        self.btn_details.SetTopEndColour(wx.Colour(self.btnC))
         
         self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
                             _("Target level:")))
@@ -176,6 +179,9 @@ class Audio_Conv(wx.Panel):
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         
         #----------------------Set Properties----------------------#
+        self.txt_options.SetBackgroundColour(wx.Colour(18, 18, 18))
+        self.txt_options.SetForegroundColour(wx.Colour(0, 128, 0))
+        #----------------------Set Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_global = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                 "")), wx.VERTICAL)
@@ -274,7 +280,7 @@ class Audio_Conv(wx.Panel):
         """
         self.rdbx_norm.Enable()
         self.txt_options.Enable(), self.btn_param.Enable()
-        self.btn_param.SetForegroundColour(wx.Colour(28,28,28))
+        self.btn_param.SetForegroundColour(wx.Colour(self.fBtnC))
         cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
         cmd_opt["AudioCodec"] = acodecs[self.cmbx_a.GetValue()]
         ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
@@ -285,7 +291,7 @@ class Audio_Conv(wx.Panel):
         cmd_opt["AudioRate"] = ["",""]
         cmd_opt["AudioBitrate"] = ["",""]
         cmd_opt["AudioDepth"] = ["",""]
-        self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_param.SetBottomEndColour(wx.Colour(self.btnC))
     #------------------------------------------------------------------#
     def on_Param(self, evt):
         """
@@ -352,7 +358,7 @@ class Audio_Conv(wx.Panel):
                 self.txt_options.AppendText(" %s | " % d[0])
 
         if count == 0:
-            self.btn_param.SetBottomEndColour(wx.Colour(205, 235, 222))
+            self.btn_param.SetBottomEndColour(wx.Colour(self.btnC))
         else:
             self.btn_param.SetBottomEndColour(wx.Colour(0, 240, 0))
         
@@ -385,7 +391,7 @@ class Audio_Conv(wx.Panel):
                 self.spin_target.SetValue(-20.0)
                 
             self.btn_analyzes.Enable()
-            self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
+            self.btn_analyzes.SetForegroundColour(wx.Colour(self.fBtnC))
             self.btn_analyzes.Show(), self.spin_target.Show(),
             self.lab_amplitude.Show(), self.btn_details.Hide()
             self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
@@ -415,7 +421,7 @@ class Audio_Conv(wx.Panel):
         """
         if not self.btn_analyzes.IsEnabled():
             self.btn_analyzes.Enable()
-            self.btn_analyzes.SetForegroundColour(wx.Colour(28,28,28))
+            self.btn_analyzes.SetForegroundColour(wx.Colour(self.fBtnC))
         
     #------------------------------------------------------------------#
     
@@ -634,13 +640,13 @@ class Audio_Conv(wx.Panel):
         """
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
         title = _('Audio conversions')
-        command = ("-vn %s %s %s %s %s %s -y" % (cmd_opt["AudioCodec"],
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioDepth"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    self.threads,
-                                                    ))
+        command = ('-vn %s %s %s %s %s %s' % (cmd_opt["AudioCodec"],
+                                              cmd_opt["AudioBitrate"][1], 
+                                              cmd_opt["AudioDepth"][1], 
+                                              cmd_opt["AudioRate"][1], 
+                                              cmd_opt["AudioChannel"][1], 
+                                              self.threads,
+                                               ))
         command = " ".join(command.split())# mi formatta la stringa
         valupdate = self.update_dict(countmax)
         ending = Formula(self, valupdate[0], valupdate[1], title)
@@ -676,13 +682,13 @@ class Audio_Conv(wx.Panel):
                                                 str(self.spin_lra.GetValue())))
         title = _('Audio EBU normalization')
         cmd_1 = ('-vn %s' % (self.threads))
-        cmd_2 = ("-vn %s %s %s %s %s %s" % (cmd_opt["AudioCodec"],
-                                               cmd_opt["AudioBitrate"][1], 
-                                               cmd_opt["AudioDepth"][1], 
-                                               cmd_opt["AudioRate"][1], 
-                                               cmd_opt["AudioChannel"][1], 
-                                               self.threads,
-                                               ))
+        cmd_2 = ('-vn %s %s %s %s %s %s' % (cmd_opt["AudioCodec"],
+                                            cmd_opt["AudioBitrate"][1], 
+                                            cmd_opt["AudioDepth"][1], 
+                                            cmd_opt["AudioRate"][1], 
+                                            cmd_opt["AudioChannel"][1], 
+                                            self.threads,
+                                            ))
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
         valupdate = self.update_dict(countmax)
@@ -732,12 +738,18 @@ class Audio_Conv(wx.Panel):
         formula = (_("SUMMARY\n\nFile Queue\
                 \nAudio Container\nAudio Codec\nAudio bit-rate\
                 \nAudio Channels\nAudio Rate\nBit per Sample\
-                \nAudio Normalization\nTime selection"))
-        dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" % (
-                numfile, cmd_opt["AudioContainer"], 
-                cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][0], 
-                cmd_opt["AudioChannel"][0], cmd_opt["AudioRate"][0], 
-                cmd_opt["AudioDepth"][0] , normalize, time)
+                \nAudio Normalization\nTime selection\nThreads"))
+        dictions = ("\n\n%s\n%s\n%s\n%s\n%s"
+                    "\n%s\n%s\n%s\n%s\n%s" % (numfile, 
+                                              cmd_opt["AudioContainer"], 
+                                              cmd_opt["AudioCodec"], 
+                                              cmd_opt["AudioBitrate"][0], 
+                                              cmd_opt["AudioChannel"][0], 
+                                              cmd_opt["AudioRate"][0], 
+                                              cmd_opt["AudioDepth"][0] , 
+                                              normalize, 
+                                              time,
+                                              self.threads.split()[1],)
                     )
         return formula, dictions
     
@@ -767,12 +779,13 @@ class Audio_Conv(wx.Panel):
         else:
             normalize = ''
   
-        command = ("-vn %s %s %s %s %s %s" % (normalize, 
-                                              cmd_opt["AudioCodec"], 
-                                              cmd_opt["AudioBitrate"][1], 
-                                              cmd_opt["AudioDepth"][1], 
-                                              cmd_opt["AudioRate"][1], 
-                                              cmd_opt["AudioChannel"][1],
+        command = ("-vn %s %s %s %s %s %s %s" % (normalize, 
+                                                 cmd_opt["AudioCodec"], 
+                                                 cmd_opt["AudioBitrate"][1], 
+                                                 cmd_opt["AudioDepth"][1], 
+                                                 cmd_opt["AudioRate"][1], 
+                                                 cmd_opt["AudioChannel"][1],
+                                                 self.threads,
                                               ))
         command = ' '.join(command.split())# sistemo gli spazi
         list = [command, cmd_opt["ExportExt"]]

@@ -68,21 +68,21 @@ class MemPresets(wx.Dialog):
         siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, _("Description"))
         self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, 
-                                      (_("Command Line Parameters "
-                                   "Do not use `-i` or output filename)"))
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("Command Line "
+                        "Parameters. Don't start command written with `-i` or "
+                        "end with output file name"))
                                       )
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER
                                     )
-        siz4_supp = wx.StaticBox(self, wx.ID_ANY, (_("Files supported in the "
-                                        "import (do not include the `.`)"))
+        siz4_supp = wx.StaticBox(self, wx.ID_ANY, (_("file extension supported, "
+                                                "do not include the `.`"))
                                                     )
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER
                                    )
-        siz4_ext = wx.StaticBox(self, wx.ID_ANY, (_("Output format extension "
-                                                  "(do not include the `.`)"))
+        siz4_ext = wx.StaticBox(self, wx.ID_ANY, (_("Output format extension, "
+                                                  "do not include the `.`"))
                                                   )
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
@@ -95,20 +95,15 @@ class MemPresets(wx.Dialog):
         self.txt_supp.SetMinSize((300, -1))
         self.txt_ext.SetMinSize((150, -1))
 
-        self.txt_name.SetToolTip(_("Assign a short name to the profile. "
+        self.txt_name.SetToolTip(_('Assign a short name to the profile'))
+        self.txt_descript.SetToolTip(_('Assign a long description '
+                                       'to the profile'))
+        self.txt_cmd.SetToolTip(_('Do not start command written with `-i` '
+                                  'or end with output file name, please.'
                                         ))
-        self.txt_descript.SetToolTip(_("Assign a long description to "
-                                           "the profile.")
-                                           )
-        self.txt_cmd.SetToolTip(_("Do not use `-i` or output file, please."
-                                        ))
-        self.txt_supp.SetToolTip(_("You can limit the type "
-                            "of files formats imported by specifying in a box "
-                            "a format or multiple formats separated by a space "
-                            "(a list of extensions without the dot)."
-                            "Leave blank to involve any type of file to import " 
-                            "inbound."))
-        self.txt_ext.SetToolTip(_("Write here the output format extension"))
+        self.txt_supp.SetToolTip(_('You can specify one or more format names '
+                                   'to include in the profile'))
+        self.txt_ext.SetToolTip(_("Type the output format extension here"))
         
         #----------------------Build layout----------------------#
         grd_s1 = wx.FlexGridSizer(4, 1, 0, 0)

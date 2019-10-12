@@ -134,7 +134,8 @@ class Video_Conv(wx.Panel):
                  threads, ffmpeg_loglev, ffplay_loglev, OS, iconplay,
                  iconreset, iconresize, iconcrop, iconrotate, 
                  icondeinterlace, icondenoiser, iconanalyzes, 
-                 iconsettings, iconpeaklevel, iconatrack
+                 iconsettings, iconpeaklevel, iconatrack, btn_color,
+                 fontBtncolor,
                  ):
 
         wx.Panel.__init__(self, parent)
@@ -145,13 +146,14 @@ class Video_Conv(wx.Panel):
         self.ffplay_link = ffplay_link
         self.ffprobe_link = ffprobe_link
         self.threads = threads
-        self.cpu_used = ''
         self.ffmpeg_loglev = ffmpeg_loglev
         self.ffplay_loglev = ffplay_loglev
         self.file_sources = []
         self.file_destin = ''
         self.normdetails = []
         self.OS = OS
+        self.btn_color = btn_color
+        self.fBtnC = fontBtncolor
         #------------
         self.panel_base = wx.Panel(self, wx.ID_ANY)
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, 
@@ -207,9 +209,10 @@ class Video_Conv(wx.Panel):
                                                  (_("Video Bit-Rate Value"))
                                                     )
         self.slider_CRF = wx.Slider(self.notebook_1_pane_1, wx.ID_ANY, 
-                                    1, 0, 51, size=(230, -1),style=wx.SL_HORIZONTAL | 
-                                                    wx.SL_AUTOTICKS | 
-                                                    wx.SL_LABELS
+                                    1, 0, 51, size=(230, -1),
+                                    style=wx.SL_HORIZONTAL | 
+                                          wx.SL_AUTOTICKS | 
+                                          wx.SL_LABELS
                                     )
         self.sizer_crf_staticbox = wx.StaticBox(self.notebook_1_pane_1, 
                                                 wx.ID_ANY, 
@@ -222,75 +225,75 @@ class Video_Conv(wx.Panel):
                                                bitmap=resizebmp,
                                                label=_("Resize"))
         self.btn_videosize.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(28,28,28))
-        self.btn_videosize.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_videosize.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_videosize.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_videosize.SetTopEndColour(wx.Colour(205, 235, 222))
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_videosize.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_videosize.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_videosize.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_videosize.SetTopEndColour(wx.Colour(self.btn_color))
         cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
         self.btn_crop = GB.GradientButton(self.notebook_1_pane_2,
                                           size=(-1,25),
                                           bitmap=cropbmp,
                                           label=_("Crop Dimension"))
         self.btn_crop.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(28,28,28))
-        self.btn_crop.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_crop.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_crop.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_crop.SetTopEndColour(wx.Colour(205, 235, 222))
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_crop.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_crop.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_crop.SetTopEndColour(wx.Colour(self.btn_color))
         rotatebmp = wx.Bitmap(iconrotate, wx.BITMAP_TYPE_ANY)
         self.btn_rotate = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25),
                                             bitmap=rotatebmp,
                                             label=_("Rotation"))
         self.btn_rotate.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(28,28,28))
-        self.btn_rotate.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_rotate.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_rotate.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_rotate.SetTopEndColour(wx.Colour(205, 235, 222))
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_rotate.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_rotate.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_rotate.SetTopEndColour(wx.Colour(self.btn_color))
         deintbmp = wx.Bitmap(icondeinterlace, wx.BITMAP_TYPE_ANY)
         self.btn_lacing = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25),
                                             bitmap=deintbmp,
                                             label=_("De/Interlace"))
         self.btn_lacing.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(28,28,28))
-        self.btn_lacing.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_lacing.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_lacing.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_lacing.SetTopEndColour(wx.Colour(205, 235, 222))
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_lacing.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_lacing.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_lacing.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_lacing.SetTopEndColour(wx.Colour(self.btn_color))
         denoiserbmp = wx.Bitmap(icondenoiser, wx.BITMAP_TYPE_ANY)
         self.btn_denois = GB.GradientButton(self.notebook_1_pane_2,
                                             size=(-1,25),
                                             bitmap=denoiserbmp,
                                             label="Denoisers")
         self.btn_denois.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(28,28,28))
-        self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_denois.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_denois.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_denois.SetTopEndColour(wx.Colour(205, 235, 222))
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_denois.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_denois.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_denois.SetTopEndColour(wx.Colour(self.btn_color))
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.notebook_1_pane_2,
                                              size=(-1,25),
                                              bitmap=playbmp, 
                                              )
         self.btn_preview.SetBaseColours(startcolour=wx.Colour(158,201,232))
-        self.btn_preview.SetBottomEndColour(wx.Colour(97, 204, 153))
-        self.btn_preview.SetBottomStartColour(wx.Colour(97, 204, 153))
-        self.btn_preview.SetTopStartColour(wx.Colour(97, 204, 153))
-        self.btn_preview.SetTopEndColour(wx.Colour(97, 204, 153))
+        self.btn_preview.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_preview.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_preview.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_preview.SetTopEndColour(wx.Colour(self.btn_color))
         resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
         self.btn_reset = GB.GradientButton(self.notebook_1_pane_2,
                                              size=(-1,25),
                                              bitmap=resetbmp, 
                                              )
         self.btn_reset.SetBaseColours(startcolour=wx.Colour(158,201,232))
-        self.btn_reset.SetBottomEndColour(wx.Colour(97, 204, 153))
-        self.btn_reset.SetBottomStartColour(wx.Colour(97, 204, 153))
-        self.btn_reset.SetTopStartColour(wx.Colour(97, 204, 153))
-        self.btn_reset.SetTopEndColour(wx.Colour(97, 204, 153))
+        self.btn_reset.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_reset.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_reset.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_reset.SetTopEndColour(wx.Colour(self.btn_color))
         
         self.sizer_videosize_staticbox = wx.StaticBox(self.notebook_1_pane_2, 
                                                       wx.ID_ANY, 
@@ -354,10 +357,10 @@ class Video_Conv(wx.Panel):
                                             label=_("Volumedetect"))
         self.btn_voldect.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28, 28))
-        self.btn_voldect.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_voldect.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_voldect.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_voldect.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_voldect.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_voldect.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_voldect.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_voldect.SetTopEndColour(wx.Colour(self.btn_color))
         
         peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
         self.btn_details = GB.GradientButton(self.notebook_1_pane_3,
@@ -366,10 +369,10 @@ class Video_Conv(wx.Panel):
                                             label=_("Volume Statistics"))
         self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(28,28, 28))
-        self.btn_details.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_details.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_details.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_details.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_details.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_details.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_details.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_details.SetTopEndColour(wx.Colour(self.btn_color))
         
         self.lab_amplitude = wx.StaticText(self.notebook_1_pane_3, wx.ID_ANY, 
                                     (_("Target level:"))
@@ -413,10 +416,10 @@ class Video_Conv(wx.Panel):
                                            label=_("Audio Options"))
         self.btn_aparam.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(165,165, 165))
-        self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
-        self.btn_aparam.SetBottomStartColour(wx.Colour(205, 235, 222))
-        self.btn_aparam.SetTopStartColour(wx.Colour(205, 235, 222))
-        self.btn_aparam.SetTopEndColour(wx.Colour(205, 235, 222))
+        self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_aparam.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_aparam.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_aparam.SetTopEndColour(wx.Colour(self.btn_color))
         self.txt_audio_options = wx.TextCtrl(self.notebook_1_pane_3, wx.ID_ANY, 
                                              size=(300,-1), 
                                              style=wx.TE_READONLY
@@ -652,6 +655,8 @@ class Video_Conv(wx.Panel):
         self.Layout()
         
         #----------------------Set Properties----------------------#
+        self.txt_audio_options.SetBackgroundColour(wx.Colour(18, 18, 18))
+        self.txt_audio_options.SetForegroundColour(wx.Colour(0, 128, 0))
         self.cmbx_vidContainers.SetToolTip(_('The output Video container'))
         
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
@@ -750,7 +755,7 @@ class Video_Conv(wx.Panel):
         Update all the GUI widgets based on the choices made by the user.
         """
         if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
-            self.sizer_automations_staticbox.SetLabel(_(''))
+            self.sizer_automations_staticbox.SetLabel('')
             self.spin_cpu.Hide(), self.lab_cpu.Hide(), self.rdb_deadline.Hide()
             self.ckbx_multithread.Hide()
             if cmd_opt["VideoCodec"] == "-c:v libx264":
@@ -779,7 +784,7 @@ class Video_Conv(wx.Panel):
             self.btn_preview.Enable(), self.ckbx_pass.Enable()
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
-            self.sizer_automations_staticbox.SetLabel(_(''))
+            self.sizer_automations_staticbox.SetLabel('')
             self.spin_cpu.Hide(), self.lab_cpu.Hide(), self.rdb_deadline.Hide()
             self.ckbx_multithread.Hide()
             self.spin_Vbrate.Disable(), self.btn_videosize.Disable() 
@@ -789,7 +794,7 @@ class Video_Conv(wx.Panel):
             self.ckbx_pass.Disable()
             
         else: # all others containers that not use h264
-            self.sizer_automations_staticbox.SetLabel(_(''))
+            self.sizer_automations_staticbox.SetLabel('')
             self.spin_cpu.Hide(), self.lab_cpu.Hide(), self.rdb_deadline.Hide()
             self.ckbx_multithread.Hide()
             self.notebook_1_pane_4.Disable()
@@ -831,7 +836,7 @@ class Video_Conv(wx.Panel):
         cmd_opt["AudioDepth"] = ["",""]
         self.btn_aparam.Disable()
         self.btn_aparam.SetForegroundColour(wx.Colour(165,165, 165))
-        self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+        self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         self.txt_audio_options.SetValue('')
         #self.rdbx_normalize.Enable()
     #-------------------------------------------------------------------#
@@ -853,7 +858,7 @@ class Video_Conv(wx.Panel):
         self.btn_details.Hide(), self.lab_amplitude.Hide() 
         self.lab_i.Hide(), self.lab_tp.Hide(), self.lab_lra.Hide() 
         self.spin_i.Hide(), self.spin_tp.Hide(), self.spin_lra.Hide()
-        self.btn_voldect.SetForegroundColour(wx.Colour(28,28,28))
+        self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
         cmd_opt["PEAK"], cmd_opt["EBU"], cmd_opt["RMS"] = "", "", ""
         del self.normdetails[:]
     
@@ -1020,11 +1025,11 @@ class Video_Conv(wx.Panel):
             cmd_opt['Setsar'], cmd_opt['Deinterlace'] = "",""
             cmd_opt['Interlace'], cmd_opt['Denoiser'] = "",""
             cmd_opt["Filters"] = ""
-            self.btn_videosize.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_crop.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_lacing.SetBottomEndColour(wx.Colour(205, 235, 222))
-            self.btn_rotate.SetBottomEndColour(wx.Colour(205, 235, 222))
+            self.btn_videosize.SetBottomEndColour(wx.Colour(self.btn_color))
+            self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
+            self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
+            self.btn_lacing.SetBottomEndColour(wx.Colour(self.btn_color))
+            self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
     #------------------------------------------------------------------#
     def video_filter_checker(self):
         """
@@ -1086,7 +1091,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
             if not data:
-               self.btn_videosize.SetBottomEndColour(wx.Colour(205, 235, 222))
+               self.btn_videosize.SetBottomEndColour(wx.Colour(self.btn_color))
                cmd_opt["Setdar"] = ""
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
@@ -1123,7 +1128,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["Orientation"][0] = data[0]# cmd option
             cmd_opt["Orientation"][1] = data[1]#msg
             if not data[0]:
-                self.btn_rotate.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
             else:
                 self.btn_rotate.SetBottomEndColour(wx.Colour(0, 240, 0))
             self.video_filter_checker()
@@ -1140,7 +1145,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = crop.GetValue()
             if not data:
-                self.btn_crop.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
                 cmd_opt["Crop"] = ''
             else:
                 self.btn_crop.SetBottomEndColour(wx.Colour(0, 240, 0))
@@ -1163,7 +1168,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = lacing.GetValue()
             if not data:
-                self.btn_lacing.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_lacing.SetBottomEndColour(wx.Colour(self.btn_color))
                 cmd_opt["Deinterlace"] = ''
                 cmd_opt["Interlace"] = ''
             else:
@@ -1191,7 +1196,7 @@ class Video_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = den.GetValue()
             if not data:
-                self.btn_denois.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
                 cmd_opt["Denoiser"] = ''
             else:
                 self.btn_denois.SetBottomEndColour(wx.Colour(0, 240, 0))
@@ -1266,13 +1271,13 @@ class Video_Conv(wx.Panel):
             if enablebuttonparameters:
                 self.btn_aparam.Enable()
                 self.txt_audio_options.SetValue('')
-                self.btn_aparam.SetForegroundColour(wx.Colour(28,28,28))
-                self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_aparam.SetForegroundColour(wx.Colour(self.fBtnC))
+                self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
             else:
                 self.btn_aparam.Disable(), 
                 self.txt_audio_options.SetValue('')
                 self.btn_aparam.SetForegroundColour(wx.Colour(165,165,165))
-                self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+                self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         #--------------------------------------------------------
         for n in acodecs.values():
             if audioformat in n[0]:
@@ -1364,7 +1369,7 @@ class Video_Conv(wx.Panel):
                 self.txt_audio_options.AppendText(" %s | " % d[0])
 
         if count == 0:
-            self.btn_aparam.SetBottomEndColour(wx.Colour(205, 235, 222))
+            self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         else:
             self.btn_aparam.SetBottomEndColour(wx.Colour(0, 240, 0))
             
@@ -1432,7 +1437,7 @@ class Video_Conv(wx.Panel):
         """
         if not self.btn_voldect.IsEnabled():
             self.btn_voldect.Enable()
-            self.btn_voldect.SetForegroundColour(wx.Colour(28,28,28))
+            self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
         
     #------------------------------------------------------------------#
     def on_Audio_analyzes(self, event):  # Volumedetect button
@@ -1719,8 +1724,7 @@ class Video_Conv(wx.Panel):
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
             
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            command = ('-loglevel %s %s %s %s %s %s %s %s %s %s %s %s -y' %(
-                                                    self.ffmpeg_loglev,
+            command = ('%s %s %s %s %s %s %s %s %s %s' %(
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["VideoAspect"],
                                                     cmd_opt["VideoRate"],
@@ -1729,8 +1733,7 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["AudioRate"][1], 
                                                     cmd_opt["AudioChannel"][1], 
                                                     cmd_opt["AudioDepth"][1], 
-                                                    self.threads, 
-                                                    self.cpu_used,
+                                                    self.threads,
                                                     cmd_opt["Map"],
                                                         ))
             command = " ".join(command.split())# mi formatta la stringa
@@ -1817,8 +1820,8 @@ class Video_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                       '%s %s %s -y' % (cmd_opt["VideoCodec"], 
+            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                       '%s %s %s %s' % (cmd_opt["VideoCodec"], 
                                         cmd_opt["CRF"],
                                         cmd_opt["Bitrate"],
                                         cmd_opt["Deadline"],
@@ -2004,9 +2007,9 @@ class Video_Conv(wx.Panel):
                         \nVideo Codec\nVideo Aspect\nVideo Rate\
                         \nAudio Format\nAudio Codec\nAudio Channels\
                         \nAudio Rate\nAudio bit-rate\nBit per Sample\
-                        \nAudio Normalization\nMap\nTime selection"
-                        ))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \nAudio Normalization\nMap\nTime selection\
+                        \nThreads"))
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                          \n%s\n%s\n%s" %(numfile, 
                                          cmd_opt["VidCmbxStr"], 
                                          cmd_opt["VideoCodec"], 
@@ -2021,30 +2024,40 @@ class Video_Conv(wx.Panel):
                                          normalize, 
                                          cmd_opt["Map"], 
                                          time,
+                                         self.threads.split()[1],
                                          ))
         #--------------------
         else:
             formula = (_("SUMMARY\n\nFile to Queue\
-                         \nVideo Format\nVideo Codec\nVideo bit-rate\nCRF\
-                         \nPass Encoding\nDeinterlacing\nInterlacing\
+                         \nVideo Format\nPass Encoding\nVideo Codec\
+                         \nVideo bit-rate\nCRF\nVP8/VP9 Options\
                          \nApplied Filters\nVideo Aspect\nVideo Rate\
-                         \nPreset h/x 264\nProfile h/x 264\nTune h/x 264\
-                         \nOrientation point\nAudio Format\nAudio codec\
+                         \nPreset h.264/h.265\nProfile h.264/h.265\
+                         \nTune h.264/h.265\nAudio Format\nAudio codec\
                          \nAudio Channels\nAudio Rate\nAudio bit-rate\
                          \nBit per Sample\nAudio Normalization\nMap\
-                         \nTime selection"
+                         \nTime selection\nThreads"
                          ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s" % (numfile, cmd_opt["VidCmbxStr"], 
-                                 cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
-                                 cmd_opt["CRF"], cmd_opt["Passing"], 
-                                 cmd_opt["Deinterlace"], cmd_opt["Interlace"], 
-                                 cmd_opt["Filters"], cmd_opt["VideoAspect"], 
-                                 cmd_opt["VideoRate"], cmd_opt["Presets"], 
-                                 cmd_opt["Profile"], cmd_opt["Tune"], 
-                                 cmd_opt["Orientation"][1],
-                                 cmd_opt["Audio"], cmd_opt["AudioCodec"], 
+                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \n%s" % (numfile, 
+                                 cmd_opt["VidCmbxStr"], 
+                                 cmd_opt["Passing"],
+                                 cmd_opt["VideoCodec"], 
+                                 cmd_opt["Bitrate"], 
+                                 cmd_opt["CRF"],
+                                '%s %s %s' %(cmd_opt["Deadline"], 
+                                                cmd_opt["CpuUsed"],
+                                                cmd_opt["RowMthreading"],
+                                                ),
+                                 cmd_opt["Filters"], 
+                                 cmd_opt["VideoAspect"], 
+                                 cmd_opt["VideoRate"], 
+                                 cmd_opt["Presets"], 
+                                 cmd_opt["Profile"], 
+                                 cmd_opt["Tune"], 
+                                 cmd_opt["Audio"], 
+                                 cmd_opt["AudioCodec"], 
                                  cmd_opt["AudioChannel"][0], 
                                  cmd_opt["AudioRate"][0], 
                                  cmd_opt["AudioBitrate"][0], 
@@ -2052,6 +2065,7 @@ class Video_Conv(wx.Panel):
                                  normalize, 
                                  cmd_opt["Map"], 
                                  time,
+                                 self.threads.split()[1],
                                 ))
         return formula, dictions
 
@@ -2080,7 +2094,7 @@ class Video_Conv(wx.Panel):
         if not self.ckbx_pass.IsChecked():
             if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
                 outext = cmd_opt["VideoFormat"]
-                command = ('%s %s %s %s %s %s %s %s %s %s' % (
+                command = ('%s %s %s %s %s %s %s %s %s %s %s' % (
                                                     normalize,
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["VideoAspect"],
@@ -2090,44 +2104,75 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["AudioRate"][1], 
                                                     cmd_opt["AudioChannel"][1], 
                                                     cmd_opt["AudioDepth"][1], 
+                                                    self.threads,
                                                     cmd_opt["Map"],
                                                     ))
             else:
                 outext = cmd_opt["VideoFormat"]
-                command = ("%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s"
-                           "%s" % (normalize, cmd_opt["VideoCodec"], 
-                                   cmd_opt["CRF"], cmd_opt["Presets"], 
-                                   cmd_opt["Profile"], cmd_opt["Tune"], 
-                                   cmd_opt["VideoAspect"], cmd_opt["VideoRate"], 
-                                   cmd_opt["Filters"], cmd_opt["YUV"], 
-                                   cmd_opt["AudioCodec"], 
-                                   cmd_opt["AudioBitrate"][1], 
-                                   cmd_opt["AudioRate"][1], 
-                                   cmd_opt["AudioChannel"][1], 
-                                   cmd_opt["AudioDepth"][1], 
-                                   cmd_opt["Map"],
-                                   ))
+                command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                           '%s %s %s %s %s %s %s' %(normalize, 
+                                                    cmd_opt["VideoCodec"], 
+                                                    cmd_opt["CRF"], 
+                                                    cmd_opt["Bitrate"], 
+                                                    cmd_opt["Deadline"],
+                                                    cmd_opt["CpuUsed"],
+                                                    cmd_opt["RowMthreading"],
+                                                    cmd_opt["Presets"], 
+                                                    cmd_opt["Profile"], 
+                                                    cmd_opt["Tune"], 
+                                                    cmd_opt["VideoAspect"], 
+                                                    cmd_opt["VideoRate"], 
+                                                    cmd_opt["Filters"], 
+                                                    cmd_opt["YUV"], 
+                                                    cmd_opt["AudioCodec"], 
+                                                    cmd_opt["AudioBitrate"][1], 
+                                                    cmd_opt["AudioRate"][1], 
+                                                    cmd_opt["AudioChannel"][1], 
+                                                    cmd_opt["AudioDepth"][1], 
+                                                    self.threads,
+                                                    cmd_opt["Map"],
+                                                    ))
         else:
             outext = cmd_opt["VideoFormat"]
-            cmd1 = ('-an %s %s %s %s %s %s %s %s %s -f rawvideo' % (
-                                    cmd_opt["VideoCodec"], cmd_opt["Bitrate"], 
-                                    cmd_opt["Presets"], cmd_opt["Profile"],
-                                    cmd_opt["Tune"], cmd_opt["VideoAspect"], 
-                                    cmd_opt["VideoRate"], cmd_opt["Filters"],
-                                    cmd_opt["YUV"],
+            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                    '-f rawvideo' %(cmd_opt["VideoCodec"],
+                                    cmd_opt["CRF"],
+                                    cmd_opt["Bitrate"], 
+                                    cmd_opt["Deadline"],
+                                    cmd_opt["CpuUsed"],
+                                    cmd_opt["RowMthreading"],
+                                    cmd_opt["Presets"], 
+                                    cmd_opt["Profile"], 
+                                    cmd_opt["Tune"], 
+                                    cmd_opt["VideoAspect"], 
+                                    cmd_opt["VideoRate"], 
+                                    cmd_opt["Filters"], 
+                                    cmd_opt["YUV"], 
+                                    self.threads,
                                     ))
-            cmd2= ('%s %s %s %s %s %s %s %s '
-                   '%s %s %s %s %s %s %s %s' % (
-                            normalize, cmd_opt["VideoCodec"], 
-                            cmd_opt["Bitrate"], cmd_opt["Presets"], 
-                            cmd_opt["Profile"], cmd_opt["Tune"], 
-                            cmd_opt["VideoAspect"], cmd_opt["VideoRate"], 
-                            cmd_opt["Filters"], cmd_opt["YUV"], 
-                            cmd_opt["AudioCodec"], cmd_opt["AudioBitrate"][1], 
-                            cmd_opt["AudioRate"][1], cmd_opt["AudioChannel"][1], 
-                            cmd_opt["AudioDepth"][1], cmd_opt["Map"],
-                            ))
-            command = ("%s DOUBLE_PASS %s" % (cmd1,cmd2))
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s '
+                   '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"],
+                                                  cmd_opt["CRF"],
+                                                  cmd_opt["Bitrate"], 
+                                                  cmd_opt["Deadline"],
+                                                  cmd_opt["CpuUsed"],
+                                                  cmd_opt["RowMthreading"],
+                                                  cmd_opt["Presets"], 
+                                                  cmd_opt["Profile"], 
+                                                  cmd_opt["Tune"], 
+                                                  cmd_opt["VideoAspect"], 
+                                                  cmd_opt["VideoRate"], 
+                                                  cmd_opt["Filters"], 
+                                                  cmd_opt["YUV"], 
+                                                  cmd_opt["AudioCodec"], 
+                                                  cmd_opt["AudioBitrate"][1], 
+                                                  cmd_opt["AudioRate"][1], 
+                                                  cmd_opt["AudioChannel"][1], 
+                                                  cmd_opt["AudioDepth"][1], 
+                                                  self.threads, 
+                                                  cmd_opt["Map"],
+                                                  ))
+            command = ("-pass 1 %s -pass 2 %s" % (cmd1,cmd2))
                        
         command = ' '.join(command.split())# sitemo meglio gli spazi in stringa
         list = [command, outext]

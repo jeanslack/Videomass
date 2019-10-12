@@ -136,7 +136,9 @@ class PresetsPanel(wx.Panel):
         #self.list_ctrl.SetBackgroundColour(azure)
         self.list_ctrl.SetToolTip(_("List selection profiles"))
         self.txt_cmd.SetMinSize((430, 60))
-        self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        #self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        self.txt_cmd.SetBackgroundColour(wx.Colour(18, 18, 18))
+        self.txt_cmd.SetForegroundColour(wx.Colour(0, 128, 0))
         self.txt_cmd.SetToolTip(_("Command of the selected profile"))
 
         #----------------------Build Layout----------------------#
@@ -539,16 +541,15 @@ class PresetsPanel(wx.Panel):
 
         ######## ------------FINE VALIDAZIONI: --------------
         
-        if 'DOUBLE_PASS' in comcheck:
+        if '-pass 1' and '-pass 2' in comcheck:
             
-            split = self.txt_cmd.GetValue().split('DOUBLE_PASS')
-            passOne = split[0].strip()
-            passTwo = split[1].strip()
+            passes = self.txt_cmd.GetValue().split('-pass 1')[1].split('-pass 2')
+            passOne = passes[0].strip()
+            passTwo = passes[1].strip()
             
-            command1 = ("%s %s -f rawvideo" % (passOne, self.threads,)
-                        )
-            command2 = ("%s %s" % (passTwo, self.threads,)
-                        )
+            command1 = passOne
+            command2 = passTwo
+                        
             pass1 = " ".join(command1.split())# mi formatta la stringa
             pass2 = " ".join(command2.split())# mi formatta la stringa
             
@@ -573,7 +574,7 @@ class PresetsPanel(wx.Panel):
                                                     array[4]))
 
         else:
-            command = ("%s %s -y" % (self.txt_cmd.GetValue(), self.threads,))
+            command = (self.txt_cmd.GetValue())
             valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:

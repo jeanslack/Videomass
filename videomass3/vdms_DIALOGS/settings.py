@@ -62,13 +62,13 @@ class Setup(wx.Dialog):
             if not b.startswith('#'):
                 if not b == '\n':
                     self.rowsNum.append(a)
-                    dic [a] = b.strip()# used for easy reading print debug
+                    #dic [a] = b.strip()# used for easy reading print debug
 
-        #USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
-        #uncomment the following code for a convenient reading
-        print("\nPOSITION:    ROW:     VALUE:")
-        for n, k in enumerate(sorted(dic)):
-            print(n, ' -------> ', k, ' --> ', dic[k])
+        ##USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
+        ##uncomment the following code for a convenient reading
+        #print("\nPOSITION:    ROW:     VALUE:")
+        #for n, k in enumerate(sorted(dic)):
+            #print(n, ' -------> ', k, ' --> ', dic[k])
 
         self.threads = threads
         self.ffplay_loglevel = ffplay_loglev
@@ -257,11 +257,25 @@ class Setup(wx.Dialog):
                                      wx.ALIGN_CENTER_VERTICAL, 15)
         
         btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, _("Buttons Colour"))
-        gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL | 
+                                           wx.ALIGN_CENTER_HORIZONTAL, 15)
+        #-----------
+        labFontColor = wx.StaticText(tabFour, wx.ID_ANY, (
+                                          _("Change Buttons Font Colour:")))
+        gridTBColor.Add(labFontColor, 0, wx.ALL | 
+                                     wx.ALIGN_CENTER_HORIZONTAL| 
+                                     wx.ALIGN_CENTER_VERTICAL, 15)
+        
+        btn_Fontcolor = wx.Button(tabFour, wx.ID_ANY, _("Font Colour"))
+        gridTBColor.Add(btn_Fontcolor, 0, wx.ALL | 
+                                          wx.ALIGN_CENTER_HORIZONTAL, 15)
+        #-------------
         btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR, 
-                                        _("Restore default settings"))
-        gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL | wx.EXPAND | wx.ALIGN_CENTER_HORIZONTAL, 15)
-
+                                                _("Restore default settings"))
+        gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL | 
+                                                   wx.EXPAND | 
+                                                   wx.ALIGN_CENTER_HORIZONTAL, 
+                                                   15)
         #------------------------------------------------------bottom
         gridBottom = wx.GridSizer(1, 2, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
@@ -337,6 +351,8 @@ class Setup(wx.Dialog):
         
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
+        self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_Fontcolor)
+        
         self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, btn_TBcolorClearBtn)
         
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
@@ -531,7 +547,7 @@ class Setup(wx.Dialog):
         Colorize the toolbar bar
         """
         btn = event.GetEventObject()
-        identify = btn.GetLabelText()
+        identity = btn.GetLabelText()
   
         dlg = wx.ColourDialog(self)
  
@@ -544,10 +560,12 @@ class Setup(wx.Dialog):
             rgb = str(data.GetColour().Get())
             choice = rgb.replace('(','').replace(')','').strip()
             
-            if identify == _('Bar Colour'):
+            if identity == _('Bar Colour'):
                 self.full_list[self.rowsNum[12]] = "%s\n" % choice
-            elif identify == _('Buttons Colour'):
+            elif identity == _('Buttons Colour'):
                 self.full_list[self.rowsNum[13]] = "%s\n" % choice
+            elif identity ==  _("Font Colour"):
+                self.full_list[self.rowsNum[14]] = "%s\n" % choice
  
         dlg.Destroy()
     #----------------------------------------------------------------------#
@@ -558,6 +576,7 @@ class Setup(wx.Dialog):
         self.full_list[self.rowsNum[11]] = "Videomass_Sign_Icons\n"
         self.full_list[self.rowsNum[12]] = '205,235,222\n'
         self.full_list[self.rowsNum[13]] = '255,255,255\n'
+        self.full_list[self.rowsNum[14]] = '0,0,0\n'
         
     #----------------------------------------------------------------------#
     def on_help(self, event):

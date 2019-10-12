@@ -77,6 +77,10 @@ class MainFrame(wx.Frame):
         self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2]))
         # toolbar buttons colour
         
+        fBtnC = setui[4][14].split(',')
+        self.fBtnC = wx.Colour(int(fBtnC[0]),int(fBtnC[1]),int(fBtnC[2]))
+        # Buttons Font Colour 
+        
         #self.helping = setui[5]# path contestual help for helping:
         self.OS = setui[0]# ID of the operative system:
         SRCpath = setui[1]# share dir (are where the origin files?):
@@ -125,7 +129,7 @@ class MainFrame(wx.Frame):
                                            bitmap=infoIbmp, 
                                            label=_("Show Metadata"))
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                      foregroundcolour=wx.Colour(28,28,28))
+                                      foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_metaI.SetBottomEndColour(self.bBtnC)
         self.btn_metaI.SetBottomStartColour(self.bBtnC)
         self.btn_metaI.SetTopStartColour(self.bBtnC)
@@ -136,7 +140,7 @@ class MainFrame(wx.Frame):
                                            bitmap=previewbmp, 
                                            label=_("Preview"))
         self.btn_playO.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                      foregroundcolour=wx.Colour(28,28,28))
+                                      foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_playO.SetBottomEndColour(self.bBtnC)
         self.btn_playO.SetBottomStartColour(self.bBtnC)
         self.btn_playO.SetTopStartColour(self.bBtnC)
@@ -147,7 +151,7 @@ class MainFrame(wx.Frame):
                                               bitmap=cutbmp, 
                                               label=_("Duration"))
         self.btn_duration.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(28,28,28))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_duration.SetBottomEndColour(self.bBtnC)
         self.btn_duration.SetBottomStartColour(self.bBtnC)
         self.btn_duration.SetTopStartColour(self.bBtnC)
@@ -158,7 +162,7 @@ class MainFrame(wx.Frame):
                                               bitmap=saveprfbmp, 
                                               label=_("Save As Profile"))
         self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(28,28,28))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
         self.btn_saveprf.SetBottomStartColour(self.bBtnC)
         self.btn_saveprf.SetTopStartColour(self.bBtnC)
@@ -169,7 +173,7 @@ class MainFrame(wx.Frame):
                                               bitmap=newprfbmp, 
                                               label=_("New.."))
         self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(28,28,28))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_newprf.SetBottomEndColour(self.bBtnC)
         self.btn_newprf.SetBottomStartColour(self.bBtnC)
         self.btn_newprf.SetTopStartColour(self.bBtnC)
@@ -180,7 +184,7 @@ class MainFrame(wx.Frame):
                                               bitmap=delprfbmp, 
                                               label=_("Delete.."))
         self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(28,28,28))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_delprf.SetBottomEndColour(self.bBtnC)
         self.btn_delprf.SetBottomStartColour(self.bBtnC)
         self.btn_delprf.SetTopStartColour(self.bBtnC)
@@ -191,7 +195,7 @@ class MainFrame(wx.Frame):
                                               bitmap=editprfbmp, 
                                               label=_("Edit.."))
         self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(28,28,28))
+                                    foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_editprf.SetBottomEndColour(self.bBtnC)
         self.btn_editprf.SetBottomStartColour(self.bBtnC)
         self.btn_editprf.SetTopStartColour(self.bBtnC)
@@ -228,6 +232,8 @@ class MainFrame(wx.Frame):
                                                 pathicons[22],# icon settings
                                                 pathicons[24],# icon peaklevel
                                                 pathicons[25],# icon audiotrack
+                                                self.bBtnC,
+                                                self.fBtnC,
                                                 )
         self.AconvPanel = audio_conv.Audio_Conv(self, 
                                                 self.ffmpeg_link, 
@@ -238,6 +244,8 @@ class MainFrame(wx.Frame):
                                                 pathicons[21],# icon analyzes
                                                 pathicons[22],# icon settings
                                                 pathicons[24],# icon peaklevel
+                                                self.bBtnC,
+                                                self.fBtnC,
                                                 )
 
         self.DnD = dragNdrop.DnDPanel(self, self.ffprobe_link) # dragNdrop panel
