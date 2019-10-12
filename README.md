@@ -9,7 +9,9 @@
 
 ## News
 
-- October 2019 v.1.7.0: Added implementation for EBU R128 normalization and RMS-based normalization. See changelog for more details.
+- October 2019 v.1.7.0: Added EBU R128 and RMS-based audio normalizations. 
+  Added support to VP8, VP9, H.265 and OPUS encoders. See changelog for 
+  more details.
 
 ## Features
 
