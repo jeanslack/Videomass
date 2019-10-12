@@ -7,10 +7,9 @@ It is composed of five text fields, four of which are mandatory.
 
 - "_Description_" is a longer description.
 
-- "_Command Line Parameters_" allows you to enter the FFmpeg command. Do not enter the first input parameter, ie the FFmpeg command call and the first '-i' flag with the name of the first file imported, unless you want to concatenate or add one or more audio files to a movie or images by creating slideshows, in this case you can take a look [here](../../../tips_and_tricks.md). So, don't even enter the last output parameter which is given automatically. For conversions that involve a double pass, use the string **DOUBLE_PASS** as a separator 
-  between the first and second pass, for example:
+- "_Command Line Parameters_" allows you to enter the FFmpeg command. Do not enter the first input parameter, ie the FFmpeg command call and the first '-i' flag with the name of the first file imported, unless you want to concatenate or add others file. So, don't even enter at the end the last output file name which is given automatically. For conversions that involve a double pass, use the string **-pass 1** to first pass and **-pass 2** for second pass as separators, for example:
   ```
-  -an -vcodec libx264 -b:v 1500k -f rawvideo DOUBLE_PASS -vcodec libx264 -b:v 1500k
+  -pass 1 -an -vcodec libx264 -b:v 1500k -f rawvideo -pass 2 -vcodec libx264 -b:v 1500k
   ```
 - "_Files supported in the import_" field is optional and is useful for limiting the importation of one or more formats 
   that you can specify or not. When you specify a list of formats, they must be separated by a white space.
