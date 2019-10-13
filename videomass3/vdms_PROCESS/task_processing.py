@@ -158,15 +158,24 @@ class GeneralProcess(wx.Panel):
         """
         Thread redirection
         """
-        if self.varargs[0] == 'common':# from all panels
+        if self.varargs[0] == 'common_presets':# from Presets Manager
+            PresetsManager_Thread(self.varargs, self.duration,
+                          self.logname, self.time_seq,
+                          ) 
+        
+        elif self.varargs[0] == 'twopass_presets':# from Presets Manager
+            TwoPass_PresetsManager_Thread(self.varargs, self.duration,
+                                          self.logname, self.time_seq,
+                                          )
+        elif self.varargs[0] == 'common':# from Audio/Video Conv.
             Common_Thread(self.varargs, self.duration,
                           self.logname, self.time_seq,
                           ) 
-        elif self.varargs[0] == 'doublepass': # from Vidconv/Prstmng panels
+        elif self.varargs[0] == 'doublepass': # from Video Conv.
             TwoPass_Video(self.varargs, self.duration,
                           self.logname, self.time_seq
                           )
-        elif self.varargs[0] == 'EBU normalization':# from Vidconv/Aconv panels
+        elif self.varargs[0] == 'EBU normalization': # from Audio/Video Conv.
             TwoPass_Loudnorm(self.varargs, self.duration, 
                              self.logname, self.time_seq
                             )
@@ -307,6 +316,352 @@ https://stackoverflow.com/questions/1388753/how-to-get-output-
 from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
 """
+class PresetsManager_Thread(Thread):
+    """
+    This class represents a separate thread for running processes, which 
+    need to read the stdout/stderr in real time.
+    """
+    def __init__(self, varargs, duration, logname, timeseq):
+        """
+        Some attribute can be empty, this depend from conversion type. 
+        If the format/container is not changed on a conversion, the 
+        'extoutput' attribute will have an empty value.
+        
+        """
+        Thread.__init__(self)
+        """initialize"""
+        
+        self.filelist = varargs[1] # list of files (elements)
+        self.command = varargs[4] # comand set on single pass
+        self.outputdir = varargs[3] # output path
+        self.extoutput = varargs[2] # format (extension)
+        self.duration = duration # duration list
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[1]) # length file list
+        self.logname = logname # title name of file log
+        self.time_seq = timeseq # a time segment
+
+        print('single prsmng')
+
+        self.start() # start the thread (va in self.run())
+
+    def run(self):
+        """
+        Subprocess initialize thread.
+        """
+        global STATUS_ERROR
+        
+        for (files,
+             folders,
+             duration) in itertools.zip_longest(self.filelist, 
+                                                self.outputdir, 
+                                                self.duration,
+                                                fillvalue='',
+                                                ):
+            basename = os.path.basename(files) #nome file senza path
+            filename = os.path.splitext(basename)[0]#nome senza estensione
+            source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
+            outext = source_ext if not self.extoutput else self.extoutput
+                
+            cmd = ('%s -nostdin %s -loglevel %s -i "%s" %s '
+                   '-y "%s/%s.%s"' %(ffmpeg_url, 
+                                        self.time_seq,
+                                        ffmpeg_loglev,
+                                        files, 
+                                        self.command,
+                                        folders, 
+                                        filename,
+                                        outext,
+                                        ))
+            self.count += 1
+            count = 'File %s/%s' % (self.count, self.countmax,)
+            com = "%s\n%s" % (count, cmd)
+            print("%s" % com)
+            
+            wx.CallAfter(pub.sendMessage,
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files,
+                         end='',
+                         )
+            logWrite(com, '', self.logname)# write n/n + command only
+            
+            try:
+                with subprocess.Popen(shlex.split(cmd),
+                                      stderr=subprocess.PIPE, 
+                                      bufsize=1, 
+                                      universal_newlines=True) as p:
+                    for line in p.stderr:
+                        #sys.stdout.write(line)
+                        #sys.stdout.flush()
+                        print(line, end=''),
+                        
+                        wx.CallAfter(pub.sendMessage, 
+                                    "UPDATE_EVT", 
+                                    output=line, 
+                                    duration=duration,
+                                    status=0,
+                                    )
+                        if CHANGE_STATUS == 1:# break second 'for' loop
+                            p.terminate()
+                            break
+                        
+                    if p.wait(): # error
+                        wx.CallAfter(pub.sendMessage, 
+                                    "UPDATE_EVT", 
+                                    output=line, 
+                                    duration=duration,
+                                    status=p.wait(),
+                                    )
+                        logWrite('', 
+                                 "Exit status: %s" % p.wait(),
+                                 self.logname)
+                                 #append exit error number
+                    else: # ok
+                        wx.CallAfter(pub.sendMessage, 
+                                        "COUNT_EVT", 
+                                        count='', 
+                                        duration='',
+                                        fname='',
+                                        end='ok'
+                                        )
+                        print('...Done\n')
+                        
+            except OSError as err:
+                e = "%s\n  %s" % (err, not_exist_msg)
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             count=e, 
+                             duration=0,
+                             fname=files,
+                             end='',
+                             )
+                print('...%s' % (e))
+                STATUS_ERROR = 1
+                break
+            
+            if CHANGE_STATUS == 1:# break first 'for' loop
+                p.terminate()
+                print('...Interrupted process')
+                break
+                
+        time.sleep(.5)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+########################################################################
+class TwoPass_PresetsManager_Thread(Thread):
+    """
+    This class represents a separate thread which need to read the 
+    stdout/stderr in real time mode. The subprocess module is instantiated 
+    twice for two different tasks: the process on the first video pass and 
+    the process on the second video pass for video only.
+    """
+    def __init__(self, varargs, duration, logname, timeseq):
+        """
+        The 'volume' attribute may have an empty value, but it will 
+        have no influence on the type of conversion.
+        """
+        Thread.__init__(self)
+        """initialize"""
+
+        self.filelist = varargs[1] # list of files (elements)
+        self.passList = varargs[5] # comand list set for double-pass
+        self.outputdir = varargs[3] # output path
+        self.extoutput = varargs[2] # format (extension)
+        self.duration = duration # duration list
+        self.time_seq = timeseq # a time segment
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[1]) # length file list
+        self.logname = logname # title name of file log
+        self.nul = '/dev/null'
+        
+        print('two pass prsmng')
+        
+        self.start()# start the thread (va in self.run())
+
+    def run(self):
+        """
+        Subprocess initialize thread.
+        """
+        global STATUS_ERROR
+        
+        for (files,
+             folders,
+             duration) in itertools.zip_longest(self.filelist, 
+                                                self.outputdir, 
+                                                self.duration,
+                                                fillvalue='',
+                                                ):
+            basename = os.path.basename(files) #nome file senza path
+            filename = os.path.splitext(basename)[0]#nome senza estensione
+
+            #--------------- first pass
+            pass1 = ('%s -nostdin -loglevel %s %s -i "%s" %s '
+                     '-y %s' % (ffmpeg_url, 
+                                ffmpeg_loglev,
+                                self.time_seq,
+                                files, 
+                                self.passList[0],
+                                self.nul,
+                                )) 
+            self.count += 1
+            count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
+            cmd = "%s\n%s" % (count, pass1)
+            print("%s" % cmd)
+            
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files,
+                         end='',
+                         )
+            logWrite(cmd, '', self.logname)# write n/n + command only
+            
+            try:
+                with subprocess.Popen(shlex.split(pass1), 
+                                      stderr=subprocess.PIPE, 
+                                      bufsize=1, 
+                                      universal_newlines=True) as p1:
+                    
+                    for line in p1.stderr:
+                        #sys.stdout.write(line)
+                        #sys.stdout.flush()
+                        print (line, end=''),
+                        
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_EVT", 
+                                     output=line, 
+                                     duration=duration,
+                                     status=0
+                                     )
+                        if CHANGE_STATUS == 1:# break second 'for' loop
+                            p1.terminate()
+                            break
+                        
+                    if p1.wait(): # will add '..failed' to txtctrl
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_EVT", 
+                                     output=line, 
+                                     duration=duration,
+                                     status=p1.wait(),
+                                     )
+                        logWrite('', 
+                                 "Exit status: %s" % p1.wait(),
+                                 self.logname)
+                                 #append exit error number
+                    
+            except OSError as err:
+                e = "%s\n  %s" % (err, not_exist_msg)
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             count=e, 
+                             duration=0,
+                             fname=files,
+                             end=''
+                             )
+                STATUS_ERROR = 1
+                break
+                    
+            if CHANGE_STATUS == 1:# break first 'for' loop
+                p1.terminate()
+                break # fermo il ciclo for, altrimenti passa avanti
+            
+            if p1.wait() == 0: # will add '..terminated' to txtctrl
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             count='', 
+                             duration='',
+                             fname='',
+                             end='ok'
+                             )
+            
+            #--------------- second pass ----------------#
+            pass2 = ('%s -nostdin -loglevel %s %s -i "%s" %s '
+                     '-y "%s/%s.%s"' % (ffmpeg_url,
+                                        ffmpeg_loglev,
+                                        self.time_seq,
+                                        files, 
+                                        self.passList[1],
+                                        folders, 
+                                        filename,
+                                        self.extoutput,
+                                        ))
+            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
+            cmd = "%s\n%s" % (count, pass2)
+            print("%s" % cmd)
+            
+            wx.CallAfter(pub.sendMessage, 
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=duration,
+                         fname=files,
+                         end='',
+                         )
+            logWrite(cmd, '', self.logname)
+            
+            with subprocess.Popen(shlex.split(pass2), 
+                                  stderr=subprocess.PIPE, 
+                                  bufsize=1, 
+                                  universal_newlines=True) as p2:
+                    
+                    for line2 in p2.stderr:
+                        #sys.stdout.write(line)
+                        #sys.stdout.flush()
+                        print (line2, end=''),
+                        
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_EVT", 
+                                     output=line2, 
+                                     duration=duration,
+                                     status=0,
+                                     )
+                        if CHANGE_STATUS == 1:
+                            p2.terminate()
+                            break
+                    
+                    if p2.wait(): # will add '..failed' to txtctrl
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_EVT", 
+                                     output=line, 
+                                     duration=duration,
+                                     status=p2.wait(),
+                                     )
+                        logWrite('', 
+                                 "Exit status: %s" % p2.wait(), 
+                                 self.logname)
+                                 #append exit error number
+                        
+            if CHANGE_STATUS == 1:# break first 'for' loop
+                p2.terminate()
+                break # fermo il ciclo for, altrimenti passa avanti
+            
+            if p2.wait() == 0: # will add '..terminated' to txtctrl
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             count='', 
+                             duration='',
+                             fname='',
+                             end='ok'
+                             )
+            
+        time.sleep(.5)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+        
+        if STATUS_ERROR == 1:
+            self.endProc(e)
+        elif CHANGE_STATUS == 1:
+            self.endProc('Interrupted process')
+        else:
+            self.endProc('Done')
+    #----------------------------------------------------------------#
+    def endProc(self, mess):
+        """
+        print end messagess to console
+        """
+        print('...%s' % (mess))
+########################################################################
+
 class Common_Thread(Thread):
     """
     This class represents a separate thread for running processes, which 

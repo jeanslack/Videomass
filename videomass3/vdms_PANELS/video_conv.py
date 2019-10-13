@@ -2107,7 +2107,11 @@ class Video_Conv(wx.Panel):
                                                     ))
             else:
                 outext = cmd_opt["VideoFormat"]
-                command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                if cmd_opt["VideoCodec"] == "-c:v libx265":
+                    param265 = ('-x265-params')
+                else:
+                    param265 = ''
+                command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                            '%s %s %s %s %s %s %s' %(normalize, 
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["CRF"], 
@@ -2118,6 +2122,7 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["Presets"], 
                                                     cmd_opt["Profile"], 
                                                     cmd_opt["Tune"], 
+                                                    param265,
                                                     cmd_opt["VideoAspect"], 
                                                     cmd_opt["VideoRate"], 
                                                     cmd_opt["Filters"], 
@@ -2131,24 +2136,33 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["Map"],
                                                     ))
         else:
+            home = os.path.expanduser('~')
             outext = cmd_opt["VideoFormat"]
+            if cmd_opt["VideoCodec"] == "-c:v libx265":
+                param1 = ('-x265-params pass=1:stats=%s/ffmpegLOG.log' % home)
+                param2 = ('-x265-params pass=2:stats=%s/ffmpegLOG.log' % home)
+            else:
+                param1 = '-pass 1 -passlogfile %s/ffmpegLOG.log'  % home
+                param2 = '-pass 2 -passlogfile %s/ffmpegLOG.log'  % home
+            
             cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                    '-f rawvideo' %(cmd_opt["VideoCodec"],
-                                    cmd_opt["CRF"],
-                                    cmd_opt["Bitrate"], 
-                                    cmd_opt["Deadline"],
-                                    cmd_opt["CpuUsed"],
-                                    cmd_opt["RowMthreading"],
-                                    cmd_opt["Presets"], 
-                                    cmd_opt["Profile"], 
-                                    cmd_opt["Tune"], 
-                                    cmd_opt["VideoAspect"], 
-                                    cmd_opt["VideoRate"], 
-                                    cmd_opt["Filters"], 
-                                    cmd_opt["YUV"], 
-                                    self.threads,
-                                    ))
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s '
+                    '-f rawvideo %s' %(cmd_opt["VideoCodec"],
+                                        cmd_opt["CRF"],
+                                        cmd_opt["Bitrate"], 
+                                        cmd_opt["Deadline"],
+                                        cmd_opt["CpuUsed"],
+                                        cmd_opt["RowMthreading"],
+                                        cmd_opt["Presets"], 
+                                        cmd_opt["Profile"], 
+                                        cmd_opt["Tune"], 
+                                        cmd_opt["VideoAspect"], 
+                                        cmd_opt["VideoRate"], 
+                                        cmd_opt["Filters"], 
+                                        cmd_opt["YUV"], 
+                                        self.threads,
+                                        param1,
+                                        ))
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s '
                    '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"],
                                                   cmd_opt["CRF"],
                                                   cmd_opt["Bitrate"], 
@@ -2169,8 +2183,9 @@ class Video_Conv(wx.Panel):
                                                   cmd_opt["AudioDepth"][1], 
                                                   self.threads, 
                                                   cmd_opt["Map"],
+                                                  param2,
                                                   ))
-            command = ("-pass 1 %s -pass 2 %s" % (cmd1,cmd2))
+            command = ("PASS1 %s PASS2 %s" % (cmd1,cmd2))
                        
         command = ' '.join(command.split())# sitemo meglio gli spazi in stringa
         list = [command, outext]

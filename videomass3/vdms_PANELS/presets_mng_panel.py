@@ -538,8 +538,16 @@ class PresetsPanel(wx.Panel):
          base_name, countmax) = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
+        n = [n for n in comcheck if n == '-pass']
+        if len(n) == 1 or len(n) > 2:
+            wx.MessageBox(_('Videomass support two pass only. '
+                            'Valid arguments for passes are "-pass 1" '
+                            'and "-pass 2". Please correct the syntax '
+                            'before proceeding.'), 
+                            "Videomass",  wx.ICON_WARNING, self)
+            return
         
-        if '-pass 1' and '-pass 2' in comcheck:
+        if '-pass 1' and '-pass 2' in self.txt_cmd.GetValue():
             
             passes = self.txt_cmd.GetValue().split('-pass 1')[1].split('-pass 2')
             passOne = passes[0].strip()
@@ -555,7 +563,7 @@ class PresetsPanel(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:
 
-                self.parent.switch_Process('doublepass',
+                self.parent.switch_Process('twopass_presets',
                                             file_sources, 
                                             array[4], 
                                             dir_destin, 
@@ -576,7 +584,7 @@ class PresetsPanel(wx.Panel):
             valupdate = self.update_dict(countmax)
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('common',
+                self.parent.switch_Process('common_presets',
                                             file_sources, 
                                             array[4], 
                                             dir_destin, 
