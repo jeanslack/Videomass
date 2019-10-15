@@ -2,11 +2,16 @@
 NOTE FOR share/videomass folder:
 =======================
 
+Update: October 14 2019
+-----------------------
+
 This directory contains the Videomass configuration files.
 Furthermore, it is used to store log files during conversion 
-processes and to store new custom profiles in the '*.vdms' files.
+processes and to store new custom profiles in the '*.vdms' 
+files or new file presets on the Videomass/vdms presets
+configuration folder.
 
-The *.vdms files in the 'vdms' folder are simple xml files need for presets 
+The *.vdms files in the 'vdms' folder are simple json files need for presets 
 list; videomass.conf and videomassWin32.conf (for MS Windows) are the main 
 Videomass configuration files and are also used for storing user preferences.
 

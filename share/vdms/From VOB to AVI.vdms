@@ -1,0 +1,18 @@
+[
+    { 
+        "Name": "From VOB to avi de-interlaced",
+        "Description": "Convert VOB file from DVD to avi format de-interlaced",
+        "First_pass": "-f avi -vcodec mpeg4 -b 800k -r 25 -g 300 -bf 2 -vf w3fdif -acodec libmp3lame -ab 128k -ar 44100",
+        "Second_pass": "",
+        "Supported_list": "VOB vob",
+        "Output_extension": "avi"
+    },
+    { 
+        "Name": "From VOB to avi",
+        "Description":  "Convert VOB file from DVD to avi format",
+        "First_pass": "-f avi -vcodec mpeg4 -b 800k -r 25 -g 300 -bf 2 -acodec libmp3lame -ab 128k -ar 44100",
+        "Second_pass": "",
+        "Supported_list": "VOB vob",
+        "Output_extension": "avi"
+    }
+]

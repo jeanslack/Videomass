@@ -42,7 +42,12 @@ def copy_restore(src, dest):
     function for restore file. File name is owner choice and can be an preset
     or not. If file exist overwrite it.
     """
-    shutil.copyfile(src, '%s' % (dest))
+    try:
+        shutil.copyfile(src, '%s' % (dest))
+    except FileNotFoundError as err:
+        return err
+    
+    return
 
 #------------------------------------------------------------------#
 def copy_backup(src, dest):

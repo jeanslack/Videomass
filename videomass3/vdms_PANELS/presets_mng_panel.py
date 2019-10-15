@@ -29,9 +29,9 @@
 
 import wx
 import os
-from videomass3.vdms_IO.presets_manager_properties import parser_xml
-from videomass3.vdms_IO.presets_manager_properties import delete_profiles
+from videomass3.vdms_IO.presets_manager_properties import json_data
 from videomass3.vdms_IO.presets_manager_properties import supported_formats
+from videomass3.vdms_IO.presets_manager_properties import delete_profiles
 from videomass3.vdms_SYS.os_interaction import copy_restore
 from videomass3.vdms_SYS.os_interaction import copy_backup
 from videomass3.vdms_SYS.os_interaction import copy_on
@@ -39,30 +39,8 @@ from videomass3.vdms_IO.filedir_control import inspect
 from videomass3.vdms_DIALOGS import presets_addnew
 from videomass3.vdms_DIALOGS.epilogue import Formula
 
-array = []# all parameters of the selected profile
-# this dictionary content all presets in ~/.videomass:
-dict_presets = {
-(_("Audio Conversions")) : ("preset-v1-Audio", "Audio Conversions"), 
-(_("Extract audio from video")): ("preset-v1-VideoAudio", 
-                                "Extract audio from video"),
-(_("Convert to AVI")) : ("preset-v1-AVI", "Convert to AVI"),
-(_("Mobile Phones multimedia")) : ("preset-v1-MobilePhones", 
-                                 "Mobile Phones multimedia"),
-"iPod iTunes" : ("preset-v1-iPod-iTunes", "iPod iTunes"),
-(_("Convert to VCD (mpg)")) : ("preset-v1-VCD", "Convert to VCD (mpg)"),
-(_("Convert DVD VOB")) : ("preset-v1-VOB", "Convert DVD VOB"),
-(_("Convert to quicktime (mov)")) : ("preset-v1-quicktime", 
-                                   "Convert to quicktime (mov)"),
-(_("Convert to DV")) : ("preset-v1-DV", "Convert to DV"),
-"Google Android" : ("preset-v1-GoogleAndroid", "Google Android"),
-"Google webm" : ("preset-v1-GoogleWebm", "Google webm"),
-(_("DVD Conversions")) : ("preset-v1-DVD", "DVD Conversions"),
-(_("MPEG-4 Conversions")): ("preset-v1-MPEG-4", "MPEG-4 Conversions"),
-(_("PS3 Compatible")) : ("preset-v1-PS3", "PS3 Compatible"),
-(_("PSP Compatible")) : ("preset-v1-PSP", "PSP Compatible"),
-(_("Websites")) : ("preset-v1-websites", "Websites"),
-(_("User Profiles")) : ("preset-v1-Personal", "User Profiles"),
-                    }
+array = [] # Parameters of the selected profile
+
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6'# rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
@@ -73,15 +51,28 @@ green = '#268826'
 
 class PresetsPanel(wx.Panel):
     """
-    The Presets manager panel is used for the direct execution of profiles 
-    with the ffmpeg commands, for editing, restoring and storing them.
+    Interface for using and managing presets in the FFmpeg syntax. 
+    Each presets is a JSON file (Javascript object notation) which is 
+    a list object with a variable number of items (called profiles)
+    of type <class 'dict'>, each of which collect 5 keys object in 
+    the following form:
+    
+    {'Name': "", 
+    "Descritpion": "", 
+    "First_pass": "", 
+    "Second_pass": "",
+    "Supported_list": "",
+    "Output_extension": "",
+    }
     
     """
 
     def __init__(self, parent, path_srcShare, path_confdir,
                  PWD, threads, ffmpeg_loglev, ffmpeg_link, OS):
+        """
+        """
         
-        self.src_vdms = os.path.join(path_srcShare, 'vdms')#origine share/vdms
+        self.src_vdms = os.path.join(path_srcShare, 'vdms')#origin share/vdms
         self.user_vdms = os.path.join(path_confdir, 'vdms')#conf/videomass/vdms
         self.PWD = PWD #current work of videomass
         self.threads = threads
@@ -91,7 +82,7 @@ class PresetsPanel(wx.Panel):
         self.parent = parent
         self.file_sources = []
         self.file_destin = ''
-        self.prstmancmdmod = False # don't show dlg if cmdline is mod manually
+        self.prstmancmdmod = False # don't show dlg if cmdline is edited
         
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
@@ -99,37 +90,24 @@ class PresetsPanel(wx.Panel):
         self.panel_1 = wx.Panel(self, wx.ID_ANY)
 
         self.list_ctrl = wx.ListCtrl(self.panel_1, wx.ID_ANY, 
-                                        style=wx.LC_REPORT | wx.SUNKEN_BORDER
-                                        )
+                                    style=wx.LC_REPORT| 
+                                          wx.SUNKEN_BORDER
+                                    )
         nb1 = wx.Notebook(self.panel_1, wx.ID_ANY, style=0)
         nb1_p1 = wx.Panel(nb1, wx.ID_ANY)
         lab_prfl = wx.StaticText(nb1_p1, wx.ID_ANY, _("Select a preset from "
-                                                    "the drop down:"))
-        self.cmbx_prst = wx.ComboBox(nb1_p1,wx.ID_ANY, choices=[
-                        (_("Audio Conversions")),
-                        (_("Extract audio from video")),
-                        (_("Convert to AVI")),
-                        (_("Mobile Phones multimedia")),
-                        ("iPod iTunes"),
-                        (_("Convert to VCD (mpg)")),
-                        (_("Convert DVD VOB")),
-                        (_("Convert to quicktime (mov)")),
-                        (_("Convert to DV")),
-                        ("Google Android"),
-                        ("Google webm"),
-                        (_("DVD Conversions")),
-                        (_("MPEG-4 Conversions")),
-                        (_("PS3 Compatible")),
-                        (_("PSP Compatible")),
-                        (_("Websites")),
-                        (_("User Profiles")),
-                        ],
-                        style=wx.CB_DROPDOWN | wx.CB_READONLY
-                        )
+                                                      "the drop down:"))
+        self.cmbx_prst = wx.ComboBox(nb1_p1,wx.ID_ANY, 
+                                     choices=[os.path.splitext(x)[0] for x 
+                                              in os.listdir(self.user_vdms)],
+                                     size=(200,-1),
+                                     style=wx.CB_DROPDOWN | 
+                                     wx.CB_READONLY
+                                     )
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
-        self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"",
-                                style=wx.TE_MULTILINE | wx.TE_PROCESS_ENTER)
-        
+        self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
+                                                          wx.TE_PROCESS_ENTER
+                                                          )
         #----------------------Set Properties----------------------#
         self.cmbx_prst.SetSelection(0)
         
@@ -183,102 +161,97 @@ class PresetsPanel(wx.Panel):
                                               )
         self.Bind(wx.EVT_TEXT, self.enter_command, self.txt_cmd)
         
-        #----------------------Create preset list----------------------#
-        if array != []: # appena avvio, cancella i dati in memoria se esistono
-            del array[0:5]
-
-        self.set_listctrl() # passo l'istanza al parsing e creo la lista
-    
+        self.set_listctrl()
     #-----------------------------------------------------------------------#
     
     def reset_list(self):
         """
-        Clear all memory presets and pass to set_listctrl() for 
-        re-charging new. This is used when add/edit or delete profiles. 
-        The list is reloaded automatically after closing the dialogs for 
-        view update .
+        Clear all data and re-charging new. Used by selecting new preset
+        and add/edit/delete profiles events.
+        
         """
         self.list_ctrl.ClearAll()
         self.txt_cmd.SetValue("")
-        self.set_listctrl()
         if array != []:
-            del array[0:5]
-            
+            del array[0:6]
+        self.set_listctrl()
+    #----------------------------------------------------------------#  
+    
     def set_listctrl(self):
         """
-        Order list of preset (Name/Descript.) from reading xml (vdms)
+        Populates Presets list with JSON data from *.vdms files.
+        See presets_manager_properties.py 
         """
+        self.list_ctrl.InsertColumn(0, _('Profile Name'), width=230)
+        self.list_ctrl.InsertColumn(1, _('Description'), width=350)
+        self.list_ctrl.InsertColumn(2, _('Output Format'), width=150)
+        self.list_ctrl.InsertColumn(3, _('Supported Formats List'), width=150)
+        
+        path = os.path.join('%s' % self.user_vdms, 
+                            '%s.vdms' % self.cmbx_prst.GetValue()
+                            )
+        collections = json_data(path)
+        if collections == 'error':
+            return
+        index = 0
         try:
-            av_presets = dict_presets[self.cmbx_prst.GetValue()][0]
-            dati = parser_xml(av_presets, self.user_vdms) # xml parsing
-            
-            self.list_ctrl.InsertColumn(0, _('Profile Name'), width=230)
-            self.list_ctrl.InsertColumn(1, _('Description'), width=350)
-            self.list_ctrl.InsertColumn(2, _('Output Extension Type'), width=150)
-            self.list_ctrl.InsertColumn(3, _('Supported formats'), width=150)
-            
-            index = 0
-            for name in sorted(dati.keys()):
-                rows = self.list_ctrl.InsertItem(index, name)
-                self.list_ctrl.SetItem(rows, 0, name)
-                param = dati[name]
-                self.list_ctrl.SetItem(rows, 1, param["type"])
-                self.list_ctrl.SetItem(rows, 2, param["estensione"])
-                self.list_ctrl.SetItem(rows, 3, param["filesupport"])
-        except:
-            UnboundLocalError
-            wx.MessageBox(_("For some circumstance, the selected preset is "
-                          "corrupted. To restore the original copy at least go "
-                          "to the File menu and choose 'restore the preset "
-                          "source in use'. Note, before you make this choice, "
-                          "saved your personal settings."), "ERROR !", 
-                          wx.ICON_ERROR, self)
+            #for x in collections:
+                #for name in x:
+            for name in collections:
+                rows = self.list_ctrl.InsertItem(index, name['Name'])
+                self.list_ctrl.SetItem(rows, 0, name['Name'])
+                self.list_ctrl.SetItem(rows, 1, name["Description"])
+                self.list_ctrl.SetItem(rows, 2, name["Output_extension"])
+                self.list_ctrl.SetItem(rows, 3, name["Supported_list"])
+        except KeyError as err:
+            wx.MessageBox(_('{}\nTyping error on json key: {} '
+                            'is malformed ?'.format(path, err)), 
+                            "ERROR !", wx.ICON_ERROR, self)
             return
     #----------------------Event handler (callback)----------------------#
-    #------------------------------------------------------------------#
     def on_choice_profiles(self, event): # combobox
         """
-        Whenever change preset type in the combobox list, clear all
-        in the list_ctrl and re-charge with new file xml, clear the 
-        text command and delete elements of array[] if in list.
+        Clear all when change preset type in the combobox list, 
+        clear the text command and delete elements of array.
+        
         """
         self.reset_list()
         
     #------------------------------------------------------------------#
     def on_select(self, event): # list_ctrl
         """
-        When select a profile into the list_ctrl, set the parameters
-        request.
-        Is the main point where be filled the list_ctrl for view.
-        The presets are the files with extension vdms. The profiles
-        are content it on presets and are selected in list_ctrl
+        By selecting a profile into the list_ctrl sets request data 
+        to filled the list_ctrl for view.
+        
         """
-        combvalue = dict_presets[self.cmbx_prst.GetValue()][0] # name xml
-        dati = parser_xml(combvalue, self.user_vdms) # All data go in dict
+        path = os.path.join('%s' % self.user_vdms, 
+                            '%s.vdms' % self.cmbx_prst.GetValue()
+                            )
+        collections = json_data(path)
+        selected = event.GetText() # event.GetText is a Name Profile
         if array != []:
-            del array[0:5] # delete all: lista [0],[1],[2],[3],[4]
-            
-        slct = event.GetText() # event.GetText is a Name Profile
+            del array[0:6] # delete all: [0],[1],[2],[3],[4],[5]
         self.txt_cmd.SetValue("")
-        # param, pass a name profile and search all own elements in list.
-        param = dati[event.GetText()] 
-        # lista extract and construct command from param and description (type)
-        # slct is the profile name
-        lista =  [slct, param["type"],param["parametri"], 
-                  param["filesupport"], param["estensione"]
-                  ]
-
-        array.append(lista[0])# lista[0] is the profile name 
-        array.append(lista[1])# lista[1] description
-        array.append(lista[2])# lista[2] is the final command
-        array.append(lista[3])# lista[3] the file support
-        array.append(lista[4])# lista[4] output format name
+        try:
+            #for x in collections:
+                #for name in x:
+            for name in collections:
+                if selected in name["Name"]:
+                    array.append(name["Name"])# profile name 
+                    array.append(name["Description"])
+                    array.append(name["First_pass"])# first pass command
+                    array.append(name["Second_pass"])# second pass command
+                    array.append(name["Supported_list"])# supported ext.
+                    array.append(name["Output_extension"])
+        except KeyError as err:
+            wx.MessageBox(_('{}\nTyping error on json key: {} '
+                            'is malformed ?'.format(path, err)), 
+                            "ERROR !", wx.ICON_ERROR, self)
+            return
         
-        self.txt_cmd.AppendText(lista[2]) # this is cmd show in text ctrl
-        
+        self.txt_cmd.AppendText('%s %s' %(array[2], array[3]))# cmd text ctrl
         self.parent.statusbar_msg(_('Selected profile name:  %s') % (array[0]),
                                                                         None)
-
     #------------------------------------------------------------------#
     def enter_command(self, event): # text command view
         """
@@ -304,7 +277,7 @@ class PresetsPanel(wx.Panel):
         save a single file copy of preset. The saved presets must be have
         same name where is saved to restore it correctly
         """
-        combvalue = dict_presets[self.cmbx_prst.GetValue()][0]
+        combvalue = self.cmbx_prst.GetValue()
         filedir = '%s/%s.vdms' % (self.user_vdms, combvalue)
         filename = combvalue
         
@@ -331,26 +304,13 @@ class PresetsPanel(wx.Panel):
             dirname = dialfile.GetPath()
             tail = os.path.basename(dirname)
             dialfile.Destroy()
-            
-            for k,v in dict_presets.items():
-                if tail in "%s.vdms" % v[0]:
-                    vdms = True
-                    name = v[1]
-                    break
-                else:
-                    vdms = False
-            
-            if not vdms:
-                wx.MessageBox(_("This file does not match those used "
-                                "by Videomass:\n\n'{0}'").format(dirname), 
-                                "Videomass",  wx.ICON_INFORMATION, self)
-                return
+
             
             if wx.MessageBox(_("The following preset:\n\n"
-                               "'{0}'   ({1})\n\n"
+                               "'{0}'\n\n"
                                "will be imported and will overwrite "
                                "the one in use.\n"
-                               "Proceed ?").format(tail, name), 
+                               "Proceed ?").format(tail), 
                              _('Videomass: Please confirm'), 
                                                 wx.ICON_QUESTION | 
                                                 wx.YES_NO, 
@@ -370,24 +330,29 @@ class PresetsPanel(wx.Panel):
         """ 
         #copy_restore('%s/share/av_presets.xml' % (self.PWD), '%s' % (self.dirconf))
         if wx.MessageBox(_("The selected preset will be overwritten to "
-                           "default values!\nproceed?"), 
+                           "default profile!\nproceed?"), 
                            _("Videomass: Please confirm"), 
                             wx.ICON_QUESTION | 
                             wx.YES_NO, self) == wx.NO:
             return
         
-        filename = dict_presets[self.cmbx_prst.GetValue()][0]
-        copy_restore('%s/%s.vdms' % (self.src_vdms, 
-                                     filename), 
-                                     '%s/%s.vdms' % (self.user_vdms,
-                                                     filename))
+        filename = self.cmbx_prst.GetValue()
+        copy = copy_restore('%s/%s.vdms' % (self.src_vdms, filename), 
+                            '%s/%s.vdms' % (self.user_vdms, filename))
+        
+        if copy:
+            wx.MessageBox(_('Sorry, this preset is not part of stock presets. '
+                            'It was probably created later.'), "ERROR !", 
+                            wx.ICON_ERROR, self)
+            return
+            
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#
     def Default_all(self):
         """
         restore all preset files in the path presets of the program
         """
-        if wx.MessageBox(_("WARNING: you are restoring all the "
+        if wx.MessageBox(_("WARNING: you are restoring all "
                            "default presets!\nProceed?"), 
                            _("Videomass: Please confirm"), 
                             wx.ICON_QUESTION | 
@@ -411,19 +376,18 @@ class PresetsPanel(wx.Panel):
         combobox. The list is reloaded automatically after
         pressed ok button in the dialog for update view.
         """
-        filename = dict_presets[self.cmbx_prst.GetValue()][0]
-        name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
+        filename = self.cmbx_prst.GetValue()
+        t = _('Create a new profile on the selected  preset "%s"') % filename
         full_pathname = '%s/%s.vdms' % (self.user_vdms, filename)
 
         prstdialog = presets_addnew.MemPresets(self, 
                                                'newprofile', 
                                                full_pathname, 
                                                filename, 
-                                               None, _('Create a new '
-                                'profile on the selected  preset "%s"') % (
-                                                name_preset)
-                                                )
+                                               None,
+                                               t)
         ret = prstdialog.ShowModal()
+        
         if ret == wx.ID_OK:
             self.reset_list() # re-charging list_ctrl with newer
     #------------------------------------------------------------------#
@@ -438,8 +402,8 @@ class PresetsPanel(wx.Panel):
                                         yellow)
             return
         else:
-            filename = dict_presets[self.cmbx_prst.GetValue()][0]
-            name_preset = dict_presets[self.cmbx_prst.GetValue()][1]
+            filename = self.cmbx_prst.GetValue()
+            t = _('Edit profile on "%s" preset: ') % (filename)
             full_pathname = '%s/%s.vdms' % (self.user_vdms, filename)
             
             prstdialog = presets_addnew.MemPresets(self, 
@@ -447,8 +411,7 @@ class PresetsPanel(wx.Panel):
                                                    full_pathname, 
                                                    filename, 
                                                    array, 
-                                            _('Edit profile on "%s" preset: ') 
-                                                   % (name_preset)
+                                                   t,
                                                    )
             ret = prstdialog.ShowModal()
             if ret == wx.ID_OK:
@@ -456,32 +419,30 @@ class PresetsPanel(wx.Panel):
     #------------------------------------------------------------------#
     def Delprof(self):
         """
-        Delete a choice in list_ctrl. This delete only single
-        profile of the preset used
+        Delete a selected profile in list_ctrl
         """
         if array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"), 
                                          yellow)
         else:
-            filename = dict_presets[self.cmbx_prst.GetValue()][0]
+            filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
                              "selected profile?"), 
                              _("Videomass: Please confirm"), 
                              wx.ICON_QUESTION | 
                              wx.YES_NO, self) == wx.NO:
                 return
-        
-            filename = dict_presets[self.cmbx_prst.GetValue()][0]
-            # call module-function and pass list as argument
-            delete_profiles(array, filename, self.user_vdms)
+            
+            path = os.path.join('%s' % self.user_vdms, 
+                            '%s.vdms' % self.cmbx_prst.GetValue()
+                            )
+            delete_profiles(path, array[0])
+
             self.reset_list()
     #------------------------------------------------------------------#
     def on_ok(self):
         """
-        The method composes the command strings to be sent to the 
-        ffmpeg's process.
-        It also involves the files existence verification procedures,
-        overwriting control and log writing.
+        File data redirecting .
         
         """
         self.time_seq = self.parent.time_seq
@@ -499,8 +460,8 @@ class PresetsPanel(wx.Panel):
             self.parent.statusbar_msg(_("First select a profile in the list"),  
                                         yellow)
             return
-        
-        if array[2].strip() != self.txt_cmd.GetValue().strip():
+        u = '%s %s' %(array[2],array[3])
+        if u.strip() != self.txt_cmd.GetValue().strip():
             if not self.prstmancmdmod:
             
                 msg = _("The selected profile command has been "
@@ -524,9 +485,9 @@ class PresetsPanel(wx.Panel):
                         # make sure we won't show it again the next time
                         self.prstmancmdmod = True
             
-        array3, array4 = array[3], array[4]
-        file_sources = supported_formats(array3, file_sources)
-        checking = inspect(file_sources, dir_destin, array4)
+        array4, array5 = array[4], array[5]
+        file_sources = supported_formats(array4, file_sources)
+        checking = inspect(file_sources, dir_destin, array5)
         if not checking[0]:# l'utente non vuole continuare o files assenti
             return
         # typeproc: batch or single process
@@ -538,34 +499,19 @@ class PresetsPanel(wx.Panel):
          base_name, countmax) = checking
 
         ######## ------------FINE VALIDAZIONI: --------------
-        n = [n for n in comcheck if n == '-pass']
-        if len(n) == 1 or len(n) > 2:
-            wx.MessageBox(_('Videomass support two pass only. '
-                            'Valid arguments for passes are "-pass 1" '
-                            'and "-pass 2". Please correct the syntax '
-                            'before proceeding.'), 
-                            "Videomass",  wx.ICON_WARNING, self)
-            return
         
-        if '-pass 1' and '-pass 2' in self.txt_cmd.GetValue():
+        if array[3]: # has double pass
             
-            passes = self.txt_cmd.GetValue().split('-pass 1')[1].split('-pass 2')
-            passOne = passes[0].strip()
-            passTwo = passes[1].strip()
+            pass1 = " ".join(array[2].split())# mi formatta la stringa
+            pass2 = " ".join(array[3].split())# mi formatta la stringa
             
-            command1 = passOne
-            command2 = passTwo
-                        
-            pass1 = " ".join(command1.split())# mi formatta la stringa
-            pass2 = " ".join(command2.split())# mi formatta la stringa
-            
-            valupdate = self.update_dict(countmax)
+            valupdate = self.update_dict(countmax, 'Two passes')
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:
 
                 self.parent.switch_Process('twopass_presets',
                                             file_sources, 
-                                            array[4], 
+                                            array[5], 
                                             dir_destin, 
                                             None, 
                                             [pass1, pass2], 
@@ -577,16 +523,16 @@ class PresetsPanel(wx.Panel):
                 #used for play preview and mediainfo:
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                    array[4]))
+                                                    array[5]))
 
         else:
             command = (self.txt_cmd.GetValue())
-            valupdate = self.update_dict(countmax)
+            valupdate = self.update_dict(countmax, 'One passes')
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('common_presets',
                                             file_sources, 
-                                            array[4], 
+                                            array[5], 
                                             dir_destin, 
                                             command, 
                                             None, 
@@ -597,12 +543,12 @@ class PresetsPanel(wx.Panel):
                                             )
                 f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
                 self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
-                                                    array[4]))
+                                                    array[5]))
     #------------------------------------------------------------------#
     
-    def update_dict(self, countmax):
+    def update_dict(self, countmax, passes):
         """
-        This method is required for update info before send at epilogue
+        Update information before send to epilogue
         
         """
         if not self.parent.time_seq:
@@ -614,14 +560,16 @@ class PresetsPanel(wx.Panel):
             
         numfile = "%s file in pending" % str(countmax)
                     
-        formula = (_(u"SUMMARY\n\nFile to Queue\
+        formula = (_("SUMMARY\n\nFile to Queue\
+                      \nPass Encoding\
                       \nProfile Used\nOut Format\
                       \nTime selection"
                       ))
-        dictions = ("\n\n%s\n%s\n%s\n%s" % (numfile, 
-                                            array[0], 
-                                            array[4],
-                                            time,)
+        dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile,
+                                                passes,
+                                                array[0], 
+                                                array[5],
+                                                time,)
                     )
 
         return formula, dictions

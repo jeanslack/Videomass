@@ -30,8 +30,8 @@
 import wx
 import os
 import string
-from videomass3.vdms_IO.presets_manager_properties import delete_profiles
 import webbrowser
+import json
 
 # setting the path to the configuration directory:
 get = wx.GetApp()
@@ -39,21 +39,20 @@ DIRconf = os.path.join(get.DIRconf, 'vdms')
 
 class MemPresets(wx.Dialog):
     """
-    Class for show dialog and store or edit single profiles of 
-    the selected preset .
+    Show dialog to store and edit profiles of a selected preset.
     """
     def __init__(self, parent, arg, full_pathname, filename, array, title):
         """
-        arg: argument for evaluate if this dialog is used for add new
-        profile or edit a existing profiles. Then you can pass three type 
-        of strings: 
-        arg = 'newprofile'  
-        arg = 'edit'
-        arg = 'addprofile'
+        arg: evaluate if this dialog is used for add new profile or 
+             edit a existing profiles from three message strings: 
+        arg = 'newprofile'  from preset manager
+        arg = 'edit' from preset manager
+        arg = 'addprofile' from video and audio conversions
+        
         """
         wx.Dialog.__init__(self, parent, -1, title, style=wx.DEFAULT_DIALOG_STYLE)
         
-        self.path_xml = full_pathname
+        self.path_vdms = full_pathname
         self.filename = filename
         self.arg = arg # arg é solo un parametro di valutazione (edit o newprofile).
         self.array = array
@@ -66,10 +65,16 @@ class MemPresets(wx.Dialog):
                                         style=wx.TE_PROCESS_ENTER
                                         )
         siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, _("Description"))
-        self.txt_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
+        self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("Command Line "
-                        "Parameters. Don't start command written with `-i` or "
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("PASS 1° parameters. "
+                        ". Don't start command written with `-i` or "
+                        "end with output file name"))
+                                      )
+        self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                   style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
+        siz5_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("PASS 2° parameters. "
+                        "Don't start command written with `-i` or "
                         "end with output file name"))
                                       )
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", 
@@ -91,22 +96,28 @@ class MemPresets(wx.Dialog):
         #----------------------Set Properties----------------------#
         self.txt_name.SetMinSize((150, -1))
         self.txt_descript.SetMinSize((300, -1))
-        self.txt_cmd.SetMinSize((350, 60))
+        self.pass_1_cmd.SetMinSize((350, 60))
+        self.pass_2_cmd.SetMinSize((350, 60))
         self.txt_supp.SetMinSize((300, -1))
         self.txt_ext.SetMinSize((150, -1))
 
         self.txt_name.SetToolTip(_('Assign a short name to the profile'))
         self.txt_descript.SetToolTip(_('Assign a long description '
                                        'to the profile'))
-        self.txt_cmd.SetToolTip(_('Do not start command written with `-i` '
-                                  'or end with output file name, please.'
+        self.pass_1_cmd.SetToolTip(_('Parameters reserved for single passes. '
+                                     'Do not start command written with `-i` '
+                                     'or end with output file name, please.'
+                                        ))
+        self.pass_2_cmd.SetToolTip(_('Parameters reserved for double passes. '
+                                     'Do not start command written with `-i` '
+                                     'or end with output file name, please.'
                                         ))
         self.txt_supp.SetToolTip(_('You can specify one or more format names '
                                    'to include in the profile'))
         self.txt_ext.SetToolTip(_("Type the output format extension here"))
         
         #----------------------Build layout----------------------#
-        grd_s1 = wx.FlexGridSizer(4, 1, 0, 0)
+        grd_s1 = wx.FlexGridSizer(5, 1, 0, 0)
         boxSiz = wx.BoxSizer(wx.VERTICAL)
         grdexit = wx.GridSizer(1, 2, 0, 0)
         grd_s4 = wx.GridSizer(1, 2, 0, 0)
@@ -116,6 +127,8 @@ class MemPresets(wx.Dialog):
         s4_f_supp = wx.StaticBoxSizer(siz4_supp, wx.VERTICAL)
         siz3_staticbox.Lower()
         siz3 = wx.StaticBoxSizer(siz3_staticbox, wx.VERTICAL)
+        siz5_staticbox.Lower()
+        siz5 = wx.StaticBoxSizer(siz5_staticbox, wx.VERTICAL)
         grd_s2 = wx.GridSizer(1, 2, 0, 0)
         siz2_staticbox.Lower()
         siz2 = wx.StaticBoxSizer(siz2_staticbox, wx.VERTICAL)
@@ -126,8 +139,10 @@ class MemPresets(wx.Dialog):
         siz2.Add(self.txt_descript, 0, wx.ALL, 15)
         grd_s2.Add(siz2, 1, wx.ALL | wx.EXPAND, 15)
         grd_s1.Add(grd_s2, 1, wx.EXPAND, 0)
-        siz3.Add(self.txt_cmd, 0, wx.ALL|wx.EXPAND, 15)
+        siz3.Add(self.pass_1_cmd, 0, wx.ALL|wx.EXPAND, 15)
+        siz5.Add(self.pass_2_cmd, 0, wx.ALL|wx.EXPAND, 15)
         grd_s1.Add(siz3, 1, wx.ALL | wx.EXPAND, 15)
+        grd_s1.Add(siz5, 1, wx.ALL | wx.EXPAND, 15)
         s4_f_supp.Add(self.txt_supp, 0, wx.ALL, 15)
         grd_s4.Add(s4_f_supp, 1, wx.ALL | wx.EXPAND, 15)
         s4_ext.Add(self.txt_ext, 0, wx.ALL, 15)
@@ -157,11 +172,11 @@ class MemPresets(wx.Dialog):
             self.change() # passo alla modifica del profilo, altrimenti
                         # vado avanti per memorizzarne di nuovi
         elif arg == 'addprofile':
-            self.txt_cmd.AppendText(self.array[0]) # command or param
-            if self.array[1] == '-c:v copy':
+            self.pass_1_cmd.AppendText(self.array[0]) # command or param
+            if '-c:v copy' in self.array[2]:
                 self.txt_ext.AppendText('Not set')
             else:
-                self.txt_ext.AppendText(self.array[1]) # extension
+                self.txt_ext.AppendText(self.array[5]) # extension
         
                         
     def change(self):
@@ -171,9 +186,10 @@ class MemPresets(wx.Dialog):
         """
         self.txt_name.AppendText(self.array[0]) # name
         self.txt_descript.AppendText(self.array[1]) # descript
-        self.txt_cmd.AppendText(self.array[2]) # command or param
-        self.txt_supp.AppendText(self.array[3]) # file supportted
-        self.txt_ext.AppendText(self.array[4]) # extension
+        self.pass_1_cmd.AppendText(self.array[2]) # command 1
+        self.pass_2_cmd.AppendText(self.array[3]) # command 2
+        self.txt_supp.AppendText(self.array[4]) # file supportted
+        self.txt_ext.AppendText(self.array[5]) # extension
     
 #---------------------Callback (event handler)----------------------#
     
@@ -190,65 +206,64 @@ class MemPresets(wx.Dialog):
     #------------------------------------------------------------------#
     def on_apply(self, event):
         
-        nameprofile = self.txt_name.GetValue()
-        descriptprofile = self.txt_descript.GetValue()
-        paramprofile = self.txt_cmd.GetValue()
+        name = self.txt_name.GetValue()
+        decript = self.txt_descript.GetValue()
+        pass_1 = self.pass_1_cmd.GetValue()
+        pass_2 = self.pass_2_cmd.GetValue()
         file_support = self.txt_supp.GetValue()
-        extprofile = self.txt_ext.GetValue() 
+        extens = self.txt_ext.GetValue() 
         
         if file_support in string.whitespace:
             wildcard = " "
         
         else:
             wildcard = file_support.strip()
-            
-        with open('%s' % (self.path_xml),'r') as readxml: # leggo il file
-            rlist = readxml.readlines() # metto in lista il contenuto
-        raw_list = ''.join(rlist)
-        names = 'name="%s"' % (nameprofile)
-        
-        if nameprofile == '' or descriptprofile == '' or\
-                                paramprofile == '' or extprofile ==  '':
-                                    
+        ####---------------------------------------------------------------
+        ck = [txt for txt in [name, decript, pass_1, extens] if txt == '']
+        if ck:
             wx.MessageBox(_("Incomplete profile assignments"),
-                             "Videomass ", wx.ICON_INFORMATION, self)
+                            "Videomass ", wx.ICON_INFORMATION, self)
             return
-                                            
-        elif names in raw_list and self.arg == 'newprofile': # if exist name
-                
-            wx.MessageBox(_("Profile already stored with the same name"), 
-                          "Videomass ", wx.ICON_INFORMATION, self)
-            return
-
-        if self.arg == 'edit':
-            # call module-function in os_processing and pass list
-            delete_profiles(self.array, self.filename, DIRconf)
-            # riapro e leggo il file
-            with open('%s' % (self.path_xml),'r') as open_xml: # leggo il file
-                rlist = open_xml.readlines() # metto in lista il contenuto
-            
-        del rlist[len(rlist)-1] # cancello ultimo elemento
-        #open('%s' % (self.path_xml),'w').writelines(rlist)
-        with open('%s' % (self.path_xml), "w") as f:
-            f.writelines(rlist)
-        #rlist = open('%s' % (self.path_xml),'a') # mette in coda al file
-        with open('%s' % (self.path_xml), "a") as rlist:
-
-            model = """
-    <label name="%s" type="%s">
-        <parameters>%s</parameters>
-        <filesupport>%s</filesupport>
-        <extension>%s</extension>
-    </label>
-</presets>
-""" % (nameprofile, descriptprofile, paramprofile, wildcard, extprofile)
-
-            rlist.writelines(model)
+        
+        with open(self.path_vdms, 'r', encoding='utf-8') as infile:
+            stored_data = json.load(infile)
+        
+        if self.arg == 'newprofile':# create new profile
+            for x in stored_data:
+                if x["Name"] == name:
+                    wx.MessageBox(_("Profile already stored with the same name"), 
+                                    "Videomass ", wx.ICON_INFORMATION, self)
+                    return
+            data = [
+                    {
+                        "Name": "%s" % name,
+                        "Description": "%s" % decript,
+                        "First_pass": "%s" % pass_1,
+                        "Second_pass": "%s" % pass_2,
+                        "Supported_list": "%s" % file_support,
+                        "Output_extension": "%s" % extens
+                    }
+                    ]
+            new_data = stored_data + data
+        
+        elif self.arg == 'edit': # edit existing profile
+            new_data = stored_data
+            for item in new_data:
+                if item["Name"] == self.array[0]:
+                    item["Name"] = "%s" % name
+                    item["Description"] = "%s" % decript
+                    item["First_pass"] = "%s" % pass_1
+                    item["Second_pass"] = "%s" % pass_2
+                    item["Supported_list"] = "%s" % file_support
+                    item["Output_extension"] = "%s" % extens
+        
+        with open(self.path_vdms, 'w', encoding='utf-8') as outfile:
+            json.dump(new_data, outfile, ensure_ascii=False, indent=4)
         
         if self.arg == 'newprofile':
             wx.MessageBox(_("Successful storing!"))
             self.txt_name.SetValue(''), self.txt_descript.SetValue(''),
-            self.txt_cmd.SetValue(''), self.txt_ext.SetValue('')
+            self.pass_1_cmd.SetValue(''), self.txt_ext.SetValue('')
             self.txt_supp.SetValue('')
             
         elif self.arg == 'edit':
