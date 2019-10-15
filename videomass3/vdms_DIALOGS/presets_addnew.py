@@ -35,13 +35,13 @@ import json
 
 # setting the path to the configuration directory:
 get = wx.GetApp()
-DIRconf = os.path.join(get.DIRconf, 'vdms')
+DIRconf = get.DIRconf
 
 class MemPresets(wx.Dialog):
     """
     Show dialog to store and edit profiles of a selected preset.
     """
-    def __init__(self, parent, arg, full_pathname, filename, array, title):
+    def __init__(self, parent, arg, filename, array, title):
         """
         arg: evaluate if this dialog is used for add new profile or 
              edit a existing profiles from three message strings: 
@@ -52,10 +52,9 @@ class MemPresets(wx.Dialog):
         """
         wx.Dialog.__init__(self, parent, -1, title, style=wx.DEFAULT_DIALOG_STYLE)
         
-        self.path_vdms = full_pathname
-        self.filename = filename
-        self.arg = arg # arg é solo un parametro di valutazione (edit o newprofile).
-        self.array = array
+        self.path_vdms = os.path.join(DIRconf, 'vdms', '%s.vdms' % filename)
+        self.arg = arg # evaluate if 'edit', 'newprofile', 'addprofile'
+        self.array = array # param list [name, descript, cmd1, cmd2, supp, ext]
         
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER
@@ -67,27 +66,27 @@ class MemPresets(wx.Dialog):
         siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, _("Description"))
         self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("PASS 1° parameters. "
-                        ". Don't start command written with `-i` or "
-                        "end with output file name"))
+        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("PASS 1° - "
+                                    "Don't start command written with `-i` or "
+                                    "end with output file name"))
                                       )
         self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz5_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("PASS 2° parameters. "
-                        "Don't start command written with `-i` or "
-                        "end with output file name"))
+        siz5_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("PASS 2° (optional), "
+                                    "Don't start command written with `-i` or "
+                                    "end with output file name"))
                                       )
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER
                                     )
-        siz4_supp = wx.StaticBox(self, wx.ID_ANY, (_("file extension supported, "
-                                                "do not include the `.`"))
+        siz4_supp = wx.StaticBox(self, wx.ID_ANY, (_("Supported Formats list "
+                                        "(optional), do not include the `.`"))
                                                     )
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER
                                    )
-        siz4_ext = wx.StaticBox(self, wx.ID_ANY, (_("Output format extension, "
-                                                  "do not include the `.`"))
+        siz4_ext = wx.StaticBox(self, wx.ID_ANY, (_("Output Format, "
+                                                    "do not include the `.`"))
                                                   )
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
@@ -173,10 +172,11 @@ class MemPresets(wx.Dialog):
                         # vado avanti per memorizzarne di nuovi
         elif arg == 'addprofile':
             self.pass_1_cmd.AppendText(self.array[0]) # command or param
-            if '-c:v copy' in self.array[2]:
+            self.pass_2_cmd.AppendText(self.array[1])
+            if '-c:v copy' in self.array[0] or '-c:v copy' in self.array[1]:
                 self.txt_ext.AppendText('Not set')
             else:
-                self.txt_ext.AppendText(self.array[5]) # extension
+                self.txt_ext.AppendText(self.array[2]) # extension
         
                         
     def change(self):
@@ -228,7 +228,7 @@ class MemPresets(wx.Dialog):
         with open(self.path_vdms, 'r', encoding='utf-8') as infile:
             stored_data = json.load(infile)
         
-        if self.arg == 'newprofile':# create new profile
+        if self.arg == 'newprofile' or self.arg == 'addprofile':# create new 
             for x in stored_data:
                 if x["Name"] == name:
                     wx.MessageBox(_("Profile already stored with the same name"), 
@@ -246,7 +246,7 @@ class MemPresets(wx.Dialog):
                     ]
             new_data = stored_data + data
         
-        elif self.arg == 'edit': # edit existing profile
+        elif self.arg == 'edit': # edit, add
             new_data = stored_data
             for item in new_data:
                 if item["Name"] == self.array[0]:

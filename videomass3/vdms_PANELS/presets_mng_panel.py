@@ -105,17 +105,32 @@ class PresetsPanel(wx.Panel):
                                      wx.CB_READONLY
                                      )
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
-        self.txt_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
+        
+        labcmd_1 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("First pass parameters:"))
+        #self.labcmd_1 = wx.StaticText(nb1_p2, wx.ID_ANY, (
+                                            #_("Pass 1 parameters:  ")))
+        self.txt_1_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
+                                                          wx.TE_PROCESS_ENTER
+                                                          )
+        labcmd_2 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("Second pass parameters:"))
+        #self.labcmd_2 = wx.StaticText(nb1_p2, wx.ID_ANY, (
+                                            #_("Pass 2 parameters:  ")))
+        self.txt_2_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
                                                           wx.TE_PROCESS_ENTER
                                                           )
         #----------------------Set Properties----------------------#
         self.cmbx_prst.SetSelection(0)
         
         #self.list_ctrl.SetBackgroundColour(azure)
-        self.list_ctrl.SetToolTip(_("List selection profiles"))
-        self.txt_cmd.SetMinSize((430, 60))
-        self.txt_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        self.txt_cmd.SetToolTip(_("Command of the selected profile"))
+        self.list_ctrl.SetToolTip(_('Selection profiles'))
+        self.txt_1_cmd.SetMinSize((430, 60))
+        self.txt_1_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        self.txt_1_cmd.SetToolTip(_('First pass parameters of the '
+                                    'selected profile'))
+        self.txt_2_cmd.SetMinSize((430, 60))
+        self.txt_2_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+        self.txt_2_cmd.SetToolTip(_('Second pass parameters of the '
+                                    'selected profile'))
 
         #----------------------Build Layout----------------------#
         #siz1 = wx.BoxSizer(wx.VERTICAL)
@@ -126,14 +141,33 @@ class PresetsPanel(wx.Panel):
         grd_s4 = wx.GridSizer(1, 3, 0, 0)
         grid_siz5 = wx.FlexGridSizer(2, 2, 0, 0)
         grid_siz6 = wx.FlexGridSizer(1, 7, 0, 0)
-        grd_s3 = wx.GridSizer(1, 1, 0, 0)
-        #siz1.Add(self.DnD, 1, wx.EXPAND|wx.ALL, 10)#########################
+        grd_s3 = wx.GridSizer(1, 2, 0, 0)
         grd_s1.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
-        grd_s3.Add(self.txt_cmd, 0, wx.ALL | wx.EXPAND 
+        
+        labcmd_1.Lower()
+        sizlab1 = wx.StaticBoxSizer(labcmd_1, wx.VERTICAL)
+        sizlab1.Add(self.txt_1_cmd, 0, wx.ALL | wx.EXPAND 
                                             | wx.ALIGN_CENTER_HORIZONTAL 
                                             | wx.ALIGN_CENTER_VERTICAL, 15
                                             )
-        grid_siz7.Add(lab_prfl, 0, wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 0)
+        grd_s3.Add(sizlab1,  0, wx.ALL | wx.EXPAND 
+                                            | wx.ALIGN_CENTER_HORIZONTAL 
+                                            | wx.ALIGN_CENTER_VERTICAL, 15
+                                            )
+        
+        labcmd_2.Lower()
+        sizlab2 = wx.StaticBoxSizer(labcmd_2, wx.VERTICAL)
+        sizlab2.Add(self.txt_2_cmd, 0, wx.ALL | wx.EXPAND 
+                                            | wx.ALIGN_CENTER_HORIZONTAL 
+                                            | wx.ALIGN_CENTER_VERTICAL, 15
+                                            )
+        grd_s3.Add(sizlab2, 0, wx.ALL | wx.EXPAND 
+                                            | wx.ALIGN_CENTER_HORIZONTAL 
+                                            | wx.ALIGN_CENTER_VERTICAL, 15
+                                            )
+        grid_siz7.Add(lab_prfl, 0, wx.ALIGN_CENTER_HORIZONTAL | 
+                                   wx.ALIGN_CENTER_VERTICAL, 0
+                                   )
         grid_siz7.Add(self.cmbx_prst, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
         nb1_p1.SetSizer(grid_siz7)
         nb1_p2.SetSizer(grd_s3)
@@ -157,10 +191,7 @@ class PresetsPanel(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.Run_Coding, 
-                                              self.list_ctrl
-                                              )
-        self.Bind(wx.EVT_TEXT, self.enter_command, self.txt_cmd)
-        
+                                              self.list_ctrl)
         self.set_listctrl()
     #-----------------------------------------------------------------------#
     
@@ -171,7 +202,7 @@ class PresetsPanel(wx.Panel):
         
         """
         self.list_ctrl.ClearAll()
-        self.txt_cmd.SetValue("")
+        self.txt_1_cmd.SetValue(""), self.txt_2_cmd.SetValue("")
         if array != []:
             del array[0:6]
         self.set_listctrl()
@@ -231,7 +262,7 @@ class PresetsPanel(wx.Panel):
         selected = event.GetText() # event.GetText is a Name Profile
         if array != []:
             del array[0:6] # delete all: [0],[1],[2],[3],[4],[5]
-        self.txt_cmd.SetValue("")
+        self.txt_1_cmd.SetValue(""), self.txt_2_cmd.SetValue("")
         try:
             #for x in collections:
                 #for name in x:
@@ -249,16 +280,14 @@ class PresetsPanel(wx.Panel):
                             "ERROR !", wx.ICON_ERROR, self)
             return
         
-        self.txt_cmd.AppendText('%s %s' %(array[2], array[3]))# cmd text ctrl
+        self.txt_1_cmd.AppendText('%s' %(array[2]))# cmd1 text ctrl
+        if array[3]:
+            self.txt_2_cmd.Enable()
+            self.txt_2_cmd.AppendText('%s' %(array[3]))# cmd2 text ctrl
+        else:
+            self.txt_2_cmd.Disable()
         self.parent.statusbar_msg(_('Selected profile name:  %s') % (array[0]),
-                                                                        None)
-    #------------------------------------------------------------------#
-    def enter_command(self, event): # text command view
-        """
-        If a profile is selected, append text into the text_ctrl. Also
-        modified the text received signal event
-        """
-        self.txt_cmd.GetValue()
+                                                                     None)
     #------------------------------------------------------------------#
     def exportStreams(self, exported):
         """
@@ -378,11 +407,9 @@ class PresetsPanel(wx.Panel):
         """
         filename = self.cmbx_prst.GetValue()
         t = _('Create a new profile on the selected  preset "%s"') % filename
-        full_pathname = '%s/%s.vdms' % (self.user_vdms, filename)
 
         prstdialog = presets_addnew.MemPresets(self, 
                                                'newprofile', 
-                                               full_pathname, 
                                                filename, 
                                                None,
                                                t)
@@ -404,11 +431,9 @@ class PresetsPanel(wx.Panel):
         else:
             filename = self.cmbx_prst.GetValue()
             t = _('Edit profile on "%s" preset: ') % (filename)
-            full_pathname = '%s/%s.vdms' % (self.user_vdms, filename)
             
             prstdialog = presets_addnew.MemPresets(self, 
                                                    'edit', 
-                                                   full_pathname, 
                                                    filename, 
                                                    array, 
                                                    t,
@@ -450,8 +475,6 @@ class PresetsPanel(wx.Panel):
         file_sources = self.parent.file_sources[:]
         # make a different id need to avoid attribute overwrite:
         dir_destin = self.file_destin
-        # comcheck, cut string in spaces and become list:
-        comcheck = self.txt_cmd.GetValue().split()#ffmpeg command
         # used for file name log 
         self.logname = 'Videomass_PresetsManager.log'
 
@@ -460,8 +483,9 @@ class PresetsPanel(wx.Panel):
             self.parent.statusbar_msg(_("First select a profile in the list"),  
                                         yellow)
             return
-        u = '%s %s' %(array[2],array[3])
-        if u.strip() != self.txt_cmd.GetValue().strip():
+        
+        if (array[2].strip() != self.txt_1_cmd.GetValue().strip() or 
+            array[3].strip() != self.txt_2_cmd.GetValue().strip()):
             if not self.prstmancmdmod:
             
                 msg = _("The selected profile command has been "
@@ -502,8 +526,8 @@ class PresetsPanel(wx.Panel):
         
         if array[3]: # has double pass
             
-            pass1 = " ".join(array[2].split())# mi formatta la stringa
-            pass2 = " ".join(array[3].split())# mi formatta la stringa
+            pass1 = " ".join(self.txt_1_cmd.GetValue().split())
+            pass2 = " ".join(self.txt_1_cmd.GetValue().split())
             
             valupdate = self.update_dict(countmax, 'Two passes')
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
@@ -526,7 +550,7 @@ class PresetsPanel(wx.Panel):
                                                     array[5]))
 
         else:
-            command = (self.txt_cmd.GetValue())
+            command = (self.txt_1_cmd.GetValue())
             valupdate = self.update_dict(countmax, 'One passes')
             ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
             if ending.ShowModal() == wx.ID_OK:

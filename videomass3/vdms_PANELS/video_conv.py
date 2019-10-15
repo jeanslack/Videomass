@@ -1981,8 +1981,8 @@ class Video_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def update_dict(self, countmax, prof):
         """
-        This method is required for update all cmd_opt
-        dictionary values before send to epilogue
+        Update all settings before send to epilogue
+        
         """
         numfile = _("%s file in pending") % str(countmax)
         if cmd_opt["PEAK"]:
@@ -2070,29 +2070,22 @@ class Video_Conv(wx.Panel):
 #------------------------------------------------------------------#
     def Addprof(self):
         """
-        Storing new profile in the 'Preset Manager' panel with the same 
-        current setting. All profiles saved in this way will also be stored 
-        in the preset 'User Presets'
+        Storing new profile in the 'User Profiles.vdms' with same 
+        current settings
         
-        FIXME have any problem with xml escapes in special character
-        (like && for ffmpeg double pass), so there is some to get around it 
-        (escamotage), but work .
         """
-        self.update_allentries()# aggiorno gli imput
-        get = wx.GetApp()
-        dirconf = os.path.join(get.DIRconf, 'vdms')
-        
+        self.update_allentries()
         if cmd_opt["PEAK"]:
             normalize = cmd_opt["PEAK"][0]
         elif cmd_opt["RMS"]:
-            normalize = cmd_opt["RMS"][0]# tengo il primo valore lista 
+            normalize = cmd_opt["RMS"][0]
         else:
             normalize = ''
         
         if not self.ckbx_pass.IsChecked():
             if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
                 outext = cmd_opt["VideoFormat"]
-                command = ('%s %s %s %s %s %s %s %s %s %s %s' % (
+                cmd1 = ('%s %s %s %s %s %s %s %s %s %s %s' % (
                                                     normalize,
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["VideoAspect"],
@@ -2105,36 +2098,38 @@ class Video_Conv(wx.Panel):
                                                     self.threads,
                                                     cmd_opt["Map"],
                                                     ))
+                cmd2 = ''
             else:
                 outext = cmd_opt["VideoFormat"]
                 if cmd_opt["VideoCodec"] == "-c:v libx265":
                     param265 = ('-x265-params')
                 else:
                     param265 = ''
-                command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                           '%s %s %s %s %s %s %s' %(normalize, 
-                                                    cmd_opt["VideoCodec"], 
-                                                    cmd_opt["CRF"], 
-                                                    cmd_opt["Bitrate"], 
-                                                    cmd_opt["Deadline"],
-                                                    cmd_opt["CpuUsed"],
-                                                    cmd_opt["RowMthreading"],
-                                                    cmd_opt["Presets"], 
-                                                    cmd_opt["Profile"], 
-                                                    cmd_opt["Tune"], 
-                                                    param265,
-                                                    cmd_opt["VideoAspect"], 
-                                                    cmd_opt["VideoRate"], 
-                                                    cmd_opt["Filters"], 
-                                                    cmd_opt["YUV"], 
-                                                    cmd_opt["AudioCodec"], 
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1], 
-                                                    self.threads,
-                                                    cmd_opt["Map"],
-                                                    ))
+                cmd1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                        '%s %s %s %s %s %s %s' %(normalize, 
+                                                cmd_opt["VideoCodec"], 
+                                                cmd_opt["CRF"], 
+                                                cmd_opt["Bitrate"], 
+                                                cmd_opt["Deadline"],
+                                                cmd_opt["CpuUsed"],
+                                                cmd_opt["RowMthreading"],
+                                                cmd_opt["Presets"], 
+                                                cmd_opt["Profile"], 
+                                                cmd_opt["Tune"], 
+                                                param265,
+                                                cmd_opt["VideoAspect"], 
+                                                cmd_opt["VideoRate"], 
+                                                cmd_opt["Filters"], 
+                                                cmd_opt["YUV"], 
+                                                cmd_opt["AudioCodec"], 
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1], 
+                                                cmd_opt["AudioDepth"][1], 
+                                                self.threads,
+                                                cmd_opt["Map"],
+                                                ))
+                cmd2 = ''
         else:
             home = os.path.expanduser('~')
             outext = cmd_opt["VideoFormat"]
@@ -2185,17 +2180,13 @@ class Video_Conv(wx.Panel):
                                                   cmd_opt["Map"],
                                                   param2,
                                                   ))
-            command = ("PASS1 %s PASS2 %s" % (cmd1,cmd2))
-                       
-        command = ' '.join(command.split())# sitemo meglio gli spazi in stringa
-        list = [command, outext]
-
-        filename = 'preset-v1-Personal'# nome del file preset senza ext
-        name_preset = 'User Profiles'
-        full_pathname = os.path.join(dirconf, 'preset-v1-Personal.vdms')
-        
-        prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
-                                            filename, list, 
-                    _('Videomass: Create a new profile on "%s" preset') % (
-                                 name_preset))
+        filename = 'User Profiles'
+        param = [' '.join(cmd1.split()),' '.join(cmd2.split()),outext]
+        t = _('Videomass: Create a new profile on "User Profiles" preset')
+        prstdlg = presets_addnew.MemPresets(self, 
+                                            'addprofile', 
+                                            filename, 
+                                            param,
+                                            t,
+                                            )
         prstdlg.ShowModal()
