@@ -87,20 +87,29 @@ def json_data(arg):
     try:
         with open(arg, 'r', encoding='utf-8') as f:
             data = json.load(f)
+            
     except json.decoder.JSONDecodeError as err:
-        wx.MessageBox('"%s"\n\n%s' % (arg,err), ("Videomass"), 
-                                wx.ICON_ERROR | 
-                                wx.OK, 
-                                None
-                                )
+        msg = _('Is not a compatible Videomass presets. It is recommended '
+                'removing it, replace it or rewrite it with a compatible '
+                'JSON data structure.\n\n'
+                'Possible solution: open Presets Manager panel, then use '
+                'menu "File" > "Reset all presets" to safe repair all '
+                'presets. Remember, those that are not compatible you '
+                'have to manually remove them.'
+                )
+        wx.MessageBox('File: "{0}"\nerror: {1}\n\n{2}'.format(arg,err,msg),
+                      ("Videomass"), wx.ICON_ERROR | wx.OK, None)
+        
         return 'error'
     
     except FileNotFoundError as err:
-        wx.MessageBox('"%s"\n\n%s' % (arg,err), ("Videomass"), 
-                                wx.ICON_ERROR | 
-                                wx.OK, 
-                                None
-                                )
+        msg = _('The presets folder is empty, or there are invalid files. '
+                'Open the Presets Manager panel, then Perform a repair in '
+                'the "File" > "Reset all presets" menu.'
+                )
+        wx.MessageBox('File: "{0}"\n{1}\n\n{2}'.format(arg,err,msg), 
+                      ("Videomass"), wx.ICON_ERROR | wx.OK, None)
+        
         return 'error'
         
 

@@ -784,15 +784,15 @@ class Audio_Conv(wx.Panel):
                                                  cmd_opt["AudioChannel"][1],
                                                  self.threads,
                                               ))
-        command = ' '.join(command.split())# sistemo gli spazi
-        list = [command, cmd_opt["ExportExt"]]
 
-        filename = 'preset-v1-Personal'# nome del file preset senza ext
-        name_preset = 'User Profiles'
-        full_pathname = os.path.join(dirconf, 'preset-v1-Personal.vdms')
+        param = [' '.join(command.split()), '', cmd_opt["ExportExt"]]
+        filename = 'User Profiles'
+        t = _('Videomass: Create a new profile on "User Profiles" preset')
         
-        prstdlg = presets_addnew.MemPresets(self, 'addprofile', full_pathname, 
-                                            filename, list, 
-                    _('Videomass: Create a new profile on "%s" preset') % (
-                                                                name_preset))
+        prstdlg = presets_addnew.MemPresets(self, 
+                                            'addprofile', 
+                                            filename, 
+                                            param,
+                                            t,
+                                            )
         prstdlg.ShowModal()

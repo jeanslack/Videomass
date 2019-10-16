@@ -84,6 +84,10 @@ class PresetsPanel(wx.Panel):
         self.file_destin = ''
         self.prstmancmdmod = False # don't show dlg if cmdline is edited
         
+        vdms = [os.path.splitext(x)[0] for x in os.listdir(self.user_vdms) 
+                if os.path.splitext(x)[1] == '.vdms']
+
+        
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
 
@@ -98,8 +102,7 @@ class PresetsPanel(wx.Panel):
         lab_prfl = wx.StaticText(nb1_p1, wx.ID_ANY, _("Select a preset from "
                                                       "the drop down:"))
         self.cmbx_prst = wx.ComboBox(nb1_p1,wx.ID_ANY, 
-                                     choices=[os.path.splitext(x)[0] for x 
-                                              in os.listdir(self.user_vdms)],
+                                     choices=vdms,
                                      size=(200,-1),
                                      style=wx.CB_DROPDOWN | 
                                      wx.CB_READONLY
@@ -107,14 +110,10 @@ class PresetsPanel(wx.Panel):
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         
         labcmd_1 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("First pass parameters:"))
-        #self.labcmd_1 = wx.StaticText(nb1_p2, wx.ID_ANY, (
-                                            #_("Pass 1 parameters:  ")))
         self.txt_1_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
                                                           wx.TE_PROCESS_ENTER
                                                           )
         labcmd_2 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("Second pass parameters:"))
-        #self.labcmd_2 = wx.StaticText(nb1_p2, wx.ID_ANY, (
-                                            #_("Pass 2 parameters:  ")))
         self.txt_2_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
                                                           wx.TE_PROCESS_ENTER
                                                           )
@@ -122,7 +121,6 @@ class PresetsPanel(wx.Panel):
         self.cmbx_prst.SetSelection(0)
         
         #self.list_ctrl.SetBackgroundColour(azure)
-        self.list_ctrl.SetToolTip(_('Selection profiles'))
         self.txt_1_cmd.SetMinSize((430, 60))
         self.txt_1_cmd.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.txt_1_cmd.SetToolTip(_('First pass parameters of the '
@@ -235,15 +233,14 @@ class PresetsPanel(wx.Panel):
                 self.list_ctrl.SetItem(rows, 2, name["Output_extension"])
                 self.list_ctrl.SetItem(rows, 3, name["Supported_list"])
         except KeyError as err:
-            wx.MessageBox(_('{}\nTyping error on json key: {} '
-                            'is malformed ?'.format(path, err)), 
+            wx.MessageBox(_('{}\nTyping error on json keys: {} '
+                            'key malformed ?'.format(path, err)), 
                             "ERROR !", wx.ICON_ERROR, self)
             return
     #----------------------Event handler (callback)----------------------#
-    def on_choice_profiles(self, event): # combobox
+    def on_choice_profiles(self, event):
         """
-        Clear all when change preset type in the combobox list, 
-        clear the text command and delete elements of array.
+        Combobox event.
         
         """
         self.reset_list()
@@ -251,8 +248,9 @@ class PresetsPanel(wx.Panel):
     #------------------------------------------------------------------#
     def on_select(self, event): # list_ctrl
         """
-        By selecting a profile into the list_ctrl sets request data 
-        to filled the list_ctrl for view.
+        By selecting a profile in the list_ctrl set new request 
+        data in to the appropriate objects and sets parameters 
+        to the text boxes.
         
         """
         path = os.path.join('%s' % self.user_vdms, 
@@ -275,8 +273,8 @@ class PresetsPanel(wx.Panel):
                     array.append(name["Supported_list"])# supported ext.
                     array.append(name["Output_extension"])
         except KeyError as err:
-            wx.MessageBox(_('{}\nTyping error on json key: {} '
-                            'is malformed ?'.format(path, err)), 
+            wx.MessageBox(_('{}\nTyping error on json keys: {} '
+                            'key malformed ?'.format(path, err)), 
                             "ERROR !", wx.ICON_ERROR, self)
             return
         
@@ -389,6 +387,11 @@ class PresetsPanel(wx.Panel):
             return
 
         copy_on('vdms', self.src_vdms, self.user_vdms)
+        
+        vdms = [os.path.splitext(x)[0] for x in os.listdir(self.user_vdms) 
+                if os.path.splitext(x)[1] == '.vdms']
+        self.cmbx_prst.Clear()
+        self.cmbx_prst.AppendItems(vdms)
         
         self.reset_list() # re-charging functions
     #------------------------------------------------------------------#

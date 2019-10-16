@@ -271,10 +271,8 @@ class MemPresets(wx.Dialog):
             #self.Destroy() # con ID_OK e ID_CANCEL non serve
             
         elif self.arg == 'addprofile':
-            wx.MessageBox(_("Successful storing!\n\n"
-                          "You will find this profile in the 'User "
-                          "Profiles'preset in the 'Presets Manager' panel.\n"
-                          "Use the 'Reload presets list' on File menu to "
-                          "update profile list."))
+            wx.MessageBox(_('Successful storing!\n\n'
+                          'You will find this profile in the "User '
+                          'Profiles" preset on the "Presets Manager" panel.'))
                 
         event.Skip() 
