@@ -357,7 +357,7 @@ class Audio_Conv(wx.Panel):
         if count == 0:
             self.btn_param.SetBottomEndColour(wx.Colour(self.btnC))
         else:
-            self.btn_param.SetBottomEndColour(wx.Colour(0, 240, 0))
+            self.btn_param.SetBottomEndColour(wx.Colour(255, 255, 0))
         
         audiodialog.Destroy()
         

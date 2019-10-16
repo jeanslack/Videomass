@@ -1094,7 +1094,7 @@ class Video_Conv(wx.Panel):
                cmd_opt["Setsar"] = ""
                cmd_opt["Scale"] = ""
             else:
-                self.btn_videosize.SetBottomEndColour(wx.Colour(0, 240, 0))
+                self.btn_videosize.SetBottomEndColour(wx.Colour(255, 255, 0))
                 if 'scale' in data:
                     cmd_opt["Scale"] = data['scale']
                 else:
@@ -1128,7 +1128,7 @@ class Video_Conv(wx.Panel):
             if not data[0]:
                 self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
             else:
-                self.btn_rotate.SetBottomEndColour(wx.Colour(0, 240, 0))
+                self.btn_rotate.SetBottomEndColour(wx.Colour(255, 255, 0))
             self.video_filter_checker()
         else:
             rotate.Destroy()
@@ -1146,7 +1146,7 @@ class Video_Conv(wx.Panel):
                 self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
                 cmd_opt["Crop"] = ''
             else:
-                self.btn_crop.SetBottomEndColour(wx.Colour(0, 240, 0))
+                self.btn_crop.SetBottomEndColour(wx.Colour(255, 255, 0))
                 cmd_opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
@@ -1170,7 +1170,7 @@ class Video_Conv(wx.Panel):
                 cmd_opt["Deinterlace"] = ''
                 cmd_opt["Interlace"] = ''
             else:
-                self.btn_lacing.SetBottomEndColour(wx.Colour(0, 240, 0))
+                self.btn_lacing.SetBottomEndColour(wx.Colour(255, 255, 0))
                 if 'deinterlace' in data:
                     cmd_opt["Deinterlace"] = data["deinterlace"]
                     cmd_opt["Interlace"] = ''
@@ -1197,7 +1197,7 @@ class Video_Conv(wx.Panel):
                 self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
                 cmd_opt["Denoiser"] = ''
             else:
-                self.btn_denois.SetBottomEndColour(wx.Colour(0, 240, 0))
+                self.btn_denois.SetBottomEndColour(wx.Colour(255, 255, 0))
                 cmd_opt["Denoiser"] = data
             self.video_filter_checker()
         else:
@@ -1369,7 +1369,7 @@ class Video_Conv(wx.Panel):
         if count == 0:
             self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         else:
-            self.btn_aparam.SetBottomEndColour(wx.Colour(0, 240, 0))
+            self.btn_aparam.SetBottomEndColour(wx.Colour(255, 255, 0))
             
         audiodialog.Destroy()
 

@@ -33,6 +33,10 @@ management and some savings in system resources.
 To create new Videomass compatible file presets follow these general 
 guidelines:
 
+[]
+
+The square brackets above make a good starting with new empty preset
+
 [
     {
         "Name": "",

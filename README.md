@@ -16,10 +16,11 @@
 ## Features
 
 - Drag n' Drop with multiple files at once.
-- Batch processing for all included features
 - Presets manager interface with fully customizable and expandable profiles.
+- It can convert to all the formats you want using custom parameters.
+- Batch processing for all included features
 - Dedicated interfaces: presets manager, video and audio conversions
-- Displaying streams information.
+- Displaying information from streams analyzer.
 - Playback for imported files and last exported file.
 - Real-time video filters preview on the video conversions interface.
 - Peak level-based audio normalization.

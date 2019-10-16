@@ -200,9 +200,9 @@ class PresetsPanel(wx.Panel):
         
         """
         if reset_cmbx:
-            vdms = sorted([os.path.splitext(x)[0] for x 
-                    in os.listdir(self.user_vdms)
-                    if os.path.splitext(x)[1] == '.vdms'])
+            vdms = sorted([os.path.splitext(x)[0] for x in 
+                           os.listdir(self.user_vdms) if 
+                           os.path.splitext(x)[1] == '.vdms'])
             self.cmbx_prst.Clear()
             self.cmbx_prst.AppendItems(vdms), self.cmbx_prst.SetSelection(0)
         
@@ -302,6 +302,20 @@ class PresetsPanel(wx.Panel):
         else:
             self.parent.post_process = exported
             self.parent.postExported_enable()
+    #------------------------------------------------------------------#
+    def New_preset_vdms(self):
+        """
+        Create new empty preset '*.vdms' on /vdms path name
+        
+        """
+        pass
+    #------------------------------------------------------------------#
+    def Del_preset_vdms(self):
+        """
+        Remove or delete a preset '*.vdms' on /vdms path name
+        
+        """
+        pass
 
     #------------------------------------------------------------------#
     def Saveme(self):
@@ -399,7 +413,7 @@ class PresetsPanel(wx.Panel):
         """ 
         reset_list to re-charging list
         """
-        self.reset_list()
+        self.reset_list(True)
     
     #------------------------------------------------------------------#
     def Addprof(self):

@@ -374,11 +374,13 @@ class MainFrame(wx.Frame):
             self.file_open.Enable(False), self.saveme.Enable(False), 
             self.restore.Enable(False), self.default.Enable(False), 
             self.default_all.Enable(False), self.refresh.Enable(False), 
+            self.new_prst.Enable(False), self.del_prst.Enable(False),
             self.btn_newprf.Hide(), self.btn_saveprf.Hide(), 
             self.btn_delprf.Hide(), self.btn_editprf.Hide(),
             
         elif self.PrstsPanel.IsShown():
             self.file_open.Enable(True), self.saveme.Enable(True), 
+            self.new_prst.Enable(True), self.del_prst.Enable(True), 
             self.restore.Enable(True), self.default.Enable(True), 
             self.default_all.Enable(True), self.refresh.Enable(True), 
             self.btn_newprf.Show(), self.btn_saveprf.Hide(), 
@@ -392,6 +394,7 @@ class MainFrame(wx.Frame):
             
         elif self.VconvPanel.IsShown():
             self.file_open.Enable(True), self.saveme.Enable(False),
+            self.new_prst.Enable(False), self.del_prst.Enable(False),
             self.restore.Enable(False), self.default.Enable(False), 
             self.default_all.Enable(False), self.refresh.Enable(False), 
             self.btn_newprf.Hide(), self.btn_saveprf.Show(), 
@@ -405,6 +408,7 @@ class MainFrame(wx.Frame):
             
         elif self.AconvPanel.IsShown():
             self.file_open.Enable(True), self.saveme.Enable(False),
+            self.new_prst.Enable(False), self.del_prst.Enable(False),
             self.restore.Enable(False), self.default.Enable(False), 
             self.default_all.Enable(False), self.refresh.Enable(False), 
             self.btn_newprf.Hide(), self.btn_saveprf.Show(), 
@@ -418,6 +422,7 @@ class MainFrame(wx.Frame):
             
         elif self.ProcessPanel.IsShown():
             self.file_open.Enable(False), self.saveme.Enable(False), 
+            self.new_prst.Enable(False), self.del_prst.Enable(False),
             self.restore.Enable(False), self.default.Enable(False), 
             self.default_all.Enable(False), self.refresh.Enable(False), 
             #Disable all top menu bar :
@@ -435,7 +440,7 @@ class MainFrame(wx.Frame):
         when click with the mouse on a control list item, 
         enable Metadata Info and file reproduction menu
         """
-        self.btn_metaI.SetBottomEndColour(wx.Colour(0, 240, 0))
+        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 255, 0))
         self.import_clicked = path# used for play and metadata
         
     #------------------------------------------------------------------#
@@ -455,7 +460,7 @@ class MainFrame(wx.Frame):
         if not self.btn_playO.IsShown():
             self.btn_playO.Show()
             self.Layout()
-        self.btn_playO.SetBottomEndColour(wx.Colour(0, 240, 0))
+        self.btn_playO.SetBottomEndColour(wx.Colour(255, 255, 0))
 
     #---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the dragNdrop panel
@@ -477,7 +482,7 @@ class MainFrame(wx.Frame):
                 self.time_read['time'] = ['','']
                 self.btn_duration.SetBottomEndColour(self.bBtnC)
             else:
-                self.btn_duration.SetBottomEndColour(wx.Colour(0, 240, 0))
+                self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 0))
                 # set a more readable time
                 ss = data.split()[1] # the -ss flag
                 h,m,s = ss.split(':')
@@ -626,6 +631,9 @@ class MainFrame(wx.Frame):
                                                         "folder.."), 
                         _("Choice a folder where save processed files"))
         fileButton.AppendSeparator()
+        self.new_prst = fileButton.Append(wx.ID_NEW, _("Create new preset "),
+                         _("Create a new preset to use on Presets Manager"))
+        fileButton.AppendSeparator()
         self.saveme = fileButton.Append(wx.ID_REVERT_TO_SAVED,
                                  _("Save the current preset as separated file"),
                        _("Make a back-up of the selected preset on combobox"
@@ -642,7 +650,10 @@ class MainFrame(wx.Frame):
         self.default_all = fileButton.Append(wx.ID_UNDO, _("Reset all presets "),
                          _("Revert all presets to default values")
                                                 )
-        
+        fileButton.AppendSeparator()
+        self.del_prst = fileButton.Append(wx.ID_DELETE, _("Remove preset"),
+                         _("Remove the selected preset on Presets Manager")
+                                                )
         fileButton.AppendSeparator()
         self.refresh = fileButton.Append(wx.ID_REFRESH, _("Reload presets list"), 
                                            _("..Sometimes it can be useful"))
@@ -714,10 +725,12 @@ class MainFrame(wx.Frame):
         #----FILE----
         self.Bind(wx.EVT_MENU, self.File_Open, self.file_open)
         self.Bind(wx.EVT_MENU, self.File_Save, self.file_save)
+        self.Bind(wx.EVT_MENU, self.New_preset, self.new_prst)
         self.Bind(wx.EVT_MENU, self.Saveme, self.saveme)
         self.Bind(wx.EVT_MENU, self.Restore, self.restore)
         self.Bind(wx.EVT_MENU, self.Default, self.default)
         self.Bind(wx.EVT_MENU, self.Default_all, self.default_all)
+        self.Bind(wx.EVT_MENU, self.Del_preset, self.del_prst)
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
@@ -758,6 +771,14 @@ class MainFrame(wx.Frame):
         """
         self.DnD.on_custom_save()
     #--------------------------------------------------#
+    def New_preset(self, event):
+        """
+        Call New_preset_vdms from Prrsets Manager panel
+        
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.New_preset_vdms()
+    #--------------------------------------------------#
     def Saveme(self, event):
         """
         call method for save a single file copy of preset.
@@ -786,6 +807,14 @@ class MainFrame(wx.Frame):
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Default_all()
+    #--------------------------------------------------#
+    def Del_preset(self, event):
+        """ 
+        Call Del_preset_vdms from Prrsets Manager panel
+        Remove the selected preset from /vdms presets
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Del_Preset_vdms()
     #--------------------------------------------------#
     def Refresh(self, event):
         """ 
