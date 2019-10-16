@@ -1,16 +1,16 @@
 [
-    { 
-        "Name": "VCD PAL",
-        "Description":  "PAL VCD (HQ)",
-        "First_pass": "-f vcd -target pal-vcd -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2",
+    {
+        "Name": "VCD NTSC",
+        "Description": "NTSC VCD (HQ)",
+        "First_pass": "-f vcd -target ntsc-vcd -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mpg"
     },
-    { 
-        "Name": "VCD NTSC",
-        "Description":  "NTSC VCD (HQ)",
-        "First_pass": "-f vcd -target ntsc-vcd -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2",
+    {
+        "Name": "VCD PAL",
+        "Description": "PAL VCD (HQ)",
+        "First_pass": "-f vcd -target pal-vcd -mbd rd -trellis 1 -flags +mv0 -cmp 0 -subcmp 2",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mpg"

@@ -90,14 +90,14 @@ def json_data(arg):
             
     except json.decoder.JSONDecodeError as err:
         msg = _('Is not a compatible Videomass presets. It is recommended '
-                'removing it, replace it or rewrite it with a compatible '
-                'JSON data structure.\n\n'
+                'removing it or rewrite it with a compatible JSON data '
+                'structure.\n\n'
                 'Possible solution: open Presets Manager panel, then use '
                 'menu "File" > "Reset all presets" to safe repair all '
                 'presets. Remember, those that are not compatible you '
                 'have to manually remove them.'
                 )
-        wx.MessageBox('File: "{0}"\nerror: {1}\n\n{2}'.format(arg,err,msg),
+        wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg,err,msg),
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
         
         return 'error'
@@ -107,7 +107,7 @@ def json_data(arg):
                 'Open the Presets Manager panel, then Perform a repair in '
                 'the "File" > "Reset all presets" menu.'
                 )
-        wx.MessageBox('File: "{0}"\n{1}\n\n{2}'.format(arg,err,msg), 
+        wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg,err,msg), 
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
         
         return 'error'
@@ -122,9 +122,9 @@ def delete_profiles(path, name):
 
     """
     with open(path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+        data = json.load(f)
 
     new_data = [obj for obj in data if not obj["Name"] == name]
-    
+
     with open(path, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)

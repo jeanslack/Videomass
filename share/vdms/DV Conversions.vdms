@@ -1,18 +1,18 @@
 [
-    { 
+    {
         "Name": "dv ntsc",
-        "Description":  "Raw DV for NTSC Fullscreen",
+        "Description": "Raw DV for NTSC Fullscreen",
         "First_pass": "-target ntsc-dv -aspect 4:3 -f dv",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "dv"
     },
-    { 
+    {
         "Name": "dv pal",
-        "Description":  "Raw DV for PAL Fullscreen",
+        "Description": "Raw DV for PAL Fullscreen",
         "First_pass": "-target pal-dv -aspect 4:3 -f dv",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "dv"
     }
-] 
+]

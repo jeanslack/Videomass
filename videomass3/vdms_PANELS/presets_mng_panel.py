@@ -84,8 +84,8 @@ class PresetsPanel(wx.Panel):
         self.file_destin = ''
         self.prstmancmdmod = False # don't show dlg if cmdline is edited
         
-        vdms = [os.path.splitext(x)[0] for x in os.listdir(self.user_vdms) 
-                if os.path.splitext(x)[1] == '.vdms']
+        vdms = sorted([os.path.splitext(x)[0] for x in os.listdir(self.user_vdms) 
+                if os.path.splitext(x)[1] == '.vdms'])
 
         
         wx.Panel.__init__(self, parent, -1) 
@@ -193,12 +193,19 @@ class PresetsPanel(wx.Panel):
         self.set_listctrl()
     #-----------------------------------------------------------------------#
     
-    def reset_list(self):
+    def reset_list(self, reset_cmbx=False):
         """
         Clear all data and re-charging new. Used by selecting new preset
         and add/edit/delete profiles events.
         
         """
+        if reset_cmbx:
+            vdms = sorted([os.path.splitext(x)[0] for x 
+                    in os.listdir(self.user_vdms)
+                    if os.path.splitext(x)[1] == '.vdms'])
+            self.cmbx_prst.Clear()
+            self.cmbx_prst.AppendItems(vdms), self.cmbx_prst.SetSelection(0)
+        
         self.list_ctrl.ClearAll()
         self.txt_1_cmd.SetValue(""), self.txt_2_cmd.SetValue("")
         if array != []:
@@ -222,20 +229,19 @@ class PresetsPanel(wx.Panel):
         collections = json_data(path)
         if collections == 'error':
             return
-        index = 0
         try:
-            #for x in collections:
-                #for name in x:
+            index = 0
             for name in collections:
+                index+=1
                 rows = self.list_ctrl.InsertItem(index, name['Name'])
                 self.list_ctrl.SetItem(rows, 0, name['Name'])
                 self.list_ctrl.SetItem(rows, 1, name["Description"])
                 self.list_ctrl.SetItem(rows, 2, name["Output_extension"])
                 self.list_ctrl.SetItem(rows, 3, name["Supported_list"])
         except KeyError as err:
-            wx.MessageBox(_('{}\nTyping error on json keys: {} '
-                            'key malformed ?'.format(path, err)), 
-                            "ERROR !", wx.ICON_ERROR, self)
+            wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
+                            'File: "{}"\nkey malformed ?'.format(err,path)), 
+                            "Videomass", wx.ICON_ERROR, self)
             return
     #----------------------Event handler (callback)----------------------#
     def on_choice_profiles(self, event):
@@ -244,8 +250,8 @@ class PresetsPanel(wx.Panel):
         
         """
         self.reset_list()
-        
     #------------------------------------------------------------------#
+    
     def on_select(self, event): # list_ctrl
         """
         By selecting a profile in the list_ctrl set new request 
@@ -258,24 +264,23 @@ class PresetsPanel(wx.Panel):
                             )
         collections = json_data(path)
         selected = event.GetText() # event.GetText is a Name Profile
-        if array != []:
-            del array[0:6] # delete all: [0],[1],[2],[3],[4],[5]
         self.txt_1_cmd.SetValue(""), self.txt_2_cmd.SetValue("")
+        del array[0:6] # delete all: [0],[1],[2],[3],[4],[5]
+        
         try:
-            #for x in collections:
-                #for name in x:
             for name in collections:
-                if selected in name["Name"]:
+                if selected == name["Name"]:
                     array.append(name["Name"])# profile name 
                     array.append(name["Description"])
                     array.append(name["First_pass"])# first pass command
                     array.append(name["Second_pass"])# second pass command
                     array.append(name["Supported_list"])# supported ext.
                     array.append(name["Output_extension"])
+                    
         except KeyError as err:
-            wx.MessageBox(_('{}\nTyping error on json keys: {} '
-                            'key malformed ?'.format(path, err)), 
-                            "ERROR !", wx.ICON_ERROR, self)
+            wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
+                            'File: "{}"\nkey malformed ?'.format(err,path)), 
+                            "Videomass", wx.ICON_ERROR, self)
             return
         
         self.txt_1_cmd.AppendText('%s' %(array[2]))# cmd1 text ctrl
@@ -347,7 +352,7 @@ class PresetsPanel(wx.Panel):
             copy_restore('%s' % (dirname), 
                          '%s/%s' % (self.user_vdms, tail))
             
-            self.reset_list() # re-charging functions
+            self.reset_list(True) # re-charging functions
     #------------------------------------------------------------------#
     def Default(self):
         """
@@ -368,8 +373,8 @@ class PresetsPanel(wx.Panel):
                             '%s/%s.vdms' % (self.user_vdms, filename))
         
         if copy:
-            wx.MessageBox(_('Sorry, this preset is not part of stock presets. '
-                            'It was probably created later.'), "ERROR !", 
+            wx.MessageBox(_('Sorry, this preset is not part '
+                            'of default Videomass presets.'), "ERROR !", 
                             wx.ICON_ERROR, self)
             return
             
@@ -388,16 +393,11 @@ class PresetsPanel(wx.Panel):
 
         copy_on('vdms', self.src_vdms, self.user_vdms)
         
-        vdms = [os.path.splitext(x)[0] for x in os.listdir(self.user_vdms) 
-                if os.path.splitext(x)[1] == '.vdms']
-        self.cmbx_prst.Clear()
-        self.cmbx_prst.AppendItems(vdms)
-        
-        self.reset_list() # re-charging functions
+        self.reset_list(True) # re-charging functions
     #------------------------------------------------------------------#
     def Refresh(self):
         """ 
-        Pass to reset_list function for re-charging list
+        reset_list to re-charging list
         """
         self.reset_list()
     

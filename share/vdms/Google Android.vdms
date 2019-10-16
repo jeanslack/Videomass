@@ -1,35 +1,34 @@
-
 [
-    { 
+    {
         "Name": "Android 1",
-        "Description":  "Google Android compatible video",
+        "Description": "Google Android compatible video",
         "First_pass": "-vf scale=480:320 -vcodec mpeg4 -acodec aac -ac 1 -ar 16000 -r 13 -b:a 32000 -aspect 3:2",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mp4"
     },
-    {   
+    {
         "Name": "Android 2",
-        "Description":  "Google Android compatible video. Video bitrate: 480 kb/s",
+        "Description": "Google Android compatible video. Video bitrate: 480 kb/s",
         "First_pass": "-vf scale=480:320 -vcodec mpeg4 -b:v 480k -acodec aac -ac 1 -ar 16000 -r 13 -b:a 32000 -aspect 3:2",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mp4"
     },
-    { 
+    {
         "Name": "Android 3",
-        "Description":  "Google Android video. VHQ 16:9 widescreen",
+        "Description": "Google Android video. VHQ 16:9 widescreen",
         "First_pass": "-vf scale=480:272 -vcodec libx264 -preset medium -b:v 500k -acodec aac -b:a 96k",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mp4"
     },
-    { 
+    {
         "Name": "Android 4",
-        "Description":  "Google Android video. VHQ 4:3 fullscreen",
+        "Description": "Google Android video. VHQ 4:3 fullscreen",
         "First_pass": "-vf scale=432:320 -vcodec libx264 -preset medium -b:v 500k -acodec aac -b:a 96k",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mp4"
     }
-] 
+]

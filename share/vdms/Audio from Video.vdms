@@ -1,73 +1,66 @@
 [
-    { 
-        "Name": "From Video to WAV",
-        "Description":  "Extracting audio stream to WAV format, from all video formats",
-        "First_pass": "-vn -acodec pcm_s16le -ac 2 -ar 44100 ",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "wav"
-    },
-
-    { 
-        "Name": "From Video to WMA",
-        "Description":  "Extracting audio stream in VMA format, bitrate 160, from all video formats",
-        "First_pass": "-vn -acodec wmav2 -b:a 160k -ac 2 -ar 44100 ",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "wma"
-    },
-
-    { 
-        "Name": "From Video to MP3",
-        "Description":  "Extracting audio stream in MP3 format, bitrate 160 vbr, from all video formats",
-        "First_pass": "-vn -acodec libmp3lame -b:a 160k -ac 2 -ar 44100 ",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "mp3"
-    },
-    
-    { 
-        "Name": "From Video to MPEG4 audio",
-        "Description":  "Extracting audio stream in M4A format, bitrate 112, stereo, Sample-Rate 44100, from all video formats",
-        "First_pass": "-vn -acodec aac -b:a 112k -ac 2 -ar 48000 ",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "m4a"
-    },
-
-    { 
-        "Name": "From Video to OGG audio",
-        "Description":  "Extracting audio stream in OGG format, bitrate 128, from all video formats",
-        "First_pass": "-vn -acodec libvorbis -aq 3 -ac 2 ",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "ogg"
-    },
-
-    { 
+    {
         "Name": "From Video to Ac3 DVD",
-        "Description":  "Extracting audio stream in AC3 format, bitrate 384kbps, from all video formats",
+        "Description": "Extracting audio stream in AC3 format, bitrate 384kbps, from all video formats",
         "First_pass": "-vn -f ac3 -acodec ac3 -b:a 384k -ar 48000 -ac 2 ",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "ac3"
     },
-
-    { 
+    {
         "Name": "From Video to Ac3 DVD",
-        "Description":  "Extracting audio stream in AC3 format, bitrate 192kbps, from all video formats",
+        "Description": "Extracting audio stream in AC3 format, bitrate 192kbps, from all video formats",
         "First_pass": "-vn -f ac3 -acodec ac3 -b:a 192k -ar 48000 -ac 2 ",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "ac3"
     },
-
-    { 
+    {
         "Name": "From Video to FLAC",
-        "Description":  "Extracting audio stream in FLAC format, stereo, Sample-Rate 44100",
+        "Description": "Extracting audio stream in FLAC format, stereo, Sample-Rate 44100",
         "First_pass": "-acodec flac -ac 2 -ar 44100",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "flac"
+    },
+    {
+        "Name": "From Video to MP3",
+        "Description": "Extracting audio stream in MP3 format, bitrate 160 vbr, from all video formats",
+        "First_pass": "-vn -acodec libmp3lame -b:a 160k -ac 2 -ar 44100 ",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mp3"
+    },
+    {
+        "Name": "From Video to MPEG4 audio",
+        "Description": "Extracting audio stream in M4A format, bitrate 112, stereo, Sample-Rate 44100, from all video formats",
+        "First_pass": "-vn -acodec aac -b:a 112k -ac 2 -ar 48000 ",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "m4a"
+    },
+    {
+        "Name": "From Video to OGG audio",
+        "Description": "Extracting audio stream in OGG format, bitrate 128, from all video formats",
+        "First_pass": "-vn -acodec libvorbis -aq 3 -ac 2 ",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "ogg"
+    },
+    {
+        "Name": "From Video to WAV",
+        "Description": "Extracting audio stream to WAV format, from all video formats",
+        "First_pass": "-vn -acodec pcm_s16le -ac 2 -ar 44100 ",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "From Video to WMA",
+        "Description": "Extracting audio stream in VMA format, bitrate 160, from all video formats",
+        "First_pass": "-vn -acodec wmav2 -b:a 160k -ac 2 -ar 44100 ",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wma"
     }
 ]

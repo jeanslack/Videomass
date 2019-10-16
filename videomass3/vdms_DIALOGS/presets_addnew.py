@@ -173,10 +173,7 @@ class MemPresets(wx.Dialog):
         elif arg == 'addprofile':
             self.pass_1_cmd.AppendText(self.array[0]) # command or param
             self.pass_2_cmd.AppendText(self.array[1])
-            if '-c:v copy' in self.array[0] or '-c:v copy' in self.array[1]:
-                self.txt_ext.AppendText('Not set')
-            else:
-                self.txt_ext.AppendText(self.array[2]) # extension
+            self.txt_ext.AppendText(self.array[2]) # extension
         
                         
     def change(self):
@@ -234,17 +231,17 @@ class MemPresets(wx.Dialog):
                     wx.MessageBox(_("Profile already stored with the same name"), 
                                     "Videomass ", wx.ICON_INFORMATION, self)
                     return
-            data = [
-                    {
-                        "Name": "%s" % name,
-                        "Description": "%s" % decript,
-                        "First_pass": "%s" % pass_1,
-                        "Second_pass": "%s" % pass_2,
-                        "Supported_list": "%s" % file_support,
-                        "Output_extension": "%s" % extens
-                    }
-                    ]
+                
+            data = [{"Name": "%s" % name,
+                     "Description": "%s" % decript,
+                     "First_pass": "%s" % pass_1,
+                     "Second_pass": "%s" % pass_2,
+                     "Supported_list": "%s" % file_support,
+                     "Output_extension": "%s" % extens
+                    }]
+                    
             new_data = stored_data + data
+            new_data.sort(key=lambda s: s["Name"])# make sorted by name
         
         elif self.arg == 'edit': # edit, add
             new_data = stored_data
@@ -256,7 +253,8 @@ class MemPresets(wx.Dialog):
                     item["Second_pass"] = "%s" % pass_2
                     item["Supported_list"] = "%s" % file_support
                     item["Output_extension"] = "%s" % extens
-        
+                    
+        new_data.sort(key=lambda s: s["Name"])# make sorted by name
         with open(self.path_vdms, 'w', encoding='utf-8') as outfile:
             json.dump(new_data, outfile, ensure_ascii=False, indent=4)
         
