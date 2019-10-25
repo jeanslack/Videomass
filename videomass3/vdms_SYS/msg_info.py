@@ -66,8 +66,8 @@ def descriptions_release():
 
     short_d = ("Videomass is a cross-platform GUI for FFmpeg")
     
-    long_d = ("-Videomass- provides a graphical interface for\n "
-              "audio and video conversions through FFmpeg\n ")
+    long_d = ("-Videomass- is not a converter. It provides a graphical\n"
+              "interface to writing presets for FFmpeg\n")
 
     short_l = ("GPL3 (Gnu Public License)")
 

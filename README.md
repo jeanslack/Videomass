@@ -1,4 +1,4 @@
-# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.   
+# **Videomass** is not a converter. It provides a graphical interface to writing presets for FFmpeg.   
 
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [GitHub Page](https://github.com/jeanslack/Videomass)
@@ -15,8 +15,9 @@
 
 ## Features
 
+- Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Drag n' Drop with multiple files at once.
-- Presets manager interface with fully customizable and expandable profiles.
+- Presets manager interface with fully customizable and expandable profiles and presets.
 - It can convert to all the formats you want using custom parameters.
 - Batch processing for all included features
 - Dedicated interfaces: presets manager, video and audio conversions
@@ -29,10 +30,6 @@
 - Setting duration portions for imported files, filters, export and tests.
 - Log management.
 - Multi language (English and Italian Languages support for now).
-- Work on many platforms where Python3 and wxPython4 are supported, 
-  including Linux, Unix, MacOs and Windows.
-- Compatible with Python 3 only
-- ...And more
 
 ## Requirements
    

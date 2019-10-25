@@ -64,7 +64,8 @@ def makedir_move(ext, name_dir):
     """
     try: # if exist dir not exit OSError, go...
         os.mkdir("%s" % (name_dir))
-    except: OSError
+    except OSError as err:
+        return err
     move_on(ext, name_dir)
 
 #------------------------------------------------------------------#

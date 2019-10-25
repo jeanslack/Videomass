@@ -15,14 +15,22 @@ NEWS:
       some advantages in the presets management and some savings in system 
       resources.
     
-    * Now presets can also be created from scratch
+    * Presets can also be created from scratch
+    
+    * Presets can be removed (not deleted)
     
 ADDED:
     * Presets Manager: added new text boxes useful for conversions with 
       second pass.
+      
+    * Dialog to add new preset has box entry for two pass conversion
+    
+    * Added "Create new preset" to File menu item
+    
+    * Added "Remove preset" to File menu item
 
 IMPROVEMENTS:
-    * Presets Manager: Improved conversion management with two passes, 
+    * Presets Manager: Improved conversion management with one or two passes, 
       making the parameter syntax similar to that of FFmpeg.
       
       
