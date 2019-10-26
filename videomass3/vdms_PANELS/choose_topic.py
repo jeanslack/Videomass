@@ -33,7 +33,8 @@ class Choose_Topic(wx.Panel):
     """
     Helps to choose the appropriate contextual panel
     """
-    def __init__(self, parent, OS):
+    def __init__(self, parent, OS, videoconv_icn, audioconv_icn, 
+                 storepictures_icn):
 
         self.parent = parent
         self.OS = OS
@@ -56,13 +57,23 @@ class Choose_Topic(wx.Panel):
                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_buttons = wx.GridSizer(3, 2, 20, 20)
         
-        self.video = wx.Button(self, wx.ID_ANY, "Video Conversions", size=(-1,-1))
-        self.audio = wx.Button(self, wx.ID_ANY, "Audio Conversions", size=(-1,-1))
-        self.save_pict = wx.Button(self, wx.ID_ANY, "Pictures from Video", size=(-1,-1))
-        self.audio_extract = wx.Button(self, wx.ID_ANY, "Extract Audio from Video", size=(-1,-1))
+        video_lab = _('Video Conversions')
+        audio_lab = _('Audio Conversions')
+        pict_lab = _('Pictures from Video')
+        audgr_lab = _('Extract Audio from Video')
+        slide_lab = _('Picture Slideshow Maker')
+        audmer_lab = _('Merging Audio and Video')
         
-        self.slideshow = wx.Button(self, wx.ID_ANY, "Picture Slideshow Maker", size=(-1,-1))
-        self.audio_merge = wx.Button(self, wx.ID_ANY, "Merging Audio and Video", size=(-1,-1))
+        self.video = wx.Button(self, wx.ID_ANY, video_lab, size=(-1,-1))
+        self.video.SetBitmap(wx.Bitmap(videoconv_icn),wx.LEFT)
+        self.audio = wx.Button(self, wx.ID_ANY, audio_lab, size=(-1,-1))
+        self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.LEFT)
+        self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
+        self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.LEFT)
+        self.audio_extract = wx.Button(self, wx.ID_ANY, audgr_lab, size=(-1,-1))
+        self.slideshow = wx.Button(self, wx.ID_ANY, slide_lab, size=(-1,-1))
+        self.audio_merge = wx.Button(self, wx.ID_ANY, audmer_lab, size=(-1,-1))
+        
         grid_buttons.AddMany([(self.video, 0, wx.EXPAND, 5),
                               (self.audio, 0, wx.EXPAND, 5),
                               (self.save_pict, 0, wx.EXPAND, 5),
@@ -77,16 +88,19 @@ class Choose_Topic(wx.Panel):
         
         self.SetSizerAndFit(sizer_base)
         
-        self.Bind(wx.EVT_BUTTON, self.on_Choose, self.video)
-        self.Bind(wx.EVT_BUTTON, self.on_Choose, self.audio)
+        self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)
+        self.Bind(wx.EVT_BUTTON, self.on_Audio, self.audio)
         self.Bind(wx.EVT_BUTTON, self.on_Pictures, self.save_pict)
         self.Bind(wx.EVT_BUTTON, self.on_AudioFromVideo, self.audio_extract)
         self.Bind(wx.EVT_BUTTON, self.on_AudioMerging, self.audio_merge)
         self.Bind(wx.EVT_BUTTON, self.on_Slideshow, self.slideshow)
         
         
-    def on_Choose(self, event):
-        self.parent.File_import(self)
+    def on_Video(self, event):
+        self.parent.File_import(self, 'Video Conversion')
+        
+    def on_Audio(self, event):
+        self.parent.File_import(self, 'Audio Conversion')
     
     def on_Pictures(self, event):
         print('pictures from video')

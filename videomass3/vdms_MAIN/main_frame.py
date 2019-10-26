@@ -64,11 +64,11 @@ class MainFrame(wx.Frame):
                run as portable program or installated program.
         """
         self.videomass_icon = pathicons[0]
-        self.icon_presets = pathicons[1]
-        self.icon_switchvideomass = pathicons[2]
-        self.icon_process = pathicons[3]
+        self.icon_storePictures = pathicons[1]
+        self.icon_videoconversions = pathicons[2]
+        self.icon_runconversion = pathicons[3]
         self.icon_help = pathicons[4]
-        self.icon_headphones = pathicons[5]
+        self.icon_audioconversions = pathicons[5]
         self.icon_import = pathicons[6]
         barC = setui[4][12].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
@@ -109,6 +109,7 @@ class MainFrame(wx.Frame):
         self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
         self.time_read = {'start seek':['',''],'time':['','']}
         self.duration = [] # empty if not file imported
+        self.topicname = None
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
         #----------- panel toolbar buttons
@@ -118,9 +119,10 @@ class MainFrame(wx.Frame):
         previewbmp = wx.Bitmap(pathicons[8], wx.BITMAP_TYPE_ANY)
         cutbmp = wx.Bitmap(pathicons[9], wx.BITMAP_TYPE_ANY)
         saveprfbmp = wx.Bitmap(pathicons[12], wx.BITMAP_TYPE_ANY)
-        newprfbmp = wx.Bitmap(pathicons[13], wx.BITMAP_TYPE_ANY)
-        delprfbmp = wx.Bitmap(pathicons[14], wx.BITMAP_TYPE_ANY)
-        editprfbmp = wx.Bitmap(pathicons[15], wx.BITMAP_TYPE_ANY)
+        
+        #newprfbmp = wx.Bitmap(pathicons[13], wx.BITMAP_TYPE_ANY)
+        #delprfbmp = wx.Bitmap(pathicons[14], wx.BITMAP_TYPE_ANY)
+        #editprfbmp = wx.Bitmap(pathicons[15], wx.BITMAP_TYPE_ANY)
         
         
         
@@ -167,45 +169,15 @@ class MainFrame(wx.Frame):
         self.btn_saveprf.SetBottomStartColour(self.bBtnC)
         self.btn_saveprf.SetTopStartColour(self.bBtnC)
         self.btn_saveprf.SetTopEndColour(self.bBtnC)
-        
-        self.btn_newprf = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=newprfbmp, 
-                                              label=_("New.."))
-        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_newprf.SetBottomEndColour(self.bBtnC)
-        self.btn_newprf.SetBottomStartColour(self.bBtnC)
-        self.btn_newprf.SetTopStartColour(self.bBtnC)
-        self.btn_newprf.SetTopEndColour(self.bBtnC)
-        
-        self.btn_delprf = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=delprfbmp, 
-                                              label=_("Delete.."))
-        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_delprf.SetBottomEndColour(self.bBtnC)
-        self.btn_delprf.SetBottomStartColour(self.bBtnC)
-        self.btn_delprf.SetTopStartColour(self.bBtnC)
-        self.btn_delprf.SetTopEndColour(self.bBtnC)
-        
-        self.btn_editprf = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=editprfbmp, 
-                                              label=_("Edit.."))
-        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
-                                    foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_editprf.SetBottomEndColour(self.bBtnC)
-        self.btn_editprf.SetBottomStartColour(self.bBtnC)
-        self.btn_editprf.SetTopStartColour(self.bBtnC)
-        self.btn_editprf.SetTopEndColour(self.bBtnC)
 
         self.btnpanel.SetBackgroundColour(barColor)
         #self.btnpanel.SetBackgroundColour(wx.Colour(205, 235, 222))
         #---------- others panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self, 
                                                      self.OS,
+                                                     self.icon_videoconversions,
+                                                     self.icon_audioconversions,
+                                                     self.icon_storePictures 
                                                      )
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, 
                                                          SRCpath, 
@@ -264,9 +236,6 @@ class MainFrame(wx.Frame):
         grid_pan.Add(self.btn_playO, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_duration, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_saveprf, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_newprf, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_delprf, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_editprf, 0, wx.CENTER|wx.ALL, 5)
         self.btnpanel.SetSizer(grid_pan) # set panel
         self.DnDsizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
         # Layout externals panels:
@@ -291,7 +260,7 @@ class MainFrame(wx.Frame):
         #self.Centre()
         #self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.DnDsizer)
-        self.Layout()
+        #self.Layout()
         
         # Tooltips:
         self.btn_duration.SetToolTip(_('Set a global timeline to apply to '
@@ -306,13 +275,6 @@ class MainFrame(wx.Frame):
         self.btn_saveprf.SetToolTip(_("Save as profile with the current "
                                         "settings of this panel."
                                         ))
-        self.btn_newprf.SetToolTip(_("Create a new profile from yourself "
-                                        "and save it in the selected preset."
-                                        ))
-        self.btn_delprf.SetToolTip(_("Delete the selected profile."
-                                        ))
-        self.btn_editprf.SetToolTip(_("Edit the selected profile."
-                                          ))
         # menu bar
         self.videomass_menu_bar()
         ## tool bar main
@@ -321,14 +283,16 @@ class MainFrame(wx.Frame):
         # status bar
         self.sb = self.CreateStatusBar(1)
         
+        # hide toolbar and buttons bar
+        self.toolbar.Hide()
+        self.btnpanel.Hide()
+        self.Layout()
+        
         #---------------------- Binding (EVT) ----------------------#
         self.DnD.ckbx_dir.Bind(wx.EVT_CHECKBOX, self.onCheckBox)
         self.DnD.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
         self.Bind(wx.EVT_BUTTON, self.Saveprofile, self.btn_saveprf)
-        self.Bind(wx.EVT_BUTTON, self.Newprofile, self.btn_newprf)
-        self.Bind(wx.EVT_BUTTON, self.Delprofile, self.btn_delprf)
-        self.Bind(wx.EVT_BUTTON, self.Editprofile, self.btn_editprf)
         self.Bind(wx.EVT_BUTTON, self.ImportInfo, self.btn_metaI)
         self.Bind(wx.EVT_BUTTON, self.ExportPlay, self.btn_playO)
         #self.Bind(wx.EVT_SHOW, self.panelShown)
@@ -350,26 +314,7 @@ class MainFrame(wx.Frame):
         self.sb.Refresh()
     
     #---------------------- Used Methods ----------------------#
-    # The Used Methods are called from the dragNdrop panel
-    def Disable_ToolBtn(self):
-        """
-        Start with default or by deleting listcontrol from dragNdrop panel
-        """
-        self.toolbar.EnableTool(wx.ID_FILE3, False)
-        self.toolbar.EnableTool(wx.ID_FILE5, False)
-        self.toolbar.EnableTool(wx.ID_FILE6, False)
-        self.toolbar.EnableTool(wx.ID_FILE7, False)
-        self.toolbar.EnableTool(wx.ID_OK, False)
-    #------------------------------------------------------------------#
-    def Enable_ToolBtn(self):
-        """
-        Enable preset manager, video converter and 
-        audio converter buttons
-        """
-        self.toolbar.EnableTool(wx.ID_FILE5, True)
-        self.toolbar.EnableTool(wx.ID_FILE6, True)
-        self.toolbar.EnableTool(wx.ID_FILE7, True)
-    #------------------------------------------------------------------#
+    
     def Setup_items_bar(self):
         """
         When switch between panels, disable/enable some item on menu bar 
@@ -424,23 +369,6 @@ class MainFrame(wx.Frame):
             self.toolbar.EnableTool(wx.ID_FILE6, False)
             self.toolbar.EnableTool(wx.ID_FILE7, False)
             self.toolbar.EnableTool(wx.ID_OK, False)
-
-    #------------------------------------------------------------------#
-    def importClicked_enable(self, path):
-        """
-        when click with the mouse on a control list item, 
-        enable Metadata Info and file reproduction menu
-        """
-        self.btn_metaI.SetBottomEndColour(wx.Colour(255, 255, 0))
-        self.import_clicked = path# used for play and metadata
-        
-    #------------------------------------------------------------------#
-    def importClicked_disable(self):
-        """
-        Disable streams imported menu
-        """
-        self.btn_metaI.SetBottomEndColour(self.bBtnC)
-        self.import_clicked = ''
         
     #------------------------------------------------------------------#
     def postExported_enable(self):
@@ -550,35 +478,8 @@ class MainFrame(wx.Frame):
             self.AconvPanel.Addprof()
         else:
             print ('Videomass: Error, no panels shown')
+            
     #------------------------------------------------------------------#
-    def Newprofile(self, event):
-        """
-        Store new profile in the selected preset of the presets manager
-        panel. The list is reloaded automatically after pressed ok button 
-        in the dialog for update view.
-        """
-        if self.PrstsPanel.IsShown():
-            self.PrstsPanel.Addprof()
-        else:
-            print ('Videomass: Error, no presets manager panel shown')
-    #------------------------------------------------------------------#
-    def Delprofile(self, event):
-        """
-        Delete the selected preset of the presets manager
-        panel.
-        """
-        if self.PrstsPanel.IsShown():
-            self.PrstsPanel.Delprof()
-    #------------------------------------------------------------------#
-    def Editprofile(self, event):
-        """
-        Edit selected item in the list control of the presets manager
-        panel. The list is reloaded automatically after pressed ok button 
-        in the dialog.
-        """
-        if self.PrstsPanel.IsShown():
-            self.PrstsPanel.Editprof(self)
-    #-----------------------------------------------------------------#
     def onCheckBox(self, event):
         """
         Intercept the Checkbox event in the dragNdrop panel
@@ -969,28 +870,28 @@ class MainFrame(wx.Frame):
         
         #-------- Switch at preset manager
         prs_mng = self.toolbar.AddTool(wx.ID_FILE5, _('Presets Manager'), 
-                                    wx.Bitmap(self.icon_presets)
+                                    wx.Bitmap(self.icon_storePictures)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE5, False)
         self.toolbar.AddSeparator()
         
         #-------- Switch at videomass
         switch_video = self.toolbar.AddTool(wx.ID_FILE6, 
-                    _('Video Conversions'), wx.Bitmap(self.icon_switchvideomass)
+                    _('Video Conversions'), wx.Bitmap(self.icon_videoconversions)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE6, False)
         self.toolbar.AddSeparator()
 
         #-------- Switch Advanced audio
         switch_audio = self.toolbar.AddTool(wx.ID_FILE7, 
-                    _('Audio Conversions'),  wx.Bitmap(self.icon_headphones)
+                    _('Audio Conversions'),  wx.Bitmap(self.icon_audioconversions)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE7, False)
         self.toolbar.AddSeparator()
         
         # ------- Run process button
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start Encoding'), 
-                                    wx.Bitmap(self.icon_process)
+                                    wx.Bitmap(self.icon_runconversion)
                                                 )
         self.toolbar.EnableTool(wx.ID_OK, False)
         self.toolbar.AddSeparator()
@@ -1012,10 +913,11 @@ class MainFrame(wx.Frame):
 
     #--------------- Tool Bar Callback (event handler) -----------------#
     #------------------------------------------------------------------#
-    def File_import(self, event):
+    def File_import(self, event, wich):
         """
         Show files import panel.
         """
+        self.topicname = wich
         self.PrstsPanel.Hide(), self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.ChooseTopic.Hide()
         self.DnD.Show()

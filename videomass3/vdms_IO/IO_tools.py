@@ -133,7 +133,8 @@ def probeDuration(path_list, ffprobe_link):
     Se i file non sono supportati da ffprobe e quindi da ffmpeg, avvisa
     con un messaggio di errore.
     """
-    metadata = FFProbe(path_list, ffprobe_link, 'no_pretty') 
+    data = dict()
+    metadata = FFProbe(path_list, ffprobe_link, 'pretty') 
         # first execute a control for errors:
     if metadata.ERROR():
         err = metadata.error
@@ -145,8 +146,16 @@ def probeDuration(path_list, ffprobe_link):
         return duration, err
     try:
         for items in metadata.data_format()[0]:
+            if items.startswith('filename='):
+                data[items.split('=')[0]] = items.split('=')[1]
+            if items.startswith('format='):
+                data[items.split('=')[0]] = items.split('=')[1]
             if items.startswith('duration='):
-                duration = (int(items[9:16].split('.')[0]))
+                data[items.split('=')[0]] = items.split('=')[1]
+                duration = items.split('=')[1]    
+            if items.startswith('size='):
+                data[items.split('=')[0]] = items.split('=')[1]
+
     except ValueError as ve:
         duration = 0
         if ve.args[0] == "invalid literal for int() with base 10: 'N/A'":
@@ -154,7 +163,7 @@ def probeDuration(path_list, ffprobe_link):
         else:
             return duration, ve.args
     
-    return duration , None
+    return data , None
 #-------------------------------------------------------------------------#
 def volumeDetectProcess(ffmpeg, filelist, time_seq):
     """

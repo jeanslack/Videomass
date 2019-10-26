@@ -33,11 +33,26 @@ from videomass3.vdms_IO import IO_tools
 
 dirname = os.path.expanduser('~') # /home/user/
 duration = []
+data_files = []
+
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
 yellow = '#a29500'
 greenolive = '#6aaf23'
 orange = '#f28924'
+
+def convert(time):
+    """
+    convert time human to seconds
+    """
+    if time == 'N/A':
+        return int('0')
+    
+    pos = time.split(':')
+    h,m,s = pos[0],pos[1],pos[2]
+    totalsum = (int(h)*60+ int(m)*60+ float(s))
+    
+    return totalsum
 
 ########################################################################
 class MyListCtrl(wx.ListCtrl):
@@ -76,15 +91,25 @@ class MyListCtrl(wx.ListCtrl):
             self.fileList.append(path)
             self.InsertItem(self.index, path)
             self.index += 1
-            s = IO_tools.probeDuration(path, self.ffprobe_link)
-            duration.append(s[0])
-            if s[1]:
-                if s[1] == 'N/A':
-                    msg = "%s; %s" %(s[1],_('duration is skipped'))
+            data_dict = IO_tools.probeDuration(path, self.ffprobe_link)
+            
+            data_files.append(data_dict[0])
+            
+            t = convert(data_dict[0]['duration'])
+            duration.append(t)
+            
+            #print(duration, t)
+            topic = self.parent.wich()
+            #print(topic)
+            
+            
+            if data_dict[1]:
+                if data_dict[1] == 'N/A':
+                    msg = "%s; %s" %(data_dict[1],_('duration is skipped'))
                     print(msg)
                     #self.parent.statusbar_msg(msg, greenolive)
                 else:
-                    self.parent.statusbar_msg(s[1], red)
+                    self.parent.statusbar_msg(data_dict[1], red)
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
             print (mess)
@@ -137,6 +162,7 @@ class DnDPanel(wx.Panel):
         self.switch = 'off' # tells if one or more files are imported
         self.selected = False # tells if an imported file is selected or not
         #This builds the list control box:
+        
         self.fileListCtrl = MyListCtrl(self, self.fileList, ffprobe_link)  #class MyListCtr
         #Establish the listctrl as a drop target:
         file_drop_target = MyFileDropTarget(self.fileListCtrl)
@@ -148,21 +174,31 @@ class DnDPanel(wx.Panel):
                                 _("Save destination in source folder")))
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1,-1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "", 
-                                    style=wx.TE_PROCESS_ENTER | wx.TE_READONLY
-                                                    )
-        lbl = wx.StaticText(self, label=_("Drag some files here:"))
-        self.fileListCtrl.InsertColumn(0,_('Files list'),width=700)
+                                                style=wx.TE_PROCESS_ENTER| 
+                                                      wx.TE_READONLY
+                                                      )
+        lbl = wx.StaticText(self, label=_("Drag one or more files here:"))
+        self.fileListCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
         grid = wx.FlexGridSizer(1, 4, 5, 5)
-        sizer.Add(lbl, 0, wx.ALL, 5)
+        sizer.Add(lbl, 0, wx.ALL|
+                          wx.ALIGN_CENTER_HORIZONTAL|
+                          wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(self.fileListCtrl, 1, wx.EXPAND|wx.ALL, 5)
         sizer.Add(grid)
-        grid.Add(btn_clear, 1, wx.ALL, 5)
-        grid.Add(self.ckbx_dir, 1, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL|
-                 wx.ALIGN_CENTER_VERTICAL, 5
-                 )
-        grid.Add(self.btn_save, 1, wx.ALL, 5)
+        grid.Add(btn_clear, 1, wx.ALL|
+                               wx.ALIGN_CENTER_HORIZONTAL|
+                               wx.ALIGN_CENTER_VERTICAL, 5
+                               )
+        grid.Add(self.ckbx_dir, 1, wx.ALL|
+                                   wx.ALIGN_CENTER_HORIZONTAL|
+                                   wx.ALIGN_CENTER_VERTICAL, 5
+                                   )
+        grid.Add(self.btn_save, 1, wx.ALL|
+                                   wx.ALIGN_CENTER_HORIZONTAL|
+                                   wx.ALIGN_CENTER_VERTICAL, 5
+                                   )
         grid.Add(self.text_path_save, 1, wx.ALL|wx.EXPAND, 5)
         self.text_path_save.SetMinSize((290, -1)) 
         self.SetSizer(sizer)
@@ -234,6 +270,9 @@ class DnDPanel(wx.Panel):
                     self.duration.pop(item)
                 
     #----------------------------------------------------------------------
+    def wich(self):
+        return self.parent.topicname
+    #----------------------------------------------------------------------
     def btn_enable(self, fileList, invalid):
         """
         When is dropped any files, Enable MainFrame Toolbar buttons.
@@ -244,7 +283,6 @@ class DnDPanel(wx.Panel):
             return
         if self.switch == 'off':
             self.switch = 'on'
-            self.parent.Enable_ToolBtn()
     #----------------------------------------------------------------------
     def deleteAll(self, event):
         """
@@ -258,8 +296,6 @@ class DnDPanel(wx.Panel):
         del duration[:]
         del self.duration[:]
         self.switch = 'off'
-        self.parent.Disable_ToolBtn()
-        self.parent.importClicked_disable()
         self.selected = False
     #----------------------------------------------------------------------
     def on_select(self, event):
@@ -268,8 +304,9 @@ class DnDPanel(wx.Panel):
         """
         index = self.fileListCtrl.GetFocusedItem()
         item = self.fileListCtrl.GetItemText(index)
-        self.parent.importClicked_enable(item)
         self.selected = True
+        
+        print(data_files)
     #----------------------------------------------------------------------
     def on_doubleClick(self, row):
         """
@@ -283,7 +320,6 @@ class DnDPanel(wx.Panel):
         De-selecting a line with mouse by click in empty space of
         the control list
         """
-        self.parent.importClicked_disable()
         self.selected = False
     #----------------------------------------------------------------------
     def on_custom_save(self):
