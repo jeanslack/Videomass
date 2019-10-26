@@ -45,6 +45,8 @@ def convert(time):
     """
     convert time human to seconds
     """
+    print(time)
+    
     if time == 'N/A':
         return int('0')
     
@@ -70,46 +72,77 @@ class MyListCtrl(wx.ListCtrl):
         self.invalid = False # used for directories import control
         self.ffprobe_link = ffprobe_link
         
+        print(self.index)
+        
 
     #----------------------------------------------------------------------#
     def dropUpdate(self, path):
         """
-        Update list-control and fileList during drag and drop.
-        Also, enable certain buttons of the MainFrame toolbar
-        and advise with status bar messages
+        Update list-control during drag and drop
         """
         if os.path.isdir(path):
-            mess = _("Directories are not allowed, "
-                     "just add files, please: > '%s'") % path
+            mess = _("Directories are not allowed, just add files, please")
             print (mess)
             self.parent.statusbar_msg(mess, orange)
             self.invalid = True
             return
         
-        if path not in self.fileList:
+        #if path not in self.fileList:
+        if not [x for x in data_files if x['filename'] == path]:
+
             self.invalid = False
-            self.fileList.append(path)
-            self.InsertItem(self.index, path)
-            self.index += 1
+            #self.fileList.append(path)
+            #self.InsertItem(self.index, path)
+            #self.index += 1
+            
             data_dict = IO_tools.probeDuration(path, self.ffprobe_link)
             
-            data_files.append(data_dict[0])
-            
-            t = convert(data_dict[0]['duration'])
-            duration.append(t)
-            
-            #print(duration, t)
-            topic = self.parent.wich()
-            #print(topic)
-            
-            
-            if data_dict[1]:
-                if data_dict[1] == 'N/A':
-                    msg = "%s; %s" %(data_dict[1],_('duration is skipped'))
-                    print(msg)
-                    #self.parent.statusbar_msg(msg, greenolive)
+            if data_dict[1] == 'N/A':
+                duration.append(0)
+                #data_files.append(data_dict[0])
+                msg = "%s; %s" %(data_dict[1],_('duration is skipped'))
+                print(msg)
+                
+            elif data_dict[1]:
+                self.parent.statusbar_msg(data_dict[1], red)
+                return
+
+            if self.parent.which() == 'Video Conversions':
+                if not data_dict[0].get('video_codec_name') in ['mpeg4','h264']:
+                    self.parent.statusbar_msg('Not such Video stream', orange)
                 else:
-                    self.parent.statusbar_msg(data_dict[1], red)
+                    self.InsertItem(self.index, path)
+                    self.index += 1
+                    data_files.append(data_dict[0])
+                    t = convert(data_dict[0]['duration'])
+                    duration.append(t)
+                    self.parent.statusbar_msg('', None)
+                    
+            elif self.parent.which() == 'Audio Conversions':
+                if data_dict[0].get('video_codec_type'):
+                    self.parent.statusbar_msg('Not such Audio stream', orange)
+                else:
+                    self.InsertItem(self.index, path)
+                    self.index += 1
+                    data_files.append(data_dict[0])
+                    t = convert(data_dict[0]['duration'])
+                    duration.append(t)
+                    self.parent.statusbar_msg('', None)
+                    
+            elif self.parent.which() == 'Pictures Slideshow Maker':
+                l = ['bmp','png','mjpeg']
+                if not data_dict[0].get('video_codec_name') in l:
+                    self.parent.statusbar_msg('Not such Pictures imported', orange)
+                else:
+                    self.InsertItem(self.index, path)
+                    self.index += 1
+                    data_files.append(data_dict[0])
+                    t = convert(data_dict[0]['duration'])
+                    duration.append(t)
+                    self.parent.statusbar_msg('', None)
+            
+            
+            
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
             print (mess)
@@ -177,12 +210,12 @@ class DnDPanel(wx.Panel):
                                                 style=wx.TE_PROCESS_ENTER| 
                                                       wx.TE_READONLY
                                                       )
-        lbl = wx.StaticText(self, label=_("Drag one or more files here:"))
+        self.lbl = wx.StaticText(self, label=_("Drag one or more files here:"))
         self.fileListCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
         grid = wx.FlexGridSizer(1, 4, 5, 5)
-        sizer.Add(lbl, 0, wx.ALL|
+        sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(self.fileListCtrl, 1, wx.EXPAND|wx.ALL, 5)
@@ -212,6 +245,15 @@ class DnDPanel(wx.Panel):
         #self.Bind(wx.EVT_BUTTON, self.on_custom_save, self.btn_save)
         
         self.text_path_save.SetValue(self.file_dest)
+    
+    #----------------------------------------------------------------------
+    def which(self):
+        """
+        return topic name by choose_topic.py selection 
+    
+        """
+        #self.lbl.SetLabel('Drag one or more Video files here')
+        return self.parent.topicname
     #----------------------------------------------------------------------
     def onContext(self, event):
         """
@@ -268,10 +310,7 @@ class DnDPanel(wx.Panel):
                     self.selected = False
                     self.fileList.pop(item)
                     self.duration.pop(item)
-                
-    #----------------------------------------------------------------------
-    def wich(self):
-        return self.parent.topicname
+                    
     #----------------------------------------------------------------------
     def btn_enable(self, fileList, invalid):
         """

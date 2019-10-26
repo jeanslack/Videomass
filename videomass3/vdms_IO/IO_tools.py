@@ -145,16 +145,41 @@ def probeDuration(path_list, ffprobe_link):
         duration = 0
         return duration, err
     try:
+        print('----------------------------')
         for items in metadata.data_format()[0]:
+            print(items)
             if items.startswith('filename='):
                 data[items.split('=')[0]] = items.split('=')[1]
-            if items.startswith('format='):
+            if items.startswith('format_long_name='):
                 data[items.split('=')[0]] = items.split('=')[1]
             if items.startswith('duration='):
                 data[items.split('=')[0]] = items.split('=')[1]
                 duration = items.split('=')[1]    
             if items.startswith('size='):
                 data[items.split('=')[0]] = items.split('=')[1]
+                
+        if metadata.video_stream():
+            print('----------------------------')
+            for items in metadata.video_stream()[0]:
+                print(items)
+                if items.startswith('codec_name='):
+                    data['video_codec_name'] = items.split('=')[1]
+                if items.startswith('codec_type='):
+                    data['video_codec_type'] = items.split('=')[1]
+                if items.startswith('width='):
+                    data[items.split('=')[0]] = items.split('=')[1]
+                    duration = items.split('=')[1]    
+                if items.startswith('height='):
+                    data[items.split('=')[0]] = items.split('=')[1]
+        
+        if metadata.audio_stream():
+            print('----------------------------')
+            for items in metadata.audio_stream()[0]:
+                print(items)
+                if items.startswith('codec_type='):
+                    data['audio_codec_type'] = items.split('=')[1]
+                if items.startswith('codec_name='):
+                    data['audio_codec_name'] = items.split('=')[1]
 
     except ValueError as ve:
         duration = 0

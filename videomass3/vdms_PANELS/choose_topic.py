@@ -97,10 +97,10 @@ class Choose_Topic(wx.Panel):
         
         
     def on_Video(self, event):
-        self.parent.File_import(self, 'Video Conversion')
+        self.parent.File_import(self, 'Video Conversions')
         
     def on_Audio(self, event):
-        self.parent.File_import(self, 'Audio Conversion')
+        self.parent.File_import(self, 'Audio Conversions')
     
     def on_Pictures(self, event):
         print('pictures from video')
@@ -112,7 +112,7 @@ class Choose_Topic(wx.Panel):
         print('audio merging')
     
     def on_Slideshow(self, event):
-        print('make a slideshow')
+        self.parent.File_import(self,'Pictures Slideshow Maker')
         
         
 
