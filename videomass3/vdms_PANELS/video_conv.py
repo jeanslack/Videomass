@@ -154,6 +154,7 @@ class Video_Conv(wx.Panel):
         self.OS = OS
         self.btn_color = btn_color
         self.fBtnC = fontBtncolor
+        
         #------------
         self.panel_base = wx.Panel(self, wx.ID_ANY)
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, 
@@ -1000,7 +1001,7 @@ class Video_Conv(wx.Panel):
             return
         
         self.time_seq = self.parent.time_seq
-        first_path = self.file_sources[0]
+        first_path = self.file_sources[0]['filename']
         
         stream_play(first_path, 
                     self.time_seq, 

@@ -170,7 +170,7 @@ class DnDPanel(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname # path name files destination
-        self.selected = False # tells if an imported file is selected or not
+        self.selected = None # tells if an imported file is selected or not
         #This builds the list control box:
         
         self.fileListCtrl = MyListCtrl(self, ffprobe_link)  #class MyListCtr
@@ -264,7 +264,7 @@ class DnDPanel(wx.Panel):
         # build the menu
         menu = wx.Menu()
         itemOne = menu.Append(self.popupID1, _("Play selected file"))
-        itemTwo = menu.Append(self.itemTwoId, _("Show metadata window"))
+        itemTwo = menu.Append(self.itemTwoId, _("Show stream informations"))
         itemThree = menu.Append(self.itemThreeId, _("Remove the selected file"))
  
         # show the popup menu
@@ -287,11 +287,12 @@ class DnDPanel(wx.Panel):
         else:
             self.parent.statusbar_msg('Add Files', None)
             if menuItem.GetLabel() == _("Play selected file"):
-                self.parent.ImportPlay()
                 
-            elif menuItem.GetLabel() == _("Show metadata window"):
+                self.parent.ImportPlay(self.selected)
+                
+            elif menuItem.GetLabel() == _("Show stream informations"):
                 #self.on_doubleClick(self)
-                self.parent.ImportInfo(self)
+                self.parent.ImportInfo(self, self.selected)
                 
             elif menuItem.GetLabel() == _("Remove the selected file"):
                 if self.fileListCtrl.GetItemCount() == 1:
@@ -299,7 +300,7 @@ class DnDPanel(wx.Panel):
                 else:
                     item = self.fileListCtrl.GetFocusedItem()
                     self.fileListCtrl.DeleteItem(item)
-                    self.selected = False
+                    self.selected = None
                     data_files.pop(item)
 
     #----------------------------------------------------------------------
@@ -312,7 +313,7 @@ class DnDPanel(wx.Panel):
         #self.fileListCtrl.ClearAll()
         self.fileListCtrl.DeleteAllItems()
         del data_files[:]
-        self.selected = False
+        self.selected = None
     #----------------------------------------------------------------------
     def on_select(self, event):
         """
@@ -320,10 +321,8 @@ class DnDPanel(wx.Panel):
         """
         index = self.fileListCtrl.GetFocusedItem()
         item = self.fileListCtrl.GetItemText(index)
-        self.selected = True
+        self.selected = item
         
-        print(data_files)
-        print(self.file_dest)
     #----------------------------------------------------------------------
     def on_doubleClick(self, row):
         """
@@ -337,7 +336,7 @@ class DnDPanel(wx.Panel):
         De-selecting a line with mouse by click in empty space of
         the control list
         """
-        self.selected = False
+        self.selected = None
     #----------------------------------------------------------------------
     def on_custom_save(self):
         """
