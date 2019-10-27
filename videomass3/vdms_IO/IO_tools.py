@@ -147,7 +147,7 @@ def probeDuration(path_list, ffprobe_link):
     try:
         print('----------------------------')
         for items in metadata.data_format()[0]:
-            print(items)
+            #print(items)
             if items.startswith('filename='):
                 data[items.split('=')[0]] = items.split('=')[1]
             if items.startswith('format_long_name='):
@@ -161,7 +161,7 @@ def probeDuration(path_list, ffprobe_link):
         if metadata.video_stream():
             print('----------------------------')
             for items in metadata.video_stream()[0]:
-                print(items)
+                #print(items)
                 if items.startswith('codec_name='):
                     data['video_codec_name'] = items.split('=')[1]
                 if items.startswith('codec_type='):
@@ -175,7 +175,7 @@ def probeDuration(path_list, ffprobe_link):
         if metadata.audio_stream():
             print('----------------------------')
             for items in metadata.audio_stream()[0]:
-                print(items)
+                #print(items)
                 if items.startswith('codec_type='):
                     data['audio_codec_type'] = items.split('=')[1]
                 if items.startswith('codec_name='):

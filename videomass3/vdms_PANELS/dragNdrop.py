@@ -32,7 +32,6 @@ import os
 from videomass3.vdms_IO import IO_tools
 
 dirname = os.path.expanduser('~') # /home/user/
-duration = []
 data_files = []
 
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -41,6 +40,7 @@ yellow = '#a29500'
 greenolive = '#6aaf23'
 orange = '#f28924'
 
+#--------------------------------------------------------------------#
 def convert(time):
     """
     convert time human to seconds
@@ -63,16 +63,12 @@ class MyListCtrl(wx.ListCtrl):
     parent.
     """
     #----------------------------------------------------------------------
-    def __init__(self, parent, fileList, ffprobe_link):
+    def __init__(self, parent, ffprobe_link):
         """Constructor"""
         wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
         self.index = 0
         self.parent = parent # parent is DnDPanel class
-        self.fileList = fileList
-        self.invalid = False # used for directories import control
         self.ffprobe_link = ffprobe_link
-        
-        print(self.index)
         
 
     #----------------------------------------------------------------------#
@@ -84,22 +80,13 @@ class MyListCtrl(wx.ListCtrl):
             mess = _("Directories are not allowed, just add files, please")
             print (mess)
             self.parent.statusbar_msg(mess, orange)
-            self.invalid = True
             return
         
-        #if path not in self.fileList:
         if not [x for x in data_files if x['filename'] == path]:
-
-            self.invalid = False
-            #self.fileList.append(path)
-            #self.InsertItem(self.index, path)
-            #self.index += 1
             
             data_dict = IO_tools.probeDuration(path, self.ffprobe_link)
             
             if data_dict[1] == 'N/A':
-                duration.append(0)
-                #data_files.append(data_dict[0])
                 msg = "%s; %s" %(data_dict[1],_('duration is skipped'))
                 print(msg)
                 
@@ -108,14 +95,16 @@ class MyListCtrl(wx.ListCtrl):
                 return
 
             if self.parent.which() == 'Video Conversions':
-                if not data_dict[0].get('video_codec_name') in ['mpeg4','h264']:
+                if not data_dict[0].get('video_codec_name'):
                     self.parent.statusbar_msg('Not such Video stream', orange)
                 else:
                     self.InsertItem(self.index, path)
                     self.index += 1
                     data_files.append(data_dict[0])
                     t = convert(data_dict[0]['duration'])
-                    duration.append(t)
+
+                    data_files[0]['duration_sec'] = t
+                    
                     self.parent.statusbar_msg('', None)
                     
             elif self.parent.which() == 'Audio Conversions':
@@ -126,7 +115,7 @@ class MyListCtrl(wx.ListCtrl):
                     self.index += 1
                     data_files.append(data_dict[0])
                     t = convert(data_dict[0]['duration'])
-                    duration.append(t)
+                    data_files[0]['duration_sec'] = t
                     self.parent.statusbar_msg('', None)
                     
             elif self.parent.which() == 'Pictures Slideshow Maker':
@@ -138,7 +127,7 @@ class MyListCtrl(wx.ListCtrl):
                     self.index += 1
                     data_files.append(data_dict[0])
                     t = convert(data_dict[0]['duration'])
-                    duration.append(t)
+                    data_files[0]['duration_sec'] = t
                     self.parent.statusbar_msg('', None)
             
             
@@ -147,13 +136,6 @@ class MyListCtrl(wx.ListCtrl):
             mess = _("Duplicate files are rejected: > '%s'") % path
             print (mess)
             self.parent.statusbar_msg(mess, yellow)
-            
-    #----------------------------------------------------------------------#
-    def send_data(self):
-        """
-        enable buttons and send data to parent in non-recursive mode
-        """
-        self.parent.btn_enable(self.fileList, self.invalid)
 
 ########################################################################
 class MyFileDropTarget(wx.FileDropTarget):
@@ -176,8 +158,6 @@ class MyFileDropTarget(wx.FileDropTarget):
         for filepath in filenames:
             self.window.dropUpdate(filepath) # update list control
 
-        # send data at end of every drag n drop action:
-        self.window.send_data()
         return True
 
 ########################################################################
@@ -190,13 +170,10 @@ class DnDPanel(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname # path name files destination
-        self.fileList = [] # list of each imported file
-        self.duration = duration # list of the duration of each file imported
-        self.switch = 'off' # tells if one or more files are imported
         self.selected = False # tells if an imported file is selected or not
         #This builds the list control box:
         
-        self.fileListCtrl = MyListCtrl(self, self.fileList, ffprobe_link)  #class MyListCtr
+        self.fileListCtrl = MyListCtrl(self, ffprobe_link)  #class MyListCtr
         #Establish the listctrl as a drop target:
         file_drop_target = MyFileDropTarget(self.fileListCtrl)
         self.fileListCtrl.SetDropTarget(file_drop_target) #Make drop target.
@@ -210,11 +187,12 @@ class DnDPanel(wx.Panel):
                                                 style=wx.TE_PROCESS_ENTER| 
                                                       wx.TE_READONLY
                                                       )
+        self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
         self.lbl = wx.StaticText(self, label=_("Drag one or more files here:"))
         self.fileListCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        grid = wx.FlexGridSizer(1, 4, 5, 5)
+        grid = wx.FlexGridSizer(1, 5, 5, 5)
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
@@ -234,6 +212,10 @@ class DnDPanel(wx.Panel):
                                    )
         grid.Add(self.text_path_save, 1, wx.ALL|wx.EXPAND, 5)
         self.text_path_save.SetMinSize((290, -1)) 
+        grid.Add(self.btn_go, 1, wx.ALL|
+                                 wx.ALIGN_CENTER_HORIZONTAL|
+                                 wx.ALIGN_CENTER_VERTICAL, 5
+                                 )
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
@@ -242,10 +224,21 @@ class DnDPanel(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.fileListCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         #self.Bind(wx.EVT_CHECKBOX, self.same_filedest, self.ckbx_dir)
-        #self.Bind(wx.EVT_BUTTON, self.on_custom_save, self.btn_save)
+        self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
         
         self.text_path_save.SetValue(self.file_dest)
     
+    #----------------------------------------------------------------------
+    def topic_Redirect(self, event):
+        """
+        Redirects to specific panel
+        """
+        if self.fileListCtrl.GetItemCount() == 0:
+            wx.MessageBox(_('Drag at least one file'), "Videomass", 
+                             wx.ICON_INFORMATION, self)
+            return
+        else:
+            self.parent.topic_Redirect(data_files)
     #----------------------------------------------------------------------
     def which(self):
         """
@@ -280,7 +273,7 @@ class DnDPanel(wx.Panel):
     #----------------------------------------------------------------------
     def onPopup(self, event):
         """
-        Evaluate the label string of the menu item selected and start
+        Evaluate the label string of the menu item selected and starts
         the related process
         """
         itemId = event.GetId()
@@ -306,22 +299,9 @@ class DnDPanel(wx.Panel):
                 else:
                     item = self.fileListCtrl.GetFocusedItem()
                     self.fileListCtrl.DeleteItem(item)
-                    self.parent.importClicked_disable()
                     self.selected = False
-                    self.fileList.pop(item)
-                    self.duration.pop(item)
-                    
-    #----------------------------------------------------------------------
-    def btn_enable(self, fileList, invalid):
-        """
-        When is dropped any files, Enable MainFrame Toolbar buttons.
-        The 'if' statement prevents the call to the function to be unnecessarily 
-        recursive, as well as the setting of the variables.
-        """
-        if invalid:
-            return
-        if self.switch == 'off':
-            self.switch = 'on'
+                    data_files.pop(item)
+
     #----------------------------------------------------------------------
     def deleteAll(self, event):
         """
@@ -331,10 +311,7 @@ class DnDPanel(wx.Panel):
         """
         #self.fileListCtrl.ClearAll()
         self.fileListCtrl.DeleteAllItems()
-        del self.fileList[:]
-        del duration[:]
-        del self.duration[:]
-        self.switch = 'off'
+        del data_files[:]
         self.selected = False
     #----------------------------------------------------------------------
     def on_select(self, event):
@@ -346,6 +323,7 @@ class DnDPanel(wx.Panel):
         self.selected = True
         
         print(data_files)
+        print(self.file_dest)
     #----------------------------------------------------------------------
     def on_doubleClick(self, row):
         """

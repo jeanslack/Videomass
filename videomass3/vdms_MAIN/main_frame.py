@@ -105,7 +105,7 @@ class MainFrame(wx.Frame):
         self.post_process = []# post-pocess set first file for play/metadata
         self.file_sources = []# list of items in list control
         self.file_destin = ''# path name for file saved destination
-        self.panelshown = '' # gives current (previusly) panel shown
+        self.panelshown = 'Choose Topic' # gives current (previusly) panel shown
         self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
         self.time_read = {'start seek':['',''],'time':['','']}
         self.duration = [] # empty if not file imported
@@ -298,10 +298,9 @@ class MainFrame(wx.Frame):
         #self.Bind(wx.EVT_SHOW, self.panelShown)
         #self.DnDPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
-        #-----------------------------------------------------------#
-        self.statusbar_msg(_('Add Files'),None)#set default statusmsg
+
         
-    #-------------------Status bar popolate--------------------#
+    #-------------------Status bar settings--------------------#
     def statusbar_msg(self, msg, color):
         """
         set the status-bar with messages and color types
@@ -312,21 +311,40 @@ class MainFrame(wx.Frame):
             self.sb.SetBackgroundColour(color)
         self.sb.SetStatusText(msg)
         self.sb.Refresh()
-    
-    #---------------------- Used Methods ----------------------#
-    
+    #
+    #------------------------------------------------------------------#
+    def choosetopicRetrieve(self):
+        """
+        Retrieve to choose topic panel and reset data object
+        """
+        self.panelshown = 'Choose Topic'
+        self.topicname = None
+        self.DnD.deleteAll(self)
+        self.PrstsPanel.Hide(), self.VconvPanel.Hide(), self.AconvPanel.Hide()
+        self.DnD.Hide(), self.ChooseTopic.Show()
+        self.toolbar.Hide(), self.btnpanel.Hide()
+        self.statusbar_msg(_(''), None)
+        self.Layout()
+    #------------------------------------------------------------------#
+    def topic_Redirect(self, data):
+        """
+        """
+        self.data = data
+        if self.topicname == 'Video Conversions':
+            self.switch_video_conv(self)
+            
+        elif self.topicname == 'Audio Conversions':
+            self.switch_audio_conv(self)
+            
+    #----------------------------------------------------------#
     def Setup_items_bar(self):
         """
         When switch between panels, disable/enable some item on menu bar 
         and tool bar. Also at the program start, the DnDPanel is show and 
         then take its setting
         """
-        if self.DnD.IsShown():
-            self.file_open.Enable(False), self.file_save.Enable(False), 
-            self.btn_saveprf.Hide(), 
-
             
-        elif self.PrstsPanel.IsShown():
+        if self.PrstsPanel.IsShown():
             self.file_open.Enable(True), self.file_save.Enable(True), 
             self.toolbar.EnableTool(wx.ID_FILE3, True)
             self.toolbar.EnableTool(wx.ID_FILE6, True)
@@ -336,7 +354,7 @@ class MainFrame(wx.Frame):
             self.Layout()
             
         elif self.VconvPanel.IsShown():
-            self.file_open.Enable(True), self.file_save.Enable(True),
+            self.toolbar.Show(), self.btnpanel.Show()
             self.btn_saveprf.Show(), 
  
             self.toolbar.EnableTool(wx.ID_FILE3, True)
@@ -500,7 +518,11 @@ class MainFrame(wx.Frame):
         """
         destroy the videomass.
         """
-        self.Destroy()
+        if self.panelshown == 'Choose Topic':
+            self.Destroy()
+        else:
+            self.choosetopicRetrieve()
+            
     #------------------------------------------------------------------#
 
 ############################### BUILD THE MENU BAR  ########################
@@ -517,8 +539,6 @@ class MainFrame(wx.Frame):
         ####----------------------- file
         fileButton = wx.Menu()
         
-        self.file_open = fileButton.Append(wx.ID_OPEN, _("Add File.. "), 
-                        _("Files import with drag and drop"))
         self.file_save = fileButton.Append(wx.ID_SAVE, _("Choose a Destination " 
                                                         "folder.."), 
                         _("Choice a folder where save processed files"))
@@ -589,7 +609,6 @@ class MainFrame(wx.Frame):
         
         #-----------------------Binding menu bar-------------------------#
         #----FILE----
-        self.Bind(wx.EVT_MENU, self.File_Open, self.file_open)
         self.Bind(wx.EVT_MENU, self.File_Save, self.file_save)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
@@ -618,12 +637,6 @@ class MainFrame(wx.Frame):
     #-------------------Menu Bar Event handler (callback)----------------------#
     
     #-------------------------- Menu  File -----------------------------#
-    def File_Open(self, event):
-        """
-        Open choice dialog input
-        """
-        self.File_import(self)
-    #--------------------------------------------------#
     def File_Save(self, event):
         """
         Open choice dialog output
@@ -635,7 +648,7 @@ class MainFrame(wx.Frame):
         """
         destroy the videomass.
         """
-        self.Destroy()
+        self.on_close(self)
                 
     #------------------------ Menu  Preferences -------------------------#
     def Show_toolbar(self, event):
@@ -866,35 +879,35 @@ class MainFrame(wx.Frame):
                                          wx.Bitmap(self.icon_import),
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE3, False)
-        self.toolbar.AddSeparator()
+        #self.toolbar.AddSeparator()
         
         #-------- Switch at preset manager
         prs_mng = self.toolbar.AddTool(wx.ID_FILE5, _('Presets Manager'), 
                                     wx.Bitmap(self.icon_storePictures)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE5, False)
-        self.toolbar.AddSeparator()
+        #self.toolbar.AddSeparator()
         
         #-------- Switch at videomass
         switch_video = self.toolbar.AddTool(wx.ID_FILE6, 
                     _('Video Conversions'), wx.Bitmap(self.icon_videoconversions)
                                                 )
-        self.toolbar.EnableTool(wx.ID_FILE6, False)
-        self.toolbar.AddSeparator()
+        #self.toolbar.EnableTool(wx.ID_FILE6, False)
+        #self.toolbar.AddSeparator()
 
         #-------- Switch Advanced audio
         switch_audio = self.toolbar.AddTool(wx.ID_FILE7, 
                     _('Audio Conversions'),  wx.Bitmap(self.icon_audioconversions)
                                                 )
         self.toolbar.EnableTool(wx.ID_FILE7, False)
-        self.toolbar.AddSeparator()
+        #self.toolbar.AddSeparator()
         
         # ------- Run process button
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start Encoding'), 
                                     wx.Bitmap(self.icon_runconversion)
                                                 )
         self.toolbar.EnableTool(wx.ID_OK, False)
-        self.toolbar.AddSeparator()
+        #self.toolbar.AddSeparator()
         
         #------- help button
         help_contest = self.toolbar.AddTool(wx.ID_ANY, _('Help'), 
@@ -912,27 +925,29 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.Helpme, help_contest)
 
     #--------------- Tool Bar Callback (event handler) -----------------#
+    
     #------------------------------------------------------------------#
-    def File_import(self, event, wich):
+    def File_import(self, event, which):
         """
         Show files import panel.
         """
-        self.topicname = wich
+        self.topicname = which
+        self.panelshown = 'File Import'
         self.PrstsPanel.Hide(), self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.ChooseTopic.Hide()
         self.DnD.Show()
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
         
-        self.toolbar.EnableTool(wx.ID_FILE5, True)
-        self.toolbar.EnableTool(wx.ID_FILE6, True)
-        self.toolbar.EnableTool(wx.ID_FILE7, True)
-        self.toolbar.EnableTool(wx.ID_FILE3, False)
-        self.toolbar.EnableTool(wx.ID_OK, False)
-        
-        self.Setup_items_bar()
+        #if which == 'Video Conversions':
+            #self.toolbar.Show()
+            #self.toolbar.RemoveTool(wx.ID_FILE3)
+            #self.toolbar.RemoveTool(wx.ID_FILE5)
+            ##self.toolbar.RemoveTool(wx.ID_FILE6)
+            #self.toolbar.RemoveTool(wx.ID_FILE7)
+            #self.toolbar.RemoveTool(wx.ID_OK)
+
     #------------------------------------------------------------------#
-    
     def Preset_Mng(self, event):
         """
         Show presets manager panel
@@ -957,14 +972,14 @@ class MainFrame(wx.Frame):
         Show Video converter panel
         """
         self.panelshown = 'video conversions'
-        self.file_sources = self.DnD.fileList[:]
+        #self.file_sources = self.DnD.fileList[:]
         self.file_destin = self.DnD.file_dest
         
         self.DnD.Hide(), self.PrstsPanel.Hide(), self.AconvPanel.Hide()
         self.VconvPanel.Show(), self.Layout()
         
         self.statusbar_msg(_('Video Conversions'), None)
-        self.Setup_items_bar()
+        #self.Setup_items_bar()
 
         self.VconvPanel.file_destin = self.file_destin
         if self.file_sources != self.VconvPanel.file_sources:
@@ -986,7 +1001,7 @@ class MainFrame(wx.Frame):
         self.AconvPanel.Show(), self.Layout()
         
         self.statusbar_msg(_('Audio Conversions'), None)
-        self.Setup_items_bar()
+        #self.Setup_items_bar()
 
         self.AconvPanel.file_destin = self.file_destin
         if self.file_sources != self.AconvPanel.file_sources:
