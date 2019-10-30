@@ -52,9 +52,9 @@ def convert(time):
     
     pos = time.split(':')
     h,m,s = pos[0],pos[1],pos[2]
-    totalsum = (int(h)*60+ int(m)*60+ float(s))
+    duration = (int(h)*60+ int(m)*60+ float(s))
     
-    return totalsum
+    return duration
 
 ########################################################################
 class MyListCtrl(wx.ListCtrl):
@@ -68,7 +68,6 @@ class MyListCtrl(wx.ListCtrl):
         wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
         self.index = 0
         self.parent = parent # parent is DnDPanel class
-        self.ffprobe_link = ffprobe_link
         
 
     #----------------------------------------------------------------------#
@@ -76,62 +75,62 @@ class MyListCtrl(wx.ListCtrl):
         """
         Update list-control during drag and drop
         """
+        msg_video = _('Not found Video Stream. Just drag Video files only.')
+        msg_audio = _('Not found Audio Stream. Just drag Audio files only.')
+        msg_slide = _('Not such picture as jpg, png or bmp formats.')
+        msg_dir = _("Directories are not allowed, just add files, please.")
+        
         if os.path.isdir(path):
-            mess = _("Directories are not allowed, just add files, please")
-            print (mess)
-            self.parent.statusbar_msg(mess, orange)
+            print (mess_dir)
+            self.parent.statusbar_msg(msg_dir, orange)
             return
         
-        if not [x for x in data_files if x['filename'] == path]:
-            
-            data_dict = IO_tools.probeDuration(path, self.ffprobe_link)
-            
-            if data_dict[1] == 'N/A':
-                msg = "%s; %s" %(data_dict[1],_('duration is skipped'))
-                print(msg)
-                
-            elif data_dict[1]:
-                self.parent.statusbar_msg(data_dict[1], red)
-                return
+        if not [x for x in data_files if x['FORMAT'].get('filename') == path]:
+            data_dict = IO_tools.probeInfo(path)
+        
+            if data_dict[1]:
+                    self.parent.statusbar_msg(data_dict[1], red)
+                    return
 
             if self.parent.which() == 'Video Conversions':
-                if not data_dict[0].get('video_codec_name'):
-                    self.parent.statusbar_msg('Not such Video stream', orange)
+                if not data_dict[0]['VIDEO']:
+                    self.parent.statusbar_msg(msg_video, orange)
                 else:
                     self.InsertItem(self.index, path)
                     self.index += 1
                     data_files.append(data_dict[0])
-                    t = convert(data_dict[0]['duration'])
-
-                    data_files[0]['duration_sec'] = t
-                    
+                    t = convert(data_dict[0].get('FORMAT').get('duration'))
+                    data_files[0]['DURATION'] = t
                     self.parent.statusbar_msg('', None)
-                    
+            
             elif self.parent.which() == 'Audio Conversions':
-                if data_dict[0].get('video_codec_type'):
-                    self.parent.statusbar_msg('Not such Audio stream', orange)
+                if data_dict[0]['VIDEO']:
+                    self.parent.statusbar_msg(msg_audio, orange)
                 else:
                     self.InsertItem(self.index, path)
                     self.index += 1
                     data_files.append(data_dict[0])
-                    t = convert(data_dict[0]['duration'])
-                    data_files[0]['duration_sec'] = t
+                    t = convert(data_dict[0].get('FORMAT').get('duration'))
+                    data_files[0]['DURATION'] = t
                     self.parent.statusbar_msg('', None)
-                    
+
             elif self.parent.which() == 'Pictures Slideshow Maker':
-                l = ['bmp','png','mjpeg']
-                if not data_dict[0].get('video_codec_name') in l:
-                    self.parent.statusbar_msg('Not such Pictures imported', orange)
+                if not data_dict[0]['VIDEO']:
+                    self.parent.statusbar_msg(msg_slide, orange)
                 else:
-                    self.InsertItem(self.index, path)
-                    self.index += 1
-                    data_files.append(data_dict[0])
-                    t = convert(data_dict[0]['duration'])
-                    data_files[0]['duration_sec'] = t
-                    self.parent.statusbar_msg('', None)
-            
-            
-            
+                    f = ['bmp','png','mjpeg']
+                    name = list(data_dict[0]['VIDEO'].keys())
+                    codec = data_dict[0]['VIDEO'].get(name[0]).get('codec_name')
+                        
+                    if not codec in f:
+                        self.parent.statusbar_msg(msg_slide, orange)
+                    else:
+                        self.InsertItem(self.index, path)
+                        self.index += 1
+                        data_files.append(data_dict[0])
+                        t = convert(data_dict[0].get('FORMAT').get('duration'))
+                        data_files[0]['DURATION'] = t
+                        self.parent.statusbar_msg('', None)
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
             print (mess)
@@ -322,6 +321,7 @@ class DnDPanel(wx.Panel):
         index = self.fileListCtrl.GetFocusedItem()
         item = self.fileListCtrl.GetItemText(index)
         self.selected = item
+        print(data_files)
         
     #----------------------------------------------------------------------
     def on_doubleClick(self, row):

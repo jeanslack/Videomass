@@ -32,6 +32,7 @@ import wx
 get = wx.GetApp()
 OS = get.OS
 DIRconf = get.DIRconf
+ffprobe_url = get.ffprobe_url
 
 if OS == 'Windows':
     from videomass3.vdms_PROCESS.task_processingWin32 import GeneralProcess
@@ -45,6 +46,7 @@ else:
     from videomass3.vdms_PROCESS.volumedetect import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproduction import Play
     from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
+    #from videomass3.vdms_PROCESS.import_stream_parsing import parsing_import
     
     
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
@@ -125,70 +127,72 @@ def stream_play(filepath, timeseq, ffplay_link, param, loglevel_type):
         return
     
 #-----------------------------------------------------------------------#
-def probeDuration(path_list, ffprobe_link):
+def probeInfo(filepath):
     """
-    Parsa i metadati riguardanti la durata (duration) dei media importati, 
-    utilizzata per il calcolo della progress bar. Questa funzione viene 
-    chiamata nella MyListCtrl(wx.ListCtrl) con il pannello dragNdrop.
-    Se i file non sono supportati da ffprobe e quindi da ffmpeg, avvisa
-    con un messaggio di errore.
+    Get data stream informations during dragNdrop action. 
+    The duration data is useful to calculate the progress bar too. 
+    It is called by MyListCtrl(wx.ListCtrl) only. 
+    Return tuple with two items: (dict type data object, None) or
+    (None, data str error).
+    
     """
-    data = dict()
-    metadata = FFProbe(path_list, ffprobe_link, 'pretty') 
+    f_format = dict()
+    v_streams = dict()
+    a_streams = dict()
+    s_streams = dict()
+    
+    metadata = FFProbe(filepath, ffprobe_url, 'pretty') 
         # first execute a control for errors:
     if metadata.ERROR():
         err = metadata.error
         print ("[FFprobe] Error:  %s" % err)
-        #wx.MessageBox("%s\nFile not supported!" % (metadata.error),
-                      #"Error - Videomass", 
-                      #wx.ICON_ERROR, None)
-        duration = 0
-        return duration, err
-    try:
-        print('----------------------------')
-        for items in metadata.data_format()[0]:
-            #print(items)
-            if items.startswith('filename='):
-                data[items.split('=')[0]] = items.split('=')[1]
-            if items.startswith('format_long_name='):
-                data[items.split('=')[0]] = items.split('=')[1]
-            if items.startswith('duration='):
-                data[items.split('=')[0]] = items.split('=')[1]
-                duration = items.split('=')[1]    
-            if items.startswith('size='):
-                data[items.split('=')[0]] = items.split('=')[1]
-                
-        if metadata.video_stream():
-            print('----------------------------')
-            for items in metadata.video_stream()[0]:
-                #print(items)
-                if items.startswith('codec_name='):
-                    data['video_codec_name'] = items.split('=')[1]
-                if items.startswith('codec_type='):
-                    data['video_codec_type'] = items.split('=')[1]
-                if items.startswith('width='):
-                    data[items.split('=')[0]] = items.split('=')[1]
-                    duration = items.split('=')[1]    
-                if items.startswith('height='):
-                    data[items.split('=')[0]] = items.split('=')[1]
-        
-        if metadata.audio_stream():
-            print('----------------------------')
-            for items in metadata.audio_stream()[0]:
-                #print(items)
-                if items.startswith('codec_type='):
-                    data['audio_codec_type'] = items.split('=')[1]
-                if items.startswith('codec_name='):
-                    data['audio_codec_name'] = items.split('=')[1]
-
-    except ValueError as ve:
-        duration = 0
-        if ve.args[0] == "invalid literal for int() with base 10: 'N/A'":
-            return duration, 'N/A'
-        else:
-            return duration, ve.args
+        return (None, err)
     
-    return data , None
+    video_list = metadata.video_stream()
+    format_list = metadata.data_format()
+    audio_list = metadata.audio_stream()
+    subtitle_list = metadata.subtitle_stream()
+    
+    n = len(format_list)
+    for f in range(n):
+        (k,v) = format_list[f][0].strip().split('=')
+        stream = 'FORMAT'
+        for i in format_list[f]:
+            (k,v) = i.split('=',1)
+            f_format[k] = v
+    
+    n = len(video_list)
+    for v in range(n):
+        (key) = video_list[v][0].strip().split('=')[1]
+        stream = 'index %s' % key[0]
+        v_streams[stream] = {}
+        for i in video_list[v]:
+            (k,v) = i.split('=',1)
+            v_streams[stream].update({k:v})
+            
+    n = len(audio_list)
+    for a in range(n):
+        (key) = audio_list[a][0].strip().split('=')[1]
+        stream = 'index %s' % key[0]
+        a_streams[stream] = {}
+        for i in audio_list[a]:
+            (k,v) = i.split('=',1)
+            a_streams[stream].update({k:v})
+    
+    n = len(subtitle_list)
+    for s in range(n):
+        (key) = subtitle_list[s][0].strip().split('=')[1]
+        stream = 'index %s' % key[0]
+        s_streams[stream] = {}
+        for i in subtitle_list[s]:
+            (k,v) = i.split('=',1)
+            s_streams[stream].update({k:v})
+    
+    
+    data = {'FORMAT': f_format, 'VIDEO': v_streams, 
+            'AUDIO': a_streams, 'SUBTITLES': s_streams}
+    
+    return (data , None)
 #-------------------------------------------------------------------------#
 def volumeDetectProcess(ffmpeg, filelist, time_seq):
     """

@@ -554,16 +554,6 @@ class MainFrame(wx.Frame):
         
         ####------------------ setup button
         setupButton = wx.Menu()
-
-        self.showtoolbar = setupButton.Append(wx.ID_ANY, _("Show Tool Bar"), 
-                                       _("Show tool bar view"), wx.ITEM_CHECK)
-        setupButton.Check(self.showtoolbar.GetId(), True)
-        
-        self.showpanelbar = setupButton.Append(wx.ID_ANY, _("Show Buttons Bar"), 
-                                _("Show or hide buttons bar view"), wx.ITEM_CHECK)
-        setupButton.Check(self.showpanelbar.GetId(), True)
-
-        setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"), 
                                        _("General Settings"))
         
@@ -600,8 +590,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
         
         #----SETUP----
-        self.Bind(wx.EVT_MENU, self.Show_toolbar, self.showtoolbar)
-        self.Bind(wx.EVT_MENU, self.Show_panelbar, self.showpanelbar)
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         #----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
@@ -629,28 +617,7 @@ class MainFrame(wx.Frame):
         self.on_close(self)
                 
     #------------------------ Menu  Preferences -------------------------#
-    def Show_toolbar(self, event):
-        """
-        Show the tool bar and disable Show toolbar menu item
-        """
-        if self.showtoolbar.IsChecked():
-            self.toolbar.Show()
-        else:
-            self.toolbar.Hide()
-            
-        self.Layout()
-    #--------------------------------------------------------------------#
-    def Show_panelbar(self, event):
-        """
-        Show or Hide the buttons bar
-        """
-        if self.showpanelbar.IsChecked():
-            self.btnpanel.Show()
-        else:
-            self.btnpanel.Hide()
-            
-        self.Layout()
-    #------------------------------------------------------------------#
+
     def Setup(self, event):
         """
         Call the module setup for setting preferences
