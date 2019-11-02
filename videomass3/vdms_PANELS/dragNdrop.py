@@ -44,9 +44,8 @@ orange = '#f28924'
 def convert(time):
     """
     convert time human to seconds
-    """
-    print(time)
     
+    """
     if time == 'N/A':
         return int('0')
     
@@ -85,52 +84,48 @@ class MyListCtrl(wx.ListCtrl):
             self.parent.statusbar_msg(msg_dir, orange)
             return
         
-        if not [x for x in data_files if x['FORMAT'].get('filename') == path]:
-            data_dict = IO_tools.probeInfo(path)
+        if not [x for x in data_files if x['format']['filename'] == path]:
+            data = IO_tools.probeInfo(path)
         
-            if data_dict[1]:
+            if data[1]:
                     self.parent.statusbar_msg(data_dict[1], red)
                     return
+            
+            data = eval(data[0])
+            codec_type = [x['codec_type'] for x in data['streams']]
+
 
             if self.parent.which() == 'Video Conversions':
-                if not data_dict[0]['VIDEO']:
+                if not 'video' in codec_type:
                     self.parent.statusbar_msg(msg_video, orange)
-                else:
-                    self.InsertItem(self.index, path)
-                    self.index += 1
-                    data_files.append(data_dict[0])
-                    t = convert(data_dict[0].get('FORMAT').get('duration'))
-                    data_files[0]['DURATION'] = t
-                    self.parent.statusbar_msg('', None)
+                    return
             
             elif self.parent.which() == 'Audio Conversions':
-                if data_dict[0]['VIDEO']:
+                if 'video' in codec_type:
                     self.parent.statusbar_msg(msg_audio, orange)
-                else:
-                    self.InsertItem(self.index, path)
-                    self.index += 1
-                    data_files.append(data_dict[0])
-                    t = convert(data_dict[0].get('FORMAT').get('duration'))
-                    data_files[0]['DURATION'] = t
-                    self.parent.statusbar_msg('', None)
+                    return
 
             elif self.parent.which() == 'Pictures Slideshow Maker':
-                if not data_dict[0]['VIDEO']:
+                if not 'video' in codec_type:
                     self.parent.statusbar_msg(msg_slide, orange)
-                else:
-                    f = ['bmp','png','mjpeg']
-                    name = list(data_dict[0]['VIDEO'].keys())
-                    codec = data_dict[0]['VIDEO'].get(name[0]).get('codec_name')
-                        
-                    if not codec in f:
-                        self.parent.statusbar_msg(msg_slide, orange)
-                    else:
-                        self.InsertItem(self.index, path)
-                        self.index += 1
-                        data_files.append(data_dict[0])
-                        t = convert(data_dict[0].get('FORMAT').get('duration'))
-                        data_files[0]['DURATION'] = t
-                        self.parent.statusbar_msg('', None)
+                    return
+                f = ['bmp','png','mjpeg']
+                if (not [x['codec_name'] for x in data['streams'] 
+                         if x['codec_name'] in f]):
+                    self.parent.statusbar_msg(msg_slide, orange)
+                    return
+
+            self.InsertItem(self.index, path)
+            self.index += 1
+            if not 'duration' in data['format'].keys():
+                data['format']['duration'] = 0
+            else:
+                data.get('format')['time'] = data.get('format').pop('duration')
+                t = convert(data.get('format')['time'])
+                data['format']['duration'] = t
+            data_files.append(data)
+            self.parent.statusbar_msg('', None)
+            
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
             print (mess)

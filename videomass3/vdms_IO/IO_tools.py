@@ -46,8 +46,6 @@ else:
     from videomass3.vdms_PROCESS.volumedetect import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproduction import Play
     from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
-    #from videomass3.vdms_PROCESS.import_stream_parsing import parsing_import
-    
     
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
 from videomass3.vdms_PROCESS.check_bin import ff_conf
@@ -127,70 +125,22 @@ def stream_play(filepath, timeseq, ffplay_link, param, loglevel_type):
         return
     
 #-----------------------------------------------------------------------#
-def probeInfo(filepath):
+def probeInfo(filename):
     """
-    Get data stream informations during dragNdrop action. 
-    The duration data is useful to calculate the progress bar too. 
+    Get data stream informations during dragNdrop action.  
     It is called by MyListCtrl(wx.ListCtrl) only. 
-    Return tuple with two items: (dict type data object, None) or
-    (None, data str error).
+    Return tuple with two items: (data, None) or
+    (None, error).
     
     """
-    f_format = dict()
-    v_streams = dict()
-    a_streams = dict()
-    s_streams = dict()
-    
-    metadata = FFProbe(filepath, ffprobe_url, 'pretty') 
-        # first execute a control for errors:
-    if metadata.ERROR():
+    metadata = FFProbe(ffprobe_url, filename, parse=False, writer='json')
+        
+    if metadata.ERROR(): # first execute a control for errors:
         err = metadata.error
         print ("[FFprobe] Error:  %s" % err)
         return (None, err)
     
-    video_list = metadata.video_stream()
-    format_list = metadata.data_format()
-    audio_list = metadata.audio_stream()
-    subtitle_list = metadata.subtitle_stream()
-    
-    n = len(format_list)
-    for f in range(n):
-        (k,v) = format_list[f][0].strip().split('=')
-        stream = 'FORMAT'
-        for i in format_list[f]:
-            (k,v) = i.split('=',1)
-            f_format[k] = v
-    
-    n = len(video_list)
-    for v in range(n):
-        (key) = video_list[v][0].strip().split('=')[1]
-        stream = 'index %s' % key[0]
-        v_streams[stream] = {}
-        for i in video_list[v]:
-            (k,v) = i.split('=',1)
-            v_streams[stream].update({k:v})
-            
-    n = len(audio_list)
-    for a in range(n):
-        (key) = audio_list[a][0].strip().split('=')[1]
-        stream = 'index %s' % key[0]
-        a_streams[stream] = {}
-        for i in audio_list[a]:
-            (k,v) = i.split('=',1)
-            a_streams[stream].update({k:v})
-    
-    n = len(subtitle_list)
-    for s in range(n):
-        (key) = subtitle_list[s][0].strip().split('=')[1]
-        stream = 'index %s' % key[0]
-        s_streams[stream] = {}
-        for i in subtitle_list[s]:
-            (k,v) = i.split('=',1)
-            s_streams[stream].update({k:v})
-    
-    
-    data = {'FORMAT': f_format, 'VIDEO': v_streams, 
-            'AUDIO': a_streams, 'SUBTITLES': s_streams}
+    data = metadata.custom_output()
     
     return (data , None)
 #-------------------------------------------------------------------------#
