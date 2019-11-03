@@ -88,8 +88,8 @@ class MyListCtrl(wx.ListCtrl):
             data = IO_tools.probeInfo(path)
         
             if data[1]:
-                    self.parent.statusbar_msg(data_dict[1], red)
-                    return
+                self.parent.statusbar_msg(data[1], red)
+                return
             
             data = eval(data[0])
             codec_type = [x['codec_type'] for x in data['streams']]
@@ -316,7 +316,7 @@ class DnDPanel(wx.Panel):
         index = self.fileListCtrl.GetFocusedItem()
         item = self.fileListCtrl.GetItemText(index)
         self.selected = item
-        print(data_files)
+        print(item)
         
     #----------------------------------------------------------------------
     def on_doubleClick(self, row):
@@ -343,6 +343,7 @@ class DnDPanel(wx.Panel):
             self.text_path_save.SetValue("")
             self.text_path_save.AppendText(dialdir.GetPath())
             self.file_dest = '%s' % (dialdir.GetPath())
+            self.parent.file_destin = self.file_dest
             dialdir.Destroy()
     #----------------------------------------------------------------------
     def same_filedest(self):

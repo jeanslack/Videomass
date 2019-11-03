@@ -148,8 +148,7 @@ class Video_Conv(wx.Panel):
         self.threads = threads
         self.ffmpeg_loglev = ffmpeg_loglev
         self.ffplay_loglev = ffplay_loglev
-        self.file_sources = []
-        self.file_destin = ''
+        self.file_src = []
         self.normdetails = []
         self.OS = OS
         self.btn_color = btn_color
@@ -993,7 +992,7 @@ class Video_Conv(wx.Panel):
     def on_FiltersPreview(self, event):
         """
         Showing a preview with applied filters only and Only the first 
-        file in the list `self.file_sources` will be displayed
+        file in the list `self.file_src` will be displayed
         """
         if not cmd_opt["Filters"]:
             wx.MessageBox(_("No filter enabled"), "Videomass: Info", 
@@ -1001,7 +1000,7 @@ class Video_Conv(wx.Panel):
             return
         
         self.time_seq = self.parent.time_seq
-        first_path = self.file_sources[0]['filename']
+        first_path = self.file_src[0]['filename']
         
         stream_play(first_path, 
                     self.time_seq, 
@@ -1444,16 +1443,14 @@ class Video_Conv(wx.Panel):
         Evaluates the user's choices and directs them to the references 
         for audio normalizations based on PEAK or RMS .
         """
-        file_sources = self.parent.file_sources[:]
-        
         if self.rdbx_normalize.GetSelection() == 1:
-            self.max_volume_PEAK(file_sources)
+            self.max_volume_PEAK()
             
         elif self.rdbx_normalize.GetSelection() == 2:
-            self.mean_volume_RMS(file_sources)
+            self.mean_volume_RMS()
 
     #------------------------------------------------------------------#
-    def max_volume_PEAK(self, file_sources):  # Volumedetect button
+    def max_volume_PEAK(self):  # Volumedetect button
         """
         Analyzes to get MAXIMUM peak levels data to calculates offset in
         dBFS values need for audio normalization process.
@@ -1470,7 +1467,7 @@ class Video_Conv(wx.Panel):
         target = self.spin_target.GetValue()
 
         data = volumeDetectProcess(self.ffmpeg_link, 
-                                   file_sources, 
+                                   self.file_src, 
                                    self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
@@ -1478,7 +1475,7 @@ class Video_Conv(wx.Panel):
         else:
             volume = list()
 
-            for f, v in zip(file_sources, data[0]):
+            for f, v in zip(self.file_src, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(target)
@@ -1511,7 +1508,7 @@ class Video_Conv(wx.Panel):
         self.notebook_1_pane_3.Layout()
 
     #------------------------------------------------------------------#
-    def mean_volume_RMS(self, file_sources):  # Volumedetect button
+    def mean_volume_RMS(self):  # Volumedetect button
         """
         Analyzes to get MEAN peak levels data to calculates RMS offset in dB
         need for audio normalization process.
@@ -1527,7 +1524,7 @@ class Video_Conv(wx.Panel):
         target = self.spin_target.GetValue()
 
         data = volumeDetectProcess(self.ffmpeg_link, 
-                                   file_sources, 
+                                   self.file_src, 
                                    self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
@@ -1535,7 +1532,7 @@ class Video_Conv(wx.Panel):
         else:
             volume = list()
 
-            for f, v in zip(file_sources, data[0]):
+            for f, v in zip(self.file_src, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(meanvol) - float(target)
@@ -1684,38 +1681,37 @@ class Video_Conv(wx.Panel):
                                 'the data on the audio volume.'),
                                 'Videomass', wx.ICON_INFORMATION)
                 return
-            
-        # make a different id need to avoid attribute overwrite:
-        file_sources = self.parent.file_sources[:]
-        # make a different id need to avoid attribute overwrite:
-        dir_destin = self.file_destin
-        # used for file log name
-        logname = 'Videomass_VideoConversion.log'
-
         # CHECKING:
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
             self.time_seq = self.parent.time_seq
-            checking = inspect(file_sources, dir_destin, '')
+            checking = inspect(self.file_src, 
+                               self.parent.file_destin, 
+                               ''
+                               )
         else:
             self.update_allentries()# last update of all setting interface
-            checking = inspect(file_sources, dir_destin, cmd_opt["VideoFormat"])
+            checking = inspect(self.file_src, 
+                               self.parent.file_destin, 
+                               cmd_opt["VideoFormat"]
+                               )
             
         if not checking[0]: # the user changing idea or not such files exist
             return
         
-        (typeproc, file_sources, dir_destin,
-        filename, base_name, countmax) = checking
+        (typeproc, f_src, destin, filename, base_name, countmax) = checking
+        
+        logname = 'Videomass_VideoConversion.log'
     
         if self.rdbx_normalize.GetSelection() == 3: # EBU
-            self.ebu_2pass(file_sources, dir_destin, countmax, logname)
+            self.ebu_2pass(f_src, destin, countmax, logname)
             
         else:
-            self.stdProc(file_sources, dir_destin, countmax, logname)
+            self.stdProc(f_src, destin, countmax, logname)
         
         return
 
     #------------------------------------------------------------------#
-    def stdProc(self, file_sources, dir_destin, countmax, logname):
+    def stdProc(self, f_src, destin, countmax, logname):
         """
         Define the ffmpeg command strings for batch process.
         
@@ -1741,9 +1737,9 @@ class Video_Conv(wx.Panel):
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('common',
-                                           file_sources, 
+                                           f_src, 
                                            '', 
-                                           dir_destin, 
+                                           destin, 
                                            command, 
                                            None, 
                                            '',
@@ -1752,7 +1748,7 @@ class Video_Conv(wx.Panel):
                                            countmax,
                                            )
                 #used for play preview and mediainfo:
-                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
+                f = '%s/%s' % (destin[0], os.path.basename(f_src[0]))
                 self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
@@ -1802,9 +1798,9 @@ class Video_Conv(wx.Panel):
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('doublepass',
-                                           file_sources, 
+                                           f_src, 
                                            cmd_opt['VideoFormat'], 
-                                           dir_destin, 
+                                           destin, 
                                            None, 
                                            [pass1, pass2], 
                                            '',
@@ -1813,8 +1809,8 @@ class Video_Conv(wx.Panel):
                                            countmax,
                                            )
                 #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
+                self.exportStreams('%s/%s.%s' % (destin[0], f, 
                                               cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
@@ -1848,9 +1844,9 @@ class Video_Conv(wx.Panel):
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('common',
-                                           file_sources, 
+                                           f_src, 
                                            cmd_opt['VideoFormat'], 
-                                           dir_destin, 
+                                           destin, 
                                            command, 
                                            None, 
                                            '',
@@ -1859,12 +1855,12 @@ class Video_Conv(wx.Panel):
                                            countmax, 
                                            )
                 #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
+                self.exportStreams('%s/%s.%s' % (destin[0], f, 
                                                  cmd_opt["VideoFormat"]))
 
     #------------------------------------------------------------------#
-    def ebu_2pass(self, file_sources, dir_destin, countmax, logname):
+    def ebu_2pass(self, f_src, destin, countmax, logname):
         """
         Define the ffmpeg command strings for batch process with
         EBU two-passes conversion 
@@ -1902,9 +1898,9 @@ class Video_Conv(wx.Panel):
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('EBU normalization',
-                                           file_sources, 
+                                           f_src, 
                                            '', 
-                                           dir_destin, 
+                                           destin, 
                                            cmd_opt["VideoFormat"], 
                                            [pass1, pass2, loudfilter, False], 
                                            '',
@@ -1913,7 +1909,7 @@ class Video_Conv(wx.Panel):
                                            countmax,
                                            )
                 #used for play preview and mediainfo:
-                f = '%s/%s' % (dir_destin[0], os.path.basename(file_sources[0]))
+                f = '%s/%s' % (destin[0], os.path.basename(f_src[0]))
                 self.exportStreams(f)#pass arg to function above
         
         else:
@@ -1964,9 +1960,9 @@ class Video_Conv(wx.Panel):
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('EBU normalization',
-                                           file_sources, 
+                                           f_src, 
                                            '', 
-                                           dir_destin, 
+                                           destin, 
                                            cmd_opt["VideoFormat"], 
                                            [pass1, pass2, loudfilter, True], 
                                            '',
@@ -1975,8 +1971,8 @@ class Video_Conv(wx.Panel):
                                            countmax,
                                            )
                 #used for play preview and mediainfo:
-                f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+                f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
+                self.exportStreams('%s/%s.%s' % (destin[0], f, 
                                                  cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
     #------------------------------------------------------------------#

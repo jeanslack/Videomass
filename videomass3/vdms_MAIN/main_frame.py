@@ -35,9 +35,12 @@ from videomass3.vdms_DIALOGS import settings
 from videomass3.vdms_DIALOGS import infoprg
 from videomass3.vdms_DIALOGS import while_playing
 from videomass3.vdms_DIALOGS import ffmpeg_search
+from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
 from videomass3.vdms_PANELS import choose_topic, dragNdrop, presets_mng_panel
 from videomass3.vdms_PANELS import video_conv, audio_conv
 from videomass3.vdms_IO import IO_tools
+
+
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -104,11 +107,10 @@ class MainFrame(wx.Frame):
         self.post_process = []# post-pocess set first file for play/metadata
         self.data = None# list of items in list control
         self.file_destin = ''# path name for file saved destination
-        self.panelshown = 'Choose Topic' # gives current (previusly) panel shown
         self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
         self.time_read = {'start seek':['',''],'time':['','']}
         self.duration = [] # empty if not file imported
-        self.topicname = None
+        self.topicname = None # panel name shown
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
         #----------- panel toolbar buttons
@@ -315,7 +317,6 @@ class MainFrame(wx.Frame):
         """
         Retrieve to choose topic panel and reset data object
         """
-        self.panelshown = 'Choose Topic'
         self.topicname = None
         self.data = None
         self.DnD.deleteAll(self)
@@ -431,20 +432,20 @@ class MainFrame(wx.Frame):
         """
         IO_tools.stream_play(filepath, 
                              self.time_seq, 
-                             self.ffplay_link,
-                             '', # parameters
-                             self.ffplay_loglevel,
-                             )
+                            '', # parameters
+                            )
     #------------------------------------------------------------------#
-    def ImportInfo(self, event, filepath):
+    def ImportInfo(self, event):
         """
         Redirect input file clicked at stream_info for metadata display
         """
-        title = _('Videomass: media streams')
-        IO_tools.stream_info(title, 
-                             filepath, 
-                             self.ffprobe_link,
-                             )
+        
+        dialog = Mediainfo('Videomass: media streams', self.data, self.OS,)
+        dialog.Show()
+            
+            
+        #title = _('Videomass: media streams')
+        #IO_tools.stream_info(title, filepath)
     #------------------------------------------------------------------#
     def ExportPlay(self, event):
         """
@@ -498,7 +499,7 @@ class MainFrame(wx.Frame):
         """
         destroy the videomass.
         """
-        if self.panelshown == 'Choose Topic':
+        if not self.topicname:
             self.Destroy()
         else:
             self.choosetopicRetrieve()
@@ -843,7 +844,6 @@ class MainFrame(wx.Frame):
         Show files import panel.
         """
         self.topicname = which
-        self.panelshown = 'File Import'
         self.PrstsPanel.Hide(), self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.ChooseTopic.Hide()
         self.DnD.Show()
@@ -855,7 +855,6 @@ class MainFrame(wx.Frame):
         """
         Show presets manager panel
         """
-        self.panelshown = 'presets manager'
         self.file_sources = self.DnD.fileList[:]
         self.file_destin = self.DnD.file_dest
         
@@ -874,17 +873,18 @@ class MainFrame(wx.Frame):
         """
         Show Video converter panel
         """
-        self.panelshown = 'video conversions'
-        #self.file_sources = self.DnD.fileList[:]
         self.file_destin = self.DnD.file_dest
         
         self.DnD.Hide(), self.PrstsPanel.Hide(), self.AconvPanel.Hide()
         self.VconvPanel.Show(), self.Layout()
-        
         self.statusbar_msg(_('Video Conversions'), None)
-
-        self.VconvPanel.file_destin = self.file_destin
-        self.VconvPanel.file_sources = self.data
+        flist = [f['format']['filename'] for f in 
+                 self.data if f['format']['filename']
+                 ]
+        self.duration = [f['format']['duration'] for f in 
+                         self.data if f['format']['duration']
+                         ]
+        self.VconvPanel.file_src = flist
         self.VconvPanel.normalize_default()
         
         self.toolbar.Show()
@@ -898,21 +898,25 @@ class MainFrame(wx.Frame):
         """
         Show Audio converter panel
         """
-        self.panelshown = 'audio conversions'
-        self.file_sources = self.DnD.fileList[:]
         self.file_destin = self.DnD.file_dest
 
         self.DnD.Hide(), self.PrstsPanel.Hide(), self.VconvPanel.Hide()
         self.AconvPanel.Show(), self.Layout()
-        
         self.statusbar_msg(_('Audio Conversions'), None)
         #self.Setup_items_bar()
-
-        self.AconvPanel.file_destin = self.file_destin
-        if self.file_sources != self.AconvPanel.file_sources:
-            self.AconvPanel.file_sources = self.file_sources
-            self.AconvPanel.normalization_default()
-            self.duration = self.DnD.duration
+        flist = [f['format']['filename'] for f in 
+                 self.data if f['format']['filename']
+                 ]
+        self.duration = [f['format']['duration'] for f in 
+                         self.data if f['format']['duration']
+                         ]
+        self.AconvPanel.file_sources = flist
+        self.AconvPanel.normalization_default()
+        
+        self.toolbar.Show()
+        self.btnpanel.Show()
+        self.btn_saveprf.Show()
+        self.toolbar.EnableTool(wx.ID_OK, True)
             
     #------------------------------------------------------------------#
     def switch_Process(self, *varargs):
@@ -922,14 +926,12 @@ class MainFrame(wx.Frame):
         of the main frame (as others) because otherwise it would immediately
         start running.
         """
-        duration = self.DnD.duration[:] # the streams duration list
-        
         if self.showpanelbar.IsChecked():
             self.btnpanel.Hide()# hide buttons bar if the user has shown it:
         
         IO_tools.process(self, varargs, 
-                         self.panelshown, 
-                         duration,
+                         self.topicname, 
+                         self.duration,
                          self.time_seq,
                          self.time_read,
                          )
@@ -969,10 +971,10 @@ class MainFrame(wx.Frame):
         if panelshown == 'presets manager':
             self.ProcessPanel.Hide()
             self.Preset_Mng(self)
-        elif panelshown == 'video conversions':
+        elif panelshown == 'Video Conversions':
             self.ProcessPanel.Hide()
             self.switch_video_conv(self)
-        elif panelshown == 'audio conversions':
+        elif panelshown == 'Audio Conversions':
             self.ProcessPanel.Hide()
             self.switch_audio_conv(self)
         # Enable all top menu bar:

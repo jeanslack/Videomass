@@ -37,6 +37,8 @@ from videomass3.vdms_IO.make_filelog import write_log # write initial log
 # get data from bootstrap
 get = wx.GetApp()
 DIRconf = get.DIRconf # path to the configuration directory
+ffplay_url = get.ffplay_url
+ffplay_loglev = get.ffplay_loglev
 #########################################################################
 
 def msg_Error(msg):
@@ -66,8 +68,7 @@ class Play(Thread):
     to show files streaming.
     
     """
-    def __init__(self, filepath, timeseq, ffplay_link, 
-                 param, ffplay_loglevel, OS):
+    def __init__(self, filepath, timeseq, param):
         """
         The self.ffplay_loglevel has flag 'error -hide_banner' 
         by default (see conf. file).
@@ -78,11 +79,8 @@ class Play(Thread):
         ''' constructor'''
 
         self.filename = filepath # file name selected
-        self.ffplay = ffplay_link # command process
-        self.ffplay_loglevel = ffplay_loglevel
         self.time_seq = timeseq # seeking
         self.param = param # additional parameters if present
-        self.OS = OS # tipo di sistema operativo
         self.logf = "%s/log/%s" %(DIRconf, 'Videomass_FFplay.log')
         
         write_log('Videomass_FFplay.log', "%s/log" % DIRconf) 
@@ -100,9 +98,9 @@ class Play(Thread):
         
         """
         #time.sleep(.5)
-        cmd = '%s %s -loglevel %s -i "%s" %s' % (self.ffplay,
+        cmd = '%s %s -loglevel %s -i "%s" %s' % (ffplay_url,
                                                  self.time_seq,
-                                                 self.ffplay_loglevel,
+                                                 ffplay_loglev,
                                                  self.filename,
                                                  self.param,)
         self.logWrite(cmd)

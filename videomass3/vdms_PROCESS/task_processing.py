@@ -83,7 +83,7 @@ class GeneralProcess(wx.Panel):
         
         """
         self.parent = parent # main frame
-        self.previus = panel # stores the panel from which  it starts
+        self.previus = panel # stores the panel from which it starts
         self.countmax = varargs[9]# the multiple task number
         self.count = 0 # initial setting of the counter
         self.logname = varargs[8] # example: Videomass_VideoConversion.log

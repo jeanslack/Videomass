@@ -134,9 +134,11 @@ class FFProbe(object):
                 writer='default=nw=1:nk=1'
                 writer='default=noprint_wrappers=1:nokey=1'
                 
-                available writers name are default, compact, csv, flat,
-                ini, json and xml . Options are list of key=value pairs, 
-                separated by ":" (see `man ffprobe`)
+                available writers name are `default`, `compact`, `csv`, 
+                `flat`, `ini`, `json` and `xml`. 
+                Options are list of key=value pairs, separated by ":" 
+                
+                See `man ffprobe`
             
     ------------------------------------------------
     [i] This class was partially inspired to:

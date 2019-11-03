@@ -47,7 +47,7 @@ else:
     from videomass3.vdms_PROCESS.ffplay_reproduction import Play
     from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
     
-from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
+#from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
 from videomass3.vdms_PROCESS.check_bin import ff_conf
 from videomass3.vdms_PROCESS.check_bin import ff_formats
 from videomass3.vdms_PROCESS.check_bin import ff_codecs
@@ -85,7 +85,7 @@ def process(self, varargs, panelshown, duration, time_seq, time_read):
                                        OS,
                                        )
 #-----------------------------------------------------------------------#
-def stream_info(title, filepath , ffprobe_link):
+def stream_info(title, filepath):
     """
     Show media information of the streams content.
     This function make a bit control of file existance.
@@ -94,7 +94,7 @@ def stream_info(title, filepath , ffprobe_link):
         with open(filepath):
             dialog = Mediainfo(title, 
                                filepath, 
-                               ffprobe_link, 
+                               ffprobe_url, 
                                OS,
                                )
             dialog.Show()
@@ -104,19 +104,13 @@ def stream_info(title, filepath , ffprobe_link):
             filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
         
 #-----------------------------------------------------------------------#
-def stream_play(filepath, timeseq, ffplay_link, param, loglevel_type):
+def stream_play(filepath, timeseq, param):
     """
     Thread for media reproduction with ffplay
     """
     try:
         with open(filepath):
-            thread = Play(filepath, 
-                          timeseq, 
-                          ffplay_link, 
-                          param, 
-                          loglevel_type, 
-                          OS,
-                          )
+            thread = Play(filepath, timeseq, param)
             #thread.join()# attende che finisca il thread (se no ritorna subito)
             #error = thread.data
     except IOError:
