@@ -167,10 +167,10 @@ class DnDPanel(wx.Panel):
         self.selected = None # tells if an imported file is selected or not
         #This builds the list control box:
         
-        self.fileListCtrl = MyListCtrl(self, ffprobe_link)  #class MyListCtr
+        self.flCtrl = MyListCtrl(self, ffprobe_link)  #class MyListCtr
         #Establish the listctrl as a drop target:
-        file_drop_target = MyFileDropTarget(self.fileListCtrl)
-        self.fileListCtrl.SetDropTarget(file_drop_target) #Make drop target.
+        file_drop_target = MyFileDropTarget(self.flCtrl)
+        self.flCtrl.SetDropTarget(file_drop_target) #Make drop target.
 
         # create widgets
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
@@ -183,14 +183,14 @@ class DnDPanel(wx.Panel):
                                                       )
         self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
         self.lbl = wx.StaticText(self, label=_("Drag one or more files here:"))
-        self.fileListCtrl.InsertColumn(0, '' ,width=700)
+        self.flCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        grid = wx.FlexGridSizer(1, 5, 5, 5)
+        grid = wx.FlexGridSizer(1, 5, 0, 0)
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
-        sizer.Add(self.fileListCtrl, 1, wx.EXPAND|wx.ALL, 5)
+        sizer.Add(self.flCtrl, 1, wx.EXPAND|wx.ALL, 5)
         sizer.Add(grid)
         grid.Add(btn_clear, 1, wx.ALL|
                                wx.ALIGN_CENTER_HORIZONTAL|
@@ -213,9 +213,9 @@ class DnDPanel(wx.Panel):
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
-        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.fileListCtrl)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.fileListCtrl)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.fileListCtrl)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         #self.Bind(wx.EVT_CHECKBOX, self.same_filedest, self.ckbx_dir)
         self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
@@ -227,7 +227,7 @@ class DnDPanel(wx.Panel):
         """
         Redirects to specific panel
         """
-        if self.fileListCtrl.GetItemCount() == 0:
+        if self.flCtrl.GetItemCount() == 0:
             wx.MessageBox(_('Drag at least one file'), "Videomass", 
                              wx.ICON_INFORMATION, self)
             return
@@ -248,19 +248,11 @@ class DnDPanel(wx.Panel):
         """
         # only do this part the first time so the events are only bound once 
         if not hasattr(self, "popupID1"):
-            self.popupID1 = wx.NewId()
-            self.itemTwoId = wx.NewId()
             self.itemThreeId = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.itemTwoId)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.itemThreeId)
- 
         # build the menu
         menu = wx.Menu()
-        itemOne = menu.Append(self.popupID1, _("Play selected file"))
-        itemTwo = menu.Append(self.itemTwoId, _("Show stream informations"))
         itemThree = menu.Append(self.itemThreeId, _("Remove the selected file"))
- 
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -280,20 +272,13 @@ class DnDPanel(wx.Panel):
                                       menuItem.GetLabel(), yellow)
         else:
             self.parent.statusbar_msg('Add Files', None)
-            if menuItem.GetLabel() == _("Play selected file"):
                 
-                self.parent.ImportPlay(self.selected)
-                
-            elif menuItem.GetLabel() == _("Show stream informations"):
-                #self.on_doubleClick(self)
-                self.parent.ImportInfo(self, self.selected)
-                
-            elif menuItem.GetLabel() == _("Remove the selected file"):
-                if self.fileListCtrl.GetItemCount() == 1:
+            if menuItem.GetLabel() == _("Remove the selected file"):
+                if self.flCtrl.GetItemCount() == 1:
                     self.deleteAll(self)
                 else:
-                    item = self.fileListCtrl.GetFocusedItem()
-                    self.fileListCtrl.DeleteItem(item)
+                    item = self.flCtrl.GetFocusedItem()
+                    self.flCtrl.DeleteItem(item)
                     self.selected = None
                     data_files.pop(item)
 
@@ -304,8 +289,8 @@ class DnDPanel(wx.Panel):
         reset the fileList[], disable Toolbar button and menu bar
         Stream/play select imported file - Stream/display imported...
         """
-        #self.fileListCtrl.ClearAll()
-        self.fileListCtrl.DeleteAllItems()
+        #self.flCtrl.ClearAll()
+        self.flCtrl.DeleteAllItems()
         del data_files[:]
         self.selected = None
     #----------------------------------------------------------------------
@@ -313,10 +298,9 @@ class DnDPanel(wx.Panel):
         """
         Selecting a line with mouse or up/down keyboard buttons
         """
-        index = self.fileListCtrl.GetFocusedItem()
-        item = self.fileListCtrl.GetItemText(index)
+        index = self.flCtrl.GetFocusedItem()
+        item = self.flCtrl.GetItemText(index)
         self.selected = item
-        print(item)
         
     #----------------------------------------------------------------------
     def on_doubleClick(self, row):

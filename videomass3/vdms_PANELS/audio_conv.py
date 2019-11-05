@@ -88,8 +88,7 @@ class Audio_Conv(wx.Panel):
         self.btnC = btn_color
         self.fBtnC = fontBtncolor
         #self.DIRconf = DIRconf
-        self.file_sources = []
-        self.file_destin = ''
+        self.file_src = []
         self.normdetails = []
 
         wx.Panel.__init__(self, parent, -1)
@@ -428,16 +427,14 @@ class Audio_Conv(wx.Panel):
         for audio normalizations based on PEAK or RMS .
         
         """
-        file_sources = self.parent.file_sources[:]
-        
         if self.rdbx_norm.GetSelection() == 1:
-            self.max_volume_PEAK(file_sources)
+            self.max_volume_PEAK()
             
         elif self.rdbx_norm.GetSelection() == 2:
-            self.mean_volume_RMS(file_sources)
+            self.mean_volume_RMS()
     #------------------------------------------------------------------#
     
-    def max_volume_PEAK(self, file_sources):
+    def max_volume_PEAK(self):
         """
         Analyzes to get MAXIMUM peak levels data to calculates offset in
         dBFS values need for audio normalization process.
@@ -457,7 +454,7 @@ class Audio_Conv(wx.Panel):
         target = self.spin_target.GetValue()
 
         data = volumeDetectProcess(self.ffmpeg_link, 
-                                   file_sources, 
+                                   self.file_src, 
                                    self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
@@ -465,7 +462,7 @@ class Audio_Conv(wx.Panel):
         else:
             volume = list()
 
-            for f, v in zip(file_sources, data[0]):
+            for f, v in zip(self.file_src, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(maxvol) - float(target)
@@ -497,7 +494,7 @@ class Audio_Conv(wx.Panel):
         self.Layout()
     #------------------------------------------------------------------#
     
-    def mean_volume_RMS(self, file_sources):  # Volumedetect button
+    def mean_volume_RMS(self):  # Volumedetect button
         """
         Analyzes to get MEAN peak levels data to calculates RMS offset in
         dBFS need for audio normalization process.
@@ -513,7 +510,7 @@ class Audio_Conv(wx.Panel):
         target = self.spin_target.GetValue()
 
         data = volumeDetectProcess(self.ffmpeg_link, 
-                                   file_sources, 
+                                   self.file_src, 
                                    self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
@@ -521,7 +518,7 @@ class Audio_Conv(wx.Panel):
         else:
             volume = list()
 
-            for f, v in zip(file_sources, data[0]):
+            for f, v in zip(self.file_src, data[0]):
                 maxvol = v[0].split(' ')[0]
                 meanvol = v[1].split(' ')[0]
                 offset = float(meanvol) - float(target)
@@ -604,33 +601,30 @@ class Audio_Conv(wx.Panel):
                                 'the data on the audio volume.'),
                                 "Videomass", wx.ICON_INFORMATION)
                 return
+            
         self.update_allentries()# last update of all setting interface
-        # make a different id need to avoid attribute overwrite:
-        file_sources = self.parent.file_sources[:]
-        # make a different id need to avoid attribute overwrite:
-        dir_destin = self.file_destin
-        # used for file name log 
-        logname = 'Videomass_AudioConversion.log'
-
-        ######## ------------ VALIDAZIONI: --------------
-        checking = inspect(file_sources, dir_destin,  cmd_opt["ExportExt"])
+        checking = inspect(self.file_src, 
+                           self.parent.file_destin,  
+                           cmd_opt["ExportExt"])
         if not checking[0]: # the user changing idea or not such files exist
             return
         # typeproc: batch or single process
         # filename: nome file senza ext.
         # base_name: nome file con ext.
         # countmax: count processing cicles for batch mode
-        (typeproc, file_sources, dir_destin, filename, base_name, 
-         countmax) = checking
+        (typeproc, f_src, f_dest, filename, base_name, countmax) = checking
+        
+        # used for file name log 
+        logname = 'Videomass_AudioConversion.log'
 
         if self.rdbx_norm.GetSelection() == 3:
-            self.ebu_Doublepass(file_sources, dir_destin, countmax, logname)
+            self.ebu_Doublepass(f_src, f_dest, countmax, logname)
             
         else:
-            self.stdProc(file_sources, dir_destin, countmax, logname)
+            self.stdProc(f_src, f_dest, countmax, logname)
 
     #------------------------------------------------------------------#
-    def stdProc(self, file_sources, dir_destin, countmax, logname):
+    def stdProc(self, f_src, f_dest, countmax, logname):
         """
         Composes the ffmpeg command strings for the batch mode processing.
         
@@ -650,9 +644,9 @@ class Audio_Conv(wx.Panel):
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('common',
-                                        file_sources,
+                                        f_src,
                                         cmd_opt["ExportExt"],
-                                        dir_destin,
+                                        f_dest,
                                         command,
                                         None,
                                         '',
@@ -661,12 +655,12 @@ class Audio_Conv(wx.Panel):
                                         countmax,
                                         )
             #used for play preview and mediainfo:
-            f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+            f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
+            self.exportStreams('%s/%s.%s' % (f_dest[0], f, 
                                                 cmd_opt["ExportExt"]))
                 
     #------------------------------------------------------------------#
-    def ebu_Doublepass(self, file_sources, dir_destin, countmax, logname):
+    def ebu_Doublepass(self, f_src, f_dest, countmax, logname):
         """
         Perform EBU R128 normalization as 'only norm.' and as 
         standard conversion
@@ -693,9 +687,9 @@ class Audio_Conv(wx.Panel):
 
         if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_Process('EBU normalization',
-                                        file_sources,
+                                        f_src,
                                         '',
-                                        dir_destin,
+                                        f_dest,
                                         cmd_opt["ExportExt"],
                                         [pass1, pass2, loudfilter, False],
                                         self.ffmpeg_link,
@@ -704,11 +698,10 @@ class Audio_Conv(wx.Panel):
                                         countmax,
                                         )
             #used for play preview and mediainfo:
-            f = os.path.basename(file_sources[0]).rsplit('.', 1)[0]
-            self.exportStreams('%s/%s.%s' % (dir_destin[0], f, 
+            f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
+            self.exportStreams('%s/%s.%s' % (f_dest[0], f, 
                                                 cmd_opt["ExportExt"]))
         
-    #------------------------------------------------------------------#
     #------------------------------------------------------------------#
     def update_dict(self, countmax):
         """

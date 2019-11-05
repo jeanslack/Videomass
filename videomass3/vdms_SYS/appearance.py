@@ -88,6 +88,7 @@ class Appearance(object):
                     
         # videomass sign
         if iconset == 'Videomass_Sign_Icons': # default
+            self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
             self.x36 = '%s/Videomass_Sign_Icons/36x36' % url
             self.x24 = '%s/Videomass_Sign_Icons/24x24' % url
             self.x18 = '%s/Videomass_Sign_Icons/18x18' % url
@@ -114,11 +115,23 @@ class Appearance(object):
         """
         assignment path at the used icons in according to configuration file.
         """
+        # choose topic icons 48x48:
+        #icon_import = '%s/icon_import.png' % self.x36
+        #icon_presets = '%s/icon_presets.png' % self.x36
+        icon_switchvideomass = '%s/icon_videoconversions.png' % self.x48
+        icon_headphones = '%s/icon_audioconversions.png' % self.x48
+        icon_videopictures = '%s/icon_videopictures.png' % self.x48
+        icon_audioextract = '%s/icon_audioextract.png' % self.x48
+        icon_merging = '%s/icon_merging.png' % self.x48
+        icon_slideshow = '%s/icon_slideshow.png' % self.x48
+        icon_youtube = '%s/icon_youtube.png' % self.x48
+        #icon_process = '%s/icon_process.png' % self.x36
+        #icon_help = '%s/icon_help.png' % self.x36
         # main icons 32x32 - 36x36:
         icon_import = '%s/icon_import.png' % self.x36
         icon_presets = '%s/icon_presets.png' % self.x36
-        icon_switchvideomass = '%s/icon_videoconversions.png' % self.x36
-        icon_headphones = '%s/icon_audioconversions.png' % self.x36
+        #icon_switchvideomass = '%s/icon_videoconversions.png' % self.x36
+        #icon_headphones = '%s/icon_audioconversions.png' % self.x36
         icon_process = '%s/icon_process.png' % self.x36
         icon_help = '%s/icon_help.png' % self.x36
         # x24 icons 24x24:
@@ -169,6 +182,11 @@ class Appearance(object):
                                                 self.wizard_icon, # 23
                                                 ic_peaklevel, # 24
                                                 ic_audiotrack, # 25
+                                                icon_audioextract, #26
+                                                icon_merging, #27
+                                                icon_youtube, #28
+                                                icon_videopictures, #29
+                                                icon_slideshow, #30
                                                 ]]
             
         

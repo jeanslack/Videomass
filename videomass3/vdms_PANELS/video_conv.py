@@ -1694,7 +1694,6 @@ class Video_Conv(wx.Panel):
                                self.parent.file_destin, 
                                cmd_opt["VideoFormat"]
                                )
-            
         if not checking[0]: # the user changing idea or not such files exist
             return
         

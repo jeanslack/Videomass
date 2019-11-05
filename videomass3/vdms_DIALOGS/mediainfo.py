@@ -35,15 +35,16 @@ class Mediainfo(wx.Dialog):
     """
     Dialog to display streams information from ffprobe json data. 
     """
-    def __init__(self, title, data, OS):
+    def __init__(self, data, OS):
         """
         """
         self.data = data
         # with 'None' not depend from videomass. With 'parent, -1' if close
         # videomass also close mediainfo window:
         #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
-        
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
+                                             wx.RESIZE_BORDER)
+        # Add widget controls
         self.file_select = wx.ListCtrl(self, wx.ID_ANY,
                                   style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                   )
@@ -71,9 +72,9 @@ class Mediainfo(wx.Dialog):
         button_close = wx.Button(self, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
-        self.SetTitle(title)
+        self.SetTitle('Videomass - Multimedia Streams Information')
         self.file_select.SetMinSize((640, 200))
-        self.file_select.InsertColumn(0, _('File name list'), width=500)
+        self.file_select.InsertColumn(0, _('File Selection'), width=500)
         #file_select.InsertColumn(1, _('Parameters'), width=450)
         
         self.format_ctrl.SetMinSize((640, 300))
@@ -104,8 +105,8 @@ class Mediainfo(wx.Dialog):
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.file_select, 0, wx.ALL|wx.EXPAND, 5)
-        grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
-        grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
+        grid_sizer_1 = wx.GridSizer(1, 1, 0, 0)
+        grid_buttons = wx.GridSizer(1, 1, 0, 0)
         
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(self.format_ctrl, 1, wx.ALL | wx.EXPAND, 5)
@@ -128,9 +129,10 @@ class Mediainfo(wx.Dialog):
         notebook_1.AddPage(notebook_1_pane_3, (_("Audio Streams")))
         notebook_1.AddPage(notebook_1_pane_4, (_("Subtitle Streams")))
         grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
-        grid_buttons.Add(button_close, 0, wx.ALL, 5)
-        grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        grid_buttons.Add(button_close, 1, wx.ALL, 5)
+        
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
+        sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
         self.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
@@ -202,7 +204,7 @@ class Mediainfo(wx.Dialog):
                     num_items = self.audio_ctrl.GetItemCount()
                     n = 'AUDIO INDEX %d' % t.get('index')
                     self.audio_ctrl.InsertItem(num_items, n)
-                    self.audio_ctrl.SetItemBackgroundColour(index,"GOLDENROD")      
+                    self.audio_ctrl.SetItemBackgroundColour(index, "GREEN")      
                     index += 1
                     for k, v in t.items():
                         self.audio_ctrl.InsertItem(index, str(k))
@@ -214,7 +216,7 @@ class Mediainfo(wx.Dialog):
                     num_items = self.subtitle_ctrl.GetItemCount()
                     n = 'SUBTITLE INDEX %d' % t.get('index')
                     self.subtitle_ctrl.InsertItem(num_items, n)
-                    self.subtitle_ctrl.SetItemBackgroundColour(index, "GREEN")      
+                    self.subtitle_ctrl.SetItemBackgroundColour(index,"GOLDENROD")      
                     index += 1
                     for k, v in t.items():
                         self.subtitle_ctrl.InsertItem(index, str(k))

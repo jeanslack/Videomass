@@ -123,7 +123,7 @@ def probeInfo(filename):
     """
     Get data stream informations during dragNdrop action.  
     It is called by MyListCtrl(wx.ListCtrl) only. 
-    Return tuple with two items: (data, None) or
+    Return tuple object with two items: (data, None) or
     (None, error).
     
     """

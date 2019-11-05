@@ -34,7 +34,8 @@ class Choose_Topic(wx.Panel):
     Helps to choose the appropriate contextual panel
     """
     def __init__(self, parent, OS, videoconv_icn, audioconv_icn, 
-                 storepictures_icn):
+                 storepictures_icn, slideshow_icn, audioextract_icn, 
+                 merging_icn, youtube_icn,):
 
         self.parent = parent
         self.OS = OS
@@ -55,7 +56,8 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(vers, 0, wx.ALL|
                                 wx.ALIGN_CENTER_VERTICAL|
                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_buttons = wx.GridSizer(5, 2, 20, 20)
+        grid_buttons = wx.FlexGridSizer(5, 4, 20, 20)
+        grid_base = wx.GridSizer(1, 1, 0, 0)
         
         video_lab = _('Video Conversions')
         audio_lab = _('Audio Conversions')
@@ -63,19 +65,24 @@ class Choose_Topic(wx.Panel):
         audgr_lab = _('Extract Audio from Video')
         slide_lab = _('Picture Slideshow Maker')
         audmer_lab = _('Merging Audio and Video')
-        vnorm_lab =  _('Video Normalization')
+        youtube_lab =  _('Download from Youtube')
         anorm_lab =  _('Audio Normalization')
         
         self.video = wx.Button(self, wx.ID_ANY, video_lab, size=(-1,-1))
-        self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
+        self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.TOP)
         self.audio = wx.Button(self, wx.ID_ANY, audio_lab, size=(-1,-1))
-        self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.LEFT)
+        self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.TOP)
         self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
-        self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.LEFT)
+        self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.TOP)
+        
         self.audio_extract = wx.Button(self, wx.ID_ANY, audgr_lab, size=(-1,-1))
+        self.audio_extract.SetBitmap(wx.Bitmap(audioextract_icn),wx.TOP)
         self.slideshow = wx.Button(self, wx.ID_ANY, slide_lab, size=(-1,-1))
+        self.slideshow.SetBitmap(wx.Bitmap(slideshow_icn),wx.TOP)
         self.audio_merge = wx.Button(self, wx.ID_ANY, audmer_lab, size=(-1,-1))
-        self.vnorm = wx.Button(self, wx.ID_ANY, vnorm_lab, size=(-1,-1))
+        self.audio_merge.SetBitmap(wx.Bitmap(merging_icn),wx.TOP)
+        self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1,-1))
+        self.youtube.SetBitmap(wx.Bitmap(youtube_icn),wx.TOP)
         self.anorm = wx.Button(self, wx.ID_ANY, anorm_lab, size=(-1,-1))
         self.exit = wx.Button(self, wx.ID_EXIT, '', size=(-1,-1))
 
@@ -85,11 +92,13 @@ class Choose_Topic(wx.Panel):
                               (self.audio_extract, 0, wx.EXPAND, 5),
                               (self.audio_merge, 0, wx.EXPAND, 5),
                               (self.slideshow, 0, wx.EXPAND, 5),
-                              (self.vnorm, 0, wx.EXPAND, 5),
+                              (self.youtube, 0, wx.EXPAND, 5),
                               (self.anorm, 0, wx.EXPAND, 5),
                               ])
+        grid_base.Add(grid_buttons, 0, wx.ALIGN_CENTER_VERTICAL|
+                                       wx.ALIGN_CENTER_HORIZONTAL, 5)
         
-        sizer_base.Add(grid_buttons, 1, wx.EXPAND|
+        sizer_base.Add(grid_base, 1, wx.EXPAND|
                                         wx.ALIGN_CENTER_VERTICAL|
                                         wx.ALIGN_CENTER_HORIZONTAL, 5)
         sizer_base.Add(self.exit, 0, wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, 0)

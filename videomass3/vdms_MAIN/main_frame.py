@@ -36,8 +36,11 @@ from videomass3.vdms_DIALOGS import infoprg
 from videomass3.vdms_DIALOGS import while_playing
 from videomass3.vdms_DIALOGS import ffmpeg_search
 from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
-from videomass3.vdms_PANELS import choose_topic, dragNdrop, presets_mng_panel
-from videomass3.vdms_PANELS import video_conv, audio_conv
+from videomass3.vdms_PANELS import choose_topic
+from videomass3.vdms_PANELS import dragNdrop
+from videomass3.vdms_PANELS import presets_mng_panel
+from videomass3.vdms_PANELS import video_conv
+from videomass3.vdms_PANELS import audio_conv
 from videomass3.vdms_IO import IO_tools
 
 
@@ -67,12 +70,11 @@ class MainFrame(wx.Frame):
                run as portable program or installated program.
         """
         self.videomass_icon = pathicons[0]
-        self.icon_storePictures = pathicons[1]
-        self.icon_videoconversions = pathicons[2]
+        #self.icon_storePictures = pathicons[1]
+
         self.icon_runconversion = pathicons[3]
         self.icon_help = pathicons[4]
-        self.icon_audioconversions = pathicons[5]
-        self.icon_import = pathicons[6]
+        #self.icon_import = pathicons[6]
         barC = setui[4][12].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
         # toolbar panel colour
@@ -130,7 +132,7 @@ class MainFrame(wx.Frame):
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
                                            bitmap=infoIbmp, 
-                                           label=_("Show Metadata"))
+                                           label=_("Streams Information"))
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                       foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_metaI.SetBottomEndColour(self.bBtnC)
@@ -176,9 +178,13 @@ class MainFrame(wx.Frame):
         #---------- others panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self, 
                                                      self.OS,
-                                                     self.icon_videoconversions,
-                                                     self.icon_audioconversions,
-                                                     self.icon_storePictures 
+                                                     pathicons[2],
+                                                     pathicons[5],
+                                                     pathicons[29],
+                                                     pathicons[30],
+                                                     pathicons[26],
+                                                     pathicons[27],
+                                                     pathicons[28],
                                                      )
         self.PrstsPanel = presets_mng_panel.PresetsPanel(self, 
                                                          SRCpath, 
@@ -355,8 +361,7 @@ class MainFrame(wx.Frame):
             self.Layout()
             
         elif self.AconvPanel.IsShown():
-            self.file_open.Enable(True), self.file_save.Enable(True),
-            self.btn_saveprf.Show(), 
+            self.file_open.Enable(True), self.file_save.Enable(True), 
             self.toolbar.EnableTool(wx.ID_FILE3, True)
             self.toolbar.EnableTool(wx.ID_FILE5, True)
             self.toolbar.EnableTool(wx.ID_FILE6, True)
@@ -440,7 +445,7 @@ class MainFrame(wx.Frame):
         Redirect input file clicked at stream_info for metadata display
         """
         
-        dialog = Mediainfo('Videomass: media streams', self.data, self.OS,)
+        dialog = Mediainfo(self.data, self.OS,)
         dialog.Show()
             
             
@@ -910,7 +915,7 @@ class MainFrame(wx.Frame):
         self.duration = [f['format']['duration'] for f in 
                          self.data if f['format']['duration']
                          ]
-        self.AconvPanel.file_sources = flist
+        self.AconvPanel.file_src = flist
         self.AconvPanel.normalization_default()
         
         self.toolbar.Show()
