@@ -74,7 +74,6 @@ class Choose_Topic(wx.Panel):
         self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.TOP)
         self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
         self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.TOP)
-        
         self.audio_extract = wx.Button(self, wx.ID_ANY, audgr_lab, size=(-1,-1))
         self.audio_extract.SetBitmap(wx.Bitmap(audioextract_icn),wx.TOP)
         self.slideshow = wx.Button(self, wx.ID_ANY, slide_lab, size=(-1,-1))
