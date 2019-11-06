@@ -29,17 +29,6 @@
 
 import wx
 import os
-from videomass3.vdms_IO.presets_manager_properties import json_data
-from videomass3.vdms_IO.presets_manager_properties import supported_formats
-from videomass3.vdms_IO.presets_manager_properties import delete_profiles
-from videomass3.vdms_SYS.os_interaction import copy_restore
-from videomass3.vdms_SYS.os_interaction import copy_backup
-from videomass3.vdms_SYS.os_interaction import copy_on
-from videomass3.vdms_IO.filedir_control import inspect
-from videomass3.vdms_DIALOGS import presets_addnew
-from videomass3.vdms_DIALOGS.epilogue import Formula
-
-array = [] # Parameters of the selected profile
 
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6'# rgb form (wx.Colour(217,255,255))
@@ -49,7 +38,7 @@ orange = '#f28924'
 greenolive = '#8aab3c'
 green = '#268826'
 
-class PresetsPanel(wx.Panel):
+class Downloader(wx.Panel):
     """
     Interface for using and managing presets in the FFmpeg syntax. 
     Each presets is a JSON file (Javascript object notation) which is 
@@ -67,32 +56,23 @@ class PresetsPanel(wx.Panel):
     
     """
 
-    def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, threads, ffmpeg_loglev, ffmpeg_link, OS):
+    def __init__(self, parent, OS):
         """
         """
-        
-        self.src_vdms = os.path.join(path_srcShare, 'vdms')#origin share/vdms
-        self.user_vdms = os.path.join(path_confdir, 'vdms')#conf/videomass/vdms
-        self.PWD = PWD #current work of videomass
-        self.threads = threads
-        self.ffmpeg_loglev = ffmpeg_loglev
-        self.ffmpeg_link = ffmpeg_link
+
         self.OS = OS
         self.parent = parent
-        self.file_sources = []
         self.file_destin = ''
-        self.txtcmdedited = False # show dlg if cmdline is edited
 
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
 
         self.panel_1 = wx.Panel(self, wx.ID_ANY)
 
-        self.list_ctrl = wx.ListCtrl(self.panel_1, wx.ID_ANY, 
-                                    style=wx.LC_REPORT| 
-                                          wx.SUNKEN_BORDER
-                                    )
+        #self.list_ctrl = wx.ListCtrl(self.panel_1, wx.ID_ANY, 
+                                    #style=wx.LC_REPORT| 
+                                          #wx.SUNKEN_BORDER
+                                    #)
         nb1 = wx.Notebook(self.panel_1, wx.ID_ANY, style=0)
         nb1_p1 = wx.Panel(nb1, wx.ID_ANY)
         lab_prfl = wx.StaticText(nb1_p1, wx.ID_ANY, _("Select a preset from "
@@ -136,7 +116,7 @@ class PresetsPanel(wx.Panel):
         grid_siz5 = wx.FlexGridSizer(2, 2, 0, 0)
         grid_siz6 = wx.FlexGridSizer(1, 7, 0, 0)
         grd_s3 = wx.GridSizer(1, 2, 0, 0)
-        grd_s1.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
+        #grd_s1.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
         
         labcmd_1.Lower()
         sizlab1 = wx.StaticBoxSizer(labcmd_1, wx.VERTICAL)

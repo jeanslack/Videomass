@@ -31,9 +31,6 @@ import subprocess
 import platform
 import re
 
-if not platform.system() == 'Windows':
-    import shlex
-
 ####################################################################
 class FFProbe(object):
     """
@@ -213,13 +210,19 @@ class FFProbe(object):
                                                               writer
                                                               )
         if not platform.system() == 'Windows':
+            import shlex
             cmnd = shlex.split(cmnd)
-            
+            info = None
+        else:
+            # Hide subprocess window on MS Windows
+            info = subprocess.STARTUPINFO()
+            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
             p = subprocess.Popen(cmnd, 
                                  stdout=subprocess.PIPE, 
                                  stderr=subprocess.PIPE, 
                                  universal_newlines=True,
+                                 startupinfo=info,
                                  )
             output, error =  p.communicate()
 
@@ -229,20 +232,21 @@ class FFProbe(object):
         
         if p.returncode:
                 self.error = error
-        
         if parse:
             self.parser(output)
-
         else:
             self.writer = output
             
     #-------------------------------------------------------------#
     def parser(self, output):
+        """
+        Indexes the catalogs [STREAM\] and [FORMAT\] given by 
+        the default output of FFprobe
         
-            
-        raw_list = output.split('\n') # create list with strings element
+        """
+        probing = output.split('\n') # create list with strings element
 
-        for s in raw_list:
+        for s in probing:
             if re.match('\[STREAM\]',s):
                 self.datalines=[]
 
@@ -252,7 +256,7 @@ class FFProbe(object):
             else:
                 self.datalines.append(s)
 
-        for f in raw_list:
+        for f in probing:
             if re.match('\[FORMAT\]',f):
                 self.datalines=[]
 

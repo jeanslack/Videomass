@@ -83,7 +83,7 @@ class Choose_Topic(wx.Panel):
         self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1,-1))
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn),wx.TOP)
         self.anorm = wx.Button(self, wx.ID_ANY, anorm_lab, size=(-1,-1))
-        self.exit = wx.Button(self, wx.ID_EXIT, '', size=(-1,-1))
+        #self.exit = wx.Button(self, wx.ID_EXIT, '', size=(-1,-1))
 
         grid_buttons.AddMany([(self.video, 0, wx.EXPAND, 5),
                               (self.audio, 0, wx.EXPAND, 5),
@@ -100,7 +100,7 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_base, 1, wx.EXPAND|
                                         wx.ALIGN_CENTER_VERTICAL|
                                         wx.ALIGN_CENTER_HORIZONTAL, 5)
-        sizer_base.Add(self.exit, 0, wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, 0)
+        #sizer_base.Add(self.exit, 0, wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, 0)
         
         self.SetSizerAndFit(sizer_base)
         
@@ -110,7 +110,8 @@ class Choose_Topic(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_AudioFromVideo, self.audio_extract)
         self.Bind(wx.EVT_BUTTON, self.on_AudioMerging, self.audio_merge)
         self.Bind(wx.EVT_BUTTON, self.on_Slideshow, self.slideshow)
-        self.Bind(wx.EVT_BUTTON, self.onExit, self.exit)
+        self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
+        #self.Bind(wx.EVT_BUTTON, self.onExit, self.exit)
         
         
     def on_Video(self, event):
@@ -130,6 +131,87 @@ class Choose_Topic(wx.Panel):
     
     def on_Slideshow(self, event):
         self.parent.File_import(self,'Pictures Slideshow Maker')
+    
+    def on_YoutubeDL(self, event):
+        self.parent.Text_import(self, 'Youtube Downloader')
+        print('python3 youtube-dl --abort-on-error --ignore-config --restrict-filenames --no-overwrites --prefer-free-formats --extract-audio')
+        """
+        Post-processing Options:
+       -x, --extract-audio
+              Convert  video  files to audio-only files (requires ffmpeg or avconv and ffprobe or
+              avprobe)
+
+       --audio-format FORMAT
+              Specify audio format: "best", "aac", "flac", "mp3",  "m4a",  "opus",  "vorbis",  or
+              "wav"; "best" by default; No effect without -x
+
+       --audio-quality QUALITY
+              Specify  ffmpeg/avconv  audio  quality,  insert  a  value  between 0 (better) and 9
+              (worse) for VBR or a specific bitrate like 128K (default 5)
+
+       --recode-video FORMAT
+              Encode  the  video  to  another   format   if   necessary   (currently   supported:
+              mp4|flv|ogg|webm|mkv|avi)
+        
+        --postprocessor-args ARGS
+              Give these arguments to the postprocessor
+
+       -k, --keep-video
+              Keep  the video file on disk after the post- processing; the video is erased by de‐
+              fault
+
+       --no-post-overwrites
+              Do not overwrite post-processed files; the post-processed files are overwritten  by
+              default
+
+       --embed-subs
+              Embed subtitles in the video (only for mp4, webm and mkv videos)
+
+       --embed-thumbnail
+              Embed thumbnail in the audio as cover art
+
+       --add-metadata
+              Write metadata to the video file
+        
+        --metadata-from-title FORMAT
+              Parse  additional metadata like song title / artist from the video title.  The for‐
+              mat syntax is the same as --output.  Regular expression with named  capture  groups
+              may also be used.  The parsed parameters replace existing values.  Example: --meta‐
+              data-from- title "%(artist)s - %(title)s" matches a title  like  "Coldplay  -  Par‐
+              adise".  Example (regex): --metadata-from-title "(?P.+?) - (?P
+              .+)"
+
+       --xattrs
+              Write metadata to the video file's xattrs (using dublin core and xdg standards)
+
+       --fixup POLICY
+              Automatically  correct  known  faults of the file.  One of never (do nothing), warn
+              (only emit a warning), detect_or_warn (the default; fix file if we can, warn other‐
+              wise)
+
+       --prefer-avconv
+              Prefer avconv over ffmpeg for running the postprocessors
+
+       --prefer-ffmpeg
+              Prefer ffmpeg over avconv for running the postprocessors (default)
+        
+        --ffmpeg-location PATH
+              Location of the ffmpeg/avconv binary; either the path to the binary or its contain‐
+              ing directory.
+
+       --exec CMD
+              Execute a command on the file after downloading, similar to  find's  -exec  syntax.
+              Example: --exec 'adb push {} /sdcard/Music/ && rm {}'
+
+       --convert-subs FORMAT
+              Convert the subtitles to other format (currently supported: srt|ass|vtt|lrc)
+
+
+
+        """
+
+        #self.parent.File_import(self,'Download from Youtube')
+        
     
     def onExit(self, event):
         self.parent.on_close(self)

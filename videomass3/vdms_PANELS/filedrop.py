@@ -73,6 +73,7 @@ class MyListCtrl(wx.ListCtrl):
     def dropUpdate(self, path):
         """
         Update list-control during drag and drop
+        
         """
         msg_video = _('Not found Video Stream. Just drag Video files only.')
         msg_audio = _('Not found Audio Stream. Just drag Audio files only.')
@@ -131,7 +132,7 @@ class MyListCtrl(wx.ListCtrl):
             print (mess)
             self.parent.statusbar_msg(mess, yellow)
 
-########################################################################
+#######################################################################
 class MyFileDropTarget(wx.FileDropTarget):
     """
     This is the file drop target
@@ -155,7 +156,7 @@ class MyFileDropTarget(wx.FileDropTarget):
         return True
 
 ########################################################################
-class DnDPanel(wx.Panel):
+class FileDnD(wx.Panel):
     """
     Panel for dragNdrop files queue. Accept one or more files.
     """
@@ -266,7 +267,6 @@ class DnDPanel(wx.Panel):
         menu = event.GetEventObject()
         menuItem = menu.FindItemById(itemId)
         
-
         if not self.selected:
             self.parent.statusbar_msg(_('No file selected to `%s` yet') % 
                                       menuItem.GetLabel(), yellow)
