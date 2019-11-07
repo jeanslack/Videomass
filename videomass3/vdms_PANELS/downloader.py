@@ -40,19 +40,6 @@ green = '#268826'
 
 class Downloader(wx.Panel):
     """
-    Interface for using and managing presets in the FFmpeg syntax. 
-    Each presets is a JSON file (Javascript object notation) which is 
-    a list object with a variable number of items (called profiles)
-    of type <class 'dict'>, each of which collect 5 keys object in 
-    the following form:
-    
-    {'Name': "", 
-    "Descritpion": "", 
-    "First_pass": "", 
-    "Second_pass": "",
-    "Supported_list": "",
-    "Output_extension": "",
-    }
     
     """
 
@@ -62,7 +49,7 @@ class Downloader(wx.Panel):
 
         self.OS = OS
         self.parent = parent
-        self.file_destin = ''
+        #self.file_destin = ''
 
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
@@ -83,6 +70,7 @@ class Downloader(wx.Panel):
                                      style=wx.CB_DROPDOWN | 
                                      wx.CB_READONLY
                                      )
+        self.btn = wx.Button(nb1_p1, wx.ID_ANY, 'LA cerveza', size=(-1,-1))
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         
         labcmd_1 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("First pass parameters:"))
@@ -109,7 +97,7 @@ class Downloader(wx.Panel):
         #----------------------Build Layout----------------------#
         #siz1 = wx.BoxSizer(wx.VERTICAL)
         siz1 = wx.FlexGridSizer(1, 1, 0, 0)
-        grid_siz7 = wx.GridSizer(2, 1, 0, 0)
+        grid_siz7 = wx.GridSizer(3, 1, 0, 0)
         grd_s1 = wx.FlexGridSizer(2, 1, 0, 0)
         grd_s2 = wx.FlexGridSizer(3, 1, 0, 0)
         grd_s4 = wx.GridSizer(1, 3, 0, 0)
@@ -143,6 +131,7 @@ class Downloader(wx.Panel):
                                    wx.ALIGN_CENTER_VERTICAL, 0
                                    )
         grid_siz7.Add(self.cmbx_prst, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
+        grid_siz7.Add(self.btn, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
         nb1_p1.SetSizer(grid_siz7)
         nb1_p2.SetSizer(grd_s3)
         nb1.AddPage(nb1_p1, (_("Selecting presets")))
@@ -162,3 +151,23 @@ class Downloader(wx.Panel):
         self.Layout()
         
         #----------------------Binder (EVT)----------------------#
+        self.Bind(wx.EVT_BUTTON, self.on_start, self.btn)
+    
+    def on_start(self, event):
+        opt = ''
+        logname = 'DOWNLOADER'
+        urls = self.parent.data
+
+        self.parent.switch_Process('downloader',
+                                        urls,
+                                        '',
+                                        self.parent.file_destin,
+                                        opt,
+                                        None,
+                                        '',
+                                        '',
+                                        logname, 
+                                        len(urls),
+                                        )
+        
+        

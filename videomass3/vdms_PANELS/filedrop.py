@@ -133,7 +133,7 @@ class MyListCtrl(wx.ListCtrl):
             self.parent.statusbar_msg(mess, yellow)
 
 #######################################################################
-class MyFileDropTarget(wx.FileDropTarget):
+class FileDrop(wx.FileDropTarget):
     """
     This is the file drop target
     """
@@ -160,7 +160,7 @@ class FileDnD(wx.Panel):
     """
     Panel for dragNdrop files queue. Accept one or more files.
     """
-    def __init__(self, parent, ffprobe_link):  
+    def __init__(self, parent, ffprobe_link, go_icn):  
         """Constructor. This will initiate with an id and a title"""
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent # parent is the MainFrame
@@ -170,7 +170,7 @@ class FileDnD(wx.Panel):
         
         self.flCtrl = MyListCtrl(self, ffprobe_link)  #class MyListCtr
         #Establish the listctrl as a drop target:
-        file_drop_target = MyFileDropTarget(self.flCtrl)
+        file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target) #Make drop target.
 
         # create widgets
@@ -183,6 +183,7 @@ class FileDnD(wx.Panel):
                                                       wx.TE_READONLY
                                                       )
         self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
+        self.btn_go.SetBitmap(wx.Bitmap(go_icn),wx.LEFT)
         self.lbl = wx.StaticText(self, label=_("Drag one or more files here:"))
         self.flCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout

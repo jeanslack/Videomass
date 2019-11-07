@@ -29,7 +29,6 @@ import wx
 import subprocess
 import itertools
 import sys
-import shlex
 import os
 from threading import Thread
 import time
@@ -42,6 +41,7 @@ STATUS_ERROR = None
 
 # get videomass wx.App attribute
 get = wx.GetApp()
+OS = get.OS
 DIRconf = get.DIRconf # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
 ffmpeg_loglev = get.ffmpeg_loglev
@@ -74,7 +74,7 @@ class GeneralProcess(wx.Panel):
     close the panel during final activities.
     
     """
-    def __init__(self, parent, panel, varargs, duration, OS):
+    def __init__(self, parent, panel, varargs, duration):
         """
         In the 'previous' attribute is stored an ID string used to
         recover the previous panel from which the process is started.
@@ -89,7 +89,6 @@ class GeneralProcess(wx.Panel):
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
         self.duration = duration # total duration or partial if set timeseq
         self.time_seq = self.parent.time_seq # a time segment
-        self.OS = OS # operative sistem name Identifier
         self.varargs = varargs # tuple data
         
         wx.Panel.__init__(self, parent=parent)
@@ -131,7 +130,7 @@ class GeneralProcess(wx.Panel):
                                     #"knowledge the all exit status as "
                                     #"errors and warnings."
                                            #))
-        self.ckbx_text.SetToolTip(_('If activated, hides all FFmpeg '
+        self.ckbx_text.SetToolTip(_('If activated, hides some '
                                     'output messages.'))
         self.button_stop.SetToolTip(_("Stops current process"))
         self.SetSizerAndFit(sizer)
@@ -147,7 +146,8 @@ class GeneralProcess(wx.Panel):
         time.sleep(.1)
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
-
+        
+        pub.subscribe(self.update_download, "UPDATE_DOWNLOAD_EVT")
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
@@ -179,7 +179,46 @@ class GeneralProcess(wx.Panel):
             TwoPass_Loudnorm(self.varargs, self.duration, 
                              self.logname, self.time_seq
                             )
+        elif self.varargs[0] == 'downloader':
+            YoutubeDL_Downloader(self.varargs, self.logname)
+                             
     #-------------------------------------------------------------------#
+    def update_download(self, output, duration, status):
+        """
+        Receive youtube-dl output message from pubsub "UPDATE_DOWNLOAD_EVT".
+        The received 'output' is parsed to get the bar/label progressive 
+        percentage and errors management.
+        
+        """
+        if not status == 0:# error, exit status of the p.wait
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
+            self.OutText.AppendText(_(' ...Failed\n'))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+        
+        if '[download]' in output:# ...in processing
+            if not 'Destination' in output:
+                try:
+                    i = float(output.split()[1].split('%')[0])
+                except ValueError:
+                    self.OutText.AppendText(' %s' % output)
+                else:
+                    #if not self.ckbx_text.IsChecked():# not print the output
+                        #self.OutText.AppendText(' %s' % output)
+                    self.barProg.SetValue(i)
+                    self.labPerc.SetLabel("%s" % output)
+                    del output, duration
+                    
+        else:# append all others lines on the textctrl and log file
+            if not self.ckbx_text.IsChecked():# not print the output
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+                self.OutText.AppendText(' %s' % output)
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                
+            with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
+                logerr.write("[FFMPEG]: %s" % (output))
+                # write a row error into file log
+        
+        
     def update_display(self, output, duration, status):
         """
         Receive message from thread of the second loops process
@@ -245,11 +284,11 @@ class GeneralProcess(wx.Panel):
         if STATUS_ERROR == 1:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
             self.OutText.AppendText('\n  %s\n' % (count))
-            self.labPerc.SetLabel("Percentage: 0%")
+            #self.labPerc.SetLabel("Percentage: 0%")
         else:
             self.barProg.SetRange(duration)#set la durata complessiva
             self.barProg.SetValue(0)# resetto la prog bar
-            self.labPerc.SetLabel("Percentage: 100%")
+            #self.labPerc.SetLabel("Percentage: 100%")
             self.OutText.AppendText('\n  %s : "%s"\n' % (count,fname))
     #-------------------------------------------------------------------#
     
@@ -272,7 +311,8 @@ class GeneralProcess(wx.Panel):
         CHANGE_STATUS = None
         self.OutText.Clear()# reset textctrl before close
         self.parent.panelShown(self.previus)# retrieve at previusly panel
-        event.Skip()
+
+        #event.Skip()
     #-------------------------------------------------------------------#
     def end_proc(self):
         """
@@ -293,7 +333,7 @@ class GeneralProcess(wx.Panel):
         else:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
             self.OutText.AppendText(_('\n Done !\n'))
-            self.labPerc.SetLabel("Percentage: 100%")
+            #self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
             self.barProg.SetValue(0)
@@ -316,6 +356,141 @@ https://stackoverflow.com/questions/1388753/how-to-get-output-
 from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
 """
+#########################################################################
+
+class YoutubeDL_Downloader(Thread):
+    """
+    YoutubeDL_Downloader represents a separate thread for running 
+    processes, which need to read the youtube-dl stdout/stderr in
+    real time
+    """
+    def __init__(self, varargs, logname):
+        """
+        self.urls:          urls list
+        self.opt:           option strings to adding
+        self.outputdir:     pathname destination
+        self.count:         increases with the progressive account elements
+        self.countmax:      length of self.urls 
+        self.logname:       title log name for logging
+        
+        """
+        Thread.__init__(self)
+        """initialize"""
+        self.urls = varargs[1]
+        self.opt = varargs[4] 
+        self.outputdir = varargs[3]
+        self.count = 0 
+        self.countmax = len(varargs[1])
+        self.logname = logname
+
+        self.start() # start the thread (va in self.run())
+    
+    def run(self):
+        """
+        Subprocess initialize thread.
+        """
+        global STATUS_ERROR
+        
+        '''python youtube-dl --newline -i -o /home/gianluca/Downloads/%(title)s.%(ext)s --ignore-config --hls-prefer-native https://www.youtube.com/watch?v=BaW_jenozKc
+        '''
+        
+        for url in self.urls:
+            cmd = ('youtube-dl --newline -o "{0}/%(title)s.%(ext)s" '
+                    '--ignore-config --restrict-filenames {1} '
+                    '"{2}"'.format(self.outputdir, self.opt, url)
+                    )
+            #cmd = ('youtube-dl --newline -o "/home/gianluca/Video/%(title)s.%(ext)s" '
+                    #'--ignore-config --restrict-filenames --prefer-free-formats ')
+            self.count += 1
+            count = 'URL %s/%s' % (self.count, self.countmax,)
+            com = "%s\n%s" % (count, cmd)
+            #print("%s" % com)
+            wx.CallAfter(pub.sendMessage,
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=100,
+                         fname=url,
+                         end='',
+                         )
+            logWrite(com, '', self.logname)# write n/n + command only
+            
+            if not OS == 'Windows':
+                import shlex
+                cmd = shlex.split(cmd)
+                info = None
+            else:
+                # Hide subprocess window on MS Windows
+                info = subprocess.STARTUPINFO()
+                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            
+            try:
+                with subprocess.Popen(cmd,
+                                      stdout=subprocess.PIPE,
+                                      stderr=subprocess.STDOUT,
+                                      bufsize=1, 
+                                      universal_newlines=True,
+                                      startupinfo=info,) as p:
+                    
+                    for line in p.stdout:
+                        #sys.stdout.write(line)
+                        #sys.stdout.flush()
+                        #print('PROVA ', line, end='')
+                        #if '%' in line:
+                        #print(line.split())
+                        
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_DOWNLOAD_EVT", 
+                                     output=line, 
+                                     duration=100,
+                                     status=0,
+                                     )
+                        if CHANGE_STATUS == 1:# break second 'for' loop
+                            p.terminate()
+                            break
+                        
+                    if p.wait(): # error
+                        wx.CallAfter(pub.sendMessage, 
+                                     "UPDATE_DOWNLOAD_EVT", 
+                                     output=line, 
+                                     duration=100,
+                                     status=p.wait(),
+                                     )
+                        logWrite('', 
+                                 "Exit status: %s" % p.wait(),
+                                 self.logname)
+                                 #append exit error number
+                    else: # ok
+                        wx.CallAfter(pub.sendMessage, 
+                                     "COUNT_EVT", 
+                                     count='', 
+                                     duration='',
+                                     fname='',
+                                     end='ok'
+                                        )
+                        print('...Done\n')
+                        
+            except OSError as err:
+                e = "%s\n  %s" % (err, not_exist_msg)
+                wx.CallAfter(pub.sendMessage, 
+                             "COUNT_EVT", 
+                             count=e, 
+                             duration=0,
+                             fname=url,
+                             end='',
+                             )
+                print('...%s' % (e))
+                STATUS_ERROR = 1
+                break
+            
+            if CHANGE_STATUS == 1:# break first 'for' loop
+                p.terminate()
+                print('...Interrupted process')
+                break
+                
+        time.sleep(.5)
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+########################################################################
+
 class PresetsManager_Thread(Thread):
     """
     This class represents a separate thread for running processes, which 
@@ -449,6 +624,7 @@ class PresetsManager_Thread(Thread):
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
 ########################################################################
+
 class TwoPass_PresetsManager_Thread(Thread):
     """
     This class represents a separate thread which need to read the 

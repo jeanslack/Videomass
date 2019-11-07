@@ -166,7 +166,7 @@ class MainFrame(wx.Frame):
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=saveprfbmp, 
-                                              label=_("Save As Profile"))
+                                              label=_("Create Vinc Preset"))
         self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
@@ -186,6 +186,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[26],
                                                      pathicons[27],
                                                      pathicons[28],
+                                                     pathicons[31],
                                                      )
         self.ChooseTopic.SetBackgroundColour(barColor)
         self.ytDownloader = downloader.Downloader(self, self.OS,)
@@ -224,8 +225,10 @@ class MainFrame(wx.Frame):
                                                 self.fBtnC,
                                                 )
 
-        self.fileDnDTarget = filedrop.FileDnD(self, self.ffprobe_link) # panel
-        self.textDnDTarget = textdrop.TextDnD(self) # panel
+        self.fileDnDTarget = filedrop.FileDnD(self, 
+                                              self.ffprobe_link, 
+                                              pathicons[32]) # panel
+        self.textDnDTarget = textdrop.TextDnD(self, pathicons[32]) # panel
         
         self.fileDnDTarget.Hide()
         self.textDnDTarget.Hide()
@@ -276,8 +279,7 @@ class MainFrame(wx.Frame):
         self.btn_playO.SetToolTip(_("Play the file exported in the "
                                     "last encoding."
                                         ))
-        self.btn_saveprf.SetToolTip(_("Save as profile with the current "
-                                        "settings of this panel."
+        self.btn_saveprf.SetToolTip(_("Save the settings as a preset for Vinc"
                                         ))
         # menu bar
         self.videomass_menu_bar()
@@ -374,10 +376,10 @@ class MainFrame(wx.Frame):
             self.Layout()
             
         elif self.ProcessPanel.IsShown():
-            self.file_open.Enable(False), self.saveme.Enable(False), 
-            self.new_prst.Enable(False), self.del_prst.Enable(False),
-            self.restore.Enable(False), self.default.Enable(False), 
-            self.default_all.Enable(False), self.refresh.Enable(False), 
+            #self.file_open.Enable(False), self.saveme.Enable(False), 
+            #self.new_prst.Enable(False), self.del_prst.Enable(False),
+            #self.restore.Enable(False), self.default.Enable(False), 
+            #self.default_all.Enable(False), self.refresh.Enable(False), 
             #Disable all top menu bar :
             [self.menuBar.EnableTop(x, False) for x in range(0,3)]
             #Disable the tool bar
@@ -516,13 +518,28 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def on_close(self, event):
         """
-        destroy the videomass.
+        switch to panels or destroy the videomass app.
+        
         """
-        if not self.topicname:
-            self.Destroy()
+        def close():
+            if not self.topicname:
+                if wx.MessageBox(_('Are you sure you want to exit?'), 
+                        _('Exit'), wx.ICON_QUESTION | wx.YES_NO, 
+                        self) == wx.YES:
+                    self.Destroy()
+            else:
+                self.choosetopicRetrieve()
+        try:
+            self.ProcessPanel.IsShown()
+                
+        except AttributeError:
+            close()
         else:
-            self.choosetopicRetrieve()
-
+            if self.ProcessPanel.IsShown():
+                self.ProcessPanel.on_close(self)
+            else:
+                close()
+    
     #### -------------   BUILD THE MENU BAR  ----------------###
     def videomass_menu_bar(self):
         """
@@ -838,22 +855,22 @@ class MainFrame(wx.Frame):
         self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
         
         # ------- Run process button
-        run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start Encoding'), 
+        run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
                                     wx.Bitmap(self.icon_runconversion)
                                                 )
         self.toolbar.EnableTool(wx.ID_OK, False)
         #self.toolbar.AddSeparator()
         
         #------- help button
-        help_contest = self.toolbar.AddTool(wx.ID_ANY, _('Help'), 
-                                    wx.Bitmap(self.icon_help)
-                                                )
+        #help_contest = self.toolbar.AddTool(wx.ID_ANY, _('Help'), 
+                                    #wx.Bitmap(self.icon_help)
+                                                #)
         # finally, create it
         self.toolbar.Realize()
         
         #----------------- Tool Bar Binding (evt)-----------------------#
         self.Bind(wx.EVT_TOOL, self.Run_Coding, run_coding)
-        self.Bind(wx.EVT_TOOL, self.Helpme, help_contest)
+        #self.Bind(wx.EVT_TOOL, self.Helpme, help_contest)
 
     #--------------- Tool Bar Callback (event handler) -----------------#
     
@@ -963,8 +980,8 @@ class MainFrame(wx.Frame):
         of the main frame (as others) because otherwise it would immediately
         start running.
         """
-        if self.showpanelbar.IsChecked():
-            self.btnpanel.Hide()# hide buttons bar if the user has shown it:
+
+        self.btnpanel.Hide()# hide buttons bar if the user has shown it:
         
         IO_tools.process(self, varargs, 
                          self.topicname, 
@@ -975,12 +992,13 @@ class MainFrame(wx.Frame):
         #make the positioning:
         self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
         #Hide all others panels:
-        self.fileDnDTarget.Hide(), self.ytDownloader.Hide(), self.VconvPanel.Hide()
-        self.AconvPanel.Hide()
+        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
+        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
+        self.AconvPanel.Hide(), 
         #Show the panel:
         self.ProcessPanel.Show()
         self.Layout()
-        self.SetTitle(_('..Start Encoding - Videomass'))
+        self.SetTitle(_('Processing Status - Videomass'))
 
         self.Setup_items_bar()# call set default layout method
     #------------------------------------------------------------------#
@@ -1011,16 +1029,21 @@ class MainFrame(wx.Frame):
         elif panelshown == 'Video Conversions':
             self.ProcessPanel.Hide()
             self.switch_video_conv(self)
+            self.btnpanel.Show()
         elif panelshown == 'Audio Conversions':
             self.ProcessPanel.Hide()
             self.switch_audio_conv(self)
+            self.btnpanel.Show()
+        elif panelshown == 'Youtube Downloader':
+            self.ProcessPanel.Hide()
+            self.youtube_Downloader(self)
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0,3)]
         self.SetTitle("Videomass")# set the appropriate title
         # show buttons bar if the user has shown it:
-        if self.showpanelbar.IsChecked():
-            self.btnpanel.Show()
-            self.Layout()
+
+        
+        self.Layout()
         
         
         

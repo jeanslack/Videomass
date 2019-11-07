@@ -81,8 +81,7 @@ def process(self, varargs, panelshown, duration, time_seq, time_read):
     self.ProcessPanel = GeneralProcess(self, 
                                        panelshown, 
                                        varargs, 
-                                       duration, 
-                                       OS,
+                                       duration,
                                        )
 #-----------------------------------------------------------------------#
 def stream_info(title, filepath):

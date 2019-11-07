@@ -94,18 +94,21 @@ class Appearance(object):
             self.x18 = '%s/Videomass_Sign_Icons/18x18' % url
         # material design black
         if iconset == 'Material_Design_Icons_black':
+            self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
             self.x36 = '%s/Material_Design_Icons_black/36x36' % url
             self.x24 = '%s/Material_Design_Icons_black/24x24' % url
             self.x18 = '%s/Material_Design_Icons_black/18x18' % url
             self.icons_set()
         # material design white
         elif iconset == 'Material_Design_Icons_white':
+            self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
             self.x36 = '%s/Material_Design_Icons_white/36x36' % url
             self.x24 = '%s/Material_Design_Icons_black/24x24' % url
             self.x18 = '%s/Material_Design_Icons_black/18x18' % url
             self.icons_set()
         # flat-colours
         elif iconset == 'Flat_Color_Icons':
+            self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
             self.x36 = '%s/Flat_Color_Icons/36x36' % url
             self.x24 = '%s/Flat_Color_Icons/24x24' % url
             self.x18 = '%s/Flat_Color_Icons/18x18' % url
@@ -125,6 +128,7 @@ class Appearance(object):
         icon_merging = '%s/icon_merging.png' % self.x48
         icon_slideshow = '%s/icon_slideshow.png' % self.x48
         icon_youtube = '%s/icon_youtube.png' % self.x48
+        icon_audionorm = '%s/icon_audionorm.png' % self.x48
         #icon_process = '%s/icon_process.png' % self.x36
         #icon_help = '%s/icon_help.png' % self.x36
         # main icons 32x32 - 36x36:
@@ -155,6 +159,7 @@ class Appearance(object):
         ic_settings = '%s/settings.png' % self.x18
         ic_peaklevel = '%s/peaklevel.png' % self.x18
         ic_audiotrack = '%s/audiotrack.png' % self.x18
+        icon_go = '%s/icon_go.png' % self.x18
         
         return [os.path.join(norm) for norm in [self.videomass_icon, # 0
                                                 icon_presets, # 1
@@ -187,6 +192,8 @@ class Appearance(object):
                                                 icon_youtube, #28
                                                 icon_videopictures, #29
                                                 icon_slideshow, #30
+                                                icon_audionorm, # 31
+                                                icon_go, # 32
                                                 ]]
             
         

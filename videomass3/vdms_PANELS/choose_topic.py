@@ -35,7 +35,7 @@ class Choose_Topic(wx.Panel):
     """
     def __init__(self, parent, OS, videoconv_icn, audioconv_icn, 
                  storepictures_icn, slideshow_icn, audioextract_icn, 
-                 merging_icn, youtube_icn,):
+                 merging_icn, youtube_icn, audionorm_icn):
 
         self.parent = parent
         self.OS = OS
@@ -83,6 +83,7 @@ class Choose_Topic(wx.Panel):
         self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1,-1))
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn),wx.TOP)
         self.anorm = wx.Button(self, wx.ID_ANY, anorm_lab, size=(-1,-1))
+        self.anorm.SetBitmap(wx.Bitmap(audionorm_icn),wx.TOP)
         #self.exit = wx.Button(self, wx.ID_EXIT, '', size=(-1,-1))
 
         grid_buttons.AddMany([(self.video, 0, wx.EXPAND, 5),
@@ -134,7 +135,7 @@ class Choose_Topic(wx.Panel):
     
     def on_YoutubeDL(self, event):
         self.parent.Text_import(self, 'Youtube Downloader')
-        print('python3 youtube-dl --abort-on-error --ignore-config --restrict-filenames --no-overwrites --prefer-free-formats --extract-audio')
+        #print('python3 youtube-dl --abort-on-error --ignore-config --restrict-filenames --no-overwrites --prefer-free-formats --extract-audio')
         """
         Post-processing Options:
        -x, --extract-audio

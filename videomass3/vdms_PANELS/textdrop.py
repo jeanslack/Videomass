@@ -63,7 +63,7 @@ class TextDnD(wx.Panel):
     """
     Panel for dragNdrop files queue. Accept one or more files.
     """
-    def __init__(self, parent):  
+    def __init__(self, parent, go_icn):  
         """Constructor. This will initiate with an id and a title"""
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent # parent is the MainFrame
@@ -85,6 +85,7 @@ class TextDnD(wx.Panel):
                                                       wx.TE_READONLY
                                                       )
         self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
+        self.btn_go.SetBitmap(wx.Bitmap(go_icn),wx.LEFT)
         self.lbl = wx.StaticText(self, label=_("Enter one or more URLs here:"))
 
         # create sizers layout
@@ -129,6 +130,7 @@ class TextDnD(wx.Panel):
     def WriteText(self, text):
         self.text.WriteText("\n%s\n" % text)
         #self.text.WriteText("\n%s\n" % text)
+        
     
     #----------------------------------------------------------------------
     def topic_Redirect(self, event):
@@ -140,7 +142,8 @@ class TextDnD(wx.Panel):
                              wx.ICON_INFORMATION, self)
             return
         else:
-            self.parent.topic_Redirect(data_files)
+            data = (self.myTextCtrl.GetValue().split())
+            self.parent.topic_Redirect(data)
     #----------------------------------------------------------------------
     def which(self):
         """
