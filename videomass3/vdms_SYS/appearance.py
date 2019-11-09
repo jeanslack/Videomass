@@ -99,13 +99,6 @@ class Appearance(object):
             self.x24 = '%s/Material_Design_Icons_black/24x24' % url
             self.x18 = '%s/Material_Design_Icons_black/18x18' % url
             self.icons_set()
-        # material design white
-        elif iconset == 'Material_Design_Icons_white':
-            self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
-            self.x36 = '%s/Material_Design_Icons_white/36x36' % url
-            self.x24 = '%s/Material_Design_Icons_black/24x24' % url
-            self.x18 = '%s/Material_Design_Icons_black/18x18' % url
-            self.icons_set()
         # flat-colours
         elif iconset == 'Flat_Color_Icons':
             self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
@@ -119,8 +112,6 @@ class Appearance(object):
         assignment path at the used icons in according to configuration file.
         """
         # choose topic icons 48x48:
-        #icon_import = '%s/icon_import.png' % self.x36
-        #icon_presets = '%s/icon_presets.png' % self.x36
         icon_switchvideomass = '%s/icon_videoconversions.png' % self.x48
         icon_headphones = '%s/icon_audioconversions.png' % self.x48
         icon_videopictures = '%s/icon_videopictures.png' % self.x48
@@ -129,23 +120,13 @@ class Appearance(object):
         icon_slideshow = '%s/icon_slideshow.png' % self.x48
         icon_youtube = '%s/icon_youtube.png' % self.x48
         icon_audionorm = '%s/icon_audionorm.png' % self.x48
-        #icon_process = '%s/icon_process.png' % self.x36
-        #icon_help = '%s/icon_help.png' % self.x36
-        # main icons 32x32 - 36x36:
-        icon_import = '%s/icon_import.png' % self.x36
-        icon_presets = '%s/icon_presets.png' % self.x36
-        #icon_switchvideomass = '%s/icon_videoconversions.png' % self.x36
-        #icon_headphones = '%s/icon_audioconversions.png' % self.x36
+        # choose topic icons 36x36:
         icon_process = '%s/icon_process.png' % self.x36
-        icon_help = '%s/icon_help.png' % self.x36
         # x24 icons 24x24:
         icn_infosource = '%s/infosource.png' % self.x24
         icn_preview = '%s/preview.png' % self.x24
         icn_cut = '%s/cut.png' % self.x24
         icn_saveprf = '%s/saveprf.png' % self.x24
-        icn_newprf = '%s/newprf.png' % self.x24
-        icn_delprf = '%s/delprf.png' % self.x24
-        icn_editprf = '%s/editprf.png' % self.x24
         # filters icons 24x24:
         icn_playfilters = '%s/playfilters.png' % self.x24
         icn_resetfilters = '%s/resetfilters.png' % self.x24
@@ -162,21 +143,15 @@ class Appearance(object):
         icon_go = '%s/icon_go.png' % self.x18
         
         return [os.path.join(norm) for norm in [self.videomass_icon, # 0
-                                                icon_presets, # 1
                                                 icon_switchvideomass, # 2
                                                 icon_process, # 3
-                                                icon_help, # 4
                                                 icon_headphones, # 5
-                                                icon_import, # 6
                                                 icn_infosource, # 7
                                                 icn_preview, # 8
                                                 icn_cut, # 9
                                                 icn_playfilters, # 10
                                                 icn_resetfilters,  # 11
                                                 icn_saveprf, # 12
-                                                icn_newprf, # 13
-                                                icn_delprf, # 14
-                                                icn_editprf, # 15
                                                 ic_resize, # 16
                                                 ic_crop, # 17
                                                 ic_rotate, # 18
@@ -195,5 +170,3 @@ class Appearance(object):
                                                 icon_audionorm, # 31
                                                 icon_go, # 32
                                                 ]]
-            
-        

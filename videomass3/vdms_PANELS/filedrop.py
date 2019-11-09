@@ -184,15 +184,20 @@ class FileDnD(wx.Panel):
                                                       )
         self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
         self.btn_go.SetBitmap(wx.Bitmap(go_icn),wx.LEFT)
-        self.lbl = wx.StaticText(self, label=_("Drag one or more files here:"))
+        self.lbl = wx.StaticText(self, label=_("Drag one or more files below"))
         self.flCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        grid = wx.FlexGridSizer(1, 5, 0, 0)
+        
+        sizer.Add(self.btn_go, 0, wx.ALL|
+                                 wx.ALIGN_CENTER_HORIZONTAL|
+                                 wx.ALIGN_CENTER_VERTICAL, 5
+                                 )
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND|wx.ALL, 5)
+        grid = wx.FlexGridSizer(1, 5, 0, 0)
         sizer.Add(grid)
         grid.Add(btn_clear, 1, wx.ALL|
                                wx.ALIGN_CENTER_HORIZONTAL|
@@ -208,10 +213,6 @@ class FileDnD(wx.Panel):
                                    )
         grid.Add(self.text_path_save, 1, wx.ALL|wx.EXPAND, 5)
         self.text_path_save.SetMinSize((290, -1)) 
-        grid.Add(self.btn_go, 1, wx.ALL|
-                                 wx.ALIGN_CENTER_HORIZONTAL|
-                                 wx.ALIGN_CENTER_VERTICAL, 5
-                                 )
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)

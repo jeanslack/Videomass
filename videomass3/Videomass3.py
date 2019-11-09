@@ -63,9 +63,7 @@ class Videomass(wx.App):
         self.ffprobe_url = None
         self.ffmpeg_loglev = None
         self.ffplay_loglev = None
-        
-        print ("App __init__")
-
+        #print ("App __init__")
         wx.App.__init__(self, redirect, filename) # constructor
     #-------------------------------------------------------------------
         
@@ -135,7 +133,7 @@ class Videomass(wx.App):
             self.ffprobe_url = setui[4][8]
             self.ffplay_url = setui[4][10]
             # --- used for debug only ---#
-            #self.firstrun(pathicons[23])
+            #self.firstrun(pathicons[17])
             #return True
             
         from videomass3.vdms_MAIN.main_frame import MainFrame
@@ -198,7 +196,7 @@ class Videomass(wx.App):
         """
         OnExit provides an interface for exiting the application
         """
-        print ("OnExit")
+        #print ("OnExit")
         return True
     #-------------------------------------------------------------------    
 
@@ -209,6 +207,6 @@ def main():
     app = Videomass(False)
     #app.MainLoop()
     fred = app.MainLoop()
-    print ("after MainLoop", fred)
+    #print ("after MainLoop", fred)
     
 

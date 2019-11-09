@@ -7,7 +7,6 @@ Update: October 14 2019
 
 This directory contains the Videomass configuration files.
 Furthermore, it is used to store log files during conversion 
-processes and to load '.vdms' presets localized on /vdms folder.
 
 videomass.conf and videomassWin32.conf (for MS Windows) are the main 
 Videomass configuration files and are also used for storing user preferences.
@@ -20,54 +19,3 @@ according to the conventions typical of each operating system:
         On MacOs:       '~/Library/Application Support/videomass'
         On Windows:     'C:\Users\username\AppData\Roaming\videomass'
 -----------------------------------------------------------------------
-
-VERY IMPORTANT
---------------
-Files with ".vdms" format are simple text files with JSON
-data structure. Since version 1.7.5 Videomass uses JSON data 
-for its presets while old ones with xml data are now obsolete 
-and incompatible. This allowed some advantages in the presets 
-management and some savings in system resources.
-
-
-To create new Videomass compatible file presets follow these general 
-guidelines:
-
-[]
-
-The square brackets above make a good starting with new empty preset
-
-[
-    {
-        "Name": "",
-        "Description": "",
-        "First_pass": "",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": ""
-    }
-]
-
-The JSON object above is a representation of an empty profile.
-The following use may be more useful:
-
-[
-    { 
-        "Name": "From Video to WAV",
-        "Description":  "Extracting WAV audio stream from video",
-        "First_pass": "-vn -acodec pcm_s16le -ac 2 -ar 44100 ",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "wav"
-    },
-
-    { 
-        "Name": "From Video to WMA",
-        "Description":  "Extracting VMA audio stream from video",
-        "First_pass": "-vn -acodec wmav2 -b:a 160k -ac 2 -ar 44100 ",
-        "Second_pass": "",
-        "Supported_list": "",
-        "Output_extension": "wma"
-    }
-]
-

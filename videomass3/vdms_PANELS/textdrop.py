@@ -31,7 +31,6 @@ import wx
 import os
 
 dirname = os.path.expanduser('~') # /home/user/
-data_files = []
 
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
@@ -42,7 +41,7 @@ orange = '#f28924'
 
 ########################################################################
 
-class MyTextDropTarget(wx.TextDropTarget):
+class TextDrop(wx.TextDropTarget):
  
     #----------------------------------------------------------------------
     def __init__(self, textctrl):
@@ -56,29 +55,26 @@ class MyTextDropTarget(wx.TextDropTarget):
         return True
     #----------------------------------------------------------------------
     def OnDragOver(self, x, y, d):
-        print(x,y,d)
+        #print(x,y,d)
         return wx.DragCopy
 
 class TextDnD(wx.Panel):
     """
-    Panel for dragNdrop files queue. Accept one or more files.
+    Accept one or more urls.
     """
     def __init__(self, parent, go_icn):  
         """Constructor. This will initiate with an id and a title"""
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname # path name files destination
-        self.selected = None # tells if an imported file is selected or not
         #This builds the list control box:
         
-        self.myTextCtrl = wx.TextCtrl(self, style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
-        text_drop_target = MyTextDropTarget(self.myTextCtrl)
-        self.myTextCtrl.SetDropTarget(text_drop_target)
+        self.textCtrl = wx.TextCtrl(self, style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
+        text_drop_target = TextDrop(self.textCtrl)
+        self.textCtrl.SetDropTarget(text_drop_target)
 
         # create widgets
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        self.ckbx_dir = wx.CheckBox(self, wx.ID_ANY, (
-                                _("Save destination in source folder")))
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1,-1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "", 
                                                 style=wx.TE_PROCESS_ENTER| 
@@ -86,42 +82,33 @@ class TextDnD(wx.Panel):
                                                       )
         self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
         self.btn_go.SetBitmap(wx.Bitmap(go_icn),wx.LEFT)
-        self.lbl = wx.StaticText(self, label=_("Enter one or more URLs here:"))
+        self.lbl = wx.StaticText(self, label=_("Enter one or more URLs below"))
 
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        grid = wx.FlexGridSizer(1, 5, 0, 0)
+        sizer.Add(self.btn_go, 0, wx.ALL|
+                                 wx.ALIGN_CENTER_HORIZONTAL|
+                                 wx.ALIGN_CENTER_VERTICAL, 5
+                                 )
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
-        sizer.Add(self.myTextCtrl, 1, wx.EXPAND|wx.ALL, 5)
+        sizer.Add(self.textCtrl, 1, wx.EXPAND|wx.ALL, 5)
+        grid = wx.FlexGridSizer(1, 5, 0, 0)
         sizer.Add(grid)
         grid.Add(btn_clear, 1, wx.ALL|
                                wx.ALIGN_CENTER_HORIZONTAL|
                                wx.ALIGN_CENTER_VERTICAL, 5
                                )
-        grid.Add(self.ckbx_dir, 1, wx.ALL|
-                                   wx.ALIGN_CENTER_HORIZONTAL|
-                                   wx.ALIGN_CENTER_VERTICAL, 5
-                                   )
         grid.Add(self.btn_save, 1, wx.ALL|
                                    wx.ALIGN_CENTER_HORIZONTAL|
                                    wx.ALIGN_CENTER_VERTICAL, 5
                                    )
         grid.Add(self.text_path_save, 1, wx.ALL|wx.EXPAND, 5)
         self.text_path_save.SetMinSize((290, -1)) 
-        grid.Add(self.btn_go, 1, wx.ALL|
-                                 wx.ALIGN_CENTER_HORIZONTAL|
-                                 wx.ALIGN_CENTER_VERTICAL, 5
-                                 )
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
-        #self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
-        #self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
-        #self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
-        #self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        #self.Bind(wx.EVT_CHECKBOX, self.same_filedest, self.ckbx_dir)
         self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
         
         self.text_path_save.SetValue(self.file_dest)
@@ -130,19 +117,17 @@ class TextDnD(wx.Panel):
     def WriteText(self, text):
         self.text.WriteText("\n%s\n" % text)
         #self.text.WriteText("\n%s\n" % text)
-        
-    
     #----------------------------------------------------------------------
     def topic_Redirect(self, event):
         """
         Redirects to specific panel
         """
-        if not self.myTextCtrl.GetValue():
+        if not self.textCtrl.GetValue():
             wx.MessageBox(_('Append at least one URL'), "Videomass", 
                              wx.ICON_INFORMATION, self)
             return
         else:
-            data = (self.myTextCtrl.GetValue().split())
+            data = (self.textCtrl.GetValue().split())
             self.parent.topic_Redirect(data)
     #----------------------------------------------------------------------
     def which(self):
@@ -153,79 +138,12 @@ class TextDnD(wx.Panel):
         #self.lbl.SetLabel('Drag one or more Video files here')
         return self.parent.topicname
     #----------------------------------------------------------------------
-    def onContext(self, event):
-        """
-        Create and show a Context Menu
-        """
-        # only do this part the first time so the events are only bound once 
-        if not hasattr(self, "popupID1"):
-            self.itemThreeId = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.itemThreeId)
-        # build the menu
-        menu = wx.Menu()
-        itemThree = menu.Append(self.itemThreeId, _("Remove the selected file"))
-        # show the popup menu
-        self.PopupMenu(menu)
-        menu.Destroy()
-    #----------------------------------------------------------------------
-    def onPopup(self, event):
-        """
-        Evaluate the label string of the menu item selected and starts
-        the related process
-        """
-        itemId = event.GetId()
-        menu = event.GetEventObject()
-        menuItem = menu.FindItemById(itemId)
-        
-        if not self.selected:
-            self.parent.statusbar_msg(_('No file selected to `%s` yet') % 
-                                      menuItem.GetLabel(), yellow)
-        else:
-            self.parent.statusbar_msg('Add Files', None)
-                
-            if menuItem.GetLabel() == _("Remove the selected file"):
-                if self.flCtrl.GetItemCount() == 1:
-                    self.deleteAll(self)
-                else:
-                    item = self.flCtrl.GetFocusedItem()
-                    self.flCtrl.DeleteItem(item)
-                    self.selected = None
-                    data_files.pop(item)
-
-    #----------------------------------------------------------------------
     def deleteAll(self, event):
         """
-        Delete and clear all text lines of the TxtCtrl,
-        reset the fileList[], disable Toolbar button and menu bar
-        Stream/play select imported file - Stream/display imported...
+        Delete and clear all text lines of the TxtCtrl
+
         """
-        #self.flCtrl.ClearAll()
-        self.myTextCtrl.SetValue('')
-        del data_files[:]
-        self.selected = None
-    #----------------------------------------------------------------------
-    def on_select(self, event):
-        """
-        Selecting a line with mouse or up/down keyboard buttons
-        """
-        index = self.flCtrl.GetFocusedItem()
-        item = self.flCtrl.GetItemText(index)
-        self.selected = item
-        
-    #----------------------------------------------------------------------
-    def on_doubleClick(self, row):
-        """
-        Double click or keyboard enter button, open media info
-        """
-        self.onContext(self)
-        #self.parent.ImportInfo(self)
-    #----------------------------------------------------------------------
-    def on_deselect(self, event):
-        """
-        De-selecting a line with mouse by click in empty space of
-        the control list
-        """
-        self.selected = None
+        self.textCtrl.SetValue('')
     #----------------------------------------------------------------------
     def on_custom_save(self):
         """

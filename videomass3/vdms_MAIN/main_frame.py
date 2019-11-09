@@ -71,11 +71,8 @@ class MainFrame(wx.Frame):
                run as portable program or installated program.
         """
         self.videomass_icon = pathicons[0]
-        #self.icon_storePictures = pathicons[1]
+        self.icon_runconversion = pathicons[2]
 
-        self.icon_runconversion = pathicons[3]
-        self.icon_help = pathicons[4]
-        #self.icon_import = pathicons[6]
         barC = setui[4][12].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
         # toolbar panel colour
@@ -119,17 +116,11 @@ class MainFrame(wx.Frame):
         #----------- panel toolbar buttons
         self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         
-        infoIbmp = wx.Bitmap(pathicons[7], wx.BITMAP_TYPE_ANY)
-        previewbmp = wx.Bitmap(pathicons[8], wx.BITMAP_TYPE_ANY)
-        cutbmp = wx.Bitmap(pathicons[9], wx.BITMAP_TYPE_ANY)
-        saveprfbmp = wx.Bitmap(pathicons[12], wx.BITMAP_TYPE_ANY)
-        
-        #newprfbmp = wx.Bitmap(pathicons[13], wx.BITMAP_TYPE_ANY)
-        #delprfbmp = wx.Bitmap(pathicons[14], wx.BITMAP_TYPE_ANY)
-        #editprfbmp = wx.Bitmap(pathicons[15], wx.BITMAP_TYPE_ANY)
-        
-        
-        
+        infoIbmp = wx.Bitmap(pathicons[4], wx.BITMAP_TYPE_ANY)
+        previewbmp = wx.Bitmap(pathicons[5], wx.BITMAP_TYPE_ANY)
+        cutbmp = wx.Bitmap(pathicons[6], wx.BITMAP_TYPE_ANY)
+        saveprfbmp = wx.Bitmap(pathicons[9], wx.BITMAP_TYPE_ANY)
+
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
                                            bitmap=infoIbmp, 
@@ -179,17 +170,17 @@ class MainFrame(wx.Frame):
         #---------- others panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self, 
                                                      self.OS,
-                                                     pathicons[2],
-                                                     pathicons[5],
-                                                     pathicons[29],
-                                                     pathicons[30],
-                                                     pathicons[26],
-                                                     pathicons[27],
-                                                     pathicons[28],
-                                                     pathicons[31],
+                                                     pathicons[1],
+                                                     pathicons[3],
+                                                     pathicons[23],
+                                                     pathicons[24],
+                                                     pathicons[20],
+                                                     pathicons[21],
+                                                     pathicons[22],
+                                                     pathicons[25],
                                                      )
         self.ChooseTopic.SetBackgroundColour(barColor)
-        self.ytDownloader = downloader.Downloader(self, self.OS,)
+        self.ytDownloader = downloader.Downloader(self)
         self.VconvPanel = video_conv.Video_Conv(self, 
                                                 self.ffmpeg_link,
                                                 self.ffplay_link,
@@ -198,17 +189,17 @@ class MainFrame(wx.Frame):
                                                 self.ffmpeg_loglevel,
                                                 self.ffplay_loglevel,
                                                 self.OS,
-                                                pathicons[10],# icon playfilters
-                                                pathicons[11],# icon resetfilters
-                                                pathicons[16],# icon resize
-                                                pathicons[17],# icon crop
-                                                pathicons[18],# icon rotate
-                                                pathicons[19],# icon deinterlace
-                                                pathicons[20],# icon ic_denoiser
-                                                pathicons[21],# icon analyzes
-                                                pathicons[22],# icon settings
-                                                pathicons[24],# icon peaklevel
-                                                pathicons[25],# icon audiotrack
+                                                pathicons[7],# icon playfilters
+                                                pathicons[8],# icon resetfilters
+                                                pathicons[10],# icon resize
+                                                pathicons[11],# icon crop
+                                                pathicons[12],# icon rotate
+                                                pathicons[13],# icon deinterlace
+                                                pathicons[14],# icon ic_denoiser
+                                                pathicons[15],# icon analyzes
+                                                pathicons[16],# icon settings
+                                                pathicons[18],# icon peaklevel
+                                                pathicons[19],# icon audiotrack
                                                 self.bBtnC,
                                                 self.fBtnC,
                                                 )
@@ -218,17 +209,17 @@ class MainFrame(wx.Frame):
                                                 self.ffmpeg_loglevel, 
                                                 self.ffprobe_link,
                                                 self.OS,
-                                                pathicons[21],# icon analyzes
-                                                pathicons[22],# icon settings
-                                                pathicons[24],# icon peaklevel
+                                                pathicons[15],# icon analyzes
+                                                pathicons[16],# icon settings
+                                                pathicons[18],# icon peaklevel
                                                 self.bBtnC,
                                                 self.fBtnC,
                                                 )
 
         self.fileDnDTarget = filedrop.FileDnD(self, 
                                               self.ffprobe_link, 
-                                              pathicons[32]) # panel
-        self.textDnDTarget = textdrop.TextDnD(self, pathicons[32]) # panel
+                                              pathicons[26]) # panel
+        self.textDnDTarget = textdrop.TextDnD(self, pathicons[26]) # panel
         
         self.fileDnDTarget.Hide()
         self.textDnDTarget.Hide()
@@ -296,7 +287,6 @@ class MainFrame(wx.Frame):
         #---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.ckbx_dir.Bind(wx.EVT_CHECKBOX, self.onCheckBox)
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
-        self.textDnDTarget.ckbx_dir.Bind(wx.EVT_CHECKBOX, self.onCheckBox)
         self.textDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
         self.Bind(wx.EVT_BUTTON, self.Saveprofile, self.btn_saveprf)
@@ -347,48 +337,6 @@ class MainFrame(wx.Frame):
         
         elif self.topicname == 'Youtube Downloader':
             self.youtube_Downloader(self)
-            
-    #----------------------------------------------------------#
-    def Setup_items_bar(self):
-        """
-        When switch between panels, disable/enable some item on menu bar 
-        and tool bar. Also at the program start, the DnDPanel is show and 
-        then take its setting
-        """
-        
-            
-        if self.ytDownloader.IsShown():
-            self.file_open.Enable(True), self.file_save.Enable(True), 
-            self.toolbar.EnableTool(wx.ID_FILE3, True)
-            self.toolbar.EnableTool(wx.ID_FILE6, True)
-            self.toolbar.EnableTool(wx.ID_FILE7, True)
-            self.toolbar.EnableTool(wx.ID_FILE5, False)
-            self.toolbar.EnableTool(wx.ID_OK, True)
-            self.Layout()
-            
-        elif self.AconvPanel.IsShown():
-            self.file_open.Enable(True), self.file_save.Enable(True), 
-            self.toolbar.EnableTool(wx.ID_FILE3, True)
-            self.toolbar.EnableTool(wx.ID_FILE5, True)
-            self.toolbar.EnableTool(wx.ID_FILE6, True)
-            self.toolbar.EnableTool(wx.ID_FILE7, False)
-            self.toolbar.EnableTool(wx.ID_OK, True)
-            self.Layout()
-            
-        elif self.ProcessPanel.IsShown():
-            #self.file_open.Enable(False), self.saveme.Enable(False), 
-            #self.new_prst.Enable(False), self.del_prst.Enable(False),
-            #self.restore.Enable(False), self.default.Enable(False), 
-            #self.default_all.Enable(False), self.refresh.Enable(False), 
-            #Disable all top menu bar :
-            [self.menuBar.EnableTop(x, False) for x in range(0,3)]
-            #Disable the tool bar
-            self.toolbar.EnableTool(wx.ID_FILE3, False)
-            self.toolbar.EnableTool(wx.ID_FILE5, False)
-            self.toolbar.EnableTool(wx.ID_FILE6, False)
-            self.toolbar.EnableTool(wx.ID_FILE7, False)
-            self.toolbar.EnableTool(wx.ID_OK, False)
-        
     #------------------------------------------------------------------#
     def postExported_enable(self):
         """
@@ -857,20 +805,14 @@ class MainFrame(wx.Frame):
         # ------- Run process button
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
                                     wx.Bitmap(self.icon_runconversion)
-                                                )
+                                          )
         self.toolbar.EnableTool(wx.ID_OK, False)
         #self.toolbar.AddSeparator()
-        
-        #------- help button
-        #help_contest = self.toolbar.AddTool(wx.ID_ANY, _('Help'), 
-                                    #wx.Bitmap(self.icon_help)
-                                                #)
         # finally, create it
         self.toolbar.Realize()
         
         #----------------- Tool Bar Binding (evt)-----------------------#
         self.Bind(wx.EVT_TOOL, self.Run_Coding, run_coding)
-        #self.Bind(wx.EVT_TOOL, self.Helpme, help_contest)
 
     #--------------- Tool Bar Callback (event handler) -----------------#
     
@@ -889,14 +831,14 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def Text_import(self, event, which):
         """
-        Show files import panel.
+        Show URLs import panel.
         """
         self.topicname = which
         self.fileDnDTarget.Hide(),self.ytDownloader.Hide(), 
         self.VconvPanel.Hide(), self.AconvPanel.Hide(),
         self.ChooseTopic.Hide(), self.textDnDTarget.Show(),
         self.Layout()
-        self.statusbar_msg(_('Add Files'), None)
+        self.statusbar_msg(_('Add URLs'), None)
 
     #------------------------------------------------------------------#
     def youtube_Downloader(self, event):
@@ -957,7 +899,6 @@ class MainFrame(wx.Frame):
         self.AconvPanel.Show(), 
         self.Layout()
         self.statusbar_msg(_('Audio Conversions'), None)
-        #self.Setup_items_bar()
         flist = [f['format']['filename'] for f in 
                  self.data if f['format']['filename']
                  ]
@@ -1000,7 +941,13 @@ class MainFrame(wx.Frame):
         self.Layout()
         self.SetTitle(_('Processing Status - Videomass'))
 
-        self.Setup_items_bar()# call set default layout method
+        [self.menuBar.EnableTop(x, False) for x in range(0,3)]
+        #Disable the tool bar
+        #self.toolbar.EnableTool(wx.ID_FILE3, False)
+        #self.toolbar.EnableTool(wx.ID_FILE5, False)
+        #self.toolbar.EnableTool(wx.ID_FILE6, False)
+        #self.toolbar.EnableTool(wx.ID_FILE7, False)
+        self.toolbar.EnableTool(wx.ID_OK, False)
     #------------------------------------------------------------------#
     def Run_Coding(self, event):
         """
@@ -1009,7 +956,7 @@ class MainFrame(wx.Frame):
         the 'switch_Process' method above.
         """
         if self.ytDownloader.IsShown():
-            self.ytDownloader.on_ok()
+            self.ytDownloader.on_Start()
         elif self.VconvPanel.IsShown():
             self.VconvPanel.on_ok()
         elif self.AconvPanel.IsShown():

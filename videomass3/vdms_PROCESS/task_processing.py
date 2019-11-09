@@ -140,7 +140,6 @@ class GeneralProcess(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         
         #------------------------------------------
-        print ('[VIDEOMASS] Initial log:')
         write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
         time.sleep(.1)
@@ -162,7 +161,6 @@ class GeneralProcess(wx.Panel):
             PresetsManager_Thread(self.varargs, self.duration,
                           self.logname, self.time_seq,
                           ) 
-        
         elif self.varargs[0] == 'twopass_presets':# from Presets Manager
             TwoPass_PresetsManager_Thread(self.varargs, self.duration,
                                           self.logname, self.time_seq,
@@ -396,7 +394,7 @@ class YoutubeDL_Downloader(Thread):
         
         for url in self.urls:
             cmd = ('youtube-dl --newline -o "{0}/%(title)s.%(ext)s" '
-                    '--ignore-config --restrict-filenames {1} '
+                   '--ignore-errors --ignore-config --restrict-filenames {1} '
                     '"{2}"'.format(self.outputdir, self.opt, url)
                     )
             #cmd = ('youtube-dl --newline -o "/home/gianluca/Video/%(title)s.%(ext)s" '
@@ -404,7 +402,6 @@ class YoutubeDL_Downloader(Thread):
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
-            #print("%s" % com)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT", 
                          count=count, 
@@ -422,7 +419,6 @@ class YoutubeDL_Downloader(Thread):
                 # Hide subprocess window on MS Windows
                 info = subprocess.STARTUPINFO()
                 info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            
             try:
                 with subprocess.Popen(cmd,
                                       stdout=subprocess.PIPE,
@@ -432,12 +428,7 @@ class YoutubeDL_Downloader(Thread):
                                       startupinfo=info,) as p:
                     
                     for line in p.stdout:
-                        #sys.stdout.write(line)
-                        #sys.stdout.flush()
                         #print('PROVA ', line, end='')
-                        #if '%' in line:
-                        #print(line.split())
-                        
                         wx.CallAfter(pub.sendMessage, 
                                      "UPDATE_DOWNLOAD_EVT", 
                                      output=line, 
@@ -467,8 +458,6 @@ class YoutubeDL_Downloader(Thread):
                                      fname='',
                                      end='ok'
                                         )
-                        print('...Done\n')
-                        
             except OSError as err:
                 e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
@@ -478,13 +467,12 @@ class YoutubeDL_Downloader(Thread):
                              fname=url,
                              end='',
                              )
-                print('...%s' % (e))
                 STATUS_ERROR = 1
                 break
             
             if CHANGE_STATUS == 1:# break first 'for' loop
                 p.terminate()
-                print('...Interrupted process')
+                #print('...Interrupted process')
                 break
                 
         time.sleep(.5)
