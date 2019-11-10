@@ -30,7 +30,7 @@
 import wx
 
 vformats = ("All best", "mp4", "webm", "flv", "3gp", "m4a", "mkv")
-vquality = {"All best": {"default": "bestvideo+bestaudio/best"},
+vquality = {"All best": {"default": "--format 'bestvideo+bestaudio/best'"},
             "mp4": {"mp4 maximum quality": "--format mp4",
                     "mp4 [360p] (3D)": "--format 82",
                     "mp4 [480p] (3D)": "--format 83",
@@ -102,8 +102,9 @@ aquality = {("Maximum quality"): ("--audio-quality 0"),
             }
 
 opt = {"PLAYLIST": "--no-playlist", "WARNINGS": "", "THUMB": "",
-       "METADATA": "", "V_FORMAT": "bestvideo+bestaudio/best",
-       "A_FORMAT": "", "A_QUALITY": "--audio-quality 5", 
+       "METADATA": "", "V_FORMAT": "--format 'bestvideo+bestaudio/best'",
+       "A_FORMAT": "--extract-audio --audio-format best", 
+       "A_QUALITY": "--audio-quality 5", 
        }
 
 class Downloader(wx.Panel):
@@ -117,6 +118,7 @@ class Downloader(wx.Panel):
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
         sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add((20, 20), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
         self.choice = wx.Choice(self, wx.ID_ANY, 
                                      choices=['Video+Audio',  
                                               'Audio only',],
@@ -128,6 +130,8 @@ class Downloader(wx.Panel):
         box.Add(self.choice, 0, wx.ALIGN_CENTER | wx.ALL, 20)
         self.choice.SetSelection(0)
         sizer.Add(box, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
+        sizer.Add((50, 50), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
+        
         self.cmbx_vf = wx.ComboBox(self, wx.ID_ANY,
                                    choices=[x for x in vformats],
                                    size=(110,-1),style=wx.CB_DROPDOWN|
@@ -241,7 +245,7 @@ class Downloader(wx.Panel):
         if self.ckbx_thumb.IsChecked():
             opt["THUMB"] = "--embed-thumbnail"
         else:
-            opt["PLAYLIST"] = ""
+            opt["THUMB"] = ""
     #-----------------------------------------------------------------#
     def on_Metadata(self, event):
         if self.ckbx_meta.IsChecked():
@@ -255,13 +259,14 @@ class Downloader(wx.Panel):
         urls = self.parent.data
         
         if self.choice.GetSelection() == 0:
-            cmd = ('{} {} {} {} {}'.format(opt["WARNINGS"], opt["METADATA"],
-                                           opt["V_FORMAT"], opt["A_QUALITY"],
-                                           opt["PLAYLIST"]))
+            cmd = ('{} {} {} {} {}'.format(opt["V_FORMAT"], opt["A_QUALITY"], 
+                                           opt["METADATA"], opt["PLAYLIST"], 
+                                           opt["WARNINGS"]))
         elif self.choice.GetSelection() == 1:
-            cmd = ('{} {} {} {}'.format(opt["WARNINGS"], opt["METADATA"],
-                                        opt["A_FORMAT"], opt["THUMB"],
-                                        opt["PLAYLIST"]))
+            cmd = ('{} {} {} {}'.format(opt["A_FORMAT"], opt["THUMB"],
+                                        opt["METADATA"], opt["PLAYLIST"],
+                                        opt["WARNINGS"]))
+        print(cmd)
 
         self.parent.switch_Process('downloader',
                                         urls,

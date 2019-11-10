@@ -800,7 +800,7 @@ class MainFrame(wx.Frame):
         #--------- Properties
         self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT | wx.TB_TEXT))
         self.toolbar.SetToolBitmapSize((32,32))
-        self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+        self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         
         # ------- Run process button
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
@@ -856,7 +856,7 @@ class MainFrame(wx.Frame):
         self.statusbar_msg(_('Youtube Downloader'), None)
         
         self.toolbar.Show()
-        #self.btnpanel.Show()
+        self.btnpanel.Show()
         #self.btn_saveprf.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
 

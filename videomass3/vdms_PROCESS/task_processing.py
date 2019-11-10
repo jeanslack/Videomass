@@ -393,12 +393,12 @@ class YoutubeDL_Downloader(Thread):
         '''
         
         for url in self.urls:
-            cmd = ('youtube-dl --newline -o "{0}/%(title)s.%(ext)s" '
-                   '--ignore-errors --ignore-config --restrict-filenames {1} '
-                    '"{2}"'.format(self.outputdir, self.opt, url)
-                    )
-            #cmd = ('youtube-dl --newline -o "/home/gianluca/Video/%(title)s.%(ext)s" '
-                    #'--ignore-config --restrict-filenames --prefer-free-formats ')
+            cmd = ('youtube-dl --newline --ignore-errors -o '
+                   '"{0}/%(title)s.%(ext)s" {1} --ignore-config '
+                   '--restrict-filenames "{2}"'.format(self.outputdir, 
+                                                       self.opt, 
+                                                       url
+                                                       ))
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
@@ -415,6 +415,7 @@ class YoutubeDL_Downloader(Thread):
                 import shlex
                 cmd = shlex.split(cmd)
                 info = None
+                print(cmd)
             else:
                 # Hide subprocess window on MS Windows
                 info = subprocess.STARTUPINFO()
