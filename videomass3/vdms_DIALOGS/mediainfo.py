@@ -169,6 +169,7 @@ class Mediainfo(wx.Dialog):
         self.video_ctrl.DeleteAllItems()
         self.audio_ctrl.DeleteAllItems()
         self.subtitle_ctrl.DeleteAllItems()
+
         index = self.file_select.GetFocusedItem()
         item = self.file_select.GetItemText(index)
         

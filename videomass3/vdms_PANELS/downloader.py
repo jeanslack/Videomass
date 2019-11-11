@@ -26,60 +26,13 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
  
 #########################################################
-
+from __future__ import unicode_literals
 import wx
 
-vformats = ("All best", "mp4", "webm", "flv", "3gp", "m4a", "mkv")
-vquality = {"All best": {"default": "--format 'bestvideo+bestaudio/best'"},
-            "mp4": {"mp4 maximum quality": "--format mp4",
-                    "mp4 [360p] (3D)": "--format 82",
-                    "mp4 [480p] (3D)": "--format 83",
-                    "mp4 [720p] (3D)": "-format 84",
-                    "mp4 [1080p] (3D)": "--format 85",
-                    "mp4 [360p]": "--format 18",
-                    "mp4 [720p]": "--format 22",
-                    "mp4 [1080p]": "--format 37",
-                    "mp4 [4K]": "--format 38",
-                    "mp4 [144p] (DASH Video)": "--format 160",
-                    "mp4 [240p] (DASH Video)": "--format 133",
-                    "mp4 [360p] (DASH Video)": "--format 134",
-                    "mp4 [480p] (DASH Video)": "--format 135",
-                    "mp4 [720p] (DASH Video)": "--format136",
-                    "mp4 [1080p] (DASH Video)": "--format 137",
-                    "mp4 [1440p] (DASH Video)": "--format 264",
-                    "mp4 [2160p] (DASH Video)": "--format 138"},
-            "webm": {"webm maximum quality": "--format webm",
-                    "webm [360p]": "--format 43",
-                    "webm [480p]": "--format 44",
-                    "webm [720p]": "--format 45",
-                    "webm [1080p]": "--format 46",
-                    "webm [240p] DASH Video": "--format 242",
-                    "webm [360p] DASH Video": "--format 243",
-                    "webm [480p] DASH Video": "--format 244",
-                    "webm [720p] DASH Video": "--format 247",
-                    "webm [1080p] DASH Video": "--format 248",
-                    "webm [1440p] DASH Video": "--format 271",
-                    "webm [2160p] DASH Video": "--format 272",
-                    "webm [360p] 3D": "--format 100",
-                    "webm [480p] 3D": "--format 101",
-                    "webm [720p] 3D": "--format 102",
-                    "webm 48k DASH Audio": "--format 171",
-                    "webm 256k DASH Audio": "--format 172"},
-            "flv": {"flv maximum quality": "--format flv",
-                    "flv [240p]": "--format 5",
-                    "flv [360p]": "--format 34",
-                    "flv [480p]": "--format 35"},
-            "3gp": {"3gp maximum quality": "--format 3gp",
-                    "3gp [144p]": "--format 17",
-                    "3gp [240p]": "--format 36"},
-            "m4a": {"m4a maximum quality": "--format m4a",
-                    "m4a 48k DASH Audio": "--format 139",
-                    "m4a 128k DASH Audio": "--format 140",
-                    "m4a 256k DASH Audio": "--format 141"},
-            "mkv": {"mkv maximum quality": "--format mkv",}
-                }
+vquality = {'Best quality video': 'bestvideo',
+            'Worst quality video': 'worstvideo'}
 
-aformats = {("Best audio)"): ("--extract-audio --audio-format best"),
+aformats = {("Default format"): ("--extract-audio --audio-format bestaudio"),
             ("wav"): ("--extract-audio --audio-format wav"),
             ("mp3"): ("--extract-audio --audio-format mp3"),
             ("aac"): ("--extract-audio --audio-format aac"),
@@ -89,39 +42,44 @@ aformats = {("Best audio)"): ("--extract-audio --audio-format best"),
             ("flac"): ("--extract-audio --audio-format flac"),
             }
 
-aquality = {("Maximum quality"): ("--audio-quality 0"),
-            ("Audio quality 1"): ("--audio-quality 1"),
-            ("Audio quality 2"): ("--audio-quality 2"),
-            ("Audio quality 3"): ("--audio-quality 3"),
-            ("Audio qualit 4"): ("--audio-quality 4"),
-            ("Mid audio quality"): ("--audio-quality 5"),
-            ("Audio quality 6"): ("--audio-quality 6"),
-            ("Audio quality 7"): ("--audio-quality 7"),
-            ("Audio quality 8"): ("--audio-quality 8"),
-            ("Worse audio quality 9"): ("--audio-quality 9"),
-            }
+aquality = {'Best quality audio': 'bestaudio',
+            'Worst quality audio': 'worstaudio'}
 
 opt = {"PLAYLIST": "--no-playlist", "WARNINGS": "", "THUMB": "",
-       "METADATA": "", "V_FORMAT": "--format 'bestvideo+bestaudio/best'",
+       "METADATA": "", "V_QUALITY": "bestvideo",
        "A_FORMAT": "--extract-audio --audio-format best", 
-       "A_QUALITY": "--audio-quality 5", 
+       "A_QUALITY": "bestaudio", 
        }
+
+yellow = '#a29500'
+
+#####################################################################
+def sizeof_fmt(num, suffix='B'):
+    num = int(num)
+    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
+        if abs(num) < 1024.0:
+            return "%3.1f%s%s" % (num, unit, suffix)
+        num /= 1024.0
+    return "%.1f%s%s" % (num, 'Yi', suffix)
+######################################################################
 
 class Downloader(wx.Panel):
     """
     
     """
-    def __init__(self, parent):
+    def __init__(self, parent, OS):
         """
         """
         self.parent = parent
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add((20, 20), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
+        #sizer.Add((20, 20), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
         self.choice = wx.Choice(self, wx.ID_ANY, 
-                                     choices=['Video+Audio',  
-                                              'Audio only',],
+                                     choices=[_('Default'),
+                                              _('Separated Video+Audio'),  
+                                              _('Audio only'),
+                                              _('By using format code')],
                                      size=(-1,-1),
                                      )
         box = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -132,40 +90,50 @@ class Downloader(wx.Panel):
         sizer.Add(box, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         sizer.Add((50, 50), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
         
-        self.cmbx_vf = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=[x for x in vformats],
-                                   size=(110,-1),style=wx.CB_DROPDOWN|
-                                                       wx.CB_READONLY
-                                                       )
-        self.cmbx_vf.SetSelection(0)
+        
+        
+        self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                   style=wx.TE_PROCESS_ENTER, size=(50,-1)
+                                   )
+        self.txt_code.Disable()
+        
+        grid_fcode = wx.FlexGridSizer(1, 2, 0, 0)
+        sizer.Add(grid_fcode, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        self.stext = wx.StaticText(self, wx.ID_ANY, (
+                                        _('Enter `Format Code` number here:')))
+        self.stext.Disable()
+        grid_fcode.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_fcode.Add(self.txt_code, 0, wx.ALL, 5)
+        
+        
+        
         grid_v = wx.FlexGridSizer(1, 5, 0, 0)
         sizer.Add(grid_v, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
-        grid_v.Add(self.cmbx_vf, 0, wx.ALL, 5)
-        f = [x for x in vquality.get('All best')]
+        f = [x for x in vquality.keys()]
         self.cmbx_vq = wx.ComboBox(self, wx.ID_ANY, choices=f,
-                                   size=(200,-1),style=wx.CB_DROPDOWN|
+                                   size=(150,-1),style=wx.CB_DROPDOWN|
                                                       wx.CB_READONLY
                                                       )
         self.cmbx_vq.SetSelection(0)
-        grid_v.Add((20, 20), 0,)
+        #grid_v.Add((20, 20), 0,)
         grid_v.Add(self.cmbx_vq, 0, wx.ALL, 5)
         self.cmbx_aq = wx.ComboBox(self, wx.ID_ANY, 
                                    choices=[x for x in aquality.keys()],
-                                   size=(200,-1),style=wx.CB_DROPDOWN|
+                                   size=(150,-1),style=wx.CB_DROPDOWN|
                                                        wx.CB_READONLY
                                                        )
-        self.cmbx_aq.SetSelection(5)
-        grid_v.Add((20, 20), 0,)
+        self.cmbx_aq.SetSelection(0)
+        #grid_v.Add((20, 20), 0,)
         grid_v.Add(self.cmbx_aq, 0, wx.ALL, 5)
         self.cmbx_af = wx.ComboBox(self, wx.ID_ANY,
                                    choices=[x for x in aformats.keys()],
-                                   size=(110,-1),style=wx.CB_DROPDOWN|
+                                   size=(150,-1),style=wx.CB_DROPDOWN|
                                                        wx.CB_READONLY)
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
-        grid_a = wx.FlexGridSizer(1, 1, 0, 0)
-        sizer.Add(grid_a, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_a.Add(self.cmbx_af, 0, wx.ALL, 5)
+        #grid_a = wx.FlexGridSizer(1, 1, 0, 0)
+        #sizer.Add(grid_a, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
         #-------------opt
         line_0 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
         sizer.Add(line_0, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
@@ -183,13 +151,34 @@ class Downloader(wx.Panel):
         grid_opt.Add(self.ckbx_meta, 0, wx.ALL, 5)
         line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
         sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
+        
+        self.fcode = wx.ListCtrl(self, wx.ID_ANY,style=wx.LC_REPORT | 
+                                                  wx.SUNKEN_BORDER
+                                    )
+        self.fcode.Disable()
+        sizer.Add(self.fcode, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        
+        self.fcode.InsertColumn(0, (_('URL')), width=400)
+        self.fcode.InsertColumn(1, (_('Format Code')), width=100)
+        self.fcode.InsertColumn(2, (_('Extension')), width=80)
+        self.fcode.InsertColumn(3, (_('Resolution')), width=150)
+        self.fcode.InsertColumn(4, (_('Video Codec')), width=110)
+        self.fcode.InsertColumn(5, (_('fps')), width=60)
+        self.fcode.InsertColumn(6, (_('Audio Codec')), width=110)
+        self.fcode.InsertColumn(7, (_('Size')), width=80)
+        
+        
+        
+        if OS == 'Darwin':
+            self.fcode.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        else:
+            self.fcode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
         self.SetSizer(sizer)
         self.Layout()
 
         #----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
-        self.cmbx_vf.Bind(wx.EVT_COMBOBOX, self.on_Vf)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
         self.cmbx_af.Bind(wx.EVT_COMBOBOX, self.on_Af)
         self.cmbx_aq.Bind(wx.EVT_COMBOBOX, self.on_Aq)
@@ -197,34 +186,87 @@ class Downloader(wx.Panel):
         self.ckbx_warn.Bind(wx.EVT_CHECKBOX, self.on_Warnings)
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
-        
     #-----------------------------------------------------------------#
-    def on_Choice(self, event):
-        if self.choice.GetSelection() == 0:
-            self.cmbx_af.Disable(), self.cmbx_vf.Enable()
-            self.cmbx_aq.Enable(), self.cmbx_vq.Enable()
-            self.cmbx_aq.Enable()
+    def infoParse(self):
+        
+        import youtube_dl
+        
+        index = 0
+        self.parent.statusbar_msg("wait... I'm getting the data", 'YELLOW')
+        for link in self.parent.data:
             
-        elif self.choice.GetSelection() == 1:
-            self.cmbx_vq.Disable(), self.cmbx_vf.Disable()
-            self.cmbx_af.Enable(), self.cmbx_aq.Enable()
-            self.cmbx_aq.Disable()
+            #ydl_opts = {'listformats': True }
+            ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,}
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                meta = ydl.extract_info(link, download=False)
+                
+                if meta:
+                    if 'entries' in meta:
+                        meta['entries'][0]
+                    formats = meta.get('formats', [meta])
+                    self.fcode.InsertItem(index, link)
+                    self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                else:
+                    self.fcode.InsertItem(index, 'ERROR: %s' % link)
+                    self.fcode.SetItemBackgroundColour(index, 'RED')
+                    break
+                
+            for f in formats:
+                index+=1
+                if f['vcodec'] == 'none':
+                    vcodec = ''
+                    fps = ''
+                else:
+                    vcodec = f['vcodec']
+                    fps = '%sfps' % f['fps']
+                            
+                if f['acodec'] == 'none':
+                    acodec = 'Video only'
+                else:
+                    acodec = f['acodec']
+                
+                if f['filesize']:
+                    size = sizeof_fmt(f['filesize'])
+                else:
+                    size = ''
+                
+                self.fcode.InsertItem(index, '' )
+                self.fcode.SetItem(index, 1, f['format_id'] )
+                self.fcode.SetItem(index, 2, f['ext'])
+                self.fcode.SetItem(index, 3, f['format'].split('-')[1])
+                self.fcode.SetItem(index, 4, vcodec)
+                self.fcode.SetItem(index, 5, fps)
+                self.fcode.SetItem(index, 6, acodec)
+                self.fcode.SetItem(index, 7, size)
+                
+        self.parent.statusbar_msg('Youtube Downloader', None)
 
     #-----------------------------------------------------------------#
-    def on_Vf(self, event): 
-        self.cmbx_vq.Clear()
-        fq = [x for x in vquality.get(self.cmbx_vf.GetValue())]
-        self.cmbx_vq.Append((fq),)
-        self.cmbx_vq.SetSelection(0)
-        q = vquality[self.cmbx_vf.GetValue()].get(self.cmbx_vq.GetValue())
-        opt["V_FORMAT"] = q
+    def on_Choice(self, event):
+        if self.choice.GetSelection() in [0,1]:
+            self.cmbx_af.Disable(), self.cmbx_aq.Enable()
+            self.cmbx_vq.Enable(), self.txt_code.Disable()
+            self.fcode.Disable(), self.stext.Disable()
+            
+        elif self.choice.GetSelection() == 2:
+            self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
+            self.cmbx_af.Enable(), self.txt_code.Disable()
+            self.fcode.Disable(), self.stext.Disable()
+            
+        elif self.choice.GetSelection() == 3:
+            self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
+            self.cmbx_af.Disable(), self.txt_code.Enable()
+            self.fcode.Enable(), self.stext.Enable()
+            self.infoParse()
+
     #-----------------------------------------------------------------#
     def on_Vq(self, event):
-        q = vquality[self.cmbx_vf.GetValue()].get(self.cmbx_vq.GetValue())
-        opt["V_FORMAT"] = q
+        opt["V_QUALITY"] = vquality[self.cmbx_vq.GetValue()]
+        
     #-----------------------------------------------------------------#
     def on_Af(self, event):
         opt["A_FORMAT"] = aformats.get(self.cmbx_af.GetValue())
+        
     #-----------------------------------------------------------------#
     def on_Aq(self, event):
         opt["A_QUALITY"] = aquality.get(self.cmbx_aq.GetValue())
@@ -254,30 +296,49 @@ class Downloader(wx.Panel):
             opt["METADATA"] = ""
     #-----------------------------------------------------------------#
     def on_Start(self):
-        # https://www.youtube.com/watch?v=R67nUHelLM4
+
         logname = 'Youtube_downloader'
         urls = self.parent.data
         
         if self.choice.GetSelection() == 0:
-            cmd = ('{} {} {} {} {}'.format(opt["V_FORMAT"], opt["A_QUALITY"], 
-                                           opt["METADATA"], opt["PLAYLIST"], 
-                                           opt["WARNINGS"]))
-        elif self.choice.GetSelection() == 1:
-            cmd = ('{} {} {} {}'.format(opt["A_FORMAT"], opt["THUMB"],
-                                        opt["METADATA"], opt["PLAYLIST"],
+            cmd = ('--format {}+{} {} {} {}'.format(opt["V_QUALITY"], 
+                                                    opt["A_QUALITY"], 
+                                                    opt["METADATA"], 
+                                                    opt["PLAYLIST"], 
+                                                    opt["WARNINGS"]))
+        if self.choice.GetSelection() == 1:
+            cmd = ('--format {},{} {} {} {}'.format(opt["V_QUALITY"], 
+                                                    opt["A_QUALITY"], 
+                                                    opt["METADATA"], 
+                                                    opt["PLAYLIST"], 
+                                                    opt["WARNINGS"]))
+        elif self.choice.GetSelection() == 2: # audio only
+            cmd = ('{} {} {} {}'.format(opt["A_FORMAT"], 
+                                        opt["THUMB"],
+                                        opt["METADATA"], 
+                                        opt["PLAYLIST"],
                                         opt["WARNINGS"]))
-        print(cmd)
+        if self.choice.GetSelection() == 3:
+            code = self.txt_code.GetValue().strip()
+            if not code.isdigit() or not code:
+                wx.MessageBox(_('Enter a `Format Code` number in the text '
+                                'box, please'),'Videomass', wx.ICON_INFORMATION)
+                self.txt_code.SetBackgroundColour((255,192,255))
+                return
+            
+            cmd = ('--format {} {} {} {}'.format(code,
+                                                 opt["METADATA"], 
+                                                 opt["PLAYLIST"], 
+                                                 opt["WARNINGS"]))
 
         self.parent.switch_Process('downloader',
-                                        urls,
-                                        '',
-                                        self.parent.file_destin,
-                                        cmd,
-                                        None,
-                                        '',
-                                        '',
-                                        logname, 
-                                        len(urls),
-                                        )
-        
-        
+                                    urls,
+                                    '',
+                                    self.parent.file_destin,
+                                    cmd,
+                                    None,
+                                    '',
+                                    '',
+                                    logname, 
+                                    len(urls),
+                                    )

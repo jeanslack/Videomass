@@ -180,7 +180,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[25],
                                                      )
         self.ChooseTopic.SetBackgroundColour(barColor)
-        self.ytDownloader = downloader.Downloader(self)
+        self.ytDownloader = downloader.Downloader(self, self.OS)
         self.VconvPanel = video_conv.Video_Conv(self, 
                                                 self.ffmpeg_link,
                                                 self.ffplay_link,
@@ -318,7 +318,13 @@ class MainFrame(wx.Frame):
         self.data = None
         self.fileDnDTarget.deleteAll(self)
         self.textDnDTarget.deleteAll(self)
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(), 
+        if self.ytDownloader.IsShown():
+            self.ytDownloader.fcode.DeleteAllItems()
+            self.ytDownloader.choice.SetSelection(0)
+            self.ytDownloader.on_Choice(self)
+            self.ytDownloader.Hide()
+            
+        self.VconvPanel.Hide(), 
         self.AconvPanel.Hide(), self.fileDnDTarget.Hide(), 
         self.textDnDTarget.Hide(), self.ChooseTopic.Show()
         self.toolbar.Hide(), self.btnpanel.Hide()
@@ -849,14 +855,14 @@ class MainFrame(wx.Frame):
         
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.VconvPanel.Hide(), self.AconvPanel.Hide()
-        self.ytDownloader.Show()
+        self.ytDownloader.Show()#, self.SetSize((700, 800))
         
         self.Layout()
 
         self.statusbar_msg(_('Youtube Downloader'), None)
         
         self.toolbar.Show()
-        self.btnpanel.Show()
+        #self.btnpanel.Show()
         #self.btn_saveprf.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
 

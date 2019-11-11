@@ -41,22 +41,22 @@ orange = '#f28924'
 
 ########################################################################
 
-class TextDrop(wx.TextDropTarget):
+#class TextDrop(wx.TextDropTarget):
  
-    #----------------------------------------------------------------------
-    def __init__(self, textctrl):
-        wx.TextDropTarget.__init__(self)
-        self.textctrl = textctrl
+    ##----------------------------------------------------------------------
+    #def __init__(self, textctrl):
+        #wx.TextDropTarget.__init__(self)
+        #self.textctrl = textctrl
  
-    #----------------------------------------------------------------------
-    def OnDropText(self, x, y, text):
-        #self.textctrl.WriteText("(%d, %d)\n%s\n" % (x, y, text))
-        self.textctrl.WriteText(text)
-        return True
-    #----------------------------------------------------------------------
-    def OnDragOver(self, x, y, d):
-        #print(x,y,d)
-        return wx.DragCopy
+    ##----------------------------------------------------------------------
+    #def OnDropText(self, x, y, text):
+        ##self.textctrl.WriteText("(%d, %d)\n%s\n" % (x, y, text))
+        #self.textctrl.WriteText(text)
+        #return True
+    ##----------------------------------------------------------------------
+    #def OnDragOver(self, x, y, d):
+        ##print(x,y,d)
+        #return wx.DragCopy
 
 class TextDnD(wx.Panel):
     """
@@ -69,9 +69,12 @@ class TextDnD(wx.Panel):
         self.file_dest = dirname # path name files destination
         #This builds the list control box:
         
-        self.textCtrl = wx.TextCtrl(self, style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
-        text_drop_target = TextDrop(self.textCtrl)
-        self.textCtrl.SetDropTarget(text_drop_target)
+        self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                   style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
+        
+        #self.textCtrl = wx.TextCtrl(self, style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
+        #text_drop_target = TextDrop(self.textCtrl)
+        #self.textCtrl.SetDropTarget(text_drop_target)
 
         # create widgets
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
@@ -110,12 +113,19 @@ class TextDnD(wx.Panel):
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
         self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
+        #self.Bind(wx.EVT_CHAR, self.on_Drop, self.textCtrl)
         
         self.text_path_save.SetValue(self.file_dest)
         
     #----------------------------------------------------------------------
-    def WriteText(self, text):
-        self.text.WriteText("\n%s\n" % text)
+    def on_Drop(self, event):
+        print(self.textCtrl.GetValue())
+        
+        if event.GetKeyCode() == 13:
+            self.control.WriteText('\n>>>')
+        else:
+            event.Skip()
+        #self.textCtrl.WriteText("n")
         #self.text.WriteText("\n%s\n" % text)
     #----------------------------------------------------------------------
     def topic_Redirect(self, event):
