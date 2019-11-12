@@ -29,10 +29,10 @@
 from __future__ import unicode_literals
 import wx
 
-vquality = {'Best quality video': 'bestvideo',
-            'Worst quality video': 'worstvideo'}
+vquality = {'Best quality video': 'best',
+            'Worst quality video': 'worst'}
 
-aformats = {("Default format"): ("--extract-audio --audio-format bestaudio"),
+aformats = {("Default format"): ("--extract-audio"),
             ("wav"): ("--extract-audio --audio-format wav"),
             ("mp3"): ("--extract-audio --audio-format mp3"),
             ("aac"): ("--extract-audio --audio-format aac"),
@@ -42,13 +42,12 @@ aformats = {("Default format"): ("--extract-audio --audio-format bestaudio"),
             ("flac"): ("--extract-audio --audio-format flac"),
             }
 
-aquality = {'Best quality audio': 'bestaudio',
-            'Worst quality audio': 'worstaudio'}
+aquality = {'Best quality audio': 'best',
+            'Worst quality audio': 'worst'}
 
 opt = {"PLAYLIST": "--no-playlist", "WARNINGS": "", "THUMB": "",
-       "METADATA": "", "V_QUALITY": "bestvideo",
-       "A_FORMAT": "--extract-audio --audio-format best", 
-       "A_QUALITY": "bestaudio", 
+       "METADATA": "", "V_QUALITY": "best", "A_FORMAT": "--extract-audio", 
+       "A_QUALITY": "best", 
        }
 
 yellow = '#a29500'
@@ -56,6 +55,9 @@ red = '#ea312d'
 
 #####################################################################
 def sizeof_fmt(num, suffix='B'):
+    """
+    """
+    # TODO make 
     num = int(num)
     for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
         if abs(num) < 1024.0:
@@ -72,6 +74,7 @@ class Downloader(wx.Panel):
         """
         """
         self.parent = parent
+        self.OS = OS
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -117,6 +120,7 @@ class Downloader(wx.Panel):
                                                        wx.CB_READONLY
                                                        )
         self.cmbx_aq.SetSelection(0)
+        self.cmbx_aq.Disable()
         #grid_v.Add((20, 20), 0,)
         grid_v.Add(self.cmbx_aq, 0, wx.ALL, 5)
         self.cmbx_af = wx.ComboBox(self, wx.ID_ANY,
@@ -168,7 +172,6 @@ class Downloader(wx.Panel):
 
         self.SetSizer(sizer)
         self.Layout()
-
         #----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
@@ -181,13 +184,19 @@ class Downloader(wx.Panel):
     #-----------------------------------------------------------------#
     def infoParse(self):
         
-        import youtube_dl
+        if self.fcode.GetItemCount() > 0:
+            return
+        if self.OS == 'Windows':
+            ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,
+                        '--no-check-certificate': True,}
+        else:
+            #ydl_opts = {'listformats': True }
+            ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,}
         
+        import youtube_dl
         index = 0
         self.parent.statusbar_msg("wait... I'm getting the data", 'YELLOW')
         for link in self.parent.data:
-            #ydl_opts = {'listformats': True }
-            ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 meta = ydl.extract_info(link, download=False)
                 
@@ -234,7 +243,12 @@ class Downloader(wx.Panel):
 
     #-----------------------------------------------------------------#
     def on_Choice(self, event):
-        if self.choice.GetSelection() in [0,1]:
+        if self.choice.GetSelection() == 0:
+            self.cmbx_af.Disable(), self.cmbx_aq.Disable()
+            self.cmbx_vq.Enable(), self.txt_code.Disable()
+            self.fcode.Disable(), self.stext.Disable()
+            
+        elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
             self.cmbx_vq.Enable(), self.txt_code.Disable()
             self.fcode.Disable(), self.stext.Disable()
@@ -292,19 +306,19 @@ class Downloader(wx.Panel):
         urls = self.parent.data
         
         if self.choice.GetSelection() == 0:
-            cmd = [('--format {}+{} {} {} {}'.format(opt["V_QUALITY"], 
-                                                    opt["A_QUALITY"], 
-                                                    opt["METADATA"], 
-                                                    opt["PLAYLIST"], 
-                                                    opt["WARNINGS"])),
+            cmd = [('--format {} {} {} {}'.format(opt["V_QUALITY"],
+                                                  opt["METADATA"], 
+                                                  opt["PLAYLIST"], 
+                                                  opt["WARNINGS"])),
                     ('%(title)s.%(ext)s')
                     ]
         if self.choice.GetSelection() == 1:
-            cmd = [('--format {},{} {} {} {}'.format(opt["V_QUALITY"], 
-                                                    opt["A_QUALITY"], 
-                                                    opt["METADATA"], 
-                                                    opt["PLAYLIST"], 
-                                                    opt["WARNINGS"])),
+            cmd = [('--format {}video,{}audio {} {} {}'.format(
+                                                            opt["V_QUALITY"], 
+                                                            opt["A_QUALITY"], 
+                                                            opt["METADATA"], 
+                                                            opt["PLAYLIST"], 
+                                                            opt["WARNINGS"])),
                    ('%(title)s.f%(format_id)s.%(ext)s')
                    ]
         elif self.choice.GetSelection() == 2: # audio only
@@ -327,7 +341,7 @@ class Downloader(wx.Panel):
                                                  opt["METADATA"], 
                                                  opt["PLAYLIST"], 
                                                  opt["WARNINGS"])),
-                    ('%(title)s.%(ext)s')]
+                    ('%(title)s.f%(format_id)s.%(ext)s')]
 
         self.parent.switch_Process('downloader',
                                     urls,

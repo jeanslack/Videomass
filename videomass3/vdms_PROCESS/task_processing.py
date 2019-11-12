@@ -392,16 +392,19 @@ class YoutubeDL_Downloader(Thread):
         
         '''python youtube-dl --newline -i -o /home/gianluca/Downloads/%(title)s.%(ext)s --ignore-config --hls-prefer-native https://www.youtube.com/watch?v=BaW_jenozKc
         '''
+        ssl = '--no-check-certificate' if OS == 'Windows' else ''
         
         for url in self.urls:
             
-            cmd = ('youtube-dl --newline --ignore-errors -o '
-                   '"{0}/{1}" {2} --ignore-config '
-                   '--restrict-filenames "{3}"'.format(self.outputdir,
-                                                       self.outtmpl,
-                                                       self.opt, 
-                                                       url
-                                                       ))
+            cmd = ('youtube-dl {0} --newline --ignore-errors -o '
+                   '"{1}/{2}" {3} --ignore-config --restrict-filenames '
+                   '"{4}" --ffmpeg-location "{5}"'.format(ssl,
+                                                          self.outputdir,
+                                                          self.outtmpl,
+                                                          self.opt, 
+                                                          url,
+                                                          ffmpeg_url,
+                                                          ))
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)
@@ -418,11 +421,11 @@ class YoutubeDL_Downloader(Thread):
                 import shlex
                 cmd = shlex.split(cmd)
                 info = None
-            print(cmd)
             else:
                 # Hide subprocess window on MS Windows
                 info = subprocess.STARTUPINFO()
                 info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            print(cmd)
             try:
                 with subprocess.Popen(cmd,
                                       stdout=subprocess.PIPE,

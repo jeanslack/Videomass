@@ -236,7 +236,7 @@ class MainFrame(wx.Frame):
         self.btnpanel.SetSizer(grid_pan) # set panel
         self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
         # Layout externals panels:
-        self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND|wx.ALL, 20)
+        self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.ytDownloader, 1, wx.EXPAND|wx.ALL, 0)
@@ -856,15 +856,12 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.ytDownloader.Show()#, self.SetSize((700, 800))
-        
-        self.Layout()
-
         self.statusbar_msg(_('Youtube Downloader'), None)
-        
         self.toolbar.Show()
         #self.btnpanel.Show()
         #self.btn_saveprf.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
+        self.Layout()
 
     #------------------------------------------------------------------#
     def switch_video_conv(self, event):
@@ -876,7 +873,6 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.AconvPanel.Hide()
         self.VconvPanel.Show(), 
-        self.Layout()
         self.statusbar_msg(_('Video Conversions'), None)
         flist = [f['format']['filename'] for f in 
                  self.data if f['format']['filename']
@@ -891,6 +887,7 @@ class MainFrame(wx.Frame):
         self.btnpanel.Show()
         self.btn_saveprf.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
+        self.Layout()
         
     #------------------------------------------------------------------#
     #def switch_audio_conv(self, event):
@@ -903,7 +900,6 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
         self.AconvPanel.Show(), 
-        self.Layout()
         self.statusbar_msg(_('Audio Conversions'), None)
         flist = [f['format']['filename'] for f in 
                  self.data if f['format']['filename']
@@ -918,6 +914,7 @@ class MainFrame(wx.Frame):
         self.btnpanel.Show()
         self.btn_saveprf.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
+        self.Layout()
             
     #------------------------------------------------------------------#
     def switch_Process(self, *varargs):
@@ -944,9 +941,7 @@ class MainFrame(wx.Frame):
         self.AconvPanel.Hide(), 
         #Show the panel:
         self.ProcessPanel.Show()
-        self.Layout()
         self.SetTitle(_('Processing Status - Videomass'))
-
         [self.menuBar.EnableTop(x, False) for x in range(0,3)]
         #Disable the tool bar
         #self.toolbar.EnableTool(wx.ID_FILE3, False)
@@ -954,6 +949,7 @@ class MainFrame(wx.Frame):
         #self.toolbar.EnableTool(wx.ID_FILE6, False)
         #self.toolbar.EnableTool(wx.ID_FILE7, False)
         self.toolbar.EnableTool(wx.ID_OK, False)
+        self.Layout()
     #------------------------------------------------------------------#
     def Run_Coding(self, event):
         """

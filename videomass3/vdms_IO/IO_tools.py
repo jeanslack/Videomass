@@ -35,19 +35,19 @@ DIRconf = get.DIRconf
 ffprobe_url = get.ffprobe_url
 
 if OS == 'Windows':
-    from videomass3.vdms_PROCESS.task_processingWin32 import GeneralProcess
+    #from videomass3.vdms_PROCESS.task_processingWin32 import GeneralProcess
     from videomass3.vdms_PROCESS.volumedetectWin32 import VolumeDetectThread
     from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproductionWin32 import Play
     from videomass3.vdms_PROCESS.ffprobe_parserWin32 import FFProbe
 else:
-    from videomass3.vdms_PROCESS.task_processing import GeneralProcess
     from videomass3.vdms_PROCESS.volumedetect import VolumeDetectThread
     from videomass3.vdms_PROCESS.volumedetect import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproduction import Play
     from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
     
 #from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
+from videomass3.vdms_PROCESS.task_processing import GeneralProcess
 from videomass3.vdms_PROCESS.check_bin import ff_conf
 from videomass3.vdms_PROCESS.check_bin import ff_formats
 from videomass3.vdms_PROCESS.check_bin import ff_codecs

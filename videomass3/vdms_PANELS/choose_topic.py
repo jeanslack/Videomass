@@ -56,7 +56,7 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(vers, 0, wx.ALL|
                                 wx.ALIGN_CENTER_VERTICAL|
                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_buttons = wx.FlexGridSizer(5, 4, 20, 20)
+        grid_buttons = wx.FlexGridSizer(2, 4, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
         
         video_lab = _('Video Conversions')
@@ -84,7 +84,6 @@ class Choose_Topic(wx.Panel):
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn),wx.TOP)
         self.anorm = wx.Button(self, wx.ID_ANY, anorm_lab, size=(-1,-1))
         self.anorm.SetBitmap(wx.Bitmap(audionorm_icn),wx.TOP)
-        #self.exit = wx.Button(self, wx.ID_EXIT, '', size=(-1,-1))
 
         grid_buttons.AddMany([(self.video, 0, wx.EXPAND, 5),
                               (self.audio, 0, wx.EXPAND, 5),
@@ -101,8 +100,6 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_base, 1, wx.EXPAND|
                                         wx.ALIGN_CENTER_VERTICAL|
                                         wx.ALIGN_CENTER_HORIZONTAL, 5)
-        #sizer_base.Add(self.exit, 0, wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, 0)
-        
         self.SetSizerAndFit(sizer_base)
         
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)
@@ -112,8 +109,6 @@ class Choose_Topic(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_AudioMerging, self.audio_merge)
         self.Bind(wx.EVT_BUTTON, self.on_Slideshow, self.slideshow)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
-        #self.Bind(wx.EVT_BUTTON, self.onExit, self.exit)
-        
         
     def on_Video(self, event):
         self.parent.File_import(self, 'Video Conversions')
@@ -142,10 +137,3 @@ class Choose_Topic(wx.Panel):
             return
 
         self.parent.Text_import(self, 'Youtube Downloader')
-
-    def onExit(self, event):
-        self.parent.on_close(self)
-        
-        
-
-        
