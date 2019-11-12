@@ -64,11 +64,10 @@ class MyListCtrl(wx.ListCtrl):
     #----------------------------------------------------------------------
     def __init__(self, parent, ffprobe_link):
         """Constructor"""
-        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
         self.index = 0
         self.parent = parent # parent is DnDPanel class
+        wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT|wx.LC_SINGLE_SEL)
         
-
     #----------------------------------------------------------------------#
     def dropUpdate(self, path):
         """
@@ -81,7 +80,6 @@ class MyListCtrl(wx.ListCtrl):
         msg_dir = _("Directories are not allowed, just add files, please.")
         
         if os.path.isdir(path):
-            print (mess_dir)
             self.parent.statusbar_msg(msg_dir, orange)
             return
         
@@ -129,7 +127,6 @@ class MyListCtrl(wx.ListCtrl):
             
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
-            print (mess)
             self.parent.statusbar_msg(mess, yellow)
 
 #######################################################################
@@ -162,17 +159,15 @@ class FileDnD(wx.Panel):
     """
     def __init__(self, parent, ffprobe_link, go_icn):  
         """Constructor. This will initiate with an id and a title"""
-        wx.Panel.__init__(self, parent=parent)
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname # path name files destination
         self.selected = None # tells if an imported file is selected or not
+        wx.Panel.__init__(self, parent=parent)
         #This builds the list control box:
-        
         self.flCtrl = MyListCtrl(self, ffprobe_link)  #class MyListCtr
         #Establish the listctrl as a drop target:
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target) #Make drop target.
-
         # create widgets
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         self.ckbx_dir = wx.CheckBox(self, wx.ID_ANY, (

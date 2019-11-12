@@ -52,6 +52,7 @@ opt = {"PLAYLIST": "--no-playlist", "WARNINGS": "", "THUMB": "",
        }
 
 yellow = '#a29500'
+red = '#ea312d'
 
 #####################################################################
 def sizeof_fmt(num, suffix='B'):
@@ -88,15 +89,11 @@ class Downloader(wx.Panel):
         box.Add(self.choice, 0, wx.ALIGN_CENTER | wx.ALL, 20)
         self.choice.SetSelection(0)
         sizer.Add(box, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
-        sizer.Add((50, 50), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
-        
-        
-        
+        #sizer.Add((50, 50), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
         self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER, size=(50,-1)
                                    )
         self.txt_code.Disable()
-        
         grid_fcode = wx.FlexGridSizer(1, 2, 0, 0)
         sizer.Add(grid_fcode, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.stext = wx.StaticText(self, wx.ID_ANY, (
@@ -104,9 +101,6 @@ class Downloader(wx.Panel):
         self.stext.Disable()
         grid_fcode.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         grid_fcode.Add(self.txt_code, 0, wx.ALL, 5)
-        
-        
-        
         grid_v = wx.FlexGridSizer(1, 5, 0, 0)
         sizer.Add(grid_v, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         f = [x for x in vquality.keys()]
@@ -135,8 +129,8 @@ class Downloader(wx.Panel):
         #sizer.Add(grid_a, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
         #-------------opt
-        line_0 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
-        sizer.Add(line_0, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
+        #line_0 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
+        #sizer.Add(line_0, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         grid_opt = wx.FlexGridSizer(1, 5, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.ckbx_pl = wx.CheckBox(self, wx.ID_ANY,(
@@ -149,8 +143,8 @@ class Downloader(wx.Panel):
         grid_opt.Add(self.ckbx_thumb, 0, wx.ALL, 5)
         self.ckbx_meta = wx.CheckBox(self, wx.ID_ANY,(_('Add metadata to file')))
         grid_opt.Add(self.ckbx_meta, 0, wx.ALL, 5)
-        line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
-        sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
+        #line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
+        #sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
         self.fcode = wx.ListCtrl(self, wx.ID_ANY,style=wx.LC_REPORT | 
                                                   wx.SUNKEN_BORDER
@@ -166,8 +160,6 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(5, (_('fps')), width=60)
         self.fcode.InsertColumn(6, (_('Audio Codec')), width=110)
         self.fcode.InsertColumn(7, (_('Size')), width=80)
-        
-        
         
         if OS == 'Darwin':
             self.fcode.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
@@ -194,7 +186,6 @@ class Downloader(wx.Panel):
         index = 0
         self.parent.statusbar_msg("wait... I'm getting the data", 'YELLOW')
         for link in self.parent.data:
-            
             #ydl_opts = {'listformats': True }
             ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -208,7 +199,7 @@ class Downloader(wx.Panel):
                     self.fcode.SetItemBackgroundColour(index, 'GREEN')
                 else:
                     self.fcode.InsertItem(index, 'ERROR: %s' % link)
-                    self.fcode.SetItemBackgroundColour(index, 'RED')
+                    self.fcode.SetItemBackgroundColour(index, red)
                     break
                 
             for f in formats:
@@ -301,23 +292,29 @@ class Downloader(wx.Panel):
         urls = self.parent.data
         
         if self.choice.GetSelection() == 0:
-            cmd = ('--format {}+{} {} {} {}'.format(opt["V_QUALITY"], 
+            cmd = [('--format {}+{} {} {} {}'.format(opt["V_QUALITY"], 
                                                     opt["A_QUALITY"], 
                                                     opt["METADATA"], 
                                                     opt["PLAYLIST"], 
-                                                    opt["WARNINGS"]))
+                                                    opt["WARNINGS"])),
+                    ('%(title)s.%(ext)s')
+                    ]
         if self.choice.GetSelection() == 1:
-            cmd = ('--format {},{} {} {} {}'.format(opt["V_QUALITY"], 
+            cmd = [('--format {},{} {} {} {}'.format(opt["V_QUALITY"], 
                                                     opt["A_QUALITY"], 
                                                     opt["METADATA"], 
                                                     opt["PLAYLIST"], 
-                                                    opt["WARNINGS"]))
+                                                    opt["WARNINGS"])),
+                   ('%(title)s.f%(format_id)s.%(ext)s')
+                   ]
         elif self.choice.GetSelection() == 2: # audio only
-            cmd = ('{} {} {} {}'.format(opt["A_FORMAT"], 
+            cmd = [('{} {} {} {}'.format(opt["A_FORMAT"], 
                                         opt["THUMB"],
                                         opt["METADATA"], 
                                         opt["PLAYLIST"],
-                                        opt["WARNINGS"]))
+                                        opt["WARNINGS"])),
+                    ('%(title)s.%(ext)s')
+                    ]
         if self.choice.GetSelection() == 3:
             code = self.txt_code.GetValue().strip()
             if not code.isdigit() or not code:
@@ -326,10 +323,11 @@ class Downloader(wx.Panel):
                 self.txt_code.SetBackgroundColour((255,192,255))
                 return
             
-            cmd = ('--format {} {} {} {}'.format(code,
+            cmd = [('--format {} {} {} {}'.format(code,
                                                  opt["METADATA"], 
                                                  opt["PLAYLIST"], 
-                                                 opt["WARNINGS"]))
+                                                 opt["WARNINGS"])),
+                    ('%(title)s.%(ext)s')]
 
         self.parent.switch_Process('downloader',
                                     urls,

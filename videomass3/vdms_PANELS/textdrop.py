@@ -41,41 +41,19 @@ orange = '#f28924'
 
 ########################################################################
 
-#class TextDrop(wx.TextDropTarget):
- 
-    ##----------------------------------------------------------------------
-    #def __init__(self, textctrl):
-        #wx.TextDropTarget.__init__(self)
-        #self.textctrl = textctrl
- 
-    ##----------------------------------------------------------------------
-    #def OnDropText(self, x, y, text):
-        ##self.textctrl.WriteText("(%d, %d)\n%s\n" % (x, y, text))
-        #self.textctrl.WriteText(text)
-        #return True
-    ##----------------------------------------------------------------------
-    #def OnDragOver(self, x, y, d):
-        ##print(x,y,d)
-        #return wx.DragCopy
-
 class TextDnD(wx.Panel):
     """
     Accept one or more urls.
     """
-    def __init__(self, parent, go_icn):  
-        """Constructor. This will initiate with an id and a title"""
-        wx.Panel.__init__(self, parent=parent)
+    def __init__(self, parent, go_icn):
+        """
+        """
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname # path name files destination
-        #This builds the list control box:
-        
+        """Constructor. This will initiate with an id and a title"""
+        wx.Panel.__init__(self, parent=parent)
         self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
-        
-        #self.textCtrl = wx.TextCtrl(self, style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
-        #text_drop_target = TextDrop(self.textCtrl)
-        #self.textCtrl.SetDropTarget(text_drop_target)
-
         # create widgets
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1,-1))
@@ -113,20 +91,9 @@ class TextDnD(wx.Panel):
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
         self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
-        #self.Bind(wx.EVT_CHAR, self.on_Drop, self.textCtrl)
         
         self.text_path_save.SetValue(self.file_dest)
         
-    #----------------------------------------------------------------------
-    def on_Drop(self, event):
-        print(self.textCtrl.GetValue())
-        
-        if event.GetKeyCode() == 13:
-            self.control.WriteText('\n>>>')
-        else:
-            event.Skip()
-        #self.textCtrl.WriteText("n")
-        #self.text.WriteText("\n%s\n" % text)
     #----------------------------------------------------------------------
     def topic_Redirect(self, event):
         """
@@ -140,14 +107,7 @@ class TextDnD(wx.Panel):
             data = (self.textCtrl.GetValue().split())
             self.parent.topic_Redirect(data)
     #----------------------------------------------------------------------
-    def which(self):
-        """
-        return topic name by choose_topic.py selection 
-    
-        """
-        #self.lbl.SetLabel('Drag one or more Video files here')
-        return self.parent.topicname
-    #----------------------------------------------------------------------
+
     def deleteAll(self, event):
         """
         Delete and clear all text lines of the TxtCtrl
