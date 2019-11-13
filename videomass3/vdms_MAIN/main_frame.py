@@ -804,14 +804,18 @@ class MainFrame(wx.Frame):
         Makes and attaches the view toolsBtn bar
         """
         #--------- Properties
-        self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT | wx.TB_TEXT))
+        self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT|
+                                                 wx.TB_FLAT|
+                                                 wx.TB_TEXT ))
         self.toolbar.SetToolBitmapSize((32,32))
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         
         # ------- Run process button
+        self.toolbar.AddStretchableSpace()
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
                                     wx.Bitmap(self.icon_runconversion)
                                           )
+        self.toolbar.AddStretchableSpace()
         self.toolbar.EnableTool(wx.ID_OK, False)
         #self.toolbar.AddSeparator()
         # finally, create it
@@ -821,8 +825,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.Run_Coding, run_coding)
 
     #--------------- Tool Bar Callback (event handler) -----------------#
-    
-    #------------------------------------------------------------------#
     def File_import(self, event, which):
         """
         Show files import panel.

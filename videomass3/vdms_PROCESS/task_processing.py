@@ -366,6 +366,7 @@ class YoutubeDL_Downloader(Thread):
         """
         self.urls:          urls list
         self.opt:           option strings to adding
+        self.outtmpl:       options template to renaming on pathname
         self.outputdir:     pathname destination
         self.count:         increases with the progressive account elements
         self.countmax:      length of self.urls 
@@ -390,8 +391,6 @@ class YoutubeDL_Downloader(Thread):
         """
         global STATUS_ERROR
         
-        '''python youtube-dl --newline -i -o /home/gianluca/Downloads/%(title)s.%(ext)s --ignore-config --hls-prefer-native https://www.youtube.com/watch?v=BaW_jenozKc
-        '''
         ssl = '--no-check-certificate' if OS == 'Windows' else ''
         
         for url in self.urls:
