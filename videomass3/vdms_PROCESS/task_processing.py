@@ -238,20 +238,31 @@ class GeneralProcess(wx.Panel):
         
         """
         if status == 'ERROR': 
-            self.OutText.AppendText(_('%s\n' % output))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+            self.OutText.AppendText('%s\n' % output)
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
             self.OutText.AppendText(_(' ...Failed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             
         elif status == 'WARNING':
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
-            self.OutText.AppendText(' %s\n' % output)
+            self.OutText.AppendText('%s\n' % output)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             
-        elif status == 'DEBUG': 
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
-            self.OutText.AppendText(' %s\n' % output)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+        elif status == 'DEBUG':
+            if '[download] Destination' in output:
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+                self.OutText.AppendText('%s\n' % output)
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                
+            elif not '[download]' in output:
+                #self.labPerc.SetLabel("%s" % output)
+            #else:
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+                self.OutText.AppendText('%s\n' % output)
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         elif status == 'DOWNLOAD': 
             self.labPerc.SetLabel("%s" % duration[0])
@@ -259,7 +270,7 @@ class GeneralProcess(wx.Panel):
             
         elif status == 'FINISHED':
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
-            self.OutText.AppendText(' %s\n' % duration)
+            self.OutText.AppendText('%s\n' % duration)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
     #---------------------------------------------------------------------#
@@ -405,18 +416,14 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 class MyLogger(object):
     
     def debug(self, msg):
-        #wx.CallAfter(pub.sendMessage, 
-                    #"UPDATE_DOWNLOAD_EVT", 
-                    #output=msg, 
-                    #duration='',
-                    #status='DEBUG',)
-        #with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
-                #logerr.write("[FFMPEG]: %s" % (output))
-                ## write a row error into file log
-        print(msg)
+        wx.CallAfter(pub.sendMessage, 
+                    "UPDATE_DOWNLOAD_EVT", 
+                    output=msg, 
+                    duration='',
+                    status='DEBUG',)
         
     def warning(self, msg):
-        print('WARNING::: ', msg)
+        msg = 'WARNING: %s' % msg
         wx.CallAfter(pub.sendMessage, 
                     "UPDATE_DOWNLOAD_EVT", 
                     output=msg, 
@@ -430,19 +437,19 @@ class MyLogger(object):
                     output=msg, 
                     duration='',
                     status='ERROR',)
+#-------------------------------------------------------------------------#
 
 def my_hook(d):
     #print('stampa',d)
     
     if d['status'] == 'downloading':
         perc = float(d['_percent_str'].strip().split('%')[0])
-        duration = ('{}: {} of {} at {} ETA {}'.format(d['status'],
-                                                        d['_percent_str'], 
-                                                        d['_total_bytes_str'], 
-                                                        d['_speed_str'],
-                                                        d['_eta_str'],),perc)
-        
-        #riceiver(None, duration, 'DOWNLOAD')
+            
+        duration = ('Downloading... {} of {} at {} ETA {}'.format(
+                                                    d['_percent_str'], 
+                                                    d['_total_bytes_str'], 
+                                                    d['_speed_str'],
+                                                    d['_eta_str'],),perc)
         wx.CallAfter(pub.sendMessage, 
                     "UPDATE_DOWNLOAD_EVT", 
                     output='', 
@@ -456,7 +463,15 @@ def my_hook(d):
                     output='', 
                     duration='Done downloading, now converting ...',
                     status='FINISHED',)
-
+        
+        wx.CallAfter(pub.sendMessage, 
+                    "COUNT_EVT", 
+                    count='', 
+                    duration='',
+                    fname='',
+                    end='ok'
+                    )
+#-------------------------------------------------------------------------#
 
 class downloader(Thread):
     """
@@ -468,7 +483,6 @@ class downloader(Thread):
         """
         self.urls:          urls list
         self.opt:           option strings to adding
-        self.outtmpl:       options template to renaming on pathname
         self.outputdir:     pathname destination
         self.count:         increases with the progressive account elements
         self.countmax:      length of self.urls 
@@ -479,12 +493,15 @@ class downloader(Thread):
         """initialize"""
         self.urls = varargs[1]
         self.opt = varargs[4] 
-        #self.outtmpl = varargs[4][1] 
         self.outputdir = varargs[3]
         self.count = 0 
         self.countmax = len(varargs[1])
         self.logname = logname
-
+        if OS == 'Windows':
+            self.nocheckcertificate = True
+        else:
+            self.nocheckcertificate = False
+            
         self.start() # start the thread (va in self.run())
     
     def run(self):
@@ -505,19 +522,20 @@ class downloader(Thread):
             if CHANGE_STATUS == 1:
                 break
             
-            ydl_opts = {
-                        #'format': '140',
-                        'format': self.opt['format'],
+            ydl_opts = {'format': self.opt['format'],
                         'outtmpl': '{}/{}'.format(self.outputdir, 
-                                                    self.opt['outtmpl']),
+                                                  self.opt['outtmpl']),
+                        #'writesubtitles': True,
                         'restrictfilenames' : True,
                         'ignoreerrors' : True,
                         'no_warnings' : False,
                         'writethumbnail': self.opt['writethumbnail'],
                         'noplaylist': self.opt['noplaylist'],
                         'no_color': True,
-                        #'postprocessors': [{
-                                            #'key': ''FFmpegExtractAudio'',
+                        'nocheckcertificate': self.nocheckcertificate,
+                        'ffmpeg_location': '{}'.format(ffmpeg_url),
+                        #'postprocessors': [{'ffmpeg_location': '{}'.format(ffmpeg_url),
+                                            #'key': 'FFmpegExtractAudio',
                                             #'preferredcodec': 'mp3',
                                             #'preferredquality': '192',
                                             #}],
@@ -527,14 +545,6 @@ class downloader(Thread):
                         
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download(["{}".format(url)])
-        
-        wx.CallAfter(pub.sendMessage, 
-                    "COUNT_EVT", 
-                    count='', 
-                    duration='',
-                    fname='',
-                    end='ok'
-                    )
         
         wx.CallAfter(pub.sendMessage, "END_EVT")
             

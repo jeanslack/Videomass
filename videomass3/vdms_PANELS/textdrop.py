@@ -64,13 +64,9 @@ class TextDnD(wx.Panel):
         self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
         self.btn_go.SetBitmap(wx.Bitmap(go_icn),wx.LEFT)
         self.lbl = wx.StaticText(self, label=_("Enter one or more URLs below"))
-
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.btn_go, 0, wx.ALL|
-                                 wx.ALIGN_CENTER_HORIZONTAL|
-                                 wx.ALIGN_CENTER_VERTICAL, 5
-                                 )
+        sizer.Add(self.btn_go, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)

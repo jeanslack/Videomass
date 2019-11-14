@@ -198,15 +198,16 @@ class Downloader(wx.Panel):
         
         if self.fcode.GetItemCount() > 0:
             return
+        
+        import youtube_dl
         if self.OS == 'Windows':
             ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,
-                        '--no-check-certificate': True,}
+                        'nocheckcertificate': True,}
         else:
             #ydl_opts = {'listformats': True }
             ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,}
         
         self.txt_code.SetValue('')
-        import youtube_dl
         index = 0
         self.parent.statusbar_msg("wait... I'm getting the data", 'YELLOW')
         for link in self.parent.data:

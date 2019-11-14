@@ -805,8 +805,7 @@ class MainFrame(wx.Frame):
         #--------- Properties
         self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT|
                                                  wx.TB_FLAT|
-                                                 wx.TB_TEXT|
-                                                 wx.TB_BOTTOM))
+                                                 wx.TB_TEXT))
         self.toolbar.SetToolBitmapSize((32,32))
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         
@@ -946,12 +945,8 @@ class MainFrame(wx.Frame):
         self.ProcessPanel.Show()
         self.SetTitle(_('Processing Status - Videomass'))
         [self.menuBar.EnableTop(x, False) for x in range(0,3)]
-        #Disable the tool bar
-        #self.toolbar.EnableTool(wx.ID_FILE3, False)
-        #self.toolbar.EnableTool(wx.ID_FILE5, False)
-        #self.toolbar.EnableTool(wx.ID_FILE6, False)
-        #self.toolbar.EnableTool(wx.ID_FILE7, False)
-        self.toolbar.EnableTool(wx.ID_OK, False)
+        #Hide the tool bar
+        self.toolbar.Hide()
         self.Layout()
     #------------------------------------------------------------------#
     def Run_Coding(self, event):
