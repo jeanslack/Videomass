@@ -295,7 +295,6 @@ class MainFrame(wx.Frame):
         #self.Bind(wx.EVT_SHOW, self.panelShown)
         #self.fileDnDTargetPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
-
         
     #-------------------Status bar settings--------------------#
     def statusbar_msg(self, msg, color):
@@ -806,7 +805,8 @@ class MainFrame(wx.Frame):
         #--------- Properties
         self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT|
                                                  wx.TB_FLAT|
-                                                 wx.TB_TEXT ))
+                                                 wx.TB_TEXT|
+                                                 wx.TB_BOTTOM))
         self.toolbar.SetToolBitmapSize((32,32))
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         
@@ -815,7 +815,7 @@ class MainFrame(wx.Frame):
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
                                     wx.Bitmap(self.icon_runconversion)
                                           )
-        self.toolbar.AddStretchableSpace()
+        #self.toolbar.AddStretchableSpace()
         self.toolbar.EnableTool(wx.ID_OK, False)
         #self.toolbar.AddSeparator()
         # finally, create it
@@ -851,7 +851,7 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def youtube_Downloader(self, event):
         """
-        Show presets manager panel
+        Show youtube-dl downloader
         """
         self.file_destin = self.textDnDTarget.file_dest
         
@@ -860,8 +860,9 @@ class MainFrame(wx.Frame):
         self.ytDownloader.Show()#, self.SetSize((700, 800))
         self.statusbar_msg(_('Youtube Downloader'), None)
         self.toolbar.Show()
-        #self.btnpanel.Show()
-        #self.btn_saveprf.Show()
+        self.btnpanel.Show()
+        self.btn_saveprf.Hide(),self.btn_duration.Hide(), 
+        self.btn_playO.Hide(), self.btn_metaI.Hide()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
 

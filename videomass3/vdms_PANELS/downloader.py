@@ -45,7 +45,7 @@ aformats = {("Default format"): ("--extract-audio"),
 aquality = {'Best quality audio': 'best',
             'Worst quality audio': 'worst'}
 
-opt = {"PLAYLIST": "--no-playlist", "WARNINGS": "", "THUMB": "",
+opt = {"PLAYLIST": "--no-playlist", "THUMB": "",
        "METADATA": "", "V_QUALITY": "best", "A_FORMAT": "--extract-audio", 
        "A_QUALITY": "best", 
        }
@@ -79,6 +79,9 @@ class Downloader(wx.Panel):
         """constructor"""
         sizer = wx.BoxSizer(wx.VERTICAL)
         #sizer.Add((20, 20), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
+        #gen = wx.StaticText(self, wx.ID_ANY, (_('Media streams to download')))
+        #gen.SetFont(wx.Font(12, wx.NORMAL, wx.NORMAL, wx.BOLD))
+        #sizer.Add(gen, 0, wx.ALL, 15)
         self.choice = wx.Choice(self, wx.ID_ANY, 
                                      choices=[_('Default'),
                                               _('Separated Video+Audio'),  
@@ -86,25 +89,26 @@ class Downloader(wx.Panel):
                                               _('By using format code')],
                                      size=(-1,-1),
                                      )
-        box = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    _(" Media streams to download "))), 
-                                        wx.VERTICAL)
-        box.Add(self.choice, 0, wx.ALIGN_CENTER | wx.ALL, 20)
+        #box = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                    #_(" Media streams to download "))), 
+                                        #wx.VERTICAL)
+        #box.Add(self.choice, 0, wx.ALIGN_CENTER | wx.ALL, 20)
         self.choice.SetSelection(0)
-        sizer.Add(box, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
-        #sizer.Add((50, 50), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
-        self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "", 
-                                   style=wx.TE_PROCESS_ENTER, size=(50,-1)
-                                   )
-        self.txt_code.Disable()
-        grid_fcode = wx.FlexGridSizer(1, 2, 0, 0)
-        sizer.Add(grid_fcode, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
-        self.stext = wx.StaticText(self, wx.ID_ANY, (
-                                        _('Enter `Format Code` number here:')))
-        self.stext.Disable()
-        grid_fcode.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_fcode.Add(self.txt_code, 0, wx.ALL, 5)
-        grid_v = wx.FlexGridSizer(1, 5, 0, 0)
+        #sizer.Add(box, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
+        sizer.Add(self.choice, 0, wx.EXPAND|wx.ALL, 15)
+
+        #self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                   #style=wx.TE_PROCESS_ENTER, size=(50,-1)
+                                   #)
+        #self.txt_code.Disable()
+        #grid_fcode = wx.FlexGridSizer(1, 2, 0, 0)
+        #sizer.Add(grid_fcode, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        #self.stext = wx.StaticText(self, wx.ID_ANY, (
+                                        #_('Enter `Format Code` here:')))
+        #self.stext.Disable()
+        #grid_fcode.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        #grid_fcode.Add(self.txt_code, 0, wx.ALL, 5)
+        grid_v = wx.FlexGridSizer(1, 7, 0, 0)
         sizer.Add(grid_v, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         f = [x for x in vquality.keys()]
         self.cmbx_vq = wx.ComboBox(self, wx.ID_ANY, choices=f,
@@ -132,16 +136,25 @@ class Downloader(wx.Panel):
         #grid_a = wx.FlexGridSizer(1, 1, 0, 0)
         #sizer.Add(grid_a, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
+        
+        self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "", 
+                                   style=wx.TE_PROCESS_ENTER, size=(50,-1)
+                                   )
+        self.txt_code.Disable()
+        self.stext = wx.StaticText(self, wx.ID_ANY, (
+                                        _('Enter `Format Code` here:')))
+        self.stext.Disable()
+        grid_v.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_v.Add(self.txt_code, 0, wx.ALL, 5)
+        
         #-------------opt
         #line_0 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
         #sizer.Add(line_0, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
-        grid_opt = wx.FlexGridSizer(1, 5, 0, 0)
+        grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.ckbx_pl = wx.CheckBox(self, wx.ID_ANY,(
                                                   _('Download all playlist')))
         grid_opt.Add(self.ckbx_pl, 0, wx.ALL, 5)
-        self.ckbx_warn = wx.CheckBox(self, wx.ID_ANY,(_('No warnings')))
-        grid_opt.Add(self.ckbx_warn, 0, wx.ALL, 5)
         self.ckbx_thumb = wx.CheckBox(self, wx.ID_ANY,(
                                         _('Embed thumbnail in audio file')))
         grid_opt.Add(self.ckbx_thumb, 0, wx.ALL, 5)
@@ -154,7 +167,7 @@ class Downloader(wx.Panel):
                                                   wx.SUNKEN_BORDER
                                     )
         self.fcode.Disable()
-        sizer.Add(self.fcode, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        sizer.Add(self.fcode, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
         self.fcode.InsertColumn(0, (_('URL')), width=400)
         self.fcode.InsertColumn(1, (_('Format Code')), width=100)
@@ -178,7 +191,6 @@ class Downloader(wx.Panel):
         self.cmbx_af.Bind(wx.EVT_COMBOBOX, self.on_Af)
         self.cmbx_aq.Bind(wx.EVT_COMBOBOX, self.on_Aq)
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_Playlist)
-        self.ckbx_warn.Bind(wx.EVT_CHECKBOX, self.on_Warnings)
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
     #-----------------------------------------------------------------#
@@ -193,6 +205,7 @@ class Downloader(wx.Panel):
             #ydl_opts = {'listformats': True }
             ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,}
         
+        self.txt_code.SetValue('')
         import youtube_dl
         index = 0
         self.parent.statusbar_msg("wait... I'm getting the data", 'YELLOW')
@@ -239,6 +252,7 @@ class Downloader(wx.Panel):
                 self.fcode.SetItem(index, 6, acodec)
                 self.fcode.SetItem(index, 7, size)
                 
+        self.txt_code.WriteText(f['format_id'])
         self.parent.statusbar_msg('Youtube Downloader', None)
 
     #-----------------------------------------------------------------#
@@ -278,21 +292,19 @@ class Downloader(wx.Panel):
     #-----------------------------------------------------------------#
     def on_Playlist(self, event):
         if self.ckbx_pl.IsChecked():
-            opt["PLAYLIST"] = "--yes-playlist"
+            #opt["PLAYLIST"] = "--yes-playlist"
+            opt["PLAYLIST"] = True
         else:
-            opt["PLAYLIST"] = "--no-playlist"
-    #-----------------------------------------------------------------#
-    def on_Warnings(self, event):
-        if self.ckbx_warn.IsChecked():
-            opt["WARNINGS"] = "--no-warnings"
-        else:
-            opt["WARNINGS"] = ""
+            #opt["PLAYLIST"] = "--no-playlist"
+            opt["PLAYLIST"] = False
     #-----------------------------------------------------------------#
     def on_Thumbnails(self, event):
         if self.ckbx_thumb.IsChecked():
-            opt["THUMB"] = "--embed-thumbnail"
+            opt["THUMB"] = True
+            #opt["THUMB"] = "--embed-thumbnail"
         else:
-            opt["THUMB"] = ""
+            opt["THUMB"] = False
+            #opt["THUMB"] = ""
     #-----------------------------------------------------------------#
     def on_Metadata(self, event):
         if self.ckbx_meta.IsChecked():
@@ -300,33 +312,81 @@ class Downloader(wx.Panel):
         else:
             opt["METADATA"] = ""
     #-----------------------------------------------------------------#
+    #def on_Start(self):
+
+        #logname = 'Youtube_downloader'
+        #urls = self.parent.data
+        
+        #if self.choice.GetSelection() == 0:
+            #cmd = [('--format {} {} {}'.format(opt["V_QUALITY"],
+                                                  #opt["METADATA"], 
+                                                  #opt["PLAYLIST"],)),
+                    #('%(title)s.%(ext)s')
+                    #]
+        #if self.choice.GetSelection() == 1:
+            #cmd = [('--format {}video,{}audio {} {}'.format(
+                                                            #opt["V_QUALITY"], 
+                                                            #opt["A_QUALITY"], 
+                                                            #opt["METADATA"], 
+                                                            #opt["PLAYLIST"],)),
+                   #('%(title)s.f%(format_id)s.%(ext)s')
+                   #]
+        #elif self.choice.GetSelection() == 2: # audio only
+            #cmd = [('{} {} {}'.format(opt["A_FORMAT"], 
+                                        #opt["THUMB"],
+                                        #opt["METADATA"], 
+                                        #opt["PLAYLIST"],)),
+                    #('%(title)s.%(ext)s')
+                    #]
+        #if self.choice.GetSelection() == 3:
+            #code = self.txt_code.GetValue().strip()
+            #if not code.isdigit() or not code:
+                #wx.MessageBox(_('Enter a `Format Code` number in the text '
+                                #'box, please'),'Videomass', wx.ICON_INFORMATION)
+                #self.txt_code.SetBackgroundColour((255,192,255))
+                #return
+            
+            #cmd = [('--format {} {} {}'.format(code,
+                                                 #opt["METADATA"], 
+                                                 #opt["PLAYLIST"],)),
+                    #('%(title)s.f%(format_id)s.%(ext)s')]
+
+        #self.parent.switch_Process('downloader',
+                                    #urls,
+                                    #'',
+                                    #self.parent.file_destin,
+                                    #cmd,
+                                    #None,
+                                    #'',
+                                    #'',
+                                    #logname, 
+                                    #len(urls),
+                                    #)
+    #-----------------------------------------------------------------#
     def on_Start(self):
 
         logname = 'Youtube_downloader'
         urls = self.parent.data
         
         if self.choice.GetSelection() == 0:
-            cmd = [('--format {} {} {} {}'.format(opt["V_QUALITY"],
-                                                  opt["METADATA"], 
-                                                  opt["PLAYLIST"], 
-                                                  opt["WARNINGS"])),
-                    ('%(title)s.%(ext)s')
-                    ]
+            
+            data = {'format': opt["V_QUALITY"], 'noplaylist': opt["PLAYLIST"],
+                    'writethumbnail': opt["THUMB"], 'outtmpl': '%(title)s.%(ext)s'}
+            
         if self.choice.GetSelection() == 1:
-            cmd = [('--format {}video,{}audio {} {} {}'.format(
-                                                            opt["V_QUALITY"], 
-                                                            opt["A_QUALITY"], 
-                                                            opt["METADATA"], 
-                                                            opt["PLAYLIST"], 
-                                                            opt["WARNINGS"])),
-                   ('%(title)s.f%(format_id)s.%(ext)s')
-                   ]
+            
+            data = {'format': '{}video,{}audio'.format(opt["V_QUALITY"],
+                                                       opt["A_QUALITY"]), 
+                    'noplaylist': opt["PLAYLIST"],
+                    'writethumbnail': opt["THUMB"], 
+                    'outtmpl': '%(title)s.f%(format_id)s.%(ext)s'}
+            
+
         elif self.choice.GetSelection() == 2: # audio only
-            cmd = [('{} {} {} {}'.format(opt["A_FORMAT"], 
+            cmd = [('{} {} {}'.format(opt["A_FORMAT"], 
                                         opt["THUMB"],
                                         opt["METADATA"], 
-                                        opt["PLAYLIST"],
-                                        opt["WARNINGS"])),
+                                        opt["PLAYLIST"],)),
                     ('%(title)s.%(ext)s')
                     ]
         if self.choice.GetSelection() == 3:
@@ -337,17 +397,16 @@ class Downloader(wx.Panel):
                 self.txt_code.SetBackgroundColour((255,192,255))
                 return
             
-            cmd = [('--format {} {} {} {}'.format(code,
+            cmd = [('--format {} {} {}'.format(code,
                                                  opt["METADATA"], 
-                                                 opt["PLAYLIST"], 
-                                                 opt["WARNINGS"])),
+                                                 opt["PLAYLIST"],)),
                     ('%(title)s.f%(format_id)s.%(ext)s')]
 
         self.parent.switch_Process('downloader',
                                     urls,
                                     '',
                                     self.parent.file_destin,
-                                    cmd,
+                                    data,
                                     None,
                                     '',
                                     '',

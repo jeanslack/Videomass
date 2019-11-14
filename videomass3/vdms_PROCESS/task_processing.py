@@ -25,6 +25,12 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
+from __future__ import unicode_literals
+try:
+    import youtube_dl
+
+except ModuleNotFoundError as noydl:
+    print(noydl)
 import wx
 import subprocess
 import itertools
@@ -62,6 +68,7 @@ def logWrite(cmd, sterr, logname):
         log.write(apnd)
         
 #----------------------------------------------------------------#
+
 ########################################################################
 
 class GeneralProcess(wx.Panel):
@@ -177,9 +184,51 @@ class GeneralProcess(wx.Panel):
             TwoPass_Loudnorm(self.varargs, self.duration, 
                              self.logname, self.time_seq
                             )
+        #elif self.varargs[0] == 'downloader':
+            #YoutubeDL_Downloader(self.varargs, self.logname)
+        
         elif self.varargs[0] == 'downloader':
-            YoutubeDL_Downloader(self.varargs, self.logname)
+            self.ckbx_text.Hide()
+            downloader(self.varargs, self.logname)
+        
+        if not self.varargs[0] == 'downloader':
+            self.ckbx_text.Show()
                              
+    #-------------------------------------------------------------------#
+    #def update_download(self, output, duration, status):
+        #"""
+        #Receive youtube-dl output message from pubsub "UPDATE_DOWNLOAD_EVT".
+        #The received 'output' is parsed to get the bar/label progressive 
+        #percentage and errors management.
+        
+        #"""
+        #if not status == 0:# error, exit status of the p.wait
+            #self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
+            #self.OutText.AppendText(_(' ...Failed\n'))
+            #self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+        
+        #if '[download]' in output:# ...in processing
+            #if not 'Destination' in output:
+                #try:
+                    #i = float(output.split()[1].split('%')[0])
+                #except ValueError:
+                    #self.OutText.AppendText(' %s' % output)
+                #else:
+                    ##if not self.ckbx_text.IsChecked():# not print the output
+                        ##self.OutText.AppendText(' %s' % output)
+                    #self.barProg.SetValue(i)
+                    #self.labPerc.SetLabel("%s" % output)
+                    #del output, duration
+                    
+        #else:# append all others lines on the textctrl and log file
+            #if not self.ckbx_text.IsChecked():# not print the output
+                #self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+                #self.OutText.AppendText(' %s' % output)
+                #self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                
+            #with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
+                #logerr.write("[FFMPEG]: %s" % (output))
+                ## write a row error into file log
     #-------------------------------------------------------------------#
     def update_download(self, output, duration, status):
         """
@@ -188,35 +237,32 @@ class GeneralProcess(wx.Panel):
         percentage and errors management.
         
         """
-        if not status == 0:# error, exit status of the p.wait
+        if status == 'ERROR': 
+            self.OutText.AppendText(_('%s\n' % output))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
             self.OutText.AppendText(_(' ...Failed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-        
-        if '[download]' in output:# ...in processing
-            if not 'Destination' in output:
-                try:
-                    i = float(output.split()[1].split('%')[0])
-                except ValueError:
-                    self.OutText.AppendText(' %s' % output)
-                else:
-                    #if not self.ckbx_text.IsChecked():# not print the output
-                        #self.OutText.AppendText(' %s' % output)
-                    self.barProg.SetValue(i)
-                    self.labPerc.SetLabel("%s" % output)
-                    del output, duration
-                    
-        else:# append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():# not print the output
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
-                self.OutText.AppendText(' %s' % output)
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-                
-            with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
-                logerr.write("[FFMPEG]: %s" % (output))
-                # write a row error into file log
-        
-        
+            
+        elif status == 'WARNING':
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+            self.OutText.AppendText(' %s\n' % output)
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            
+        elif status == 'DEBUG': 
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+            self.OutText.AppendText(' %s\n' % output)
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+
+        elif status == 'DOWNLOAD': 
+            self.labPerc.SetLabel("%s" % duration[0])
+            self.barProg.SetValue(duration[1])
+            
+        elif status == 'FINISHED':
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
+            self.OutText.AppendText(' %s\n' % duration)
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+
+    #---------------------------------------------------------------------#
     def update_display(self, output, duration, status):
         """
         Receive message from thread of the second loops process
@@ -354,8 +400,145 @@ https://stackoverflow.com/questions/1388753/how-to-get-output-
 from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
 """
-#########################################################################
 
+#########################################################################
+class MyLogger(object):
+    
+    def debug(self, msg):
+        #wx.CallAfter(pub.sendMessage, 
+                    #"UPDATE_DOWNLOAD_EVT", 
+                    #output=msg, 
+                    #duration='',
+                    #status='DEBUG',)
+        #with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
+                #logerr.write("[FFMPEG]: %s" % (output))
+                ## write a row error into file log
+        print(msg)
+        
+    def warning(self, msg):
+        print('WARNING::: ', msg)
+        wx.CallAfter(pub.sendMessage, 
+                    "UPDATE_DOWNLOAD_EVT", 
+                    output=msg, 
+                    duration='',
+                    status='WARNING',)
+
+
+    def error(self, msg):
+        wx.CallAfter(pub.sendMessage, 
+                    "UPDATE_DOWNLOAD_EVT", 
+                    output=msg, 
+                    duration='',
+                    status='ERROR',)
+
+def my_hook(d):
+    #print('stampa',d)
+    
+    if d['status'] == 'downloading':
+        perc = float(d['_percent_str'].strip().split('%')[0])
+        duration = ('{}: {} of {} at {} ETA {}'.format(d['status'],
+                                                        d['_percent_str'], 
+                                                        d['_total_bytes_str'], 
+                                                        d['_speed_str'],
+                                                        d['_eta_str'],),perc)
+        
+        #riceiver(None, duration, 'DOWNLOAD')
+        wx.CallAfter(pub.sendMessage, 
+                    "UPDATE_DOWNLOAD_EVT", 
+                    output='', 
+                    duration=duration,
+                    status='DOWNLOAD',)
+        
+    if d['status'] == 'finished':
+        #riceiver(None, 'Done downloading, now converting ...', 'FINISHED')
+        wx.CallAfter(pub.sendMessage, 
+                    "UPDATE_DOWNLOAD_EVT", 
+                    output='', 
+                    duration='Done downloading, now converting ...',
+                    status='FINISHED',)
+
+
+class downloader(Thread):
+    """
+    YoutubeDL_Downloader represents a separate thread for running 
+    processes, which need to read the youtube-dl stdout/stderr in
+    real time
+    """
+    def __init__(self, varargs, logname):
+        """
+        self.urls:          urls list
+        self.opt:           option strings to adding
+        self.outtmpl:       options template to renaming on pathname
+        self.outputdir:     pathname destination
+        self.count:         increases with the progressive account elements
+        self.countmax:      length of self.urls 
+        self.logname:       title log name for logging
+        
+        """
+        Thread.__init__(self)
+        """initialize"""
+        self.urls = varargs[1]
+        self.opt = varargs[4] 
+        #self.outtmpl = varargs[4][1] 
+        self.outputdir = varargs[3]
+        self.count = 0 
+        self.countmax = len(varargs[1])
+        self.logname = logname
+
+        self.start() # start the thread (va in self.run())
+    
+    def run(self):
+
+        
+        
+        
+        for url in self.urls:
+            self.count += 1
+            count = 'URL %s/%s' % (self.count, self.countmax,)
+            wx.CallAfter(pub.sendMessage,
+                            "COUNT_EVT", 
+                            count=count, 
+                            duration=100,
+                            fname=url,
+                            end='',
+                            )
+            if CHANGE_STATUS == 1:
+                break
+            
+            ydl_opts = {
+                        #'format': '140',
+                        'format': self.opt['format'],
+                        'outtmpl': '{}/{}'.format(self.outputdir, 
+                                                    self.opt['outtmpl']),
+                        'restrictfilenames' : True,
+                        'ignoreerrors' : True,
+                        'no_warnings' : False,
+                        'writethumbnail': self.opt['writethumbnail'],
+                        'noplaylist': self.opt['noplaylist'],
+                        'no_color': True,
+                        #'postprocessors': [{
+                                            #'key': ''FFmpegExtractAudio'',
+                                            #'preferredcodec': 'mp3',
+                                            #'preferredquality': '192',
+                                            #}],
+                        'logger': MyLogger(),
+                        'progress_hooks': [my_hook],
+                        }
+                        
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                ydl.download(["{}".format(url)])
+        
+        wx.CallAfter(pub.sendMessage, 
+                    "COUNT_EVT", 
+                    count='', 
+                    duration='',
+                    fname='',
+                    end='ok'
+                    )
+        
+        wx.CallAfter(pub.sendMessage, "END_EVT")
+            
+#########################################################################
 class YoutubeDL_Downloader(Thread):
     """
     YoutubeDL_Downloader represents a separate thread for running 
