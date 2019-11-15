@@ -32,22 +32,21 @@ import wx
 vquality = {'Best quality video': 'best',
             'Worst quality video': 'worst'}
 
-aformats = {("Default format"): ("--extract-audio"),
-            ("wav"): ("--extract-audio --audio-format wav"),
-            ("mp3"): ("--extract-audio --audio-format mp3"),
-            ("aac"): ("--extract-audio --audio-format aac"),
-            ("m4a"): ("--extract-audio --audio-format m4a"),
-            ("vorbis"): ("--extract-audio --audio-format vorbis"),
-            ("opus"): ("--extract-audio --audio-format opus"),
-            ("flac"): ("--extract-audio --audio-format flac"),
+aformats = {("Default format"): ("best"),
+            ("wav"): ("wav"),
+            ("mp3"): ("mp3"),
+            ("aac"): ("aac"),
+            ("m4a"): ("m4a"),
+            ("vorbis"): ("vorbis"),
+            ("opus"): ("opus"),
+            ("flac"): ("flac"),
             }
 
 aquality = {'Best quality audio': 'best',
             'Worst quality audio': 'worst'}
 
-opt = {"PLAYLIST": "--no-playlist", "THUMB": "",
-       "METADATA": "", "V_QUALITY": "best", "A_FORMAT": "--extract-audio", 
-       "A_QUALITY": "best", 
+opt = {"PLAYLIST": False, "THUMB": False, "METADATA": False,
+       "V_QUALITY": "best", "A_FORMAT": "best", "A_QUALITY": "best", 
        }
 
 yellow = '#a29500'
@@ -293,25 +292,21 @@ class Downloader(wx.Panel):
     #-----------------------------------------------------------------#
     def on_Playlist(self, event):
         if self.ckbx_pl.IsChecked():
-            #opt["PLAYLIST"] = "--yes-playlist"
             opt["PLAYLIST"] = True
         else:
-            #opt["PLAYLIST"] = "--no-playlist"
             opt["PLAYLIST"] = False
     #-----------------------------------------------------------------#
     def on_Thumbnails(self, event):
         if self.ckbx_thumb.IsChecked():
             opt["THUMB"] = True
-            #opt["THUMB"] = "--embed-thumbnail"
         else:
             opt["THUMB"] = False
-            #opt["THUMB"] = ""
     #-----------------------------------------------------------------#
     def on_Metadata(self, event):
         if self.ckbx_meta.IsChecked():
-            opt["METADATA"] = "--add-metadata"
+            opt["METADATA"] = True
         else:
-            opt["METADATA"] = ""
+            opt["METADATA"] = False
     #-----------------------------------------------------------------#
     #def on_Start(self):
 
@@ -370,26 +365,36 @@ class Downloader(wx.Panel):
         urls = self.parent.data
         
         if self.choice.GetSelection() == 0:
-            
-            data = {'format': opt["V_QUALITY"], 'noplaylist': opt["PLAYLIST"],
-                    'writethumbnail': opt["THUMB"], 'outtmpl': '%(title)s.%(ext)s'}
-            
+            data = {'format': opt["V_QUALITY"], 
+                    'noplaylist': opt["PLAYLIST"],
+                    'writethumbnail': opt["THUMB"], 
+                    'outtmpl': '%(title)s.%(ext)s',
+                    'extractaudio': False,
+                    'addmetadata': opt["METADATA"],
+                    'postprocessors': []
+                    }
         if self.choice.GetSelection() == 1:
-            
             data = {'format': '{}video,{}audio'.format(opt["V_QUALITY"],
                                                        opt["A_QUALITY"]), 
                     'noplaylist': opt["PLAYLIST"],
                     'writethumbnail': opt["THUMB"], 
-                    'outtmpl': '%(title)s.f%(format_id)s.%(ext)s'}
-            
-
+                    'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                    'extractaudio': False,
+                    'addmetadata': opt["METADATA"],
+                    'postprocessors': []
+                    }
         elif self.choice.GetSelection() == 2: # audio only
-            cmd = [('{} {} {}'.format(opt["A_FORMAT"], 
-                                        opt["THUMB"],
-                                        opt["METADATA"], 
-                                        opt["PLAYLIST"],)),
-                    ('%(title)s.%(ext)s')
-                    ]
+            
+            data = {'format': 'best', 
+                    'noplaylist': opt["PLAYLIST"],
+                    'writethumbnail': opt["THUMB"], 
+                    'outtmpl': '%(title)s.%(ext)s',
+                    'extractaudio': True,
+                    'addmetadata': opt["METADATA"],
+                    'postprocessors': [{'key': 'FFmpegExtractAudio',
+                                        'preferredcodec': opt["A_FORMAT"],
+                                        }]
+                    }
         if self.choice.GetSelection() == 3:
             code = self.txt_code.GetValue().strip()
             if not code.isdigit() or not code:
@@ -398,11 +403,14 @@ class Downloader(wx.Panel):
                 self.txt_code.SetBackgroundColour((255,192,255))
                 return
             
-            cmd = [('--format {} {} {}'.format(code,
-                                                 opt["METADATA"], 
-                                                 opt["PLAYLIST"],)),
-                    ('%(title)s.f%(format_id)s.%(ext)s')]
-
+            data = {'format': code, 
+                    'noplaylist': opt["PLAYLIST"],
+                    'writethumbnail': opt["THUMB"], 
+                    'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                    'extractaudio': False,
+                    'addmetadata': opt["METADATA"],
+                    'postprocessors': []
+                    }
         self.parent.switch_Process('downloader',
                                     urls,
                                     '',
