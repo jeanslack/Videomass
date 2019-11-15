@@ -859,7 +859,7 @@ class MainFrame(wx.Frame):
         self.ytDownloader.Show()#, self.SetSize((700, 800))
         self.statusbar_msg(_('Youtube Downloader'), None)
         self.toolbar.Show()
-        self.btnpanel.Show()
+        #self.btnpanel.Show()
         self.btn_saveprf.Hide(),self.btn_duration.Hide(), 
         self.btn_playO.Hide(), self.btn_metaI.Hide()
         self.toolbar.EnableTool(wx.ID_OK, True)

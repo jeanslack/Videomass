@@ -368,7 +368,9 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 #########################################################################
 class MyLogger(object):
     """
-    
+    Intercepts youtube-dl's output by setting a logger object.
+    Log messages to a logging.Logger instance.
+    https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#embedding-youtube-dl
     """
     def debug(self, msg):
         wx.CallAfter(pub.sendMessage, 
@@ -396,6 +398,31 @@ class MyLogger(object):
 
 def my_hook(d):
     """
+    progress_hooks is A list of functions that get called on download
+    progress, with a dictionary with the entries
+        * status: One of "downloading", "error", or "finished".
+          Check this first and ignore unknown values. If status is one 
+          of "downloading", or "finished", the following properties may 
+          also be present:
+          
+            * filename: The final filename (always present)
+            * tmpfilename: The filename we're currently writing to
+            * downloaded_bytes: Bytes on disk
+            * total_bytes: Size of the whole file, None if unknown
+            * total_bytes_estimate: Guess of the eventual file size,
+                                    None if unavailable.
+            * elapsed: The number of seconds since download started.
+            * eta: The estimated time in seconds, None if unknown
+            * speed: The download speed in bytes/second, None if
+                    unknown
+            * fragment_index: The counter of the currently
+                                downloaded video fragment.
+            * fragment_count: The number of fragments (= individual
+                                files that will be merged)
+            Progress hooks are guaranteed to be called at least once
+            (with status "finished") if the download is successful.
+    NOTE: the "error" status do not exist on 2019.08.13 version.
+          I go with 'logger' instance to get errors
     """
     
     if d['status'] == 'downloading':
@@ -404,7 +431,9 @@ def my_hook(d):
                                                     d['_percent_str'], 
                                                     d['_total_bytes_str'], 
                                                     d['_speed_str'],
-                                                    d['_eta_str'],),perc)
+                                                    d['_eta_str'],),
+                    perc
+                    )
         wx.CallAfter(pub.sendMessage, 
                     "UPDATE_DOWNLOAD_EVT", 
                     output='', 
@@ -429,18 +458,24 @@ def my_hook(d):
 
 class YoutubeDL_Downloader(Thread):
     """
-    YoutubeDL_Downloader represents a separate thread for running 
-    processes, which need to read the youtube-dl stdout/stderr in
-    real time
+    Embed youtube-dl as module into a separated thread in order 
+    to get output during downloading and conversion in real time.
+    For a list of available options see:
+    
+    <https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/YoutubeDL.py#L129-L279>
+    <https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/options.py>
+    
+    or by help(youtube_dl.YoutubeDL)
+    
     """
     def __init__(self, varargs, logname):
         """
         self.urls:          urls list
-        self.opt:           option strings to adding
+        self.opt:           option dict data type to adding
         self.outputdir:     pathname destination
         self.count:         increases with the progressive account elements
-        self.countmax:      length of self.urls 
-        self.logname:       title log name for logging
+        self.countmax:      length of self.urls items list 
+        self.logname:       file name to log messages for logging
         
         """
         Thread.__init__(self)
@@ -499,133 +534,133 @@ class YoutubeDL_Downloader(Thread):
         wx.CallAfter(pub.sendMessage, "END_EVT")
             
 #########################################################################
-class Downloader(Thread):
-    """
-    YoutubeDL_Downloader represents a separate thread for running 
-    processes, which need to read the youtube-dl stdout/stderr in
-    real time
-    """
-    def __init__(self, varargs, logname):
-        """
-        self.urls:          urls list
-        self.opt:           option strings to adding
-        self.outtmpl:       options template to renaming on pathname
-        self.outputdir:     pathname destination
-        self.count:         increases with the progressive account elements
-        self.countmax:      length of self.urls 
-        self.logname:       title log name for logging
+#class Downloader(Thread):
+    #"""
+    #YoutubeDL_Downloader represents a separate thread for running 
+    #processes, which need to read the youtube-dl stdout/stderr in
+    #real time
+    #"""
+    #def __init__(self, varargs, logname):
+        #"""
+        #self.urls:          urls list
+        #self.opt:           option strings to adding
+        #self.outtmpl:       options template to renaming on pathname
+        #self.outputdir:     pathname destination
+        #self.count:         increases with the progressive account elements
+        #self.countmax:      length of self.urls 
+        #self.logname:       title log name for logging
         
-        """
-        Thread.__init__(self)
-        """initialize"""
-        self.urls = varargs[1]
-        self.opt = varargs[4][0] 
-        self.outtmpl = varargs[4][1] 
-        self.outputdir = varargs[3]
-        self.count = 0 
-        self.countmax = len(varargs[1])
-        self.logname = logname
+        #"""
+        #Thread.__init__(self)
+        #"""initialize"""
+        #self.urls = varargs[1]
+        #self.opt = varargs[4][0] 
+        #self.outtmpl = varargs[4][1] 
+        #self.outputdir = varargs[3]
+        #self.count = 0 
+        #self.countmax = len(varargs[1])
+        #self.logname = logname
 
-        self.start() # start the thread (va in self.run())
+        #self.start() # start the thread (va in self.run())
     
-    def run(self):
-        """
-        Subprocess initialize thread.
-        """
-        global STATUS_ERROR
+    #def run(self):
+        #"""
+        #Subprocess initialize thread.
+        #"""
+        #global STATUS_ERROR
         
-        ssl = '--no-check-certificate' if OS == 'Windows' else ''
+        #ssl = '--no-check-certificate' if OS == 'Windows' else ''
         
-        for url in self.urls:
+        #for url in self.urls:
             
-            cmd = ('youtube-dl {0} --newline --ignore-errors -o '
-                   '"{1}/{2}" {3} --ignore-config --restrict-filenames '
-                   '"{4}" --ffmpeg-location "{5}"'.format(ssl,
-                                                          self.outputdir,
-                                                          self.outtmpl,
-                                                          self.opt, 
-                                                          url,
-                                                          ffmpeg_url,
-                                                          ))
-            self.count += 1
-            count = 'URL %s/%s' % (self.count, self.countmax,)
-            com = "%s\n%s" % (count, cmd)
-            wx.CallAfter(pub.sendMessage,
-                         "COUNT_EVT", 
-                         count=count, 
-                         duration=100,
-                         fname=url,
-                         end='',
-                         )
-            logWrite(com, '', self.logname)# write n/n + command only
+            #cmd = ('youtube-dl {0} --newline --ignore-errors -o '
+                   #'"{1}/{2}" {3} --ignore-config --restrict-filenames '
+                   #'"{4}" --ffmpeg-location "{5}"'.format(ssl,
+                                                          #self.outputdir,
+                                                          #self.outtmpl,
+                                                          #self.opt, 
+                                                          #url,
+                                                          #ffmpeg_url,
+                                                          #))
+            #self.count += 1
+            #count = 'URL %s/%s' % (self.count, self.countmax,)
+            #com = "%s\n%s" % (count, cmd)
+            #wx.CallAfter(pub.sendMessage,
+                         #"COUNT_EVT", 
+                         #count=count, 
+                         #duration=100,
+                         #fname=url,
+                         #end='',
+                         #)
+            #logWrite(com, '', self.logname)# write n/n + command only
             
-            if not OS == 'Windows':
-                import shlex
-                cmd = shlex.split(cmd)
-                info = None
-            else:
-                # Hide subprocess window on MS Windows
-                info = subprocess.STARTUPINFO()
-                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            print(cmd)
-            try:
-                with subprocess.Popen(cmd,
-                                      stdout=subprocess.PIPE,
-                                      stderr=subprocess.STDOUT,
-                                      bufsize=1, 
-                                      universal_newlines=True,
-                                      startupinfo=info,) as p:
+            #if not OS == 'Windows':
+                #import shlex
+                #cmd = shlex.split(cmd)
+                #info = None
+            #else:
+                ## Hide subprocess window on MS Windows
+                #info = subprocess.STARTUPINFO()
+                #info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            #print(cmd)
+            #try:
+                #with subprocess.Popen(cmd,
+                                      #stdout=subprocess.PIPE,
+                                      #stderr=subprocess.STDOUT,
+                                      #bufsize=1, 
+                                      #universal_newlines=True,
+                                      #startupinfo=info,) as p:
                     
-                    for line in p.stdout:
-                        #print('PROVA ', line, end='')
-                        wx.CallAfter(pub.sendMessage, 
-                                     "UPDATE_DOWNLOAD_EVT", 
-                                     output=line, 
-                                     duration=100,
-                                     status=0,
-                                     )
-                        if CHANGE_STATUS == 1:# break second 'for' loop
-                            p.terminate()
-                            break
+                    #for line in p.stdout:
+                        ##print('PROVA ', line, end='')
+                        #wx.CallAfter(pub.sendMessage, 
+                                     #"UPDATE_DOWNLOAD_EVT", 
+                                     #output=line, 
+                                     #duration=100,
+                                     #status=0,
+                                     #)
+                        #if CHANGE_STATUS == 1:# break second 'for' loop
+                            #p.terminate()
+                            #break
                         
-                    if p.wait(): # error
-                        wx.CallAfter(pub.sendMessage, 
-                                     "UPDATE_DOWNLOAD_EVT", 
-                                     output=line, 
-                                     duration=100,
-                                     status=p.wait(),
-                                     )
-                        logWrite('', 
-                                 "Exit status: %s" % p.wait(),
-                                 self.logname)
-                                 #append exit error number
-                    else: # ok
-                        wx.CallAfter(pub.sendMessage, 
-                                     "COUNT_EVT", 
-                                     count='', 
-                                     duration='',
-                                     fname='',
-                                     end='ok'
-                                        )
-            except OSError as err:
-                e = "%s\n  %s" % (err, not_exist_msg)
-                wx.CallAfter(pub.sendMessage, 
-                             "COUNT_EVT", 
-                             count=e, 
-                             duration=0,
-                             fname=url,
-                             end='',
-                             )
-                STATUS_ERROR = 1
-                break
+                    #if p.wait(): # error
+                        #wx.CallAfter(pub.sendMessage, 
+                                     #"UPDATE_DOWNLOAD_EVT", 
+                                     #output=line, 
+                                     #duration=100,
+                                     #status=p.wait(),
+                                     #)
+                        #logWrite('', 
+                                 #"Exit status: %s" % p.wait(),
+                                 #self.logname)
+                                 ##append exit error number
+                    #else: # ok
+                        #wx.CallAfter(pub.sendMessage, 
+                                     #"COUNT_EVT", 
+                                     #count='', 
+                                     #duration='',
+                                     #fname='',
+                                     #end='ok'
+                                        #)
+            #except OSError as err:
+                #e = "%s\n  %s" % (err, not_exist_msg)
+                #wx.CallAfter(pub.sendMessage, 
+                             #"COUNT_EVT", 
+                             #count=e, 
+                             #duration=0,
+                             #fname=url,
+                             #end='',
+                             #)
+                #STATUS_ERROR = 1
+                #break
             
-            if CHANGE_STATUS == 1:# break first 'for' loop
-                p.terminate()
-                #print('...Interrupted process')
-                break
+            #if CHANGE_STATUS == 1:# break first 'for' loop
+                #p.terminate()
+                ##print('...Interrupted process')
+                #break
                 
-        time.sleep(.5)
-        wx.CallAfter(pub.sendMessage, "END_EVT")
+        #time.sleep(.5)
+        #wx.CallAfter(pub.sendMessage, "END_EVT")
 ########################################################################
 
 class PresetsManager_Thread(Thread):

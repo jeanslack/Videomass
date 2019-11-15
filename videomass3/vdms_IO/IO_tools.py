@@ -35,7 +35,6 @@ DIRconf = get.DIRconf
 ffprobe_url = get.ffprobe_url
 
 if OS == 'Windows':
-    #from videomass3.vdms_PROCESS.task_processingWin32 import GeneralProcess
     from videomass3.vdms_PROCESS.volumedetectWin32 import VolumeDetectThread
     from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
     from videomass3.vdms_PROCESS.ffplay_reproductionWin32 import Play
@@ -56,6 +55,7 @@ from videomass3.vdms_PROCESS.opendir import browse
 from videomass3.vdms_DIALOGS import ffmpeg_conf
 from videomass3.vdms_DIALOGS import ffmpeg_formats
 from videomass3.vdms_DIALOGS import ffmpeg_codecs
+from videomass3.vdms_PROCESS.ydl_extract_info import Extract_Info
 
 #-----------------------------------------------------------------------#
 def process(self, varargs, panelshown, duration, time_seq, time_read):
@@ -234,5 +234,15 @@ def openpath(mod):
     if ret:
         wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
 #-------------------------------------------------------------------------#
+def youtube_info(url):
+    """
+    Call a separated thread to get extract info data object. 
+    """
+    thread = Extract_Info(url) 
+    thread.join()
+    data = thread.data
+    
+    yield data
+#--------------------------------------------------------------------------#
 
 

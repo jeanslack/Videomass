@@ -5,9 +5,16 @@ from ffprobe_parser import FFProbe
 filename_url = '/home/gianluca/out_EBU.avi'
 ffprobe_url = '/usr/bin/ffprobe'
 
-data = FFProbe(ffprobe_url, filename_url, parse=True, 
-                    pretty=True, select=None, entries=None,
-                    show_format=True, show_streams=True, writer='default')
+data = FFProbe(ffprobe_url, 
+               filename_url, 
+               parse=True, 
+               pretty=True, 
+               select=None, 
+               entries=None,
+               show_format=True, 
+               show_streams=True, 
+               writer='default'
+               )
 
 if data.ERROR():
     print ("Some Error:  %s" % (data.error))

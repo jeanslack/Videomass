@@ -27,7 +27,9 @@
  
 #########################################################
 from __future__ import unicode_literals
+from videomass3.vdms_IO import IO_tools
 import wx
+
 
 vquality = {'Best quality video': 'best',
             'Worst quality video': 'worst'}
@@ -55,8 +57,9 @@ red = '#ea312d'
 #####################################################################
 def sizeof_fmt(num, suffix='B'):
     """
+    Convert type int in file size human readable
     """
-    # TODO make 
+    # TODO make beter
     num = int(num)
     for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
         if abs(num) < 1024.0:
@@ -67,7 +70,7 @@ def sizeof_fmt(num, suffix='B'):
 
 class Downloader(wx.Panel):
     """
-    
+    This panel gives a graphic layout to some features of youtube-dl
     """
     def __init__(self, parent, OS):
         """
@@ -77,10 +80,6 @@ class Downloader(wx.Panel):
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
         sizer = wx.BoxSizer(wx.VERTICAL)
-        #sizer.Add((20, 20), 0,)#wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 30)
-        #gen = wx.StaticText(self, wx.ID_ANY, (_('Media streams to download')))
-        #gen.SetFont(wx.Font(12, wx.NORMAL, wx.NORMAL, wx.BOLD))
-        #sizer.Add(gen, 0, wx.ALL, 15)
         self.choice = wx.Choice(self, wx.ID_ANY, 
                                      choices=[_('Default'),
                                               _('Separated Video+Audio'),  
@@ -88,25 +87,8 @@ class Downloader(wx.Panel):
                                               _('By using format code')],
                                      size=(-1,-1),
                                      )
-        #box = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                    #_(" Media streams to download "))), 
-                                        #wx.VERTICAL)
-        #box.Add(self.choice, 0, wx.ALIGN_CENTER | wx.ALL, 20)
         self.choice.SetSelection(0)
-        #sizer.Add(box, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         sizer.Add(self.choice, 0, wx.EXPAND|wx.ALL, 15)
-
-        #self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "", 
-                                   #style=wx.TE_PROCESS_ENTER, size=(50,-1)
-                                   #)
-        #self.txt_code.Disable()
-        #grid_fcode = wx.FlexGridSizer(1, 2, 0, 0)
-        #sizer.Add(grid_fcode, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
-        #self.stext = wx.StaticText(self, wx.ID_ANY, (
-                                        #_('Enter `Format Code` here:')))
-        #self.stext.Disable()
-        #grid_fcode.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        #grid_fcode.Add(self.txt_code, 0, wx.ALL, 5)
         grid_v = wx.FlexGridSizer(1, 7, 0, 0)
         sizer.Add(grid_v, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         f = [x for x in vquality.keys()]
@@ -132,8 +114,6 @@ class Downloader(wx.Panel):
                                                        wx.CB_READONLY)
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
-        #grid_a = wx.FlexGridSizer(1, 1, 0, 0)
-        #sizer.Add(grid_a, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
         
         self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "", 
@@ -145,10 +125,7 @@ class Downloader(wx.Panel):
         self.stext.Disable()
         grid_v.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         grid_v.Add(self.txt_code, 0, wx.ALL, 5)
-        
         #-------------opt
-        #line_0 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
-        #sizer.Add(line_0, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.ckbx_pl = wx.CheckBox(self, wx.ID_ANY,(
@@ -159,8 +136,8 @@ class Downloader(wx.Panel):
         grid_opt.Add(self.ckbx_thumb, 0, wx.ALL, 5)
         self.ckbx_meta = wx.CheckBox(self, wx.ID_ANY,(_('Add metadata to file')))
         grid_opt.Add(self.ckbx_meta, 0, wx.ALL, 5)
-        #line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
-        #sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
+        line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
+        sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
         self.fcode = wx.ListCtrl(self, wx.ID_ANY,style=wx.LC_REPORT | 
                                                   wx.SUNKEN_BORDER
@@ -192,65 +169,55 @@ class Downloader(wx.Panel):
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_Playlist)
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
-    #-----------------------------------------------------------------#
-    def infoParse(self):
         
+    #-----------------------------------------------------------------#
+    def get_format_codes(self):
+        """
+        get format_code from extract_info data
+        
+        """
         if self.fcode.GetItemCount() > 0:
             return
-        
-        import youtube_dl
-        if self.OS == 'Windows':
-            ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,
-                        'nocheckcertificate': True,}
-        else:
-            #ydl_opts = {'listformats': True }
-            ydl_opts = {'ignoreerrors' : True, 'noplaylist': True,}
-        
         self.txt_code.SetValue('')
         index = 0
         self.parent.statusbar_msg("wait... I'm getting the data", 'YELLOW')
         for link in self.parent.data:
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                meta = ydl.extract_info(link, download=False)
-                
-                if meta:
-                    if 'entries' in meta:
-                        meta['entries'][0]
-                    formats = meta.get('formats', [meta])
-                    self.fcode.InsertItem(index, link)
-                    self.fcode.SetItemBackgroundColour(index, 'GREEN')
-                else:
-                    self.fcode.InsertItem(index, 'ERROR: %s' % link)
-                    self.fcode.SetItemBackgroundColour(index, red)
-                    break
-                
-            for f in formats:
-                index+=1
-                if f['vcodec'] == 'none':
-                    vcodec = ''
-                    fps = ''
-                else:
-                    vcodec = f['vcodec']
-                    fps = '%sfps' % f['fps']
-                            
-                if f['acodec'] == 'none':
-                    acodec = 'Video only'
-                else:
-                    acodec = f['acodec']
-                
-                if f['filesize']:
-                    size = sizeof_fmt(f['filesize'])
-                else:
-                    size = ''
-                
-                self.fcode.InsertItem(index, '' )
-                self.fcode.SetItem(index, 1, f['format_id'] )
-                self.fcode.SetItem(index, 2, f['ext'])
-                self.fcode.SetItem(index, 3, f['format'].split('-')[1])
-                self.fcode.SetItem(index, 4, vcodec)
-                self.fcode.SetItem(index, 5, fps)
-                self.fcode.SetItem(index, 6, acodec)
-                self.fcode.SetItem(index, 7, size)
+            data = IO_tools.youtube_info(link)
+            for meta in data:
+                if meta[1]:
+                    self.parent.statusbar_msg('Youtube Downloader', None)
+                    wx.MessageBox(meta[1],'youtube_dl ERROR', wx.ICON_ERROR)
+                    return
+                if 'entries' in meta[0]: 
+                    meta[0]['entries'][0] # not parse all playlist
+                formats = meta[0].get('formats', [meta[0]])
+                self.fcode.InsertItem(index, link)
+                self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                for f in formats:
+                    index+=1
+                    if f['vcodec'] == 'none':
+                        vcodec = ''
+                        fps = ''
+                    else:
+                        vcodec = f['vcodec']
+                        fps = '%sfps' % f['fps']
+                    if f['acodec'] == 'none':
+                        acodec = 'Video only'
+                    else:
+                        acodec = f['acodec']
+                    if f['filesize']:
+                        size = sizeof_fmt(f['filesize'])
+                    else:
+                        size = ''
+                        
+                    self.fcode.InsertItem(index, '' )
+                    self.fcode.SetItem(index, 1, f['format_id'] )
+                    self.fcode.SetItem(index, 2, f['ext'])
+                    self.fcode.SetItem(index, 3, f['format'].split('-')[1])
+                    self.fcode.SetItem(index, 4, vcodec)
+                    self.fcode.SetItem(index, 5, fps)
+                    self.fcode.SetItem(index, 6, acodec)
+                    self.fcode.SetItem(index, 7, size)
                 
         self.txt_code.WriteText(f['format_id'])
         self.parent.statusbar_msg('Youtube Downloader', None)
@@ -276,7 +243,7 @@ class Downloader(wx.Panel):
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable(), self.txt_code.Enable()
             self.fcode.Enable(), self.stext.Enable()
-            self.infoParse()
+            self.get_format_codes()
 
     #-----------------------------------------------------------------#
     def on_Vq(self, event):
@@ -308,57 +275,7 @@ class Downloader(wx.Panel):
         else:
             opt["METADATA"] = False
     #-----------------------------------------------------------------#
-    #def on_Start(self):
-
-        #logname = 'Youtube_downloader'
-        #urls = self.parent.data
-        
-        #if self.choice.GetSelection() == 0:
-            #cmd = [('--format {} {} {}'.format(opt["V_QUALITY"],
-                                                  #opt["METADATA"], 
-                                                  #opt["PLAYLIST"],)),
-                    #('%(title)s.%(ext)s')
-                    #]
-        #if self.choice.GetSelection() == 1:
-            #cmd = [('--format {}video,{}audio {} {}'.format(
-                                                            #opt["V_QUALITY"], 
-                                                            #opt["A_QUALITY"], 
-                                                            #opt["METADATA"], 
-                                                            #opt["PLAYLIST"],)),
-                   #('%(title)s.f%(format_id)s.%(ext)s')
-                   #]
-        #elif self.choice.GetSelection() == 2: # audio only
-            #cmd = [('{} {} {}'.format(opt["A_FORMAT"], 
-                                        #opt["THUMB"],
-                                        #opt["METADATA"], 
-                                        #opt["PLAYLIST"],)),
-                    #('%(title)s.%(ext)s')
-                    #]
-        #if self.choice.GetSelection() == 3:
-            #code = self.txt_code.GetValue().strip()
-            #if not code.isdigit() or not code:
-                #wx.MessageBox(_('Enter a `Format Code` number in the text '
-                                #'box, please'),'Videomass', wx.ICON_INFORMATION)
-                #self.txt_code.SetBackgroundColour((255,192,255))
-                #return
-            
-            #cmd = [('--format {} {} {}'.format(code,
-                                                 #opt["METADATA"], 
-                                                 #opt["PLAYLIST"],)),
-                    #('%(title)s.f%(format_id)s.%(ext)s')]
-
-        #self.parent.switch_Process('downloader',
-                                    #urls,
-                                    #'',
-                                    #self.parent.file_destin,
-                                    #cmd,
-                                    #None,
-                                    #'',
-                                    #'',
-                                    #logname, 
-                                    #len(urls),
-                                    #)
-    #-----------------------------------------------------------------#
+    
     def on_Start(self):
 
         logname = 'Youtube_downloader'
