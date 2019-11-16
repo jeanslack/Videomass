@@ -883,7 +883,7 @@ class MainFrame(wx.Frame):
         self.VconvPanel.file_src = flist
         self.toolbar.Show()
         self.btnpanel.Show()
-        self.btn_saveprf.Show()
+        self.btn_saveprf.Show(), self.btn_duration.Show(), self.btn_metaI.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
         
@@ -906,7 +906,7 @@ class MainFrame(wx.Frame):
         self.AconvPanel.file_src = flist
         self.toolbar.Show()
         self.btnpanel.Show()
-        self.btn_saveprf.Show()
+        self.btn_saveprf.Show(), self.btn_duration.Show(), self.btn_metaI.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
             
