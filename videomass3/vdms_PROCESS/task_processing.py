@@ -341,7 +341,7 @@ class GeneralProcess(wx.Panel):
 
         else:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
-            self.OutText.AppendText(_('\n Done !\n'))
+            self.OutText.AppendText(_('\n All finished !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             #self.labPerc.SetLabel("Percentage: 100%")
             self.button_stop.Enable(False)
@@ -370,8 +370,8 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 #########################################################################
 class MyLogger(object):
     """
-    Intercepts youtube-dl's output by setting a logger object.
-    Log messages to a logging.Logger instance.
+    Intercepts youtube-dl's output by setting a logger object;
+    * Log messages to a logging.Logger instance.
     https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#embedding-youtube-dl
     """
     def debug(self, msg):

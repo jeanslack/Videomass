@@ -56,45 +56,36 @@ def info(parent, videomass_icon):
         """
         info =  wx.adv.AboutDialogInfo()
         info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
-        #info.SetIcon(videomass_icon)
         info.SetName("%s" % Name)
         info.SetVersion("%s" % Version)
-        info.SetDescription(_('Videomass provides a graphical interface\n'
-                              'for audio and video conversions\n'
-                              'with FFmpeg\n'))
+        info.SetDescription(_("Yet another UI for audio and video "
+                              "conversions with FFmpeg"))
         info.SetCopyright("Copyright %s %s" %(Copyright, Author))
         info.SetWebSite(Website)
         info.SetLicence(Long_Lic)
-        #info.AddDeveloper("\n%s \n"
-                        #"%s\n"
-                        #"%s\n\n"
-                        #"%s\n" %(Author,Mail,Website,Comment))
-        #info.SetDevelopers('')
-        info.AddDeveloper("%s %s\n" %(Author,Mail))
+        info.AddDeveloper("%s %s" %(Author,Mail))
         info.AddDeveloper("Thanks to:")
-        info.AddDeveloper('- Python (programming language)\n<https://www.'
-                          'python.org/>')
-        info.AddDeveloper("- wxPython "
-                          '(cross-platform GUI toolkit for the Python language)'
-                          '\n<https://wxpython.org/>')
-        info.AddDeveloper('- FFmpeg (a complete, cross-platform solution '
-                          'for media)\n<http://ffmpeg.org/>')
-        info.AddDeveloper('- Material design icons\n'
-                          'http://google.github.io/material-design-icons/'
-                          '#getting-icons')
-        info.AddDeveloper('- Flat Color Icons\nhttp://icons8.com/color-icons\n')
-        #info.SetDocWriters('')
-        info.AddDocWriter("Gianluca Pernigotto (online documentation)\n")
-        #info.AddArtist('Gianluca Pernigotto powered by wx.Python')
-        #info.SetTranslators('')
+        info.AddDeveloper("Python <https://www.python.org/>, "
+                          "programming language"
+                          )
+        info.AddDeveloper("wxPython <https://wxpython.org/>, cross-platform "
+                          "GUI toolkit for the Python language"
+                          )
+        info.AddDeveloper("FFmpeg <http://ffmpeg.org/>, a complete, "
+                          "cross-platform solution for media"
+                          )
+        info.AddDeveloper("youtube-dl <http://ytdl-org.github.io/youtube-"
+                          "dl/>, Download videos from YouTube and more sites"
+                          )
+        info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>"
+                          )
+        info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
+                         'Material design icons '
+                         'http://google.github.io/material-design-icons/'
+                         '#getting-icons', 'Flat Color Icons, '
+                          'http://icons8.com/color-icons'])
         info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> "
-                           "English to Italian translations.\n")
-        #info.SetArtists('')
-        #info.AddArtist('- Gianluca Pernigotto (Videomass app icons only)\n'
-                       #'http://jeanslack.github.io/Videomass/')
-        #info.AddArtist('- Material design icons from Google\n'
-                       #'http://google.github.io/material-design-icons/#'
-                       #'getting-icons')
-        #info.AddArtist('- Flat Color Icons\nhttp://icons8.com/color-icons')
+                           "English to Italian translations."
+                           )
         wx.adv.AboutBox(info)
         #event.Skip()
