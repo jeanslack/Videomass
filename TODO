@@ -10,8 +10,8 @@ URGENCY: high
 -------------
 URGENCY: low
 -------------
-- Add one specific `format code` to any url indexing with the urls list
-- Get extract info metadata by using dialog with ListCtrl like mediainfo
+- YoutubeDL add one specific `format code` to any url indexing with the urls list
+- YoutubeDL get extract info metadata by using dialog with ListCtrl like mediainfo
 
 ---------------
 URGENCY: medium

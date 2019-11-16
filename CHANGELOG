@@ -6,32 +6,17 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
-October 15, 2019 V.1.7.5
+November 16, 2019 V.1.8.0
 +------------------------------------+
 
 NEWS:
-    * Since version 1.7.5 Videomass uses JSON data for its presets while 
-      old ones with xml data are now obsolete and incompatible. This allowed 
-      some advantages in the presets management and some savings in system 
-      resources.
-    
-    * Presets can also be created from scratch
-    
-    * Presets can be removed (not deleted)
+    * 
     
 ADDED:
-    * Presets Manager: added new text boxes useful for conversions with 
-      second pass.
-      
-    * Dialog to add new preset has box entry for two pass conversion
-    
-    * Added "Create new preset" to File menu item
-    
-    * Added "Remove preset" to File menu item
+    * 
 
 IMPROVEMENTS:
-    * Presets Manager: Improved conversion management with one or two passes, 
-      making the parameter syntax similar to that of FFmpeg.
+    * 
       
       
 +------------------------------------+
