@@ -416,13 +416,14 @@ class Setup(wx.Dialog):
     def logging_ffplay(self, event):
         """specifies loglevel type for ffplay."""
         s = self.rdbFFplay.GetStringSelection().split()[0]
-        self.full_list[self.rowsNum[3]] = '%s -hide_banner\n' % s
+        self.full_list[self.rowsNum[3]] = '-loglevel %s -hide_banner \n' % s
 
     #--------------------------------------------------------------------#
     def logging_ffmpeg(self, event):
         """specifies loglevel type for ffmpeg"""
         s = self.rdbFFmpeg.GetStringSelection().split()[0]
-        self.full_list[self.rowsNum[4]] = '%s -stats\n' % s
+        self.full_list[self.rowsNum[4]] = ('-loglevel %s -stats -hide_banner '
+                                           '-nostdin\n' % s)
         
     #----------------------ffmpeg path checkbox--------------------------#
     def exeFFmpeg(self, event):

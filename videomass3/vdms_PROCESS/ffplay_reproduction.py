@@ -27,20 +27,21 @@
 
 #########################################################
 import wx
-import subprocess
-import shlex
-import time
-from threading import Thread
-from videomass3.vdms_IO.make_filelog import write_log # write initial log
-
-#########################################################################
 # get data from bootstrap
 get = wx.GetApp()
 DIRconf = get.DIRconf # path to the configuration directory
 ffplay_url = get.ffplay_url
 ffplay_loglev = get.ffplay_loglev
-#########################################################################
+OS = get.OS
 
+import subprocess
+if not OS == 'Windows':
+    import shlex
+import time
+from threading import Thread
+from videomass3.vdms_IO.make_filelog import write_log # write initial log
+
+#-----------------------------------------------------------------#
 def msg_Error(msg):
     """
     Receive error messages from Play(Thread) via wxCallafter
@@ -98,18 +99,23 @@ class Play(Thread):
         
         """
         #time.sleep(.5)
-        cmd = '%s %s -loglevel %s -i "%s" %s' % (ffplay_url,
-                                                 self.time_seq,
-                                                 ffplay_loglev,
-                                                 self.filename,
-                                                 self.param,)
+        cmd = '%s %s %s -i "%s" %s' % (ffplay_url,
+                                       self.time_seq,
+                                       ffplay_loglev,
+                                       self.filename,
+                                       self.param,)
         self.logWrite(cmd)
-        command = shlex.split(cmd)
-        
+        if not OS == 'Windows':
+            cmd = shlex.split(cmd)
+            info = None
+        else: # Hide subprocess window on MS Windows
+            info = subprocess.STARTUPINFO()
+            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
-            p = subprocess.Popen(command,
+            p = subprocess.Popen(cmd,
                                  stderr=subprocess.PIPE,
                                  universal_newlines=True,
+                                 startupinfo=info,
                                  )
             error =  p.communicate()
         

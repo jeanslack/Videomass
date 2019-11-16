@@ -998,16 +998,9 @@ class Video_Conv(wx.Panel):
             wx.MessageBox(_("No filter enabled"), "Videomass: Info", 
                           wx.ICON_INFORMATION)
             return
-        
         self.time_seq = self.parent.time_seq
-        first_path = self.file_src[0]['filename']
         
-        stream_play(first_path, 
-                    self.time_seq, 
-                    self.ffplay_link, 
-                    cmd_opt["Filters"], 
-                    self.ffplay_loglev,
-                    )
+        stream_play(self.file_src[0], self.time_seq, cmd_opt["Filters"])
     #------------------------------------------------------------------#
     def on_FiltersClear(self, event):
         """

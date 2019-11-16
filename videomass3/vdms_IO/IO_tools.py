@@ -34,19 +34,10 @@ OS = get.OS
 DIRconf = get.DIRconf
 ffprobe_url = get.ffprobe_url
 
-if OS == 'Windows':
-    from videomass3.vdms_PROCESS.volumedetectWin32 import VolumeDetectThread
-    from videomass3.vdms_PROCESS.volumedetectWin32 import PopupDialog
-    from videomass3.vdms_PROCESS.ffplay_reproductionWin32 import Play
-    from videomass3.vdms_PROCESS.ffprobe_parserWin32 import FFProbe
-else:
-    from videomass3.vdms_PROCESS.volumedetect import VolumeDetectThread
-    from videomass3.vdms_PROCESS.volumedetect import PopupDialog
-    from videomass3.vdms_PROCESS.ffplay_reproduction import Play
-    from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
-    
-#from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
-from videomass3.vdms_PROCESS.task_processing import GeneralProcess
+from videomass3.vdms_PROCESS.ffplay_reproduction import Play
+from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
+from videomass3.vdms_PROCESS.volumedetect import VolumeDetectThread
+from videomass3.vdms_PROCESS.volumedetect import PopupDialog
 from videomass3.vdms_PROCESS.check_bin import ff_conf
 from videomass3.vdms_PROCESS.check_bin import ff_formats
 from videomass3.vdms_PROCESS.check_bin import ff_codecs
@@ -57,32 +48,6 @@ from videomass3.vdms_DIALOGS import ffmpeg_formats
 from videomass3.vdms_DIALOGS import ffmpeg_codecs
 from videomass3.vdms_PROCESS.ydl_extract_info import Extract_Info
 
-#-----------------------------------------------------------------------#
-def process(self, varargs, panelshown, duration, time_seq, time_read):
-    """
-    1) TIME DEFINITION FOR THE PROGRESS BAR
-        For a suitable and efficient progress bar, if a specific 
-        time sequence has been set with the duration tool, the total 
-        duration of each media file will be replaced with the set time 
-        sequence. Otherwise the duration of each media will be the one 
-        originated from its real duration.
-        
-    2) STARTING THE PROCESS
-        Here the panel with the progress bar is instantiated which will 
-        assign a corresponding thread.
-        
-    """
-    if time_seq:
-        newDuration = []
-        for n in duration:
-            newDuration.append(time_read['time'][1])
-        duration = newDuration
-        
-    self.ProcessPanel = GeneralProcess(self, 
-                                       panelshown, 
-                                       varargs, 
-                                       duration,
-                                       )
 #-----------------------------------------------------------------------#
 def stream_info(title, filepath):
     """

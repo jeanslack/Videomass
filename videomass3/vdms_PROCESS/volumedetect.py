@@ -28,7 +28,6 @@
 import wx
 from pubsub import pub
 import subprocess
-import shlex
 from threading import Thread
 from videomass3.vdms_IO.make_filelog import write_log # write initial log
 
@@ -36,7 +35,10 @@ from videomass3.vdms_IO.make_filelog import write_log # write initial log
 # path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
+OS = get.OS
 #########################################################################
+if not OS == 'Windows':
+    import shlex
 
 class PopupDialog(wx.Dialog):
     """ 
@@ -125,10 +127,7 @@ class VolumeDetectThread(Thread):
         self.time_seq = timeseq
         self.status = None
         self.data = None
-        if OS == 'Windows':#Replace /dev/null with NUL on Windows.
-            self.nul = 'NUL'
-        else:
-            self.nul = '/dev/null'
+        self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
 
         self.logf = "%s/log/%s" %(DIRconf, 'Videomass_volumedected.log')
         
@@ -150,20 +149,25 @@ class VolumeDetectThread(Thread):
         volume = list()
 
         for files in self.filelist:
-            args = ('{0} {1} -i "{2}" -hide_banner -af volumedetect '
+            cmd = ('{0} {1} -i "{2}" -hide_banner -af volumedetect '
                     '-vn -sn -dn -f null {3}').format(self.ffmpeg, 
                                                       self.time_seq,
                                                       files,
                                                       self.nul)
-            self.logWrite(args)
+            self.logWrite(cmd)
             
-            cmnd = shlex.split(args)
-
+            if not OS == 'Windows':
+                cmd = shlex.split(cmd)
+                info = None
+            else: # Hide subprocess window on MS Windows
+                info = subprocess.STARTUPINFO()
+                info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             try:
-                p = subprocess.Popen(cmnd, 
+                p = subprocess.Popen(cmd, 
                                      stdout=subprocess.PIPE, 
                                      stderr=subprocess.STDOUT,
-                                     universal_newlines=True
+                                     universal_newlines=True,
+                                     startupinfo=info,
                                      )
                 output =  p.communicate()
             

@@ -43,6 +43,7 @@ from videomass3.vdms_PANELS import downloader
 from videomass3.vdms_PANELS import video_conv
 from videomass3.vdms_PANELS import audio_conv
 from videomass3.vdms_IO import IO_tools
+from videomass3.vdms_PROCESS.task_processing import GeneralProcess
 
 
 
@@ -221,11 +222,14 @@ class MainFrame(wx.Frame):
                                               pathicons[26]) # panel
         self.textDnDTarget = textdrop.TextDnD(self, pathicons[26]) # panel
         
+        self.ProcessPanel = GeneralProcess(self)
+        
         self.fileDnDTarget.Hide()
         self.textDnDTarget.Hide()
         self.ytDownloader.Hide()
         self.VconvPanel.Hide()
         self.AconvPanel.Hide()
+        self.ProcessPanel.Hide()
         # Layout toolbar buttons:
         self.mainSizer = wx.BoxSizer(wx.VERTICAL) # sizer base global
         grid_pan = wx.FlexGridSizer(1, 7, 0, 0)
@@ -242,6 +246,7 @@ class MainFrame(wx.Frame):
         self.mainSizer.Add(self.ytDownloader, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.AconvPanel, 1, wx.EXPAND|wx.ALL, 0)
+        self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
         
         #----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
@@ -315,18 +320,23 @@ class MainFrame(wx.Frame):
         """
         self.topicname = None
         self.data = None
-        self.fileDnDTarget.deleteAll(self)
-        self.textDnDTarget.deleteAll(self)
+        self.fileDnDTarget.deleteAll(self), self.fileDnDTarget.Hide()
+        self.textDnDTarget.deleteAll(self), self.textDnDTarget.Hide()
         if self.ytDownloader.IsShown():
             self.ytDownloader.fcode.DeleteAllItems()
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
             self.ytDownloader.Hide()
             
-        self.VconvPanel.Hide(), 
-        self.AconvPanel.Hide(), self.fileDnDTarget.Hide(), 
-        self.textDnDTarget.Hide(), self.ChooseTopic.Show()
-        self.toolbar.Hide(), self.btnpanel.Hide()
+        elif self.VconvPanel.IsShown():
+            self.VconvPanel.normalize_default()
+            self.VconvPanel.Hide()
+            
+        elif self.AconvPanel.IsShown():
+            self.AconvPanel.normalization_default()
+            self.AconvPanel.Hide()
+            
+        self.ChooseTopic.Show(), self.toolbar.Hide(), self.btnpanel.Hide()
         self.statusbar_msg(_(''), None)
         self.Layout()
     #------------------------------------------------------------------#
@@ -423,9 +433,7 @@ class MainFrame(wx.Frame):
 
         IO_tools.stream_play(self.post_process,
                              '', # time_seq is useless for the exported file
-                             self.ffplay_link, 
                              '', # no others parameters are needed
-                             self.ffplay_loglevel,
                              )
     #------------------------------------------------------------------#
     def Saveprofile(self, event):
@@ -474,24 +482,16 @@ class MainFrame(wx.Frame):
         switch to panels or destroy the videomass app.
         
         """
-        def close():
-            if not self.topicname:
-                if wx.MessageBox(_('Are you sure you want to exit?'), 
-                        _('Exit'), wx.ICON_QUESTION | wx.YES_NO, 
-                        self) == wx.YES:
-                    self.Destroy()
-            else:
-                self.choosetopicRetrieve()
-        try:
-            self.ProcessPanel.IsShown()
-                
-        except AttributeError:
-            close()
+        if self.ProcessPanel.IsShown():
+            self.ProcessPanel.on_close(self)
+            
+        elif not self.topicname:
+            if wx.MessageBox(_('Are you sure you want to exit?'), 
+                    _('Exit'), wx.ICON_QUESTION | wx.YES_NO, 
+                    self) == wx.YES:
+                self.Destroy()
         else:
-            if self.ProcessPanel.IsShown():
-                self.ProcessPanel.on_close(self)
-            else:
-                close()
+            self.choosetopicRetrieve()
     
     #### -------------   BUILD THE MENU BAR  ----------------###
     def videomass_menu_bar(self):
@@ -808,7 +808,6 @@ class MainFrame(wx.Frame):
                                                  wx.TB_TEXT))
         self.toolbar.SetToolBitmapSize((32,32))
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        
         # ------- Run process button
         self.toolbar.AddStretchableSpace()
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
@@ -871,7 +870,6 @@ class MainFrame(wx.Frame):
         Show Video converter panel
         """
         self.file_destin = self.fileDnDTarget.file_dest
-        
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.AconvPanel.Hide()
         self.VconvPanel.Show(), 
@@ -883,8 +881,6 @@ class MainFrame(wx.Frame):
                          self.data if f['format']['duration']
                          ]
         self.VconvPanel.file_src = flist
-        self.VconvPanel.normalize_default()
-        
         self.toolbar.Show()
         self.btnpanel.Show()
         self.btn_saveprf.Show()
@@ -892,13 +888,11 @@ class MainFrame(wx.Frame):
         self.Layout()
         
     #------------------------------------------------------------------#
-    #def switch_audio_conv(self, event):
     def switch_audio_conv(self, event):
         """
         Show Audio converter panel
         """
         self.file_destin = self.fileDnDTarget.file_dest
-
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
         self.AconvPanel.Show(), 
@@ -910,8 +904,6 @@ class MainFrame(wx.Frame):
                          self.data if f['format']['duration']
                          ]
         self.AconvPanel.file_src = flist
-        self.AconvPanel.normalization_default()
-        
         self.toolbar.Show()
         self.btnpanel.Show()
         self.btn_saveprf.Show()
@@ -921,22 +913,27 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def switch_Process(self, *varargs):
         """
-        Show a panel for processing task only. 
-        This is a panel that should not be instantiated at the beginning 
-        of the main frame (as others) because otherwise it would immediately
-        start running.
+    1) TIME DEFINITION FOR THE PROGRESS BAR
+        For a suitable and efficient progress bar, if a specific 
+        time sequence has been set with the duration tool, the total 
+        duration of each media file will be replaced with the set time 
+        sequence. Otherwise the duration of each media will be the one 
+        originated from its real duration.
+        
+    2) STARTING THE PROCESS
+        Here the panel with the progress bar is instantiated which will 
+        assign a corresponding thread.
+        
         """
+        if self.time_seq:
+            newDuration = []
+            for n in self.duration:
+                newDuration.append(self.time_read['time'][1])
+            duration = newDuration
+        else:
+            duration = self.duration
 
         self.btnpanel.Hide()# hide buttons bar if the user has shown it:
-        
-        IO_tools.process(self, varargs, 
-                         self.topicname, 
-                         self.duration,
-                         self.time_seq,
-                         self.time_read,
-                         )
-        #make the positioning:
-        self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
         #Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
@@ -947,6 +944,7 @@ class MainFrame(wx.Frame):
         [self.menuBar.EnableTop(x, False) for x in range(0,3)]
         #Hide the tool bar
         self.toolbar.Hide()
+        self.ProcessPanel.startThread(self.topicname, varargs, duration)
         self.Layout()
     #------------------------------------------------------------------#
     def Run_Coding(self, event):
@@ -988,9 +986,5 @@ class MainFrame(wx.Frame):
         [self.menuBar.EnableTop(x, True) for x in range(0,3)]
         self.SetTitle("Videomass")# set the appropriate title
         # show buttons bar if the user has shown it:
-
-        
         self.Layout()
-        
-        
         

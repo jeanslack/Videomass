@@ -34,7 +34,7 @@ import wx
 vquality = {'Best quality video': 'best',
             'Worst quality video': 'worst'}
 
-aformats = {("Default format"): ("best"),
+aformats = {("Default audio format"): ("best"),
             ("wav"): ("wav"),
             ("mp3"): ("mp3"),
             ("aac"): ("aac"),
@@ -49,7 +49,7 @@ aquality = {'Best quality audio': 'best',
 
 opt = {"PLAYLIST": False, "THUMB": False, "METADATA": False,
        "V_QUALITY": "best", "A_FORMAT": "best", "A_QUALITY": "best", 
-       }
+       "SUBTITLES": False,}
 
 yellow = '#a29500'
 red = '#ea312d'
@@ -136,6 +136,11 @@ class Downloader(wx.Panel):
         grid_opt.Add(self.ckbx_thumb, 0, wx.ALL, 5)
         self.ckbx_meta = wx.CheckBox(self, wx.ID_ANY,(_('Add metadata to file')))
         grid_opt.Add(self.ckbx_meta, 0, wx.ALL, 5)
+        
+        self.ckbx_sb = wx.CheckBox(self, wx.ID_ANY,(
+                                                _('Write subtitles to video')))
+        grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
+        
         line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
         sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
@@ -169,6 +174,7 @@ class Downloader(wx.Panel):
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_Playlist)
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
+        self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
         
     #-----------------------------------------------------------------#
     def get_format_codes(self):
@@ -275,6 +281,12 @@ class Downloader(wx.Panel):
         else:
             opt["METADATA"] = False
     #-----------------------------------------------------------------#
+    def on_Subtitles(self, event):
+        if self.ckbx_sb.IsChecked():
+            opt["SUBTITLES"] = True
+        else:
+            opt["SUBTITLES"] = False
+    #-----------------------------------------------------------------#
     
     def on_Start(self):
 
@@ -288,6 +300,7 @@ class Downloader(wx.Panel):
                     'outtmpl': '%(title)s.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': opt["METADATA"],
+                    'writesubtitles' : opt["SUBTITLES"],
                     'postprocessors': []
                     }
         if self.choice.GetSelection() == 1:
@@ -298,6 +311,7 @@ class Downloader(wx.Panel):
                     'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': opt["METADATA"],
+                    'writesubtitles' : opt["SUBTITLES"],
                     'postprocessors': []
                     }
         elif self.choice.GetSelection() == 2: # audio only
@@ -308,6 +322,7 @@ class Downloader(wx.Panel):
                     'outtmpl': '%(title)s.%(ext)s',
                     'extractaudio': True,
                     'addmetadata': opt["METADATA"],
+                    'writesubtitles' : False,
                     'postprocessors': [{'key': 'FFmpegExtractAudio',
                                         'preferredcodec': opt["A_FORMAT"],
                                         }]
@@ -326,6 +341,7 @@ class Downloader(wx.Panel):
                     'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
                     'addmetadata': opt["METADATA"],
+                    'writesubtitles' : opt["SUBTITLES"],
                     'postprocessors': []
                     }
         self.parent.switch_Process('downloader',
