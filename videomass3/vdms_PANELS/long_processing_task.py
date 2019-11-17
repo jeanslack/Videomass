@@ -61,15 +61,10 @@ class Logging_Console(wx.Panel):
         """
         self.parent = parent # main frame
         self.PARENT_THREAD = None # the instantiated thread
-        self.ABORT = False # if True set to abort
-        self.ERROR = False
+        self.ABORT = False # if True set to abort current process
+        self.ERROR = False # if True, all the tasks was failed 
         self.previus = None # stores the panel from which it starts
-        self.countmax = None # the multiple task number
-        self.count = None # initial setting of the counter
         self.logname = None # example: Videomass_VideoConversion.log
-        self.duration = None # total duration or partial if set timeseq
-        self.time_seq = None # a time segment
-        self.varargs = None # tuple data
         
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
@@ -123,33 +118,31 @@ class Logging_Console(wx.Panel):
     #-------------------------------------------------------------------#
     def topic_thread(self, panel, varargs, duration):
         """
-        Thread redirection 
+        Thread redirection
+        varargs: is a data tuple
+        duration: total duration or partial if set timeseq
         """
         self.previus = panel # stores the panel from which it starts
-        self.countmax = varargs[9]# the multiple task number
-        self.count = 0 # initial setting of the counter
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
-        self.duration = duration # total duration or partial if set timeseq
-        self.time_seq = self.parent.time_seq # a time segment
-        self.varargs = varargs # tuple data
+        time_seq = self.parent.time_seq # a time segment
         
         write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
-        if self.varargs[0] == 'onepass':# from Audio/Video Conv.
-            self.PARENT_THREAD = OnePass(self.varargs, self.duration,
-                                         self.logname, self.time_seq,
+        if varargs[0] == 'onepass':# from Audio/Video Conv.
+            self.PARENT_THREAD = OnePass(varargs, duration,
+                                         self.logname, time_seq,
                                          ) 
-        elif self.varargs[0] == 'twopass': # from Video Conv.
-            self.PARENT_THREAD = TwoPass(self.varargs, self.duration,
-                                         self.logname, self.time_seq
+        elif varargs[0] == 'twopass': # from Video Conv.
+            self.PARENT_THREAD = TwoPass(varargs, duration,
+                                         self.logname, time_seq
                                          )
-        elif self.varargs[0] == 'twopass EBU': # from Audio/Video Conv.
-            self.PARENT_THREAD = Loudnorm(self.varargs, self.duration, 
-                                          self.logname, self.time_seq
+        elif varargs[0] == 'twopass EBU': # from Audio/Video Conv.
+            self.PARENT_THREAD = Loudnorm(varargs, duration, 
+                                          self.logname, time_seq
                                           )
-        elif self.varargs[0] == 'youtubedl downloader':
+        elif varargs[0] == 'youtubedl downloader':
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = YoutubeDL_Downloader(self.varargs,
+            self.PARENT_THREAD = YoutubeDL_Downloader(varargs,
                                                       self.logname)
                              
     #-------------------------------------------------------------------#
