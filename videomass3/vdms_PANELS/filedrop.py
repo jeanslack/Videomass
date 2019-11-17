@@ -262,7 +262,7 @@ class FileDnD(wx.Panel):
         
         if not self.selected:
             self.parent.statusbar_msg(_('No file selected to `%s` yet') % 
-                                      menuItem.GetLabel(), yellow)
+                                         menuItem.GetLabel(), yellow)
         else:
             self.parent.statusbar_msg('Add Files', None)
                 

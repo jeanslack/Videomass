@@ -76,27 +76,30 @@ https://stackoverflow.com/questions/1388753/how-to-get-output-
 from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 
 """
-class TwoPass_Loudnorm(Thread):
+class TwoPass(Thread):
     """
     This class represents a separate thread which need to read the 
     stdout/stderr in real time mode. The subprocess module is instantiated 
     twice for two different tasks: the process on the first video pass and 
     the process on the second video pass for video only.
     """
-    def __init__(self, var, duration, logname, timeseq):
+    def __init__(self, varargs, duration, logname, timeseq):
         """
+        The 'volume' attribute may have an empty value, but it will 
+        have no influence on the type of conversion.
         """
         Thread.__init__(self)
         """initialize"""
-
-        self.filelist = var[1] # list of files (elements)
-        self.ext = var[4]
-        self.passList = var[5] # comand list set for double-pass
-        self.outputdir = var[3] # output path
+        self.stop_work_thread = False # process terminate
+        self.filelist = varargs[1] # list of files (elements)
+        self.passList = varargs[5] # comand list set for double-pass
+        self.outputdir = varargs[3] # output path
+        self.extoutput = varargs[2] # format (extension)
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
-        self.count = 0 # count first for loop 
-        self.countmax = len(var[1]) # length file list
+        self.volume = varargs[7]# volume compensation data
+        self.count = 0 # count first for loop
+        self.countmax = len(varargs[1]) # length file list
         self.logname = logname # title name of file log
         self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
         
@@ -105,54 +108,39 @@ class TwoPass_Loudnorm(Thread):
     def run(self):
         """
         Subprocess initialize thread.
+        
         """
-        global STATUS_ERROR
-        summary = {'Input Integrated:': None, 'Input True Peak:': None, 
-                   'Input LRA:': None, 'Input Threshold:': None, 
-                   'Output Integrated:': None, 'Output True Peak:': None, 
-                   'Output LRA:': None, 'Output Threshold:': None, 
-                   'Normalization Type:': None, 'Target Offset:': None
-                   }
-        muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
-                  'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',}
         for (files,
              folders,
+             volume,
              duration) in itertools.zip_longest(self.filelist, 
                                                 self.outputdir, 
+                                                self.volume, 
                                                 self.duration,
                                                 fillvalue='',
                                                 ):
-            basename = os.path.basename(files) # name.ext 
-            filename = os.path.splitext(basename)[0]# name
-            source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
-            outext = source_ext if not self.ext else self.ext
-            if self.passList[3]: # True(2pass video) or False(copy/std)
-                force = '-f %s' % muxers[outext]
-            else:
-                force = '-f null'
-                
+            basename = os.path.basename(files) #nome file senza path
+            filename = os.path.splitext(basename)[0]#nome senza estensione
+
+            #--------------- first pass
             if 'libx265' in self.passList[1]:
                 passpar = '-x265-params pass=1:stats='
             else:
                 passpar = '-pass 1 -passlogfile '
-            
-            #--------------- first pass
-            pass1 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {9}"{4}/{5}.log" -af {6} '
-                     '{7} -y {8}'.format(ffmpeg_url, 
-                                         self.time_seq,
-                                         files, 
-                                         self.passList[0],
-                                         folders,
-                                         filename,
-                                         self.passList[2],#loudnorm
-                                         force,# -f 
-                                         self.nul,
-                                         passpar,
-                                        )) 
+                
+            pass1 = ('%s %s %s -i "%s" %s %s"%s/%s.log" -y %s' % (
+                                                            ffmpeg_url, 
+                                                            ffmpeg_loglev,
+                                                            self.time_seq,
+                                                            files, 
+                                                            self.passList[0],
+                                                            passpar,
+                                                            folders, 
+                                                            filename,
+                                                            self.nul,
+                                                            )) 
             self.count += 1
-            count = ('Loudnorm af: Getting statistics for measurements...\n  '
-                     'File %s/%s - Pass One' % (self.count, self.countmax,))
+            count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
@@ -177,20 +165,15 @@ class TwoPass_Loudnorm(Thread):
                                       startupinfo=info,) as p1:
                     
                     for line in p1.stderr:
-                        #print (line, end='', ),
                         wx.CallAfter(pub.sendMessage, 
                                      "UPDATE_EVT", 
                                      output=line, 
                                      duration=duration,
                                      status=0
                                      )
-                        if CHANGE_STATUS == 1:# break second 'for' loop
+                        if self.stop_work_thread: # break second 'for' loop
                             p1.terminate()
                             break
-                        
-                        for k in summary.keys():
-                            if line.startswith(k):
-                                summary[k] = line.split(':')[1].split()[0]
                         
                     if p1.wait(): # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage, 
@@ -203,8 +186,7 @@ class TwoPass_Loudnorm(Thread):
                                  "Exit status: %s" % p1.wait(),
                                  self.logname)
                                  #append exit error number
-                        break
-                    
+                                 
             except OSError as err:
                 e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage, 
@@ -212,12 +194,11 @@ class TwoPass_Loudnorm(Thread):
                              count=e, 
                              duration=0,
                              fname=files,
-                             end=''
+                             end='error',
                              )
-                STATUS_ERROR = 1
                 break
                     
-            if CHANGE_STATUS == 1:# break first 'for' loop
+            if self.stop_work_thread: # break first 'for' loop
                 p1.terminate()
                 break # fermo il ciclo for, altrimenti passa avanti
             
@@ -230,37 +211,26 @@ class TwoPass_Loudnorm(Thread):
                              end='ok'
                              )
             #--------------- second pass ----------------#
-            filters = ('%s:measured_I=%s:measured_LRA=%s:measured_TP=%s:'
-                       'measured_thresh=%s:offset=%s:linear=true:dual_mono='
-                       'true' %(self.passList[2],
-                                summary["Input Integrated:"], 
-                                summary["Input LRA:"],
-                                summary["Input True Peak:"], 
-                                summary["Input Threshold:"], 
-                                summary["Target Offset:"]
-                                )
-                       )
-            time.sleep(.5)
-            
             if 'libx265' in self.passList[1]:
                 passpar = '-x265-params pass=1:stats='
             else:
                 passpar = '-pass 1 -passlogfile '
                 
-            pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {8}"{5}/{6}.log" -af '
-                     '{4} -y "{5}/{6}.{7}"'.format(ffmpeg_url, 
-                                                   self.time_seq,
-                                                   files,
-                                                   self.passList[1],
-                                                   filters,
-                                                   folders, 
-                                                   filename,
-                                                   outext,
-                                                   passpar,
-                                                   ))
-            count = ('Loudnorm af: apply EBU R128...\n  '
-                     'File %s/%s - Pass Two' % (self.count, self.countmax,))
+            pass2 = ('%s %s %s -i "%s" %s %s %s'
+                     '"%s/%s.log" -y "%s/%s.%s"' % (ffmpeg_url,
+                                                    ffmpeg_loglev,
+                                                    self.time_seq,
+                                                    files, 
+                                                    self.passList[1], 
+                                                    volume,
+                                                    passpar,
+                                                    folders, 
+                                                    filename,
+                                                    folders, 
+                                                    filename,
+                                                    self.extoutput,
+                                                    ))
+            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             wx.CallAfter(pub.sendMessage, 
                          "COUNT_EVT", 
@@ -291,10 +261,10 @@ class TwoPass_Loudnorm(Thread):
                                      duration=duration,
                                      status=0,
                                      )
-                        if CHANGE_STATUS == 1:
+                        if self.stop_work_thread:
                             p2.terminate()
                             break
-                    
+                        
                     if p2.wait(): # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage, 
                                      "UPDATE_EVT", 
@@ -307,7 +277,7 @@ class TwoPass_Loudnorm(Thread):
                                  self.logname)
                                  #append exit error number
                         
-            if CHANGE_STATUS == 1:# break first 'for' loop
+            if self.stop_work_thread: # break first 'for' loop
                 p2.terminate()
                 break # fermo il ciclo for, altrimenti passa avanti
             
@@ -322,15 +292,9 @@ class TwoPass_Loudnorm(Thread):
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
         
-        if STATUS_ERROR == 1:
-            self.endProc(e)
-        elif CHANGE_STATUS == 1:
-            self.endProc('Interrupted process')
-        else:
-            self.endProc('Done')
-    #----------------------------------------------------------------#
-    def endProc(self, mess):
+    #--------------------------------------------------------------------#
+    def stop(self):
         """
-        print end messagess to console
+        Sets the stop work thread to terminate the process
         """
-        print('...%s' % (mess))
+        self.stop_work_thread = True

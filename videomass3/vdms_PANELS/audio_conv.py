@@ -643,7 +643,7 @@ class Audio_Conv(wx.Panel):
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('common',
+            self.parent.switch_Process('onepass',
                                         f_src,
                                         cmd_opt["ExportExt"],
                                         f_dest,
@@ -686,7 +686,7 @@ class Audio_Conv(wx.Panel):
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('EBU normalization',
+            self.parent.switch_Process('twopass EBU',
                                         f_src,
                                         '',
                                         f_dest,

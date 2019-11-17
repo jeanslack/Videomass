@@ -944,7 +944,7 @@ class MainFrame(wx.Frame):
         [self.menuBar.EnableTop(x, False) for x in range(0,3)]
         #Hide the tool bar
         self.toolbar.Hide()
-        self.ProcessPanel.topicThread(self.topicname, varargs, duration)
+        self.ProcessPanel.topic_thread(self.topicname, varargs, duration)
         self.Layout()
     #------------------------------------------------------------------#
     def Run_Coding(self, event):

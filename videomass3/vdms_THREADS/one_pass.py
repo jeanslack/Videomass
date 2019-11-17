@@ -91,7 +91,7 @@ class OnePass(Thread):
         """
         Thread.__init__(self)
         """initialize"""
-        self.stop_work_thread = False
+        self.stop_work_thread = False # process terminate
         self.filelist = varargs[1] # list of files (elements)
         self.command = varargs[4] # comand set on single pass
         self.outputdir = varargs[3] # output path

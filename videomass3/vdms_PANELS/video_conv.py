@@ -1728,7 +1728,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self,valupdate[0],valupdate[1],'Copy video codec')
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('common',
+                self.parent.switch_Process('onepass',
                                            f_src, 
                                            '', 
                                            destin, 
@@ -1789,7 +1789,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('doublepass',
+                self.parent.switch_Process('twopass',
                                            f_src, 
                                            cmd_opt['VideoFormat'], 
                                            destin, 
@@ -1835,7 +1835,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('common',
+                self.parent.switch_Process('onepass',
                                            f_src, 
                                            cmd_opt['VideoFormat'], 
                                            destin, 
@@ -1889,7 +1889,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('EBU normalization',
+                self.parent.switch_Process('twopass EBU',
                                            f_src, 
                                            '', 
                                            destin, 
@@ -1951,7 +1951,7 @@ class Video_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('EBU normalization',
+                self.parent.switch_Process('twopass EBU',
                                            f_src, 
                                            '', 
                                            destin, 

@@ -34,19 +34,19 @@ OS = get.OS
 DIRconf = get.DIRconf
 ffprobe_url = get.ffprobe_url
 
-from videomass3.vdms_PROCESS.ffplay_reproduction import Play
-from videomass3.vdms_PROCESS.ffprobe_parser import FFProbe
-from videomass3.vdms_PROCESS.volumedetect import VolumeDetectThread
-from videomass3.vdms_PROCESS.volumedetect import PopupDialog
-from videomass3.vdms_PROCESS.check_bin import ff_conf
-from videomass3.vdms_PROCESS.check_bin import ff_formats
-from videomass3.vdms_PROCESS.check_bin import ff_codecs
-from videomass3.vdms_PROCESS.check_bin import ff_topics
-from videomass3.vdms_PROCESS.opendir import browse
+from videomass3.vdms_THREADS.ffplay_reproduction import Play
+from videomass3.vdms_THREADS.ffprobe_parser import FFProbe
+from videomass3.vdms_THREADS.volumedetect import VolumeDetectThread
+from videomass3.vdms_THREADS.volumedetect import PopupDialog
+from videomass3.vdms_THREADS.check_bin import ff_conf
+from videomass3.vdms_THREADS.check_bin import ff_formats
+from videomass3.vdms_THREADS.check_bin import ff_codecs
+from videomass3.vdms_THREADS.check_bin import ff_topics
+from videomass3.vdms_THREADS.opendir import browse
 from videomass3.vdms_DIALOGS import ffmpeg_conf
 from videomass3.vdms_DIALOGS import ffmpeg_formats
 from videomass3.vdms_DIALOGS import ffmpeg_codecs
-from videomass3.vdms_PROCESS.ydl_extract_info import Extract_Info
+from videomass3.vdms_THREADS.ydl_extract_info import Extract_Info
 
 #-----------------------------------------------------------------------#
 def stream_info(title, filepath):
@@ -192,7 +192,7 @@ def findtopic(ffmpeg_link, topic):
 #-------------------------------------------------------------------------#
 def openpath(mod):
     """
-    Call vdms_PROCESS.opendir.browse
+    Call vdms_THREADS.opendir.browse
     
     """
     ret = browse(OS, DIRconf, mod)

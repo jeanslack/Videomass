@@ -30,9 +30,10 @@ from __future__ import unicode_literals
 import wx
 from pubsub import pub
 from videomass3.vdms_IO.make_filelog import write_log
-from videomass3.vdms_PROCESS.ydl_download import YoutubeDL_Downloader
-from videomass3.vdms_PROCESS.one_pass_process import OnePass
-from videomass3.vdms_PROCESS.two_pass_process import TwoPass
+from videomass3.vdms_THREADS.ydl_download import YoutubeDL_Downloader
+from videomass3.vdms_THREADS.one_pass import OnePass
+from videomass3.vdms_THREADS.two_pass import TwoPass
+from videomass3.vdms_THREADS.two_pass_EBU import Loudnorm
 
 # get videomass wx.App attribute
 get = wx.GetApp()
@@ -122,7 +123,7 @@ class Logging_Console(wx.Panel):
     #-------------------------------------------------------------------#
     def topic_thread(self, panel, varargs, duration):
         """
-        Thread redirection
+        Thread redirection 
         """
         self.previus = panel # stores the panel from which it starts
         self.countmax = varargs[9]# the multiple task number
@@ -134,31 +135,28 @@ class Logging_Console(wx.Panel):
         
         write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
-        if self.varargs[0] == 'common':# from Audio/Video Conv.
+        if self.varargs[0] == 'onepass':# from Audio/Video Conv.
             self.PARENT_THREAD = OnePass(self.varargs, self.duration,
                                          self.logname, self.time_seq,
                                          ) 
-        elif self.varargs[0] == 'doublepass': # from Video Conv.
+        elif self.varargs[0] == 'twopass': # from Video Conv.
             self.PARENT_THREAD = TwoPass(self.varargs, self.duration,
                                          self.logname, self.time_seq
                                          )
-        elif self.varargs[0] == 'EBU normalization': # from Audio/Video Conv.
-            TwoPass_Loudnorm(self.varargs, self.duration, 
-                             self.logname, self.time_seq
-                            )
-        elif self.varargs[0] == 'downloader':
+        elif self.varargs[0] == 'twopass EBU': # from Audio/Video Conv.
+            self.PARENT_THREAD = Loudnorm(self.varargs, self.duration, 
+                                          self.logname, self.time_seq
+                                          )
+        elif self.varargs[0] == 'youtubedl downloader':
             self.ckbx_text.Hide()
             self.PARENT_THREAD = YoutubeDL_Downloader(self.varargs,
                                                       self.logname)
-            
-        if not self.varargs[0] == 'downloader':
-            self.ckbx_text.Show()
                              
     #-------------------------------------------------------------------#
     def update_download(self, output, duration, status):
         """
-        Receive youtube-dl output message from 
-        pubsub "UPDATE_DOWNLOAD_EVT".
+        Receive youtube-dl output message from pubsub 
+        "UPDATE_DOWNLOAD_EVT".
         
         """
         if status == 'ERROR': 
@@ -270,34 +268,7 @@ class Logging_Console(wx.Panel):
             self.barProg.SetValue(0)# resetto la prog bar
             self.labPerc.SetLabel("Percentage: 100%")
             self.OutText.AppendText('\n  %s : "%s"\n' % (count,fname))
-    #-------------------------------------------------------------------#
-    
-    def on_stop(self, event):
-        """
-        The user change idea and was stop process
-        """
-        self.PARENT_THREAD.stop()
-        self.PARENT_THREAD.join()
-        self.ABORT = True
-        
-        event.Skip()
-    #-------------------------------------------------------------------#
-    def on_close(self, event):
-        """
-        close dialog and retrieve at previusly panel
-        
-        """
-        if not self.PARENT_THREAD == None:
-            return
-        # reset all before close
-        self.button_stop.Enable(True)
-        self.button_close.Enable(False)
-        self.PARENT_THREAD = None
-        self.ABORT = False
-        self.ERROR = False
-        self.OutText.Clear()
-        self.parent.panelShown(self.previus)# retrieve at previusly panel
-        #event.Skip()
+            
     #-------------------------------------------------------------------#
     def end_proc(self):
         """
@@ -319,7 +290,41 @@ class Logging_Console(wx.Panel):
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             self.labPerc.SetLabel("Percentage: 100%")
             self.barProg.SetValue(0)
-        
+            
         self.button_stop.Enable(False)
         self.button_close.Enable(True)
         self.PARENT_THREAD = None
+    #-------------------------------------------------------------------#
+    
+    def on_stop(self, event):
+        """
+        The user change idea and was stop process
+        """
+        self.PARENT_THREAD.stop()
+        self.PARENT_THREAD.join()
+        self.ABORT = True
+        
+        event.Skip()
+    #-------------------------------------------------------------------#
+    def on_close(self, event):
+        """
+        close dialog and retrieve at previusly panel
+        
+        """
+        if not self.PARENT_THREAD == None:
+            wx.MessageBox(_('There are still processes running.. if you '
+                            'want to stop them, use the "Abort" button '
+                            'or wait to complete'), 
+                            "Info", wx.ICON_INFORMATION, self)
+            return
+        # reset all before close
+        self.ckbx_text.Show()
+        self.button_stop.Enable(True)
+        self.button_close.Enable(False)
+        self.PARENT_THREAD = None
+        self.ABORT = False
+        self.ERROR = False
+        self.OutText.Clear()
+        self.parent.panelShown(self.previus)# retrieve at previusly panel
+        #event.Skip()
+    

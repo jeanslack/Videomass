@@ -128,8 +128,7 @@ class Downloader(wx.Panel):
         #-------------opt
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
-        self.ckbx_pl = wx.CheckBox(self, wx.ID_ANY,(
-                                                  _('Download all playlist')))
+        self.ckbx_pl = wx.CheckBox(self, wx.ID_ANY,(_('Download all playlist')))
         grid_opt.Add(self.ckbx_pl, 0, wx.ALL, 5)
         self.ckbx_thumb = wx.CheckBox(self, wx.ID_ANY,(
                                         _('Embed thumbnail in audio file')))
@@ -186,7 +185,7 @@ class Downloader(wx.Panel):
             return
         self.txt_code.SetValue('')
         index = 0
-        self.parent.statusbar_msg("wait... I'm getting the data", 'YELLOW')
+        self.parent.statusbar_msg(_("wait... I'm getting the data", 'YELLOW'))
         for link in self.parent.data:
             data = IO_tools.youtube_info(link)
             for meta in data:
@@ -226,7 +225,7 @@ class Downloader(wx.Panel):
                     self.fcode.SetItem(index, 7, size)
                 
         self.txt_code.WriteText(f['format_id'])
-        self.parent.statusbar_msg('Youtube Downloader', None)
+        self.parent.statusbar_msg(_('Ready, Youtube Downloader', None))
 
     #-----------------------------------------------------------------#
     def on_Choice(self, event):
@@ -344,7 +343,7 @@ class Downloader(wx.Panel):
                     'writesubtitles' : opt["SUBTITLES"],
                     'postprocessors': []
                     }
-        self.parent.switch_Process('downloader',
+        self.parent.switch_Process('youtubedl downloader',
                                     urls,
                                     '',
                                     self.parent.file_destin,

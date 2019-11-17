@@ -135,7 +135,7 @@ class YoutubeDL_Downloader(Thread):
         """
         Thread.__init__(self)
         """initialize"""
-        self.stop_work_thread = False
+        self.stop_work_thread = False # process terminate
         self.urls = varargs[1]
         self.opt = varargs[4] 
         self.outputdir = varargs[3]
