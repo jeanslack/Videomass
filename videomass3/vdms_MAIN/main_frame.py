@@ -42,8 +42,8 @@ from videomass3.vdms_PANELS import textdrop
 from videomass3.vdms_PANELS import downloader
 from videomass3.vdms_PANELS import video_conv
 from videomass3.vdms_PANELS import audio_conv
+from videomass3.vdms_PANELS.long_processing_task import Logging_Console
 from videomass3.vdms_IO import IO_tools
-from videomass3.vdms_PROCESS.task_processing import GeneralProcess
 
 
 
@@ -222,7 +222,7 @@ class MainFrame(wx.Frame):
                                               pathicons[26]) # panel
         self.textDnDTarget = textdrop.TextDnD(self, pathicons[26]) # panel
         
-        self.ProcessPanel = GeneralProcess(self)
+        self.ProcessPanel = Logging_Console(self)
         
         self.fileDnDTarget.Hide()
         self.textDnDTarget.Hide()
@@ -944,7 +944,7 @@ class MainFrame(wx.Frame):
         [self.menuBar.EnableTop(x, False) for x in range(0,3)]
         #Hide the tool bar
         self.toolbar.Hide()
-        self.ProcessPanel.startThread(self.topicname, varargs, duration)
+        self.ProcessPanel.topicThread(self.topicname, varargs, duration)
         self.Layout()
     #------------------------------------------------------------------#
     def Run_Coding(self, event):
