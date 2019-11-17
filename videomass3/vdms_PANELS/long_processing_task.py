@@ -119,7 +119,7 @@ class Logging_Console(wx.Panel):
     def topic_thread(self, panel, varargs, duration):
         """
         Thread redirection
-        varargs: is a data tuple
+        varargs: type tuple data object
         duration: total duration or partial if set timeseq
         """
         self.previus = panel # stores the panel from which it starts
