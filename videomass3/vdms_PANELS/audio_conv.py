@@ -94,6 +94,7 @@ class Audio_Conv(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         """ constructor"""
         # Widgets definitions:
+        txtformat = wx.StaticText(self, wx.ID_ANY, (_("Output format:")))
         self.a_choice = wx.Choice(self, wx.ID_ANY,
                                   choices=[x for x in acodecs.keys()],
                                   size=(-1,-1)
@@ -186,12 +187,16 @@ class Audio_Conv(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         frame.Add(sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         sizer_base.Add((20, 20), 0,)
-        sizer_base.Add(self.a_choice, 0, wx.ALL|wx.EXPAND, 15)
-        sizer_aopt = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_aopt, 0, wx.ALL|wx.EXPAND, 10)
-        sizer_aopt.Add(self.btn_param, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        sizer_aopt.Add((5, 0), 0,) # stessa cosa di sizer_aopt.AddSpacer(5)
-        sizer_aopt.Add(self.txt_options, 1, wx.ALL|wx.EXPAND, 5)
+        sizer_audio_frm = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizer_audio_frm, 0, wx.ALL|wx.EXPAND, 10)
+        sizer_audio_frm.Add(txtformat,0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        sizer_audio_frm.Add((5, 0), 0,)
+        sizer_audio_frm.Add(self.a_choice, 1, wx.ALL|wx.EXPAND, 5)
+        sizer_audio_opt = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizer_audio_opt, 0, wx.ALL|wx.EXPAND, 10)
+        sizer_audio_opt.Add(self.btn_param, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+        sizer_audio_opt.Add((5, 0), 0,) # stesso i sizer_audio_opt.AddSpacer(5)
+        sizer_audio_opt.Add(self.txt_options, 1, wx.ALL|wx.EXPAND, 5)
         sizer_base.Add(self.rdbx_norm, 0, wx.ALL|wx.EXPAND, 15)
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
         sizer_peak.Add(self.btn_analyzes, 0, wx.ALIGN_CENTER_VERTICAL, 0)

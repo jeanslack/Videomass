@@ -229,7 +229,7 @@ class Logging_Console(wx.Panel):
         else:# append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():# not print the output
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200,183,47)))
-                self.OutText.AppendText(' %s' % output)
+                self.OutText.AppendText('%s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
                 
             with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
@@ -252,7 +252,7 @@ class Logging_Console(wx.Panel):
         #if STATUS_ERROR == 1:
         if end == 'error':
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
-            self.OutText.AppendText('\n  %s\n' % (count))
+            self.OutText.AppendText('\n%s\n' % (count))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             self.ERROR = True
             #self.labPerc.SetLabel("Percentage: 0%")
@@ -260,7 +260,7 @@ class Logging_Console(wx.Panel):
             self.barProg.SetRange(duration)#set la durata complessiva
             self.barProg.SetValue(0)# resetto la prog bar
             self.labPerc.SetLabel("Percentage: 100%")
-            self.OutText.AppendText('\n  %s : "%s"\n' % (count,fname))
+            self.OutText.AppendText('\n%s : "%s"\n' % (count,fname))
             
     #-------------------------------------------------------------------#
     def end_proc(self):

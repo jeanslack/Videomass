@@ -188,22 +188,22 @@ class FileDnD(wx.Panel):
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND|wx.ALL, 5)
-        grid = wx.FlexGridSizer(1, 5, 0, 0)
-        sizer.Add(grid)
-        grid.Add(btn_clear, 1, wx.ALL|
+        
+        sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_ctrl, 0, wx.ALL|wx.EXPAND, 5)
+        sizer_ctrl.Add(btn_clear, 0, wx.ALL|
                                wx.ALIGN_CENTER_HORIZONTAL|
                                wx.ALIGN_CENTER_VERTICAL, 5
                                )
-        grid.Add(self.ckbx_dir, 1, wx.ALL|
+        sizer_ctrl.Add(self.ckbx_dir, 0, wx.ALL|
                                    wx.ALIGN_CENTER_HORIZONTAL|
                                    wx.ALIGN_CENTER_VERTICAL, 5
                                    )
-        grid.Add(self.btn_save, 1, wx.ALL|
+        sizer_ctrl.Add(self.btn_save, 0, wx.ALL|
                                    wx.ALIGN_CENTER_HORIZONTAL|
                                    wx.ALIGN_CENTER_VERTICAL, 5
                                    )
-        grid.Add(self.text_path_save, 1, wx.ALL|wx.EXPAND, 5)
-        self.text_path_save.SetMinSize((290, -1)) 
+        sizer_ctrl.Add(self.text_path_save, 1, wx.ALL|wx.EXPAND, 5)
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)

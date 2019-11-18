@@ -79,7 +79,12 @@ class Downloader(wx.Panel):
         self.OS = OS
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        frame = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                                "")), wx.VERTICAL)
+        sizer_base.Add(frame, 1, wx.ALL | wx.EXPAND, 5)
         sizer = wx.BoxSizer(wx.VERTICAL)
+        frame.Add(sizer, 1, wx.ALL | wx.EXPAND, 5)
         self.choice = wx.Choice(self, wx.ID_ANY, 
                                      choices=[_('Default'),
                                               _('Separated Video+Audio'),  
@@ -163,7 +168,7 @@ class Downloader(wx.Panel):
         else:
             self.fcode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
-        self.SetSizer(sizer)
+        self.SetSizer(sizer_base)
         self.Layout()
         #----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)

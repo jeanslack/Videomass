@@ -28,6 +28,7 @@
 #########################################################
 from __future__ import unicode_literals 
 import wx
+import wx.lib.agw.hyperlink as hpl
 
 class Choose_Topic(wx.Panel):
     """
@@ -44,8 +45,7 @@ class Choose_Topic(wx.Panel):
         
         welcome = wx.StaticText(self, wx.ID_ANY, (
                              _("Welcome to Videomass")))
-        vers = wx.StaticText(self, wx.ID_ANY, (
-                             _("Choose a Topic")))
+        #vers = wx.StaticText(self, wx.ID_ANY, (_("Choose a Topic")))
         welcome.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
         
         
@@ -53,61 +53,74 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(welcome, 0, wx.TOP|
                                    wx.ALIGN_CENTER_VERTICAL|
                                    wx.ALIGN_CENTER_HORIZONTAL, 15)
-        sizer_base.Add(vers, 0, wx.ALL|
-                                wx.ALIGN_CENTER_VERTICAL|
-                                wx.ALIGN_CENTER_HORIZONTAL, 15)
-        grid_buttons = wx.FlexGridSizer(2, 4, 20, 20)
+        #sizer_base.Add(vers, 0, wx.ALL|
+                                #wx.ALIGN_CENTER_VERTICAL|
+                                #wx.ALIGN_CENTER_HORIZONTAL, 15)
+        grid_buttons = wx.FlexGridSizer(1, 3, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
-        
-        video_lab = _('Video Conversions')
-        audio_lab = _('Audio Conversions')
+
+        video_lab = _('    Video Conversions     ')
+        audio_lab = _('    Audio Conversions     ')
         pict_lab = _('Pictures from Video')
         audgr_lab = _('Extract Audio from Video')
         slide_lab = _('Picture Slideshow Maker')
         audmer_lab = _('Merging Audio and Video')
-        youtube_lab =  _('Download from Youtube')
+        youtube_lab =  _('Download from YouTube')
         anorm_lab =  _('Audio Normalization')
         
         self.video = wx.Button(self, wx.ID_ANY, video_lab, size=(-1,-1))
         self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.TOP)
         self.audio = wx.Button(self, wx.ID_ANY, audio_lab, size=(-1,-1))
         self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.TOP)
-        self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
-        self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.TOP)
-        self.audio_extract = wx.Button(self, wx.ID_ANY, audgr_lab, size=(-1,-1))
-        self.audio_extract.SetBitmap(wx.Bitmap(audioextract_icn),wx.TOP)
-        self.slideshow = wx.Button(self, wx.ID_ANY, slide_lab, size=(-1,-1))
-        self.slideshow.SetBitmap(wx.Bitmap(slideshow_icn),wx.TOP)
-        self.audio_merge = wx.Button(self, wx.ID_ANY, audmer_lab, size=(-1,-1))
-        self.audio_merge.SetBitmap(wx.Bitmap(merging_icn),wx.TOP)
+        #self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
+        #self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.TOP)
+        #self.audio_extract = wx.Button(self, wx.ID_ANY, audgr_lab, size=(-1,-1))
+        #self.audio_extract.SetBitmap(wx.Bitmap(audioextract_icn),wx.TOP)
+        #self.slideshow = wx.Button(self, wx.ID_ANY, slide_lab, size=(-1,-1))
+        #self.slideshow.SetBitmap(wx.Bitmap(slideshow_icn),wx.TOP)
+        #self.audio_merge = wx.Button(self, wx.ID_ANY, audmer_lab, size=(-1,-1))
+        #self.audio_merge.SetBitmap(wx.Bitmap(merging_icn),wx.TOP)
         self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1,-1))
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn),wx.TOP)
-        self.anorm = wx.Button(self, wx.ID_ANY, anorm_lab, size=(-1,-1))
-        self.anorm.SetBitmap(wx.Bitmap(audionorm_icn),wx.TOP)
+        #self.anorm = wx.Button(self, wx.ID_ANY, anorm_lab, size=(-1,-1))
+        #self.anorm.SetBitmap(wx.Bitmap(audionorm_icn),wx.TOP)
 
         grid_buttons.AddMany([(self.video, 0, wx.EXPAND, 5),
                               (self.audio, 0, wx.EXPAND, 5),
-                              (self.save_pict, 0, wx.EXPAND, 5),
-                              (self.audio_extract, 0, wx.EXPAND, 5),
-                              (self.audio_merge, 0, wx.EXPAND, 5),
-                              (self.slideshow, 0, wx.EXPAND, 5),
+                              #(self.save_pict, 0, wx.EXPAND, 5),
+                              #(self.audio_extract, 0, wx.EXPAND, 5),
+                              #(self.audio_merge, 0, wx.EXPAND, 5),
+                              #(self.slideshow, 0, wx.EXPAND, 5),
                               (self.youtube, 0, wx.EXPAND, 5),
-                              (self.anorm, 0, wx.EXPAND, 5),
+                              #(self.anorm, 0, wx.EXPAND, 5),
                               ])
         grid_base.Add(grid_buttons, 0, wx.ALIGN_CENTER_VERTICAL|
                                        wx.ALIGN_CENTER_HORIZONTAL, 5)
-        
         sizer_base.Add(grid_base, 1, wx.EXPAND|
                                         wx.ALIGN_CENTER_VERTICAL|
                                         wx.ALIGN_CENTER_HORIZONTAL, 5)
+        
+        sizer_hpl = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizer_hpl, 0, wx.ALL|
+                                   wx.ALIGN_CENTER_VERTICAL|
+                                   wx.ALIGN_CENTER_HORIZONTAL, 15)
+        
+        txt_link = wx.StaticText(self, label='From the same author you may '
+                                             'also be interested in: ')
+        link = hpl.HyperLinkCtrl(self, -1, "Vinc is not a converter",
+                                URL="https://gitlab.com/jeanslack/vinc")
+        sizer_hpl.Add(txt_link)
+        sizer_hpl.Add(link)
+        
+        
         self.SetSizerAndFit(sizer_base)
         
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)
         self.Bind(wx.EVT_BUTTON, self.on_Audio, self.audio)
-        self.Bind(wx.EVT_BUTTON, self.on_Pictures, self.save_pict)
-        self.Bind(wx.EVT_BUTTON, self.on_AudioFromVideo, self.audio_extract)
-        self.Bind(wx.EVT_BUTTON, self.on_AudioMerging, self.audio_merge)
-        self.Bind(wx.EVT_BUTTON, self.on_Slideshow, self.slideshow)
+        #self.Bind(wx.EVT_BUTTON, self.on_Pictures, self.save_pict)
+        #self.Bind(wx.EVT_BUTTON, self.on_AudioFromVideo, self.audio_extract)
+       # self.Bind(wx.EVT_BUTTON, self.on_AudioMerging, self.audio_merge)
+        #self.Bind(wx.EVT_BUTTON, self.on_Slideshow, self.slideshow)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
         
     def on_Video(self, event):
@@ -116,17 +129,17 @@ class Choose_Topic(wx.Panel):
     def on_Audio(self, event):
         self.parent.File_import(self, 'Audio Conversions')
     
-    def on_Pictures(self, event):
-        print('pictures from video')
+    #def on_Pictures(self, event):
+        #print('pictures from video')
         
-    def on_AudioFromVideo(self, event):
-        print('audio from video')
+    #def on_AudioFromVideo(self, event):
+        #print('audio from video')
     
-    def on_AudioMerging(self, event):
-        print('audio merging')
+    #def on_AudioMerging(self, event):
+        #print('audio merging')
     
-    def on_Slideshow(self, event):
-        self.parent.File_import(self,'Pictures Slideshow Maker')
+    #def on_Slideshow(self, event):
+        #self.parent.File_import(self,'Pictures Slideshow Maker')
     
     def on_YoutubeDL(self, event):
         try:
