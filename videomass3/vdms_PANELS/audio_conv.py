@@ -94,12 +94,16 @@ class Audio_Conv(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         """ constructor"""
         # Widgets definitions:
-        self.cmbx_a = wx.ComboBox(self, wx.ID_ANY,
+        self.a_choice = wx.Choice(self, wx.ID_ANY,
                                   choices=[x for x in acodecs.keys()],
-                                  size=(120,-1),style=wx.CB_DROPDOWN | 
-                                  wx.CB_READONLY
+                                  size=(-1,-1)
                                   )
-        self.cmbx_a.SetSelection(4)
+        #self.a_choice = wx.ComboBox(self, wx.ID_ANY,
+                                  #choices=[x for x in acodecs.keys()],
+                                  #size=(-1,-1),style=wx.CB_DROPDOWN | 
+                                  #wx.CB_READONLY
+                                  #)
+        self.a_choice.SetSelection(4)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
         self.btn_param = GB.GradientButton(self,
                                            size=(-1,25),
@@ -112,7 +116,7 @@ class Audio_Conv(wx.Panel):
         self.btn_param.SetTopStartColour(wx.Colour(self.btnC))
         self.btn_param.SetTopEndColour(wx.Colour(self.btnC))
         
-        self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(265,-1),
+        self.txt_options = wx.TextCtrl(self, wx.ID_ANY, size=(-1,-1),
                                           style=wx.TE_READONLY
                                           )
         self.rdbx_norm = wx.RadioBox(self,wx.ID_ANY,(_("Audio Normalization")), 
@@ -122,11 +126,13 @@ class Audio_Conv(wx.Panel):
                                        ('RMS'),
                                        ('EBU R128'),
                                               ], 
-                                     majorDimension=0, 
+                                     majorDimension=1, 
                                      style=wx.RA_SPECIFY_ROWS,
                                             )
+                                     
+        self.peakpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
-        self.btn_analyzes = GB.GradientButton(self,
+        self.btn_analyzes = GB.GradientButton(self.peakpanel,
                                            size=(-1,25),
                                            bitmap=analyzebmp,
                                            label=_("Volumedected"))
@@ -138,7 +144,7 @@ class Audio_Conv(wx.Panel):
         self.btn_analyzes.SetTopEndColour(wx.Colour(self.btnC))
         
         peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
-        self.btn_details = GB.GradientButton(self,
+        self.btn_details = GB.GradientButton(self.peakpanel,
                                             size=(-1,25),
                                             bitmap=peaklevelbmp,
                                             label=_("Volume Statistics"))
@@ -149,75 +155,78 @@ class Audio_Conv(wx.Panel):
         self.btn_details.SetTopStartColour(wx.Colour(self.btnC))
         self.btn_details.SetTopEndColour(wx.Colour(self.btnC))
         
-        self.lab_amplitude = wx.StaticText(self, wx.ID_ANY, (
+        self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY, (
                             _("Target level:")))
-        self.spin_target = FS.FloatSpin(self, wx.ID_ANY, min_val=-99.0, 
+        self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY, min_val=-99.0, 
                                     max_val=0.0, increment=0.5, value=-1.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         
-        self.lab_i = wx.StaticText(self, wx.ID_ANY, (
+        self.ebupanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                              _("Set integrated loudness target:  ")))
-        self.spin_i = FS.FloatSpin(self, wx.ID_ANY, min_val=-70.0, 
+        self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY, min_val=-70.0, 
                                     max_val=-5.0, increment=0.5, value=-24.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
         
-        self.lab_tp = wx.StaticText(self, wx.ID_ANY, (
+        self.lab_tp = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                                     _("Set maximum true peak:")))
-        self.spin_tp = FS.FloatSpin(self, wx.ID_ANY, min_val=-9.0, 
+        self.spin_tp = FS.FloatSpin(self.ebupanel, wx.ID_ANY, min_val=-9.0, 
                                     max_val=0.0, increment=0.5, value=-2.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
         
-        self.lab_lra = wx.StaticText(self, wx.ID_ANY, (
+        self.lab_lra = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                                     _("Set loudness range target:")))
-        self.spin_lra = FS.FloatSpin(self, wx.ID_ANY, min_val=1.0, 
+        self.spin_lra = FS.FloatSpin(self.ebupanel, wx.ID_ANY, min_val=1.0, 
                                     max_val=20.0, increment=0.5, value=7.0, 
                                     agwStyle=FS.FS_LEFT,size=(-1,-1))
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
-        
-        #----------------------Set Layout----------------------#
+        #--------------------------------------------------------#
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        frame = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                "Format and Audio Options")), wx.VERTICAL)
+        sizer.Add(frame, 1, wx.ALL | wx.EXPAND, 5)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizer_global = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                "")), wx.VERTICAL)
-        sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
-        grid_sizer_3 = wx.FlexGridSizer(7, 2, 0, 0)
-        grid_sizer_1 = wx.GridSizer(2, 1, 0, 0)
-        grid_sizer_2 = wx.FlexGridSizer(2, 2, 0, 0)
-        grid_sizer_4 = wx.FlexGridSizer(2, 4, 0, 0)
-        #grid_sizer_5 = wx.FlexGridSizer(1, 3, 0, 0)
-        sizer_3 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                _("Audio format selection"))), 
-                                                       wx.VERTICAL
-                                                       )
-        sizer_3.Add(self.cmbx_a, 0, wx.ALIGN_CENTER | wx.ALL, 20)
-        grid_sizer_1.Add(sizer_3, 1, wx.ALL | wx.EXPAND, 5)
-        grid_sizer_2.Add((0, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_2.Add((0, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_2.Add(self.btn_param, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_2.Add(self.txt_options, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_sizer_1.Add(grid_sizer_2, 1, 0, 0)
-        sizer_2.Add(grid_sizer_1, 1, wx.ALL | wx.EXPAND, 20)
-        grid_sizer_3.Add(self.rdbx_norm, 0, wx.TOP, 5)
-        grid_sizer_3.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_3.Add(self.btn_analyzes, 0, wx.TOP, 10)
-        grid_sizer_3.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_3.Add(self.btn_details, 0, wx.TOP, 10)
-        grid_sizer_3.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5)
-        grid_sizer_3.Add(self.lab_amplitude, 0, wx.TOP, 10)
-        grid_sizer_3.Add(self.spin_target, 0, wx.TOP, 5)
-        grid_sizer_3.Add(self.lab_i, 0, wx.TOP, 10)
-        grid_sizer_3.Add(self.spin_i, 0, wx.TOP, 5)
-        grid_sizer_3.Add(self.lab_tp, 0, wx.TOP, 10)
-        grid_sizer_3.Add(self.spin_tp, 0, wx.TOP, 5)
-        grid_sizer_3.Add(self.lab_lra, 0, wx.TOP, 10)
-        grid_sizer_3.Add(self.spin_lra, 0, wx.TOP, 5)
-
-        sizer_2.Add(grid_sizer_3, 1, wx.ALL | wx.EXPAND, 20)
-        sizer_global.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_base.Add(sizer_global, 1, wx.ALL | wx.EXPAND, 5)
-        self.SetSizer(sizer_base)
+        frame.Add(sizer_base, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(self.a_choice, 0, wx.ALL|wx.EXPAND, 15)
+        grid_opt = wx.GridSizer(1, 2, 0, 0)
+        sizer_base.Add(grid_opt, 0, wx.ALL|wx.EXPAND, 15)
+        grid_opt.Add(self.btn_param, 0, wx.ALL|
+                                        wx.ALIGN_CENTER_VERTICAL|
+                                        wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_opt.Add(self.txt_options, 0, wx.ALL|wx.EXPAND, 5)
+        
+        sizer_base.Add(self.rdbx_norm, 0, wx.ALL|wx.EXPAND, 15)
+        sizer_peak = wx.FlexGridSizer(1, 4, 0, 0)
+        sizer_peak.Add(self.btn_analyzes, 0, wx.ALL, 15)
+        sizer_peak.Add(self.btn_details, 0, wx.ALL, 15)
+        sizer_peak.Add(self.lab_amplitude, 0, wx.ALL|
+                                              wx.ALIGN_CENTER_VERTICAL|
+                                              wx.ALIGN_CENTER_HORIZONTAL, 15)
+        sizer_peak.Add(self.spin_target, 0, wx.ALL, 15)
+        
+        self.peakpanel.SetSizer(sizer_peak) # set panel
+        sizer_base.Add(self.peakpanel, 0, wx.ALL, 0)
+        
+        sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
+        #grid_norm.Add((20, 20), 0, wx.EXPAND | wx.TOP, 5))
+        sizer_ebu.Add(self.lab_i, 0, wx.ALL|
+                                     wx.ALIGN_CENTER_VERTICAL|
+                                     wx.ALIGN_CENTER_HORIZONTAL, 0)
+        sizer_ebu.Add(self.spin_i, 0, wx.ALL, 0)
+        sizer_ebu.Add(self.lab_tp, 0, wx.ALL|
+                                      wx.ALIGN_CENTER_VERTICAL|
+                                      wx.ALIGN_CENTER_HORIZONTAL, 0)
+        sizer_ebu.Add(self.spin_tp, 0, wx.ALL, 0)
+        sizer_ebu.Add(self.lab_lra, 0, wx.ALL|
+                                       wx.ALIGN_CENTER_VERTICAL|
+                                       wx.ALIGN_CENTER_HORIZONTAL, 0)
+        sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
+        self.ebupanel.SetSizer(sizer_ebu) # set panel
+        sizer_base.Add(self.ebupanel, 0, wx.ALL, 15)
+        self.SetSizer(sizer)
         # Set tooltip:
         self.btn_param.SetToolTip(_('Audio bit-rate, audio channel and audio '
                                     'rate of the selected audio codec.'))
@@ -239,7 +248,7 @@ class Audio_Conv(wx.Panel):
                                    ))
         
         #----------------------Binding (EVT)----------------------#
-        self.cmbx_a.Bind(wx.EVT_COMBOBOX, self.audioFormats)
+        self.a_choice.Bind(wx.EVT_CHOICE, self.audioFormats)
         self.Bind(wx.EVT_BUTTON, self.on_Param, self.btn_param)
         self.Bind(wx.EVT_RADIOBOX, self.on_Enable_norm, self.rdbx_norm)
         self.Bind(wx.EVT_BUTTON, self.on_Analyzes, self.btn_analyzes)
@@ -259,11 +268,16 @@ class Audio_Conv(wx.Panel):
         
         """
         self.rdbx_norm.SetSelection(0), 
-        self.btn_analyzes.Hide(), self.btn_details.Hide()
-        self.lab_amplitude.Hide()
-        self.spin_target.Hide(), self.spin_target.SetValue(-1.0)
-        self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
-        self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
+        #self.btn_analyzes.Hide(), self.btn_details.Hide()
+        #self.lab_amplitude.Hide(), self.spin_target.Hide(), 
+        self.spin_target.SetValue(-1.0)
+        #self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
+        #self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
+        
+        self.peakpanel.Hide(), self.ebupanel.Hide()
+        
+        
+        
         cmd_opt["PEAK"], cmd_opt["EBU"], cmd_opt["RMS"] = "", "", ""
         del self.normdetails[:]
         
@@ -277,9 +291,9 @@ class Audio_Conv(wx.Panel):
         self.rdbx_norm.Enable()
         self.txt_options.Enable(), self.btn_param.Enable()
         self.btn_param.SetForegroundColour(wx.Colour(self.fBtnC))
-        cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
-        cmd_opt["AudioCodec"] = acodecs[self.cmbx_a.GetValue()]
-        ext = self.cmbx_a.GetValue().split()[1].strip('[.]')
+        cmd_opt["AudioContainer"] = self.a_choice.GetValue()
+        cmd_opt["AudioCodec"] = acodecs[self.a_choice.GetValue()]
+        ext = self.a_choice.GetValue().split()[1].strip('[.]')
         cmd_opt["ExportExt"] = ext
         
         self.txt_options.SetValue("")
@@ -296,7 +310,7 @@ class Audio_Conv(wx.Panel):
         Send identifier data of the container to audio_parameters method
         """
         if not cmd_opt["AudioContainer"]:
-            cmd_opt["AudioContainer"] = self.cmbx_a.GetValue()
+            cmd_opt["AudioContainer"] = self.a_choice.GetValue()
         #--------------------------------------------#
         for k,v in acodecs.items():
             if cmd_opt["AudioContainer"] == k:
@@ -385,22 +399,24 @@ class Audio_Conv(wx.Panel):
             else:
                 self.parent.statusbar_msg(msg_2, '#15A660')
                 self.spin_target.SetValue(-20.0)
-                
+            self.peakpanel.Show(), self.ebupanel.Hide()
             self.btn_analyzes.Enable()
             self.btn_analyzes.SetForegroundColour(wx.Colour(self.fBtnC))
-            self.btn_analyzes.Show(), self.spin_target.Show(),
-            self.lab_amplitude.Show(), self.btn_details.Hide()
-            self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
-            self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
+            self.btn_analyzes.Show(), #self.spin_target.Show(),
+            #self.lab_amplitude.Show(), 
+            self.btn_details.Hide()
+            #self.lab_i.Hide(), self.spin_i.Hide(), self.lab_lra.Hide(),
+            #self.spin_lra.Hide(), self.lab_tp.Hide(), self.spin_tp.Hide()
             cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
             del self.normdetails[:]
             
         elif self.rdbx_norm.GetSelection() == 3: # EBU
             self.parent.statusbar_msg(msg_3, '#87A615')
-            self.btn_analyzes.Hide(), self.lab_amplitude.Hide()
-            self.spin_target.Hide(), self.btn_details.Hide()
-            self.lab_i.Show(), self.spin_i.Show(), self.lab_lra.Show(),
-            self.spin_lra.Show(), self.lab_tp.Show(), self.spin_tp.Show()
+            self.peakpanel.Hide(), self.ebupanel.Show()
+            #self.btn_analyzes.Hide(), self.lab_amplitude.Hide()
+            #self.spin_target.Hide(), self.btn_details.Hide()
+            #self.lab_i.Show(), self.spin_i.Show(), self.lab_lra.Show(),
+            #self.spin_lra.Show(), self.lab_tp.Show(), self.spin_tp.Show()
             cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
 
         else: # usually it is 0
