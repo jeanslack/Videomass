@@ -105,9 +105,8 @@ class MainFrame(wx.Frame):
         self.ffplay_link = ffplay_link
         self.iconset = setui[4][11]
         #-------------------------------# 
-        self.post_process = []# post-pocess set first file for play/metadata
         self.data = None# list of items in list control
-        self.file_destin = ''# path name for file saved destination
+        self.file_destin = None # path name for file saved destination
         self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
         self.time_read = {'start seek':['',''],'time':['','']}
         self.duration = [] # empty if not file imported
@@ -250,7 +249,6 @@ class MainFrame(wx.Frame):
         
         #----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
-        self.btn_playO.Hide()
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
@@ -290,7 +288,6 @@ class MainFrame(wx.Frame):
         self.Layout()
         
         #---------------------- Binding (EVT) ----------------------#
-        self.fileDnDTarget.ckbx_dir.Bind(wx.EVT_CHECKBOX, self.onCheckBox)
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.textDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
@@ -352,16 +349,6 @@ class MainFrame(wx.Frame):
         
         elif self.topicname == 'Youtube Downloader':
             self.youtube_Downloader(self)
-    #------------------------------------------------------------------#
-    def postExported_enable(self):
-        """
-        Enable menu Streams items for output play and metadata
-        info
-        """
-        if not self.btn_playO.IsShown():
-            self.btn_playO.Show()
-            self.Layout()
-        self.btn_playO.SetBottomEndColour(wx.Colour(255, 255, 0))
 
     #---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the filedrop panel
@@ -416,22 +403,24 @@ class MainFrame(wx.Frame):
         
         dialog = Mediainfo(self.data, self.OS,)
         dialog.Show()
-            
-            
-        #title = _('Videomass: media streams')
-        #IO_tools.stream_info(title, filepath)
     #------------------------------------------------------------------#
+    
     def ExportPlay(self, event):
         """
-        Playback functionality for exported files, useful for result 
-        testing. The first one exported of the list will be reproduced.
+        Playback with FFplay
+        
         """
-        if not self.post_process:
-            wx.MessageBox(_("No files exported yet"), 
-                          'Videomass', wx.ICON_INFORMATION, self)
-            return
+        with wx.FileDialog(self, "Videomass: Open a file to playback", 
+                           defaultDir=self.file_destin,
+                           #wildcard="Audio source (%s)|%s" % (f, f),
+                           style=wx.FD_OPEN | 
+                           wx.FD_FILE_MUST_EXIST) as fileDialog:
 
-        IO_tools.stream_play(self.post_process,
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                return     
+            pathname = fileDialog.GetPath()
+
+        IO_tools.stream_play(pathname,
                              '', # time_seq is useless for the exported file
                              '', # no others parameters are needed
                              )
@@ -451,18 +440,18 @@ class MainFrame(wx.Frame):
             print ('Videomass: Error, no panels shown')
             
     #------------------------------------------------------------------#
-    def onCheckBox(self, event):
-        """
-        Intercept the Checkbox event in the filedrop panel
-        and set same file sources destination path
-        """
-        if self.fileDnDTarget.IsShown():
-            self.fileDnDTarget.same_filedest()
-            self.file_destin = self.fileDnDTarget.file_dest
+    #def onCheckBox(self, event):
+        #"""
+        #Intercept the Checkbox event in the filedrop panel
+        #and set same file sources destination path
+        #"""
+        #if self.fileDnDTarget.IsShown():
+            #self.fileDnDTarget.same_filedest()
+            #self.file_destin = self.fileDnDTarget.file_dest
             
-        elif self.textDnDTarget.IsShown():
-            self.textDnDTarget.same_filedest()
-            self.file_destin = self.textDnDTarget.file_dest
+        #elif self.textDnDTarget.IsShown():
+            #self.textDnDTarget.same_filedest()
+            #self.file_destin = self.textDnDTarget.file_dest
     #------------------------------------------------------------------#
     def onCustomSave(self, event):
         """
@@ -828,9 +817,13 @@ class MainFrame(wx.Frame):
         Show files import panel.
         """
         self.topicname = which
-        self.textDnDTarget.Hide(), self.ytDownloader.Hide(), 
-        self.VconvPanel.Hide(), self.AconvPanel.Hide(),
+        self.textDnDTarget.Hide(), self.ytDownloader.Hide()
+        self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.ChooseTopic.Hide(), self.fileDnDTarget.Show()
+        if self.file_destin:
+            self.fileDnDTarget.text_path_save.SetValue("")
+            self.fileDnDTarget.text_path_save.AppendText(self.file_destin)
+        
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
         
@@ -840,9 +833,12 @@ class MainFrame(wx.Frame):
         Show URLs import panel.
         """
         self.topicname = which
-        self.fileDnDTarget.Hide(),self.ytDownloader.Hide(), 
-        self.VconvPanel.Hide(), self.AconvPanel.Hide(),
-        self.ChooseTopic.Hide(), self.textDnDTarget.Show(),
+        self.fileDnDTarget.Hide(),self.ytDownloader.Hide()
+        self.VconvPanel.Hide(), self.AconvPanel.Hide()
+        self.ChooseTopic.Hide(), self.textDnDTarget.Show()
+        if self.file_destin:
+            self.textDnDTarget.text_path_save.SetValue("")
+            self.textDnDTarget.text_path_save.AppendText(self.file_destin)
         self.Layout()
         self.statusbar_msg(_('Add URLs'), None)
 
@@ -857,10 +853,8 @@ class MainFrame(wx.Frame):
         self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.ytDownloader.Show()#, self.SetSize((700, 800))
         self.statusbar_msg(_('Youtube Downloader'), None)
-        self.toolbar.Show()
-        #self.btnpanel.Show()
-        self.btn_saveprf.Hide(),self.btn_duration.Hide(), 
-        self.btn_playO.Hide(), self.btn_metaI.Hide()
+        self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
+        self.btn_saveprf.Hide(),self.btn_duration.Hide(),self.btn_metaI.Hide()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
 
@@ -881,9 +875,9 @@ class MainFrame(wx.Frame):
                          self.data if f['format']['duration']
                          ]
         self.VconvPanel.file_src = flist
-        self.toolbar.Show()
-        self.btnpanel.Show()
-        self.btn_saveprf.Show(), self.btn_duration.Show(), self.btn_metaI.Show()
+        self.toolbar.Show(), self.btnpanel.Show()
+        self.btn_saveprf.Show(), self.btn_duration.Show(),
+        self.btn_metaI.Show(), self.btn_playO.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
         
@@ -895,7 +889,7 @@ class MainFrame(wx.Frame):
         self.file_destin = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.AconvPanel.Show(), 
+        self.AconvPanel.Show()
         self.statusbar_msg(_('Audio Conversions'), None)
         flist = [f['format']['filename'] for f in 
                  self.data if f['format']['filename']
@@ -904,9 +898,9 @@ class MainFrame(wx.Frame):
                          self.data if f['format']['duration']
                          ]
         self.AconvPanel.file_src = flist
-        self.toolbar.Show()
-        self.btnpanel.Show()
-        self.btn_saveprf.Show(), self.btn_duration.Show(), self.btn_metaI.Show()
+        self.toolbar.Show(), self.btnpanel.Show()
+        self.btn_saveprf.Show(), self.btn_duration.Show()
+        self.btn_metaI.Show(), self.btn_playO.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
             

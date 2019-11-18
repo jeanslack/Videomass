@@ -170,8 +170,6 @@ class FileDnD(wx.Panel):
         self.flCtrl.SetDropTarget(file_drop_target) #Make drop target.
         # create widgets
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        self.ckbx_dir = wx.CheckBox(self, wx.ID_ANY, (
-                                _("Save destination in source folder")))
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1,-1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "", 
                                                 style=wx.TE_PROCESS_ENTER| 
@@ -195,10 +193,6 @@ class FileDnD(wx.Panel):
                                wx.ALIGN_CENTER_HORIZONTAL|
                                wx.ALIGN_CENTER_VERTICAL, 5
                                )
-        sizer_ctrl.Add(self.ckbx_dir, 0, wx.ALL|
-                                   wx.ALIGN_CENTER_HORIZONTAL|
-                                   wx.ALIGN_CENTER_VERTICAL, 5
-                                   )
         sizer_ctrl.Add(self.btn_save, 0, wx.ALL|
                                    wx.ALIGN_CENTER_HORIZONTAL|
                                    wx.ALIGN_CENTER_VERTICAL, 5
@@ -211,7 +205,6 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        #self.Bind(wx.EVT_CHECKBOX, self.same_filedest, self.ckbx_dir)
         self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
         
         self.text_path_save.SetValue(self.file_dest)
@@ -322,20 +315,6 @@ class FileDnD(wx.Panel):
             self.file_dest = '%s' % (dialdir.GetPath())
             self.parent.file_destin = self.file_dest
             dialdir.Destroy()
-    #----------------------------------------------------------------------
-    def same_filedest(self):
-        """
-        Save destination as files sources 
-        """
-        if self.ckbx_dir.GetValue() is True:
-            self.file_dest = 'same dest'
-            self.text_path_save.Disable(), self.btn_save.Disable()
-            self.parent.file_save.Enable(False)
-            
-        elif self.ckbx_dir.GetValue() is False:
-            self.file_dest = self.text_path_save.GetValue()
-            self.text_path_save.Enable(), self.btn_save.Enable()
-            self.parent.file_save.Enable(True)
     #----------------------------------------------------------------------
     
     def statusbar_msg(self, mess, color):

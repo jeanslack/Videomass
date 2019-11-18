@@ -105,14 +105,12 @@ class Choose_Topic(wx.Panel):
                                    wx.ALIGN_CENTER_VERTICAL|
                                    wx.ALIGN_CENTER_HORIZONTAL, 15)
         
-        txt_link = wx.StaticText(self, label='From the same author you may '
+        txt_link = wx.StaticText(self, label='From the same author, you may '
                                              'also be interested in: ')
-        link = hpl.HyperLinkCtrl(self, -1, "Vinc is not a converter",
+        link = hpl.HyperLinkCtrl(self, -1, "Vinc",
                                 URL="https://gitlab.com/jeanslack/vinc")
         sizer_hpl.Add(txt_link)
         sizer_hpl.Add(link)
-        
-        
         self.SetSizerAndFit(sizer_base)
         
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)

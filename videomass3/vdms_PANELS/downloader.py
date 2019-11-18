@@ -47,7 +47,7 @@ aformats = {("Default audio format"): ("best"),
 aquality = {'Best quality audio': 'best',
             'Worst quality audio': 'worst'}
 
-opt = {"PLAYLIST": False, "THUMB": False, "METADATA": False,
+opt = {"NO_PLAYLIST": True, "THUMB": False, "METADATA": False,
        "V_QUALITY": "best", "A_FORMAT": "best", "A_QUALITY": "best", 
        "SUBTITLES": False,}
 
@@ -269,9 +269,9 @@ class Downloader(wx.Panel):
     #-----------------------------------------------------------------#
     def on_Playlist(self, event):
         if self.ckbx_pl.IsChecked():
-            opt["PLAYLIST"] = True
+            opt["NO_PLAYLIST"] = False
         else:
-            opt["PLAYLIST"] = False
+            opt["NO_PLAYLIST"] = True
     #-----------------------------------------------------------------#
     def on_Thumbnails(self, event):
         if self.ckbx_thumb.IsChecked():
@@ -299,7 +299,7 @@ class Downloader(wx.Panel):
         
         if self.choice.GetSelection() == 0:
             data = {'format': opt["V_QUALITY"], 
-                    'noplaylist': opt["PLAYLIST"],
+                    'noplaylist': opt["NO_PLAYLIST"],
                     'writethumbnail': opt["THUMB"], 
                     'outtmpl': '%(title)s.%(ext)s',
                     'extractaudio': False,
@@ -310,7 +310,7 @@ class Downloader(wx.Panel):
         if self.choice.GetSelection() == 1:
             data = {'format': '{}video,{}audio'.format(opt["V_QUALITY"],
                                                        opt["A_QUALITY"]), 
-                    'noplaylist': opt["PLAYLIST"],
+                    'noplaylist': opt["NO_PLAYLIST"],
                     'writethumbnail': opt["THUMB"], 
                     'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
                     'extractaudio': False,
@@ -321,7 +321,7 @@ class Downloader(wx.Panel):
         elif self.choice.GetSelection() == 2: # audio only
             
             data = {'format': 'best', 
-                    'noplaylist': opt["PLAYLIST"],
+                    'noplaylist': opt["NO_PLAYLIST"],
                     'writethumbnail': opt["THUMB"], 
                     'outtmpl': '%(title)s.%(ext)s',
                     'extractaudio': True,
@@ -340,7 +340,7 @@ class Downloader(wx.Panel):
                 return
             
             data = {'format': code, 
-                    'noplaylist': opt["PLAYLIST"],
+                    'noplaylist': opt["NO_PLAYLIST"],
                     'writethumbnail': opt["THUMB"], 
                     'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
                     'extractaudio': False,

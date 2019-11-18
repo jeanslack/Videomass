@@ -1605,19 +1605,6 @@ class Video_Conv(wx.Panel):
             cmd_opt["Tune"] = ""
         else:
             cmd_opt["Tune"] = "-tune:v %s" % (select)
-            
-    #-----------------------------------------------------------------------#
-
-    def exportStreams(self, exported):
-        """
-        Set the parent.post_process attribute to communicate the
-        file available for playback or display metadata.
-        """
-        if not exported:
-            return
-        else:
-            self.parent.post_process = exported
-            self.parent.postExported_enable()
     #-------------------------------------------------------------------#
     
     def update_allentries(self):
@@ -1739,9 +1726,6 @@ class Video_Conv(wx.Panel):
                                            logname, 
                                            countmax,
                                            )
-                #used for play preview and mediainfo:
-                f = '%s/%s' % (destin[0], os.path.basename(f_src[0]))
-                self.exportStreams(f)#call function more above
                 
         elif cmd_opt["Passing"] == "double":
             cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
@@ -1800,10 +1784,6 @@ class Video_Conv(wx.Panel):
                                            logname, 
                                            countmax,
                                            )
-                #used for play preview and mediainfo:
-                f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (destin[0], f, 
-                                              cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
@@ -1846,11 +1826,6 @@ class Video_Conv(wx.Panel):
                                            logname, 
                                            countmax, 
                                            )
-                #used for play preview and mediainfo:
-                f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (destin[0], f, 
-                                                 cmd_opt["VideoFormat"]))
-
     #------------------------------------------------------------------#
     def ebu_2pass(self, f_src, destin, countmax, logname):
         """
@@ -1900,10 +1875,6 @@ class Video_Conv(wx.Panel):
                                            logname, 
                                            countmax,
                                            )
-                #used for play preview and mediainfo:
-                f = '%s/%s' % (destin[0], os.path.basename(f_src[0]))
-                self.exportStreams(f)#pass arg to function above
-        
         else:
             cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
                                                     cmd_opt["VideoCodec"], 
@@ -1962,10 +1933,6 @@ class Video_Conv(wx.Panel):
                                            logname, 
                                            countmax,
                                            )
-                #used for play preview and mediainfo:
-                f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
-                self.exportStreams('%s/%s.%s' % (destin[0], f, 
-                                                 cmd_opt["VideoFormat"]))
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
     #------------------------------------------------------------------#
     def update_dict(self, countmax, prof):

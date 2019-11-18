@@ -123,20 +123,6 @@ class TextDnD(wx.Panel):
             self.parent.file_destin = self.file_dest
             dialdir.Destroy()
     #----------------------------------------------------------------------
-    def same_filedest(self):
-        """
-        Save destination as files sources 
-        """
-        if self.ckbx_dir.GetValue() is True:
-            self.file_dest = 'same dest'
-            self.text_path_save.Disable(), self.btn_save.Disable()
-            self.parent.file_save.Enable(False)
-            
-        elif self.ckbx_dir.GetValue() is False:
-            self.file_dest = self.text_path_save.GetValue()
-            self.text_path_save.Enable(), self.btn_save.Enable()
-            self.parent.file_save.Enable(True)
-    #----------------------------------------------------------------------
     
     def statusbar_msg(self, mess, color):
         """

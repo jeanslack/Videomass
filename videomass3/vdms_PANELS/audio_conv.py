@@ -552,19 +552,7 @@ class Audio_Conv(wx.Panel):
                                                        self.normdetails, 
                                                        self.OS)
         audionormlist.Show()
-    #-----------------------------------------------------------------------#
 
-    def exportStreams(self, exported):
-        """
-        Set the parent.post_process attribute for communicate it the
-        file disponibilities for play or metadata functionalities.
-        """
-        if not exported:
-            return
-
-        else:
-            self.parent.post_process = exported
-            self.parent.postExported_enable()
     #------------------------------------------------------------------#
     def update_allentries(self):
         """
@@ -643,11 +631,6 @@ class Audio_Conv(wx.Panel):
                                         logname, 
                                         countmax,
                                         )
-            #used for play preview and mediainfo:
-            f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
-            self.exportStreams('%s/%s.%s' % (f_dest[0], f, 
-                                                cmd_opt["ExportExt"]))
-                
     #------------------------------------------------------------------#
     def ebu_Doublepass(self, f_src, f_dest, countmax, logname):
         """
@@ -686,11 +669,6 @@ class Audio_Conv(wx.Panel):
                                         logname, 
                                         countmax,
                                         )
-            #used for play preview and mediainfo:
-            f = os.path.basename(f_src[0]).rsplit('.', 1)[0]
-            self.exportStreams('%s/%s.%s' % (f_dest[0], f, 
-                                                cmd_opt["ExportExt"]))
-        
     #------------------------------------------------------------------#
     def update_dict(self, countmax):
         """

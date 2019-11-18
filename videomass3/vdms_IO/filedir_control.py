@@ -62,24 +62,15 @@ def inspect(file_sources, dir_destin, extoutput):
         #ext. del filesources:
         #sameext = os.path.splitext(basename)[1].replace('.','')
         if not extoutput:#uses more extension identity
-            if dir_destin == 'same dest': #l'utente sceglie stessa dest.source
-                pathname = '%s/%s' % (dirname,basename)
-                outputdir.append(dirname)#può avere più percorsi diversi
-                base_name.append(basename)
-            else: # l'utente sceglie un suo percorso o usa il predefinito
-                pathname = '%s/%s' % (dir_destin,basename)
-                outputdir.append(dir_destin)
-                base_name.append(basename)
+            pathname = '%s/%s' % (dir_destin,basename)
+            outputdir.append(dir_destin)
+            base_name.append(basename)
             if os.path.exists(pathname):
                 exclude.append(pathname)
        
         else:#uses only one extension identity
-            if dir_destin == 'same dest': #l'utente sceglie stessa dest.source
-                pathname = '%s/%s.%s' % (dirname,filename,extoutput)
-                outputdir.append(dirname)#può avere più percorsi diversi
-            else: # l'utente sceglie un suo percorso o usa il predefinito
-                pathname = '%s/%s.%s' % (dir_destin,filename,extoutput)
-                outputdir.append(dir_destin)
+            pathname = '%s/%s.%s' % (dir_destin,filename,extoutput)
+            outputdir.append(dir_destin)
             if os.path.exists(pathname):
                 exclude.append(pathname)
     if exclude:
