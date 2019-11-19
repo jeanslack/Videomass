@@ -270,8 +270,8 @@ class MainFrame(wx.Frame):
         self.btn_metaI.SetToolTip(_("Show information about the metadata "
                                         "of the selected imported file." 
                                         ))
-        self.btn_playO.SetToolTip(_("Play the file exported in the "
-                                    "last encoding."
+        self.btn_playO.SetToolTip(_("Choose a file to playback in the "
+                                    "destination folder"
                                         ))
         self.btn_saveprf.SetToolTip(_("Save the settings as a preset for Vinc"
                                         ))
@@ -823,7 +823,6 @@ class MainFrame(wx.Frame):
         if self.file_destin:
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.file_destin)
-        
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
         
@@ -962,10 +961,7 @@ class MainFrame(wx.Frame):
         panel showing and re-enables the functions provided by 
         the menu bar.
         """
-        if panelshown == 'presets manager':
-            self.ProcessPanel.Hide()
-            self.youtube_Downloader(self)
-        elif panelshown == 'Video Conversions':
+        if panelshown == 'Video Conversions':
             self.ProcessPanel.Hide()
             self.switch_video_conv(self)
             self.btnpanel.Show()

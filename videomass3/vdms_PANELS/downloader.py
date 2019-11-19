@@ -28,6 +28,7 @@
 #########################################################
 from __future__ import unicode_literals
 from videomass3.vdms_IO import IO_tools
+from videomass3.vdms_UTILS.utils import format_bytes
 import wx
 
 
@@ -54,20 +55,7 @@ opt = {"NO_PLAYLIST": True, "THUMB": False, "METADATA": False,
 yellow = '#a29500'
 red = '#ea312d'
 
-#####################################################################
-def sizeof_fmt(num, suffix='B'):
-    """
-    Convert type int in file size human readable
-    """
-    # TODO make beter
-    num = int(num)
-    for unit in ['','Ki','Mi','Gi','Ti','Pi','Ei','Zi']:
-        if abs(num) < 1024.0:
-            return "%3.1f%s%s" % (num, unit, suffix)
-        num /= 1024.0
-    return "%.1f%s%s" % (num, 'Yi', suffix)
-######################################################################
-
+#######################################################################
 class Downloader(wx.Panel):
     """
     This panel gives a graphic layout to some features of youtube-dl
@@ -190,7 +178,7 @@ class Downloader(wx.Panel):
             return
         self.txt_code.SetValue('')
         index = 0
-        self.parent.statusbar_msg(_("wait... I'm getting the data", 'YELLOW'))
+        self.parent.statusbar_msg(_("wait... I'm getting the data"), 'YELLOW')
         for link in self.parent.data:
             data = IO_tools.youtube_info(link)
             for meta in data:
@@ -216,7 +204,7 @@ class Downloader(wx.Panel):
                     else:
                         acodec = f['acodec']
                     if f['filesize']:
-                        size = sizeof_fmt(f['filesize'])
+                        size = format_bytes(float(f['filesize']))
                     else:
                         size = ''
                         
@@ -230,7 +218,7 @@ class Downloader(wx.Panel):
                     self.fcode.SetItem(index, 7, size)
                 
         self.txt_code.WriteText(f['format_id'])
-        self.parent.statusbar_msg(_('Ready, Youtube Downloader', None))
+        self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)
 
     #-----------------------------------------------------------------#
     def on_Choice(self, event):

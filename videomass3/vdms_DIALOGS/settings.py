@@ -62,6 +62,7 @@ class Setup(wx.Dialog):
             if not b.startswith('#'):
                 if not b == '\n':
                     self.rowsNum.append(a)
+                    
                     #dic [a] = b.strip()# used for easy reading print debug
 
         ##USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
@@ -368,13 +369,13 @@ class Setup(wx.Dialog):
         """
         
         for s in range(self.rdbFFplay.GetCount()):
-            if (self.ffplay_loglevel.split()[0] in 
+            if (self.ffplay_loglevel.split()[1] in 
                                 self.rdbFFplay.GetString(s).split()[0]
                                 ):
                 self.rdbFFplay.SetSelection(s)
         
         for s in range(self.rdbFFmpeg.GetCount()):
-            if (self.ffmpeg_loglevel.split()[0] in 
+            if (self.ffmpeg_loglevel.split()[1] in 
                                 self.rdbFFmpeg.GetString(s).split()[0]
                                 ):
                 self.rdbFFmpeg.SetSelection(s)

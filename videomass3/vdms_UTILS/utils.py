@@ -35,6 +35,51 @@ and renaming files and folders.
 import shutil
 import os
 import glob
+import math
+
+#------------------------------------------------------------------------
+def format_bytes(bytes):
+    """
+    Convert Format bytes to size output strings human readable, e.g.
+    out = format_bytes(9909043.20)
+    It return a string digit with metric suffix
+    
+    """
+    filesize_metrics = ["B", "KiB", "MiB", "GiB", "TiB", 
+                        "PiB", "EiB", "ZiB", "YiB"]
+    kilo_size = 1024.0
+    
+    if bytes == 0.0:
+        exponent = 0
+    else:
+        exponent = int(math.log(bytes, kilo_size))
+
+    suffix = filesize_metrics[exponent]
+    output_value = bytes / (kilo_size ** exponent)
+
+    return "%.2f%s" % (output_value, suffix)
+#------------------------------------------------------------------------
+
+def to_bytes(string):
+    """
+    Convert given size string to bytes, e.g. 
+    out = to_bytes('9.45MiB')
+    It return a number 'float' 
+    
+    """
+    value = 0.0
+    filesize_metrics = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+    kilo_size = 1024.0
+
+    for index, metric in enumerate(reversed(filesize_metrics)):
+        if metric in string:
+            value = float(string.split(metric)[0])
+            break
+
+    exponent = index * (-1) + (len(filesize_metrics) - 1)
+
+    return round(value * (kilo_size ** exponent), 2)
+#------------------------------------------------------------------------
 
 
 def copy_restore(src, dest):

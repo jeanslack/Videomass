@@ -30,6 +30,10 @@ from __future__ import unicode_literals
 import wx
 import wx.lib.agw.hyperlink as hpl
 
+# get videomass wx.App attribute
+get = wx.GetApp()
+OS = get.OS
+
 class Choose_Topic(wx.Panel):
     """
     Helps to choose the appropriate contextual panel
@@ -43,12 +47,7 @@ class Choose_Topic(wx.Panel):
 
         wx.Panel.__init__(self, parent, -1)
         
-        welcome = wx.StaticText(self, wx.ID_ANY, (
-                             _("Welcome to Videomass")))
-        #vers = wx.StaticText(self, wx.ID_ANY, (_("Choose a Topic")))
-        welcome.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
-        
-        
+        welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")))
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add(welcome, 0, wx.TOP|
                                    wx.ALIGN_CENTER_VERTICAL|
@@ -106,12 +105,18 @@ class Choose_Topic(wx.Panel):
                                    wx.ALIGN_CENTER_HORIZONTAL, 15)
         
         txt_link = wx.StaticText(self, label='From the same author, you may '
-                                             'also be interested in: ')
+                                             'also be interested in ')
         link = hpl.HyperLinkCtrl(self, -1, "Vinc",
                                 URL="https://gitlab.com/jeanslack/vinc")
         sizer_hpl.Add(txt_link)
         sizer_hpl.Add(link)
         self.SetSizerAndFit(sizer_base)
+        
+        
+        if OS == 'Darwin':
+            welcome.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
+        else:
+            welcome.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
         
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)
         self.Bind(wx.EVT_BUTTON, self.on_Audio, self.audio)

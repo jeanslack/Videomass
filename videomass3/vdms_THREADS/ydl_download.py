@@ -57,6 +57,7 @@ class MyLogger(object):
                     output=msg, 
                     duration='',
                     status='DEBUG',)
+        self.msg = msg
         
     def warning(self, msg):
         msg = 'WARNING: %s' % msg
@@ -74,6 +75,7 @@ class MyLogger(object):
                     duration='',
                     status='ERROR',)
 #-------------------------------------------------------------------------#
+
 def my_hook(d):
     """
     progress_hooks is A list of functions that get called on 
@@ -81,13 +83,13 @@ def my_hook(d):
     
     """
     if d['status'] == 'downloading':
-        perc = float(d['_percent_str'].strip().split('%')[0])
+        percent = float(d['_percent_str'].strip().split('%')[0])
         duration = ('Downloading... {} of {} at {} ETA {}'.format(
                                                     d['_percent_str'], 
                                                     d['_total_bytes_str'], 
                                                     d['_speed_str'],
                                                     d['_eta_str'],),
-                    perc
+                    percent
                     )
         wx.CallAfter(pub.sendMessage, 
                     "UPDATE_DOWNLOAD_EVT", 
@@ -169,7 +171,7 @@ class YoutubeDL_Downloader(Thread):
             ydl_opts = {'format': self.opt['format'],
                         'extractaudio': self.opt['format'],
                         'outtmpl': '{}/{}'.format(self.outputdir, 
-                                                  self.opt['outtmpl']),
+                                                self.opt['outtmpl']),
                         'writesubtitles': self.opt['writesubtitles'],
                         'addmetadata': self.opt['addmetadata'],
                         'restrictfilenames' : True,

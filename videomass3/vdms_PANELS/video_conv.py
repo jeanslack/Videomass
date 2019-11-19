@@ -33,7 +33,7 @@ import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
 from videomass3.vdms_IO.IO_tools import volumeDetectProcess
 from videomass3.vdms_IO.IO_tools import stream_play
-from videomass3.vdms_IO.filedir_control import inspect
+from videomass3.vdms_IO.filenames_check import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import audiodialogs 
 from videomass3.vdms_DIALOGS import presets_addnew
