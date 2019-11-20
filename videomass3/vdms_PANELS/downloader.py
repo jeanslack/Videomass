@@ -26,7 +26,7 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
  
 #########################################################
-from __future__ import unicode_literals
+#from __future__ import unicode_literals
 from videomass3.vdms_IO import IO_tools
 from videomass3.vdms_UTILS.utils import format_bytes
 import wx
@@ -142,14 +142,16 @@ class Downloader(wx.Panel):
         self.fcode.Disable()
         sizer.Add(self.fcode, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
-        self.fcode.InsertColumn(0, (_('URL')), width=400)
-        self.fcode.InsertColumn(1, (_('Format Code')), width=100)
-        self.fcode.InsertColumn(2, (_('Extension')), width=80)
-        self.fcode.InsertColumn(3, (_('Resolution')), width=150)
-        self.fcode.InsertColumn(4, (_('Video Codec')), width=110)
-        self.fcode.InsertColumn(5, (_('fps')), width=60)
-        self.fcode.InsertColumn(6, (_('Audio Codec')), width=110)
-        self.fcode.InsertColumn(7, (_('Size')), width=80)
+        self.fcode.InsertColumn(0, (_('TITLE')), width=180)
+        self.fcode.InsertColumn(1, (_('URL')), width=80)
+        self.fcode.InsertColumn(2, (_('Format Code')), width=100)
+        self.fcode.InsertColumn(3, (_('Extension')), width=80)
+        self.fcode.InsertColumn(4, (_('Resolution')), width=140)
+        self.fcode.InsertColumn(5, (_('Video Codec')), width=110)
+        self.fcode.InsertColumn(6, (_('fps')), width=60)
+        self.fcode.InsertColumn(7, (_('Audio Codec')), width=110)
+        self.fcode.InsertColumn(8, (_('Size')), width=80)
+        
         
         if OS == 'Darwin':
             self.fcode.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
@@ -188,9 +190,10 @@ class Downloader(wx.Panel):
                     return
                 if 'entries' in meta[0]: 
                     meta[0]['entries'][0] # not parse all playlist
-                formats = meta[0].get('formats', [meta[0]])
-                self.fcode.InsertItem(index, link)
+                self.fcode.InsertItem(index, meta[0]['title'])
+                self.fcode.SetItem(index, 1, link)
                 self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                formats = meta[0].get('formats', [meta[0]])
                 for f in formats:
                     index+=1
                     if f['vcodec'] == 'none':
@@ -209,13 +212,15 @@ class Downloader(wx.Panel):
                         size = ''
                         
                     self.fcode.InsertItem(index, '' )
-                    self.fcode.SetItem(index, 1, f['format_id'] )
-                    self.fcode.SetItem(index, 2, f['ext'])
-                    self.fcode.SetItem(index, 3, f['format'].split('-')[1])
-                    self.fcode.SetItem(index, 4, vcodec)
-                    self.fcode.SetItem(index, 5, fps)
-                    self.fcode.SetItem(index, 6, acodec)
-                    self.fcode.SetItem(index, 7, size)
+                    self.fcode.SetItem(index, 1, '')
+                    self.fcode.SetItem(index, 2, f['format_id'] )
+                    self.fcode.SetItem(index, 3, f['ext'])
+                    self.fcode.SetItem(index, 4, f['format'].split('-')[1])
+                    self.fcode.SetItem(index, 5, vcodec)
+                    self.fcode.SetItem(index, 6, fps)
+                    self.fcode.SetItem(index, 7, acodec)
+                    self.fcode.SetItem(index, 8, size)
+                    
                 
         self.txt_code.WriteText(f['format_id'])
         self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)

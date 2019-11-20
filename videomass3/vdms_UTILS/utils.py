@@ -38,24 +38,25 @@ import glob
 import math
 
 #------------------------------------------------------------------------
-def format_bytes(bytes):
+def format_bytes(n):
     """
-    Convert Format bytes to size output strings human readable, e.g.
+    Given a float number (bytes) returns size output 
+    strings human readable, e.g.
     out = format_bytes(9909043.20)
     It return a string digit with metric suffix
     
     """
-    filesize_metrics = ["B", "KiB", "MiB", "GiB", "TiB", 
-                        "PiB", "EiB", "ZiB", "YiB"]
-    kilo_size = 1024.0
+    unit = ["B", "KiB", "MiB", "GiB", "TiB", 
+            "PiB", "EiB", "ZiB", "YiB"]
+    const = 1024.0
     
-    if bytes == 0.0:
+    if n == 0.0: # if 0.0 or 0 raise ValueError: math domain error
         exponent = 0
     else:
-        exponent = int(math.log(bytes, kilo_size))
+        exponent = int(math.log(n, const)) # get unit index
 
-    suffix = filesize_metrics[exponent]
-    output_value = bytes / (kilo_size ** exponent)
+    suffix = unit[exponent] # unit index
+    output_value = n / (const ** exponent)
 
     return "%.2f%s" % (output_value, suffix)
 #------------------------------------------------------------------------
@@ -68,17 +69,17 @@ def to_bytes(string):
     
     """
     value = 0.0
-    filesize_metrics = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
-    kilo_size = 1024.0
+    unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
+    const = 1024.0
 
-    for index, metric in enumerate(reversed(filesize_metrics)):
+    for index, metric in enumerate(reversed(unit)):
         if metric in string:
             value = float(string.split(metric)[0])
             break
 
-    exponent = index * (-1) + (len(filesize_metrics) - 1)
+    exponent = index * (-1) + (len(unit) - 1)
 
-    return round(value * (kilo_size ** exponent), 2)
+    return round(value * (const ** exponent), 2)
 #------------------------------------------------------------------------
 
 
