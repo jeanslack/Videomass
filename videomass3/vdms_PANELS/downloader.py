@@ -29,6 +29,7 @@
 #from __future__ import unicode_literals
 from videomass3.vdms_IO import IO_tools
 from videomass3.vdms_UTILS.utils import format_bytes
+from videomass3.vdms_UTILS.utils import time_human
 from videomass3.vdms_DIALOGS.ydl_mediainfo import YDL_Mediainfo
 import wx
 
@@ -67,7 +68,7 @@ class Downloader(wx.Panel):
         self.parent = parent
         self.OS = OS
         self.info = []
-        self.format_code = []
+        self.error = False
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -142,7 +143,7 @@ class Downloader(wx.Panel):
         self.fcode = wx.ListCtrl(self, wx.ID_ANY,style=wx.LC_REPORT | 
                                                   wx.SUNKEN_BORDER
                                     )
-        self.fcode.Disable()
+        
         sizer.Add(self.fcode, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
         self.fcode.InsertColumn(0, (_('TITLE')), width=180)
@@ -154,6 +155,7 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(6, (_('fps')), width=60)
         self.fcode.InsertColumn(7, (_('Audio Codec')), width=110)
         self.fcode.InsertColumn(8, (_('Size')), width=80)
+        self.fcode.Hide()
         
         
         if OS == 'Darwin':
@@ -174,12 +176,18 @@ class Downloader(wx.Panel):
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
     
     #-----------------------------------------------------------------#
-    def get_info(self):
+    def parse_info(self):
         """
-        
+        Data parsing from youtube-dl extract_info. This method should 
+        also populate the listctrl and fill the self.info list.
+
+        If meta[1] is None, sets self.info attribute with dict objetc 
+        items and return error=False. Otherwise self.info is a empty 
+        list and return error=True. 
         """
         index = 0
         if not self.info:
+            self.txt_code.Clear()
             self.parent.statusbar_msg(_("wait... I'm getting the data"), 
                                         'YELLOW')
             for link in self.parent.data:
@@ -188,25 +196,29 @@ class Downloader(wx.Panel):
                     if meta[1]:
                         self.parent.statusbar_msg('Youtube Downloader', None)
                         wx.MessageBox(meta[1],'youtube_dl ERROR', wx.ICON_ERROR)
-                        self.info = []
-                        return
+                        self.info, self.error = [], True
+                        return self.error
                     if 'entries' in meta[0]: 
                         meta[0]['entries'][0] # not parse all playlist
-                    
+                    ftime = '%s (%s sec.)' % (time_human(meta[0]['duration']),
+                                              meta[0]['duration'])
+                    date = '%s/%s/%s' %(meta[0]['upload_date'][:4],
+                                        meta[0]['upload_date'][4:6],
+                                        meta[0]['upload_date'][6:8])
                     self.info.append({
                                 'url': link,
                                 'title': meta[0]['title'], 
                                 'categories': meta[0]['categories'],
                                 'license': meta[0]['license'],
                                 'format': meta[0]['format'],
-                                'upload_date': meta[0]['upload_date'],
+                                'upload_date': date,
                                 'uploader': meta[0]['uploader'],
                                 'view': meta[0]['view_count'],
                                 'like': meta[0]['like_count'],
                                 'dislike': meta[0]['dislike_count'],
                                 'average_rating': meta[0]['average_rating'],
                                 'id': meta[0]['id'],
-                                'duration': meta[0]['duration'],
+                                'duration': ftime,
                                 'description': meta[0]['description'],
                                     })
                     self.fcode.InsertItem(index, meta[0]['title'])
@@ -241,89 +253,61 @@ class Downloader(wx.Panel):
                         self.fcode.SetItem(index, 7, acodec)
                         self.fcode.SetItem(index, 8, size)
 
-                                          
-
-        self.parent.statusbar_msg('Youtube Downloader', None)  
+            self.txt_code.WriteText(f['format_id'])
+        self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)  
         
-        #dialog = YDL_Mediainfo(self.info, self.OS)
-        #dialog.Show()
+        return self.error
+    
     #-----------------------------------------------------------------#
-    def get_format_codes(self):
+    def on_show_info(self):
         """
-        get format_code from extract_info data
+        show data information. This method is called by the main frame 
+        when the 'show stream information' button is pressed.
         
         """
-        if self.fcode.GetItemCount() > 0:
-            return
-        self.txt_code.SetValue('')
-        index = 0
-        self.parent.statusbar_msg(_("wait... I'm getting the data"), 'YELLOW')
-        for link in self.parent.data:
-            data = IO_tools.youtube_info(link)
-            for meta in data:
-                if meta[1]:
-                    self.parent.statusbar_msg('Youtube Downloader', None)
-                    wx.MessageBox(meta[1],'youtube_dl ERROR', wx.ICON_ERROR)
-                    return
-                if 'entries' in meta[0]: 
-                    meta[0]['entries'][0] # not parse all playlist
-                self.fcode.InsertItem(index, meta[0]['title'])
-                self.fcode.SetItem(index, 1, link)
-                self.fcode.SetItemBackgroundColour(index, 'GREEN')
-                formats = meta[0].get('formats', [meta[0]])
-                for f in formats:
-                    index+=1
-                    if f['vcodec'] == 'none':
-                        vcodec = ''
-                        fps = ''
-                    else:
-                        vcodec = f['vcodec']
-                        fps = '%sfps' % f['fps']
-                    if f['acodec'] == 'none':
-                        acodec = 'Video only'
-                    else:
-                        acodec = f['acodec']
-                    if f['filesize']:
-                        size = format_bytes(float(f['filesize']))
-                    else:
-                        size = ''
-                        
-                    self.fcode.InsertItem(index, '' )
-                    self.fcode.SetItem(index, 1, '')
-                    self.fcode.SetItem(index, 2, f['format_id'] )
-                    self.fcode.SetItem(index, 3, f['ext'])
-                    self.fcode.SetItem(index, 4, f['format'].split('-')[1])
-                    self.fcode.SetItem(index, 5, vcodec)
-                    self.fcode.SetItem(index, 6, fps)
-                    self.fcode.SetItem(index, 7, acodec)
-                    self.fcode.SetItem(index, 8, size)
-                    
-                
-        self.txt_code.WriteText(f['format_id'])
-        self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)
+        if not self.info:
+            error = self.parse_info()
+            if error:
+                return
 
+        dialog = YDL_Mediainfo(self.info, self.OS)
+        dialog.Show()
+    #-----------------------------------------------------------------#
+    def on_format_codes(self):
+        """
+        Show listctrl to choose format code 
+        
+        """
+        if not self.info:
+            error = self.parse_info()
+            if error:
+                return
+
+        self.fcode.Show()
+        self.Layout()
     #-----------------------------------------------------------------#
     def on_Choice(self, event):
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
             self.cmbx_vq.Enable(), self.txt_code.Disable()
-            self.fcode.Disable(), self.stext.Disable()
+            self.fcode.Hide(), self.stext.Disable()
             
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
             self.cmbx_vq.Enable(), self.txt_code.Disable()
-            self.fcode.Disable(), self.stext.Disable()
+            self.fcode.Hide(), self.stext.Disable()
             
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Enable(), self.txt_code.Disable()
-            self.fcode.Disable(), self.stext.Disable()
+            self.fcode.Hide(), self.stext.Disable()
             
         elif self.choice.GetSelection() == 3:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable(), self.txt_code.Enable()
-            self.fcode.Enable(), self.stext.Enable()
-            self.get_format_codes()
+            #self.fcode.Enable(), 
+            self.stext.Enable()
+            self.on_format_codes()
 
     #-----------------------------------------------------------------#
     def on_Vq(self, event):

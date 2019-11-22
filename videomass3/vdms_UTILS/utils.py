@@ -82,112 +82,26 @@ def to_bytes(string):
     return round(value * (const ** exponent), 2)
 #------------------------------------------------------------------------
 
-
-def copy_restore(src, dest):
+def time_seconds(time):
     """
-    function for restore file. File name is owner choice and can be an preset
-    or not. If file exist overwrite it.
-    """
-    try:
-        shutil.copyfile(src, '%s' % (dest))
-    except FileNotFoundError as err:
-        return err
+    convert time human to seconds
     
-    return
-
-#------------------------------------------------------------------#
-def copy_backup(src, dest):
     """
-    function for backup file. File name is owner choice
-    """
-    shutil.copyfile('%s' % (src), dest)
-
-#------------------------------------------------------------------#
-def makedir_move(ext, name_dir):
-    """
-    this function is for make directory and move-in file (ext, name_dir: 
-    extension, directory name)
-    """
-    try: # if exist dir not exit OSError, go...
-        os.mkdir("%s" % (name_dir))
-    except OSError as err:
-        return err
-    move_on(ext, name_dir)
-
-#------------------------------------------------------------------#
-def rename_move_indir(src, ext, name_dir):
-    """
-    this function includes "makedir_move(ext, name_dir)" function but cycling 
-    files renames groups
-    """
-    for path in os.listdir(os.getcwd()):
-        nuovoNome = path.replace("%s" % (src), "%s" % (ext))
-        os.rename(path, nuovoNome)
-    try:
-        os.mkdir("%s" % (name_dir))
-    except: OSError
+    if time == 'N/A':
+        return int('0')
     
-    move_on(ext, name_dir)
-
-#------------------------------------------------------------------#
-def rename_file(src, ext):
-    """
-    Cycling for file rename groups only
-    """
-    for path in os.listdir(os.getcwd()):
-        nuovoNome = path.replace("%s" % (src), "%s" % (ext))
-        os.rename(path,nuovoNome)
-
-#------------------------------------------------------------------#
-def move_on(ext, name_dir):
-    """
-    Cycling on name extension file and move-on in other directory
-    """
-    files = glob.glob("*%s" % (ext))
-    for sposta in files:
-        #shutil.move(sposta, '%s' % (name_dir))
-        print ('%s   %s' % (sposta,name_dir))
-        
-#------------------------------------------------------------------#
-def copy_on(ext, name_dir, path_confdir):
-    """
-    Cycling on path and file extension name for copy files in other directory
-    ARGUMENTS:
-    ext: files extension with no dot
-    name_dir: path name with no basename
-    """
-    files = glob.glob("%s/*.%s" % (name_dir, ext))
+    pos = time.split(':')
+    h,m,s = pos[0],pos[1],pos[2]
+    duration = (int(h)*60+ int(m)*60+ float(s))
     
-    for copia in files:
-        shutil.copy(copia, '%s' % (path_confdir))
+    return duration
 
-#------------------------------------------------------------------#
-def delete(ext):
+#------------------------------------------------------------------------
+def time_human(seconds):
     """
-    function for file group delete with same extension
+    Convert from seconds to time human. Accept integear only e.g.
+    time_human(2300)
     """
-    files = glob.glob("*%s" % (ext))
-    for rimuovi in files:
-        os.remove(rimuovi)
-
-#------------------------------------------------------------------#
-def delete_noempty_dir(path):
-    """
-    Delete a entire directory no empty
-    """
-    shutil.rmtree(path)
-
-#------------------------------------------------------------------#
-#def exist_file(inputfile):
-    #"""
-    #Control if exist an file name
-    
-    #"""
-    #os.chdir(PWD)
-    #file_exist =  os.path.isfile(os.path.join(PWD,'%s' % inputfile))
-    #if file_exist is False:
-        #call('clear', shell = True) 
-        #print ("Nella directory: '%s'\nNessun file da processare che abbia "
-            #"questo nome:\033[0;1m %s\033[0m" % (PWD, inputfile)
-            #)
-        #sys.exit("...Error\n")
+    m, s = divmod(seconds, 60)
+    h, m = divmod(m, 60)
+    return "%d:%02d:%02d" % (h, m, s)

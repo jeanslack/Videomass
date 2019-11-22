@@ -323,6 +323,7 @@ class MainFrame(wx.Frame):
             self.ytDownloader.fcode.DeleteAllItems()
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
+            self.ytDownloader.info, self.ytDownloader.error = [], False
             self.ytDownloader.Hide()
             
         elif self.VconvPanel.IsShown():
@@ -401,7 +402,7 @@ class MainFrame(wx.Frame):
         Redirect input file clicked at stream_info for metadata display
         """
         if self.topicname == 'Youtube Downloader':
-            self.ytDownloader.get_info()
+            self.ytDownloader.on_show_info()
         else:
             dialog = Mediainfo(self.data, self.OS,)
             dialog.Show()

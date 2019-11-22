@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: mediainfo.py
-# Porpose: show media streams information through youtube-dl
+# Porpose: show media streams information through youtube-dl.extract_info
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -29,9 +29,8 @@
 
 import wx
 import os
-import webbrowser
 
-class YDL_Mediainfo(wx.Dialog):
+class YDL_Mediainfo(wx.Frame):
     """
     Dialog to display streams information from youtube-dl data. 
     """
@@ -41,9 +40,9 @@ class YDL_Mediainfo(wx.Dialog):
         self.data = data
         # with 'None' not depend from videomass. With 'parent, -1' if close
         # videomass also close mediainfo window:
-        #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
-                                             wx.RESIZE_BORDER)
+        wx.Frame.__init__(self, None)
+        #wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
+                                             #wx.RESIZE_BORDER)
         # Add widget controls
         self.url_select = wx.ListCtrl(self, wx.ID_ANY,
                                       style=wx.LC_REPORT | wx.SUNKEN_BORDER)
@@ -64,7 +63,7 @@ class YDL_Mediainfo(wx.Dialog):
             self.textCtrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
         else:
             self.url_select.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.textCtrl.SetFont(wx.Font(8, wx.DECORATIVE, wx.NORMAL, wx.BOLD))
+            self.textCtrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.url_select, 0, wx.ALL|wx.EXPAND, 5)
@@ -104,22 +103,28 @@ class YDL_Mediainfo(wx.Dialog):
         
         for info in self.data:
             if info['title'] == item:
-                text = ("Categories:  {}\nLicense:  {}\nUpload Date:  {}\n"
-                        "Uploader:  {}\nView:  {}\nLike:  {}\n"
-                        "Dislike:  {}\nAverage Rating:  {}\nID  :  {}\n"
-                        "Duration:  {}\nDescription:  {}\n".format( 
-                                                    info['categories'],
-                                                    info['license'],
-                                                    info['upload_date'],
-                                                    info['uploader'],
-                                                    info['view'],
-                                                    info['like'],
-                                                    info['dislike'],
-                                                    info['average_rating'],
-                                                    info['id'],
-                                                    info['duration'],
-                                                    info['description'],
-                                                    ))
+                text = ("Categories:      {}\n"
+                        "License:         {}\n"
+                        "Upload Date:     {}\n"
+                        "Uploader:        {}\n"
+                        "View Count:      {}\n"
+                        "Like Count:      {}\n"
+                        "Dislike Count:   {}\n"
+                        "Average Rating:  {}\n"
+                        "ID:              {}\n"
+                        "Duration:        {}\n"
+                        "Description:     {}\n".format(info['categories'],
+                                                       info['license'],
+                                                       info['upload_date'],
+                                                       info['uploader'],
+                                                       info['view'],
+                                                       info['like'],
+                                                       info['dislike'],
+                                                       info['average_rating'],
+                                                       info['id'],
+                                                       info['duration'],
+                                                       info['description'],
+                                                       ))
         self.textCtrl.AppendText(text)                
     #------------------------------------------------------------------#
     
