@@ -111,6 +111,8 @@ def my_hook(d):
                     duration='Done downloading, now converting ...',
                     status='FINISHED',
                     )
+    
+    
 #-------------------------------------------------------------------------#
 
 class YoutubeDL_Downloader(Thread):

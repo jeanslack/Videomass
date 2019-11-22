@@ -294,7 +294,7 @@ class Logging_Console(wx.Panel):
         The user change idea and was stop process
         """
         self.PARENT_THREAD.stop()
-        self.parent.statusbar_msg(_("wait... I'm aborting"), '#ea312d')
+        self.parent.statusbar_msg(_("wait... I'm aborting"), 'YELLOW')
         self.PARENT_THREAD.join()
         self.parent.statusbar_msg(_("Status: Interrupted"), None)
         self.ABORT = True
@@ -307,11 +307,15 @@ class Logging_Console(wx.Panel):
         
         """
         if not self.PARENT_THREAD == None:
-            wx.MessageBox(_('There are still processes running.. if you '
-                            'want to stop them, use the "Abort" button '
-                            'or wait to complete'), 
-                            "Info", wx.ICON_INFORMATION, self)
-            return
+            if wx.MessageBox(_('There are still processes running.. if you '
+                            'want to stop them, use the "Abort" button.\n\n'
+                            'Do you want to kill application?'), 
+                             _('Please confirm'), 
+                            wx.ICON_QUESTION |wx.YES_NO, self) == wx.NO:
+                return
+            
+            self.parent.on_Kill()
+            
         # reset all before close
         self.ckbx_text.Show()
         self.button_stop.Enable(True)

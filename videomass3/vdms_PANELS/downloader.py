@@ -29,6 +29,7 @@
 #from __future__ import unicode_literals
 from videomass3.vdms_IO import IO_tools
 from videomass3.vdms_UTILS.utils import format_bytes
+from videomass3.vdms_DIALOGS.ydl_mediainfo import YDL_Mediainfo
 import wx
 
 
@@ -65,6 +66,8 @@ class Downloader(wx.Panel):
         """
         self.parent = parent
         self.OS = OS
+        self.info = []
+        self.format_code = []
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -169,7 +172,81 @@ class Downloader(wx.Panel):
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
+    
+    #-----------------------------------------------------------------#
+    def get_info(self):
+        """
         
+        """
+        index = 0
+        if not self.info:
+            self.parent.statusbar_msg(_("wait... I'm getting the data"), 
+                                        'YELLOW')
+            for link in self.parent.data:
+                data = IO_tools.youtube_info(link)
+                for meta in data:
+                    if meta[1]:
+                        self.parent.statusbar_msg('Youtube Downloader', None)
+                        wx.MessageBox(meta[1],'youtube_dl ERROR', wx.ICON_ERROR)
+                        self.info = []
+                        return
+                    if 'entries' in meta[0]: 
+                        meta[0]['entries'][0] # not parse all playlist
+                    
+                    self.info.append({
+                                'url': link,
+                                'title': meta[0]['title'], 
+                                'categories': meta[0]['categories'],
+                                'license': meta[0]['license'],
+                                'format': meta[0]['format'],
+                                'upload_date': meta[0]['upload_date'],
+                                'uploader': meta[0]['uploader'],
+                                'view': meta[0]['view_count'],
+                                'like': meta[0]['like_count'],
+                                'dislike': meta[0]['dislike_count'],
+                                'average_rating': meta[0]['average_rating'],
+                                'id': meta[0]['id'],
+                                'duration': meta[0]['duration'],
+                                'description': meta[0]['description'],
+                                    })
+                    self.fcode.InsertItem(index, meta[0]['title'])
+                    self.fcode.SetItem(index, 1, link)
+                    self.fcode.SetItemBackgroundColour(index, 'GREEN')
+
+                    formats = meta[0].get('formats', [meta[0]])
+                    for f in formats:
+                        index+=1
+                        if f['vcodec'] == 'none':
+                            vcodec = ''
+                            fps = ''
+                        else:
+                            vcodec = f['vcodec']
+                            fps = '%sfps' % f['fps']
+                        if f['acodec'] == 'none':
+                            acodec = 'Video only'
+                        else:
+                            acodec = f['acodec']
+                        if f['filesize']:
+                            size = format_bytes(float(f['filesize']))
+                        else:
+                            size = ''
+                        
+                        self.fcode.InsertItem(index, '' )
+                        self.fcode.SetItem(index, 1, '')
+                        self.fcode.SetItem(index, 2, f['format_id'] )
+                        self.fcode.SetItem(index, 3, f['ext'])
+                        self.fcode.SetItem(index, 4, f['format'].split('-')[1])
+                        self.fcode.SetItem(index, 5, vcodec)
+                        self.fcode.SetItem(index, 6, fps)
+                        self.fcode.SetItem(index, 7, acodec)
+                        self.fcode.SetItem(index, 8, size)
+
+                                          
+
+        self.parent.statusbar_msg('Youtube Downloader', None)  
+        
+        #dialog = YDL_Mediainfo(self.info, self.OS)
+        #dialog.Show()
     #-----------------------------------------------------------------#
     def get_format_codes(self):
         """

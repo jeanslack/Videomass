@@ -400,9 +400,11 @@ class MainFrame(wx.Frame):
         """
         Redirect input file clicked at stream_info for metadata display
         """
-        
-        dialog = Mediainfo(self.data, self.OS,)
-        dialog.Show()
+        if self.topicname == 'Youtube Downloader':
+            self.ytDownloader.get_info()
+        else:
+            dialog = Mediainfo(self.data, self.OS,)
+            dialog.Show()
     #------------------------------------------------------------------#
     
     def ExportPlay(self, event):
@@ -438,20 +440,7 @@ class MainFrame(wx.Frame):
             self.AconvPanel.Addprof()
         else:
             print ('Videomass: Error, no panels shown')
-            
-    #------------------------------------------------------------------#
-    #def onCheckBox(self, event):
-        #"""
-        #Intercept the Checkbox event in the filedrop panel
-        #and set same file sources destination path
-        #"""
-        #if self.fileDnDTarget.IsShown():
-            #self.fileDnDTarget.same_filedest()
-            #self.file_destin = self.fileDnDTarget.file_dest
-            
-        #elif self.textDnDTarget.IsShown():
-            #self.textDnDTarget.same_filedest()
-            #self.file_destin = self.textDnDTarget.file_dest
+        
     #------------------------------------------------------------------#
     def onCustomSave(self, event):
         """
@@ -481,6 +470,15 @@ class MainFrame(wx.Frame):
                 self.Destroy()
         else:
             self.choosetopicRetrieve()
+    
+     #------------------------------------------------------------------#
+    def on_Kill(self):
+        """
+        Try to kill application during a process thread
+        that does not want to terminate with the abort button
+        
+        """
+        self.Destroy()
     
     #### -------------   BUILD THE MENU BAR  ----------------###
     def videomass_menu_bar(self):
@@ -853,7 +851,7 @@ class MainFrame(wx.Frame):
         self.ytDownloader.Show()#, self.SetSize((700, 800))
         self.statusbar_msg(_('Youtube Downloader'), None)
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
-        self.btn_saveprf.Hide(),self.btn_duration.Hide(),self.btn_metaI.Hide()
+        self.btn_saveprf.Hide(),self.btn_duration.Hide(),self.btn_metaI.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
 

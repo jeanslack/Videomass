@@ -750,7 +750,8 @@ class Audio_Conv(wx.Panel):
                                               ))
         vinc = DIRconf.split('videomass')[0] + 'vinc'
         if os.path.exists(vinc):
-            with wx.FileDialog(self, _("Videomass: Choose a preset to storing"), 
+            with wx.FileDialog(self, _("Videomass: Choose a preset "
+                                       "to storing data"), 
                 defaultDir=os.path.join(vinc, 'presets'),
                 wildcard="Vinc presets (*.vip;)|*.vip;",
                 style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
