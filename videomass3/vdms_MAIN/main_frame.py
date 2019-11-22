@@ -267,8 +267,7 @@ class MainFrame(wx.Frame):
         self.btn_duration.SetToolTip(_('Set a global timeline to apply to '
                                        'any media file with duration.'
                                            ))
-        self.btn_metaI.SetToolTip(_("Show information about the metadata "
-                                        "of the selected imported file." 
+        self.btn_metaI.SetToolTip(_("Show additional media information." 
                                         ))
         self.btn_playO.SetToolTip(_("Choose a file to playback in the "
                                     "destination folder"

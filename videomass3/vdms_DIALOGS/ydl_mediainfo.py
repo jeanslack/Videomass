@@ -60,10 +60,10 @@ class YDL_Mediainfo(wx.Frame):
         self.textCtrl.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
         if OS == 'Darwin':
             self.url_select.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.textCtrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.textCtrl.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.BOLD))
         else:
             self.url_select.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.textCtrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.textCtrl.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
         #----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.url_select, 0, wx.ALL|wx.EXPAND, 5)
