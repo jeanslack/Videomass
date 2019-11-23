@@ -26,7 +26,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
  
 #########################################################
-#from __future__ import unicode_literals
 from videomass3.vdms_IO import IO_tools
 from videomass3.vdms_UTILS.utils import format_bytes
 from videomass3.vdms_UTILS.utils import time_human
@@ -118,7 +117,7 @@ class Downloader(wx.Panel):
                                    )
         self.txt_code.Disable()
         self.stext = wx.StaticText(self, wx.ID_ANY, (
-                                        _('Enter `Format Code` here:')))
+                                        _('Enter Format Code here:')))
         self.stext.Disable()
         grid_v.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         grid_v.Add(self.txt_code, 0, wx.ALL, 5)
