@@ -157,7 +157,7 @@ class FileDnD(wx.Panel):
     """
     Panel for dragNdrop files queue. Accept one or more files.
     """
-    def __init__(self, parent, ffprobe_link, go_icn):  
+    def __init__(self, parent, ffprobe_link, forward_icn, back_icn):  
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname # path name files destination
@@ -175,13 +175,19 @@ class FileDnD(wx.Panel):
                                                 style=wx.TE_PROCESS_ENTER| 
                                                       wx.TE_READONLY
                                                       )
-        self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
-        self.btn_go.SetBitmap(wx.Bitmap(go_icn),wx.LEFT)
+        self.btn_forward = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
+        self.btn_forward.SetBitmap(wx.Bitmap(forward_icn),wx.LEFT)
+        self.btn_back = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
+        self.btn_back.SetBitmap(wx.Bitmap(back_icn),wx.LEFT)
+        
         self.lbl = wx.StaticText(self, label=_("Drag one or more files below"))
         self.flCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.btn_go, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
+        sizerdir = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizerdir, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
+        sizerdir.Add(self.btn_back, 0, wx.ALL|wx.ALIGN_LEFT, 5)
+        sizerdir.Add(self.btn_forward, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
@@ -205,7 +211,7 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
+        self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_forward)
         
         self.text_path_save.SetValue(self.file_dest)
     
@@ -255,7 +261,7 @@ class FileDnD(wx.Panel):
         
         if not self.selected:
             self.parent.statusbar_msg(_('No file selected to `%s` yet') % 
-                                         menuItem.GetLabel(), yellow)
+                                         menuItem.GetLabel(), 'GOLDENROD')
         else:
             self.parent.statusbar_msg('Add Files', None)
                 

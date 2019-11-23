@@ -27,6 +27,12 @@
 
 #########################################################
 from __future__ import unicode_literals 
+try:
+    import youtube_dl
+    ydl = True
+except ModuleNotFoundError:
+    ydl = False
+    
 import wx
 import wx.lib.agw.hyperlink as hpl
 
@@ -145,10 +151,9 @@ class Choose_Topic(wx.Panel):
         #self.parent.File_import(self,'Pictures Slideshow Maker')
     
     def on_YoutubeDL(self, event):
-        try:
-            import youtube_dl
-        except ModuleNotFoundError:
-            wx.MessageBox(_('youtube-dl not found, please install it'),
+        if not ydl:
+            wx.MessageBox(_('"youtube_dl" module not found. To use this feature '
+                            'please install youtube-dl.'),
                             'Videomass', wx.ICON_ERROR)
             return
 

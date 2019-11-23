@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: dragNdrop.py
-# Porpose: drag n drop interface
+# Name: textNdrop.py
+# Porpose: Allows you to add URLs to download media
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -26,7 +26,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import wx
 import os
 
@@ -37,15 +36,13 @@ red = '#ea312d'
 yellow = '#a29500'
 greenolive = '#6aaf23'
 orange = '#f28924'
-
-
 ########################################################################
 
 class TextDnD(wx.Panel):
     """
-    Accept one or more urls.
+    Accept one or more urls separated by a white space or newline.
     """
-    def __init__(self, parent, go_icn):
+    def __init__(self, parent, forward_icn, back_icn):
         """
         """
         self.parent = parent # parent is the MainFrame
@@ -61,12 +58,17 @@ class TextDnD(wx.Panel):
                                                 style=wx.TE_PROCESS_ENTER| 
                                                       wx.TE_READONLY
                                                       )
-        self.btn_go = wx.Button(self, wx.ID_ANY, "GO!", size=(-1,-1))
-        self.btn_go.SetBitmap(wx.Bitmap(go_icn),wx.LEFT)
+        self.btn_forward = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
+        self.btn_forward.SetBitmap(wx.Bitmap(forward_icn),wx.LEFT)
+        self.btn_back = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
+        self.btn_back.SetBitmap(wx.Bitmap(back_icn),wx.LEFT)
         self.lbl = wx.StaticText(self, label=_("Enter one or more URLs below"))
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.btn_go, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
+        sizerdir = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizerdir, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
+        sizerdir.Add(self.btn_back, 0, wx.ALL|wx.ALIGN_LEFT, 5)
+        sizerdir.Add(self.btn_forward, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
@@ -85,7 +87,7 @@ class TextDnD(wx.Panel):
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
-        self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_go)
+        self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_forward)
         
         self.text_path_save.SetValue(self.file_dest)
         
@@ -108,7 +110,7 @@ class TextDnD(wx.Panel):
         Delete and clear all text lines of the TxtCtrl
 
         """
-        self.textCtrl.SetValue('')
+        self.textCtrl.Clear()
     #----------------------------------------------------------------------
     def on_custom_save(self):
         """

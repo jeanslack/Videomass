@@ -141,6 +141,7 @@ class Appearance(object):
         ic_peaklevel = '%s/peaklevel.png' % self.x18
         ic_audiotrack = '%s/audiotrack.png' % self.x18
         icon_go = '%s/icon_go.png' % self.x18
+        icon_back = '%s/icon_back.png' % self.x18
         
         return [os.path.join(norm) for norm in [self.videomass_icon, # 0
                                                 icon_switchvideomass, # 2
@@ -169,4 +170,5 @@ class Appearance(object):
                                                 icon_slideshow, #30
                                                 icon_audionorm, # 31
                                                 icon_go, # 32
+                                                icon_back, # 33
                                                 ]]

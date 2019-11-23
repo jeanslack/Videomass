@@ -71,27 +71,20 @@ class MainFrame(wx.Frame):
                program. How it can be localized depend if Videomass is 
                run as portable program or installated program.
         """
-        self.videomass_icon = pathicons[0]
-        self.icon_runconversion = pathicons[2]
-
         barC = setui[4][12].split(',') 
         barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
         # toolbar panel colour
         bBtnC = setui[4][13].split(',')
         self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2]))
         # toolbar buttons colour
-        
         fBtnC = setui[4][14].split(',')
         self.fBtnC = wx.Colour(int(fBtnC[0]),int(fBtnC[1]),int(fBtnC[2]))
         # Buttons Font Colour 
-        
-        #self.helping = setui[5]# path contestual help for helping:
         self.OS = setui[0]# ID of the operative system:
         SRCpath = setui[1]# share dir (are where the origin files?):
         self.PATHconf = setui[6]
         self.WORKdir = setui[7]
         self.DIRconf = setui[8]
-        
         #---------------------------#
         self.threads = setui[4][2]#ffmpeg option, set the cpu threads
         self.ffplay_loglevel = setui[4][3]
@@ -104,6 +97,8 @@ class MainFrame(wx.Frame):
         self.ffprobe_link = ffprobe_link
         self.ffplay_link = ffplay_link
         self.iconset = setui[4][11]
+        self.videomass_icon = pathicons[0]
+        self.icon_runconversion = pathicons[2]
         #-------------------------------# 
         self.data = None# list of items in list control
         self.file_destin = None # path name for file saved destination
@@ -166,7 +161,6 @@ class MainFrame(wx.Frame):
         self.btn_saveprf.SetTopEndColour(self.bBtnC)
 
         self.btnpanel.SetBackgroundColour(barColor)
-        #self.btnpanel.SetBackgroundColour(wx.Colour(205, 235, 222))
         #---------- others panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self, 
                                                      self.OS,
@@ -215,14 +209,17 @@ class MainFrame(wx.Frame):
                                                 self.bBtnC,
                                                 self.fBtnC,
                                                 )
-
         self.fileDnDTarget = filedrop.FileDnD(self, 
                                               self.ffprobe_link, 
-                                              pathicons[26]) # panel
-        self.textDnDTarget = textdrop.TextDnD(self, pathicons[26]) # panel
-        
+                                              pathicons[26], 
+                                              pathicons[27]
+                                              )
+        self.textDnDTarget = textdrop.TextDnD(self, 
+                                              pathicons[26], 
+                                              pathicons[27]
+                                              )
         self.ProcessPanel = Logging_Console(self)
-        
+        # hide panels
         self.fileDnDTarget.Hide()
         self.textDnDTarget.Hide()
         self.ytDownloader.Hide()
@@ -246,7 +243,6 @@ class MainFrame(wx.Frame):
         self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.AconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
-        
         #----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
         icon = wx.Icon()
@@ -258,11 +254,9 @@ class MainFrame(wx.Frame):
             self.SetSize((900, 530))
         else:
             self.SetSize((1000, 600))
-        #self.Centre()
-        #self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
+
+        self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
-        #self.Layout()
-        
         # Tooltips:
         self.btn_duration.SetToolTip(_('Set a global timeline to apply to '
                                        'any media file with duration.'
@@ -280,7 +274,6 @@ class MainFrame(wx.Frame):
         self.videomass_tool_bar()
         # status bar
         self.sb = self.CreateStatusBar(1)
-        
         # hide toolbar and buttons bar
         self.toolbar.Hide()
         self.btnpanel.Hide()
@@ -288,7 +281,9 @@ class MainFrame(wx.Frame):
         
         #---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
+        self.fileDnDTarget.btn_back.Bind(wx.EVT_BUTTON, self.on_close)
         self.textDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
+        self.textDnDTarget.btn_back.Bind(wx.EVT_BUTTON, self.on_close)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
         self.Bind(wx.EVT_BUTTON, self.Saveprofile, self.btn_saveprf)
         self.Bind(wx.EVT_BUTTON, self.ImportInfo, self.btn_metaI)

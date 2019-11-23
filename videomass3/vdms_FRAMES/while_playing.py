@@ -57,11 +57,8 @@ class While_Playing(wx.Frame):
    
     """
     def __init__(self, OS):
-        wx.Frame.__init__(self, None, style=wx.MINIMIZE_BOX |  
-                                            wx.SYSTEM_MENU | 
-                                            wx.CAPTION | 
-                                            wx.CLOSE_BOX | 
-                                            wx.CLIP_CHILDREN
+        wx.Frame.__init__(self, None, style=wx.DEFAULT_FRAME_STYLE 
+                          & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)
                                             )
         """
         with 'None' not depend from parent:
@@ -72,15 +69,11 @@ class While_Playing(wx.Frame):
         if close videomass also close parent window
         
         """
-        
+        #-------------------- widget --------------------------#
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        
-        
-        
         label1 = wx.StaticText(panel, wx.ID_ANY, keys)
         label2 = wx.StaticText(panel, wx.ID_ANY, explan)
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
-        
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: Shortcuts while playing"))
         label1.SetForegroundColour(wx.Colour('#008000'))
@@ -95,14 +88,9 @@ class While_Playing(wx.Frame):
         btngrid.Add(self.button_close, 0, wx.ALL, 5)
         panel.SetSizer(gr_s1)#
         #s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
-        s1.Add(panel, 1, )
+        s1.Add(panel, 0, )
         s1.Add(btngrid, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
-        
-        #self.SetSizer(s1)
-        #s1.Fit(self)
-        #self.Layout()
         self.SetSizerAndFit(s1)
-        
         # binding
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)

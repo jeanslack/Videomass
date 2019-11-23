@@ -188,7 +188,7 @@ class Downloader(wx.Panel):
         if not self.info:
             self.txt_code.Clear()
             self.parent.statusbar_msg(_("wait... I'm getting the data"), 
-                                        'YELLOW')
+                                        'GOLDENROD')
             for link in self.parent.data:
                 data = IO_tools.youtube_info(link)
                 for meta in data:
