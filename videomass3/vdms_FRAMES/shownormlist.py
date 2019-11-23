@@ -29,10 +29,10 @@
 
 import wx
 
-class NormalizationList(wx.Dialog):
+class NormalizationList(wx.Frame):
     """
-    Show a dialog with FFmpeg volumedetect command data and  report 
-    offset and gain results need for normalization process.
+    Show FFmpeg volumedetect command data and report offset and gain 
+    results need for normalization process.
     
     """
     def __init__(self, title, data, OS):
@@ -40,42 +40,35 @@ class NormalizationList(wx.Dialog):
         detailslist is a list of items list.
         
         """
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
-                                             wx.RESIZE_BORDER)
-        """
-        constructor:
-        with 'None' not depend from parent:
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Frame.__init__(self, None)
+        """constructor"""
         
-        With parent, -1:
-        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        if close videomass also close parent window:
-        
-        """
-        normlist = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | 
-                                                      wx.SUNKEN_BORDER)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        normlist = wx.ListCtrl(self.panel, wx.ID_ANY, style=wx.LC_REPORT | 
+                                                            wx.SUNKEN_BORDER)
         #----------------------Properties----------------------#
         self.SetTitle(_(title))
-        normlist.SetMinSize((850, 200))
+        self.SetSize((850, 400))
+        #normlist.SetMinSize((850, 200))
         normlist.InsertColumn(0, _('File name'), width=300)
         normlist.InsertColumn(1, _('Max volume dBFS'), width=150)
         normlist.InsertColumn(2, _('Mean volume dBFS'), width=150)
         normlist.InsertColumn(3, _('Offset dBFS'), width=100)
         normlist.InsertColumn(4, _('Result dBFS'), width=120)
-        self.button_close = wx.Button(self, wx.ID_CLOSE, "")
-        descript = wx.StaticText(self, wx.ID_ANY,  (_('Post-normalization '
+        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        descript = wx.StaticText(self.panel, wx.ID_ANY, (_('Post-normalization '
                                                       'references:')))
-        red = wx.StaticText(self, wx.ID_ANY, "\t")
+        red = wx.StaticText(self.panel, wx.ID_ANY, "\t")
         red.SetBackgroundColour(wx.Colour(233, 80, 77)) # #e9504d
-        txtred = wx.StaticText(self, wx.ID_ANY,  (_("=  Clipped peaks")))
+        txtred = wx.StaticText(self.panel, wx.ID_ANY,  (_("=  Clipped peaks")))
         
-        grey = wx.StaticText(self, wx.ID_ANY, "\t")
+        grey = wx.StaticText(self.panel, wx.ID_ANY, "\t")
         grey.SetBackgroundColour(wx.Colour(100, 100, 100))# #646464
-        txtgrey = wx.StaticText(self, wx.ID_ANY, (_("=  No changes")))
+        txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
         
-        yell = wx.StaticText(self, wx.ID_ANY, "\t")
+        yell = wx.StaticText(self.panel, wx.ID_ANY, "\t")
         yell.SetBackgroundColour(wx.Colour(198, 180, 38))# #C6B426
-        txtyell = wx.StaticText(self, wx.ID_ANY, (_("=  Below max peak")))
+        txtyell = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Below max peak")))
         
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -107,7 +100,7 @@ class NormalizationList(wx.Dialog):
         
         sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         gridbtn.Add(self.button_close, 1, wx.ALL, 5)
-        self.SetSizerAndFit(sizer)
+        self.panel.SetSizerAndFit(sizer)
         
         if OS == 'Darwin':
             normlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))

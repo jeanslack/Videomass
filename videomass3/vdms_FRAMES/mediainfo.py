@@ -31,25 +31,27 @@ import wx
 import os
 import webbrowser
 
-class Mediainfo(wx.Dialog):
+class Mediainfo(wx.Frame):
     """
-    Dialog to display streams information from ffprobe json data. 
+    Display streams information from ffprobe json data. 
     """
     def __init__(self, data, OS):
         """
+        NOTE constructor:: with 'None' not depend from videomass. 
+        With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
-        # with 'None' not depend from videomass. With 'parent, -1' if close
-        # videomass also close mediainfo window:
-        #wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
-                                             wx.RESIZE_BORDER)
+        wx.Frame.__init__(self, None)
+        '''constructor'''
+        
+        # add panel
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         # Add widget controls
-        self.file_select = wx.ListCtrl(self, wx.ID_ANY,
+        self.file_select = wx.ListCtrl(self.panel, wx.ID_ANY,
                                   style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                   )
         
-        notebook_1 = wx.Notebook(self, wx.ID_ANY)
+        notebook_1 = wx.Notebook(self.panel, wx.ID_ANY)
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
         self.format_ctrl = wx.ListCtrl(notebook_1_pane_1, wx.ID_ANY,
                                   style=wx.LC_REPORT | wx.SUNKEN_BORDER
@@ -69,7 +71,7 @@ class Mediainfo(wx.Dialog):
                                    style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                    )
         #button_help = wx.Button(self, wx.ID_HELP, "")
-        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
         self.SetTitle('Videomass - Multimedia Streams Information')
@@ -133,7 +135,7 @@ class Mediainfo(wx.Dialog):
         
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
         sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-        self.SetSizer(sizer_1)
+        self.panel.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
         

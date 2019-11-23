@@ -38,7 +38,7 @@ from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import audiodialogs 
 from videomass3.vdms_DIALOGS import presets_addnew
 from videomass3.vdms_DIALOGS import dialog_tools
-from videomass3.vdms_DIALOGS import shownormlist
+from videomass3.vdms_FRAMES import shownormlist
 
 # setting the path to the configuration directory:
 get = wx.GetApp()

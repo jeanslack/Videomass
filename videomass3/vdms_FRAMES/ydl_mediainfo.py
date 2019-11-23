@@ -32,23 +32,25 @@ import os
 
 class YDL_Mediainfo(wx.Frame):
     """
-    Dialog to display streams information from youtube-dl data. 
+    Display streams information from youtube-dl data. 
     """
     def __init__(self, data, OS):
         """
+        NOTE constructor:: with 'None' not depend from videomass. 
+        With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
-        # with 'None' not depend from videomass. With 'parent, -1' if close
-        # videomass also close mediainfo window:
         wx.Frame.__init__(self, None)
-        #wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
-                                             #wx.RESIZE_BORDER)
+        '''constructor'''
+        
+        # add panel
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         # Add widget controls
-        self.url_select = wx.ListCtrl(self, wx.ID_ANY,
+        self.url_select = wx.ListCtrl(self.panel, wx.ID_ANY,
                                       style=wx.LC_REPORT | wx.SUNKEN_BORDER)
-        self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "", 
+        self.textCtrl = wx.TextCtrl(self.panel, wx.ID_ANY, "", 
                                    style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
-        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
         self.SetTitle('Videomass - Multimedia Streams Information')
@@ -74,7 +76,7 @@ class YDL_Mediainfo(wx.Frame):
         grid_buttons = wx.GridSizer(1, 1, 0, 0)
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
         sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-        self.SetSizer(sizer_1)
+        self.panel.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
 

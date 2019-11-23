@@ -33,9 +33,9 @@ import webbrowser
 from videomass3.vdms_DIALOGS import dialog_tools
 from videomass3.vdms_DIALOGS import settings
 from videomass3.vdms_DIALOGS import infoprg
-from videomass3.vdms_DIALOGS import while_playing
-from videomass3.vdms_DIALOGS import ffmpeg_search
-from videomass3.vdms_DIALOGS.mediainfo import Mediainfo
+from videomass3.vdms_FRAMES import while_playing
+from videomass3.vdms_FRAMES import ffmpeg_search
+from videomass3.vdms_FRAMES.mediainfo import Mediainfo
 from videomass3.vdms_PANELS import choose_topic
 from videomass3.vdms_PANELS import filedrop
 from videomass3.vdms_PANELS import textdrop

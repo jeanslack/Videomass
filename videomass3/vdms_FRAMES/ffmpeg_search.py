@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ffmpeg_search.py
-# Porpose: Show a dialog box to search FFmpeg topics
+# Porpose: Show a box to search FFmpeg topics
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -31,7 +31,7 @@ from videomass3.vdms_IO import IO_tools
 import wx
 import re
 
-class FFmpeg_Search(wx.Dialog):
+class FFmpeg_Search(wx.Frame):
     """
     Search and view all the FFmpeg help options.
     
@@ -47,40 +47,40 @@ class FFmpeg_Search(wx.Dialog):
         self.OS = OS
         self.row = None
         
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE |
-                                             wx.RESIZE_BORDER
-                                             )
+        wx.Frame.__init__(self, None)
         """
         with 'None' not depend from parent:
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Frame.__init__(self, None)
         
         With parent, -1:
-        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        if close videomass also close parent window:
+        wx.Frame.__init__(self, parent, -1)
+        if close videomass also close parent window
         
         """
-        self.cmbx_choice = wx.ComboBox(self,wx.ID_ANY, choices=[
-                        ("--"),
-                        (_("print basic options")),
-                        (_("print more options")),
-                        (_("print all options (very long)")),
-                        (_("show available devices")),
-                        (_("show available bit stream filters")),
-                        (_("show available protocols")),
-                        (_("show available filters")),
-                        (_("show available pixel formats")),
-                        (_("show available audio sample formats")),
-                        (_("show available color names")),
-                        (_("list sources of the input device")),
-                        (_("list sinks of the output device")),
-                        (_("show available HW acceleration methods")),
-                        ],
-                        style=wx.CB_DROPDOWN | wx.CB_READONLY
-                        )
+        # add panel
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY, choices=[
+                                ("--"),
+                                (_("print basic options")),
+                                (_("print more options")),
+                                (_("print all options (very long)")),
+                                (_("show available devices")),
+                                (_("show available bit stream filters")),
+                                (_("show available protocols")),
+                                (_("show available filters")),
+                                (_("show available pixel formats")),
+                                (_("show available audio sample formats")),
+                                (_("show available color names")),
+                                (_("list sources of the input device")),
+                                (_("list sinks of the output device")),
+                                (_("show available HW acceleration methods")),
+                                ],
+                                style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                )
         self.cmbx_choice.SetSelection(0)
         self.cmbx_choice.SetToolTip(_("Choose one of the topics in the list"))
-        self.texthelp = wx.TextCtrl(self, wx.ID_ANY, "", 
-                                    size=(550,400),
+        self.texthelp = wx.TextCtrl(self.panel, wx.ID_ANY, "", 
+                                    #size=(550,400),
                                     style = wx.TE_READONLY |
                                             wx.TE_MULTILINE | 
                                             wx.TE_RICH | 
@@ -90,17 +90,17 @@ class FFmpeg_Search(wx.Dialog):
             self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        self.search = wx.SearchCtrl(self, wx.ID_ANY, size=(200,30),
+        self.search = wx.SearchCtrl(self.panel, wx.ID_ANY, size=(200,30),
                                     style=wx.TE_PROCESS_ENTER,)
         self.search.SetToolTip(_("The search function allows you to find "
                                  "entries in the current topic"
                                  ))
-        self.case = wx.CheckBox(self, wx.ID_ANY, (_("Ignore-case"))
+        self.case = wx.CheckBox(self.panel, wx.ID_ANY, (_("Ignore-case"))
                                 )
         self.case.SetToolTip(_("Ignore case distinctions, so that characters "
                                "that differ only in case match each other."
                                  ))
-        self.button_close = wx.Button(self, wx.ID_CLOSE, "")
+        self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         grid_src = wx.GridSizer(1, 2, 5, 5)
@@ -114,10 +114,11 @@ class FFmpeg_Search(wx.Dialog):
         grid.Add(self.button_close, 1, wx.ALL, 5)
         
         self.SetTitle(_("Videomass: FFmpeg search topics"))
+        self.SetSize((550,400))
         # set_properties:
         #self.texthelp.SetBackgroundColour((217, 255, 255))
-        #self.SetSizer(sizer)
-        self.SetSizerAndFit(sizer)
+        #self.panel.SetSizer(sizer)
+        self.panel.SetSizerAndFit(sizer)
         
         self.Bind(wx.EVT_COMBOBOX, self.on_Selected, self.cmbx_choice)
         self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.on_Search, self.search)

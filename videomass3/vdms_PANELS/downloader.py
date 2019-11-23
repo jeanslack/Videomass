@@ -29,7 +29,7 @@
 from videomass3.vdms_IO import IO_tools
 from videomass3.vdms_UTILS.utils import format_bytes
 from videomass3.vdms_UTILS.utils import time_human
-from videomass3.vdms_DIALOGS.ydl_mediainfo import YDL_Mediainfo
+from videomass3.vdms_FRAMES.ydl_mediainfo import YDL_Mediainfo
 import wx
 
 
@@ -136,7 +136,7 @@ class Downloader(wx.Panel):
                                                 _('Write subtitles to video')))
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
         
-        line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 2))
+        line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 0))
         sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
         self.fcode = wx.ListCtrl(self, wx.ID_ANY,style=wx.LC_REPORT | 

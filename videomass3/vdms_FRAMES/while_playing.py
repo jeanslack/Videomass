@@ -50,14 +50,28 @@ explan = (_("Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
             "Toggle full screen."))
 
 #------------------------------------------------------------------#    
-class While_Playing(wx.Dialog):
+class While_Playing(wx.Frame):
     """
     Display a dialog box resizable with shortcuts keyboard
     useful when you use playback function with FFplay
    
     """
     def __init__(self, OS):
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Frame.__init__(self, None, style=wx.MINIMIZE_BOX |  
+                                            wx.SYSTEM_MENU | 
+                                            wx.CAPTION | 
+                                            wx.CLOSE_BOX | 
+                                            wx.CLIP_CHILDREN
+                                            )
+        """
+        with 'None' not depend from parent:
+        wx.Frame.__init__(self, None)
+        
+        With parent, -1:
+        wx.Frame.__init__(self, parent, -1)
+        if close videomass also close parent window
+        
+        """
         
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         
@@ -72,15 +86,6 @@ class While_Playing(wx.Dialog):
         label1.SetForegroundColour(wx.Colour('#008000'))
         label2.SetForegroundColour(wx.Colour('#959595'))
         panel.SetBackgroundColour(wx.Colour('#121212'))
-        
-        #if OS == 'Darwin':
-            #label1.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
-            #label2.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
-        #else:
-            #label1.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.BOLD))
-            #label2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
-        
         #---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
