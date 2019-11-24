@@ -41,6 +41,7 @@ orange = '#f28924'
 class TextDnD(wx.Panel):
     """
     Accept one or more urls separated by a white space or newline.
+    
     """
     def __init__(self, parent, forward_icn, back_icn):
         """

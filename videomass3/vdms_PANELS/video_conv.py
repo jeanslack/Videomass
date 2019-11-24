@@ -80,7 +80,7 @@ vcodecs = {("AVI (XVID mpeg4)"): ("-c:v mpeg4 -vtag xvid","avi"),
             }
 # Namings in the audio format selection on audio radio box:
 acodecs = {('default'): (_("Default (managed by FFmpeg)"),''),
-           ('wav'): ("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
+           ('wav'): ("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"),  
            ('flac'): ("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
            ('aac'): ("Aac (Lossy, MultiChannel)", "-c:a aac"), 
            ('m4v'): ("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
@@ -161,7 +161,7 @@ class Video_Conv(wx.Panel):
         #------------
         self.panel_base = wx.Panel(self, wx.ID_ANY)
         self.notebook_1 = wx.Notebook(self.panel_base, wx.ID_ANY, 
-                                      style=wx.NB_NOPAGETHEME|wx.NB_BOTTOM)
+                                      style=wx.NB_NOPAGETHEME|wx.NB_TOP)
         self.notebook_1_pane_1 = wx.Panel(self.notebook_1, wx.ID_ANY)
         self.cmbx_vidContainers = wx.ComboBox(self.notebook_1_pane_1, 
                                               wx.ID_ANY,
@@ -2143,7 +2143,8 @@ class Video_Conv(wx.Panel):
                    
         vinc = DIRconf.split('videomass')[0] + 'vinc'
         if os.path.exists(vinc):
-            with wx.FileDialog(self, _("Videomass: Choose a preset to storing"), 
+            with wx.FileDialog(self, _("Videomass: Choose a preset to "
+                                       "storing new profile"), 
                 defaultDir=os.path.join(vinc, 'presets'),
                 wildcard="Vinc presets (*.vip;)|*.vip;",
                 style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
