@@ -199,7 +199,7 @@ class Audio_Conv(wx.Panel):
         sizer_audio_opt = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_audio_opt, 0, wx.ALL|wx.EXPAND, 10)
         sizer_audio_opt.Add(self.btn_param, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
-        sizer_audio_opt.Add((5, 0), 0,) # stesso i sizer_audio_opt.AddSpacer(5)
+        sizer_audio_opt.Add((5, 0), 0,) # uguale di AddSpacer(5)
         sizer_audio_opt.Add(self.txt_options, 1, wx.ALL|wx.EXPAND, 5)
         sizer_base.Add(self.rdbx_norm, 0, wx.ALL|wx.EXPAND, 15)
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
