@@ -35,10 +35,10 @@ class MemPresets(wx.Dialog):
     """
     Show dialog to store and edit profiles of a selected preset.
     """
-    def __init__(self, parent, filename, array, title):
+    def __init__(self, filename, array, title):
         """
         """
-        wx.Dialog.__init__(self, parent, -1, title, style=wx.DEFAULT_DIALOG_STYLE)
+        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
         
         self.path_prst = filename
         self.array = array # param list [name, descript, cmd1, cmd2, supp, ext]
@@ -165,8 +165,8 @@ class MemPresets(wx.Dialog):
         webbrowser.open(page)
     #------------------------------------------------------------------#
     def on_close(self, event):
-        #self.Destroy()
-        event.Skip()
+        self.Destroy()
+        #event.Skip()
     #------------------------------------------------------------------#
     def on_apply(self, event):
         
@@ -216,10 +216,10 @@ class MemPresets(wx.Dialog):
         with open(self.path_prst, 'w', encoding='utf-8') as outfile:
             json.dump(new_data, outfile, ensure_ascii=False, indent=4)
         
-        wx.MessageBox(_("Successful storing!"))
-        self.txt_name.SetValue(''), self.txt_descript.SetValue(''),
-        self.pass_1_cmd.SetValue(''), self.txt_ext.SetValue('')
-        self.txt_supp.SetValue('')
-
-                
-        event.Skip() 
+            wx.MessageBox(_("Successful storing!"), "Videomass", 
+                        wx.ICON_INFORMATION, self)
+            self.txt_name.SetValue(''), self.txt_descript.SetValue(''),
+            self.pass_1_cmd.SetValue(''), self.txt_ext.SetValue('')
+            self.txt_supp.SetValue('')
+            
+            self.on_close(self)

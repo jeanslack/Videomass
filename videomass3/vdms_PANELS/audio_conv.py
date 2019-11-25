@@ -32,6 +32,7 @@ import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
 from videomass3.vdms_IO.IO_tools import volumeDetectProcess
+from videomass3.vdms_IO.IO_tools import create_vinc_profile
 from videomass3.vdms_IO.filenames_check import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import  audiodialogs
@@ -717,17 +718,8 @@ class Audio_Conv(wx.Panel):
 #------------------------------------------------------------------#
     def Addprof(self):
         """
-        Storing new profile in the 'Preset Manager' panel with the same 
-        current setting. All profiles saved in this way will also be stored 
-        in the preset 'User Presets'
-        
-        NOTE: For multiple processes involving audio normalization and those 
-              for saving audio streams from movies, only the data from the 
-              first file in the list will be considered.
-        
-        FIXME have any problem with xml escapes in special character
-        (like && for ffmpeg double pass), so there is some to get around it 
-        (escamotage), but work .
+        Storing profile or save new preset for vinc application 
+        with the same current setting. 
         
         """
         get = wx.GetApp()
@@ -748,35 +740,5 @@ class Audio_Conv(wx.Panel):
                                                  cmd_opt["AudioChannel"][1],
                                                  self.threads,
                                               ))
-        vinc = DIRconf.split('videomass')[0] + 'vinc'
-        if os.path.exists(vinc):
-            with wx.FileDialog(self, _("Videomass: Choose a preset to "
-                                       "storing new profile"), 
-                defaultDir=os.path.join(vinc, 'presets'),
-                wildcard="Vinc presets (*.vip;)|*.vip;",
-                style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return     
-                filename = fileDialog.GetPath()
-                t = _('Videomass: Create a new Vinc profile')
-        else:
-            with wx.FileDialog(self, "Enter name for new preset", 
-                               wildcard="Vinc presets (*.vip;)|*.vip;",
-                               style=wx.FD_SAVE | 
-                                     wx.FD_OVERWRITE_PROMPT) as fileDialog:
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return
-                filename = "%s.vip" % fileDialog.GetPath()
-                t = _('Videomass: Create a new Vinc preset')
-                try:
-                    with open(filename, 'w') as file:
-                        file.write('[]')
-                except IOError:
-                    wx.LogError("Cannot save current "
-                                "data in file '%s'." % filename)
-                    return
-
-        param = [' '.join(command.split()), '', cmd_opt["ExportExt"]]
-        
-        prstdlg = presets_addnew.MemPresets(self, filename, param, t)
-        prstdlg.ShowModal()
+        create_vinc_profile([' '.join(cmd1.split()),
+                             ' '.join(cmd2.split()),outext])

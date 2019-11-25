@@ -29,7 +29,7 @@
 
 import wx
 
-class FFmpeg_Codecs(wx.Dialog):
+class FFmpeg_Codecs(wx.Frame):
     """
     It shows a dialog box with a pretty kind of GUI to view 
     the formats available on FFmpeg
@@ -54,30 +54,60 @@ class FFmpeg_Codecs(wx.Dialog):
             colctrl = 'SIENNA'
             title = _("Videomass: FFmpeg decoders")
             
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
-        notebook_1 = wx.Notebook(self, wx.ID_ANY,)
+        wx.Frame.__init__(self, None)
+        # add panel
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        notebook_1 = wx.Notebook(self.panel, wx.ID_ANY,)
+        sizer_base.Add(notebook_1, 1, wx.ALL | wx.EXPAND, 5)
+        
+        
+        #-- nb 1
         notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
         vid = wx.ListCtrl(notebook_1_pane_1, wx.ID_ANY, 
                                     style=wx.LC_REPORT | 
                                     wx.SUNKEN_BORDER
                                     )
+        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab1.Add(vid, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_1_pane_1.SetSizer(sizer_tab1)
+        notebook_1.AddPage(notebook_1_pane_1, (_("Video")))
+        # --- nb2
         notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
         aud = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
                                      style=wx.LC_REPORT | 
                                      wx.SUNKEN_BORDER
                                      )
+        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab2.Add(aud, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_1_pane_2.SetSizer(sizer_tab2)
+        notebook_1.AddPage(notebook_1_pane_2, (_("Audio")))
+        #-- nb3
         notebook_1_pane_3 = wx.Panel(notebook_1, wx.ID_ANY)
         sub = wx.ListCtrl(notebook_1_pane_3, wx.ID_ANY, 
                                        style=wx.LC_REPORT | 
                                        wx.SUNKEN_BORDER
                                        )
-        stext = wx.StaticText(self, wx.ID_ANY, "")
-        #button_help = wx.Button(self, wx.ID_HELP, "")
-        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab3.Add(sub, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_1_pane_3.SetSizer(sizer_tab3)
+        notebook_1.AddPage(notebook_1_pane_3, (_("Subtitle")))
+        
+        
+        
+        stext = wx.StaticText(self.panel, wx.ID_ANY, "")
+        sizer_base.Add(stext, 0, wx.ALL | wx.EXPAND, 5)
+        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        grid_buttons = wx.GridSizer(1, 1, 0, 0)
+        grid_buttons.Add(button_close, 1, wx.ALL, 5)
+        sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        self.panel.SetSizerAndFit(sizer_base)
+        self.Layout()
         
         #----------------------Properties----------------------#
         self.SetTitle(title)
-        vid.SetMinSize((600, 300))
+        self.SetSize((600, 300))
+        #vid.SetMinSize((600, 300))
         vid.InsertColumn(0, ('codec'), width=150)
         vid.InsertColumn(1, ('F'), width=40)
         vid.InsertColumn(2, ('S'), width=40)
@@ -122,30 +152,6 @@ class FFmpeg_Codecs(wx.Dialog):
                "B = Supports draw_horiz_band\n"
                "D = Supports direct rendering method 1")
         stext.SetLabel(leg)
-        
-        #----------------------Layout--------------------------#
-        sizer_1 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
-        grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
-        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab1.Add(vid, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_1.SetSizer(sizer_tab1)
-        sizer_tab2.Add(aud, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_2.SetSizer(sizer_tab2)
-        sizer_tab3.Add(sub, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_3.SetSizer(sizer_tab3)
-        notebook_1.AddPage(notebook_1_pane_1, (_("Video")))
-        notebook_1.AddPage(notebook_1_pane_2, (_("Audio")))
-        notebook_1.AddPage(notebook_1_pane_3, (_("Subtitle")))
-        grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
-        grid_sizer_1.Add(stext, 1, wx.ALL, 5)
-        grid_buttons.Add(button_close, 0, wx.ALL, 5)
-        sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-        sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-
-        self.SetSizerAndFit(sizer_1)
         
         #### populate vid listctrl output:
         index = 0 
@@ -231,11 +237,6 @@ class FFmpeg_Codecs(wx.Dialog):
         #----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
-        #self.Bind(wx.EVT_BUTTON, self.on_help, button_help)
-
     #----------------------Event handler (callback)----------------------#
     def on_close(self, event):
-        self.Destroy()
-        #event.Skip()
-
-    #-------------------------------------------------------------------# 
+        self.Destroy() 

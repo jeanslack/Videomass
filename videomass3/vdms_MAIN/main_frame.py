@@ -45,8 +45,6 @@ from videomass3.vdms_PANELS import audio_conv
 from videomass3.vdms_PANELS.long_processing_task import Logging_Console
 from videomass3.vdms_IO import IO_tools
 
-
-
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
@@ -54,8 +52,8 @@ red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
 green = '#268826'
-
 ########################################################################
+
 class MainFrame(wx.Frame):
     """
     This is the main frame top window for panels implementation.
@@ -249,11 +247,11 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if self.OS == 'Darwin':
-            self.SetSize((970, 500))
+            self.SetSize((970, 650))
         elif self.OS == 'Windows':
-            self.SetSize((900, 530))
+            self.SetSize((900, 650))
         else:
-            self.SetSize((1000, 600))
+            self.SetSize((1000, 680))
 
         self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)

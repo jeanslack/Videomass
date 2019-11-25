@@ -33,6 +33,7 @@ import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
 from videomass3.vdms_IO.IO_tools import volumeDetectProcess
 from videomass3.vdms_IO.IO_tools import stream_play
+from videomass3.vdms_IO.IO_tools import create_vinc_profile
 from videomass3.vdms_IO.filenames_check import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import audiodialogs 
@@ -198,21 +199,26 @@ class Video_Conv(wx.Panel):
                                                wx.ALIGN_CENTER_VERTICAL, 20
                             )
         self.frame_opt = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_1, 
-                                    wx.ID_ANY, ("")), 
+                                    wx.ID_ANY, ("Extra Options")), 
                                                 wx.VERTICAL
                                                 )
         sizer_nb1.Add(self.frame_opt, 1, wx.ALL | wx.EXPAND, 10)
         
         
         
-        self.optpanel = wx.Panel(self.ntb_pan_1, wx.ID_ANY, 
+        self.vp9panel = wx.Panel(self.ntb_pan_1, wx.ID_ANY, 
                                   style=wx.TAB_TRAVERSAL)
-        self.frame_opt.Add(self.optpanel, 0, wx.ALL|
+        self.frame_opt.Add(self.vp9panel, 0, wx.ALL|
                                                wx.ALIGN_CENTER_HORIZONTAL | 
                                                wx.ALIGN_CENTER_VERTICAL, 5)
-        sizer_optpanel = wx.FlexGridSizer(4, 1, 5, 5)
+        sizer_optpanel = wx.FlexGridSizer(5, 1, 5, 5)
         
-        self.rdb_deadline = wx.RadioBox(self.optpanel, wx.ID_ANY, 
+        vp9_textopt = wx.StaticText(self.vp9panel, wx.ID_ANY, 
+                                           _("Controlling Speed and Quality"))
+        vp9_textopt.SetFont(wx.Font(10, wx.NORMAL, wx.NORMAL, wx.BOLD))
+        sizer_optpanel.Add(vp9_textopt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        
+        self.rdb_deadline = wx.RadioBox(self.vp9panel, wx.ID_ANY, 
                                    (_("Deadline/Quality")), choices=[
                                             ("best"), 
                                             ("good"), 
@@ -223,26 +229,26 @@ class Video_Conv(wx.Panel):
         sizer_optpanel.Add(self.rdb_deadline, 0, wx.ALL|
                                                  wx.ALIGN_CENTER_HORIZONTAL, 5
                                                  )
-        self.lab_cpu = wx.StaticText(self.optpanel, wx.ID_ANY, (
+        lab_cpu = wx.StaticText(self.vp9panel, wx.ID_ANY, (
                             _("Quality/Speed ratio modifier:")))
-        sizer_optpanel.Add(self.lab_cpu, 0, wx.ALL|
+        sizer_optpanel.Add(lab_cpu, 0, wx.ALL|
                                             wx.ALIGN_CENTER_HORIZONTAL, 5
                                             )
-        self.spin_cpu = wx.SpinCtrl(self.optpanel, wx.ID_ANY, 
+        self.spin_cpu = wx.SpinCtrl(self.vp9panel, wx.ID_ANY, 
                                         "0", min=-16, max=16, 
                                         size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                              )
         sizer_optpanel.Add(self.spin_cpu, 0, wx.ALL|
                                              wx.ALIGN_CENTER_HORIZONTAL, 5
                                              )
-        self.ckbx_multithread = wx.CheckBox(self.optpanel, 
+        self.ckbx_multithread = wx.CheckBox(self.vp9panel, 
                                      wx.ID_ANY, 
                                      (_('Activates row-mt 1'))
                                      )
         sizer_optpanel.Add(self.ckbx_multithread, 0, wx.ALL|
                                                 wx.ALIGN_CENTER_HORIZONTAL, 5
                                                 )
-        self.optpanel.SetSizer(sizer_optpanel) # set panel
+        self.vp9panel.SetSizer(sizer_optpanel) # set panel
         grid_dx_vquality = wx.GridSizer(2, 1, 0, 0)
         sizer_nb1.Add(grid_dx_vquality, 1, wx.ALL | wx.EXPAND, 5)
         
@@ -275,6 +281,7 @@ class Video_Conv(wx.Panel):
         grid_dx_vquality.Add(self.frame_vcrf, 1, wx.ALL | wx.EXPAND, 5)
 
         self.ntb_pan_1.SetSizer(sizer_nb1)
+        self.notebook.AddPage(self.ntb_pan_1, _("Video Container"))
         #-------------- notebook panel 2:
         self.ntb_pan_2 = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nb2 = wx.BoxSizer(wx.HORIZONTAL)
@@ -412,6 +419,7 @@ class Video_Conv(wx.Panel):
                                                 wx.ALIGN_CENTER_VERTICAL, 20
                                                 )
         self.ntb_pan_2.SetSizer(sizer_nb2)
+        self.notebook.AddPage(self.ntb_pan_2, _("Video Settings"))
         #-------------- notebook panel 3:
         self.ntb_pan_3 = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nb3 = wx.BoxSizer(wx.VERTICAL)
@@ -424,9 +432,7 @@ class Video_Conv(wx.Panel):
             if not v: # disable only not compatible with mkv 
                 self.rdb_a.EnableItem(n,enable=False
                                       )
-        sizer_nb3.Add(self.rdb_a, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | 
-                                              wx.ALIGN_CENTER_VERTICAL, 20
-                                                )
+        sizer_nb3.Add(self.rdb_a, 0, wx.ALL | wx.EXPAND, 20)
         grid_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         sizer_nb3.Add(grid_a_ctrl, 0, wx.ALL|wx.EXPAND, 0)
         
@@ -537,6 +543,7 @@ class Video_Conv(wx.Panel):
         self.ebupanel.SetSizer(sizer_ebu) # set panel
         sizer_nb3.Add(self.ebupanel, 0, wx.ALL, 20)
         self.ntb_pan_3.SetSizer(sizer_nb3)
+        self.notebook.AddPage(self.ntb_pan_3, _("Audio Settings"))
         #-------------- notebook panel 4:
         self.ntb_pan_4 = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nb4 = wx.BoxSizer(wx.VERTICAL)
@@ -568,18 +575,11 @@ class Video_Conv(wx.Panel):
                                             wx.ALIGN_CENTER_HORIZONTAL | 
                                             wx.ALIGN_CENTER_VERTICAL, 20)
         self.ntb_pan_4.SetSizer(sizer_nb4)
-        
-        self.notebook.AddPage(self.ntb_pan_1, 
-                                (_("Video Container")))
-        self.notebook.AddPage(self.ntb_pan_2, 
-                                (_("Video Settings")))
-        self.notebook.AddPage(self.ntb_pan_3, 
-                                (_("Audio Settings")))
-        self.notebook.AddPage(self.ntb_pan_4, 
-                                (_("h.264/h.265 Options")))
+        self.notebook.AddPage(self.ntb_pan_4, _("h.264/h.265 Options"))
+        #------------------ set layout
         self.SetSizer(sizer_base)
         self.Layout()
-        #----------------------Set Properties----------------------#
+        #---------------------- Tooltip 
         self.cmbx_vidContainers.SetToolTip(_('The output Video container'))
         
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
@@ -678,8 +678,7 @@ class Video_Conv(wx.Panel):
         Update all the GUI widgets based on the choices made by the user.
         """
         if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
-            #self.frame_opt.SetLabel('')
-            self.optpanel.Hide()
+            self.vp9panel.Hide()
             if cmd_opt["VideoCodec"] == "-c:v libx264":
                 self.slider_CRF.SetValue(23)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
@@ -693,7 +692,7 @@ class Video_Conv(wx.Panel):
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                        "-c:v libaom-av1 -strict -2"]:
             #self.frame_opt.SetLabel(_('Controlling Speed and Quality'))
-            self.optpanel.Show(), self.ckbx_multithread.SetValue(True)
+            self.vp9panel.Show(), self.ckbx_multithread.SetValue(True)
             self.rdb_deadline.SetSelection(1)
             self.spin_cpu.SetRange(0, 5)
             self.ntb_pan_1.Layout()
@@ -705,7 +704,7 @@ class Video_Conv(wx.Panel):
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
             #self.frame_opt.SetLabel('')
-            self.optpanel.Hide()
+            self.vp9panel.Hide()
             self.spin_Vbrate.Disable(), self.btn_videosize.Disable() 
             self.btn_crop.Disable(), self.btn_rotate.Disable()
             self.btn_lacing.Disable(), self.btn_denois.Disable() 
@@ -714,7 +713,7 @@ class Video_Conv(wx.Panel):
             
         else: # all others containers that not use h264
             #self.frame_opt.SetLabel('')
-            self.optpanel.Hide()
+            self.vp9panel.Hide()
             self.ntb_pan_4.Disable()
             self.btn_videosize.Enable(), 
             self.btn_crop.Enable(), self.btn_rotate.Enable() 
@@ -771,8 +770,7 @@ class Video_Conv(wx.Panel):
         if not self.btn_voldect.IsEnabled():
                 self.btn_voldect.Enable()
         self.spin_target.SetValue(-1.0)
-        self.peakpanel.Hide(), self.ebupanel.Hide()
-
+        self.peakpanel.Hide(), self.ebupanel.Hide(), self.btn_details.Hide()
         self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
         cmd_opt["PEAK"], cmd_opt["EBU"], cmd_opt["RMS"] = "", "", ""
         del self.normdetails[:]
@@ -903,7 +901,6 @@ class Video_Conv(wx.Panel):
             self.spin_cpu.SetRange(0, 5), self.spin_cpu.SetValue(0)
         else:
             self.spin_cpu.SetRange(0, 15), self.spin_cpu.SetValue(0)
-        
         
     #------------------------------------------------------------------#
     def on_FiltersPreview(self, event):
@@ -1543,7 +1540,7 @@ class Video_Conv(wx.Panel):
             cmd_opt["CRF"] = ''
             cmd_opt["Bitrate"] = ''
         
-        if self.rdb_deadline.IsShown():
+        if self.vp9panel.IsShown():
             deadline = self.rdb_deadline.GetStringSelection()
             cmd_opt["CpuUsed"] = '-cpu-used %s' % self.spin_cpu.GetValue()
             cmd_opt["Deadline"] = '-deadline %s' % deadline
@@ -1940,8 +1937,8 @@ class Video_Conv(wx.Panel):
 #------------------------------------------------------------------#
     def Addprof(self):
         """
-        Storing new profile in the 'User Profiles.vdms' with same 
-        current settings
+        Storing profile or save new preset for vinc application 
+        with the same current setting. 
         
         """
         self.update_allentries()
@@ -2050,36 +2047,5 @@ class Video_Conv(wx.Panel):
                                                   cmd_opt["Map"],
                                                   param2,
                                                   ))
-                   
-        vinc = DIRconf.split('videomass')[0] + 'vinc'
-        if os.path.exists(vinc):
-            with wx.FileDialog(self, _("Videomass: Choose a preset to "
-                                       "storing new profile"), 
-                defaultDir=os.path.join(vinc, 'presets'),
-                wildcard="Vinc presets (*.vip;)|*.vip;",
-                style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return     
-                filename = fileDialog.GetPath()
-                t = _('Videomass: Create a new Vinc profile')
-        else:
-            with wx.FileDialog(self, "Enter name for new preset", 
-                               wildcard="Vinc presets (*.vip;)|*.vip;",
-                               style=wx.FD_SAVE | 
-                                     wx.FD_OVERWRITE_PROMPT) as fileDialog:
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return
-                filename = "%s.vip" % fileDialog.GetPath()
-                t = _('Videomass: Create a new Vinc preset')
-                try:
-                    with open(filename, 'w') as file:
-                        file.write('[]')
-                except IOError:
-                    wx.LogError("Cannot save current "
-                                "data in file '%s'." % filename)
-                    return
-                
-        param = [' '.join(cmd1.split()),' '.join(cmd2.split()),outext]
-        
-        prstdlg = presets_addnew.MemPresets(self, filename, param, t)
-        prstdlg.ShowModal()
+        create_vinc_profile([' '.join(cmd1.split()),
+                             ' '.join(cmd2.split()),outext])

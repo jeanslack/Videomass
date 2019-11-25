@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: downloader.py
-# Porpose: extract informations data with extract_info method
+# Porpose: extract informations data with youtube_dl
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2019/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
