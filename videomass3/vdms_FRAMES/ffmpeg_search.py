@@ -31,7 +31,7 @@ from videomass3.vdms_IO import IO_tools
 import wx
 import re
 
-class FFmpeg_Search(wx.Frame):
+class FFmpeg_Search(wx.MiniFrame):
     """
     Search and view all the FFmpeg help options.
     
@@ -47,7 +47,7 @@ class FFmpeg_Search(wx.Frame):
         self.OS = OS
         self.row = None
         
-        wx.Frame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None)
         """
         with 'None' not depend from parent:
         wx.Frame.__init__(self, None)

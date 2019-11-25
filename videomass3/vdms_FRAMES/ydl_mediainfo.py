@@ -30,7 +30,7 @@
 import wx
 import os
 
-class YDL_Mediainfo(wx.Frame):
+class YDL_Mediainfo(wx.MiniFrame):
     """
     Display streams information from youtube-dl data. 
     """
@@ -40,7 +40,7 @@ class YDL_Mediainfo(wx.Frame):
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
-        wx.Frame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None)
         '''constructor'''
         
         # add panel
@@ -54,6 +54,7 @@ class YDL_Mediainfo(wx.Frame):
         
         #----------------------Properties----------------------#
         self.SetTitle('Videomass - Multimedia Streams Information')
+        self.SetMinSize((640, 400))
         self.url_select.SetMinSize((640, 200))
         self.url_select.InsertColumn(0, _('TITLE'), width=250)
         self.url_select.InsertColumn(1, _('URL'), width=500)
@@ -132,7 +133,3 @@ class YDL_Mediainfo(wx.Frame):
     
     def on_close(self, event):
         self.Destroy()
-        #event.Skip()
-
-    #-------------------------------------------------------------------#
-        

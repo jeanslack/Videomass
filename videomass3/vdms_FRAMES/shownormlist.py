@@ -29,7 +29,7 @@
 
 import wx
 
-class NormalizationList(wx.Frame):
+class NormalizationList(wx.MiniFrame):
     """
     Show FFmpeg volumedetect command data and report offset and gain 
     results need for normalization process.
@@ -40,7 +40,7 @@ class NormalizationList(wx.Frame):
         detailslist is a list of items list.
         
         """
-        wx.Frame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None)
         """constructor"""
         
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
@@ -48,7 +48,7 @@ class NormalizationList(wx.Frame):
                                                             wx.SUNKEN_BORDER)
         #----------------------Properties----------------------#
         self.SetTitle(_(title))
-        self.SetSize((850, 400))
+        self.SetMinSize((850, 400))
         #normlist.SetMinSize((850, 200))
         normlist.InsertColumn(0, _('File name'), width=300)
         normlist.InsertColumn(1, _('Max volume dBFS'), width=150)
@@ -164,6 +164,4 @@ class NormalizationList(wx.Frame):
         destroy dialog by button and the X
         '''
         self.Destroy()
-        #event.Skip()
-
-    #-------------------------------------------------------------------#
+        

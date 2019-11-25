@@ -167,48 +167,48 @@ class Video_Conv(wx.Panel):
         sizer_base.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 5)
         
         #-------------- notebook panel 1:
-        self.ntb_pan_1 = wx.Panel(self.notebook, wx.ID_ANY)
+        self.nb_panel_1 = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nb1 = wx.BoxSizer(wx.HORIZONTAL)
         grid_sx_vcontainer = wx.GridSizer(2, 1, 0, 0)
         sizer_nb1.Add(grid_sx_vcontainer, 1, wx.ALL | wx.EXPAND, 5)
-        self.frame_vformat = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_1, 
+        self.box_vformat = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
                                                wx.ID_ANY, 
                                                _("Video Container Selection")), 
                                                 wx.VERTICAL)
-        grid_sx_vcontainer.Add(self.frame_vformat, 0, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_vidContainers = wx.ComboBox(self.ntb_pan_1, wx.ID_ANY,
+        grid_sx_vcontainer.Add(self.box_vformat, 0, wx.ALL | wx.EXPAND, 5)
+        self.cmbx_vidContainers = wx.ComboBox(self.nb_panel_1, wx.ID_ANY,
                                              choices=[x for x in vcodecs.keys()],
                                              size=(200,-1),
                                              style=wx.CB_DROPDOWN | 
                                                    wx.CB_READONLY
                                              )
-        self.frame_vformat.Add(self.cmbx_vidContainers, 0, wx.ALL |
+        self.box_vformat.Add(self.cmbx_vidContainers, 0, wx.ALL |
                                                 wx.ALIGN_CENTER_HORIZONTAL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 20
                                                 )
-        self.frame_pass = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_1, 
+        self.box_pass = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
                                     wx.ID_ANY, _("Improves low-quality export")), 
                                                 wx.VERTICAL
                                                 )
-        grid_sx_vcontainer.Add(self.frame_pass, 0, wx.ALL | wx.EXPAND, 5)
-        self.ckbx_pass = wx.CheckBox(self.ntb_pan_1, wx.ID_ANY, 
+        grid_sx_vcontainer.Add(self.box_pass, 0, wx.ALL | wx.EXPAND, 5)
+        self.ckbx_pass = wx.CheckBox(self.nb_panel_1, wx.ID_ANY, 
                                      _("2-pass encoding")
                                      )
-        self.frame_pass.Add(self.ckbx_pass, 0, wx.ALL |
+        self.box_pass.Add(self.ckbx_pass, 0, wx.ALL |
                                                wx.ALIGN_CENTER_HORIZONTAL | 
                                                wx.ALIGN_CENTER_VERTICAL, 20
                             )
-        self.frame_opt = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_1, 
+        self.box_opt = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
                                     wx.ID_ANY, ("Extra Options")), 
                                                 wx.VERTICAL
                                                 )
-        sizer_nb1.Add(self.frame_opt, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_nb1.Add(self.box_opt, 1, wx.ALL | wx.EXPAND, 10)
         
         
         
-        self.vp9panel = wx.Panel(self.ntb_pan_1, wx.ID_ANY, 
+        self.vp9panel = wx.Panel(self.nb_panel_1, wx.ID_ANY, 
                                   style=wx.TAB_TRAVERSAL)
-        self.frame_opt.Add(self.vp9panel, 0, wx.ALL|
+        self.box_opt.Add(self.vp9panel, 0, wx.ALL|
                                                wx.ALIGN_CENTER_HORIZONTAL | 
                                                wx.ALIGN_CENTER_VERTICAL, 5)
         sizer_optpanel = wx.FlexGridSizer(5, 1, 5, 5)
@@ -252,49 +252,49 @@ class Video_Conv(wx.Panel):
         grid_dx_vquality = wx.GridSizer(2, 1, 0, 0)
         sizer_nb1.Add(grid_dx_vquality, 1, wx.ALL | wx.EXPAND, 5)
         
-        self.frame_vbrate = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_1, 
+        self.box_vbrate = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
                                     wx.ID_ANY, _("Video Bit-Rate Value")), 
                                                 wx.VERTICAL
                                                 )
-        self.spin_Vbrate = wx.SpinCtrl(self.ntb_pan_1, wx.ID_ANY, 
+        self.spin_Vbrate = wx.SpinCtrl(self.nb_panel_1, wx.ID_ANY, 
                                        "1500", min=0, max=204800, 
                                         style=wx.TE_PROCESS_ENTER
                                         )
-        self.frame_vbrate.Add(self.spin_Vbrate, 0, wx.ALL |
+        self.box_vbrate.Add(self.spin_Vbrate, 0, wx.ALL |
                                                 wx.ALIGN_CENTER_HORIZONTAL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 20
                                                 )
-        grid_dx_vquality.Add(self.frame_vbrate, 1, wx.ALL | wx.EXPAND, 5)
-        self.frame_vcrf = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_1, 
+        grid_dx_vquality.Add(self.box_vbrate, 1, wx.ALL | wx.EXPAND, 5)
+        self.box_CRF = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
                                     wx.ID_ANY, _("Video CRF Value")), 
                                                 wx.VERTICAL
                                                 )
-        self.slider_CRF = wx.Slider(self.ntb_pan_1, wx.ID_ANY, 1, 0, 51, 
+        self.slider_CRF = wx.Slider(self.nb_panel_1, wx.ID_ANY, 1, 0, 51, 
                                     size=(230, -1), style=wx.SL_HORIZONTAL | 
                                                           wx.SL_AUTOTICKS | 
                                                           wx.SL_LABELS
                                     )
-        self.frame_vcrf.Add(self.slider_CRF, 0, wx.ALL |
+        self.box_CRF.Add(self.slider_CRF, 0, wx.ALL |
                                                 wx.ALIGN_CENTER_HORIZONTAL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 20
                                                 )
-        grid_dx_vquality.Add(self.frame_vcrf, 1, wx.ALL | wx.EXPAND, 5)
+        grid_dx_vquality.Add(self.box_CRF, 1, wx.ALL | wx.EXPAND, 5)
 
-        self.ntb_pan_1.SetSizer(sizer_nb1)
-        self.notebook.AddPage(self.ntb_pan_1, _("Video Container"))
+        self.nb_panel_1.SetSizer(sizer_nb1)
+        self.notebook.AddPage(self.nb_panel_1, _("Video Container"))
         #-------------- notebook panel 2:
-        self.ntb_pan_2 = wx.Panel(self.notebook, wx.ID_ANY)
+        self.nb_panel_2 = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nb2 = wx.BoxSizer(wx.HORIZONTAL)
-        self.frame_vfilters = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_2, 
+        self.box_vFilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_2, 
                                                wx.ID_ANY,  _("Video Filters")), 
                                                 wx.VERTICAL)
-        sizer_nb2.Add(self.frame_vfilters, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_nb2.Add(self.box_vFilters, 1, wx.ALL | wx.EXPAND, 10)
         grid_vfilters = wx.GridSizer(6, 2, 50, 50)
-        self.frame_vfilters.Add(grid_vfilters, 0, wx.ALL |
+        self.box_vFilters.Add(grid_vfilters, 0, wx.ALL |
                                                 wx.ALIGN_CENTER_HORIZONTAL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 20)
         resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
-        self.btn_videosize = GB.GradientButton(self.ntb_pan_2,
+        self.btn_videosize = GB.GradientButton(self.nb_panel_2,
                                                size=(-1,25),
                                                bitmap=resizebmp,
                                                label=_("Resize"))
@@ -306,7 +306,7 @@ class Video_Conv(wx.Panel):
         self.btn_videosize.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_videosize)
         cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
-        self.btn_crop = GB.GradientButton(self.ntb_pan_2,
+        self.btn_crop = GB.GradientButton(self.nb_panel_2,
                                           size=(-1,25),
                                           bitmap=cropbmp,
                                           label=_("Crop Dimension"))
@@ -318,7 +318,7 @@ class Video_Conv(wx.Panel):
         self.btn_crop.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_crop)
         rotatebmp = wx.Bitmap(iconrotate, wx.BITMAP_TYPE_ANY)
-        self.btn_rotate = GB.GradientButton(self.ntb_pan_2,
+        self.btn_rotate = GB.GradientButton(self.nb_panel_2,
                                             size=(-1,25),
                                             bitmap=rotatebmp,
                                             label=_("Rotation"))
@@ -330,7 +330,7 @@ class Video_Conv(wx.Panel):
         self.btn_rotate.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_rotate)
         deintbmp = wx.Bitmap(icondeinterlace, wx.BITMAP_TYPE_ANY)
-        self.btn_lacing = GB.GradientButton(self.ntb_pan_2,
+        self.btn_lacing = GB.GradientButton(self.nb_panel_2,
                                             size=(-1,25),
                                             bitmap=deintbmp,
                                             label=_("De/Interlace"))
@@ -342,7 +342,7 @@ class Video_Conv(wx.Panel):
         self.btn_lacing.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_lacing)
         denoiserbmp = wx.Bitmap(icondenoiser, wx.BITMAP_TYPE_ANY)
-        self.btn_denois = GB.GradientButton(self.ntb_pan_2,
+        self.btn_denois = GB.GradientButton(self.nb_panel_2,
                                             size=(-1,25),
                                             bitmap=denoiserbmp,
                                             label="Denoisers")
@@ -355,7 +355,7 @@ class Video_Conv(wx.Panel):
         grid_vfilters.Add(self.btn_denois)
         grid_vfilters.Add((20, 20), 0,)# separator
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
-        self.btn_preview = GB.GradientButton(self.ntb_pan_2,
+        self.btn_preview = GB.GradientButton(self.nb_panel_2,
                                              size=(-1,25),
                                              bitmap=playbmp, 
                                              )
@@ -366,7 +366,7 @@ class Video_Conv(wx.Panel):
         self.btn_preview.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_preview)
         resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
-        self.btn_reset = GB.GradientButton(self.ntb_pan_2,
+        self.btn_reset = GB.GradientButton(self.nb_panel_2,
                                              size=(-1,25),
                                              bitmap=resetbmp, 
                                              )
@@ -378,12 +378,12 @@ class Video_Conv(wx.Panel):
         grid_vfilters.Add(self.btn_reset)
         grid_dx_vset = wx.GridSizer(2, 1, 0, 0)
         sizer_nb2.Add(grid_dx_vset, 1, wx.ALL | wx.EXPAND, 5)
-        self.frame_vaspect = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_2, 
+        self.box_vAspect = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_2, 
                                                wx.ID_ANY, _("Video Aspect")), 
                                                wx.VERTICAL
                                                 )
-        grid_dx_vset.Add(self.frame_vaspect, 1, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_Vaspect = wx.ComboBox(self.ntb_pan_2, wx.ID_ANY,
+        grid_dx_vset.Add(self.box_vAspect, 1, wx.ALL | wx.EXPAND, 5)
+        self.cmbx_Vaspect = wx.ComboBox(self.nb_panel_2, wx.ID_ANY,
                                         size=(200, -1), choices=[("Default "), 
                                                                  ("4:3"), 
                                                                  ("16:9"),
@@ -391,16 +391,16 @@ class Video_Conv(wx.Panel):
                                                                  ("1.7777")], 
                                         style=wx.CB_DROPDOWN | wx.CB_READONLY
                                         )
-        self.frame_vaspect.Add(self.cmbx_Vaspect, 0, wx.ALL|
+        self.box_vAspect.Add(self.cmbx_Vaspect, 0, wx.ALL|
                                                wx.ALIGN_CENTER_HORIZONTAL | 
                                                wx.ALIGN_CENTER_VERTICAL, 20
                                                )
-        self.frame_vrate = wx.StaticBoxSizer(wx.StaticBox(self.ntb_pan_2, 
+        self.box_vRate = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_2, 
                                                wx.ID_ANY, _("Video Rate")), 
                                                wx.VERTICAL
                                                 )
-        grid_dx_vset.Add(self.frame_vrate, 1, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_Vrate = wx.ComboBox(self.ntb_pan_2, wx.ID_ANY, 
+        grid_dx_vset.Add(self.box_vRate, 1, wx.ALL | wx.EXPAND, 5)
+        self.cmbx_Vrate = wx.ComboBox(self.nb_panel_2, wx.ID_ANY, 
                                       choices=[("Default "), 
                                                ("25 fps (50i) PAL"), 
                                                ("29.97 fps (60i) NTSC"),
@@ -414,16 +414,16 @@ class Video_Conv(wx.Panel):
                                       style=wx.CB_DROPDOWN | 
                                       wx.CB_READONLY
                                       )
-        self.frame_vrate.Add(self.cmbx_Vrate, 0, wx.ALL |
+        self.box_vRate.Add(self.cmbx_Vrate, 0, wx.ALL |
                                                 wx.ALIGN_CENTER_HORIZONTAL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 20
                                                 )
-        self.ntb_pan_2.SetSizer(sizer_nb2)
-        self.notebook.AddPage(self.ntb_pan_2, _("Video Settings"))
+        self.nb_panel_2.SetSizer(sizer_nb2)
+        self.notebook.AddPage(self.nb_panel_2, _("Video Settings"))
         #-------------- notebook panel 3:
-        self.ntb_pan_3 = wx.Panel(self.notebook, wx.ID_ANY)
+        self.nb_panel_3 = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nb3 = wx.BoxSizer(wx.VERTICAL)
-        self.rdb_a = wx.RadioBox(self.ntb_pan_3, wx.ID_ANY, (
+        self.rdb_a = wx.RadioBox(self.nb_panel_3, wx.ID_ANY, (
                                  _("Audio Codec Selecting")),
                                  choices=[x[0] for x in acodecs.values()],
                                  majorDimension=4, style=wx.RA_SPECIFY_COLS
@@ -437,7 +437,7 @@ class Video_Conv(wx.Panel):
         sizer_nb3.Add(grid_a_ctrl, 0, wx.ALL|wx.EXPAND, 0)
         
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
-        self.btn_aparam = GB.GradientButton(self.ntb_pan_3,
+        self.btn_aparam = GB.GradientButton(self.nb_panel_3,
                                            size=(-1,25),
                                            bitmap=setbmp,
                                            label=_("Audio Options"))
@@ -449,12 +449,12 @@ class Video_Conv(wx.Panel):
         self.btn_aparam.SetTopEndColour(wx.Colour(self.btn_color))
         grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 20)
         grid_a_ctrl.Add((5, 0), 0,) # uguale di AddSpacer(5)
-        self.txt_audio_options = wx.TextCtrl(self.ntb_pan_3, wx.ID_ANY, 
+        self.txt_audio_options = wx.TextCtrl(self.nb_panel_3, wx.ID_ANY, 
                                              size=(-1,-1), 
                                              style=wx.TE_READONLY
                                              )
         grid_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL|wx.EXPAND,20)
-        self.rdbx_normalize = wx.RadioBox(self.ntb_pan_3,wx.ID_ANY,
+        self.rdbx_normalize = wx.RadioBox(self.nb_panel_3,wx.ID_ANY,
                                      (_("Audio Normalization")), 
                                      choices=[
                                        ('Off'), 
@@ -466,7 +466,7 @@ class Video_Conv(wx.Panel):
                                      style=wx.RA_SPECIFY_ROWS,
                                             )
         sizer_nb3.Add(self.rdbx_normalize, 0, wx.ALL|wx.EXPAND, 20)
-        self.peakpanel = wx.Panel(self.ntb_pan_3, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.peakpanel = wx.Panel(self.nb_panel_3, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_voldect = GB.GradientButton(self.peakpanel,
@@ -509,7 +509,7 @@ class Video_Conv(wx.Panel):
         sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.peakpanel.SetSizer(sizer_peak) # set panel
         sizer_nb3.Add(self.peakpanel, 0, wx.ALL, 20)
-        self.ebupanel = wx.Panel(self.ntb_pan_3, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.ebupanel = wx.Panel(self.nb_panel_3, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                              _("Set integrated loudness target:  ")))
@@ -542,12 +542,12 @@ class Video_Conv(wx.Panel):
         sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
         self.ebupanel.SetSizer(sizer_ebu) # set panel
         sizer_nb3.Add(self.ebupanel, 0, wx.ALL, 20)
-        self.ntb_pan_3.SetSizer(sizer_nb3)
-        self.notebook.AddPage(self.ntb_pan_3, _("Audio Settings"))
+        self.nb_panel_3.SetSizer(sizer_nb3)
+        self.notebook.AddPage(self.nb_panel_3, _("Audio Settings"))
         #-------------- notebook panel 4:
-        self.ntb_pan_4 = wx.Panel(self.notebook, wx.ID_ANY)
+        self.nb_panel_4 = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nb4 = wx.BoxSizer(wx.VERTICAL)
-        self.rdb_h264preset = wx.RadioBox(self.ntb_pan_4, wx.ID_ANY, 
+        self.rdb_h264preset = wx.RadioBox(self.nb_panel_4, wx.ID_ANY, 
                                           ("presets"),  
                                     choices=[p for p in x264_opt["Presets"]],
                                           majorDimension=1, 
@@ -556,7 +556,7 @@ class Video_Conv(wx.Panel):
         sizer_nb4.Add(self.rdb_h264preset, 0, wx.ALL |
                                               wx.ALIGN_CENTER_HORIZONTAL | 
                                               wx.ALIGN_CENTER_VERTICAL, 20)
-        self.rdb_h264profile = wx.RadioBox(self.ntb_pan_4, wx.ID_ANY, 
+        self.rdb_h264profile = wx.RadioBox(self.nb_panel_4, wx.ID_ANY, 
                                            ("Profile"),  
                                     choices=[p for p in x264_opt["Profiles"]],
                                            majorDimension=1, 
@@ -565,7 +565,7 @@ class Video_Conv(wx.Panel):
         sizer_nb4.Add(self.rdb_h264profile, 0, wx.ALL |
                                                wx.ALIGN_CENTER_HORIZONTAL | 
                                                wx.ALIGN_CENTER_VERTICAL, 20)
-        self.rdb_h264tune = wx.RadioBox(self.ntb_pan_4, wx.ID_ANY, 
+        self.rdb_h264tune = wx.RadioBox(self.nb_panel_4, wx.ID_ANY, 
                                         ("Tune"),
                                         choices=[p for p in x264_opt["Tunes"]],
                                         majorDimension=1, 
@@ -574,8 +574,8 @@ class Video_Conv(wx.Panel):
         sizer_nb4.Add(self.rdb_h264tune, 0, wx.ALL |
                                             wx.ALIGN_CENTER_HORIZONTAL | 
                                             wx.ALIGN_CENTER_VERTICAL, 20)
-        self.ntb_pan_4.SetSizer(sizer_nb4)
-        self.notebook.AddPage(self.ntb_pan_4, _("h.264/h.265 Options"))
+        self.nb_panel_4.SetSizer(sizer_nb4)
+        self.notebook.AddPage(self.nb_panel_4, _("h.264/h.265 Options"))
         #------------------ set layout
         self.SetSizer(sizer_base)
         self.Layout()
@@ -623,7 +623,7 @@ class Video_Conv(wx.Panel):
                                    'From +1.0 to +20.0, default is +7.0'))
         self.rdb_a.SetToolTip(_('Audio codecs compatible with the chosen '
                                 'video container'))
-        self.ntb_pan_4.SetToolTip(_('Options enabled for the codecs '
+        self.nb_panel_4.SetToolTip(_('Options enabled for the codecs '
                                             'x.264/x.265'))
 
         #----------------------Binding (EVT)----------------------#
@@ -683,7 +683,7 @@ class Video_Conv(wx.Panel):
                 self.slider_CRF.SetValue(23)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
                 self.slider_CRF.SetValue(28)
-            self.ntb_pan_4.Enable(), self.btn_videosize.Enable() 
+            self.nb_panel_4.Enable(), self.btn_videosize.Enable() 
             self.btn_crop.Enable(), self.btn_rotate.Enable() 
             self.btn_lacing.Enable(), self.btn_denois.Enable() 
             self.btn_preview.Enable(), self.slider_CRF.SetMax(51)
@@ -691,30 +691,30 @@ class Video_Conv(wx.Panel):
         
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                        "-c:v libaom-av1 -strict -2"]:
-            #self.frame_opt.SetLabel(_('Controlling Speed and Quality'))
+            #self.box_opt.SetLabel(_('Controlling Speed and Quality'))
             self.vp9panel.Show(), self.ckbx_multithread.SetValue(True)
             self.rdb_deadline.SetSelection(1)
             self.spin_cpu.SetRange(0, 5)
-            self.ntb_pan_1.Layout()
+            self.nb_panel_1.Layout()
             self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
-            self.ntb_pan_4.Disable(), self.btn_videosize.Enable()
+            self.nb_panel_4.Disable(), self.btn_videosize.Enable()
             self.btn_crop.Enable(), self.btn_rotate.Enable()
             self.btn_lacing.Enable(), self.btn_denois.Enable()
             self.btn_preview.Enable(), self.ckbx_pass.Enable()
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
-            #self.frame_opt.SetLabel('')
+            #self.box_opt.SetLabel('')
             self.vp9panel.Hide()
             self.spin_Vbrate.Disable(), self.btn_videosize.Disable() 
             self.btn_crop.Disable(), self.btn_rotate.Disable()
             self.btn_lacing.Disable(), self.btn_denois.Disable() 
-            self.btn_preview.Disable(), self.ntb_pan_4.Disable() 
+            self.btn_preview.Disable(), self.nb_panel_4.Disable() 
             self.ckbx_pass.Disable()
             
         else: # all others containers that not use h264
-            #self.frame_opt.SetLabel('')
+            #self.box_opt.SetLabel('')
             self.vp9panel.Hide()
-            self.ntb_pan_4.Disable()
+            self.nb_panel_4.Disable()
             self.btn_videosize.Enable(), 
             self.btn_crop.Enable(), self.btn_rotate.Enable() 
             self.btn_lacing.Enable(), self.btn_denois.Enable()
@@ -1320,7 +1320,7 @@ class Video_Conv(wx.Panel):
             self.parent.statusbar_msg(_("Audio normalization off"), None)
             self.normalize_default(False)
 
-        self.ntb_pan_3.Layout()
+        self.nb_panel_3.Layout()
         
         if not self.rdbx_normalize.GetSelection() == 3: 
             if not self.cmbx_vidContainers.GetSelection() == 16:#copycodec
@@ -1409,7 +1409,7 @@ class Video_Conv(wx.Panel):
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
-        self.ntb_pan_3.Layout()
+        self.nb_panel_3.Layout()
 
     #------------------------------------------------------------------#
     def mean_volume_RMS(self):  # Volumedetect button
@@ -1466,7 +1466,7 @@ class Video_Conv(wx.Panel):
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
-        self.ntb_pan_3.Layout()
+        self.nb_panel_3.Layout()
         
     #------------------------------------------------------------------#
     def on_Show_normlist(self, event):

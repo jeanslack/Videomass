@@ -31,7 +31,7 @@ import wx
 import os
 from shutil import which
 
-class Checkconf(wx.Dialog):
+class Checkconf(wx.MiniFrame):
     """
     View the features of the build configuration of 
     FFmpeg on different notebook panels
@@ -47,31 +47,69 @@ class Checkconf(wx.Dialog):
         if close videomass also close parent window:
         
         """
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
-        notebook_1 = wx.Notebook(self, wx.ID_ANY)
-        notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY,)
-        txtinfo = wx.StaticText(notebook_1_pane_1, wx.ID_ANY,)
-        notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
-        others_opt = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
+        wx.MiniFrame.__init__(self, None)
+        # add panel
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        notebook = wx.Notebook(self.panel, wx.ID_ANY)
+        sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
+        #-- nb 1
+        nb_panel_1 = wx.Panel(notebook, wx.ID_ANY,)
+        txtinfo = wx.StaticText(nb_panel_1, wx.ID_ANY,)
+        sizer_tab1 = wx.BoxSizer(wx.HORIZONTAL)
+        grid_tab1 = wx.FlexGridSizer(1, 1, 10, 10)
+        sizer_tab1.Add(grid_tab1,1, wx.ALL | wx.EXPAND, 5)
+        grid_tab1.Add(txtinfo, 1, wx.ALL , 5)
+        nb_panel_1.SetSizer(sizer_tab1)
+        notebook.AddPage(nb_panel_1, (_("Informations"))
+                         )
+        #-- nb 2
+        nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
+        others_opt = wx.ListCtrl(nb_panel_2, wx.ID_ANY, 
                                     style=wx.LC_REPORT | 
                                     wx.SUNKEN_BORDER
                                     )
-        notebook_1_pane_3 = wx.Panel(notebook_1, wx.ID_ANY)
-        enable_opt = wx.ListCtrl(notebook_1_pane_3, wx.ID_ANY, 
+        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
+        nb_panel_2.SetSizer(sizer_tab2)
+        notebook.AddPage(nb_panel_2, (_("System options"))
+                         )
+        #-- nb 3
+        nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
+        enable_opt = wx.ListCtrl(nb_panel_3, wx.ID_ANY, 
                                      style=wx.LC_REPORT | 
                                      wx.SUNKEN_BORDER
                                      )
-        notebook_1_pane_4 = wx.Panel(notebook_1, wx.ID_ANY)
-        
-        disabled_opt = wx.ListCtrl(notebook_1_pane_4, wx.ID_ANY, 
+        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab3.Add(enable_opt, 1, wx.ALL | wx.EXPAND, 5)
+        nb_panel_3.SetSizer(sizer_tab3)
+        notebook.AddPage(nb_panel_3, (_("Options enabled"))
+                         )
+        #-- nb 4
+        nb_panel_4 = wx.Panel(notebook, wx.ID_ANY)
+        disabled_opt = wx.ListCtrl(nb_panel_4, wx.ID_ANY, 
                                        style=wx.LC_REPORT | 
                                        wx.SUNKEN_BORDER
                                        )
+        sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab4.Add(disabled_opt, 1, wx.ALL | wx.EXPAND, 5)
+        nb_panel_4.SetSizer(sizer_tab4)
+        notebook.AddPage(nb_panel_4, (_("Options disabled"))
+                         )
+        #-- btns
         #button_help = wx.Button(self, wx.ID_HELP, "")
-        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        
+        grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
+        grid_buttons.Add(button_close, 0, wx.ALL, 5)
+        sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)####
+        #-- set layout
+        self.panel.SetSizerAndFit(sizer_base)
+        self.Layout()
         
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: FFmpeg specifications"))
+        self.SetMinSize((700, 500))
         others_opt.SetMinSize((700, 400))
         others_opt.InsertColumn(0, _('flags'), width=300)
         others_opt.InsertColumn(1, _('options'), width=450)
@@ -95,43 +133,6 @@ class Checkconf(wx.Dialog):
             others_opt.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             enable_opt.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             disabled_opt.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        
-        #----------------------Layout--------------------------#
-        Base = wx.BoxSizer(wx.VERTICAL)
-
-        grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
-        sizer_tab1 = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
-
-        grid_tab1 = wx.FlexGridSizer(1, 1, 10, 10)
-        sizer_tab1.Add(grid_tab1)
-        grid_tab1.Add(txtinfo, 1, wx.ALL , 5)
-        notebook_1_pane_1.SetSizer(sizer_tab1)
-        
-        sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_2.SetSizer(sizer_tab2)
-        
-        sizer_tab3.Add(enable_opt, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_3.SetSizer(sizer_tab3)
-        
-        sizer_tab4.Add(disabled_opt, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_4.SetSizer(sizer_tab4)
-        
-        notebook_1.AddPage(notebook_1_pane_1, (_("Informations")))
-        notebook_1.AddPage(notebook_1_pane_2, (_("System options")))
-        notebook_1.AddPage(notebook_1_pane_3, (_("Options enabled")))
-        notebook_1.AddPage(notebook_1_pane_4, (_("Options disabled")))
-
-        Base.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)####
-        grid_buttons.Add(button_close, 0, wx.ALL, 5)
-
-        Base.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)####
-
-        self.SetSizer(Base)
-        Base.Fit(self)
-        self.Layout()
         
         # create lists by out:
         info, others, enable, disable = out
@@ -231,6 +232,3 @@ class Checkconf(wx.Dialog):
     #----------------------Event handler (callback)----------------------#
     def on_close(self, event):
         self.Destroy()
-        #event.Skip()
-
-    #-------------------------------------------------------------------#

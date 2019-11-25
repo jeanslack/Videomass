@@ -44,9 +44,9 @@ from videomass3.vdms_THREADS.check_bin import ff_formats
 from videomass3.vdms_THREADS.check_bin import ff_codecs
 from videomass3.vdms_THREADS.check_bin import ff_topics
 from videomass3.vdms_THREADS.opendir import browse
-from videomass3.vdms_DIALOGS import ffmpeg_conf
-from videomass3.vdms_DIALOGS import ffmpeg_formats
-from videomass3.vdms_DIALOGS import ffmpeg_codecs
+from videomass3.vdms_FRAMES import ffmpeg_conf
+from videomass3.vdms_FRAMES import ffmpeg_formats
+from videomass3.vdms_FRAMES import ffmpeg_codecs
 from videomass3.vdms_DIALOGS import presets_addnew
 from videomass3.vdms_THREADS.ydl_extract_info import Extract_Info
 
@@ -248,5 +248,3 @@ def create_vinc_profile(parameters):
     
     prstdlg = presets_addnew.MemPresets(filename, parameters, t)
     prstdlg.Show()
-
-

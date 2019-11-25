@@ -29,7 +29,7 @@
 
 import wx
 
-class FFmpeg_formats(wx.Dialog):
+class FFmpeg_formats(wx.MiniFrame):
     """
     It shows a dialog box with a pretty kind of GUI to view 
     the formats available on FFmpeg
@@ -45,37 +45,62 @@ class FFmpeg_formats(wx.Dialog):
         if close videomass also close parent window:
         
         """
-        wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
-        notebook_1 = wx.Notebook(self, wx.ID_ANY)
-        notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
-        dmx = wx.ListCtrl(notebook_1_pane_1, wx.ID_ANY, 
+        wx.MiniFrame.__init__(self, None)
+        # add panel
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        notebook = wx.Notebook(self.panel, wx.ID_ANY)
+        sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
+        #----- nb1
+        notebook_pane_1 = wx.Panel(notebook, wx.ID_ANY)
+        dmx = wx.ListCtrl(notebook_pane_1, wx.ID_ANY, 
                                     style=wx.LC_REPORT | 
                                     wx.SUNKEN_BORDER
                                     )
-        notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
-        mx = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
+        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab1.Add(dmx, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_pane_1.SetSizer(sizer_tab1)
+        notebook.AddPage(notebook_pane_1, (_("Demuxing only")))
+        #----- nb2
+        notebook_pane_2 = wx.Panel(notebook, wx.ID_ANY)
+        mx = wx.ListCtrl(notebook_pane_2, wx.ID_ANY, 
                                      style=wx.LC_REPORT | 
                                      wx.SUNKEN_BORDER
                                      )
-        notebook_1_pane_3 = wx.Panel(notebook_1, wx.ID_ANY)
-        dmx_mx = wx.ListCtrl(notebook_1_pane_3, wx.ID_ANY, 
+        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab2.Add(mx, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_pane_2.SetSizer(sizer_tab2)
+        notebook.AddPage(notebook_pane_2, (_("Muxing only")))
+        #----- nb3
+        notebook_pane_3 = wx.Panel(notebook, wx.ID_ANY)
+        dmx_mx = wx.ListCtrl(notebook_pane_3, wx.ID_ANY, 
                                        style=wx.LC_REPORT | 
                                        wx.SUNKEN_BORDER
                                        )
-        #button_help = wx.Button(self, wx.ID_HELP, "")
-        button_close = wx.Button(self, wx.ID_CLOSE, "")
+        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
+        sizer_tab3.Add(dmx_mx, 1, wx.ALL | wx.EXPAND, 5)
+        notebook_pane_3.SetSizer(sizer_tab3)
+        notebook.AddPage(notebook_pane_3, (_("Demuxing/Muxing support")))
         
+        #----- btns
+        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
+        grid_buttons = wx.GridSizer(1, 1, 0, 0)
+        grid_buttons.Add(button_close, 1, wx.ALL, 5)
+        sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        self.panel.SetSizerAndFit(sizer_base)
+        self.Layout()
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: FFmpeg file formats"))
-        dmx.SetMinSize((500, 400))
+        self.SetMinSize((500, 400))
+        #dmx.SetMinSize((500, 400))
         dmx.InsertColumn(0, _('format'), width=150)
         dmx.InsertColumn(1, _('description'), width=450)
         #dmx.SetBackgroundColour(wx.Colour(217, 255, 255))
-        mx.SetMinSize((500, 400))
+        #mx.SetMinSize((500, 400))
         mx.InsertColumn(0, _('format'), width=150)
         mx.InsertColumn(1, _('description'), width=450)
         #mx.SetBackgroundColour(wx.Colour(217, 255, 255))
-        dmx_mx.SetMinSize((500, 400))
+        #dmx_mx.SetMinSize((500, 400))
         dmx_mx.InsertColumn(0, _('format'), width=150)
         dmx_mx.InsertColumn(1, _('description'), width=450)
         #dmx_mx.SetBackgroundColour(wx.Colour(217, 255, 255))
@@ -88,31 +113,6 @@ class FFmpeg_formats(wx.Dialog):
             dmx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             mx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             dmx_mx.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        
-        #----------------------Layout--------------------------#
-        sizer_1 = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_1 = wx.FlexGridSizer(2, 1, 0, 0)
-        grid_buttons = wx.FlexGridSizer(1, 1, 0, 0)
-        sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
-        sizer_tab1.Add(dmx, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_1.SetSizer(sizer_tab1)
-        sizer_tab2.Add(mx, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_2.SetSizer(sizer_tab2)
-        sizer_tab3.Add(dmx_mx, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_3.SetSizer(sizer_tab3)
-        notebook_1.AddPage(notebook_1_pane_1, (_("Demuxing only")))
-        notebook_1.AddPage(notebook_1_pane_2, (_("Muxing only")))
-        notebook_1.AddPage(notebook_1_pane_3, (_("Demuxing/Muxing support")))
-        grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
-        grid_buttons.Add(button_close, 0, wx.ALL, 5)
-        grid_sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-
-        sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-        self.SetSizer(sizer_1)
-        sizer_1.Fit(self)
-        self.Layout()
         
         # delete previous append:
         dmx.DeleteAllItems()
@@ -184,6 +184,3 @@ class FFmpeg_formats(wx.Dialog):
     #----------------------Event handler (callback)----------------------#
     def on_close(self, event):
         self.Destroy()
-        #event.Skip()
-
-    #-------------------------------------------------------------------#

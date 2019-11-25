@@ -50,14 +50,14 @@ explan = (_("Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
             "Toggle full screen."))
 
 #------------------------------------------------------------------#    
-class While_Playing(wx.Frame):
+class While_Playing(wx.MiniFrame):
     """
     Display a dialog box resizable with shortcuts keyboard
     useful when you use playback function with FFplay
    
     """
     def __init__(self, OS):
-        wx.Frame.__init__(self, None, style=wx.DEFAULT_FRAME_STYLE 
+        wx.MiniFrame.__init__(self, None, style=wx.DEFAULT_FRAME_STYLE 
                           & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)
                                             )
         """
@@ -76,6 +76,7 @@ class While_Playing(wx.Frame):
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         #----------------------Properties----------------------#
         self.SetTitle(_("Videomass: Shortcuts while playing"))
+        
         label1.SetForegroundColour(wx.Colour('#008000'))
         label2.SetForegroundColour(wx.Colour('#959595'))
         panel.SetBackgroundColour(wx.Colour('#121212'))
@@ -101,4 +102,3 @@ class While_Playing(wx.Frame):
         destroy dialog by button and the X
         '''
         self.Destroy()
-        #event.Skip()

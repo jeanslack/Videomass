@@ -29,7 +29,7 @@
 
 import wx
 
-class FFmpeg_Codecs(wx.Frame):
+class FFmpeg_Codecs(wx.MiniFrame):
     """
     It shows a dialog box with a pretty kind of GUI to view 
     the formats available on FFmpeg
@@ -54,49 +54,46 @@ class FFmpeg_Codecs(wx.Frame):
             colctrl = 'SIENNA'
             title = _("Videomass: FFmpeg decoders")
             
-        wx.Frame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None)
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        notebook_1 = wx.Notebook(self.panel, wx.ID_ANY,)
-        sizer_base.Add(notebook_1, 1, wx.ALL | wx.EXPAND, 5)
-        
-        
+        notebook = wx.Notebook(self.panel, wx.ID_ANY,)
+        sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
         #-- nb 1
-        notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
-        vid = wx.ListCtrl(notebook_1_pane_1, wx.ID_ANY, 
+        nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
+        vid = wx.ListCtrl(nb_panel_1, wx.ID_ANY, 
                                     style=wx.LC_REPORT | 
                                     wx.SUNKEN_BORDER
                                     )
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(vid, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_1.SetSizer(sizer_tab1)
-        notebook_1.AddPage(notebook_1_pane_1, (_("Video")))
+        nb_panel_1.SetSizer(sizer_tab1)
+        notebook.AddPage(nb_panel_1, (_("Video")))
         # --- nb2
-        notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
-        aud = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY, 
+        nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
+        aud = wx.ListCtrl(nb_panel_2, wx.ID_ANY, 
                                      style=wx.LC_REPORT | 
                                      wx.SUNKEN_BORDER
                                      )
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(aud, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_2.SetSizer(sizer_tab2)
-        notebook_1.AddPage(notebook_1_pane_2, (_("Audio")))
+        nb_panel_2.SetSizer(sizer_tab2)
+        notebook.AddPage(nb_panel_2, (_("Audio")))
         #-- nb3
-        notebook_1_pane_3 = wx.Panel(notebook_1, wx.ID_ANY)
-        sub = wx.ListCtrl(notebook_1_pane_3, wx.ID_ANY, 
+        nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
+        sub = wx.ListCtrl(nb_panel_3, wx.ID_ANY, 
                                        style=wx.LC_REPORT | 
                                        wx.SUNKEN_BORDER
                                        )
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(sub, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_3.SetSizer(sizer_tab3)
-        notebook_1.AddPage(notebook_1_pane_3, (_("Subtitle")))
-        
-        
-        
+        nb_panel_3.SetSizer(sizer_tab3)
+        notebook.AddPage(nb_panel_3, (_("Subtitle")))
+        #----- text
         stext = wx.StaticText(self.panel, wx.ID_ANY, "")
         sizer_base.Add(stext, 0, wx.ALL | wx.EXPAND, 5)
+        #----- btns
         button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         grid_buttons = wx.GridSizer(1, 1, 0, 0)
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
@@ -106,7 +103,7 @@ class FFmpeg_Codecs(wx.Frame):
         
         #----------------------Properties----------------------#
         self.SetTitle(title)
-        self.SetSize((600, 300))
+        self.SetMinSize((700, 500))
         #vid.SetMinSize((600, 300))
         vid.InsertColumn(0, ('codec'), width=150)
         vid.InsertColumn(1, ('F'), width=40)
@@ -116,7 +113,7 @@ class FFmpeg_Codecs(wx.Frame):
         vid.InsertColumn(5, ('D'), width=40)
         vid.InsertColumn(6, _('description'), width=450)
         #vid.SetBackgroundColour(wx.Colour(217, 255, 255))
-        aud.SetMinSize((600, 300))
+        #aud.SetMinSize((600, 300))
         aud.InsertColumn(0, ('codec'), width=150)
         aud.InsertColumn(1, ('F'), width=40)
         aud.InsertColumn(2, ('S'), width=40)
@@ -125,7 +122,7 @@ class FFmpeg_Codecs(wx.Frame):
         aud.InsertColumn(5, ('D'), width=40)
         aud.InsertColumn(6, _('description'), width=450)
         #aud.SetBackgroundColour(wx.Colour(217, 255, 255))
-        sub.SetMinSize((600, 300))
+        #sub.SetMinSize((600, 300))
         sub.InsertColumn(0, ('codec'), width=150)
         sub.InsertColumn(1, ('F'), width=40)
         sub.InsertColumn(2, ('S'), width=40)

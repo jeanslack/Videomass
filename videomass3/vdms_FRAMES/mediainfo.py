@@ -31,7 +31,7 @@ import wx
 import os
 import webbrowser
 
-class Mediainfo(wx.Frame):
+class Mediainfo(wx.MiniFrame):
     """
     Display streams information from ffprobe json data. 
     """
@@ -41,7 +41,7 @@ class Mediainfo(wx.Frame):
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
-        wx.Frame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None)
         '''constructor'''
         
         # add panel
@@ -50,31 +50,30 @@ class Mediainfo(wx.Frame):
         self.file_select = wx.ListCtrl(self.panel, wx.ID_ANY,
                                   style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                   )
-        
-        notebook_1 = wx.Notebook(self.panel, wx.ID_ANY)
-        notebook_1_pane_1 = wx.Panel(notebook_1, wx.ID_ANY)
-        self.format_ctrl = wx.ListCtrl(notebook_1_pane_1, wx.ID_ANY,
+        notebook = wx.Notebook(self.panel, wx.ID_ANY)
+        nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
+        self.format_ctrl = wx.ListCtrl(nb_panel_1, wx.ID_ANY,
                                   style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                   )
-        notebook_1_pane_2 = wx.Panel(notebook_1, wx.ID_ANY)
+        nb_panel_2 = wx.Panel(notebook, wx.ID_ANY)
         
-        self.video_ctrl = wx.ListCtrl(notebook_1_pane_2, wx.ID_ANY,
+        self.video_ctrl = wx.ListCtrl(nb_panel_2, wx.ID_ANY,
                                    style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                    )
-        notebook_1_pane_3 = wx.Panel(notebook_1, wx.ID_ANY)
-        self.audio_ctrl = wx.ListCtrl(notebook_1_pane_3, wx.ID_ANY,
+        nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
+        self.audio_ctrl = wx.ListCtrl(nb_panel_3, wx.ID_ANY,
                                   style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                   )
-        notebook_1_pane_4 = wx.Panel(notebook_1, wx.ID_ANY)
+        nb_panel_4 = wx.Panel(notebook, wx.ID_ANY)
         
-        self.subtitle_ctrl = wx.ListCtrl(notebook_1_pane_4, wx.ID_ANY,
+        self.subtitle_ctrl = wx.ListCtrl(nb_panel_4, wx.ID_ANY,
                                    style=wx.LC_REPORT | wx.SUNKEN_BORDER
                                    )
-        #button_help = wx.Button(self, wx.ID_HELP, "")
         button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         
         #----------------------Properties----------------------#
         self.SetTitle('Videomass - Multimedia Streams Information')
+        self.SetMinSize((640, 400))
         self.file_select.SetMinSize((640, 200))
         self.file_select.InsertColumn(0, _('File Selection'), width=500)
         #file_select.InsertColumn(1, _('Parameters'), width=450)
@@ -112,25 +111,25 @@ class Mediainfo(wx.Frame):
         
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(self.format_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_1.SetSizer(sizer_tab1)
+        nb_panel_1.SetSizer(sizer_tab1)
         
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(self.video_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_2.SetSizer(sizer_tab2)
+        nb_panel_2.SetSizer(sizer_tab2)
         
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(self.audio_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_3.SetSizer(sizer_tab3)
+        nb_panel_3.SetSizer(sizer_tab3)
         
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4.Add(self.subtitle_ctrl, 1, wx.ALL | wx.EXPAND, 5)
-        notebook_1_pane_4.SetSizer(sizer_tab4)
+        nb_panel_4.SetSizer(sizer_tab4)
         
-        notebook_1.AddPage(notebook_1_pane_1, (_("Data Format")))
-        notebook_1.AddPage(notebook_1_pane_2, (_("Video Stream")))
-        notebook_1.AddPage(notebook_1_pane_3, (_("Audio Streams")))
-        notebook_1.AddPage(notebook_1_pane_4, (_("Subtitle Streams")))
-        grid_sizer_1.Add(notebook_1, 1, wx.ALL|wx.EXPAND, 5)
+        notebook.AddPage(nb_panel_1, (_("Data Format")))
+        notebook.AddPage(nb_panel_2, (_("Video Stream")))
+        notebook.AddPage(nb_panel_3, (_("Audio Streams")))
+        notebook.AddPage(nb_panel_4, (_("Subtitle Streams")))
+        grid_sizer_1.Add(notebook, 1, wx.ALL|wx.EXPAND, 5)
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
         
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
@@ -152,7 +151,6 @@ class Mediainfo(wx.Frame):
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_desel, self.file_select)
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
-        #self.Bind(wx.EVT_BUTTON, self.on_help, button_help)
 
     #----------------------Event handler (callback)----------------------#
         
@@ -229,7 +227,3 @@ class Mediainfo(wx.Frame):
     #------------------------------------------------------------------#
     def on_close(self, event):
         self.Destroy()
-        #event.Skip()
-
-    #-------------------------------------------------------------------#
-        
