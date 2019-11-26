@@ -33,7 +33,6 @@ import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
 from videomass3.vdms_IO.IO_tools import volumeDetectProcess
 from videomass3.vdms_IO.IO_tools import stream_play
-from videomass3.vdms_IO.IO_tools import create_vinc_profile
 from videomass3.vdms_IO.filenames_check import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import audiodialogs 
@@ -2047,5 +2046,25 @@ class Video_Conv(wx.Panel):
                                                   cmd_opt["Map"],
                                                   param2,
                                                   ))
-        create_vinc_profile([' '.join(cmd1.split()),
-                             ' '.join(cmd2.split()),outext])
+        parameters = [' '.join(cmd1.split()), ' '.join(cmd2.split()),outext]
+
+        with wx.FileDialog(None, _("Videomass: Choose a preset to "
+                                    "storing new profile"), 
+            defaultDir=os.path.join(DIRconf, 'presets'),
+            wildcard="Vinc presets (*.prst;)|*.prst;",
+            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                return     
+            filename = os.path.splitext(fileDialog.GetPath())[0]
+            
+            t = _('Videomass: Create a new profile')
+        
+        prstdialog = presets_addnew.MemPresets(self, 
+                                               'addprofile', 
+                                               os.path.basename(filename), 
+                                               parameters,
+                                               t)
+        ret = prstdialog.ShowModal()
+        
+        #prstdlg = presets_addnew.MemPresets(filename, parameters, t)
+        #prstdlg.Show()

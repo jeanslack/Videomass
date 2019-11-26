@@ -104,15 +104,19 @@ class MyListCtrl(wx.ListCtrl):
                     self.parent.statusbar_msg(msg_audio, orange)
                     return
 
-            elif self.parent.which() == 'Pictures Slideshow Maker':
-                if not 'video' in codec_type:
-                    self.parent.statusbar_msg(msg_slide, orange)
-                    return
-                f = ['bmp','png','mjpeg']
-                if (not [x['codec_name'] for x in data['streams'] 
-                         if x['codec_name'] in f]):
-                    self.parent.statusbar_msg(msg_slide, orange)
-                    return
+            #elif self.parent.which() == 'Pictures Slideshow Maker':
+                #if not 'video' in codec_type:
+                    #self.parent.statusbar_msg(msg_slide, orange)
+                    #return
+                #f = ['bmp','png','mjpeg']
+                #if (not [x['codec_name'] for x in data['streams'] 
+                         #if x['codec_name'] in f]):
+                    #self.parent.statusbar_msg(msg_slide, orange)
+                    #return
+            #elif self.parent.which() == 'Presets Manager':
+                #if 'video' in codec_type:
+                    #self.parent.statusbar_msg(msg_audio, orange)
+                    #return
 
             self.InsertItem(self.index, path)
             self.index += 1

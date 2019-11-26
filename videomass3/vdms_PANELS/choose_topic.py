@@ -28,7 +28,7 @@
 #########################################################
     
 import wx
-import wx.lib.agw.hyperlink as hpl
+#import wx.lib.agw.hyperlink as hpl
 
 # get videomass wx.App attribute
 get = wx.GetApp()
@@ -41,7 +41,7 @@ class Choose_Topic(wx.Panel):
     """
     def __init__(self, parent, OS, videoconv_icn, audioconv_icn, 
                  storepictures_icn, slideshow_icn, audioextract_icn, 
-                 merging_icn, youtube_icn, audionorm_icn):
+                 merging_icn, youtube_icn, audionorm_icn, prstmng_icn):
 
         self.parent = parent
         self.OS = OS
@@ -67,11 +67,14 @@ class Choose_Topic(wx.Panel):
         audmer_lab = _('Merging Audio and Video')
         youtube_lab =  _('Download from YouTube')
         anorm_lab =  _('Audio Normalization')
+        prst_mng =  _('      Presets Manager      ')
         
         self.video = wx.Button(self, wx.ID_ANY, video_lab, size=(-1,-1))
         self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.TOP)
         self.audio = wx.Button(self, wx.ID_ANY, audio_lab, size=(-1,-1))
         self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.TOP)
+        self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1,-1))
+        self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn),wx.TOP)
         #self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
         #self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.TOP)
         #self.audio_extract = wx.Button(self, wx.ID_ANY, audgr_lab, size=(-1,-1))
@@ -88,7 +91,7 @@ class Choose_Topic(wx.Panel):
         grid_buttons.AddMany([(self.video, 0, wx.EXPAND, 5),
                               (self.audio, 0, wx.EXPAND, 5),
                               #(self.save_pict, 0, wx.EXPAND, 5),
-                              #(self.audio_extract, 0, wx.EXPAND, 5),
+                              (self.presets_mng, 0, wx.EXPAND, 5),
                               #(self.audio_merge, 0, wx.EXPAND, 5),
                               #(self.slideshow, 0, wx.EXPAND, 5),
                               (self.youtube, 0, wx.EXPAND, 5),
@@ -100,17 +103,17 @@ class Choose_Topic(wx.Panel):
                                         wx.ALIGN_CENTER_VERTICAL|
                                         wx.ALIGN_CENTER_HORIZONTAL, 5)
         
-        sizer_hpl = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_hpl, 0, wx.ALL|
-                                   wx.ALIGN_CENTER_VERTICAL|
-                                   wx.ALIGN_CENTER_HORIZONTAL, 15)
+        #sizer_hpl = wx.BoxSizer(wx.HORIZONTAL)
+        #sizer_base.Add(sizer_hpl, 0, wx.ALL|
+                                   #wx.ALIGN_CENTER_VERTICAL|
+                                   #wx.ALIGN_CENTER_HORIZONTAL, 15)
         
-        txt_link = wx.StaticText(self, label='From the same author, you may '
-                                             'also be interested in ')
-        link = hpl.HyperLinkCtrl(self, -1, "Vinc",
-                                URL="https://gitlab.com/jeanslack/vinc")
-        sizer_hpl.Add(txt_link)
-        sizer_hpl.Add(link)
+        #txt_link = wx.StaticText(self, label='From the same author, you may '
+                                             #'also be interested in ')
+        #link = hpl.HyperLinkCtrl(self, -1, "Vinc",
+                                #URL="https://gitlab.com/jeanslack/vinc")
+        #sizer_hpl.Add(txt_link)
+        #sizer_hpl.Add(link)
         self.SetSizerAndFit(sizer_base)
         
         
@@ -121,15 +124,16 @@ class Choose_Topic(wx.Panel):
         
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)
         self.Bind(wx.EVT_BUTTON, self.on_Audio, self.audio)
+        self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         #self.Bind(wx.EVT_BUTTON, self.on_Pictures, self.save_pict)
         #self.Bind(wx.EVT_BUTTON, self.on_AudioFromVideo, self.audio_extract)
        # self.Bind(wx.EVT_BUTTON, self.on_AudioMerging, self.audio_merge)
         #self.Bind(wx.EVT_BUTTON, self.on_Slideshow, self.slideshow)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
-        
+    #------------------------------------------------------------------#    
     def on_Video(self, event):
         self.parent.File_import(self, 'Video Conversions')
-        
+    #------------------------------------------------------------------#
     def on_Audio(self, event):
         self.parent.File_import(self, 'Audio Conversions')
     
@@ -144,7 +148,7 @@ class Choose_Topic(wx.Panel):
     
     #def on_Slideshow(self, event):
         #self.parent.File_import(self,'Pictures Slideshow Maker')
-    
+    #------------------------------------------------------------------#
     def on_YoutubeDL(self, event):
         if not ydl[0]:
             wx.MessageBox('ERROR: %s\n\nTo use this feature '
@@ -153,3 +157,6 @@ class Choose_Topic(wx.Panel):
             return
 
         self.parent.Text_import(self, 'Youtube Downloader')
+    #------------------------------------------------------------------#
+    def on_Prst_mng(self, event):
+        self.parent.File_import(self, 'Presets Manager')

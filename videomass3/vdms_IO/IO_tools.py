@@ -47,7 +47,6 @@ from videomass3.vdms_THREADS.opendir import browse
 from videomass3.vdms_FRAMES import ffmpeg_conf
 from videomass3.vdms_FRAMES import ffmpeg_formats
 from videomass3.vdms_FRAMES import ffmpeg_codecs
-from videomass3.vdms_DIALOGS import presets_addnew
 from videomass3.vdms_THREADS.ydl_extract_info import Extract_Info
 
 #-----------------------------------------------------------------------#
@@ -213,38 +212,3 @@ def youtube_info(url):
     
     yield data
 #--------------------------------------------------------------------------#
-def create_vinc_profile(parameters):
-    """
-    Save a profile on a vinc preset or create new preset if not vinc
-    exist
-    """
-    vinc = DIRconf.split('videomass')[0] + 'vinc'
-    if os.path.exists(vinc):
-        with wx.FileDialog(None, _("Videomass: Choose a preset to "
-                                    "storing new profile"), 
-            defaultDir=os.path.join(vinc, 'presets'),
-            wildcard="Vinc presets (*.vip;)|*.vip;",
-            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
-            if fileDialog.ShowModal() == wx.ID_CANCEL:
-                return     
-            filename = fileDialog.GetPath()
-            t = _('Videomass: Create a new Vinc profile')
-    else:
-        with wx.FileDialog(None, "Enter name for new preset", 
-                            wildcard="Vinc presets (*.vip;)|*.vip;",
-                            style=wx.FD_SAVE | 
-                                    wx.FD_OVERWRITE_PROMPT) as fileDialog:
-            if fileDialog.ShowModal() == wx.ID_CANCEL:
-                return
-            filename = "%s.vip" % fileDialog.GetPath()
-            t = _('Videomass: Create a new Vinc preset')
-            try:
-                with open(filename, 'w') as file:
-                    file.write('[]')
-            except IOError:
-                wx.LogError("Cannot save current "
-                            "data in file '%s'." % filename)
-                return
-    
-    prstdlg = presets_addnew.MemPresets(filename, parameters, t)
-    prstdlg.Show()

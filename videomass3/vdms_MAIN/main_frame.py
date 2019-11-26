@@ -43,6 +43,7 @@ from videomass3.vdms_PANELS import downloader
 from videomass3.vdms_PANELS import video_conv
 from videomass3.vdms_PANELS import audio_conv
 from videomass3.vdms_PANELS.long_processing_task import Logging_Console
+from videomass3.vdms_PANELS import presets_manager
 from videomass3.vdms_IO import IO_tools
 
 # set widget colours in some case with html rappresentetion:
@@ -113,6 +114,9 @@ class MainFrame(wx.Frame):
         previewbmp = wx.Bitmap(pathicons[5], wx.BITMAP_TYPE_ANY)
         cutbmp = wx.Bitmap(pathicons[6], wx.BITMAP_TYPE_ANY)
         saveprfbmp = wx.Bitmap(pathicons[9], wx.BITMAP_TYPE_ANY)
+        newprfbmp = wx.Bitmap(pathicons[29], wx.BITMAP_TYPE_ANY)
+        delprfbmp = wx.Bitmap(pathicons[30], wx.BITMAP_TYPE_ANY)
+        editprfbmp = wx.Bitmap(pathicons[31], wx.BITMAP_TYPE_ANY)
 
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
@@ -150,13 +154,46 @@ class MainFrame(wx.Frame):
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
                                               size=(-1,25),
                                               bitmap=saveprfbmp, 
-                                              label=_("Create Vinc Preset"))
+                                              label=_("Save Configuration"))
         self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
         self.btn_saveprf.SetBottomStartColour(self.bBtnC)
         self.btn_saveprf.SetTopStartColour(self.bBtnC)
         self.btn_saveprf.SetTopEndColour(self.bBtnC)
+        
+        self.btn_newprf = GB.GradientButton(self.btnpanel,
+                                              size=(-1,25),
+                                              bitmap=newprfbmp, 
+                                              label=_("New.."))
+        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+                                    foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_newprf.SetBottomEndColour(self.bBtnC)
+        self.btn_newprf.SetBottomStartColour(self.bBtnC)
+        self.btn_newprf.SetTopStartColour(self.bBtnC)
+        self.btn_newprf.SetTopEndColour(self.bBtnC)
+        
+        self.btn_delprf = GB.GradientButton(self.btnpanel,
+                                              size=(-1,25),
+                                              bitmap=delprfbmp, 
+                                              label=_("Delete.."))
+        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+                                    foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_delprf.SetBottomEndColour(self.bBtnC)
+        self.btn_delprf.SetBottomStartColour(self.bBtnC)
+        self.btn_delprf.SetTopStartColour(self.bBtnC)
+        self.btn_delprf.SetTopEndColour(self.bBtnC)
+        
+        self.btn_editprf = GB.GradientButton(self.btnpanel,
+                                              size=(-1,25),
+                                              bitmap=editprfbmp, 
+                                              label=_("Edit.."))
+        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+                                    foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_editprf.SetBottomEndColour(self.bBtnC)
+        self.btn_editprf.SetBottomStartColour(self.bBtnC)
+        self.btn_editprf.SetTopStartColour(self.bBtnC)
+        self.btn_editprf.SetTopEndColour(self.bBtnC)
 
         self.btnpanel.SetBackgroundColour(barColor)
         #---------- others panel instances:
@@ -170,6 +207,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[21],
                                                      pathicons[22],
                                                      pathicons[25],
+                                                     pathicons[28]
                                                      )
         self.ChooseTopic.SetBackgroundColour(barColor)
         self.ytDownloader = downloader.Downloader(self, self.OS)
@@ -217,6 +255,19 @@ class MainFrame(wx.Frame):
                                               pathicons[27]
                                               )
         self.ProcessPanel = Logging_Console(self)
+        self.PrstsPanel = presets_manager.PrstPan(self, 
+                                                  SRCpath, 
+                                                  self.DIRconf, 
+                                                  self.WORKdir, 
+                                                  self.threads, 
+                                                  self.ffmpeg_loglevel, 
+                                                  self.ffmpeg_link, 
+                                                  self.OS,
+                                                  pathicons[15],#icon analyzes
+                                                  pathicons[18],#icon peaklevel
+                                                  self.bBtnC,
+                                                  self.fBtnC,
+                                                  )
         # hide panels
         self.fileDnDTarget.Hide()
         self.textDnDTarget.Hide()
@@ -224,6 +275,7 @@ class MainFrame(wx.Frame):
         self.VconvPanel.Hide()
         self.AconvPanel.Hide()
         self.ProcessPanel.Hide()
+        self.PrstsPanel.Hide()
         # Layout toolbar buttons:
         self.mainSizer = wx.BoxSizer(wx.VERTICAL) # sizer base global
         grid_pan = wx.FlexGridSizer(1, 7, 0, 0)
@@ -231,6 +283,9 @@ class MainFrame(wx.Frame):
         grid_pan.Add(self.btn_playO, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_duration, 0, wx.CENTER|wx.ALL, 5)
         grid_pan.Add(self.btn_saveprf, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_newprf, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_delprf, 0, wx.CENTER|wx.ALL, 5)
+        grid_pan.Add(self.btn_editprf, 0, wx.CENTER|wx.ALL, 5)
         self.btnpanel.SetSizer(grid_pan) # set panel
         self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
         # Layout externals panels:
@@ -241,6 +296,7 @@ class MainFrame(wx.Frame):
         self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.AconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
+        self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND|wx.ALL, 0)
         #----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
         icon = wx.Icon()
@@ -264,7 +320,7 @@ class MainFrame(wx.Frame):
         self.btn_playO.SetToolTip(_("Choose a file to playback in the "
                                     "destination folder"
                                         ))
-        self.btn_saveprf.SetToolTip(_("Save the settings as a preset for Vinc"
+        self.btn_saveprf.SetToolTip(_("Save the settings on presets manager"
                                         ))
         # menu bar
         self.videomass_menu_bar()
@@ -284,6 +340,9 @@ class MainFrame(wx.Frame):
         self.textDnDTarget.btn_back.Bind(wx.EVT_BUTTON, self.on_close)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
         self.Bind(wx.EVT_BUTTON, self.Saveprofile, self.btn_saveprf)
+        self.Bind(wx.EVT_BUTTON, self.Newprofile, self.btn_newprf)
+        self.Bind(wx.EVT_BUTTON, self.Delprofile, self.btn_delprf)
+        self.Bind(wx.EVT_BUTTON, self.Editprofile, self.btn_editprf)
         self.Bind(wx.EVT_BUTTON, self.ImportInfo, self.btn_metaI)
         self.Bind(wx.EVT_BUTTON, self.ExportPlay, self.btn_playO)
         #self.Bind(wx.EVT_SHOW, self.panelShown)
@@ -325,6 +384,10 @@ class MainFrame(wx.Frame):
         elif self.AconvPanel.IsShown():
             self.AconvPanel.normalization_default()
             self.AconvPanel.Hide()
+        
+        elif self.PrstsPanel.IsShown():
+            self.PrstsPanel.normalization_default()
+            self.PrstsPanel.Hide()
             
         self.ChooseTopic.Show(), self.toolbar.Hide(), self.btnpanel.Hide()
         self.statusbar_msg(_(''), None)
@@ -342,6 +405,9 @@ class MainFrame(wx.Frame):
         
         elif self.topicname == 'Youtube Downloader':
             self.youtube_Downloader(self)
+            
+        elif self.topicname == 'Presets Manager':
+            self.switch_presets_manager(self)
 
     #---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the filedrop panel
@@ -433,6 +499,35 @@ class MainFrame(wx.Frame):
             self.AconvPanel.Addprof()
         else:
             print ('Videomass: Error, no panels shown')
+    
+    #------------------------------------------------------------------#
+    def Newprofile(self, event):
+        """
+        Store new profile in the selected preset of the presets manager
+        panel. The list is reloaded automatically after pressed ok button 
+        in the dialog for update view.
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Addprof()
+        else:
+            print ('Videomass: Error, no presets manager panel shown')
+    #------------------------------------------------------------------#
+    def Delprofile(self, event):
+        """
+        Delete the selected preset of the presets manager
+        panel.
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Delprof()
+    #------------------------------------------------------------------#
+    def Editprofile(self, event):
+        """
+        Edit selected item in the list control of the presets manager
+        panel. The list is reloaded automatically after pressed ok button 
+        in the dialog.
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Editprof(self)
         
     #------------------------------------------------------------------#
     def onCustomSave(self, event):
@@ -490,7 +585,33 @@ class MainFrame(wx.Frame):
         self.file_save = fileButton.Append(wx.ID_SAVE, _("Choose a Destination " 
                                                         "folder.."), 
                         _("Choice a folder where save processed files"))
-
+        fileButton.AppendSeparator()
+        self.new_prst = fileButton.Append(wx.ID_NEW, _("Create new preset "),
+                         _("Create a new preset to use on Presets Manager"))
+        fileButton.AppendSeparator()
+        self.saveme = fileButton.Append(wx.ID_REVERT_TO_SAVED,
+                                 _("Save the current preset as separated file"),
+                       _("Make a back-up of the selected preset on combobox"
+                                    ))
+        self.restore = fileButton.Append(wx.ID_REPLACE, _("Restore a previously "
+                                                "saved preset"), 
+                _("Replace the selected preset with other saved custom preset.")
+                                                )
+        self.default = fileButton.Append(wx.ID_ANY, _("Reset the current preset "),
+                            _("Replace the selected preset with default values.")
+                                                )
+        fileButton.AppendSeparator()
+        
+        self.default_all = fileButton.Append(wx.ID_UNDO, _("Reset all presets "),
+                         _("Revert all presets to default values")
+                                                )
+        fileButton.AppendSeparator()
+        self.del_prst = fileButton.Append(wx.ID_DELETE, _("Remove preset"),
+                         _("Remove the selected preset on Presets Manager")
+                                                )
+        fileButton.AppendSeparator()
+        self.refresh = fileButton.Append(wx.ID_REFRESH, _("Reload presets list"), 
+                                           _("..Sometimes it can be useful"))
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"), _("Close Videomass"))
         self.menuBar.Append(fileButton,"&File")
@@ -548,6 +669,13 @@ class MainFrame(wx.Frame):
         #-----------------------Binding menu bar-------------------------#
         #----FILE----
         self.Bind(wx.EVT_MENU, self.File_Save, self.file_save)
+        self.Bind(wx.EVT_MENU, self.New_preset, self.new_prst)
+        self.Bind(wx.EVT_MENU, self.Saveme, self.saveme)
+        self.Bind(wx.EVT_MENU, self.Restore, self.restore)
+        self.Bind(wx.EVT_MENU, self.Default, self.default)
+        self.Bind(wx.EVT_MENU, self.Default_all, self.default_all)
+        self.Bind(wx.EVT_MENU, self.Del_preset, self.del_prst)
+        self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
         #----TOOLS----
         self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
@@ -570,7 +698,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
         
-    #-------------------Menu Bar Event handler (callback)----------------------#
+    #--------Menu Bar Event handler (callback)
     
     #-------------------------- Menu  File -----------------------------#
     def File_Save(self, event):
@@ -585,8 +713,62 @@ class MainFrame(wx.Frame):
         destroy the videomass.
         """
         self.on_close(self)
+    
+    #--------------------------------------------------#
+    def New_preset(self, event):
+        """
+        Call New_preset_prst from Prrsets Manager panel
+        
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.New_preset_prst()
+    #--------------------------------------------------#
+    def Saveme(self, event):
+        """
+        call method for save a single file copy of preset.
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Saveme()
+    #--------------------------------------------------#
+    def Restore(self, event):
+        """
+        call restore a single preset file in the path presets of the program
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Restore()
+    #--------------------------------------------------#
+    def Default(self, event):
+        """
+        call copy the single original preset file into the configuration
+        folder. This replace new personal changes make at profile.
+        """ 
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Default()
+    #--------------------------------------------------#
+    def Default_all(self, event):
+        """
+        call restore all preset files in the path presets of the program
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Default_all()
+    #--------------------------------------------------#
+    def Del_preset(self, event):
+        """ 
+        Call Del_preset_prst from Prrsets Manager panel
+        Remove the selected preset from /prst presets
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Del_preset_prst()
+    #--------------------------------------------------#
+    def Refresh(self, event):
+        """ 
+        call Pass to reset_list function for re-charging list
+        """
+        if self.PrstsPanel.IsShown():
+            self.PrstsPanel.Refresh()
+    #--------------------------------------------------#
                 
-    #------------------------ Menu  Preferences -------------------------#
+    #--------- Menu  Preferences
 
     def Setup(self, event):
         """
@@ -603,7 +785,7 @@ class MainFrame(wx.Frame):
                                      )
         setup_dlg.ShowModal()
     
-    #--------------------------- Menu Tools ---------------------------#
+    #--------- Menu Tools
     def durinPlayng(self, event):
         """
         show dialog with shortcuts keyboard for FFplay
@@ -664,7 +846,7 @@ class MainFrame(wx.Frame):
         """
         IO_tools.openpath('dirconf')
         
-    #---------------------------- Menu Edit ----------------------------#
+    #--------- Menu Edit
     def Helpme(self, event):
         """Online User guide"""
         page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
@@ -810,7 +992,8 @@ class MainFrame(wx.Frame):
         self.topicname = which
         self.textDnDTarget.Hide(), self.ytDownloader.Hide()
         self.VconvPanel.Hide(), self.AconvPanel.Hide()
-        self.ChooseTopic.Hide(), self.fileDnDTarget.Show()
+        self.ChooseTopic.Hide(), self.PrstsPanel.Hide()
+        self.fileDnDTarget.Show()
         if self.file_destin:
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.file_destin)
@@ -825,7 +1008,8 @@ class MainFrame(wx.Frame):
         self.topicname = which
         self.fileDnDTarget.Hide(),self.ytDownloader.Hide()
         self.VconvPanel.Hide(), self.AconvPanel.Hide()
-        self.ChooseTopic.Hide(), self.textDnDTarget.Show()
+        self.ChooseTopic.Hide(), self.PrstsPanel.Hide()
+        self.textDnDTarget.Show()
         if self.file_destin:
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.file_destin)
@@ -841,10 +1025,13 @@ class MainFrame(wx.Frame):
         
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.VconvPanel.Hide(), self.AconvPanel.Hide()
-        self.ytDownloader.Show()#, self.SetSize((700, 800))
+        self.PrstsPanel.Hide(), self.ytDownloader.Show()
         self.statusbar_msg(_('Youtube Downloader'), None)
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
         self.btn_saveprf.Hide(),self.btn_duration.Hide(),self.btn_metaI.Show()
+        self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
+        
+        
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
 
@@ -856,7 +1043,7 @@ class MainFrame(wx.Frame):
         self.file_destin = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.AconvPanel.Hide()
-        self.VconvPanel.Show(), 
+        self.PrstsPanel.Hide(), self.VconvPanel.Show(), 
         self.statusbar_msg(_('Video Conversions'), None)
         flist = [f['format']['filename'] for f in 
                  self.data if f['format']['filename']
@@ -866,6 +1053,7 @@ class MainFrame(wx.Frame):
                          ]
         self.VconvPanel.file_src = flist
         self.toolbar.Show(), self.btnpanel.Show()
+        self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.btn_saveprf.Show(), self.btn_duration.Show(),
         self.btn_metaI.Show(), self.btn_playO.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
@@ -879,7 +1067,7 @@ class MainFrame(wx.Frame):
         self.file_destin = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.AconvPanel.Show()
+        self.PrstsPanel.Hide(), self.AconvPanel.Show()
         self.statusbar_msg(_('Audio Conversions'), None)
         flist = [f['format']['filename'] for f in 
                  self.data if f['format']['filename']
@@ -889,7 +1077,32 @@ class MainFrame(wx.Frame):
                          ]
         self.AconvPanel.file_src = flist
         self.toolbar.Show(), self.btnpanel.Show()
+        self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.btn_saveprf.Show(), self.btn_duration.Show()
+        self.btn_metaI.Show(), self.btn_playO.Show()
+        self.toolbar.EnableTool(wx.ID_OK, True)
+        self.Layout()
+    #------------------------------------------------------------------#
+    def switch_presets_manager(self, event):
+        """
+        Show presets manager panel
+        
+        """
+        self.file_destin = self.fileDnDTarget.file_dest
+        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
+        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
+        self.AconvPanel.Hide(), self.PrstsPanel.Show()
+        self.statusbar_msg(_('Presets Manager'), None)
+        flist = [f['format']['filename'] for f in 
+                 self.data if f['format']['filename']
+                 ]
+        self.duration = [f['format']['duration'] for f in 
+                         self.data if f['format']['duration']
+                         ]
+        self.PrstsPanel.file_src = flist
+        self.toolbar.Show(), self.btnpanel.Show()
+        self.btn_newprf.Show(), self.btn_delprf.Show(), self.btn_editprf.Show()
+        self.btn_saveprf.Hide(), self.btn_duration.Show()
         self.btn_metaI.Show(), self.btn_playO.Show()
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
@@ -943,6 +1156,8 @@ class MainFrame(wx.Frame):
             self.VconvPanel.on_ok()
         elif self.AconvPanel.IsShown():
             self.AconvPanel.on_ok()
+        elif self.PrstsPanel.IsShown():
+            self.PrstsPanel.on_ok()
             
     #------------------------------------------------------------------#
     def panelShown(self, panelshown):
@@ -963,9 +1178,12 @@ class MainFrame(wx.Frame):
         elif panelshown == 'Youtube Downloader':
             self.ProcessPanel.Hide()
             self.youtube_Downloader(self)
+        elif panelshown == 'Presets Manager':
+            self.ProcessPanel.Hide()
+            self.switch_presets_manager(self)
+            self.btnpanel.Show()
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0,3)]
         self.SetTitle("Videomass")# set the appropriate title
         # show buttons bar if the user has shown it:
         self.Layout()
-        

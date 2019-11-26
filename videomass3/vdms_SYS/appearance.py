@@ -120,6 +120,7 @@ class Appearance(object):
         icon_slideshow = '%s/icon_slideshow.png' % self.x48
         icon_youtube = '%s/icon_youtube.png' % self.x48
         icon_audionorm = '%s/icon_audionorm.png' % self.x48
+        icon_prst_mng = '%s/icon_prst_mng.png' % self.x48
         # choose topic icons 36x36:
         icon_process = '%s/icon_process.png' % self.x36
         # x24 icons 24x24:
@@ -127,6 +128,9 @@ class Appearance(object):
         icn_preview = '%s/preview.png' % self.x24
         icn_cut = '%s/cut.png' % self.x24
         icn_saveprf = '%s/saveprf.png' % self.x24
+        icn_newprf = '%s/newprf.png' % self.x24
+        icn_delprf = '%s/delprf.png' % self.x24
+        icn_editprf = '%s/editprf.png' % self.x24
         # filters icons 24x24:
         icn_playfilters = '%s/playfilters.png' % self.x24
         icn_resetfilters = '%s/resetfilters.png' % self.x24
@@ -171,4 +175,8 @@ class Appearance(object):
                                                 icon_audionorm, # 31
                                                 icon_go, # 32
                                                 icon_back, # 33
+                                                icon_prst_mng, # 28
+                                                icn_newprf, # 29
+                                                icn_delprf, # 30
+                                                icn_editprf, # 31
                                                 ]]
