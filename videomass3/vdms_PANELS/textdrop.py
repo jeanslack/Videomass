@@ -60,7 +60,7 @@ class TextDnD(wx.Panel):
                                                       wx.TE_READONLY
                                                       )
         self.btn_forward = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
-        self.btn_forward.SetBitmap(wx.Bitmap(forward_icn),wx.LEFT)
+        self.btn_forward.SetBitmap(wx.Bitmap(forward_icn),wx.RIGHT)
         self.btn_back = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
         self.btn_back.SetBitmap(wx.Bitmap(back_icn),wx.LEFT)
         self.lbl = wx.StaticText(self, label=_("Enter one or more URLs below"))

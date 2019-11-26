@@ -215,7 +215,7 @@ class Video_Conv(wx.Panel):
         
         vp9_textopt = wx.StaticText(self.vp9panel, wx.ID_ANY, 
                                            _("Controlling Speed and Quality"))
-        vp9_textopt.SetFont(wx.Font(10, wx.NORMAL, wx.NORMAL, wx.BOLD))
+        vp9_textopt.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
         sizer_optpanel.Add(vp9_textopt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
         
         self.rdb_deadline = wx.RadioBox(self.vp9panel, wx.ID_ANY, 

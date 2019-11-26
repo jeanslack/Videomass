@@ -26,12 +26,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-from __future__ import unicode_literals 
-try:
-    import youtube_dl
-    ydl = True
-except ModuleNotFoundError:
-    ydl = False
     
 import wx
 import wx.lib.agw.hyperlink as hpl
@@ -39,6 +33,7 @@ import wx.lib.agw.hyperlink as hpl
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
+ydl = get.ydl
 
 class Choose_Topic(wx.Panel):
     """
@@ -151,10 +146,10 @@ class Choose_Topic(wx.Panel):
         #self.parent.File_import(self,'Pictures Slideshow Maker')
     
     def on_YoutubeDL(self, event):
-        if not ydl:
-            wx.MessageBox(_('"youtube_dl" module not found. To use this feature '
-                            'please install youtube-dl.'),
-                            'Videomass', wx.ICON_ERROR)
+        if not ydl[0]:
+            wx.MessageBox('ERROR: %s\n\nTo use this feature '
+                          'please install youtube-dl.' % ydl[1],
+                          'Videomass', wx.ICON_ERROR)
             return
 
         self.parent.Text_import(self, 'Youtube Downloader')

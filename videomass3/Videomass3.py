@@ -27,6 +27,13 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
+try:
+    from youtube_dl import YoutubeDL 
+    ydl = (True, None)
+except ModuleNotFoundError as moderr:
+    ydl = (False, moderr)
+except ImportError as moderr:
+    ydl = (False, moderr)
 import wx
 import os
 from videomass3.vdms_SYS.ctrl_run import system_check
@@ -63,6 +70,7 @@ class Videomass(wx.App):
         self.ffprobe_url = None
         self.ffmpeg_loglev = None
         self.ffplay_loglev = None
+        self.ydl = ydl
         #print ("App __init__")
         wx.App.__init__(self, redirect, filename) # constructor
     #-------------------------------------------------------------------
