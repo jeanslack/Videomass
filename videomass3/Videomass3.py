@@ -30,10 +30,8 @@
 try:
     from youtube_dl import YoutubeDL 
     ydl = (True, None)
-except ModuleNotFoundError as moderr:
-    ydl = (False, moderr)
-except ImportError as moderr:
-    ydl = (False, moderr)
+except (ModuleNotFoundError, ImportError) as nomodule:
+    ydl = (False, nomodule)
 import wx
 import os
 from videomass3.vdms_SYS.ctrl_run import system_check
@@ -83,17 +81,16 @@ class Videomass(wx.App):
         
         """
         setui = system_check() # user-space and interface settings
-        
+        # locale
         lang = ''
         self.locale = None
         wx.Locale.AddCatalogLookupPathPrefix(setui[5])
         self.updateLanguage(lang)
         
-        if setui[2]: # if source /share is missing and videomass is corrupted
-            wx.MessageBox(_('Can not find the configuration file\n\n'
-                            'Sorry, cannot continue..'),
+        if setui[2]: # copyerr = True; the share folder is damaged
+            wx.MessageBox(_('{0}\n\nSorry, cannot continue..'.format(setui[2])),
                              'Videomass: Fatal Error', wx.ICON_STOP)
-            print ('Videomass: Fatal Error, file configuration not found')
+            print ('Videomass: Fatal Error, %s' % setui[2])
             return False
         
         icons = Appearance(setui[3], setui[4][11])# set appearance instance
@@ -216,5 +213,3 @@ def main():
     #app.MainLoop()
     fred = app.MainLoop()
     #print ("after MainLoop", fred)
-    
-

@@ -1,0 +1,34 @@
+[
+    {
+        "Name": "PEAK/RMS normalization",
+        "Description": "Normalize any audio file by activate PEAK or RMS normalization automation",
+        "First_pass": "-vn -c:a pcm_s16le -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "EBU normalization",
+        "Description": "Normalize any audio file by activate EBU normalization automation",
+        "First_pass": "-vn -f null",
+        "Second_pass": "-vn -c:a pcm_s16le -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "PEAK/RMS normalization for Video",
+        "Description": "Normalize first audio stream of the video file by activate PEAK or RMS normalization automation",
+        "First_pass": "-c:v copy -c:a pcm_s16le -map 0:1 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "mkv,avi",
+        "Output_extension": "copy"
+    },
+    {
+        "Name": "EBU normalization for Video",
+        "Description": "Normalize first audio stream of the video file by activate EBU normalization automation",
+        "First_pass": "-vn -f null",
+        "Second_pass": "-c:v copy -c:a pcm_s16le -map 0:1 -map_metadata 0",
+        "Supported_list": "mkv,avi",
+        "Output_extension": "copy"
+    }
+]

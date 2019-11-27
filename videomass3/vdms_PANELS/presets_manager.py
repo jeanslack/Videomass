@@ -677,9 +677,9 @@ class PrstPan(wx.Panel):
         
         """
         filename = self.cmbx_prst.GetValue()
-        if wx.MessageBox(_('Are you sure you want to remove the selected '
-                           'preset?\n\n"{}"\n\nIt will be moved to the '
-                           '"Removals" folder on the presets directory'
+        if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
+                           'It will be moved to the "Removals" folder in the '
+                           'presets directory'
                            ).format(filename), _('Videomass: Please confirm'), 
                             wx.ICON_QUESTION | 
                             wx.YES_NO, self) == wx.NO:
@@ -688,7 +688,6 @@ class PrstPan(wx.Panel):
         path = os.path.join('%s' % self.user_prst, 
                         '%s.prst' % self.cmbx_prst.GetValue()
                         )
-        
         try: # if exist dir not exit OSError, go...
             if not os.path.exists(os.path.join(self.user_prst, 'Removals')):
                 os.mkdir(os.path.join(self.user_prst, 'Removals'))
@@ -699,9 +698,7 @@ class PrstPan(wx.Panel):
             return
         s = os.path.join(self.user_prst, '%s.prst' % filename)
         d = os.path.join(self.user_prst, 'Removals', '%s.prst' % filename)
-        
         os.replace(s, d)
-
         self.reset_list(True)
 
     #------------------------------------------------------------------#

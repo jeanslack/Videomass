@@ -67,7 +67,7 @@ def parsing_fileconf():
     lst = [line.strip() for line in fconf if not line.startswith('#')]
     dataconf = [x for x in lst if x]# list without empties values
     if not dataconf:
-        return 'corrupted'
+        return
     else:
         return dataconf
 #------------------------------------------------------------------------#
@@ -116,16 +116,16 @@ def system_check():
                 IS_LOCAL = False
                 
     #--------------------------------------------#
-    #### check videomass.conf and configuration folder #
+    #### check videomass configuration folder #
     #--------------------------------------------#
     copyerr = False
-    existfileconf = True # file conf esiste (True) o non esiste (False)
+    existfileconf = True # True > found, False > not found
     
-    if os.path.exists(os.path.dirname(FILEconf)): # if exist conf. folder
+    if os.path.exists(DIRconf): # if exist conf. folder
         if os.path.isfile(FILEconf):
             DATAconf = parsing_fileconf() # fileconf data
-            if DATAconf == 'corrupted':
-                print("The file configuration is corrupted! try to restore..")
+            if not DATAconf:
+                print("The file configuration is damaged! try to restore..")
                 existfileconf = False
             if float(DATAconf[0]) != 1.7:
                 existfileconf = False
@@ -134,26 +134,30 @@ def system_check():
         
         if not existfileconf:
             try:
-                if OS == ('Linux') or OS == ('Darwin'):
-                    shutil.copyfile('%s/videomass.conf' % SRCpath, 
-                                    FILEconf)
-                elif OS == ('Windows'):
+                if OS == ('Windows'):
                     shutil.copyfile('%s/videomassWin32.conf' % SRCpath, 
                                     FILEconf)
+                else:
+                    shutil.copyfile('%s/videomass.conf' % SRCpath, 
+                                    FILEconf)
                 DATAconf = parsing_fileconf() # read again file conf
-            except IOError:
-                copyerr = True
-                DATAconf = 'corrupted'
+            except IOError as e:
+                copyerr = e
+                DATAconf = None
+        if not os.path.exists(os.path.join(DIRconf, "presets")):
+            try:
+                shutil.copytree(os.path.join(SRCpath, "presets"), 
+                                os.path.join(DIRconf, "presets"))
+            except (OSError, IOError) as e:
+                copyerr = e
+                DATAconf = None
     else:
         try:
             shutil.copytree(SRCpath, DIRconf)
             DATAconf = parsing_fileconf() #  read again file conf
-        except OSError:
-            copyerr = True
-            DATAconf = 'corrupted'
-        except IOError:
-            copyerr = True
-            DATAconf = 'corrupted'
+        except (OSError, IOError) as e:
+            copyerr = e
+            DATAconf = None
 
     return (OS, SRCpath, 
             copyerr, IS_LOCAL, 

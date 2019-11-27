@@ -1,0 +1,26 @@
+[
+    {
+        "Name": "Video mkv H.264",
+        "Description": "achieving the best possible quality",
+        "First_pass": "-c:v libx264 -crf 23 -map 0 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Video webm VP9",
+        "Description": "achieving the best possible quality",
+        "First_pass": "-c:v libvpx-vp9 -crf 30 -b:v 0 -row-mt 1 -map 0 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "webm"
+    },
+    {
+        "Name": "Video mkv H.265",
+        "Description": "achieving the best possible quality",
+        "First_pass": "-c:v libx265 -crf 28 -map 0 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    }
+]

@@ -1,0 +1,82 @@
+[
+    {
+        "Name": "Converts to AC3",
+        "Description": "Ac3 DVD - 192kbps",
+        "First_pass": "-vn -c:a ac3 -b:a 192k -f ac3 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "ac3"
+    },
+    {
+        "Name": "Converts to FLAC",
+        "Description": "FLAC - stereo (lossless)",
+        "First_pass": "-vn -c:a flac -compression_level 5 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "flac"
+    },
+    {
+        "Name": "From WMA 9 to WAV",
+        "Description": "Converts wma9 files to wav format",
+        "First_pass": "-map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "wma VMA",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "Converts to MP3",
+        "Description": "MP3 - 320kbps",
+        "First_pass": "-vn -c:a libmp3lame -b:a 320k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mp3"
+    },
+    {
+        "Name": "Converts to m4a",
+        "Description": "MPEG4 audio - 112kbps",
+        "First_pass": "-vn -c:a aac -b:a 112k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "m4a"
+    },
+    {
+        "Name": "Converts to OGG",
+        "Description": "128kbps, stereo, low quality from -aq 1 to -aq 10",
+        "First_pass": "-vn -c:a libvorbis -aq 3 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "ogg"
+    },
+    {
+        "Name": "Converts to OPUS",
+        "Description": "maximum quality from  0 to 10 compression level",
+        "First_pass": "-vn -c:a libopus -compression_level 10 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "opus"
+    },
+    {
+        "Name": "Converts to WAV",
+        "Description": "bit depth 16 bit",
+        "First_pass": "-vn -c:a pcm_s16le -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "Converts to WAV for CD",
+        "Description": "bit depth 16 bit, sample rate 44.1 kHz",
+        "First_pass": "-vn -c:a pcm_s16le -ar 44100 -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "Converts to WMA",
+        "Description": "wmav2 160kbps",
+        "First_pass": "-vn -c:a wmav2 -b:a 160k -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wma"
+    }
+]
