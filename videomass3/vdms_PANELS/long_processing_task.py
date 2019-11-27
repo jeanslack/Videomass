@@ -125,6 +125,7 @@ class Logging_Console(wx.Panel):
         self.previus = panel # stores the panel from which it starts
         self.logname = varargs[8] # example: Videomass_VideoConversion.log
         time_seq = self.parent.time_seq # a time segment
+        print(self.previus)
         
         write_log(self.logname, "%s/log" % DIRconf) # set initial file LOG
         
@@ -144,6 +145,9 @@ class Logging_Console(wx.Panel):
             self.ckbx_text.Hide()
             self.PARENT_THREAD = YoutubeDL_Downloader(varargs,
                                                       self.logname)
+        
+        elif varargs[0] == 'one pass':
+            print('cia00000')
                              
     #-------------------------------------------------------------------#
     def update_download(self, output, duration, status):

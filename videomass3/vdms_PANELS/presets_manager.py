@@ -87,8 +87,7 @@ class PrstPan(wx.Panel):
         self.ffmpeg_link = ffmpeg_link
         self.OS = OS
         self.parent = parent
-        self.file_sources = []
-        self.file_destin = ''
+        self.file_src = []
         self.txtcmdedited = False # show dlg if cmdline is edited
         self.normdetails = []
         prst = sorted([os.path.splitext(x)[0] for x in 
@@ -504,13 +503,11 @@ class PrstPan(wx.Panel):
         for audio normalizations based on PEAK or RMS .
         
         """
-        file_sources = self.parent.file_sources[:]
-        
         if self.rdbx_norm.GetSelection() == 1:
-            self.max_volume_PEAK(file_sources)
+            self.max_volume_PEAK(self.file_src)
             
         elif self.rdbx_norm.GetSelection() == 2:
-            self.mean_volume_RMS(file_sources)
+            self.mean_volume_RMS(self.file_src)
     #------------------------------------------------------------------#
     def max_volume_PEAK(self, file_sources):
         """
@@ -628,6 +625,7 @@ class PrstPan(wx.Panel):
         self.btn_details.Show()
         self.Layout()
     #------------------------------------------------------------------#
+    
     def on_Show_normlist(self, event):
         """
         Show a wx.ListCtrl dialog with volumedected data
@@ -642,18 +640,7 @@ class PrstPan(wx.Panel):
                                                        self.OS)
         audionormlist.Show()
     #-----------------------------------------------------------------------#
-    
-    def exportStreams(self, exported):
-        """
-        Set the parent.post_process attribute for communicate it the
-        file disponibilities for play or metadata functionalities.
-        """
-        if not exported:
-            return
-        else:
-            self.parent.post_process = exported
-            self.parent.postExported_enable()
-    #------------------------------------------------------------------#
+
     def New_preset_prst(self):
         """
         Create new empty preset '*.prst' on /presets path name
@@ -895,10 +882,7 @@ class PrstPan(wx.Panel):
                                 "Videomass", wx.ICON_INFORMATION)
                 return
         self.time_seq = self.parent.time_seq
-        # make a different id need to avoid attribute overwrite:
-        file_sources = self.parent.file_sources[:]
-        # make a different id need to avoid attribute overwrite:
-        dir_destin = self.file_destin
+        dir_destin = self.parent.file_destin
         # used for file name log 
         self.logname = 'Videomass_PresetsManager.log'
 
@@ -935,7 +919,7 @@ class PrstPan(wx.Panel):
                         
         outext = '' if array[5] == 'copy' else array[5] 
         extlst, outext = array[4], outext
-        file_sources = supported_formats(extlst, file_sources)
+        file_sources = supported_formats(extlst, self.file_src)
         checking = inspect(file_sources, dir_destin, outext)
         
         if not checking[0]:# missing files or user has changed his mind
@@ -973,8 +957,6 @@ class PrstPan(wx.Panel):
                                         self.logname, 
                                         cntmax,
                                         )
-            
-            self.preview(filesrc, destdir, outext)
     #------------------------------------------------------------------#
     
     def two_Pass(self, filesrc, destdir, cntmax, outext):
@@ -1028,9 +1010,6 @@ class PrstPan(wx.Panel):
                                         self.logname, 
                                         cntmax,
                                         )
-            
-            self.preview(filesrc, destdir, outext)
-            
     #------------------------------------------------------------------#
     
     def update_dict(self, cntmax, passes):
@@ -1061,16 +1040,3 @@ class PrstPan(wx.Panel):
 
         return formula, dictions
     #--------------------------------------------------------------------#
-    
-    def preview(self, filesrc, destdir, outext):
-        """
-        used for play preview and/or mediainfo
-        
-        """
-        if not outext:
-            f = '%s/%s' % (destdir[0], os.path.basename(filesrc[0]))
-            self.exportStreams(f)
-        else:
-            f = os.path.basename(filesrc[0]).rsplit('.', 1)[0]
-            self.exportStreams('%s/%s.%s' % (destdir[0], f, array[5]))
-

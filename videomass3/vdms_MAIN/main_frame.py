@@ -322,6 +322,13 @@ class MainFrame(wx.Frame):
                                         ))
         self.btn_saveprf.SetToolTip(_("Save the settings on presets manager"
                                         ))
+        self.btn_newprf.SetToolTip(_("Create a new profile from yourself "
+                                        "and save it in the selected preset."
+                                        ))
+        self.btn_delprf.SetToolTip(_("Delete the selected profile."
+                                        ))
+        self.btn_editprf.SetToolTip(_("Edit the selected profile."
+                                          ))
         # menu bar
         self.videomass_menu_bar()
         ## tool bar main
@@ -332,7 +339,6 @@ class MainFrame(wx.Frame):
         self.toolbar.Hide()
         self.btnpanel.Hide()
         self.Layout()
-        
         #---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.fileDnDTarget.btn_back.Bind(wx.EVT_BUTTON, self.on_close)
@@ -348,7 +354,6 @@ class MainFrame(wx.Frame):
         #self.Bind(wx.EVT_SHOW, self.panelShown)
         #self.fileDnDTargetPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
-        
     #-------------------Status bar settings--------------------#
     def statusbar_msg(self, msg, color):
         """
@@ -408,6 +413,15 @@ class MainFrame(wx.Frame):
             
         elif self.topicname == 'Presets Manager':
             self.switch_presets_manager(self)
+    #------------------------------------------------------------------#
+    def menu_items(self):
+        """
+        enable or disable some menu items according by showing panels
+        """
+        self.saveme.Enable(False),
+        self.new_prst.Enable(False), self.del_prst.Enable(False),
+        self.restore.Enable(False), self.default.Enable(False), 
+        self.default_all.Enable(False), self.refresh.Enable(False),
 
     #---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the filedrop panel
@@ -997,6 +1011,7 @@ class MainFrame(wx.Frame):
         if self.file_destin:
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.file_destin)
+        self.menu_items()#disable some menu items
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
         
@@ -1013,6 +1028,7 @@ class MainFrame(wx.Frame):
         if self.file_destin:
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.file_destin)
+        self.menu_items()#disable some menu items
         self.Layout()
         self.statusbar_msg(_('Add URLs'), None)
 
@@ -1022,7 +1038,6 @@ class MainFrame(wx.Frame):
         Show youtube-dl downloader
         """
         self.file_destin = self.textDnDTarget.file_dest
-        
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.VconvPanel.Hide(), self.AconvPanel.Hide()
         self.PrstsPanel.Hide(), self.ytDownloader.Show()
@@ -1030,8 +1045,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
         self.btn_saveprf.Hide(),self.btn_duration.Hide(),self.btn_metaI.Show()
         self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
-        
-        
+        self.menu_items()#disable some menu items
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
 
@@ -1056,6 +1070,7 @@ class MainFrame(wx.Frame):
         self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.btn_saveprf.Show(), self.btn_duration.Show(),
         self.btn_metaI.Show(), self.btn_playO.Show()
+        self.menu_items()#disable some menu items
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
         
@@ -1080,6 +1095,7 @@ class MainFrame(wx.Frame):
         self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.btn_saveprf.Show(), self.btn_duration.Show()
         self.btn_metaI.Show(), self.btn_playO.Show()
+        self.menu_items()#disable some menu items
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
     #------------------------------------------------------------------#
@@ -1104,6 +1120,11 @@ class MainFrame(wx.Frame):
         self.btn_newprf.Show(), self.btn_delprf.Show(), self.btn_editprf.Show()
         self.btn_saveprf.Hide(), self.btn_duration.Show()
         self.btn_metaI.Show(), self.btn_playO.Show()
+        self.saveme.Enable(True)
+        self.new_prst.Enable(True), self.del_prst.Enable(True), 
+        self.restore.Enable(True), self.default.Enable(True), 
+        self.default_all.Enable(True), self.refresh.Enable(True),
+        
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
             
@@ -1134,7 +1155,7 @@ class MainFrame(wx.Frame):
         #Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.AconvPanel.Hide(), 
+        self.AconvPanel.Hide(), self.PrstsPanel.Hide(),
         #Show the panel:
         self.ProcessPanel.Show()
         self.SetTitle(_('Processing Status - Videomass'))
