@@ -108,7 +108,6 @@ class Videomass(wx.App):
         self.ffplay_check = setui[4][9]
         self.threads = setui[4][2]
         self.userpath = None if setui[4][1] == 'none' else setui[4][1]
-        print(self.userpath)
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"

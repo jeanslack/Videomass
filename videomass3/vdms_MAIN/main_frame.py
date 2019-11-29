@@ -287,8 +287,9 @@ class MainFrame(wx.Frame):
         self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:
-        self.btn_duration.SetToolTip(_('Set a global timeline to apply to '
-                                       'any media file with duration.'
+        self.btn_duration.SetToolTip(_('Specify the duration or part of the '
+                                       'time globally. this can affect many '
+                                       'functions.'
                                            ))
         self.btn_metaI.SetToolTip(_("Show additional media information." 
                                         ))

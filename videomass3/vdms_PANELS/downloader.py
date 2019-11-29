@@ -131,19 +131,18 @@ class Downloader(wx.Panel):
         grid_opt.Add(self.ckbx_thumb, 0, wx.ALL, 5)
         self.ckbx_meta = wx.CheckBox(self, wx.ID_ANY,(_('Add metadata to file')))
         grid_opt.Add(self.ckbx_meta, 0, wx.ALL, 5)
-        
         self.ckbx_sb = wx.CheckBox(self, wx.ID_ANY,(
                                                 _('Write subtitles to video')))
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
-        
         line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 0))
         sizer.Add(line_1, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
         
-        self.fcode = wx.ListCtrl(self, wx.ID_ANY,style=wx.LC_REPORT | 
-                                                  wx.SUNKEN_BORDER
+        self.fcode = wx.ListCtrl(self, wx.ID_ANY,style=wx.LC_REPORT| 
+                                                       wx.SUNKEN_BORDER
                                     )
-        
-        sizer.Add(self.fcode, 1, wx.EXPAND|wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 10)
+        sizer.Add(self.fcode, 1, wx.EXPAND|
+                                 wx.ALL|
+                                 wx.ALIGN_CENTER_HORIZONTAL, 10)
         
         self.fcode.InsertColumn(0, (_('TITLE')), width=180)
         self.fcode.InsertColumn(1, (_('URL')), width=80)

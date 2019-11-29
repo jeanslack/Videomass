@@ -69,12 +69,13 @@ class Choose_Topic(wx.Panel):
         anorm_lab =  _('Audio Normalization')
         prst_mng =  _('      Presets Manager      ')
         
+        self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1,-1))
+        self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn),wx.TOP)
         self.video = wx.Button(self, wx.ID_ANY, video_lab, size=(-1,-1))
         self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.TOP)
         self.audio = wx.Button(self, wx.ID_ANY, audio_lab, size=(-1,-1))
         self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.TOP)
-        self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1,-1))
-        self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn),wx.TOP)
+        
         #self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
         #self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.TOP)
         #self.audio_extract = wx.Button(self, wx.ID_ANY, audgr_lab, size=(-1,-1))
@@ -88,10 +89,10 @@ class Choose_Topic(wx.Panel):
         #self.anorm = wx.Button(self, wx.ID_ANY, anorm_lab, size=(-1,-1))
         #self.anorm.SetBitmap(wx.Bitmap(audionorm_icn),wx.TOP)
 
-        grid_buttons.AddMany([(self.video, 0, wx.EXPAND, 5),
+        grid_buttons.AddMany([(self.presets_mng, 0, wx.EXPAND, 5),
+                              (self.video, 0, wx.EXPAND, 5),
                               (self.audio, 0, wx.EXPAND, 5),
                               #(self.save_pict, 0, wx.EXPAND, 5),
-                              (self.presets_mng, 0, wx.EXPAND, 5),
                               #(self.audio_merge, 0, wx.EXPAND, 5),
                               #(self.slideshow, 0, wx.EXPAND, 5),
                               (self.youtube, 0, wx.EXPAND, 5),
