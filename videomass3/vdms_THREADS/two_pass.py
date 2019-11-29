@@ -40,6 +40,7 @@ OS = get.OS
 DIRconf = get.DIRconf # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
 ffmpeg_loglev = get.ffmpeg_loglev
+threads = get.threads
 
 if not OS == 'Windows':
     import shlex
@@ -121,24 +122,19 @@ class TwoPass(Thread):
                                                 ):
             basename = os.path.basename(files) #nome file senza path
             filename = os.path.splitext(basename)[0]#nome senza estensione
+            source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
+            outext = source_ext if not self.extoutput else self.extoutput
 
             #--------------- first pass
-            if 'libx265' in self.passList[1]:
-                passpar = '-x265-params pass=1:stats='
-            else:
-                passpar = '-pass 1 -passlogfile '
-                
-            pass1 = ('%s %s %s -i "%s" %s %s"%s/%s.log" -y %s' % (
-                                                            ffmpeg_url, 
-                                                            ffmpeg_loglev,
-                                                            self.time_seq,
-                                                            files, 
-                                                            self.passList[0],
-                                                            passpar,
-                                                            folders, 
-                                                            filename,
-                                                            self.nul,
-                                                            )) 
+            pass1 = ('%s %s %s -i "%s" %s %s '
+                     '-y %s' % (ffmpeg_url, 
+                                ffmpeg_loglev,
+                                self.time_seq,
+                                files, 
+                                self.passList[0],
+                                threads,
+                                self.nul,
+                                )) 
             self.count += 1
             count = 'File %s/%s - Pass One' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass1)
@@ -211,25 +207,18 @@ class TwoPass(Thread):
                              end='ok'
                              )
             #--------------- second pass ----------------#
-            if 'libx265' in self.passList[1]:
-                passpar = '-x265-params pass=1:stats='
-            else:
-                passpar = '-pass 1 -passlogfile '
-                
-            pass2 = ('%s %s %s -i "%s" %s %s %s'
-                     '"%s/%s.log" -y "%s/%s.%s"' % (ffmpeg_url,
-                                                    ffmpeg_loglev,
-                                                    self.time_seq,
-                                                    files, 
-                                                    self.passList[1], 
-                                                    volume,
-                                                    passpar,
-                                                    folders, 
-                                                    filename,
-                                                    folders, 
-                                                    filename,
-                                                    self.extoutput,
-                                                    ))
+            pass2 = ('%s %s %s -i "%s" %s %s %s '
+                     '-y "%s/%s.%s"' % (ffmpeg_url,
+                                        ffmpeg_loglev,
+                                        self.time_seq,
+                                        files, 
+                                        self.passList[1],
+                                        volume,
+                                        threads,
+                                        folders, 
+                                        filename,
+                                        outext,
+                                        ))
             count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             wx.CallAfter(pub.sendMessage, 

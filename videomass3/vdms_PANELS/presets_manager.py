@@ -73,18 +73,15 @@ class PrstPan(wx.Panel):
     }
     
     """
-    def __init__(self, parent, path_srcShare, path_confdir, PWD, 
-                 threads, ffmpeg_loglev, ffmpeg_link, OS, iconanalyzes, 
-                 iconpeaklevel, btn_color, fontBtncolor):
+    def __init__(self, parent, path_srcShare, path_confdir, 
+                 PWD, OS, iconanalyzes, iconpeaklevel, btn_color, 
+                 fontBtncolor):
         """
         
         """
         self.src_prst = os.path.join(path_srcShare, 'presets')#origin/share
         self.user_prst = os.path.join(path_confdir, 'presets')#conf/videomass
         self.PWD = PWD #current work of videomass
-        self.threads = threads
-        self.ffmpeg_loglev = ffmpeg_loglev
-        self.ffmpeg_link = ffmpeg_link
         self.OS = OS
         self.parent = parent
         self.file_src = []
@@ -528,9 +525,7 @@ class PrstPan(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, 
-                                   file_sources, 
-                                   self.time_seq)
+        data = volumeDetectProcess(file_sources, self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
@@ -584,9 +579,7 @@ class PrstPan(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, 
-                                   file_sources, 
-                                   self.time_seq)
+        data = volumeDetectProcess(file_sources, self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
@@ -865,7 +858,7 @@ class PrstPan(wx.Panel):
 
             self.reset_list()
     #------------------------------------------------------------------#
-    def on_ok(self):
+    def on_start(self):
         """
         File data redirecting .
         
@@ -943,7 +936,7 @@ class PrstPan(wx.Panel):
         valupdate = self.update_dict(cntmax, 'One passes')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('one pass',
+            self.parent.switch_Process('onepass',
                                         filesrc, 
                                         outext, 
                                         destdir, 
@@ -988,7 +981,7 @@ class PrstPan(wx.Panel):
                 
             
         else: # two-pass std
-            typeproc, loudnorm = 'two pass', ''
+            typeproc, loudnorm = 'twopass', ''
             audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
         
         

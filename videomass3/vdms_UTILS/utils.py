@@ -95,7 +95,6 @@ def time_seconds(time):
     duration = (int(h)*60+ int(m)*60+ float(s))
     
     return duration
-
 #------------------------------------------------------------------------
 def time_human(seconds):
     """

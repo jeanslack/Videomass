@@ -69,6 +69,8 @@ class Videomass(wx.App):
         self.ffmpeg_loglev = None
         self.ffplay_loglev = None
         self.ydl = ydl
+        self.userpath = None
+        
         #print ("App __init__")
         wx.App.__init__(self, redirect, filename) # constructor
     #-------------------------------------------------------------------
@@ -101,6 +103,12 @@ class Videomass(wx.App):
         self.DIRconf = setui[8] # set location dir conf pathname
         self.ffmpeg_loglev = setui[4][4]
         self.ffplay_loglev = setui[4][3]
+        self.ffmpeg_check = setui[4][5]
+        self.ffprobe_check = setui[4][7]
+        self.ffplay_check = setui[4][9]
+        self.threads = setui[4][2]
+        self.userpath = None if setui[4][1] == 'none' else setui[4][1]
+        print(self.userpath)
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -142,12 +150,7 @@ class Videomass(wx.App):
             #return True
             
         from videomass3.vdms_MAIN.main_frame import MainFrame
-        main_frame = MainFrame(setui, 
-                               self.ffmpeg_url, 
-                               self.ffprobe_url, 
-                               self.ffplay_url,
-                               pathicons
-                               )
+        main_frame = MainFrame(setui, pathicons)
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True

@@ -18,7 +18,7 @@
     {
         "Name": "Drawing text",
         "Description": "Complex system for printing text on video",
-        "First_pass": "-c:v libx264 -crf 23 -map 0 -map_metadata 0 -vf drawtext=text='Test Text':x=100:y=50:fontsize=24:fontcolor=yellow:box=1:boxcolor=red",
+        "First_pass": "-c:v libx264 -crf 23 -map 0 -map_metadata 0 -vf drawtext=text='Add your text here':x=100:y=50:fontsize=24:fontcolor=yellow:box=1:boxcolor=red",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "mkv"

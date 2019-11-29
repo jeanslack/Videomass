@@ -30,9 +30,12 @@
 import wx
 import os
 from videomass3.vdms_IO import IO_tools
+from videomass3.vdms_UTILS.utils import time_seconds
 
 dirname = os.path.expanduser('~') # /home/user/
-data_files = []
+# path to the configuration directory:
+get = wx.GetApp()
+userpath = get.userpath
 
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
@@ -40,20 +43,7 @@ yellow = '#a29500'
 greenolive = '#6aaf23'
 orange = '#f28924'
 
-#--------------------------------------------------------------------#
-def convert(time):
-    """
-    convert time human to seconds
-    
-    """
-    if time == 'N/A':
-        return int('0')
-    
-    pos = time.split(':')
-    h,m,s = pos[0],pos[1],pos[2]
-    duration = (int(h)*60+ int(m)*60+ float(s))
-    
-    return duration
+data_files = []
 
 ########################################################################
 class MyListCtrl(wx.ListCtrl):
@@ -62,7 +52,7 @@ class MyListCtrl(wx.ListCtrl):
     parent.
     """
     #----------------------------------------------------------------------
-    def __init__(self, parent, ffprobe_link):
+    def __init__(self, parent):
         """Constructor"""
         self.index = 0
         self.parent = parent # parent is DnDPanel class
@@ -124,7 +114,7 @@ class MyListCtrl(wx.ListCtrl):
                 data['format']['duration'] = 0
             else:
                 data.get('format')['time'] = data.get('format').pop('duration')
-                t = convert(data.get('format')['time'])
+                t = time_seconds(data.get('format')['time'])
                 data['format']['duration'] = t
             data_files.append(data)
             self.parent.statusbar_msg('', None)
@@ -161,14 +151,14 @@ class FileDnD(wx.Panel):
     """
     Panel for dragNdrop files queue. Accept one or more files.
     """
-    def __init__(self, parent, ffprobe_link, forward_icn, back_icn):  
+    def __init__(self, parent, forward_icn, back_icn):  
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent # parent is the MainFrame
-        self.file_dest = dirname # path name files destination
+        self.file_dest = dirname if not userpath else userpath
         self.selected = None # tells if an imported file is selected or not
         wx.Panel.__init__(self, parent=parent)
         #This builds the list control box:
-        self.flCtrl = MyListCtrl(self, ffprobe_link)  #class MyListCtr
+        self.flCtrl = MyListCtrl(self)  #class MyListCtr
         #Establish the listctrl as a drop target:
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target) #Make drop target.

@@ -31,14 +31,29 @@ import wx
 import os
 import webbrowser
 
+dirname = os.path.expanduser('~') # /home/user/
+
+# get videomass wx.App attribute
+get = wx.GetApp()
+OS = get.OS
+threads = get.threads
+PWD = get.WORKdir
+fileconf = get.FILEconf
+ffmpeg_link = get.ffmpeg_url
+ffplay_link = get.ffplay_url
+ffprobe_link = get.ffprobe_url
+ffmpeg_loglevel = get.ffmpeg_loglev
+ffplay_loglevel = get.ffplay_loglev
+ffmpeg_check = get.ffmpeg_check
+ffprobe_check = get.ffprobe_check
+ffplay_check = get.ffplay_check
+userpath = get.userpath
+
 class Setup(wx.Dialog):
     """
     Main settings of the videomass program and configuration storing.
     """
-    def __init__(self, parent, threads, ffplay_loglev, ffmpeg_loglev, 
-                 ffmpeg_link, ffmpeg_check, ffprobe_link, ffprobe_check, 
-                 ffplay_link, ffplay_check, OS, iconset, fileconf, PWD
-                 ):
+    def __init__(self, parent, iconset):
         """
         NOTE 0): self.rowsNum attribute is a sorted list with a exatly number 
                  index corresponding to each read line of the videomass.conf.
@@ -70,22 +85,12 @@ class Setup(wx.Dialog):
         #print("\nPOSITION:    ROW:     VALUE:")
         #for n, k in enumerate(sorted(dic)):
             #print(n, ' -------> ', k, ' --> ', dic[k])
-
-        self.threads = threads
-        self.ffplay_loglevel = ffplay_loglev
-        self.ffmpeg_loglevel = ffmpeg_loglev
-        self.ffmpeg_link = ffmpeg_link
-        self.ffmpeg_check = ffmpeg_check
-        self.ffprobe_link = ffprobe_link
-        self.ffprobe_check = ffprobe_check
-        self.ffplay_link = ffplay_link
-        self.ffplay_check = ffplay_check
-        self.OS = OS
+        
+        self.userpath = dirname if not userpath else userpath
         self.iconset = iconset
         self.FILEconf = fileconf
-        self.PWD = PWD
         
-        if self.OS == 'Windows':
+        if OS == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
             self.ffprobe = 'ffprobe.exe'
             self.ffplay = 'ffplay.exe'
@@ -110,50 +115,62 @@ class Setup(wx.Dialog):
         # make a sizer base and grid base. Note that grid base contains
         # buttons close and apply. First add notebook then the buttons at bottom
         sizer = wx.BoxSizer(wx.VERTICAL)
-        gridBase = wx.FlexGridSizer(2, 1, 0, 0)# ntbook + buttons ok,close
+        gridBase = wx.BoxSizer(wx.VERTICAL)# ntbook + buttons ok,close
         gridBase.Add(notebook, 1, wx.ALL|wx.EXPAND, 15)
         #--------------------------------------------------TAB 1
-        gridGeneral = wx.FlexGridSizer(3, 1, 0, 0)
+        gridGeneral = wx.BoxSizer(wx.VERTICAL)
         tabOne.SetSizer(gridGeneral)#aggiungo il sizer su tab 1
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                     _("Settings CPU"))), wx.VERTICAL)
         gridGeneral.Add(boxLabThreads, 1, wx.ALL|wx.EXPAND, 15)
-        gridThreads = wx.FlexGridSizer(4, 1, 0, 0)
+        gridThreads = wx.BoxSizer(wx.VERTICAL)
+        
         boxLabThreads.Add(gridThreads, 1, wx.ALL|wx.EXPAND, 15)
         lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,(
                                _("Set the number of threads (from 0 to 32)")))
-        gridThreads.Add(lab1_pane1, 0, wx.ALL, 5)
+        gridThreads.Add(lab1_pane1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL|
+                                                wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY, 
                                             "%s" % threads[9:],
                                             size=(-1,-1), min=0, max=32, 
                                             style=wx.TE_PROCESS_ENTER
                                              )
         gridThreads.Add(self.spinctrl_threads, 0, wx.ALL |
-                                                  wx.ALIGN_CENTER_VERTICAL, 
+                                                  wx.ALIGN_CENTER_VERTICAL|
+                                                  wx.ALIGN_CENTER_HORIZONTAL, 
                                                   5)
-        #lab2_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (
-                        #_("Quality/Speed ratio modifier (from -16 to 16)")))
-        #gridThreads.Add(lab2_pane1, 0, wx.ALL, 5)
-        #gridctrl = wx.FlexGridSizer(1, 2, 0, 0)
-        #gridThreads.Add(gridctrl)
-        #self.spinctrl_cpu = wx.SpinCtrl(tabOne, wx.ID_ANY, 
-                                        #"%s" % cpu_used[9:], min=-16, max=16, 
-                                        #size=(-1,-1), style=wx.TE_PROCESS_ENTER
-                                             #)
-        #gridctrl.Add(self.spinctrl_cpu, 0, wx.ALL, 5)
-        #self.ckbx_cpu = wx.CheckBox(tabOne, wx.ID_ANY, (_("Disable")))
-        #gridctrl.Add(self.ckbx_cpu, 1, wx.ALL, border=10 )
-        #gridctrl.Add(self.ckbx_autoThreads, 0,  wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
+                                    _("Where do you prefer to save files?"))), 
+                                                    wx.VERTICAL
+                                                    )
+        gridGeneral.Add(boxUserpath, 1, wx.ALL|wx.EXPAND, 15)
+        gridUserpath =  wx.BoxSizer(wx.HORIZONTAL)
+        boxUserpath.Add(gridUserpath, 1, wx.ALL|wx.EXPAND, 15)
         
+        self.btn_userpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
+        gridUserpath.Add(self.btn_userpath, 0, wx.ALL |
+                                               wx.ALIGN_CENTER_VERTICAL|
+                                               wx.ALIGN_CENTER_HORIZONTAL, 5
+                                               )
+        
+        self.txtctrl_userpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        gridUserpath.Add(self.txtctrl_userpath, 1, wx.ALL |
+                                               wx.ALIGN_CENTER_VERTICAL|
+                                               wx.ALIGN_CENTER_HORIZONTAL, 5
+                                               )
+        self.txtctrl_userpath.AppendText(self.userpath)
         #--------------------------------------------------TAB 2
-        gridLog = wx.FlexGridSizer(4, 1, 0, 0)
+        gridLog = wx.BoxSizer(wx.VERTICAL)
         tabTwo.SetSizer(gridLog)#aggiungo il sizer su tab 2
         lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, 
-                               (_("These settings affect output messages "
-                                  "and the log\nmessages during processes. "
-                                  "Change only if you\nknow what you are "
-                                  "doing.")))
-        gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
+                            (_("The following settings affect output messages "
+                               "and the log\nmessages during processes. "
+                               "Change only if you\nknow what you are "
+                               "doing.")))
+        gridLog.Add(lab3_pane2, 0,  wx.ALL, 15
+                                            )
         self.rdbFFmpeg = wx.RadioBox(tabTwo, wx.ID_ANY,
                                     ("Set logging level flags used by FFmpeg"), 
                             choices=[("quiet (Show nothing at all)"), 
@@ -164,7 +181,9 @@ class Setup(wx.Dialog):
                                             "during processing)"),], 
                                     majorDimension=1, style=wx.RA_SPECIFY_COLS
                                     )
-        gridLog.Add(self.rdbFFmpeg, 0, wx.ALL, 15)
+        gridLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL|
+                                                wx.ALIGN_CENTER_HORIZONTAL, 15
+                                                )
         self.rdbFFplay = wx.RadioBox(tabTwo, wx.ID_ANY,
                                     ("Set logging level flags used by FFplay"), 
                             choices=[("quiet (Show nothing at all)"), 
@@ -175,24 +194,23 @@ class Setup(wx.Dialog):
                                             "during processing)"),], 
                                     majorDimension=1, style=wx.RA_SPECIFY_COLS
                                     )
-        gridLog.Add(self.rdbFFplay, 0, wx.ALL, 15)
+        gridLog.Add(self.rdbFFplay, 0,  wx.ALL | wx.ALIGN_CENTER_VERTICAL|
+                                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
         #--------------------------------------------------TAB 3
-        gridExec = wx.FlexGridSizer(6, 1, 0, 0)
-        tabThree.SetSizer(gridExec)#aggiungo il sizer su tab 3
-
+        gridExec = wx.BoxSizer(wx.VERTICAL)
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY,(
                                        _(" Use a custom path to run FFmpeg")))
         self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
-        gridExec.Add(self.checkbox_exeFFmpeg, 1, wx.TOP|
+        gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.ALL|
                                                  wx.ALIGN_CENTER_VERTICAL|
                                                  wx.ALIGN_CENTER_HORIZONTAL, 15)
-        gridFFmpeg = wx.FlexGridSizer(1, 2, 0, 0)
-        gridExec.Add(gridFFmpeg)
-        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 15)
-        gridFFmpeg.Add(self.txtctrl_ffmpeg, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFmpeg, 0, wx.ALL|wx.EXPAND, 15)
+        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
+        gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
                                        _(" Use a custom path to run FFprobe")))
@@ -200,13 +218,13 @@ class Setup(wx.Dialog):
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "", 
                                            style=wx.TE_READONLY
                                            )
-        gridExec.Add(self.checkbox_exeFFprobe, 1, wx.TOP|
+        gridExec.Add(self.checkbox_exeFFprobe, 0, wx.ALL|
                                                   wx.ALIGN_CENTER_VERTICAL|
                                                   wx.ALIGN_CENTER_HORIZONTAL, 15)
-        gridFFprobe = wx.FlexGridSizer(1, 2, 0, 0)
-        gridExec.Add(gridFFprobe)
-        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 15)
-        gridFFprobe.Add(self.txtctrl_ffprobe, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFprobe, 0, wx.ALL|wx.EXPAND, 15)
+        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
+        gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
                                        _(" Use a custom path to run FFplay")))
@@ -214,16 +232,17 @@ class Setup(wx.Dialog):
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "", 
                                           style=wx.TE_READONLY
                                           )
-        gridExec.Add(self.checkbox_exeFFplay, 1, wx.TOP|
+        gridExec.Add(self.checkbox_exeFFplay, 0, wx.TOP|
                                                  wx.ALIGN_CENTER_VERTICAL|
                                                  wx.ALIGN_CENTER_HORIZONTAL, 15)
-        gridFFplay = wx.FlexGridSizer(1, 2, 0, 0)
-        gridExec.Add(gridFFplay)
-        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 15)
-        gridFFplay.Add(self.txtctrl_ffplay, 0, wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFplay, 0, wx.ALL|wx.EXPAND, 15)
+        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
+        gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        tabThree.SetSizer(gridExec)#aggiungo il sizer su tab 3
         #--------------------------------------------------TAB 4
-        gridappearance = wx.FlexGridSizer(3, 1, 0, 0)
-        tabFour.SetSizer(gridappearance)#aggiungo il sizer su tab 4
+        gridappearance = wx.BoxSizer(wx.VERTICAL)
+        
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
                                     _("Set Icon Themes"))), wx.VERTICAL)
         gridappearance.Add(boxLabIcons, 1, wx.ALL|wx.EXPAND, 15)
@@ -276,6 +295,7 @@ class Setup(wx.Dialog):
                                                    wx.EXPAND | 
                                                    wx.ALIGN_CENTER_HORIZONTAL, 
                                                    15)
+        tabFour.SetSizer(gridappearance)#aggiungo il sizer su tab 4
         #------------------------------------------------------bottom
         gridBottom = wx.GridSizer(1, 2, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
@@ -338,6 +358,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
+        self.Bind(wx.EVT_BUTTON, self.set_Userpath, self.btn_userpath)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffmpeg, self.txtctrl_ffmpeg)
@@ -369,42 +390,42 @@ class Setup(wx.Dialog):
         """
         
         for s in range(self.rdbFFplay.GetCount()):
-            if (self.ffplay_loglevel.split()[1] in 
+            if (ffplay_loglevel.split()[1] in 
                                 self.rdbFFplay.GetString(s).split()[0]
                                 ):
                 self.rdbFFplay.SetSelection(s)
         
         for s in range(self.rdbFFmpeg.GetCount()):
-            if (self.ffmpeg_loglevel.split()[1] in 
+            if (ffmpeg_loglevel.split()[1] in 
                                 self.rdbFFmpeg.GetString(s).split()[0]
                                 ):
                 self.rdbFFmpeg.SetSelection(s)
             
-        if self.ffmpeg_check == 'false':
+        if ffmpeg_check == 'false':
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.SetValue("")
             self.checkbox_exeFFmpeg.SetValue(False)
         else:
-            self.txtctrl_ffmpeg.AppendText(self.ffmpeg_link)
+            self.txtctrl_ffmpeg.AppendText(ffmpeg_link)
             self.checkbox_exeFFmpeg.SetValue(True)
             
-        if self.ffprobe_check == 'false':
+        if ffprobe_check == 'false':
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.SetValue("")
             self.checkbox_exeFFprobe.SetValue(False)
         else:
-            self.txtctrl_ffprobe.AppendText(self.ffprobe_link)
+            self.txtctrl_ffprobe.AppendText(ffprobe_link)
             self.checkbox_exeFFprobe.SetValue(True)
             
-        if self.ffplay_check == 'false':
+        if ffplay_check == 'false':
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.SetValue("")
             self.checkbox_exeFFplay.SetValue(False)
         else:
-            self.txtctrl_ffplay.AppendText(self.ffplay_link)
+            self.txtctrl_ffplay.AppendText(ffplay_link)
             self.checkbox_exeFFplay.SetValue(True)
     
     #--------------------------------------------------------------------#
@@ -412,6 +433,18 @@ class Setup(wx.Dialog):
         """set cpu number threads used as option on ffmpeg"""
         sett = self.spinctrl_threads.GetValue()
         self.full_list[self.rowsNum[2]] = '-threads %s\n' % sett
+    
+    #---------------------------------------------------------------------#
+    def set_Userpath(self, event):
+        """write a custom user path name where saving exported files"""
+
+        dlg = wx.DirDialog (self, "Choose default directory", "",
+                    wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+        if dlg.ShowModal() == wx.ID_OK:
+            self.txtctrl_userpath.Clear()
+            self.txtctrl_userpath.AppendText(dlg.GetPath())
+            self.full_list[self.rowsNum[1]] = '%s\n' % (dlg.GetPath())
+            dlg.Destroy()
 
     #--------------------------------------------------------------------#
     def logging_ffplay(self, event):
@@ -599,23 +632,23 @@ class Setup(wx.Dialog):
         # if self.checkbox_exeFFmpeg.IsChecked():
         #     if not self.txtctrl_ffmpeg.GetValue() == '':
         #         ffmpeg_src = self.txtctrl_ffmpeg.GetValue()
-        #         if not self.ffmpeg_link == ffmpeg_src:# if not modified
-        #             if os.path.exists("%s/FFMPEG_BIN/bin" % self.PWD):
-        #                 os.symlink(ffmpeg_src, "%s/FFMPEG_BIN/bin/ffmpeg" % self.PWD)
+        #         if not ffmpeg_link == ffmpeg_src:# if not modified
+        #             if os.path.exists("%s/FFMPEG_BIN/bin" % PWD):
+        #                 os.symlink(ffmpeg_src, "%s/FFMPEG_BIN/bin/ffmpeg" % PWD)
         #             
         # if self.checkbox_exeFFprobe.IsChecked():
         #     if not self.txtctrl_ffprobe.GetValue() == '':
         #         ffprobe_src = self.txtctrl_ffprobe.GetValue()
-        #         if not self.ffprobe_link == ffprobe_src:# if not modified
-        #             if os.path.exists("%s/FFMPEG_BIN" % self.PWD):
-        #                 os.symlink(ffprobe_src, "%s/FFMPEG_BIN/bin/ffprobe" % self.PWD)
+        #         if not ffprobe_link == ffprobe_src:# if not modified
+        #             if os.path.exists("%s/FFMPEG_BIN" % PWD):
+        #                 os.symlink(ffprobe_src, "%s/FFMPEG_BIN/bin/ffprobe" % PWD)
         # 
         # if self.checkbox_exeFFplay.IsChecked():
         #     if not self.txtctrl_ffplay.GetValue() == '':
         #         ffplay_src = self.txtctrl_ffplay.GetValue()
-        #         if not self.ffplay_link == ffplay_src:# if not modified
-        #             if os.path.exists("%s/FFMPEG_BIN" % self.PWD):
-        #                 os.symlink(ffplay_src, "%s/FFMPEG_BIN/bin/ffplay" % self.PWD)
+        #         if not ffplay_link == ffplay_src:# if not modified
+        #             if os.path.exists("%s/FFMPEG_BIN" % PWD):
+        #                 os.symlink(ffplay_src, "%s/FFMPEG_BIN/bin/ffplay" % PWD)
 
         with open (self.FILEconf, 'w') as fileconf:
             for i in self.full_list:

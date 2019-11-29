@@ -53,7 +53,7 @@ cmd_opt = {"VidCmbxStr": "", "VideoFormat": "", "VideoCodec": "",
            "AudioCodec": "", "AudioChannel": ["",""], 
            "AudioRate": ["",""], "AudioBitrate": ["",""], 
            "AudioDepth": ["",""], "PEAK": "", "EBU": "","RMS": "", 
-           "Deinterlace": "", "Interlace": "", "Map": "-map 0", 
+           "Deinterlace": "", "Interlace": "", "Map": "-map 0 -map_metadata 0", 
            "PixelFormat": "", "Orientation": ["",""],"Crop": "",
            "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
            "Filters": "", "YUV": "", "Deadline": "", "CpuUsed": "",
@@ -78,6 +78,10 @@ vcodecs = {("AVI (XVID mpeg4)"): ("-c:v mpeg4 -vtag xvid","avi"),
             ("FLV (h.264/AVC)"): ("-c:v libx264","flv"),
             (_("Copy video codec")): ("-c:v copy",""),
             }
+# muxers dictionary:
+muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
+          'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
+          }
 # Namings in the audio format selection on audio radio box:
 acodecs = {('default'): (_("Default (managed by FFmpeg)"),''),
            ('wav'): ("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
@@ -135,22 +139,13 @@ class Video_Conv(wx.Panel):
     """
     Interface panel for video conversions
     """
-    def __init__(self, parent, ffmpeg_link, ffplay_link, ffprobe_link, 
-                 threads, ffmpeg_loglev, ffplay_loglev, OS, iconplay,
-                 iconreset, iconresize, iconcrop, iconrotate, 
-                 icondeinterlace, icondenoiser, iconanalyzes, 
-                 iconsettings, iconpeaklevel, iconatrack, btn_color,
-                 fontBtncolor,
-                 ):
+    def __init__(self, parent, OS, iconplay, iconreset, iconresize, 
+                 iconcrop, iconrotate, icondeinterlace, icondenoiser, 
+                 iconanalyzes, iconsettings, iconpeaklevel, iconatrack, 
+                 btn_color, fontBtncolor,):
         
         # set attributes:
         self.parent = parent
-        self.ffmpeg_link = ffmpeg_link
-        self.ffplay_link = ffplay_link
-        self.ffprobe_link = ffprobe_link
-        self.threads = threads
-        self.ffmpeg_loglev = ffmpeg_loglev
-        self.ffplay_loglev = ffplay_loglev
         self.file_src = []
         self.normdetails = []
         self.OS = OS
@@ -508,7 +503,9 @@ class Video_Conv(wx.Panel):
         sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.peakpanel.SetSizer(sizer_peak) # set panel
         sizer_nb3.Add(self.peakpanel, 0, wx.ALL, 20)
-        self.ebupanel = wx.Panel(self.nb_panel_3, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.ebupanel = wx.Panel(self.nb_panel_3, 
+                                 wx.ID_ANY, style=wx.TAB_TRAVERSAL
+                                 )
         sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                              _("Set integrated loudness target:  ")))
@@ -1206,13 +1203,14 @@ class Video_Conv(wx.Panel):
     #-------------------------------------------------------------------#
     def on_AudioParam(self, event):
         """
-        Call audio_dialog method and pass the respective parameters 
-        of the selected audio codec 
+        Set audio format string and codec string and pass it to
+        audio_dialogs method.
+        
         """ 
         pcm = ["-c:a pcm_s16le","-c:a pcm_s24le","-c:a pcm_s32le",]
         
         if cmd_opt["AudioCodec"] in pcm:
-            self.audio_dialog("wav", "Audio wav parameter (%s)"
+            self.audio_dialog("wav", "encoding parameters (%s)"
                               % cmd_opt["AudioCodec"])
         else:
             for k,v in acodecs.items():
@@ -1225,13 +1223,15 @@ class Video_Conv(wx.Panel):
     #-------------------------------------------------------------------#
     def audio_dialog(self, audio_type, title):
         """
-        Starts a dialog to select the audio parameters, then sets the values 
-        on the cmd_opt dictionary.
+        Run audio dialog on specified audio format to get additionals
+        audio options. Text is placed in the textctrl's fields.
+        
         NOTE: The data[X] tuple contains the command parameters on the 
               index [1] and the descriptive parameters on the index [0].
               exemple: data[0] contains parameters for channel then
               data[0][1] is ffmpeg option command for audio channels and
               data[0][0] is a simple description for view.
+              
         """
         audiodialog = audiodialogs.AudioSettings(self,
                                                  audio_type,
@@ -1369,9 +1369,7 @@ class Video_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, 
-                                   self.file_src, 
-                                   self.time_seq)
+        data = volumeDetectProcess(self.file_src, self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
@@ -1426,9 +1424,7 @@ class Video_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, 
-                                   self.file_src, 
-                                   self.time_seq)
+        data = volumeDetectProcess(self.file_src, self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
@@ -1522,7 +1518,6 @@ class Video_Conv(wx.Panel):
         Update some entries, is callaed by on_ok method.
         
         """
-        self.time_seq = self.parent.time_seq
         #self.on_Vrate(self), self.on_Vaspect(self)
         #if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
             #self.on_Bitrate(self), self.on_Crf(self)
@@ -1553,14 +1548,15 @@ class Video_Conv(wx.Panel):
             cmd_opt["RowMthreading"] = ''
             
     #------------------------------------------------------------------#
-    def on_ok(self):
+    def on_start(self):
         """
-        Involves the files existence verification procedures and
-        overwriting control, return:
-        - typeproc: batch or single process
-        - filename: nome file senza ext.
-        - base_name: nome file con ext.
-        - countmax: count processing cicles for batch mode
+        Check the settings and files before redirecting 
+        to the build command.
+        
+        typeproc      : batch or single process
+        filename      : file name without extension
+        base_name     : file name with extension
+        countmax      : count processing cicles for batch mode
 
         """
         # check normalization data offset, if enable
@@ -1573,11 +1569,7 @@ class Video_Conv(wx.Panel):
                 return
         # CHECKING:
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            self.time_seq = self.parent.time_seq
-            checking = inspect(self.file_src, 
-                               self.parent.file_destin, 
-                               ''
-                               )
+            checking = inspect(self.file_src, self.parent.file_destin, '')
         else:
             self.update_allentries()# last update of all setting interface
             checking = inspect(self.file_src, 
@@ -1608,7 +1600,7 @@ class Video_Conv(wx.Panel):
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
             
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            command = ('%s %s %s %s %s %s %s %s %s %s' %(
+            command = ('%s %s %s %s %s %s %s %s %s' %(
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["VideoAspect"],
                                                     cmd_opt["VideoRate"],
@@ -1616,11 +1608,12 @@ class Video_Conv(wx.Panel):
                                                     cmd_opt["AudioBitrate"][1], 
                                                     cmd_opt["AudioRate"][1], 
                                                     cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1], 
-                                                    self.threads,
+                                                    cmd_opt["AudioDepth"][1],
                                                     cmd_opt["Map"],
                                                         ))
             command = " ".join(command.split())# mi formatta la stringa
+            if logname == 'save as profile':
+                return command, '', cmd_opt["VideoFormat"]
             valupdate = self.update_dict(countmax, ["Copy video codec"] )
             ending = Formula(self,valupdate[0],valupdate[1],'Copy video codec')
             
@@ -1638,6 +1631,11 @@ class Video_Conv(wx.Panel):
                                            )
                 
         elif cmd_opt["Passing"] == "double":
+            if cmd_opt["VideoCodec"] == "-c:v libx265":
+                opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
+            else:
+                opt1, opt2 = '-pass 1', '-pass 2'
+            
             cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                     '-f rawvideo' %(cmd_opt["VideoCodec"],
                                     cmd_opt["CRF"],
@@ -1651,8 +1649,8 @@ class Video_Conv(wx.Panel):
                                     cmd_opt["VideoAspect"], 
                                     cmd_opt["VideoRate"], 
                                     cmd_opt["Filters"], 
-                                    cmd_opt["YUV"], 
-                                    self.threads,
+                                    cmd_opt["YUV"],
+                                    opt1,
                                     ))
             cmd2= ('%s %s %s %s %s %s %s %s %s %s %s '
                    '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"],
@@ -1673,11 +1671,13 @@ class Video_Conv(wx.Panel):
                                                   cmd_opt["AudioRate"][1], 
                                                   cmd_opt["AudioChannel"][1], 
                                                   cmd_opt["AudioDepth"][1], 
-                                                  self.threads, 
                                                   cmd_opt["Map"],
+                                                  opt2,
                                                   ))
             pass1 = " ".join(cmd1.split())
             pass2 =  " ".join(cmd2.split())
+            if logname == 'save as profile':
+                return pass1, pass2, cmd_opt["VideoFormat"]
             valupdate = self.update_dict(countmax, [''])
             title = 'Two pass Video Encoding'
             ending = Formula(self, valupdate[0], valupdate[1], title)
@@ -1697,7 +1697,7 @@ class Video_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
-            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                        '%s %s %s %s' % (cmd_opt["VideoCodec"], 
                                         cmd_opt["CRF"],
                                         cmd_opt["Bitrate"],
@@ -1716,12 +1716,13 @@ class Video_Conv(wx.Panel):
                                         cmd_opt["AudioRate"][1], 
                                         cmd_opt["AudioChannel"][1], 
                                         cmd_opt["AudioDepth"][1], 
-                                        self.threads, 
                                         cmd_opt["Map"],
                                         ))
             command = " ".join(command.split())# mi formatta la stringa
+            if logname == 'save as profile':
+                return command, '', cmd_opt["VideoFormat"]
             valupdate = self.update_dict(countmax, [''])
-            title = 'Standard Video Encoding'
+            title = 'One pass Video Encoding'
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
@@ -1745,67 +1746,78 @@ class Video_Conv(wx.Panel):
         """
         title = _('Audio/Video EBU normalization')
         cmd_opt["EBU"] = 'EBU R128'
-        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %( 
+        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:offset=0.0:print_format=summary' %( 
                                               str(self.spin_i.GetValue()),
                                               str(self.spin_tp.GetValue()),
                                               str(self.spin_lra.GetValue()),))
+        if cmd_opt["VideoCodec"] == "-c:v libx265":
+            opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
+        else:
+            opt1, opt2 = '-pass 1', '-pass 2' 
         
         if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            cmd_1 = ('%s %s %s %s %s' %(cmd_opt["VideoCodec"], 
-                                        cmd_opt["VideoAspect"],
-                                        cmd_opt["VideoRate"],
-                                        self.threads,
-                                        cmd_opt["Map"],
-                                        ))
-            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
-                                                       cmd_opt["VideoAspect"],
-                                                       cmd_opt["VideoRate"],
-                                                       cmd_opt["AudioCodec"], 
-                                                       cmd_opt["AudioBitrate"][1], 
-                                                       cmd_opt["AudioRate"][1], 
-                                                       cmd_opt["AudioChannel"][1], 
-                                                       cmd_opt["AudioDepth"][1], 
-                                                       self.threads,
-                                                       cmd_opt["Map"],
-                                                       ))
+            cmd_1 = ('-af %s -vn -sn %s %s %s %s -f null' %(
+                                                    loudfilter, 
+                                                    opt1,
+                                                    cmd_opt["VideoAspect"],
+                                                    cmd_opt["VideoRate"],
+                                                    cmd_opt["Map"],
+                                                    ))
+            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s' %(
+                                                    cmd_opt["VideoCodec"], 
+                                                    opt2,
+                                                    cmd_opt["VideoAspect"],
+                                                    cmd_opt["VideoRate"],
+                                                    cmd_opt["AudioCodec"], 
+                                                    cmd_opt["AudioBitrate"][1], 
+                                                    cmd_opt["AudioRate"][1], 
+                                                    cmd_opt["AudioChannel"][1], 
+                                                    cmd_opt["AudioDepth"][1],
+                                                    cmd_opt["Map"],
+                                                    ))
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
+            if logname == 'save as profile':
+                return pass1, pass2, cmd_opt["VideoFormat"]
             valupdate = self.update_dict(countmax, ["Copy video codec"])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('twopass EBU',
+                self.parent.switch_Process('two pass EBU',
                                            f_src, 
-                                           '', 
+                                           cmd_opt["VideoFormat"],
                                            destin, 
-                                           cmd_opt["VideoFormat"], 
-                                           [pass1, pass2, loudfilter, False], 
-                                           '',
-                                           '', 
+                                           None, 
+                                           [pass1, pass2, loudfilter], 
+                                           None,
+                                           None, 
                                            logname, 
                                            countmax,
                                            )
         else:
-            cmd_1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s' % (
-                                                    cmd_opt["VideoCodec"], 
-                                                    cmd_opt["CRF"],
-                                                    cmd_opt["Bitrate"],
-                                                    cmd_opt["Deadline"],
-                                                    cmd_opt["CpuUsed"],
-                                                    cmd_opt["RowMthreading"],
-                                                    cmd_opt["Presets"], 
-                                                    cmd_opt["Profile"], 
-                                                    cmd_opt["Tune"], 
-                                                    cmd_opt["VideoAspect"], 
-                                                    cmd_opt["VideoRate"], 
-                                                    cmd_opt["Filters"], 
-                                                    cmd_opt["YUV"], 
-                                                    self.threads,
-                                                    cmd_opt["Map"],
-                                                    ))
+            cmd_1 = ('-af %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                     '%s %s -f %s' % (loudfilter,
+                                      cmd_opt["VideoCodec"],
+                                      opt1,
+                                      cmd_opt["CRF"],
+                                      cmd_opt["Bitrate"],
+                                      cmd_opt["Deadline"],
+                                      cmd_opt["CpuUsed"],
+                                      cmd_opt["RowMthreading"],
+                                      cmd_opt["Presets"], 
+                                      cmd_opt["Profile"], 
+                                      cmd_opt["Tune"], 
+                                      cmd_opt["VideoAspect"], 
+                                      cmd_opt["VideoRate"], 
+                                      cmd_opt["Filters"], 
+                                      cmd_opt["YUV"],
+                                      cmd_opt["Map"],
+                                      '%s' % muxers[cmd_opt["VideoFormat"]],
+                                      ))
                 
             cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s '
                     '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
+                                                   opt2,
                                                    cmd_opt["CRF"],
                                                    cmd_opt["Bitrate"], 
                                                    cmd_opt["Deadline"],
@@ -1823,23 +1835,24 @@ class Video_Conv(wx.Panel):
                                                    cmd_opt["AudioRate"][1], 
                                                    cmd_opt["AudioChannel"][1], 
                                                    cmd_opt["AudioDepth"][1], 
-                                                   self.threads, 
                                                    cmd_opt["Map"],
                                                    ))
             pass1 = " ".join(cmd_1.split())
             pass2 =  " ".join(cmd_2.split())# mi formatta la stringa
+            if logname == 'save as profile':
+                return pass1, pass2, cmd_opt["VideoFormat"]
             valupdate = self.update_dict(countmax, [''])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('twopass EBU',
+                self.parent.switch_Process('two pass EBU',
                                            f_src, 
-                                           '', 
-                                           destin, 
                                            cmd_opt["VideoFormat"], 
-                                           [pass1, pass2, loudfilter, True], 
-                                           '',
-                                           '', 
+                                           destin, 
+                                           None, 
+                                           [pass1, pass2, loudfilter], 
+                                           None,
+                                           None, 
                                            logname, 
                                            countmax,
                                            )
@@ -1871,9 +1884,8 @@ class Video_Conv(wx.Panel):
                         \nVideo Codec\nVideo Aspect\nVideo Rate\
                         \nAudio Format\nAudio Codec\nAudio Channels\
                         \nAudio Rate\nAudio bit-rate\nBit per Sample\
-                        \nAudio Normalization\nMap\nTime selection\
-                        \nThreads"))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \nAudio Normalization\nMap\nTime selection"))
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                          \n%s\n%s\n%s" %(numfile, 
                                          cmd_opt["VidCmbxStr"], 
                                          cmd_opt["VideoCodec"], 
@@ -1888,7 +1900,6 @@ class Video_Conv(wx.Panel):
                                          normalize, 
                                          cmd_opt["Map"], 
                                          time,
-                                         self.threads.split()[1],
                                          ))
         #--------------------
         else:
@@ -1900,9 +1911,9 @@ class Video_Conv(wx.Panel):
                          \nTune h.264/h.265\nAudio Format\nAudio codec\
                          \nAudio Channels\nAudio Rate\nAudio bit-rate\
                          \nBit per Sample\nAudio Normalization\nMap\
-                         \nTime selection\nThreads"
+                         \nTime selection"
                          ))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s" % (numfile, 
                                  cmd_opt["VidCmbxStr"], 
@@ -1911,9 +1922,9 @@ class Video_Conv(wx.Panel):
                                  cmd_opt["Bitrate"], 
                                  cmd_opt["CRF"],
                                 '%s %s %s' %(cmd_opt["Deadline"], 
-                                                cmd_opt["CpuUsed"],
-                                                cmd_opt["RowMthreading"],
-                                                ),
+                                             cmd_opt["CpuUsed"],
+                                             cmd_opt["RowMthreading"],
+                                             ),
                                  cmd_opt["Filters"], 
                                  cmd_opt["VideoAspect"], 
                                  cmd_opt["VideoRate"], 
@@ -1929,7 +1940,6 @@ class Video_Conv(wx.Panel):
                                  normalize, 
                                  cmd_opt["Map"], 
                                  time,
-                                 self.threads.split()[1],
                                 ))
         return formula, dictions
 
@@ -1941,117 +1951,17 @@ class Video_Conv(wx.Panel):
         
         """
         self.update_allentries()
-        if cmd_opt["PEAK"]:
-            normalize = cmd_opt["PEAK"][0]
-        elif cmd_opt["RMS"]:
-            normalize = cmd_opt["RMS"][0]
-        else:
-            normalize = ''
         
-        if not self.ckbx_pass.IsChecked():
-            if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-                outext = cmd_opt["VideoFormat"]
-                cmd1 = ('%s %s %s %s %s %s %s %s %s %s %s' % (
-                                                    normalize,
-                                                    cmd_opt["VideoCodec"], 
-                                                    cmd_opt["VideoAspect"],
-                                                    cmd_opt["VideoRate"],
-                                                    cmd_opt["AudioCodec"], 
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1], 
-                                                    self.threads,
-                                                    cmd_opt["Map"],
-                                                    ))
-                cmd2 = ''
-            else:
-                outext = cmd_opt["VideoFormat"]
-                if cmd_opt["VideoCodec"] == "-c:v libx265":
-                    param265 = ('-x265-params')
-                else:
-                    param265 = ''
-                cmd1 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                        '%s %s %s %s %s %s %s' %(normalize, 
-                                                cmd_opt["VideoCodec"], 
-                                                cmd_opt["CRF"], 
-                                                cmd_opt["Bitrate"], 
-                                                cmd_opt["Deadline"],
-                                                cmd_opt["CpuUsed"],
-                                                cmd_opt["RowMthreading"],
-                                                cmd_opt["Presets"], 
-                                                cmd_opt["Profile"], 
-                                                cmd_opt["Tune"], 
-                                                param265,
-                                                cmd_opt["VideoAspect"], 
-                                                cmd_opt["VideoRate"], 
-                                                cmd_opt["Filters"], 
-                                                cmd_opt["YUV"], 
-                                                cmd_opt["AudioCodec"], 
-                                                cmd_opt["AudioBitrate"][1], 
-                                                cmd_opt["AudioRate"][1], 
-                                                cmd_opt["AudioChannel"][1], 
-                                                cmd_opt["AudioDepth"][1], 
-                                                self.threads,
-                                                cmd_opt["Map"],
-                                                ))
-                cmd2 = ''
-        else:
-            home = os.path.expanduser('~')
-            outext = cmd_opt["VideoFormat"]
-            if cmd_opt["VideoCodec"] == "-c:v libx265":
-                param1 = ('-x265-params pass=1:stats=%s/ffmpegLOG.log' % home)
-                param2 = ('-x265-params pass=2:stats=%s/ffmpegLOG.log' % home)
-            else:
-                param1 = '-pass 1 -passlogfile %s/ffmpegLOG.log'  % home
-                param2 = '-pass 2 -passlogfile %s/ffmpegLOG.log'  % home
+        if self.rdbx_normalize.GetSelection() == 3: # EBU
+            parameters = self.ebu_2pass([], [], 0, 'save as profile')
             
-            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                    '-f rawvideo %s' %(cmd_opt["VideoCodec"],
-                                        cmd_opt["CRF"],
-                                        cmd_opt["Bitrate"], 
-                                        cmd_opt["Deadline"],
-                                        cmd_opt["CpuUsed"],
-                                        cmd_opt["RowMthreading"],
-                                        cmd_opt["Presets"], 
-                                        cmd_opt["Profile"], 
-                                        cmd_opt["Tune"], 
-                                        cmd_opt["VideoAspect"], 
-                                        cmd_opt["VideoRate"], 
-                                        cmd_opt["Filters"], 
-                                        cmd_opt["YUV"], 
-                                        self.threads,
-                                        param1,
-                                        ))
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s '
-                   '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"],
-                                                  cmd_opt["CRF"],
-                                                  cmd_opt["Bitrate"], 
-                                                  cmd_opt["Deadline"],
-                                                  cmd_opt["CpuUsed"],
-                                                  cmd_opt["RowMthreading"],
-                                                  cmd_opt["Presets"], 
-                                                  cmd_opt["Profile"], 
-                                                  cmd_opt["Tune"], 
-                                                  cmd_opt["VideoAspect"], 
-                                                  cmd_opt["VideoRate"], 
-                                                  cmd_opt["Filters"], 
-                                                  cmd_opt["YUV"], 
-                                                  cmd_opt["AudioCodec"], 
-                                                  cmd_opt["AudioBitrate"][1], 
-                                                  cmd_opt["AudioRate"][1], 
-                                                  cmd_opt["AudioChannel"][1], 
-                                                  cmd_opt["AudioDepth"][1], 
-                                                  self.threads, 
-                                                  cmd_opt["Map"],
-                                                  param2,
-                                                  ))
-        parameters = [' '.join(cmd1.split()), ' '.join(cmd2.split()),outext]
+        else:
+            parameters = self.stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(None, _("Videomass: Choose a preset to "
                                     "storing new profile"), 
             defaultDir=os.path.join(DIRconf, 'presets'),
-            wildcard="Vinc presets (*.prst;)|*.prst;",
+            wildcard="Videomass presets (*.prst;)|*.prst;",
             style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return     
@@ -2065,6 +1975,3 @@ class Video_Conv(wx.Panel):
                                                parameters,
                                                t)
         ret = prstdialog.ShowModal()
-        
-        #prstdlg = presets_addnew.MemPresets(filename, parameters, t)
-        #prstdlg.Show()

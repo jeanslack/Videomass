@@ -34,6 +34,8 @@ get = wx.GetApp()
 OS = get.OS
 DIRconf = get.DIRconf
 ffprobe_url = get.ffprobe_url
+ffmpeg_url = get.ffmpeg_url
+ffplay_url = get.ffplay_url
 
 from videomass3.vdms_THREADS.ffplay_reproduction import Play
 from videomass3.vdms_THREADS.ffprobe_parser import FFProbe
@@ -103,12 +105,12 @@ def probeInfo(filename):
     
     return (data , None)
 #-------------------------------------------------------------------------#
-def volumeDetectProcess(ffmpeg, filelist, time_seq):
+def volumeDetectProcess(filelist, time_seq):
     """
     Run a thread to get audio peak level data and show a 
     pop-up dialog with message. 
     """
-    thread = VolumeDetectThread(ffmpeg, time_seq, filelist, OS) 
+    thread = VolumeDetectThread(time_seq, filelist, OS) 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."), 
                                 _("\nWait....\nAudio peak analysis.\n")
                           )
@@ -119,14 +121,14 @@ def volumeDetectProcess(ffmpeg, filelist, time_seq):
     
     return data
 #-------------------------------------------------------------------------#
-def test_conf(ffmpeg_link, ffprobe_link, ffplay_link):
+def test_conf():
     """
     Call *check_bin.ffmpeg_conf* to get data to test the building 
     configurations of the installed or imported FFmpeg executable 
     and send it to dialog box.
     
     """
-    out = ff_conf(ffmpeg_link, OS)
+    out = ff_conf(ffmpeg_url, OS)
     if 'Not found' in out[0]:
         wx.MessageBox("\n{0}".format(out[1]), 
                         "Videomass: error",
@@ -135,20 +137,20 @@ def test_conf(ffmpeg_link, ffprobe_link, ffplay_link):
         return
     else:
         dlg = ffmpeg_conf.Checkconf(out, 
-                                    ffmpeg_link, 
-                                    ffprobe_link,
-                                    ffplay_link, 
+                                    ffmpeg_url, 
+                                    ffprobe_url,
+                                    ffplay_url, 
                                     OS,
                                     )
         dlg.Show()
 #-------------------------------------------------------------------------#
-def test_formats(ffmpeg_link):
+def test_formats():
     """
     Call *check_bin.ff_formats* to get available formats by 
     imported FFmpeg executable and send it to dialog box.
     
     """
-    diction = ff_formats(ffmpeg_link, OS)
+    diction = ff_formats(ffmpeg_url, OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']), 
                         "Videomass: error",
@@ -159,14 +161,14 @@ def test_formats(ffmpeg_link):
         dlg = ffmpeg_formats.FFmpeg_formats(diction, OS)
         dlg.Show()
 #-------------------------------------------------------------------------#
-def test_codecs(ffmpeg_link, type_opt):
+def test_codecs(type_opt):
     """
     Call *check_bin.ff_codecs* to get available encoders 
     and decoders by FFmpeg executable and send it to
     corresponding dialog box.
     
     """
-    diction = ff_codecs(ffmpeg_link, type_opt, OS)
+    diction = ff_codecs(ffmpeg_url, type_opt, OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']), 
                         "Videomass: error",
@@ -177,13 +179,13 @@ def test_codecs(ffmpeg_link, type_opt):
         dlg = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
         dlg.Show()
 #-------------------------------------------------------------------------#
-def findtopic(ffmpeg_link, topic):
+def findtopic(topic):
     """
     Call * check_bin.ff_topic * to run the ffmpeg command to search
-    a certain topic. The ffmpeg_link is given by ffmpeg-search dialog.
+    a certain topic. The ffmpeg_url is given by ffmpeg-search dialog.
     
     """
-    retcod = ff_topics(ffmpeg_link, topic, OS)
+    retcod = ff_topics(ffmpeg_url, topic, OS)
     
     if 'Not found' in retcod[0]:
         s = ("\n{0}".format(retcod[1]))

@@ -79,19 +79,13 @@ class Audio_Conv(wx.Panel):
     Interface panel for audio conversions and volume normalizations,
     with preset storing feature (TODO)
     """
-    def __init__(self, parent, ffmpeg_link, threads, ffmpeg_loglev, 
-                 ffprobe_link, OS, iconanalyzes, iconsettings, 
+    def __init__(self, parent, OS, iconanalyzes, iconsettings, 
                  iconpeaklevel, btn_color, fontBtncolor):
 
         self.parent = parent
-        self.ffmpeg_link = ffmpeg_link
-        self.threads = threads
-        self.ffmpeg_loglevel = ffmpeg_loglev
-        self.ffprobe_link = ffprobe_link
         self.OS = OS
         self.btnC = btn_color
         self.fBtnC = fontBtncolor
-        #self.DIRconf = DIRconf
         self.file_src = []
         self.normdetails = []
 
@@ -269,7 +263,7 @@ class Audio_Conv(wx.Panel):
 
     def audioFormats(self, evt):
         """
-        Get selected option from combobox
+        Get a selected format from choice list
         
         """
         val = self.a_choice.GetString(self.a_choice.GetSelection())
@@ -290,9 +284,9 @@ class Audio_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_Param(self, evt):
         """
-        Get the container type and set value dictionary codec in the
-        AudioCodec key used for ffmpeg command..
-        Send identifier data of the container to audio_parameters method
+        Set audio format string and codec string and pass it to
+        audio_parameters method.
+        
         """
         if not cmd_opt["AudioContainer"]:
             val = self.a_choice.GetString(self.a_choice.GetSelection())
@@ -301,16 +295,17 @@ class Audio_Conv(wx.Panel):
         for k,v in acodecs.items():
             if cmd_opt["AudioContainer"] == k:
                 self.audio_parameters(k.split()[0].lower(),
-                                      "%s export parameters (%s)" 
+                                      "%s encoding parameters (%s)" 
                                       %(k.split()[0].lower(),v.split()[1])
                                         )
     #-------------------------------------------------------------------#
     def audio_parameters(self, audio_type, title):
         """
-        Run a dialogs to choices audio parameters then set dictionary 
-        at proper values. Also text is placed in the textctrl's fields.
-        NOTE: The data[X] tuple contains the command parameters on the index [1] 
-              and the descriptive parameters on the index [0].
+        Run audio parameters dialog on specified audio format to get
+        additionals audio options. Text is placed in the textctrl's fields.
+        
+        NOTE: The data[X] tuple contains the command parameters on the 
+              index [1] and the descriptive parameters on the index [0].
               exemple: data[0] contains parameters for channel then
               data[0][1] is ffmpeg option command for audio channels and
               data[0][0] is a simple description for view.
@@ -446,9 +441,7 @@ class Audio_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, 
-                                   self.file_src, 
-                                   self.time_seq)
+        data = volumeDetectProcess(self.file_src, self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
@@ -502,9 +495,7 @@ class Audio_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.ffmpeg_link, 
-                                   self.file_src, 
-                                   self.time_seq)
+        data = volumeDetectProcess(self.file_src, self.time_seq)
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
@@ -558,20 +549,15 @@ class Audio_Conv(wx.Panel):
         audionormlist.Show()
 
     #------------------------------------------------------------------#
-    def update_allentries(self):
+    def on_start(self):
         """
-        Last step for set definitively all values before to proceed
-        with std_conv or batch_conv methods.
-        Update _allentries is callaed by on_ok method.
+        Check the settings and files before redirecting 
+        to the build command.
         
-        """
-        self.time_seq = self.parent.time_seq
-
-    #------------------------------------------------------------------#
-    def on_ok(self):
-        """
-        File existence verification procedures, overwriting control and 
-        data redirecting .
+        typeproc      : batch or single process
+        filename      : file name without extension
+        base_name     : file name with extension
+        countmax      : count processing cicles for batch mode
         
         """
         # check normalization data offset, if enable.
@@ -583,24 +569,16 @@ class Audio_Conv(wx.Panel):
                                 "Videomass", wx.ICON_INFORMATION)
                 return
             
-        self.update_allentries()# last update of all setting interface
         checking = inspect(self.file_src, 
                            self.parent.file_destin,  
-                           cmd_opt["ExportExt"])
+                           cmd_opt["ExportExt"]
+                           )
         if not checking[0]: # the user changing idea or not such files exist
             return
-        # typeproc: batch or single process
-        # filename: nome file senza ext.
-        # base_name: nome file con ext.
-        # countmax: count processing cicles for batch mode
         (typeproc, f_src, f_dest, filename, base_name, countmax) = checking
-        
-        # used for file name log 
-        logname = 'Videomass_AudioConversion.log'
-
+        logname = 'Videomass_AudioConversion.log' # used for log name
         if self.rdbx_norm.GetSelection() == 3:
             self.ebu_Doublepass(f_src, f_dest, countmax, logname)
-            
         else:
             self.stdProc(f_src, f_dest, countmax, logname)
 
@@ -612,14 +590,16 @@ class Audio_Conv(wx.Panel):
         """
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
         title = _('Audio conversions')
-        command = ('-vn %s %s %s %s %s %s' % (cmd_opt["AudioCodec"],
-                                              cmd_opt["AudioBitrate"][1], 
-                                              cmd_opt["AudioDepth"][1], 
-                                              cmd_opt["AudioRate"][1], 
-                                              cmd_opt["AudioChannel"][1], 
-                                              self.threads,
-                                               ))
+        command = ('-vn %s %s %s %s %s -map_metadata 0' % (
+                                                cmd_opt["AudioCodec"],
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioDepth"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1],
+                                                            ))
         command = " ".join(command.split())# mi formatta la stringa
+        if logname == 'save as profile':
+                return command, '', cmd_opt["ExportExt"]
         valupdate = self.update_dict(countmax)
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
@@ -648,28 +628,31 @@ class Audio_Conv(wx.Panel):
                                                 str(self.spin_tp.GetValue()),
                                                 str(self.spin_lra.GetValue())))
         title = _('Audio EBU normalization')
-        cmd_1 = ('-vn %s' % (self.threads))
-        cmd_2 = ('-vn %s %s %s %s %s %s' % (cmd_opt["AudioCodec"],
+
+        cmd_1 = ('-af %s -vn -sn -pass 1 -f null' % loudfilter)
+        cmd_2 = ('-vn -sn -pass 2 %s %s %s'
+                 '%s %s -map_metadata 0' % (cmd_opt["AudioCodec"],
                                             cmd_opt["AudioBitrate"][1], 
                                             cmd_opt["AudioDepth"][1], 
                                             cmd_opt["AudioRate"][1], 
-                                            cmd_opt["AudioChannel"][1], 
-                                            self.threads,
+                                            cmd_opt["AudioChannel"][1],
                                             ))
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
+        if logname == 'save as profile':
+                return pass1, pass2, cmd_opt["ExportExt"]
         valupdate = self.update_dict(countmax)
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('twopass EBU',
+            self.parent.switch_Process('two pass EBU',
                                         f_src,
-                                        '',
-                                        f_dest,
                                         cmd_opt["ExportExt"],
-                                        [pass1, pass2, loudfilter, False],
-                                        self.ffmpeg_link,
-                                        '',
+                                        f_dest,
+                                        None,
+                                        [pass1, pass2, loudfilter],
+                                        None,
+                                        None,
                                         logname, 
                                         countmax,
                                         )
@@ -700,7 +683,7 @@ class Audio_Conv(wx.Panel):
                 \nAudio Container\nAudio Codec\nAudio bit-rate\
                 \nAudio Channels\nAudio Rate\nBit per Sample\
                 \nAudio Normalization\nTime selection\nThreads"))
-        dictions = ("\n\n%s\n%s\n%s\n%s\n%s"
+        dictions = ("\n\n%s\n%s\n%s\n%s"
                     "\n%s\n%s\n%s\n%s\n%s" % (numfile, 
                                               cmd_opt["AudioContainer"], 
                                               cmd_opt["AudioCodec"], 
@@ -709,8 +692,7 @@ class Audio_Conv(wx.Panel):
                                               cmd_opt["AudioRate"][0], 
                                               cmd_opt["AudioDepth"][0] , 
                                               normalize, 
-                                              time,
-                                              self.threads.split()[1],)
+                                              time,)
                     )
         return formula, dictions
     
@@ -721,30 +703,16 @@ class Audio_Conv(wx.Panel):
         with the same current setting. 
         
         """
-        get = wx.GetApp()
-        dirconf = os.path.join(get.DIRconf, 'vdms')
-        
-        if cmd_opt["PEAK"]:
-            normalize = cmd_opt["PEAK"][0]# tengo il primo valore lista 
-        elif cmd_opt["RMS"]:
-            normalize = cmd_opt["RMS"][0]# tengo il primo valore lista 
+        if self.rdbx_norm.GetSelection() == 3:
+            parameters = self.ebu_Doublepass([], [], 0, 'save as profile')
+            
         else:
-            normalize = ''
-  
-        command = ("-vn %s %s %s %s %s %s %s" % (normalize, 
-                                                 cmd_opt["AudioCodec"], 
-                                                 cmd_opt["AudioBitrate"][1], 
-                                                 cmd_opt["AudioDepth"][1], 
-                                                 cmd_opt["AudioRate"][1], 
-                                                 cmd_opt["AudioChannel"][1],
-                                                 self.threads,
-                                              ))
-        parameters = [' '.join(cmd1.split()), ' '.join(cmd2.split()),outext]
+            parameters = self.stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(None, _("Videomass: Choose a preset to "
                                     "storing new profile"), 
             defaultDir=os.path.join(DIRconf, 'presets'),
-            wildcard="Vinc presets (*.prst;)|*.prst;",
+            wildcard="Videomass presets (*.prst;)|*.prst;",
             style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return     

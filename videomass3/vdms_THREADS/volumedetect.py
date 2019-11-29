@@ -36,6 +36,7 @@ from videomass3.vdms_IO.make_filelog import write_log # write initial log
 get = wx.GetApp()
 DIRconf = get.DIRconf
 OS = get.OS
+ffmpeg_url = get.ffmpeg_url
 #########################################################################
 if not OS == 'Windows':
     import shlex
@@ -108,7 +109,7 @@ class VolumeDetectThread(Thread):
     lack of ffmpeg of course.
     
     """
-    def __init__(self, ffmpeg_bin, timeseq, filelist, OS):
+    def __init__(self, timeseq, filelist, OS):
         """
         Replace /dev/null with NUL on Windows.
         
@@ -123,7 +124,6 @@ class VolumeDetectThread(Thread):
         Thread.__init__(self)
         """initialize"""
         self.filelist = filelist
-        self.ffmpeg = ffmpeg_bin
         self.time_seq = timeseq
         self.status = None
         self.data = None
@@ -150,7 +150,7 @@ class VolumeDetectThread(Thread):
 
         for files in self.filelist:
             cmd = ('{0} {1} -i "{2}" -hide_banner -af volumedetect '
-                    '-vn -sn -dn -f null {3}').format(self.ffmpeg, 
+                    '-vn -sn -dn -f null {3}').format(ffmpeg_url, 
                                                       self.time_seq,
                                                       files,
                                                       self.nul)

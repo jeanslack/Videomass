@@ -36,14 +36,13 @@ class FFmpeg_Search(wx.MiniFrame):
     Search and view all the FFmpeg help options.
     
     """
-    def __init__(self, ffmpeg_link, OS):
+    def __init__(self, OS):
         """
         The list of topics in the combo box is part of the 
         'Print help / information / capabilities:' section 
         given by the -h option on the FFmpeg command line.
         
         """
-        self.ffmpeg = ffmpeg_link
         self.OS = OS
         self.row = None
         
@@ -153,7 +152,7 @@ class FFmpeg_Search(wx.MiniFrame):
         else:
             self.texthelp.Clear()# reset textctrl
             topic = dicdef[self.cmbx_choice.GetValue()]
-            out = IO_tools.findtopic(self.ffmpeg, topic)
+            out = IO_tools.findtopic(topic)
             self.row = out
             if self.row:
                 self.texthelp.AppendText(self.row)

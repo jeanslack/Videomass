@@ -62,9 +62,7 @@ class MainFrame(wx.Frame):
     ProcessPanel which is instantiated in an appropriate instance 
     method. (see switch_Process method doc strings below)
     """
-    def __init__(self, setui, ffmpeg_link,
-                 ffprobe_link, ffplay_link, 
-                 pathicons):
+    def __init__(self, setui, pathicons):
         """
         NOTE: 'SRCpath' is a current work directory of Videomass 
                program. How it can be localized depend if Videomass is 
@@ -86,15 +84,6 @@ class MainFrame(wx.Frame):
         self.DIRconf = setui[8]
         #---------------------------#
         self.threads = setui[4][2]#ffmpeg option, set the cpu threads
-        self.ffplay_loglevel = setui[4][3]
-        self.ffmpeg_loglevel = setui[4][4]
-        self.loglevel_batch = ''#setui[4][7]# marks as batch process
-        self.ffmpeg_check = setui[4][5]
-        self.ffprobe_check = setui[4][7]
-        self.ffplay_check = setui[4][9]
-        self.ffmpeg_link = ffmpeg_link
-        self.ffprobe_link = ffprobe_link
-        self.ffplay_link = ffplay_link
         self.iconset = setui[4][11]
         self.videomass_icon = pathicons[0]
         self.icon_runconversion = pathicons[2]
@@ -211,13 +200,7 @@ class MainFrame(wx.Frame):
                                                      )
         self.ChooseTopic.SetBackgroundColour(barColor)
         self.ytDownloader = downloader.Downloader(self, self.OS)
-        self.VconvPanel = video_conv.Video_Conv(self, 
-                                                self.ffmpeg_link,
-                                                self.ffplay_link,
-                                                self.ffprobe_link,
-                                                self.threads, 
-                                                self.ffmpeg_loglevel,
-                                                self.ffplay_loglevel,
+        self.VconvPanel = video_conv.Video_Conv(self,
                                                 self.OS,
                                                 pathicons[7],# icon playfilters
                                                 pathicons[8],# icon resetfilters
@@ -233,11 +216,7 @@ class MainFrame(wx.Frame):
                                                 self.bBtnC,
                                                 self.fBtnC,
                                                 )
-        self.AconvPanel = audio_conv.Audio_Conv(self, 
-                                                self.ffmpeg_link, 
-                                                self.threads,
-                                                self.ffmpeg_loglevel, 
-                                                self.ffprobe_link,
+        self.AconvPanel = audio_conv.Audio_Conv(self,
                                                 self.OS,
                                                 pathicons[15],# icon analyzes
                                                 pathicons[16],# icon settings
@@ -246,7 +225,6 @@ class MainFrame(wx.Frame):
                                                 self.fBtnC,
                                                 )
         self.fileDnDTarget = filedrop.FileDnD(self, 
-                                              self.ffprobe_link, 
                                               pathicons[26], 
                                               pathicons[27]
                                               )
@@ -259,9 +237,6 @@ class MainFrame(wx.Frame):
                                                   SRCpath, 
                                                   self.DIRconf, 
                                                   self.WORKdir, 
-                                                  self.threads, 
-                                                  self.ffmpeg_loglevel, 
-                                                  self.ffmpeg_link, 
                                                   self.OS,
                                                   pathicons[15],#icon analyzes
                                                   pathicons[18],#icon peaklevel
@@ -789,14 +764,7 @@ class MainFrame(wx.Frame):
         Call the module setup for setting preferences
         """
         #self.parent.Setup(self)
-        setup_dlg = settings.Setup(self, self.threads, self.ffplay_loglevel, 
-                                   self.ffmpeg_loglevel, self.ffmpeg_link, 
-                                   self.ffmpeg_check, self.ffprobe_link, 
-                                   self.ffprobe_check, self.ffplay_link, 
-                                   self.ffplay_check, self.OS, 
-                                   self.iconset, self.PATHconf,
-                                   self.WORKdir
-                                     )
+        setup_dlg = settings.Setup(self, self.iconset)
         setup_dlg.ShowModal()
     
     #--------- Menu Tools
@@ -813,37 +781,35 @@ class MainFrame(wx.Frame):
         Call IO_tools.test_conf
         
         """
-        IO_tools.test_conf(self.ffmpeg_link, self.ffprobe_link, 
-                                 self.ffplay_link
-                                 )
+        IO_tools.test_conf()
     #------------------------------------------------------------------#
     def Check_formats(self, event):
         """
         IO_tools.test_formats
         
         """
-        IO_tools.test_formats(self.ffmpeg_link)
+        IO_tools.test_formats()
     #------------------------------------------------------------------#
     def Check_enc(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-encoders')
+        IO_tools.test_codecs('-encoders')
     #------------------------------------------------------------------#
     def Check_dec(self, event):
         """
         IO_tools.test_encoders
         
         """
-        IO_tools.test_codecs(self.ffmpeg_link, '-decoders')
+        IO_tools.test_codecs('-decoders')
     #------------------------------------------------------------------#
     def Search_topic(self, event):
         """
         Show a dialog box to help you find FFmpeg topics
         
         """
-        dlg = ffmpeg_search.FFmpeg_Search(self.ffmpeg_link, self.OS)
+        dlg = ffmpeg_search.FFmpeg_Search(self.OS)
         dlg.Show()
     #------------------------------------------------------------------#
     def Openlog(self, event):
@@ -1151,7 +1117,7 @@ class MainFrame(wx.Frame):
         else:
             duration = self.duration
 
-        self.btnpanel.Hide()# hide buttons bar if the user has shown it:
+        self.btnpanel.Hide()# hide buttons bar 
         #Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
@@ -1174,11 +1140,11 @@ class MainFrame(wx.Frame):
         if self.ytDownloader.IsShown():
             self.ytDownloader.on_Start()
         elif self.VconvPanel.IsShown():
-            self.VconvPanel.on_ok()
+            self.VconvPanel.on_start()
         elif self.AconvPanel.IsShown():
-            self.AconvPanel.on_ok()
+            self.AconvPanel.on_start()
         elif self.PrstsPanel.IsShown():
-            self.PrstsPanel.on_ok()
+            self.PrstsPanel.on_start()
             
     #------------------------------------------------------------------#
     def panelShown(self, panelshown):

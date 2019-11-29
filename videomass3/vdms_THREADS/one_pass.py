@@ -40,6 +40,7 @@ OS = get.OS
 DIRconf = get.DIRconf # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
 ffmpeg_loglev = get.ffmpeg_loglev
+threads = get.threads
 
 if not OS == 'Windows':
     import shlex
@@ -124,16 +125,18 @@ class OnePass(Thread):
             source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
             outext = source_ext if not self.extoutput else self.extoutput
                 
-            cmd = ('%s %s %s -i "%s" %s %s -y "%s/%s.%s"' %(ffmpeg_url,
-                                                            ffmpeg_loglev,
-                                                            self.time_seq,
-                                                            files, 
-                                                            self.command,
-                                                            volume,
-                                                            folders, 
-                                                            filename,
-                                                            outext,
-                                                            ))
+            cmd = ('%s %s %s -i "%s" %s %s %s '
+                   '-y "%s/%s.%s"' %(ffmpeg_url, 
+                                     self.time_seq,
+                                     ffmpeg_loglev,
+                                     files, 
+                                     self.command,
+                                     volume,
+                                     threads,
+                                     folders, 
+                                     filename,
+                                     outext,
+                                     ))
             self.count += 1
             count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)

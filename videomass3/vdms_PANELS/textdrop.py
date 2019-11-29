@@ -30,14 +30,19 @@ import wx
 import os
 
 dirname = os.path.expanduser('~') # /home/user/
+# path to the configuration directory:
+get = wx.GetApp()
+userpath = get.userpath
 
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
 red = '#ea312d'
 yellow = '#a29500'
 greenolive = '#6aaf23'
 orange = '#f28924'
-########################################################################
 
+data_files = []
+
+########################################################################
 class TextDnD(wx.Panel):
     """
     Accept one or more urls separated by a white space or newline.
@@ -47,7 +52,7 @@ class TextDnD(wx.Panel):
         """
         """
         self.parent = parent # parent is the MainFrame
-        self.file_dest = dirname # path name files destination
+        self.file_dest = dirname if not userpath else userpath
         """Constructor. This will initiate with an id and a title"""
         wx.Panel.__init__(self, parent=parent)
         self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "", 

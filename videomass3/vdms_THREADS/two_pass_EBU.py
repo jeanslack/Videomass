@@ -40,6 +40,7 @@ OS = get.OS
 DIRconf = get.DIRconf # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
 ffmpeg_loglev = get.ffmpeg_loglev
+threads = get.threads
 
 if not OS == 'Windows':
     import shlex
@@ -78,10 +79,8 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 """
 class Loudnorm(Thread):
     """
-    This class represents a separate thread which need to read the 
-    stdout/stderr in real time mode. The subprocess module is instantiated 
-    twice for two different tasks: the process on the first video pass and 
-    the process on the second video pass for video only.
+    Like `TwoPass_Thread` but execute -loudnorm parsing from first 
+    pass and has definitions to apply on second pass.
     """
     def __init__(self, var, duration, logname, timeseq):
         """
@@ -90,7 +89,7 @@ class Loudnorm(Thread):
         """initialize"""
         self.stop_work_thread = False # process terminate
         self.filelist = var[1] # list of files (elements)
-        self.ext = var[4]
+        self.ext = var[2]
         self.passList = var[5] # comand list set for double-pass
         self.outputdir = var[3] # output path
         self.duration = duration # duration list
@@ -113,8 +112,6 @@ class Loudnorm(Thread):
                    'Output LRA:': None, 'Output Threshold:': None, 
                    'Normalization Type:': None, 'Target Offset:': None
                    }
-        muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
-                  'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',}
         for (files,
              folders,
              duration) in itertools.zip_longest(self.filelist, 
@@ -126,30 +123,16 @@ class Loudnorm(Thread):
             filename = os.path.splitext(basename)[0]# name
             source_ext = os.path.splitext(basename)[1].split('.')[1]# ext
             outext = source_ext if not self.ext else self.ext
-            if self.passList[3]: # True(2pass video) or False(copy/std)
-                force = '-f %s' % muxers[outext]
-            else:
-                force = '-f null'
-                
-            if 'libx265' in self.passList[1]:
-                passpar = '-x265-params pass=1:stats='
-            else:
-                passpar = '-pass 1 -passlogfile '
             
             #--------------- first pass
             pass1 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {9}"{4}/{5}.log" -af {6} '
-                     '{7} -y {8}'.format(ffmpeg_url, 
-                                         self.time_seq,
-                                         files, 
-                                         self.passList[0],
-                                         folders,
-                                         filename,
-                                         self.passList[2],#loudnorm
-                                         force,# -f 
-                                         self.nul,
-                                         passpar,
-                                        )) 
+                     '{1} -i "{2}" {3} {4} -y {5}'.format(ffmpeg_url, 
+                                                          self.time_seq,
+                                                          files, 
+                                                          self.passList[0],
+                                                          threads,
+                                                          self.nul,
+                                                          )) 
             self.count += 1
             count = ('Loudnorm af: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
@@ -240,24 +223,19 @@ class Loudnorm(Thread):
                                 )
                        )
             time.sleep(.5)
-            
-            if 'libx265' in self.passList[1]:
-                passpar = '-x265-params pass=1:stats='
-            else:
-                passpar = '-pass 1 -passlogfile '
                 
             pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {8}"{5}/{6}.log" -af '
-                     '{4} -y "{5}/{6}.{7}"'.format(ffmpeg_url, 
-                                                   self.time_seq,
-                                                   files,
-                                                   self.passList[1],
-                                                   filters,
-                                                   folders, 
-                                                   filename,
-                                                   outext,
-                                                   passpar,
-                                                   ))
+                     '{1} -i "{2}" {3} -af {4} {5} -y "{6}/{7}.{8}"'.format(
+                                                            ffmpeg_url, 
+                                                            self.time_seq,
+                                                            files,
+                                                            self.passList[1],
+                                                            filters,
+                                                            threads,
+                                                            folders, 
+                                                            filename,
+                                                            outext,
+                                                            ))
             count = ('Loudnorm af: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)

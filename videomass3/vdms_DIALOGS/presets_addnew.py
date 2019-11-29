@@ -35,6 +35,7 @@ import json
 # setting the path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
+OS = get.OS
 
 class MemPresets(wx.Dialog):
     """
@@ -92,6 +93,17 @@ class MemPresets(wx.Dialog):
         btn_save = wx.Button(self, wx.ID_OK, _("Save.."))
 
         #----------------------Set Properties----------------------#
+        # set_properties:
+        if OS == 'Darwin':
+            self.pass_1_cmd.SetFont(wx.Font(12, wx.MODERN, 
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_cmd.SetFont(wx.Font(12, wx.MODERN, 
+                                            wx.NORMAL, wx.NORMAL))
+        else:
+            self.pass_1_cmd.SetFont(wx.Font(9, wx.MODERN, 
+                                            wx.NORMAL, wx.NORMAL))
+            self.pass_2_cmd.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, 
+                                            wx.NORMAL))
         self.txt_name.SetMinSize((150, -1))
         self.txt_descript.SetMinSize((300, -1))
         self.pass_1_cmd.SetMinSize((350, 60))
