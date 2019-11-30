@@ -28,7 +28,7 @@
 #########################################################
     
 import wx
-#import wx.lib.agw.hyperlink as hpl
+import wx.lib.agw.hyperlink as hpl
 
 # get videomass wx.App attribute
 get = wx.GetApp()
@@ -104,17 +104,17 @@ class Choose_Topic(wx.Panel):
                                         wx.ALIGN_CENTER_VERTICAL|
                                         wx.ALIGN_CENTER_HORIZONTAL, 5)
         
-        #sizer_hpl = wx.BoxSizer(wx.HORIZONTAL)
-        #sizer_base.Add(sizer_hpl, 0, wx.ALL|
-                                   #wx.ALIGN_CENTER_VERTICAL|
-                                   #wx.ALIGN_CENTER_HORIZONTAL, 15)
+        sizer_hpl = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizer_hpl, 0, wx.ALL|
+                                   wx.ALIGN_CENTER_VERTICAL|
+                                   wx.ALIGN_CENTER_HORIZONTAL, 15)
         
-        #txt_link = wx.StaticText(self, label='From the same author, you may '
-                                             #'also be interested in ')
-        #link = hpl.HyperLinkCtrl(self, -1, "Vinc",
-                                #URL="https://gitlab.com/jeanslack/vinc")
-        #sizer_hpl.Add(txt_link)
-        #sizer_hpl.Add(link)
+        txt_link = wx.StaticText(self, label='Download additional presets or '
+                                             'contribute to making new ones ')
+        link = hpl.HyperLinkCtrl(self, -1, "Additional Presets",
+                        URL="https://github.com/jeanslack/Videomass-presets")
+        sizer_hpl.Add(txt_link)
+        sizer_hpl.Add(link)
         self.SetSizerAndFit(sizer_base)
         
         
