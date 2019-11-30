@@ -156,7 +156,7 @@ class Video_Conv(wx.Panel):
         #------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.notebook = wx.Notebook(self, wx.ID_ANY, style=wx.NB_NOPAGETHEME|
-                                                           wx.NB_TOP
+                                                           wx.NB_BOTTOM
                                                            )
         sizer_base.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 5)
         
@@ -181,7 +181,7 @@ class Video_Conv(wx.Panel):
                                                 wx.ALIGN_CENTER_VERTICAL, 20
                                                 )
         self.box_pass = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
-                                    wx.ID_ANY, _("Improves low-quality export")), 
+                                    wx.ID_ANY, _("Encoding Pass Selection")), 
                                                 wx.VERTICAL
                                                 )
         grid_sx_vcontainer.Add(self.box_pass, 0, wx.ALL | wx.EXPAND, 5)
@@ -281,9 +281,9 @@ class Video_Conv(wx.Panel):
         sizer_nb2 = wx.BoxSizer(wx.HORIZONTAL)
         self.box_vFilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_2, 
                                                wx.ID_ANY,  _("Video Filters")), 
-                                                wx.VERTICAL)
+                                               wx.VERTICAL)
         sizer_nb2.Add(self.box_vFilters, 1, wx.ALL | wx.EXPAND, 10)
-        grid_vfilters = wx.GridSizer(6, 2, 50, 50)
+        grid_vfilters = wx.FlexGridSizer(7, 3, 20, 20)
         self.box_vFilters.Add(grid_vfilters, 0, wx.ALL |
                                                 wx.ALIGN_CENTER_HORIZONTAL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 20)
@@ -348,6 +348,9 @@ class Video_Conv(wx.Panel):
         self.btn_denois.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_denois)
         grid_vfilters.Add((20, 20), 0,)# separator
+        grid_vfilters.Add((50, 50), 0,)
+        grid_vfilters.Add((50, 50), 0,)
+        grid_vfilters.Add((50, 50), 0,)
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.nb_panel_2,
                                              size=(-1,25),
@@ -359,6 +362,7 @@ class Video_Conv(wx.Panel):
         self.btn_preview.SetTopStartColour(wx.Colour(self.btn_color))
         self.btn_preview.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_preview)
+        grid_vfilters.Add((20, 20), 0,)# separator
         resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
         self.btn_reset = GB.GradientButton(self.nb_panel_2,
                                              size=(-1,25),
@@ -442,7 +446,7 @@ class Video_Conv(wx.Panel):
         self.btn_aparam.SetTopStartColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetTopEndColour(wx.Colour(self.btn_color))
         grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 20)
-        grid_a_ctrl.Add((5, 0), 0,) # uguale di AddSpacer(5)
+        #grid_a_ctrl.Add((5, 0), 0,) # uguale di AddSpacer(5)
         self.txt_audio_options = wx.TextCtrl(self.nb_panel_3, wx.ID_ANY, 
                                              size=(-1,-1), 
                                              style=wx.TE_READONLY
@@ -683,43 +687,38 @@ class Video_Conv(wx.Panel):
             self.btn_crop.Enable(), self.btn_rotate.Enable() 
             self.btn_lacing.Enable(), self.btn_denois.Enable() 
             self.btn_preview.Enable(), self.slider_CRF.SetMax(51)
-            self.ckbx_pass.Enable()
         
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                        "-c:v libaom-av1 -strict -2"]:
-            #self.box_opt.SetLabel(_('Controlling Speed and Quality'))
             self.vp9panel.Show(), self.ckbx_multithread.SetValue(True)
-            self.rdb_deadline.SetSelection(1)
-            self.spin_cpu.SetRange(0, 5)
-            self.nb_panel_1.Layout()
+            self.rdb_deadline.SetSelection(1), self.spin_cpu.SetRange(0, 5)
             self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
             self.nb_panel_4.Disable(), self.btn_videosize.Enable()
             self.btn_crop.Enable(), self.btn_rotate.Enable()
             self.btn_lacing.Enable(), self.btn_denois.Enable()
-            self.btn_preview.Enable(), self.ckbx_pass.Enable()
+            self.btn_preview.Enable()
+            self.nb_panel_1.Layout()
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
-            #self.box_opt.SetLabel('')
             self.vp9panel.Hide()
             self.spin_Vbrate.Disable(), self.btn_videosize.Disable() 
             self.btn_crop.Disable(), self.btn_rotate.Disable()
             self.btn_lacing.Disable(), self.btn_denois.Disable() 
             self.btn_preview.Disable(), self.nb_panel_4.Disable() 
-            self.ckbx_pass.Disable()
             
         else: # all others containers that not use h264
-            #self.box_opt.SetLabel('')
-            self.vp9panel.Hide()
-            self.nb_panel_4.Disable()
-            self.btn_videosize.Enable(), 
-            self.btn_crop.Enable(), self.btn_rotate.Enable() 
-            self.btn_lacing.Enable(), self.btn_denois.Enable()
-            self.btn_preview.Enable(), self.ckbx_pass.Enable()
+            self.vp9panel.Hide(), self.nb_panel_4.Disable()
+            self.btn_videosize.Enable(), self.btn_crop.Enable(), self.btn_rotate.Enable(), self.btn_lacing.Enable(), self.btn_denois.Enable(), self.btn_preview.Enable()
         
         if self.rdbx_normalize.GetSelection() == 3: 
             self.ckbx_pass.SetValue(True)
+            self.ckbx_pass.Disable()
         else:
-            self.ckbx_pass.SetValue(False)
+            if cmd_opt["VideoCodec"] == "-c:v copy":
+                self.ckbx_pass.SetValue(False)
+                self.ckbx_pass.Disable()
+            else:
+                self.ckbx_pass.Enable()
         self.on_Pass(self) 
         
         if opt265:
@@ -840,6 +839,10 @@ class Video_Conv(wx.Panel):
             if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Enable()
+                
+            elif cmd_opt["VideoCodec"] == "-c:v copy":
+                self.slider_CRF.Disable()
+                self.spin_Vbrate.Disable()
             else:   
                 self.slider_CRF.Disable()
                 self.spin_Vbrate.Enable()
@@ -1313,7 +1316,7 @@ class Video_Conv(wx.Panel):
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
             cmd_opt["Passing"] = "double"
-            if not self.cmbx_vidContainers.GetSelection() == 16:#copycodec
+            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
                 self.on_Pass(self)
         else:
             self.parent.statusbar_msg(_("Audio normalization off"), None)
@@ -1322,10 +1325,10 @@ class Video_Conv(wx.Panel):
         self.nb_panel_3.Layout()
         
         if not self.rdbx_normalize.GetSelection() == 3: 
-            if not self.cmbx_vidContainers.GetSelection() == 16:#copycodec
+            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
                 self.ckbx_pass.Enable()
                 
-        if self.cmbx_vidContainers.GetSelection() == 16:#copycodec
+        if self.cmbx_vidContainers.GetSelection() == 15:#copycodec
             if not self.rdbx_normalize.GetSelection() == 3: 
                 self.ckbx_pass.SetValue(False)
         

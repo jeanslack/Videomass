@@ -3,7 +3,7 @@
 
 #########################################################
 # Name: Videomass3.py
-# Porpose: bootstrap for the videomass
+# Porpose: bootstrap for Videomass app.
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -92,7 +92,6 @@ class Videomass(wx.App):
         if setui[2]: # copyerr = True; the share folder is damaged
             wx.MessageBox(_('{0}\n\nSorry, cannot continue..'.format(setui[2])),
                              'Videomass: Fatal Error', wx.ICON_STOP)
-            print ('Videomass: Fatal Error, %s' % setui[2])
             return False
         
         icons = Appearance(setui[3], setui[4][11])# set appearance instance
@@ -158,7 +157,7 @@ class Videomass(wx.App):
     def firstrun(self, icon):
         """
         Start a temporary dialog: this is showing during first time 
-        start Videomass application on MaOS and Windows.
+        start of the Videomass application on MacOS and Windows.
         """
         from videomass3.vdms_DIALOGS.first_time_start import FirstStart
         main_frame = FirstStart(icon)

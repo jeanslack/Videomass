@@ -10,8 +10,16 @@ URGENCY: high
 -------------
 URGENCY: low
 -------------
-- YoutubeDL add one specific `format code` to any url indexing with the urls list
-- YoutubeDL get extract info metadata by using dialog with ListCtrl like mediainfo
+- YoutubeDL add one specific `format code` to any url indexing with the urls 
+  list, e.g. using a check box into list ctrl or button to append a selected 
+  format code to list.
+ 
+- How to update youtube-dl when using Videomass supplied with macOs and 
+  Windows installers?
+  
+- Show youtube-dl version.
+
+- Add extra parameters for video filters section on Videoconverions panel
 
 ---------------
 URGENCY: medium

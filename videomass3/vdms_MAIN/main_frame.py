@@ -287,7 +287,7 @@ class MainFrame(wx.Frame):
         self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:
-        self.btn_duration.SetToolTip(_('Specify the duration or part of the '
+        self.btn_duration.SetToolTip(_('Specify the duration or portion of the '
                                        'time globally. this can affect many '
                                        'functions.'
                                            ))

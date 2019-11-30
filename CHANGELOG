@@ -6,17 +6,37 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
-November 16, 2019 V.1.8.0
+November 30, 2019 V.1.8.0
 +------------------------------------+
 
 NEWS:
-    * 
+    * GUI completely redesigned to make it easier for users to use.
+    
+    * Now Videomass has embedded youtube-dl to download videos from Youtube
+    
+        * Download multiple URLs with your settings.
+        * View video information without downloading it.
+        * Ability to download videos using the 'format code'.
+        
+    * New and improved management of presets.
+        
+        * The json format replaces the old xml format for presets management.
+        * Now you can create your own presets, delete them or add others 
+          directly to the presets directory.
+        * Improved management of pass encoding parameters on any profile.
+    
+    * Complete support for audio normalization also on the Presets Manager tool.
     
 ADDED:
-    * 
+    * Added two text boxes on Presets Manager to view FFmpeg command line for 
+      one and two pass encoding
+    
+    * Add new entry box on Settings dialog to choose the user default directory
+      to files storing
+    
 
 IMPROVEMENTS:
-    * 
+    * Improved all UI layouts
       
       
 +------------------------------------+

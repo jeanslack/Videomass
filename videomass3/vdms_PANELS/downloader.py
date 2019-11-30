@@ -63,6 +63,10 @@ class Downloader(wx.Panel):
     """
     def __init__(self, parent, OS):
         """
+        The first item of the self.info is a complete list of all 
+        informations getting by extract_info method from youtube_dl 
+        module. The second item can be a status error witch sets the
+        self.error attribute.
         """
         self.parent = parent
         self.OS = OS
@@ -154,7 +158,6 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(7, (_('Audio Codec')), width=110)
         self.fcode.InsertColumn(8, (_('Size')), width=80)
         self.fcode.Hide()
-        
         
         if OS == 'Darwin':
             self.fcode.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))

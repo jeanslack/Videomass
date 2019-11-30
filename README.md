@@ -13,17 +13,26 @@
   Added support to VP8, VP9, H.265 and OPUS encoders. See changelog for 
   more details.
 
+- November 2019 v.1.8.0: Now Videomass has embedded youtube-dl to downloads
+  video from Youtube and more sites.
+
 ## Features
 
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Drag n' Drop with multiple files at once.
-- Batch processing for audio and video conversions
+- Batch processing.
+- Fully customizable presets and profiles.
+- Has useful presets to start with and you can download more.
+- Supports all formats and codecs available with FFmpeg.
 - Displaying information from streams analyzer.
 - Real-time video filters preview
 - Peak level-based audio normalization.
 - RMS-based audio normalization.
 - EBU R128 audio normalization.
 - Setting duration portions for imported files, filters, export and tests.
+- Download multiple URLs from youtube with your settings.
+- View video information without downloading it.
+- Ability to download videos using the 'format code'.
 - Log management.
 - Multi language (English and Italian Languages support for now).
 
@@ -31,7 +40,7 @@
    
 - Python3     
 - wxPython4 (phoenix) 
-- PyPubSub  
+- PyPubSub (from https://pypi.org)
 - ffmpeg >= 3.2   
 - ffprobe (for multimedia streams analysis)  
 - ffplay (for playback)   

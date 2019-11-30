@@ -138,8 +138,7 @@ def system_check():
                     shutil.copyfile('%s/videomassWin32.conf' % SRCpath, 
                                     FILEconf)
                 else:
-                    shutil.copyfile('%s/videomass.conf' % SRCpath, 
-                                    FILEconf)
+                    shutil.copyfile('%s/videomass.conf' % SRCpath, FILEconf)
                 DATAconf = parsing_fileconf() # read again file conf
             except IOError as e:
                 copyerr = e

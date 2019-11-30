@@ -112,12 +112,12 @@ class PrstPan(wx.Panel):
                                      wx.CB_READONLY
                                      )
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
-        labcmd_1 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("First pass parameters:"))
-        self.txt_1_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
+        labcmd_1 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("First pass parameters"))
+        self.txt_1cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
                                                           wx.TE_PROCESS_ENTER
                                                           )
-        labcmd_2 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("Second pass parameters:"))
-        self.txt_2_cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
+        labcmd_2 = wx.StaticBox(nb1_p2, wx.ID_ANY, _("Second pass parameters"))
+        self.txt_2cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
                                                           wx.TE_PROCESS_ENTER
                                                           )
         #--------------------------------### Audio.
@@ -187,19 +187,19 @@ class PrstPan(wx.Panel):
         
         #----------------------Set Properties----------------------#
         if OS == 'Darwin':
-            self.txt_1_cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_2_cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.txt_1cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.txt_2cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
         else:
-            self.txt_1_cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_2_cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.txt_1cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.txt_2cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
         
-        self.txt_1_cmd.SetMinSize((430, 100))
-        self.txt_2_cmd.SetMinSize((430, 100))    
+        self.txt_1cmd.SetMinSize((430, 100))
+        self.txt_2cmd.SetMinSize((430, 100))    
         #self.list_ctrl.SetBackgroundColour(azure)
         #------- tooltips
-        self.txt_1_cmd.SetToolTip(_('First pass parameters of the '
+        self.txt_1cmd.SetToolTip(_('First pass parameters of the '
                                     'selected profile'))
-        self.txt_2_cmd.SetToolTip(_('Second pass parameters of the '
+        self.txt_2cmd.SetToolTip(_('Second pass parameters of the '
                                     'selected profile'))
         self.btn_analyzes.SetToolTip(_('Gets maximum volume and average volume '
                 'data in dBFS, then calculates the offset amount for audio '
@@ -232,7 +232,7 @@ class PrstPan(wx.Panel):
         grd_s1.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
         labcmd_1.Lower()
         sizlab1 = wx.StaticBoxSizer(labcmd_1, wx.VERTICAL)
-        sizlab1.Add(self.txt_1_cmd, 0, wx.ALL | wx.EXPAND 
+        sizlab1.Add(self.txt_1cmd, 0, wx.ALL | wx.EXPAND 
                                             | wx.ALIGN_CENTER_HORIZONTAL 
                                             | wx.ALIGN_CENTER_VERTICAL, 15
                                             )
@@ -243,7 +243,7 @@ class PrstPan(wx.Panel):
         
         labcmd_2.Lower()
         sizlab2 = wx.StaticBoxSizer(labcmd_2, wx.VERTICAL)
-        sizlab2.Add(self.txt_2_cmd, 0, wx.ALL | wx.EXPAND 
+        sizlab2.Add(self.txt_2cmd, 0, wx.ALL | wx.EXPAND 
                                             | wx.ALIGN_CENTER_HORIZONTAL 
                                             | wx.ALIGN_CENTER_VERTICAL, 15
                                             )
@@ -345,7 +345,7 @@ class PrstPan(wx.Panel):
             self.cmbx_prst.SetSelection(0)
         
         self.list_ctrl.ClearAll()
-        self.txt_1_cmd.SetValue(""), self.txt_2_cmd.SetValue("")
+        self.txt_1cmd.SetValue(""), self.txt_2cmd.SetValue("")
         if array != []:
             del array[0:6]
         self.set_listctrl()
@@ -403,7 +403,7 @@ class PrstPan(wx.Panel):
                             )
         collections = json_data(path)
         selected = event.GetText() # event.GetText is a Name Profile
-        self.txt_1_cmd.SetValue(""), self.txt_2_cmd.SetValue("")
+        self.txt_1cmd.SetValue(""), self.txt_2cmd.SetValue("")
         del array[0:6] # delete all: [0],[1],[2],[3],[4],[5]
         
         try:
@@ -422,12 +422,12 @@ class PrstPan(wx.Panel):
                             "Videomass", wx.ICON_ERROR, self)
             return
         
-        self.txt_1_cmd.AppendText('%s' %(array[2]))# cmd1 text ctrl
+        self.txt_1cmd.AppendText('%s' %(array[2]))# cmd1 text ctrl
         if array[3]:
-            self.txt_2_cmd.Enable()
-            self.txt_2_cmd.AppendText('%s' %(array[3]))# cmd2 text ctrl
+            self.txt_2cmd.Enable()
+            self.txt_2cmd.AppendText('%s' %(array[3]))# cmd2 text ctrl
         else:
-            self.txt_2_cmd.Disable()
+            self.txt_2cmd.Disable()
         
         sel = '{0} - {1}'.format(self.cmbx_prst.GetValue(), array[0])
         self.parent.statusbar_msg(sel, None)
@@ -751,8 +751,8 @@ class PrstPan(wx.Panel):
         Replace the selected preset at default values. 
         
         """ 
-        if wx.MessageBox(_("The selected preset will be overwritten to "
-                           "default profile!\nproceed?"), 
+        if wx.MessageBox(_("The selected preset will be overwritten with "
+                           "default profiles!\nproceed?"), 
                            _("Videomass: Please confirm"), 
                             wx.ICON_QUESTION | 
                             wx.YES_NO, self) == wx.NO:
@@ -799,7 +799,7 @@ class PrstPan(wx.Panel):
         
         """
         filename = self.cmbx_prst.GetValue()
-        t = _('Create a new profile on the selected  preset "%s"') % filename
+        t = _('Create a new profile on "%s" preset') % filename
 
         prstdialog = presets_addnew.MemPresets(self, 
                                                'newprofile', 
@@ -882,8 +882,8 @@ class PrstPan(wx.Panel):
                                         yellow)
             return
         
-        if (array[2].strip() != self.txt_1_cmd.GetValue().strip() or 
-            array[3].strip() != self.txt_2_cmd.GetValue().strip()):
+        if (array[2].strip() != self.txt_1cmd.GetValue().strip() or 
+            array[3].strip() != self.txt_2cmd.GetValue().strip()):
             if not self.txtcmdedited:
             
                 msg = _("The selected profile command has been "
@@ -932,7 +932,7 @@ class PrstPan(wx.Panel):
         
         """
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
-        command = (self.txt_1_cmd.GetValue())
+        command = (self.txt_1cmd.GetValue())
         valupdate = self.update_dict(cntmax, 'One passes')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:
@@ -953,8 +953,8 @@ class PrstPan(wx.Panel):
         """
         defines two-pass parameters
         """
-        pass1 = " ".join(self.txt_1_cmd.GetValue().split())
-        pass2 = " ".join(self.txt_2_cmd.GetValue().split())
+        pass1 = " ".join(self.txt_1cmd.GetValue().split())
+        pass2 = " ".join(self.txt_2cmd.GetValue().split())
         
         if 'loudnorm=' in pass1:
             if self.rdbx_norm.GetSelection() == 3:
