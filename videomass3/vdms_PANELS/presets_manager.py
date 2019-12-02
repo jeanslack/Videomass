@@ -920,8 +920,7 @@ class PrstPan(wx.Panel):
         # fname: filename, nome file senza ext.
         # bname: basename, nome file con ext.
         # cntmax: count items for batch proc.
-        
-        if array[3]: # has double pass
+        elif array[3]: # has double pass
             self.two_Pass(file_sources, dir_destin, cntmax, outext)
         else:
             self.one_Pass(file_sources, dir_destin, cntmax, outext)
@@ -1000,8 +999,7 @@ class PrstPan(wx.Panel):
                                         self.logname, 
                                         cntmax,
                                         )
-    #------------------------------------------------------------------#
-    
+    #--------------------------------------------------------------------#
     def update_dict(self, cntmax, passes):
         """
         Update information before send to epilogue

@@ -193,12 +193,10 @@ class Video_Conv(wx.Panel):
                                                wx.ALIGN_CENTER_VERTICAL, 20
                             )
         self.box_opt = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
-                                    wx.ID_ANY, ("Extra Options")), 
+                                    wx.ID_ANY, _("Codec Options")), 
                                                 wx.VERTICAL
                                                 )
         sizer_nb1.Add(self.box_opt, 1, wx.ALL | wx.EXPAND, 10)
-        
-        
         
         self.vp9panel = wx.Panel(self.nb_panel_1, wx.ID_ANY, 
                                   style=wx.TAB_TRAVERSAL)
@@ -424,7 +422,7 @@ class Video_Conv(wx.Panel):
         self.rdb_a = wx.RadioBox(self.nb_panel_3, wx.ID_ANY, (
                                  _("Audio Codec Selecting")),
                                  choices=[x[0] for x in acodecs.values()],
-                                 majorDimension=4, style=wx.RA_SPECIFY_COLS
+                                 majorDimension=3, style=wx.RA_SPECIFY_COLS
                                     )
         for n,v in enumerate(av_formats["mkv"]):
             if not v: # disable only not compatible with mkv 

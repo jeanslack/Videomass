@@ -107,7 +107,7 @@ class Setup(wx.Dialog):
         sizerGeneral = wx.BoxSizer(wx.VERTICAL)
         
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    _("Settings CPU"))), wx.VERTICAL)
+                                    _("FFmpeg threads option"))), wx.VERTICAL)
         sizerGeneral.Add(boxLabThreads, 1, wx.ALL|wx.EXPAND, 15)
         gridThreads = wx.BoxSizer(wx.VERTICAL)
         
@@ -126,7 +126,7 @@ class Setup(wx.Dialog):
                                                   wx.ALIGN_CENTER_HORIZONTAL, 
                                                   5)
         boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    _("Where do you prefer to save files?"))), 
+                                    _("Where do you prefer to store files?"))), 
                                                     wx.VERTICAL
                                                     )
         sizerGeneral.Add(boxUserpath, 1, wx.ALL|wx.EXPAND, 15)
@@ -154,8 +154,8 @@ class Setup(wx.Dialog):
         gridLog = wx.BoxSizer(wx.VERTICAL)
         lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, 
                             (_("The following settings affect output messages "
-                               "and the log\nmessages during processes. "
-                               "Change only if you\nknow what you are "
+                               "and the log messages\nduring processes. "
+                               "Change only if you know what you are "
                                "doing.")))
         gridLog.Add(lab3_pane2, 0,  wx.ALL, 15
                                             )
@@ -194,9 +194,7 @@ class Setup(wx.Dialog):
         self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
-        gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.TOP|
-                                                 wx.ALIGN_CENTER_VERTICAL|
-                                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
+        gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.ALL, 15)
         gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFmpeg, 0, wx.ALL|wx.EXPAND, 15)
         gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
@@ -208,9 +206,7 @@ class Setup(wx.Dialog):
         self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "", 
                                            style=wx.TE_READONLY
                                            )
-        gridExec.Add(self.checkbox_exeFFprobe, 0, wx.TOP|
-                                                  wx.ALIGN_CENTER_VERTICAL|
-                                                  wx.ALIGN_CENTER_HORIZONTAL, 15)
+        gridExec.Add(self.checkbox_exeFFprobe, 0, wx.ALL, 15)
         gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFprobe, 0, wx.ALL|wx.EXPAND, 15)
         gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
@@ -222,9 +218,7 @@ class Setup(wx.Dialog):
         self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "", 
                                           style=wx.TE_READONLY
                                           )
-        gridExec.Add(self.checkbox_exeFFplay, 0, wx.TOP|
-                                                 wx.ALIGN_CENTER_VERTICAL|
-                                                 wx.ALIGN_CENTER_HORIZONTAL, 15)
+        gridExec.Add(self.checkbox_exeFFplay, 0, wx.ALL, 15)
         gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFplay, 0, wx.ALL|wx.EXPAND, 15)
         gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
