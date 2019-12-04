@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# FileName: video_conv.py
-# Porpose: Intarface for video conversions
+# FileName: av_conversions.py
+# Porpose: Intarface for audio/video conversions
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.02.2019, Sept.24.2019
+# Rev: Aug.02.2019, Sept.24.2019, Dic.04.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -31,6 +31,7 @@ import wx
 import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
+import wx.lib.scrolledpanel as SP
 from videomass3.vdms_IO.IO_tools import volumeDetectProcess
 from videomass3.vdms_IO.IO_tools import stream_play
 from videomass3.vdms_IO.filenames_check import inspect
@@ -45,97 +46,107 @@ get = wx.GetApp()
 DIRconf = get.DIRconf
 
 # Dictionary definition for command settings:
-cmd_opt = {"VidCmbxStr": "", "VideoFormat": "", "VideoCodec": "", 
+cmd_opt = {"VidCmbxStr": "", "OutputFormat": "", "VideoCodec": "", 
            "ext_input": "", "Passing": "single", "InputDir": "", 
            "OutputDir": "",  "VideoSize": "", "VideoAspect": "", 
            "VideoRate": "", "Presets": "", "Profile": "", 
-           "Tune": "", "Bitrate": "", "CRF": "", "Audio": "", 
+           "Tune": "", "Bitrate": "", "CRF": "", "AudioCodStr": "", 
            "AudioCodec": "", "AudioChannel": ["",""], 
            "AudioRate": ["",""], "AudioBitrate": ["",""], 
            "AudioDepth": ["",""], "PEAK": "", "EBU": "","RMS": "", 
            "Deinterlace": "", "Interlace": "", "Map": "-map 0 -map_metadata 0", 
            "PixelFormat": "", "Orientation": ["",""],"Crop": "",
            "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
-           "Filters": "", "YUV": "", "Deadline": "", "CpuUsed": "",
+           "Filters": "", "PxlFrm": "", "Deadline": "", "CpuUsed": "",
            "RowMthreading": "",
            }
-# Namings in the video container selection combo box:
-vcodecs = {("AVI (XVID mpeg4)"): ("-c:v mpeg4 -vtag xvid","avi"), 
-            ("AVI (FFmpeg mpeg4)"): ("-c:v mpeg4","avi"), 
-            ("AVI (h.264/AVC)"): ("-c:v libx264","avi"),
-            ("AVI (h.265/HEVC)"): ("-c:v libx265","avi"),
-            ("MP4 (mpeg4)"): ("-c:v mpeg4","mp4"), 
-            ("MP4 (h.264/AVC)"): ("-c:v libx264","mp4"), 
-            ("MP4 (h.265/HEVC)"): ("-c:v libx265","mp4"), 
-            ("M4V (h.264/AVC)"): ("-c:v libx264","m4v"), 
-            ("M4V (h.265/HEVC)"): ("-c:v libx265","m4v"),
-            ("MKV (h.264/AVC)"): ("-c:v libx264","mkv"),
-            ("MKV (h.265/HEVC)"): ("-c:v libx265","mkv"),
-            #("MKV (AV1/libaom)"): ("-c:v libaom-av1 -strict -2","mkv"),
-            ("OGG theora"): ("-c:v libtheora","ogg"), 
-            ("WebM vp8 (HTML5)"): ("-c:v libvpx","webm"), 
-            ("WebM vp9 (HTML5)"): ("-c:v libvpx-vp9","webm"),
-            ("FLV (h.264/AVC)"): ("-c:v libx264","flv"),
-            (_("Copy video codec")): ("-c:v copy",""),
-            }
 # muxers dictionary:
 muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
           'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
           }
-# Namings in the audio format selection on audio radio box:
-acodecs = {('default'): (_("Default (managed by FFmpeg)"),''),
-           ('wav'): ("Wav (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
-           ('aiff'): ("Aiff (Raw, No_MultiChannel)", "-c:a pcm_s16le"), 
-           ('flac'): ("Flac (Lossless, No_MultiChannel)", "-c:a flac"), 
-           ('aac'): ("Aac (Lossy, MultiChannel)", "-c:a aac"), 
-           ('m4v'): ("Alac (Lossless, m4v, No_MultiChannel)", "-c:a alac"),
-           ('ac3'): ("Ac3 (Lossy, MultiChannel)", "-c:a ac3"), 
-           ('ogg'): ("Ogg (Lossy, No_MultiChannel)", "-c:a libvorbis"),
-           ('mp3'): ("Mp3 (Lossy, No_MultiChannel)", "-c:a libmp3lame"),
-           ('opus'): ("Opus (Lossy, No_MultiChannel)", "-c:a libopus"),
-           ('copy'): (_("Try to copy audio source"), "-c:a copy"),
-           ('silent'): (_("No audio stream (silent)"), "-an")
+# Namings in the video container selection combo box:
+vcodecs = ({"Mpeg4": {"-c:v mpeg4":["avi"]}, 
+            "x264": {"-c:v libx264": ["mkv","mp4","avi","flv","m4v"]},
+            "x265": {"-c:v libx265": ["mkv","mp4","avi","m4v"]},
+            "Theora": {"-c:v libtheora": ["ogv"]}, 
+            #"AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
+            "Vp8": {"-c:v libvpx": ["webm"]}, 
+            "Vp9": {"-c:v libvpx-vp9": ["webm"]},
+            "Copy": {"-c:v copy": ["mkv","mp4","avi","flv","m4v","ogv"]}
+            })
+# Namings in the audio codec selection on audio radio box:
+acodecs = {('Auto'): (""),
+           ('PCM'): ("-c:a pcm_s16le"),  
+           ('FLAC'): ("-c:a flac"), 
+           ('AAC'): ("-c:a aac"), 
+           ('ALAC'): ("-c:a alac"),
+           ('AC3'): ("-c:a ac3"), 
+           ('VORBIS'): ("-c:a libvorbis"),
+           ('LAME'): ("-c:a libmp3lame"),
+           ('OPUS'): ("-c:a libopus"),
+           ('Copy'): ("-c:a copy"),
+           ('Mute'): ("-an")
            }
+# Namings in the audio format selection on Container combobox:
+a_formats = ('wav','mp3','ac3','ogg','flac','m4a','aac'
+             )
 # compatibility between video formats and related audio codecs:
 av_formats = {('avi'): ('default','wav',None,None,None,'ac3',None,'mp3',
-                        None,'copy','silent'),
+                        None,'copy','mute'),
               ('flv'): ('default',None,None,'aac',None,'ac3',None,'mp3',
-                        None,'copy','silent'),
+                        None,'copy','mute'),
               ('mp4'): ('default',None,None,'aac',None,'ac3',None,'mp3',
-                        None,'copy','silent'),
+                        None,'copy','mute'),
               ('m4v'): ('default',None,None,'aac','alac',None,None,None,
-                        None,'copy','silent'),
-              ('mkv'): ('default','wav','flac','aac',None,'ac3','ogg','mp3',
-                        'opus','copy','silent'),
+                        None,'copy','mute'),
+              ('mkv'): ('default','wav','flac','aac',None,'ac3',
+                        'ogg','mp3','opus','copy','mute'),
               ('webm'): ('default',None,None,None,None,None,'ogg',None,
-                         'opus','copy','silent'),
-              ('ogg'): ('default',None,'flac',None,None,None,'ogg',None,
-                        'opus','copy','silent')
+                         'opus','copy','mute'),
+              ('ogv'): ('default',None,'flac',None,None,None,'ogg',None,
+                        'opus','copy','mute'),
+              ('wav'): (None,'wav',None,None,None,None,None,None,None,
+                        None,None),
+              ('mp3'): (None,None,None,None,None,None,None,'mp3',None,
+                        None,None),
+              ('ac3'): (None,None,None,None,None,'ac3',None,None,
+                        None,None,None),
+              ('ogg'): (None,None,None,None,None,None,'ogg',None,None,
+                        None,None),
+              ('flac'): (None,None,'flac',None,None,None,None,None,None,
+                        None,None),
+              ('m4a'): (None,None,None,None,'alac',None,None,None,None,
+                        None,None),
+              ('aac'): (None,None,None,'aac',None,None,None,None,
+                        None,None,None),
               }
-# presets used by x264 an h264:
-x264_opt = {("Presets"): ("Disabled","ultrafast","superfast",
+# presets used by x264 and h265:
+x264_opt = {("Presets"): ("None","ultrafast","superfast",
                           "veryfast","faster","fast","medium",
                           "slow","slower","veryslow","placebo"
                           ), 
-            ("Profiles"): ("Disabled","baseline","main","high",
+            ("Profiles"): ("None","baseline","main","high",
                            "high10","high444"
                            ),
-            ("Tunes"): ("Disabled","film","animation","grain",
+            ("Tunes"): ("None","film","animation","grain",
                         "stillimage","psnr","ssim","fastedecode",
                         "zerolatency"
                         )
             }
+# tune used by x265 only
+x265_tune = ("None", "grain", "psnr", "ssim", "fastedecode", "zerolatency"
+             )
 # set widget colours in some case with html rappresentetion:
-azure = '#15a6a6' # rgb form (wx.Colour(217,255,255))
+azure = '#15a6a6'
 yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
 green = '#268826'
-ciano = '#61ccc7' # rgb 97, 204, 199
+ciano = '#61ccc7' # rgb form (wx.Colour(97, 204, 199)
 violet = '#D64E93'
 
-class Video_Conv(wx.Panel):
+class AV_Conv(wx.Panel):
     """
     Interface panel for video conversions
     """
@@ -156,59 +167,117 @@ class Video_Conv(wx.Panel):
         #------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.notebook = wx.Notebook(self, wx.ID_ANY, style=wx.NB_NOPAGETHEME|
-                                                           wx.NB_BOTTOM
+                                                           wx.NB_TOP
                                                            )
         sizer_base.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 5)
         
         #-------------- notebook panel 1:
-        self.nb_panel_1 = wx.Panel(self.notebook, wx.ID_ANY)
-        sizer_nb1 = wx.BoxSizer(wx.HORIZONTAL)
-        grid_sx_vcontainer = wx.GridSizer(2, 1, 0, 0)
-        sizer_nb1.Add(grid_sx_vcontainer, 1, wx.ALL | wx.EXPAND, 5)
-        self.box_vformat = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
-                                               wx.ID_ANY, 
-                                               _("Video Container Selection")), 
-                                                wx.VERTICAL)
-        grid_sx_vcontainer.Add(self.box_vformat, 0, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_vidContainers = wx.ComboBox(self.nb_panel_1, wx.ID_ANY,
-                                             choices=[x for x in vcodecs.keys()],
-                                             size=(200,-1),
-                                             style=wx.CB_DROPDOWN | 
-                                                   wx.CB_READONLY
+        self.nb_Video = wx.Panel(self.notebook, wx.ID_ANY)
+        sizer_nbVideo = wx.BoxSizer(wx.HORIZONTAL)
+        # box Sx
+        self.box_Vcod = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video, 
+                                        wx.ID_ANY, _("Codec")), 
+                                        wx.VERTICAL
+                                            )
+        sizer_nbVideo.Add(self.box_Vcod, 1, wx.ALL | wx.EXPAND, 10)
+        # panel video codec
+        #self.codVpanel = wx.Panel(self.nb_Video, wx.ID_ANY, 
+                                  #style=wx.TAB_TRAVERSAL)
+        self.codVpanel = SP.ScrolledPanel(self.nb_Video, wx.ID_ANY, 
+                                          style=wx.TAB_TRAVERSAL)
+        
+        self.box_Vcod.Add(self.codVpanel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL| 
+                                             wx.ALIGN_CENTER_VERTICAL, 5
                                              )
-        self.box_vformat.Add(self.cmbx_vidContainers, 0, wx.ALL |
-                                                wx.ALIGN_CENTER_HORIZONTAL | 
-                                                wx.ALIGN_CENTER_VERTICAL, 20
-                                                )
-        self.box_pass = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
-                                    wx.ID_ANY, _("Encoding Pass Selection")), 
-                                                wx.VERTICAL
-                                                )
-        grid_sx_vcontainer.Add(self.box_pass, 0, wx.ALL | wx.EXPAND, 5)
-        self.ckbx_pass = wx.CheckBox(self.nb_panel_1, wx.ID_ANY, 
+        grid_sx_Vcod = wx.FlexGridSizer(6,2,0,0)
+        txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Video Codec'))
+        grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
+                                    choices=[x for x in vcodecs.keys()],
+                                    size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                         wx.CB_READONLY
+                                                            )
+        grid_sx_Vcod.Add(self.cmb_Vcod, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        txtpass = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Pass'))
+        grid_sx_Vcod.Add(txtpass, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        self.ckbx_pass = wx.CheckBox(self.codVpanel, wx.ID_ANY, 
                                      _("2-pass encoding")
                                      )
-        self.box_pass.Add(self.ckbx_pass, 0, wx.ALL |
-                                               wx.ALIGN_CENTER_HORIZONTAL | 
-                                               wx.ALIGN_CENTER_VERTICAL, 20
-                            )
-        self.box_opt = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
-                                    wx.ID_ANY, _("Codec Options")), 
+        grid_sx_Vcod.Add(self.ckbx_pass, 0, wx.ALL | 
+                                              wx.ALIGN_CENTER_VERTICAL, 5
+                                              )
+        txtCRF = wx.StaticText(self.codVpanel, wx.ID_ANY, _('CRF'))
+        grid_sx_Vcod.Add(txtCRF, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.slider_CRF = wx.Slider(self.codVpanel, wx.ID_ANY, 1, 0, 51, 
+                                    size=(160, -1), style=wx.SL_HORIZONTAL | 
+                                                          wx.SL_AUTOTICKS | 
+                                                          wx.SL_LABELS
+                                                          )
+        grid_sx_Vcod.Add(self.slider_CRF, 0, wx.ALL|
+                                               wx.ALIGN_CENTER_VERTICAL, 5
+                                                )
+        txtVbrate = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Bit Rate'))
+        grid_sx_Vcod.Add(txtVbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        self.spin_Vbrate = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
+                                       "1500", min=0, max=204800, 
+                                        style=wx.TE_PROCESS_ENTER
+                                        )
+        grid_sx_Vcod.Add(self.spin_Vbrate, 0, wx.ALL | 
+                                                wx.ALIGN_CENTER_VERTICAL, 5
+                                                )
+        
+        txtVaspect = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Aspect Ratio'))
+        grid_sx_Vcod.Add(txtVaspect, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Vaspect = wx.ComboBox(self.codVpanel, wx.ID_ANY,
+                                    choices=[("Auto"), ("4:3"),("16:9"),
+                                              ("1.3333"), ("1.7777")],
+                                    size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                         wx.CB_READONLY
+                                                            )
+        grid_sx_Vcod.Add(self.cmb_Vaspect, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL,5)
+
+        txtFps = wx.StaticText(self.codVpanel, wx.ID_ANY, ('FPS'))
+        grid_sx_Vcod.Add(txtFps, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Fps = wx.ComboBox(self.codVpanel, wx.ID_ANY, 
+                                      choices=[("Auto"),
+                                                ("ntsc"),
+                                                ("pal"),
+                                                ("film"),
+                                                ("23.976"),
+                                                ("24"),
+                                                ("25"),
+                                                ("29.97"),
+                                                ("30"),
+                                                ("48"),
+                                                ("50"),
+                                                ("59.94"),
+                                                ("60"),], size=(160,-1), 
+                                      style=wx.CB_DROPDOWN | 
+                                      wx.CB_READONLY
+                                      )
+        grid_sx_Vcod.Add(self.cmb_Fps, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        self.codVpanel.SetSizer(grid_sx_Vcod) # set panel
+        # central box
+        self.box_opt = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video, 
+                                    wx.ID_ANY, _("Video Codec Options")), 
                                                 wx.VERTICAL
                                                 )
-        sizer_nb1.Add(self.box_opt, 1, wx.ALL | wx.EXPAND, 10)
-        
-        self.vp9panel = wx.Panel(self.nb_panel_1, wx.ID_ANY, 
+        sizer_nbVideo.Add(self.box_opt, 1, wx.ALL | wx.EXPAND, 10)
+        # panel vp8 vp9
+        self.vp9panel = wx.Panel(self.nb_Video, wx.ID_ANY, 
                                   style=wx.TAB_TRAVERSAL)
         self.box_opt.Add(self.vp9panel, 0, wx.ALL|
                                                wx.ALIGN_CENTER_HORIZONTAL | 
                                                wx.ALIGN_CENTER_VERTICAL, 5)
-        sizer_optpanel = wx.FlexGridSizer(5, 1, 5, 5)
+        sizer_vp9panel = wx.FlexGridSizer(5, 1, 5, 5)
         
-        vp9_textopt = wx.StaticText(self.vp9panel, wx.ID_ANY, 
+        vp9_txt = wx.StaticText(self.vp9panel, wx.ID_ANY, 
                                            _("Controlling Speed and Quality"))
-        vp9_textopt.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
-        sizer_optpanel.Add(vp9_textopt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
+        vp9_txt.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
+        sizer_vp9panel.Add(vp9_txt, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         
         self.rdb_deadline = wx.RadioBox(self.vp9panel, wx.ID_ANY, 
                                    (_("Deadline/Quality")), choices=[
@@ -218,222 +287,154 @@ class Video_Conv(wx.Panel):
                                     majorDimension=0, 
                                     style=wx.RA_SPECIFY_ROWS
                                             )
-        sizer_optpanel.Add(self.rdb_deadline, 0, wx.ALL|
+        sizer_vp9panel.Add(self.rdb_deadline, 0, wx.ALL|
                                                  wx.ALIGN_CENTER_HORIZONTAL, 5
                                                  )
         lab_cpu = wx.StaticText(self.vp9panel, wx.ID_ANY, (
                             _("Quality/Speed ratio modifier:")))
-        sizer_optpanel.Add(lab_cpu, 0, wx.ALL|
+        sizer_vp9panel.Add(lab_cpu, 0, wx.ALL|
                                             wx.ALIGN_CENTER_HORIZONTAL, 5
                                             )
         self.spin_cpu = wx.SpinCtrl(self.vp9panel, wx.ID_ANY, 
                                         "0", min=-16, max=16, 
                                         size=(-1,-1), style=wx.TE_PROCESS_ENTER
                                              )
-        sizer_optpanel.Add(self.spin_cpu, 0, wx.ALL|
+        sizer_vp9panel.Add(self.spin_cpu, 0, wx.ALL|
                                              wx.ALIGN_CENTER_HORIZONTAL, 5
                                              )
         self.ckbx_multithread = wx.CheckBox(self.vp9panel, 
                                      wx.ID_ANY, 
                                      (_('Activates row-mt 1'))
                                      )
-        sizer_optpanel.Add(self.ckbx_multithread, 0, wx.ALL|
+        sizer_vp9panel.Add(self.ckbx_multithread, 0, wx.ALL|
                                                 wx.ALIGN_CENTER_HORIZONTAL, 5
                                                 )
-        self.vp9panel.SetSizer(sizer_optpanel) # set panel
-        grid_dx_vquality = wx.GridSizer(2, 1, 0, 0)
-        sizer_nb1.Add(grid_dx_vquality, 1, wx.ALL | wx.EXPAND, 5)
-        
-        self.box_vbrate = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
-                                    wx.ID_ANY, _("Video Bit-Rate Value")), 
-                                                wx.VERTICAL
-                                                )
-        self.spin_Vbrate = wx.SpinCtrl(self.nb_panel_1, wx.ID_ANY, 
-                                       "1500", min=0, max=204800, 
-                                        style=wx.TE_PROCESS_ENTER
-                                        )
-        self.box_vbrate.Add(self.spin_Vbrate, 0, wx.ALL |
-                                                wx.ALIGN_CENTER_HORIZONTAL | 
-                                                wx.ALIGN_CENTER_VERTICAL, 20
-                                                )
-        grid_dx_vquality.Add(self.box_vbrate, 1, wx.ALL | wx.EXPAND, 5)
-        self.box_CRF = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_1, 
-                                    wx.ID_ANY, _("Video CRF Value")), 
-                                                wx.VERTICAL
-                                                )
-        self.slider_CRF = wx.Slider(self.nb_panel_1, wx.ID_ANY, 1, 0, 51, 
-                                    size=(230, -1), style=wx.SL_HORIZONTAL | 
-                                                          wx.SL_AUTOTICKS | 
-                                                          wx.SL_LABELS
-                                    )
-        self.box_CRF.Add(self.slider_CRF, 0, wx.ALL |
-                                                wx.ALIGN_CENTER_HORIZONTAL | 
-                                                wx.ALIGN_CENTER_VERTICAL, 20
-                                                )
-        grid_dx_vquality.Add(self.box_CRF, 1, wx.ALL | wx.EXPAND, 5)
-
-        self.nb_panel_1.SetSizer(sizer_nb1)
-        self.notebook.AddPage(self.nb_panel_1, _("Video Container"))
-        #-------------- notebook panel 2:
-        self.nb_panel_2 = wx.Panel(self.notebook, wx.ID_ANY)
-        sizer_nb2 = wx.BoxSizer(wx.HORIZONTAL)
-        self.box_vFilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_2, 
-                                               wx.ID_ANY,  _("Video Filters")), 
-                                               wx.VERTICAL)
-        sizer_nb2.Add(self.box_vFilters, 1, wx.ALL | wx.EXPAND, 10)
-        grid_vfilters = wx.FlexGridSizer(7, 3, 20, 20)
-        self.box_vFilters.Add(grid_vfilters, 0, wx.ALL |
-                                                wx.ALIGN_CENTER_HORIZONTAL | 
-                                                wx.ALIGN_CENTER_VERTICAL, 20)
-        resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
-        self.btn_videosize = GB.GradientButton(self.nb_panel_2,
-                                               size=(-1,25),
-                                               bitmap=resizebmp,
-                                               label=_("Resize"))
-        self.btn_videosize.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_videosize.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.btn_videosize.SetBottomStartColour(wx.Colour(self.btn_color))
-        self.btn_videosize.SetTopStartColour(wx.Colour(self.btn_color))
-        self.btn_videosize.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_vfilters.Add(self.btn_videosize)
-        cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
-        self.btn_crop = GB.GradientButton(self.nb_panel_2,
-                                          size=(-1,25),
-                                          bitmap=cropbmp,
-                                          label=_("Crop Dimension"))
-        self.btn_crop.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.btn_crop.SetBottomStartColour(wx.Colour(self.btn_color))
-        self.btn_crop.SetTopStartColour(wx.Colour(self.btn_color))
-        self.btn_crop.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_vfilters.Add(self.btn_crop)
-        rotatebmp = wx.Bitmap(iconrotate, wx.BITMAP_TYPE_ANY)
-        self.btn_rotate = GB.GradientButton(self.nb_panel_2,
-                                            size=(-1,25),
-                                            bitmap=rotatebmp,
-                                            label=_("Rotation"))
-        self.btn_rotate.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.btn_rotate.SetBottomStartColour(wx.Colour(self.btn_color))
-        self.btn_rotate.SetTopStartColour(wx.Colour(self.btn_color))
-        self.btn_rotate.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_vfilters.Add(self.btn_rotate)
-        deintbmp = wx.Bitmap(icondeinterlace, wx.BITMAP_TYPE_ANY)
-        self.btn_lacing = GB.GradientButton(self.nb_panel_2,
-                                            size=(-1,25),
-                                            bitmap=deintbmp,
-                                            label=_("De/Interlace"))
-        self.btn_lacing.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_lacing.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.btn_lacing.SetBottomStartColour(wx.Colour(self.btn_color))
-        self.btn_lacing.SetTopStartColour(wx.Colour(self.btn_color))
-        self.btn_lacing.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_vfilters.Add(self.btn_lacing)
-        denoiserbmp = wx.Bitmap(icondenoiser, wx.BITMAP_TYPE_ANY)
-        self.btn_denois = GB.GradientButton(self.nb_panel_2,
-                                            size=(-1,25),
-                                            bitmap=denoiserbmp,
-                                            label="Denoisers")
-        self.btn_denois.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
-        self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.btn_denois.SetBottomStartColour(wx.Colour(self.btn_color))
-        self.btn_denois.SetTopStartColour(wx.Colour(self.btn_color))
-        self.btn_denois.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_vfilters.Add(self.btn_denois)
-        grid_vfilters.Add((20, 20), 0,)# separator
-        grid_vfilters.Add((50, 50), 0,)
-        grid_vfilters.Add((50, 50), 0,)
-        grid_vfilters.Add((50, 50), 0,)
-        playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
-        self.btn_preview = GB.GradientButton(self.nb_panel_2,
-                                             size=(-1,25),
-                                             bitmap=playbmp, 
-                                             )
-        self.btn_preview.SetBaseColours(startcolour=wx.Colour(158,201,232))
-        self.btn_preview.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.btn_preview.SetBottomStartColour(wx.Colour(self.btn_color))
-        self.btn_preview.SetTopStartColour(wx.Colour(self.btn_color))
-        self.btn_preview.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_vfilters.Add(self.btn_preview)
-        grid_vfilters.Add((20, 20), 0,)# separator
-        resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
-        self.btn_reset = GB.GradientButton(self.nb_panel_2,
-                                             size=(-1,25),
-                                             bitmap=resetbmp, 
-                                             )
-        self.btn_reset.SetBaseColours(startcolour=wx.Colour(158,201,232))
-        self.btn_reset.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.btn_reset.SetBottomStartColour(wx.Colour(self.btn_color))
-        self.btn_reset.SetTopStartColour(wx.Colour(self.btn_color))
-        self.btn_reset.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_vfilters.Add(self.btn_reset)
-        grid_dx_vset = wx.GridSizer(2, 1, 0, 0)
-        sizer_nb2.Add(grid_dx_vset, 1, wx.ALL | wx.EXPAND, 5)
-        self.box_vAspect = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_2, 
-                                               wx.ID_ANY, _("Video Aspect")), 
-                                               wx.VERTICAL
-                                                )
-        grid_dx_vset.Add(self.box_vAspect, 1, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_Vaspect = wx.ComboBox(self.nb_panel_2, wx.ID_ANY,
-                                        size=(200, -1), choices=[("Default "), 
-                                                                 ("4:3"), 
-                                                                 ("16:9"),
-                                                                 ("1.3333"),
-                                                                 ("1.7777")], 
-                                        style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                        )
-        self.box_vAspect.Add(self.cmbx_Vaspect, 0, wx.ALL|
+        self.vp9panel.SetSizer(sizer_vp9panel) # set panel
+        # panel x/h 264 265
+        self.h264panel = wx.Panel(self.nb_Video, wx.ID_ANY, 
+                                  style=wx.TAB_TRAVERSAL)
+        self.box_opt.Add(self.h264panel, 0, wx.ALL|
                                                wx.ALIGN_CENTER_HORIZONTAL | 
-                                               wx.ALIGN_CENTER_VERTICAL, 20
-                                               )
-        self.box_vRate = wx.StaticBoxSizer(wx.StaticBox(self.nb_panel_2, 
-                                               wx.ID_ANY, _("Video Rate")), 
-                                               wx.VERTICAL
+                                               wx.ALIGN_CENTER_VERTICAL, 5)
+        sizer_h264panel = wx.BoxSizer(wx.VERTICAL)
+        h264_txt = wx.StaticText(self.h264panel, wx.ID_ANY, 
+                                           _("h264/h265 Options"))
+        h264_txt.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
+        sizer_h264panel.Add(h264_txt, 0, wx.ALL|
+                                             wx.ALIGN_CENTER_HORIZONTAL, 5)
+        
+        grid_h264panel = wx.FlexGridSizer(4, 2, 0, 0)
+        
+        sizer_h264panel.Add(grid_h264panel, 0, wx.ALL|
+                                             wx.ALIGN_CENTER_HORIZONTAL, 5)
+        
+        
+        
+        txtpresets = wx.StaticText(self.h264panel, wx.ID_ANY, (
+                                        _('Preset')))
+        grid_h264panel.Add(txtpresets, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL| 
+                                               wx.ALIGN_CENTER_VERTICAL, 5)
+
+        self.cmb_h264preset = wx.ComboBox(self.h264panel, wx.ID_ANY,  
+                                    choices=[p for p in x264_opt["Presets"]],
+                                          size=(120,-1), style=wx.CB_DROPDOWN | 
+                                                               wx.CB_READONLY)
+        
+        grid_h264panel.Add(self.cmb_h264preset, 0, wx.ALL |
+                                               wx.ALIGN_CENTER_HORIZONTAL|
+                                              wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        
+        txtprofile = wx.StaticText(self.h264panel, wx.ID_ANY, (
+                                        _('Profile')))
+        grid_h264panel.Add(txtprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_h264profile = wx.ComboBox(self.h264panel, wx.ID_ANY,  
+                                    choices=[p for p in x264_opt["Profiles"]],
+                                           size=(120,-1), style=wx.CB_DROPDOWN | 
+                                                                wx.CB_READONLY)
+        grid_h264panel.Add(self.cmb_h264profile, 0, wx.ALL | 
+                                               wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        txttune = wx.StaticText(self.h264panel, wx.ID_ANY, (
+                                        _('Tune')))
+        grid_h264panel.Add(txttune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        
+        self.cmb_h264tune = wx.ComboBox(self.h264panel, wx.ID_ANY,
+                                        choices=[p for p in x264_opt["Tunes"]],
+                                        size=(120,-1), style=wx.CB_DROPDOWN | 
+                                                                wx.CB_READONLY)
+        grid_h264panel.Add(self.cmb_h264tune, 0, wx.ALL | 
+                                            wx.ALIGN_CENTER_VERTICAL, 5)
+        self.h264panel.SetSizer(sizer_h264panel) # set panel
+
+        sizer_dx_format = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_nbVideo.Add(sizer_dx_format, 1, wx.ALL | wx.EXPAND, 5)
+        
+        self.box_format = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video, 
+                                    wx.ID_ANY, _("Format")), 
+                                                wx.VERTICAL
                                                 )
-        grid_dx_vset.Add(self.box_vRate, 1, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_Vrate = wx.ComboBox(self.nb_panel_2, wx.ID_ANY, 
-                                      choices=[("Default "), 
-                                               ("25 fps (50i) PAL"), 
-                                               ("29.97 fps (60i) NTSC"),
-                                               ("30 fps (30p) Progessive"),
-                                               ("0.2 fps"), 
-                                               ("0.5 fps"),
-                                               ("1 fps"), 
-                                               ("1.5 fps"), 
-                                               ("2 fps")
-                                               ], 
-                                      style=wx.CB_DROPDOWN | 
-                                      wx.CB_READONLY
-                                      )
-        self.box_vRate.Add(self.cmbx_Vrate, 0, wx.ALL |
-                                                wx.ALIGN_CENTER_HORIZONTAL | 
-                                                wx.ALIGN_CENTER_VERTICAL, 20
-                                                )
-        self.nb_panel_2.SetSizer(sizer_nb2)
-        self.notebook.AddPage(self.nb_panel_2, _("Video Settings"))
-        #-------------- notebook panel 3:
-        self.nb_panel_3 = wx.Panel(self.notebook, wx.ID_ANY)
-        sizer_nb3 = wx.BoxSizer(wx.VERTICAL)
-        self.rdb_a = wx.RadioBox(self.nb_panel_3, wx.ID_ANY, (
-                                 _("Audio Codec Selecting")),
-                                 choices=[x[0] for x in acodecs.values()],
-                                 majorDimension=3, style=wx.RA_SPECIFY_COLS
+        sizer_dx_format.Add(self.box_format, 1, wx.ALL | wx.EXPAND, 5)
+        grid_dx_frmt = wx.FlexGridSizer(4,2,0,0)
+        self.box_format.Add(grid_dx_frmt, 1, wx.ALL|
+                                               wx.ALIGN_CENTER_HORIZONTAL | 
+                                               wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        
+        txtMedia = wx.StaticText(self.nb_Video, wx.ID_ANY, _('Media'))
+        grid_dx_frmt.Add(txtMedia, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Media = wx.ComboBox(self.nb_Video, wx.ID_ANY,
+                                      choices=['Video', 'Audio'],
+                                      size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                           wx.CB_READONLY
+                                                           )
+        grid_dx_frmt.Add(self.cmb_Media, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        
+        
+        txtFormat = wx.StaticText(self.nb_Video, wx.ID_ANY, _('Container'))
+        grid_dx_frmt.Add(txtFormat, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Vcont = wx.ComboBox(self.nb_Video, wx.ID_ANY,
+                                               choices=[f for f in 
+                                               vcodecs.get('x264').values()][0],
+                                      size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                           wx.CB_READONLY
+                                                           )
+        grid_dx_frmt.Add(self.cmb_Vcont, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        
+        txtPixfrm = wx.StaticText(self.nb_Video, wx.ID_ANY, _('Pixel Format'))
+        grid_dx_frmt.Add(txtPixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Pixfrm = wx.ComboBox(self.nb_Video, wx.ID_ANY,
+                                      choices=['None', 'rgb24', 
+                                               'yuv420p', 'yuv444p'],
+                                      size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                           wx.CB_READONLY
+                                                           )
+        grid_dx_frmt.Add(self.cmb_Pixfrm, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        
+        self.nb_Video.SetSizer(sizer_nbVideo)
+        self.notebook.AddPage(self.nb_Video, _("Video"))
+        #-------------- notebook panel 2:
+        self.nb_Audio = wx.Panel(self.notebook, wx.ID_ANY)
+        sizer_nbAudio = wx.BoxSizer(wx.VERTICAL)
+        self.rdb_a = wx.RadioBox(self.nb_Audio, wx.ID_ANY, (
+                                 _("Audio Codec")),
+                                 choices=[x for x in acodecs.keys()],
+                                 majorDimension=5, style=wx.RA_SPECIFY_COLS
                                     )
         for n,v in enumerate(av_formats["mkv"]):
             if not v: # disable only not compatible with mkv 
                 self.rdb_a.EnableItem(n,enable=False
                                       )
-        sizer_nb3.Add(self.rdb_a, 0, wx.ALL | wx.EXPAND, 20)
+        sizer_nbAudio.Add(self.rdb_a, 0, wx.ALL | wx.EXPAND, 20)
         grid_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_nb3.Add(grid_a_ctrl, 0, wx.ALL|wx.EXPAND, 0)
+        sizer_nbAudio.Add(grid_a_ctrl, 0, wx.ALL|wx.EXPAND, 0)
         
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
-        self.btn_aparam = GB.GradientButton(self.nb_panel_3,
+        self.btn_aparam = GB.GradientButton(self.nb_Audio,
                                            size=(-1,25),
                                            bitmap=setbmp,
                                            label=_("Audio Options"))
@@ -445,12 +446,231 @@ class Video_Conv(wx.Panel):
         self.btn_aparam.SetTopEndColour(wx.Colour(self.btn_color))
         grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 20)
         #grid_a_ctrl.Add((5, 0), 0,) # uguale di AddSpacer(5)
-        self.txt_audio_options = wx.TextCtrl(self.nb_panel_3, wx.ID_ANY, 
+        self.txt_audio_options = wx.TextCtrl(self.nb_Audio, wx.ID_ANY, 
                                              size=(-1,-1), 
                                              style=wx.TE_READONLY
                                              )
         grid_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL|wx.EXPAND,20)
-        self.rdbx_normalize = wx.RadioBox(self.nb_panel_3,wx.ID_ANY,
+        #self.rdbx_normalize = wx.RadioBox(self.nb_Audio,wx.ID_ANY,
+                                     #(_("Audio Normalization")), 
+                                     #choices=[
+                                       #('Off'), 
+                                       #('PEAK'), 
+                                       #('RMS'),
+                                       #('EBU R128'),
+                                              #], 
+                                     #majorDimension=1, 
+                                     #style=wx.RA_SPECIFY_ROWS,
+                                            #)
+        #sizer_nbAudio.Add(self.rdbx_normalize, 0, wx.ALL|wx.EXPAND, 20)
+        #self.peakpanel = wx.Panel(self.nb_Audio, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        #sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
+        #analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
+        #self.btn_voldect = GB.GradientButton(self.peakpanel,
+                                            #size=(-1,25),
+                                            #bitmap=analyzebmp,
+                                            #label=_("Volumedetect"))
+        #self.btn_voldect.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                    #foregroundcolour=wx.Colour(28,28, 28))
+        #self.btn_voldect.SetBottomEndColour(wx.Colour(self.btn_color))
+        #self.btn_voldect.SetBottomStartColour(wx.Colour(self.btn_color))
+        #self.btn_voldect.SetTopStartColour(wx.Colour(self.btn_color))
+        #self.btn_voldect.SetTopEndColour(wx.Colour(self.btn_color))
+        #sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        
+        #peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
+        #self.btn_details = GB.GradientButton(self.peakpanel,
+                                            #size=(-1,25),
+                                            #bitmap=peaklevelbmp,
+                                            #label=_("Volume Statistics"))
+        #self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                    #foregroundcolour=wx.Colour(28,28, 28))
+        #self.btn_details.SetBottomEndColour(wx.Colour(self.btn_color))
+        #self.btn_details.SetBottomStartColour(wx.Colour(self.btn_color))
+        #self.btn_details.SetTopStartColour(wx.Colour(self.btn_color))
+        #self.btn_details.SetTopEndColour(wx.Colour(self.btn_color))
+        #sizer_peak.Add(self.btn_details, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        
+        #self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY, 
+                                    #(_("Target level:"))
+                                    #)
+        #sizer_peak.Add(self.lab_amplitude, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        #self.spin_target = FS.FloatSpin(self.peakpanel, 
+                                                     #wx.ID_ANY, 
+                                                     #min_val=-99.0, 
+                                                     #max_val=0.0, 
+                                                     #increment=0.5, value=-1.0, 
+                                            #agwStyle=FS.FS_LEFT, size=(-1,-1)
+                                            #)
+        #self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
+        #sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        #self.peakpanel.SetSizer(sizer_peak) # set panel
+        #sizer_nbAudio.Add(self.peakpanel, 0, wx.ALL, 20)
+        #self.ebupanel = wx.Panel(self.nb_Audio, 
+                                 #wx.ID_ANY, style=wx.TAB_TRAVERSAL
+                                 #)
+        #sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
+        #self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
+                             #_("Set integrated loudness target:  ")))
+        #sizer_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        #self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY, 
+                                   #min_val=-70.0, max_val=-5.0, 
+                                   #increment=0.5, value=-24.0, 
+                                    #agwStyle=FS.FS_LEFT,size=(-1,-1))
+        #self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
+        #sizer_ebu.Add(self.spin_i, 0, wx.ALL, 0)
+        
+        #self.lab_tp = wx.StaticText(self.ebupanel, wx.ID_ANY, (
+                                    #_("Set maximum true peak:")))
+        #sizer_ebu.Add(self.lab_tp, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        #self.spin_tp = FS.FloatSpin(self.ebupanel, wx.ID_ANY, 
+                                    #min_val=-9.0, max_val=0.0,
+                                    #increment=0.5, value=-2.0, 
+                                    #agwStyle=FS.FS_LEFT,size=(-1,-1))
+        #self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
+        #sizer_ebu.Add(self.spin_tp, 0, wx.ALL, 0)
+        
+        #self.lab_lra = wx.StaticText(self.ebupanel, wx.ID_ANY, (
+                                    #_("Set loudness range target:")))
+        #sizer_ebu.Add(self.lab_lra, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        #self.spin_lra = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
+                                     #min_val=1.0, max_val=20.0, 
+                                     #increment=0.5, value=7.0, 
+                                    #agwStyle=FS.FS_LEFT,size=(-1,-1))
+        #self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
+        #sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
+        #self.ebupanel.SetSizer(sizer_ebu) # set panel
+        #sizer_nbAudio.Add(self.ebupanel, 0, wx.ALL, 20)
+        self.nb_Audio.SetSizer(sizer_nbAudio)
+        self.notebook.AddPage(self.nb_Audio, _("Audio"))
+        #-------------- notebook panel 3:
+        self.nb_filters = wx.Panel(self.notebook, wx.ID_ANY)
+        sizer_nbFilters = wx.BoxSizer(wx.VERTICAL)
+        # box video Filters
+        self.box_vFilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_filters, 
+                                               wx.ID_ANY,  _("Video Filters")), 
+                                               wx.VERTICAL)
+        sizer_nbFilters.Add(self.box_vFilters, 1, wx.ALL | wx.EXPAND, 10)
+        
+        
+        self.filterVpanel = wx.Panel(self.nb_filters, wx.ID_ANY, 
+                                     style=wx.TAB_TRAVERSAL)
+        
+        self.box_vFilters.Add(self.filterVpanel, 0, wx.ALL|
+                                                    wx.ALIGN_CENTER_HORIZONTAL| 
+                                                    wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        
+        grid_vfilters = wx.FlexGridSizer(3, 5, 20, 20)
+        
+        resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
+        self.btn_videosize = GB.GradientButton(self.filterVpanel,
+                                               size=(-1,25),
+                                               bitmap=resizebmp,
+                                               label=_("Resize"))
+        self.btn_videosize.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_videosize.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_videosize.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_videosize.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_videosize.SetTopEndColour(wx.Colour(self.btn_color))
+        grid_vfilters.Add(self.btn_videosize)
+        cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
+        self.btn_crop = GB.GradientButton(self.filterVpanel,
+                                          size=(-1,25),
+                                          bitmap=cropbmp,
+                                          label=_("Crop Dimension"))
+        self.btn_crop.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_crop.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_crop.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_crop.SetTopEndColour(wx.Colour(self.btn_color))
+        grid_vfilters.Add(self.btn_crop)
+        rotatebmp = wx.Bitmap(iconrotate, wx.BITMAP_TYPE_ANY)
+        self.btn_rotate = GB.GradientButton(self.filterVpanel,
+                                            size=(-1,25),
+                                            bitmap=rotatebmp,
+                                            label=_("Rotation"))
+        self.btn_rotate.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_rotate.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_rotate.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_rotate.SetTopEndColour(wx.Colour(self.btn_color))
+        grid_vfilters.Add(self.btn_rotate)
+        deintbmp = wx.Bitmap(icondeinterlace, wx.BITMAP_TYPE_ANY)
+        self.btn_lacing = GB.GradientButton(self.filterVpanel,
+                                            size=(-1,25),
+                                            bitmap=deintbmp,
+                                            label=_("De/Interlace"))
+        self.btn_lacing.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_lacing.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_lacing.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_lacing.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_lacing.SetTopEndColour(wx.Colour(self.btn_color))
+        grid_vfilters.Add(self.btn_lacing)
+        denoiserbmp = wx.Bitmap(icondenoiser, wx.BITMAP_TYPE_ANY)
+        self.btn_denois = GB.GradientButton(self.filterVpanel,
+                                            size=(-1,25),
+                                            bitmap=denoiserbmp,
+                                            label="Denoisers")
+        self.btn_denois.SetBaseColours(startcolour=wx.Colour(158,201,232),
+                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_denois.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_denois.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_denois.SetTopEndColour(wx.Colour(self.btn_color))
+        grid_vfilters.Add(self.btn_denois)
+        #grid_vfilters.AddMany([(50, 50), (50, 50),(50, 50),(50, 50),(50, 50)]) 
+        playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
+        self.btn_preview = GB.GradientButton(self.filterVpanel,
+                                             size=(-1,25),
+                                             bitmap=playbmp, 
+                                             )
+        self.btn_preview.SetBaseColours(startcolour=wx.Colour(158,201,232))
+        self.btn_preview.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_preview.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_preview.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_preview.SetTopEndColour(wx.Colour(self.btn_color))
+        grid_vfilters.Add(self.btn_preview)
+        #grid_vfilters.Add((20, 20), 0,)# separator
+        resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
+        self.btn_reset = GB.GradientButton(self.filterVpanel,
+                                             size=(-1,25),
+                                             bitmap=resetbmp, 
+                                             )
+        self.btn_reset.SetBaseColours(startcolour=wx.Colour(158,201,232))
+        self.btn_reset.SetBottomEndColour(wx.Colour(self.btn_color))
+        self.btn_reset.SetBottomStartColour(wx.Colour(self.btn_color))
+        self.btn_reset.SetTopStartColour(wx.Colour(self.btn_color))
+        self.btn_reset.SetTopEndColour(wx.Colour(self.btn_color))
+        grid_vfilters.Add(self.btn_reset)
+        
+        self.filterVpanel.SetSizer(grid_vfilters) # set panel
+
+        self.box_aFilters = wx.StaticBoxSizer(wx.StaticBox(self.nb_filters, 
+                                             wx.ID_ANY, _("Audio Filters")), 
+                                             wx.VERTICAL
+                                                )
+        sizer_nbFilters.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 10)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        sizer_Anormalization = wx.BoxSizer(wx.VERTICAL)
+        self.box_aFilters.Add(sizer_Anormalization, 0, wx.ALL | wx.EXPAND, 0)
+        
+        
+        
+        self.rdbx_normalize = wx.RadioBox(self.nb_filters,wx.ID_ANY,
                                      (_("Audio Normalization")), 
                                      choices=[
                                        ('Off'), 
@@ -461,9 +681,11 @@ class Video_Conv(wx.Panel):
                                      majorDimension=1, 
                                      style=wx.RA_SPECIFY_ROWS,
                                             )
-        sizer_nb3.Add(self.rdbx_normalize, 0, wx.ALL|wx.EXPAND, 20)
-        self.peakpanel = wx.Panel(self.nb_panel_3, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_Anormalization.Add(self.rdbx_normalize, 0, wx.ALL|wx.EXPAND, 20)
+        self.peakpanel = wx.Panel(self.nb_filters, wx.ID_ANY, 
+                                  style=wx.TAB_TRAVERSAL)
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
+        sizer_Anormalization.Add(self.peakpanel, 0, wx.ALL|wx.EXPAND, 20)
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_voldect = GB.GradientButton(self.peakpanel,
                                             size=(-1,25),
@@ -504,11 +726,12 @@ class Video_Conv(wx.Panel):
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.peakpanel.SetSizer(sizer_peak) # set panel
-        sizer_nb3.Add(self.peakpanel, 0, wx.ALL, 20)
-        self.ebupanel = wx.Panel(self.nb_panel_3, 
+        sizer_nbAudio.Add(self.peakpanel, 0, wx.ALL, 20)
+        self.ebupanel = wx.Panel(self.nb_filters, 
                                  wx.ID_ANY, style=wx.TAB_TRAVERSAL
                                  )
         sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
+        sizer_Anormalization.Add(self.ebupanel, 0, wx.ALL|wx.EXPAND, 20)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                              _("Set integrated loudness target:  ")))
         sizer_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
@@ -539,46 +762,36 @@ class Video_Conv(wx.Panel):
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
         self.ebupanel.SetSizer(sizer_ebu) # set panel
-        sizer_nb3.Add(self.ebupanel, 0, wx.ALL, 20)
-        self.nb_panel_3.SetSizer(sizer_nb3)
-        self.notebook.AddPage(self.nb_panel_3, _("Audio Settings"))
+        sizer_nbAudio.Add(self.ebupanel, 0, wx.ALL, 20)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+
+        self.nb_filters.SetSizer(sizer_nbFilters)
+        self.notebook.AddPage(self.nb_filters, _("Filters"))
+        
         #-------------- notebook panel 4:
-        self.nb_panel_4 = wx.Panel(self.notebook, wx.ID_ANY)
-        sizer_nb4 = wx.BoxSizer(wx.VERTICAL)
-        self.rdb_h264preset = wx.RadioBox(self.nb_panel_4, wx.ID_ANY, 
-                                          ("presets"),  
-                                    choices=[p for p in x264_opt["Presets"]],
-                                          majorDimension=1, 
-                                          style=wx.RA_SPECIFY_ROWS
-                                            )
-        sizer_nb4.Add(self.rdb_h264preset, 0, wx.ALL |
-                                              wx.ALIGN_CENTER_HORIZONTAL | 
-                                              wx.ALIGN_CENTER_VERTICAL, 20)
-        self.rdb_h264profile = wx.RadioBox(self.nb_panel_4, wx.ID_ANY, 
-                                           ("Profile"),  
-                                    choices=[p for p in x264_opt["Profiles"]],
-                                           majorDimension=1, 
-                                           style=wx.RA_SPECIFY_ROWS
-                                            )
-        sizer_nb4.Add(self.rdb_h264profile, 0, wx.ALL |
-                                               wx.ALIGN_CENTER_HORIZONTAL | 
-                                               wx.ALIGN_CENTER_VERTICAL, 20)
-        self.rdb_h264tune = wx.RadioBox(self.nb_panel_4, wx.ID_ANY, 
-                                        ("Tune"),
-                                        choices=[p for p in x264_opt["Tunes"]],
-                                        majorDimension=1, 
-                                        style=wx.RA_SPECIFY_ROWS
-                                         )
-        sizer_nb4.Add(self.rdb_h264tune, 0, wx.ALL |
-                                            wx.ALIGN_CENTER_HORIZONTAL | 
-                                            wx.ALIGN_CENTER_VERTICAL, 20)
-        self.nb_panel_4.SetSizer(sizer_nb4)
-        self.notebook.AddPage(self.nb_panel_4, _("h.264/h.265 Options"))
+        #self.nb_Subt = wx.Panel(self.notebook, wx.ID_ANY)
+        #sizer_nbSubt = wx.BoxSizer(wx.VERTICAL)
+
+        #self.nb_Subt.SetSizer(sizer_nbSubt)
+        #self.notebook.AddPage(self.nb_Subt, _("Subtitles"))
         #------------------ set layout
         self.SetSizer(sizer_base)
         self.Layout()
         #---------------------- Tooltip 
-        self.cmbx_vidContainers.SetToolTip(_('The output Video container'))
+        self.cmb_Vcod.SetToolTip(_('The output Video container'))
         
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
                                     'reduce the file size, but takes longer.'))
@@ -598,10 +811,10 @@ class Video_Conv(wx.Panel):
         self.btn_preview.SetToolTip(_('Try the filters by playing a '
                                       'video preview'))
         self.btn_reset.SetToolTip(_("Clear all enabled filters "))
-        self.cmbx_Vaspect.SetToolTip(_('Video aspect (Aspect Ratio) is the '
+        self.cmb_Vaspect.SetToolTip(_('Video aspect (Aspect Ratio) is the '
                 'video width and video height ratio. Leave on "Default" to '
                 'copy the original settings.'))
-        self.cmbx_Vrate.SetToolTip(_('Video Rate: A any video consists of'
+        self.cmb_Fps.SetToolTip(_('Video Rate: A any video consists of'
                 'of images displayed as frames, repeated a given number of '
                 'times per second. In countries are 30 NTSC, PAL countries '
                 '(like Italy) are 25. Leave on "Default" to copy the '
@@ -621,8 +834,8 @@ class Video_Conv(wx.Panel):
                                    'From +1.0 to +20.0, default is +7.0'))
         self.rdb_a.SetToolTip(_('Audio codecs compatible with the chosen '
                                 'video container'))
-        self.nb_panel_4.SetToolTip(_('Options enabled for the codecs '
-                                            'x.264/x.265'))
+        #self.nb_Subt.SetToolTip(_('Options enabled for the codecs '
+                                            #'x.264/x.265'))
 
         #----------------------Binding (EVT)----------------------#
         """
@@ -630,8 +843,10 @@ class Video_Conv(wx.Panel):
         agli input di tastiera, il secondo é sensibile agli input di tastiera
         ma anche agli "append"
         """
-        self.Bind(wx.EVT_COMBOBOX, self.vidContainers, self.cmbx_vidContainers)
-        self.cmbx_vidContainers.Bind(wx.EVT_COMBOBOX, self.vidContainers)
+        self.Bind(wx.EVT_COMBOBOX, self.videoCodec, self.cmb_Vcod)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Container, self.cmb_Vcont)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Media, self.cmb_Media)
+        self.cmb_Vcod.Bind(wx.EVT_COMBOBOX, self.videoCodec)
         self.Bind(wx.EVT_RADIOBOX, self.on_Deadline, self.rdb_deadline)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
@@ -643,29 +858,31 @@ class Video_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Enable_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
-        self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmbx_Vaspect)
-        self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmbx_Vrate)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmb_Vaspect)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmb_Fps)
         self.Bind(wx.EVT_RADIOBOX, self.on_AudioFormats, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
-        self.Bind(wx.EVT_RADIOBOX, self.on_h264Presets, self.rdb_h264preset)
-        self.Bind(wx.EVT_RADIOBOX, self.on_h264Profiles, self.rdb_h264profile)
-        self.Bind(wx.EVT_RADIOBOX, self.on_h264Tunes, self.rdb_h264tune)
+        self.Bind(wx.EVT_COMBOBOX, self.on_h264Presets, self.cmb_h264preset)
+        self.Bind(wx.EVT_COMBOBOX, self.on_h264Profiles, self.cmb_h264profile)
+        self.Bind(wx.EVT_COMBOBOX, self.on_h264Tunes, self.cmb_h264tune)
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
         #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
         #-------------------------------------- initialize default layout:
         cmd_opt["VidCmbxStr"] = "MKV (h.264/AVC)"
-        cmd_opt["VideoFormat"] = "mkv"
+        cmd_opt["OutputFormat"] = "mkv"
         cmd_opt["VideoCodec"] = "-c:v libx264"
-        cmd_opt["YUV"] = "-pix_fmt yuv420p"
+        cmd_opt["PxlFrm"] = "-pix_fmt yuv420p"
         cmd_opt["VideoAspect"] = ""
         cmd_opt["VideoRate"] = ""
-        self.rdb_a.SetSelection(0), self.cmbx_vidContainers.SetSelection(9)
+        self.rdb_a.SetSelection(0), self.cmb_Vcod.SetSelection(1)
+        self.cmb_Media.SetSelection(0), self.cmb_Vcont.SetSelection(0)
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
-        self.cmbx_Vrate.SetSelection(0), self.cmbx_Vaspect.SetSelection(0), 
+        self.cmb_Fps.SetSelection(0), self.cmb_Vaspect.SetSelection(0)
+        self.cmb_Pixfrm.SetSelection(2)
         self.UI_set()
         self.audio_default()
         self.normalize_default()
@@ -676,37 +893,30 @@ class Video_Conv(wx.Panel):
         Update all the GUI widgets based on the choices made by the user.
         """
         if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
-            self.vp9panel.Hide()
+            self.vp9panel.Hide(), self.h264panel.Show()
             if cmd_opt["VideoCodec"] == "-c:v libx264":
                 self.slider_CRF.SetValue(23)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
-                self.slider_CRF.SetValue(28)
-            self.nb_panel_4.Enable(), self.btn_videosize.Enable() 
-            self.btn_crop.Enable(), self.btn_rotate.Enable() 
-            self.btn_lacing.Enable(), self.btn_denois.Enable() 
-            self.btn_preview.Enable(), self.slider_CRF.SetMax(51)
+                self.slider_CRF.SetValue(28) 
+            self.filterVpanel.Enable(), self.slider_CRF.SetMax(51)
         
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                        "-c:v libaom-av1 -strict -2"]:
-            self.vp9panel.Show(), self.ckbx_multithread.SetValue(True)
+            self.vp9panel.Show(), self.h264panel.Hide()
+            self.ckbx_multithread.SetValue(True)
             self.rdb_deadline.SetSelection(1), self.spin_cpu.SetRange(0, 5)
-            self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31)
-            self.nb_panel_4.Disable(), self.btn_videosize.Enable()
-            self.btn_crop.Enable(), self.btn_rotate.Enable()
-            self.btn_lacing.Enable(), self.btn_denois.Enable()
-            self.btn_preview.Enable()
-            self.nb_panel_1.Layout()
+            self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31) 
+            self.filterVpanel.Enable()
+            self.nb_Video.Layout()
+            
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
-            self.vp9panel.Hide()
-            self.spin_Vbrate.Disable(), self.btn_videosize.Disable() 
-            self.btn_crop.Disable(), self.btn_rotate.Disable()
-            self.btn_lacing.Disable(), self.btn_denois.Disable() 
-            self.btn_preview.Disable(), self.nb_panel_4.Disable() 
+            self.vp9panel.Hide(), self.h264panel.Hide()
+            self.spin_Vbrate.Disable(), self.filterVpanel.Disable()
             
         else: # all others containers that not use h264
-            self.vp9panel.Hide(), self.nb_panel_4.Disable()
-            self.btn_videosize.Enable(), self.btn_crop.Enable(), self.btn_rotate.Enable(), self.btn_lacing.Enable(), self.btn_denois.Enable(), self.btn_preview.Enable()
+            self.vp9panel.Hide(), self.h264panel.Hide() 
+            self.filterVpanel.Disable()
         
         if self.rdbx_normalize.GetSelection() == 3: 
             self.ckbx_pass.SetValue(True)
@@ -721,24 +931,26 @@ class Video_Conv(wx.Panel):
         
         if opt265:
             if cmd_opt["VideoCodec"] == "-c:v libx265":
-                for n in [1,2,4]:
-                    self.rdb_h264tune.EnableItem(n,enable=False)
+                self.cmb_h264tune.Clear()
+                for tune in x265_tune:
+                    self.cmb_h264tune.Append((tune),)
             elif cmd_opt["VideoCodec"] == "-c:v libx264":
-                for n in [1,2,4]:
-                    self.rdb_h264tune.EnableItem(n,enable=True)
+                self.cmb_h264tune.Clear()
+                for tune in x264_opt['Tunes']:
+                    self.cmb_h264tune.Append((tune),)
             
-        self.rdb_h264preset.SetSelection(0), self.on_h264Presets(self)
-        self.rdb_h264profile.SetSelection(0), self.on_h264Profiles(self)
-        self.rdb_h264tune.SetSelection(0), self.on_h264Tunes(self)
+        self.cmb_h264preset.SetSelection(0), self.on_h264Presets(self)
+        self.cmb_h264profile.SetSelection(0), self.on_h264Profiles(self)
+        self.cmb_h264tune.SetSelection(0), self.on_h264Tunes(self)
     #-------------------------------------------------------------------#
     
     def audio_default(self):
         """
         Set default audio parameters. This method is called on first run and
-        if there is a change inthe  video container selection on the combobox
+        when change the video container selection
         """
-        self.rdb_a.SetStringSelection(_("Default (managed by FFmpeg)"))
-        cmd_opt["Audio"] = _("Default (managed by FFmpeg)")
+        self.rdb_a.SetStringSelection("Auto")
+        cmd_opt["AudioCodStr"] = "Auto"
         cmd_opt["AudioCodec"] = ""
         cmd_opt["AudioBitrate"] = ["",""]
         cmd_opt["AudioChannel"] = ["",""]
@@ -747,7 +959,7 @@ class Video_Conv(wx.Panel):
         self.btn_aparam.Disable()
         self.btn_aparam.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
-        self.txt_audio_options.SetValue('')
+        self.txt_audio_options.Clear()
         #self.rdbx_normalize.Enable()
     #-------------------------------------------------------------------#
     def normalize_default(self, setoff=True):
@@ -770,62 +982,70 @@ class Video_Conv(wx.Panel):
     
     #----------------------Event handler (callback)----------------------#
     #------------------------------------------------------------------#
-    def vidContainers(self, event):
+    def videoCodec(self, event):
         """
         The event chosen in the video format combobox triggers the 
         setting to the default values. The selection of a new format 
         determines the default status, enabling or disabling some 
         functions depending on the type of video format chosen.
         """
-        selected = self.cmbx_vidContainers.GetValue()
+        #selected = self.cmb_Vcod.GetValue()
+        selected = vcodecs.get(self.cmb_Vcod.GetValue())
+        libcodec = list(selected.keys())[0]
+        self.cmb_Vcont.Clear()
+        for f in selected.values():
+            self.cmb_Vcont.Append((f),)
+        self.cmb_Vcont.SetSelection(0)
         
-        if vcodecs[selected][0] in ["-c:v libx264", "-c:v libx265", 
-                                    "-c:v libaom-av1 -strict -2"]:
-            if vcodecs[selected][0] == "-c:v libx264":
-                cmd_opt["VideoCodec"] = "-c:v libx264"
-                
-            elif vcodecs[selected][0] == "-c:v libx265":
-                cmd_opt["VideoCodec"] = "-c:v libx265"
-                
-            elif vcodecs[selected][0] == "-c:v libaom-av1 -strict -2":
-                cmd_opt["VideoCodec"] = "-c:v libaom-av1 -strict -2"
-        
-            cmd_opt["VidCmbxStr"] = "%s" % (selected)# output form.
-            cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])# format
-            cmd_opt["Bitrate"] = ""
-            cmd_opt["CRF"] = ""
-            cmd_opt["YUV"] = "-pix_fmt yuv420p"
+        cmd_opt["VideoCodec"] = libcodec
+        cmd_opt["VidCmbxStr"] = self.cmb_Vcod.GetValue()
+        cmd_opt["OutputFormat"] = self.cmb_Vcont.GetValue()
+        cmd_opt["Bitrate"] = ""
+        cmd_opt["CRF"] = ""
             
-        elif vcodecs[selected][0] in ["-c:v libvpx","-c:v libvpx-vp9"]:
-            if vcodecs[selected][0] == "-c:v libvpx":
-                cmd_opt["VideoCodec"] = "-c:v libvpx"
-            else:
-                cmd_opt["VideoCodec"] = "-c:v libvpx-vp9"
-            cmd_opt["VidCmbxStr"] = "%s" % (selected)# output form.
-            cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])# format
-            cmd_opt["Bitrate"] = ""
-            cmd_opt["CRF"] = ""
-            cmd_opt["YUV"] = "-pix_fmt yuv420p"
-            
-        elif vcodecs[selected][0] == "":# copy video codec
+        if self.cmb_Vcod.GetValue() == "Copy":
+            self.cmb_Pixfrm.SetSelection(0)
             cmd_opt["Passing"] = "single"
-            cmd_opt["VidCmbxStr"] = "%s" % (selected)
-            cmd_opt['VideoFormat'] = "%s" % ( vcodecs[selected][1])
-            cmd_opt["VideoCodec"] = "-c:v copy"
-            cmd_opt["YUV"] = ""
-
-        else: # not h264/h265
-            cmd_opt["VidCmbxStr"] = "%s" % (selected)
-            cmd_opt['VideoFormat'] = "%s" % (vcodecs[selected][1])
-            cmd_opt["VideoCodec"] = "%s" %(vcodecs[selected][0])
-            cmd_opt["Bitrate"] = ""
-            cmd_opt["CRF"] = ""
-            cmd_opt["YUV"] = ""
+            cmd_opt["PxlFrm"] = ""
+        else:
+            self.cmb_Pixfrm.SetSelection(2)
+            cmd_opt["PxlFrm"] = "-pix_fmt yuv420p"
         
         self.UI_set(True)
         self.audio_default() # reset audio radiobox and dict
         self.setAudioRadiobox(self)
+    #------------------------------------------------------------------#
+    def on_Media(self, event):
+        """
+        Combobox Media Sets layout to Audio or Video formats
         
+        """
+        if self.cmb_Media.GetValue() == 'Audio':
+            self.cmb_Vcod.SetSelection(6)
+            cmd_opt["VideoCodec"] = "-c:v copy"
+            self.audio_default()
+            self.codVpanel.Disable()
+            self.cmb_Vcont.Clear()
+            for f in a_formats:
+                self.cmb_Vcont.Append((f),)
+            self.cmb_Vcont.SetSelection(0)
+            self.UI_set()
+            self.setAudioRadiobox(self)
+            
+        elif self.cmb_Media.GetValue() == 'Video':
+            self.codVpanel.Enable()
+            self.cmb_Vcod.SetSelection(1)
+            self.videoCodec(self)
+        
+        cmd_opt["OutputFormat"] = self.cmb_Vcont.GetValue()
+            
+    #------------------------------------------------------------------#
+    def on_Container(self, event):
+        """
+        Appends on container combobox according to audio and video formats
+        
+        """
+        self.setAudioRadiobox(self)
     #------------------------------------------------------------------#
 
     def on_Pass(self, event):
@@ -1112,44 +1332,51 @@ class Video_Conv(wx.Panel):
         """
         Set aspect parameter (16:9, 4:3)
         """
-        if self.cmbx_Vaspect.GetValue() == "Default ":
+        if self.cmb_Vaspect.GetValue() == "Auto":
             cmd_opt["VideoAspect"] = ""
             
         else:
-            cmd_opt["VideoAspect"] = '-aspect %s' % self.cmbx_Vaspect.GetValue()
+            cmd_opt["VideoAspect"] = '-aspect %s' % self.cmb_Vaspect.GetValue()
             
     #------------------------------------------------------------------#
     def on_Vrate(self, event):
         """
         Set video rate parameter with fps values
         """
-        val = self.cmbx_Vrate.GetValue()
-        if val == "Default ":
+        fps = self.cmb_Fps.GetValue()
+        if fps == "Auto":
             cmd_opt["VideoRate"] = ""
         else:
-            cmd_opt["VideoRate"] = "-r %s" % val.split(' ')[0]
+            cmd_opt["VideoRate"] = "-r %s" % fps
             
     #------------------------------------------------------------------#
     def setAudioRadiobox(self, event):
         """
-        set the compatible audio formats with selected video format 
-        on audio radiobox (see av_formats dict.) 
-        * except when 'Copy video codec' is selected
-        """
-        cmb_str = self.cmbx_vidContainers.GetValue()
+        Container combobox sets compatible audio codecs to selected format.
+        see av_formats dict
         
-        if cmb_str == _('Copy video codec'):# enable all audio sel.
-            for n,v in enumerate(av_formats.keys()):
-                self.rdb_a.EnableItem(n,enable=True)
-        else:
-            for n,v in enumerate(av_formats[vcodecs[cmb_str][1]]):
+        """
+        if self.cmb_Media.GetValue() == 'Video':
+            if self.cmb_Vcod.GetValue() == 'Copy': # enable all codec
+                for n in range(self.rdb_a.GetCount()):
+                    self.rdb_a.EnableItem(n,enable=True)
+            else:
+                for n,v in enumerate(av_formats[self.cmb_Vcont.GetValue()]):
+                    if v:
+                        self.rdb_a.EnableItem(n,enable=True)
+                    else:
+                        self.rdb_a.EnableItem(n,enable=False)
+            self.rdb_a.SetSelection(0)
+                        
+        if self.cmb_Media.GetValue() == 'Audio':
+            for n,v in enumerate(av_formats[self.cmb_Vcont.GetValue()]):
                 if v:
                     self.rdb_a.EnableItem(n,enable=True)
+                    self.rdb_a.SetSelection(n)
                 else:
                     self.rdb_a.EnableItem(n,enable=False)
-                    
-        self.rdb_a.SetSelection(0)
-        
+            self.on_AudioFormats(self)
+            
     #------------------------------------------------------------------#
     def on_AudioFormats(self, event):
         """
@@ -1181,51 +1408,47 @@ class Video_Conv(wx.Panel):
                 self.btn_aparam.SetForegroundColour(wx.Colour(165,165,165))
                 self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         #--------------------------------------------------------
-        for n in acodecs.values():
-            if audioformat in n[0]:
-                if audioformat == _("Default (managed by FFmpeg)"):
+        for k,v in acodecs.items():
+            if audioformat in k:
+                if audioformat == "Auto":
                     self.audio_default()
                     self.rdbx_normalize.Enable()
 
-                elif audioformat == _("Try to copy audio source"):
+                elif audioformat == "Copy":
                     self.normalize_default()
                     param(False, False)
 
-                elif audioformat == _("No audio stream (silent)"):
+                elif audioformat == _("Mute"):
                     self.normalize_default()
                     param(False, False)
-                    break
+                    #break
                 else:
                     param(True, True)
                     
-                cmd_opt["Audio"] = audioformat
-                cmd_opt["AudioCodec"] = n[1]
+                cmd_opt["AudioCodStr"] = audioformat
+                cmd_opt["AudioCodec"] = v
             
     #-------------------------------------------------------------------#
     def on_AudioParam(self, event):
         """
-        Set audio format string and codec string and pass it to
-        audio_dialogs method.
+        Event by Audio options button. Set audio codec string and audio 
+        command string and pass it to audio_dialogs method.
         
         """ 
         pcm = ["-c:a pcm_s16le","-c:a pcm_s24le","-c:a pcm_s32le",]
         
         if cmd_opt["AudioCodec"] in pcm:
-            self.audio_dialog("wav", "encoding parameters (%s)"
-                              % cmd_opt["AudioCodec"])
+            self.audio_dialog(cmd_opt["AudioCodStr"], 
+                              "%s Audio Settings" % cmd_opt["AudioCodStr"])
         else:
-            for k,v in acodecs.items():
-                if cmd_opt["AudioCodec"] == v[1]:
-                    self.audio_dialog(k, "%s encoding parameters (%s)" 
-                                      % (k,v[1].split()[1]))
-        
-        #print (cmd_opt["AudioCodec"])
+            self.audio_dialog(cmd_opt["AudioCodStr"], 
+                              "%s Audio Settings" % cmd_opt["AudioCodStr"])
             
     #-------------------------------------------------------------------#
     def audio_dialog(self, audio_type, title):
         """
-        Run audio dialog on specified audio format to get additionals
-        audio options. Text is placed in the textctrl's fields.
+        Run audio dialog on specified audio codec to get additionals
+        audio options.
         
         NOTE: The data[X] tuple contains the command parameters on the 
               index [1] and the descriptive parameters on the index [0].
@@ -1314,19 +1537,19 @@ class Video_Conv(wx.Panel):
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
             cmd_opt["Passing"] = "double"
-            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
+            if not self.cmb_Vcod.GetSelection() == 6:#copycodec
                 self.on_Pass(self)
         else:
             self.parent.statusbar_msg(_("Audio normalization off"), None)
             self.normalize_default(False)
 
-        self.nb_panel_3.Layout()
+        self.nb_filters.Layout()
         
         if not self.rdbx_normalize.GetSelection() == 3: 
-            if not self.cmbx_vidContainers.GetSelection() == 15:#copycodec
+            if not self.cmb_Vcod.GetSelection() == 6:#copycodec
                 self.ckbx_pass.Enable()
                 
-        if self.cmbx_vidContainers.GetSelection() == 15:#copycodec
+        if self.cmb_Vcod.GetSelection() == 6:#copycodec
             if not self.rdbx_normalize.GetSelection() == 3: 
                 self.ckbx_pass.SetValue(False)
         
@@ -1407,7 +1630,7 @@ class Video_Conv(wx.Panel):
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
-        self.nb_panel_3.Layout()
+        self.nb_filters.Layout()
 
     #------------------------------------------------------------------#
     def mean_volume_RMS(self):  # Volumedetect button
@@ -1462,7 +1685,7 @@ class Video_Conv(wx.Panel):
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
-        self.nb_panel_3.Layout()
+        self.nb_filters.Layout()
         
     #------------------------------------------------------------------#
     def on_Show_normlist(self, event):
@@ -1484,9 +1707,9 @@ class Video_Conv(wx.Panel):
         """
         Set only for h264 (non ha il default)
         """
-        select = self.rdb_h264preset.GetStringSelection()
+        select = self.cmb_h264preset.GetStringSelection()
         
-        if select == "Disabled":
+        if select == "None":
             cmd_opt["Presets"] = ""
         else:
             cmd_opt["Presets"] = "-preset:v %s" % (select)
@@ -1495,9 +1718,9 @@ class Video_Conv(wx.Panel):
         """
         Set only for h264
         """
-        select = self.rdb_h264profile.GetStringSelection()
+        select = self.cmb_h264profile.GetStringSelection()
         
-        if select == "Disabled":
+        if select == "None":
             cmd_opt["Profile"] = ""
         else:
             cmd_opt["Profile"] = "-profile:v %s" % (select)
@@ -1506,9 +1729,9 @@ class Video_Conv(wx.Panel):
         """
         Set only for h264
         """
-        select = self.rdb_h264tune.GetStringSelection()
+        select = self.cmb_h264tune.GetStringSelection()
         
-        if select == "Disabled":
+        if select == "None":
             cmd_opt["Tune"] = ""
         else:
             cmd_opt["Tune"] = "-tune:v %s" % (select)
@@ -1561,6 +1784,7 @@ class Video_Conv(wx.Panel):
 
         """
         # check normalization data offset, if enable
+        logname = 'Videomass_VideoConversion.log'
         if self.rdbx_normalize.GetSelection() in [1,2]:
             if self.btn_voldect.IsEnabled():
                 wx.MessageBox(_('Undetected volume values! use the '
@@ -1568,39 +1792,49 @@ class Video_Conv(wx.Panel):
                                 'the data on the audio volume.'),
                                 'Videomass', wx.ICON_INFORMATION)
                 return
-        # CHECKING:
-        if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
-            checking = inspect(self.file_src, self.parent.file_destin, '')
-        else:
-            self.update_allentries()# last update of all setting interface
+        
+        if self.cmb_Media.GetValue() == 'Video':
+            # CHECKING:
+            if self.cmb_Vcod.GetValue() == "Copy":
+                checking = inspect(self.file_src, self.parent.file_destin, '')
+            else:
+                self.update_allentries()# update
+                checking = inspect(self.file_src, 
+                                self.parent.file_destin, 
+                                cmd_opt["OutputFormat"]
+                                )
+            if not checking[0]: # User changing idea or not such files exist
+                return
+            
+            (typeproc, f_src, destin, filename, base_name, countmax) = checking
+            if self.rdbx_normalize.GetSelection() == 3: # EBU
+                self.video_ebu_2pass(f_src, destin, countmax, logname)
+            else:
+                self.video_stdProc(f_src, destin, countmax, logname)
+                
+        elif self.cmb_Media.GetValue() == 'Audio':
+            # CHECKING:
             checking = inspect(self.file_src, 
                                self.parent.file_destin, 
-                               cmd_opt["VideoFormat"]
-                               )
-        if not checking[0]: # the user changing idea or not such files exist
-            return
-        
-        (typeproc, f_src, destin, filename, base_name, countmax) = checking
-        
-        logname = 'Videomass_VideoConversion.log'
-    
-        if self.rdbx_normalize.GetSelection() == 3: # EBU
-            self.ebu_2pass(f_src, destin, countmax, logname)
-            
-        else:
-            self.stdProc(f_src, destin, countmax, logname)
-        
+                               cmd_opt["OutputFormat"])
+            if not checking[0]: # User changing idea or not such files exist
+                return
+            (typeproc, f_src, destin, filename, base_name, countmax) = checking
+            if self.rdbx_normalize.GetSelection() == 3:
+                self.audio_ebu_2pass(f_src, destin, countmax, logname)
+            else:
+                self.audio_stdProc(f_src, destin, countmax, logname)
         return
 
     #------------------------------------------------------------------#
-    def stdProc(self, f_src, destin, countmax, logname):
+    def video_stdProc(self, f_src, destin, countmax, logname):
         """
         Define the ffmpeg command strings for batch process.
         
         """
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
             
-        if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
+        if self.cmb_Vcod.GetValue() == "Copy":
             command = ('%s %s %s %s %s %s %s %s %s' %(
                                                     cmd_opt["VideoCodec"], 
                                                     cmd_opt["VideoAspect"],
@@ -1614,9 +1848,9 @@ class Video_Conv(wx.Panel):
                                                         ))
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
-                return command, '', cmd_opt["VideoFormat"]
-            valupdate = self.update_dict(countmax, ["Copy video codec"] )
-            ending = Formula(self,valupdate[0],valupdate[1],'Copy video codec')
+                return command, '', cmd_opt["OutputFormat"]
+            valupdate = self.update_dict(countmax, ["Copy"] )
+            ending = Formula(self,valupdate[0],valupdate[1],'Copy')
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('onepass',
@@ -1650,7 +1884,7 @@ class Video_Conv(wx.Panel):
                                     cmd_opt["VideoAspect"], 
                                     cmd_opt["VideoRate"], 
                                     cmd_opt["Filters"], 
-                                    cmd_opt["YUV"],
+                                    cmd_opt["PxlFrm"],
                                     opt1,
                                     ))
             cmd2= ('%s %s %s %s %s %s %s %s %s %s %s '
@@ -1666,7 +1900,7 @@ class Video_Conv(wx.Panel):
                                                   cmd_opt["VideoAspect"], 
                                                   cmd_opt["VideoRate"], 
                                                   cmd_opt["Filters"], 
-                                                  cmd_opt["YUV"], 
+                                                  cmd_opt["PxlFrm"], 
                                                   cmd_opt["AudioCodec"], 
                                                   cmd_opt["AudioBitrate"][1], 
                                                   cmd_opt["AudioRate"][1], 
@@ -1678,7 +1912,7 @@ class Video_Conv(wx.Panel):
             pass1 = " ".join(cmd1.split())
             pass2 =  " ".join(cmd2.split())
             if logname == 'save as profile':
-                return pass1, pass2, cmd_opt["VideoFormat"]
+                return pass1, pass2, cmd_opt["OutputFormat"]
             valupdate = self.update_dict(countmax, [''])
             title = 'Two pass Video Encoding'
             ending = Formula(self, valupdate[0], valupdate[1], title)
@@ -1686,7 +1920,7 @@ class Video_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('twopass',
                                            f_src, 
-                                           cmd_opt['VideoFormat'], 
+                                           cmd_opt["OutputFormat"], 
                                            destin, 
                                            None, 
                                            [pass1, pass2], 
@@ -1711,7 +1945,7 @@ class Video_Conv(wx.Panel):
                                         cmd_opt["VideoAspect"], 
                                         cmd_opt["VideoRate"], 
                                         cmd_opt["Filters"],
-                                        cmd_opt["YUV"], 
+                                        cmd_opt["PxlFrm"], 
                                         cmd_opt["AudioCodec"], 
                                         cmd_opt["AudioBitrate"][1], 
                                         cmd_opt["AudioRate"][1], 
@@ -1721,7 +1955,7 @@ class Video_Conv(wx.Panel):
                                         ))
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
-                return command, '', cmd_opt["VideoFormat"]
+                return command, '', cmd_opt["OutputFormat"]
             valupdate = self.update_dict(countmax, [''])
             title = 'One pass Video Encoding'
             ending = Formula(self, valupdate[0], valupdate[1], title)
@@ -1729,7 +1963,7 @@ class Video_Conv(wx.Panel):
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('onepass',
                                            f_src, 
-                                           cmd_opt['VideoFormat'], 
+                                           cmd_opt["OutputFormat"], 
                                            destin, 
                                            command, 
                                            None, 
@@ -1739,7 +1973,7 @@ class Video_Conv(wx.Panel):
                                            countmax, 
                                            )
     #------------------------------------------------------------------#
-    def ebu_2pass(self, f_src, destin, countmax, logname):
+    def video_ebu_2pass(self, f_src, destin, countmax, logname):
         """
         Define the ffmpeg command strings for batch process with
         EBU two-passes conversion 
@@ -1747,7 +1981,8 @@ class Video_Conv(wx.Panel):
         """
         title = _('Audio/Video EBU normalization')
         cmd_opt["EBU"] = 'EBU R128'
-        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:offset=0.0:print_format=summary' %( 
+        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:'
+                      'offset=0.0:print_format=summary' %( 
                                               str(self.spin_i.GetValue()),
                                               str(self.spin_tp.GetValue()),
                                               str(self.spin_lra.GetValue()),))
@@ -1756,7 +1991,7 @@ class Video_Conv(wx.Panel):
         else:
             opt1, opt2 = '-pass 1', '-pass 2' 
         
-        if self.cmbx_vidContainers.GetValue() == _("Copy video codec"):
+        if self.cmb_Vcod.GetValue() == "Copy":
             cmd_1 = ('-af %s -vn -sn %s %s %s %s -f null' %(
                                                     loudfilter, 
                                                     opt1,
@@ -1779,14 +2014,14 @@ class Video_Conv(wx.Panel):
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
             if logname == 'save as profile':
-                return pass1, pass2, cmd_opt["VideoFormat"]
-            valupdate = self.update_dict(countmax, ["Copy video codec"])
+                return pass1, pass2, cmd_opt["OutputFormat"]
+            valupdate = self.update_dict(countmax, ["Copy"])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('two pass EBU',
                                            f_src, 
-                                           cmd_opt["VideoFormat"],
+                                           cmd_opt["OutputFormat"],
                                            destin, 
                                            None, 
                                            [pass1, pass2, loudfilter], 
@@ -1811,9 +2046,9 @@ class Video_Conv(wx.Panel):
                                       cmd_opt["VideoAspect"], 
                                       cmd_opt["VideoRate"], 
                                       cmd_opt["Filters"], 
-                                      cmd_opt["YUV"],
+                                      cmd_opt["PxlFrm"],
                                       cmd_opt["Map"],
-                                      '%s' % muxers[cmd_opt["VideoFormat"]],
+                                      '%s' % muxers[cmd_opt["OutputFormat"]],
                                       ))
                 
             cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s '
@@ -1830,7 +2065,7 @@ class Video_Conv(wx.Panel):
                                                    cmd_opt["VideoAspect"], 
                                                    cmd_opt["VideoRate"], 
                                                    cmd_opt["Filters"],
-                                                   cmd_opt["YUV"], 
+                                                   cmd_opt["PxlFrm"], 
                                                    cmd_opt["AudioCodec"], 
                                                    cmd_opt["AudioBitrate"][1], 
                                                    cmd_opt["AudioRate"][1], 
@@ -1841,14 +2076,14 @@ class Video_Conv(wx.Panel):
             pass1 = " ".join(cmd_1.split())
             pass2 =  " ".join(cmd_2.split())# mi formatta la stringa
             if logname == 'save as profile':
-                return pass1, pass2, cmd_opt["VideoFormat"]
+                return pass1, pass2, cmd_opt["OutputFormat"]
             valupdate = self.update_dict(countmax, [''])
             ending = Formula(self, valupdate[0], valupdate[1], title)
             
             if ending.ShowModal() == wx.ID_OK:
                 self.parent.switch_Process('two pass EBU',
                                            f_src, 
-                                           cmd_opt["VideoFormat"], 
+                                           cmd_opt["OutputFormat"], 
                                            destin, 
                                            None, 
                                            [pass1, pass2, loudfilter], 
@@ -1858,6 +2093,81 @@ class Video_Conv(wx.Panel):
                                            countmax,
                                            )
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
+            
+    #------------------------------------------------------------------#
+    def audio_stdProc(self, f_src, destin, countmax, logname):
+        """
+        Composes the ffmpeg command strings for the batch mode processing.
+        
+        """
+        audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
+        title = _('Audio conversions')
+        command = ('-vn %s %s %s %s %s -map_metadata 0' % (
+                                                cmd_opt["AudioCodec"],
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioDepth"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1],
+                                                            ))
+        command = " ".join(command.split())# mi formatta la stringa
+        if logname == 'save as profile':
+                return command, '', cmd_opt["OutputFormat"]
+        valupdate = self.update_dict(countmax, [''])
+        ending = Formula(self, valupdate[0], valupdate[1], title)
+
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('onepass',
+                                        f_src,
+                                        cmd_opt["OutputFormat"],
+                                        destin,
+                                        command,
+                                        None,
+                                        '',
+                                        audnorm,
+                                        logname, 
+                                        countmax,
+                                        )
+    #------------------------------------------------------------------#
+    def audio_ebu_Doublepass(self, f_src, destin, countmax, logname):
+        """
+        Perform EBU R128 normalization as 'only norm.' and as 
+        standard conversion
+        
+        """
+        cmd_opt["EBU"] = True
+        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' 
+                                              %(str(self.spin_i.GetValue()),
+                                                str(self.spin_tp.GetValue()),
+                                                str(self.spin_lra.GetValue())))
+        title = _('Audio EBU normalization')
+
+        cmd_1 = ('-af %s -vn -sn -pass 1 -f null' % loudfilter)
+        cmd_2 = ('-vn -sn -pass 2 %s %s %s'
+                 '%s %s -map_metadata 0' % (cmd_opt["AudioCodec"],
+                                            cmd_opt["AudioBitrate"][1], 
+                                            cmd_opt["AudioDepth"][1], 
+                                            cmd_opt["AudioRate"][1], 
+                                            cmd_opt["AudioChannel"][1],
+                                            ))
+        pass1 = " ".join(cmd_1.split())
+        pass2 = " ".join(cmd_2.split())
+        if logname == 'save as profile':
+                return pass1, pass2, cmd_opt["OutputFormat"]
+        valupdate = self.update_dict(countmax, [''])
+        ending = Formula(self, valupdate[0], valupdate[1], title)
+
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_Process('two pass EBU',
+                                        f_src,
+                                        cmd_opt["OutputFormat"],
+                                        destin,
+                                        None,
+                                        [pass1, pass2, loudfilter],
+                                        None,
+                                        None,
+                                        logname, 
+                                        countmax,
+                                        )
     #------------------------------------------------------------------#
     def update_dict(self, countmax, prof):
         """
@@ -1880,7 +2190,23 @@ class Video_Conv(wx.Panel):
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
                                                 t[1][0], t[1][1][0])
         #------------------
-        if prof[0] == "Copy video codec":
+        if self.cmb_Media.GetValue() == 'Audio':
+            formula = (_("SUMMARY\n\nFile Queue\
+                \nAudio Container\nAudio Codec\nAudio bit-rate\
+                \nAudio Channels\nAudio Rate\nBit per Sample\
+                \nAudio Normalization\nTime selection\nThreads"))
+            dictions = ("\n\n%s\n%s\n%s\n%s"
+                        "\n%s\n%s\n%s\n%s\n%s" % (numfile, 
+                                                cmd_opt["OutputFormat"], 
+                                                cmd_opt["AudioCodec"], 
+                                                cmd_opt["AudioBitrate"][0], 
+                                                cmd_opt["AudioChannel"][0], 
+                                                cmd_opt["AudioRate"][0], 
+                                                cmd_opt["AudioDepth"][0] , 
+                                                normalize, 
+                                                time,)
+                        )   
+        elif prof[0] == "Copy":
             formula = (_("SUMMARY\n\nFile to Queue\nVideo Format\
                         \nVideo Codec\nVideo Aspect\nVideo Rate\
                         \nAudio Format\nAudio Codec\nAudio Channels\
@@ -1892,8 +2218,10 @@ class Video_Conv(wx.Panel):
                                          cmd_opt["VideoCodec"], 
                                          cmd_opt["VideoAspect"], 
                                          cmd_opt["VideoRate"], 
-                                         cmd_opt["Audio"], 
-                                         cmd_opt["AudioCodec"], 
+                                         "%s [%s]" % (cmd_opt["AudioCodStr"],
+                                                      cmd_opt["AudioCodec"],),
+                                         "%s [%s]" % (cmd_opt["AudioCodStr"],
+                                                      cmd_opt["AudioCodec"],), 
                                          cmd_opt["AudioChannel"][0], 
                                          cmd_opt["AudioRate"][0], 
                                          cmd_opt["AudioBitrate"][0], 
@@ -1932,7 +2260,7 @@ class Video_Conv(wx.Panel):
                                  cmd_opt["Presets"], 
                                  cmd_opt["Profile"], 
                                  cmd_opt["Tune"], 
-                                 cmd_opt["Audio"], 
+                                 cmd_opt["AudioCodStr"], 
                                  cmd_opt["AudioCodec"], 
                                  cmd_opt["AudioChannel"][0], 
                                  cmd_opt["AudioRate"][0], 
@@ -1951,13 +2279,19 @@ class Video_Conv(wx.Panel):
         with the same current setting. 
         
         """
-        self.update_allentries()
-        
-        if self.rdbx_normalize.GetSelection() == 3: # EBU
-            parameters = self.ebu_2pass([], [], 0, 'save as profile')
+        if self.cmb_Media.GetValue() == 'Video':
+            self.update_allentries()
             
-        else:
-            parameters = self.stdProc([], [], 0, 'save as profile')
+            if self.rdbx_normalize.GetSelection() == 3: # EBU
+                parameters = self.video_ebu_2pass([], [], 0, 'save as profile')
+            else:
+                parameters = self.video_stdProc([], [], 0, 'save as profile')
+                
+        elif self.cmb_Media.GetValue() == 'Audio':
+            if self.rdbx_normalize.GetSelection() == 3: # EBU
+                parameters = self.audio_ebu_2pass([], [], 0, 'save as profile')
+            else:
+                parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(None, _("Videomass: Choose a preset to "
                                     "storing new profile"), 

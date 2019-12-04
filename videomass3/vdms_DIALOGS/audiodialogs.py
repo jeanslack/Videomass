@@ -32,15 +32,14 @@ import webbrowser
 
 class AudioSettings(wx.Dialog):
     """
-    Provides a dialog for audio settings which bit-rate, sample-rate,
-    audio-channels and bit-per-sample (bit depth).
+    Provides a dialog for codec audio settings which bit-rate, 
+    sample-rate, audio-channels and bit-per-sample (bit depth).
     """
     def __init__(self, parent, audio_type, arate, 
                  adepth, abitrate, achannel, title):
         """
-        The given 'audio_type' parameter is a string that represents the 
-        audio format without punctuation, which it is passed creating the 
-        instance at 'data = TypeAudioParameters(audio_type)' class.
+        The given 'audio_type' parameter represents the audio codec 
+        string, which will passed to the instance `data`.
         This class has the same attributes as the TypeAudioParameters class 
         but here they are assigned by reference with the instance-object.
         """
@@ -240,7 +239,7 @@ The audio channels are represented by monophonic,
 stereophonic and quadraphonic techniques reproduction.
 For some codecs can only assign an audio stream
 monaural or stereo, for others even polyphonic.
-If you are not sure set to "Default" and source values 
+If you are not sure set to "Auto" and source values 
 will be copied.\
 """))
     sample_rate_tooltip = (_("""\
@@ -249,7 +248,7 @@ frequency and is measured in hertz. The higher the frequency,
 plus the audio signal will be true to the sound source, but 
 the file will increase its size. For normal playback with 
 audio CD set a sample rate of 44100kHz. If you are not sure 
-set to "Default" and source values will be copied.\
+set to "Auto" and source values will be copied.\
 """))
     bitrate_tooltip = (_("""\
 The audio bitrate affects on file compression
@@ -263,7 +262,7 @@ of each sample. Bit depth is only meaningful in reference
 to a PCM digital signal. Non-PCM formats, such as lossy 
 compression formats, do not have associated bit depths.\
 """))
-    sample_rate = {0:("Default", ""), 
+    sample_rate = {0:("Auto", ""), 
                    1:("44100 Hz ","-ar 44100 "), 
                    2:("48000 Hz ","-ar 48000"), 
                    3:("88200 Hz ","-ar 88200"), 
@@ -283,50 +282,50 @@ compression formats, do not have associated bit depths.\
         self.bitrate = None
         self.bitdepth = None
 
-        if audio_format in ('wav','aiff'):
-            self.wav_param()
-        elif audio_format in ('flac'):
-            self.flac_param()
-        elif audio_format in ('alac', 'm4v'):
-            self.alac_param()
-        elif audio_format == 'aac':
-            self.aac_param()
-        elif audio_format == 'ac3':
-            self.ac3_param()
-        elif audio_format == 'ogg':
-            self.ogg_param()
-        elif audio_format == 'mp3':
-            self.mp3_param()
-        elif audio_format == 'opus':
-            self.libopus_param()
+        if audio_format in ('PCM','wav','aiff'):
+            self.pcm()
+        elif audio_format in ('FLAC','flac'):
+            self.flac()
+        elif audio_format in ('ALAC','alac','m4a'):
+            self.alac()
+        elif audio_format in ('AAC','aac'):
+            self.aac()
+        elif audio_format in ('AC3','ac3'):
+            self.ac3()
+        elif audio_format in ('VORBIS','ogg','oga'):
+            self.vorbis()
+        elif audio_format in ('LAME','mp3'):
+            self.lame()
+        elif audio_format in ('OPUS','opus'):
+            self.opus()
     #-----------------------------------------------------------------#
-    def wav_param(self):
+    def pcm(self):
         """
         NOTE: the wav and aiff bitdepth is used impicitly on the 
               codec name and not as separated -sample_fmts option.
         """
-        self.sample_rate = {0:("Default", ""), 
+        self.sample_rate = {0:("Auto", ""), 
                             1:("44100 Hz ","-ar 44100 "), 
                             2:("48000 Hz ","-ar 48000"), 
                             3:("88200 Hz ","-ar 88200"), 
                             4:("96000 Hz ","-ar 96000 ")
                             }
-        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitdepth = {0:("Default",""),1:("16 bit","-c:a pcm_s16le"),
+        self.bitdepth = {0:("Auto",""),1:("16 bit","-c:a pcm_s16le"),
                          2:("24 bit","-c:a pcm_s24le"),
                          4:("32 bit","-c:a pcm_s32le")
                          }
     #-----------------------------------------------------------------#
-    def flac_param(self):
+    def flac(self):
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate
-        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitrate = {0:("Default",""), 
+        self.bitrate = {0:("Auto",""), 
                         1:("very high quality", "-compression_level 0"), 
                         2:("quality 1", "-compression_level 1"), 
                         3:("quality 2", "-compression_level 2"), 
@@ -337,29 +336,29 @@ compression formats, do not have associated bit depths.\
                         8:("quality 7", "-compression_level 7"), 
                         9:("low quality", "-compression_level 8")
                         }
-        #self.bitdepth = {0:("Default",""),1:("16 bit","-sample_fmt s16"),
+        #self.bitdepth = {0:("Auto",""),1:("16 bit","-sample_fmt s16"),
                          #2:("24 bit","-sample_fmt s24"),
                          #4:("32 bit","-sample_fmt s32")
                          #} 
     #-----------------------------------------------------------------#
-    def alac_param(self):
+    def alac(self):
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate
-        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
     
     #-----------------------------------------------------------------#
-    def libopus_param(self):
+    def opus(self):
         """
         """
         #self.sample_rate
-        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
         self.bitrate = {
-                0: ("Default",""), 
+                0: ("Auto",""), 
                 1: ("low quality 0", "-compression_level 0"),
                 2: ("low quality 1", "-compression_level 1"), 
                 3: ("quality 2", "-compression_level 2"), 
@@ -373,17 +372,17 @@ compression formats, do not have associated bit depths.\
                 11: ("highest quality 10 (default)", "-compression_level 10")
                         }
     #-----------------------------------------------------------------#
-    def aac_param(self):
+    def aac(self):
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate
-        self.channels = {0:("Default",""), 
+        self.channels = {0:("Auto",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
                          3:("MultiChannel 5.1", "-ac 6")
                          }
         self.bitrate = {
-            0:("Default",""), 
+            0:("Auto",""), 
             1:("low quality", "-b:a 128k"), 
             2:("medium/low quality", "-b:a 160k"), 
             3:("medium quality", "-b:a 192k"), 
@@ -393,16 +392,16 @@ compression formats, do not have associated bit depths.\
 
     #-----------------------------------------------------------------#
         
-    def ac3_param(self):
+    def ac3(self):
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate
-        self.channels = {0:("Default",""), 
+        self.channels = {0:("Auto",""), 
                          1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2"), 
                          3:("MultiChannel 5.1", "-ac 6")
                          }
-        self.bitrate = {0:("Default",""), 
+        self.bitrate = {0:("Auto",""), 
                         1:("low quality", "-b:a 192k"), 
                         2:("224 kbit/s", "-b:a 224k"), 
                         3:("256 kbit/s", "-b:a 256k"), 
@@ -415,15 +414,15 @@ compression formats, do not have associated bit depths.\
                         }
 
     #-----------------------------------------------------------------#
-    def ogg_param(self):
+    def vorbis(self):
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate
         
-        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitrate = {0:("Default", ""), 
+        self.bitrate = {0:("Auto", ""), 
                         1:("very poor quality", "-aq 1"), 
                         2:("VBR 92 kbit/s", "-aq 2"), 
                         3:("VBR 128 kbit/s", "-aq 3"), 
@@ -437,16 +436,16 @@ compression formats, do not have associated bit depths.\
                         }
 
     #-----------------------------------------------------------------#
-    def mp3_param(self):
+    def lame(self):
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate 
         
-        self.channels = {0:("Default",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
         self.bitrate = {
-            0:("Default", ""), 
+            0:("Auto", ""), 
             1:("VBR 128 kbit/s (low quality)", "-b:a 128k"), 
             2:("VBR 160 kbit/s", "-b:a 160k"), 
             3:("VBR 192 kbit/s", "-b:a 192k"), 

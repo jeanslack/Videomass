@@ -38,10 +38,14 @@
 
 ## Requirements
    
-- Python3     
+- Python3  >= 3.5.?
 - wxPython4 (phoenix) 
-- PyPubSub (from https://pypi.org)
+- PyPubSub (https://pypi.org/project/PyPubSub/)
 - ffmpeg >= 3.2   
 - ffprobe (for multimedia streams analysis)  
-- ffplay (for playback)   
+- ffplay (for playback)
+
+## Optionals 
+
+- youtube-dl (https://pypi.org/project/youtube_dl/)
 

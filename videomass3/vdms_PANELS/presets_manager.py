@@ -920,7 +920,7 @@ class PrstPan(wx.Panel):
         # fname: filename, nome file senza ext.
         # bname: basename, nome file con ext.
         # cntmax: count items for batch proc.
-        elif array[3]: # has double pass
+        if array[3]: # has double pass
             self.two_Pass(file_sources, dir_destin, cntmax, outext)
         else:
             self.one_Pass(file_sources, dir_destin, cntmax, outext)

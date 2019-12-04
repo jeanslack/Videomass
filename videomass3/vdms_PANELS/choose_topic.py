@@ -59,7 +59,7 @@ class Choose_Topic(wx.Panel):
         grid_buttons = wx.FlexGridSizer(1, 4, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
 
-        video_lab = _('    Video Conversions     ')
+        video_lab = _('    Audio/Video Conversions     ')
         audio_lab = _('    Audio Conversions     ')
         pict_lab = _('Pictures from Video')
         audgr_lab = _('Extract Audio from Video')
@@ -73,8 +73,8 @@ class Choose_Topic(wx.Panel):
         self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn),wx.TOP)
         self.video = wx.Button(self, wx.ID_ANY, video_lab, size=(-1,-1))
         self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.TOP)
-        self.audio = wx.Button(self, wx.ID_ANY, audio_lab, size=(-1,-1))
-        self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.TOP)
+        #self.audio = wx.Button(self, wx.ID_ANY, audio_lab, size=(-1,-1))
+        #self.audio.SetBitmap(wx.Bitmap(audioconv_icn),wx.TOP)
         
         #self.save_pict = wx.Button(self, wx.ID_ANY, pict_lab, size=(-1,-1))
         #self.save_pict.SetBitmap(wx.Bitmap(storepictures_icn),wx.TOP)
@@ -91,7 +91,7 @@ class Choose_Topic(wx.Panel):
 
         grid_buttons.AddMany([(self.presets_mng, 0, wx.EXPAND, 5),
                               (self.video, 0, wx.EXPAND, 5),
-                              (self.audio, 0, wx.EXPAND, 5),
+                              #(self.audio, 0, wx.EXPAND, 5),
                               #(self.save_pict, 0, wx.EXPAND, 5),
                               #(self.audio_merge, 0, wx.EXPAND, 5),
                               #(self.slideshow, 0, wx.EXPAND, 5),
@@ -124,7 +124,7 @@ class Choose_Topic(wx.Panel):
             welcome.SetFont(wx.Font(10, wx.SWISS, wx.NORMAL, wx.BOLD))
         
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)
-        self.Bind(wx.EVT_BUTTON, self.on_Audio, self.audio)
+        #self.Bind(wx.EVT_BUTTON, self.on_Audio, self.audio)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         #self.Bind(wx.EVT_BUTTON, self.on_Pictures, self.save_pict)
         #self.Bind(wx.EVT_BUTTON, self.on_AudioFromVideo, self.audio_extract)
@@ -135,8 +135,8 @@ class Choose_Topic(wx.Panel):
     def on_Video(self, event):
         self.parent.File_import(self, 'Video Conversions')
     #------------------------------------------------------------------#
-    def on_Audio(self, event):
-        self.parent.File_import(self, 'Audio Conversions')
+    #def on_Audio(self, event):
+        #self.parent.File_import(self, 'Audio Conversions')
     
     #def on_Pictures(self, event):
         #print('pictures from video')

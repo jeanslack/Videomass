@@ -33,10 +33,17 @@ ADDED:
     
     * Add new entry box on Settings dialog to choose the user default directory
       to files storing
+      
+    * Added Containers selction, Media selection and pixel format comboboxes
     
 
 IMPROVEMENTS:
     * Improved all UI layouts
+    
+REPLACEMENTS and REMOVALS:
+    * Removed the Audio Conversions panel, now to export/extract the audio 
+      file you need to select it via the Media combobox in the Audio/Video 
+      Conversions panel
       
       
 +------------------------------------+
