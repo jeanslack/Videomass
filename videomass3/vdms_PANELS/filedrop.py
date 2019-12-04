@@ -64,9 +64,6 @@ class MyListCtrl(wx.ListCtrl):
         Update list-control during drag and drop
         
         """
-        msg_video = _('Not found Video Stream. Just drag Video files only.')
-        msg_audio = _('Not found Audio Stream. Just drag Audio files only.')
-        msg_slide = _('Not such picture as jpg, png or bmp formats.')
         msg_dir = _("Directories are not allowed, just add files, please.")
         
         if os.path.isdir(path):
@@ -81,33 +78,6 @@ class MyListCtrl(wx.ListCtrl):
                 return
             
             data = eval(data[0])
-            codec_type = [x['codec_type'] for x in data['streams']]
-
-
-            if self.parent.which() == 'Video Conversions':
-                if not 'video' in codec_type:
-                    self.parent.statusbar_msg(msg_video, orange)
-                    return
-            
-            elif self.parent.which() == 'Audio Conversions':
-                if 'video' in codec_type:
-                    self.parent.statusbar_msg(msg_audio, orange)
-                    return
-
-            #elif self.parent.which() == 'Pictures Slideshow Maker':
-                #if not 'video' in codec_type:
-                    #self.parent.statusbar_msg(msg_slide, orange)
-                    #return
-                #f = ['bmp','png','mjpeg']
-                #if (not [x['codec_name'] for x in data['streams'] 
-                         #if x['codec_name'] in f]):
-                    #self.parent.statusbar_msg(msg_slide, orange)
-                    #return
-            #elif self.parent.which() == 'Presets Manager':
-                #if 'video' in codec_type:
-                    #self.parent.statusbar_msg(msg_audio, orange)
-                    #return
-
             self.InsertItem(self.index, path)
             self.index += 1
             if not 'duration' in data['format'].keys():

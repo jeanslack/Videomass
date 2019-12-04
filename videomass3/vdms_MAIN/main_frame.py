@@ -30,7 +30,7 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
-from videomass3.vdms_DIALOGS import dialog_tools
+from videomass3.vdms_DIALOGS import time_selection
 from videomass3.vdms_DIALOGS import settings
 from videomass3.vdms_DIALOGS import infoprg
 from videomass3.vdms_FRAMES import while_playing
@@ -41,7 +41,6 @@ from videomass3.vdms_PANELS import filedrop
 from videomass3.vdms_PANELS import textdrop
 from videomass3.vdms_PANELS import downloader
 from videomass3.vdms_PANELS import av_conversions
-#from videomass3.vdms_PANELS import audio_conv
 from videomass3.vdms_PANELS.long_processing_task import Logging_Console
 from videomass3.vdms_PANELS import presets_manager
 from videomass3.vdms_IO import IO_tools
@@ -216,14 +215,6 @@ class MainFrame(wx.Frame):
                                                 self.bBtnC,
                                                 self.fBtnC,
                                                 )
-        #self.AconvPanel = audio_conv.Audio_Conv(self,
-                                                #self.OS,
-                                                #pathicons[15],# icon analyzes
-                                                #pathicons[16],# icon settings
-                                                #pathicons[18],# icon peaklevel
-                                                #self.bBtnC,
-                                                #self.fBtnC,
-                                                #)
         self.fileDnDTarget = filedrop.FileDnD(self, 
                                               pathicons[26], 
                                               pathicons[27]
@@ -248,7 +239,6 @@ class MainFrame(wx.Frame):
         self.textDnDTarget.Hide()
         self.ytDownloader.Hide()
         self.VconvPanel.Hide()
-        #self.AconvPanel.Hide()
         self.ProcessPanel.Hide()
         self.PrstsPanel.Hide()
         # Layout toolbar buttons:
@@ -269,7 +259,6 @@ class MainFrame(wx.Frame):
         self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.ytDownloader, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
-        #self.mainSizer.Add(self.AconvPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
         self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND|wx.ALL, 0)
         #----------------------Set Properties----------------------#
@@ -278,12 +267,11 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if self.OS == 'Darwin':
-            self.SetSize((1150, 650))
+            self.SetMinSize((900, 600))
         elif self.OS == 'Windows':
-            self.SetSize((900, 650))
+            self.SetMinSize((900, 600))
         else:
-            self.SetSize((1000, 680))
-
+            self.SetMinSize((900, 600))
         self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:
@@ -361,10 +349,6 @@ class MainFrame(wx.Frame):
         elif self.VconvPanel.IsShown():
             self.VconvPanel.normalize_default()
             self.VconvPanel.Hide()
-            
-        #elif self.AconvPanel.IsShown():
-            #self.AconvPanel.normalization_default()
-            #self.AconvPanel.Hide()
         
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.normalization_default()
@@ -409,7 +393,7 @@ class MainFrame(wx.Frame):
         """
         data = ''
 
-        dial = dialog_tools.Cut_Range(self, self.time_seq)
+        dial = time_selection.Time_Duration(self, self.time_seq)
         retcode = dial.ShowModal()
         if retcode == wx.ID_OK:
             data = dial.GetValue()
@@ -1042,30 +1026,6 @@ class MainFrame(wx.Frame):
         self.Layout()
         
     #------------------------------------------------------------------#
-    #def switch_audio_conv(self, event):
-        #"""
-        #Show Audio converter panel
-        #"""
-        #self.file_destin = self.fileDnDTarget.file_dest
-        #self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        #self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        #self.PrstsPanel.Hide(), self.AconvPanel.Show()
-        #self.statusbar_msg(_('Audio Conversions'), None)
-        #flist = [f['format']['filename'] for f in 
-                 #self.data if f['format']['filename']
-                 #]
-        #self.duration = [f['format']['duration'] for f in 
-                         #self.data if f['format']['duration']
-                         #]
-        #self.AconvPanel.file_src = flist
-        #self.toolbar.Show(), self.btnpanel.Show()
-        #self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
-        #self.btn_saveprf.Show(), self.btn_duration.Show()
-        #self.btn_metaI.Show(), self.btn_playO.Show()
-        #self.menu_items()#disable some menu items
-        #self.toolbar.EnableTool(wx.ID_OK, True)
-        #self.Layout()
-    #------------------------------------------------------------------#
     def switch_presets_manager(self, event):
         """
         Show presets manager panel
@@ -1144,8 +1104,6 @@ class MainFrame(wx.Frame):
             self.ytDownloader.on_Start()
         elif self.VconvPanel.IsShown():
             self.VconvPanel.on_start()
-        #elif self.AconvPanel.IsShown():
-            #self.AconvPanel.on_start()
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.on_start()
             
@@ -1161,10 +1119,6 @@ class MainFrame(wx.Frame):
             self.ProcessPanel.Hide()
             self.switch_av_conversions(self)
             self.btnpanel.Show()
-        #elif panelshown == 'Audio Conversions':
-            #self.ProcessPanel.Hide()
-            #self.switch_audio_conv(self)
-            #self.btnpanel.Show()
         elif panelshown == 'Youtube Downloader':
             self.ProcessPanel.Hide()
             self.youtube_Downloader(self)

@@ -1,5 +1,5 @@
 =======================
-NOTE FOR share/videomass folder configuration:
+NOTE FOR share-videomass folder configuration:
 =======================
 
 Update: November 30 2019
@@ -20,8 +20,7 @@ Furthermore, Videomass configuration directory is also used to store log files
 during processes (e.g. during conversions, video downloads, etc.) and to load 
 presets files on /presets folder.
 
-
-Files with ".prst" format are simple text files with JSON data structure. 
+Files with ".prst" format are simple text files with a JSON data structure. 
 Now Videomass uses JSON data for its presets, this allowed some advantages 
 in the presets management and some savings in system resources.
 

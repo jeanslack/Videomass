@@ -6,8 +6,12 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
-November 30, 2019 V.1.8.0
+December 4, 2019 V.1.8.0
 +------------------------------------+
+
+BUGS:
+    * Fixed configuration file rewrite issue when you set FFmpeg/FFplay logging 
+      levels from the Settings dialog.
 
 NEWS:
     * GUI completely redesigned to make it easier for users to use.
@@ -15,30 +19,45 @@ NEWS:
     * Now Videomass has embedded youtube-dl to download videos from Youtube
     
         * Download multiple URLs with your settings.
+        
         * View video information without downloading it.
+        
         * Ability to download videos using the 'format code'.
         
-    * New and improved management of presets.
+    * New and improved management of presets. Now Videomass uses JSON data for
+      its presets while old ones with xml data are now obsolete and incompatible. 
+      This allowed some advantages in the presets management and some savings 
+      in system resources.
         
-        * The json format replaces the old xml format for presets management.
-        * Now you can create your own presets, delete them or add others 
+        * Now you can create your own presets from scratch or adding others 
           directly to the presets directory.
-        * Improved management of pass encoding parameters on any profile.
+        
+        * Presets can be removed (not deleted)
+          
+        * Improved management of pass encoding parameters on any profile,
+          making the parameter syntax similar to that of FFmpeg on CLI.
     
-    * Complete support for audio normalization also on the Presets Manager tool.
+    * Complete support for audio normalization (peak, rms, ebu) also on the 
+      Presets Manager tool.
     
 ADDED:
     * Added two text boxes on Presets Manager to view FFmpeg command line for 
       one and two pass encoding
+    
+    * Dialog to add new profile has box entry for two pass conversion
+    
+    * Added "Create new preset" to File menu item
+    
+    * Added "Remove preset" to File menu item
     
     * Add new entry box on Settings dialog to choose the user default directory
       to files storing
       
     * Added Containers selction, Media selection and pixel format comboboxes
     
-
 IMPROVEMENTS:
-    * Improved all UI layouts
+    * Improved all GUI layouts
+    * Code thinning 
     
 REPLACEMENTS and REMOVALS:
     * Removed the Audio Conversions panel, now to export/extract the audio 

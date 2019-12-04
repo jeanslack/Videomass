@@ -38,7 +38,7 @@ from videomass3.vdms_IO.filenames_check import inspect
 from videomass3.vdms_DIALOGS.epilogue import Formula
 from videomass3.vdms_DIALOGS import audiodialogs 
 from videomass3.vdms_DIALOGS import presets_addnew
-from videomass3.vdms_DIALOGS import dialog_tools
+from videomass3.vdms_DIALOGS import video_filters
 from videomass3.vdms_FRAMES import shownormlist
 
 # setting the path to the configuration directory:
@@ -47,7 +47,7 @@ DIRconf = get.DIRconf
 
 # Dictionary definition for command settings:
 cmd_opt = {"VidCmbxStr": "", "OutputFormat": "", "VideoCodec": "", 
-           "ext_input": "", "Passing": "single", "InputDir": "", 
+           "ext_input": "", "Passing": "1 pass", "InputDir": "", 
            "OutputDir": "",  "VideoSize": "", "VideoAspect": "", 
            "VideoRate": "", "Presets": "", "Profile": "", 
            "Tune": "", "Bitrate": "", "CRF": "", "AudioCodStr": "", 
@@ -860,7 +860,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmb_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmb_Fps)
-        self.Bind(wx.EVT_RADIOBOX, self.on_AudioFormats, self.rdb_a)
+        self.Bind(wx.EVT_RADIOBOX, self.on_AudioCodecs, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
@@ -872,17 +872,19 @@ class AV_Conv(wx.Panel):
         #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
         #-------------------------------------- initialize default layout:
-        cmd_opt["VidCmbxStr"] = "MKV (h.264/AVC)"
-        cmd_opt["OutputFormat"] = "mkv"
-        cmd_opt["VideoCodec"] = "-c:v libx264"
-        cmd_opt["PxlFrm"] = "-pix_fmt yuv420p"
-        cmd_opt["VideoAspect"] = ""
-        cmd_opt["VideoRate"] = ""
         self.rdb_a.SetSelection(0), self.cmb_Vcod.SetSelection(1)
         self.cmb_Media.SetSelection(0), self.cmb_Vcont.SetSelection(0)
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
         self.cmb_Fps.SetSelection(0), self.cmb_Vaspect.SetSelection(0)
         self.cmb_Pixfrm.SetSelection(2)
+        
+        cmd_opt["VidCmbxStr"] = self.cmb_Vcod.GetValue()
+        cmd_opt["OutputFormat"] = "mkv"
+        cmd_opt["VideoCodec"] = "-c:v libx264"
+        cmd_opt["PxlFrm"] = "-pix_fmt yuv420p"
+        cmd_opt["VideoAspect"] = ""
+        cmd_opt["VideoRate"] = ""
+        
         self.UI_set()
         self.audio_default()
         self.normalize_default()
@@ -1005,7 +1007,7 @@ class AV_Conv(wx.Panel):
             
         if self.cmb_Vcod.GetValue() == "Copy":
             self.cmb_Pixfrm.SetSelection(0)
-            cmd_opt["Passing"] = "single"
+            cmd_opt["Passing"] = "1 pass"
             cmd_opt["PxlFrm"] = ""
         else:
             self.cmb_Pixfrm.SetSelection(2)
@@ -1053,7 +1055,7 @@ class AV_Conv(wx.Panel):
         enable or disable functionality for two pass encoding
         """
         if self.ckbx_pass.IsChecked():
-            cmd_opt["Passing"] = "double"
+            cmd_opt["Passing"] = "2 pass"
             if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Enable()
@@ -1065,7 +1067,7 @@ class AV_Conv(wx.Panel):
                 self.slider_CRF.Disable()
                 self.spin_Vbrate.Enable()
         else:
-            cmd_opt["Passing"] = "single"
+            cmd_opt["Passing"] = "1 pass"
             if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
                 self.slider_CRF.Enable()
                 self.spin_Vbrate.Disable()
@@ -1204,7 +1206,7 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable video/image resolution functionalities
         """
-        sizing = dialog_tools.VideoResolution(self, 
+        sizing = video_filters.VideoResolution(self, 
                                               cmd_opt["Scale"],
                                               cmd_opt["Setdar"], 
                                               cmd_opt["Setsar"],
@@ -1240,7 +1242,7 @@ class AV_Conv(wx.Panel):
         """
         Show a setting dialog for video/image rotate
         """
-        rotate = dialog_tools.VideoRotate(self, 
+        rotate = video_filters.VideoRotate(self, 
                                           cmd_opt["Orientation"][0],
                                           cmd_opt["Orientation"][1],
                                           )
@@ -1262,7 +1264,7 @@ class AV_Conv(wx.Panel):
         """
         Show a setting dialog for video crop functionalities
         """
-        crop = dialog_tools.VideoCrop(self, cmd_opt["Crop"])
+        crop = video_filters.VideoCrop(self, cmd_opt["Crop"])
         retcode = crop.ShowModal()
         if retcode == wx.ID_OK:
             data = crop.GetValue()
@@ -1282,7 +1284,7 @@ class AV_Conv(wx.Panel):
         """
         Show a setting dialog for settings Deinterlace/Interlace filters
         """
-        lacing = dialog_tools.Lacing(self, 
+        lacing = video_filters.Lacing(self, 
                                      cmd_opt["Deinterlace"],
                                      cmd_opt["Interlace"],
                                      )
@@ -1313,7 +1315,7 @@ class AV_Conv(wx.Panel):
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
-        den = dialog_tools.Denoisers(self, cmd_opt["Denoiser"])
+        den = video_filters.Denoisers(self, cmd_opt["Denoiser"])
         retcode = den.ShowModal()
         if retcode == wx.ID_OK:
             data = den.GetValue()
@@ -1375,17 +1377,17 @@ class AV_Conv(wx.Panel):
                     self.rdb_a.SetSelection(n)
                 else:
                     self.rdb_a.EnableItem(n,enable=False)
-            self.on_AudioFormats(self)
+            self.on_AudioCodecs(self)
             
     #------------------------------------------------------------------#
-    def on_AudioFormats(self, event):
+    def on_AudioCodecs(self, event):
         """
         When choose an item on audio radiobox list, set the audio format 
         name and audio codec command (see acodecs dict.). Also  set the 
         view of the audio normalize widgets and reset values some cmd_opt 
         keys.
         """
-        audioformat = self.rdb_a.GetStringSelection()
+        audiocodec = self.rdb_a.GetStringSelection()
         #------------------------------------------------------
         def param(enablenormalization, enablebuttonparameters):
             cmd_opt["AudioBitrate"] = ["",""]
@@ -1409,23 +1411,23 @@ class AV_Conv(wx.Panel):
                 self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         #--------------------------------------------------------
         for k,v in acodecs.items():
-            if audioformat in k:
-                if audioformat == "Auto":
+            if audiocodec in k:
+                if audiocodec == "Auto":
                     self.audio_default()
                     self.rdbx_normalize.Enable()
 
-                elif audioformat == "Copy":
+                elif audiocodec == "Copy":
                     self.normalize_default()
                     param(False, False)
 
-                elif audioformat == _("Mute"):
+                elif audiocodec == _("Mute"):
                     self.normalize_default()
                     param(False, False)
                     #break
                 else:
                     param(True, True)
                     
-                cmd_opt["AudioCodStr"] = audioformat
+                cmd_opt["AudioCodStr"] = audiocodec
                 cmd_opt["AudioCodec"] = v
             
     #-------------------------------------------------------------------#
@@ -1536,7 +1538,7 @@ class AV_Conv(wx.Panel):
             self.normalize_default(False)
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
-            cmd_opt["Passing"] = "double"
+            cmd_opt["Passing"] = "2 pass"
             if not self.cmb_Vcod.GetSelection() == 6:#copycodec
                 self.on_Pass(self)
         else:
@@ -1865,7 +1867,7 @@ class AV_Conv(wx.Panel):
                                            countmax,
                                            )
                 
-        elif cmd_opt["Passing"] == "double":
+        elif cmd_opt["Passing"] == "2 pass":
             if cmd_opt["VideoCodec"] == "-c:v libx265":
                 opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
             else:
@@ -1931,7 +1933,7 @@ class AV_Conv(wx.Panel):
                                            )
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
-        elif cmd_opt["Passing"] == "single": # Batch-Mode / h264 Codec
+        elif cmd_opt["Passing"] == "1 pass": # Batch-Mode / h264 Codec
             command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                        '%s %s %s %s' % (cmd_opt["VideoCodec"], 
                                         cmd_opt["CRF"],
@@ -2128,7 +2130,7 @@ class AV_Conv(wx.Panel):
                                         countmax,
                                         )
     #------------------------------------------------------------------#
-    def audio_ebu_Doublepass(self, f_src, destin, countmax, logname):
+    def audio_ebu_2pass(self, f_src, destin, countmax, logname):
         """
         Perform EBU R128 normalization as 'only norm.' and as 
         standard conversion
@@ -2182,9 +2184,9 @@ class AV_Conv(wx.Panel):
         elif cmd_opt["EBU"]:
             normalize = 'EBU R128'
         else:
-            normalize = _('Disabled')
+            normalize = _('Off')
         if not self.parent.time_seq:
-            time = _('Disabled')
+            time = _('Off')
         else:
             t = list(self.parent.time_read.items())
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0], 
@@ -2192,13 +2194,13 @@ class AV_Conv(wx.Panel):
         #------------------
         if self.cmb_Media.GetValue() == 'Audio':
             formula = (_("SUMMARY\n\nFile Queue\
-                \nAudio Container\nAudio Codec\nAudio bit-rate\
+                \nOutput Format\nAudio Codec\nAudio bit-rate\
                 \nAudio Channels\nAudio Rate\nBit per Sample\
-                \nAudio Normalization\nTime selection\nThreads"))
+                \nAudio Normalization\nTime selection"))
             dictions = ("\n\n%s\n%s\n%s\n%s"
-                        "\n%s\n%s\n%s\n%s\n%s" % (numfile, 
+                        "\n%s\n%s\n%s\n%s\n%s" %(numfile, 
                                                 cmd_opt["OutputFormat"], 
-                                                cmd_opt["AudioCodec"], 
+                                                cmd_opt["AudioCodStr"], 
                                                 cmd_opt["AudioBitrate"][0], 
                                                 cmd_opt["AudioChannel"][0], 
                                                 cmd_opt["AudioRate"][0], 
@@ -2207,21 +2209,18 @@ class AV_Conv(wx.Panel):
                                                 time,)
                         )   
         elif prof[0] == "Copy":
-            formula = (_("SUMMARY\n\nFile to Queue\nVideo Format\
-                        \nVideo Codec\nVideo Aspect\nVideo Rate\
-                        \nAudio Format\nAudio Codec\nAudio Channels\
+            formula = (_("SUMMARY\n\nFile to Queue\nOutput Format\
+                        \nVideo Codec\nAspect Ratio\nFPS\
+                        \nAudio Codec\nAudio Channels\
                         \nAudio Rate\nAudio bit-rate\nBit per Sample\
                         \nAudio Normalization\nMap\nTime selection"))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                         \n%s\n%s\n%s" %(numfile, 
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                         \n%s\n%s\n%s" %(numfile,
+                                         cmd_opt["OutputFormat"],
                                          cmd_opt["VidCmbxStr"], 
-                                         cmd_opt["VideoCodec"], 
                                          cmd_opt["VideoAspect"], 
                                          cmd_opt["VideoRate"], 
-                                         "%s [%s]" % (cmd_opt["AudioCodStr"],
-                                                      cmd_opt["AudioCodec"],),
-                                         "%s [%s]" % (cmd_opt["AudioCodStr"],
-                                                      cmd_opt["AudioCodec"],), 
+                                         cmd_opt["AudioCodStr"], 
                                          cmd_opt["AudioChannel"][0], 
                                          cmd_opt["AudioRate"][0], 
                                          cmd_opt["AudioBitrate"][0], 
@@ -2232,22 +2231,21 @@ class AV_Conv(wx.Panel):
                                          ))
         #--------------------
         else:
-            formula = (_("SUMMARY\n\nFile to Queue\
-                         \nVideo Format\nPass Encoding\nVideo Codec\
+            formula = (_("SUMMARY\n\nFile to Queue\nPass Encoding\
+                         \nOutput Format\nVideo Codec\
                          \nVideo bit-rate\nCRF\nVP8/VP9 Options\
-                         \nApplied Filters\nVideo Aspect\nVideo Rate\
-                         \nPreset h.264/h.265\nProfile h.264/h.265\
-                         \nTune h.264/h.265\nAudio Format\nAudio codec\
+                         \nVideo Filters\nAspect Ratio\nFPS\
+                         \nPreset\nProfile\nTune\nAudio Codec\
                          \nAudio Channels\nAudio Rate\nAudio bit-rate\
                          \nBit per Sample\nAudio Normalization\nMap\
                          \nTime selection"
                          ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s" % (numfile, 
-                                 cmd_opt["VidCmbxStr"], 
                                  cmd_opt["Passing"],
-                                 cmd_opt["VideoCodec"], 
+                                 cmd_opt["OutputFormat"], 
+                                 cmd_opt["VidCmbxStr"], 
                                  cmd_opt["Bitrate"], 
                                  cmd_opt["CRF"],
                                 '%s %s %s' %(cmd_opt["Deadline"], 
@@ -2261,7 +2259,6 @@ class AV_Conv(wx.Panel):
                                  cmd_opt["Profile"], 
                                  cmd_opt["Tune"], 
                                  cmd_opt["AudioCodStr"], 
-                                 cmd_opt["AudioCodec"], 
                                  cmd_opt["AudioChannel"][0], 
                                  cmd_opt["AudioRate"][0], 
                                  cmd_opt["AudioBitrate"][0], 
