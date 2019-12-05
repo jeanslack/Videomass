@@ -23,18 +23,17 @@ Now open the "videomass.po" with a translation editing program, for example
 new native language tanslation.
 
 Optionally, if you want to try your new translation by starting Videomass, 
-make sure to update the "videomass2/vdms_SYS/app_const.py" module for 
-Python2 and "videomass3/vdms_SYS/app_const.py" module for Python3 by adding 
-the newly translated language to the dictionary on 'app_const.py', for 
-example appending this line:
+make sure to update the "videomass3/vdms_SYS/app_const.py" module for Python3 
+by adding the newly translated language to the dictionary on 'app_const.py', 
+for example appending this line:
 
-    u "de": wx.LANGUAGE_GERMAN,
+    "de": wx.LANGUAGE_GERMAN,
     
 to:
 
-    supLang = {u "en": wx.LANGUAGE_ENGLISH,
-               u "it": wx.LANGUAGE_ITALIAN,
-               u "de": wx.LANGUAGE_GERMAN,
+    supLang = {"en": wx.LANGUAGE_ENGLISH,
+               "it": wx.LANGUAGE_ITALIAN,
+               "de": wx.LANGUAGE_GERMAN,
                }
 
 For a list of the supported languages, please see:

@@ -267,12 +267,12 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if self.OS == 'Darwin':
-            self.SetMinSize((900, 600))
+            self.SetSize((900, 600))
         elif self.OS == 'Windows':
-            self.SetMinSize((900, 600))
+            self.SetSize((900, 600))
         else:
-            self.SetMinSize((900, 600))
-        self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
+            self.SetSize((930, 600))
+        #self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:
         self.btn_duration.SetToolTip(_('Specify the duration or portion of the '

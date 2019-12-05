@@ -2,7 +2,7 @@
     {
         "Name": "Save as JPG",
         "Description": "Extract 'jpg' pictures from movies with 0.2 fps per images",
-        "First_pass": "-r 0.2 -an",
+        "First_pass": "-an -r 0.2 -pix_fmt yuvj420p",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "jpg"
@@ -10,7 +10,7 @@
     {
         "Name": "Save as PNG",
         "Description": "Extract 'png' pictures from movies with 0.2 fps per images",
-        "First_pass": "-r 0.2 -an",
+        "First_pass": "-an -r 0.2 -pix_fmt rgb24",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "png"
@@ -18,7 +18,7 @@
     {
         "Name": "Save as BMP",
         "Description": "Extract 'bmp' pictures from movies with 0.2 fps per images",
-        "First_pass": "-r 0.2 -an",
+        "First_pass": "-an -r 0.2 -pix_fmt bgr24",
         "Second_pass": "",
         "Supported_list": "",
         "Output_extension": "bmp"

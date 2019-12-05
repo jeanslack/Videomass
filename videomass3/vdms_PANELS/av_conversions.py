@@ -46,20 +46,22 @@ get = wx.GetApp()
 DIRconf = get.DIRconf
 
 # Dictionary definition for command settings:
-cmd_opt = {"VidCmbxStr": "", "OutputFormat": "", "VideoCodec": "", 
-           "ext_input": "", "Passing": "1 pass", "InputDir": "", 
-           "OutputDir": "",  "VideoSize": "", "VideoAspect": "", 
-           "VideoRate": "", "Presets": "", "Profile": "", 
-           "Tune": "", "Bitrate": "", "CRF": "", "AudioCodStr": "", 
-           "AudioCodec": "", "AudioChannel": ["",""], 
-           "AudioRate": ["",""], "AudioBitrate": ["",""], 
-           "AudioDepth": ["",""], "PEAK": "", "EBU": "","RMS": "", 
-           "Deinterlace": "", "Interlace": "", "Map": "-map 0 -map_metadata 0", 
+cmd_opt = {"VidCmbxStr": "x264", "OutputFormat": "mkv", 
+           "VideoCodec": "-c:v libx264", "ext_input": "", 
+           "Passing": "1 pass", "InputDir": "", "OutputDir": "",  
+           "VideoSize": "", "AspectRatio": "", "FPS": "", "Presets": "", 
+           "Profile": "", "Tune": "", "VideoBitrate": "", "CRF": "", 
+           "Qmin": "", "Qmax": "", "BufferSize": "", "AudioCodStr": "", 
+           "AudioMap": "-map 0:a?", "SubtitleMap": "-map 0:s?", 
+           "AudioCodec": "", "AudioChannel": ["",""], "AudioRate": ["",""], 
+           "AudioBitrate": ["",""], "AudioDepth": ["",""], "PEAK": "", 
+           "EBU": "","RMS": "", "Deinterlace": "", "Interlace": "", 
            "PixelFormat": "", "Orientation": ["",""],"Crop": "",
            "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
-           "Filters": "", "PxlFrm": "", "Deadline": "", "CpuUsed": "",
-           "RowMthreading": "",
+           "Filters": "", "PixFmt": "-pix_fmt yuv420p", "Deadline": "", 
+           "CpuUsed": "", "RowMthreading": "",
            }
+#  "Map": "-map_metadata 0",
 # muxers dictionary:
 muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
           'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
@@ -85,7 +87,7 @@ acodecs = {('Auto'): (""),
            ('LAME'): ("-c:a libmp3lame"),
            ('OPUS'): ("-c:a libopus"),
            ('Copy'): ("-c:a copy"),
-           ('Mute'): ("-an")
+           ('No Audio'): ("-an")
            }
 # Namings in the audio format selection on Container combobox:
 a_formats = ('wav','mp3','ac3','ogg','flac','m4a','aac'
@@ -106,19 +108,19 @@ av_formats = {('avi'): ('default','wav',None,None,None,'ac3',None,'mp3',
               ('ogv'): ('default',None,'flac',None,None,None,'ogg',None,
                         'opus','copy','mute'),
               ('wav'): (None,'wav',None,None,None,None,None,None,None,
-                        None,None),
+                        'copy',None),
               ('mp3'): (None,None,None,None,None,None,None,'mp3',None,
-                        None,None),
-              ('ac3'): (None,None,None,None,None,'ac3',None,None,
-                        None,None,None),
+                        'copy',None),
+              ('ac3'): (None,None,None,None,None,'ac3',None,None,None,
+                        'copy',None),
               ('ogg'): (None,None,None,None,None,None,'ogg',None,None,
-                        None,None),
+                        'copy',None),
               ('flac'): (None,None,'flac',None,None,None,None,None,None,
-                        None,None),
+                        'copy',None),
               ('m4a'): (None,None,None,None,'alac',None,None,None,None,
-                        None,None),
-              ('aac'): (None,None,None,'aac',None,None,None,None,
-                        None,None,None),
+                        'copy',None),
+              ('aac'): (None,None,None,'aac',None,None,None,None,None,
+                        'copy',None),
               }
 # presets used by x264 and h265:
 x264_opt = {("Presets"): ("None","ultrafast","superfast",
@@ -175,21 +177,21 @@ class AV_Conv(wx.Panel):
         self.nb_Video = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nbVideo = wx.BoxSizer(wx.HORIZONTAL)
         # box Sx
-        self.box_Vcod = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video, 
+        
+        self.codVpanel = SP.ScrolledPanel(self.nb_Video, wx.ID_ANY, 
+                                          style=wx.TAB_TRAVERSAL)
+        sizer_nbVideo.Add(self.codVpanel, 1, wx.ALL | wx.EXPAND, 10)
+        grid_sx_Vcod = wx.FlexGridSizer(11,2,0,0)
+        
+        self.box_Vcod = wx.StaticBoxSizer(wx.StaticBox(self.codVpanel, 
                                         wx.ID_ANY, _("Codec")), 
                                         wx.VERTICAL
                                             )
-        sizer_nbVideo.Add(self.box_Vcod, 1, wx.ALL | wx.EXPAND, 10)
-        # panel video codec
-        #self.codVpanel = wx.Panel(self.nb_Video, wx.ID_ANY, 
-                                  #style=wx.TAB_TRAVERSAL)
-        self.codVpanel = SP.ScrolledPanel(self.nb_Video, wx.ID_ANY, 
-                                          style=wx.TAB_TRAVERSAL)
-        
-        self.box_Vcod.Add(self.codVpanel, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL| 
+        self.box_Vcod.Add(grid_sx_Vcod, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL| 
                                              wx.ALIGN_CENTER_VERTICAL, 5
                                              )
-        grid_sx_Vcod = wx.FlexGridSizer(6,2,0,0)
+        
+
         txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Video Codec'))
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
@@ -228,7 +230,33 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(self.spin_Vbrate, 0, wx.ALL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
-        
+        txtQmin = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Min Rate'))
+        grid_sx_Vcod.Add(txtQmin, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        self.txtctrlQmin = wx.TextCtrl(self.codVpanel, wx.ID_ANY, "", 
+                                       size=(110,-1), style=wx.TE_PROCESS_ENTER
+                                        )
+        grid_sx_Vcod.Add(self.txtctrlQmin, 0, 
+                         wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5
+                         )
+        txtQmax = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Max Rate'))
+        grid_sx_Vcod.Add(txtQmax, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        self.txtctrlQmax = wx.TextCtrl(self.codVpanel, wx.ID_ANY, "", 
+                                       size=(110,-1), style=wx.TE_PROCESS_ENTER
+                                        )
+        grid_sx_Vcod.Add(self.txtctrlQmax, 0, 
+                         wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5
+                         )
+        txtBuffer = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Buffer Size'))
+        grid_sx_Vcod.Add(txtBuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+
+        self.txtctrlBuff = wx.TextCtrl(self.codVpanel, wx.ID_ANY, "", 
+                                       size=(110,-1), style=wx.TE_PROCESS_ENTER
+                                        )
+        grid_sx_Vcod.Add(self.txtctrlBuff, 0, 
+                         wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5
+                         )
         txtVaspect = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Aspect Ratio'))
         grid_sx_Vcod.Add(txtVaspect, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vaspect = wx.ComboBox(self.codVpanel, wx.ID_ANY,
@@ -259,10 +287,29 @@ class AV_Conv(wx.Panel):
                                       wx.CB_READONLY
                                       )
         grid_sx_Vcod.Add(self.cmb_Fps, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        self.codVpanel.SetSizer(grid_sx_Vcod) # set panel
+        txtPixfrm = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Pixel Format'))
+        grid_sx_Vcod.Add(txtPixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Pixfrm = wx.ComboBox(self.codVpanel, wx.ID_ANY,
+                                      choices=['None', 'yuv420p', 'yuv444p'],
+                                      size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                           wx.CB_READONLY
+                                                           )
+        grid_sx_Vcod.Add(self.cmb_Pixfrm, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        
+        txtSubmap = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Subtitle Stream'))
+        grid_sx_Vcod.Add(txtSubmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Submap = wx.ComboBox(self.codVpanel, wx.ID_ANY,
+                                      choices=['None', 'All', '1','2','3', 
+                                               '4','5','6','7','8'],
+                                      size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                           wx.CB_READONLY
+                                                           )
+        grid_sx_Vcod.Add(self.cmb_Submap, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        self.codVpanel.SetSizer(self.box_Vcod) # set scrolled panel
+        self.codVpanel.SetupScrolling()
         # central box
         self.box_opt = wx.StaticBoxSizer(wx.StaticBox(self.nb_Video, 
-                                    wx.ID_ANY, _("Video Codec Options")), 
+                                    wx.ID_ANY, _("")), 
                                                 wx.VERTICAL
                                                 )
         sizer_nbVideo.Add(self.box_opt, 1, wx.ALL | wx.EXPAND, 10)
@@ -402,19 +449,6 @@ class AV_Conv(wx.Panel):
                                                            wx.CB_READONLY
                                                            )
         grid_dx_frmt.Add(self.cmb_Vcont, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        
-        
-        txtPixfrm = wx.StaticText(self.nb_Video, wx.ID_ANY, _('Pixel Format'))
-        grid_dx_frmt.Add(txtPixfrm, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_Pixfrm = wx.ComboBox(self.nb_Video, wx.ID_ANY,
-                                      choices=['None', 'rgb24', 
-                                               'yuv420p', 'yuv444p'],
-                                      size=(160,-1), style=wx.CB_DROPDOWN | 
-                                                           wx.CB_READONLY
-                                                           )
-        grid_dx_frmt.Add(self.cmb_Pixfrm, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        
-        
         self.nb_Video.SetSizer(sizer_nbVideo)
         self.notebook.AddPage(self.nb_Video, _("Video"))
         #-------------- notebook panel 2:
@@ -445,102 +479,26 @@ class AV_Conv(wx.Panel):
         self.btn_aparam.SetTopStartColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetTopEndColour(wx.Colour(self.btn_color))
         grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 20)
-        #grid_a_ctrl.Add((5, 0), 0,) # uguale di AddSpacer(5)
         self.txt_audio_options = wx.TextCtrl(self.nb_Audio, wx.ID_ANY, 
                                              size=(-1,-1), 
                                              style=wx.TE_READONLY
                                              )
         grid_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL|wx.EXPAND,20)
-        #self.rdbx_normalize = wx.RadioBox(self.nb_Audio,wx.ID_ANY,
-                                     #(_("Audio Normalization")), 
-                                     #choices=[
-                                       #('Off'), 
-                                       #('PEAK'), 
-                                       #('RMS'),
-                                       #('EBU R128'),
-                                              #], 
-                                     #majorDimension=1, 
-                                     #style=wx.RA_SPECIFY_ROWS,
-                                            #)
-        #sizer_nbAudio.Add(self.rdbx_normalize, 0, wx.ALL|wx.EXPAND, 20)
-        #self.peakpanel = wx.Panel(self.nb_Audio, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        #sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
-        #analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
-        #self.btn_voldect = GB.GradientButton(self.peakpanel,
-                                            #size=(-1,25),
-                                            #bitmap=analyzebmp,
-                                            #label=_("Volumedetect"))
-        #self.btn_voldect.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    #foregroundcolour=wx.Colour(28,28, 28))
-        #self.btn_voldect.SetBottomEndColour(wx.Colour(self.btn_color))
-        #self.btn_voldect.SetBottomStartColour(wx.Colour(self.btn_color))
-        #self.btn_voldect.SetTopStartColour(wx.Colour(self.btn_color))
-        #self.btn_voldect.SetTopEndColour(wx.Colour(self.btn_color))
-        #sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         
-        #peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
-        #self.btn_details = GB.GradientButton(self.peakpanel,
-                                            #size=(-1,25),
-                                            #bitmap=peaklevelbmp,
-                                            #label=_("Volume Statistics"))
-        #self.btn_details.SetBaseColours(startcolour=wx.Colour(158,201,232),
-                                    #foregroundcolour=wx.Colour(28,28, 28))
-        #self.btn_details.SetBottomEndColour(wx.Colour(self.btn_color))
-        #self.btn_details.SetBottomStartColour(wx.Colour(self.btn_color))
-        #self.btn_details.SetTopStartColour(wx.Colour(self.btn_color))
-        #self.btn_details.SetTopEndColour(wx.Colour(self.btn_color))
-        #sizer_peak.Add(self.btn_details, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         
-        #self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY, 
-                                    #(_("Target level:"))
-                                    #)
-        #sizer_peak.Add(self.lab_amplitude, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        #self.spin_target = FS.FloatSpin(self.peakpanel, 
-                                                     #wx.ID_ANY, 
-                                                     #min_val=-99.0, 
-                                                     #max_val=0.0, 
-                                                     #increment=0.5, value=-1.0, 
-                                            #agwStyle=FS.FS_LEFT, size=(-1,-1)
-                                            #)
-        #self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
-        #sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        #self.peakpanel.SetSizer(sizer_peak) # set panel
-        #sizer_nbAudio.Add(self.peakpanel, 0, wx.ALL, 20)
-        #self.ebupanel = wx.Panel(self.nb_Audio, 
-                                 #wx.ID_ANY, style=wx.TAB_TRAVERSAL
-                                 #)
-        #sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
-        #self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
-                             #_("Set integrated loudness target:  ")))
-        #sizer_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        #self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY, 
-                                   #min_val=-70.0, max_val=-5.0, 
-                                   #increment=0.5, value=-24.0, 
-                                    #agwStyle=FS.FS_LEFT,size=(-1,-1))
-        #self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
-        #sizer_ebu.Add(self.spin_i, 0, wx.ALL, 0)
+        grid_Amap = wx.FlexGridSizer(1,2,0,0)
+        sizer_nbAudio.Add(grid_Amap,0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
+        txtAmap = wx.StaticText(self.nb_Audio, wx.ID_ANY, _('Audio Stream'))
+        grid_Amap.Add(txtAmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmb_Audiomap = wx.ComboBox(self.nb_Audio, wx.ID_ANY,
+                                      choices=['None', 'All', '1','2','3', 
+                                               '4','5','6','7','8'],
+                                      size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                           wx.CB_READONLY
+                                                           )
+        grid_Amap.Add(self.cmb_Audiomap, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         
-        #self.lab_tp = wx.StaticText(self.ebupanel, wx.ID_ANY, (
-                                    #_("Set maximum true peak:")))
-        #sizer_ebu.Add(self.lab_tp, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        #self.spin_tp = FS.FloatSpin(self.ebupanel, wx.ID_ANY, 
-                                    #min_val=-9.0, max_val=0.0,
-                                    #increment=0.5, value=-2.0, 
-                                    #agwStyle=FS.FS_LEFT,size=(-1,-1))
-        #self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
-        #sizer_ebu.Add(self.spin_tp, 0, wx.ALL, 0)
         
-        #self.lab_lra = wx.StaticText(self.ebupanel, wx.ID_ANY, (
-                                    #_("Set loudness range target:")))
-        #sizer_ebu.Add(self.lab_lra, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        #self.spin_lra = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
-                                     #min_val=1.0, max_val=20.0, 
-                                     #increment=0.5, value=7.0, 
-                                    #agwStyle=FS.FS_LEFT,size=(-1,-1))
-        #self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
-        #sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
-        #self.ebupanel.SetSizer(sizer_ebu) # set panel
-        #sizer_nbAudio.Add(self.ebupanel, 0, wx.ALL, 20)
         self.nb_Audio.SetSizer(sizer_nbAudio)
         self.notebook.AddPage(self.nb_Audio, _("Audio"))
         #-------------- notebook panel 3:
@@ -551,18 +509,13 @@ class AV_Conv(wx.Panel):
                                                wx.ID_ANY,  _("Video Filters")), 
                                                wx.VERTICAL)
         sizer_nbFilters.Add(self.box_vFilters, 1, wx.ALL | wx.EXPAND, 10)
-        
-        
         self.filterVpanel = wx.Panel(self.nb_filters, wx.ID_ANY, 
                                      style=wx.TAB_TRAVERSAL)
         
         self.box_vFilters.Add(self.filterVpanel, 0, wx.ALL|
                                                     wx.ALIGN_CENTER_HORIZONTAL| 
                                                     wx.ALIGN_CENTER_VERTICAL, 5)
-        
-        
         grid_vfilters = wx.FlexGridSizer(3, 5, 20, 20)
-        
         resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
         self.btn_videosize = GB.GradientButton(self.filterVpanel,
                                                size=(-1,25),
@@ -623,7 +576,7 @@ class AV_Conv(wx.Panel):
         self.btn_denois.SetTopStartColour(wx.Colour(self.btn_color))
         self.btn_denois.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_denois)
-        #grid_vfilters.AddMany([(50, 50), (50, 50),(50, 50),(50, 50),(50, 50)]) 
+
         playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = GB.GradientButton(self.filterVpanel,
                                              size=(-1,25),
@@ -635,7 +588,6 @@ class AV_Conv(wx.Panel):
         self.btn_preview.SetTopStartColour(wx.Colour(self.btn_color))
         self.btn_preview.SetTopEndColour(wx.Colour(self.btn_color))
         grid_vfilters.Add(self.btn_preview)
-        #grid_vfilters.Add((20, 20), 0,)# separator
         resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
         self.btn_reset = GB.GradientButton(self.filterVpanel,
                                              size=(-1,25),
@@ -655,21 +607,8 @@ class AV_Conv(wx.Panel):
                                              wx.VERTICAL
                                                 )
         sizer_nbFilters.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 10)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         sizer_Anormalization = wx.BoxSizer(wx.VERTICAL)
         self.box_aFilters.Add(sizer_Anormalization, 0, wx.ALL | wx.EXPAND, 0)
-        
-        
-        
         self.rdbx_normalize = wx.RadioBox(self.nb_filters,wx.ID_ANY,
                                      (_("Audio Normalization")), 
                                      choices=[
@@ -763,24 +702,8 @@ class AV_Conv(wx.Panel):
         sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
         self.ebupanel.SetSizer(sizer_ebu) # set panel
         sizer_nbAudio.Add(self.ebupanel, 0, wx.ALL, 20)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
-
         self.nb_filters.SetSizer(sizer_nbFilters)
         self.notebook.AddPage(self.nb_filters, _("Filters"))
-        
         #-------------- notebook panel 4:
         #self.nb_Subt = wx.Panel(self.notebook, wx.ID_ANY)
         #sizer_nbSubt = wx.BoxSizer(wx.VERTICAL)
@@ -791,8 +714,10 @@ class AV_Conv(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
         #---------------------- Tooltip 
-        self.cmb_Vcod.SetToolTip(_('The output Video container'))
-        
+        self.cmb_Vcod.SetToolTip(_('The video codec determines the video '
+                                   'container'))
+        self.cmb_Vcont.SetToolTip(_('Output format and file extension'))
+        self.cmb_Media.SetToolTip(_('Determines the type of file produced'))
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
                                     'reduce the file size, but takes longer.'))
         self.rdb_deadline.SetToolTip(_('"good" is the default and recommended '
@@ -801,24 +726,16 @@ class AV_Conv(wx.Panel):
                 'is recommended for live/fast encoding'))
         self.spin_cpu.SetToolTip(_('"cpu-used" sets how efficient the '
                 'compression will be. The meaning depends on the mode above.'))
-        self.spin_Vbrate.SetToolTip(_('The bit rate determines the quality and '
-                'the final video size. A larger value correspond to greater '
-                'quality and size of the file.'))
-        self.slider_CRF.SetToolTip(_('CRF (constant rate factor) Affects the '
-                'quality of the final video. Only used with x264/x265 encoders '
-                'on one-pass (two-pass encoding switchs to bitrate). With '
-                'lower values the quality is higher and a larger file size.'))
-        self.btn_preview.SetToolTip(_('Try the filters by playing a '
-                                      'video preview'))
+        self.spin_Vbrate.SetToolTip(_('Sets the quality and file size. '
+                                      'Higher value = higher quality.'))
+        self.slider_CRF.SetToolTip(_('Constant rate factor. Lower values = '
+                                     'higher quality and a larger file size.'))
+        self.btn_preview.SetToolTip(_('Try filters by playing a preview'))
         self.btn_reset.SetToolTip(_("Clear all enabled filters "))
-        self.cmb_Vaspect.SetToolTip(_('Video aspect (Aspect Ratio) is the '
-                'video width and video height ratio. Leave on "Default" to '
-                'copy the original settings.'))
-        self.cmb_Fps.SetToolTip(_('Video Rate: A any video consists of'
-                'of images displayed as frames, repeated a given number of '
+        self.cmb_Vaspect.SetToolTip(_('Video width and video height ratio.'))
+        self.cmb_Fps.SetToolTip(_('Frames repeated a given number of '
                 'times per second. In countries are 30 NTSC, PAL countries '
-                '(like Italy) are 25. Leave on "Default" to copy the '
-                'original settings.'))
+                '(like Italy) are 25.'))
         self.btn_voldect.SetToolTip(_('Gets maximum volume and average volume '
                 'data in dBFS, then calculates the offset amount for audio '
                 'normalization.'))
@@ -832,10 +749,6 @@ class AV_Conv(wx.Panel):
                                   'to +0.0, default is -2.0'))
         self.spin_lra.SetToolTip(_('Loudness Range Target in LUFS. '
                                    'From +1.0 to +20.0, default is +7.0'))
-        self.rdb_a.SetToolTip(_('Audio codecs compatible with the chosen '
-                                'video container'))
-        #self.nb_Subt.SetToolTip(_('Options enabled for the codecs '
-                                            #'x.264/x.265'))
 
         #----------------------Binding (EVT)----------------------#
         """
@@ -876,15 +789,8 @@ class AV_Conv(wx.Panel):
         self.cmb_Media.SetSelection(0), self.cmb_Vcont.SetSelection(0)
         self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
         self.cmb_Fps.SetSelection(0), self.cmb_Vaspect.SetSelection(0)
-        self.cmb_Pixfrm.SetSelection(2)
-        
-        cmd_opt["VidCmbxStr"] = self.cmb_Vcod.GetValue()
-        cmd_opt["OutputFormat"] = "mkv"
-        cmd_opt["VideoCodec"] = "-c:v libx264"
-        cmd_opt["PxlFrm"] = "-pix_fmt yuv420p"
-        cmd_opt["VideoAspect"] = ""
-        cmd_opt["VideoRate"] = ""
-        
+        self.cmb_Pixfrm.SetSelection(1), self.cmb_Submap.SetSelection(1)
+        self.cmb_Audiomap.SetSelection(1)
         self.UI_set()
         self.audio_default()
         self.normalize_default()
@@ -1002,16 +908,16 @@ class AV_Conv(wx.Panel):
         cmd_opt["VideoCodec"] = libcodec
         cmd_opt["VidCmbxStr"] = self.cmb_Vcod.GetValue()
         cmd_opt["OutputFormat"] = self.cmb_Vcont.GetValue()
-        cmd_opt["Bitrate"] = ""
+        cmd_opt["VideoBitrate"] = ""
         cmd_opt["CRF"] = ""
             
         if self.cmb_Vcod.GetValue() == "Copy":
             self.cmb_Pixfrm.SetSelection(0)
             cmd_opt["Passing"] = "1 pass"
-            cmd_opt["PxlFrm"] = ""
+            cmd_opt["PixFmt"] = ""
         else:
-            self.cmb_Pixfrm.SetSelection(2)
-            cmd_opt["PxlFrm"] = "-pix_fmt yuv420p"
+            self.cmb_Pixfrm.SetSelection(1)
+            cmd_opt["PixFmt"] = "-pix_fmt yuv420p"
         
         self.UI_set(True)
         self.audio_default() # reset audio radiobox and dict
@@ -1097,7 +1003,7 @@ class AV_Conv(wx.Panel):
                                          "-c:v libaom-av1 -strict -2"]:
             cmd_opt["CRF"] = ""
             
-        cmd_opt["Bitrate"] = "-b:v %sk" % (self.spin_Vbrate.GetValue())
+        cmd_opt["VideoBitrate"] = "-b:v %sk" % (self.spin_Vbrate.GetValue())
 
         
     #------------------------------------------------------------------#
@@ -1107,7 +1013,7 @@ class AV_Conv(wx.Panel):
         """
         if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                          "-c:v libaom-av1 -strict -2"]:
-            cmd_opt["Bitrate"] = ""
+            cmd_opt["VideoBitrate"] = ""
         cmd_opt["CRF"] = "-crf %s" % self.slider_CRF.GetValue()
         
     #------------------------------------------------------------------#
@@ -1335,10 +1241,10 @@ class AV_Conv(wx.Panel):
         Set aspect parameter (16:9, 4:3)
         """
         if self.cmb_Vaspect.GetValue() == "Auto":
-            cmd_opt["VideoAspect"] = ""
+            cmd_opt["AspectRatio"] = ""
             
         else:
-            cmd_opt["VideoAspect"] = '-aspect %s' % self.cmb_Vaspect.GetValue()
+            cmd_opt["AspectRatio"] = '-aspect %s' % self.cmb_Vaspect.GetValue()
             
     #------------------------------------------------------------------#
     def on_Vrate(self, event):
@@ -1347,9 +1253,9 @@ class AV_Conv(wx.Panel):
         """
         fps = self.cmb_Fps.GetValue()
         if fps == "Auto":
-            cmd_opt["VideoRate"] = ""
+            cmd_opt["FPS"] = ""
         else:
-            cmd_opt["VideoRate"] = "-r %s" % fps
+            cmd_opt["FPS"] = "-r %s" % fps
             
     #------------------------------------------------------------------#
     def setAudioRadiobox(self, event):
@@ -1374,9 +1280,13 @@ class AV_Conv(wx.Panel):
             for n,v in enumerate(av_formats[self.cmb_Vcont.GetValue()]):
                 if v:
                     self.rdb_a.EnableItem(n,enable=True)
-                    self.rdb_a.SetSelection(n)
+                    #self.rdb_a.SetSelection(n)
                 else:
                     self.rdb_a.EnableItem(n,enable=False)
+            for x in range(self.rdb_a.GetCount()):
+                if self.rdb_a.IsItemEnabled(x):
+                    self.rdb_a.SetSelection(x)
+                    break
             self.on_AudioCodecs(self)
             
     #------------------------------------------------------------------#
@@ -1420,7 +1330,7 @@ class AV_Conv(wx.Panel):
                     self.normalize_default()
                     param(False, False)
 
-                elif audiocodec == _("Mute"):
+                elif audiocodec == _("No Audio"):
                     self.normalize_default()
                     param(False, False)
                     #break
@@ -1758,7 +1668,7 @@ class AV_Conv(wx.Panel):
             self.on_Bitrate(self), self.on_Crf(self)
         else:
             cmd_opt["CRF"] = ''
-            cmd_opt["Bitrate"] = ''
+            cmd_opt["VideoBitrate"] = ''
         
         if self.vp9panel.IsShown():
             deadline = self.rdb_deadline.GetStringSelection()
@@ -1837,16 +1747,19 @@ class AV_Conv(wx.Panel):
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
             
         if self.cmb_Vcod.GetValue() == "Copy":
-            command = ('%s %s %s %s %s %s %s %s %s' %(
+            command = ('%s %s %s %s %s %s %s %s %s %s %s %s' %(
                                                     cmd_opt["VideoCodec"], 
-                                                    cmd_opt["VideoAspect"],
-                                                    cmd_opt["VideoRate"],
+                                                    cmd_opt["PixFmt"],
+                                                    cmd_opt["AspectRatio"],
+                                                    cmd_opt["FPS"],
                                                     cmd_opt["AudioCodec"], 
                                                     cmd_opt["AudioBitrate"][1], 
                                                     cmd_opt["AudioRate"][1], 
                                                     cmd_opt["AudioChannel"][1], 
                                                     cmd_opt["AudioDepth"][1],
-                                                    cmd_opt["Map"],
+                                                    cmd_opt["AudioMap"],
+                                                    cmd_opt["SubtitleMap"],
+                                                    '-map_metadata 0',
                                                         ))
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
@@ -1869,47 +1782,61 @@ class AV_Conv(wx.Panel):
                 
         elif cmd_opt["Passing"] == "2 pass":
             if cmd_opt["VideoCodec"] == "-c:v libx265":
-                opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
+                opt1 = '-x265-params pass=1%s%s%s' %(cmd_opt["Qmin"],
+                                                     cmd_opt["Qmax"],
+                                                     cmd_opt["BufferSize"],)
+                                                     
+                opt2 = '-x265-params pass=2%s%s%s' %(cmd_opt["Qmin"],
+                                                     cmd_opt["Qmax"],
+                                                     cmd_opt["BufferSize"],)
             else:
-                opt1, opt2 = '-pass 1', '-pass 2'
+                opt1 = '%s %s %s -pass 1' %(cmd_opt["Qmin"],
+                                            cmd_opt["Qmax"],
+                                            cmd_opt["BufferSize"],)
+                opt2 = '%s %s %s -pass 2' %(cmd_opt["Qmin"],
+                                            cmd_opt["Qmax"],
+                                            cmd_opt["BufferSize"],)
+
             
-            cmd1 = ('-an %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+            cmd1 = ('-an -sn %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                     '-f rawvideo' %(cmd_opt["VideoCodec"],
                                     cmd_opt["CRF"],
-                                    cmd_opt["Bitrate"], 
+                                    cmd_opt["VideoBitrate"], 
                                     cmd_opt["Deadline"],
                                     cmd_opt["CpuUsed"],
                                     cmd_opt["RowMthreading"],
                                     cmd_opt["Presets"], 
                                     cmd_opt["Profile"], 
                                     cmd_opt["Tune"], 
-                                    cmd_opt["VideoAspect"], 
-                                    cmd_opt["VideoRate"], 
+                                    cmd_opt["AspectRatio"], 
+                                    cmd_opt["FPS"], 
                                     cmd_opt["Filters"], 
-                                    cmd_opt["PxlFrm"],
+                                    cmd_opt["PixFmt"],
                                     opt1,
                                     ))
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s '
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s '
                    '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"],
                                                   cmd_opt["CRF"],
-                                                  cmd_opt["Bitrate"], 
+                                                  cmd_opt["VideoBitrate"], 
                                                   cmd_opt["Deadline"],
                                                   cmd_opt["CpuUsed"],
                                                   cmd_opt["RowMthreading"],
                                                   cmd_opt["Presets"], 
                                                   cmd_opt["Profile"], 
                                                   cmd_opt["Tune"], 
-                                                  cmd_opt["VideoAspect"], 
-                                                  cmd_opt["VideoRate"], 
+                                                  cmd_opt["AspectRatio"], 
+                                                  cmd_opt["FPS"], 
                                                   cmd_opt["Filters"], 
-                                                  cmd_opt["PxlFrm"], 
+                                                  cmd_opt["PixFmt"], 
+                                                  opt2,
                                                   cmd_opt["AudioCodec"], 
                                                   cmd_opt["AudioBitrate"][1], 
                                                   cmd_opt["AudioRate"][1], 
                                                   cmd_opt["AudioChannel"][1], 
                                                   cmd_opt["AudioDepth"][1], 
-                                                  cmd_opt["Map"],
-                                                  opt2,
+                                                  cmd_opt["AudioMap"],
+                                                  cmd_opt["SubtitleMap"],
+                                                  '-map_metadata 0',
                                                   ))
             pass1 = " ".join(cmd1.split())
             pass2 =  " ".join(cmd2.split())
@@ -1934,26 +1861,37 @@ class AV_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "1 pass": # Batch-Mode / h264 Codec
-            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+            if cmd_opt["VideoCodec"] == "-c:v libx265":
+                opt = '-x265-params %s%s%s' %(cmd_opt["Qmin"],
+                                              cmd_opt["Qmax"],
+                                              cmd_opt["BufferSize"],)
+            else:
+                opt = '%s %s %s' %(cmd_opt["Qmin"],
+                                   cmd_opt["Qmax"],
+                                   cmd_opt["BufferSize"],)
+            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                        '%s %s %s %s' % (cmd_opt["VideoCodec"], 
                                         cmd_opt["CRF"],
-                                        cmd_opt["Bitrate"],
+                                        cmd_opt["VideoBitrate"],
+                                        opt,
                                         cmd_opt["Deadline"],
                                         cmd_opt["CpuUsed"],
                                         cmd_opt["RowMthreading"],
                                         cmd_opt["Presets"], 
                                         cmd_opt["Profile"],
                                         cmd_opt["Tune"], 
-                                        cmd_opt["VideoAspect"], 
-                                        cmd_opt["VideoRate"], 
+                                        cmd_opt["AspectRatio"], 
+                                        cmd_opt["FPS"], 
                                         cmd_opt["Filters"],
-                                        cmd_opt["PxlFrm"], 
+                                        cmd_opt["PixFmt"], 
                                         cmd_opt["AudioCodec"], 
                                         cmd_opt["AudioBitrate"][1], 
                                         cmd_opt["AudioRate"][1], 
                                         cmd_opt["AudioChannel"][1], 
                                         cmd_opt["AudioDepth"][1], 
-                                        cmd_opt["Map"],
+                                        cmd_opt["AudioMap"],
+                                        cmd_opt["SubtitleMap"],
+                                        '-map_metadata 0',
                                         ))
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
@@ -1989,29 +1927,42 @@ class AV_Conv(wx.Panel):
                                               str(self.spin_tp.GetValue()),
                                               str(self.spin_lra.GetValue()),))
         if cmd_opt["VideoCodec"] == "-c:v libx265":
-            opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
+            opt1 = '-x265-params pass=1%s%s%s' %(cmd_opt["Qmin"],
+                                                 cmd_opt["Qmax"],
+                                                 cmd_opt["BufferSize"],)
+                                                     
+            opt2 = '-x265-params pass=2%s%s%s' %(cmd_opt["Qmin"],
+                                                    cmd_opt["Qmax"],
+                                                    cmd_opt["BufferSize"],)
         else:
-            opt1, opt2 = '-pass 1', '-pass 2' 
+            opt1 = '%s %s %s -pass 1' %(cmd_opt["Qmin"],
+                                        cmd_opt["Qmax"],
+                                        cmd_opt["BufferSize"],)
+            opt2 = '%s %s %s -pass 2' %(cmd_opt["Qmin"],
+                                        cmd_opt["Qmax"],
+                                        cmd_opt["BufferSize"],) 
         
         if self.cmb_Vcod.GetValue() == "Copy":
             cmd_1 = ('-af %s -vn -sn %s %s %s %s -f null' %(
                                                     loudfilter, 
                                                     opt1,
-                                                    cmd_opt["VideoAspect"],
-                                                    cmd_opt["VideoRate"],
-                                                    cmd_opt["Map"],
+                                                    cmd_opt["AspectRatio"],
+                                                    cmd_opt["FPS"],
+                                                    cmd_opt["AudioMap"],
                                                     ))
-            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s' %(
+            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s %s %s' %(
                                                     cmd_opt["VideoCodec"], 
                                                     opt2,
-                                                    cmd_opt["VideoAspect"],
-                                                    cmd_opt["VideoRate"],
+                                                    cmd_opt["AspectRatio"],
+                                                    cmd_opt["FPS"],
                                                     cmd_opt["AudioCodec"], 
                                                     cmd_opt["AudioBitrate"][1], 
                                                     cmd_opt["AudioRate"][1], 
                                                     cmd_opt["AudioChannel"][1], 
                                                     cmd_opt["AudioDepth"][1],
-                                                    cmd_opt["Map"],
+                                                    cmd_opt["AudioMap"],
+                                                    cmd_opt["SubtitleMap"],
+                                                    '-map_metadata 0',
                                                     ))
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
@@ -2033,47 +1984,49 @@ class AV_Conv(wx.Panel):
                                            countmax,
                                            )
         else:
-            cmd_1 = ('-af %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
+            cmd_1 = ('-af %s -sn %s %s %s %s %s %s %s %s %s %s %s %s %s '
                      '%s %s -f %s' % (loudfilter,
                                       cmd_opt["VideoCodec"],
                                       opt1,
                                       cmd_opt["CRF"],
-                                      cmd_opt["Bitrate"],
+                                      cmd_opt["VideoBitrate"],
                                       cmd_opt["Deadline"],
                                       cmd_opt["CpuUsed"],
                                       cmd_opt["RowMthreading"],
                                       cmd_opt["Presets"], 
                                       cmd_opt["Profile"], 
                                       cmd_opt["Tune"], 
-                                      cmd_opt["VideoAspect"], 
-                                      cmd_opt["VideoRate"], 
+                                      cmd_opt["AspectRatio"], 
+                                      cmd_opt["FPS"], 
                                       cmd_opt["Filters"], 
-                                      cmd_opt["PxlFrm"],
-                                      cmd_opt["Map"],
+                                      cmd_opt["PixFmt"],
+                                      cmd_opt["AudioMap"],
                                       '%s' % muxers[cmd_opt["OutputFormat"]],
                                       ))
                 
-            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s '
+            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s '
                     '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
                                                    opt2,
                                                    cmd_opt["CRF"],
-                                                   cmd_opt["Bitrate"], 
+                                                   cmd_opt["VideoBitrate"], 
                                                    cmd_opt["Deadline"],
                                                    cmd_opt["CpuUsed"],
                                                    cmd_opt["RowMthreading"],
                                                    cmd_opt["Presets"], 
                                                    cmd_opt["Profile"],
                                                    cmd_opt["Tune"], 
-                                                   cmd_opt["VideoAspect"], 
-                                                   cmd_opt["VideoRate"], 
+                                                   cmd_opt["AspectRatio"], 
+                                                   cmd_opt["FPS"], 
                                                    cmd_opt["Filters"],
-                                                   cmd_opt["PxlFrm"], 
+                                                   cmd_opt["PixFmt"], 
                                                    cmd_opt["AudioCodec"], 
                                                    cmd_opt["AudioBitrate"][1], 
                                                    cmd_opt["AudioRate"][1], 
                                                    cmd_opt["AudioChannel"][1], 
                                                    cmd_opt["AudioDepth"][1], 
-                                                   cmd_opt["Map"],
+                                                   cmd_opt["AudioMap"],
+                                                   cmd_opt["SubtitleMap"],
+                                                   '-map_metadata 0',
                                                    ))
             pass1 = " ".join(cmd_1.split())
             pass2 =  " ".join(cmd_2.split())# mi formatta la stringa
@@ -2104,12 +2057,14 @@ class AV_Conv(wx.Panel):
         """
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
         title = _('Audio conversions')
-        command = ('-vn %s %s %s %s %s -map_metadata 0' % (
+        command = ('-vn -sn %s %s %s %s %s %s %s' % (
                                                 cmd_opt["AudioCodec"],
                                                 cmd_opt["AudioBitrate"][1], 
                                                 cmd_opt["AudioDepth"][1], 
                                                 cmd_opt["AudioRate"][1], 
                                                 cmd_opt["AudioChannel"][1],
+                                                cmd_opt["AudioMap"],
+                                                '-map_metadata 0',
                                                             ))
         command = " ".join(command.split())# mi formatta la stringa
         if logname == 'save as profile':
@@ -2144,13 +2099,15 @@ class AV_Conv(wx.Panel):
         title = _('Audio EBU normalization')
 
         cmd_1 = ('-af %s -vn -sn -pass 1 -f null' % loudfilter)
-        cmd_2 = ('-vn -sn -pass 2 %s %s %s'
-                 '%s %s -map_metadata 0' % (cmd_opt["AudioCodec"],
-                                            cmd_opt["AudioBitrate"][1], 
-                                            cmd_opt["AudioDepth"][1], 
-                                            cmd_opt["AudioRate"][1], 
-                                            cmd_opt["AudioChannel"][1],
-                                            ))
+        cmd_2 = ('-vn -sn -pass 2 %s %s %s %s %s '
+                 '%s %s' % (cmd_opt["AudioCodec"],
+                            cmd_opt["AudioBitrate"][1], 
+                            cmd_opt["AudioDepth"][1], 
+                            cmd_opt["AudioRate"][1], 
+                            cmd_opt["AudioChannel"][1],
+                            cmd_opt["AudioMap"],
+                            '-map_metadata 0',
+                            ))
         pass1 = " ".join(cmd_1.split())
         pass2 = " ".join(cmd_2.split())
         if logname == 'save as profile':
@@ -2196,77 +2153,86 @@ class AV_Conv(wx.Panel):
             formula = (_("SUMMARY\n\nFile Queue\
                 \nOutput Format\nAudio Codec\nAudio bit-rate\
                 \nAudio Channels\nAudio Rate\nBit per Sample\
-                \nAudio Normalization\nTime selection"))
-            dictions = ("\n\n%s\n%s\n%s\n%s"
+                \nAudio Normalization\nTime selection\nAudio Stream index"))
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s"
                         "\n%s\n%s\n%s\n%s\n%s" %(numfile, 
                                                 cmd_opt["OutputFormat"], 
                                                 cmd_opt["AudioCodStr"], 
                                                 cmd_opt["AudioBitrate"][0], 
                                                 cmd_opt["AudioChannel"][0], 
                                                 cmd_opt["AudioRate"][0], 
-                                                cmd_opt["AudioDepth"][0] , 
+                                                cmd_opt["AudioDepth"][0], 
                                                 normalize, 
-                                                time,)
+                                                time,
+                                                cmd_opt["AudioMap"],
+                                                )
                         )   
         elif prof[0] == "Copy":
             formula = (_("SUMMARY\n\nFile to Queue\nOutput Format\
-                        \nVideo Codec\nAspect Ratio\nFPS\
-                        \nAudio Codec\nAudio Channels\
-                        \nAudio Rate\nAudio bit-rate\nBit per Sample\
-                        \nAudio Normalization\nMap\nTime selection"))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \nVideo Codec\nAspect Ratio\nFPS\nAudio Codec\
+                        \nAudio Channels\nAudio Rate\nAudio bit-rate\
+                        \nBit per Sample\nAudio Normalization\
+                        \nAudio Stream index\nSubtitle stream index\
+                        \nTime selection"))
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                          \n%s\n%s\n%s" %(numfile,
                                          cmd_opt["OutputFormat"],
                                          cmd_opt["VidCmbxStr"], 
-                                         cmd_opt["VideoAspect"], 
-                                         cmd_opt["VideoRate"], 
+                                         cmd_opt["AspectRatio"], 
+                                         cmd_opt["FPS"], 
                                          cmd_opt["AudioCodStr"], 
                                          cmd_opt["AudioChannel"][0], 
                                          cmd_opt["AudioRate"][0], 
                                          cmd_opt["AudioBitrate"][0], 
                                          cmd_opt["AudioDepth"][0], 
                                          normalize, 
-                                         cmd_opt["Map"], 
+                                         cmd_opt["AudioMap"],
+                                         cmd_opt["SubtitleMap"], 
                                          time,
                                          ))
         #--------------------
         else:
             formula = (_("SUMMARY\n\nFile to Queue\nPass Encoding\
-                         \nOutput Format\nVideo Codec\
-                         \nVideo bit-rate\nCRF\nVP8/VP9 Options\
+                         \nOutput Format\nVideo Codec\nVideo bit-rate\
+                         \nCRF\nQmin\nQmax\nBuffer size\nVP8/VP9 Options\
                          \nVideo Filters\nAspect Ratio\nFPS\
                          \nPreset\nProfile\nTune\nAudio Codec\
                          \nAudio Channels\nAudio Rate\nAudio bit-rate\
-                         \nBit per Sample\nAudio Normalization\nMap\
+                         \nBit per Sample\nAudio Normalization\
+                         \nAudio Stream index\nSubtitle stream index\
                          \nTime selection"
                          ))
-            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
-                        \n%s" % (numfile, 
-                                 cmd_opt["Passing"],
-                                 cmd_opt["OutputFormat"], 
-                                 cmd_opt["VidCmbxStr"], 
-                                 cmd_opt["Bitrate"], 
-                                 cmd_opt["CRF"],
-                                '%s %s %s' %(cmd_opt["Deadline"], 
-                                             cmd_opt["CpuUsed"],
-                                             cmd_opt["RowMthreading"],
-                                             ),
-                                 cmd_opt["Filters"], 
-                                 cmd_opt["VideoAspect"], 
-                                 cmd_opt["VideoRate"], 
-                                 cmd_opt["Presets"], 
-                                 cmd_opt["Profile"], 
-                                 cmd_opt["Tune"], 
-                                 cmd_opt["AudioCodStr"], 
-                                 cmd_opt["AudioChannel"][0], 
-                                 cmd_opt["AudioRate"][0], 
-                                 cmd_opt["AudioBitrate"][0], 
-                                 cmd_opt["AudioDepth"][0],
-                                 normalize, 
-                                 cmd_opt["Map"], 
-                                 time,
-                                ))
+            dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
+                        \n%s\n%s" %(numfile, 
+                                    cmd_opt["Passing"],
+                                    cmd_opt["OutputFormat"], 
+                                    cmd_opt["VidCmbxStr"], 
+                                    cmd_opt["VideoBitrate"], 
+                                    cmd_opt["CRF"],
+                                    cmd_opt["Qmin"],
+                                    cmd_opt["Qmax"],
+                                    cmd_opt["BufferSize"],
+                                    '%s %s %s' %(cmd_opt["Deadline"], 
+                                                cmd_opt["CpuUsed"],
+                                                cmd_opt["RowMthreading"],
+                                                ),
+                                    cmd_opt["Filters"], 
+                                    cmd_opt["AspectRatio"], 
+                                    cmd_opt["FPS"], 
+                                    cmd_opt["Presets"], 
+                                    cmd_opt["Profile"], 
+                                    cmd_opt["Tune"], 
+                                    cmd_opt["AudioCodStr"], 
+                                    cmd_opt["AudioChannel"][0], 
+                                    cmd_opt["AudioRate"][0], 
+                                    cmd_opt["AudioBitrate"][0], 
+                                    cmd_opt["AudioDepth"][0],
+                                    normalize, 
+                                    cmd_opt["AudioMap"],
+                                    cmd_opt["SubtitleMap"], 
+                                    time,
+                                    ))
         return formula, dictions
 
 #------------------------------------------------------------------#

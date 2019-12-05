@@ -83,7 +83,7 @@ class AudioSettings(wx.Dialog):
              style=wx.RA_SPECIFY_ROWS)
 
         self.rdb_channels = wx.RadioBox(self, wx.ID_ANY, (
-            "Audio Channel"), choices=channel_list, majorDimension=0, 
+            "Audio Channels"), choices=channel_list, majorDimension=0, 
              style=wx.RA_SPECIFY_ROWS)
 
         self.rdb_sample_r = wx.RadioBox(self, wx.ID_ANY, (
@@ -234,14 +234,9 @@ class TypeAudioParameters(object):
     audio bitrates, sample rate, audio channels and bitdepth and also 
     include messages tooltip.
     """
-    channel_tooltip = (_("""\
-The audio channels are represented by monophonic, 
-stereophonic and quadraphonic techniques reproduction.
-For some codecs can only assign an audio stream
-monaural or stereo, for others even polyphonic.
-If you are not sure set to "Auto" and source values 
-will be copied.\
-"""))
+    channel_tooltip = (_('Support to mono or stereo audio channels. If you '
+                         'are not sure set to "Auto" and source values '
+                         'will be copied.'))
     sample_rate_tooltip = (_("""\
 The audio Rate (or sample-rate) is the sound sampling 
 frequency and is measured in hertz. The higher the frequency, 
@@ -272,8 +267,8 @@ compression formats, do not have associated bit depths.\
     def __init__(self, audio_format):
         """
         Accept a type string object representing the name of the audio 
-        format. For now there is support for these  audio formats: 
-        wav, aiff, flac, alac, aac, ac3, ogg, mp3, opus.
+        format or/and audio codec name. For now there is support for these  
+        audio formats e.g. 'PCM' or 'wav' or 'aiff' ..
         Each attribute is instantiable with this class and returns the 
         data object for each dictionary.
         """
