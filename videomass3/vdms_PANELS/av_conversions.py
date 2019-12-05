@@ -51,7 +51,7 @@ cmd_opt = {"VidCmbxStr": "x264", "OutputFormat": "mkv",
            "Passing": "1 pass", "InputDir": "", "OutputDir": "",  
            "VideoSize": "", "AspectRatio": "", "FPS": "", "Presets": "", 
            "Profile": "", "Tune": "", "VideoBitrate": "", "CRF": "", 
-           "Qmin": "", "Qmax": "", "BufferSize": "", "AudioCodStr": "", 
+           "MinRate": "", "MaxRate": "", "Bufsize": "", "AudioCodStr": "", 
            "AudioMap": "-map 0:a?", "SubtitleMap": "-map 0:s?", 
            "AudioCodec": "", "AudioChannel": ["",""], "AudioRate": ["",""], 
            "AudioBitrate": ["",""], "AudioDepth": ["",""], "PEAK": "", 
@@ -230,33 +230,32 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(self.spin_Vbrate, 0, wx.ALL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
-        txtQmin = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Min Rate'))
+        txtQmin = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Min Rate (kb)'))
         grid_sx_Vcod.Add(txtQmin, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.txtctrlQmin = wx.TextCtrl(self.codVpanel, wx.ID_ANY, "", 
-                                       size=(110,-1), style=wx.TE_PROCESS_ENTER
+        self.spinMinr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
+                                       "0", min=0, max=900000, 
+                                        style=wx.TE_PROCESS_ENTER
                                         )
-        grid_sx_Vcod.Add(self.txtctrlQmin, 0, 
-                         wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5
-                         )
-        txtQmax = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Max Rate'))
+        grid_sx_Vcod.Add(self.spinMinr, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        txtQmax = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Max Rate (kb)'))
         grid_sx_Vcod.Add(txtQmax, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.txtctrlQmax = wx.TextCtrl(self.codVpanel, wx.ID_ANY, "", 
-                                       size=(110,-1), style=wx.TE_PROCESS_ENTER
+        self.spinMaxr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
+                                       "0", min=0, max=900000, 
+                                        style=wx.TE_PROCESS_ENTER
                                         )
-        grid_sx_Vcod.Add(self.txtctrlQmax, 0, 
-                         wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5
-                         )
-        txtBuffer = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Buffer Size'))
+        grid_sx_Vcod.Add(self.spinMaxr, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
+        txtBuffer = wx.StaticText(self.codVpanel, wx.ID_ANY, 
+                                  _('Buffer Size (kb)')
+                                  )
         grid_sx_Vcod.Add(txtBuffer, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.txtctrlBuff = wx.TextCtrl(self.codVpanel, wx.ID_ANY, "", 
-                                       size=(110,-1), style=wx.TE_PROCESS_ENTER
+        self.spinBufsize = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
+                                       "0", min=0, max=900000, 
+                                        style=wx.TE_PROCESS_ENTER
                                         )
-        grid_sx_Vcod.Add(self.txtctrlBuff, 0, 
-                         wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5
-                         )
+        grid_sx_Vcod.Add(self.spinBufsize,0,wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         txtVaspect = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Aspect Ratio'))
         grid_sx_Vcod.Add(txtVaspect, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vaspect = wx.ComboBox(self.codVpanel, wx.ID_ANY,
@@ -342,9 +341,9 @@ class AV_Conv(wx.Panel):
         sizer_vp9panel.Add(lab_cpu, 0, wx.ALL|
                                             wx.ALIGN_CENTER_HORIZONTAL, 5
                                             )
-        self.spin_cpu = wx.SpinCtrl(self.vp9panel, wx.ID_ANY, 
-                                        "0", min=-16, max=16, 
-                                        size=(-1,-1), style=wx.TE_PROCESS_ENTER
+        self.spin_cpu = wx.SpinCtrl(self.vp9panel, wx.ID_ANY, "0", min=-16, 
+                                    max=16, size=(-1,-1), 
+                                    style=wx.TE_PROCESS_ENTER
                                              )
         sizer_vp9panel.Add(self.spin_cpu, 0, wx.ALL|
                                              wx.ALIGN_CENTER_HORIZONTAL, 5
@@ -484,8 +483,6 @@ class AV_Conv(wx.Panel):
                                              style=wx.TE_READONLY
                                              )
         grid_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL|wx.EXPAND,20)
-        
-        
         grid_Amap = wx.FlexGridSizer(1,2,0,0)
         sizer_nbAudio.Add(grid_Amap,0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
         txtAmap = wx.StaticText(self.nb_Audio, wx.ID_ANY, _('Audio Stream'))
@@ -497,8 +494,6 @@ class AV_Conv(wx.Panel):
                                                            wx.CB_READONLY
                                                            )
         grid_Amap.Add(self.cmb_Audiomap, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        
-        
         self.nb_Audio.SetSizer(sizer_nbAudio)
         self.notebook.AddPage(self.nb_Audio, _("Audio"))
         #-------------- notebook panel 3:
@@ -720,13 +715,20 @@ class AV_Conv(wx.Panel):
         self.cmb_Media.SetToolTip(_('Determines the type of file produced'))
         self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
                                     'reduce the file size, but takes longer.'))
+        self.spinMinr.SetToolTip(_('Specifies a minimum tolerance to be used'))
+        self.spinMaxr.SetToolTip(_('Specifies a maximum tolerance. this is '
+                                   'only used in conjunction with bufsize'))
+        self.spinBufsize.SetToolTip(_('Specifies the decoder buffer size, '
+                                      'which determines the variability of '
+                                      'the output bitrate '))
         self.rdb_deadline.SetToolTip(_('"good" is the default and recommended '
                 'for most applications; "best" is recommended if you have lots '
                 'of time and want the best compression efficiency; "realtime" '
                 'is recommended for live/fast encoding'))
         self.spin_cpu.SetToolTip(_('"cpu-used" sets how efficient the '
                 'compression will be. The meaning depends on the mode above.'))
-        self.spin_Vbrate.SetToolTip(_('Sets the quality and file size. '
+        self.spin_Vbrate.SetToolTip(_('specifies the target (average) bit '
+                                      'rate for the encoder to use. '
                                       'Higher value = higher quality.'))
         self.slider_CRF.SetToolTip(_('Constant rate factor. Lower values = '
                                      'higher quality and a larger file size.'))
@@ -764,6 +766,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Media, self.cmb_Media)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
@@ -1651,13 +1654,9 @@ class AV_Conv(wx.Panel):
     
     def update_allentries(self):
         """
-        Update some entries, is callaed by on_ok method.
+        Update entries.
         
         """
-        #self.on_Vrate(self), self.on_Vaspect(self)
-        #if cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9"]:
-            #self.on_Bitrate(self), self.on_Crf(self)
-        #else:
         if self.spin_Vbrate.IsEnabled() and not self.slider_CRF.IsEnabled():
             self.on_Bitrate(self)
             
@@ -1682,8 +1681,45 @@ class AV_Conv(wx.Panel):
             cmd_opt["CpuUsed"] = ''
             cmd_opt["Deadline"] = ''
             cmd_opt["RowMthreading"] = ''
+        
+        if self.spinMinr.GetValue() > 0:
+            cmd_opt["MinRate"] = '-minrate %sk' % self.spinMinr.GetValue()
+        else:
+            cmd_opt["MinRate"] = ''
+        if self.spinMaxr.GetValue() > 0:
+            cmd_opt["MaxRate"] = '-maxrate %sk' % self.spinMaxr.GetValue()
+        else:
+            cmd_opt["MaxRate"] = ''
+        if self.spinBufsize.GetValue() > 0:
+            cmd_opt["Bufsize"] = '-bufsize %sk' % self.spinBufsize.GetValue()
+        else:
+            cmd_opt["Bufsize"] = ''
+        
+        if self.cmb_Pixfrm.GetValue() == 'None':
+            cmd_opt["PixFmt"] = ''
+        else:
+            cmd_opt["PixFmt"] = '-pix_fmt %s' % self.cmb_Pixfrm.GetValue()
             
+        smap = self.cmb_Submap.GetValue()    
+        if smap == 'None':
+            cmd_opt["SubtitleMap"] = '-sn'
+        elif smap == 'All':
+            cmd_opt["SubtitleMap"] = '-map 0:s?'
+        else:
+            cmd_opt["SubtitleMap"] = '-map 0:s%s?' % str(int(smap) - 1)
+        
+        if self.rdb_a.GetStringSelection() == "No Audio":
+            cmd_opt["AudioMap"] = ''
+        else:
+            amap = self.cmb_Audiomap.GetValue()
+            if amap == 'None':
+                cmd_opt["AudioMap"] = ''
+            elif amap == 'All':
+                cmd_opt["AudioMap"] = '-map 0:a?'
+            else:
+                cmd_opt["AudioMap"] = '-map 0:a%s?' % str(int(amap) - 1)
     #------------------------------------------------------------------#
+    
     def on_start(self):
         """
         Check the settings and files before redirecting 
@@ -1705,12 +1741,13 @@ class AV_Conv(wx.Panel):
                                 'Videomass', wx.ICON_INFORMATION)
                 return
         
+        self.update_allentries()# update
+        
         if self.cmb_Media.GetValue() == 'Video':
             # CHECKING:
             if self.cmb_Vcod.GetValue() == "Copy":
                 checking = inspect(self.file_src, self.parent.file_destin, '')
             else:
-                self.update_allentries()# update
                 checking = inspect(self.file_src, 
                                 self.parent.file_destin, 
                                 cmd_opt["OutputFormat"]
@@ -1747,20 +1784,21 @@ class AV_Conv(wx.Panel):
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
             
         if self.cmb_Vcod.GetValue() == "Copy":
-            command = ('%s %s %s %s %s %s %s %s %s %s %s %s' %(
-                                                    cmd_opt["VideoCodec"], 
-                                                    cmd_opt["PixFmt"],
-                                                    cmd_opt["AspectRatio"],
-                                                    cmd_opt["FPS"],
-                                                    cmd_opt["AudioCodec"], 
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1],
-                                                    cmd_opt["AudioMap"],
-                                                    cmd_opt["SubtitleMap"],
-                                                    '-map_metadata 0',
-                                                        ))
+            command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s' %(
+                                                cmd_opt["VideoCodec"], 
+                                                cmd_opt["PixFmt"],
+                                                cmd_opt["AspectRatio"],
+                                                cmd_opt["FPS"],
+                                                '-map 0:v? -map_chapters 0',
+                                                cmd_opt["SubtitleMap"],
+                                                cmd_opt["AudioCodec"], 
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1], 
+                                                cmd_opt["AudioDepth"][1],
+                                                cmd_opt["AudioMap"],
+                                                '-map_metadata 0',
+                                                    ))
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
                 return command, '', cmd_opt["OutputFormat"]
@@ -1782,42 +1820,35 @@ class AV_Conv(wx.Panel):
                 
         elif cmd_opt["Passing"] == "2 pass":
             if cmd_opt["VideoCodec"] == "-c:v libx265":
-                opt1 = '-x265-params pass=1%s%s%s' %(cmd_opt["Qmin"],
-                                                     cmd_opt["Qmax"],
-                                                     cmd_opt["BufferSize"],)
-                                                     
-                opt2 = '-x265-params pass=2%s%s%s' %(cmd_opt["Qmin"],
-                                                     cmd_opt["Qmax"],
-                                                     cmd_opt["BufferSize"],)
+                opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
             else:
-                opt1 = '%s %s %s -pass 1' %(cmd_opt["Qmin"],
-                                            cmd_opt["Qmax"],
-                                            cmd_opt["BufferSize"],)
-                opt2 = '%s %s %s -pass 2' %(cmd_opt["Qmin"],
-                                            cmd_opt["Qmax"],
-                                            cmd_opt["BufferSize"],)
-
-            
-            cmd1 = ('-an -sn %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                    '-f rawvideo' %(cmd_opt["VideoCodec"],
-                                    cmd_opt["CRF"],
-                                    cmd_opt["VideoBitrate"], 
-                                    cmd_opt["Deadline"],
-                                    cmd_opt["CpuUsed"],
-                                    cmd_opt["RowMthreading"],
-                                    cmd_opt["Presets"], 
-                                    cmd_opt["Profile"], 
-                                    cmd_opt["Tune"], 
-                                    cmd_opt["AspectRatio"], 
-                                    cmd_opt["FPS"], 
-                                    cmd_opt["Filters"], 
-                                    cmd_opt["PixFmt"],
-                                    opt1,
-                                    ))
-            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s '
+                opt1, opt2 = '-pass 1', '-pass 2'
+            cmd1 = ('-an -sn %s %s %s %s %s %s %s %s %s %s %s %s %s '
+                    '%s %s %s %s -f rawvideo' %(cmd_opt["VideoCodec"],
+                                                cmd_opt["VideoBitrate"],
+                                                cmd_opt["MinRate"],
+                                                cmd_opt["MaxRate"],
+                                                cmd_opt["Bufsize"],
+                                                cmd_opt["CRF"],
+                                                cmd_opt["Deadline"],
+                                                cmd_opt["CpuUsed"],
+                                                cmd_opt["RowMthreading"],
+                                                cmd_opt["Presets"], 
+                                                cmd_opt["Profile"], 
+                                                cmd_opt["Tune"], 
+                                                cmd_opt["AspectRatio"], 
+                                                cmd_opt["FPS"], 
+                                                cmd_opt["Filters"], 
+                                                cmd_opt["PixFmt"],
+                                                opt1,
+                                                ))
+            cmd2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                    '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"],
-                                                  cmd_opt["CRF"],
-                                                  cmd_opt["VideoBitrate"], 
+                                                  cmd_opt["VideoBitrate"],
+                                                  cmd_opt["MinRate"],
+                                                  cmd_opt["MaxRate"],
+                                                  cmd_opt["Bufsize"],
+                                                  cmd_opt["CRF"], 
                                                   cmd_opt["Deadline"],
                                                   cmd_opt["CpuUsed"],
                                                   cmd_opt["RowMthreading"],
@@ -1827,15 +1858,16 @@ class AV_Conv(wx.Panel):
                                                   cmd_opt["AspectRatio"], 
                                                   cmd_opt["FPS"], 
                                                   cmd_opt["Filters"], 
-                                                  cmd_opt["PixFmt"], 
+                                                  cmd_opt["PixFmt"],
+                                                  '-map 0:v? -map_chapters 0',
                                                   opt2,
+                                                  cmd_opt["SubtitleMap"],
                                                   cmd_opt["AudioCodec"], 
                                                   cmd_opt["AudioBitrate"][1], 
                                                   cmd_opt["AudioRate"][1], 
                                                   cmd_opt["AudioChannel"][1], 
                                                   cmd_opt["AudioDepth"][1], 
                                                   cmd_opt["AudioMap"],
-                                                  cmd_opt["SubtitleMap"],
                                                   '-map_metadata 0',
                                                   ))
             pass1 = " ".join(cmd1.split())
@@ -1861,38 +1893,33 @@ class AV_Conv(wx.Panel):
             #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
 
         elif cmd_opt["Passing"] == "1 pass": # Batch-Mode / h264 Codec
-            if cmd_opt["VideoCodec"] == "-c:v libx265":
-                opt = '-x265-params %s%s%s' %(cmd_opt["Qmin"],
-                                              cmd_opt["Qmax"],
-                                              cmd_opt["BufferSize"],)
-            else:
-                opt = '%s %s %s' %(cmd_opt["Qmin"],
-                                   cmd_opt["Qmax"],
-                                   cmd_opt["BufferSize"],)
             command = ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
-                       '%s %s %s %s' % (cmd_opt["VideoCodec"], 
-                                        cmd_opt["CRF"],
-                                        cmd_opt["VideoBitrate"],
-                                        opt,
-                                        cmd_opt["Deadline"],
-                                        cmd_opt["CpuUsed"],
-                                        cmd_opt["RowMthreading"],
-                                        cmd_opt["Presets"], 
-                                        cmd_opt["Profile"],
-                                        cmd_opt["Tune"], 
-                                        cmd_opt["AspectRatio"], 
-                                        cmd_opt["FPS"], 
-                                        cmd_opt["Filters"],
-                                        cmd_opt["PixFmt"], 
-                                        cmd_opt["AudioCodec"], 
-                                        cmd_opt["AudioBitrate"][1], 
-                                        cmd_opt["AudioRate"][1], 
-                                        cmd_opt["AudioChannel"][1], 
-                                        cmd_opt["AudioDepth"][1], 
-                                        cmd_opt["AudioMap"],
-                                        cmd_opt["SubtitleMap"],
-                                        '-map_metadata 0',
-                                        ))
+                       '%s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
+                                                cmd_opt["VideoBitrate"],
+                                                cmd_opt["MinRate"],
+                                                cmd_opt["MaxRate"],
+                                                cmd_opt["Bufsize"],
+                                                cmd_opt["CRF"],
+                                                cmd_opt["Deadline"],
+                                                cmd_opt["CpuUsed"],
+                                                cmd_opt["RowMthreading"],
+                                                cmd_opt["Presets"], 
+                                                cmd_opt["Profile"],
+                                                cmd_opt["Tune"], 
+                                                cmd_opt["AspectRatio"], 
+                                                cmd_opt["FPS"], 
+                                                cmd_opt["Filters"],
+                                                cmd_opt["PixFmt"], 
+                                                '-map 0:v? -map_chapters 0',
+                                                cmd_opt["SubtitleMap"],
+                                                cmd_opt["AudioCodec"], 
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1], 
+                                                cmd_opt["AudioDepth"][1], 
+                                                cmd_opt["AudioMap"],
+                                                '-map_metadata 0',
+                                                ))
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
                 return command, '', cmd_opt["OutputFormat"]
@@ -1927,20 +1954,9 @@ class AV_Conv(wx.Panel):
                                               str(self.spin_tp.GetValue()),
                                               str(self.spin_lra.GetValue()),))
         if cmd_opt["VideoCodec"] == "-c:v libx265":
-            opt1 = '-x265-params pass=1%s%s%s' %(cmd_opt["Qmin"],
-                                                 cmd_opt["Qmax"],
-                                                 cmd_opt["BufferSize"],)
-                                                     
-            opt2 = '-x265-params pass=2%s%s%s' %(cmd_opt["Qmin"],
-                                                    cmd_opt["Qmax"],
-                                                    cmd_opt["BufferSize"],)
+            opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
         else:
-            opt1 = '%s %s %s -pass 1' %(cmd_opt["Qmin"],
-                                        cmd_opt["Qmax"],
-                                        cmd_opt["BufferSize"],)
-            opt2 = '%s %s %s -pass 2' %(cmd_opt["Qmin"],
-                                        cmd_opt["Qmax"],
-                                        cmd_opt["BufferSize"],) 
+            opt1, opt2 = '-pass 1', '-pass 2' 
         
         if self.cmb_Vcod.GetValue() == "Copy":
             cmd_1 = ('-af %s -vn -sn %s %s %s %s -f null' %(
@@ -1950,20 +1966,21 @@ class AV_Conv(wx.Panel):
                                                     cmd_opt["FPS"],
                                                     cmd_opt["AudioMap"],
                                                     ))
-            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s %s %s' %(
-                                                    cmd_opt["VideoCodec"], 
-                                                    opt2,
-                                                    cmd_opt["AspectRatio"],
-                                                    cmd_opt["FPS"],
-                                                    cmd_opt["AudioCodec"], 
-                                                    cmd_opt["AudioBitrate"][1], 
-                                                    cmd_opt["AudioRate"][1], 
-                                                    cmd_opt["AudioChannel"][1], 
-                                                    cmd_opt["AudioDepth"][1],
-                                                    cmd_opt["AudioMap"],
-                                                    cmd_opt["SubtitleMap"],
-                                                    '-map_metadata 0',
-                                                    ))
+            cmd_2 = ('%s %s %s %s %s %s %s %s %s %s %s %s %s' %(
+                                                cmd_opt["VideoCodec"], 
+                                                opt2,
+                                                cmd_opt["AspectRatio"],
+                                                cmd_opt["FPS"],
+                                                '-map 0:v? -map_chapters 0',
+                                                cmd_opt["SubtitleMap"],
+                                                cmd_opt["AudioCodec"], 
+                                                cmd_opt["AudioBitrate"][1], 
+                                                cmd_opt["AudioRate"][1], 
+                                                cmd_opt["AudioChannel"][1], 
+                                                cmd_opt["AudioDepth"][1],
+                                                cmd_opt["AudioMap"],
+                                                '-map_metadata 0',
+                                                ))
             pass1 = " ".join(cmd_1.split())
             pass2 = " ".join(cmd_2.split())
             if logname == 'save as profile':
@@ -1984,12 +2001,15 @@ class AV_Conv(wx.Panel):
                                            countmax,
                                            )
         else:
-            cmd_1 = ('-af %s -sn %s %s %s %s %s %s %s %s %s %s %s %s %s '
+            cmd_1 = ('-af %s -sn %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                      '%s %s -f %s' % (loudfilter,
                                       cmd_opt["VideoCodec"],
                                       opt1,
-                                      cmd_opt["CRF"],
                                       cmd_opt["VideoBitrate"],
+                                      cmd_opt["MinRate"],
+                                      cmd_opt["MaxRate"],
+                                      cmd_opt["Bufsize"],
+                                      cmd_opt["CRF"],
                                       cmd_opt["Deadline"],
                                       cmd_opt["CpuUsed"],
                                       cmd_opt["RowMthreading"],
@@ -2004,11 +2024,14 @@ class AV_Conv(wx.Panel):
                                       '%s' % muxers[cmd_opt["OutputFormat"]],
                                       ))
                 
-            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s '
+            cmd_2= ('%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s '
                     '%s %s %s %s %s %s %s %s %s' %(cmd_opt["VideoCodec"], 
                                                    opt2,
-                                                   cmd_opt["CRF"],
-                                                   cmd_opt["VideoBitrate"], 
+                                                   cmd_opt["VideoBitrate"],
+                                                   cmd_opt["MinRate"],
+                                                   cmd_opt["MaxRate"],
+                                                   cmd_opt["Bufsize"],
+                                                   cmd_opt["CRF"], 
                                                    cmd_opt["Deadline"],
                                                    cmd_opt["CpuUsed"],
                                                    cmd_opt["RowMthreading"],
@@ -2019,13 +2042,14 @@ class AV_Conv(wx.Panel):
                                                    cmd_opt["FPS"], 
                                                    cmd_opt["Filters"],
                                                    cmd_opt["PixFmt"], 
+                                                   '-map 0:v? -map_chapters 0',
+                                                   cmd_opt["SubtitleMap"],
                                                    cmd_opt["AudioCodec"], 
                                                    cmd_opt["AudioBitrate"][1], 
                                                    cmd_opt["AudioRate"][1], 
                                                    cmd_opt["AudioChannel"][1], 
                                                    cmd_opt["AudioDepth"][1], 
                                                    cmd_opt["AudioMap"],
-                                                   cmd_opt["SubtitleMap"],
                                                    '-map_metadata 0',
                                                    ))
             pass1 = " ".join(cmd_1.split())
@@ -2199,7 +2223,7 @@ class AV_Conv(wx.Panel):
                          \nPreset\nProfile\nTune\nAudio Codec\
                          \nAudio Channels\nAudio Rate\nAudio bit-rate\
                          \nBit per Sample\nAudio Normalization\
-                         \nAudio Stream index\nSubtitle stream index\
+                         \nAudio Streams index\nSubtitles streams index\
                          \nTime selection"
                          ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
@@ -2210,9 +2234,9 @@ class AV_Conv(wx.Panel):
                                     cmd_opt["VidCmbxStr"], 
                                     cmd_opt["VideoBitrate"], 
                                     cmd_opt["CRF"],
-                                    cmd_opt["Qmin"],
-                                    cmd_opt["Qmax"],
-                                    cmd_opt["BufferSize"],
+                                    cmd_opt["MinRate"],
+                                    cmd_opt["MaxRate"],
+                                    cmd_opt["Bufsize"],
                                     '%s %s %s' %(cmd_opt["Deadline"], 
                                                 cmd_opt["CpuUsed"],
                                                 cmd_opt["RowMthreading"],
