@@ -136,7 +136,7 @@ class Loudnorm(Thread):
                                                           self.nul,
                                                           )) 
             self.count += 1
-            count = ('Loudnorm af: Getting statistics for measurements...\n  '
+            count = ('Loudnorm ebu: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass1)
             wx.CallAfter(pub.sendMessage, 
@@ -227,7 +227,7 @@ class Loudnorm(Thread):
             time.sleep(.5)
                 
             pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} -filter:a: {4} {5} -y "{6}/{7}.{8}"'.format(
+                     '{1} -i "{2}" {3} -filter:a:{9} {4} {5} -y "{6}/{7}.{8}"'.format(
                                                             ffmpeg_url, 
                                                             self.time_seq,
                                                             files,
@@ -237,9 +237,9 @@ class Loudnorm(Thread):
                                                             folders, 
                                                             filename,
                                                             outext,
-                                                            #self.audioOUTmap[1]
+                                                            self.audioOUTmap[1]
                                                             ))
-            count = ('Loudnorm af: apply EBU R128...\n  '
+            count = ('Loudnorm ebu: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
             wx.CallAfter(pub.sendMessage, 

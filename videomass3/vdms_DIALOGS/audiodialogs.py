@@ -308,16 +308,18 @@ compression formats, do not have associated bit depths.\
         self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
-        self.bitdepth = {0:("Auto",""),1:("16 bit","-c:a pcm_s16le"),
-                         2:("24 bit","-c:a pcm_s24le"),
-                         4:("32 bit","-c:a pcm_s32le")
+        self.bitdepth = {0:("Auto",""),
+                         1:("16 bit","pcm_s16le"),
+                         2:("24 bit","pcm_s24le"),
+                         4:("32 bit","pcm_s32le")
                          }
     #-----------------------------------------------------------------#
     def flac(self):
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate
-        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 
+                         1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
         self.bitrate = {0:("Auto",""), 
@@ -340,7 +342,8 @@ compression formats, do not have associated bit depths.\
         """
         """
         self.sample_rate = TypeAudioParameters.sample_rate
-        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 
+                         1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
     
@@ -349,7 +352,8 @@ compression formats, do not have associated bit depths.\
         """
         """
         #self.sample_rate
-        self.channels = {0:("Auto",""), 1:("Mono","-ac 1"), 
+        self.channels = {0:("Auto",""), 
+                         1:("Mono","-ac 1"), 
                          2:("Stereo","-ac 2")
                          }
         self.bitrate = {

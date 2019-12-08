@@ -3,6 +3,12 @@
 URGENCY: to do soon
 --------------------  
 
+- Add combobox preset choice on the Video Properties box to selecting a ready 
+  optimization to a certain conversion type e.g. h.264, High Definition.
+  
+- add 'Pictures' on the Media list to export image sequences in jpg, png, bmp 
+  formats.
+
 --------------
 URGENCY: high
 --------------
@@ -19,7 +25,7 @@ URGENCY: low
   
 - Show youtube-dl version.
 
-- Add extra parameters for video filters section on Videoconverions panel 
+- Add extra parameters for video filters section on Audio/Video converions panel
 
 ---------------
 URGENCY: medium
