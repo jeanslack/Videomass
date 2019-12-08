@@ -464,12 +464,12 @@ class AV_Conv(wx.Panel):
         for n,v in enumerate(av_formats["mkv"]):
             if not v: # disable only not compatible with mkv 
                 self.rdb_a.EnableItem(n,enable=False)
-        sizer_nbAudio.Add(self.rdb_a, 1, wx.ALL | wx.EXPAND, 20)
+        sizer_nbAudio.Add(self.rdb_a, 1, wx.ALL | wx.EXPAND, 10)
         self.box_audioProper = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio, 
                                         wx.ID_ANY, _("Audio Properties")), 
                                         wx.VERTICAL
                                             )
-        sizer_nbAudio.Add(self.box_audioProper, 1, wx.ALL|wx.EXPAND, 20)
+        sizer_nbAudio.Add(self.box_audioProper, 1, wx.ALL|wx.EXPAND, 10)
         grid_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         self.box_audioProper.Add(grid_a_ctrl, 0, wx.ALL|wx.EXPAND, 0)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
@@ -493,9 +493,9 @@ class AV_Conv(wx.Panel):
                                         wx.ID_ANY, _("Audio Streams Mapping")), 
                                         wx.VERTICAL
                                             )
-        sizer_nbAudio.Add(self.box_audioMap, 1, wx.ALL | wx.EXPAND, 20)
+        sizer_nbAudio.Add(self.box_audioMap, 1, wx.ALL | wx.EXPAND, 10)
         grid_Amap = wx.FlexGridSizer(2,2,0,0)
-        self.box_audioMap.Add(grid_Amap,0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15)
+        self.box_audioMap.Add(grid_Amap, 0, wx.ALL|wx.EXPAND, 15)
         txtAinmap = wx.StaticText(self.nb_Audio, wx.ID_ANY, 
                                    _('Input Audio Index')
                                    )

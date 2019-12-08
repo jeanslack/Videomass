@@ -326,4 +326,4 @@ class Logging_Console(wx.Panel):
         self.OutText.Clear()
         self.parent.panelShown(self.previus)# retrieve at previusly panel
         #event.Skip()
-    
+        
