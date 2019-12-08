@@ -12,6 +12,8 @@ December 4, 2019 V.1.8.0
 BUGS:
     * Fixed configuration file rewrite issue when you set FFmpeg/FFplay logging 
       levels from the Settings dialog.
+    * Fixed issue with incorrect 'tune' name option for h264/h265. "fastedecode" 
+      error corrected with "fastdecode"
 
 NEWS:
     * GUI completely redesigned to make it easier for users to use.
@@ -41,8 +43,8 @@ NEWS:
       Presets Manager tool.
     
 ADDED:
-    * Added two text boxes on Presets Manager to view FFmpeg command line for 
-      one and two pass encoding
+    * Added another text boxe on Presets Manager to view the two pass command 
+      line 
     
     * Dialog to add new profile has box entry for two pass conversion
     
@@ -53,7 +55,10 @@ ADDED:
     * Add new entry box on Settings dialog to choose the user default directory
       to files storing
       
-    * Added Containers selction, Media selection and pixel format comboboxes
+    * Added Containers selection, Media selection, pixel format selection,
+      min rate, max rate, buffer size, subtitle selection and audio index
+      selection controls on the av_conversions.
+      
     
 IMPROVEMENTS:
     * Improved all GUI layouts

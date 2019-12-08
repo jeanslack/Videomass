@@ -109,7 +109,7 @@ class VolumeDetectThread(Thread):
     lack of ffmpeg of course.
     
     """
-    def __init__(self, timeseq, filelist, OS):
+    def __init__(self, timeseq, filelist, audiomap, OS):
         """
         Replace /dev/null with NUL on Windows.
         
@@ -125,6 +125,7 @@ class VolumeDetectThread(Thread):
         """initialize"""
         self.filelist = filelist
         self.time_seq = timeseq
+        self.audiomap = audiomap
         self.status = None
         self.data = None
         self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
@@ -149,10 +150,11 @@ class VolumeDetectThread(Thread):
         volume = list()
 
         for files in self.filelist:
-            cmd = ('{0} {1} -i "{2}" -hide_banner -af volumedetect '
-                    '-vn -sn -dn -f null {3}').format(ffmpeg_url, 
+            cmd = ('{0} {1} -i "{2}" -hide_banner {3} -af volumedetect '
+                    '-vn -sn -dn -f null {4}').format(ffmpeg_url, 
                                                       self.time_seq,
                                                       files,
+                                                      self.audiomap,
                                                       self.nul)
             self.logWrite(cmd)
             

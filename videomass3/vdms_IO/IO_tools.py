@@ -105,12 +105,12 @@ def probeInfo(filename):
     
     return (data , None)
 #-------------------------------------------------------------------------#
-def volumeDetectProcess(filelist, time_seq):
+def volumeDetectProcess(filelist, time_seq, audiomap):
     """
     Run a thread to get audio peak level data and show a 
     pop-up dialog with message. 
     """
-    thread = VolumeDetectThread(time_seq, filelist, OS) 
+    thread = VolumeDetectThread(time_seq, filelist, audiomap, OS) 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."), 
                                 _("\nWait....\nAudio peak analysis.\n")
                           )

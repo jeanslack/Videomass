@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ffmpeg_conf.py
-# Porpose: Dialog to show the build configuration of the FFmpeg
+# Porpose: Shows the features of the FFmpeg build configuration
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -33,8 +33,8 @@ from shutil import which
 
 class Checkconf(wx.MiniFrame):
     """
-    View the features of the build configuration of 
-    FFmpeg on different notebook panels
+    Shows a graphical representation of the FFmpeg configuration 
+    sorted by topic
     
     """
     def __init__(self, out, ffmpeg_link, ffprobe_link, ffplay_link, OS):

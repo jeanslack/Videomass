@@ -52,21 +52,19 @@ class Choose_Topic(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         sizer_base.Add(welcome, 0, wx.TOP|
                                    wx.ALIGN_CENTER_VERTICAL|
-                                   wx.ALIGN_CENTER_HORIZONTAL, 15)
-        #sizer_base.Add(vers, 0, wx.ALL|
-                                #wx.ALIGN_CENTER_VERTICAL|
-                                #wx.ALIGN_CENTER_HORIZONTAL, 15)
+                                   wx.ALIGN_CENTER_HORIZONTAL, 15
+                                   )
         grid_buttons = wx.FlexGridSizer(1, 4, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
 
         video_lab = _('    Audio/Video Conversions     ')
-        audio_lab = _('    Audio Conversions     ')
-        pict_lab = _('Pictures from Video')
-        audgr_lab = _('Extract Audio from Video')
-        slide_lab = _('Picture Slideshow Maker')
-        audmer_lab = _('Merging Audio and Video')
+        #audio_lab = _('    Audio Conversions     ')
+        #pict_lab = _('Pictures from Video')
+        #audgr_lab = _('Extract Audio from Video')
+        #slide_lab = _('Picture Slideshow Maker')
+        #audmer_lab = _('Merging Audio and Video')
         youtube_lab =  _('Download from YouTube')
-        anorm_lab =  _('Audio Normalization')
+        #anorm_lab =  _('Audio Normalization')
         prst_mng =  _('      Presets Manager      ')
         
         self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1,-1))
@@ -132,7 +130,7 @@ class Choose_Topic(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
     #------------------------------------------------------------------#    
     def on_Video(self, event):
-        self.parent.File_import(self, 'Video Conversions')
+        self.parent.File_import(self, 'Audio/Video Conversions')
     #------------------------------------------------------------------#
     #def on_Audio(self, event):
         #self.parent.File_import(self, 'Audio Conversions')

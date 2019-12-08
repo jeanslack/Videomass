@@ -90,7 +90,9 @@ class Loudnorm(Thread):
         self.stop_work_thread = False # process terminate
         self.filelist = var[1] # list of files (elements)
         self.ext = var[2]
-        self.passList = var[5] # comand list set for double-pass
+        self.passList = var[5] # comand list
+        self.audioINmap = var[6] # map input list
+        self.audioOUTmap = var[7] # map output list
         self.outputdir = var[3] # output path
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
@@ -225,7 +227,7 @@ class Loudnorm(Thread):
             time.sleep(.5)
                 
             pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} -af {4} {5} -y "{6}/{7}.{8}"'.format(
+                     '{1} -i "{2}" {3} -filter:a: {4} {5} -y "{6}/{7}.{8}"'.format(
                                                             ffmpeg_url, 
                                                             self.time_seq,
                                                             files,
@@ -235,6 +237,7 @@ class Loudnorm(Thread):
                                                             folders, 
                                                             filename,
                                                             outext,
+                                                            #self.audioOUTmap[1]
                                                             ))
             count = ('Loudnorm af: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))

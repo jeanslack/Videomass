@@ -349,7 +349,7 @@ class Downloader(wx.Panel):
     
     def on_Start(self):
 
-        logname = 'Youtube_downloader'
+        logname = 'Youtube_downloader.log'
         urls = self.parent.data
         
         if self.choice.GetSelection() == 0:

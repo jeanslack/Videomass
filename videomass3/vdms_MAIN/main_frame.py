@@ -271,7 +271,8 @@ class MainFrame(wx.Frame):
         elif self.OS == 'Windows':
             self.SetSize((950, 650))
         else:
-            self.SetSize((930, 600))
+            #self.SetSize((930, 600))
+            self.SetSize((930, 750))
         #self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:
@@ -362,7 +363,7 @@ class MainFrame(wx.Frame):
         """
         """
         self.data = data
-        if self.topicname == 'Video Conversions':
+        if self.topicname == 'Audio/Video Conversions':
             self.switch_av_conversions(self)
             
         #elif self.topicname == 'Audio Conversions':
@@ -1009,7 +1010,7 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide()#, self.AconvPanel.Hide()
         self.PrstsPanel.Hide(), self.VconvPanel.Show(), 
-        self.statusbar_msg(_('Video Conversions'), None)
+        self.statusbar_msg(_('Audio/Video Conversions'), None)
         flist = [f['format']['filename'] for f in 
                  self.data if f['format']['filename']
                  ]
@@ -1115,7 +1116,7 @@ class MainFrame(wx.Frame):
         panel showing and re-enables the functions provided by 
         the menu bar.
         """
-        if panelshown == 'Video Conversions':
+        if panelshown == 'Audio/Video Conversions':
             self.ProcessPanel.Hide()
             self.switch_av_conversions(self)
             self.btnpanel.Show()
