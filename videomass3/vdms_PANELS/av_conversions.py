@@ -1475,8 +1475,14 @@ class AV_Conv(wx.Panel):
         sel = self.cmb_A_inMap.GetValue()
         if sel == 'Auto':
             cmd_opt["AudioInMap"] = ['','']
+            self.cmb_A_outMap.Enable()
+            self.cmb_A_outMap.SetSelection(1)
+            self.on_audioOUTstream(self)
         else:
             cmd_opt["AudioInMap"] = ['-map 0:%s' % sel, sel]
+            self.cmb_A_outMap.SetStringSelection(self.cmb_A_inMap.GetValue())
+            self.cmb_A_outMap.Disable()
+            self.on_audioOUTstream(self)
         
         if self.rdbx_normalize.GetSelection() in  [1,2]:
             if not self.btn_voldect.IsEnabled():
