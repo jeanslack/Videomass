@@ -390,34 +390,34 @@ class AV_Conv(wx.Panel):
         grid_h264panel.Add(txtpresets, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL| 
                                                wx.ALIGN_CENTER_VERTICAL, 5
                                                )
-        self.cmb_h264preset = wx.ComboBox(self.h264panel, wx.ID_ANY,  
+        self.cmb_preset = wx.ComboBox(self.h264panel, wx.ID_ANY,  
                                     choices=[p for p in x264_opt["Presets"]],
                                           size=(120,-1), style=wx.CB_DROPDOWN | 
                                                                wx.CB_READONLY
                                                                )
-        grid_h264panel.Add(self.cmb_h264preset, 0, wx.ALL |
+        grid_h264panel.Add(self.cmb_preset, 0, wx.ALL |
                                                    wx.ALIGN_CENTER_HORIZONTAL|
                                                    wx.ALIGN_CENTER_VERTICAL, 5
                                                    )
         txtprofile = wx.StaticText(self.h264panel, wx.ID_ANY, _('Profile'))
         grid_h264panel.Add(txtprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_h264profile = wx.ComboBox(self.h264panel, wx.ID_ANY,  
+        self.cmb_profile = wx.ComboBox(self.h264panel, wx.ID_ANY,  
                                     choices=[p for p in x264_opt["Profiles"]],
                                            size=(120,-1), style=wx.CB_DROPDOWN | 
                                                                 wx.CB_READONLY
                                                                 )
-        grid_h264panel.Add(self.cmb_h264profile, 0, wx.ALL | 
+        grid_h264panel.Add(self.cmb_profile, 0, wx.ALL | 
                                                wx.ALIGN_CENTER_VERTICAL, 5)
         
         txttune = wx.StaticText(self.h264panel, wx.ID_ANY, _('Tune'))
         grid_h264panel.Add(txttune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         
         
-        self.cmb_h264tune = wx.ComboBox(self.h264panel, wx.ID_ANY,
+        self.cmb_tune = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                         choices=[p for p in x264_opt["Tunes"]],
                                         size=(120,-1), style=wx.CB_DROPDOWN | 
                                                                 wx.CB_READONLY)
-        grid_h264panel.Add(self.cmb_h264tune, 0, wx.ALL | 
+        grid_h264panel.Add(self.cmb_tune, 0, wx.ALL | 
                                             wx.ALIGN_CENTER_VERTICAL, 5)
         self.h264panel.SetSizer(sizer_h264panel) # set panel
 
@@ -806,9 +806,9 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
-        self.Bind(wx.EVT_COMBOBOX, self.on_h264Presets, self.cmb_h264preset)
-        self.Bind(wx.EVT_COMBOBOX, self.on_h264Profiles, self.cmb_h264profile)
-        self.Bind(wx.EVT_COMBOBOX, self.on_h264Tunes, self.cmb_h264tune)
+        self.Bind(wx.EVT_COMBOBOX, self.on_xPreset, self.cmb_preset)
+        self.Bind(wx.EVT_COMBOBOX, self.on_xProfile, self.cmb_profile)
+        self.Bind(wx.EVT_COMBOBOX, self.on_xTune, self.cmb_tune)
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
 
         #-------------------------------------- initialize default layout:
@@ -829,12 +829,23 @@ class AV_Conv(wx.Panel):
         """
         if cmd_opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
             self.vp9panel.Hide(), self.h264panel.Show()
+            self.cmb_tune.Clear(), self.cmb_profile.Clear()
             if cmd_opt["VideoCodec"] == "-c:v libx264":
                 self.slider_CRF.SetValue(23)
+                for tune in x264_opt['Tunes']:
+                    self.cmb_tune.Append((tune),)
+                for prof in x264_opt["Profiles"]:
+                    self.cmb_profile.Append((prof),)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
                 self.slider_CRF.SetValue(28) 
+                for tune in x265_opt["Tunes"]:
+                    self.cmb_tune.Append((tune),)
+                for prof in x265_opt["Profiles"]:
+                    self.cmb_profile.Append((prof),)
             self.filterVpanel.Show(), self.slider_CRF.SetMax(51)
-        
+            self.cmb_preset.SetSelection(0), self.cmb_profile.SetSelection(0)
+            self.cmb_tune.SetSelection(0)
+            
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                        "-c:v libaom-av1 -strict -2"]:
             self.vp9panel.Show(), self.h264panel.Hide()
@@ -864,24 +875,22 @@ class AV_Conv(wx.Panel):
                 self.ckbx_pass.Enable()
         self.on_Pass(self) 
         
-        if opt265:
-            self.cmb_h264tune.Clear(), self.cmb_h264profile.Clear()
-            if cmd_opt["VideoCodec"] == "-c:v libx265":
-                for tune in x265_opt["Tunes"]:
-                    self.cmb_h264tune.Append((tune),)
-                for prof in x265_opt["Profiles"]:
-                    self.cmb_h264profile.Append((prof),)
-            elif cmd_opt["VideoCodec"] == "-c:v libx264":
-                for tune in x264_opt['Tunes']:
-                    self.cmb_h264tune.Append((tune),)
-                for prof in x264_opt["Profiles"]:
-                    self.cmb_h264profile.Append((prof),)
+        #if opt265:
+            #self.cmb_tune.Clear(), self.cmb_profile.Clear()
+            #if cmd_opt["VideoCodec"] == "-c:v libx265":
+                #for tune in x265_opt["Tunes"]:
+                    #self.cmb_tune.Append((tune),)
+                #for prof in x265_opt["Profiles"]:
+                    #self.cmb_profile.Append((prof),)
+            #elif cmd_opt["VideoCodec"] == "-c:v libx264":
+                #for tune in x264_opt['Tunes']:
+                    #self.cmb_tune.Append((tune),)
+                #for prof in x264_opt["Profiles"]:
+                    #self.cmb_profile.Append((prof),)
                     
-        self.cmb_h264preset.SetSelection(0) 
+        
         cmd_opt["Preset"] = ''
-        self.cmb_h264profile.SetSelection(0)
         cmd_opt["Profile"] = ''
-        self.cmb_h264tune.SetSelection(0)
         cmd_opt["Tune"] = ''
                     
     #-------------------------------------------------------------------#
@@ -1716,31 +1725,31 @@ class AV_Conv(wx.Panel):
         audionormlist.Show()
         
     #------------------------------------------------------------------#
-    def on_h264Presets(self, event):
+    def self.on_xPreset(self, event):
         """
         Set h264/h265 only
         """
-        select = self.cmb_h264preset.GetStringSelection()
+        select = self.cmb_preset.GetStringSelection()
         if select == "None":
             cmd_opt["Preset"] = ""
         else:
             cmd_opt["Preset"] = "-preset:v %s" % (select)
     #------------------------------------------------------------------#
-    def on_h264Profiles(self, event):
+    def self.on_xProfile(self, event):
         """
         Set h264/h265 only
         """
-        select = self.cmb_h264profile.GetStringSelection()
+        select = self.cmb_profile.GetStringSelection()
         if select == "None":
             cmd_opt["Profile"] = ""
         else:
             cmd_opt["Profile"] = "-profile:v %s" % (select)
     #------------------------------------------------------------------#
-    def on_h264Tunes(self, event):
+    def self.on_xTune(self, event):
         """
         Set h264/h265 only
         """
-        select = self.cmb_h264tune.GetStringSelection()
+        select = self.cmb_tune.GetStringSelection()
         if select == "None":
             cmd_opt["Tune"] = ""
         else:
