@@ -786,7 +786,6 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.videoCodec, self.cmb_Vcod)
         self.Bind(wx.EVT_COMBOBOX, self.on_Container, self.cmb_Vcont)
         self.Bind(wx.EVT_COMBOBOX, self.on_Media, self.cmb_Media)
-        self.cmb_Vcod.Bind(wx.EVT_COMBOBOX, self.videoCodec)
         self.Bind(wx.EVT_RADIOBOX, self.on_Deadline, self.rdb_deadline)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
         self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
@@ -802,10 +801,8 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmb_Fps)
         self.Bind(wx.EVT_RADIOBOX, self.on_AudioCodecs, self.rdb_a)
         self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
-        
         self.Bind(wx.EVT_COMBOBOX, self.on_audioINstream, self.cmb_A_inMap)
         self.Bind(wx.EVT_COMBOBOX, self.on_audioOUTstream, self.cmb_A_outMap)
-        
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
@@ -813,7 +810,6 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_COMBOBOX, self.on_h264Profiles, self.cmb_h264profile)
         self.Bind(wx.EVT_COMBOBOX, self.on_h264Tunes, self.cmb_h264tune)
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
-        #self.Bind(wx.EVT_CLOSE, self.Quiet) # controlla la x di chiusura
 
         #-------------------------------------- initialize default layout:
         self.rdb_a.SetSelection(0), self.cmb_Vcod.SetSelection(1)
@@ -880,10 +876,14 @@ class AV_Conv(wx.Panel):
                     self.cmb_h264tune.Append((tune),)
                 for prof in x264_opt["Profiles"]:
                     self.cmb_h264profile.Append((prof),)
-            
-        self.cmb_h264preset.SetSelection(0), self.on_h264Presets(self)
-        self.cmb_h264profile.SetSelection(0), self.on_h264Profiles(self)
-        self.cmb_h264tune.SetSelection(0), self.on_h264Tunes(self)
+                    
+        self.cmb_h264preset.SetSelection(0) 
+        cmd_opt["Preset"] = ''
+        self.cmb_h264profile.SetSelection(0)
+        cmd_opt["Profile"] = ''
+        self.cmb_h264tune.SetSelection(0)
+        cmd_opt["Tune"] = ''
+                    
     #-------------------------------------------------------------------#
     
     def audio_default(self):
@@ -1464,10 +1464,12 @@ class AV_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_audioINstream(self, event):
         """
-        sets audio input stream as a source for the output file .
+        sets the specified audio input stream as index to process e.g.
+        for filters volumedected and loudnorm will map 0:N where N is
+        digit from 0 to available audio index up to 8.
         See: http://ffmpeg.org/ffmpeg.html#Advanced-options 
         When changes this feature affect audio filter peak and rms analyzers
-        and then re-enable volume dected button .
+        and then re-enable volume dected button . 
         
         """
         sel = self.cmb_A_inMap.GetValue()
@@ -1608,7 +1610,7 @@ class AV_Conv(wx.Panel):
                 if float(maxvol) == float(target):
                     volume.append('  ')
                 else:
-                    volume.append("-filter:a%s volume=%fdB" % (
+                    volume.append("-filter:a:%s volume=%fdB" % (
                                                     cmd_opt["AudioOutMap"][1], 
                                                     -offset))
                     
@@ -1667,7 +1669,7 @@ class AV_Conv(wx.Panel):
                 if offset == 0.0:
                     volume.append('  ')
                 else:
-                    volume.append("-filter:a%s volume=%fdB" % (
+                    volume.append("-filter:a:%s volume=%fdB" % (
                                                    cmd_opt["AudioOutMap"][1],
                                                    -offset))
                     
@@ -1710,21 +1712,19 @@ class AV_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_h264Presets(self, event):
         """
-        Set only for h264 (non ha il default)
+        Set h264/h265 only
         """
         select = self.cmb_h264preset.GetStringSelection()
-        
         if select == "None":
-            cmd_opt["Presets"] = ""
+            cmd_opt["Preset"] = ""
         else:
-            cmd_opt["Presets"] = "-preset:v %s" % (select)
+            cmd_opt["Preset"] = "-preset:v %s" % (select)
     #------------------------------------------------------------------#
     def on_h264Profiles(self, event):
         """
-        Set only for h264
+        Set h264/h265 only
         """
         select = self.cmb_h264profile.GetStringSelection()
-        
         if select == "None":
             cmd_opt["Profile"] = ""
         else:
@@ -1732,10 +1732,9 @@ class AV_Conv(wx.Panel):
     #------------------------------------------------------------------#
     def on_h264Tunes(self, event):
         """
-        Set only for h264
+        Set h264/h265 only
         """
         select = self.cmb_h264tune.GetStringSelection()
-        
         if select == "None":
             cmd_opt["Tune"] = ""
         else:
@@ -1860,15 +1859,15 @@ class AV_Conv(wx.Panel):
         audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
             
         if self.cmb_Vcod.GetValue() == "Copy":
-            command = (f'{cmd_opt["VideoCodec"]} {cmd_opt["PixFmt"]} '
-                       f'{cmd_opt["AspectRatio"]} {cmd_opt["FPS"]} '
-                       f' -map 0:v? -map_chapters 0 {cmd_opt["SubtitleMap"]} '
-                       f'{cmd_opt["AudioInMap"][0]} {cmd_opt["AudioCodec"][0]} '
-                       f'{cmd_opt["AudioCodec"][1]} ' 
-                       f'{cmd_opt["AudioBitrate"][1]} {cmd_opt["AudioRate"][1]} '
-                       f'{cmd_opt["AudioChannel"][1]} {cmd_opt["AudioDepth"][1]} '
-                       f'{cmd_opt["AudioOutMap"][0]} -map_metadata 0'
-                       )
+            command = (
+                    f'{cmd_opt["VideoCodec"]} {cmd_opt["PixFmt"]} '
+                    f'{cmd_opt["AspectRatio"]} {cmd_opt["FPS"]} '
+                    f' -map 0:v? -map_chapters 0 {cmd_opt["SubtitleMap"]} '
+                    f'{cmd_opt["AudioCodec"][0]} {cmd_opt["AudioCodec"][1]} ' 
+                    f'{cmd_opt["AudioBitrate"][1]} {cmd_opt["AudioRate"][1]} '
+                    f'{cmd_opt["AudioChannel"][1]} {cmd_opt["AudioDepth"][1]} '
+                    f'{cmd_opt["AudioOutMap"][0]} -map_metadata 0'
+                      )
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
                 return command, '', cmd_opt["OutputFormat"]
@@ -1899,7 +1898,7 @@ class AV_Conv(wx.Panel):
                     f'{cmd_opt["MaxRate"]} {cmd_opt["Bufsize"]} '
                     f'{cmd_opt["CRF"]} {cmd_opt["Deadline"]} '
                     f'{cmd_opt["CpuUsed"]} {cmd_opt["RowMthreading"]} '
-                    f'{cmd_opt["Presets"]} {cmd_opt["Profile"]} '
+                    f'{cmd_opt["Preset"]} {cmd_opt["Profile"]} '
                     f'{cmd_opt["Tune"]} {cmd_opt["AspectRatio"]} '
                     f'{cmd_opt["FPS"]} {cmd_opt["VFilters"]} '
                     f'{cmd_opt["PixFmt"]} {opt1} -f rawvideo'
@@ -1908,13 +1907,12 @@ class AV_Conv(wx.Panel):
                     f'{cmd_opt["MinRate"]} {cmd_opt["MaxRate"]} '
                     f'{cmd_opt["Bufsize"]} {cmd_opt["CRF"]} '
                     f'{cmd_opt["Deadline"]} {cmd_opt["CpuUsed"]} '
-                    f'{cmd_opt["RowMthreading"]} {cmd_opt["Presets"]} '
+                    f'{cmd_opt["RowMthreading"]} {cmd_opt["Preset"]} '
                     f'{cmd_opt["Profile"]} {cmd_opt["Tune"]} '
                     f'{cmd_opt["AspectRatio"]} {cmd_opt["FPS"]} '
                     f'{cmd_opt["VFilters"]} {cmd_opt["PixFmt"]} '
-                    f'-map 0:v? -map_chapters 0 '
-                    f'{opt2} {cmd_opt["SubtitleMap"]} '
-                    f'{cmd_opt["AudioInMap"][0]} {cmd_opt["AudioCodec"][0]} '
+                    f'-map 0:v? -map_chapters 0 {opt2} '
+                    f'{cmd_opt["SubtitleMap"]} {cmd_opt["AudioCodec"][0]} '
                     f'{cmd_opt["AudioCodec"][1]} {cmd_opt["AudioBitrate"][1]} '
                     f'{cmd_opt["AudioRate"][1]} {cmd_opt["AudioChannel"][1]} '
                     f'{cmd_opt["AudioDepth"][1]} {cmd_opt["AudioOutMap"][0]} '
@@ -1946,16 +1944,15 @@ class AV_Conv(wx.Panel):
                     f'{cmd_opt["MinRate"]} {cmd_opt["MaxRate"]} '
                     f'{cmd_opt["Bufsize"]} {cmd_opt["CRF"]} '
                     f'{cmd_opt["Deadline"]} {cmd_opt["CpuUsed"]} '
-                    f'{cmd_opt["RowMthreading"]} {cmd_opt["Presets"]} '
+                    f'{cmd_opt["RowMthreading"]} {cmd_opt["Preset"]} '
                     f'{cmd_opt["Profile"]} {cmd_opt["Tune"]} '
                     f'{cmd_opt["AspectRatio"]} {cmd_opt["FPS"]} '
                     f'{cmd_opt["VFilters"]} {cmd_opt["PixFmt"]} '
                     f'-map 0:v? -map_chapters 0 {cmd_opt["SubtitleMap"]} '
-                    f'{cmd_opt["AudioInMap"][0]} {cmd_opt["AudioCodec"][0]} '
-                    f'{cmd_opt["AudioCodec"][1]} {cmd_opt["AudioBitrate"][1]} '
-                    f'{cmd_opt["AudioRate"][1]} {cmd_opt["AudioChannel"][1]} '
-                    f'{cmd_opt["AudioDepth"][1]} {cmd_opt["AudioOutMap"][0]} '
-                    f'-map_metadata 0'
+                    f'{cmd_opt["AudioCodec"][0]} {cmd_opt["AudioCodec"][1]} '
+                    f'{cmd_opt["AudioBitrate"][1]} {cmd_opt["AudioRate"][1]} '
+                    f'{cmd_opt["AudioChannel"][1]} {cmd_opt["AudioDepth"][1]} '
+                    f'{cmd_opt["AudioOutMap"][0]} -map_metadata 0'
                         )
             command = " ".join(command.split())# mi formatta la stringa
             if logname == 'save as profile':
@@ -2035,7 +2032,7 @@ class AV_Conv(wx.Panel):
                      f'{cmd_opt["MinRate"]} {cmd_opt["MaxRate"]} '
                      f'{cmd_opt["Bufsize"]} {cmd_opt["CRF"]} '
                      f'{cmd_opt["Deadline"]} {cmd_opt["CpuUsed"]} '
-                     f'{cmd_opt["RowMthreading"]} {cmd_opt["Presets"]} '
+                     f'{cmd_opt["RowMthreading"]} {cmd_opt["Preset"]} '
                      f'{cmd_opt["Profile"]} {cmd_opt["Tune"]} '
                      f'{cmd_opt["AspectRatio"]} {cmd_opt["FPS"]} '
                      f'{cmd_opt["VFilters"]} {cmd_opt["PixFmt"]} -map 0:v? '
@@ -2047,7 +2044,7 @@ class AV_Conv(wx.Panel):
                     f'{cmd_opt["MinRate"]} {cmd_opt["MaxRate"]} '
                     f'{cmd_opt["Bufsize"]} {cmd_opt["CRF"]} '
                     f'{cmd_opt["Deadline"]} {cmd_opt["CpuUsed"]} '
-                    f'{cmd_opt["RowMthreading"]} {cmd_opt["Presets"]} '
+                    f'{cmd_opt["RowMthreading"]} {cmd_opt["Preset"]} '
                     f'{cmd_opt["Profile"]} {cmd_opt["Tune"]} '
                     f'{cmd_opt["AspectRatio"]} {cmd_opt["FPS"]} '
                     f'{cmd_opt["VFilters"]} {cmd_opt["PixFmt"]} '
@@ -2224,8 +2221,8 @@ class AV_Conv(wx.Panel):
         else:
             formula = (_("SUMMARY\n\nFile to Queue\nPass Encoding\
                          \nOutput Format\nVideo Codec\nVideo bit-rate\
-                         \nCRF\nQmin\nQmax\nBuffer size\nVP8/VP9 Options\
-                         \nVideo Filters\nAspect Ratio\nFPS\
+                         \nCRF\nMin Rate\nMax Rate\nBuffer size\
+                         \nVP8/VP9 Options\nVideo Filters\nAspect Ratio\nFPS\
                          \nPreset\nProfile\nTune\nAudio Codec\
                          \nAudio Channels\nAudio Rate\nAudio bit-rate\
                          \nBit per Sample\nAudio Normalization\
@@ -2250,7 +2247,7 @@ class AV_Conv(wx.Panel):
                                     cmd_opt["VFilters"], 
                                     cmd_opt["AspectRatio"], 
                                     cmd_opt["FPS"], 
-                                    cmd_opt["Presets"], 
+                                    cmd_opt["Preset"], 
                                     cmd_opt["Profile"], 
                                     cmd_opt["Tune"], 
                                     cmd_opt["AudioCodStr"], 
