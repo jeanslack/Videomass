@@ -97,9 +97,8 @@ class PrstPan(wx.Panel):
         wx.Panel.__init__(self, parent, -1) 
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY, 
-                                    style=wx.LC_REPORT| 
-                                          wx.SUNKEN_BORDER
+        self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | 
+                                                            wx.SUNKEN_BORDER
                                     )
         sizer_base.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
         nb1 = wx.Notebook(self, wx.ID_ANY, style=0)
@@ -116,11 +115,11 @@ class PrstPan(wx.Panel):
                                      choices=prst,
                                      size=(200,-1),
                                      style=wx.CB_DROPDOWN | 
-                                     wx.CB_READONLY
+                                           wx.CB_READONLY
                                      )
         grd_prst.Add(self.cmbx_prst, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
         nb1_p1.SetSizer(grd_prst)
-        nb1.AddPage(nb1_p1, (_("Preset Selection")))
+        nb1.AddPage(nb1_p1, _("Preset Selection"))
         #------- page commands
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         grd_cmd = wx.GridSizer(1, 2, 0, 0)
@@ -132,8 +131,8 @@ class PrstPan(wx.Panel):
                                          | wx.ALIGN_CENTER_HORIZONTAL 
                                          | wx.ALIGN_CENTER_VERTICAL, 15
                     )
-        self.txt_1cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"", style=wx.TE_MULTILINE| 
-                                                          wx.TE_PROCESS_ENTER
+        self.txt_1cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY,"",
+                                    style=wx.TE_MULTILINE | wx.TE_PROCESS_ENTER
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND 
                                               | wx.ALIGN_CENTER_HORIZONTAL 
@@ -142,7 +141,7 @@ class PrstPan(wx.Panel):
         box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY, 
                                                   _("Second pass parameters")), 
                                                     wx.VERTICAL
-                                                    )
+                                    )
         grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND 
                                         | wx.ALIGN_CENTER_HORIZONTAL 
                                         | wx.ALIGN_CENTER_VERTICAL, 15
@@ -161,24 +160,20 @@ class PrstPan(wx.Panel):
         size_auto = wx.BoxSizer(wx.HORIZONTAL)
         grd_autosx = wx.FlexGridSizer(2,1,5,5)
         size_auto.Add(grd_autosx, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
-        
         self.rdbx_norm = wx.RadioBox(self.nb1_p3,wx.ID_ANY,
                                      (_("Audio Normalization")), 
-                                     choices=[
-                                       ('Off'), 
-                                       ('PEAK'), 
-                                       ('RMS'),
-                                       ('EBU R128'),
+                                     choices=[('Off'), ('PEAK'), 
+                                              ('RMS'), ('EBU R128'),
                                               ], 
                                      majorDimension=1, 
                                      style=wx.RA_SPECIFY_ROWS,
                                             )
         grd_autosx.Add(self.rdbx_norm, 0, wx.ALL, 10)  
         
-        box_audioMap = wx.StaticBoxSizer(wx.StaticBox(self.nb1_p3, 
-                                        wx.ID_ANY, _("Audio Streams Mapping")), 
-                                        wx.VERTICAL
-                                            )
+        box_audioMap = wx.StaticBoxSizer(wx.StaticBox(self.nb1_p3, wx.ID_ANY, 
+                                                    _("Audio Streams Mapping")), 
+                                                      wx.VERTICAL
+                                        )
         grd_autosx.Add(box_audioMap, 0, wx.ALL | wx.EXPAND, 10)
         grd_map = wx.FlexGridSizer(1,2,0,0)
         box_audioMap.Add(grd_map, 0, wx.ALL | wx.EXPAND, 5)
@@ -189,19 +184,17 @@ class PrstPan(wx.Panel):
                                                '4','5','6','7','8'],
                                       size=(160,-1), style=wx.CB_DROPDOWN | 
                                                            wx.CB_READONLY
-                                                           )
+                                       )
         grd_map.Add(self.cmb_A_inMap, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 10)
         size_panels = wx.BoxSizer(wx.VERTICAL)
         size_auto.Add(size_panels, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
-        self.peakpanel = wx.Panel(self.nb1_p3, wx.ID_ANY, 
-                                  style=wx.TAB_TRAVERSAL
-                                  )
-        sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
+        self.peakpanel = wx.Panel(self.nb1_p3,wx.ID_ANY,style=wx.TAB_TRAVERSAL)
+        sizer_peak = wx.FlexGridSizer(1,4,15,15)
         analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
-        self.btn_voldect = GB.GradientButton(self.peakpanel,
-                                           size=(-1,25),
-                                           bitmap=analyzebmp,
-                                           label=_("Volumedected"))
+        self.btn_voldect = GB.GradientButton(self.peakpanel, 
+                                             size=(-1,25),
+                                             bitmap=analyzebmp,
+                                             label=_("Volumedected"))
         self.btn_voldect.SetBaseColours(startcolour=wx.Colour(158,201,232),
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_voldect.SetBottomEndColour(wx.Colour(self.btnC))
@@ -226,24 +219,26 @@ class PrstPan(wx.Panel):
         self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY, (
                             _("Target level:")))
         sizer_peak.Add(self.lab_amplitude, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY, min_val=-99.0, 
-                                    max_val=0.0, increment=0.5, value=-1.0, 
-                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
+        self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY, 
+                                        min_val=-99.0, max_val=0.0, 
+                                        increment=0.5, value=-1.0, 
+                                        agwStyle=FS.FS_LEFT, size=(-1,-1)
+                                        )
         sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         size_panels.Add(self.peakpanel, 0, wx.ALL|wx.EXPAND, 0)
         self.peakpanel.SetSizer(sizer_peak) # set panel
-        self.ebupanel = wx.Panel(self.nb1_p3, 
-                                 wx.ID_ANY, style=wx.TAB_TRAVERSAL
-                                 )
-        sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
+        self.ebupanel = wx.Panel(self.nb1_p3, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_ebu = wx.FlexGridSizer(3,2,5,5)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, 
-                             _("Set integrated loudness target:  "))
+                                   _("Set integrated loudness target:  ")
+                                   )
         sizer_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY, 
                                    min_val=-70.0, max_val=-5.0, 
                                    increment=0.5, value=-24.0, 
-                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
+                                   agwStyle=FS.FS_LEFT, size=(-1,-1)
+                                   )
         self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
         sizer_ebu.Add(self.spin_i, 0, wx.ALL, 0)
         
@@ -253,17 +248,18 @@ class PrstPan(wx.Panel):
         self.spin_tp = FS.FloatSpin(self.ebupanel, wx.ID_ANY, 
                                     min_val=-9.0, max_val=0.0,
                                     increment=0.5, value=-2.0, 
-                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
+                                    agwStyle=FS.FS_LEFT,size=(-1,-1)
+                                    )
         self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
         sizer_ebu.Add(self.spin_tp, 0, wx.ALL, 0)
-        
         self.lab_lra = wx.StaticText(self.ebupanel, wx.ID_ANY, 
                                     _("Set loudness range target:"))
         sizer_ebu.Add(self.lab_lra, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_lra = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
                                      min_val=1.0, max_val=20.0, 
                                      increment=0.5, value=7.0, 
-                                    agwStyle=FS.FS_LEFT,size=(-1,-1))
+                                     agwStyle=FS.FS_LEFT, size=(-1,-1)
+                                     )
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
         size_panels.Add(self.ebupanel, 0, wx.ALL|wx.EXPAND, 0)
@@ -515,24 +511,16 @@ class PrstPan(wx.Panel):
         if not self.btn_voldect.IsEnabled():
             self.btn_voldect.Enable()
             self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
-        
     #------------------------------------------------------------------#
-    def on_Analyzes(self, event):  # Volumedected button
+    
+    def on_Analyzes(self, event):
         """
-        Evaluates the user's choices and directs them to the references 
-        for audio normalizations based on PEAK or RMS .
-        
-        """
-        if self.rdbx_norm.GetSelection() == 1:
-            self.max_volume_PEAK(self.file_src)
-            
-        elif self.rdbx_norm.GetSelection() == 2:
-            self.mean_volume_RMS(self.file_src)
-    #------------------------------------------------------------------#
-    def max_volume_PEAK(self, file_sources):
-        """
-        Analyzes to get MAXIMUM peak levels data to calculates offset in
-        dBFS values need for audio normalization process.
+        ** Volumedected button 
+        - normalizations based on PEAK Analyzes to get MAXIMUM peak levels 
+          data to calculates offset in dBFS need for audio normalization 
+          process.
+        - normalizations based on RMS Analyzes to get MEAN peak levels data to 
+          calculates RMS offset in dBFS need for audio normalization process.
 
         <https://superuser.com/questions/323119/how-can-i-normalize-audio-
         using-ffmpeg?utm_medium=organic>
@@ -548,7 +536,7 @@ class PrstPan(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(file_sources, 
+        data = volumeDetectProcess(self.file_src, 
                                    self.time_seq, 
                                    cmd_opt["AudioInMap"][0])
         if data[1]:
@@ -556,24 +544,42 @@ class PrstPan(wx.Panel):
             return
         else:
             volume = list()
-
-            for f, v in zip(file_sources, data[0]):
-                maxvol = v[0].split(' ')[0]
-                meanvol = v[1].split(' ')[0]
-                offset = float(maxvol) - float(target)
-                result = float(maxvol) - offset
-                
-                if float(maxvol) == float(target):
-                    volume.append('  ')
-                else:
-                    volume.append("-af volume=%fdB" % -offset)
-
-                self.normdetails.append((f, 
-                                         maxvol,
-                                         meanvol,
-                                         str(offset),
-                                         str(result),
-                                         ))
+            if self.rdbx_norm.GetSelection() == 1: # peak Analyzes
+                for f, v in zip(self.file_src, data[0]):
+                    maxvol = v[0].split(' ')[0]
+                    meanvol = v[1].split(' ')[0]
+                    offset = float(maxvol) - float(target)
+                    result = float(maxvol) - offset
+                    if float(maxvol) == float(target):
+                        volume.append('  ')
+                    else:
+                        volume.append("-filter:a:%s volume=%fdB" % (
+                                                    cmd_opt["AudioOutMap"][1], 
+                                                    -offset))
+                    self.normdetails.append((f, 
+                                            maxvol,
+                                            meanvol,
+                                            str(offset),
+                                            str(result),
+                                            ))
+            elif self.rdbx_norm.GetSelection() == 2: # rms Analyzes
+                for f, v in zip(self.file_src, data[0]):
+                    maxvol = v[0].split(' ')[0]
+                    meanvol = v[1].split(' ')[0]
+                    offset = float(meanvol) - float(target)
+                    result = float(maxvol) - offset
+                    if offset == 0.0:
+                        volume.append('  ')
+                    else:
+                        volume.append("-filter:a:%s volume=%fdB" % (
+                                                   cmd_opt["AudioOutMap"][1],
+                                                   -offset))
+                    self.normdetails.append((f, 
+                                            maxvol,
+                                            meanvol,
+                                            str(offset),
+                                            str(result),
+                                            ))
         if [a for a in volume if not '  ' in a] == []:
              self.parent.statusbar_msg(msg3, orange)
         else:
@@ -581,72 +587,15 @@ class PrstPan(wx.Panel):
                  pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
-
-        cmd_opt["PEAK"] = volume
+        if self.rdbx_norm.GetSelection() == 1:
+            cmd_opt["PEAK"] = volume
+        elif self.rdbx_norm.GetSelection() == 2:
+            cmd_opt["RMS"] = volume
+        
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()
         self.nb1_p3.Layout()
-        #self.Layout()
-    #------------------------------------------------------------------#
-    
-    def mean_volume_RMS(self, file_sources):  # Volumedetect button
-        """
-        Analyzes to get MEAN peak levels data to calculates RMS offset in
-        dBFS need for audio normalization process.
-        """
-        msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_('Audio normalization is not required based to '
-                  'set target level'))
-        if self.normdetails:
-            del self.normdetails[:]
-        
-        self.parent.statusbar_msg("",None)
-        self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
-        target = self.spin_target.GetValue()
-
-        data = volumeDetectProcess(file_sources, 
-                                   self.time_seq, 
-                                   cmd_opt["AudioInMap"][0])
-        if data[1]:
-            wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
-            return
-        else:
-            volume = list()
-
-            for f, v in zip(file_sources, data[0]):
-                maxvol = v[0].split(' ')[0]
-                meanvol = v[1].split(' ')[0]
-                offset = float(meanvol) - float(target)
-                result = float(maxvol) - offset
-                
-                if offset == 0.0:
-                    volume.append('  ')
-                else:
-                    volume.append("-af volume=%fdB" % -offset)
-                    
-                self.normdetails.append((f, 
-                                         maxvol,
-                                         meanvol,
-                                         str(offset),
-                                         str(result),
-                                         ))
-                    
-        if [a for a in volume if not '  ' in a] == []:
-             self.parent.statusbar_msg(msg3, orange)
-        else:
-            if len(volume) == 1 or not '  ' in volume:
-                 pass
-            else:
-                self.parent.statusbar_msg(msg2, yellow)
-       
-        cmd_opt["RMS"] = volume
-        self.btn_voldect.Disable()
-        self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
-        self.btn_details.Show()
-        
-        self.nb1_p3.Layout()
-        #self.Layout()
     #------------------------------------------------------------------#
     
     def on_Show_normlist(self, event):

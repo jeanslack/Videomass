@@ -1561,24 +1561,18 @@ class AV_Conv(wx.Panel):
         if not self.btn_voldect.IsEnabled():
             self.btn_voldect.Enable()
             self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
-            
     #------------------------------------------------------------------#
+    
     def on_Audio_analyzes(self, event):  # Volumedetect button
         """
-        Evaluates the user's choices and directs them to the references 
-        for audio normalizations based on PEAK or RMS .
-        """
-        if self.rdbx_normalize.GetSelection() == 1:
-            self.max_volume_PEAK()
-            
-        elif self.rdbx_normalize.GetSelection() == 2:
-            self.mean_volume_RMS()
+        - normalizations based on PEAK Analyzes to get MAXIMUM peak levels 
+          data to calculates offset in dBFS need for audio normalization 
+          process.
+        - normalizations based on RMS Analyzes to get MEAN peak levels data to 
+          calculates RMS offset in dBFS need for audio normalization process.
 
-    #------------------------------------------------------------------#
-    def max_volume_PEAK(self):  # Volumedetect button
-        """
-        Analyzes to get MAXIMUM peak levels data to calculates offset in
-        dBFS values need for audio normalization process.
+        <https://superuser.com/questions/323119/how-can-i-normalize-audio-
+        using-ffmpeg?utm_medium=organic>
         
         """
         msg2 = (_('Audio normalization is required only for some files'))
@@ -1599,27 +1593,42 @@ class AV_Conv(wx.Panel):
             return
         else:
             volume = list()
-
-            for f, v in zip(self.file_src, data[0]):
-                maxvol = v[0].split(' ')[0]
-                meanvol = v[1].split(' ')[0]
-                offset = float(maxvol) - float(target)
-                result = float(maxvol) - offset
-                
-                if float(maxvol) == float(target):
-                    volume.append('  ')
-                else:
-                    volume.append("-filter:a:%s volume=%fdB" % (
-                                                    cmd_opt["AudioOutMap"][1], 
+            if self.rdbx_normalize.GetSelection() == 1:# RMS
+                for f, v in zip(self.file_src, data[0]):
+                    maxvol = v[0].split(' ')[0]
+                    meanvol = v[1].split(' ')[0]
+                    offset = float(maxvol) - float(target)
+                    result = float(maxvol) - offset
+                    if float(maxvol) == float(target):
+                        volume.append('  ')
+                    else:
+                        volume.append("-filter:a:%s volume=%fdB" % (
+                                                        cmd_opt["AudioOutMap"][1], 
+                                                        -offset))
+                    self.normdetails.append((f,
+                                            maxvol,
+                                            meanvol,
+                                            str(offset),
+                                            str(result),
+                                            ))
+            elif self.rdbx_normalize.GetSelection() == 2:# ebu
+                for f, v in zip(self.file_src, data[0]):
+                    maxvol = v[0].split(' ')[0]
+                    meanvol = v[1].split(' ')[0]
+                    offset = float(meanvol) - float(target)
+                    result = float(maxvol) - offset
+                    if offset == 0.0:
+                        volume.append('  ')
+                    else:
+                        volume.append("-filter:a:%s volume=%fdB" % (
+                                                    cmd_opt["AudioOutMap"][1],
                                                     -offset))
-                    
-                self.normdetails.append((f, 
-                                         maxvol,
-                                         meanvol,
-                                         str(offset),
-                                         str(result),
-                                         ))
-                    
+                    self.normdetails.append((f, 
+                                            maxvol,
+                                            meanvol,
+                                            str(offset),
+                                            str(result),
+                                            ))
         if [a for a in volume if not '  ' in a] == []:
              self.parent.statusbar_msg(msg3, orange)
         else:
@@ -1627,67 +1636,10 @@ class AV_Conv(wx.Panel):
                  pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
-                
-        cmd_opt["PEAK"] = volume
-        self.btn_voldect.Disable()
-        self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
-        self.btn_details.Show()
-        self.nb_filters.Layout()
-
-    #------------------------------------------------------------------#
-    def mean_volume_RMS(self):  # Volumedetect button
-        """
-        Analyzes to get MEAN peak levels data to calculates RMS offset in dB
-        need for audio normalization process.
-        """
-        msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_('Audio normalization is not required based to '
-                  'set target level'))
-        if self.normdetails:
-            del self.normdetails[:]
-        
-        self.parent.statusbar_msg("",None)
-        self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
-        target = self.spin_target.GetValue()
-
-        data = volumeDetectProcess(self.file_src, 
-                                   self.time_seq,
-                                   cmd_opt["AudioInMap"][0],)
-        if data[1]:
-            wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
-            return
-        else:
-            volume = list()
-
-            for f, v in zip(self.file_src, data[0]):
-                maxvol = v[0].split(' ')[0]
-                meanvol = v[1].split(' ')[0]
-                offset = float(meanvol) - float(target)
-                result = float(maxvol) - offset
-                
-                if offset == 0.0:
-                    volume.append('  ')
-                else:
-                    volume.append("-filter:a:%s volume=%fdB" % (
-                                                   cmd_opt["AudioOutMap"][1],
-                                                   -offset))
-                    
-                self.normdetails.append((f, 
-                                         maxvol,
-                                         meanvol,
-                                         str(offset),
-                                         str(result),
-                                         ))
-                    
-        if [a for a in volume if not '  ' in a] == []:
-             self.parent.statusbar_msg(msg3, orange)
-        else:
-            if len(volume) == 1 or not '  ' in volume:
-                 pass
-            else:
-                self.parent.statusbar_msg(msg2, yellow)
-                
-        cmd_opt["RMS"] = volume
+        if self.rdbx_normalize.GetSelection() == 1:# RMS        
+            cmd_opt["PEAK"] = volume
+        elif self.rdbx_normalize.GetSelection() == 2:# ebu
+            cmd_opt["RMS"] = volume
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
         self.btn_details.Show()

@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec 28 2018, Sept 10 2019
+# Rev: Dec 28 2018, Sept 10 2019, Dec.09.2019
 #########################################################
 
 # This file is part of Videomass.
@@ -57,9 +57,6 @@ green = '#268826'
 class MainFrame(wx.Frame):
     """
     This is the main frame top window for panels implementation.
-    All panels are instantiated in the init constructor, except 
-    ProcessPanel which is instantiated in an appropriate instance 
-    method. (see switch_Process method doc strings below)
     """
     def __init__(self, setui, pathicons):
         """
