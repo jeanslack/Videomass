@@ -50,48 +50,90 @@ class MemPresets(wx.Dialog):
         arg = 'addprofile' from video and audio conversions
         
         """
-        wx.Dialog.__init__(self, parent, -1, title, style=wx.DEFAULT_DIALOG_STYLE)
-        
         self.path_prst = os.path.join(DIRconf, 'presets', '%s.prst' % filename)
         self.arg = arg # evaluate if 'edit', 'newprofile', 'addprofile'
         self.array = array # param list [name, descript, cmd1, cmd2, supp, ext]
         
+        wx.Dialog.__init__(self, parent, -1, title, 
+                           style=wx.DEFAULT_DIALOG_STYLE | wx.RESIZE_BORDER)
+        
+        size_base = wx.BoxSizer(wx.VERTICAL)
+        size_namedescr = wx.BoxSizer(wx.HORIZONTAL)
+        size_base.Add(size_namedescr, 0, wx.ALL|wx.EXPAND, 0)
+        box_name = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                _("Profile Name")), wx.VERTICAL)
+        size_namedescr.Add(box_name, 1, wx.ALL|wx.EXPAND, 15)
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER
                                     )
-        siz1_staticbox = wx.StaticBox(self, wx.ID_ANY, _("Profile Name"))
+        box_name.Add(self.txt_name, 0, wx.ALL|wx.EXPAND, 15)
+        box_descr = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                _("Description")), wx.VERTICAL
+                                      )
+        size_namedescr.Add(box_descr, 1, wx.ALL|wx.EXPAND, 15)
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "", 
                                         style=wx.TE_PROCESS_ENTER
                                         )
-        siz2_staticbox = wx.StaticBox(self, wx.ID_ANY, _("Description"))
+        box_descr.Add(self.txt_descript, 0, wx.ALL|wx.EXPAND, 15)
+        box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                    _("1-PASS, Do not start with: `ffmpeg "
+                                      "-i filename`, Do not end with: "
+                                      "`output-filename`")), wx.VERTICAL
+                                      )
+        size_base.Add(box_pass1, 1, wx.ALL|wx.EXPAND, 15)
         self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz3_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("1-PASS, "
-                                    "Do not start with: `ffmpeg -i filename`, "
-                                    "Do not end with: `output-filename`"))
+        box_pass1.Add(self.pass_1_cmd, 1, wx.ALL|wx.EXPAND, 15)
+        box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                    _("2-PASS (optional), Do not start with: "
+                                      "`ffmpeg -i filename`, Do not end with: "
+                                      "`output-filename`")), wx.VERTICAL
                                       )
+        size_base.Add(box_pass2, 1, wx.ALL|wx.EXPAND, 15)
         self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "", 
-                                   style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE)
-        siz5_staticbox = wx.StaticBox(self, wx.ID_ANY, (_("2-PASS (optional), "
-                                    "Do not start with: `ffmpeg -i filename`, "
-                                    "Do not end with: `output-filename`"))
-                                      )
+                                   style=wx.TE_PROCESS_ENTER | wx.TE_MULTILINE
+                                   )
+        box_pass2.Add(self.pass_2_cmd, 1, wx.ALL|wx.EXPAND, 15)
+        size_formats = wx.BoxSizer(wx.HORIZONTAL)
+        size_base.Add(size_formats, 0, wx.ALL|wx.EXPAND, 0)
+        box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, 
+                                        _("Supported Formats list "
+                                        "(optional), do not include the `.`")),
+                                        wx.VERTICAL
+                                        )
+        size_formats.Add(box_supp, 1, wx.ALL|wx.EXPAND, 15)
+        
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "", 
                                     style=wx.TE_PROCESS_ENTER
                                     )
-        siz4_supp = wx.StaticBox(self, wx.ID_ANY, (_("Supported Formats list "
-                                        "(optional), do not include the `.`"))
+        box_supp.Add(self.txt_supp, 0, wx.ALL|wx.EXPAND, 15)
+        box_format = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, 
+                                                    _("Output Format, do not "
+                                                      "include the `.`")),
+                                                    wx.VERTICAL
                                                     )
+        size_formats.Add(box_format, 1, wx.ALL|wx.EXPAND, 15)
+        
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "", 
                                    style=wx.TE_PROCESS_ENTER
                                    )
-        siz4_ext = wx.StaticBox(self, wx.ID_ANY, (_("Output Format, do not "
-                                                    "include the `.`"))
-                                                  )
+        box_format.Add(self.txt_ext, 0, wx.ALL|wx.EXPAND, 15)
+        grdhelp = wx.GridSizer(1, 1, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
+        grdhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn =  wx.GridSizer(1, 2, 0, 0)
+        grdBtn.Add(grdhelp)
+        grdexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
+        grdexit.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         btn_save = wx.Button(self, wx.ID_OK, _("Save.."))
-
+        grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grdBtn.Add(grdexit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        size_base.Add(grdBtn,0, wx.ALL | wx.EXPAND, 5)
+        #------ set sizer
+        self.SetSizerAndFit(size_base)
+        self.Layout()
+        
         #----------------------Set Properties----------------------#
         # set_properties:
         if OS == 'Darwin':
@@ -104,12 +146,6 @@ class MemPresets(wx.Dialog):
                                             wx.NORMAL, wx.NORMAL))
             self.pass_2_cmd.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, 
                                             wx.NORMAL))
-        self.txt_name.SetMinSize((150, -1))
-        self.txt_descript.SetMinSize((300, -1))
-        self.pass_1_cmd.SetMinSize((350, 60))
-        self.pass_2_cmd.SetMinSize((350, 60))
-        self.txt_supp.SetMinSize((300, -1))
-        self.txt_ext.SetMinSize((150, -1))
 
         self.txt_name.SetToolTip(_('Assign a short name to the profile'))
         self.txt_descript.SetToolTip(_('Assign a long description'
@@ -122,52 +158,6 @@ class MemPresets(wx.Dialog):
                                    ' format names to include in the profile'))
         self.txt_ext.SetToolTip(_("Type the output format extension here. "
                                   "Leave blank to copy codec and format"))
-        
-        #----------------------Build layout----------------------#
-        grd_s1 = wx.FlexGridSizer(5, 1, 0, 0)
-        boxSiz = wx.BoxSizer(wx.VERTICAL)
-        grdexit = wx.GridSizer(1, 2, 0, 0)
-        grd_s4 = wx.GridSizer(1, 2, 0, 0)
-        siz4_ext.Lower()
-        s4_ext = wx.StaticBoxSizer(siz4_ext, wx.VERTICAL)
-        siz4_supp.Lower()
-        s4_f_supp = wx.StaticBoxSizer(siz4_supp, wx.VERTICAL)
-        siz3_staticbox.Lower()
-        siz3 = wx.StaticBoxSizer(siz3_staticbox, wx.VERTICAL)
-        siz5_staticbox.Lower()
-        siz5 = wx.StaticBoxSizer(siz5_staticbox, wx.VERTICAL)
-        grd_s2 = wx.GridSizer(1, 2, 0, 0)
-        siz2_staticbox.Lower()
-        siz2 = wx.StaticBoxSizer(siz2_staticbox, wx.VERTICAL)
-        siz1_staticbox.Lower()
-        siz1 = wx.StaticBoxSizer(siz1_staticbox, wx.VERTICAL)
-        siz1.Add(self.txt_name, 0, wx.ALL, 15)
-        grd_s2.Add(siz1, 1, wx.ALL | wx.EXPAND, 15)
-        siz2.Add(self.txt_descript, 0, wx.ALL, 15)
-        grd_s2.Add(siz2, 1, wx.ALL | wx.EXPAND, 15)
-        grd_s1.Add(grd_s2, 1, wx.EXPAND, 0)
-        siz3.Add(self.pass_1_cmd, 0, wx.ALL|wx.EXPAND, 15)
-        siz5.Add(self.pass_2_cmd, 0, wx.ALL|wx.EXPAND, 15)
-        grd_s1.Add(siz3, 1, wx.ALL | wx.EXPAND, 15)
-        grd_s1.Add(siz5, 1, wx.ALL | wx.EXPAND, 15)
-        s4_f_supp.Add(self.txt_supp, 0, wx.ALL, 15)
-        grd_s4.Add(s4_f_supp, 1, wx.ALL | wx.EXPAND, 15)
-        s4_ext.Add(self.txt_ext, 0, wx.ALL, 15)
-        grd_s4.Add(s4_ext, 1, wx.ALL | wx.EXPAND, 15)
-        grd_s1.Add(grd_s4, 1, wx.EXPAND, 0)
-        grdBtn =  wx.GridSizer(1, 2, 0, 0)
-        grdhelp = wx.GridSizer(1, 1, 0, 0)
-        grdhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn.Add(grdhelp)
-        grdexit.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn.Add(grdexit, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=0)
-        
-        boxSiz.Add(grdBtn,1, wx.ALL | wx.EXPAND, 5)
-        grd_s1.Add(boxSiz, 1, wx.ALL | wx.EXPAND, 5)
-        self.SetSizer(grd_s1)
-        grd_s1.Fit(self)
-        self.Layout()
 
         #----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_canc)
@@ -182,12 +172,11 @@ class MemPresets(wx.Dialog):
             self.pass_1_cmd.AppendText(self.array[0]) # command or param
             self.pass_2_cmd.AppendText(self.array[1])
             self.txt_ext.AppendText(self.array[2]) # extension
-        
-                        
+    
     def change(self):
         """
-        Copio gli elementi della lista array sui relativi campi di testo.
-        questa funzione viene chiamata solo se si modificano i profili
+        In edit mode only, paste the array items on text boxes
+        
         """
         self.txt_name.AppendText(self.array[0]) # name
         self.txt_descript.AppendText(self.array[1]) # descript
@@ -196,9 +185,7 @@ class MemPresets(wx.Dialog):
         self.txt_supp.AppendText(self.array[4]) # file supportted
         self.txt_ext.AppendText(self.array[5]) # extension
         
-    
 #---------------------Callback (event handler)----------------------#
-    
     def on_help(self, event):
         """
         """

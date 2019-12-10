@@ -232,7 +232,7 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(self.slider_CRF, 0, wx.ALL|
                                                wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
-        txtVbrate = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Bit Rate'))
+        txtVbrate = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Bit Rate (kb)'))
         grid_sx_Vcod.Add(txtVbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         
         self.spin_Vbrate = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
@@ -471,7 +471,7 @@ class AV_Conv(wx.Panel):
                                             )
         sizer_nbAudio.Add(self.box_audioProper, 1, wx.ALL|wx.EXPAND, 10)
         grid_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
-        self.box_audioProper.Add(grid_a_ctrl, 0, wx.ALL|wx.EXPAND, 0)
+        self.box_audioProper.Add(grid_a_ctrl, 0, wx.ALL|wx.EXPAND, 15)
         setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
         self.btn_aparam = GB.GradientButton(self.nb_Audio,
                                            size=(-1,25),
@@ -483,12 +483,12 @@ class AV_Conv(wx.Panel):
         self.btn_aparam.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetTopStartColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetTopEndColour(wx.Colour(self.btn_color))
-        grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 20)
+        grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.txt_audio_options = wx.TextCtrl(self.nb_Audio, wx.ID_ANY, 
                                              size=(-1,-1), 
                                              style=wx.TE_READONLY
                                              )
-        grid_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL|wx.EXPAND,20)
+        grid_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL|wx.EXPAND, 5)
         self.box_audioMap = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio, 
                                         wx.ID_ANY, _("Audio Streams Mapping")), 
                                         wx.VERTICAL
@@ -823,7 +823,7 @@ class AV_Conv(wx.Panel):
         self.normalize_default()
 
     #-------------------------------------------------------------------#
-    def UI_set(self, opt265=False):
+    def UI_set(self):
         """
         Update all the GUI widgets based on the choices made by the user.
         """
@@ -864,6 +864,8 @@ class AV_Conv(wx.Panel):
             self.vp9panel.Hide(), self.h264panel.Hide() 
             self.filterVpanel.Show()
         
+        cmd_opt["Preset"], cmd_opt["Profile"], cmd_opt["Tune"] = '','',''
+        
         if self.rdbx_normalize.GetSelection() == 3: 
             self.ckbx_pass.SetValue(True)
             self.ckbx_pass.Disable()
@@ -873,25 +875,7 @@ class AV_Conv(wx.Panel):
                 self.ckbx_pass.Disable()
             else:
                 self.ckbx_pass.Enable()
-        self.on_Pass(self) 
-        
-        #if opt265:
-            #self.cmb_tune.Clear(), self.cmb_profile.Clear()
-            #if cmd_opt["VideoCodec"] == "-c:v libx265":
-                #for tune in x265_opt["Tunes"]:
-                    #self.cmb_tune.Append((tune),)
-                #for prof in x265_opt["Profiles"]:
-                    #self.cmb_profile.Append((prof),)
-            #elif cmd_opt["VideoCodec"] == "-c:v libx264":
-                #for tune in x264_opt['Tunes']:
-                    #self.cmb_tune.Append((tune),)
-                #for prof in x264_opt["Profiles"]:
-                    #self.cmb_profile.Append((prof),)
-                    
-        
-        cmd_opt["Preset"] = ''
-        cmd_opt["Profile"] = ''
-        cmd_opt["Tune"] = ''
+        self.on_Pass(self)
                     
     #-------------------------------------------------------------------#
     
@@ -964,7 +948,7 @@ class AV_Conv(wx.Panel):
             self.spinBufsize.Enable(), self.cmb_Pixfrm.SetSelection(1)
             cmd_opt["PixFmt"] = "-pix_fmt yuv420p"
         
-        self.UI_set(True)
+        self.UI_set()
         self.audio_default() # reset audio radiobox and dict
         self.setAudioRadiobox(self)
     #------------------------------------------------------------------#
@@ -1725,7 +1709,7 @@ class AV_Conv(wx.Panel):
         audionormlist.Show()
         
     #------------------------------------------------------------------#
-    def self.on_xPreset(self, event):
+    def on_xPreset(self, event):
         """
         Set h264/h265 only
         """
@@ -1735,7 +1719,7 @@ class AV_Conv(wx.Panel):
         else:
             cmd_opt["Preset"] = "-preset:v %s" % (select)
     #------------------------------------------------------------------#
-    def self.on_xProfile(self, event):
+    def on_xProfile(self, event):
         """
         Set h264/h265 only
         """
@@ -1745,7 +1729,7 @@ class AV_Conv(wx.Panel):
         else:
             cmd_opt["Profile"] = "-profile:v %s" % (select)
     #------------------------------------------------------------------#
-    def self.on_xTune(self, event):
+    def on_xTune(self, event):
         """
         Set h264/h265 only
         """

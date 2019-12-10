@@ -6,14 +6,14 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
-December 4, 2019 V.1.8.0
+December 10, 2019 V.2.0.0
 +------------------------------------+
 
 BUGS:
-    * Fixed configuration file rewrite issue when you set FFmpeg/FFplay logging 
-      levels from the Settings dialog.
-    * Fixed issue with incorrect 'tune' name option for h264/h265. "fastedecode" 
-      error corrected with "fastdecode"
+    * Fixed file rewrite issue when you set FFmpeg/FFplay logging levels from 
+      the Settings dialog.
+    * Fixed wrong 'tune' name option for h264/h265 > "fastedecode" error fixed 
+      with > "fastdecode"
 
 NEWS:
     * GUI completely redesigned to make it easier for users to use.
@@ -55,18 +55,20 @@ ADDED:
     * Add new entry box on Settings dialog to choose the user default directory
       to files storing
       
-    * Added Containers selection, Media selection, pixel format selection,
-      min rate, max rate, buffer size, subtitle selection and audio index
-      selection controls on the av_conversions.
+    * Added new controls to manage conversions: Containers, Media, Pixel Format, 
+      Min Rate, Max Rate, Buffer Size, Subtitle Stream selections .
+    
+    * Added controls to select audio indexes from videos to apply a certain 
+      audio codec and apply the normalization process only to a certain index.
       
     
 IMPROVEMENTS:
-    * Improved all GUI layouts
+    * Improved all GUI layouts windows
     * Code thinning 
     
 REPLACEMENTS and REMOVALS:
     * Removed the Audio Conversions panel, now to export/extract the audio 
-      file you need to select it via the Media combobox in the Audio/Video 
+      file you need to select it via the 'Media' combobox on the Audio/Video 
       Conversions panel
       
       

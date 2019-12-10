@@ -1,0 +1,55 @@
+## ADD SUPPORT FOR NEW LANGUAGE
+
+### Requirements
+- [GNU gettext](https://www.gnu.org/software/gettext) (To build `.pot` and the `.mo` files)
+- poEdit: To do the actual translation we recommend [poEdit](https://poedit.net/), it allows you to create or update a translation catalog (.po file) from the .pot file.
+- Some kind of text editor to edit some code (notepad++, nano, etc are sufficient)
+- [Git](https://git-scm.com/downloads)
+
+### NOTES
+- The instructions below assume basic knowledge of the command line (OS independent)
+
+To start a new translation, clone my repo by type:
+
+``` git clone https://gitlab.com/jeanslack/Videomass.git
+```
+
+create two new folders inside /Videomass/locale folder (for example create a 'de_DE' folder and within which a 'LC_MESSAGES' folder for the German 
+language support) with the following tree:
+
+    /Videomass
+        /locale
+            /de_DE
+                /LC_MESSAGES
+                
+Copy the "videomass.pot" file translation template located in the '/locale' 
+folder, and paste into the 'LC_MESSAGES' folder, than rename it to change
+extension name to "videomass.po". 
+Now open the "videomass.po" with a translation editing program, for example 
+'Poedit', and then save it by generating a 'videomass.mo' file with your 
+new native language tanslation.
+
+Optionally, if you want to try your new translation by starting Videomass, 
+make sure to update the "videomass3/vdms_SYS/app_const.py" module for Python3 
+by adding the newly translated language to the dictionary on 'app_const.py', 
+for example appending this line:
+
+    "de": wx.LANGUAGE_GERMAN,
+    
+to:
+
+    supLang = {"en": wx.LANGUAGE_ENGLISH,
+               "it": wx.LANGUAGE_ITALIAN,
+               "de": wx.LANGUAGE_GERMAN,
+               }
+
+For a list of the supported languages, please see [wx.Language](https://wxpython.org/Phoenix/docs/html/wx.Language.enumeration.html#wx-language)
+
+When you have completed your translation with 'Poedit', please send me the
+traslated files with 'videomass.po' and 'videomass.mo' extensions at:
+
+<jeanlucperni@gmail.com>
+
+I will be grateful!!
+
+

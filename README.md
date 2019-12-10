@@ -29,6 +29,7 @@
 - Peak level-based audio normalization.
 - RMS-based audio normalization.
 - EBU R128 audio normalization.
+- Audio index from videos selectable to apply normalization
 - Setting duration portions for imported files, filters, export and tests.
 - Download multiple URLs from youtube with your settings.
 - View video information without downloading it.
