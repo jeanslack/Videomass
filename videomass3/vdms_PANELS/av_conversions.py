@@ -26,14 +26,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
-prst = '''(
-            self.cmb_Vcont.SetSelection(1), self.on_Container(self),
-            self.cmb_preset.SetSelection(3), self.cmb_profile.SetSelection(4),
-            self.on_xPreset(self), self.on_xProfile(self))
-'''
-
-
 import wx
 import os
 import wx.lib.agw.floatspin as FS
@@ -46,6 +38,7 @@ from videomass3.vdms_DIALOGS import audiodialogs
 from videomass3.vdms_DIALOGS import presets_addnew
 from videomass3.vdms_DIALOGS import video_filters
 from videomass3.vdms_FRAMES import shownormlist
+from videomass3.vdms_UTILS import optimizations
 
 # setting the path to the configuration directory:
 get = wx.GetApp()
@@ -163,6 +156,8 @@ x265_opt = {("Presets"): ("None","ultrafast","superfast",
 levels = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1', 
           '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
           )
+# optimization list for vp8/vp9
+optimization_str = ('None','VP9 best for Archive',)
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6'
 yellow = '#a29500'
@@ -354,7 +349,7 @@ class AV_Conv(wx.Panel):
                                               wx.ALIGN_CENTER_VERTICAL, 5
                                )
         self.cmb_vp9optimize = wx.ComboBox(self.vp9panel, wx.ID_ANY,  
-                                           choices=[],
+                                           choices=optimization_str,
                                           size=(200,-1), style=wx.CB_DROPDOWN | 
                                                                wx.CB_READONLY
                                             )
@@ -453,8 +448,7 @@ class AV_Conv(wx.Panel):
                                                wx.ALIGN_CENTER_VERTICAL, 5)
         txtlevel = wx.StaticText(self.h264panel, wx.ID_ANY, _('Level'))
         grid_h264panel.Add(txtlevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_level = wx.ComboBox(self.h264panel, wx.ID_ANY,  
-                                    choices=[l for l in levels],
+        self.cmb_level = wx.ComboBox(self.h264panel, wx.ID_ANY, choices=levels,
                                            size=(80,-1), style=wx.CB_DROPDOWN | 
                                                                 wx.CB_READONLY
                                                                 )
@@ -841,7 +835,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.on_Deadline, self.rdb_deadline)
         self.Bind(wx.EVT_CHECKBOX, self.on_Pass, self.ckbx_pass)
         self.Bind(wx.EVT_CHECKBOX, self.on_WebOptimize, self.ckbx_web)
-        self.Bind(wx.EVT_SPINCTRL, self.on_Bitrate, self.spin_Vbrate)
+        self.Bind(wx.EVT_SPINCTRL, self.on_Vbitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
         self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
@@ -980,7 +974,6 @@ class AV_Conv(wx.Panel):
         determines the default status, enabling or disabling some 
         functions depending on the type of video format chosen.
         """
-        #selected = self.cmb_Vcod.GetValue()
         selected = vcodecs.get(self.cmb_Vcod.GetValue())
         libcodec = list(selected.keys())[0]
         self.cmb_Vcont.Clear()
@@ -998,11 +991,9 @@ class AV_Conv(wx.Panel):
             self.spinMinr.Disable(), self.spinMaxr.Disable()
             self.spinBufsize.Disable()
             cmd_opt["Passing"] = "1 pass"
-            cmd_opt["PixFmt"] = ""
         else:
             self.spinMinr.Enable(), self.spinMaxr.Enable()
             self.spinBufsize.Enable()
-            cmd_opt["PixFmt"] = "-pix_fmt yuv420p"
         
         self.UI_set()
         self.audio_default() # reset audio radiobox and dict
@@ -1065,7 +1056,11 @@ class AV_Conv(wx.Panel):
         encoders
         
         """
-        pass
+        name = self.cmb_vp9optimize.GetValue()
+        if name == 'None':
+            return
+        data = optimizations.vp9(name)
+        eval(data)
     #-------------------------------------------------------------------#
     def on_Pass(self, event):
         """
@@ -1101,7 +1096,7 @@ class AV_Conv(wx.Panel):
                 self.slider_CRF.Disable()
                 self.spin_Vbrate.Enable()
     #------------------------------------------------------------------#
-    def on_Bitrate(self, event):
+    def on_Vbitrate(self, event):
         """
         Reset a empty CRF (this depend if is h264 two-pass encoding
         or if not codec h264)
@@ -1791,13 +1786,13 @@ class AV_Conv(wx.Panel):
         
         """
         if self.spin_Vbrate.IsEnabled() and not self.slider_CRF.IsEnabled():
-            self.on_Bitrate(self)
+            self.on_Vbitrate(self)
             
         elif self.slider_CRF.IsEnabled() and not self.spin_Vbrate.IsEnabled():
             self.on_Crf(self)
             
         elif self.slider_CRF.IsEnabled() and self.spin_Vbrate.IsEnabled():
-            self.on_Bitrate(self), self.on_Crf(self)
+            self.on_Vbitrate(self), self.on_Crf(self)
         else:
             cmd_opt["CRF"] = ''
             cmd_opt["VideoBitrate"] = ''
