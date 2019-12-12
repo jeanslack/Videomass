@@ -22,9 +22,9 @@ language support) with the following tree:
             /de_DE
                 /LC_MESSAGES
                 
-Copy the "videomass.pot" file translation template located in the '/locale' 
+Copy the **videomass.pot"** file translation template located in the '/locale' 
 folder, and paste into the 'LC_MESSAGES' folder, than rename it to change
-extension name to "videomass.po". 
+extension name to "videomass.po" . 
 Now open the "videomass.po" with a translation editing program, for example 
 'Poedit', and then save it by generating a 'videomass.mo' file with your 
 new native language tanslation.

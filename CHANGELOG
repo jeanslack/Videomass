@@ -58,10 +58,10 @@ ADDED:
     * Added new controls to manage conversions: Containers, Media, Pixel Format, 
       Min Rate, Max Rate, Buffer Size, Subtitle Stream selections .
     
-    * Added controls to select audio indexes from videos to apply a certain 
-      audio codec and apply the normalization process only to a certain index.
+    * Added controls to select audio indexes from a input video to apply a 
+      specified process e.g. change audio codec, normalization, etc without 
+      change others audio streams .
       
-    
 IMPROVEMENTS:
     * Improved all GUI layouts windows
     * Code thinning 
