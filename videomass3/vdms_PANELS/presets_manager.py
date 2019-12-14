@@ -119,12 +119,12 @@ class PrstPan(wx.Panel):
                                      )
         grd_prst.Add(self.cmbx_prst, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
         nb1_p1.SetSizer(grd_prst)
-        nb1.AddPage(nb1_p1, _("Preset Selection"))
+        nb1.AddPage(nb1_p1, _("Presets"))
         #------- page commands
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         grd_cmd = wx.GridSizer(1, 2, 0, 0)
         box_cmd1 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY,
-                                                  _("First pass parameters")), 
+                                                  _("1-PASS")), 
                                                     wx.VERTICAL
                                                     )
         grd_cmd.Add(box_cmd1,  0, wx.ALL | wx.EXPAND 
@@ -139,7 +139,7 @@ class PrstPan(wx.Panel):
                                               | wx.ALIGN_CENTER_VERTICAL, 15
                     )
         box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY, 
-                                                  _("Second pass parameters")), 
+                                                  _("2-PASS")), 
                                                     wx.VERTICAL
                                     )
         grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND 
@@ -175,7 +175,7 @@ class PrstPan(wx.Panel):
                                                       wx.VERTICAL
                                         )
         grd_autosx.Add(box_audioMap, 0, wx.ALL | wx.EXPAND, 10)
-        grd_map = wx.FlexGridSizer(1,2,0,0)
+        grd_map = wx.FlexGridSizer(2,2,0,0)
         box_audioMap.Add(grd_map, 0, wx.ALL | wx.EXPAND, 5)
         txtAinmap = wx.StaticText(self.nb1_p3,wx.ID_ANY,_('Input Audio Index'))
         grd_map.Add(txtAinmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
@@ -186,6 +186,18 @@ class PrstPan(wx.Panel):
                                                            wx.CB_READONLY
                                        )
         grd_map.Add(self.cmb_A_inMap, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 10)
+        txtAoutmap = wx.StaticText(self.nb1_p3, wx.ID_ANY, 
+                                   _('Output Audio Index')
+                                   )
+        grd_map.Add(txtAoutmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
+
+        self.cmb_A_outMap = wx.ComboBox(self.nb1_p3, wx.ID_ANY,
+                                      choices=['Auto', 'All', '1','2','3', 
+                                               '4','5','6','7','8'],
+                                      size=(160,-1), style=wx.CB_DROPDOWN | 
+                                                           wx.CB_READONLY
+                                                           )
+        grd_map.Add(self.cmb_A_outMap, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 10)
         size_panels = wx.BoxSizer(wx.VERTICAL)
         size_auto.Add(size_panels, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
         self.peakpanel = wx.Panel(self.nb1_p3,wx.ID_ANY,style=wx.TAB_TRAVERSAL)
@@ -310,9 +322,11 @@ class PrstPan(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
         self.Bind(wx.EVT_SPINCTRL, self.enter_Amplitude, self.spin_target)
         self.Bind(wx.EVT_COMBOBOX, self.on_audioINstream, self.cmb_A_inMap)
+        self.Bind(wx.EVT_COMBOBOX, self.on_audioOUTstream, self.cmb_A_outMap)
         
         #---------------------------- defaults
         self.cmbx_prst.SetSelection(0), self.cmb_A_inMap.SetSelection(0)
+        self.cmb_A_outMap.SetSelection(1)
         self.set_listctrl()
         self.normalization_default()
         
@@ -330,8 +344,8 @@ class PrstPan(wx.Panel):
         self.spin_target.SetValue(-1.0)
         cmd_opt["PEAK"], cmd_opt["EBU"], cmd_opt["RMS"] = "", "", ""
         del self.normdetails[:]
-    
     #------------------------------------------------------------------#
+    
     def on_audioINstream(self, event):
         """
         sets the specified audio input stream as index to process e.g.
@@ -345,13 +359,34 @@ class PrstPan(wx.Panel):
         sel = self.cmb_A_inMap.GetValue()
         if sel == 'Auto':
             cmd_opt["AudioInMap"] = ['','']
+            self.cmb_A_outMap.SetSelection(1)
+            self.on_audioOUTstream(self)
         else:
             cmd_opt["AudioInMap"] = ['-map 0:%s' % sel, sel]
-        if self.rdbx_normalize.GetSelection() in  [1,2]:
+            self.cmb_A_outMap.SetStringSelection(self.cmb_A_inMap.GetValue())
+            self.on_audioOUTstream(self)
+        if self.rdbx_norm.GetSelection() in  [1,2]:
             if not self.btn_voldect.IsEnabled():
                 self.btn_voldect.Enable()
                 self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
     #-----------------------------------------------------------------------#
+    
+    def on_audioOUTstream(self, event):
+        """
+        Sets the audio stream index for the output file and sets
+        audio codec to specified map.
+        
+        """
+        sel = self.cmb_A_outMap.GetValue()
+        if sel == 'Auto':
+            cmd_opt["AudioOutMap"] = ['','']
+        elif sel == 'All':
+            cmd_opt["AudioOutMap"] = ['-map 0:a?', '']
+        else:
+            sel = int(sel) - 1
+            cmd_opt["AudioOutMap"] = ['-map 0:a%s?' % str(sel),
+                                      '%s'  % str(sel)]
+    #------------------------------------------------------------------#
     
     def reset_list(self, reset_cmbx=False):
         """
@@ -936,24 +971,23 @@ class PrstPan(wx.Panel):
         
         if 'loudnorm=' in pass1:
             if self.rdbx_norm.GetSelection() == 3:
-                if wx.MessageBox(_('EBU automation is active but has also been '
-                                'inserted in the preset parameters '
-                                '(-af loudnorm). The parameters have priority.'
-                                '\n\nDo you wish to continue?'), 
+                if wx.MessageBox(_('EBU normalization is enabled twice in '
+                                   'automation and command line. Command line '
+                                   'has priority.\n\nDo you wish to continue?'), 
                                 _("Videomass: Please confirm"), 
                                 wx.ICON_QUESTION | 
                                 wx.YES_NO, self) == wx.NO:
                     return
             
             typeproc, audnorm = 'two pass EBU', ''
-            loudnorm = [ln for ln in pass1.split() if 'loudnorm=' in ln][0]
+            loudnorm = [ebu for ebu in pass1.split() if 'loudnorm=' in ebu][0]
             
         elif self.rdbx_norm.GetSelection() == 3:
             loudnorm = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %(
                                             str(self.spin_i.GetValue()),
                                             str(self.spin_tp.GetValue()),
                                             str(self.spin_lra.GetValue())))
-            pass1 = '-af %s ' % loudnorm + '%s' % pass1
+            pass1 = '-filter:a: %s ' % loudnorm + '%s' % pass1
             typeproc, audnorm = 'two pass EBU', ''
             
                 
@@ -973,7 +1007,7 @@ class PrstPan(wx.Panel):
                                         destdir, 
                                         None, 
                                         [pass1, pass2, loudnorm], 
-                                        '',
+                                        cmd_opt["AudioOutMap"],
                                         audnorm, 
                                         self.logname, 
                                         cntmax,

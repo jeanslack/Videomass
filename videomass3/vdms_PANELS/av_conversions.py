@@ -74,7 +74,7 @@ vcodecs = ({"Mpeg4": {"-c:v mpeg4":["avi"]},
             #"AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
             "Vp8": {"-c:v libvpx": ["webm"]}, 
             "Vp9": {"-c:v libvpx-vp9": ["webm"]},
-            "Copy": {"-c:v copy": ["mkv","mp4","avi","flv","m4v","ogv"]}
+            "Copy": {"-c:v copy": ["mkv","mp4","avi","flv","m4v","ogv","webm"]}
             })
 # Namings in the audio codec selection on audio radio box:
 acodecs = {('Auto'): (""),
@@ -152,12 +152,17 @@ x265_opt = {("Presets"): ("None","ultrafast","superfast",
                          "zerolatency")
             }
 # profile level for profiles x264/x265
-
 levels = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1', 
           '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
           )
 # optimization list for vp8/vp9
-optimization_str = ('None','VP9 best for Archive',)
+optimization_vp9 = ('Default','Vp9 best for Archive', 'Vp9 CBR Web streaming', 
+                    'Vp9 ABR encoding for devices', 
+                    'Vp9 Constrained ABR-VBV live streaming')
+# optimization list for x264/x265
+optimization_hevc_avc = ('Default','x264 best for Archive', 'x265 best for Archive' 'Vp9 CBR Web streaming', 
+                    'Vp9 ABR encoding for devices', 
+                    'Vp9 Constrained ABR-VBV live streaming')
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6'
 yellow = '#a29500'
@@ -228,7 +233,7 @@ class AV_Conv(wx.Panel):
                                               )
         txtCRF = wx.StaticText(self.codVpanel, wx.ID_ANY, _('CRF'))
         grid_sx_Vcod.Add(txtCRF, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.slider_CRF = wx.Slider(self.codVpanel, wx.ID_ANY, 1, 0, 51, 
+        self.slider_CRF = wx.Slider(self.codVpanel, wx.ID_ANY, 1, -1, 51, 
                                     size=(160, -1), style=wx.SL_HORIZONTAL | 
                                                           wx.SL_AUTOTICKS | 
                                                           wx.SL_LABELS
@@ -240,22 +245,22 @@ class AV_Conv(wx.Panel):
         grid_sx_Vcod.Add(txtVbrate, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         
         self.spin_Vbrate = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
-                                       "1500", min=0, max=204800, 
+                                       "-1", min=-1, max=204800, 
                                         style=wx.TE_PROCESS_ENTER
                                         )
         grid_sx_Vcod.Add(self.spin_Vbrate, 0, wx.ALL | 
                                                 wx.ALIGN_CENTER_VERTICAL, 5
                                                 )
-        txtQmin = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Min Rate (kb)'))
-        grid_sx_Vcod.Add(txtQmin, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        txtMinr = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Min Rate (kb)'))
+        grid_sx_Vcod.Add(txtMinr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.spinMinr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
                                        "0", min=0, max=900000, 
                                         style=wx.TE_PROCESS_ENTER
                                         )
         grid_sx_Vcod.Add(self.spinMinr, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
-        txtQmax = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Max Rate (kb)'))
-        grid_sx_Vcod.Add(txtQmax, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        txtMaxr = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Max Rate (kb)'))
+        grid_sx_Vcod.Add(txtMaxr, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.spinMaxr = wx.SpinCtrl(self.codVpanel, wx.ID_ANY, 
                                        "0", min=0, max=900000, 
@@ -348,12 +353,12 @@ class AV_Conv(wx.Panel):
                                               wx.ALIGN_CENTER_HORIZONTAL| 
                                               wx.ALIGN_CENTER_VERTICAL, 5
                                )
-        self.cmb_vp9optimize = wx.ComboBox(self.vp9panel, wx.ID_ANY,  
-                                           choices=optimization_str,
+        self.cmb_vp9opti = wx.ComboBox(self.vp9panel, wx.ID_ANY,  
+                                           choices=optimization_vp9,
                                           size=(200,-1), style=wx.CB_DROPDOWN | 
                                                                wx.CB_READONLY
                                             )
-        grid_vp9panelprst.Add(self.cmb_vp9optimize, 0, 
+        grid_vp9panelprst.Add(self.cmb_vp9opti, 0, 
                                                     wx.ALL |
                                                     wx.ALIGN_CENTER_HORIZONTAL|
                                                     wx.ALIGN_CENTER_VERTICAL, 5
@@ -384,11 +389,11 @@ class AV_Conv(wx.Panel):
         sizer_vp9panel.Add(self.spin_cpu, 0, wx.ALL|
                                              wx.ALIGN_CENTER_HORIZONTAL, 5
                                              )
-        self.ckbx_multithread = wx.CheckBox(self.vp9panel, 
+        self.ckbx_rowMt1 = wx.CheckBox(self.vp9panel, 
                                      wx.ID_ANY, 
                                      (_('Activates row-mt 1'))
                                      )
-        sizer_vp9panel.Add(self.ckbx_multithread, 0, wx.ALL|
+        sizer_vp9panel.Add(self.ckbx_rowMt1, 0, wx.ALL|
                                                 wx.ALIGN_CENTER_HORIZONTAL, 5
                                                 )
         self.vp9panel.SetSizer(sizer_vp9panel) # set panel
@@ -409,12 +414,12 @@ class AV_Conv(wx.Panel):
                                               wx.ALIGN_CENTER_HORIZONTAL| 
                                               wx.ALIGN_CENTER_VERTICAL, 5
                                )
-        self.cmb_264optimize = wx.ComboBox(self.h264panel, wx.ID_ANY,  
-                                           choices=[],
+        self.cmb_x26opti = wx.ComboBox(self.h264panel, wx.ID_ANY,  
+                                           choices=optimization_hevc_avc,
                                           size=(200,-1), style=wx.CB_DROPDOWN | 
                                                                wx.CB_READONLY
                                             )
-        grid_h264panelprst.Add(self.cmb_264optimize, 0, wx.ALL |
+        grid_h264panelprst.Add(self.cmb_x26opti, 0, wx.ALL |
                                                     wx.ALIGN_CENTER_HORIZONTAL|
                                                     wx.ALIGN_CENTER_VERTICAL, 5
                                )
@@ -797,9 +802,11 @@ class AV_Conv(wx.Panel):
                 'compression will be. The meaning depends on the mode above.'))
         self.spin_Vbrate.SetToolTip(_('specifies the target (average) bit '
                                       'rate for the encoder to use. '
-                                      'Higher value = higher quality.'))
+                                      'Higher value = higher quality. '
+                                      'Set -1 to disable this control.'))
         self.slider_CRF.SetToolTip(_('Constant rate factor. Lower values = '
-                                     'higher quality and a larger file size.'))
+                                     'higher quality and a larger file size. '
+                                     'Set -1 to disable this control.'))
         self.btn_preview.SetToolTip(_('Try filters by playing a preview'))
         self.btn_reset.SetToolTip(_("Clear all enabled filters "))
         self.cmb_Vaspect.SetToolTip(_('Video width and video height ratio.'))
@@ -853,8 +860,8 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
         self.Bind(wx.EVT_SPINCTRL, self.on_enter_Ampl, self.spin_target)
         self.Bind(wx.EVT_BUTTON, self.on_Audio_analyzes, self.btn_voldect)
-        self.Bind(wx.EVT_COMBOBOX, self.on_xOptimize, self.cmb_264optimize)
-        self.Bind(wx.EVT_COMBOBOX, self.on_vpOptimize, self.cmb_vp9optimize)
+        self.Bind(wx.EVT_COMBOBOX, self.on_xOptimize, self.cmb_x26opti)
+        self.Bind(wx.EVT_COMBOBOX, self.on_vpOptimize, self.cmb_vp9opti)
         self.Bind(wx.EVT_COMBOBOX, self.on_xPreset, self.cmb_preset)
         self.Bind(wx.EVT_COMBOBOX, self.on_xProfile, self.cmb_profile)
         self.Bind(wx.EVT_COMBOBOX, self.on_Level, self.cmb_level)
@@ -864,10 +871,10 @@ class AV_Conv(wx.Panel):
         #-------------------------------------- initialize default layout:
         self.rdb_a.SetSelection(0), self.cmb_Vcod.SetSelection(1)
         self.cmb_Media.SetSelection(0), self.cmb_Vcont.SetSelection(0)
-        self.ckbx_pass.SetValue(False), self.slider_CRF.SetValue(23)
         self.cmb_Fps.SetSelection(0), self.cmb_Vaspect.SetSelection(0)
         self.cmb_Pixfrm.SetSelection(1), self.cmb_Submap.SetSelection(1)
         self.cmb_A_outMap.SetSelection(1), self.cmb_A_inMap.SetSelection(0)
+        self.cmb_x26opti.SetSelection(0),self.cmb_vp9opti.SetSelection(0)
         self.UI_set()
         self.audio_default()
         self.normalize_default()
@@ -881,13 +888,13 @@ class AV_Conv(wx.Panel):
             self.vp9panel.Hide(), self.h264panel.Show()
             self.cmb_tune.Clear(), self.cmb_profile.Clear()
             if cmd_opt["VideoCodec"] == "-c:v libx264":
-                self.slider_CRF.SetValue(23)
+                self.slider_CRF.SetValue(23), self.spin_Vbrate.SetValue(1500)
                 for tune in x264_opt['Tunes']:
                     self.cmb_tune.Append((tune),)
                 for prof in x264_opt["Profiles"]:
                     self.cmb_profile.Append((prof),)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
-                self.slider_CRF.SetValue(28) 
+                self.slider_CRF.SetValue(28), self.spin_Vbrate.SetValue(1500)
                 for tune in x265_opt["Tunes"]:
                     self.cmb_tune.Append((tune),)
                 for prof in x265_opt["Profiles"]:
@@ -899,18 +906,19 @@ class AV_Conv(wx.Panel):
         elif cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                        "-c:v libaom-av1 -strict -2"]:
             self.vp9panel.Show(), self.h264panel.Hide()
-            self.ckbx_multithread.SetValue(True)
-            self.rdb_deadline.SetSelection(1), self.spin_cpu.SetRange(0, 5)
-            self.slider_CRF.SetMax(63), self.slider_CRF.SetValue(31) 
-            self.filterVpanel.Show()
-            self.nb_Video.Layout()
+            self.ckbx_rowMt1.SetValue(True), self.rdb_deadline.SetSelection(1) 
+            self.spin_cpu.SetRange(0, 5), self.slider_CRF.SetMax(63) 
+            self.slider_CRF.SetValue(31), self.spin_Vbrate.SetValue(1500)
+            self.filterVpanel.Show(), self.nb_Video.Layout()
             
             
         elif cmd_opt["VideoCodec"] == "-c:v copy":
+            self.slider_CRF.SetValue(-1), self.spin_Vbrate.SetValue(-1)
             self.vp9panel.Hide(), self.h264panel.Hide()
-            self.spin_Vbrate.Disable(), self.filterVpanel.Hide()
+            self.filterVpanel.Hide()
             
         else: # all others containers that not use h264
+            self.slider_CRF.SetValue(-1), self.spin_Vbrate.SetValue(1500)
             self.vp9panel.Hide(), self.h264panel.Hide() 
             self.filterVpanel.Show()
         
@@ -1048,7 +1056,11 @@ class AV_Conv(wx.Panel):
         encoders
         
         """
-        pass
+        name = self.cmb_x26opti.GetValue()
+        if name == 'Default':
+            return
+        data = optimizations.hevc_avc(name)
+        eval(data)
     #-------------------------------------------------------------------#
     def on_vpOptimize(self, event):
         """
@@ -1056,8 +1068,8 @@ class AV_Conv(wx.Panel):
         encoders
         
         """
-        name = self.cmb_vp9optimize.GetValue()
-        if name == 'None':
+        name = self.cmb_vp9opti.GetValue()
+        if name == 'Default':
             return
         data = optimizations.vp9(name)
         eval(data)
@@ -1101,6 +1113,7 @@ class AV_Conv(wx.Panel):
         Reset a empty CRF (this depend if is h264 two-pass encoding
         or if not codec h264)
         """
+        val = self.spin_Vbrate.GetValue()
         if cmd_opt["VideoCodec"] == "-c:v libaom-av1 -strict -2":
             if self.ckbx_pass.IsChecked():
                 cmd_opt["CRF"] = ""
@@ -1109,7 +1122,7 @@ class AV_Conv(wx.Panel):
                                          "-c:v libaom-av1 -strict -2"]:
             cmd_opt["CRF"] = ""
             
-        cmd_opt["VideoBitrate"] = "-b:v %sk" % (self.spin_Vbrate.GetValue())
+        cmd_opt["VideoBitrate"] = "" if val == -1 else "-b:v %sk" % val
 
         
     #------------------------------------------------------------------#
@@ -1117,10 +1130,12 @@ class AV_Conv(wx.Panel):
         """
         Reset bitrate at empty (this depend if is h264 codec)
         """
+        val = self.slider_CRF.GetValue()
         if not cmd_opt["VideoCodec"] in ["-c:v libvpx","-c:v libvpx-vp9", 
                                          "-c:v libaom-av1 -strict -2"]:
             cmd_opt["VideoBitrate"] = ""
-        cmd_opt["CRF"] = "-crf %s" % self.slider_CRF.GetValue()
+
+        cmd_opt["CRF"] = "" if val == -1 else "-crf %s" % val
         
     #------------------------------------------------------------------#
     def on_Deadline(self, event):
@@ -1552,14 +1567,11 @@ class AV_Conv(wx.Panel):
         sel = self.cmb_A_inMap.GetValue()
         if sel == 'Auto':
             cmd_opt["AudioInMap"] = ['','']
-            if not self.rdb_a.GetStringSelection() == 'No Audio':
-                self.cmb_A_outMap.Enable()
             self.cmb_A_outMap.SetSelection(1)
             self.on_audioOUTstream(self)
         else:
             cmd_opt["AudioInMap"] = ['-map 0:%s' % sel, sel]
             self.cmb_A_outMap.SetStringSelection(self.cmb_A_inMap.GetValue())
-            self.cmb_A_outMap.Disable()
             self.on_audioOUTstream(self)
         
         if self.rdbx_normalize.GetSelection() in  [1,2]:
@@ -1735,6 +1747,7 @@ class AV_Conv(wx.Panel):
         """
         Show a wx.ListCtrl dialog with volumedected data
         """
+        print('peak:%s rms%s' % (cmd_opt["PEAK"],cmd_opt["RMS"]))
         if cmd_opt["PEAK"]:
             title = _('PEAK-based volume statistics')
         elif cmd_opt["RMS"]:
@@ -1801,7 +1814,7 @@ class AV_Conv(wx.Panel):
             deadline = self.rdb_deadline.GetStringSelection()
             cmd_opt["CpuUsed"] = '-cpu-used %s' % self.spin_cpu.GetValue()
             cmd_opt["Deadline"] = '-deadline %s' % deadline
-            if self.ckbx_multithread.IsChecked():
+            if self.ckbx_rowMt1.IsChecked():
                 cmd_opt["RowMthreading"] = '-row-mt 1'
             else:
                 cmd_opt["RowMthreading"] = ''
@@ -2028,8 +2041,7 @@ class AV_Conv(wx.Panel):
         """
         title = _('Audio/Video EBU normalization')
         cmd_opt["EBU"] = 'EBU R128'
-        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:'
-                      'offset=0.0:print_format=summary' %( 
+        loudfilter = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' %( 
                                               str(self.spin_i.GetValue()),
                                               str(self.spin_tp.GetValue()),
                                               str(self.spin_lra.GetValue()),))
@@ -2067,8 +2079,8 @@ class AV_Conv(wx.Panel):
                                            destin, 
                                            None, 
                                            [pass1, pass2, loudfilter], 
-                                           cmd_opt["AudioInMap"],
-                                           cmd_opt["AudioOutMap"], 
+                                           cmd_opt["AudioOutMap"],
+                                           None, 
                                            logname, 
                                            countmax,
                                            )
@@ -2083,8 +2095,8 @@ class AV_Conv(wx.Panel):
                      f'{cmd_opt["FPS"]} {cmd_opt["VFilters"]} '
                      f'{cmd_opt["PixFmt"]} {cmd_opt["WebOptim"]} '
                      f'-map 0:v? {cmd_opt["AudioInMap"][0]}  '
-                     f'{opt1} -sn -filter:a: '
-                     f'{loudfilter} -f {muxers[cmd_opt["OutputFormat"]]}'
+                     f'{opt1} -sn -filter:a: {loudfilter} '
+                     f'-f {muxers[cmd_opt["OutputFormat"]]}'
                      )
             cmd_2 = (f'{cmd_opt["VideoCodec"]} {cmd_opt["VideoBitrate"]} '
                     f'{cmd_opt["MinRate"]} {cmd_opt["MaxRate"]} '
@@ -2116,8 +2128,8 @@ class AV_Conv(wx.Panel):
                                            destin, 
                                            None, 
                                            [pass1, pass2, loudfilter], 
-                                           cmd_opt["AudioInMap"],
-                                           cmd_opt["AudioOutMap"], 
+                                           cmd_opt["AudioOutMap"],
+                                           None, 
                                            logname, 
                                            countmax,
                                            )
@@ -2194,8 +2206,8 @@ class AV_Conv(wx.Panel):
                                         destin,
                                         None,
                                         [pass1, pass2, loudfilter],
-                                        cmd_opt["AudioInMap"],
                                         ['',''], # do not map audio file
+                                        None, 
                                         logname, 
                                         countmax,
                                         )

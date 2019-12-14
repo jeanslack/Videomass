@@ -12,6 +12,11 @@ URGENCY: to do soon
 --------------
 URGENCY: high
 --------------
+
+- Make preset with device compatibilities and quality using -preset, -profile,
+  -level and -tune parameters for x264/x265 (Presets Manager/av_conversions)
+
+- improve automation in the Audio Streams Index box (Presets Manager)
         
 -------------
 URGENCY: low

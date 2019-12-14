@@ -91,8 +91,7 @@ class Loudnorm(Thread):
         self.filelist = var[1] # list of files (elements)
         self.ext = var[2]
         self.passList = var[5] # comand list
-        self.audioINmap = var[6] # map input list
-        self.audioOUTmap = var[7] # map output list
+        self.audioOUTmap = var[6] # map output list
         self.outputdir = var[3] # output path
         self.duration = duration # duration list
         self.time_seq = timeseq # a time segment
