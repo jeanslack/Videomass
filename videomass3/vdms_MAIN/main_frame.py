@@ -84,8 +84,10 @@ class MainFrame(wx.Frame):
         self.videomass_icon = pathicons[0]
         self.icon_runconversion = pathicons[2]
         #-------------------------------# 
-        self.data = None# list of items in list control
+        self.data_files = None# list of items in list control
+        self.data_url = None# list of urls in text box
         self.file_destin = None # path name for file saved destination
+        self.file_src = None# input files list
         self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
         self.time_read = {'start seek':['',''],'time':['','']}
         self.duration = [] # empty if not file imported
@@ -334,11 +336,12 @@ class MainFrame(wx.Frame):
         Retrieve to choose topic panel and reset data object
         """
         self.topicname = None
-        self.data = None
-        self.fileDnDTarget.deleteAll(self), self.fileDnDTarget.Hide()
-        self.textDnDTarget.deleteAll(self), self.textDnDTarget.Hide()
+        #self.data_files = None
+        #self.fileDnDTarget.deleteAll(self), 
+        #self.textDnDTarget.deleteAll(self), 
+        self.textDnDTarget.Hide(), self.fileDnDTarget.Hide()
         if self.ytDownloader.IsShown():
-            self.ytDownloader.fcode.DeleteAllItems()
+            #self.ytDownloader.fcode.DeleteAllItems()
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
             self.ytDownloader.info, self.ytDownloader.error = [], False
@@ -358,18 +361,20 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def topic_Redirect(self, data):
         """
+        Is called by filedrop and textdrop modules when types 
+        the forward button to redirect on corresponding panel
         """
-        self.data = data
-        if self.topicname == 'Audio/Video Conversions':
-            self.switch_av_conversions(self)
-            
-        #elif self.topicname == 'Audio Conversions':
-            #self.switch_audio_conv(self)
         
+        if self.topicname == 'Audio/Video Conversions':
+            self.data_files = data
+            self.switch_av_conversions(self)
+
         elif self.topicname == 'Youtube Downloader':
+            self.data_url = data
             self.youtube_Downloader(self)
             
         elif self.topicname == 'Presets Manager':
+            self.data_files = data
             self.switch_presets_manager(self)
     #------------------------------------------------------------------#
     def menu_items(self):
@@ -434,7 +439,7 @@ class MainFrame(wx.Frame):
         if self.topicname == 'Youtube Downloader':
             self.ytDownloader.on_show_info()
         else:
-            dialog = Mediainfo(self.data, self.OS,)
+            dialog = Mediainfo(self.data_files, self.OS,)
             dialog.Show()
     #------------------------------------------------------------------#
     
@@ -1009,10 +1014,10 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide(), self.VconvPanel.Show(), 
         self.statusbar_msg(_('Audio/Video Conversions'), None)
         flist = [f['format']['filename'] for f in 
-                 self.data if f['format']['filename']
+                 self.data_files if f['format']['filename']
                  ]
         self.duration = [f['format']['duration'] for f in 
-                         self.data if f['format']['duration']
+                         self.data_files if f['format']['duration']
                          ]
         self.VconvPanel.file_src = flist
         self.toolbar.Show(), self.btnpanel.Show()
@@ -1035,13 +1040,13 @@ class MainFrame(wx.Frame):
         #self.AconvPanel.Hide(), 
         self.PrstsPanel.Show()
         self.statusbar_msg(_('Presets Manager'), None)
-        flist = [f['format']['filename'] for f in 
-                 self.data if f['format']['filename']
-                 ]
+        self.file_src = [f['format']['filename'] for f in 
+                         self.data_files if f['format']['filename']
+                        ]
         self.duration = [f['format']['duration'] for f in 
-                         self.data if f['format']['duration']
+                         self.data_files if f['format']['duration']
                          ]
-        self.PrstsPanel.file_src = flist
+        #self.PrstsPanel.file_src = flist
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Show(), self.btn_delprf.Show(), self.btn_editprf.Show()
         self.btn_saveprf.Hide(), self.btn_duration.Show()
@@ -1098,12 +1103,14 @@ class MainFrame(wx.Frame):
         the on_ok method of the corresponding panel shown, which calls 
         the 'switch_Process' method above.
         """
+        print(self.file_src)
         if self.ytDownloader.IsShown():
             self.ytDownloader.on_Start()
         elif self.VconvPanel.IsShown():
             self.VconvPanel.on_start()
         elif self.PrstsPanel.IsShown():
-            self.PrstsPanel.on_start()
+            self.PrstsPanel.on_Start()
+            print('si')
             
     #------------------------------------------------------------------#
     def panelShown(self, panelshown):

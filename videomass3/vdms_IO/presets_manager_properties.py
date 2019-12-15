@@ -38,6 +38,7 @@ def supported_formats(supp, file_sources):
     presets manager panel
 
     """
+    print(file_sources)
     items = ''.join(supp.split()).split(',')
     exclude = []
 
@@ -56,7 +57,7 @@ def supported_formats(supp, file_sources):
                                 wx.ICON_INFORMATION | wx.OK, 
                                 None
                                 )
-                return (False)
+                return
             
     return (file_sources)
 

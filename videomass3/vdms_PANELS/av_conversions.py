@@ -212,7 +212,7 @@ class AV_Conv(wx.Panel):
         sizer_nbVideo.Add(self.codVpanel, 1, wx.ALL | wx.EXPAND, 10)
         grid_sx_Vcod = wx.FlexGridSizer(11,2,0,0)
         self.box_Vcod = wx.StaticBoxSizer(wx.StaticBox(self.codVpanel, 
-                                        wx.ID_ANY, _("Video Encoders")), 
+                                        wx.ID_ANY, _("Video Encoder")), 
                                         wx.VERTICAL
                                             )
         self.box_Vcod.Add(grid_sx_Vcod, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL| 
@@ -513,7 +513,7 @@ class AV_Conv(wx.Panel):
         self.nb_Audio = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nbAudio = wx.BoxSizer(wx.VERTICAL)
         self.rdb_a = wx.RadioBox(self.nb_Audio, wx.ID_ANY, (
-                                 _("Audio Encoders")),
+                                 _("Audio Encoder")),
                                  choices=[x for x in acodecs.keys()],
                                  majorDimension=5, style=wx.RA_SPECIFY_COLS
                                     )
@@ -815,9 +815,10 @@ class AV_Conv(wx.Panel):
         self.btn_preview.SetToolTip(_('Try filters by playing a preview'))
         self.btn_reset.SetToolTip(_("Clear all enabled filters "))
         self.cmb_Vaspect.SetToolTip(_('Video width and video height ratio.'))
-        self.cmb_Fps.SetToolTip(_('Frames repeated a given number of '
-                'times per second. In countries are 30 NTSC, PAL countries '
-                '(like Italy) are 25.'))
+        self.cmb_Fps.SetToolTip(_('Frames repeat a given number of times per '
+                                  'second. In some countries are 30 NTSC, in '
+                                  'PAL countries like Italy are 25.'
+                                ))
         self.btn_voldect.SetToolTip(_('Gets maximum volume and average volume '
                 'data in dBFS, then calculates the offset amount for audio '
                 'normalization.'))

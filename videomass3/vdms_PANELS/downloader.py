@@ -82,9 +82,9 @@ class Downloader(wx.Panel):
         frame.Add(sizer, 1, wx.ALL | wx.EXPAND, 5)
         self.choice = wx.Choice(self, wx.ID_ANY, 
                                      choices=[_('Default'),
-                                              _('Separated Video+Audio'),  
+                                              _('Video + Audio'),  
                                               _('Audio only'),
-                                              _('By using format code')],
+                                              _('Using format code')],
                                      size=(-1,-1),
                                      )
         self.choice.SetSelection(0)
@@ -191,7 +191,7 @@ class Downloader(wx.Panel):
             self.txt_code.Clear()
             self.parent.statusbar_msg(_("wait... I'm getting the data"), 
                                         'GOLDENROD')
-            for link in self.parent.data:
+            for link in self.parent.data_url:
                 data = IO_tools.youtube_info(link)
                 for meta in data:
                     if meta[1]:
@@ -350,7 +350,7 @@ class Downloader(wx.Panel):
     def on_Start(self):
 
         logname = 'Youtube_downloader.log'
-        urls = self.parent.data
+        urls = self.parent.data_url
         
         if self.choice.GetSelection() == 0:
             data = {'format': opt["V_QUALITY"], 

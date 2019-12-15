@@ -175,12 +175,12 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_forward)
+        self.Bind(wx.EVT_BUTTON, self.on_Redirect, self.btn_forward)
         
         self.text_path_save.SetValue(self.file_dest)
     
     #----------------------------------------------------------------------
-    def topic_Redirect(self, event):
+    def on_Redirect(self, event):
         """
         Redirects to specific panel
         """

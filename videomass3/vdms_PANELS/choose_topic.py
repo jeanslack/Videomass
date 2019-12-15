@@ -57,7 +57,7 @@ class Choose_Topic(wx.Panel):
         grid_buttons = wx.FlexGridSizer(1, 4, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
 
-        video_lab = _('    Audio/Video Conversions     ')
+        video_lab = _('Audio/Video Conversions')
         #audio_lab = _('    Audio Conversions     ')
         #pict_lab = _('Pictures from Video')
         #audgr_lab = _('Extract Audio from Video')
@@ -65,7 +65,7 @@ class Choose_Topic(wx.Panel):
         #audmer_lab = _('Merging Audio and Video')
         youtube_lab =  _('Download from YouTube')
         #anorm_lab =  _('Audio Normalization')
-        prst_mng =  _('      Presets Manager      ')
+        prst_mng =  _('Presets Manager')
         
         self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1,-1))
         self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn),wx.TOP)

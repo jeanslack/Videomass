@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-15 12:22+0100\n"
+"POT-Creation-Date: 2019-12-15 20:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -531,7 +531,7 @@ msgid "Assign a short name to the profile"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/presets_addnew.py:151
-msgid "Assign a long descriptionto the profile"
+msgid "Assign a long description to the profile"
 msgstr ""
 
 #: ../videomass3/vdms_DIALOGS/presets_addnew.py:153
@@ -912,13 +912,13 @@ msgid "=  Below max peak"
 msgstr ""
 
 #: ../videomass3/vdms_FRAMES/shownormlist.py:122
-#: ../videomass3/vdms_PANELS/av_conversions.py:1756
+#: ../videomass3/vdms_PANELS/av_conversions.py:1757
 #: ../videomass3/vdms_PANELS/presets_manager.py:648
 msgid "RMS-based volume statistics"
 msgstr ""
 
 #: ../videomass3/vdms_FRAMES/shownormlist.py:144
-#: ../videomass3/vdms_PANELS/av_conversions.py:1754
+#: ../videomass3/vdms_PANELS/av_conversions.py:1755
 #: ../videomass3/vdms_PANELS/presets_manager.py:646
 msgid "PEAK-based volume statistics"
 msgstr ""
@@ -1480,10 +1480,12 @@ msgid "Youtube Downloader"
 msgstr ""
 
 #: ../videomass3/vdms_MAIN/main_frame.py:1010
+#: ../videomass3/vdms_PANELS/choose_topic.py:60
 msgid "Audio/Video Conversions"
 msgstr ""
 
 #: ../videomass3/vdms_MAIN/main_frame.py:1037
+#: ../videomass3/vdms_PANELS/choose_topic.py:68
 msgid "Presets Manager"
 msgstr ""
 
@@ -1492,7 +1494,7 @@ msgid "Processing Status - Videomass"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:215
-msgid "Video Encoders"
+msgid "Video Encoder"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:221
@@ -1597,7 +1599,7 @@ msgid "AV Media"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:516
-msgid "Audio Encoders"
+msgid "Audio Encoder"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:525
@@ -1757,18 +1759,18 @@ msgstr ""
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:818
 msgid ""
-"Frames repeated a given number of times per second. In countries are 30 "
-"NTSC, PAL countries (like Italy) are 25."
+"Frames repeat a given number of times per second. In some countries are 30 "
+"NTSC, in PAL countries like Italy are 25."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:821
+#: ../videomass3/vdms_PANELS/av_conversions.py:822
 #: ../videomass3/vdms_PANELS/presets_manager.py:298
 msgid ""
 "Gets maximum volume and average volume data in dBFS, then calculates the "
 "offset amount for audio normalization."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:824
+#: ../videomass3/vdms_PANELS/av_conversions.py:825
 #: ../videomass3/vdms_PANELS/presets_manager.py:301
 msgid ""
 "Limiter for the maximum peak level or the mean level (when switch to RMS) in "
@@ -1776,108 +1778,109 @@ msgid ""
 "-20.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:828
+#: ../videomass3/vdms_PANELS/av_conversions.py:829
 #: ../videomass3/vdms_PANELS/presets_manager.py:314
 msgid "Choose from video a specific input audio stream to work out."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:830
+#: ../videomass3/vdms_PANELS/av_conversions.py:831
 #: ../videomass3/vdms_PANELS/presets_manager.py:316
 msgid ""
 "Map on the output index. Keep same input map if saving as video; to save as "
 "audio select to \"all\" or \"Auto\""
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:833
+#: ../videomass3/vdms_PANELS/av_conversions.py:834
 #: ../videomass3/vdms_PANELS/presets_manager.py:305
 msgid ""
 "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:835
+#: ../videomass3/vdms_PANELS/av_conversions.py:836
 #: ../videomass3/vdms_PANELS/presets_manager.py:308
 msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:837
+#: ../videomass3/vdms_PANELS/av_conversions.py:838
 #: ../videomass3/vdms_PANELS/presets_manager.py:311
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1161
-#: ../videomass3/vdms_PANELS/av_conversions.py:1173
+#: ../videomass3/vdms_PANELS/av_conversions.py:1162
+#: ../videomass3/vdms_PANELS/av_conversions.py:1174
 msgid "No filter enabled"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1460
+#: ../videomass3/vdms_PANELS/av_conversions.py:1461
 msgid "No Audio"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1611
+#: ../videomass3/vdms_PANELS/av_conversions.py:1612
 #: ../videomass3/vdms_PANELS/presets_manager.py:504
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1614
+#: ../videomass3/vdms_PANELS/av_conversions.py:1615
 #: ../videomass3/vdms_PANELS/presets_manager.py:507
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1618
+#: ../videomass3/vdms_PANELS/av_conversions.py:1619
 #: ../videomass3/vdms_PANELS/presets_manager.py:511
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1641
+#: ../videomass3/vdms_PANELS/av_conversions.py:1642
 #: ../videomass3/vdms_PANELS/presets_manager.py:537
 msgid "Audio normalization off"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1678
+#: ../videomass3/vdms_PANELS/av_conversions.py:1679
 #: ../videomass3/vdms_PANELS/presets_manager.py:569
 msgid "Audio normalization is required only for some files"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1679
+#: ../videomass3/vdms_PANELS/av_conversions.py:1680
 #: ../videomass3/vdms_PANELS/presets_manager.py:570
 msgid "Audio normalization is not required based to set target level"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:1873
+#: ../videomass3/vdms_PANELS/av_conversions.py:1874
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "the data on the audio volume."
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2044
+#: ../videomass3/vdms_PANELS/av_conversions.py:2045
 msgid "Audio/Video EBU normalization"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2147
+#: ../videomass3/vdms_PANELS/av_conversions.py:2148
 msgid "Audio conversions"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2186
+#: ../videomass3/vdms_PANELS/av_conversions.py:2187
 msgid "Audio EBU normalization"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2222
+#: ../videomass3/vdms_PANELS/av_conversions.py:2223
 #, python-format
 msgid "%s file in pending"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2230
-#: ../videomass3/vdms_PANELS/av_conversions.py:2232
+#: ../videomass3/vdms_PANELS/av_conversions.py:2231
+#: ../videomass3/vdms_PANELS/av_conversions.py:2233
+#: ../videomass3/vdms_PANELS/presets_manager.py:1033
 msgid "Off"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2239
+#: ../videomass3/vdms_PANELS/av_conversions.py:2240
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -1894,7 +1897,7 @@ msgid ""
 "Selected Input Audio index"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2259
+#: ../videomass3/vdms_PANELS/av_conversions.py:2260
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -1916,7 +1919,7 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2285
+#: ../videomass3/vdms_PANELS/av_conversions.py:2286
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -1949,11 +1952,11 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2352
+#: ../videomass3/vdms_PANELS/av_conversions.py:2353
 msgid "Videomass: Choose a preset to storing new profile"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/av_conversions.py:2361
+#: ../videomass3/vdms_PANELS/av_conversions.py:2362
 msgid "Videomass: Create a new profile"
 msgstr ""
 
@@ -1961,16 +1964,8 @@ msgstr ""
 msgid "Welcome to Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/choose_topic.py:60
-msgid "    Audio/Video Conversions     "
-msgstr ""
-
 #: ../videomass3/vdms_PANELS/choose_topic.py:66
 msgid "Download from YouTube"
-msgstr ""
-
-#: ../videomass3/vdms_PANELS/choose_topic.py:68
-msgid "      Presets Manager      "
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/choose_topic.py:109
@@ -1994,7 +1989,7 @@ msgid "Default"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/downloader.py:85
-msgid "Separated Video+Audio"
+msgid "Video + Audio"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/downloader.py:86
@@ -2002,7 +1997,7 @@ msgid "Audio only"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/downloader.py:87
-msgid "By using format code"
+msgid "Using format code"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/downloader.py:124
@@ -2336,18 +2331,21 @@ msgid ""
 "Do you wish to continue?"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/presets_manager.py:1027
+#: ../videomass3/vdms_PANELS/presets_manager.py:1035
 msgid "Disable"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/presets_manager.py:1035
+#: ../videomass3/vdms_PANELS/presets_manager.py:1043
 msgid ""
 "SUMMARY\n"
 "\n"
-"File to Queue                      \n"
+"File to Queue\n"
 "Pass Encoding                      \n"
 "Profile Used\n"
-"Out Format                      \n"
+"Output Format\n"
+"Audio Normalization                      \n"
+"Selected Input Audio index\n"
+"Audio Output Map index                      \n"
 "Time selection"
 msgstr ""
 

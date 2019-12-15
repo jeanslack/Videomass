@@ -85,7 +85,6 @@ class PrstPan(wx.Panel):
         self.PWD = PWD #current work of videomass
         self.OS = OS
         self.parent = parent
-        self.file_src = []
         self.txtcmdedited = False # show dlg if cmdline is edited
         self.normdetails = []
         prst = sorted([os.path.splitext(x)[0] for x in 
@@ -576,7 +575,7 @@ class PrstPan(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.file_src, 
+        data = volumeDetectProcess(self.parent.file_src, 
                                    self.time_seq, 
                                    cmd_opt["AudioInMap"][0])
         if data[1]:
@@ -585,7 +584,7 @@ class PrstPan(wx.Panel):
         else:
             volume = list()
             if self.rdbx_norm.GetSelection() == 1: # peak Analyzes
-                for f, v in zip(self.file_src, data[0]):
+                for f, v in zip(self.parent.file_src, data[0]):
                     maxvol = v[0].split(' ')[0]
                     meanvol = v[1].split(' ')[0]
                     offset = float(maxvol) - float(target)
@@ -603,7 +602,7 @@ class PrstPan(wx.Panel):
                                             str(result),
                                             ))
             elif self.rdbx_norm.GetSelection() == 2: # rms Analyzes
-                for f, v in zip(self.file_src, data[0]):
+                for f, v in zip(self.parent.file_src, data[0]):
                     maxvol = v[0].split(' ')[0]
                     meanvol = v[1].split(' ')[0]
                     offset = float(meanvol) - float(target)
@@ -877,7 +876,7 @@ class PrstPan(wx.Panel):
 
             self.reset_list()
     #------------------------------------------------------------------#
-    def on_start(self):
+    def on_Start(self):
         """
         File data redirecting .
         
@@ -925,14 +924,19 @@ class PrstPan(wx.Panel):
                     if dlg.IsCheckBoxChecked():
                         # make sure we won't show it again the next time
                         self.txtcmdedited = True
+        print('ok sono su prst')
                         
         outext = '' if array[5] == 'copy' else array[5] 
         extlst, outext = array[4], outext
-        file_sources = supported_formats(extlst, self.file_src)
+        print(self.parent.file_src)
+        file_sources = supported_formats(extlst, self.parent.file_src)
         checking = inspect(file_sources, dir_destin, outext)
         
-        if not checking[0]:# missing files or user has changed his mind
+        if not checking[0]:
+            print('si ferma qui?')
+            # not supported, missing files or user has changed his mind
             return
+        print('sono a metà')
         
         (batch, file_sources, dir_destin, fname, bname, cntmax) = checking
         # batch: batch or single process
@@ -943,6 +947,8 @@ class PrstPan(wx.Panel):
             self.two_Pass(file_sources, dir_destin, cntmax, outext)
         else:
             self.one_Pass(file_sources, dir_destin, cntmax, outext)
+        
+        print('sono in fondo')
     #----------------------------------------------------------------#
     
     def one_Pass(self, filesrc, destdir, cntmax, outext):
@@ -1023,6 +1029,14 @@ class PrstPan(wx.Panel):
         Update information before send to epilogue
         
         """
+        if cmd_opt["PEAK"]:
+            normalize = 'PEAK'
+        elif cmd_opt["RMS"]:
+            normalize = 'RMS'
+        elif cmd_opt["EBU"]:
+            normalize = 'EBU R128'
+        else:
+            normalize = _('Off')
         if not self.parent.time_seq:
             time = _('Disable')
         else:
@@ -1032,16 +1046,20 @@ class PrstPan(wx.Panel):
             
         numfile = "%s file in pending" % str(cntmax)
                     
-        formula = (_("SUMMARY\n\nFile to Queue\
-                      \nPass Encoding\
-                      \nProfile Used\nOut Format\
+        formula = (_("SUMMARY\n\nFile to Queue\nPass Encoding\
+                      \nProfile Used\nOutput Format\nAudio Normalization\
+                      \nSelected Input Audio index\nAudio Output Map index\
                       \nTime selection"
                       ))
-        dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile,
-                                                passes,
-                                                array[0], 
-                                                array[5],
-                                                time,)
+        dictions = ("\n\n%s\n%s\n%s\n"
+                    "%s\n%s\n%s\n%s\n%s" % (numfile,
+                                            passes,
+                                            array[0], 
+                                            array[5],
+                                            normalize,
+                                            self.cmb_A_inMap.GetValue(),
+                                            self.cmb_A_outMap.GetValue(),
+                                            time,)
                     )
 
         return formula, dictions

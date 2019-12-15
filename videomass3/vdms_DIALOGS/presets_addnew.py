@@ -148,7 +148,7 @@ class MemPresets(wx.Dialog):
                                             wx.NORMAL))
 
         self.txt_name.SetToolTip(_('Assign a short name to the profile'))
-        self.txt_descript.SetToolTip(_('Assign a long description'
+        self.txt_descript.SetToolTip(_('Assign a long description '
                                        'to the profile'))
         self.pass_1_cmd.SetToolTip(_('Reserved arguments for the first pass'
                                         ))
