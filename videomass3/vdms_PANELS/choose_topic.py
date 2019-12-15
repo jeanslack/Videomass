@@ -106,9 +106,9 @@ class Choose_Topic(wx.Panel):
                                    wx.ALIGN_CENTER_VERTICAL|
                                    wx.ALIGN_CENTER_HORIZONTAL, 15)
         
-        txt_link = wx.StaticText(self, label='Download additional presets or '
-                                             'contribute to making new ones ')
-        link = hpl.HyperLinkCtrl(self, -1, "Additional Presets",
+        txt_link = wx.StaticText(self, label=_('Download additional presets or '
+                                             'contribute to making new ones '))
+        link = hpl.HyperLinkCtrl(self, -1, _("Additional Presets"),
                         URL="https://github.com/jeanslack/Videomass-presets")
         sizer_hpl.Add(txt_link)
         sizer_hpl.Add(link)
@@ -149,8 +149,8 @@ class Choose_Topic(wx.Panel):
     #------------------------------------------------------------------#
     def on_YoutubeDL(self, event):
         if not ydl[0]:
-            wx.MessageBox('ERROR: %s\n\nTo use this feature '
-                          'please install youtube-dl.' % ydl[1],
+            wx.MessageBox(_('ERROR: {0}\n\nTo use this feature '
+                          'please install youtube-dl.') % ydl[1],
                           'Videomass', wx.ICON_ERROR)
             return
 

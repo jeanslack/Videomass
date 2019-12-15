@@ -353,7 +353,7 @@ class MainFrame(wx.Frame):
             self.PrstsPanel.Hide()
             
         self.ChooseTopic.Show(), self.toolbar.Hide(), self.btnpanel.Hide()
-        self.statusbar_msg(_(''), None)
+        self.statusbar_msg('', None)
         self.Layout()
     #------------------------------------------------------------------#
     def topic_Redirect(self, data):

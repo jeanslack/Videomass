@@ -156,13 +156,18 @@ levels = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
           '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
           )
 # optimization list for vp8/vp9
-optimization_vp9 = ('Default','Vp9 best for Archive', 'Vp9 CBR Web streaming', 
-                    'Vp9 ABR encoding for devices', 
+optimization_vp9 = ('Default',
+                    'Vp9 best for Archive', 
+                    'Vp9 CBR Web streaming', 
                     'Vp9 Constrained ABR-VBV live streaming')
 # optimization list for x264/x265
-optimization_hevc_avc = ('Default','x264 best for Archive', 'x265 best for Archive' 'Vp9 CBR Web streaming', 
-                    'Vp9 ABR encoding for devices', 
-                    'Vp9 Constrained ABR-VBV live streaming')
+optimization_hevc_avc = ('Default',
+                         'x264 best for Archive', 
+                         'x265 best for Archive',
+                         'x264 ABR for devices', 
+                         'x265 ABR for devices', 
+                         'x264 ABR-VBV live streaming',
+                         'x265 ABR-VBV live streaming')
 # set widget colours in some case with html rappresentetion:
 azure = '#15a6a6'
 yellow = '#a29500'
@@ -790,7 +795,7 @@ class AV_Conv(wx.Panel):
                                     'reduce the file size, but takes longer.'))
         self.spinMinr.SetToolTip(_('Specifies a minimum tolerance to be used'))
         self.spinMaxr.SetToolTip(_('Specifies a maximum tolerance. this is '
-                                   'only used in conjunction with bufsize'))
+                                   'only used in conjunction with buffer size'))
         self.spinBufsize.SetToolTip(_('Specifies the decoder buffer size, '
                                       'which determines the variability of '
                                       'the output bitrate '))
@@ -820,9 +825,11 @@ class AV_Conv(wx.Panel):
                 'the mean level (when switch to RMS) in dBFS. From -99.0 to '
                 '+0.0; default for PEAK level is -1.0; default for RMS is '
                 '-20.0'))
-        self.cmb_A_inMap.SetToolTip(_('Choose a specific input audio '
-                                      'stream to process'))
-        self.cmb_A_outMap.SetToolTip(_('Map on the output index'))
+        self.cmb_A_inMap.SetToolTip(_('Choose from video a specific input '
+                                      'audio stream to work out.'))
+        self.cmb_A_outMap.SetToolTip(_('Map on the output index. Keep same '
+                'input map if saving as video; to save as audio select to '
+                '"all" or "Auto"'))
         self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
                                  'From -70.0 to -5.0, default is -24.0'))
         self.spin_tp.SetToolTip(_('Maximum True Peak in dBTP. From -9.0 '
@@ -1057,8 +1064,6 @@ class AV_Conv(wx.Panel):
         
         """
         name = self.cmb_x26opti.GetValue()
-        if name == 'Default':
-            return
         data = optimizations.hevc_avc(name)
         eval(data)
     #-------------------------------------------------------------------#
@@ -1069,8 +1074,6 @@ class AV_Conv(wx.Panel):
         
         """
         name = self.cmb_vp9opti.GetValue()
-        if name == 'Default':
-            return
         data = optimizations.vp9(name)
         eval(data)
     #-------------------------------------------------------------------#
@@ -1733,9 +1736,9 @@ class AV_Conv(wx.Panel):
                  pass
             else:
                 self.parent.statusbar_msg(msg2, yellow)
-        if self.rdbx_normalize.GetSelection() == 1:# RMS        
+        if self.rdbx_normalize.GetSelection() == 1:# PEAK        
             cmd_opt["PEAK"] = volume
-        elif self.rdbx_normalize.GetSelection() == 2:# ebu
+        elif self.rdbx_normalize.GetSelection() == 2:# RMS
             cmd_opt["RMS"] = volume
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(165,165, 165))
@@ -1747,10 +1750,9 @@ class AV_Conv(wx.Panel):
         """
         Show a wx.ListCtrl dialog with volumedected data
         """
-        print('peak:%s rms%s' % (cmd_opt["PEAK"],cmd_opt["RMS"]))
-        if cmd_opt["PEAK"]:
+        if self.rdbx_normalize.GetSelection() == 1: # PEAK
             title = _('PEAK-based volume statistics')
-        elif cmd_opt["RMS"]:
+        elif self.rdbx_normalize.GetSelection() == 2:# RMS
             title = _('RMS-based volume statistics')
             
         audionormlist = shownormlist.NormalizationList(title, 

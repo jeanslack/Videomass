@@ -311,6 +311,11 @@ class PrstPan(wx.Panel):
         self.spin_lra.SetToolTip(_('Loudness Range Target in LUFS. '
                                    'From +1.0 to +20.0, default is +7.0'
                                    ))
+        self.cmb_A_inMap.SetToolTip(_('Choose from video a specific input '
+                                      'audio stream to work out.'))
+        self.cmb_A_outMap.SetToolTip(_('Map on the output index. Keep same '
+                'input map if saving as video; to save as audio select to '
+                '"all" or "Auto"'))
         
         #----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
@@ -637,9 +642,9 @@ class PrstPan(wx.Panel):
         """
         Show a wx.ListCtrl dialog with volumedected data
         """
-        if cmd_opt["PEAK"]:
+        if self.rdbx_norm.GetSelection() == 1:# peak
             title = _('PEAK-based volume statistics')
-        elif cmd_opt["RMS"]:
+        if self.rdbx_norm.GetSelection() == 2: # rms
             title = _('RMS-based volume statistics')
             
         audionormlist = shownormlist.NormalizationList(title, 
