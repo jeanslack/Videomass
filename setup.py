@@ -154,7 +154,7 @@ def AppendPackageFiles(data, baseicons, baselocale):
                 pathdoc = '%s/%s' % (baseicons, art)
                 data.append((pathdoc, glob_files('%s/*.md' % tmp)))
                 data.append((pathdoc, glob_files('%s/*.txt' % tmp)))
-            for size in ['18x18', '24x24', '36x36']:
+            for size in ['18x18', '24x24', '36x36', '48x48']:
                 if os.path.exists(tmp + '/' + size):
                     path = tmp + '/' + size
                     pathsize = '%s/%s/%s' % (baseicons, art, size)
@@ -178,7 +178,9 @@ def SOURCE_BUILD():
 
     """
     DATA_FILES = [  # even path must be relative-path
-            ('share/videomass/config/vdms', glob_files('share/vdms/*.vdms')),
+            ('share/videomass/config/presets', 
+              glob_files('share/presets/*.prst')
+              ),
             ('share/videomass/config', ['share/videomass.conf',
                                         'share/videomassWin32.conf',
                                         'share/README']),
@@ -222,14 +224,14 @@ def MacOS():
     PATH_ICON = '%s/art/videomass.icns' % PWD
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
 
-    # place sources even path must be relative-path
-    data = [('share/vdms', glob_files('share/vdms/*.vdms')),
+    # places data ..path must be relative-path
+    data = [('share/presets', glob_files('share/presets/*.prst')),
             ('share', ['share/videomass.conf']),
             ('art/icons', glob_files('art/icons/*.png')),
             ('', ['AUTHORS', 'BUGS',
                   'CHANGELOG', 'INSTALL',
                   'COPYING', 'TODO', 'README.md']), ]
-    # get the package data
+    # get package data
     DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
 
     OPTIONS = {'argv_emulation': False,
@@ -291,7 +293,7 @@ def WIN32():
                         '%s/bin/Videomass.py' % PWD
                         )
 
-    data = [('share/vdms', glob_files('share/vdms/*.vdms')),
+    data = [('share/presets', glob_files('share/presets/*.prst')),
             ('share', glob_files('share/*.conf')),
             ('art/icons', glob_files('art/icons/*.png')),
             ('', ['art/videomass.ico']),
