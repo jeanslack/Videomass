@@ -189,7 +189,6 @@ class AV_Conv(wx.Panel):
         
         # set attributes:
         self.parent = parent
-        self.file_src = []
         self.normdetails = []
         self.OS = OS
         self.btn_color = btn_color
@@ -1164,7 +1163,7 @@ class AV_Conv(wx.Panel):
             return
         self.time_seq = self.parent.time_seq
         
-        stream_play(self.file_src[0], self.time_seq, cmd_opt["VFilters"])
+        stream_play(self.parent.file_src[0], self.time_seq, cmd_opt["VFilters"])
     #------------------------------------------------------------------#
     def on_FiltersClear(self, event):
         """
@@ -1686,7 +1685,7 @@ class AV_Conv(wx.Panel):
         self.time_seq = self.parent.time_seq #from -ss to -t will be analyzed
         target = self.spin_target.GetValue()
 
-        data = volumeDetectProcess(self.file_src, 
+        data = volumeDetectProcess(self.parent.file_src, 
                                    self.time_seq, 
                                    cmd_opt["AudioInMap"][0])
         if data[1]:
@@ -1695,7 +1694,7 @@ class AV_Conv(wx.Panel):
         else:
             volume = list()
             if self.rdbx_normalize.GetSelection() == 1:# RMS
-                for f, v in zip(self.file_src, data[0]):
+                for f, v in zip(self.parent.file_src, data[0]):
                     maxvol = v[0].split(' ')[0]
                     meanvol = v[1].split(' ')[0]
                     offset = float(maxvol) - float(target)
@@ -1713,7 +1712,7 @@ class AV_Conv(wx.Panel):
                                             str(result),
                                             ))
             elif self.rdbx_normalize.GetSelection() == 2:# ebu
-                for f, v in zip(self.file_src, data[0]):
+                for f, v in zip(self.parent.file_src, data[0]):
                     maxvol = v[0].split(' ')[0]
                     meanvol = v[1].split(' ')[0]
                     offset = float(meanvol) - float(target)
@@ -1880,7 +1879,7 @@ class AV_Conv(wx.Panel):
         self.update_allentries()# update
         
         if self.cmb_Media.GetValue() == 'Video': # CHECKING
-            checking = inspect(self.file_src, 
+            checking = inspect(self.parent.file_src, 
                             self.parent.file_destin, 
                             cmd_opt["OutputFormat"]
                             )
@@ -1893,7 +1892,7 @@ class AV_Conv(wx.Panel):
                 self.video_stdProc(f_src, destin, countmax, logname)
                 
         elif self.cmb_Media.GetValue() == 'Audio': # CHECKING
-            checking = inspect(self.file_src, 
+            checking = inspect(self.parent.file_src, 
                                self.parent.file_destin, 
                                cmd_opt["OutputFormat"])
             if not checking[0]: # User changing idea or not such files exist

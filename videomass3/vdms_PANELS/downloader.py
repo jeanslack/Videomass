@@ -84,7 +84,7 @@ class Downloader(wx.Panel):
                                      choices=[_('Default'),
                                               _('Video + Audio'),  
                                               _('Audio only'),
-                                              _('Using format code')],
+                                              _('Format code')],
                                      size=(-1,-1),
                                      )
         self.choice.SetSelection(0)

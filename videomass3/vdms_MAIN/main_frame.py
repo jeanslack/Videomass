@@ -336,23 +336,14 @@ class MainFrame(wx.Frame):
         Retrieve to choose topic panel and reset data object
         """
         self.topicname = None
-        #self.data_files = None
-        #self.fileDnDTarget.deleteAll(self), 
-        #self.textDnDTarget.deleteAll(self), 
         self.textDnDTarget.Hide(), self.fileDnDTarget.Hide()
         if self.ytDownloader.IsShown():
-            #self.ytDownloader.fcode.DeleteAllItems()
-            self.ytDownloader.choice.SetSelection(0)
-            self.ytDownloader.on_Choice(self)
-            self.ytDownloader.info, self.ytDownloader.error = [], False
             self.ytDownloader.Hide()
             
         elif self.VconvPanel.IsShown():
-            self.VconvPanel.normalize_default()
             self.VconvPanel.Hide()
         
         elif self.PrstsPanel.IsShown():
-            self.PrstsPanel.normalization_default()
             self.PrstsPanel.Hide()
             
         self.ChooseTopic.Show(), self.toolbar.Hide(), self.btnpanel.Hide()
@@ -370,8 +361,7 @@ class MainFrame(wx.Frame):
             self.switch_av_conversions(self)
 
         elif self.topicname == 'Youtube Downloader':
-            self.data_url = data
-            self.youtube_Downloader(self)
+            self.youtube_Downloader(self, data)
             
         elif self.topicname == 'Presets Manager':
             self.data_files = data
@@ -976,7 +966,7 @@ class MainFrame(wx.Frame):
         """
         self.topicname = which
         self.fileDnDTarget.Hide(),self.ytDownloader.Hide()
-        self.VconvPanel.Hide()#, self.AconvPanel.Hide()
+        self.VconvPanel.Hide()
         self.ChooseTopic.Hide(), self.PrstsPanel.Hide()
         self.textDnDTarget.Show()
         if self.file_destin:
@@ -987,13 +977,19 @@ class MainFrame(wx.Frame):
         self.statusbar_msg(_('Add URLs'), None)
 
     #------------------------------------------------------------------#
-    def youtube_Downloader(self, event):
+    def youtube_Downloader(self, event, data):
         """
         Show youtube-dl downloader
         """
+        if not data == self.data_url:
+            self.ytDownloader.fcode.DeleteAllItems()
+            self.ytDownloader.choice.SetSelection(0)
+            self.ytDownloader.on_Choice(self)
+            self.ytDownloader.info, self.ytDownloader.error = [], False
+        self.data_url = data
         self.file_destin = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.VconvPanel.Hide()#, self.AconvPanel.Hide()
+        self.VconvPanel.Hide()
         self.PrstsPanel.Hide(), self.ytDownloader.Show()
         self.statusbar_msg(_('Youtube Downloader'), None)
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
@@ -1010,16 +1006,19 @@ class MainFrame(wx.Frame):
         """
         self.file_destin = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide()#, self.AconvPanel.Hide()
+        self.ytDownloader.Hide()
         self.PrstsPanel.Hide(), self.VconvPanel.Show(), 
         self.statusbar_msg(_('Audio/Video Conversions'), None)
-        flist = [f['format']['filename'] for f in 
-                 self.data_files if f['format']['filename']
-                 ]
-        self.duration = [f['format']['duration'] for f in 
-                         self.data_files if f['format']['duration']
+        filenames = [f['format']['filename'] for f in 
+                         self.data_files if f['format']['filename']
                          ]
-        self.VconvPanel.file_src = flist
+        if not filenames == self.file_src:
+            self.file_src = filenames
+            self.duration = [f['format']['duration'] for f in 
+                            self.data_files if f['format']['duration']
+                            ]
+            self.VconvPanel.normalize_default()
+            self.PrstsPanel.normalization_default()
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.btn_saveprf.Show(), self.btn_duration.Show(),
@@ -1036,17 +1035,19 @@ class MainFrame(wx.Frame):
         """
         self.file_destin = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        #self.AconvPanel.Hide(), 
+        self.ytDownloader.Hide(), self.VconvPanel.Hide(), 
         self.PrstsPanel.Show()
         self.statusbar_msg(_('Presets Manager'), None)
-        self.file_src = [f['format']['filename'] for f in 
-                         self.data_files if f['format']['filename']
-                        ]
-        self.duration = [f['format']['duration'] for f in 
-                         self.data_files if f['format']['duration']
-                         ]
-        #self.PrstsPanel.file_src = flist
+        filenames = [f['format']['filename'] for f in 
+                     self.data_files if f['format']['filename']
+                     ]
+        if not filenames == self.file_src:
+            self.file_src = filenames
+            self.duration = [f['format']['duration'] for f in 
+                            self.data_files if f['format']['duration']
+                            ]
+            self.PrstsPanel.normalization_default()
+            self.VconvPanel.normalize_default()
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Show(), self.btn_delprf.Show(), self.btn_editprf.Show()
         self.btn_saveprf.Hide(), self.btn_duration.Show()
@@ -1085,8 +1086,7 @@ class MainFrame(wx.Frame):
         self.btnpanel.Hide()# hide buttons bar 
         #Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        #self.AconvPanel.Hide(), 
+        self.ytDownloader.Hide(), self.VconvPanel.Hide(), 
         self.PrstsPanel.Hide(),
         #Show the panel:
         self.ProcessPanel.Show()
@@ -1103,14 +1103,15 @@ class MainFrame(wx.Frame):
         the on_ok method of the corresponding panel shown, which calls 
         the 'switch_Process' method above.
         """
-        print(self.file_src)
+        self.file_src = [f['format']['filename'] for f in 
+                         self.data_files if f['format']['filename']
+                        ]
         if self.ytDownloader.IsShown():
             self.ytDownloader.on_Start()
         elif self.VconvPanel.IsShown():
             self.VconvPanel.on_start()
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.on_Start()
-            print('si')
             
     #------------------------------------------------------------------#
     def panelShown(self, panelshown):

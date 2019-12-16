@@ -924,19 +924,16 @@ class PrstPan(wx.Panel):
                     if dlg.IsCheckBoxChecked():
                         # make sure we won't show it again the next time
                         self.txtcmdedited = True
-        print('ok sono su prst')
                         
         outext = '' if array[5] == 'copy' else array[5] 
         extlst, outext = array[4], outext
-        print(self.parent.file_src)
         file_sources = supported_formats(extlst, self.parent.file_src)
         checking = inspect(file_sources, dir_destin, outext)
         
         if not checking[0]:
-            print('si ferma qui?')
             # not supported, missing files or user has changed his mind
             return
-        print('sono a metà')
+
         
         (batch, file_sources, dir_destin, fname, bname, cntmax) = checking
         # batch: batch or single process
@@ -947,8 +944,6 @@ class PrstPan(wx.Panel):
             self.two_Pass(file_sources, dir_destin, cntmax, outext)
         else:
             self.one_Pass(file_sources, dir_destin, cntmax, outext)
-        
-        print('sono in fondo')
     #----------------------------------------------------------------#
     
     def one_Pass(self, filesrc, destdir, cntmax, outext):
