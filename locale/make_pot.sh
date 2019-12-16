@@ -37,6 +37,7 @@ xgettext -d videomass "../videomass3/Videomass3.py" \
 "../videomass3/vdms_THREADS/two_pass_EBU.py" \
 "../videomass3/vdms_THREADS/two_pass.py" \
 "../videomass3/vdms_THREADS/volumedetect.py" \
+"../videomass3/vdms_THREADS/ydl_extract_info.py" \
 
 
 

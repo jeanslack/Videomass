@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-16 11:55+0100\n"
-"PO-Revision-Date: 2019-12-16 11:57+0100\n"
+"POT-Creation-Date: 2019-12-16 18:03+0100\n"
+"PO-Revision-Date: 2019-12-16 18:07+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -1285,12 +1285,12 @@ msgid "Subtitle Streams"
 msgstr "Flussi Sottotitoli"
 
 #: ../videomass3/vdms_FRAMES/ydl_mediainfo.py:59
-#: ../videomass3/vdms_PANELS/downloader.py:151
+#: ../videomass3/vdms_PANELS/downloader.py:152
 msgid "TITLE"
 msgstr "TITOLO"
 
 #: ../videomass3/vdms_FRAMES/ydl_mediainfo.py:60
-#: ../videomass3/vdms_PANELS/downloader.py:152
+#: ../videomass3/vdms_PANELS/downloader.py:153
 msgid "URL"
 msgstr "URL"
 
@@ -1344,7 +1344,7 @@ msgstr "Videomass: Errore sulla cartella di destinazione"
 msgid "File does not exist or not a valid file:  %s"
 msgstr "File invalido o non esistente:  %s"
 
-#: ../videomass3/vdms_IO/IO_tools.py:114
+#: ../videomass3/vdms_IO/IO_tools.py:114 ../videomass3/vdms_IO/IO_tools.py:219
 msgid "Videomass - Loading..."
 msgstr "Caricamento in corso..."
 
@@ -1357,6 +1357,16 @@ msgstr ""
 "\n"
 "Attendi....\n"
 "Analisi livello di picco.\n"
+
+#: ../videomass3/vdms_IO/IO_tools.py:220
+msgid ""
+"\n"
+"Wait....\n"
+"Retrieving required data.\n"
+msgstr ""
+"\n"
+"Attendi....\n"
+"Recupero i dati richiesti.\n"
 
 #: ../videomass3/vdms_IO/presets_manager_properties.py:52
 #, python-format
@@ -1741,11 +1751,11 @@ msgstr ""
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:284
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "Proporzioni"
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:314
 msgid "Pixel Format"
-msgstr ""
+msgstr "Formato Pixel"
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:324
 msgid "Subtitle Stream"
@@ -2312,59 +2322,51 @@ msgstr "Codice formato"
 msgid "Enter Format Code here:"
 msgstr "Inserisci il Codice Formato qui:"
 
-#: ../videomass3/vdms_PANELS/downloader.py:131
+#: ../videomass3/vdms_PANELS/downloader.py:132
 msgid "Download all playlist"
 msgstr "Scarica tutta la playlist"
 
-#: ../videomass3/vdms_PANELS/downloader.py:134
+#: ../videomass3/vdms_PANELS/downloader.py:135
 msgid "Embed thumbnail in audio file"
 msgstr "Aggiungi miniatura nel file audio"
 
-#: ../videomass3/vdms_PANELS/downloader.py:136
+#: ../videomass3/vdms_PANELS/downloader.py:137
 msgid "Add metadata to file"
 msgstr "Aggiungi i meta dati al file"
 
-#: ../videomass3/vdms_PANELS/downloader.py:139
+#: ../videomass3/vdms_PANELS/downloader.py:140
 msgid "Write subtitles to video"
 msgstr "Scrivi sottotitoli al video"
 
-#: ../videomass3/vdms_PANELS/downloader.py:153
+#: ../videomass3/vdms_PANELS/downloader.py:154
 msgid "Format Code"
 msgstr "Codice Formato"
 
-#: ../videomass3/vdms_PANELS/downloader.py:154
+#: ../videomass3/vdms_PANELS/downloader.py:155
 msgid "Extension"
 msgstr "Estensione"
 
-#: ../videomass3/vdms_PANELS/downloader.py:155
+#: ../videomass3/vdms_PANELS/downloader.py:156
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../videomass3/vdms_PANELS/downloader.py:156
+#: ../videomass3/vdms_PANELS/downloader.py:157
 msgid "Video Codec"
 msgstr "Codec Video"
 
-#: ../videomass3/vdms_PANELS/downloader.py:157
+#: ../videomass3/vdms_PANELS/downloader.py:158
 msgid "fps"
 msgstr ""
 
-#: ../videomass3/vdms_PANELS/downloader.py:158
+#: ../videomass3/vdms_PANELS/downloader.py:159
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../videomass3/vdms_PANELS/downloader.py:159
+#: ../videomass3/vdms_PANELS/downloader.py:160
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../videomass3/vdms_PANELS/downloader.py:192
-msgid "wait... I'm getting the data"
-msgstr "attendi... Ottengo i dati"
-
-#: ../videomass3/vdms_PANELS/downloader.py:258
-msgid "Ready, Youtube Downloader"
-msgstr "Pronto, Youtube Downloader"
-
-#: ../videomass3/vdms_PANELS/downloader.py:392
+#: ../videomass3/vdms_PANELS/downloader.py:391
 msgid "Enter a `Format Code` number in the text box, please"
 msgstr "Inserisci un `Codice Formato` numerico nella casella"
 
@@ -2722,6 +2724,12 @@ msgstr "Aggiungi almeno un URL"
 #: ../videomass3/vdms_THREADS/two_pass.py:48
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' è installato sul tuo sistema?"
+
+#~ msgid "wait... I'm getting the data"
+#~ msgstr "attendi... Ottengo i dati"
+
+#~ msgid "Ready, Youtube Downloader"
+#~ msgstr "Pronto, Youtube Downloader"
 
 #~ msgid "Using format code"
 #~ msgstr "Usando un Codice Formato"

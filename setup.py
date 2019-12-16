@@ -9,7 +9,7 @@
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.2.2019, Sept.11.2019
+# Rev: Aug.2.2019, Sept.11.2019, Dic.16.2019
 # PEP8 compatible
 #########################################################
 
