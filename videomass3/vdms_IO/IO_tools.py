@@ -120,6 +120,7 @@ def volumeDetectProcess(filelist, time_seq, audiomap):
     loadDlg.Destroy()
     
     return data
+
 #-------------------------------------------------------------------------#
 def test_conf():
     """
@@ -203,14 +204,25 @@ def openpath(mod):
     if ret:
         wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
 #-------------------------------------------------------------------------#
+
 def youtube_info(url):
     """
     Call a separated thread to get extract info data object from 
     youtube_dl module. 
-    """
+    example without popup dialog:
     thread = Extract_Info(url) 
     thread.join()
     data = thread.data
-    
+    yield data
+    """
+    thread = Extract_Info(url) 
+    loadDlg = PopupDialog(None, _("Videomass - Loading..."), 
+                                _("\nWait....\nRetrieving required data.\n")
+                          )
+    loadDlg.ShowModal()
+    #thread.join()
+    data = thread.data
+    loadDlg.Destroy()
     yield data
 #--------------------------------------------------------------------------#
+

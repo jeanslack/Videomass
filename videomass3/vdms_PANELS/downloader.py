@@ -125,6 +125,7 @@ class Downloader(wx.Panel):
         self.stext.Disable()
         grid_v.Add(self.stext, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
         grid_v.Add(self.txt_code, 0, wx.ALL, 5)
+        self.txt_code.WriteText('18')
         #-------------opt
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL, 5)
@@ -188,14 +189,13 @@ class Downloader(wx.Panel):
         """
         index = 0
         if not self.info:
-            self.txt_code.Clear()
-            self.parent.statusbar_msg(_("wait... I'm getting the data"), 
-                                        'GOLDENROD')
+            #self.parent.statusbar_msg(_("wait... I'm getting the data"), 
+                                        #'GOLDENROD')
             for link in self.parent.data_url:
                 data = IO_tools.youtube_info(link)
                 for meta in data:
                     if meta[1]:
-                        self.parent.statusbar_msg('Youtube Downloader', None)
+                        #self.parent.statusbar_msg('Youtube Downloader', None)
                         wx.MessageBox(meta[1],'youtube_dl ERROR', wx.ICON_ERROR)
                         self.info, self.error = [], True
                         return self.error
@@ -254,8 +254,7 @@ class Downloader(wx.Panel):
                         self.fcode.SetItem(index, 7, acodec)
                         self.fcode.SetItem(index, 8, size)
 
-            self.txt_code.WriteText(f['format_id'])
-        self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)  
+        #self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)  
         
         return self.error
     
