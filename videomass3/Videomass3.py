@@ -117,7 +117,7 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.firstrun(pathicons[17])
+                self.firstrun(pathicons[16])
                 return True
             else:
                 self.ffmpeg_url = setui[4][6]
@@ -132,7 +132,7 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.firstrun(pathicons[17])
+                self.firstrun(pathicons[16])
                 return True
             else:
                 self.ffmpeg_url = setui[4][6]
@@ -144,7 +144,7 @@ class Videomass(wx.App):
             self.ffprobe_url = setui[4][8]
             self.ffplay_url = setui[4][10]
             # --- used for debug only ---#
-            #self.firstrun(pathicons[17])
+            #self.firstrun(pathicons[16])
             #return True
             
         from videomass3.vdms_MAIN.main_frame import MainFrame

@@ -22,14 +22,13 @@
 - Drag n' Drop with multiple files at once.
 - Batch processing.
 - Fully customizable presets and profiles.
-- Has useful presets to start with and you can download more.
+- Possibility to create your new presets and profiles from scratch.
+- Has useful presets to start with.
 - Supports all formats and codecs available with FFmpeg.
 - Displaying information from streams analyzer.
-- Real-time video filters preview
-- Peak level-based audio normalization.
-- RMS-based audio normalization.
-- EBU R128 audio normalization.
-- Audio index from videos selectable to apply normalization
+- Real-time video filters preview.
+- Three audio normalization modes: Peak, RMS and EBU R128.
+- Audio index from videos selectable to apply normalization.
 - Setting duration portions for imported files, filters, export and tests.
 - Download multiple URLs from youtube with your settings.
 - View video information without downloading it.

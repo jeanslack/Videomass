@@ -121,7 +121,7 @@ class FileDnD(wx.Panel):
     """
     Panel for dragNdrop files queue. Accept one or more files.
     """
-    def __init__(self, parent, forward_icn, back_icn):  
+    def __init__(self, parent):  
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent # parent is the MainFrame
         self.file_dest = dirname if not userpath else userpath
@@ -139,19 +139,10 @@ class FileDnD(wx.Panel):
                                                 style=wx.TE_PROCESS_ENTER| 
                                                       wx.TE_READONLY
                                                       )
-        self.btn_forward = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
-        self.btn_forward.SetBitmap(wx.Bitmap(forward_icn),wx.RIGHT)
-        self.btn_back = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
-        self.btn_back.SetBitmap(wx.Bitmap(back_icn),wx.LEFT)
-        
         self.lbl = wx.StaticText(self, label=_("Drag one or more files below"))
         self.flCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizerdir = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizerdir, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
-        sizerdir.Add(self.btn_back, 0, wx.ALL|wx.ALIGN_LEFT, 5)
-        sizerdir.Add(self.btn_forward, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
@@ -175,21 +166,18 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        self.Bind(wx.EVT_BUTTON, self.on_Redirect, self.btn_forward)
-        
+        #-------
         self.text_path_save.SetValue(self.file_dest)
     
     #----------------------------------------------------------------------
-    def on_Redirect(self, event):
+    def on_Redirect(self):
         """
-        Redirects to specific panel
+        Redirects data to specific panel
         """
         if self.flCtrl.GetItemCount() == 0:
-            wx.MessageBox(_('Drag at least one file'), "Videomass", 
-                             wx.ICON_INFORMATION, self)
             return
         else:
-            self.parent.topic_Redirect(data_files)
+            return data_files
     #----------------------------------------------------------------------
     def which(self):
         """

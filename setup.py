@@ -154,7 +154,7 @@ def AppendPackageFiles(data, baseicons, baselocale):
                 pathdoc = '%s/%s' % (baseicons, art)
                 data.append((pathdoc, glob_files('%s/*.md' % tmp)))
                 data.append((pathdoc, glob_files('%s/*.txt' % tmp)))
-            for size in ['18x18', '24x24', '36x36', '48x48']:
+            for size in ['18x18', '24x24', '32x32', '48x48']:
                 if os.path.exists(tmp + '/' + size):
                     path = tmp + '/' + size
                     pathsize = '%s/%s/%s' % (baseicons, art, size)

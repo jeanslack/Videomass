@@ -83,6 +83,8 @@ class MainFrame(wx.Frame):
         self.iconset = setui[4][11]
         self.videomass_icon = pathicons[0]
         self.icon_runconversion = pathicons[2]
+        self.icon_mainback = pathicons[23]
+        self.icon_mainforward = pathicons[24]
         #-------------------------------# 
         self.data_files = None# list of items in list control
         self.data_url = None# list of urls in text box
@@ -97,13 +99,13 @@ class MainFrame(wx.Frame):
         #----------- panel toolbar buttons
         self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         
-        infoIbmp = wx.Bitmap(pathicons[4], wx.BITMAP_TYPE_ANY)
-        previewbmp = wx.Bitmap(pathicons[5], wx.BITMAP_TYPE_ANY)
-        cutbmp = wx.Bitmap(pathicons[6], wx.BITMAP_TYPE_ANY)
-        saveprfbmp = wx.Bitmap(pathicons[9], wx.BITMAP_TYPE_ANY)
-        newprfbmp = wx.Bitmap(pathicons[29], wx.BITMAP_TYPE_ANY)
-        delprfbmp = wx.Bitmap(pathicons[30], wx.BITMAP_TYPE_ANY)
-        editprfbmp = wx.Bitmap(pathicons[31], wx.BITMAP_TYPE_ANY)
+        infoIbmp = wx.Bitmap(pathicons[3], wx.BITMAP_TYPE_ANY)
+        previewbmp = wx.Bitmap(pathicons[4], wx.BITMAP_TYPE_ANY)
+        cutbmp = wx.Bitmap(pathicons[5], wx.BITMAP_TYPE_ANY)
+        saveprfbmp = wx.Bitmap(pathicons[8], wx.BITMAP_TYPE_ANY)
+        newprfbmp = wx.Bitmap(pathicons[20], wx.BITMAP_TYPE_ANY)
+        delprfbmp = wx.Bitmap(pathicons[21], wx.BITMAP_TYPE_ANY)
+        editprfbmp = wx.Bitmap(pathicons[22], wx.BITMAP_TYPE_ANY)
 
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1,25),
@@ -187,49 +189,37 @@ class MainFrame(wx.Frame):
         self.ChooseTopic = choose_topic.Choose_Topic(self, 
                                                      self.OS,
                                                      pathicons[1],
-                                                     pathicons[3],
-                                                     pathicons[23],
-                                                     pathicons[24],
-                                                     pathicons[20],
-                                                     pathicons[21],
-                                                     pathicons[22],
-                                                     pathicons[25],
-                                                     pathicons[28]
+                                                     pathicons[18],
+                                                     pathicons[19]
                                                      )
-        self.ChooseTopic.SetBackgroundColour(barColor)
+        #self.ChooseTopic.SetBackgroundColour(barColor)
         self.ytDownloader = downloader.Downloader(self, self.OS)
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                 self.OS,
-                                                pathicons[7],# icon playfilters
-                                                pathicons[8],# icon resetfilters
-                                                pathicons[10],# icon resize
-                                                pathicons[11],# icon crop
-                                                pathicons[12],# icon rotate
-                                                pathicons[13],# icon deinterlace
-                                                pathicons[14],# icon ic_denoiser
-                                                pathicons[15],# icon analyzes
-                                                pathicons[16],# icon settings
-                                                pathicons[18],# icon peaklevel
-                                                pathicons[19],# icon audiotrack
+                                                pathicons[6],# icon playfilters
+                                                pathicons[7],# icon resetfilters
+                                                pathicons[9],# icon resize
+                                                pathicons[10],# icon crop
+                                                pathicons[11],# icon rotate
+                                                pathicons[12],# icon deinterlace
+                                                pathicons[13],# icon ic_denoiser
+                                                pathicons[14],# icon analyzes
+                                                pathicons[15],# icon settings
+                                                pathicons[17],# icon peaklevel
+                                                pathicons[18],# icon audiotrack
                                                 self.bBtnC,
                                                 self.fBtnC,
                                                 )
-        self.fileDnDTarget = filedrop.FileDnD(self, 
-                                              pathicons[26], 
-                                              pathicons[27]
-                                              )
-        self.textDnDTarget = textdrop.TextDnD(self, 
-                                              pathicons[26], 
-                                              pathicons[27]
-                                              )
+        self.fileDnDTarget = filedrop.FileDnD(self)
+        self.textDnDTarget = textdrop.TextDnD(self)
         self.ProcessPanel = Logging_Console(self)
         self.PrstsPanel = presets_manager.PrstPan(self, 
                                                   SRCpath, 
                                                   self.DIRconf, 
                                                   self.WORKdir, 
                                                   self.OS,
-                                                  pathicons[15],#icon analyzes
-                                                  pathicons[18],#icon peaklevel
+                                                  pathicons[14],#icon analyzes
+                                                  pathicons[17],#icon peaklevel
                                                   self.bBtnC,
                                                   self.fBtnC,
                                                   )
@@ -266,7 +256,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if self.OS == 'Darwin':
-            self.SetSize((980, 600))
+            self.SetSize((1030, 600))
         elif self.OS == 'Windows':
             self.SetSize((980, 650))
         else:
@@ -305,9 +295,7 @@ class MainFrame(wx.Frame):
         self.Layout()
         #---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
-        self.fileDnDTarget.btn_back.Bind(wx.EVT_BUTTON, self.on_close)
         self.textDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
-        self.textDnDTarget.btn_back.Bind(wx.EVT_BUTTON, self.on_close)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
         self.Bind(wx.EVT_BUTTON, self.Saveprofile, self.btn_saveprf)
         self.Bind(wx.EVT_BUTTON, self.Newprofile, self.btn_newprf)
@@ -333,7 +321,7 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def choosetopicRetrieve(self):
         """
-        Retrieve to choose topic panel and reset data object
+        Retrieve to choose topic panel
         """
         self.topicname = None
         self.textDnDTarget.Hide(), self.fileDnDTarget.Hide()
@@ -349,23 +337,6 @@ class MainFrame(wx.Frame):
         self.ChooseTopic.Show(), self.toolbar.Hide(), self.btnpanel.Hide()
         self.statusbar_msg('', None)
         self.Layout()
-    #------------------------------------------------------------------#
-    def topic_Redirect(self, data):
-        """
-        Is called by filedrop and textdrop modules when types 
-        the forward button to redirect on corresponding panel
-        """
-        
-        if self.topicname == 'Audio/Video Conversions':
-            self.data_files = data
-            self.switch_av_conversions(self)
-
-        elif self.topicname == 'Youtube Downloader':
-            self.youtube_Downloader(self, data)
-            
-        elif self.topicname == 'Presets Manager':
-            self.data_files = data
-            self.switch_presets_manager(self)
     #------------------------------------------------------------------#
     def menu_items(self):
         """
@@ -518,13 +489,14 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
             
-        elif not self.topicname:
+        elif self.topicname:
             if wx.MessageBox(_('Are you sure you want to exit?'), 
                     _('Exit'), wx.ICON_QUESTION | wx.YES_NO, 
                     self) == wx.YES:
                 self.Destroy()
         else:
-            self.choosetopicRetrieve()
+            #self.choosetopicRetrieve()
+            self.Destroy()
     
      #------------------------------------------------------------------#
     def on_Kill(self):
@@ -930,32 +902,87 @@ class MainFrame(wx.Frame):
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         # ------- Run process button
         self.toolbar.AddStretchableSpace()
+        self.toolbar.AddSeparator()
+        back = self.toolbar.AddTool(wx.ID_FILE3, (''), 
+                                    wx.Bitmap(self.icon_mainback)
+                                          )
+        self.toolbar.AddSeparator()
+        forward = self.toolbar.AddTool(wx.ID_FILE4, (''), 
+                                    wx.Bitmap(self.icon_mainforward)
+                                          )
+        self.toolbar.AddSeparator()
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
                                     wx.Bitmap(self.icon_runconversion)
                                           )
         #self.toolbar.AddStretchableSpace()
-        self.toolbar.EnableTool(wx.ID_OK, False)
+        #self.toolbar.EnableTool(wx.ID_OK, False)
         #self.toolbar.AddSeparator()
         # finally, create it
         self.toolbar.Realize()
         
         #----------------- Tool Bar Binding (evt)-----------------------#
         self.Bind(wx.EVT_TOOL, self.Run_Coding, run_coding)
+        self.Bind(wx.EVT_TOOL, self.on_Back, back)
+        self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
 
     #--------------- Tool Bar Callback (event handler) -----------------#
+    def on_Back(self, event):
+        """
+        Show URLs import panel.
+        """
+        if self.textDnDTarget.IsShown() or self.fileDnDTarget.IsShown():
+            self.choosetopicRetrieve()
+            
+        elif self.topicname in ('Audio/Video Conversions','Presets Manager'):
+            self.File_import(self, self.topicname)
+        elif self.topicname == 'Youtube Downloader':
+            self.Text_import(self, self.topicname)
+    #------------------------------------------------------------------#
+    def on_Forward(self, event):
+        """
+        redirect on corresponding panel
+        """
+        if self.topicname == 'Audio/Video Conversions':
+            data = self.fileDnDTarget.on_Redirect()
+            if not data:
+                wx.MessageBox(_('Drag at least one file'), "Videomass", 
+                             wx.ICON_INFORMATION, self)
+                return
+            self.data_files = data
+            self.switch_av_conversions(self)
+
+        elif self.topicname == 'Youtube Downloader':
+            data = self.textDnDTarget.topic_Redirect()
+            if not data:
+                wx.MessageBox(_('Append at least one URL'), "Videomass", 
+                             wx.ICON_INFORMATION, self)
+                return
+            self.youtube_Downloader(self, data)
+            
+        elif self.topicname == 'Presets Manager':
+            data = self.fileDnDTarget.on_Redirect()
+            if not data:
+                wx.MessageBox(_('Drag at least one file'), "Videomass", 
+                             wx.ICON_INFORMATION, self)
+                return
+            self.data_files = data
+            self.switch_presets_manager(self)
+    #------------------------------------------------------------------#
     def File_import(self, event, which):
         """
         Show files import panel.
         """
         self.topicname = which
         self.textDnDTarget.Hide(), self.ytDownloader.Hide()
-        self.VconvPanel.Hide()#, self.AconvPanel.Hide()
-        self.ChooseTopic.Hide(), self.PrstsPanel.Hide()
-        self.fileDnDTarget.Show()
+        self.VconvPanel.Hide(), self.ChooseTopic.Hide()
+        self.PrstsPanel.Hide(), self.fileDnDTarget.Show()
         if self.file_destin:
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.file_destin)
         self.menu_items()#disable some menu items
+        self.toolbar.Show(), self.btnpanel.Hide()
+        self.toolbar.EnableTool(wx.ID_FILE4, True)
+        self.toolbar.EnableTool(wx.ID_OK, False)
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
         
@@ -966,13 +993,15 @@ class MainFrame(wx.Frame):
         """
         self.topicname = which
         self.fileDnDTarget.Hide(),self.ytDownloader.Hide()
-        self.VconvPanel.Hide()
-        self.ChooseTopic.Hide(), self.PrstsPanel.Hide()
-        self.textDnDTarget.Show()
+        self.VconvPanel.Hide(), self.ChooseTopic.Hide()
+        self.PrstsPanel.Hide(), self.textDnDTarget.Show()
         if self.file_destin:
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.file_destin)
         self.menu_items()#disable some menu items
+        self.toolbar.Show(), self.btnpanel.Hide()
+        self.toolbar.EnableTool(wx.ID_FILE4, True)
+        self.toolbar.EnableTool(wx.ID_OK, False)
         self.Layout()
         self.statusbar_msg(_('Add URLs'), None)
 
@@ -989,13 +1018,13 @@ class MainFrame(wx.Frame):
         self.data_url = data
         self.file_destin = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.VconvPanel.Hide()
-        self.PrstsPanel.Hide(), self.ytDownloader.Show()
+        self.VconvPanel.Hide(), self.PrstsPanel.Hide(), self.ytDownloader.Show()
         self.statusbar_msg(_('Youtube Downloader'), None)
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
         self.btn_saveprf.Hide(),self.btn_duration.Hide(),self.btn_metaI.Show()
         self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.menu_items()#disable some menu items
+        self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
 
@@ -1006,8 +1035,7 @@ class MainFrame(wx.Frame):
         """
         self.file_destin = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide()
-        self.PrstsPanel.Hide(), self.VconvPanel.Show(), 
+        self.ytDownloader.Hide(), self.PrstsPanel.Hide(), self.VconvPanel.Show() 
         self.statusbar_msg(_('Audio/Video Conversions'), None)
         filenames = [f['format']['filename'] for f in 
                          self.data_files if f['format']['filename']
@@ -1024,6 +1052,7 @@ class MainFrame(wx.Frame):
         self.btn_saveprf.Show(), self.btn_duration.Show(),
         self.btn_metaI.Show(), self.btn_playO.Show()
         self.menu_items()#disable some menu items
+        self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
         
@@ -1056,7 +1085,7 @@ class MainFrame(wx.Frame):
         self.new_prst.Enable(True), self.del_prst.Enable(True), 
         self.restore.Enable(True), self.default.Enable(True), 
         self.default_all.Enable(True), self.refresh.Enable(True),
-        
+        self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
             
@@ -1103,14 +1132,17 @@ class MainFrame(wx.Frame):
         the on_ok method of the corresponding panel shown, which calls 
         the 'switch_Process' method above.
         """
-        self.file_src = [f['format']['filename'] for f in 
-                         self.data_files if f['format']['filename']
-                        ]
         if self.ytDownloader.IsShown():
             self.ytDownloader.on_Start()
         elif self.VconvPanel.IsShown():
+            self.file_src = [f['format']['filename'] for f in 
+                             self.data_files if f['format']['filename']
+                            ]
             self.VconvPanel.on_start()
         elif self.PrstsPanel.IsShown():
+            self.file_src = [f['format']['filename'] for f in 
+                             self.data_files if f['format']['filename']
+                             ]
             self.PrstsPanel.on_Start()
             
     #------------------------------------------------------------------#
@@ -1127,7 +1159,7 @@ class MainFrame(wx.Frame):
             self.btnpanel.Show()
         elif panelshown == 'Youtube Downloader':
             self.ProcessPanel.Hide()
-            self.youtube_Downloader(self)
+            self.youtube_Downloader(self, self.data_url)
         elif panelshown == 'Presets Manager':
             self.ProcessPanel.Hide()
             self.switch_presets_manager(self)

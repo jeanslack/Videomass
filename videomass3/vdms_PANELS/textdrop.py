@@ -48,7 +48,7 @@ class TextDnD(wx.Panel):
     Accept one or more urls separated by a white space or newline.
     
     """
-    def __init__(self, parent, forward_icn, back_icn):
+    def __init__(self, parent):
         """
         """
         self.parent = parent # parent is the MainFrame
@@ -64,17 +64,9 @@ class TextDnD(wx.Panel):
                                                 style=wx.TE_PROCESS_ENTER| 
                                                       wx.TE_READONLY
                                                       )
-        self.btn_forward = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
-        self.btn_forward.SetBitmap(wx.Bitmap(forward_icn),wx.RIGHT)
-        self.btn_back = wx.Button(self, wx.ID_ANY, "", size=(-1,-1))
-        self.btn_back.SetBitmap(wx.Bitmap(back_icn),wx.LEFT)
         self.lbl = wx.StaticText(self, label=_("Enter one or more URLs below"))
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizerdir = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizerdir, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
-        sizerdir.Add(self.btn_back, 0, wx.ALL|wx.ALIGN_LEFT, 5)
-        sizerdir.Add(self.btn_forward, 0, wx.ALL|wx.ALIGN_RIGHT, 5)
         sizer.Add(self.lbl, 0, wx.ALL|
                           wx.ALIGN_CENTER_HORIZONTAL|
                           wx.ALIGN_CENTER_VERTICAL, 5)
@@ -93,22 +85,19 @@ class TextDnD(wx.Panel):
         self.SetSizer(sizer)
         
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
-        self.Bind(wx.EVT_BUTTON, self.topic_Redirect, self.btn_forward)
-        
+        #------
         self.text_path_save.SetValue(self.file_dest)
         
     #----------------------------------------------------------------------
-    def topic_Redirect(self, event):
+    def topic_Redirect(self):
         """
-        Redirects to specific panel
+        Redirects data to specific panel
         """
         if not self.textCtrl.GetValue():
-            wx.MessageBox(_('Append at least one URL'), "Videomass", 
-                             wx.ICON_INFORMATION, self)
             return
         else:
             data = (self.textCtrl.GetValue().split())
-            self.parent.topic_Redirect(data)
+            return data
     #----------------------------------------------------------------------
 
     def deleteAll(self, event):

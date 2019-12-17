@@ -89,20 +89,20 @@ class Appearance(object):
         # videomass sign
         if iconset == 'Videomass_Sign_Icons': # default
             self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
-            self.x36 = '%s/Videomass_Sign_Icons/36x36' % url
+            self.x32 = '%s/Videomass_Sign_Icons/32x32' % url
             self.x24 = '%s/Videomass_Sign_Icons/24x24' % url
             self.x18 = '%s/Videomass_Sign_Icons/18x18' % url
         # material design black
         if iconset == 'Material_Design_Icons_black':
             self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
-            self.x36 = '%s/Material_Design_Icons_black/36x36' % url
+            self.x32 = '%s/Material_Design_Icons_black/32x32' % url
             self.x24 = '%s/Material_Design_Icons_black/24x24' % url
             self.x18 = '%s/Material_Design_Icons_black/18x18' % url
             self.icons_set()
         # flat-colours
         elif iconset == 'Flat_Color_Icons':
             self.x48 = '%s/Videomass_Sign_Icons/48x48' % url
-            self.x36 = '%s/Flat_Color_Icons/36x36' % url
+            self.x32 = '%s/Flat_Color_Icons/32x32' % url
             self.x24 = '%s/Flat_Color_Icons/24x24' % url
             self.x18 = '%s/Flat_Color_Icons/18x18' % url
             self.icons_set()
@@ -113,16 +113,12 @@ class Appearance(object):
         """
         # choose topic icons 48x48:
         icon_switchvideomass = '%s/icon_videoconversions.png' % self.x48
-        icon_headphones = '%s/icon_audioconversions.png' % self.x48
-        icon_videopictures = '%s/icon_videopictures.png' % self.x48
-        icon_audioextract = '%s/icon_audioextract.png' % self.x48
-        icon_merging = '%s/icon_merging.png' % self.x48
-        icon_slideshow = '%s/icon_slideshow.png' % self.x48
         icon_youtube = '%s/icon_youtube.png' % self.x48
-        icon_audionorm = '%s/icon_audionorm.png' % self.x48
         icon_prst_mng = '%s/icon_prst_mng.png' % self.x48
         # choose topic icons 36x36:
-        icon_process = '%s/icon_process.png' % self.x36
+        icon_process = '%s/icon_process.png' % self.x32
+        icon_toolback = '%s/icon_mainback.png' % self.x32
+        icon_toolforward = '%s/icon_mainforward.png' % self.x32
         # x24 icons 24x24:
         icn_infosource = '%s/infosource.png' % self.x24
         icn_preview = '%s/preview.png' % self.x24
@@ -143,40 +139,30 @@ class Appearance(object):
         ic_analyzes = '%s/analyzes.png' % self.x18
         ic_settings = '%s/settings.png' % self.x18
         ic_peaklevel = '%s/peaklevel.png' % self.x18
-        ic_audiotrack = '%s/audiotrack.png' % self.x18
-        icon_go = '%s/icon_forward.png' % self.x18
-        icon_back = '%s/icon_back.png' % self.x18
         
         return [os.path.join(norm) for norm in [self.videomass_icon, # 0
-                                                icon_switchvideomass, # 2
-                                                icon_process, # 3
-                                                icon_headphones, # 5
-                                                icn_infosource, # 7
-                                                icn_preview, # 8
-                                                icn_cut, # 9
-                                                icn_playfilters, # 10
-                                                icn_resetfilters,  # 11
-                                                icn_saveprf, # 12
-                                                ic_resize, # 16
-                                                ic_crop, # 17
-                                                ic_rotate, # 18
-                                                ic_deinterlace, # 19
-                                                ic_denoiser, # 20
-                                                ic_analyzes, # 21
-                                                ic_settings, # 22
-                                                self.wizard_icon, # 23
-                                                ic_peaklevel, # 24
-                                                ic_audiotrack, # 25
-                                                icon_audioextract, #26
-                                                icon_merging, #27
-                                                icon_youtube, #28
-                                                icon_videopictures, #29
-                                                icon_slideshow, #30
-                                                icon_audionorm, # 31
-                                                icon_go, # 32
-                                                icon_back, # 33
-                                                icon_prst_mng, # 28
-                                                icn_newprf, # 29
-                                                icn_delprf, # 30
-                                                icn_editprf, # 31
+                                                icon_switchvideomass, # 1
+                                                icon_process, # 2
+                                                icn_infosource, # 3
+                                                icn_preview, # 4
+                                                icn_cut, # 5
+                                                icn_playfilters, # 6
+                                                icn_resetfilters,  # 7
+                                                icn_saveprf, # 8
+                                                ic_resize, # 9
+                                                ic_crop, # 10
+                                                ic_rotate, # 11
+                                                ic_deinterlace, # 12
+                                                ic_denoiser, # 13
+                                                ic_analyzes, # 14
+                                                ic_settings, # 15
+                                                self.wizard_icon, # 16
+                                                ic_peaklevel, # 17
+                                                icon_youtube, #18
+                                                icon_prst_mng, # 19
+                                                icn_newprf, # 20
+                                                icn_delprf, # 21
+                                                icn_editprf, # 22
+                                                icon_toolback,#23
+                                                icon_toolforward#24
                                                 ]]
