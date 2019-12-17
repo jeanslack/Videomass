@@ -143,9 +143,7 @@ class FileDnD(wx.Panel):
         self.flCtrl.InsertColumn(0, '' ,width=700)
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.lbl, 0, wx.ALL|
-                          wx.ALIGN_CENTER_HORIZONTAL|
-                          wx.ALIGN_CENTER_VERTICAL, 5)
+        sizer.Add(self.lbl, 0, wx.ALL, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND|wx.ALL, 5)
         
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)

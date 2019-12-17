@@ -914,9 +914,9 @@ class MainFrame(wx.Frame):
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
                                     wx.Bitmap(self.icon_runconversion)
                                           )
-        #self.toolbar.AddStretchableSpace()
-        #self.toolbar.EnableTool(wx.ID_OK, False)
-        #self.toolbar.AddSeparator()
+        self.toolbar.AddSeparator()
+        self.toolbar.AddStretchableSpace()
+        
         # finally, create it
         self.toolbar.Realize()
         
