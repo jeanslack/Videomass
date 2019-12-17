@@ -303,8 +303,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.Editprofile, self.btn_editprf)
         self.Bind(wx.EVT_BUTTON, self.ImportInfo, self.btn_metaI)
         self.Bind(wx.EVT_BUTTON, self.ExportPlay, self.btn_playO)
-        #self.Bind(wx.EVT_SHOW, self.panelShown)
-        #self.fileDnDTargetPanel.fileListCtrl.Bind(wx.EVT_LIST_INSERT_ITEM, self.new_isertion)
         self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
     #-------------------Status bar settings--------------------#
     def statusbar_msg(self, msg, color):
@@ -489,14 +487,12 @@ class MainFrame(wx.Frame):
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
             
-        elif self.topicname:
+        #elif self.topicname:
+        else:
             if wx.MessageBox(_('Are you sure you want to exit?'), 
                     _('Exit'), wx.ICON_QUESTION | wx.YES_NO, 
                     self) == wx.YES:
                 self.Destroy()
-        else:
-            #self.choosetopicRetrieve()
-            self.Destroy()
     
      #------------------------------------------------------------------#
     def on_Kill(self):
