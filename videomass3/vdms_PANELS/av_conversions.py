@@ -352,14 +352,14 @@ class AV_Conv(wx.Panel):
         sizer_vp9panel.Add(grid_vp9panelprst, 0, wx.ALL|
                                                  wx.ALIGN_CENTER_HORIZONTAL, 5
                             )
-        txtvp9prst = wx.StaticText(self.vp9panel, wx.ID_ANY, _('Optimize'))
+        txtvp9prst = wx.StaticText(self.vp9panel, wx.ID_ANY, _('Optimize for'))
         grid_vp9panelprst.Add(txtvp9prst, 0, wx.ALL | 
                                               wx.ALIGN_CENTER_HORIZONTAL| 
                                               wx.ALIGN_CENTER_VERTICAL, 5
                                )
         self.cmb_vp9opti = wx.ComboBox(self.vp9panel, wx.ID_ANY,  
                                            choices=optimization_vp9,
-                                          size=(200,-1), style=wx.CB_DROPDOWN | 
+                                          size=(180,-1), style=wx.CB_DROPDOWN | 
                                                                wx.CB_READONLY
                                             )
         grid_vp9panelprst.Add(self.cmb_vp9opti, 0, 
@@ -413,14 +413,14 @@ class AV_Conv(wx.Panel):
         sizer_h264panel.Add(grid_h264panelprst, 0, wx.ALL|
                                                    wx.ALIGN_CENTER_HORIZONTAL, 5
                             )
-        txt264prst = wx.StaticText(self.h264panel, wx.ID_ANY, _('Optimize'))
+        txt264prst = wx.StaticText(self.h264panel, wx.ID_ANY, _('Optimize for'))
         grid_h264panelprst.Add(txt264prst, 0, wx.ALL | 
                                               wx.ALIGN_CENTER_HORIZONTAL| 
                                               wx.ALIGN_CENTER_VERTICAL, 5
                                )
         self.cmb_x26opti = wx.ComboBox(self.h264panel, wx.ID_ANY,  
                                            choices=optimization_hevc_avc,
-                                          size=(200,-1), style=wx.CB_DROPDOWN | 
+                                          size=(180,-1), style=wx.CB_DROPDOWN | 
                                                                wx.CB_READONLY
                                             )
         grid_h264panelprst.Add(self.cmb_x26opti, 0, wx.ALL |
@@ -786,12 +786,15 @@ class AV_Conv(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
         #---------------------- Tooltip 
-        self.cmb_Vcod.SetToolTip(_('The video codec determines the video '
-                                   'container'))
-        self.cmb_Vcont.SetToolTip(_('Output format and file extension'))
-        self.cmb_Media.SetToolTip(_('Determines the type of file produced'))
-        self.ckbx_pass.SetToolTip(_('It can improve the video quality and '
-                                    'reduce the file size, but takes longer.'))
+        self.cmb_Vcod.SetToolTip(_('Available video codecs. "Copy" is not a '
+                'codec but indicate that the video stream is not to be re-'
+                'encoded and allows changing the format or other parameters'))
+        self.cmb_Vcont.SetToolTip(_('Output format and file extension. the '
+                'content may change based on the codec or media'))
+        self.cmb_Media.SetToolTip(_('"Video" to save the output file as a '
+                                    'video; "Audio" to save as an audio track'))
+        self.ckbx_pass.SetToolTip(_('It can reduce the file size, but takes '
+                                    'longer.'))
         self.spinMinr.SetToolTip(_('Specifies a minimum tolerance to be used'))
         self.spinMaxr.SetToolTip(_('Specifies a maximum tolerance. this is '
                                    'only used in conjunction with buffer size'))
