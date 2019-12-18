@@ -940,7 +940,9 @@ class PrstPan(wx.Panel):
         # fname: filename, nome file senza ext.
         # bname: basename, nome file con ext.
         # cntmax: count items for batch proc.
-        if array[3]: # has double pass
+        if array[5] in ['jpg','png','bmp']:
+            self.savepictures(dir_destin, file_sources)
+        elif array[3]: # has double pass
             self.two_Pass(file_sources, dir_destin, cntmax, outext)
         else:
             self.one_Pass(file_sources, dir_destin, cntmax, outext)
@@ -1019,6 +1021,64 @@ class PrstPan(wx.Panel):
                                         cntmax,
                                         )
     #--------------------------------------------------------------------#
+    def savepictures(self, dest, file_sources):
+        """
+        Save as files image the selected video input. The saved 
+        images are named as file name + a progressive number + .jpg 
+        and placed in a folder with the same file name + a progressive 
+        number in the chosen output path.
+        
+        """
+        if len(file_sources) == 1:
+            clicked = file_sources[0]
+            
+        elif not self.parent.filedropselected:
+            wx.MessageBox(_("To export as pictures, select "
+                            "one file at a time"), 'Videomass', 
+                            wx.ICON_INFORMATION, self)
+            return
+        else:
+            clicked = self.parent.filedropselected
+        
+        valupdate = self.update_dict(1, 'None')
+        ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
+        
+        if ending.ShowModal() == wx.ID_OK:
+            fname = os.path.basename(clicked.rsplit('.', 1)[0])
+            dir_destin = dest[file_sources.index(clicked)]# specified dest
+            
+            try: 
+                outputdir = "%s/%s-IMAGES_1" % (dir_destin, fname)
+                os.mkdir(outputdir)
+                
+            except FileExistsError:
+                lista = []
+                for dir_ in os.listdir(dir_destin):
+                    if "%s-IMAGES_" % fname in dir_:
+                        lista.append(int(dir_.split('IMAGES_')[1]))
+                        
+                prog = max(lista) +1
+                outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
+                os.mkdir(outputdir)
+
+            fileout = "{0}-%d.{1}".format(fname,array[5])
+            cmd = ('%s -y "%s"' % (self.txt_1cmd.GetValue(),
+                                   os.path.join(outputdir, fileout))
+                                        )
+            command = " ".join(cmd.split())# compact string
+            self.parent.switch_Process('savepictures',
+                                        clicked, 
+                                        None, 
+                                        None, 
+                                        command, 
+                                        None, 
+                                        None, 
+                                        None, 
+                                        self.logname, 
+                                        1, 
+                                        False,# do not use is reserved
+                                        )
+    #------------------------------------------------------------------#
     def update_dict(self, cntmax, passes):
         """
         Update information before send to epilogue

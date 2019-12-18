@@ -34,6 +34,7 @@ xgettext -d videomass "../videomass3/Videomass3.py" \
 "../videomass3/vdms_THREADS/ffplay_reproduction.py" \
 "../videomass3/vdms_THREADS/ffprobe_parser.py" \
 "../videomass3/vdms_THREADS/one_pass.py" \
+"../videomass3/vdms_THREADS/picture_exporting.py" \
 "../videomass3/vdms_THREADS/two_pass_EBU.py" \
 "../videomass3/vdms_THREADS/two_pass.py" \
 "../videomass3/vdms_THREADS/volumedetect.py" \

@@ -34,6 +34,7 @@ from videomass3.vdms_THREADS.ydl_download import YoutubeDL_Downloader
 from videomass3.vdms_THREADS.one_pass import OnePass
 from videomass3.vdms_THREADS.two_pass import TwoPass
 from videomass3.vdms_THREADS.two_pass_EBU import Loudnorm
+from videomass3.vdms_THREADS.picture_exporting import PicturesFromVideo 
 
 # get videomass wx.App attribute
 get = wx.GetApp()
@@ -139,6 +140,10 @@ class Logging_Console(wx.Panel):
         elif varargs[0] == 'two pass EBU': # from Audio/Video Conv.
             self.PARENT_THREAD = Loudnorm(varargs, duration, 
                                           self.logname, time_seq
+                                          )
+        elif varargs[0] == 'savepictures':
+            self.PARENT_THREAD = PicturesFromVideo(varargs, duration, 
+                                                   self.logname, time_seq
                                           )
         elif varargs[0] == 'youtubedl downloader':
             self.ckbx_text.Hide()

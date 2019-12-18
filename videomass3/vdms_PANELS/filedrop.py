@@ -234,6 +234,7 @@ class FileDnD(wx.Panel):
         #self.flCtrl.ClearAll()
         self.flCtrl.DeleteAllItems()
         del data_files[:]
+        self.parent.filedropselected = None
         self.selected = None
     #----------------------------------------------------------------------
     def on_select(self, event):
@@ -242,6 +243,7 @@ class FileDnD(wx.Panel):
         """
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index)
+        self.parent.filedropselected = item
         self.selected = item
         
     #----------------------------------------------------------------------
@@ -257,6 +259,7 @@ class FileDnD(wx.Panel):
         De-selecting a line with mouse by click in empty space of
         the control list
         """
+        self.parent.filedropselected = None
         self.selected = None
     #----------------------------------------------------------------------
     def on_custom_save(self):

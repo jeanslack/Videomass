@@ -90,6 +90,7 @@ class MainFrame(wx.Frame):
         self.data_url = None# list of urls in text box
         self.file_destin = None # path name for file saved destination
         self.file_src = None# input files list
+        self.filedropselected = None # list object selected name on Add files
         self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
         self.time_read = {'start seek':['',''],'time':['','']}
         self.duration = [] # empty if not file imported
