@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-18 19:54+0100\n"
+"POT-Creation-Date: 2019-12-19 17:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1428,84 +1428,88 @@ msgstr ""
 msgid "Wiki"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:593
+#: ../videomass3/vdms_MAIN/main_frame.py:594
 msgid "Issue tracker"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:595
-msgid "Donation"
-msgstr ""
-
-#: ../videomass3/vdms_MAIN/main_frame.py:597
-msgid "FFmpeg documentation"
+#: ../videomass3/vdms_MAIN/main_frame.py:596
+msgid "Videomass Translation..."
 msgstr ""
 
 #: ../videomass3/vdms_MAIN/main_frame.py:599
-msgid "Check new releases"
-msgstr ""
-
-#: ../videomass3/vdms_MAIN/main_frame.py:600
-msgid "About Videomass"
+msgid "Donation"
 msgstr ""
 
 #: ../videomass3/vdms_MAIN/main_frame.py:601
+msgid "FFmpeg documentation"
+msgstr ""
+
+#: ../videomass3/vdms_MAIN/main_frame.py:603
+msgid "Check new releases"
+msgstr ""
+
+#: ../videomass3/vdms_MAIN/main_frame.py:604
+msgid "About Videomass"
+msgstr ""
+
+#: ../videomass3/vdms_MAIN/main_frame.py:605
 msgid "&Help"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:864
+#: ../videomass3/vdms_MAIN/main_frame.py:876
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
 "from <https://pypi.org/project/videomass/>"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:870
+#: ../videomass3/vdms_MAIN/main_frame.py:882
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:876
+#: ../videomass3/vdms_MAIN/main_frame.py:888
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:911
+#: ../videomass3/vdms_MAIN/main_frame.py:923
 msgid "Start"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:945
-#: ../videomass3/vdms_MAIN/main_frame.py:962
+#: ../videomass3/vdms_MAIN/main_frame.py:957
+#: ../videomass3/vdms_MAIN/main_frame.py:974
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:954
+#: ../videomass3/vdms_MAIN/main_frame.py:966
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:984
+#: ../videomass3/vdms_MAIN/main_frame.py:996
 msgid "Add Files"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:1003
+#: ../videomass3/vdms_MAIN/main_frame.py:1015
 msgid "Add URLs"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:1019
+#: ../videomass3/vdms_MAIN/main_frame.py:1031
 msgid "Youtube Downloader"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:1036
+#: ../videomass3/vdms_MAIN/main_frame.py:1048
 #: ../videomass3/vdms_PANELS/choose_topic.py:58
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:1066
+#: ../videomass3/vdms_MAIN/main_frame.py:1078
 #: ../videomass3/vdms_PANELS/choose_topic.py:60
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass3/vdms_MAIN/main_frame.py:1119
+#: ../videomass3/vdms_MAIN/main_frame.py:1131
 msgid "Processing Status - Videomass"
 msgstr ""
 
@@ -1713,7 +1717,7 @@ msgstr ""
 #: ../videomass3/vdms_PANELS/av_conversions.py:792
 msgid ""
 "Output format and file extension. the content may change based on the codec "
-"or media"
+"and media"
 msgstr ""
 
 #: ../videomass3/vdms_PANELS/av_conversions.py:794

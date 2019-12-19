@@ -593,7 +593,8 @@ class MainFrame(wx.Frame):
         helpButton.AppendSeparator()
         issueItem = helpButton.Append( wx.ID_ANY, _("Issue tracker"), "")
         helpButton.AppendSeparator()
-        transItem = helpButton.Append(wx.ID_ANY,_('Translation support'), '')
+        transItem = helpButton.Append(wx.ID_ANY,_('Videomass Translation...'),
+                                                '')
         helpButton.AppendSeparator()
         DonationItem = helpButton.Append( wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()

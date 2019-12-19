@@ -790,7 +790,7 @@ class AV_Conv(wx.Panel):
                 'codec but indicate that the video stream is not to be re-'
                 'encoded and allows changing the format or other parameters'))
         self.cmb_Vcont.SetToolTip(_('Output format and file extension. the '
-                'content may change based on the codec or media'))
+                'content may change based on the codec and media'))
         self.cmb_Media.SetToolTip(_('"Video" to save the output file as a '
                                     'video; "Audio" to save as an audio track'))
         self.ckbx_pass.SetToolTip(_('It can reduce the file size, but takes '
