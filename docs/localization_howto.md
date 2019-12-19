@@ -12,11 +12,12 @@
 ### Updates an existing translation
 Over time, new releases of Videomass could include new text strings not yet translated. To update an existing translation follow these steps:
 
-- Download latest videomass release [here](https://github.com/jeanslack/Videomass/releases)
+- Clone videomass with git command:
+```
+git clone https://github.com/jeanslack/Videomass.git
+```
 
-- Extract the archive.
-
-- Browse the new extracted folder by searching for the 'Videomass.po' file related to the language to be translated in the /local folder. 
+- Browse the Videomass folder by searching for the 'Videomass.po' file related to the language to be translated in the /local folder. 
 
 - Now open the "videomass.po" with 'PoEdit' and go to menu bar > Catalog > Update from POT file...
 
@@ -36,11 +37,12 @@ I will be grateful!!
 
 ### Start with a new translation
 
-- To start a new translation, make sure you have the sources for the latest videomass release that you can download [here](https://github.com/jeanslack/Videomass/releases).
+- To start a new translation, clone videomass with git command:
+```
+git clone https://github.com/jeanslack/Videomass.git
+```
 
-- Extract the archive.
-
-- Browse the new folder and create two new folders inside /Videomass-?.?.?/locale path (for example create a 'de_DE' folder and within which a 'LC_MESSAGES' folder for the German 
+- Browse the new Videomass folder and create two new folders inside /Videomass-?.?.?/locale path (for example create a 'de_DE' folder and within which a 'LC_MESSAGES' folder for the German 
 language support) with the following tree:
 
     /Videomass
