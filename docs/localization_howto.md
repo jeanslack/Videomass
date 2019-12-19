@@ -9,7 +9,32 @@
 ### Notes
 ##### The instructions below assume basic knowledge of the command line (OS independent)
 
-### Start
+### Updates an existing translation
+Over time, new releases of Videomass could include new text strings not yet translated. To update an existing translation follow these steps:
+
+- Download latest videomass release [here](https://github.com/jeanslack/Videomass/releases)
+
+- Extract the archive.
+
+- Browse the new extracted folder by searching for the 'Videomass.po' file related to the language to be translated in the /local folder. 
+
+- Now open the "videomass.po" with 'PoEdit' and go to menu bar > Catalog > Update from POT file...
+
+- Browse on '/Videomass-?.?.?/locale/' folder and select the 'videomass.pot' file.
+
+- Now start your translation on the newly strings of the latest release of videomass, then save your work.
+
+- Try your new tranlation by open a terminal window, go to the 'Videomass-?.?.?' sources folder and type: 
+
+      python3 launcher
+
+When you have completed your translation with 'PoEdit', please send me your 'videomass.po' file at:
+
+<jeanlucperni@gmail.com>
+
+I will be grateful!!
+
+### Start with a new translation
 
 - To start a new translation, make sure you have the sources for the latest videomass release that you can download [here](https://github.com/jeanslack/Videomass/releases).
 
