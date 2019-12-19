@@ -107,7 +107,7 @@ class Choose_Topic(wx.Panel):
     def on_YoutubeDL(self, event):
         if not ydl[0]:
             wx.MessageBox(_('ERROR: {0}\n\nTo use this feature '
-                          'please install youtube-dl.') % ydl[1],
+                          'please install youtube-dl.').format(ydl[1]),
                           'Videomass', wx.ICON_ERROR)
             return
 
