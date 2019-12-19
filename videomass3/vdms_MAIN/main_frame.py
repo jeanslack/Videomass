@@ -590,7 +590,10 @@ class MainFrame(wx.Frame):
         helpButton = wx.Menu()
         helpItem = helpButton.Append( wx.ID_HELP, _("User Guide"), "")
         wikiItem = helpButton.Append( wx.ID_ANY, _("Wiki"), "")
+        helpButton.AppendSeparator()
         issueItem = helpButton.Append( wx.ID_ANY, _("Issue tracker"), "")
+        helpButton.AppendSeparator()
+        transItem = helpButton.Append(wx.ID_ANY,_('Translation support'), '')
         helpButton.AppendSeparator()
         DonationItem = helpButton.Append( wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()
@@ -629,6 +632,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
         self.Bind(wx.EVT_MENU, self.Wiki, wikiItem)
         self.Bind(wx.EVT_MENU, self.Issues, issueItem)
+        self.Bind(wx.EVT_MENU, self.Translations, transItem)
         self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
         self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
@@ -789,6 +793,13 @@ class MainFrame(wx.Frame):
     def Issues(self, event):
         """Display Issues page on github"""
         page = 'https://github.com/jeanslack/Videomass/issues'
+        webbrowser.open(page)
+        
+    #------------------------------------------------------------------#
+    def Translations(self, event):
+        """Display Issues page on github"""
+        page = ('https://github.com/jeanslack/Videomass/blob/master/docs/'
+               'localization_howto.md')
         webbrowser.open(page)
         
     #------------------------------------------------------------------#
