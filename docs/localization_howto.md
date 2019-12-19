@@ -6,8 +6,10 @@
 - Some kind of text editor to edit some code (notepad++, nano, etc are sufficient)
 - [Git](https://git-scm.com/downloads)
 
-### NOTES
+### Notes
 ##### The instructions below assume basic knowledge of the command line (OS independent)
+
+### Start
 
 - To start a new translation, make sure you have the sources for the latest videomass release that you can download [here](https://github.com/jeanslack/Videomass/releases).
 
@@ -47,12 +49,11 @@ to:
 
 - When finish save 'app_const.py'.
 
-- Open a terminal window and go to the 'Videomass-?.?.?' folder and type: 
-    python3 launcher
+- Try your new tranlation by open a terminal window, go to the 'Videomass-?.?.?' sources folder and type: 
 
+      python3 launcher
 
-
-When you have completed your translation with 'Poedit', please send me your 'videomass.po' file at:
+When you have completed your translation with 'PoEdit', please send me your 'videomass.po' file at:
 
 <jeanlucperni@gmail.com>
 
