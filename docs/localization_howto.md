@@ -22,7 +22,7 @@ Over time, new releases of Videomass could include new text strings not yet tran
 
 - Browse on '/Videomass-?.?.?/locale/' folder and select the 'videomass.pot' file.
 
-- Now start your translation on the newly strings of the latest release of videomass, then save your work.
+- Now start your translation on the new strings of the latest release of videomass, then save your work.
 
 - Try your new tranlation by open a terminal window, go to the 'Videomass-?.?.?' sources folder and type: 
 
