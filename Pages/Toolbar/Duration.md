@@ -33,20 +33,17 @@ minutes from the beginning of the film, we have to set the Seeking parameter to 
 ----------------
 
 ### _Tip_
-To find out the overall duration of an imported media file, you can use the [Show Metadata](Show_metadata.md) tool.
+To find out the overall duration of an imported media file, you can use the [Streams Information](Show_metadata.md) tool.
 
 ----------------
 
 ### _Trick_ 
-To perform conversion tests, you can use the **Cut** parameter to set a short duration without waiting for the end 
-of a whole process (which can sometimes be very long).
+To perform conversion tests, you can use the **Cut** parameter to set a short duration without waiting for the end of a whole process (which can sometimes be very long).
 
 ----------------
 
 ### _IMPORTANT NOTES:_ 
-When set, the Duration tool generates a parameter that is extended globally, ie in all used conversion processes
-with the _Presets Manager_, _Video Conversions_, _Audio Conversions_, _playback_, _audio normalization_, _images extraction_, etc. 
-Keeping this principle in mind, it is possible to enable or disable this instrument as needed.
+When set, the Duration tool affects many Videomass functions such Presets Manager, Playback, Preview, peak level analysis and the export process. 
 
 ----------------
 
