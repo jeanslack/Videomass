@@ -14,7 +14,8 @@ Minimum requirements are:
 ### Windows, MacOs, Unix, Linux
 Also, wheels are available for all systems and architectures from 
 [Python Package Index (PyPi)](https://pypi.org/project/videomass/) that can be 
-installed using the **pip** command. Please, see the [Wiki](https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-tool) page for explanations.
+installed using the **pip** command.   
+Please, see the [Wiki](https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-tool) page for explanations.
 
 [Home](index.md)
 

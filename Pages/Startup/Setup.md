@@ -8,19 +8,11 @@ Whenever you save these settings the program must necessarily be restarted to ma
 ------------------
 ### General (tab)
 
-**Settings CPU**   
-In the Settings CPU box the settings relating to the CPU parameters will be displayed and will be used 
-by some FFmpeg encoder.   
-
-- Set the number of threads (from 0 to 32)   
-  _FFmpeg always has one main thread which does most of the processing. In case of multiple inputs there are 
-  also input threads for demuxing (1 thread per input); for single input demuxing is done on main thread.
-  Setting "threads N" (where N > 1) on input enables multithreaded decoding which can spawn N additional threads 
-  for each decoder which supports it._
-  
- - Quality/Speed ratio modifier(from -16 to 16)   
-   _Contrary to its name, cpu-used doesn't actually control how much overall CPU is being used, it controls the 
-   quality of the encode (ie. how much cpu is used for each frame in total)._   
+**FFmpeg threads option**   
+Set the number of threads (from 0 to 32). FFmpeg always has one main thread which does most of the processing. 
+In case of multiple inputs there are also input threads for demuxing (1 thread per input); for single input 
+demuxing is done on main thread. Setting "threads N" (where N > 1) on input enables multithreaded decoding 
+which can spawn N additional threads for each decoder which supports it.
   
 -------------------  
 ### Logging level (tab)
@@ -39,9 +31,9 @@ These log files are as follows:
 
 - Videomass_FFplay.log
 - Videomass_PresetsManager.log
-- Videomass_VideoConversion.log
-- Videomass_AudioConversion.log
+- Videomass_AV_conversions.log
 - Videomass_Volumedected.log
+- Youtube_downloader.log
 
 The log files are saved in the Videomass configuration directory which can be opened directly with the appropriate 
 function in the menu bar > Tools > Log directory . In each new process the contents of a log file are completely erased 

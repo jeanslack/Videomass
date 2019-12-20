@@ -6,50 +6,17 @@
 
 Presets Manager is an interface that allows a quick selection of profiles to start a conversion process. It is based 
 on two types of lists: the list of presets, selectable by a drop down, and the list of selectable profiles.   
-Each preset contains one or more profiles that can also be edited or deleted. A user can also create new profiles and 
-organize them on certain presets.   
+Each preset contains one or more profiles that can also be edited or deleted. A user can also create new presets and new profiles.   
 
-A single click on a profile allows you to use it for a conversion process, or to modify or remove it.  
+A single click on a profile enables it.  
 A double click on a profile starts the conversion.
 
-**Note**: each preset is an xml file with a _.vdms_ extension containing the entries of each profile stored on a 
-specific preset. All presets are located in the Videomass configuration folder.
-
-### Menubar
-![Image](../../../images/menubarFile.png)   
-With **Presets Manager** interface, the following functions are enabled in the menubar - _File_:
-
-- _Save the current preset as separated file_ (export the selected preset)
-
-- _Restore a previously saved preset_ (import and replace a preset)
-
-- _reset the current preset_  (ie return to the default state)   
-
-- _reset all presets_ (reset all presets at once. This will erase all your customizations 
-  to return to the original state.)
-
-- _Reload Presets List_ (This feature can be useful when you import new presets previously exported to recharg the new one)
-
-### Tools buttons
-![Image](../../../images/presets_manager_buttons.png)   
-These buttons are shown on the toolbar when the **Presets Manager** interface is active.
-* To create a [new profile](https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html), press the _New.._ button in the toolbar.
-* To delete a profile, press the _Delete.._ button in the toolbar.
-* To [edit a profile](https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/PresetsManager_Panel/Profiles_management.html). press the _Edit.._ button in the toolbar.
+**Note**: each preset is a simple text file with a JSON data structure with ".prst" extension. All presets are located in the Videomass configuration folder.
 
 ### The _Selecting Preset_ tab
-In this tab there is a list of all presets that can be selected from a drop-down menu.   
-**Note:** "_User Profiles_" is a particular menu item where the profiles that you saved from the Video 
-Conversions and Audio Conversions interfaces are stored.
+In this tab there is a list of all presets that can be selected from a drop-down menu. When you create a new preset, it stored to /Videomass/presets folder and the drop-down menu be automatically updated with a new entry.
 
 ### The _Command Line FFmpeg_ tab
 By selecting the 'Command Line FFmpeg' tab you will see the command of each selected profile. Here you can change the command on the fly by adding new parameters and the conversion process will execute exactly the command you wrote. Remember that a profile changed on the fly will not be stored on the profile. To save a new profile, you will need to use the 'New..' or 'Edit..' functions in the toolbar.
-
-### Start Encoding
-![Image](../../../images/start_encoding_button.png)   
-When you select a profile and press the _Start Encoding_ button in the main toolbar, the process immediately starts with the parameters of the selected profile. 
-
-At the end of the process the preview button is displayed in the toolbar, which you can use to check the conversion result.
-![Image](../../../images/presets_manager_preview.png)
 
 [Back](../../../videomass_use.md)

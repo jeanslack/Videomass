@@ -2,40 +2,17 @@
 
 ## Profiles Management
 The window for managing profiles is used to create new profiles, to add new settings and to edit existing profiles. 
-It is composed of five text fields, four of which are mandatory.
-- "_Profile Name_" is a short description that you specify as an identification.
+It has 6 text fields, three of which are mandatory.
+- "_Profile Name_" a short description .
 
-- "_Description_" is a longer description.
+- "_Description_" more longer description.
 
-- "_Command Line Parameters_" allows you to enter the FFmpeg command. Do not enter the first input parameter, ie the FFmpeg command call and the first '-i' flag with the name of the first file imported, unless you want to concatenate or add others file. So, don't even enter at the end the last output file name which is given automatically. For conversions that involve a double pass, use the string **-pass 1** to first pass and **-pass 2** for second pass as separators, for example:
-  ```
-  -pass 1 -an -vcodec libx264 -b:v 1500k -f rawvideo -pass 2 -vcodec libx264 -b:v 1500k
-  ```
-- "_Files supported in the import_" field is optional and is useful for limiting the importation of one or more formats 
-  that you can specify or not. When you specify a list of formats, they must be separated by a white space.
+- "1-PASS" allows you to enter the first pass command.
+
+- "2-PASS" allows you to enter the second pass command. This is optional.
+
+- "_Files supported_" field is optional and useful to include a certain input formats type. When you specify more than one format must be separated by comma.
   
-- "_Output format extension_", Here you have to specify the name of the output format (extension), without including 
-  the dot '.' and any other punctuation mark.
-
-### How to create a New profile
-To create a new profile it is necessary to move to the _Presets Manager_ interface by pressing the relative button in the 
-main toolbar and then pressing the "_New_" button on the secondary toolbar.  
-You will then see this window appear:   
-![Image](../../../images/new_profile.png) 
-
-### How to modify an existing profile
-You can edit each selected profile and save it with your new settings by pressing the '_Edit_' button from the 
-secondary toolbar, when you are on the _Presets Manager_ interface. The rules are the same as when you create a 
-new profile.
-
-### How to delete a profile
-Go to the _Presets Manager_ interface by pressing the corresponding button on the main toolbar, select a profile 
-to delete and then press the "Delete" button on the secondary toolbar. This will permanently delete the selected profile.
-
-### Save new profiles from Video Conversions and Audio Conversions interfaces
-New profiles can also be added from the _Video Conversions_ and _Audio Conversions_ interfaces. Whenever you set a 
-specific parameter configuration and press the 'Save as Profile' button, you will save those parameters in the 
-'User Profile' preset of the 'Presets Manager' interface.
-![Image](../../../images/save_as_profile.png) 
+- "_Output format_", extension of the output filename. If you want to copy the original format and codec, you can leave empty.
 
 [Back](../../../videomass_use.md)
