@@ -2,7 +2,7 @@
 
 ## Presets Manager
 
-![Image](../../../images/presets_manager.png)
+![Image](../../../images/presets_manager.gif)
 
 Presets Manager is an interface that allows a quick selection of profiles to start a conversion process. It is based 
 on two types of lists: the list of presets, selectable by a drop down, and the list of selectable profiles.   
