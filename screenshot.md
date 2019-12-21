@@ -2,19 +2,24 @@
 
 ## Screenshots
 
-### Windows 7 x64
-Wizard   
-![Image](/images/windows_wizard.png)   
+### On Debian buster with KDE de
+ 
+![Image](/images/Main.png)   
 
-Drag n Drop   
-![Image](/images/windows_DnD.png)   
+  
+![Image](/images/DndFile.png)   
 
-### Xubuntu 18.04
-Presets Manager   
+  
+![Image](/images/DndText.png)   
+
+  
 ![Image](/images/presets_manager.png)   
 
-### MacOs High Sierra
-during a conversion   
-![Image](/images/MacOsHighSierra.png)   
+
+![Image](/images/AVconv.png)  
+
+
+![Image](/images/ydl.png)  
+
 
 [Home](index.md)
