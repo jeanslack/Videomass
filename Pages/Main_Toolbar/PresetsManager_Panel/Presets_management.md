@@ -5,12 +5,28 @@
 ![Image](../../../images/presets_manager.gif)
 
 Presets Manager is an interface that allows a quick selection of profiles to start a conversion process. It is based on two types of lists: the list of presets, selectable by a drop down, and the list of selectable profiles.   
-Each preset contains one or more profiles wich can also be edited or deleted. You  can also create new presets and new profiles.   
+Each preset contains one or more profiles wich can also be edited or deleted. You can also create new presets and new profiles.
 
+### Create a new preset
 To create a new preset, go on *menu bar > File > Create new preset*.   
 You can create new presets only on the Presets Manager which will be stored on the presets folder in the Videomass configuration directory. The preset drop-down menu will be automatically updated with a new entry. Each preset is a simple text file with a JSON data structure and a ".prst" extension.   
 
-To create a new profile, type the button *New ...* and a dialog box will appear allowing you to catalog any type of profile which will be saved on the current selected preset.
+### Create a new profile
+To create a new profile froma scratch, type the button *New...* and a window will appear allowing you to catalog any type of profile which will be saved on the current selected preset. You can store new profiles on any selecting preset. 
+
+![Image](../../../images/new_profile.png)
+
+- "_Profile Name_" a short description .
+
+- "_Description_" more longer description.
+
+- "1-PASS" allows you to enter the first pass command.
+
+- "2-PASS" allows you to enter the second pass command. This is optional.
+
+- "_Files supported_" field is optional and useful to include a certain input formats type. When you specify more than one format must be separated by comma.
+  
+- "_Output format_", extension of the output filename. If you want to copy the original format and codec, you can leave empty.
 
 ### _Presets_ tab
 In this tab there is a list of all presets that can be selected from a drop-down menu. 
