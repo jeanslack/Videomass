@@ -4,9 +4,6 @@
 
 ![Image](../../../../images/filters.png)
 
-The video **Filters Section** is located in the _Video Conversion_ panel on the _Video Settings_ tab. 
-All available filters are auto-chained and can be played simultaneously with the preview button 
-(the one with the yellow play icon). When a certain filter is set, the corresponding button will assume 
-a yellow gradient: ![Image](../../../../images/button_rotation.png)   
+The video **Filters** is located in the _Audio/Video Conversion_ tool on the _Filters_ tab. All available filters are auto-chained and can be played simultaneously with the preview button. When you set any filter the corresponding button will colored by a yellow gradient: ![Image](../../../../images/button_rotation.png)   
 
 [Back](../../../../videomass_use.md)
