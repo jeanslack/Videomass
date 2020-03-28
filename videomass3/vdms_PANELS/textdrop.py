@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.28.2018, Sept.12.2019
+# Rev: March.28.2020
 #########################################################
 
 # This file is part of Videomass.
@@ -105,19 +105,16 @@ class TextDnD(wx.Panel):
         """
         self.textCtrl.Clear()
     #----------------------------------------------------------------------
-    def on_custom_save(self):
+    
+    def on_file_save(self, path):
         """
-        Choice a specific directory for files save
+        Choice a specific directory for files saving
+        
         """
-        dialdir = wx.DirDialog(self, _("Videomass: Choose a directory"))
-            
-        if dialdir.ShowModal() == wx.ID_OK:
-            self.text_path_save.SetValue("")
-            self.text_path_save.AppendText(dialdir.GetPath())
-            self.file_dest = '%s' % (dialdir.GetPath())
-            self.parent.file_destin = self.file_dest
-            dialdir.Destroy()
-    #----------------------------------------------------------------------
+        self.text_path_save.SetValue("")
+        self.text_path_save.AppendText(path)
+        self.file_dest = '%s' % (path)
+    #-----------------------------------------------------------------------
     
     def statusbar_msg(self, mess, color):
         """

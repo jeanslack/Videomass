@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec 28 2018, Sept 10 2019, Dec.09.2019
+# Rev: March.28.2020
 #########################################################
 
 # This file is part of Videomass.
@@ -469,16 +469,11 @@ class MainFrame(wx.Frame):
     #------------------------------------------------------------------#
     def onCustomSave(self, event):
         """
-        Intercept the button 'save' event in the filedrop panel
-        and set file custom destination path
+        Intercept the button 'save' event in the filedrop or textdrop
+        panels and sets file destination path
+        
         """
-        if self.fileDnDTarget.IsShown():
-            self.fileDnDTarget.on_custom_save()
-            self.file_destin = self.fileDnDTarget.file_dest
-            
-        elif self.textDnDTarget.IsShown():
-            self.textDnDTarget.on_custom_save()
-            self.file_destin = self.textDnDTarget.file_dest
+        self.File_Save(self)
     #------------------------------------------------------------------#
     def on_close(self, event):
         """
@@ -626,7 +621,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.Openlog, openlogdir)
         self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
-        
         #----SETUP----
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         #----HELP----
@@ -641,12 +635,21 @@ class MainFrame(wx.Frame):
         
     #--------Menu Bar Event handler (callback)
     
-    #-------------------------- Menu  File -----------------------------#
+    #-------------------------- File Menu -----------------------------#
     def File_Save(self, event):
         """
         Open choice dialog output
+        
         """
-        self.fileDnDTarget.on_custom_save()
+        dialdir = wx.DirDialog(self, _("Videomass: Choose a directory"))
+        if dialdir.ShowModal() == wx.ID_OK:
+            self.file_destin = '%s' % (dialdir.GetPath())
+            self.textDnDTarget.on_file_save(self.file_destin)
+            self.fileDnDTarget.on_file_save(self.file_destin)
+            self.textDnDTarget.file_dest = self.file_destin
+            self.fileDnDTarget.file_dest = self.file_destin
+            dialdir.Destroy()
+        
     #--------------------------------------------------#
 
     def Quiet(self, event):
@@ -980,6 +983,7 @@ class MainFrame(wx.Frame):
     def File_import(self, event, which):
         """
         Show files import panel.
+        
         """
         self.topicname = which
         self.textDnDTarget.Hide(), self.ytDownloader.Hide()

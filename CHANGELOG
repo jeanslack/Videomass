@@ -6,6 +6,17 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
+March 28, 2020 V.2.0.1
++------------------------------------+
+
+BUGS:
+    * Fixed file destination custom settings when choose by file menu
+
+IMPROVEMENTS:
+    * Fixed file head descriptions on any file.py
+    
+
++------------------------------------+
 December 10, 2019 V.2.0.0
 +------------------------------------+
 
