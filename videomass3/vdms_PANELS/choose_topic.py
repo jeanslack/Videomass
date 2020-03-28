@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: audio_conv
-# Porpose: choose topic
+# Name: choose_topic.py
+# Porpose: shows the topics available in the program
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

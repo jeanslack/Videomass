@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: presets_pan.py
+# Name: presets_manager.py
 # Porpose: ffmpeg's presets manager panel
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>

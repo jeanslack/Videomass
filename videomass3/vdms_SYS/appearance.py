@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: appearance.py
-# Porpose: Used to set appearance (icons and colours)
+# Porpose: Used to set appearance on startup (icons and colours)
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

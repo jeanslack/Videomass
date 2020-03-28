@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: while_playing.py
-# Porpose: Show dialog box with shortcuts keyboard for FFplay
+# Porpose: Show box with shortcuts keyboard when playback with FFplay
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ffmpeg_formats.py
-# Porpose: Dialog to show the available formats on the FFmpeg
+# Porpose: Show the available formats on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

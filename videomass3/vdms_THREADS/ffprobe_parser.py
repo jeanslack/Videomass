@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ffprobe_parser.py
-# Porpose: ffprobe parsing class multi-platform
+# Porpose: cross-platform parsing class for ffprobe
 # Compatibility: Python3, Python2
 # Platform: all platforms
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>

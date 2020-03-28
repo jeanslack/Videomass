@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: dragNdrop.py
-# Porpose: drag n drop interface
+# Name: filedrop.py
+# Porpose: files drag n drop interface
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

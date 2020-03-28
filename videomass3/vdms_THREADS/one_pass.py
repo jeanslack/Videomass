@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: one_pass_process.py 
-# Porpose: FFmpeg long processing task with one pass conversion
+# Name: one_pass.py 
+# Porpose: FFmpeg long processing task on one pass conversion
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

@@ -296,7 +296,7 @@ compression formats, do not have associated bit depths.\
     #-----------------------------------------------------------------#
     def pcm(self):
         """
-        NOTE: the wav and aiff bitdepth is used impicitly on the 
+        NOTE: the wav and aiff bitdepth is used implicitly on the 
               codec name and not as separated -sample_fmts option.
         """
         self.sample_rate = {0:("Auto", ""), 

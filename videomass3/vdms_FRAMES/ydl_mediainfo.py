@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: mediainfo.py
+# Name: ydl_mediainfo.py
 # Porpose: show media streams information through youtube-dl.extract_info
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>

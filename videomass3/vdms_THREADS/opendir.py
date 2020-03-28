@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: opendir.py
-# Porpose: open file browser in a specific location (platform independent)
+# Porpose: open file browser on logfiles and configuration directory
 # Compatibility: Python3 (Unix, Windows)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

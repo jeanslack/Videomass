@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: pictures_export.py 
-# Porpose: save as pictures
+# Name: pictures_exporting.py 
+# Porpose: FFmpeg long processing task on save as pictures
 # Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

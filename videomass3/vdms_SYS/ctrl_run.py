@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ctrl_run.py
-# Porpose: Program boot data
+# Porpose: Program startup data; get system data on startup
 # Compatibility: Python3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

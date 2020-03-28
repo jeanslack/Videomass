@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: epilogue.py
-# Porpose: show final param before start process
+# Porpose: show final settings before start process
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

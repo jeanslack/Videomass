@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: utils.py
-# Porpose: module with standard tools for OS
+# Porpose: Group the utilities needed for some requests
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

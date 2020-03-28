@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ffmpeg_decoders.py
-# Porpose: Dialog to show the available decoders on the FFmpeg
+# Name: ffmpeg_codecs.py
+# Porpose: Mini-frame to show the available decoders/encoders on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>

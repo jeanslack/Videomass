@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: textNdrop.py
+# Name: textdrop.py
 # Porpose: Allows you to add URLs to download media
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
