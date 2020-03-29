@@ -5,7 +5,7 @@
 # Porpose: Gets the output to display the features of FFmpeg
 # Compatibility: Python3 (Unix, Windows)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Aug.23 2019
 #########################################################

@@ -5,7 +5,7 @@
 # Porpose: Show audio volume data list (PEAK/RMS only)
 # Compatibility: Python3, wxPython4
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: October.07.2019
 #########################################################

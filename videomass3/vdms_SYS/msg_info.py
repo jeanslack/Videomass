@@ -5,7 +5,7 @@
 # Porpose: Gets Version, Copyright and program Description
 # Compatibility: Python3, Python2
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev August 2 2019
 #########################################################

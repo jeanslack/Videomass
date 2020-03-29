@@ -5,7 +5,7 @@
 # Porpose: top window main frame
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: March.28.2020
 #########################################################
@@ -638,7 +638,7 @@ class MainFrame(wx.Frame):
     #-------------------------- File Menu -----------------------------#
     def File_Save(self, event):
         """
-        Open choice dialog output
+        Open the file browser dialog to choice output file destination
         
         """
         dialdir = wx.DirDialog(self, _("Videomass: Choose a directory"))

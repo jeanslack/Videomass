@@ -5,7 +5,7 @@
 # Porpose: FFmpeg long processing task on save as pictures
 # Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Dec.18.2019
 #########################################################

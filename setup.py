@@ -7,7 +7,7 @@
 # Compatibility: Python3
 # Platform: all
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2014-2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Aug.2.2019, Sept.11.2019, Dic.16.2019
 # PEP8 compatible
@@ -177,25 +177,26 @@ def SOURCE_BUILD():
     Source/Build distributions
 
     """
-    DATA_FILES = [  # even path must be relative-path
-            ('share/videomass/config/presets', 
-              glob_files('share/presets/*.prst')
-              ),
-            ('share/videomass/config', ['share/videomass.conf',
-                                        'share/videomassWin32.conf',
-                                        'share/README']),
-            ('share/videomass/icons', glob_files('art/icons/*.png')),
-            ('share/applications', ['art/videomass.icns',
-                                    'art/videomass.ico',
-                                    'art/videomass.desktop']),
-            ('share/pixmaps', ['art/icons/videomass.png']),
-            ('share/videomass', ['AUTHORS', 'BUGS',
-                                 'CHANGELOG', 'INSTALL',
-                                 'COPYING', 'TODO', 'README.md']),
-            ]
+    DATA_FILES = [ # even path must be relative-path
+                  ('share/videomass/config/presets', 
+                   glob_files('share/presets/*.prst')),
+                   ('share/videomass/config', ['share/videomass.conf',
+                                               'share/videomassWin32.conf',
+                                               'share/README']),
+                   ('share/videomass/icons', 
+                    glob_files('art/icons/*.png')),
+                   ('share/applications', ['art/videomass.icns',
+                                           'art/videomass.ico',
+                                           'art/videomass.desktop']),
+                   ('share/pixmaps', ['art/icons/videomass.png']),
+                   ('share/videomass', ['AUTHORS', 'BUGS',
+                                        'CHANGELOG', 'INSTALL',
+                                        'COPYING', 'TODO', 'README.md']),
+                   ]
     # get the package data
     DATA_FILES = AppendPackageFiles(DATA_FILES,
-                                    'share/videomass/icons', 'share/',
+                                    'share/videomass/icons', 
+                                    'share/',
                                     )
     setup(name=PRG_NAME,
           version=VERSION,

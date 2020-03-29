@@ -5,7 +5,7 @@
 # Porpose: Intarface for audio/video conversions
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Aug.02.2019, Sept.24.2019, Dic.04.2019
 #########################################################

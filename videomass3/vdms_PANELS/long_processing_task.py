@@ -5,7 +5,7 @@
 # Porpose: Console to show logging messages during processing
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Nov 17 2019
 #########################################################

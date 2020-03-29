@@ -1,7 +1,7 @@
 # Name: __init__.py                                                           
 # Purpose: Put the videomass3 package in the videomass packages namespace
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Sept.17 2019
 #########################################################

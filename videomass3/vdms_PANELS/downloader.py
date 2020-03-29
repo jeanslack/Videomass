@@ -5,7 +5,7 @@
 # Porpose: sets youtube-dl options
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Nov.08.2019
 #########################################################

@@ -5,7 +5,7 @@
 # Porpose: FFmpeg long processing task on 2 pass conversion
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Nov 16 2019
 #########################################################
