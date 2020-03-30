@@ -11,9 +11,14 @@ March 28, 2020 V.2.0.1
 
 BUGS:
     * Fixed custom file destination settings when choosing from the file menu
+    * [Fixed Audio/Video Conversions panel] On 'Copy' video codec the output 
+      format did not match when set on the chosen container. 
 
 IMPROVEMENTS:
     * Fixed file head descriptions on any file.py
+
+ADDED:
+    * New 'Copy' item on combobox 'Container' when 'Copy' video codec is setted
     
 
 +------------------------------------+

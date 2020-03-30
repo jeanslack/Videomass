@@ -74,7 +74,7 @@ vcodecs = ({"Mpeg4": {"-c:v mpeg4":["avi"]},
             #"AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
             "Vp8": {"-c:v libvpx": ["webm"]}, 
             "Vp9": {"-c:v libvpx-vp9": ["webm"]},
-            "Copy": {"-c:v copy": ["mkv","mp4","avi","flv","m4v","ogv","webm"]}
+            "Copy": {"-c:v copy": ["mkv","mp4","avi","flv","m4v","ogv","webm","Copy"]}
             })
 # Namings in the audio codec selection on audio radio box:
 acodecs = {('Auto'): (""),
@@ -1047,7 +1047,10 @@ class AV_Conv(wx.Panel):
         Appends on container combobox according to audio and video formats
         
         """
-        cmd_opt["OutputFormat"] = self.cmb_Vcont.GetValue()
+        if self.cmb_Vcont.GetValue() == "Copy":
+            cmd_opt["OutputFormat"] = ''
+        else:
+            cmd_opt["OutputFormat"] = self.cmb_Vcont.GetValue()
         self.setAudioRadiobox(self)
     #------------------------------------------------------------------#
     def on_WebOptimize(self, event):
@@ -1936,7 +1939,7 @@ class AV_Conv(wx.Panel):
                 #ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
                 self.parent.switch_Process('onepass',
                                            f_src, 
-                                           '', 
+                                           cmd_opt["OutputFormat"], 
                                            destin, 
                                            command, 
                                            None, 
@@ -2231,6 +2234,10 @@ class AV_Conv(wx.Panel):
             normalize = 'EBU R128'
         else:
             normalize = _('Off')
+        if self.cmb_Vcont.GetValue() == "Copy":
+            outputformat = "Copy"
+        else:
+            outputformat = cmd_opt["OutputFormat"]
         if not self.parent.time_seq:
             time = _('Off')
         else:
@@ -2246,7 +2253,7 @@ class AV_Conv(wx.Panel):
                         \nSelected Input Audio index"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s"
                         "\n%s\n%s\n%s\n%s\n%s" %(numfile, 
-                                                cmd_opt["OutputFormat"],
+                                                outputformat,
                                                 cmd_opt["WebOptim"],
                                                 cmd_opt["AudioCodStr"], 
                                                 cmd_opt["AudioBitrate"][0], 
@@ -2268,7 +2275,7 @@ class AV_Conv(wx.Panel):
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                          \n%s\n%s\n%s\n%s" %(numfile,
                                             cmd_opt["WebOptim"],
-                                            cmd_opt["OutputFormat"],
+                                            outputformat,
                                             cmd_opt["VidCmbxStr"], 
                                             cmd_opt["AspectRatio"], 
                                             cmd_opt["FPS"], 
@@ -2300,7 +2307,7 @@ class AV_Conv(wx.Panel):
                         \n%s\n%s" %(numfile, 
                                     cmd_opt["WebOptim"],
                                     cmd_opt["Passing"],
-                                    cmd_opt["OutputFormat"], 
+                                    outputformat, 
                                     cmd_opt["VidCmbxStr"], 
                                     cmd_opt["VideoBitrate"], 
                                     cmd_opt["CRF"],

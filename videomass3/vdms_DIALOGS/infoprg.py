@@ -57,7 +57,7 @@ def info(parent, videomass_icon):
         info =  wx.adv.AboutDialogInfo()
         info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
         info.SetName("%s" % Name)
-        info.SetVersion("%s" % Version)
+        info.SetVersion("v%s" % Version)
         info.SetDescription(_("Yet another UI for audio and video "
                               "conversions with FFmpeg"))
         info.SetCopyright("Copyright %s %s" %(Copyright, Author))
