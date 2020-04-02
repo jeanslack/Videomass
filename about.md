@@ -29,7 +29,7 @@ MacOS, FFmpeg is licensed under the GPL. Complete FFmpeg documentation and
 sources are available at [FFmpeg.org](https://www.ffmpeg.org/)   
 
 ------------------------------------------------
-Copyright © 2015 - 2019 Gianluca Pernigotto   
+Copyright © 2015 - 2020 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
 Mail: <jeanlucperni@gmail.com>   
 License: GPL3 (see LICENSE or COPYING file in the source folder)   
