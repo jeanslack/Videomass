@@ -20,7 +20,7 @@
 Videomass is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)   
 Videomass now also has wheels on [PyPi](https://pypi.org/project/videomass/)   
 
-Copyright © 2015 - 2019 Gianluca Pernigotto   
+Copyright © 2015 - 2020 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
 Mail: <jeanlucperni@gmail.com>   
 License: GPL3 (see License page or COPYING file in the source folder)
