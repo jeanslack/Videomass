@@ -226,18 +226,18 @@ class Loudnorm(Thread):
             time.sleep(.5)
                 
             pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} -filter:a:{9} {4} {5} -y "{6}/{7}.{8}"'.format(
-                                                            ffmpeg_url, 
-                                                            self.time_seq,
-                                                            files,
-                                                            self.passList[1],
-                                                            filters,
-                                                            threads,
-                                                            folders, 
-                                                            filename,
-                                                            outext,
-                                                            self.audioOUTmap[1]
-                                                            ))
+                     '{1} -i "{2}" {3} -filter:a:{9} {4} {5} '
+                     '-y "{6}/{7}.{8}"'.format(ffmpeg_url, 
+                                               self.time_seq,
+                                               files,
+                                               self.passList[1],
+                                               filters,
+                                               threads,
+                                               folders, 
+                                               filename,
+                                               outext,
+                                               self.audioOUTmap[1]
+                                               ))
             count = ('Loudnorm ebu: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
