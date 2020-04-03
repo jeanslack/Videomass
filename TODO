@@ -2,6 +2,9 @@
 --------------------
 URGENCY: to do soon
 --------------------  
+
+- Display Progress Time/Remaining Time and how many Frames per second are 
+  processed (from github issues)
   
 - add 'Pictures' on the Media list to export image sequences in jpg, png, bmp 
   formats.
@@ -10,10 +13,7 @@ URGENCY: to do soon
 URGENCY: high
 --------------
 
-- Make preset with device compatibilities and quality using preset, profile,
-  level and tune parameters for x264/x265 (Presets Manager/av_conversions)
-
-- improve automation in the Audio Streams Index box (Presets Manager)
+- improve automations in the Audio Streams Index box (Presets Manager)
 
 - check to update all default presets or add new ones
         

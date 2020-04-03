@@ -84,7 +84,7 @@ def to_bytes(string):
 
 def time_seconds(time):
     """
-    convert time human to seconds
+    convert time human to seconds e.g. time_seconds('00:02:00')
     
     """
     if time == 'N/A':
@@ -92,7 +92,7 @@ def time_seconds(time):
     
     pos = time.split(':')
     h,m,s = pos[0],pos[1],pos[2]
-    duration = (int(h)*60+ int(m)*60+ float(s))
+    duration = (int(h)*3600+ int(m)*60+ float(s))
     
     return duration
 #------------------------------------------------------------------------

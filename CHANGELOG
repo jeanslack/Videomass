@@ -6,6 +6,17 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
+April 03, 2020 V.2.0.2
++------------------------------------+
+
+BUGS:
+    * Fixed invalid value of duration on utils.time_seconds() function
+
+IMPROVEMENTS:
+
+ADDED:
+    * test implementation for test cases of some features
++------------------------------------+
 March 28, 2020 V.2.0.1
 +------------------------------------+
 
