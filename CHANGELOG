@@ -6,7 +6,7 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
-April 03, 2020 V.2.0.2
+April 04, 2020 V.2.0.2
 +------------------------------------+
 
 BUGS:
@@ -15,9 +15,11 @@ BUGS:
       functions.  
 
 ADDED:
-    * test implementation for test cases of some program features
+    * test implementation for test cases of some program features.
     * added useful progress information such as frame, fps, speed, bitrate 
       and time remaining during conversion processes.
+      
+      
 +------------------------------------+
 March 28, 2020 V.2.0.1
 +------------------------------------+
