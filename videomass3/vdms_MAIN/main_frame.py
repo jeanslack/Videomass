@@ -370,10 +370,10 @@ class MainFrame(wx.Frame):
                 # set a more readable time
                 ss = data.split()[1] # the -ss flag
                 h,m,s = ss.split(':')
-                start = (int(h)*60+ int(m)*60+ int(s))
+                start = (int(h)*3600+ int(m)*60+ int(s))
                 t = data.split()[3] # the -t flag
                 h,m,s = t.split(':')
-                time = (int(h)*60+ int(m)*60+ int(s))
+                time = (int(h)*3600+ int(m)*60+ int(s))
                 self.time_read['start seek'] = [ss,start]
                 self.time_read['time'] = [t,time]
                 

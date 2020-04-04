@@ -10,12 +10,14 @@ April 03, 2020 V.2.0.2
 +------------------------------------+
 
 BUGS:
-    * Fixed invalid value of duration on utils.time_seconds() function
-
-IMPROVEMENTS:
+    * Fixed invalid multiplication value for time in hours (duration) on 
+      utils.time_seconds(), long_processing_task, main_frame.cut_range()
+      functions.  
 
 ADDED:
-    * test implementation for test cases of some features
+    * test implementation for test cases of some program features
+    * added useful progress information such as frame, fps, speed, bitrate 
+      and time remaining during conversion processes.
 +------------------------------------+
 March 28, 2020 V.2.0.1
 +------------------------------------+

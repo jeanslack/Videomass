@@ -35,6 +35,7 @@ from videomass3.vdms_THREADS.one_pass import OnePass
 from videomass3.vdms_THREADS.two_pass import TwoPass
 from videomass3.vdms_THREADS.two_pass_EBU import Loudnorm
 from videomass3.vdms_THREADS.picture_exporting import PicturesFromVideo 
+from videomass3.vdms_UTILS.utils import time_human
 
 # get videomass wx.App attribute
 get = wx.GetApp()
@@ -42,6 +43,10 @@ OS = get.OS
 DIRconf = get.DIRconf # path to the configuration directory:
 
 ########################################################################
+
+def pairwise(iterable):
+    a = iter(iterable)
+    return zip(a, a)
 
 class Logging_Console(wx.Panel):
     """
@@ -225,10 +230,18 @@ class Logging_Console(wx.Panel):
             i = output.index('time=')+5
             pos = output[i:i+8].split(':')
             hours, minutes, seconds = pos[0],pos[1],pos[2]
-            timesum = (int(hours)*60 + int(minutes))*60 + int(seconds)
+            timesum = (int(hours)*3600 + int(minutes))*60 + int(seconds)
             self.barProg.SetValue(timesum)
             percentage = timesum / duration * 100
-            self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
+            out = [a for a in "=".join(output.split()).split('=') if a]
+            ffprog = []
+            for x, y in pairwise(out):
+                ffprog.append(" %s: %s |" % (x, y))
+            remaining = time_human(duration-timesum)
+            self.labPerc.SetLabel("Percentage: %s%% | %s "
+                                  "Time Remaining: %s" % (str(int(percentage)), 
+                                                          "".join(ffprog), 
+                                                          remaining))
             del output, duration
 
         else:# append all others lines on the textctrl and log file
