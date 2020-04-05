@@ -203,7 +203,6 @@ class VolumeDetectThread(Thread):
                      "RESULT_EVT",  
                       status=''
                       )
-        
     #----------------------------------------------------------------#    
     def logWrite(self, cmd):
         """
@@ -212,7 +211,6 @@ class VolumeDetectThread(Thread):
         """
         with open(self.logf, "a") as log:
             log.write("%s\n\n" % (cmd))
-            
     #----------------------------------------------------------------# 
     def logError(self):
         """
@@ -223,4 +221,3 @@ class VolumeDetectThread(Thread):
             logerr.write("[FFMPEG] volumedetect "
                          "ERRORS:\n%s\n\n" % (self.status))
     #----------------------------------------------------------------#
-    

@@ -71,8 +71,8 @@ class PopupDialog(wx.Dialog):
         # Add the message
         message = wx.StaticText(self, -1, msg)
         box2.Add(message, 0, wx.EXPAND | wx.ALIGN_CENTER 
-                                    | wx.ALIGN_CENTER_VERTICAL | wx.ALL, 10
-                                    )
+                                       | wx.ALIGN_CENTER_VERTICAL 
+                                       | wx.ALL, 10)
         box.Add(box2, 0, wx.EXPAND)
         # Handle layout
         self.SetAutoLayout(True)
@@ -122,7 +122,7 @@ class MyLogger(object):
     
     def get_message(self):
         """
-        get message error from error mathod
+        get message error from error method
         """
         return None if not len(self.msg_error) else self.msg_error.pop()
     
@@ -172,5 +172,5 @@ class Extract_Info(Thread):
         
         wx.CallAfter(pub.sendMessage, 
                      "RESULT_EVT",  
-                      status=''
-                      )
+                     status=''
+                     )

@@ -43,7 +43,6 @@ OS = get.OS
 DIRconf = get.DIRconf # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
 
-
 #------------------------------------------------------------------------#
 class MyLogger(object):
     """
@@ -53,27 +52,28 @@ class MyLogger(object):
     """
     def debug(self, msg):
         wx.CallAfter(pub.sendMessage, 
-                    "UPDATE_DOWNLOAD_EVT", 
-                    output=msg, 
-                    duration='',
-                    status='DEBUG',)
+                     "UPDATE_DOWNLOAD_EVT", 
+                     output=msg, 
+                     duration='',
+                     status='DEBUG',
+                     )
         self.msg = msg
         
     def warning(self, msg):
         msg = 'WARNING: %s' % msg
         wx.CallAfter(pub.sendMessage, 
-                    "UPDATE_DOWNLOAD_EVT", 
-                    output=msg, 
-                    duration='',
-                    status='WARNING',)
-
-
+                     "UPDATE_DOWNLOAD_EVT", 
+                     output=msg, 
+                     duration='',
+                     status='WARNING',
+                     )
     def error(self, msg):
         wx.CallAfter(pub.sendMessage, 
-                    "UPDATE_DOWNLOAD_EVT", 
-                    output=msg, 
-                    duration='',
-                    status='ERROR',)
+                     "UPDATE_DOWNLOAD_EVT", 
+                     output=msg, 
+                     duration='',
+                     status='ERROR',
+                     )
 #-------------------------------------------------------------------------#
 
 def my_hook(d):
@@ -92,27 +92,25 @@ def my_hook(d):
                     percent
                     )
         wx.CallAfter(pub.sendMessage, 
-                    "UPDATE_DOWNLOAD_EVT", 
-                    output='', 
-                    duration=duration,
-                    status='DOWNLOAD',)
+                     "UPDATE_DOWNLOAD_EVT", 
+                     output='', 
+                     duration=duration,
+                     status='DOWNLOAD',)
         
     if d['status'] == 'finished':
         wx.CallAfter(pub.sendMessage, 
-                    "COUNT_EVT", 
-                    count='', 
-                    duration='',
-                    fname='',
-                    end='ok',
-                    )
+                     "COUNT_EVT", 
+                     count='', 
+                     duration='',
+                     fname='',
+                     end='ok',
+                     )
         wx.CallAfter(pub.sendMessage, 
-                    "UPDATE_DOWNLOAD_EVT", 
-                    output='', 
-                    duration='Done downloading, now converting ...',
-                    status='FINISHED',
-                    )
-    
-    
+                     "UPDATE_DOWNLOAD_EVT", 
+                     output='', 
+                     duration='Done downloading, now converting ...',
+                     status='FINISHED',
+                     )
 #-------------------------------------------------------------------------#
 
 class YoutubeDL_Downloader(Thread):
@@ -132,7 +130,7 @@ class YoutubeDL_Downloader(Thread):
         self.urls:          urls list
         self.opt:           option dict data type to adding
         self.outputdir:     pathname destination
-        self.count:         increases with the progressive account elements
+        self.count:         increases progressive account elements
         self.countmax:      length of self.urls items list 
         self.logname:       file name to log messages for logging
         
@@ -160,12 +158,12 @@ class YoutubeDL_Downloader(Thread):
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
             wx.CallAfter(pub.sendMessage,
-                            "COUNT_EVT", 
-                            count=count, 
-                            duration=100,
-                            fname=url,
-                            end='',
-                            )
+                         "COUNT_EVT", 
+                         count=count, 
+                         duration=100,
+                         fname=url,
+                         end='',
+                         )
 
             if self.stop_work_thread:
                 break
@@ -173,7 +171,7 @@ class YoutubeDL_Downloader(Thread):
             ydl_opts = {'format': self.opt['format'],
                         'extractaudio': self.opt['format'],
                         'outtmpl': '{}/{}'.format(self.outputdir, 
-                                                self.opt['outtmpl']),
+                                                  self.opt['outtmpl']),
                         'writesubtitles': self.opt['writesubtitles'],
                         'addmetadata': self.opt['addmetadata'],
                         'restrictfilenames' : True,
@@ -199,3 +197,4 @@ class YoutubeDL_Downloader(Thread):
         Sets the stop work thread to terminate the process
         """
         self.stop_work_thread = True
+        
