@@ -45,8 +45,30 @@ DIRconf = get.DIRconf # path to the configuration directory:
 ########################################################################
 
 def pairwise(iterable):
-    a = iter(iterable)
-    return zip(a, a)
+    """
+    Return a zip object from iterable.
+    This function is used by the update_display method.
+    ----
+    USE:
+    
+    after splitting ffmpeg's progress strings such as: 
+    output = "frame= 1178 fps=155 q=29.0 size=    2072kB time=00:00:39.02 
+              bitrate= 435.0kbits/s speed=5.15x  "  
+    in a list as:
+    iterable = ['frame', '1178', 'fps', '155', 'q', '29.0', 'size', '2072kB', 
+                'time', '00:00:39.02', 'bitrate', '435.0kbits/s', s'peed', 
+                '5.15x']
+    for x, y in pairwise(iterable):
+        print(x,y)
+    
+    <https://stackoverflow.com/questions/5389507/iterating-over-every-
+    two-elements-in-a-list>
+
+    """
+    a = iter(iterable) #list_iterator object 
+    return zip(a, a) # zip object pairs from list iterable object
+
+#----------------------------------------------------------------------#
 
 class Logging_Console(wx.Panel):
     """
@@ -85,6 +107,7 @@ class Logging_Console(wx.Panel):
                                                         "output")))
         self.barProg = wx.Gauge(self, wx.ID_ANY, range = 0)
         self.labPerc = wx.StaticText(self, label="Percentage: 0%")
+        self.labff = wx.StaticText(self, label="")
         self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -92,8 +115,9 @@ class Logging_Console(wx.Panel):
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add(self.OutText, 1, wx.EXPAND|wx.ALL, 5)
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
-        sizer.Add(self.labPerc, 0, wx.ALL| wx.ALIGN_CENTER_VERTICAL, 5 )
+        sizer.Add(self.labff, 0, wx.ALL| wx.ALIGN_CENTER_VERTICAL, 5 )
         sizer.Add(self.barProg, 0, wx.EXPAND|wx.ALL, 5 )
+        sizer.Add(self.labPerc, 0, wx.ALL| wx.ALIGN_CENTER_VERTICAL, 5 )
         sizer.Add(grid, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=5)
         grid.Add(self.button_stop, 0, wx.ALL, 5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
@@ -236,11 +260,10 @@ class Logging_Console(wx.Panel):
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
             for x, y in pairwise(out):
-                ffprog.append(" %s: %s |" % (x, y))
+                ffprog.append("%s: %s | " % (x, y))
             remaining = time_human(duration-timesum)
-            self.labPerc.SetLabel("Percentage: %s%% | %s "
-                                  "Time Remaining: %s" % (str(int(percentage)), 
-                                                          "".join(ffprog), 
+            self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
+            self.labff.SetLabel("%sTime Remaining: %s" % ("".join(ffprog), 
                                                           remaining))
             del output, duration
 
