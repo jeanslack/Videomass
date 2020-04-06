@@ -30,6 +30,7 @@
 import wx
 import webbrowser
 
+
 class AudioSettings(wx.Dialog):
     """
     Provides a dialog for codec audio settings which bit-rate, 

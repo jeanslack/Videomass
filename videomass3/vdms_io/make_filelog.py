@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.28 2018, Aug.29 2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -30,6 +30,7 @@
 import time
 import os
 
+
 def write_log(logname, dirconf):
     """
     During the process, it write log about what the program does,
@@ -43,24 +44,24 @@ def write_log(logname, dirconf):
             os.mkdir(dirconf)
         except OSError as e:
             print(e)
-            print ("Directory creation failed '%s'" % dirconf)
-            
-    current_date =  time.strftime("%c") # date/time
+            print("Directory creation failed '%s'" % dirconf)
 
-    with open("%s/%s" % (dirconf, logname),"w") as log:
+    current_date = time.strftime("%c")  # date/time
+
+    with open("%s/%s" % (dirconf, logname), "w") as log:
         log.write("""[PYTHON] CURRENT DATE/TIME:
 %s\n
 -----------------------------------------
-[VIDEOMASS] INFO FOR USERS: 
+[VIDEOMASS] INFO FOR USERS:
 -----------------------------------------
-All FFmpeg and FFplay output messages are on stderr (excluse ffprobe), 
+All FFmpeg and FFplay output messages are on stderr (excluse ffprobe),
 and include both information messages and error messages.
-Changing the logging level into setting dialog would also change the 
+Changing the logging level into setting dialog would also change the
 behavior of the output on log messages.
 -----------------------------------------
 On Videomass default ffmpeg loglevel is fixed to 'warning';
 ffplay to 'error' .
-For more details, see videomass.conf or videomassWin32.conf 
+For more details, see videomass.conf or videomassWin32.conf
 into configuration directory.
 -----------------------------------------
 

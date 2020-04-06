@@ -30,15 +30,15 @@ import wx
 import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
-from videomass3.vdms_IO.IO_tools import volumeDetectProcess
-from videomass3.vdms_IO.IO_tools import stream_play
-from videomass3.vdms_IO.filenames_check import inspect
-from videomass3.vdms_DIALOGS.epilogue import Formula
-from videomass3.vdms_DIALOGS import audiodialogs 
-from videomass3.vdms_DIALOGS import presets_addnew
-from videomass3.vdms_DIALOGS import video_filters
-from videomass3.vdms_FRAMES import shownormlist
-from videomass3.vdms_UTILS import optimizations
+from videomass3.vdms_io.IO_tools import volumeDetectProcess
+from videomass3.vdms_io.IO_tools import stream_play
+from videomass3.vdms_io.filenames_check import inspect
+from videomass3.vdms_dialogs.epilogue import Formula
+from videomass3.vdms_dialogs import audiodialogs 
+from videomass3.vdms_dialogs import presets_addnew
+from videomass3.vdms_dialogs import video_filters
+from videomass3.vdms_frames import shownormlist
+from videomass3.vdms_utils import optimizations
 
 # setting the path to the configuration directory:
 get = wx.GetApp()

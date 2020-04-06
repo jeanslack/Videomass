@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec. 28 2018, Aug.28 2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -33,11 +33,11 @@ import shutil
 import platform
 
 # Set default variables
-WORKdir = os.getcwd() # work current directory (where is Videomsass?)
-USERName = os.path.expanduser('~') # /home/user (current user directory)
-OS = platform.system()# What is the OS ??
+WORKdir = os.getcwd()  # work current directory (where is Videomsass?)
+USERName = os.path.expanduser('~')  # /home/user (current user directory)
+OS = platform.system()  # What is the OS ??
 
-# Establish the conventional paths on the different OS where 
+# Establish the conventional paths on the different OS where
 # the videomass configuration directory will be stored:
 if OS == 'Windows':
     bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
@@ -48,82 +48,80 @@ elif OS == "Darwin":
     bpath = "/Library/Application Support/videomass/videomass.conf"
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + os.path.dirname(bpath))
-    
-else: # Linux, FreeBsd, etc.
+
+else:  # Linux, FreeBsd, etc.
     bpath = "/.config/videomass/videomass.conf"
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + "/.config/videomass")
+# ------------------------------------------------------------------------#
 
-#------------------------------------------------------------------------#
 
 def parsing_fileconf():
     """
     Make a parsing of the configuration file and return
     object list with the current program settings data.
-    
     """
-    with open (FILEconf, 'r') as f:
+    with open(FILEconf, 'r') as f:
         fconf = f.readlines()
     lst = [line.strip() for line in fconf if not line.startswith('#')]
-    dataconf = [x for x in lst if x]# list without empties values
+    dataconf = [x for x in lst if x]  # list without empties values
     if not dataconf:
         return
     else:
         return dataconf
-#------------------------------------------------------------------------#
+# ------------------------------------------------------------------------#
+
 
 def system_check():
     """
-    assigning shared data paths and 
-    checking the configuration folder  
-    
+    assigning shared data paths and
+    checking the configuration folder
     """
-    #----------------------------------------------------------- #
-    #### Set locale path and source data for restoring if needed #
-    #------------------------------------------------------------#
+    # ----------------------------------------------------------- #
+    # ### Set locale path and source data for restoring if needed #
+    # ------------------------------------------------------------#
     if os.path.isdir('%s/art' % WORKdir):
-        #launch in local on any OS or as .exe and .app also
+        # launch in local on any OS or as .exe and .app also
         localepath = 'locale'
         SRCpath = '%s/share' % WORKdir
         IS_LOCAL = True
-        
-    else: # Path system installation (usr, usr/local, ~/.local)
+
+    else:  # Path system installation (usr, usr/local, ~/.local)
         if OS == 'Windows':
-            #Installed with 'pip install videomass' command
+            # Installed with 'pip install videomass' command
             pythonpath = os.path.USERName(sys.executable)
             localepath = pythonpath + '\\share\\locale'
             SRCpath = pythonpath + '\\share\\videomass\\config'
             IS_LOCAL = False
-            
         else:
             binarypath = shutil.which('videomass')
             if binarypath == '/usr/local/bin/videomass':
-                #usually Linux,MacOs,Unix
+                # usually Linux,MacOs,Unix
                 localepath = '/usr/local/share/locale'
                 SRCpath = '/usr/local/share/videomass/config'
                 IS_LOCAL = False
             elif binarypath == '/usr/bin/videomass':
-                #usually Linux
+                # usually Linux
                 localepath = '/usr/share/locale'
                 SRCpath = '/usr/share/videomass/config'
                 IS_LOCAL = False
             else:
-                #installed with 'pip install --user videomass' command
+                # installed with 'pip install --user videomass' command
                 import site
                 userbase = site.getuserbase()
                 localepath = userbase + '/share/locale'
                 SRCpath = userbase + '/share/videomass/config'
                 IS_LOCAL = False
-                
-    #--------------------------------------------#
-    #### check videomass configuration folder #
-    #--------------------------------------------#
+
+    # --------------------------------------------#
+    # ### check videomass configuration folder #
+    # --------------------------------------------#
     copyerr = False
-    existfileconf = True # True > found, False > not found
-    
-    if os.path.exists(DIRconf): # if exist conf. folder
+    existfileconf = True  # True > found, False > not found
+
+    if os.path.exists(DIRconf):  # if exist conf. folder
         if os.path.isfile(FILEconf):
-            DATAconf = parsing_fileconf() # fileconf data
+            DATAconf = parsing_fileconf()  # fileconf data
             if not DATAconf:
                 print("The file configuration is damaged! try to restore..")
                 existfileconf = False
@@ -131,21 +129,21 @@ def system_check():
                 existfileconf = False
         else:
             existfileconf = False
-        
+
         if not existfileconf:
             try:
                 if OS == ('Windows'):
-                    shutil.copyfile('%s/videomassWin32.conf' % SRCpath, 
+                    shutil.copyfile('%s/videomassWin32.conf' % SRCpath,
                                     FILEconf)
                 else:
                     shutil.copyfile('%s/videomass.conf' % SRCpath, FILEconf)
-                DATAconf = parsing_fileconf() # read again file conf
+                DATAconf = parsing_fileconf()  # read again file conf
             except IOError as e:
                 copyerr = e
                 DATAconf = None
         if not os.path.exists(os.path.join(DIRconf, "presets")):
             try:
-                shutil.copytree(os.path.join(SRCpath, "presets"), 
+                shutil.copytree(os.path.join(SRCpath, "presets"),
                                 os.path.join(DIRconf, "presets"))
             except (OSError, IOError) as e:
                 copyerr = e
@@ -153,14 +151,18 @@ def system_check():
     else:
         try:
             shutil.copytree(SRCpath, DIRconf)
-            DATAconf = parsing_fileconf() #  read again file conf
+            DATAconf = parsing_fileconf()  # read again file conf
         except (OSError, IOError) as e:
             copyerr = e
             DATAconf = None
 
-    return (OS, SRCpath, 
-            copyerr, IS_LOCAL, 
-            DATAconf, localepath,
-            FILEconf, WORKdir, DIRconf)
-
-#------------------------------------------------------------------------#
+    return (OS,
+            SRCpath,
+            copyerr,
+            IS_LOCAL,
+            DATAconf,
+            localepath,
+            FILEconf,
+            WORKdir,
+            DIRconf,
+            )

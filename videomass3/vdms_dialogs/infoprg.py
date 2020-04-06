@@ -29,7 +29,7 @@
 
 import wx
 import wx.adv
-from videomass3.vdms_SYS.msg_info import current_release, descriptions_release
+from videomass3.vdms_sys.msg_info import current_release, descriptions_release
 
 cr = current_release()
 Name = cr[0]

@@ -30,20 +30,20 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
-from videomass3.vdms_DIALOGS import time_selection
-from videomass3.vdms_DIALOGS import settings
-from videomass3.vdms_DIALOGS import infoprg
-from videomass3.vdms_FRAMES import while_playing
-from videomass3.vdms_FRAMES import ffmpeg_search
-from videomass3.vdms_FRAMES.mediainfo import Mediainfo
-from videomass3.vdms_PANELS import choose_topic
-from videomass3.vdms_PANELS import filedrop
-from videomass3.vdms_PANELS import textdrop
-from videomass3.vdms_PANELS import downloader
-from videomass3.vdms_PANELS import av_conversions
-from videomass3.vdms_PANELS.long_processing_task import Logging_Console
-from videomass3.vdms_PANELS import presets_manager
-from videomass3.vdms_IO import IO_tools
+from videomass3.vdms_dialogs import time_selection
+from videomass3.vdms_dialogs import settings
+from videomass3.vdms_dialogs import infoprg
+from videomass3.vdms_frames import while_playing
+from videomass3.vdms_frames import ffmpeg_search
+from videomass3.vdms_frames.mediainfo import Mediainfo
+from videomass3.vdms_panels import choose_topic
+from videomass3.vdms_panels import filedrop
+from videomass3.vdms_panels import textdrop
+from videomass3.vdms_panels import downloader
+from videomass3.vdms_panels import av_conversions
+from videomass3.vdms_panels.long_processing_task import Logging_Console
+from videomass3.vdms_panels import presets_manager
+from videomass3.vdms_io import IO_tools
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
@@ -824,7 +824,7 @@ class MainFrame(wx.Frame):
         Check for new version releases of Videomass, useful for 
         users with Videomass installer on Windows and MacOs.
         """
-        from videomass3.vdms_SYS.msg_info import current_release
+        from videomass3.vdms_sys.msg_info import current_release
         """
         FIXME : There are was some error regarding 
         [SSL: CERTIFICATE_VERIFY_FAILED]

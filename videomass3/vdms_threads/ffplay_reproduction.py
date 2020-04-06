@@ -39,7 +39,7 @@ if not OS == 'Windows':
     import shlex
 import time
 from threading import Thread
-from videomass3.vdms_IO.make_filelog import write_log # write initial log
+from videomass3.vdms_io.make_filelog import write_log # write initial log
 
 #-----------------------------------------------------------------#
 def msg_Error(msg):

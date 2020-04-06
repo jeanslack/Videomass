@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev August 2 2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -27,6 +27,7 @@
 
 #########################################################
 
+
 def current_release():
     """
     General info strings
@@ -34,7 +35,6 @@ def current_release():
     the sub release a=alpha release, b=beta release, c= candidate release
     Example 19.1.1c1
     """
-
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
     Version = '2.0.2'
@@ -52,44 +52,44 @@ def current_release():
                "Flat Color Icons:\n"
                "https://icons8.com/color-icons"
                )
-    
-    return (Release_Name, Program_Name, Version, Release, Copyright, 
-            Website, Author, Mail, Comment)
+    return (Release_Name, Program_Name, Version, Release,
+            Copyright, Website, Author, Mail, Comment)
+
 
 def descriptions_release():
     """
-    General info string 
+    General info string
     """
     Copyright = current_release()
     Author = current_release()
     Mail = current_release()
 
     short_d = ("Videomass is a cross-platform GUI for FFmpeg")
-    
+
     long_d = ("-Videomass- is not a converter. It provides a graphical\n"
               "interface to writing presets for FFmpeg\n")
 
     short_l = ("GPL3 (Gnu Public License)")
 
     license = ("Copyright - %s %s\n"
-                "Author and Developer: %s\n"
-                "Mail: %s\n\n"
-                "Videomass is free software: you can redistribute\n"
-                "it and/or modify it under the terms of the GNU General\n"
-                "Public License as published by the Free Software\n"
-                "Foundation, either version 3 of the License, or (at your\n"
-                "option) any later version.\n\n"
+               "Author and Developer: %s\n"
+               "Mail: %s\n\n"
+               "Videomass is free software: you can redistribute\n"
+               "it and/or modify it under the terms of the GNU General\n"
+               "Public License as published by the Free Software\n"
+               "Foundation, either version 3 of the License, or (at your\n"
+               "option) any later version.\n\n"
 
-                "Videomass is distributed in the hope that it\n"
-                "will be useful, but WITHOUT ANY WARRANTY; without\n"
-                "even the implied warranty of MERCHANTABILITY or\n" 
-                "FITNESS FOR A PARTICULAR PURPOSE.\n" 
-                "See the GNU General Public License for more details.\n\n"
+               "Videomass is distributed in the hope that it\n"
+               "will be useful, but WITHOUT ANY WARRANTY; without\n"
+               "even the implied warranty of MERCHANTABILITY or\n"
+               "FITNESS FOR A PARTICULAR PURPOSE.\n"
+               "See the GNU General Public License for more details.\n\n"
 
-                "You should have received a copy of the GNU General\n" 
-                "Public License along with this program. If not, see\n" 
-                "http://www.gnu.org/licenses/" %(Copyright[4],Author[6],
-                                                Author[6],Mail[7]))
-    
+               "You should have received a copy of the GNU General\n"
+               "Public License along with this program. If not, see\n"
+               "http://www.gnu.org/licenses/" % (Copyright[4],
+                                                 Author[6],
+                                                 Author[6],
+                                                 Mail[7]))
     return (short_d, long_d, short_l, license)
-

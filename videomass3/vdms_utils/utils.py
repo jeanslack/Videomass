@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev December 28 2018
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -27,46 +27,39 @@
 
 #########################################################
 
-"""
-The module contains some useful function for copying, moving, deleting 
-and renaming files and folders.
-
-"""
 import shutil
 import os
 import glob
 import math
 
-#------------------------------------------------------------------------
+
 def format_bytes(n):
     """
-    Given a float number (bytes) returns size output 
+    Given a float number (bytes) returns size output
     strings human readable, e.g.
     out = format_bytes(9909043.20)
     It return a string digit with metric suffix
-    
     """
-    unit = ["B", "KiB", "MiB", "GiB", "TiB", 
+    unit = ["B", "KiB", "MiB", "GiB", "TiB",
             "PiB", "EiB", "ZiB", "YiB"]
     const = 1024.0
-    
-    if n == 0.0: # if 0.0 or 0 raise ValueError: math domain error
+    if n == 0.0:  # if 0.0 or 0 raise ValueError: math domain error
         exponent = 0
     else:
-        exponent = int(math.log(n, const)) # get unit index
+        exponent = int(math.log(n, const))  # get unit index
 
-    suffix = unit[exponent] # unit index
+    suffix = unit[exponent]  # unit index
     output_value = n / (const ** exponent)
 
     return "%.2f%s" % (output_value, suffix)
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
 
 def to_bytes(string):
     """
-    Convert given size string to bytes, e.g. 
+    Convert given size string to bytes, e.g.
     out = to_bytes('9.45MiB')
-    It return a number 'float' 
-    
+    It return a number 'float'
     """
     value = 0.0
     unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
@@ -80,22 +73,24 @@ def to_bytes(string):
     exponent = index * (-1) + (len(unit) - 1)
 
     return round(value * (const ** exponent), 2)
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
 
 def time_seconds(time):
     """
     convert time human to seconds e.g. time_seconds('00:02:00')
-    
     """
     if time == 'N/A':
         return int('0')
-    
+
     pos = time.split(':')
-    h,m,s = pos[0],pos[1],pos[2]
-    duration = (int(h)*3600+ int(m)*60+ float(s))
-    
+    h, m, s = pos[0], pos[1], pos[2]
+    duration = (int(h) * 3600 + int(m) * 60 + float(s))
+
     return duration
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
+
 def time_human(seconds):
     """
     Convert from seconds to time human. Accept integear only e.g.
@@ -104,7 +99,9 @@ def time_human(seconds):
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
     return "%d:%02d:%02d" % (h, m, s)
-#------------------------------------------------------------------------
+# ------------------------------------------------------------------------
+
+
 def copy_restore(src, dest):
     """
     Restore file. File name is owner choice and can be an preset
@@ -114,62 +111,43 @@ def copy_restore(src, dest):
         shutil.copyfile(src, '%s' % (dest))
     except FileNotFoundError as err:
         return err
-    
+
     return
-#------------------------------------------------------------------#
+# ------------------------------------------------------------------#
+
+
 def copy_backup(src, dest):
     """
-    function for backup file. File name is owner choice
+    function for file backup. File name is owner choice.
     """
     shutil.copyfile('%s' % (src), dest)
+# ------------------------------------------------------------------#
 
-#------------------------------------------------------------------#
+
 def makedir_move(ext, name_dir):
     """
-    this function is for make directory and move-in file (ext, name_dir: 
-    extension, directory name)
+    this function make directory and move-in file
+    (ext, name_dir: extension, directory name)
     """
-    try: # if exist dir not exit OSError, go...
+    try:  # if exist dir not exit OSError, go...
         os.mkdir("%s" % (name_dir))
     except OSError as err:
         return err
     move_on(ext, name_dir)
+# ------------------------------------------------------------------#
 
-#------------------------------------------------------------------#
-def rename_move_indir(src, ext, name_dir):
-    """
-    this function includes "makedir_move(ext, name_dir)" function but cycling 
-    files renames groups
-    """
-    for path in os.listdir(os.getcwd()):
-        nuovoNome = path.replace("%s" % (src), "%s" % (ext))
-        os.rename(path, nuovoNome)
-    try:
-        os.mkdir("%s" % (name_dir))
-    except: OSError
-    
-    move_on(ext, name_dir)
 
-#------------------------------------------------------------------#
-def rename_file(src, ext):
-    """
-    Cycling for file rename groups only
-    """
-    for path in os.listdir(os.getcwd()):
-        nuovoNome = path.replace("%s" % (src), "%s" % (ext))
-        os.rename(path,nuovoNome)
-
-#------------------------------------------------------------------#
 def move_on(ext, name_dir):
     """
     Cycling on name extension file and move-on in other directory
     """
     files = glob.glob("*%s" % (ext))
     for sposta in files:
-        #shutil.move(sposta, '%s' % (name_dir))
-        print ('%s   %s' % (sposta,name_dir))
-        
-#------------------------------------------------------------------#
+        # shutil.move(sposta, '%s' % (name_dir))
+        print('%s   %s' % (sposta, name_dir))
+# ------------------------------------------------------------------#
+
+
 def copy_on(ext, name_dir, path_confdir):
     """
     Cycling on path and file extension name for copy files in other directory
@@ -178,11 +156,11 @@ def copy_on(ext, name_dir, path_confdir):
     name_dir: path name with no basename
     """
     files = glob.glob("%s/*.%s" % (name_dir, ext))
-    
     for copia in files:
         shutil.copy(copia, '%s' % (path_confdir))
+# ------------------------------------------------------------------#
 
-#------------------------------------------------------------------#
+
 def delete(ext):
     """
     function for file group delete with same extension
@@ -190,25 +168,3 @@ def delete(ext):
     files = glob.glob("*%s" % (ext))
     for rimuovi in files:
         os.remove(rimuovi)
-
-#------------------------------------------------------------------#
-def delete_noempty_dir(path):
-    """
-    Delete a entire directory no empty
-    """
-    shutil.rmtree(path)
-
-#------------------------------------------------------------------#
-#def exist_file(inputfile):
-    #"""
-    #Control if exist an file name
-    
-    #"""
-    #os.chdir(PWD)
-    #file_exist =  os.path.isfile(os.path.join(PWD,'%s' % inputfile))
-    #if file_exist is False:
-        #call('clear', shell = True) 
-        #print ("Nella directory: '%s'\nNessun file da processare che abbia "
-            #"questo nome:\033[0;1m %s\033[0m" % (PWD, inputfile)
-            #)
-        #sys.exit("...Error\n")

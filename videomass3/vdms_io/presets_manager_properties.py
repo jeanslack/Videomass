@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (12) December 28 2018
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -31,12 +31,11 @@ import wx
 import os
 import json
 
-#------------------------------------------------------------------#
+
 def supported_formats(supp, file_sources):
     """
     check for supported formats from selected profile in the
     presets manager panel
-
     """
     items = ''.join(supp.split()).split(',')
     exclude = []
@@ -50,40 +49,40 @@ def supported_formats(supp, file_sources):
                 file_sources.remove(x)
             if not file_sources:
                 wx.MessageBox(_("The selected profile is not suitable to "
-                                "convert the following file formats:\n\n%s\n\n") 
-                                % ('\n'.join(exclude)), 
-                                "Videomass", 
-                                wx.ICON_INFORMATION | wx.OK, 
-                                None
-                                )
+                                "convert the following file formats:"
+                                "\n\n%s\n\n") % ('\n'.join(exclude)),
+                              "Videomass",
+                              wx.ICON_INFORMATION | wx.OK,
+                              )
                 return
-            
+
     return (file_sources)
 
 ########################################################################
 # PARSINGS XML FILES AND FUNCTION FOR DELETING
 ########################################################################
 
+
 def json_data(arg):
     """
-    Used by presets_mng_panel.py to get JSON data from `*.vip` files. 
-    The `arg` parameter refer to each file name to parse. Return a list 
-    type object from getting data using `json` module in the following 
+    Used by presets_mng_panel.py to get JSON data from `*.vip` files.
+    The `arg` parameter refer to each file name to parse. Return a list
+    type object from getting data using `json` module in the following
     form:
-    
-    [{"Name": "", 
-      "Descritpion": "", 
-      "First_pass": "", 
+
+    [{"Name": "",
+      "Descritpion": "",
+      "First_pass": "",
       "Second_pass": "",
       "Supported_list": "",
       "Output_extension": ""
     }]
-    
+
     """
     try:
         with open(arg, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            
+
     except json.decoder.JSONDecodeError as err:
         msg = _('Is not a compatible Videomass presets. It is recommended '
                 'removing it or rewrite it with a compatible JSON data '
@@ -93,29 +92,28 @@ def json_data(arg):
                 'presets. Remember, those that are not compatible you '
                 'have to manually remove them.'
                 )
-        wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg,err,msg),
+        wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg, err, msg),
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
-        
+
         return 'error'
-    
+
     except FileNotFoundError as err:
         msg = _('The presets folder is empty, or there are invalid files. '
                 'Open the Presets Manager panel, then Perform a repair in '
                 'the "File" > "Reset all presets" menu.'
                 )
-        wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg,err,msg), 
+        wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg, err, msg),
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
-        
+
         return 'error'
-        
 
     return data
-#------------------------------------------------------------------#
+# ------------------------------------------------------------------#
+
 
 def delete_profiles(path, name):
     """
     Profile deletion from Presets manager panel
-
     """
     with open(path, 'r', encoding='utf-8') as f:
         data = json.load(f)

@@ -29,13 +29,13 @@
 from __future__ import unicode_literals
 import wx
 from pubsub import pub
-from videomass3.vdms_IO.make_filelog import write_log
-from videomass3.vdms_THREADS.ydl_download import YoutubeDL_Downloader
-from videomass3.vdms_THREADS.one_pass import OnePass
-from videomass3.vdms_THREADS.two_pass import TwoPass
-from videomass3.vdms_THREADS.two_pass_EBU import Loudnorm
-from videomass3.vdms_THREADS.picture_exporting import PicturesFromVideo 
-from videomass3.vdms_UTILS.utils import time_human
+from videomass3.vdms_io.make_filelog import write_log
+from videomass3.vdms_threads.ydl_download import YoutubeDL_Downloader
+from videomass3.vdms_threads.one_pass import OnePass
+from videomass3.vdms_threads.two_pass import TwoPass
+from videomass3.vdms_threads.two_pass_EBU import Loudnorm
+from videomass3.vdms_threads.picture_exporting import PicturesFromVideo 
+from videomass3.vdms_utils.utils import time_human
 
 # get videomass wx.App attribute
 get = wx.GetApp()

@@ -9,8 +9,7 @@
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.2.2019, Sept.11.2019, Dic.16.2019
-# PEP8 compatible
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -53,26 +52,9 @@ from glob import glob
 import os
 import sys
 import shutil
+from videomass3.vdms_sys.msg_info import current_release
+from videomass3.vdms_sys.msg_info import descriptions_release
 
-# ---- Version Check(s) ----#
-if sys.version_info[0] == 3:
-    from videomass3.vdms_SYS.msg_info import current_release
-    from videomass3.vdms_SYS.msg_info import descriptions_release
-
-    if platform.system() in ['Windows', 'Darwin']:
-        EXCLUDE = []
-        REQUIRES = ['wxpython>=4.0.3"', 'PyPubSub>=4.0.0']
-    else:
-        EXCLUDE = []
-        REQUIRES = ['PyPubSub>=4.0.0']
-else:
-    sys.stderr.write(
-                    "ERROR: Python3 is required.\n"
-                    "Since version 1.6.1 videomass is compatible only "
-                    "with Python3.\nYou are using Python version %s\n" % 
-                    sys.version[0]
-                         )
-    sys.exit(1)
 try:
     import wx
 except ImportError:
@@ -81,8 +63,16 @@ except ImportError:
                          "need wxPython4 (phoenix).\n"
                          "Visit the wxPython web page for more info:\n"
                          "<https://wxpython.org/>\n"
-                            )
+                         )
         sys.exit(1)
+
+# check platform for requires
+if platform.system() in ['Windows', 'Darwin']:
+    EXCLUDE = []
+    REQUIRES = ['wxpython>=4.0.3"', 'PyPubSub>=4.0.0']
+else:
+    EXCLUDE = []
+    REQUIRES = ['PyPubSub>=4.0.0']
 
 # ---- current work directory path ----#
 PWD = os.getcwd()
@@ -176,25 +166,24 @@ def SOURCE_BUILD():
     Source/Build distributions
 
     """
-    DATA_FILES = [ # even path must be relative-path
-                  ('share/videomass/config/presets', 
+    DATA_FILES = [  # even path must be relative-path
+                  ('share/videomass/config/presets',
                    glob_files('share/presets/*.prst')),
-                   ('share/videomass/config', ['share/videomass.conf',
-                                               'share/videomassWin32.conf',
-                                               'share/README']),
-                   ('share/videomass/icons', 
-                    glob_files('art/icons/*.png')),
-                   ('share/applications', ['art/videomass.icns',
-                                           'art/videomass.ico',
-                                           'art/videomass.desktop']),
-                   ('share/pixmaps', ['art/icons/videomass.png']),
-                   ('share/videomass', ['AUTHORS', 'BUGS',
-                                        'CHANGELOG', 'INSTALL',
-                                        'COPYING', 'TODO', 'README.md']),
-                   ]
+                  ('share/videomass/config', ['share/videomass.conf',
+                                              'share/videomassWin32.conf',
+                                              'share/README']),
+                  ('share/videomass/icons', glob_files('art/icons/*.png')),
+                  ('share/applications', ['art/videomass.icns',
+                                          'art/videomass.ico',
+                                          'art/videomass.desktop']),
+                  ('share/pixmaps', ['art/icons/videomass.png']),
+                  ('share/videomass', ['AUTHORS', 'BUGS',
+                                       'CHANGELOG', 'INSTALL',
+                                       'COPYING', 'TODO', 'README.md']),
+                  ]
     # get the package data
     DATA_FILES = AppendPackageFiles(DATA_FILES,
-                                    'share/videomass/icons', 
+                                    'share/videomass/icons',
                                     'share/',
                                     )
     setup(name=PRG_NAME,
@@ -235,7 +224,7 @@ def MacOS():
     DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
 
     OPTIONS = {'argv_emulation': False,
-               'excludes': EXCLUDE, #list,
+               'excludes': EXCLUDE,  # list,
                'includes': ['wx', ],
                'resources': RESOURCES,
                'iconfile': PATH_ICON,
@@ -342,8 +331,9 @@ def WIN32():
           )
 # ---------------------------------------------------------------------#
 
+
 if __name__ == '__main__':
-    
+
     if platform.system() == 'Windows' and 'py2exe' in sys.argv:
         WIN32()
     elif platform.system() == 'Darwin' and 'py2app' in sys.argv:

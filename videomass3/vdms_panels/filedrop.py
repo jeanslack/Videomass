@@ -29,8 +29,8 @@
 
 import wx
 import os
-from videomass3.vdms_IO import IO_tools
-from videomass3.vdms_UTILS.utils import time_seconds
+from videomass3.vdms_io import IO_tools
+from videomass3.vdms_utils.utils import time_seconds
 
 dirname = os.path.expanduser('~') # /home/user/
 # path to the configuration directory:

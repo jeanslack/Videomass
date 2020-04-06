@@ -26,10 +26,10 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
  
 #########################################################
-from videomass3.vdms_IO import IO_tools
-from videomass3.vdms_UTILS.utils import format_bytes
-from videomass3.vdms_UTILS.utils import time_human
-from videomass3.vdms_FRAMES.ydl_mediainfo import YDL_Mediainfo
+from videomass3.vdms_io import IO_tools
+from videomass3.vdms_utils.utils import format_bytes
+from videomass3.vdms_utils.utils import time_human
+from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
 
 

@@ -27,7 +27,7 @@
 
 #########################################################
 
-from videomass3.vdms_IO import IO_tools
+from videomass3.vdms_io import IO_tools
 import wx
 import re
 

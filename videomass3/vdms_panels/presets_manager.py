@@ -31,17 +31,17 @@ import wx
 import os
 import wx.lib.agw.floatspin as FS
 import wx.lib.agw.gradientbutton as GB
-from videomass3.vdms_IO.presets_manager_properties import json_data
-from videomass3.vdms_IO.presets_manager_properties import supported_formats
-from videomass3.vdms_IO.presets_manager_properties import delete_profiles
-from videomass3.vdms_UTILS.utils import copy_restore
-from videomass3.vdms_UTILS.utils import copy_backup
-from videomass3.vdms_UTILS.utils import copy_on
-from videomass3.vdms_IO.filenames_check import inspect
-from videomass3.vdms_DIALOGS import presets_addnew
-from videomass3.vdms_DIALOGS.epilogue import Formula
-from videomass3.vdms_IO.IO_tools import volumeDetectProcess
-from videomass3.vdms_FRAMES import shownormlist
+from videomass3.vdms_io.presets_manager_properties import json_data
+from videomass3.vdms_io.presets_manager_properties import supported_formats
+from videomass3.vdms_io.presets_manager_properties import delete_profiles
+from videomass3.vdms_utils.utils import copy_restore
+from videomass3.vdms_utils.utils import copy_backup
+from videomass3.vdms_utils.utils import copy_on
+from videomass3.vdms_io.filenames_check import inspect
+from videomass3.vdms_dialogs import presets_addnew
+from videomass3.vdms_dialogs.epilogue import Formula
+from videomass3.vdms_io.IO_tools import volumeDetectProcess
+from videomass3.vdms_frames import shownormlist
 
 
 cmd_opt = {"PEAK": "", "RMS": "","EBU": "",
