@@ -34,7 +34,7 @@ from videomass3.vdms_io.IO_tools import volumeDetectProcess
 from videomass3.vdms_io.IO_tools import stream_play
 from videomass3.vdms_io.filenames_check import inspect
 from videomass3.vdms_dialogs.epilogue import Formula
-from videomass3.vdms_dialogs import audiodialogs 
+from videomass3.vdms_dialogs import audiodialogs
 from videomass3.vdms_dialogs import presets_addnew
 from videomass3.vdms_dialogs import video_filters
 from videomass3.vdms_frames import shownormlist
@@ -45,21 +45,21 @@ get = wx.GetApp()
 DIRconf = get.DIRconf
 
 # Dictionary definition for command settings:
-cmd_opt = {"VidCmbxStr": "x264", "OutputFormat": "mkv", 
-           "VideoCodec": "-c:v libx264", "ext_input": "", 
-           "Passing": "1 pass", "InputDir": "", "OutputDir": "",  
-           "VideoSize": "", "AspectRatio": "", "FPS": "", "Presets": "", 
-           "Profile": "", "Level": "", "Tune": "", "VideoBitrate": "", 
+cmd_opt = {"VidCmbxStr": "x264", "OutputFormat": "mkv",
+           "VideoCodec": "-c:v libx264", "ext_input": "",
+           "Passing": "1 pass", "InputDir": "", "OutputDir": "",
+           "VideoSize": "", "AspectRatio": "", "FPS": "", "Presets": "",
+           "Profile": "", "Level": "", "Tune": "", "VideoBitrate": "",
            "CRF": "", "WebOptim": "",
-           "MinRate": "", "MaxRate": "", "Bufsize": "", "AudioCodStr": "", 
-           "AudioInMap": ["",""], "AudioOutMap": ["-map 0:a?",""], 
-           "SubtitleMap": "-map 0:s?", "AudioCodec": ["",""], 
-           "AudioChannel": ["",""], "AudioRate": ["",""], 
-           "AudioBitrate": ["",""], "AudioDepth": ["",""], "PEAK": "", 
-           "EBU": "","RMS": "", "Deinterlace": "", "Interlace": "", 
-           "PixelFormat": "", "Orientation": ["",""],"Crop": "",
-           "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "", 
-           "VFilters": "", "PixFmt": "-pix_fmt yuv420p", "Deadline": "", 
+           "MinRate": "", "MaxRate": "", "Bufsize": "", "AudioCodStr": "",
+           "AudioInMap": ["", ""], "AudioOutMap": ["-map 0:a?", ""],
+           "SubtitleMap": "-map 0:s?", "AudioCodec": ["", ""],
+           "AudioChannel": ["", ""], "AudioRate": ["", ""],
+           "AudioBitrate": ["", ""], "AudioDepth": ["", ""], "PEAK": "",
+           "EBU": "", "RMS": "", "Deinterlace": "", "Interlace": "",
+           "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
+           "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "",
+           "VFilters": "", "PixFmt": "-pix_fmt yuv420p", "Deadline": "",
            "CpuUsed": "", "RowMthreading": "",
            }
 # muxers dictionary:
@@ -67,22 +67,23 @@ muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
           'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
           }
 # Namings in the video container selection combo box:
-vcodecs = ({"Mpeg4": {"-c:v mpeg4":["avi"]}, 
-            "x264": {"-c:v libx264": ["mkv","mp4","avi","flv","m4v"]},
-            "x265": {"-c:v libx265": ["mkv","mp4","avi","m4v"]},
-            "Theora": {"-c:v libtheora": ["ogv"]}, 
-            #"AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
-            "Vp8": {"-c:v libvpx": ["webm"]}, 
+vcodecs = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
+            "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "flv", "m4v"]},
+            "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+            "Theora": {"-c:v libtheora": ["ogv"]},
+            # "AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
+            "Vp8": {"-c:v libvpx": ["webm"]},
             "Vp9": {"-c:v libvpx-vp9": ["webm"]},
-            "Copy": {"-c:v copy": ["mkv","mp4","avi","flv","m4v","ogv","webm","Copy"]}
+            "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "flv",
+                                   "m4v", "ogv", "webm", "Copy"]}
             })
 # Namings in the audio codec selection on audio radio box:
 acodecs = {('Auto'): (""),
-           ('PCM'): ("pcm_s16le"),  
-           ('FLAC'): ("flac"), 
-           ('AAC'): ("aac"), 
+           ('PCM'): ("pcm_s16le"),
+           ('FLAC'): ("flac"),
+           ('AAC'): ("aac"),
            ('ALAC'): ("alac"),
-           ('AC3'): ("ac3"), 
+           ('AC3'): ("ac3"),
            ('VORBIS'): ("libvorbis"),
            ('LAME'): ("libmp3lame"),
            ('OPUS'): ("libopus"),
@@ -90,82 +91,83 @@ acodecs = {('Auto'): (""),
            ('No Audio'): ("-an")
            }
 # Namings in the audio format selection on Container combobox:
-a_formats = ('wav','mp3','ac3','ogg','flac','m4a','aac'
+a_formats = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac'
              )
 # compatibility between video formats and related audio codecs:
-av_formats = {('avi'): ('default','wav',None,None,None,'ac3',None,'mp3',
-                        None,'copy','mute'),
-              ('flv'): ('default',None,None,'aac',None,'ac3',None,'mp3',
-                        None,'copy','mute'),
-              ('mp4'): ('default',None,None,'aac',None,'ac3',None,'mp3',
-                        None,'copy','mute'),
-              ('m4v'): ('default',None,None,'aac','alac',None,None,None,
-                        None,'copy','mute'),
-              ('mkv'): ('default','wav','flac','aac',None,'ac3',
-                        'ogg','mp3','opus','copy','mute'),
-              ('webm'): ('default',None,None,None,None,None,'ogg',None,
-                         'opus','copy','mute'),
-              ('ogv'): ('default',None,'flac',None,None,None,'ogg',None,
-                        'opus','copy','mute'),
-              ('wav'): (None,'wav',None,None,None,None,None,None,None,
-                        'copy',None),
-              ('mp3'): (None,None,None,None,None,None,None,'mp3',None,
-                        'copy',None),
-              ('ac3'): (None,None,None,None,None,'ac3',None,None,None,
-                        'copy',None),
-              ('ogg'): (None,None,None,None,None,None,'ogg',None,None,
-                        'copy',None),
-              ('flac'): (None,None,'flac',None,None,None,None,None,None,
-                        'copy',None),
-              ('m4a'): (None,None,None,None,'alac',None,None,None,None,
-                        'copy',None),
-              ('aac'): (None,None,None,'aac',None,None,None,None,None,
-                        'copy',None),
+av_formats = {('avi'): ('default', 'wav', None, None, None, 'ac3', None,
+                        'mp3', None, 'copy', 'mute'),
+              ('flv'): ('default', None, None, 'aac', None, 'ac3', None,
+                        'mp3', None, 'copy', 'mute'),
+              ('mp4'): ('default', None, None, 'aac', None, 'ac3', None,
+                        'mp3', None, 'copy', 'mute'),
+              ('m4v'): ('default', None, None, 'aac', 'alac', None, None,
+                        None, None, 'copy', 'mute'),
+              ('mkv'): ('default', 'wav', 'flac', 'aac', None, 'ac3', 'ogg',
+                        'mp3', 'opus', 'copy', 'mute'),
+              ('webm'): ('default', None, None, None, None, None, 'ogg',
+                         None, 'opus', 'copy', 'mute'),
+              ('ogv'): ('default', None, 'flac', None, None, None, 'ogg',
+                        None, 'opus', 'copy', 'mute'),
+              ('wav'): (None, 'wav', None, None, None, None, None, None,
+                        None, 'copy', None),
+              ('mp3'): (None, None, None, None, None, None, None, 'mp3',
+                        None, 'copy', None),
+              ('ac3'): (None, None, None, None, None, 'ac3', None, None,
+                        None, 'copy', None),
+              ('ogg'): (None, None, None, None, None, None, 'ogg', None,
+                        None, 'copy', None),
+              ('flac'): (None, None, 'flac', None, None, None, None, None,
+                         None, 'copy', None),
+              ('m4a'): (None, None, None, None, 'alac', None, None, None,
+                        None, 'copy', None),
+              ('aac'): (None, None, None, 'aac', None, None, None, None,
+                        None, 'copy', None),
               }
 # presets used by x264 and h265:
-x264_opt = {("Presets"): ("None","ultrafast","superfast",
-                          "veryfast","faster","fast","medium",
-                          "slow","slower","veryslow","placebo"
-                          ), 
-            ("Profiles"): ("None","baseline","main","high",
-                           "high10","high444"
+x264_opt = {("Presets"): ("None", "ultrafast", "superfast",
+                          "veryfast", "faster", "fast", "medium",
+                          "slow", "slower", "veryslow", "placebo"
+                          ),
+            ("Profiles"): ("None", "baseline", "main", "high",
+                           "high10", "high444"
                            ),
-            ("Tunes"): ("None","film","animation","grain",
-                        "stillimage","psnr","ssim","fastdecode",
+            ("Tunes"): ("None", "film", "animation", "grain",
+                        "stillimage", "psnr", "ssim", "fastdecode",
                         "zerolatency"
                         )
             }
 # Used by x265 only
-x265_opt = {("Presets"): ("None","ultrafast","superfast",
-                          "veryfast","faster","fast","medium",
-                          "slow","slower","veryslow","placebo"
+x265_opt = {("Presets"): ("None", "ultrafast", "superfast",
+                          "veryfast", "faster", "fast", "medium",
+                          "slow", "slower", "veryslow", "placebo"
                           ),
-            ("Profiles"): ("None","main","main10","mainstillpicture","msp",
-                            "main-intra","main10-intra","main444-8",
-                            "main444-intra","main444-stillpicture",
-                            "main422-10","main422-10-intra","main444-10",
-                            "main444-10-intra","main12","main12-intra",
-                            "main422-12","main422-12-intra","main444-12",
-                            "main444-12-intra","main444-16-intra",
-                            "main444-16-stillpicture"),
-            ("Tunes"): ("None", "grain", "psnr", "ssim", "fastdecode", 
-                         "zerolatency")
+            ("Profiles"): ("None", "main", "main10", "mainstillpicture",
+                           "msp", "main-intra", "main10-intra", "main444-8",
+                           "main444-intra", "main444-stillpicture",
+                           "main422-10", "main422-10-intra", "main444-10",
+                           "main444-10-intra", "main12", "main12-intra",
+                           "main422-12", "main422-12-intra", "main444-12",
+                           "main444-12-intra", "main444-16-intra",
+                           "main444-16-stillpicture"
+                           ),
+            ("Tunes"): ("None", "grain", "psnr", "ssim", "fastdecode",
+                        "zerolatency")
             }
 # profile level for profiles x264/x265
-levels = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1', 
+levels = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
           '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
           )
 # optimization list for vp8/vp9
 optimization_vp9 = ('Default',
-                    'Vp9 best for Archive', 
-                    'Vp9 CBR Web streaming', 
+                    'Vp9 best for Archive',
+                    'Vp9 CBR Web streaming',
                     'Vp9 Constrained ABR-VBV live streaming')
 # optimization list for x264/x265
 optimization_hevc_avc = ('Default',
-                         'x264 best for Archive', 
+                         'x264 best for Archive',
                          'x265 best for Archive',
-                         'x264 ABR for devices', 
-                         'x265 ABR for devices', 
+                         'x264 ABR for devices',
+                         'x265 ABR for devices',
                          'x264 ABR-VBV live streaming',
                          'x265 ABR-VBV live streaming')
 # set widget colours in some case with html rappresentetion:
@@ -175,18 +177,19 @@ red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
 green = '#268826'
-ciano = '#61ccc7' # rgb form (wx.Colour(97, 204, 199)
+ciano = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
 violet = '#D64E93'
+
 
 class AV_Conv(wx.Panel):
     """
     Interface panel for video conversions
     """
-    def __init__(self, parent, OS, iconplay, iconreset, iconresize, 
-                 iconcrop, iconrotate, icondeinterlace, icondenoiser, 
-                 iconanalyzes, iconsettings, iconpeaklevel, iconatrack, 
+    def __init__(self, parent, OS, iconplay, iconreset, iconresize,
+                 iconcrop, iconrotate, icondeinterlace, icondenoiser,
+                 iconanalyzes, iconsettings, iconpeaklevel, iconatrack,
                  btn_color, fontBtncolor,):
-        
+
         # set attributes:
         self.parent = parent
         self.normdetails = []
@@ -195,14 +198,14 @@ class AV_Conv(wx.Panel):
         self.fBtnC = fontBtncolor
 
         wx.Panel.__init__(self, parent, -1)
-        #------------ base
+        # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        self.notebook = wx.Notebook(self, wx.ID_ANY, style=wx.NB_NOPAGETHEME|
+        self.notebook = wx.Notebook(self, wx.ID_ANY, style=wx.NB_NOPAGETHEME |
                                                            wx.NB_TOP
                                                            )
         sizer_base.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 5)
         
-        #-------------- notebook panel 1:
+        # -------------- notebook panel 1:
         self.nb_Video = wx.Panel(self.notebook, wx.ID_ANY)
         sizer_nbVideo = wx.BoxSizer(wx.HORIZONTAL)
         # box Sx
@@ -214,14 +217,14 @@ class AV_Conv(wx.Panel):
                                         wx.ID_ANY, _("Video Encoder")), 
                                         wx.VERTICAL
                                             )
-        self.box_Vcod.Add(grid_sx_Vcod, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL| 
+        self.box_Vcod.Add(grid_sx_Vcod, 0, wx.ALL|wx.ALIGN_CENTER_HORIZONTAL |
                                              wx.ALIGN_CENTER_VERTICAL, 5
                                              )
         txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Codec'))
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
                                     choices=[x for x in vcodecs.keys()],
-                                    size=(160,-1), style=wx.CB_DROPDOWN | 
+                                    size=(160,-1), style=wx.CB_DROPDOWN |
                                                          wx.CB_READONLY
                                                             )
         grid_sx_Vcod.Add(self.cmb_Vcod, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5)
@@ -232,8 +235,8 @@ class AV_Conv(wx.Panel):
         self.ckbx_pass = wx.CheckBox(self.codVpanel, wx.ID_ANY, 
                                      _("2-pass encoding")
                                      )
-        grid_sx_Vcod.Add(self.ckbx_pass, 0, wx.ALL | 
-                                              wx.ALIGN_CENTER_VERTICAL, 5
+        grid_sx_Vcod.Add(self.ckbx_pass, 0, wx.ALL |
+                                            wx.ALIGN_CENTER_VERTICAL, 5
                                               )
         txtCRF = wx.StaticText(self.codVpanel, wx.ID_ANY, _('CRF'))
         grid_sx_Vcod.Add(txtCRF, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)

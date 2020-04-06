@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ffplay_reproduction.py 
+# Name: ffplay_reproduction.py
 # Porpose: simple media player with x-window-terminal-emulator
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -27,21 +27,21 @@
 
 #########################################################
 import wx
+import subprocess
+import time
+from threading import Thread
+from videomass3.vdms_io.make_filelog import write_log  # write initial log
+
 # get data from bootstrap
 get = wx.GetApp()
-DIRconf = get.DIRconf # path to the configuration directory
+DIRconf = get.DIRconf  # path to the configuration directory
 ffplay_url = get.ffplay_url
 ffplay_loglev = get.ffplay_loglev
 OS = get.OS
-
-import subprocess
 if not OS == 'Windows':
     import shlex
-import time
-from threading import Thread
-from videomass3.vdms_io.make_filelog import write_log # write initial log
 
-#-----------------------------------------------------------------#
+
 def msg_Error(msg):
     """
     Receive error messages from Play(Thread) via wxCallafter
