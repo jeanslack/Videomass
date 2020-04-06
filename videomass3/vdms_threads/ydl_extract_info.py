@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2019/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Nov.15.2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -24,9 +24,7 @@
 
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
- 
 #########################################################
-
 from __future__ import unicode_literals
 try:
     import youtube_dl
@@ -42,36 +40,36 @@ OS = get.OS
 
 
 class PopupDialog(wx.Dialog):
-    """ 
-    A pop-up dialog box for temporary user messages that tell the user 
+    """
+    A pop-up dialog box for temporary user messages that tell the user
     the load in progress (required for large files).
-    
+
     Usage:
-            loadDlg = PopupDialog(None, ("Videomass - Loading..."), 
+            loadDlg = PopupDialog(None, ("Videomass - Loading..."),
                         ("\nAttendi....\nSto eseguendo un processo .\n")
                                 )
-            loadDlg.ShowModal() 
+            loadDlg.ShowModal()
 
             loadDlg.Destroy()
     """
     def __init__(self, parent, title, msg):
         # Create a dialog
-        wx.Dialog.__init__(self, parent, -1, title, size=(350, 150), 
-                            style=wx.CAPTION)
+        wx.Dialog.__init__(self, parent, -1, title, size=(350, 150),
+                           style=wx.CAPTION)
         # Add sizers
         box = wx.BoxSizer(wx.VERTICAL)
         box2 = wx.BoxSizer(wx.HORIZONTAL)
         # Add an Info graphic
         bitmap = wx.Bitmap(32, 32)
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION, 
+        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION,
                                           wx.ART_MESSAGE_BOX, (32, 32)
                                           )
         graphic = wx.StaticBitmap(self, -1, bitmap)
         box2.Add(graphic, 0, wx.EXPAND | wx.ALIGN_CENTER | wx.ALL, 10)
         # Add the message
         message = wx.StaticText(self, -1, msg)
-        box2.Add(message, 0, wx.EXPAND | wx.ALIGN_CENTER 
-                                       | wx.ALIGN_CENTER_VERTICAL 
+        box2.Add(message, 0, wx.EXPAND | wx.ALIGN_CENTER
+                                       | wx.ALIGN_CENTER_VERTICAL
                                        | wx.ALL, 10)
         box.Add(box2, 0, wx.EXPAND)
         # Handle layout
@@ -81,7 +79,8 @@ class PopupDialog(wx.Dialog):
         self.Layout()
 
         pub.subscribe(self.getMessage, "RESULT_EVT")
-        
+    # ----------------------------------------------------------#
+
     def getMessage(self, status):
         """
         Riceive msg and status from thread.
@@ -93,12 +92,13 @@ class PopupDialog(wx.Dialog):
         vedi: https://github.com/wxWidgets/Phoenix/issues/672
         Penso sia fattibile anche implementare un'interfaccia GetValue
         su questo dialogo, ma si perderebbe un po' di portabilità.
-        
         """
-        #self.Destroy() # do not work
-        self.EndModal(1)
 
+        # self.Destroy() # do not work
+        self.EndModal(1)
 #######################################################################
+
+
 class MyLogger(object):
     """
     Intercepts youtube-dl's output by setting a logger object.
@@ -110,27 +110,27 @@ class MyLogger(object):
         make attribute to log messages error
         """
         self.msg_error = []
-        
+
     def debug(self, msg):
         pass
-        
+
     def warning(self, msg):
         pass
 
     def error(self, msg):
         self.msg_error.append(msg)
-    
+
     def get_message(self):
         """
         get message error from error method
         """
         return None if not len(self.msg_error) else self.msg_error.pop()
-    
 #########################################################################
+
 
 class Extract_Info(Thread):
     """
-    Embed youtube-dl as module into a separated thread in order 
+    Embed youtube-dl as module into a separated thread in order
     to get output during extract informations.
     See help(youtube_dl.YoutubeDL)
     """
@@ -147,14 +147,14 @@ class Extract_Info(Thread):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
-            
-        self.start() # start the thread (va in self.run())
-    
+
+        self.start()  # start the thread (va in self.run())
+
     def run(self):
         """
         """
         mylogger = MyLogger()
-        ydl_opts = {'ignoreerrors' : True,
+        ydl_opts = {'ignoreerrors': True,
                     'noplaylist': True,
                     'no_color': True,
                     'nocheckcertificate': self.nocheckcertificate,
@@ -162,15 +162,15 @@ class Extract_Info(Thread):
                     }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             meta = ydl.extract_info(self.url, download=False)
-        
+
         error = mylogger.get_message()
 
         if error:
             self.data = (None, error)
         elif meta:
             self.data = (meta, None)
-        
-        wx.CallAfter(pub.sendMessage, 
-                     "RESULT_EVT",  
+
+        wx.CallAfter(pub.sendMessage,
+                     "RESULT_EVT",
                      status=''
                      )

@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: pictures_exporting.py 
+# Name: pictures_exporting.py
 # Porpose: FFmpeg long processing task on save as pictures
 # Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.18.2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -35,36 +35,36 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf # path to the configuration directory:
+DIRconf = get.DIRconf  # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
 ffmpeg_loglev = get.ffmpeg_loglev
 threads = get.threads
 
 if not OS == 'Windows':
     import shlex
-    
-not_exist_msg =  _("Is 'ffmpeg' installed on your system?")
 
-#----------------------------------------------------------------#    
+not_exist_msg = _("Is 'ffmpeg' installed on your system?")
+
+
 def logWrite(cmd, sterr, logname):
     """
     writes ffmpeg commands and status error during threads below
-    
     """
     if sterr:
         apnd = "...%s\n\n" % (sterr)
-        
     else:
         apnd = "%s\n\n" % (cmd)
-        
+
     with open("%s/log/%s" % (DIRconf, logname), "a") as log:
         log.write(apnd)
-        
-#------------------------------ THREADS -------------------------------#
+
+# ------------------------------ THREADS -------------------------------#
+
+
 """
 NOTE MS Windows:
 
-subprocess.STARTUPINFO() 
+subprocess.STARTUPINFO()
 
 https://stackoverflow.com/questions/1813872/running-
 a-process-in-pythonw-with-popen-without-a-console?lq=1>
@@ -73,114 +73,112 @@ NOTE capturing output in real-time (Windows, Unix):
 
 https://stackoverflow.com/questions/1388753/how-to-get-output-
 from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
-
 """
+
 
 class PicturesFromVideo(Thread):
     """
-    This class represents a separate thread for running simple single 
-    processes to save video sequences as pictures.
+    This class represents a separate thread for running simple
+    single processes to save video sequences as pictures.
     """
     def __init__(self, varargs, duration, logname, timeseq):
         """
         self.cmd contains a unique string that comprend filename input
         and filename output also.
-        The duration adds another 10 seconds due to problems with the 
-        progress bar 
+        The duration adds another 10 seconds due to problems with the
+        progress bar
         """
         Thread.__init__(self)
         """initialize"""
-        self.stop_work_thread = False # process terminate
-        self.cmd = varargs[4] # comand set on single pass
-        self.duration = duration[0]+10# duration list
-        self.time_seq = timeseq # a time segment
-        self.count = 0 # count first for loop
-        self.logname = logname # title name of file log
-        self.fname = varargs[1] # file name
+        self.stop_work_thread = False  # process terminate
+        self.cmd = varargs[4]  # comand set on single pass
+        self.duration = duration[0]+10  # duration list
+        self.time_seq = timeseq  # a time segment
+        self.count = 0  # count first for loop
+        self.logname = logname  # title name of file log
+        self.fname = varargs[1]  # file name
 
-        self.start() # start the thread (va in self.run())
+        self.start()  # start the thread (va in self.run())
 
     def run(self):
         """
         Subprocess initialize thread.
         """
-        cmd = ('%s %s %s -i "%s" %s ' % (ffmpeg_url, 
+        cmd = ('%s %s %s -i "%s" %s ' % (ffmpeg_url,
                                          self.time_seq,
                                          ffmpeg_loglev,
                                          self.fname,
                                          self.cmd,
                                          ))
-
-        count = 'File %s/%s' % ('1','1',)
+        count = 'File %s/%s' % ('1', '1',)
         com = "%s\n%s" % (count, cmd)
-        #print("%s" % com)
-        
-        wx.CallAfter(pub.sendMessage, 
-                     "COUNT_EVT", 
-                     count=count, 
+        # print("%s" % com)
+
+        wx.CallAfter(pub.sendMessage,
+                     "COUNT_EVT",
+                     count=count,
                      duration=self.duration,
                      fname=self.fname,
                      end='',
                      )
-        logWrite(com, '', self.logname)# write n/n + command only
-        
+        logWrite(com, '', self.logname)  # write n/n + command only
+
         if not OS == 'Windows':
             cmd = shlex.split(cmd)
             info = None
-        else: # Hide subprocess window on MS Windows
+        else:  # Hide subprocess window on MS Windows
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
             with subprocess.Popen(cmd,
-                                  stderr=subprocess.PIPE, 
-                                  bufsize=1, 
+                                  stderr=subprocess.PIPE,
+                                  bufsize=1,
                                   universal_newlines=True,
                                   startupinfo=info,) as p:
                 for line in p.stderr:
-                    #print(line, end=''),
-                    wx.CallAfter(pub.sendMessage, 
-                                "UPDATE_EVT", 
-                                output=line, 
-                                duration=self.duration,
-                                status=0,
-                                )
-                    if self.stop_work_thread:# break second 'for' loop
+                    # print(line, end=''),
+                    wx.CallAfter(pub.sendMessage,
+                                 "UPDATE_EVT",
+                                 output=line,
+                                 duration=self.duration,
+                                 status=0,
+                                 )
+                    if self.stop_work_thread:  # break second 'for' loop
                         p.terminate()
                         break
-                    
-                if p.wait(): # error
-                    wx.CallAfter(pub.sendMessage, 
-                                "UPDATE_EVT", 
-                                output=line, 
-                                duration=self.duration,
-                                status=p.wait(),
-                                )
-                    logWrite('', 
-                            "Exit status: %s" % p.wait(),
-                            self.logname)
-                            #append exit error number
-                
-                else: # status ok
-                    wx.CallAfter(pub.sendMessage, 
-                                "COUNT_EVT", 
-                                count='', 
-                                duration='',
-                                fname='',
-                                end='ok'
-                                )
+
+                if p.wait():  # error
+                    wx.CallAfter(pub.sendMessage,
+                                 "UPDATE_EVT",
+                                 output=line,
+                                 duration=self.duration,
+                                 status=p.wait(),
+                                 )
+                    logWrite('',
+                             "Exit status: %s" % p.wait(),
+                             self.logname)  # append exit error number
+
+                else:  # status ok
+                    wx.CallAfter(pub.sendMessage,
+                                 "COUNT_EVT",
+                                 count='',
+                                 duration='',
+                                 fname='',
+                                 end='ok'
+                                 )
         except OSError as err:
             e = "%s\n  %s" % (err, not_exist_msg)
-            wx.CallAfter(pub.sendMessage, 
-                         "COUNT_EVT", 
-                         count=e, 
+            wx.CallAfter(pub.sendMessage,
+                         "COUNT_EVT",
+                         count=e,
                          duration=0,
                          fname=self.fname,
                          end='error',
                          )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
-    
-    #--------------------------------------------------------------------#
+    # --------------------------------------------------------------------#
+
     def stop(self):
         """
         Sets the stop work thread to terminate the process
