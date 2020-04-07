@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec 28 2018, Aug. 28 2109
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,11 +26,21 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import wx
 import os
 from shutil import which
-#---------------------------------------------------------------#
+
+MSG1 = ("This wizard will attempt to automatically detect FFmpeg in\n"
+        "your system.\n\n"
+        "In addition, it allows you to manually set a custom path\n"
+        "to locate FFmpeg and its associated executables.\n\n"
+        "Also, Remember that you can always change these settings\n"
+        "later, through the Setup dialog.\n\n"
+        "- Press 'Auto-detection' to start the system search now."
+        "\n\n"
+        "- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
+        )
+
 
 class FirstStart(wx.Dialog):
     """
@@ -44,38 +54,24 @@ class FirstStart(wx.Dialog):
         self.FILEconf = get.FILEconf
         self.WORKdir = get.WORKdir
         self.OS = get.OS
-        
-        
+
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor"""
-        
-        msg1 = (_(
-            "This wizard will attempt to automatically detect FFmpeg in\n"
-            "your system.\n\n"
-            "In addition, it allows you to manually set a custom path\n"
-            "to locate FFmpeg and its associated executables.\n\n"
-            "Also, Remember that you can always change these settings\n"
-            "later, through the Setup dialog.\n\n"
-            "- Press 'Auto-detection' to start the system search now."
-            "\n\n"
-            "- Press 'Browse..' to indicate yourself where FFmpeg is located.\n")
-               )
+
         # widget:
-        bitmap_drumsT = wx.StaticBitmap(self, wx.ID_ANY, wx.Bitmap(
-                                        img,wx.BITMAP_TYPE_ANY))
+        bitmap_vdms = wx.StaticBitmap(self,
+                                      wx.ID_ANY,
+                                      wx.Bitmap(img, wx.BITMAP_TYPE_ANY)
+                                      )
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
                                         _("Welcome to Videomass Wizard!")))
-        lab_welc2 = wx.StaticText(self, wx.ID_ANY, (msg1))
-        
+        lab_welc2 = wx.StaticText(self, wx.ID_ANY, (_(MSG1)))
         self.detectBtn = wx.Button(self, wx.ID_ANY, (_("Auto-detection")))
-
         self.browseBtn = wx.Button(self, wx.ID_ANY, (_("Browse..")))
-        
         close_btn = wx.Button(self, wx.ID_EXIT, "")
-        
         # properties
         self.SetTitle(_("Videomass: Wizard"))
-        lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL,wx.BOLD, 0, ""))
+        lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         # layout:
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grd_base = wx.FlexGridSizer(2, 1, 0, 0)
@@ -83,70 +79,71 @@ class FirstStart(wx.Dialog):
         grd_ext = wx.FlexGridSizer(4, 1, 0, 0)
         grd_2 = wx.FlexGridSizer(3, 2, 0, 0)
         grd_base.Add(grd_1)
-        grd_1.Add(bitmap_drumsT,0,wx.ALL, 10)
+        grd_1.Add(bitmap_vdms, 0, wx.ALL, 10)
         grd_1.Add(grd_ext)
         grd_base.Add(grd_2)
-        grd_ext.Add(lab_welc1,0,  wx.ALL, 10)
-        grd_ext.Add(lab_welc2,0, wx.ALIGN_CENTER | wx.ALL, 10)
-        grd_2.Add(self.detectBtn,0, wx.ALL, 15)
+        grd_ext.Add(lab_welc1, 0, wx.ALL, 10)
+        grd_ext.Add(lab_welc2, 0, wx.ALIGN_CENTER | wx.ALL, 10)
+        grd_2.Add(self.detectBtn, 0, wx.ALL, 15)
 
-        grd_2.Add((260,0), 0, wx.ALL, 5)
-        grd_2.Add(self.browseBtn,0, wx.ALL, 15)
+        grd_2.Add((260, 0), 0, wx.ALL, 5)
+        grd_2.Add(self.browseBtn, 0, wx.ALL, 15)
 
-        grd_2.Add((260,0), 0, wx.ALL, 5)
+        grd_2.Add((260, 0), 0, wx.ALL, 5)
         grd_btn = wx.FlexGridSizer(1, 2, 0, 0)
-        
-        grd_btn.Add(close_btn,0, flag=wx.ALL, border=5)
-        grd_2.Add((260,0), 0, wx.ALL, 15)
-        grd_2.Add(grd_btn,0, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=10)
-        #properties
+
+        grd_btn.Add(close_btn, 0, flag=wx.ALL, border=5)
+        grd_2.Add((260, 0), 0, wx.ALL, 15)
+        grd_2.Add(grd_btn, 0,
+                  flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=10)
+        # properties
         self.detectBtn.SetMinSize((200, -1))
         self.browseBtn.SetMinSize((200, -1))
-        
         sizer_base.Add(grd_base)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
-        
-        ######################## bindings #####################
+
+        # bindings
         self.Bind(wx.EVT_BUTTON, self.On_close)
         self.Bind(wx.EVT_BUTTON, self.Detect, self.detectBtn)
         self.Bind(wx.EVT_BUTTON, self.Browse, self.browseBtn)
-        self.Bind(wx.EVT_CLOSE, self.On_close) # controlla la chiusura (x)
-        
+        self.Bind(wx.EVT_CLOSE, self.On_close)  # controlla la chiusura (x)
+
     # EVENTS:
-    #-------------------------------------------------------------------#
     def On_close(self, event):
         self.Destroy()
-    #-------------------------------------------------------------------#
+    # -------------------------------------------------------------------#
+
     def Browse(self, event):
         """
         The user find and import FFmpeg executables folder with
-        ffmpeg, ffprobe, ffplay inside on Posix or ffmpeg.exe, ffprobe.exe, 
+        ffmpeg, ffprobe, ffplay inside on Posix or ffmpeg.exe, ffprobe.exe,
         ffplay.exe inside on Windows NT.
+
         """
-        
         if self.OS == 'Windows':
-            listFF = {'ffmpeg.exe':"",'ffprobe.exe':"",'ffplay.exe':""}
+            listFF = {'ffmpeg.exe': "", 'ffprobe.exe': "", 'ffplay.exe': ""}
         else:
-            listFF = {'ffmpeg':"",'ffprobe':"",'ffplay':""}
-            
-        dirdialog = wx.DirDialog(self, 
-                _("Videomass: locate the ffmpeg folder"), "", 
-                wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST
-                                )
-            
+            listFF = {'ffmpeg': "", 'ffprobe': "", 'ffplay': ""}
+
+        dirdialog = wx.DirDialog(self,
+                                 _("Videomass: locate the ffmpeg folder"),
+                                 "",
+                                 wx.DD_DEFAULT_STYLE |
+                                 wx.DD_DIR_MUST_EXIST
+                                 )
         if dirdialog.ShowModal() == wx.ID_OK:
             path = "%s" % dirdialog.GetPath()
             dirdialog.Destroy()
-            
+
             filelist = []
             for ff in os.listdir(path):
                 if ff in listFF.keys():
                     listFF[ff] = os.path.join("%s" % path, "%s" % ff)
-                    
+
             error = False
-            for key,val in listFF.items():
+            for key, val in listFF.items():
                 if not val:
                     error = True
                     break
@@ -155,37 +152,35 @@ class FirstStart(wx.Dialog):
                                 "'{1}' does not exist!\n\n"
                                 "Need {2}\n\n"
                                 "Please, choose a valid path.").format(
-                                        os.path.join("%s" % path, "%s" % key),
-                                        key,
-                                        [k for k in listFF.keys()]), 
-                                "Videomass: warning!",  wx.ICON_WARNING, self
-                                )
+                                os.path.join("%s" % path, "%s" % key),
+                                key, [k for k in listFF.keys()]),
+                              "Videomass: warning!", wx.ICON_WARNING, self)
                 return
-            
-            self.completion([v for v in listFF.values()])
 
-    #-------------------------------------------------------------------#
+            self.completion([v for v in listFF.values()])
+    # -------------------------------------------------------------------#
+
     def Detect(self, event):
         """
-        Check for dependencies into your system (compatible with Linux, 
+        Check for dependencies into your system (compatible with Linux,
         MacOsX, Windows)
-        [https://stackoverflow.com/questions/11210104/check-if-a-program-exists-
-        from-a-python-script]
-        Search the executable in the system, if fail stop the search, 
+        <https://stackoverflow.com/questions/11210104/check-if
+        -a-program-exists-from-a-python-script>
+        Search the executable in the system, if fail stop the search,
         otherwise write the executable pathname in the configuration file.
         """
         local = False
         if self.OS == 'Windows':
-            biname = ['ffmpeg.exe','ffprobe.exe','ffplay.exe']
+            biname = ['ffmpeg.exe', 'ffprobe.exe', 'ffplay.exe']
         else:
-            biname = ['ffmpeg','ffprobe','ffplay']
-            
+            biname = ['ffmpeg', 'ffprobe', 'ffplay']
+
         for required in biname:
             if which(required):
-                print ("Check for: '%s' ..Ok" % required)
+                print("Check for: '%s' ..Ok" % required)
                 no_which = False
             else:
-                print ("Check for: '%s' ..Not Installed" % required)
+                print("Check for: '%s' ..Not Installed" % required)
                 if self.OS == 'Darwin':
                     if os.path.isfile("/usr/local/bin/%s" % required):
                         local = True
@@ -200,30 +195,37 @@ class FirstStart(wx.Dialog):
                     break
         if no_which:
             for x in biname:
-                if not os.path.isfile("%s/FFMPEG_BIN/bin/%s" %(self.WORKdir, x)):
+                if not os.path.isfile("%s/FFMPEG_BIN/bin/%s" %
+                                      (self.WORKdir, x)):
                     noexists = True
                     break
                 else:
                     noexists = False
             if noexists:
                 wx.MessageBox(_("'%s' is not installed on the system.\n"
-                          "Please, install it or set a custom path "
-                          "using the 'Browse..' button.") 
-                          % required, 'Videomass: Warning', 
-                          wx.ICON_EXCLAMATION, self)
+                                "Please, install it or set a custom path "
+                                "using the 'Browse..' "
+                                "button.").format(required),
+                              'Videomass: Warning', wx.ICON_EXCLAMATION, self)
                 return
             else:
                 if wx.MessageBox(_("Videomass already seems to include "
                                    "FFmpeg and the executables associated "
                                    "with it.\n\n"
-                                   "Are you sure you want to use them?"), 
-                        _('Videomass: Please Confirm'),
-                        wx.ICON_QUESTION |
-                        wx.YES_NO, 
-                        None) == wx.YES:
-                    ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir, biname[0])
-                    ffprobe = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir, biname[1])
-                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir, biname[2])
+                                   "Are you sure you want to use them?"),
+                                 _('Videomass: Please Confirm'),
+                                 wx.ICON_QUESTION |
+                                 wx.YES_NO,
+                                 None) == wx.YES:
+                    ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir,
+                                                       biname[0]
+                                                       )
+                    ffprobe = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir,
+                                                        biname[1]
+                                                        )
+                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir,
+                                                       biname[2]
+                                                       )
                 else:
                     return
         else:
@@ -235,10 +237,10 @@ class FirstStart(wx.Dialog):
                 ffmpeg = which(biname[0])
                 ffprobe = which(biname[1])
                 ffplay = which(biname[2])
-        
-        self.completion([ffmpeg,ffprobe,ffplay])
-    #-------------------------------------------------------------------#
-    
+
+        self.completion([ffmpeg, ffprobe, ffplay])
+    # -------------------------------------------------------------------#
+
     def completion(self, FFmpeg):
         """
         Writes changes to the configuration file
@@ -246,11 +248,11 @@ class FirstStart(wx.Dialog):
         ffmpeg = FFmpeg[0]
         ffprobe = FFmpeg[1]
         ffplay = FFmpeg[2]
-        rowsNum = []#rows number list
-        dic = {} # used for debug
-        with open (self.FILEconf, 'r') as f:
+        rowsNum = []  # rows number list
+        dic = {}  # used for debug
+        with open(self.FILEconf, 'r') as f:
             full_list = f.readlines()
-        for a,b in enumerate(full_list):
+        for a, b in enumerate(full_list):
             if not b.startswith('#'):
                 if not b == '\n':
                     rowsNum.append(a)
@@ -258,13 +260,12 @@ class FirstStart(wx.Dialog):
         full_list[rowsNum[6]] = '%s\n' % ffmpeg
         full_list[rowsNum[8]] = '%s\n' % ffprobe
         full_list[rowsNum[10]] = '%s\n' % ffplay
-        
-        with open (self.FILEconf, 'w') as fileconf:
+
+        with open(self.FILEconf, 'w') as fileconf:
             for i in full_list:
                 fileconf.write('%s' % i)
-            
+
         wx.MessageBox(_("\nWizard completed successfully.\n"
-                       "Restart Videomass now.\n\nThank You!"), 
-                       _("That's all folks!"))   
+                        "Restart Videomass now.\n\nThank You!"),
+                      _("That's all folks!"))
         self.Destroy()
-        

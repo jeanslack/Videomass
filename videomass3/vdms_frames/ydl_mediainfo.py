@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (06) Dec.28 2018, Nov.03 2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,57 +26,67 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import wx
 import os
 
+
 class YDL_Mediainfo(wx.MiniFrame):
     """
-    Display streams information from youtube-dl data. 
+    Display streams information from youtube-dl data.
     """
     def __init__(self, data, OS):
         """
-        NOTE constructor:: with 'None' not depend from videomass. 
+        NOTE constructor:: with 'None' not depend from videomass.
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
         wx.MiniFrame.__init__(self, None)
         '''constructor'''
-        
+
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         # Add widget controls
-        self.url_select = wx.ListCtrl(self.panel, wx.ID_ANY,
-                                      style=wx.LC_REPORT | wx.SUNKEN_BORDER)
-        self.textCtrl = wx.TextCtrl(self.panel, wx.ID_ANY, "", 
-                                   style=wx.TE_MULTILINE| wx.TE_DONTWRAP)
+        self.url_select = wx.ListCtrl(self.panel,
+                                      wx.ID_ANY,
+                                      style=wx.LC_REPORT |
+                                      wx.SUNKEN_BORDER
+                                      )
+        self.textCtrl = wx.TextCtrl(self.panel,
+                                    wx.ID_ANY, "",
+                                    style=wx.TE_MULTILINE |
+                                    wx.TE_DONTWRAP
+                                    )
         button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
-        
-        #----------------------Properties----------------------#
+
+        # ----------------------Properties----------------------#
         self.SetTitle('Videomass - Multimedia Streams Information')
         self.SetMinSize((640, 400))
         self.url_select.SetMinSize((640, 200))
         self.url_select.InsertColumn(0, _('TITLE'), width=250)
         self.url_select.InsertColumn(1, _('URL'), width=500)
         self.textCtrl.SetMinSize((640, 300))
-        
-        #self.textCtrl.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
+
+        # self.textCtrl.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
         if OS == 'Darwin':
-            self.url_select.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.textCtrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.url_select.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,
+                                            wx.NORMAL))
+            self.textCtrl.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,
+                                          wx.BOLD))
         else:
-            self.url_select.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.textCtrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
-        #----------------------Layout--------------------------#
+            self.url_select.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
+                                            wx.NORMAL))
+            self.textCtrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
+                                          wx.BOLD))
+        # ----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
-        sizer_1.Add(self.url_select, 0, wx.ALL|wx.EXPAND, 5)
+        sizer_1.Add(self.url_select, 0, wx.ALL | wx.EXPAND, 5)
         grid_sizer_1 = wx.GridSizer(1, 1, 0, 0)
         sizer_1.Add(grid_sizer_1, 1, wx.EXPAND, 0)
-        
-        grid_sizer_1.Add(self.textCtrl, 0, wx.ALL|wx.EXPAND, 5)
+
+        grid_sizer_1.Add(self.textCtrl, 0, wx.ALL | wx.EXPAND, 5)
         grid_buttons = wx.GridSizer(1, 1, 0, 0)
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
-        sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT|wx.RIGHT, border=0)
+        sizer_1.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         self.panel.SetSizer(sizer_1)
         sizer_1.Fit(self)
         self.Layout()
@@ -86,24 +96,25 @@ class YDL_Mediainfo(wx.MiniFrame):
             self.url_select.InsertItem(index, url['title'])
             self.url_select.SetItem(index, 1, url['url'])
             index += 1
-        
-        #----------------------Binding (EVT)----------------------#
+
+        # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.url_select)
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
-    #----------------------Event handler (callback)----------------------#
+    # ----------------------Event handler (callback)----------------------#
 
     def on_select(self, event):
         """
         show data during items selection
+
         """
         # delete previous append:
         self.textCtrl.Clear()
 
         index = self.url_select.GetFocusedItem()
         item = self.url_select.GetItemText(index)
-        
+
         for info in self.data:
             if info['title'] == item:
                 text = ("Categories:      {}\n"
@@ -128,8 +139,8 @@ class YDL_Mediainfo(wx.MiniFrame):
                                                        info['duration'],
                                                        info['description'],
                                                        ))
-        self.textCtrl.AppendText(text)                
-    #------------------------------------------------------------------#
-    
+        self.textCtrl.AppendText(text)
+    # ------------------------------------------------------------------#
+
     def on_close(self, event):
         self.Destroy()

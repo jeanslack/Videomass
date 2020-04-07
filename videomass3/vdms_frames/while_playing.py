@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.02.2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,7 +26,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import wx
 
 keys = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
@@ -40,63 +39,65 @@ explan = (_("Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
             "Cycle video channel.\n"
             "Cycle subtitle channel in the current program.\n"
             "Cycle program.\nCycle video filters or show modes.\n"
-            "Step to the next frame. Pause if the stream is not \n"#
-            "already paused, step to the next video frame, and pause.\n"#
+            "Step to the next frame. Pause if the stream is not \n"
+            "already paused, step to the next video frame, and pause.\n"
             "Seek backward/forward 10 seconds.\n"
             "Seek backward/forward 1 minute.\n"
-            "Seek to the previous/next chapter. Or if there are no \n"#
-            "chapters Seek backward/forward 10 minutes.\n"#
+            "Seek to the previous/next chapter. Or if there are no \n"
+            "chapters Seek backward/forward 10 minutes.\n"
             "Seek to percentage in file corresponding to fraction of width.\n"
             "Toggle full screen."))
 
-#------------------------------------------------------------------#    
+# ------------------------------------------------------------------#
+
+
 class While_Playing(wx.MiniFrame):
     """
     Display a dialog box resizable with shortcuts keyboard
     useful when you use playback function with FFplay
-   
+
     """
     def __init__(self, OS):
-        wx.MiniFrame.__init__(self, None, style=wx.DEFAULT_FRAME_STYLE 
-                          & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)
-                                            )
+        wx.MiniFrame.__init__(self, None, style=wx.DEFAULT_FRAME_STYLE
+                              & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)
+                              )
         """
         with 'None' not depend from parent:
         wx.Frame.__init__(self, None)
-        
+
         With parent, -1:
         wx.Frame.__init__(self, parent, -1)
         if close videomass also close parent window
-        
+
         """
-        #-------------------- widget --------------------------#
+        # -------------------- widget --------------------------#
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         label1 = wx.StaticText(panel, wx.ID_ANY, keys)
         label2 = wx.StaticText(panel, wx.ID_ANY, explan)
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
-        #----------------------Properties----------------------#
+        # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: Shortcuts while playing"))
-        
+
         label1.SetForegroundColour(wx.Colour('#008000'))
         label2.SetForegroundColour(wx.Colour('#959595'))
         panel.SetBackgroundColour(wx.Colour('#121212'))
-        #---------------------- Layout ----------------------#
+        # ---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
         gr_s1.Add(label1, 0, wx.ALL, 5)
         gr_s1.Add(label2, 0, wx.ALL, 5)
-        btngrid = wx.FlexGridSizer(1,1,0,0)
+        btngrid = wx.FlexGridSizer(1, 1, 0, 0)
         btngrid.Add(self.button_close, 0, wx.ALL, 5)
-        panel.SetSizer(gr_s1)#
-        #s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
-        s1.Add(panel, 0, )
-        s1.Add(btngrid, flag=wx.ALL|wx.ALIGN_RIGHT|wx.RIGHT, border=5)
+        panel.SetSizer(gr_s1)
+        # s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
+        s1.Add(panel, 0,)
+        s1.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         self.SetSizerAndFit(s1)
         # binding
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
-        self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
-        
-    #--------------------------------------------------------------# 
+        self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
+    # --------------------------------------------------------------#
+
     def on_close(self, event):
         '''
         destroy dialog by button and the X
