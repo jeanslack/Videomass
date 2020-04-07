@@ -26,12 +26,11 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import wx
 import os
 import webbrowser
 
-dirname = os.path.expanduser('~') # /home/user/
+dirname = os.path.expanduser('~')  # /home/user/
 
 # get videomass wx.App attribute
 get = wx.GetApp()
@@ -49,18 +48,19 @@ ffprobe_check = get.ffprobe_check
 ffplay_check = get.ffplay_check
 userpath = get.userpath
 
+
 class Setup(wx.Dialog):
     """
     Main settings of the videomass program and configuration storing.
     """
     def __init__(self, parent, iconset):
         """
-        NOTE 0): self.rowsNum attribute is a sorted list with a exatly number 
+        NOTE 0): self.rowsNum attribute is a sorted list with a exatly number
                  index corresponding to each read line of the videomass.conf.
-        NOTE 1): The code block (USEFUL FOR DEBUGGING) prints in console a 
-                 convenient representation of the parsing, which can also be 
+        NOTE 1): The code block (USEFUL FOR DEBUGGING) prints in console a
+                 convenient representation of the parsing, which can also be
                  efforting consulted for future implementations.
-                 - POSITION, the number index of self.rowsNum items (how many 
+                 - POSITION, the number index of self.rowsNum items (how many
                    objects it contains).
                  - ROW, is the current numeric rows on the file configuration
                  - VALUE, is the value as writing in the file configuration
@@ -69,27 +69,27 @@ class Setup(wx.Dialog):
         """constructor"""
         
         # Make a items list of
-        self.rowsNum = []#rows number list
-        dic = {} # used for debug
+        self.rowsNum = []  # rows number list
+        dic = {}  # used for debug
         with open (fileconf, 'r') as f:
             self.full_list = f.readlines()
         for a,b in enumerate(self.full_list):
             if not b.startswith('#'):
                 if not b == '\n':
                     self.rowsNum.append(a)
-                    
-                    #dic [a] = b.strip()# used for easy reading print debug
 
-        ##USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
-        ##uncomment the following code for a convenient reading
-        #print("\nPOSITION:    ROW:     VALUE:")
-        #for n, k in enumerate(sorted(dic)):
-            #print(n, ' -------> ', k, ' --> ', dic[k])
-        
+                    # dic [a] = b.strip()# used for easy reading print debug
+
+        # #USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
+        # #uncomment the following code for a convenient reading
+        # print("\nPOSITION:    ROW:     VALUE:")
+        # for n, k in enumerate(sorted(dic)):
+            # print(n, ' -------> ', k, ' --> ', dic[k])
+
         self.userpath = dirname if not userpath else userpath
         self.iconset = iconset
         self.FILEconf = fileconf
-        
+
         if OS == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
             self.ffprobe = 'ffprobe.exe'
@@ -98,11 +98,11 @@ class Setup(wx.Dialog):
             self.ffmpeg = 'ffmpeg'
             self.ffprobe = 'ffprobe'
             self.ffplay = 'ffplay'
-        #----------------------------set notebook
+        # ----------------------------set notebook
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 10)
-        #-----tab 1
+        # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGeneral = wx.BoxSizer(wx.VERTICAL)
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
