@@ -75,7 +75,7 @@ class Time_Duration(wx.Dialog):
         lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
-        sizer_1_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+        sizerbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                         _("Seeking (start point) [hh,mm,ss]"))), wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
@@ -114,12 +114,12 @@ class Time_Duration(wx.Dialog):
         gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
         gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
 
-        grid_sizer_base.Add(sizer_1_staticbox, 0,
+        grid_sizer_base.Add(sizerbox, 0,
                             wx.ALL | wx.ALIGN_CENTRE, 5
                             )
-        sizer_1_staticbox.Add(gridFlex1, 0, wx.ALL |
-                              wx.ALIGN_CENTER_VERTICAL, 5
-                              )
+        sizerbox.Add(gridFlex1, 0, wx.ALL |
+                     wx.ALIGN_CENTER_VERTICAL, 5
+                     )
         gridFlex1.Add(self.start_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )

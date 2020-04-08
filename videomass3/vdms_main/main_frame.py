@@ -26,7 +26,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
@@ -46,13 +45,13 @@ from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
 
 # set widget colours in some case with html rappresentetion:
-azure = '#d9ffff' # rgb form (wx.Colour(217,255,255))
+azure = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#6aaf23'
 green = '#268826'
-########################################################################
+
 
 class MainFrame(wx.Frame):
     """
@@ -60,46 +59,46 @@ class MainFrame(wx.Frame):
     """
     def __init__(self, setui, pathicons):
         """
-        NOTE: 'SRCpath' is a current work directory of Videomass 
-               program. How it can be localized depend if Videomass is 
+        NOTE: 'SRCpath' is a current work directory of Videomass
+               program. How it can be localized depend if Videomass is
                run as portable program or installated program.
         """
-        barC = setui[4][12].split(',') 
-        barColor = wx.Colour(int(barC[0]),int(barC[1]),int(barC[2])) 
+        barC = setui[4][12].split(',')
+        barColor = wx.Colour(int(barC[0]), int(barC[1]), int(barC[2]))
         # toolbar panel colour
         bBtnC = setui[4][13].split(',')
-        self.bBtnC = wx.Colour(int(bBtnC[0]),int(bBtnC[1]),int(bBtnC[2]))
+        self.bBtnC = wx.Colour(int(bBtnC[0]), int(bBtnC[1]), int(bBtnC[2]))
         # toolbar buttons colour
         fBtnC = setui[4][14].split(',')
-        self.fBtnC = wx.Colour(int(fBtnC[0]),int(fBtnC[1]),int(fBtnC[2]))
-        # Buttons Font Colour 
-        self.OS = setui[0]# ID of the operative system:
-        SRCpath = setui[1]# share dir (are where the origin files?):
+        self.fBtnC = wx.Colour(int(fBtnC[0]), int(fBtnC[1]), int(fBtnC[2]))
+        # Buttons Font Colour
+        self.OS = setui[0]  # ID of the operative system:
+        SRCpath = setui[1]  # share dir (are where the origin files?):
         self.PATHconf = setui[6]
         self.WORKdir = setui[7]
         self.DIRconf = setui[8]
-        #---------------------------#
-        self.threads = setui[4][2]#ffmpeg option, set the cpu threads
+        # ---------------------------#
+        self.threads = setui[4][2]  # ffmpeg option, set the cpu threads
         self.iconset = setui[4][11]
         self.videomass_icon = pathicons[0]
         self.icon_runconversion = pathicons[2]
         self.icon_mainback = pathicons[23]
         self.icon_mainforward = pathicons[24]
-        #-------------------------------# 
-        self.data_files = None# list of items in list control
-        self.data_url = None# list of urls in text box
-        self.file_destin = None # path name for file saved destination
-        self.file_src = None# input files list
-        self.filedropselected = None # list object selected name on Add files
-        self.time_seq = ''# ffmpeg format time specifier with flag -ss, -t
-        self.time_read = {'start seek':['',''],'time':['','']}
-        self.duration = [] # empty if not file imported
-        self.topicname = None # panel name shown
+        # -------------------------------#
+        self.data_files = None  # list of items in list control
+        self.data_url = None  # list of urls in text box
+        self.file_destin = None  # path name for file saved destination
+        self.file_src = None  # input files list
+        self.filedropselected = None  # list object selected name on Add files
+        self.time_seq = ''  # ffmpeg format time specifier with flag -ss, -t
+        self.time_read = {'start seek': ['', ''], 'time': ['', '']}
+        self.duration = []  # empty if not file imported
+        self.topicname = None  # panel name shown
 
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
-        #----------- panel toolbar buttons
+        # ----------- panel toolbar buttons
         self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        
+
         infoIbmp = wx.Bitmap(pathicons[3], wx.BITMAP_TYPE_ANY)
         previewbmp = wx.Bitmap(pathicons[4], wx.BITMAP_TYPE_ANY)
         cutbmp = wx.Bitmap(pathicons[5], wx.BITMAP_TYPE_ANY)
@@ -109,76 +108,76 @@ class MainFrame(wx.Frame):
         editprfbmp = wx.Bitmap(pathicons[22], wx.BITMAP_TYPE_ANY)
 
         self.btn_metaI = GB.GradientButton(self.btnpanel,
-                                           size=(-1,25),
-                                           bitmap=infoIbmp, 
+                                           size=(-1, 25),
+                                           bitmap=infoIbmp,
                                            label=_("Streams Information"))
-        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
                                       foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_metaI.SetBottomEndColour(self.bBtnC)
         self.btn_metaI.SetBottomStartColour(self.bBtnC)
         self.btn_metaI.SetTopStartColour(self.bBtnC)
         self.btn_metaI.SetTopEndColour(self.bBtnC)
-        
+
         self.btn_playO = GB.GradientButton(self.btnpanel,
-                                           size=(-1,25),
-                                           bitmap=previewbmp, 
+                                           size=(-1, 25),
+                                           bitmap=previewbmp,
                                            label=_("Preview"))
-        self.btn_playO.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+        self.btn_playO.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
                                       foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_playO.SetBottomEndColour(self.bBtnC)
         self.btn_playO.SetBottomStartColour(self.bBtnC)
         self.btn_playO.SetTopStartColour(self.bBtnC)
         self.btn_playO.SetTopEndColour(self.bBtnC)
-        
+
         self.btn_duration = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=cutbmp, 
+                                              size=(-1, 25),
+                                              bitmap=cutbmp,
                                               label=_("Duration"))
-        self.btn_duration.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+        self.btn_duration.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_duration.SetBottomEndColour(self.bBtnC)
         self.btn_duration.SetBottomStartColour(self.bBtnC)
         self.btn_duration.SetTopStartColour(self.bBtnC)
         self.btn_duration.SetTopEndColour(self.bBtnC)
-        
+
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=saveprfbmp, 
-                                              label=_("Save Configuration"))
-        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+                                             size=(-1, 25),
+                                             bitmap=saveprfbmp,
+                                             label=_("Save Configuration"))
+        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
         self.btn_saveprf.SetBottomStartColour(self.bBtnC)
         self.btn_saveprf.SetTopStartColour(self.bBtnC)
         self.btn_saveprf.SetTopEndColour(self.bBtnC)
-        
+
         self.btn_newprf = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=newprfbmp, 
-                                              label=_("New.."))
-        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+                                            size=(-1, 25),
+                                            bitmap=newprfbmp,
+                                            label=_("New.."))
+        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_newprf.SetBottomEndColour(self.bBtnC)
         self.btn_newprf.SetBottomStartColour(self.bBtnC)
         self.btn_newprf.SetTopStartColour(self.bBtnC)
         self.btn_newprf.SetTopEndColour(self.bBtnC)
-        
+
         self.btn_delprf = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=delprfbmp, 
-                                              label=_("Delete.."))
-        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+                                            size=(-1, 25),
+                                            bitmap=delprfbmp,
+                                            label=_("Delete.."))
+        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_delprf.SetBottomEndColour(self.bBtnC)
         self.btn_delprf.SetBottomStartColour(self.bBtnC)
         self.btn_delprf.SetTopStartColour(self.bBtnC)
         self.btn_delprf.SetTopEndColour(self.bBtnC)
-        
+
         self.btn_editprf = GB.GradientButton(self.btnpanel,
-                                              size=(-1,25),
-                                              bitmap=editprfbmp, 
-                                              label=_("Edit.."))
-        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158,201,232), 
+                                             size=(-1, 25),
+                                             bitmap=editprfbmp,
+                                             label=_("Edit.."))
+        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_editprf.SetBottomEndColour(self.bBtnC)
         self.btn_editprf.SetBottomStartColour(self.bBtnC)
@@ -186,41 +185,41 @@ class MainFrame(wx.Frame):
         self.btn_editprf.SetTopEndColour(self.bBtnC)
 
         self.btnpanel.SetBackgroundColour(barColor)
-        #---------- others panel instances:
-        self.ChooseTopic = choose_topic.Choose_Topic(self, 
+        # ---------- others panel instances:
+        self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      self.OS,
                                                      pathicons[1],
                                                      pathicons[18],
                                                      pathicons[19]
                                                      )
-        #self.ChooseTopic.SetBackgroundColour(barColor)
+        # self.ChooseTopic.SetBackgroundColour(barColor)
         self.ytDownloader = downloader.Downloader(self, self.OS)
         self.VconvPanel = av_conversions.AV_Conv(self,
-                                                self.OS,
-                                                pathicons[6],# icon playfilters
-                                                pathicons[7],# icon resetfilters
-                                                pathicons[9],# icon resize
-                                                pathicons[10],# icon crop
-                                                pathicons[11],# icon rotate
-                                                pathicons[12],# icon deinterlace
-                                                pathicons[13],# icon ic_denoiser
-                                                pathicons[14],# icon analyzes
-                                                pathicons[15],# icon settings
-                                                pathicons[17],# icon peaklevel
-                                                pathicons[18],# icon audiotrack
-                                                self.bBtnC,
-                                                self.fBtnC,
-                                                )
+                                                 self.OS,
+                                                 pathicons[6],  # playfil
+                                                 pathicons[7],  # resetfil
+                                                 pathicons[9],  # resize
+                                                 pathicons[10],  # crop
+                                                 pathicons[11],  # rotate
+                                                 pathicons[12],  # deinter
+                                                 pathicons[13],  # ic_denoi
+                                                 pathicons[14],  # analyzes
+                                                 pathicons[15],  # settings
+                                                 pathicons[17],  # peaklevel
+                                                 pathicons[18],  # audiotr
+                                                 self.bBtnC,
+                                                 self.fBtnC,
+                                                 )
         self.fileDnDTarget = filedrop.FileDnD(self)
         self.textDnDTarget = textdrop.TextDnD(self)
         self.ProcessPanel = Logging_Console(self)
-        self.PrstsPanel = presets_manager.PrstPan(self, 
-                                                  SRCpath, 
-                                                  self.DIRconf, 
-                                                  self.WORKdir, 
+        self.PrstsPanel = presets_manager.PrstPan(self,
+                                                  SRCpath,
+                                                  self.DIRconf,
+                                                  self.WORKdir,
                                                   self.OS,
-                                                  pathicons[14],#icon analyzes
-                                                  pathicons[17],#icon peaklevel
+                                                  pathicons[14],  # analyzes
+                                                  pathicons[17],  # peaklevel
                                                   self.bBtnC,
                                                   self.fBtnC,
                                                   )
@@ -232,26 +231,26 @@ class MainFrame(wx.Frame):
         self.ProcessPanel.Hide()
         self.PrstsPanel.Hide()
         # Layout toolbar buttons:
-        self.mainSizer = wx.BoxSizer(wx.VERTICAL) # sizer base global
+        self.mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
         grid_pan = wx.FlexGridSizer(1, 7, 0, 0)
-        grid_pan.Add(self.btn_metaI, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_playO, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_duration, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_saveprf, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_newprf, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_delprf, 0, wx.CENTER|wx.ALL, 5)
-        grid_pan.Add(self.btn_editprf, 0, wx.CENTER|wx.ALL, 5)
-        self.btnpanel.SetSizer(grid_pan) # set panel
+        grid_pan.Add(self.btn_metaI, 0, wx.CENTER | wx.ALL, 5)
+        grid_pan.Add(self.btn_playO, 0, wx.CENTER | wx.ALL, 5)
+        grid_pan.Add(self.btn_duration, 0, wx.CENTER | wx.ALL, 5)
+        grid_pan.Add(self.btn_saveprf, 0, wx.CENTER | wx.ALL, 5)
+        grid_pan.Add(self.btn_newprf, 0, wx.CENTER | wx.ALL, 5)
+        grid_pan.Add(self.btn_delprf, 0, wx.CENTER | wx.ALL, 5)
+        grid_pan.Add(self.btn_editprf, 0, wx.CENTER | wx.ALL, 5)
+        self.btnpanel.SetSizer(grid_pan)  # set panel
         self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
         # Layout externals panels:
-        self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND|wx.ALL, 0)
-        self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND|wx.ALL, 0)
-        self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND|wx.ALL, 0)
-        self.mainSizer.Add(self.ytDownloader, 1, wx.EXPAND|wx.ALL, 0)
-        self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND|wx.ALL, 0)
-        self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND|wx.ALL, 0)
-        self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND|wx.ALL, 0)
-        #----------------------Set Properties----------------------#
+        self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.ytDownloader, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND | wx.ALL, 0)
+        # ----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
@@ -261,32 +260,25 @@ class MainFrame(wx.Frame):
         elif self.OS == 'Windows':
             self.SetSize((980, 650))
         else:
-            #self.SetSize((930, 600))
+            # self.SetSize((930, 600))
             self.SetSize((980, 750))
-        #self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
+        # self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:
-        self.btn_duration.SetToolTip(_('Specify the duration or portion of the '
-                                       'time globally. this can affect many '
-                                       'functions.'
-                                           ))
-        self.btn_metaI.SetToolTip(_("Show additional media information." 
-                                        ))
+        self.btn_duration.SetToolTip(_('Specify the duration or portion of '
+                                       'the time globally. this can affect '
+                                       'many functions.'))
+        self.btn_metaI.SetToolTip(_("Show additional media information."))
         self.btn_playO.SetToolTip(_("Choose a file to playback in the "
-                                    "destination folder"
-                                        ))
-        self.btn_saveprf.SetToolTip(_("Save the settings on presets manager"
-                                        ))
+                                    "destination folder"))
+        self.btn_saveprf.SetToolTip(_("Save the settings on presets manager"))
         self.btn_newprf.SetToolTip(_("Create a new profile from yourself "
-                                        "and save it in the selected preset."
-                                        ))
-        self.btn_delprf.SetToolTip(_("Delete the selected profile."
-                                        ))
-        self.btn_editprf.SetToolTip(_("Edit the selected profile."
-                                          ))
+                                     "and save it in the selected preset."))
+        self.btn_delprf.SetToolTip(_("Delete the selected profile."))
+        self.btn_editprf.SetToolTip(_("Edit the selected profile."))
         # menu bar
         self.videomass_menu_bar()
-        ## tool bar main
+        # tool bar main
         self.videomass_tool_bar()
         # status bar
         self.sb = self.CreateStatusBar(1)
@@ -294,7 +286,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Hide()
         self.btnpanel.Hide()
         self.Layout()
-        #---------------------- Binding (EVT) ----------------------#
+        # ---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.textDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
         self.Bind(wx.EVT_BUTTON, self.Cut_range, self.btn_duration)
@@ -304,20 +296,22 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.Editprofile, self.btn_editprf)
         self.Bind(wx.EVT_BUTTON, self.ImportInfo, self.btn_metaI)
         self.Bind(wx.EVT_BUTTON, self.ExportPlay, self.btn_playO)
-        self.Bind(wx.EVT_CLOSE, self.on_close) # controlla la chiusura (x)
-    #-------------------Status bar settings--------------------#
+        self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
+
+    # -------------------Status bar settings--------------------#
+
     def statusbar_msg(self, msg, color):
         """
         set the status-bar with messages and color types
         """
-        if color == None:
+        if color is None:
             self.sb.SetBackgroundColour(wx.NullColour)
         else:
             self.sb.SetBackgroundColour(color)
         self.sb.SetStatusText(msg)
         self.sb.Refresh()
-    #
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def choosetopicRetrieve(self):
         """
         Retrieve to choose topic panel
@@ -326,29 +320,31 @@ class MainFrame(wx.Frame):
         self.textDnDTarget.Hide(), self.fileDnDTarget.Hide()
         if self.ytDownloader.IsShown():
             self.ytDownloader.Hide()
-            
+
         elif self.VconvPanel.IsShown():
             self.VconvPanel.Hide()
-        
+
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.Hide()
-            
+
         self.ChooseTopic.Show(), self.toolbar.Hide(), self.btnpanel.Hide()
         self.statusbar_msg('', None)
         self.Layout()
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def menu_items(self):
         """
         enable or disable some menu items according by showing panels
         """
         self.saveme.Enable(False),
         self.new_prst.Enable(False), self.del_prst.Enable(False),
-        self.restore.Enable(False), self.default.Enable(False), 
+        self.restore.Enable(False), self.default.Enable(False),
         self.default_all.Enable(False), self.refresh.Enable(False),
 
-    #---------------------- Event handler (callback) ------------------#
+    # ---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the filedrop panel
-    #-------------------------------- Options ----------------------------#
+    # ----------------------------- Options ----------------------------#
+
     def Cut_range(self, event):
         """
         Call dialog to Set a global time sequence on all imported
@@ -362,36 +358,39 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
-                self.time_read['start seek'] = ['','']
-                self.time_read['time'] = ['','']
+                self.time_read['start seek'] = ['', '']
+                self.time_read['time'] = ['', '']
                 self.btn_duration.SetBottomEndColour(self.bBtnC)
             else:
                 self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 0))
                 # set a more readable time
-                ss = data.split()[1] # the -ss flag
-                h,m,s = ss.split(':')
-                start = (int(h)*3600+ int(m)*60+ int(s))
-                t = data.split()[3] # the -t flag
-                h,m,s = t.split(':')
-                time = (int(h)*3600+ int(m)*60+ int(s))
+                ss = data.split()[1]  # the -ss flag
+                h, m, s = ss.split(':')
+                start = (int(h) * 3600 + int(m) * 60 + int(s))
+                t = data.split()[3]  # the -t flag
+                h, m, s = t.split(':')
+                time = (int(h) * 3600 + int(m) * 60 + int(s))
                 self.time_read['start seek'] = [ss,start]
                 self.time_read['time'] = [t,time]
-                
+
             self.time_seq = data
         else:
             dial.Destroy()
             return
-    #------------------------------ Menu  Streams -----------------------#
+
+    # ------------------------------ Menu  Streams -----------------------#
+
     def ImportPlay(self, filepath):
         """
         Redirect input file clicked at stream_play for playback feature.
         This feature is available by context menu in drag n drop panel only.
         """
-        IO_tools.stream_play(filepath, 
-                             self.time_seq, 
-                            '', # parameters
-                            )
-    #------------------------------------------------------------------#
+        IO_tools.stream_play(filepath,
+                             self.time_seq,
+                             '',  # parameters
+                             )
+    # ------------------------------------------------------------------#
+
     def ImportInfo(self, event):
         """
         Redirect input file clicked at stream_info for metadata display
@@ -401,54 +400,56 @@ class MainFrame(wx.Frame):
         else:
             dialog = Mediainfo(self.data_files, self.OS,)
             dialog.Show()
-    #------------------------------------------------------------------#
-    
+    # ------------------------------------------------------------------#
+
     def ExportPlay(self, event):
         """
         Playback with FFplay
-        
+
         """
-        with wx.FileDialog(self, "Videomass: Open a file to playback", 
+        with wx.FileDialog(self, "Videomass: Open a file to playback",
                            defaultDir=self.file_destin,
-                           #wildcard="Audio source (%s)|%s" % (f, f),
-                           style=wx.FD_OPEN | 
+                           # wildcard="Audio source (%s)|%s" % (f, f),
+                           style=wx.FD_OPEN |
                            wx.FD_FILE_MUST_EXIST) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
-                return     
+                return
             pathname = fileDialog.GetPath()
 
         IO_tools.stream_play(pathname,
-                             '', # time_seq is useless for the exported file
-                             '', # no others parameters are needed
+                             '',  # time_seq is useless for the exported file
+                             '',  # no others parameters are needed
                              )
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Saveprofile(self, event):
         """
-        Store new profile with same current settings of the panel shown 
+        Store new profile with same current settings of the panel shown
         (Video Conversion & Audio Conversion)..
-        Every modification on the panel shown will be reported when saving 
+        Every modification on the panel shown will be reported when saving
         a new profile.
         """
         if self.VconvPanel.IsShown():
             self.VconvPanel.Addprof()
-        #elif self.AconvPanel.IsShown():
-            #self.AconvPanel.Addprof()
+        # elif self.AconvPanel.IsShown():
+            # self.AconvPanel.Addprof()
         else:
-            print ('Videomass: Error, no panels shown')
-    
-    #------------------------------------------------------------------#
+            print('Videomass: Error, no panels shown')
+    # ------------------------------------------------------------------#
+
     def Newprofile(self, event):
         """
         Store new profile in the selected preset of the presets manager
-        panel. The list is reloaded automatically after pressed ok button 
+        panel. The list is reloaded automatically after pressed ok button
         in the dialog for update view.
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Addprof()
         else:
-            print ('Videomass: Error, no presets manager panel shown')
-    #------------------------------------------------------------------#
+            print('Videomass: Error, no presets manager panel shown')
+    # ------------------------------------------------------------------#
+
     def Delprofile(self, event):
         """
         Delete the selected preset of the presets manager
@@ -456,50 +457,53 @@ class MainFrame(wx.Frame):
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Delprof()
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Editprofile(self, event):
         """
         Edit selected item in the list control of the presets manager
-        panel. The list is reloaded automatically after pressed ok button 
+        panel. The list is reloaded automatically after pressed ok button
         in the dialog.
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Editprof(self)
-        
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def onCustomSave(self, event):
         """
         Intercept the button 'save' event in the filedrop or textdrop
         panels and sets file destination path
-        
+
         """
         self.File_Save(self)
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def on_close(self, event):
         """
         switch to panels or destroy the videomass app.
-        
+
         """
         if self.ProcessPanel.IsShown():
             self.ProcessPanel.on_close(self)
-            
-        #elif self.topicname:
+
+        # elif self.topicname:
         else:
-            if wx.MessageBox(_('Are you sure you want to exit?'), 
-                    _('Exit'), wx.ICON_QUESTION | wx.YES_NO, 
-                    self) == wx.YES:
+            if wx.MessageBox(_('Are you sure you want to exit?'), _('Exit'),
+                             wx.ICON_QUESTION | wx.YES_NO,
+                             self) == wx.YES:
                 self.Destroy()
-    
-     #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def on_Kill(self):
         """
         Try to kill application during a process thread
         that does not want to terminate with the abort button
-        
+
         """
         self.Destroy()
-    
-    #### -------------   BUILD THE MENU BAR  ----------------###
+
+    # -------------   BUILD THE MENU BAR  ----------------###
+
     def videomass_menu_bar(self):
         """
         Make a menu bar. Per usare la disabilitazione di un menu item devi
@@ -509,13 +513,13 @@ class MainFrame(wx.Frame):
         self.menuBar.EnableTop(6, False) per disabilitare la voce Help.
         """
         self.menuBar = wx.MenuBar()
-        
-        ####----------------------- file
+
+        # ----------------------- file
         fileButton = wx.Menu()
-        
-        self.file_save = fileButton.Append(wx.ID_SAVE, _("Choose a Destination " 
-                                                        "folder.."), 
-                        _("Choice a folder where save processed files"))
+
+        self.file_save = fileButton.Append(wx.ID_SAVE,
+                                           _("Choose a Destination folder.."),
+                         _("Choice a folder where save processed files"))
         fileButton.AppendSeparator()
         self.new_prst = fileButton.Append(wx.ID_NEW, _("Create new preset "),
                          _("Create a new preset to use on Presets Manager"))
@@ -525,14 +529,14 @@ class MainFrame(wx.Frame):
                        _("Make a back-up of the selected preset on combobox"
                                     ))
         self.restore = fileButton.Append(wx.ID_REPLACE, _("Restore a previously "
-                                                "saved preset"), 
+                                                "saved preset"),
                 _("Replace the selected preset with other saved custom preset.")
                                                 )
         self.default = fileButton.Append(wx.ID_ANY, _("Reset the current preset "),
                             _("Replace the selected preset with default values.")
                                                 )
         fileButton.AppendSeparator()
-        
+
         self.default_all = fileButton.Append(wx.ID_UNDO, _("Reset all presets "),
                          _("Revert all presets to default values")
                                                 )
@@ -541,57 +545,57 @@ class MainFrame(wx.Frame):
                          _("Remove the selected preset on Presets Manager")
                                                 )
         fileButton.AppendSeparator()
-        self.refresh = fileButton.Append(wx.ID_REFRESH, _("Reload presets list"), 
+        self.refresh = fileButton.Append(wx.ID_REFRESH, _("Reload presets list"),
                                            _("..Sometimes it can be useful"))
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"), _("Close Videomass"))
-        self.menuBar.Append(fileButton,"&File")
-        
-        ####------------------ tools button
+        self.menuBar.Append(fileButton, "&File")
+
+        #------------------ tools button
         toolsButton = wx.Menu()
-        
-        playing = toolsButton.Append( wx.ID_ANY, _("While playing"), 
+
+        playing = toolsButton.Append(wx.ID_ANY, _("While playing"),
         _("Show dialog box with keyboard shortcuts useful during playback"))
         toolsButton.AppendSeparator()
-        checkconf = toolsButton.Append( wx.ID_ANY, _("FFmpeg specifications"), 
+        checkconf = toolsButton.Append(wx.ID_ANY, _("FFmpeg specifications"),
                             _("Shows the configuration features of FFmpeg"))
         toolsButton.AppendSeparator()
-        ckformats = toolsButton.Append( wx.ID_ANY, _("FFmpeg file formats"),
+        ckformats = toolsButton.Append(wx.ID_ANY, _("FFmpeg file formats"),
                                 _("Shows file formats available on FFmpeg"))
         toolsButton.AppendSeparator()
-        ckcoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg encoders"),
+        ckcoders = toolsButton.Append(wx.ID_ANY, _("FFmpeg encoders"),
                                 _("Shows available encoders on FFmpeg"))
-        ckdecoders = toolsButton.Append( wx.ID_ANY, _("FFmpeg decoders"),
+        ckdecoders = toolsButton.Append(wx.ID_ANY, _("FFmpeg decoders"),
                                 _("Shows available decoders on FFmpeg"))
         toolsButton.AppendSeparator()
-        searchtopic = toolsButton.Append( wx.ID_ANY, _("FFmpeg search topics"),
+        searchtopic = toolsButton.Append(wx.ID_ANY, _("FFmpeg search topics"),
                         _("Show a dialog box to help you find FFmpeg topics"))
         toolsButton.AppendSeparator()
-        openlogdir = toolsButton.Append( wx.ID_ANY, _("Log directory"),
+        openlogdir = toolsButton.Append(wx.ID_ANY, _("Log directory"),
                             _("Opens the Videomass log directory if it exists"))
-        openconfdir = toolsButton.Append( wx.ID_ANY,
+        openconfdir = toolsButton.Append(wx.ID_ANY,
                                          _("Configuration directory"),
                             _("Opens the Videomass configuration directory"))
-        self.menuBar.Append(toolsButton,_("&Tools"))
-        
-        ####------------------ setup button
+        self.menuBar.Append(toolsButton, _("&Tools"))
+
+        # ------------------ setup button
         setupButton = wx.Menu()
-        setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"), 
+        setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"),
                                        _("General Settings"))
-        
+
         self.menuBar.Append(setupButton,_("&Preferences"))
-        
-        ####------------------ help buton
+
+        # ------------------ help buton
         helpButton = wx.Menu()
-        helpItem = helpButton.Append( wx.ID_HELP, _("User Guide"), "")
-        wikiItem = helpButton.Append( wx.ID_ANY, _("Wiki"), "")
+        helpItem = helpButton.Append(wx.ID_HELP, _("User Guide"), "")
+        wikiItem = helpButton.Append(wx.ID_ANY, _("Wiki"), "")
         helpButton.AppendSeparator()
-        issueItem = helpButton.Append( wx.ID_ANY, _("Issue tracker"), "")
+        issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"), "")
         helpButton.AppendSeparator()
         transItem = helpButton.Append(wx.ID_ANY,_('Videomass Translation...'),
-                                                '')
+                                                  '')
         helpButton.AppendSeparator()
-        DonationItem = helpButton.Append( wx.ID_ANY, _("Donation"), "")
+        DonationItem = helpButton.Append(wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()
         docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
         helpButton.AppendSeparator()
@@ -600,9 +604,9 @@ class MainFrame(wx.Frame):
         self.menuBar.Append(helpButton, _("&Help"))
 
         self.SetMenuBar(self.menuBar)
-        
-        #-----------------------Binding menu bar-------------------------#
-        #----FILE----
+
+        # -----------------------Binding menu bar-------------------------#
+        # ----FILE----
         self.Bind(wx.EVT_MENU, self.File_Save, self.file_save)
         self.Bind(wx.EVT_MENU, self.New_preset, self.new_prst)
         self.Bind(wx.EVT_MENU, self.Saveme, self.saveme)
@@ -612,7 +616,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Del_preset, self.del_prst)
         self.Bind(wx.EVT_MENU, self.Refresh, self.refresh)
         self.Bind(wx.EVT_MENU, self.Quiet, exitItem)
-        #----TOOLS----
+        # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
@@ -621,9 +625,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.Openlog, openlogdir)
         self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
-        #----SETUP----
+        # ----SETUP----
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
-        #----HELP----
+        # ----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
         self.Bind(wx.EVT_MENU, self.Wiki, wikiItem)
         self.Bind(wx.EVT_MENU, self.Issues, issueItem)
@@ -632,14 +636,15 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
         self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
-        
-    #--------Menu Bar Event handler (callback)
-    
-    #-------------------------- File Menu -----------------------------#
+
+    # --------Menu Bar Event handler (callback)
+
+    # -------------------------- File Menu -----------------------------#
+
     def File_Save(self, event):
         """
         Open the file browser dialog to choice output file destination
-        
+
         """
         dialdir = wx.DirDialog(self, _("Videomass: Choose a directory"))
         if dialdir.ShowModal() == wx.ID_OK:
@@ -649,184 +654,195 @@ class MainFrame(wx.Frame):
             self.textDnDTarget.file_dest = self.file_destin
             self.fileDnDTarget.file_dest = self.file_destin
             dialdir.Destroy()
-        
-    #--------------------------------------------------#
+    # --------------------------------------------------#
 
     def Quiet(self, event):
         """
         destroy the videomass.
         """
         self.on_close(self)
-    
-    #--------------------------------------------------#
+    # --------------------------------------------------#
+
     def New_preset(self, event):
         """
         Call New_preset_prst from Prrsets Manager panel
-        
+
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.New_preset_prst()
-    #--------------------------------------------------#
+    # --------------------------------------------------#
+
     def Saveme(self, event):
         """
         call method for save a single file copy of preset.
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Saveme()
-    #--------------------------------------------------#
+    # --------------------------------------------------#
+
     def Restore(self, event):
         """
         call restore a single preset file in the path presets of the program
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Restore()
-    #--------------------------------------------------#
+    # --------------------------------------------------#
+
     def Default(self, event):
         """
         call copy the single original preset file into the configuration
         folder. This replace new personal changes make at profile.
-        """ 
+        """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Default()
-    #--------------------------------------------------#
+    # --------------------------------------------------#
+
     def Default_all(self, event):
         """
         call restore all preset files in the path presets of the program
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Default_all()
-    #--------------------------------------------------#
+    # --------------------------------------------------#
+
     def Del_preset(self, event):
-        """ 
+        """
         Call Del_preset_prst from Prrsets Manager panel
         Remove the selected preset from /prst presets
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Del_preset_prst()
-    #--------------------------------------------------#
+    # --------------------------------------------------#
+
     def Refresh(self, event):
-        """ 
+        """
         call Pass to reset_list function for re-charging list
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Refresh()
-    #--------------------------------------------------#
-                
-    #--------- Menu  Preferences
+
+    # --------- Menu  Preferences
 
     def Setup(self, event):
         """
         Call the module setup for setting preferences
         """
-        #self.parent.Setup(self)
+        # self.parent.Setup(self)
         setup_dlg = settings.Setup(self, self.iconset)
         setup_dlg.ShowModal()
-    
-    #--------- Menu Tools
+
+    # --------- Menu Tools
+
     def durinPlayng(self, event):
         """
         show dialog with shortcuts keyboard for FFplay
         """
         dlg = while_playing.While_Playing(self.OS)
         dlg.Show()
-        
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Check_conf(self, event):
         """
         Call IO_tools.test_conf
-        
+
         """
         IO_tools.test_conf()
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Check_formats(self, event):
         """
         IO_tools.test_formats
-        
+
         """
         IO_tools.test_formats()
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Check_enc(self, event):
         """
         IO_tools.test_encoders
-        
+
         """
         IO_tools.test_codecs('-encoders')
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Check_dec(self, event):
         """
         IO_tools.test_encoders
-        
+
         """
         IO_tools.test_codecs('-decoders')
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Search_topic(self, event):
         """
         Show a dialog box to help you find FFmpeg topics
-        
+
         """
         dlg = ffmpeg_search.FFmpeg_Search(self.OS)
         dlg.Show()
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Openlog(self, event):
         """
         Open the log diretctory with file manager
-        
+
         """
         IO_tools.openpath('openlog')
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Openconf(self, event):
         """
         Open the configuration folder with file manager
-        
+
         """
         IO_tools.openpath('dirconf')
-        
-    #--------- Menu Edit
+
+    # --------- Menu Edit
     def Helpme(self, event):
         """Online User guide"""
         page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
         webbrowser.open(page)
+    # ------------------------------------------------------------------#
 
-    #------------------------------------------------------------------#
     def Wiki(self, event):
         """Wiki page """
         page = 'https://github.com/jeanslack/Videomass/wiki'
         webbrowser.open(page)
-        
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Issues(self, event):
         """Display Issues page on github"""
         page = 'https://github.com/jeanslack/Videomass/issues'
         webbrowser.open(page)
-        
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Translations(self, event):
         """Display Issues page on github"""
         page = ('https://github.com/jeanslack/Videomass/blob/master/docs/'
-               'localization_howto.md')
+                'localization_howto.md')
         webbrowser.open(page)
-        
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Donation(self, event):
         """Display Issues page on github"""
         page = 'https://jeanslack.github.io/Videomass/donation.html'
         webbrowser.open(page)
-        
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def DocFFmpeg(self, event):
         """Display FFmpeg page documentation"""
         page = 'https://www.ffmpeg.org/documentation.html'
         webbrowser.open(page)
-        
-    #-------------------------------------------------------------------#
+    # -------------------------------------------------------------------#
+
     def CheckNewReleases(self, event):
         """
-        Check for new version releases of Videomass, useful for 
+        Check for new version releases of Videomass, useful for
         users with Videomass installer on Windows and MacOs.
         """
         from videomass3.vdms_sys.msg_info import current_release
         """
-        FIXME : There are was some error regarding 
+        FIXME : There are was some error regarding
         [SSL: CERTIFICATE_VERIFY_FAILED]
         see:
         <https://stackoverflow.com/questions/27835619/urllib-and-ssl-
@@ -836,20 +852,16 @@ class MainFrame(wx.Frame):
         """
         import ssl
         import urllib.request
-        
+
         cr = current_release()
-        
-        #ssl._create_default_https_context = ssl._create_unverified_context
+
+        # ssl._create_default_https_context = ssl._create_unverified_context
 
         try:
             context = ssl._create_unverified_context()
             f = urllib.request.urlopen('https://pypi.org/project/videomass/',
                                        context=context
                                        )
-            #f = urllib.request.urlopen(
-                            #'https://test.pypi.org/project/videomass/',
-                            #context=context
-                                       #)
             myfile = f.read().decode('UTF-8')
             page = myfile.strip().split()
             indx = ''
@@ -858,98 +870,96 @@ class MainFrame(wx.Frame):
                     indx = page.index(v)
 
         except IOError as error:
-            wx.MessageBox("%s" % error, "Videomass: ERROR", 
+            wx.MessageBox("%s" % error, "Videomass: ERROR",
                           wx.ICON_ERROR, None
                           )
             return
-        
+
         except urllib.error.HTTPError as error:
-            wx.MessageBox("%s" % error, "Videomass: ERROR", 
+            wx.MessageBox("%s" % error, "Videomass: ERROR",
                           wx.ICON_ERROR
                           )
             return
-            
-        if indx: 
-            new_major, new_minor, new_micro =  page[indx+2].split('.')
-            new_version = int('%s%s%s' %(new_major, new_minor, new_micro))
+
+        if indx:
+            new_major, new_minor, new_micro = page[indx + 2].split('.')
+            new_version = int('%s%s%s' % (new_major, new_minor, new_micro))
             this_major, this_minor, this_micro = cr[2].split('.')
-            this_version = int('%s%s%s' %(this_major, this_minor, this_micro))
-            
+            this_version = int('%s%s%s' % (this_major, this_minor, this_micro))
+
             if new_version > this_version:
-                wx.MessageBox(_('A new version (v{0}) of Videomass is available'
-                                '\nfrom <https://pypi.org/project/videomass/>') 
-                            .format(page[indx+2]), "Videomass: Check new version", 
-                                wx.ICON_INFORMATION, None
-                                )
+                wx.MessageBox(_('A new version (v{0}) of Videomass is '
+                                'available\nfrom <https://pypi.org/project/'
+                                'videomass/>').format(page[indx + 2]),
+                              "Videomass: Check new version",
+                              wx.ICON_INFORMATION, None)
             else:
                 wx.MessageBox(_('You are already using the latest version '
-                                '(v{0}) of Videomass').format(cr[2]), 
-                                "Videomass: Check new version", 
-                                wx.ICON_INFORMATION, None
-                                )
+                                '(v{0}) of Videomass').format(cr[2]),
+                              "Videomass: Check new version",
+                              wx.ICON_INFORMATION, None)
         else:
             wx.MessageBox(_('An error was found in the search for '
                             'the web page.\nSorry for this inconvenience.'),
-                            "Videomass: Warning", wx.ICON_EXCLAMATION, None
-                          )
+                          "Videomass: Warning", wx.ICON_EXCLAMATION, None)
             return
-    
-    #-------------------------------------------------------------------#
+    # -------------------------------------------------------------------#
+
     def Info(self, event):
         """
         Display the program informations and developpers
         """
         infoprg.info(self, self.videomass_icon)
-        
-    ####-----------------  BUILD THE TOOL BAR  --------------------###
+
+    # -----------------  BUILD THE TOOL BAR  --------------------###
+
     def videomass_tool_bar(self):
         """
         Makes and attaches the view toolsBtn bar
         """
-        #--------- Properties
-        self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT|
-                                                 wx.TB_FLAT|
+        # -------- Properties
+        self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT |
+                                                 wx.TB_FLAT |
                                                  wx.TB_TEXT))
-        self.toolbar.SetToolBitmapSize((32,32))
+        self.toolbar.SetToolBitmapSize((32, 32))
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         # ------- Run process button
         self.toolbar.AddStretchableSpace()
         self.toolbar.AddSeparator()
-        back = self.toolbar.AddTool(wx.ID_FILE3, (''), 
-                                    wx.Bitmap(self.icon_mainback)
-                                          )
+        back = self.toolbar.AddTool(wx.ID_FILE3, (''),
+                                    wx.Bitmap(self.icon_mainback))
         self.toolbar.AddSeparator()
-        forward = self.toolbar.AddTool(wx.ID_FILE4, (''), 
-                                    wx.Bitmap(self.icon_mainforward)
-                                          )
+        forward = self.toolbar.AddTool(wx.ID_FILE4, (''),
+                                       wx.Bitmap(self.icon_mainforward))
         self.toolbar.AddSeparator()
-        run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'), 
-                                    wx.Bitmap(self.icon_runconversion)
-                                          )
+        run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'),
+                                          wx.Bitmap(self.icon_runconversion))
         self.toolbar.AddSeparator()
         self.toolbar.AddStretchableSpace()
-        
+
         # finally, create it
         self.toolbar.Realize()
-        
-        #----------------- Tool Bar Binding (evt)-----------------------#
+
+        # ----------------- Tool Bar Binding (evt)-----------------------#
         self.Bind(wx.EVT_TOOL, self.Run_Coding, run_coding)
         self.Bind(wx.EVT_TOOL, self.on_Back, back)
         self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
 
-    #--------------- Tool Bar Callback (event handler) -----------------#
+    # --------------- Tool Bar Callback (event handler) -----------------#
+
     def on_Back(self, event):
         """
         Show URLs import panel.
         """
         if self.textDnDTarget.IsShown() or self.fileDnDTarget.IsShown():
             self.choosetopicRetrieve()
-            
-        elif self.topicname in ('Audio/Video Conversions','Presets Manager'):
+
+        elif self.topicname in ('Audio/Video Conversions', 'Presets Manager'):
             self.File_import(self, self.topicname)
         elif self.topicname == 'Youtube Downloader':
             self.Text_import(self, self.topicname)
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def on_Forward(self, event):
         """
         redirect on corresponding panel
@@ -957,33 +967,35 @@ class MainFrame(wx.Frame):
         if self.topicname == 'Audio/Video Conversions':
             data = self.fileDnDTarget.on_Redirect()
             if not data:
-                wx.MessageBox(_('Drag at least one file'), "Videomass", 
-                             wx.ICON_INFORMATION, self)
+                wx.MessageBox(_('Drag at least one file'), "Videomass",
+                              wx.ICON_INFORMATION, self)
                 return
+
             self.data_files = data
             self.switch_av_conversions(self)
 
         elif self.topicname == 'Youtube Downloader':
             data = self.textDnDTarget.topic_Redirect()
             if not data:
-                wx.MessageBox(_('Append at least one URL'), "Videomass", 
-                             wx.ICON_INFORMATION, self)
+                wx.MessageBox(_('Append at least one URL'), "Videomass",
+                              wx.ICON_INFORMATION, self)
                 return
             self.youtube_Downloader(self, data)
-            
+
         elif self.topicname == 'Presets Manager':
             data = self.fileDnDTarget.on_Redirect()
             if not data:
-                wx.MessageBox(_('Drag at least one file'), "Videomass", 
-                             wx.ICON_INFORMATION, self)
+                wx.MessageBox(_('Drag at least one file'), "Videomass",
+                              wx.ICON_INFORMATION, self)
                 return
             self.data_files = data
             self.switch_presets_manager(self)
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def File_import(self, event, which):
         """
         Show files import panel.
-        
+
         """
         self.topicname = which
         self.textDnDTarget.Hide(), self.ytDownloader.Hide()
@@ -992,33 +1004,33 @@ class MainFrame(wx.Frame):
         if self.file_destin:
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.file_destin)
-        self.menu_items()#disable some menu items
+        self.menu_items()  # disable some menu items
         self.toolbar.Show(), self.btnpanel.Hide()
         self.toolbar.EnableTool(wx.ID_FILE4, True)
         self.toolbar.EnableTool(wx.ID_OK, False)
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
-        
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Text_import(self, event, which):
         """
         Show URLs import panel.
         """
         self.topicname = which
-        self.fileDnDTarget.Hide(),self.ytDownloader.Hide()
+        self.fileDnDTarget.Hide(), self.ytDownloader.Hide()
         self.VconvPanel.Hide(), self.ChooseTopic.Hide()
         self.PrstsPanel.Hide(), self.textDnDTarget.Show()
         if self.file_destin:
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.file_destin)
-        self.menu_items()#disable some menu items
+        self.menu_items()  # disable some menu items
         self.toolbar.Show(), self.btnpanel.Hide()
         self.toolbar.EnableTool(wx.ID_FILE4, True)
         self.toolbar.EnableTool(wx.ID_OK, False)
         self.Layout()
         self.statusbar_msg(_('Add URLs'), None)
+    # ------------------------------------------------------------------#
 
-    #------------------------------------------------------------------#
     def youtube_Downloader(self, event, data):
         """
         Show youtube-dl downloader
@@ -1031,63 +1043,66 @@ class MainFrame(wx.Frame):
         self.data_url = data
         self.file_destin = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.VconvPanel.Hide(), self.PrstsPanel.Hide(), self.ytDownloader.Show()
+        self.VconvPanel.Hide(), self.PrstsPanel.Hide(),
+        self.ytDownloader.Show()
         self.statusbar_msg(_('Youtube Downloader'), None)
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
-        self.btn_saveprf.Hide(),self.btn_duration.Hide(),self.btn_metaI.Show()
-        self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
-        self.menu_items()#disable some menu items
+        self.btn_saveprf.Hide(), self.btn_duration.Hide(),
+        self.btn_metaI.Show(), self.btn_newprf.Hide()
+        self.btn_delprf.Hide(), self.btn_editprf.Hide()
+        self.menu_items()  # disable some menu items
         self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
+    # ------------------------------------------------------------------#
 
-    #------------------------------------------------------------------#
     def switch_av_conversions(self, event):
         """
         Show Video converter panel
         """
         self.file_destin = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.PrstsPanel.Hide(), self.VconvPanel.Show() 
+        self.ytDownloader.Hide(), self.PrstsPanel.Hide()
+        self.VconvPanel.Show()
         self.statusbar_msg(_('Audio/Video Conversions'), None)
-        filenames = [f['format']['filename'] for f in 
-                         self.data_files if f['format']['filename']
-                         ]
-        if not filenames == self.file_src:
-            self.file_src = filenames
-            self.duration = [f['format']['duration'] for f in 
-                            self.data_files if f['format']['duration']
-                            ]
-            self.VconvPanel.normalize_default()
-            self.PrstsPanel.normalization_default()
-        self.toolbar.Show(), self.btnpanel.Show()
-        self.btn_newprf.Hide(), self.btn_delprf.Hide(), self.btn_editprf.Hide()
-        self.btn_saveprf.Show(), self.btn_duration.Show(),
-        self.btn_metaI.Show(), self.btn_playO.Show()
-        self.menu_items()#disable some menu items
-        self.toolbar.EnableTool(wx.ID_FILE4, False)
-        self.toolbar.EnableTool(wx.ID_OK, True)
-        self.Layout()
-        
-    #------------------------------------------------------------------#
-    def switch_presets_manager(self, event):
-        """
-        Show presets manager panel
-        
-        """
-        self.file_destin = self.fileDnDTarget.file_dest
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(), 
-        self.PrstsPanel.Show()
-        self.statusbar_msg(_('Presets Manager'), None)
-        filenames = [f['format']['filename'] for f in 
+        filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
         if not filenames == self.file_src:
             self.file_src = filenames
-            self.duration = [f['format']['duration'] for f in 
-                            self.data_files if f['format']['duration']
-                            ]
+            self.duration = [f['format']['duration'] for f in
+                             self.data_files if f['format']['duration']
+                             ]
+            self.VconvPanel.normalize_default()
+            self.PrstsPanel.normalization_default()
+        self.toolbar.Show(), self.btnpanel.Show()
+        self.btn_newprf.Hide(), self.btn_delprf.Hide()
+        self.btn_editprf.Hide(), self.btn_saveprf.Show()
+        self.btn_duration.Show(), self.btn_metaI.Show(), self.btn_playO.Show()
+        self.menu_items()  # disable some menu items
+        self.toolbar.EnableTool(wx.ID_FILE4, False)
+        self.toolbar.EnableTool(wx.ID_OK, True)
+        self.Layout()
+    # ------------------------------------------------------------------#
+
+    def switch_presets_manager(self, event):
+        """
+        Show presets manager panel
+
+        """
+        self.file_destin = self.fileDnDTarget.file_dest
+        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
+        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
+        self.PrstsPanel.Show()
+        self.statusbar_msg(_('Presets Manager'), None)
+        filenames = [f['format']['filename'] for f in
+                     self.data_files if f['format']['filename']
+                     ]
+        if not filenames == self.file_src:
+            self.file_src = filenames
+            self.duration = [f['format']['duration'] for f in
+                             self.data_files if f['format']['duration']
+                             ]
             self.PrstsPanel.normalization_default()
             self.VconvPanel.normalize_default()
         self.toolbar.Show(), self.btnpanel.Show()
@@ -1095,27 +1110,27 @@ class MainFrame(wx.Frame):
         self.btn_saveprf.Hide(), self.btn_duration.Show()
         self.btn_metaI.Show(), self.btn_playO.Show()
         self.saveme.Enable(True)
-        self.new_prst.Enable(True), self.del_prst.Enable(True), 
-        self.restore.Enable(True), self.default.Enable(True), 
+        self.new_prst.Enable(True), self.del_prst.Enable(True),
+        self.restore.Enable(True), self.default.Enable(True),
         self.default_all.Enable(True), self.refresh.Enable(True),
         self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_OK, True)
         self.Layout()
-            
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def switch_Process(self, *varargs):
         """
     1) TIME DEFINITION FOR THE PROGRESS BAR
-        For a suitable and efficient progress bar, if a specific 
-        time sequence has been set with the duration tool, the total 
-        duration of each media file will be replaced with the set time 
-        sequence. Otherwise the duration of each media will be the one 
+        For a suitable and efficient progress bar, if a specific
+        time sequence has been set with the duration tool, the total
+        duration of each media file will be replaced with the set time
+        sequence. Otherwise the duration of each media will be the one
         originated from its real duration.
-        
+
     2) STARTING THE PROCESS
-        Here the panel with the progress bar is instantiated which will 
+        Here the panel with the progress bar is instantiated which will
         assign a corresponding thread.
-        
+
         """
         if self.time_seq:
             newDuration = []
@@ -1125,45 +1140,46 @@ class MainFrame(wx.Frame):
         else:
             duration = self.duration
 
-        self.btnpanel.Hide()# hide buttons bar 
-        #Hide all others panels:
+        self.btnpanel.Hide()  # hide buttons bar
+        # Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.ytDownloader.Hide(), self.VconvPanel.Hide(), 
+        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
         self.PrstsPanel.Hide(),
-        #Show the panel:
+        # Show the panel:
         self.ProcessPanel.Show()
         self.SetTitle(_('Processing Status - Videomass'))
-        [self.menuBar.EnableTop(x, False) for x in range(0,3)]
-        #Hide the tool bar
+        [self.menuBar.EnableTop(x, False) for x in range(0, 3)]
+        # Hide the tool bar
         self.toolbar.Hide()
         self.ProcessPanel.topic_thread(self.topicname, varargs, duration)
         self.Layout()
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def Run_Coding(self, event):
         """
-        By clicking the Start encoding button on the main frame, calls 
-        the on_ok method of the corresponding panel shown, which calls 
+        By clicking the Start encoding button on the main frame, calls
+        the on_ok method of the corresponding panel shown, which calls
         the 'switch_Process' method above.
         """
         if self.ytDownloader.IsShown():
             self.ytDownloader.on_Start()
         elif self.VconvPanel.IsShown():
-            self.file_src = [f['format']['filename'] for f in 
+            self.file_src = [f['format']['filename'] for f in
                              self.data_files if f['format']['filename']
-                            ]
+                             ]
             self.VconvPanel.on_start()
         elif self.PrstsPanel.IsShown():
-            self.file_src = [f['format']['filename'] for f in 
+            self.file_src = [f['format']['filename'] for f in
                              self.data_files if f['format']['filename']
                              ]
             self.PrstsPanel.on_Start()
-            
-    #------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
+
     def panelShown(self, panelshown):
         """
         When clicking 'close button' of the processing panel
-        (see switch_Process method above), Retrieval at previous 
-        panel showing and re-enables the functions provided by 
+        (see switch_Process method above), Retrieval at previous
+        panel showing and re-enables the functions provided by
         the menu bar.
         """
         if panelshown == 'Audio/Video Conversions':
@@ -1178,7 +1194,7 @@ class MainFrame(wx.Frame):
             self.switch_presets_manager(self)
             self.btnpanel.Show()
         # Enable all top menu bar:
-        [self.menuBar.EnableTop(x, True) for x in range(0,3)]
-        self.SetTitle("Videomass")# set the appropriate title
+        [self.menuBar.EnableTop(x, True) for x in range(0, 3)]
+        self.SetTitle("Videomass")  # set the appropriate title
         # show buttons bar if the user has shown it:
         self.Layout()
