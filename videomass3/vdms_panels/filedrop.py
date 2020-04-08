@@ -31,17 +31,17 @@ import os
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import time_seconds
 
-get = wx.GetApp()
-userpath = get.userpath  # path to the configuration directory
-
-azure = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
-red = '#ea312d'
-yellow = '#a29500'
-greenolive = '#6aaf23'
-orange = '#f28924'
+AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
+RED = '#ea312d'
+YELLOW = '#a29500'
+GREENOLIVE = '#6aaf23'
+ORANGE = '#f28924'
 
 dirname = os.path.expanduser('~')  # /home/user/
 data_files = []
+
+get = wx.GetApp()
+userpath = get.userpath  # path to the configuration directory
 
 
 class MyListCtrl(wx.ListCtrl):

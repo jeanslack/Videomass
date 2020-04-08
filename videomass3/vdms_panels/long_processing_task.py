@@ -36,6 +36,13 @@ from videomass3.vdms_threads.two_pass_EBU import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass3.vdms_utils.utils import time_human
 
+# Used colour
+YELLOW = 200, 183, 47
+RED = 210, 24, 20
+VIOLET = 164, 30, 164
+GREEN = 30, 164, 30
+AZURE = 30, 62, 164
+
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
@@ -174,8 +181,7 @@ class Logging_Console(wx.Panel):
                                                    )
         elif varargs[0] == 'youtubedl downloader':
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = YoutubeDL_Downloader(varargs,
-                                                      self.logname)
+            self.PARENT_THREAD = YoutubeDL_Downloader(varargs, self.logname)
     # ----------------------------------------------------------------------
 
     def update_download(self, output, duration, status):
@@ -184,29 +190,28 @@ class Logging_Console(wx.Panel):
         "UPDATE_DOWNLOAD_EVT".
 
         """
-        ylw = 200, 183, 47
         if status == 'ERROR':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
             self.OutText.AppendText('%s\n' % output)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
             self.OutText.AppendText(_(' ...Failed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         elif status == 'WARNING':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 83, 47)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
             self.OutText.AppendText('%s\n' % output)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         elif status == 'DEBUG':
             if '[download] Destination' in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(ylw)))
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
                 self.OutText.AppendText('%s\n' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
             elif '[download]' not in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(ylw)))
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
                 self.OutText.AppendText('%s\n' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
@@ -215,7 +220,7 @@ class Logging_Console(wx.Panel):
             self.barProg.SetValue(duration[1])
 
         elif status == 'FINISHED':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
             self.OutText.AppendText('%s\n' % duration)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
@@ -244,7 +249,7 @@ class Logging_Console(wx.Panel):
             # self.OutText.AppendText(output)
 
         if not status == 0:  # error, exit status of the p.wait
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
             self.OutText.AppendText(_(' ...Failed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             return  # must be return here
@@ -268,8 +273,7 @@ class Logging_Console(wx.Panel):
 
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # not print the output
-                ylw = 200, 183, 47
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(ylw)))
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
                 self.OutText.AppendText('%s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
@@ -285,13 +289,13 @@ class Logging_Console(wx.Panel):
 
         """
         if end == 'ok':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 164, 30)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(GREEN)))
             self.OutText.AppendText(_(' ...Completed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(200, 183, 47)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
             self.OutText.AppendText('\n%s\n' % (count))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             self.ERROR = True
@@ -308,17 +312,17 @@ class Logging_Console(wx.Panel):
         At the end of the process
         """
         if self.ERROR is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(210, 24, 20)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
             self.OutText.AppendText(_('\n Sorry, tasks failed !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         elif self.ABORT is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(164, 30, 164)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(VIOLET)))
             self.OutText.AppendText(_('\n Interrupted Process !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         else:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(AZURE)))
             self.OutText.AppendText(_('\n All finished !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             self.labPerc.SetLabel("Percentage: 100%")
