@@ -6,143 +6,143 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
-April 04, 2020 V.2.0.2
+April 09, 2020 V.2.0.2
 +------------------------------------+
 
 BUGS:
-    * Fixed invalid multiplication value for time in hours (duration) on 
+    * Fixed invalid multiplication value for time in hours (duration) on
       utils.time_seconds(), long_processing_task, main_frame.cut_range()
-      functions.  
+      functions.
 
 ADDED:
     * test implementation for test cases of some program features.
-    * added useful progress information such as frame, fps, speed, bitrate 
+    * added useful progress information such as frame, fps, speed, bitrate
       and time remaining during conversion processes.
-      
-      
+
+
 +------------------------------------+
 March 28, 2020 V.2.0.1
 +------------------------------------+
 
 BUGS:
     * Fixed custom file destination settings when choosing from the file menu
-    * [Fixed Audio/Video Conversions panel] On 'Copy' video codec the output 
-      format did not match when set on the chosen container. 
+    * [Fixed Audio/Video Conversions panel] On 'Copy' video codec the output
+      format did not match when set on the chosen container.
 
 IMPROVEMENTS:
     * Fixed file head descriptions on any file.py
 
 ADDED:
     * New 'Copy' item on combobox 'Container' when 'Copy' video codec is setted
-    
+
 
 +------------------------------------+
 December 10, 2019 V.2.0.0
 +------------------------------------+
 
 BUGS:
-    * Fixed file rewrite issue when you set FFmpeg/FFplay logging levels from 
+    * Fixed file rewrite issue when you set FFmpeg/FFplay logging levels from
       the Settings dialog.
-    * Fixed wrong 'tune' name option for h264/h265 > "fastedecode" error fixed 
+    * Fixed wrong 'tune' name option for h264/h265 > "fastedecode" error fixed
       with > "fastdecode"
 
 NEWS:
     * GUI completely redesigned to make it easier for users to use.
-    
+
     * Now Videomass has embedded youtube-dl to download videos from Youtube
-    
+
         * Download multiple URLs with your settings.
-        
+
         * View video information without downloading it.
-        
+
         * Ability to download videos using the 'format code'.
-        
+
     * New and improved management of presets. Now Videomass uses JSON data for
-      its presets while old ones with xml data are now obsolete and incompatible. 
-      This allowed some advantages in the presets management and some savings 
+      its presets while old ones with xml data are now obsolete and incompatible.
+      This allowed some advantages in the presets management and some savings
       in system resources.
-        
-        * Now you can create your own presets from scratch or adding others 
+
+        * Now you can create your own presets from scratch or adding others
           directly to the presets directory.
-        
+
         * Presets can be removed (not deleted)
-          
+
         * Improved management of pass encoding parameters on any profile,
           making the parameter syntax similar to that of FFmpeg on CLI.
-    
-    * Complete support for audio normalization (peak, rms, ebu) also on the 
+
+    * Complete support for audio normalization (peak, rms, ebu) also on the
       Presets Manager tool.
-    
+
 ADDED:
-    * Added another text boxe on Presets Manager to view the two pass command 
-      line 
-    
+    * Added another text boxe on Presets Manager to view the two pass command
+      line
+
     * Dialog to add new profile has box entry for two pass conversion
-    
+
     * Added "Create new preset" to File menu item
-    
+
     * Added "Remove preset" to File menu item
-    
+
     * Add new entry box on Settings dialog to choose the user default directory
       to files storing
-      
-    * Added new controls to manage conversions: Containers, Media, Pixel Format, 
+
+    * Added new controls to manage conversions: Containers, Media, Pixel Format,
       Min Rate, Max Rate, Buffer Size, Subtitle Stream selections .
-    
-    * Added controls to select audio indexes from a input video to apply a 
-      specified process e.g. change audio codec, normalization, etc without 
+
+    * Added controls to select audio indexes from a input video to apply a
+      specified process e.g. change audio codec, normalization, etc without
       change others audio streams .
-      
+
 IMPROVEMENTS:
     * Improved all GUI layouts windows
-    * Code thinning 
-    
+    * Code thinning
+
 REPLACEMENTS and REMOVALS:
-    * Removed the Audio Conversions panel, now to export/extract the audio 
-      file you need to select it via the 'Media' combobox on the Audio/Video 
+    * Removed the Audio Conversions panel, now to export/extract the audio
+      file you need to select it via the 'Media' combobox on the Audio/Video
       Conversions panel
-      
-      
+
+
 +------------------------------------+
 October 06, 2019 V.1.7.0
 +------------------------------------+
 
 NEWS
     * Additional implementations:
-    
+
         * Audio normalization with EBU R128 algorithm (loudnorm) .
         * Audio normalization in RMS .
-        
+
     * Peak level normalization now has also target to below level .
-    * PEAK/RMS normalizations are not applied to unchanged levels, ie when 
+    * PEAK/RMS normalizations are not applied to unchanged levels, ie when
       the target does not ensure level changes.
 ADDED:
     * Added "-pix_fmt yuv420p" option for compatibilities.
-    * Added some support for the h.265/HEVC encoder for MKV, MP4, M4V and AVI 
+    * Added some support for the h.265/HEVC encoder for MKV, MP4, M4V and AVI
       formats.
-    * Added some support and controls for the libvpx/libvpx-vp9 (VP8, VP9) 
+    * Added some support and controls for the libvpx/libvpx-vp9 (VP8, VP9)
       encoders for WEBM format.
     * The libopus audio encoder for the opus format has also been added.
-    
+
 REPLACEMENTS and REMOVALS:
     * For ALL conversions that involve a double pass into Presets Manager panel,
       the `DOUBLE_PASS` separator between the first and second pass it is
       replaced by `-pass 1` for first pass and `-pass 2` for second pass.
-    * Removed the "Extract audio source from video" option on Videomass 
+    * Removed the "Extract audio source from video" option on Videomass
       because it will be reprogrammed separately in the future.
-    
+
 IMPROVEMENTS:
-    * The dialog box to show the level statistics for audio normalization 
+    * The dialog box to show the level statistics for audio normalization
       has been improved with more useful information.
     * code thinning in some file section in the old stuff.
     * Disabled the interaction on standard input on the task_processings.py
-      processes adding `-nostdin` since the interaction could not happen. 
+      processes adding `-nostdin` since the interaction could not happen.
     * Added some cosmetic improvement to interface.
-      
+
 BUG FIXES:
-    * fixed bug when choosing to copy the video codec that always enabled 
+    * fixed bug when choosing to copy the video codec that always enabled
       the audio alac format and left the other audio formats disabled.
-    * Fixed bitrate missing on single pass video (serius). This did not allow 
+    * Fixed bitrate missing on single pass video (serius). This did not allow
       to choose the bitrate for the conversion.
 
 
@@ -151,106 +151,106 @@ September 12, 2019 V.1.6.1
 +------------------------------------+
 
 BUG FIXES:
-    * The overwrite message 'file already exists' that appeared when exporting 
+    * The overwrite message 'file already exists' that appeared when exporting
       images was fixed
 
 IMPROVEMENTS:
     * enhanced errors management on all processes.
     * improved messages on the status of any processes.
-    * During the conversion ffmpeg errors will no longer interrupt all 
-      other activities in the queue; if an error occurred it will be marked 
-      with 'failed' but continue; if it has finished without errors it will 
-      be marked with 'completed'. Since not all ffmpeg messages are errors, 
+    * During the conversion ffmpeg errors will no longer interrupt all
+      other activities in the queue; if an error occurred it will be marked
+      with 'failed' but continue; if it has finished without errors it will
+      be marked with 'completed'. Since not all ffmpeg messages are errors,
       sometimes it happens to see more output marked with yellow color.
-    * The export of images from a movie now has the progress bar and all 
+    * The export of images from a movie now has the progress bar and all
       the normal functions such as process stop and real-time output display.
-    * Now to export images you need to select which files to convert in the 
+    * Now to export images you need to select which files to convert in the
       'Add file' panel (drag and drop).
-    * Now the images saved by the movies are named as filename + a progressive 
+    * Now the images saved by the movies are named as filename + a progressive
       number + .jpg.
-      All saved images are placed in a folder with the same file name + a 
+      All saved images are placed in a folder with the same file name + a
       progressive number that is saved in the selected output path to avoid
       over writings.
     * the logging level can now be optional, no longer mandatory the "error"
       flag, since the management of the output and errors has been improved.
     * Changed version to the videomass.conf and videomassWin32.conf to 1.4.
-    * When setting the seek point with the duration tool, the cutting time 
+    * When setting the seek point with the duration tool, the cutting time
       must also be set. Not vice versa.
-      
+
 ADD:
-    * The option to set the ffmpeg and ffplay loglevel flag has been added 
+    * The option to set the ffmpeg and ffplay loglevel flag has been added
       to the settings dialog.
-    * Added check box to disable or enable the "-cpu-used" flag as sometimes 
+    * Added check box to disable or enable the "-cpu-used" flag as sometimes
       it is not supported and causes more output to read.
     * Added new preset to save images from movie in jpg/png/bmp formats
     * Added "Remove selected file" from the context menu of the Add File panel
       (drag n drop) to remove a selected item with the right mouse button.
-    * Added more info data stream to dialog box list when saving the audio 
+    * Added more info data stream to dialog box list when saving the audio
       from the movie.
     * Now on Preset Manager panel a double click on a profile start the process.
-    * Added "-map 0" flag on all video conversion panel commands, to include 
+    * Added "-map 0" flag on all video conversion panel commands, to include
       all streams of imported video on exported video (audio streams, subtitle
       streams, etc.).
 
-REMOVALS and DISPLACEMENTS: 
-    * removed the setting to save the log file in another directory chosen 
-      by the user since the option to open the log directory had been 
-      implemented in the previous version of Videomass. 
-      
+REMOVALS and DISPLACEMENTS:
+    * removed the setting to save the log file in another directory chosen
+      by the user since the option to open the log directory had been
+      implemented in the previous version of Videomass.
+
 
 +------------------------------------+
 September 02, 2019 V.1.6.0
 +------------------------------------+
-    
+
 IMPROVEMENTS:
     * Translation improvements
     * Improved fonts depending on the operating system in some dialog
     * code thinning in some dialog box
-    * When you import a previously saved preset to replace it with another 
+    * When you import a previously saved preset to replace it with another
       one, you no longer need to select it in the drop-down menu
-    * Automatic reload presets list after restore presets 
-    * Added the video name in the "save audio stream from video" dialog when 
-      multiple languages ​​are available. This is good when you import more videos 
+    * Automatic reload presets list after restore presets
+    * Added the video name in the "save audio stream from video" dialog when
+      multiple languages ​​are available. This is good when you import more videos
       with more audio streams.
     * Improved log view in the Process panel
     * Improved writing log during on almost all processes
-    * Now the audio normalization is applied only on the sequence in relation 
+    * Now the audio normalization is applied only on the sequence in relation
       to the duration if set before volume dected, otherwise is applied to
       entire file.
-    * The choice of bit depth for compressed formats/codecs has been disabled 
+    * The choice of bit depth for compressed formats/codecs has been disabled
       on the audio parameters dialog
-        
+
 BUG FIXES:
-    * Fixed append text issue when use dialog box to search 
+    * Fixed append text issue when use dialog box to search
       FFmpeg options on Windows
-    * Set default choice when the user cancels the "save audio stream from video" 
+    * Set default choice when the user cancels the "save audio stream from video"
       dialog to choice a language audio stream, to avoid errors.
-    * The '-af volume = .0dB' parameter is omitted from the command to the 
+    * The '-af volume = .0dB' parameter is omitted from the command to the
       audio streams which does not requires the audio normalization process
     * Fixed message "File does not exist or not a valid file:" when playing
       exported files with more dot on filename .
-      
-REMOVALS and DISPLACEMENTS: 
-    * Changed default location of the 'videomass' configuration directory 
+
+REMOVALS and DISPLACEMENTS:
+    * Changed default location of the 'videomass' configuration directory
       on the user space, following the typical conventions of the OS.
         On *nix OS's:  '~/.config/videomass'
         On MacOs:      '~/Library/Application Support/videomass'
         On Windows:    'C:\Users\username\AppData\Roaming\videomass'
     * During processes conversion the new default logs directory is
       located to videomass directory configuration;log
-    * Removed the control of the text of the maximum audio peak level and the 
+    * Removed the control of the text of the maximum audio peak level and the
       average audio peak level in the normalization sections.
 
 ADD:
-    * new features to open the file manager on the Videomass configuration 
+    * new features to open the file manager on the Videomass configuration
       directory and on the logs directory (platform independent)
-    * Add the "Don't show this dialog again" on dialog before start 
+    * Add the "Don't show this dialog again" on dialog before start
       conversion on the Presets_Manager when profile command has been
       changed manually (Python3 only)
-    * Added a new dialog to show the list of volumes detected for audio 
+    * Added a new dialog to show the list of volumes detected for audio
       normalization
     * Added a new dialog to show keyboard shortcuts during playback.
-    
+
 
 +------------------------------------+
 August 24, 2019 V.1.5.5
@@ -258,22 +258,22 @@ August 24, 2019 V.1.5.5
 
 BUG FIXES:
     * Fixed wrong main window size when run on FreeBSD O.S.
-    * Fixed the annoying bug when you save the audio from the movie 
-      and at the end of the conversion drag other files into the DnD 
+    * Fixed the annoying bug when you save the audio from the movie
+      and at the end of the conversion drag other files into the DnD
       panel to save the audio from the movie again.
-    * Fixed the bug of multiple additions when writing the log file 
+    * Fixed the bug of multiple additions when writing the log file
       during the processes
-    * Fixed bug when using double pass encoding 
+    * Fixed bug when using double pass encoding
       in Python3: NameError: name 'cmd' is not defined
-    * Fix a short command promp display when use ffmpeg specifications 
+    * Fix a short command promp display when use ffmpeg specifications
       dialog on MS Windows
-      
-      
+
+
 ADD:
     * Added a new menu tools item on the menu bar
     * Add a summary dialog before start conversion on Presets Manager
     * Added dialog box to displaying the FFmpeg compilation specifications
-    * Added dialog box to displaying file formats available on FFmpeg 
+    * Added dialog box to displaying file formats available on FFmpeg
     * Added dialog box to displaying available encoders and ability
       by FFmpeg
     * Added dialog box to displaying available decoders and capability
@@ -281,10 +281,10 @@ ADD:
     * Added dialog box to search and view all the FFmpeg help options.
     * Added resize border to ffmpeg_search dialog
     * Added hscroll to textctrl in the ffmpeg_search
-    
+
 IMPROVEMENTS:
     * Messages output from command line during start-up
-    * Presets Manager panel: if the FFmpeg command is modified manually 
+    * Presets Manager panel: if the FFmpeg command is modified manually
       a confirmation message will appear before performing the conversion
     * Improvement of some message in tooltips
     * Improved name word definitions in some windows, for greater understanding.
@@ -297,15 +297,15 @@ August 2, 2019 V.1.4.6
 +------------------------------------+
 
 BUG FIXES:
-    * fixed parsing problem on media_info.py dialog, when the values 
+    * fixed parsing problem on media_info.py dialog, when the values
       have other signs '='
 
 IMPROVEMENTS:
-    * Improved display of the text box on spin control for adjusting the 
+    * Improved display of the text box on spin control for adjusting the
       peak audio level threshold on the audio_panel.py and video_panel.py
-      
+
 NEW:
-    * setup.py now supports the automatic installation of the pubsub module 
+    * setup.py now supports the automatic installation of the pubsub module
       for Python3 when videomass is installed with the 'pip' command
 
 +------------------------------------+
@@ -315,23 +315,23 @@ January 24, 2019 V.1.4.5
 BUG FIXES:
     * Fixed the 'ValueError' object is not subscriptable exception on
       Python3 when drop file with no duration (IO_tools.probeDuration())
-    * Fixed 'SyntaxError' issue on setup.py to create packages with the 
+    * Fixed 'SyntaxError' issue on setup.py to create packages with the
       appropriate modules packages (videomass2 or 3) during compiling
       with py2exe and py2app.
     * Corrected a conditional error on the Videomass launch code.
-  
+
 NEW [features/enhancements]:
     * Added new icons set to default settings.
     * The command line text of each profile is always editable now.
-    * Added install_requires for Windows and MacOs to automate the 
+    * Added install_requires for Windows and MacOs to automate the
       installation dependencies
-  
+
 IMPROVEMENTS:
-      
+
 REMOVALS and DISPLACEMENTS:
-    * Changed version to videomass.conf file configuration with new 
+    * Changed version to videomass.conf file configuration with new
       default settings
-    * Removed 'Enable write from command text line' from settings.py. This  
+    * Removed 'Enable write from command text line' from settings.py. This
       make editable the profile text into presets manager panel
 
 +------------------------------------+
@@ -339,27 +339,27 @@ January 14, 2019 V.1.4.4
 +------------------------------------+
 
 BUG FIXES:
-    * Resolved an execution problem after installing Videomass with 
-      the pip tool for Python3. 
-  
+    * Resolved an execution problem after installing Videomass with
+      the pip tool for Python3.
+
 NEW [features/enhancements]:
-    * Added compatibility with python3. Videomass now works on both 
+    * Added compatibility with python3. Videomass now works on both
       Python2 and Python3.
     * Added new useful entries in the help menu
     * Videomass icon has been recreated with a new logo and design
-  
+
 IMPROVEMENTS:
     * Improved the wizard dialog
-    * Improved the videomass.desktop for desktop menu specification on Linux 
-    * Improved progress bar during conversions with time specifications 
+    * Improved the videomass.desktop for desktop menu specification on Linux
+    * Improved progress bar during conversions with time specifications
       set with the Duration tool.
-      
+
 REMOVALS and DISPLACEMENTS:
-    
+
     * Videomass2/Videomass3 has been changed to Videomass.
     * Update locale
-    * "install_requires" has been removed from the SOURCE_BUILD function in 
-      setup.py. Unfortunately I have not yet found a pythonic way compatible 
+    * "install_requires" has been removed from the SOURCE_BUILD function in
+      setup.py. Unfortunately I have not yet found a pythonic way compatible
       with all systems to automate a dependency like wxPython.
 
 +------------------------------------+
@@ -367,32 +367,32 @@ December 29, 2018 V.1.3.4
 +------------------------------------+
 
 BUG FIXES:
-  
+
 NEW [features/enhancements]:
-  
+
 IMPROVEMENTS:
-      
+
 REMOVALS and DISPLACEMENTS:
-    * Removed the old and obsolete `libfaac` codec, as no longer supported by 
-      FFmpeg. It has been replaced with the codec `aac` freely redistributable 
+    * Removed the old and obsolete `libfaac` codec, as no longer supported by
+      FFmpeg. It has been replaced with the codec `aac` freely redistributable
       with FFmpeg.
-      
+
 +------------------------------------+
 December 22, 2018 V.1.3.3
 +------------------------------------+
 
 BUG FIXES:
-  
+
 NEW: [features/enhancements]
-    * Update the MANIFEST.in: For completeness, the MAcOsxSetup and 
+    * Update the MANIFEST.in: For completeness, the MAcOsxSetup and
       Win32Setup folders have been added to the source distribution
-  
+
 IMPROVEMENTS:
     * Improved setup.py script
-    * Change pathname icon (Icon=/usr/local/share/pixmaps/videomass.png) 
-      of the desktop entry to videomass.desktop for wheel and source 
+    * Change pathname icon (Icon=/usr/local/share/pixmaps/videomass.png)
+      of the desktop entry to videomass.desktop for wheel and source
       distributions
-      
+
 REMOVALS and DISPLACEMENTS:
     * Remove the wxPython dependency from setup.py for PyPi distribution
 
@@ -403,21 +403,21 @@ December 21, 2018 V.1.3.2
 BUG FIXES:
     * Fixed bug on the `Video Conversions` and `Audio Conversions` panels when
       set audio parameters specially with `wav` format.
-    * Fixed bug in the preview after `Save audio from movie`. The exit with 
+    * Fixed bug in the preview after `Save audio from movie`. The exit with
       invalid filename is be fixed.
-  
+
 NEW: [features/enhancements]
-    * Added new elements that improve accessibility and readability of audio 
+    * Added new elements that improve accessibility and readability of audio
       settings in the `Video Conversions` panel.
     * Improved buttons colour and appearance
     * Added new icons free and open source compatible with GPL3.
-    * Add supports for the localization of internationalization (i18n) 
+    * Add supports for the localization of internationalization (i18n)
     * Add support to Italian language.
-    * Now Videomass has wheel on PyPi installable via pip and support 
+    * Now Videomass has wheel on PyPi installable via pip and support
       for Linux/Macintosh/Unix/Windows
-  
+
 IMPROVEMENTS:
-    * Improved configuration file error handling: if the version of the 
+    * Improved configuration file error handling: if the version of the
       configuration file changes, it is automatically updated
 
 +------------------------------------+
@@ -429,12 +429,12 @@ BUG FIXES:
       (add: does not contain any stream).
     * FFmpeg's unrecognized errors are now better managed on volumedetect Processing
     * resolved the writing of the 'passlogfile' on the source folder of 'Videomass'
-       during double pass processes. Now, the log file will be written to the same 
+       during double pass processes. Now, the log file will be written to the same
        source output path.
     * Fixed bug that did not reproduce the exported file with preview button
-    * Fixed a bug that did not send the message for ASCII/UTF-8 support on all 
+    * Fixed a bug that did not send the message for ASCII/UTF-8 support on all
       processes with non-ASCII/UTF-8 file names related to shlex module on Unix.
-    * Fixed bug in the `Save Audio from Movie` when save as profile 
+    * Fixed bug in the `Save Audio from Movie` when save as profile
     * Fixed minor bugs
 
 ADDITIONAL FEATURES:
@@ -446,52 +446,52 @@ ADDITIONAL FEATURES:
         - crop
         - deinterlace/interlace
         - denoisers
-        
+
     * Each filter button has the color application to on/off state views.
     * Added new playback button to result preview of all filters set.
     * Added new button to clear all filters set.
     * Improved layout on Video conversions panel
     * Improved layout on Audio conversion panel
     * Added a new buttons bar with color application to on/off state views
-    * Accessibility to playback exported file, metadata display, and timeline 
+    * Accessibility to playback exported file, metadata display, and timeline
       duration, are now improved.
-    * Added a contextual menu on the drag n drop panel with playback and metadata 
-      feature of the selected item. This is activable by right click or double 
+    * Added a contextual menu on the drag n drop panel with playback and metadata
+      feature of the selected item. This is activable by right click or double
       click into one imported items.
     * Added message support for exceptions and errors in streaming playback (ffplay)
     * Added support for time sequences also on playback of input streaming
     * Added contextual help buttons with online user guides
 
 REMOVALS and DISPLACEMENTS:
-    * Removed the 'video size' function instead of the scale filter 
+    * Removed the 'video size' function instead of the scale filter
     * Move the 'save image from video' function to the 'format/containers' combobox
-    * Audio Conversion panel: Message box removed on the save profile with audio 
-      normalization enabled. Now you can also save parameters with audio 
+    * Audio Conversion panel: Message box removed on the save profile with audio
+      normalization enabled. Now you can also save parameters with audio
       normalization after a confirmation message.
     * Removed all html files for user's guide. Now the user guide is online only.
-  
+
 IMPROVEMENTS:
     * Improved settings storage on audio options for Audio and Video panels
     * Overall accessibility has been significantly improved
-    * Improved overall layout 
+    * Improved overall layout
 
 +------------------------------------+
 Set 22, 2018 V.1.0.1
 +------------------------------------+
 
-    * Fixed issue with the `Presets_Manager` panel during double-pass 
+    * Fixed issue with the `Presets_Manager` panel during double-pass
       conversion in Windows.
     * Modified `cpu-used` function in the settings dialog
     * Adding `-threads` function in the settings dialog
     * Fixed anomalies in `-cpu-used` function
-    * New version of the configuration file 
+    * New version of the configuration file
 
 +------------------------------------+
 Set 17, 2018 V.1.0.0
 +------------------------------------+
 This is first release of Videomass.
 
-Videomass presents itself with an interface completely renewed and enhanced 
+Videomass presents itself with an interface completely renewed and enhanced
 by many features:
 
     * Drag n Drop interface

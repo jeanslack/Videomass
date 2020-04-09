@@ -111,8 +111,7 @@ class Logging_Console(wx.Panel):
         self.ckbx_text = wx.CheckBox(self, wx.ID_ANY, (_("Suppress excess "
                                                          "output")))
         self.barProg = wx.Gauge(self, wx.ID_ANY, range=0)
-        self.labPerc = wx.StaticText(self, label="Percentage: 0%")
-        self.labff = wx.StaticText(self, label="")
+        self.labPerc = wx.StaticText(self, label="")
         self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -120,7 +119,6 @@ class Logging_Console(wx.Panel):
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add(self.OutText, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
-        sizer.Add(self.labff, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(self.barProg, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.labPerc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
@@ -246,7 +244,7 @@ class Logging_Console(wx.Panel):
 
         """
         # if self.ckbx_text.IsChecked(): #ffmpeg output messages in real time:
-            # self.OutText.AppendText(output)
+        #    self.OutText.AppendText(output)
 
         if not status == 0:  # error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
@@ -266,9 +264,10 @@ class Logging_Console(wx.Panel):
             for x, y in pairwise(out):
                 ffprog.append("%s: %s | " % (x, y))
             remaining = time_human(duration-timesum)
-            self.labPerc.SetLabel("Percentage: %s%%" % str(int(percentage)))
-            self.labff.SetLabel("%sTime Remaining: %s" % ("".join(ffprog),
-                                                          remaining))
+            self.labPerc.SetLabel("Processing... %s%% | %sTime Remaining: %s" %
+                                  (str(int(percentage)), "".join(ffprog),
+                                   remaining,)
+                                  )
             del output, duration
 
         else:  # append all others lines on the textctrl and log file
@@ -299,11 +298,9 @@ class Logging_Console(wx.Panel):
             self.OutText.AppendText('\n%s\n' % (count))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             self.ERROR = True
-            # self.labPerc.SetLabel("Percentage: 0%")
         else:
             self.barProg.SetRange(duration)  # set la durata complessiva
             self.barProg.SetValue(0)  # resetto la prog bar
-            self.labPerc.SetLabel("Percentage: 100%")
             self.OutText.AppendText('\n%s : "%s"\n' % (count, fname))
 
     # ----------------------------------------------------------------------
@@ -325,7 +322,6 @@ class Logging_Console(wx.Panel):
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(AZURE)))
             self.OutText.AppendText(_('\n All finished !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-            self.labPerc.SetLabel("Percentage: 100%")
             self.barProg.SetValue(0)
 
         self.button_stop.Enable(False)
@@ -369,5 +365,6 @@ class Logging_Console(wx.Panel):
         self.ABORT = False
         self.ERROR = False
         self.OutText.Clear()
+        self.labPerc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel
         # event.Skip()
