@@ -40,6 +40,22 @@ from videomass3.vdms_dialogs import video_filters
 from videomass3.vdms_frames import shownormlist
 from videomass3.vdms_utils import optimizations
 
+GREY_DISABLED = 165, 165, 165
+GREY_DARK = 28, 28, 28
+AZURE_NEON = 158, 201, 232
+YELLOW_LMN = 255, 255, 0
+# set widget colours in some case with html rappresentetion:
+azure = '#15a6a6'
+yellow = '#a29500'
+red = '#ea312d'
+orange = '#f28924'
+greenolive = '#6aaf23'
+green = '#268826'
+ciano = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
+violet = '#D64E93'
+limegreen = '#87A615'
+tropgreen = '#15A660'
+
 # setting the path to the configuration directory:
 get = wx.GetApp()
 DIRconf = get.DIRconf
@@ -170,15 +186,6 @@ optimization_hevc_avc = ('Default',
                          'x265 ABR for devices',
                          'x264 ABR-VBV live streaming',
                          'x265 ABR-VBV live streaming')
-# set widget colours in some case with html rappresentetion:
-azure = '#15a6a6'
-yellow = '#a29500'
-red = '#ea312d'
-orange = '#f28924'
-greenolive = '#6aaf23'
-green = '#268826'
-ciano = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
-violet = '#D64E93'
 
 
 class AV_Conv(wx.Panel):
@@ -549,7 +556,11 @@ class AV_Conv(wx.Panel):
             if not v:  # disable only not compatible with mkv
                 self.rdb_a.EnableItem(n, enable=False)
         sizer_nbAudio.Add(self.rdb_a, 1, wx.ALL | wx.EXPAND, 10)
-        self.box_audioProper = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio, wx.ID_ANY, _("Audio Properties")), wx.VERTICAL)
+        self.box_audioProper = wx.StaticBoxSizer(wx.StaticBox(
+                                                 self.nb_Audio, wx.ID_ANY,
+                                                 _("Audio Properties")),
+                                                 wx.VERTICAL
+                                                 )
         sizer_nbAudio.Add(self.box_audioProper, 1, wx.ALL | wx.EXPAND, 10)
         grid_a_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         self.box_audioProper.Add(grid_a_ctrl, 0, wx.ALL | wx.EXPAND, 15)
@@ -558,7 +569,9 @@ class AV_Conv(wx.Panel):
                                             size=(-1, 25),
                                             bitmap=setbmp,
                                             label=_("Settings"))
-        self.btn_aparam.SetBaseColours(startcolour=wx.Colour(158, 201, 232), foregroundcolour=wx.Colour(165, 165, 165))
+        self.btn_aparam.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                       foregroundcolour=wx.Colour(GREY_DISABLED
+                                                                  ))
         self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetTopStartColour(wx.Colour(self.btn_color))
@@ -629,8 +642,10 @@ class AV_Conv(wx.Panel):
                                                size=(-1, 25),
                                                bitmap=resizebmp,
                                                label=_("Resize"))
-        self.btn_videosize.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_videosize.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                          foregroundcolour=wx.Colour(
+                                              self.fBtnC
+                                              ))
         self.btn_videosize.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_videosize.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_videosize.SetTopStartColour(wx.Colour(self.btn_color))
@@ -641,8 +656,8 @@ class AV_Conv(wx.Panel):
                                           size=(-1, 25),
                                           bitmap=cropbmp,
                                           label=_("Crop Dimension"))
-        self.btn_crop.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_crop.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                     foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_crop.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_crop.SetTopStartColour(wx.Colour(self.btn_color))
@@ -653,8 +668,8 @@ class AV_Conv(wx.Panel):
                                             size=(-1, 25),
                                             bitmap=rotatebmp,
                                             label=_("Rotation"))
-        self.btn_rotate.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_rotate.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                       foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_rotate.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_rotate.SetTopStartColour(wx.Colour(self.btn_color))
@@ -666,8 +681,8 @@ class AV_Conv(wx.Panel):
                                             bitmap=deintbmp,
                                             label=_("De/Interlace")
                                             )
-        self.btn_lacing.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_lacing.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                       foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_lacing.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_lacing.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_lacing.SetTopStartColour(wx.Colour(self.btn_color))
@@ -678,8 +693,8 @@ class AV_Conv(wx.Panel):
                                             size=(-1, 25),
                                             bitmap=denoiserbmp,
                                             label="Denoisers")
-        self.btn_denois.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                        foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_denois.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                       foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_denois.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_denois.SetTopStartColour(wx.Colour(self.btn_color))
@@ -691,7 +706,7 @@ class AV_Conv(wx.Panel):
                                              size=(-1, 25),
                                              bitmap=playbmp,
                                              )
-        self.btn_preview.SetBaseColours(startcolour=wx.Colour(158, 201, 232))
+        self.btn_preview.SetBaseColours(startcolour=wx.Colour(AZURE_NEON))
         self.btn_preview.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_preview.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_preview.SetTopStartColour(wx.Colour(self.btn_color))
@@ -702,7 +717,7 @@ class AV_Conv(wx.Panel):
                                            size=(-1, 25),
                                            bitmap=resetbmp,
                                            )
-        self.btn_reset.SetBaseColours(startcolour=wx.Colour(158, 201, 232))
+        self.btn_reset.SetBaseColours(startcolour=wx.Colour(AZURE_NEON))
         self.btn_reset.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_reset.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_reset.SetTopStartColour(wx.Colour(self.btn_color))
@@ -716,7 +731,7 @@ class AV_Conv(wx.Panel):
         sizer_nbFilters.Add(self.box_aFilters, 1, wx.ALL | wx.EXPAND, 10)
         sizer_Anormalization = wx.BoxSizer(wx.VERTICAL)
         self.box_aFilters.Add(sizer_Anormalization, 0, wx.ALL | wx.EXPAND, 0)
-        self.rdbx_normalize = wx.RadioBox(self.nb_filters,wx.ID_ANY,
+        self.rdbx_normalize = wx.RadioBox(self.nb_filters, wx.ID_ANY,
                                           (_("Audio Normalization")),
                                           choices=[('Off'),
                                                    ('PEAK'),
@@ -740,8 +755,8 @@ class AV_Conv(wx.Panel):
                                              bitmap=analyzebmp,
                                              label=_("Volumedetect")
                                              )
-        self.btn_voldect.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(28, 28, 28))
+        self.btn_voldect.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                        foregroundcolour=wx.Colour(GREY_DARK))
         self.btn_voldect.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_voldect.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_voldect.SetTopStartColour(wx.Colour(self.btn_color))
@@ -754,8 +769,8 @@ class AV_Conv(wx.Panel):
                                              bitmap=peaklevelbmp,
                                              label=_("Volume Statistics")
                                              )
-        self.btn_details.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(28, 28, 28))
+        self.btn_details.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                        foregroundcolour=wx.Colour(GREY_DARK))
         self.btn_details.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_details.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_details.SetTopStartColour(wx.Colour(self.btn_color))
@@ -763,8 +778,8 @@ class AV_Conv(wx.Panel):
         sizer_peak.Add(self.btn_details, 0, wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY,
-                                          (_("Target level:"))
-                                          )
+                                           (_("Target level:"))
+                                           )
         sizer_peak.Add(self.lab_amplitude, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY,
                                         min_val=-99.0,
@@ -827,59 +842,72 @@ class AV_Conv(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
         # ---------------------- Tooltip
-        self.cmb_Vcod.SetToolTip(_('Available video codecs. "Copy" is not a '
-                'codec but indicate that the video stream is not to be re-'
-                'encoded and allows changing the format or other parameters'))
-        self.cmb_Vcont.SetToolTip(_('Output format and file extension. the '
-                'content may change based on the codec and media'))
-        self.cmb_Media.SetToolTip(_('"Video" to save the output file as a '
-                                    'video; "Audio" to save as an audio track'))
-        self.ckbx_pass.SetToolTip(_('It can reduce the file size, but takes '
-                                    'longer.'))
-        self.spinMinr.SetToolTip(_('Specifies a minimum tolerance to be used'))
-        self.spinMaxr.SetToolTip(_('Specifies a maximum tolerance. this is '
-                                   'only used in conjunction with buffer size'))
-        self.spinBufsize.SetToolTip(_('Specifies the decoder buffer size, '
-                                      'which determines the variability of '
-                                      'the output bitrate '))
-        self.rdb_deadline.SetToolTip(_('"good" is the default and recommended '
-                'for most applications; "best" is recommended if you have lots '
-                'of time and want the best compression efficiency; "realtime" '
-                'is recommended for live/fast encoding'))
-        self.spin_cpu.SetToolTip(_('"cpu-used" sets how efficient the '
-                'compression will be. The meaning depends on the mode above.'))
-        self.spin_Vbrate.SetToolTip(_('specifies the target (average) bit '
-                                      'rate for the encoder to use. '
-                                      'Higher value = higher quality. '
-                                      'Set -1 to disable this control.'))
-        self.slider_CRF.SetToolTip(_('Constant rate factor. Lower values = '
-                                     'higher quality and a larger file size. '
-                                     'Set -1 to disable this control.'))
-        self.btn_preview.SetToolTip(_('Try filters by playing a preview'))
-        self.btn_reset.SetToolTip(_("Clear all enabled filters "))
-        self.cmb_Vaspect.SetToolTip(_('Video width and video height ratio.'))
-        self.cmb_Fps.SetToolTip(_('Frames repeat a given number of times per '
-                                  'second. In some countries are 30 NTSC, in '
-                                  'PAL countries like Italy are 25.'
-                                ))
-        self.btn_voldect.SetToolTip(_('Gets maximum volume and average volume '
-                'data in dBFS, then calculates the offset amount for audio '
-                'normalization.'))
-        self.spin_target.SetToolTip(_('Limiter for the maximum peak level or '
-                'the mean level (when switch to RMS) in dBFS. From -99.0 to '
-                '+0.0; default for PEAK level is -1.0; default for RMS is '
-                '-20.0'))
-        self.cmb_A_inMap.SetToolTip(_('Choose from video a specific input '
-                                      'audio stream to work out.'))
-        self.cmb_A_outMap.SetToolTip(_('Map on the output index. Keep same '
-                'input map if saving as video; to save as audio select to '
-                '"all" or "Auto"'))
-        self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
-                                 'From -70.0 to -5.0, default is -24.0'))
-        self.spin_tp.SetToolTip(_('Maximum True Peak in dBTP. From -9.0 '
-                                  'to +0.0, default is -2.0'))
-        self.spin_lra.SetToolTip(_('Loudness Range Target in LUFS. '
-                                   'From +1.0 to +20.0, default is +7.0'))
+        tip = (_('Available video codecs. "Copy" is not a codec but indicate '
+                 'that the video stream is not to be re-encoded and allows '
+                 'changing the format or other parameters'))
+        self.cmb_Vcod.SetToolTip(tip)
+        tip = (_('Output format and file extension. the '
+                 'content may change based on the codec and media'))
+        self.cmb_Vcont.SetToolTip(tip)
+        tip = (_('"Video" to save the output file as a '
+                 'video; "Audio" to save as an audio track'))
+        self.cmb_Media.SetToolTip(tip)
+        tip = (_('It can reduce the file size, but takes longer.'))
+        self.ckbx_pass.SetToolTip(tip)
+        tip = (_('Specifies a minimum tolerance to be used'))
+        self.spinMinr.SetToolTip(tip)
+        tip = (_('Specifies a maximum tolerance. this is '
+                 'only used in conjunction with buffer size'))
+        self.spinMaxr.SetToolTip(tip)
+        tip = (_('Specifies the decoder buffer size, which determines the '
+                 'variability of the output bitrate '))
+        self.spinBufsize.SetToolTip(tip)
+        tip = (_('"good" is the default and recommended for most '
+                 'applications; "best" is recommended if you have lots of '
+                 'time and want the best compression efficiency; "realtime" '
+                 'is recommended for live/fast encoding'))
+        self.rdb_deadline.SetToolTip(tip)
+        tip = (_('"cpu-used" sets how efficient the compression will be. '
+                 'The meaning depends on the mode above.'))
+        self.spin_cpu.SetToolTip(tip)
+        tip = (_('specifies the target (average) bit rate for the encoder '
+                 'to use. Higher value = higher quality. Set -1 to disable '
+                 'this control.'))
+        self.spin_Vbrate.SetToolTip(tip)
+        tip = (_('Constant rate factor. Lower values = higher quality and '
+                 'a larger file size. Set -1 to disable this control.'))
+        self.slider_CRF.SetToolTip(tip)
+        tip = (_('Try filters by playing a preview'))
+        self.btn_preview.SetToolTip(tip)
+        tip = (_("Clear all enabled filters "))
+        self.btn_reset.SetToolTip(tip)
+        tip = (_('Video width and video height ratio.'))
+        self.cmb_Vaspect.SetToolTip(tip)
+        tip = (_('Frames repeat a given number of times per second. In some '
+                 'countries are 30 NTSC, in PAL countries like Italy are 25.'))
+        self.cmb_Fps.SetToolTip(tip)
+        tip = (_('Gets maximum volume and average volume data in dBFS, then '
+                 'calculates the offset amount for audio normalization.'))
+        self.btn_voldect.SetToolTip(tip)
+        tip = (_('Limiter for the maximum peak level or the mean level '
+                 '(when switch to RMS) in dBFS. From -99.0 to +0.0; default '
+                 'for PEAK level is -1.0; default for RMS is -20.0'))
+        self.spin_target.SetToolTip(tip)
+        tip = (_('Choose from video a specific input '
+                 'audio stream to work out.'))
+        self.cmb_A_inMap.SetToolTip(tip)
+        tip = (_('Map on the output index. Keep same input map if saving '
+                 'as video; to save as audio select to "all" or "Auto"'))
+        self.cmb_A_outMap.SetToolTip(tip)
+        tip = (_('Integrated Loudness Target in LUFS. '
+                 'From -70.0 to -5.0, default is -24.0'))
+        self.spin_i.SetToolTip(tip)
+        tip = (_('Maximum True Peak in dBTP. From -9.0 '
+                 'to +0.0, default is -2.0'))
+        self.spin_tp.SetToolTip(tip)
+        tip = (_('Loudness Range Target in LUFS. '
+                 'From +1.0 to +20.0, default is +7.0'))
+        self.spin_lra.SetToolTip(tip)
 
         # ----------------------Binding (EVT)----------------------#
         """
@@ -999,7 +1027,7 @@ class AV_Conv(wx.Panel):
         cmd_opt["AudioRate"] = ["", ""]
         cmd_opt["AudioDepth"] = ["", ""]
         self.btn_aparam.Disable()
-        self.btn_aparam.SetForegroundColour(wx.Colour(165, 165, 165))
+        self.btn_aparam.SetForegroundColour(wx.Colour(GREY_DISABLED))
         self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         self.txt_audio_options.Clear()
         # self.rdbx_normalize.Enable()
@@ -1305,7 +1333,7 @@ class AV_Conv(wx.Panel):
                 cmd_opt["Setsar"] = ""
                 cmd_opt["Scale"] = ""
             else:
-                self.btn_videosize.SetBottomEndColour(wx.Colour(255, 255, 0))
+                self.btn_videosize.SetBottomEndColour(wx.Colour(YELLOW_LMN))
                 if 'scale' in data:
                     cmd_opt["Scale"] = data['scale']
                 else:
@@ -1340,7 +1368,7 @@ class AV_Conv(wx.Panel):
             if not data[0]:
                 self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
             else:
-                self.btn_rotate.SetBottomEndColour(wx.Colour(255, 255, 0))
+                self.btn_rotate.SetBottomEndColour(wx.Colour(YELLOW_LMN))
             self.video_filter_checker()
         else:
             rotate.Destroy()
@@ -1359,7 +1387,7 @@ class AV_Conv(wx.Panel):
                 self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
                 cmd_opt["Crop"] = ''
             else:
-                self.btn_crop.SetBottomEndColour(wx.Colour(255, 255, 0))
+                self.btn_crop.SetBottomEndColour(wx.Colour(YELLOW_LMN))
                 cmd_opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
@@ -1383,7 +1411,7 @@ class AV_Conv(wx.Panel):
                 cmd_opt["Deinterlace"] = ''
                 cmd_opt["Interlace"] = ''
             else:
-                self.btn_lacing.SetBottomEndColour(wx.Colour(255, 255, 0))
+                self.btn_lacing.SetBottomEndColour(wx.Colour(YELLOW_LMN))
                 if 'deinterlace' in data:
                     cmd_opt["Deinterlace"] = data["deinterlace"]
                     cmd_opt["Interlace"] = ''
@@ -1411,7 +1439,7 @@ class AV_Conv(wx.Panel):
                 self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
                 cmd_opt["Denoiser"] = ''
             else:
-                self.btn_denois.SetBottomEndColour(wx.Colour(255, 255, 0))
+                self.btn_denois.SetBottomEndColour(wx.Colour(YELLOW_LMN))
                 cmd_opt["Denoiser"] = data
             self.video_filter_checker()
         else:
@@ -1500,7 +1528,7 @@ class AV_Conv(wx.Panel):
             else:
                 self.btn_aparam.Disable(),
                 self.txt_audio_options.SetValue('')
-                self.btn_aparam.SetForegroundColour(wx.Colour(165, 165, 165))
+                self.btn_aparam.SetForegroundColour(wx.Colour(GREY_DISABLED))
                 self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         # --------------------------------------------------------
         for k, v in acodecs.items():
@@ -1608,7 +1636,7 @@ class AV_Conv(wx.Panel):
         if count == 0:
             self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         else:
-            self.btn_aparam.SetBottomEndColour(wx.Colour(255, 255, 0))
+            self.btn_aparam.SetBottomEndColour(wx.Colour(YELLOW_LMN))
 
         audiodialog.Destroy()
     # ------------------------------------------------------------------#
@@ -1681,11 +1709,11 @@ class AV_Conv(wx.Panel):
 
         elif self.rdbx_normalize.GetSelection() == 2:
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_2, '#15A660')
+            self.parent.statusbar_msg(msg_2, tropgreen)
             self.peakpanel.Show(), self.spin_target.SetValue(-20)
 
         elif self.rdbx_normalize.GetSelection() == 3:
-            self.parent.statusbar_msg(msg_3, '#87A615')
+            self.parent.statusbar_msg(msg_3, limegreen)
             self.normalize_default(False)
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
@@ -1798,7 +1826,7 @@ class AV_Conv(wx.Panel):
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
             cmd_opt["RMS"] = volume
         self.btn_voldect.Disable()
-        self.btn_voldect.SetForegroundColour(wx.Colour(165, 165, 165))
+        self.btn_voldect.SetForegroundColour(wx.Colour(GREY_DISABLED))
         self.btn_details.Show()
         self.nb_filters.Layout()
     # ------------------------------------------------------------------#

@@ -42,17 +42,21 @@ from videomass3.vdms_dialogs.epilogue import Formula
 from videomass3.vdms_io.IO_tools import volumeDetectProcess
 from videomass3.vdms_frames import shownormlist
 
+# set colour in RGB rappresentetion:
 GREY_DISABLED = 165, 165, 165
 AZURE_NEON = 158, 201, 232
-# set widget colours in some case with html rappresentetion:
-azure = '#15a6a6'  # rgb form (wx.Colour(217,255,255))
+# set colour in HTML rappresentetion:
+azure = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
 yellow = '#a29500'
 red = '#ea312d'
 orange = '#f28924'
 greenolive = '#8aab3c'
 green = '#268826'
-
-array = []  # Parameters of the selected profile
+limegreen = '#87A615'
+tropgreen = '#15A660'
+# Parameters of the selected profile:
+array = []
+# default options:
 cmd_opt = {"PEAK": "", "RMS": "", "EBU": "",
            "AudioInMap": ['', ''], "AudioOutMap": ['', '']
            }
@@ -303,31 +307,32 @@ class PrstPan(wx.Panel):
             self.txt_2cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
 
         # ------- tooltips
-        self.txt_1cmd.SetToolTip(_('First pass parameters of the '
-                                    'selected profile'))
-        self.txt_2cmd.SetToolTip(_('Second pass parameters of the '
-                                    'selected profile'))
-        self.btn_voldect.SetToolTip(_('Gets maximum volume and average volume '
-                'data in dBFS, then calculates the offset amount for audio '
-                'normalization.'))
-        self.spin_target.SetToolTip(_('Limiter for the maximum peak level or '
-                'the mean level (when switch to RMS) in dBFS. From -99.0 to '
-                '+0.0; default for PEAK level is -1.0; default for RMS is '
-                '-20.0'))
-        self.spin_i.SetToolTip(_('Integrated Loudness Target in LUFS. '
-                                 'From -70.0 to -5.0, default is -24.0'
-                                 ))
-        self.spin_tp.SetToolTip(_('Maximum True Peak in dBTP. From -9.0 '
-                                  'to +0.0, default is -2.0'
-                                  ))
-        self.spin_lra.SetToolTip(_('Loudness Range Target in LUFS. '
-                                   'From +1.0 to +20.0, default is +7.0'
-                                   ))
-        self.cmb_A_inMap.SetToolTip(_('Choose from video a specific input '
-                                      'audio stream to work out.'))
-        self.cmb_A_outMap.SetToolTip(_('Map on the output index. Keep same '
-                'input map if saving as video; to save as audio select to '
-                '"all" or "Auto"'))
+        toolt = (_('First pass parameters of the selected profile'))
+        self.txt_1cmd.SetToolTip(toolt)
+        toolt = (_('Second pass parameters of the selected profile'))
+        self.txt_2cmd.SetToolTip(toolt)
+        toolt = (_('Gets maximum volume and average volume data in dBFS, then '
+                   'calculates the offset amount for audio normalization.'))
+        self.btn_voldect.SetToolTip(toolt)
+        toolt = (_('Limiter for the maximum peak level or the mean level '
+                   '(when switch to RMS) in dBFS. From -99.0 to +0.0; '
+                   'default for PEAK level is -1.0; default for RMS is -20.0'))
+        self.spin_target.SetToolTip(toolt)
+        toolt = (_('Integrated Loudness Target in LUFS. From -70.0 to '
+                   '-5.0, default is -24.0'))
+        self.spin_i.SetToolTip(toolt)
+        toolt = (_('Maximum True Peak in dBTP. From -9.0 to +0.0, '
+                   'default is -2.0'))
+        self.spin_tp.SetToolTip(toolt)
+        toolt = (_('Loudness Range Target in LUFS. From +1.0 to '
+                   '+20.0, default is +7.0'))
+        self.spin_lra.SetToolTip(toolt)
+        toolt = (_('Choose from video a specific input audio stream to '
+                   'work out.'))
+        self.cmb_A_inMap.SetToolTip(toolt)
+        toolt = (_('Map on the output index. Keep same input map if saving '
+                   'as video; to save as audio select to "all" or "Auto"'))
+        self.cmb_A_outMap.SetToolTip(toolt)
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
@@ -533,7 +538,7 @@ class PrstPan(wx.Panel):
                 self.parent.statusbar_msg(msg_1, azure)
                 self.spin_target.SetValue(-1.0)
             else:
-                self.parent.statusbar_msg(msg_2, '#15A660')
+                self.parent.statusbar_msg(msg_2, tropgreen)
                 self.spin_target.SetValue(-20.0)
 
             self.peakpanel.Show(), self.btn_voldect.Enable()
@@ -543,7 +548,7 @@ class PrstPan(wx.Panel):
             del self.normdetails[:]
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
-            self.parent.statusbar_msg(msg_3, '#87A615')
+            self.parent.statusbar_msg(msg_3, limegreen)
             self.peakpanel.Hide(), self.ebupanel.Show()
             cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
             del self.normdetails[:]

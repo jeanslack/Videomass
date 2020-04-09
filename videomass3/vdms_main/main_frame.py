@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: March.28.2020
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -43,6 +43,10 @@ from videomass3.vdms_panels import av_conversions
 from videomass3.vdms_panels.long_processing_task import Logging_Console
 from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
+
+
+AZURE_NEON = 158, 201, 232
+YELLOW_LMN = 255, 255, 0
 
 # set widget colours in some case with html rappresentetion:
 azure = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
@@ -110,9 +114,11 @@ class MainFrame(wx.Frame):
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1, 25),
                                            bitmap=infoIbmp,
-                                           label=_("Streams Information"))
-        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                      foregroundcolour=wx.Colour(self.fBtnC))
+                                           label=_("Streams Information")
+                                           )
+        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                      foregroundcolour=wx.Colour(self.fBtnC)
+                                      )
         self.btn_metaI.SetBottomEndColour(self.bBtnC)
         self.btn_metaI.SetBottomStartColour(self.bBtnC)
         self.btn_metaI.SetTopStartColour(self.bBtnC)
@@ -121,9 +127,11 @@ class MainFrame(wx.Frame):
         self.btn_playO = GB.GradientButton(self.btnpanel,
                                            size=(-1, 25),
                                            bitmap=previewbmp,
-                                           label=_("Preview"))
-        self.btn_playO.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                      foregroundcolour=wx.Colour(self.fBtnC))
+                                           label=_("Preview")
+                                           )
+        self.btn_playO.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                      foregroundcolour=wx.Colour(self.fBtnC)
+                                      )
         self.btn_playO.SetBottomEndColour(self.bBtnC)
         self.btn_playO.SetBottomStartColour(self.bBtnC)
         self.btn_playO.SetTopStartColour(self.bBtnC)
@@ -132,9 +140,11 @@ class MainFrame(wx.Frame):
         self.btn_duration = GB.GradientButton(self.btnpanel,
                                               size=(-1, 25),
                                               bitmap=cutbmp,
-                                              label=_("Duration"))
-        self.btn_duration.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(self.fBtnC))
+                                              label=_("Duration")
+                                              )
+        self.btn_duration.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                         foregroundcolour=wx.Colour(self.fBtnC)
+                                         )
         self.btn_duration.SetBottomEndColour(self.bBtnC)
         self.btn_duration.SetBottomStartColour(self.bBtnC)
         self.btn_duration.SetTopStartColour(self.bBtnC)
@@ -143,9 +153,11 @@ class MainFrame(wx.Frame):
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
                                              size=(-1, 25),
                                              bitmap=saveprfbmp,
-                                             label=_("Save Configuration"))
-        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(self.fBtnC))
+                                             label=_("Save Configuration")
+                                             )
+        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                        foregroundcolour=wx.Colour(self.fBtnC)
+                                        )
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
         self.btn_saveprf.SetBottomStartColour(self.bBtnC)
         self.btn_saveprf.SetTopStartColour(self.bBtnC)
@@ -154,9 +166,11 @@ class MainFrame(wx.Frame):
         self.btn_newprf = GB.GradientButton(self.btnpanel,
                                             size=(-1, 25),
                                             bitmap=newprfbmp,
-                                            label=_("New.."))
-        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(self.fBtnC))
+                                            label=_("New..")
+                                            )
+        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                       foregroundcolour=wx.Colour(self.fBtnC)
+                                       )
         self.btn_newprf.SetBottomEndColour(self.bBtnC)
         self.btn_newprf.SetBottomStartColour(self.bBtnC)
         self.btn_newprf.SetTopStartColour(self.bBtnC)
@@ -165,9 +179,11 @@ class MainFrame(wx.Frame):
         self.btn_delprf = GB.GradientButton(self.btnpanel,
                                             size=(-1, 25),
                                             bitmap=delprfbmp,
-                                            label=_("Delete.."))
-        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(self.fBtnC))
+                                            label=_("Delete..")
+                                            )
+        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                       foregroundcolour=wx.Colour(self.fBtnC)
+                                       )
         self.btn_delprf.SetBottomEndColour(self.bBtnC)
         self.btn_delprf.SetBottomStartColour(self.bBtnC)
         self.btn_delprf.SetTopStartColour(self.bBtnC)
@@ -176,9 +192,11 @@ class MainFrame(wx.Frame):
         self.btn_editprf = GB.GradientButton(self.btnpanel,
                                              size=(-1, 25),
                                              bitmap=editprfbmp,
-                                             label=_("Edit.."))
-        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(158, 201, 232),
-                                    foregroundcolour=wx.Colour(self.fBtnC))
+                                             label=_("Edit..")
+                                             )
+        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+                                        foregroundcolour=wx.Colour(self.fBtnC)
+                                        )
         self.btn_editprf.SetBottomEndColour(self.bBtnC)
         self.btn_editprf.SetBottomStartColour(self.bBtnC)
         self.btn_editprf.SetTopStartColour(self.bBtnC)
@@ -362,7 +380,7 @@ class MainFrame(wx.Frame):
                 self.time_read['time'] = ['', '']
                 self.btn_duration.SetBottomEndColour(self.bBtnC)
             else:
-                self.btn_duration.SetBottomEndColour(wx.Colour(255, 255, 0))
+                self.btn_duration.SetBottomEndColour(wx.Colour(YELLOW_LMN))
                 # set a more readable time
                 ss = data.split()[1]  # the -ss flag
                 h, m, s = ss.split(':')
@@ -370,14 +388,13 @@ class MainFrame(wx.Frame):
                 t = data.split()[3]  # the -t flag
                 h, m, s = t.split(':')
                 time = (int(h) * 3600 + int(m) * 60 + int(s))
-                self.time_read['start seek'] = [ss,start]
-                self.time_read['time'] = [t,time]
+                self.time_read['start seek'] = [ss, start]
+                self.time_read['time'] = [t, time]
 
             self.time_seq = data
         else:
             dial.Destroy()
             return
-
     # ------------------------------ Menu  Streams -----------------------#
 
     def ImportPlay(self, filepath):
@@ -516,66 +533,72 @@ class MainFrame(wx.Frame):
 
         # ----------------------- file
         fileButton = wx.Menu()
-
-        self.file_save = fileButton.Append(wx.ID_SAVE,
-                                           _("Choose a Destination folder.."),
-                         _("Choice a folder where save processed files"))
+        dscrp = (_("Choose a Destination folder.."),
+                 _("Choice a folder where save processed files"))
+        self.file_save = fileButton.Append(wx.ID_SAVE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        self.new_prst = fileButton.Append(wx.ID_NEW, _("Create new preset "),
-                         _("Create a new preset to use on Presets Manager"))
+        dscrp = (_("Create new preset "),
+                 _("Create a new preset to use on Presets Manager"))
+        self.new_prst = fileButton.Append(wx.ID_NEW, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
+        dscrp = (_("Save the current preset as separated file"),
+                 _("Make a back-up of the selected preset on combobox"))
         self.saveme = fileButton.Append(wx.ID_REVERT_TO_SAVED,
-                                 _("Save the current preset as separated file"),
-                       _("Make a back-up of the selected preset on combobox"
-                                    ))
-        self.restore = fileButton.Append(wx.ID_REPLACE, _("Restore a previously "
-                                                "saved preset"),
-                _("Replace the selected preset with other saved custom preset.")
-                                                )
-        self.default = fileButton.Append(wx.ID_ANY, _("Reset the current preset "),
-                            _("Replace the selected preset with default values.")
-                                                )
+                                        dscrp[0], dscrp[1])
+        dscrp = (_("Restore a previously saved preset"),
+                 _("Replace the selected preset with other saved custom "
+                   "preset."))
+        self.restore = fileButton.Append(wx.ID_REPLACE, dscrp[0], dscrp[1])
+        dscrp = (_("Reset the current preset "),
+                 _("Replace the selected preset with default values."))
+        self.default = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-
-        self.default_all = fileButton.Append(wx.ID_UNDO, _("Reset all presets "),
-                         _("Revert all presets to default values")
-                                                )
+        dscrp = (_("Reset all presets "),
+                 _("Revert all presets to default values"))
+        self.default_all = fileButton.Append(wx.ID_UNDO, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        self.del_prst = fileButton.Append(wx.ID_DELETE, _("Remove preset"),
-                         _("Remove the selected preset on Presets Manager")
-                                                )
+        dscrp = (_("Remove preset"),
+                 _("Remove the selected preset on Presets Manager"))
+        self.del_prst = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        self.refresh = fileButton.Append(wx.ID_REFRESH, _("Reload presets list"),
-                                           _("..Sometimes it can be useful"))
+        self.refresh = fileButton.Append(wx.ID_REFRESH,
+                                         _("Reload presets list"),
+                                         _("..Sometimes it can be useful"))
         fileButton.AppendSeparator()
-        exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"), _("Close Videomass"))
+        exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"),
+                                     _("Close Videomass"))
         self.menuBar.Append(fileButton, "&File")
 
-        #------------------ tools button
+        # ------------------ tools button
         toolsButton = wx.Menu()
-
-        playing = toolsButton.Append(wx.ID_ANY, _("While playing"),
-        _("Show dialog box with keyboard shortcuts useful during playback"))
+        dscrp = (_("While playing"),
+                 _("Show dialog box with keyboard shortcuts useful "
+                   "during playback"))
+        playing = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
-        checkconf = toolsButton.Append(wx.ID_ANY, _("FFmpeg specifications"),
-                            _("Shows the configuration features of FFmpeg"))
+        dscrp = (_("FFmpeg specifications"),
+                 _("Shows the configuration features of FFmpeg"))
+        checkconf = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
-        ckformats = toolsButton.Append(wx.ID_ANY, _("FFmpeg file formats"),
-                                _("Shows file formats available on FFmpeg"))
+        dscrp = (_("FFmpeg file formats"),
+                 _("Shows file formats available on FFmpeg"))
+        ckformats = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         ckcoders = toolsButton.Append(wx.ID_ANY, _("FFmpeg encoders"),
-                                _("Shows available encoders on FFmpeg"))
-        ckdecoders = toolsButton.Append(wx.ID_ANY, _("FFmpeg decoders"),
-                                _("Shows available decoders on FFmpeg"))
+                                      _("Shows available encoders on FFmpeg"))
+        dscrp = (_("FFmpeg decoders"), _("Shows available decoders on FFmpeg"))
+        ckdecoders = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
-        searchtopic = toolsButton.Append(wx.ID_ANY, _("FFmpeg search topics"),
-                        _("Show a dialog box to help you find FFmpeg topics"))
+        dscrp = (_("FFmpeg search topics"),
+                 _("Show a dialog box to help you find FFmpeg topics"))
+        searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
-        openlogdir = toolsButton.Append(wx.ID_ANY, _("Log directory"),
-                            _("Opens the Videomass log directory if it exists"))
-        openconfdir = toolsButton.Append(wx.ID_ANY,
-                                         _("Configuration directory"),
-                            _("Opens the Videomass configuration directory"))
+        dscrp = (_("Log directory"),
+                 _("Opens the Videomass log directory if it exists"))
+        openlogdir = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Configuration directory"),
+                 _("Opens the Videomass configuration directory"))
+        openconfdir = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(toolsButton, _("&Tools"))
 
         # ------------------ setup button
@@ -583,7 +606,7 @@ class MainFrame(wx.Frame):
         setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"),
                                        _("General Settings"))
 
-        self.menuBar.Append(setupButton,_("&Preferences"))
+        self.menuBar.Append(setupButton, _("&Preferences"))
 
         # ------------------ help buton
         helpButton = wx.Menu()
@@ -592,8 +615,7 @@ class MainFrame(wx.Frame):
         helpButton.AppendSeparator()
         issueItem = helpButton.Append(wx.ID_ANY, _("Issue tracker"), "")
         helpButton.AppendSeparator()
-        transItem = helpButton.Append(wx.ID_ANY,_('Videomass Translation...'),
-                                                  '')
+        transItem = helpButton.Append(wx.ID_ANY, _('Translation...'), '')
         helpButton.AppendSeparator()
         DonationItem = helpButton.Append(wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()

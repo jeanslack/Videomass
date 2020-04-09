@@ -1,12 +1,9 @@
 
 --------------------
 URGENCY: to do soon
---------------------  
+--------------------
 
-- Display Progress Time/Remaining Time and how many Frames per second are 
-  processed (from github issues)
-  
-- add 'Pictures' on the Media list to export image sequences in jpg, png, bmp 
+- add 'Pictures' on the Media list to export image sequences in jpg, png, bmp
   formats.
 
 --------------
@@ -16,17 +13,17 @@ URGENCY: high
 - improve automations in the Audio Streams Index box (Presets Manager)
 
 - check to update all default presets or add new ones
-        
+
 -------------
 URGENCY: low
 -------------
-- YoutubeDL add one specific `format code` to any url indexing with the urls 
-  list, e.g. using a check box into list ctrl or button to append a selected 
+- YoutubeDL add one specific `format code` to any url indexing with the urls
+  list, e.g. using a check box into list ctrl or button to append a selected
   format code to list.
- 
-- How to update youtube-dl when using Videomass supplied with macOs and 
+
+- How to update youtube-dl when using Videomass supplied with macOs and
   Windows installers?
-  
+
 - Show youtube-dl version.
 
 - Add extra parameters for video filters section on Audio/Video converions panel
@@ -36,6 +33,6 @@ URGENCY: medium
 ----------------
 
 
-    
+
 
 
