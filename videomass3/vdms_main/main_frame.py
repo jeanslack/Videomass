@@ -300,9 +300,11 @@ class MainFrame(wx.Frame):
         self.videomass_tool_bar()
         # status bar
         self.sb = self.CreateStatusBar(1)
-        # hide toolbar and buttons bar
+        # hide toolbar, buttons bar and disable some file menu items
         self.toolbar.Hide()
         self.btnpanel.Hide()
+        self.menu_items()
+
         self.Layout()
         # ---------------------- Binding (EVT) ----------------------#
         self.fileDnDTarget.btn_save.Bind(wx.EVT_BUTTON, self.onCustomSave)
