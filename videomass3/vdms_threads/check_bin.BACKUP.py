@@ -29,32 +29,27 @@
 import subprocess
 
 
-def subp(args, OS):
+def subp_win32(args):
     """
-    Execute commands which *do not* need to read the stdout/stderr in
-    real time.
-
-    Parameters:
-        [*args* command list object]
-        *OS* it is output of the platform.system()
-
+    Execute commands received by args parameter on Windows
+    OS only.
+    This function uses 'Popen' to invoke the subprocess, since
+    on Windows it is necessary to use the STARTUPINFO class,
+    therefore the following constants are available only on
+    Windows.
     """
     cmd = []
     for opt in args:
         cmd.append(opt)
-
-    if OS == 'Windows':
-        cmd = ' '.join(cmd)
-        info = subprocess.STARTUPINFO()
-        info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    else:
-        info = None
+    cmd = ' '.join(cmd)
     try:
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         p = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT,
                              universal_newlines=True,  # mod text
-                             startupinfo=info,
+                             startupinfo=startupinfo,
                              )
         out = p.communicate()
 
@@ -65,6 +60,35 @@ def subp(args, OS):
         return('Not found', out[0])
 
     return ('None', out[0])
+# -----------------------------------------------------------#
+
+
+def subp(args):
+    """
+    Execute commands received by args parameter on Unix-like
+    OS only.
+    This function uses 'run' to invoke the subprocess, since
+    these are not advanced use cases.
+    """
+    cmd = []
+    for opt in args:
+        cmd.append(opt)
+
+    try:
+        p = subprocess.run(cmd,
+                           capture_output=True,
+                           universal_newlines=True
+                           # mod text, otherwise must be used p.stdout.decode()
+                           # for decode bytestring (b'')
+                           )
+    except FileNotFoundError as err:  # if ffmpeg do not exist
+        return('Not found', err)
+
+    if p.returncode:  # if has error on args
+        err = p.stderr
+        return('Not found', err)
+
+    return ('None', p.stdout)
 # -----------------------------------------------------------#
 
 
@@ -83,7 +107,10 @@ def ff_conf(ffmpeg_link, OS):
     """
 
     # ------- grab generic informations:
-    vers = subp([ffmpeg_link, '-loglevel', 'error', '-version'], OS)
+    if OS == 'Windows':
+        vers = subp_win32([ffmpeg_link, '-loglevel', 'error', '-version'])
+    else:
+        vers = subp([ffmpeg_link, '-loglevel', 'error', '-version'])
 
     if 'Not found' in vers[0]:
         return(vers[0], vers[1])
@@ -97,7 +124,10 @@ def ff_conf(ffmpeg_link, OS):
             info.append(v.strip())
 
     # ------- grab buildconf:
-    build = subp([ffmpeg_link, '-loglevel', 'error', '-buildconf'], OS)
+    if OS == 'Windows':
+        build = subp_win32([ffmpeg_link, '-loglevel', 'error', '-buildconf'])
+    else:
+        build = subp([ffmpeg_link, '-loglevel', 'error', '-buildconf'])
 
     if 'Not found' in build[0]:
         return(build[0], build[1])
@@ -139,7 +169,10 @@ def ff_formats(ffmpeg_link, OS):
     """
 
     # ------- grab buildconf:
-    ret = subp([ffmpeg_link, '-loglevel', 'error', '-formats'], OS)
+    if OS == 'Windows':
+        ret = subp_win32([ffmpeg_link, '-loglevel', 'error', '-formats'])
+    else:
+        ret = subp([ffmpeg_link, '-loglevel', 'error', '-formats'])
 
     if 'Not found' in ret[0]:
         return({ret[0]: ret[1], '': '', '': ''})
@@ -182,7 +215,10 @@ def ff_codecs(ffmpeg_link, type_opt, OS):
     """
 
     # ------- grab encoders or decoders output:
-    ret = subp([ffmpeg_link, '-loglevel', 'error', type_opt], OS)
+    if OS == 'Windows':
+        ret = subp_win32([ffmpeg_link, '-loglevel', 'error', type_opt])
+    else:
+        ret = subp([ffmpeg_link, '-loglevel', 'error', type_opt])
 
     if 'Not found' in ret[0]:
         return({ret[0], ret[1]})
@@ -216,7 +252,10 @@ def ff_topics(ffmpeg_link, topic, OS):
 
     # ------ get output:
     arr = [ffmpeg_link, '-loglevel', 'error'] + topic
-    ret = subp(arr, OS)
+    if OS == 'Windows':
+        ret = subp_win32(arr)
+    else:
+        ret = subp(arr)
 
     if 'Not found' in ret[0]:
         return(ret[0], ret[1])

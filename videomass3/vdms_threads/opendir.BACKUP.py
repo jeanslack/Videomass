@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: opendir.py
-# Porpose: open file browser on given pathname
+# Porpose: open file browser on logfiles and configuration directory
 # Compatibility: Python3 (Unix, Windows)
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -36,20 +36,32 @@ def browse(OS, pathname, mod):
     file manager of the OS
     """
     if mod != 'dirconf':
-        pathname = os.path.join(pathname, "log")  # normalize os pathname
+        path = os.path.join(pathname, "log")  # normalize os pathname
+    else:
+        path = pathname
 
+    # --------------------- OS:
     if OS == 'Windows':
-        cmd = ['cmd', '/c', 'start', pathname]
+        try:
+            os.startfile(path)
+        except FileNotFoundError as e:
+            return(str(e))
 
     elif OS == 'Darwin':
-        cmd = ['start', pathname]
-
-    else:  # xdg-open *should* be supported by recent Gnome, KDE, Xfce
-        cmd = ['xdg-open', pathname]
-
-    try:
-        p = subprocess.run(cmd, capture_output=True)
+        p = subprocess.run(['open', path], capture_output=True)
         if p.stderr:
             return(p.stderr.decode())
-    except FileNotFoundError as err:
-        return('%s' % (err))
+
+    else:  # Gnome, KDE, Xfce, Mate
+        try:
+            p = subprocess.Popen(['xdg-open', path], stderr=subprocess.PIPE)
+            out, err = p.communicate()
+
+            if err:
+                return(err)
+
+        except OSError as e:
+            return(e)
+            # er, think of something else to try
+            # xdg-open *should* be supported by recent Gnome, KDE, Xfce
+    return

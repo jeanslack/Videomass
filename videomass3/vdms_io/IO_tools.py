@@ -58,12 +58,12 @@ def stream_info(title, filepath):
     """
     try:
         with open(filepath):
-            dialog = Mediainfo(title,
-                               filepath,
-                               ffprobe_url,
-                               OS,
-                               )
-            dialog.Show()
+            miniframe = Mediainfo(title,
+                                  filepath,
+                                  ffprobe_url,
+                                  OS,
+                                  )
+            miniframe.Show()
 
     except IOError:
         wx.MessageBox(_("File does not exist or not a valid file:  %s") % (
@@ -139,13 +139,13 @@ def test_conf():
                       None)
         return
     else:
-        dlg = ffmpeg_conf.Checkconf(out,
-                                    ffmpeg_url,
-                                    ffprobe_url,
-                                    ffplay_url,
-                                    OS,
-                                    )
-        dlg.Show()
+        miniframe = ffmpeg_conf.Checkconf(out,
+                                         ffmpeg_url,
+                                         ffprobe_url,
+                                         ffplay_url,
+                                         OS,
+                                         )
+        miniframe.Show()
 # -------------------------------------------------------------------------#
 
 
@@ -163,8 +163,8 @@ def test_formats():
                       None)
         return
     else:
-        dlg = ffmpeg_formats.FFmpeg_formats(diction, OS)
-        dlg.Show()
+        miniframe = ffmpeg_formats.FFmpeg_formats(diction, OS)
+        miniframe.Show()
 # -------------------------------------------------------------------------#
 
 
@@ -183,8 +183,8 @@ def test_codecs(type_opt):
                       None)
         return
     else:
-        dlg = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
-        dlg.Show()
+        miniframe = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
+        miniframe.Show()
 # -------------------------------------------------------------------------#
 
 
@@ -212,7 +212,7 @@ def openpath(mod):
     """
     ret = browse(OS, DIRconf, mod)
     if ret:
-        wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
+        wx.MessageBox(ret, 'Videomass Error', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#
 
 
