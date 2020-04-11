@@ -266,7 +266,7 @@ class Logging_Console(wx.Panel):
             remaining = time_human(duration-timesum)
             self.labPerc.SetLabel("Processing... %s%% | %sTime Remaining: %s" %
                                   (str(int(percentage)), "".join(ffprog),
-                                   remaining,)
+                                   remaining)
                                   )
             del output, duration
 
@@ -291,6 +291,10 @@ class Logging_Console(wx.Panel):
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(GREEN)))
             self.OutText.AppendText(_(' ...Completed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            lab = "%s" % self.labPerc.GetLabel()
+            if lab.split('|')[0] == 'Processing... 99% ':
+                relab = lab.replace('Processing... 99%', 'Processing... 100%')
+                self.labPerc.SetLabel(relab)
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
