@@ -36,7 +36,7 @@ def subp(args, OS):
 
     Parameters:
         [*args* command list object]
-        *OS* it is output of the platform.system()
+        *OS* result of the platform.system()
 
     """
     cmd = []
@@ -83,18 +83,19 @@ def ff_conf(ffmpeg_link, OS):
     """
 
     # ------- grab generic informations:
-    vers = subp([ffmpeg_link, '-loglevel', 'error', '-version'], OS)
+    version = subp([ffmpeg_link, '-loglevel', 'error', '-version'], OS)
 
-    if 'Not found' in vers[0]:
-        return(vers[0], vers[1])
+    if 'Not found' in version[0]:
+        return(version[0], version[1])
 
-    info = []
-    for v in vers[1].split('\n'):
-        if 'ffmpeg version' in v:
-            info.append(v.strip())
+    enable, disable, others, conf, info = [], [], [], [], []
 
-        if 'built with' in v:
-            info.append(v.strip())
+    for vers in version[1].split('\n'):
+        if 'ffmpeg version' in vers:
+            info.append(vers.strip())
+
+        if 'built with' in vers:
+            info.append(vers.strip())
 
     # ------- grab buildconf:
     build = subp([ffmpeg_link, '-loglevel', 'error', '-buildconf'], OS)
@@ -102,23 +103,18 @@ def ff_conf(ffmpeg_link, OS):
     if 'Not found' in build[0]:
         return(build[0], build[1])
 
-    conf = []
-    for c in build[1].split('\n'):
-        conf.append(c.strip())
+    for bld in build[1].split('\n'):
+        conf.append(bld.strip())
 
-    enable = []
-    disable = []
-    others = []
+    for enc in conf:
+        if enc.startswith('--enable'):
+            enable.append(enc.split('--enable-')[1])
 
-    for en in conf:
-        if en.startswith('--enable'):
-            enable.append(en.split('--enable-')[1])
-
-        elif en.startswith('--disable'):
-            disable.append(en.split('--disable-')[1])
+        elif enc.startswith('--disable'):
+            disable.append(enc.split('--disable-')[1])
 
         else:
-            others.append(en)
+            others.append(enc)
 
     if 'configuration:' in others:
         others.remove('configuration:')

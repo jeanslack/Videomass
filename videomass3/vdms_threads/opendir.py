@@ -42,14 +42,18 @@ def browse(OS, pathname, mod):
         cmd = ['cmd', '/c', 'start', pathname]
 
     elif OS == 'Darwin':
-        cmd = ['start', pathname]
+        cmd = ['open', pathname]
 
     else:  # xdg-open *should* be supported by recent Gnome, KDE, Xfce
         cmd = ['xdg-open', pathname]
 
     try:
-        p = subprocess.run(cmd, capture_output=True)
+        p = subprocess.run(cmd)
         if p.stderr:
             return(p.stderr.decode())
+            '''
+            if not *capture_output=True* on subprocess instance
+            use .decode() here.
+            '''
     except FileNotFoundError as err:
         return('%s' % (err))

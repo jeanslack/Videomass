@@ -1,4 +1,4 @@
-# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg. 
+# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.
 
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [GitHub Page](https://github.com/jeanslack/Videomass)
@@ -9,8 +9,8 @@
 
 ## News
 
-- October 2019 v.1.7.0: Added EBU R128 and RMS-based audio normalizations. 
-  Added support to VP8, VP9, H.265 and OPUS encoders. See changelog for 
+- October 2019 v.1.7.0: Added EBU R128 and RMS-based audio normalizations.
+  Added support to VP8, VP9, H.265 and OPUS encoders. See changelog for
   more details.
 
 - November 2019 v.1.8.0: Now Videomass has embedded youtube-dl to downloads
@@ -37,15 +37,15 @@
 - Multi language (English and Italian Languages support for now).
 
 ## Requirements
-   
-- Python3  >= 3.6.?
-- wxPython4 (phoenix) 
+
+- Python3  >= 3.6.9
+- wxPython4 (phoenix)
 - PyPubSub (https://pypi.org/project/PyPubSub/)
-- ffmpeg >= 3.2   
-- ffprobe (for multimedia streams analysis)  
+- ffmpeg >= 3.2
+- ffprobe (for multimedia streams analysis)
 - ffplay (for playback)
 
-## Optionals 
+## Optionals
 
 - youtube-dl (https://pypi.org/project/youtube_dl/)
 

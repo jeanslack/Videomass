@@ -1,26 +1,26 @@
 Videomass Installation Instructions and buildings
 
 
-Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are 
+Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are
 available at <https://sourceforge.net/projects/videomass2/>
-These installation programs contain everything needed to be used 
-in standalone mode, without the need for anything else. 
+These installation programs contain everything needed to be used
+in standalone mode, without the need for anything else.
 #--------------------------------------------------------------------------#
 
 BASE DEPENDENCIES
 -----------------
 
     Required:
-        - Python >=3.6
+        - Python >=3.6.9
         - wxPython4 (Phoenix)
         - PyPubSub (install it with pip)
         - pip (On Windows and MacOS it is included with Python3.7)
         - FFmpeg (with ffplay and ffprobe)
-        
+
     Optionals:
         - youtube-dl (install it with pip)
 
-Videomass can be run without installing by un-tarring the source package and 
+Videomass can be run without installing by un-tarring the source package and
 executing the "launcher" script in the un-tarred directory.
 
     python3 launcher
@@ -29,12 +29,12 @@ executing the "launcher" script in the un-tarred directory.
 Installing with pip tool: [Linux/Macintosh/Unix/Windows]
 
     pip install videomass
-    
+
 - To uninstall:
 
     pip uninstall videomass
-    
-Please, Visit the Wiki page for more info: 
+
+Please, Visit the Wiki page for more info:
 
 
 https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-tool

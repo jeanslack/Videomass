@@ -13,8 +13,8 @@ BUGS:
     * Fixed file menu items on start up (some items are not disabled).
 
 IMPROVEMENTS:
-    * Code improvement on openfile.py
-    * Code improvement on check_bin.py
+    * Backward compatibility with python 3.6 code on openfile.py
+    * Backward compatibility with python 3.6 code on check_bin.py
 
 +------------------------------------+
 April 09, 2020 V.2.0.2
