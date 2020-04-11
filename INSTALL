@@ -15,7 +15,7 @@ BASE DEPENDENCIES
         - wxPython4 (Phoenix)
         - PyPubSub (install it with pip)
         - pip (On Windows and MacOS it is included with Python3.7)
-        - FFmpeg (with ffplay and ffprobe)
+        - FFmpeg (with ffplay and ffprobe) >=4.1.4
 
     Optionals:
         - youtube-dl (install it with pip)

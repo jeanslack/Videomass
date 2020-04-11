@@ -6,15 +6,22 @@ License: GPL3
 
 Change Log:
 +------------------------------------+
-April 09, 2020 V.2.0.3
+April 11, 2020 V.2.0.3
 +------------------------------------+
 
 BUGS:
     * Fixed file menu items on start up (some items are not disabled).
+    * Fixed issue on Videomass.exe installer: Audio and video previews
+      do not work on MS Windows due to the old version of ffplay.exe which
+      is no longer compatible with MS Windows 10. See NEWS below.
 
 IMPROVEMENTS:
     * Backward compatibility with python 3.6 code on openfile.py
     * Backward compatibility with python 3.6 code on check_bin.py
+
+NEWS:
+    * For MS Windows and MAcOsFFmpeg installers only: FFmpeg has been updated
+      to version 4.2.2 released on 2020-Jan-27 00:51.
 
 +------------------------------------+
 April 09, 2020 V.2.0.2

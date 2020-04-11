@@ -39,13 +39,37 @@ def browse(OS, pathname, mod):
         pathname = os.path.join(pathname, "log")  # normalize os pathname
 
     if OS == 'Windows':
-        cmd = ['cmd', '/c', 'start', pathname]
+        cmd = ' '.join(['cmd', '/c', 'start', pathname])
+        info = subprocess.STARTUPINFO()
+        info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
     elif OS == 'Darwin':
         cmd = ['open', pathname]
+        info = None
 
     else:  # xdg-open *should* be supported by recent Gnome, KDE, Xfce
         cmd = ['xdg-open', pathname]
+        info = None
+
+    try:
+        p = subprocess.Popen(cmd,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.STDOUT,
+                             universal_newlines=True,  # mod text
+                             startupinfo=info,
+                             )
+        out = p.communicate()
+
+    except OSError as oserr:  # executable do not exist
+        return('%s' % oserr)
+
+    if p.returncode:  # if returncode == 1
+        return(out[0])
+
+    """
+    NOTE The following code work, but on MS-Windows it show a short of
+         Dos-window
+    -----------------
 
     try:
         p = subprocess.run(cmd)
@@ -57,3 +81,4 @@ def browse(OS, pathname, mod):
             '''
     except FileNotFoundError as err:
         return('%s' % (err))
+    """

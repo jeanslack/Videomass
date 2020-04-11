@@ -7,15 +7,6 @@
 * [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
 * [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
 
-## News
-
-- October 2019 v.1.7.0: Added EBU R128 and RMS-based audio normalizations.
-  Added support to VP8, VP9, H.265 and OPUS encoders. See changelog for
-  more details.
-
-- November 2019 v.1.8.0: Now Videomass has embedded youtube-dl to downloads
-  video from Youtube and more sites.
-
 ## Features
 
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
@@ -30,7 +21,7 @@
 - Three audio normalization modes: Peak, RMS and EBU R128.
 - Audio index from videos selectable to apply normalization.
 - Setting duration portions for imported files, filters, export and tests.
-- Download multiple URLs from youtube with your settings.
+- Download multiple URLs from YouTube and other sites.
 - View video information without downloading it.
 - Ability to download videos using the 'format code'.
 - Log management.
@@ -41,7 +32,7 @@
 - Python3  >= 3.6.9
 - wxPython4 (phoenix)
 - PyPubSub (https://pypi.org/project/PyPubSub/)
-- ffmpeg >= 3.2
+- ffmpeg >= 4.1.4
 - ffprobe (for multimedia streams analysis)
 - ffplay (for playback)
 
