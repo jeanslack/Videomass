@@ -27,14 +27,20 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
+import os
+import sys
 try:
     from youtube_dl import YoutubeDL
     ydl = (True, None)
 except (ModuleNotFoundError, ImportError) as nomodule:
-    ydl = (False, nomodule)
+    sys.path.append(os.path.join(os.path.expanduser("~"),
+                                 '/home/gianluca/prova'))
+    try:
+        from youtube_dl import YoutubeDL
+        ydl = (True, None)
+    except (ModuleNotFoundError, ImportError) as nomodule:
+        ydl = (False, nomodule)
 import wx
-import os
 from videomass3.vdms_sys.ctrl_run import system_check
 from videomass3.vdms_sys.appearance import Appearance
 # add translation macro to builtin similar to what gettext does

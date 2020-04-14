@@ -39,66 +39,6 @@ get = wx.GetApp()
 OS = get.OS
 
 
-class PopupDialog(wx.Dialog):
-    """
-    A pop-up dialog box for temporary user messages that tell the user
-    the load in progress (required for large files).
-
-    Usage:
-            loadDlg = PopupDialog(None, ("Videomass - Loading..."),
-                        ("\nAttendi....\nSto eseguendo un processo .\n")
-                                )
-            loadDlg.ShowModal()
-
-            loadDlg.Destroy()
-    """
-    def __init__(self, parent, title, msg):
-        # Create a dialog
-        wx.Dialog.__init__(self, parent, -1, title, size=(350, 150),
-                           style=wx.CAPTION)
-        # Add sizers
-        box = wx.BoxSizer(wx.VERTICAL)
-        box2 = wx.BoxSizer(wx.HORIZONTAL)
-        # Add an Info graphic
-        bitmap = wx.Bitmap(32, 32)
-        bitmap = wx.ArtProvider.GetBitmap(wx.ART_INFORMATION,
-                                          wx.ART_MESSAGE_BOX, (32, 32)
-                                          )
-        graphic = wx.StaticBitmap(self, -1, bitmap)
-        box2.Add(graphic, 0, wx.EXPAND | wx.ALIGN_CENTER | wx.ALL, 10)
-        # Add the message
-        message = wx.StaticText(self, -1, msg)
-        box2.Add(message, 0, wx.EXPAND | wx.ALIGN_CENTER
-                                       | wx.ALIGN_CENTER_VERTICAL
-                                       | wx.ALL, 10)
-        box.Add(box2, 0, wx.EXPAND)
-        # Handle layout
-        self.SetAutoLayout(True)
-        self.SetSizer(box)
-        self.Fit()
-        self.Layout()
-
-        pub.subscribe(self.getMessage, "RESULT_EVT")
-    # ----------------------------------------------------------#
-
-    def getMessage(self, status):
-        """
-        Riceive msg and status from thread.
-        All'inizio usavo self.Destroy() per chiudere il dialogo modale
-        (con modeless ritornava dati None), ma dava warning e critical
-        e su OsX non chiudeva affatto. Con EndModal ho risolto tutti
-        i problemi e funziona bene. Ma devi ricordarti di eseguire
-        Destroy() dopo ShowModal() nel chiamante.
-        vedi: https://github.com/wxWidgets/Phoenix/issues/672
-        Penso sia fattibile anche implementare un'interfaccia GetValue
-        su questo dialogo, ma si perderebbe un po' di portabilità.
-        """
-
-        # self.Destroy() # do not work
-        self.EndModal(1)
-#######################################################################
-
-
 class MyLogger(object):
     """
     Intercepts youtube-dl's output by setting a logger object.

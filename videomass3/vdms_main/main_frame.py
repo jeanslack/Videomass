@@ -26,6 +26,7 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
+from __future__ import unicode_literals
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
@@ -44,6 +45,9 @@ from videomass3.vdms_panels.long_processing_task import Logging_Console
 from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
 
+# get videomass wx.App attribute
+get = wx.GetApp()
+ydl = get.ydl
 
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
@@ -573,27 +577,47 @@ class MainFrame(wx.Frame):
 
         # ------------------ tools button
         toolsButton = wx.Menu()
+
+
+        ffmpegButton = wx.Menu()  # ffmpeg sub menu
         dscrp = (_("While playing"),
                  _("Show dialog box with keyboard shortcuts useful "
                    "during playback"))
-        playing = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
+        playing = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
         dscrp = (_("FFmpeg specifications"),
                  _("Shows the configuration features of FFmpeg"))
-        checkconf = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
+        checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
         dscrp = (_("FFmpeg file formats"),
                  _("Shows file formats available on FFmpeg"))
-        ckformats = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
-        ckcoders = toolsButton.Append(wx.ID_ANY, _("FFmpeg encoders"),
-                                      _("Shows available encoders on FFmpeg"))
+        ckformats = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
+        ckcoders = ffmpegButton.Append(wx.ID_ANY, _("FFmpeg encoders"),
+                                       _("Shows available encoders on FFmpeg"))
         dscrp = (_("FFmpeg decoders"), _("Shows available decoders on FFmpeg"))
-        ckdecoders = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
+        ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
         dscrp = (_("FFmpeg search topics"),
                  _("Show a dialog box to help you find FFmpeg topics"))
-        searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        searchtopic = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.Append(wx.ID_ANY, "&FFmpeg", ffmpegButton)
+
+        ydlButton = wx.Menu()  # ydl sub menu
+        dscrp = (_("Show installed version"),
+                 _("Shows the version in use of the youtube-dl backend"))
+        ydlvers = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ydlButton.AppendSeparator()
+        dscrp = (_("Update youtube-dl"),
+                 _("update the youtube-dl backend"))
+        ydlupdate = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ydlButton.AppendSeparator()
+        dscrp = (_("Install locally"),
+                 _("Install a local copy of youtube-dl backend for "
+                   "Videomass use only"))
+        ydllocal = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.Append(wx.ID_ANY, _("&Youtube-dl"), ydlButton, )
+
         toolsButton.AppendSeparator()
         dscrp = (_("Log directory"),
                  _("Opens the Videomass log directory if it exists"))
@@ -601,6 +625,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Configuration directory"),
                  _("Opens the Videomass configuration directory"))
         openconfdir = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
         self.menuBar.Append(toolsButton, _("&Tools"))
 
         # ------------------ setup button
@@ -649,6 +674,10 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.Openlog, openlogdir)
         self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
+        # ----YOUTUBE_DL
+        self.Bind(wx.EVT_MENU, self.ydl_version, ydlvers)
+        self.Bind(wx.EVT_MENU, self.ydl_update, ydlupdate)
+        self.Bind(wx.EVT_MENU, self.ydl_local, ydllocal)
         # ----SETUP----
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
@@ -821,7 +850,47 @@ class MainFrame(wx.Frame):
         """
         IO_tools.openpath('dirconf')
 
+    # --------- Menu Youtube-dl
+
+    def ydl_version(self, event):
+        """
+        check version of youtube-dl used
+        """
+        if not ydl[0]:
+            wx.MessageBox(_('ERROR: {0}\n\nYoutube-dl has not been '
+                            'installed yet.').format(ydl[1]),
+                          'Videomass', wx.ICON_ERROR)
+            return
+        else:
+            import youtube_dl
+            vrs = youtube_dl.version.__version__
+            wx.MessageBox(_('youtube-dl version: {0}').format(vrs),
+                          'Videomass')
+    # -----------------------------------------------------------------#
+
+    def ydl_update(self, event):
+        """
+        update or install a new copy of the youtube-dl backand
+        """
+        if not ydl[0]:
+            if wx.MessageBox(_("youtube-dl has not been installed yet.\n\n"
+                               "Do you want to install youtube-dl locally?"),
+                             _('Videomass: Please confirm'),
+                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                return
+
+            IO_tools.youtubedl_update(upgrade=True)
+
+        else:
+            IO_tools.youtubedl_update(check=True)
+
+    # -----------------------------------------------------------------#
+
+    def ydl_local(self, event):
+        print('locally')
+
     # --------- Menu Edit
+
     def Helpme(self, event):
         """Online User guide"""
         page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
