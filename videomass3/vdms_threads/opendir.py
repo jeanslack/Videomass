@@ -30,14 +30,11 @@ import subprocess
 import os
 
 
-def browse(OS, pathname, mod):
+def browse(OS, pathname):
     """
     open file browser in a specific location with
     file manager of the OS
     """
-    if mod != 'dirconf':
-        pathname = os.path.join(pathname, "log")  # normalize os pathname
-
     if OS == 'Windows':
         cmd = ' '.join(['cmd', '/c', 'start', pathname])
         info = subprocess.STARTUPINFO()

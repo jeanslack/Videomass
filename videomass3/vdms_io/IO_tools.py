@@ -204,13 +204,19 @@ def findtopic(topic):
 # -------------------------------------------------------------------------#
 
 
-def openpath(mod):
+def openpath(where):
     """
     Call vdms_threads.opendir.browse to open file browser into
-    configuration directory and log directory.
+    configuration directory or log directory.
 
     """
-    ret = browse(OS, DIRconf, mod)
+    pathname = os.path.join(DIRconf, where)
+    if not os.path.exists(pathname):
+        wx.MessageBox(_("Output log has not been created yet."),
+                      "Videomass",
+                      wx.ICON_INFORMATION, None)
+        return
+    ret = browse(OS, pathname)
     if ret:
         wx.MessageBox(ret, 'Videomass Error', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#

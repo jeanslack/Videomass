@@ -811,7 +811,7 @@ class MainFrame(wx.Frame):
         Open the log diretctory with file manager
 
         """
-        IO_tools.openpath('openlog')
+        IO_tools.openpath('log')
     # ------------------------------------------------------------------#
 
     def Openconf(self, event):
@@ -819,7 +819,7 @@ class MainFrame(wx.Frame):
         Open the configuration folder with file manager
 
         """
-        IO_tools.openpath('dirconf')
+        IO_tools.openpath('')
 
     # --------- Menu Edit
     def Helpme(self, event):
