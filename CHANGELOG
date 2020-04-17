@@ -5,6 +5,20 @@ Copyright: (c) Gianluca Pernigotto 2014-2020
 License: GPL3
 
 Change Log:
+
++------------------------------------+
+April 14, 2020 V.2.0.5
++------------------------------------+
+
+BUGS:
+    * Fixed string error on first_time_start.py dialog
+
+IMPROVEMENTS:
+    * Code thinning for pupup dialog
+
+NEWS:
+    *
+
 +------------------------------------+
 April 11, 2020 V.2.0.3
 +------------------------------------+

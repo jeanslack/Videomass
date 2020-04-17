@@ -36,11 +36,10 @@ class PopupDialog(wx.Dialog):
     the load in progress (required for large files).
 
     Usage:
-            loadDlg = PopupDialog(None, ("Videomass - Loading..."),
-                        ("\nAttendi....\nSto eseguendo un processo .\n")
-                                )
+            loadDlg = PopupDialog(None, ("Videomass - Loading"),
+                                  ("\nWait....\nwork in progress.\n")
+                                  )
             loadDlg.ShowModal()
-
             loadDlg.Destroy()
     """
     def __init__(self, parent, title, msg):

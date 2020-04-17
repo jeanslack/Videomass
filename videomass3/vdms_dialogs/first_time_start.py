@@ -202,7 +202,7 @@ class FirstStart(wx.Dialog):
                 else:
                     noexists = False
             if noexists:
-                wx.MessageBox(_("'%s' is not installed on the system.\n"
+                wx.MessageBox(_("'{}' is not installed on the system.\n"
                                 "Please, install it or set a custom path "
                                 "using the 'Browse..' "
                                 "button.").format(required),

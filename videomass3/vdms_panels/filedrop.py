@@ -68,14 +68,14 @@ class MyListCtrl(wx.ListCtrl):
         msg_dir = _("Directories are not allowed, just add files, please.")
 
         if os.path.isdir(path):
-            self.parent.statusbar_msg(msg_dir, ORANGE)
+            self.parent.statusbar_msg(msg_dir, orange)
             return
 
         if not [x for x in data_files if x['format']['filename'] == path]:
             data = IO_tools.probeInfo(path)
 
             if data[1]:
-                self.parent.statusbar_msg(data[1], RED)
+                self.parent.statusbar_msg(data[1], red)
                 return
 
             data = eval(data[0])
@@ -92,7 +92,7 @@ class MyListCtrl(wx.ListCtrl):
 
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
-            self.parent.statusbar_msg(mess, YELLOW)
+            self.parent.statusbar_msg(mess, yellow)
     # ----------------------------------------------------------------------#
 
 

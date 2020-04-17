@@ -29,23 +29,19 @@
 
 import wx
 import os
-import shutil
 from videomass3.vdms_threads.ffplay_reproduction import Play
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
 from videomass3.vdms_threads.volumedetect import VolumeDetectThread
-#from videomass3.vdms_threads.volumedetect import PopupDialog
-from videomass3.vdms_dialogs.popup import PopupDialog
 from videomass3.vdms_threads.check_bin import ff_conf
 from videomass3.vdms_threads.check_bin import ff_formats
 from videomass3.vdms_threads.check_bin import ff_codecs
 from videomass3.vdms_threads.check_bin import ff_topics
 from videomass3.vdms_threads.opendir import browse
-from videomass3.vdms_threads import ydl_update
-
+from videomass3.vdms_threads.ydl_extract_info import Extract_Info
 from videomass3.vdms_frames import ffmpeg_conf
 from videomass3.vdms_frames import ffmpeg_formats
 from videomass3.vdms_frames import ffmpeg_codecs
-from videomass3.vdms_threads.ydl_extract_info import Extract_Info
+from videomass3.vdms_dialogs.popup import PopupDialog
 
 get = wx.GetApp()
 OS = get.OS
@@ -240,82 +236,3 @@ def youtube_info(url):
     loadDlg.Destroy()
     yield data
 # --------------------------------------------------------------------------#
-
-
-def youtubedl_update(check=False, upgrade=False):
-    """
-    calls for updating or installing a new copy of the youtube-dl backand
-    """
-    if check:
-        # check installed version if found
-        try:
-            import youtube_dl
-            #thisvers = youtube_dl.version.__version__
-            thisvers = '2020.02.10'
-        except (ModuleNotFoundError, ImportError) as nomodule:
-            thisvers = None
-
-        thread = ydl_update.CheckNewRelease('youtube_dl', OS)
-
-        loadDlg = PopupDialog(None,
-                          _("Videomass - Loading..."),
-                          _("\nWait....\nCheck for new release.\n"))
-        loadDlg.ShowModal()
-        # thread.join()
-        data = thread.data
-        loadDlg.Destroy()
-
-        if data[1]:  # error pip do not exist
-            wx.MessageBox("\n{0}".format(data[0]),
-                          "Videomass: error",
-                          wx.ICON_ERROR, None)
-            return
-        #elif data[1] is None:
-            #wx.MessageBox("NOT INSTALLED\nvuoi installare una copia in "
-                          #"locale di youyube-dl?",
-                          #"Videomass: error",
-                          #wx.ICON_ERROR, None)
-            ##inst = install('youtube_dl', 'Linux', '/home/gianluca/prova di fatto/')
-            #print('Installing youtube-dl...')
-            #finished = 'Installed youtube-dl backend. Restart Videomass to use it.'
-            #return
-
-
-        for s in data[0].split('\n'):
-            if s.startswith('youtube_dl '):
-                prg = s
-                vrs_latest = s.split()[1].replace('(','').replace(')','')
-
-        idx = vrs_latest.split('.')
-
-        if len(idx[1]) == 1:
-            idx[1] = '0'+ idx[1]
-        if len(idx[2]) == 1:
-            idx[2] = '0'+ idx[2]
-
-        vrs_latest = ".".join(idx)
-
-        if vrs_latest.strip() == thisvers.strip():
-            wx.MessageBox("\nyoutube-dl is up to date ({})".format(thisvers),
-                          "Videomass", wx.ICON_INFORMATION, None)
-            return
-        else:
-            wx.MessageBox("\nA New version is available: "
-                          "(youtube_dl {})".format(vrs_latest),
-                          "Videomass",  wx.ICON_INFORMATION, None)
-
-            print('new version %s' % vrs_latest)
-            print('vuoi installare la nuova versione?')
-            #inst = install('youtube_dl', 'Linux', '/home/gianluca/prova di fatto/')
-            print('Updating to version ' + vrs_latest + ' ...')
-            print('Updated youtube-dl backend. Restart Videomass '
-                  'to use the new version.')
-            return
-
-    elif upgrade:
-        print('upgrade')
-
-    #which = shutil.which('youtube-dl')
-    #if which:
-
-
