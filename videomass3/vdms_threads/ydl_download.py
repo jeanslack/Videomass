@@ -28,10 +28,8 @@
 from __future__ import unicode_literals
 try:
     import youtube_dl
-
 except ModuleNotFoundError as noydl:
     print(noydl)
-
 import wx
 from threading import Thread
 import time
@@ -42,6 +40,10 @@ get = wx.GetApp()
 OS = get.OS
 DIRconf = get.DIRconf  # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
+#ydl = get.ydl
+
+#if ydl is None:  # youtube-dl is installed
+    #import youtube_dl
 
 
 class MyLogger(object):

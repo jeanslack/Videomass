@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-April 17, 2020 V.2.0.5
+April 18, 2020 V.2.0.5
 +------------------------------------+
 
 BUGS:
@@ -15,10 +15,13 @@ BUGS:
 
 IMPROVEMENTS:
     * Code thinning for pupup dialog
-    * Fixed error with open log directory when log has not benn created
+    * Fixed error with open log directory when log has not been created
 
 NEWS:
-    *
+    * New optional box to merge audio to video when using a format code
+      indicating video without audio.
+    * New bar menu items to check youtube-dl installed version, latest
+      and updates.
 
 +------------------------------------+
 April 11, 2020 V.2.0.3

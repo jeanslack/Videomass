@@ -38,6 +38,7 @@ from videomass3.vdms_threads.check_bin import ff_codecs
 from videomass3.vdms_threads.check_bin import ff_topics
 from videomass3.vdms_threads.opendir import browse
 from videomass3.vdms_threads.ydl_extract_info import Extract_Info
+from videomass3.vdms_threads import ydl_update
 from videomass3.vdms_frames import ffmpeg_conf
 from videomass3.vdms_frames import ffmpeg_formats
 from videomass3.vdms_frames import ffmpeg_codecs
@@ -242,3 +243,67 @@ def youtube_info(url):
     loadDlg.Destroy()
     yield data
 # --------------------------------------------------------------------------#
+
+
+def youtubedl_latest(thisvers):
+    """
+    Calls thread for check new youtube-dl release
+    """
+    if not thisvers:
+        info = _("The latest version of youtube-dl on GitHub is:")
+    else:
+        info = _("A new version of youtube-dl is available on GitHub:")
+
+    url = 'https://yt-dl.org/update/LATEST_VERSION'
+    thread = ydl_update.CheckNewRelease(url)
+
+    loadDlg = PopupDialog(None, _("Videomass - Loading..."),
+                          _("\nWait....\nCheck for new release.\n"))
+    loadDlg.ShowModal()
+    # thread.join()
+    newversion = thread.data
+    loadDlg.Destroy()
+
+    if newversion[1]:  # failed
+        wx.MessageBox("\n{0}\n\n{1}".format(url, newversion[1]),
+                      "Videomass: error",
+                        wx.ICON_ERROR, None)
+        return
+
+    if newversion[0] == thisvers:
+
+        wx.MessageBox(_("youtube-dl is up to "
+                      "date {}".format(thisvers)),
+                      "Videomass", wx.ICON_INFORMATION, None)
+        return
+    else:
+        wx.MessageBox(_("{} {}".format(info, newversion[0])),
+                      'Videomass', wx.ICON_INFORMATION, None)
+        return
+# --------------------------------------------------------------------------#
+
+
+def youtubedl_update():
+    """
+    Calls thread for update to new youtube-dl release
+    """
+    thread = ydl_update.Update(OS)
+
+    loadDlg = PopupDialog(None, _("Videomass - Loading..."),
+                          _("\nWait....\nCheck for update.\n"))
+    loadDlg.ShowModal()
+    # thread.join()
+    update = thread.data
+    loadDlg.Destroy()
+
+    if update[1]:  # failed
+        wx.MessageBox("\n{}".format(update[0]),
+                      "Videomass: error",
+                        wx.ICON_ERROR, None)
+        return
+
+    else:
+        wx.MessageBox(_("{}".format(update[0])),
+                      'Videomass', wx.ICON_INFORMATION, None)
+        return
+# -------------

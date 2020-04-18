@@ -117,17 +117,32 @@ class Downloader(wx.Panel):
         self.cmbx_af.SetSelection(0)
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
 
-        self.txt_code = wx.TextCtrl(self, wx.ID_ANY, "",
+        self.txt_maincode = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_PROCESS_ENTER, size=(50, -1)
                                     )
-        self.txt_code.Disable()
-        self.stext = wx.StaticText(self, wx.ID_ANY,
-                                   (_('Enter Format Code here:'))
+        self.txt_maincode.Disable()
+        self.stext1 = wx.StaticText(self, wx.ID_ANY,
+                                   (_('Enter Format Code:'))
                                    )
-        self.stext.Disable()
-        grid_v.Add(self.stext, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_v.Add(self.txt_code, 0, wx.ALL, 5)
-        self.txt_code.WriteText('18')
+        self.stext1.Disable()
+        grid_v.Add(self.stext1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_v.Add(self.txt_maincode, 0, wx.ALL, 5)
+        self.txt_maincode.WriteText('18')
+
+
+
+
+        self.txt_mergecode = wx.TextCtrl(self, wx.ID_ANY, "",
+                                    style=wx.TE_PROCESS_ENTER, size=(50, -1)
+                                    )
+        self.txt_mergecode.Disable()
+        self.stext2 = wx.StaticText(self, wx.ID_ANY,
+                                   (_('Merge With:'))
+                                   )
+        self.stext2.Disable()
+        grid_v.Add(self.stext2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_v.Add(self.txt_mergecode, 0, wx.ALL, 5)
+        #self.txt_mergecode.WriteText('18')
         # -------------opt
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
@@ -167,6 +182,15 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(8, (_('Size')), width=80)
         self.fcode.Hide()
 
+        # ---------------------- Tooltip
+        tip = (_('Enter the media "Format Code" here. This box cannot '
+                 'be left empty.'))
+        self.txt_maincode.SetToolTip(tip)
+        tip = (_('To merge audio/video use this box to indicate a second '
+                 '"Format Code". This is optional.'))
+        self.txt_mergecode.SetToolTip(tip)
+
+        # ----------------------- Properties
         if OS == 'Darwin':
             self.fcode.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
@@ -299,24 +323,28 @@ class Downloader(wx.Panel):
     def on_Choice(self, event):
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_vq.Enable(), self.txt_code.Disable()
-            self.fcode.Hide(), self.stext.Disable()
+            self.cmbx_vq.Enable(), self.txt_maincode.Disable()
+            self.fcode.Hide(), self.stext1.Disable()
+            self.stext2.Disable(), self.txt_mergecode.Disable()
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
-            self.cmbx_vq.Enable(), self.txt_code.Disable()
-            self.fcode.Hide(), self.stext.Disable()
+            self.cmbx_vq.Enable(), self.txt_maincode.Disable()
+            self.fcode.Hide(), self.stext1.Disable()
+            self.stext2.Disable(), self.txt_mergecode.Disable()
 
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Enable(), self.txt_code.Disable()
-            self.fcode.Hide(), self.stext.Disable()
+            self.cmbx_af.Enable(), self.txt_maincode.Disable()
+            self.fcode.Hide(), self.stext1.Disable()
+            self.stext2.Disable(), self.txt_mergecode.Disable()
 
         elif self.choice.GetSelection() == 3:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Disable(), self.txt_code.Enable()
+            self.cmbx_af.Disable(), self.txt_maincode.Enable()
             # self.fcode.Enable(),
-            self.stext.Enable()
+            self.stext1.Enable()
+            self.stext2.Enable(), self.txt_mergecode.Enable()
             self.on_format_codes()
     # -----------------------------------------------------------------#
 
@@ -400,14 +428,26 @@ class Downloader(wx.Panel):
                                         }]
                     }
         if self.choice.GetSelection() == 3:
-            code = self.txt_code.GetValue().strip()
-            if not code.isdigit() or not code:
+            code1 = self.txt_maincode.GetValue().strip()
+            code2 = self.txt_mergecode.GetValue().strip()
+            if not code1.isdigit():
                 wx.MessageBox(_('Enter a `Format Code` number in the text '
                                 'box, please'),
                               'Videomass', wx.ICON_INFORMATION
                               )
-                self.txt_code.SetBackgroundColour((255, 192, 255))
+                self.txt_maincode.SetBackgroundColour((255, 192, 255))
                 return
+
+            if code2:
+                if not code2.isdigit():
+                    wx.MessageBox(_('Enter a "Format Code" number in the '
+                                    'second text box, please'),
+                                  'Videomass', wx.ICON_INFORMATION
+                                  )
+                    self.txt_mergecode.SetBackgroundColour((255, 192, 255))
+                    return
+
+            code = code1 if not code2 else code1 + '+' + code2
 
             data = {'format': code,
                     'noplaylist': opt["NO_PLAYLIST"],

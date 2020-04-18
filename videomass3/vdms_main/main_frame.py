@@ -26,9 +26,12 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
+from __future__ import unicode_literals
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
+import ssl
+import urllib.request
 from videomass3.vdms_dialogs import time_selection
 from videomass3.vdms_dialogs import settings
 from videomass3.vdms_dialogs import infoprg
@@ -43,7 +46,11 @@ from videomass3.vdms_panels import av_conversions
 from videomass3.vdms_panels.long_processing_task import Logging_Console
 from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
+from videomass3.vdms_sys.msg_info import current_release
 
+# get videomass wx.App attribute
+get = wx.GetApp()
+ydl = get.ydl
 
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
@@ -573,27 +580,46 @@ class MainFrame(wx.Frame):
 
         # ------------------ tools button
         toolsButton = wx.Menu()
+
+        ffmpegButton = wx.Menu()  # ffmpeg sub menu
         dscrp = (_("While playing"),
-                 _("Show dialog box with keyboard shortcuts useful "
-                   "during playback"))
-        playing = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
-        dscrp = (_("FFmpeg specifications"),
-                 _("Shows the configuration features of FFmpeg"))
-        checkconf = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
-        dscrp = (_("FFmpeg file formats"),
-                 _("Shows file formats available on FFmpeg"))
-        ckformats = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
-        ckcoders = toolsButton.Append(wx.ID_ANY, _("FFmpeg encoders"),
-                                      _("Shows available encoders on FFmpeg"))
-        dscrp = (_("FFmpeg decoders"), _("Shows available decoders on FFmpeg"))
-        ckdecoders = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.AppendSeparator()
-        dscrp = (_("FFmpeg search topics"),
-                 _("Show a dialog box to help you find FFmpeg topics"))
-        searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+                 _("Show useful keyboard shortcuts when playing "
+                   "or previewing with ffplay"))
+        playing = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
+        dscrp = (_("Integrated specifications"),
+                 _("Shows the built-ins configuration features of FFmpeg"))
+        checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
+        dscrp = (_("Muxers and Demuxers"),
+                 _("Muxers and demuxers available on FFmpeg in use."))
+        ckformats = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
+        ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"),
+                                       _("Shows available encoders on FFmpeg"))
+        dscrp = (_("Decoders"), _("Shows available decoders on FFmpeg"))
+        ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSeparator()
+        dscrp = (_("Search topics"),
+                 _("A easy utility to search for information on FFmpeg "
+                   "topics and options"))
+        searchtopic = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.Append(wx.ID_ANY, "&FFmpeg", ffmpegButton)
+
+        ydlButton = wx.Menu()  # ydl sub menu
+        dscrp = (_("Version in Use"),
+                 _("Shows the version in use if installed"))
+        ydlused = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        #ydlButton.AppendSeparator()
+        dscrp = (_("Latest on GitHub"),
+                 _("Check for the latest version available on GitHub"))
+        ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ydlButton.AppendSeparator()
+        dscrp = (_("Update youtube-dl"),
+                 _("Try to update with latest version of youtube-dl"))
+        ydlupdate = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.Append(wx.ID_ANY, _("&Youtube-dl"), ydlButton, )
+
         toolsButton.AppendSeparator()
         dscrp = (_("Log directory"),
                  _("Opens the Videomass log directory if it exists"))
@@ -601,6 +627,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Configuration directory"),
                  _("Opens the Videomass configuration directory"))
         openconfdir = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
         self.menuBar.Append(toolsButton, _("&Tools"))
 
         # ------------------ setup button
@@ -649,6 +676,9 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.Openlog, openlogdir)
         self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
+        self.Bind(wx.EVT_MENU, self.ydl_used, ydlused)
+        self.Bind(wx.EVT_MENU, self.ydl_latest, ydllatest)
+        self.Bind(wx.EVT_MENU, self.ydl_update, ydlupdate)
         # ----SETUP----
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
@@ -662,13 +692,11 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
 
     # --------Menu Bar Event handler (callback)
-
     # -------------------------- File Menu -----------------------------#
 
     def File_Save(self, event):
         """
         Open the file browser dialog to choice output file destination
-
         """
         dialdir = wx.DirDialog(self, _("Videomass: Choose a directory"))
         if dialdir.ShowModal() == wx.ID_OK:
@@ -804,6 +832,51 @@ class MainFrame(wx.Frame):
         """
         dlg = ffmpeg_search.FFmpeg_Search(self.OS)
         dlg.Show()
+    # -------------------------------------------------------------------#
+
+    def ydl_used(self, event, msgbox=True):
+        """
+        check version of youtube-dl used
+        """
+        if ydl is None:  # youtube-dl is installed
+            import youtube_dl
+            vrs = youtube_dl.version.__version__
+            if msgbox:
+                wx.MessageBox(_('You are using youtube-dl {}').format(vrs),
+                              'Videomass')
+            return vrs
+
+        else:
+            wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
+                            'installed yet.').format(ydl),
+                          'Videomass', wx.ICON_ERROR)
+            return
+    # -----------------------------------------------------------------#
+
+    def ydl_latest(self, event):
+        """
+        check for new releases of youtube-dl backand
+        """
+        if ydl is None:  # youtube-dl is installed
+            vrs = self.ydl_used(self, msgbox=False)
+            IO_tools.youtubedl_latest(vrs.strip())
+        else:
+            IO_tools.youtubedl_latest(None)
+    # -----------------------------------------------------------------#
+
+    def ydl_update(self, event):
+        """
+        Update to latest version
+        """
+        if ydl is not None:  # youtube-dl is not installed
+            wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
+                            'installed yet.').format(ydl),
+                          'Videomass', wx.ICON_ERROR)
+            return
+        else:
+            IO_tools.youtubedl_update()
+
+
     # ------------------------------------------------------------------#
 
     def Openlog(self, event):
@@ -822,6 +895,7 @@ class MainFrame(wx.Frame):
         IO_tools.openpath('')
 
     # --------- Menu Edit
+
     def Helpme(self, event):
         """Online User guide"""
         page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
@@ -863,9 +937,7 @@ class MainFrame(wx.Frame):
         """
         Check for new version releases of Videomass, useful for
         users with Videomass installer on Windows and MacOs.
-        """
-        from videomass3.vdms_sys.msg_info import current_release
-        """
+
         FIXME : There are was some error regarding
         [SSL: CERTIFICATE_VERIFY_FAILED]
         see:
@@ -874,13 +946,8 @@ class MainFrame(wx.Frame):
         <https://stackoverflow.com/questions/35569042/ssl-certificate-
         verify-failed-with-python3>
         """
-        import ssl
-        import urllib.request
-
         cr = current_release()
-
         # ssl._create_default_https_context = ssl._create_unverified_context
-
         try:
             context = ssl._create_unverified_context()
             f = urllib.request.urlopen('https://pypi.org/project/videomass/',

@@ -27,12 +27,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
-try:
-    from youtube_dl import YoutubeDL
-    ydl = (True, None)
-except (ModuleNotFoundError, ImportError) as nomodule:
-    ydl = (False, nomodule)
 import wx
 import os
 from videomass3.vdms_sys.ctrl_run import system_check
@@ -69,7 +63,7 @@ class Videomass(wx.App):
         self.ffprobe_url = None
         self.ffmpeg_loglev = None
         self.ffplay_loglev = None
-        self.ydl = ydl
+        self.ydl = None
         self.userpath = None
 
         # print ("App __init__")
@@ -108,6 +102,10 @@ class Videomass(wx.App):
         self.ffplay_check = setui[4][9]
         self.threads = setui[4][2]
         self.userpath = None if setui[4][1] == 'none' else setui[4][1]
+        try:
+            from youtube_dl import YoutubeDL
+        except (ModuleNotFoundError, ImportError) as nomodule:
+            self.ydl = (nomodule)
 
         if setui[0] == 'Darwin':
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"

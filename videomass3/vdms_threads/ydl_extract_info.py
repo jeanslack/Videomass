@@ -37,6 +37,11 @@ from threading import Thread
 # get data from bootstrap
 get = wx.GetApp()
 OS = get.OS
+#ydl = get.ydl
+
+#if ydl is None:  # youtube-dl is installed
+    #import youtube_dl
+
 
 
 class MyLogger(object):
