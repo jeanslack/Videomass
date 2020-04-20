@@ -250,7 +250,8 @@ def youtube_info(url):
 def youtube_getformatcode_exec(url):
     """
     Call the thread to get format code data object with youtube-dl
-    executable, (e.g. `youtube-dl -F url`) and show a wait pop-up dialog.
+    executable, (e.g. `youtube-dl -F url`) .
+    While waiting, a pop-up dialog is shown.
     """
     thread = GetFormatCode_Executable(url)
     loadDlg = PopupDialog(None,
@@ -267,13 +268,13 @@ def youtube_getformatcode_exec(url):
 
 def youtubedl_latest(thisvers, url):
     """
-    Calls thread for check new youtube-dl release and show a
-    wait pop-up dialog
+    Call the thread to read the latest version of youtube-dl via the web.
+    While waiting, a pop-up dialog is shown.
     """
     thread = ydl_update.CheckNewRelease(url)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
-                          _("\nWait....\nCheck for new release.\n"))
+                          _("\nWait....\nCheck for update.\n"))
     loadDlg.ShowModal()
     # thread.join()
     latest = thread.data
@@ -283,15 +284,17 @@ def youtubedl_latest(thisvers, url):
 # --------------------------------------------------------------------------#
 
 
-def youtubedl_update(cmd):
+def youtubedl_update(cmd, waitmsg):
     """
-    Calls thread to update a local copy (not installed from package
-    manager) of the youtube-dl prg and show a wait pop-up dialog.
+    Call thread to execute generic tasks as updates youtube-dl executable
+    or read the installed version. All these tasks are intended only for
+    the local copy (not installed by the package manager) of youtube-dl.
+    While waiting, a pop-up dialog is shown.
     """
-    thread = ydl_update.Update(OS, cmd)
+    thread = ydl_update.Command_Execution(OS, cmd)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
-                          _("\nWait....\nCheck for update.\n"))
+                          _("\nWait....\n%s\n" % waitmsg))
     loadDlg.ShowModal()
     # thread.join()
     update = thread.data
@@ -302,8 +305,9 @@ def youtubedl_update(cmd):
 
 def youtubedl_upgrade(latest):
     """
-    Calls thread for check new youtube-dl release and show a
-    wait pop-up dialog
+    Run thread to download the latest version of youtube-dl if not
+    installed on Ms Windows.
+    While waiting, a pop-up dialog is shown.
     """
     dest = os.path.join(DIRconf, 'youtube-dl.exe')
     thread = ydl_update.Upgrade_Latest(latest, dest)

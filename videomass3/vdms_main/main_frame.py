@@ -838,6 +838,7 @@ class MainFrame(wx.Frame):
         """
         check version of youtube-dl used from 'Version in Use' bar menu
         """
+        waitmsg = _('Check installed version')
         if ydl is None:  # youtube-dl is installed
             import youtube_dl
             vrs = youtube_dl.version.__version__
@@ -849,7 +850,9 @@ class MainFrame(wx.Frame):
             if OS == 'Windows':
                 exe = os.path.join(DIRconf, 'youtube-dl.exe')
                 if os.path.exists(exe):
-                    update = IO_tools.youtubedl_update([exe, '--version'])
+                    update = IO_tools.youtubedl_update([exe, '--version'],
+                                                       waitmsg
+                                                       )
                     if update[1] and msgbox:  # failed
                         wx.MessageBox("%s" % update[0], "Videomass: error",
                                       wx.ICON_ERROR, self)
@@ -918,13 +921,18 @@ class MainFrame(wx.Frame):
         Update to latest version from 'Update youtube-dl' bar menu
         """
         msg = None
+        waitmsg = _('Updating youtube-dl')
         if ydl is None:  # youtube-dl module exist
-            update = IO_tools.youtubedl_update(['youtube-dl', '--update'])
+            update = IO_tools.youtubedl_update(['youtube-dl', '--update'],
+                                               waitmsg
+                                               )
         else:
             if OS == 'Windows':
                 exe = os.path.join(DIRconf, 'youtube-dl.exe')
                 if os.path.exists(exe):
-                    update = IO_tools.youtubedl_update([exe, '--update'])
+                    update = IO_tools.youtubedl_update([exe, '--update'],
+                                                       waitmsg
+                                                       )
                 else:
                     msg = 'Fatal Error'
             else:

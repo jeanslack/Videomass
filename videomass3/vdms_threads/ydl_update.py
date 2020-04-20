@@ -36,8 +36,7 @@ from threading import Thread
 
 class CheckNewRelease(Thread):
     """
-    This class represents a separate thread to read
-    latest version of youtube-dl on github (see url) .
+    Read the latest version of youtube-dl on github (see url) .
     """
     def __init__(self, url):
         """
@@ -72,13 +71,17 @@ class CheckNewRelease(Thread):
 # -------------------------------------------------------------------------#
 
 
-class Update(Thread):
+class Command_Execution(Thread):
     """
-    This class represents a separate thread to execute generic
-    command by subprocess class for some task with youtube-dl binarys.
+    Executes commands from the youtube-dl executable by subprocess
+    class, e.g. read the installed version or update the downloaded
+    sources.
     """
     def __init__(self, OS, cmd):
         """
+        self.cmd is a list object
+        self.data content output of the self.status
+        self.status is a tuple object with exit status of the process
         """
         Thread.__init__(self)
         """initialize"""
@@ -130,11 +133,13 @@ class Update(Thread):
 
 class Upgrade_Latest(Thread):
     """
-    This class represents a separate thread to download
-    latest version of youtube-dl.exe from url (see self.url) .
+    Download latest version of youtube-dl.exe, see self.url .
     """
     def __init__(self, latest, dest):
         """
+        latest is the latest version getted by CheckNewRelease(Thread)
+        self.dest is the location pathname to download
+
         """
         Thread.__init__(self)
         """initialize"""
@@ -142,6 +147,7 @@ class Upgrade_Latest(Thread):
                     'download/%s/youtube-dl.exe' % latest)
         self.dest = dest
         self.data = None
+        self.status = None
 
         self.start()  # start the thread (va in self.run())
     # ----------------------------------------------------------------#
@@ -152,17 +158,19 @@ class Upgrade_Latest(Thread):
         """
         context = ssl._create_unverified_context()
         try:
-            with urllib.request.urlopen(self.url, context=context) as response, \
-                open(self.dest, 'wb') as out_file:
+            with urllib.request.urlopen(self.url, context=context) as \
+                response, open(self.dest, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
 
-            self.data = self.url, None
+            self.status = self.url, None
 
         except urllib.error.HTTPError as error:
-            self.data = None, error
+            self.status = None, error
 
         except urllib.error.URLError as error:
-            self.data = None, error
+            self.status = None, error
+
+        self.data = self.status
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",
