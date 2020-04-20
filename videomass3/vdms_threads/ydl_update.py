@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ydl_update.py
-# Porpose: check new version release
+# Porpose: update tasks
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -26,6 +26,7 @@
 
 #########################################################
 import subprocess
+import shutil
 import ssl
 import urllib.request
 import wx
@@ -36,7 +37,7 @@ from threading import Thread
 class CheckNewRelease(Thread):
     """
     This class represents a separate thread to read
-    latest version of youtube-dl .
+    latest version of youtube-dl on github (see url) .
     """
     def __init__(self, url):
         """
@@ -73,15 +74,16 @@ class CheckNewRelease(Thread):
 
 class Update(Thread):
     """
-    This class represents a separate thread to update
-    installed version of youtube-dl .
+    This class represents a separate thread to execute generic
+    command by subprocess class for some task with youtube-dl binarys.
     """
-    def __init__(self, OS):
+    def __init__(self, OS, cmd):
         """
         """
         Thread.__init__(self)
         """initialize"""
         self.OS = OS
+        self.cmd = cmd
         self.data = None
         self.status = None
 
@@ -91,14 +93,13 @@ class Update(Thread):
     def run(self):
         """
         """
-        cmd = ['youtube-dl', '--update']
-
         if self.OS == 'Windows':
-            cmd = " ".join(cmd)
+            cmd = " ".join(self.cmd)
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
         else:
+            cmd = self.cmd
             info = None
 
         try:
@@ -112,12 +113,9 @@ class Update(Thread):
 
         except OSError as oserr:  # executable do not exist
             self.status = ('%s' % oserr, 'error')
-            #self.data  = ('%s' % oserr, 'error')
         else:
             if p.returncode:  # if returncode == 1
                 self.status = (out[0], 'error')
-                #self.data = (out[0], 'error')
-
             else:
                 self.status = (out[0], out[1])
 
@@ -127,3 +125,47 @@ class Update(Thread):
                      "RESULT_EVT",
                      status=''
                      )
+# ---------------------------------------------------------------------#
+
+
+class Upgrade_Latest(Thread):
+    """
+    This class represents a separate thread to download
+    latest version of youtube-dl.exe from url (see self.url) .
+    """
+    def __init__(self, latest, dest):
+        """
+        """
+        Thread.__init__(self)
+        """initialize"""
+        self.url = ('https://github.com/ytdl-org/youtube-dl/releases/'
+                    'download/%s/youtube-dl.exe' % latest)
+        self.dest = dest
+        self.data = None
+
+        self.start()  # start the thread (va in self.run())
+    # ----------------------------------------------------------------#
+
+    def run(self):
+        """
+        Check for new version release
+        """
+        context = ssl._create_unverified_context()
+        try:
+            with urllib.request.urlopen(self.url, context=context) as response, \
+                open(self.dest, 'wb') as out_file:
+                shutil.copyfileobj(response, out_file)
+
+            self.data = self.url, None
+
+        except urllib.error.HTTPError as error:
+            self.data = None, error
+
+        except urllib.error.URLError as error:
+            self.data = None, error
+
+        wx.CallAfter(pub.sendMessage,
+                     "RESULT_EVT",
+                     status=''
+                     )
+# -------------------------------------------------------------------------#

@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: downloader.py
-# Porpose: sets youtube-dl options
+# Name: youtubedl_ui.py
+# Porpose: youtube-dl user interface
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -32,29 +32,36 @@ from videomass3.vdms_utils.utils import time_human
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
 
-vquality = {'Best quality video': 'best',
-            'Worst quality video': 'worst'}
+# cnostants
+VQUALITY = {('Best quality video'): ['best', 'best'],
+            ('Worst quality video'): ['worst', 'worst']}
 
-aformats = {("Default audio format"): ("best"),
-            ("wav"): ("wav"),
-            ("mp3"): ("mp3"),
-            ("aac"): ("aac"),
-            ("m4a"): ("m4a"),
-            ("vorbis"): ("vorbis"),
-            ("opus"): ("opus"),
-            ("flac"): ("flac"),
+AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
+            ("wav"): ("wav", "--extract-audio --audio-format wav"),
+            ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
+            ("aac"): ("aac", "--extract-audio --audio-format aac"),
+            ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
+            ("vorbis"): ("vorbis", "--extract-audio --audio-format vorbis"),
+            ("opus"): ("opus", "--extract-audio --audio-format opus"),
+            ("flac"): ("flac", "--extract-audio --audio-format flac"),
             }
 
-aquality = {'Best quality audio': 'best',
-            'Worst quality audio': 'worst'}
+AQUALITY = {('Best quality audio'): ['best', 'best'],
+            ('Worst quality audio'): ['worst', 'worst']}
 
-opt = {"NO_PLAYLIST": True, "THUMB": False, "METADATA": False,
-       "V_QUALITY": "best", "A_FORMAT": "best", "A_QUALITY": "best",
-       "SUBTITLES": False,
+# variables
+opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
+       ("THUMB"): [False, ""],
+       ("METADATA"): [False, ""],
+       ("V_QUALITY"): ["best", "best"],
+       ("A_FORMAT"): ["best", "--extract-audio"],
+       ("A_QUALITY"): ["best", "best"],
+       ("SUBTITLES"): [False, ""],
        }
 
-yellow = '#a29500'
-red = '#ea312d'
+# get videomass wx.App attribute
+get = wx.GetApp()
+ydl = get.ydl
 
 
 class Downloader(wx.Panel):
@@ -82,16 +89,16 @@ class Downloader(wx.Panel):
         frame.Add(sizer, 1, wx.ALL | wx.EXPAND, 5)
         self.choice = wx.Choice(self, wx.ID_ANY,
                                 choices=[_('Default'),
-                                         _('Video + Audio'),
+                                         _('Split audio and video'),
                                          _('Audio only'),
-                                         _('Format code')],
+                                         _('by format code')],
                                 size=(-1, -1),
                                 )
         self.choice.SetSelection(0)
         sizer.Add(self.choice, 0, wx.EXPAND | wx.ALL, 15)
         grid_v = wx.FlexGridSizer(1, 7, 0, 0)
         sizer.Add(grid_v, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        f = [x for x in vquality.keys()]
+        f = [x for x in VQUALITY.keys()]
         self.cmbx_vq = wx.ComboBox(self, wx.ID_ANY, choices=f,
                                    size=(150, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
@@ -100,7 +107,7 @@ class Downloader(wx.Panel):
         # grid_v.Add((20, 20), 0,)
         grid_v.Add(self.cmbx_vq, 0, wx.ALL, 5)
         self.cmbx_aq = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=[x for x in aquality.keys()],
+                                   choices=[x for x in AQUALITY.keys()],
                                    size=(150, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
                                    )
@@ -109,7 +116,7 @@ class Downloader(wx.Panel):
         # grid_v.Add((20, 20), 0,)
         grid_v.Add(self.cmbx_aq, 0, wx.ALL, 5)
         self.cmbx_af = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=[x for x in aformats.keys()],
+                                   choices=[x for x in AFORMATS.keys()],
                                    size=(150, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
                                    )
@@ -128,10 +135,6 @@ class Downloader(wx.Panel):
         grid_v.Add(self.stext1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grid_v.Add(self.txt_maincode, 0, wx.ALL, 5)
         self.txt_maincode.WriteText('18')
-
-
-
-
         self.txt_mergecode = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_PROCESS_ENTER, size=(50, -1)
                                     )
@@ -171,23 +174,30 @@ class Downloader(wx.Panel):
         sizer.Add(self.fcode, 1, wx.EXPAND | wx.ALL |
                   wx.ALIGN_CENTER_HORIZONTAL, 10
                   )
-        self.fcode.InsertColumn(0, (_('TITLE')), width=180)
-        self.fcode.InsertColumn(1, (_('URL')), width=80)
-        self.fcode.InsertColumn(2, (_('Format Code')), width=100)
-        self.fcode.InsertColumn(3, (_('Extension')), width=80)
-        self.fcode.InsertColumn(4, (_('Resolution')), width=140)
-        self.fcode.InsertColumn(5, (_('Video Codec')), width=110)
-        self.fcode.InsertColumn(6, (_('fps')), width=60)
-        self.fcode.InsertColumn(7, (_('Audio Codec')), width=110)
-        self.fcode.InsertColumn(8, (_('Size')), width=80)
-        self.fcode.Hide()
+        if ydl is None:  # YuotubeDL is not used as module
+            self.fcode.InsertColumn(0, (_('TITLE')), width=180)
+            self.fcode.InsertColumn(1, (_('URL')), width=80)
+            self.fcode.InsertColumn(2, (_('Format Code')), width=100)
+            self.fcode.InsertColumn(3, (_('Extension')), width=80)
+            self.fcode.InsertColumn(4, (_('Resolution')), width=140)
+            self.fcode.InsertColumn(5, (_('Video Codec')), width=110)
+            self.fcode.InsertColumn(6, (_('fps')), width=60)
+            self.fcode.InsertColumn(7, (_('Audio Codec')), width=110)
+            self.fcode.InsertColumn(8, (_('Size')), width=80)
+        else:
+            self.fcode.InsertColumn(0, (_('URL')), width=200)
+            self.fcode.InsertColumn(1, (_('Format Code')), width=100)
+            self.fcode.InsertColumn(2, (_('Extension')), width=80)
+            self.fcode.InsertColumn(3, (_('Resolution note')), width=500)
 
         # ---------------------- Tooltip
-        tip = (_('Enter the media "Format Code" here. This box cannot '
-                 'be left empty.'))
+        tip = (_('Enter the media "Format Code" here. You can specify '
+                 'multiple format codes by using slash, e.g. 22/17/18 . '
+                 'This box cannot left empty.'))
         self.txt_maincode.SetToolTip(tip)
         tip = (_('To merge audio/video use this box to indicate a second '
-                 '"Format Code". This is optional.'))
+                 '"Format Code"; this is optional. You can specify multiple '
+                 'format codes by using slash, e.g. 140/130/151 .'))
         self.txt_mergecode.SetToolTip(tip)
 
         # ----------------------- Properties
@@ -196,6 +206,8 @@ class Downloader(wx.Panel):
         else:
             self.fcode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
+        #self.fcode.Hide()
+        # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------Binder (EVT)----------------------#
@@ -207,7 +219,6 @@ class Downloader(wx.Panel):
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
-
     # -----------------------------------------------------------------#
 
     def parse_info(self):
@@ -285,10 +296,38 @@ class Downloader(wx.Panel):
                         self.fcode.SetItem(index, 6, fps)
                         self.fcode.SetItem(index, 7, acodec)
                         self.fcode.SetItem(index, 8, size)
-
         # self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)
-
         return self.error
+    # -----------------------------------------------------------------#
+
+    def get_formatcodefromexecutable(self):
+        """
+        Parsing the iterated items getting from the output
+        of the generator object *youtube_getformatcode_exec* .
+        """
+        if not self.info:
+            index = 0
+            for link in self.parent.data_url:
+                self.fcode.InsertItem(index, link)
+                self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                data = IO_tools.youtube_getformatcode_exec(link)
+                for meta in data:
+                    if meta[1]:
+                        wx.MessageBox(meta[0], 'youtube-dl ERROR',
+                                    wx.ICON_ERROR
+                                    )
+                        return
+
+                    self.info.append(link)
+                    for fc in meta[0].split('\n'):
+                        if fc is not '':
+                            if fc.split()[0].isdigit():
+                                index += 1
+                                self.fcode.InsertItem(index, '')
+                                self.fcode.SetItem(index, 1, fc.split()[0])
+                                self.fcode.SetItem(index, 2, fc.split()[1])
+                                note = ' '.join(fc.split()[2:])
+                                self.fcode.SetItem(index, 3, note)
     # -----------------------------------------------------------------#
 
     def on_show_info(self):
@@ -297,6 +336,11 @@ class Downloader(wx.Panel):
         when the 'show stream information' button is pressed.
 
         """
+        if ydl is not None:  # YuotubeDL is not used as module
+            wx.MessageBox(_('Sorry, This feature is disabled.'),
+                          'Videomass', wx.ICON_INFORMATION)
+            return
+
         if not self.info:
             error = self.parse_info()
             if error:
@@ -311,11 +355,16 @@ class Downloader(wx.Panel):
         Show listctrl to choose format code
 
         """
+        if ydl is not None:  # YuotubeDL is not used as module
+            self.get_formatcodefromexecutable()
+            self.fcode.Show()
+            self.Layout()
+            return
+
         if not self.info:
             error = self.parse_info()
             if error:
                 return
-
         self.fcode.Show()
         self.Layout()
     # -----------------------------------------------------------------#
@@ -349,123 +398,168 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Vq(self, event):
-        opt["V_QUALITY"] = vquality[self.cmbx_vq.GetValue()]
+        opt["V_QUALITY"] = VQUALITY[self.cmbx_vq.GetValue()]
     # -----------------------------------------------------------------#
 
     def on_Af(self, event):
-        opt["A_FORMAT"] = aformats.get(self.cmbx_af.GetValue())
+        opt["A_FORMAT"] = AFORMATS.get(self.cmbx_af.GetValue())
     # -----------------------------------------------------------------#
 
     def on_Aq(self, event):
-        opt["A_QUALITY"] = aquality.get(self.cmbx_aq.GetValue())
+        opt["A_QUALITY"] = AQUALITY.get(self.cmbx_aq.GetValue())
     # -----------------------------------------------------------------#
 
     def on_Playlist(self, event):
         if self.ckbx_pl.IsChecked():
-            opt["NO_PLAYLIST"] = False
+            opt["NO_PLAYLIST"] = [False, "--yes-playlist"]
         else:
-            opt["NO_PLAYLIST"] = True
+            opt["NO_PLAYLIST"] = [True, "--no-playlist"]
     # -----------------------------------------------------------------#
 
     def on_Thumbnails(self, event):
         if self.ckbx_thumb.IsChecked():
-            opt["THUMB"] = True
+            opt["THUMB"] = [True, "--embed-thumbnail"]
         else:
-            opt["THUMB"] = False
+            opt["THUMB"] = [False, ""]
     # -----------------------------------------------------------------#
 
     def on_Metadata(self, event):
         if self.ckbx_meta.IsChecked():
-            opt["METADATA"] = True
+            opt["METADATA"] = [True, "--add-metadata"]
         else:
-            opt["METADATA"] = False
+            opt["METADATA"] = [False, ""]
     # -----------------------------------------------------------------#
 
     def on_Subtitles(self, event):
         if self.ckbx_sb.IsChecked():
-            opt["SUBTITLES"] = True
+            opt["SUBTITLES"] = [True, "--write-auto-sub"]
         else:
-            opt["SUBTITLES"] = False
+            opt["SUBTITLES"] = [False, ""]
     # -----------------------------------------------------------------#
 
     def on_Start(self):
-
-        logname = 'Youtube_downloader.log'
+        """
+        Builds command string to use with an embed youtube_dl as
+        python module or using standard youtube-dl command line
+        with subprocess. This depends on some cases.
+        """
         urls = self.parent.data_url
+        logname = 'Youtube_downloader.log'
 
-        if self.choice.GetSelection() == 0:
-            data = {'format': opt["V_QUALITY"],
-                    'noplaylist': opt["NO_PLAYLIST"],
-                    'writethumbnail': opt["THUMB"],
-                    'outtmpl': '%(title)s.%(ext)s',
-                    'extractaudio': False,
-                    'addmetadata': opt["METADATA"],
-                    'writesubtitles': opt["SUBTITLES"],
-                    'postprocessors': []
-                    }
-        if self.choice.GetSelection() == 1:
-            data = {'format': '{}video,{}audio'.format(opt["V_QUALITY"],
-                                                       opt["A_QUALITY"]),
-                    'noplaylist': opt["NO_PLAYLIST"],
-                    'writethumbnail': opt["THUMB"],
-                    'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
-                    'extractaudio': False,
-                    'addmetadata': opt["METADATA"],
-                    'writesubtitles': opt["SUBTITLES"],
-                    'postprocessors': []
-                    }
-        elif self.choice.GetSelection() == 2:  # audio only
-
-            data = {'format': 'best',
-                    'noplaylist': opt["NO_PLAYLIST"],
-                    'writethumbnail': opt["THUMB"],
-                    'outtmpl': '%(title)s.%(ext)s',
-                    'extractaudio': True,
-                    'addmetadata': opt["METADATA"],
-                    'writesubtitles': False,
-                    'postprocessors': [{'key': 'FFmpegExtractAudio',
-                                        'preferredcodec': opt["A_FORMAT"],
-                                        }]
-                    }
-        if self.choice.GetSelection() == 3:
+        def _getformatcode():
+            """return format code"""
             code1 = self.txt_maincode.GetValue().strip()
             code2 = self.txt_mergecode.GetValue().strip()
-            if not code1.isdigit():
-                wx.MessageBox(_('Enter a `Format Code` number in the text '
-                                'box, please'),
-                              'Videomass', wx.ICON_INFORMATION
-                              )
-                self.txt_maincode.SetBackgroundColour((255, 192, 255))
-                return
-
-            if code2:
-                if not code2.isdigit():
-                    wx.MessageBox(_('Enter a "Format Code" number in the '
-                                    'second text box, please'),
-                                  'Videomass', wx.ICON_INFORMATION
-                                  )
-                    self.txt_mergecode.SetBackgroundColour((255, 192, 255))
-                    return
-
             code = code1 if not code2 else code1 + '+' + code2
+            ckstr = [x.isdigit() for x in code if x
+                     not in [c for c in ['/','+']]
+                     ]
+            if False in ckstr or not ckstr or not code1:
+                wx.MessageBox(_('Enter only "Format Code" numbers in the '
+                                'text box, please. You can specify multiple '
+                                'format codes by using slash, e.g. 22/17/18'),
+                                'Videomass', wx.ICON_INFORMATION)
+                self.txt_maincode.SetBackgroundColour((255, 192, 255))
+                self.txt_mergecode.SetBackgroundColour((255, 192, 255))
+                return
+            return code
 
-            data = {'format': code,
-                    'noplaylist': opt["NO_PLAYLIST"],
-                    'writethumbnail': opt["THUMB"],
-                    'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
-                    'extractaudio': False,
-                    'addmetadata': opt["METADATA"],
-                    'writesubtitles': opt["SUBTITLES"],
-                    'postprocessors': []
-                    }
-        self.parent.switch_Process('youtubedl downloader',
-                                   urls,
-                                   '',
-                                   self.parent.file_destin,
-                                   data,
-                                   None,
-                                   '',
-                                   '',
-                                   logname,
-                                   len(urls),
-                                   )
+        if ydl is None:  # ----------- YuotubeDL is used as module
+            if self.choice.GetSelection() == 0:
+                data = {'format': opt["V_QUALITY"],
+                        'noplaylist': opt["NO_PLAYLIST"][0],
+                        'writethumbnail': opt["THUMB"][0],
+                        'outtmpl': '%(title)s.%(ext)s',
+                        'extractaudio': False,
+                        'addmetadata': opt["METADATA"][0],
+                        'writesubtitles': opt["SUBTITLES"][0],
+                        'postprocessors': []
+                        }
+            if self.choice.GetSelection() == 1:  # audio files and video files
+                data = {'format': '{}video,{}audio'.format(opt["V_QUALITY"],
+                                                           opt["A_QUALITY"]),
+                        'noplaylist': opt["NO_PLAYLIST"][0],
+                        'writethumbnail': opt["THUMB"][0],
+                        'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                        'extractaudio': False,
+                        'addmetadata': opt["METADATA"][0],
+                        'writesubtitles': opt["SUBTITLES"][0],
+                        'postprocessors': []
+                        }
+            elif self.choice.GetSelection() == 2:  # audio only
+
+                data = {'format': 'best',
+                        'noplaylist': opt["NO_PLAYLIST"][0],
+                        'writethumbnail': opt["THUMB"][0],
+                        'outtmpl': '%(title)s.%(ext)s',
+                        'extractaudio': True,
+                        'addmetadata': opt["METADATA"][0],
+                        'writesubtitles': False,
+                        'postprocessors':
+                            [{'key': 'FFmpegExtractAudio',
+                              'preferredcodec': opt["A_FORMAT"][0],
+                              }
+                            ]
+                        }
+            if self.choice.GetSelection() == 3:  # format code
+                code = _getformatcode()
+                if not code:
+                    return
+                data = {'format': code,
+                        'noplaylist': opt["NO_PLAYLIST"][0],
+                        'writethumbnail': opt["THUMB"][0],
+                        'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                        'extractaudio': False,
+                        'addmetadata': opt["METADATA"][0],
+                        'writesubtitles': opt["SUBTITLES"][0],
+                        'postprocessors': []
+                        }
+            self.parent.switch_Process('youtube_dl python package',
+                                       urls,
+                                       '',
+                                       self.parent.file_destin,
+                                       data,
+                                       None,
+                                       '',
+                                       '',
+                                       logname,
+                                       len(urls),
+                                       )
+        else:  # ----------- with youtube-dl executable
+
+            if self.choice.GetSelection() == 0:  # default
+                cmd = [(f'--format {opt["V_QUALITY"][1]} {opt["METADATA"][1]} '
+                        f'{opt["SUBTITLES"][1]} {opt["NO_PLAYLIST"][1]}'),
+                       ('%(title)s.%(ext)s')
+                       ]
+
+            if self.choice.GetSelection() == 1:  # audio files and video files
+                cmd = [(f'--format {opt["V_QUALITY"][1]}video,{opt["A_QUALITY"][1]}'
+                        f'audio {opt["METADATA"][1]} {opt["SUBTITLES"][1]} '
+                        f'{opt["NO_PLAYLIST"][1]}'),
+                       ('%(title)s.f%(format_id)s.%(ext)s')
+                       ]
+            elif self.choice.GetSelection() == 2: # audio only
+                cmd = [(f'{opt["A_FORMAT"][1]} {opt["THUMB"][1]} '
+                        f'{opt["METADATA"][1]} {opt["NO_PLAYLIST"][1]}'),
+                       ('%(title)s.%(ext)s')
+                       ]
+            if self.choice.GetSelection() == 3:  # format code
+                code = _getformatcode()
+                if not code:
+                    return
+                cmd = [(f'--format {code} {opt["METADATA"][1]} '
+                        f'{opt["SUBTITLES"][1]} {opt["NO_PLAYLIST"][1]}'),
+                       ('%(title)s.f%(format_id)s.%(ext)s')
+                       ]
+            self.parent.switch_Process('youtube-dl executable',
+                                        urls,
+                                        '',
+                                        self.parent.file_destin,
+                                        cmd,
+                                        None,
+                                        '',
+                                        '',
+                                        logname,
+                                        len(urls),
+                                        )

@@ -32,7 +32,6 @@ import os
 from videomass3.vdms_sys.ctrl_run import system_check
 from videomass3.vdms_sys.appearance import Appearance
 # add translation macro to builtin similar to what gettext does
-# import locale
 import builtins
 builtins.__dict__['_'] = wx.GetTranslation
 from videomass3.vdms_sys import app_const as appC

@@ -26,12 +26,12 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-from __future__ import unicode_literals
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
 import ssl
 import urllib.request
+import os
 from videomass3.vdms_dialogs import time_selection
 from videomass3.vdms_dialogs import settings
 from videomass3.vdms_dialogs import infoprg
@@ -41,7 +41,7 @@ from videomass3.vdms_frames.mediainfo import Mediainfo
 from videomass3.vdms_panels import choose_topic
 from videomass3.vdms_panels import filedrop
 from videomass3.vdms_panels import textdrop
-from videomass3.vdms_panels import downloader
+from videomass3.vdms_panels import youtubedl_ui
 from videomass3.vdms_panels import av_conversions
 from videomass3.vdms_panels.long_processing_task import Logging_Console
 from videomass3.vdms_panels import presets_manager
@@ -50,7 +50,12 @@ from videomass3.vdms_sys.msg_info import current_release
 
 # get videomass wx.App attribute
 get = wx.GetApp()
-ydl = get.ydl
+ydl = get.ydl  # if youtube_dl.YoutubeDL module exist is None
+OS = get.OS  # ID of the operative system:
+DIRconf = get.DIRconf  # default configuration directory
+FILEconf = get.FILEconf  # pathname of the file configuration
+WORKdir = get.WORKdir  # pathname of the current work directory
+threads = get.threads  # ffmpeg option, set the cpu threads
 
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
@@ -83,13 +88,8 @@ class MainFrame(wx.Frame):
         fBtnC = setui[4][14].split(',')
         self.fBtnC = wx.Colour(int(fBtnC[0]), int(fBtnC[1]), int(fBtnC[2]))
         # Buttons Font Colour
-        self.OS = setui[0]  # ID of the operative system:
         SRCpath = setui[1]  # share dir (are where the origin files?):
-        self.PATHconf = setui[6]
-        self.WORKdir = setui[7]
-        self.DIRconf = setui[8]
         # ---------------------------#
-        self.threads = setui[4][2]  # ffmpeg option, set the cpu threads
         self.iconset = setui[4][11]
         self.videomass_icon = pathicons[0]
         self.icon_runconversion = pathicons[2]
@@ -121,7 +121,7 @@ class MainFrame(wx.Frame):
         self.btn_metaI = GB.GradientButton(self.btnpanel,
                                            size=(-1, 25),
                                            bitmap=infoIbmp,
-                                           label=_("Streams Information")
+                                           label=_("Multimedia Streams")
                                            )
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
                                       foregroundcolour=wx.Colour(self.fBtnC)
@@ -212,15 +212,15 @@ class MainFrame(wx.Frame):
         self.btnpanel.SetBackgroundColour(barColor)
         # ---------- others panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self,
-                                                     self.OS,
+                                                     OS,
                                                      pathicons[1],
                                                      pathicons[18],
                                                      pathicons[19]
                                                      )
         # self.ChooseTopic.SetBackgroundColour(barColor)
-        self.ytDownloader = downloader.Downloader(self, self.OS)
+        self.ytDownloader = youtubedl_ui.Downloader(self, OS)
         self.VconvPanel = av_conversions.AV_Conv(self,
-                                                 self.OS,
+                                                 OS,
                                                  pathicons[6],  # playfil
                                                  pathicons[7],  # resetfil
                                                  pathicons[9],  # resize
@@ -240,9 +240,9 @@ class MainFrame(wx.Frame):
         self.ProcessPanel = Logging_Console(self)
         self.PrstsPanel = presets_manager.PrstPan(self,
                                                   SRCpath,
-                                                  self.DIRconf,
-                                                  self.WORKdir,
-                                                  self.OS,
+                                                  DIRconf,
+                                                  WORKdir,
+                                                  OS,
                                                   pathicons[14],  # analyzes
                                                   pathicons[17],  # peaklevel
                                                   self.bBtnC,
@@ -280,9 +280,9 @@ class MainFrame(wx.Frame):
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        if self.OS == 'Darwin':
+        if OS == 'Darwin':
             self.SetSize((1030, 600))
-        elif self.OS == 'Windows':
+        elif OS == 'Windows':
             self.SetSize((980, 650))
         else:
             # self.SetSize((930, 600))
@@ -293,7 +293,7 @@ class MainFrame(wx.Frame):
         self.btn_duration.SetToolTip(_('Specify the duration or portion of '
                                        'the time globally. this can affect '
                                        'many functions.'))
-        self.btn_metaI.SetToolTip(_("Show additional media information."))
+        self.btn_metaI.SetToolTip(_("Show additional multimedia information."))
         self.btn_playO.SetToolTip(_("Choose a file to playback in the "
                                     "destination folder"))
         self.btn_saveprf.SetToolTip(_("Save the settings on presets manager"))
@@ -424,7 +424,7 @@ class MainFrame(wx.Frame):
         if self.topicname == 'Youtube Downloader':
             self.ytDownloader.on_show_info()
         else:
-            dialog = Mediainfo(self.data_files, self.OS,)
+            dialog = Mediainfo(self.data_files, OS,)
             dialog.Show()
     # ------------------------------------------------------------------#
 
@@ -611,7 +611,7 @@ class MainFrame(wx.Frame):
                  _("Shows the version in use if installed"))
         ydlused = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         #ydlButton.AppendSeparator()
-        dscrp = (_("Latest on GitHub"),
+        dscrp = (_("Check for Update"),
                  _("Check for the latest version available on GitHub"))
         ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ydlButton.AppendSeparator()
@@ -789,7 +789,7 @@ class MainFrame(wx.Frame):
         """
         show dialog with shortcuts keyboard for FFplay
         """
-        dlg = while_playing.While_Playing(self.OS)
+        dlg = while_playing.While_Playing(OS)
         dlg.Show()
     # ------------------------------------------------------------------#
 
@@ -830,53 +830,118 @@ class MainFrame(wx.Frame):
         Show a dialog box to help you find FFmpeg topics
 
         """
-        dlg = ffmpeg_search.FFmpeg_Search(self.OS)
+        dlg = ffmpeg_search.FFmpeg_Search(OS)
         dlg.Show()
     # -------------------------------------------------------------------#
 
     def ydl_used(self, event, msgbox=True):
         """
-        check version of youtube-dl used
+        check version of youtube-dl used from 'Version in Use' bar menu
         """
         if ydl is None:  # youtube-dl is installed
             import youtube_dl
             vrs = youtube_dl.version.__version__
             if msgbox:
-                wx.MessageBox(_('You are using youtube-dl {}').format(vrs),
+                wx.MessageBox(_('You are using youtube-dl version %s') % vrs,
                               'Videomass')
             return vrs
-
         else:
+            if OS == 'Windows':
+                exe = os.path.join(DIRconf, 'youtube-dl.exe')
+                if os.path.exists(exe):
+                    update = IO_tools.youtubedl_update([exe, '--version'])
+                    if update[1] and msgbox:  # failed
+                        wx.MessageBox("%s" % update[0], "Videomass: error",
+                                      wx.ICON_ERROR, self)
+                    else:
+                        if msgbox:
+                            wx.MessageBox(_('You are using youtube-dl version '
+                                            '%s') % update[0], 'Videomass')
+                    return update
+                msg = 'Fatal Error'
+            else:
+                msg = ydl
+
             wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(ydl),
+                            'installed yet.').format(msg),
                           'Videomass', wx.ICON_ERROR)
             return
     # -----------------------------------------------------------------#
 
     def ydl_latest(self, event):
         """
-        check for new releases of youtube-dl backand
+        check for new releases of youtube-dl backand from 'Check for Update'
+        bar menu
         """
+        url = 'https://yt-dl.org/update/LATEST_VERSION'
+
         if ydl is None:  # youtube-dl is installed
-            vrs = self.ydl_used(self, msgbox=False)
-            IO_tools.youtubedl_latest(vrs.strip())
+            thisvers = self.ydl_used(self, msgbox=False)
+            latest = IO_tools.youtubedl_latest(thisvers.strip(), url)
         else:
-            IO_tools.youtubedl_latest(None)
+            if OS == 'Windows':
+                thisvers = self.ydl_used(self, msgbox=False)
+                if thisvers[1]:
+                    wx.MessageBox("%s" % thisvers[0], "Videomass: error",
+                                  wx.ICON_ERROR, self)
+                    return
+                latest = IO_tools.youtubedl_latest(thisvers[0].strip(), url)
+                thisvers = thisvers[0].strip()
+            else:
+                thisvers = None
+                latest = IO_tools.youtubedl_latest(None, url)
+
+        if not thisvers:
+            info = _("The latest version of youtube-dl on GitHub is:")
+        else:
+            info = _("A new version of youtube-dl is available on GitHub:")
+
+        if latest[1]:  # failed
+            wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
+                          "Videomass: error", wx.ICON_ERROR, self)
+            return
+
+        if latest[0] == thisvers:
+
+            wx.MessageBox(_("youtube-dl is up to "
+                            "date {}".format(thisvers)),
+                          "Videomass", wx.ICON_INFORMATION, self)
+            return
+        else:
+            wx.MessageBox(_("{} {}".format(info, latest[0])),
+                            'Videomass', wx.ICON_INFORMATION, self)
+            return
     # -----------------------------------------------------------------#
 
     def ydl_update(self, event):
         """
-        Update to latest version
+        Update to latest version from 'Update youtube-dl' bar menu
         """
-        if ydl is not None:  # youtube-dl is not installed
-            wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(ydl),
-                          'Videomass', wx.ICON_ERROR)
+        msg = None
+        if ydl is None:  # youtube-dl module exist
+            update = IO_tools.youtubedl_update(['youtube-dl', '--update'])
+        else:
+            if OS == 'Windows':
+                exe = os.path.join(DIRconf, 'youtube-dl.exe')
+                if os.path.exists(exe):
+                    update = IO_tools.youtubedl_update([exe, '--update'])
+                else:
+                    msg = 'Fatal Error'
+            else:
+                msg = ydl
+            if msg:
+                wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
+                                'installed yet.').format(msg),
+                              'Videomass', wx.ICON_ERROR)
+                return
+        if update[1]:  # failed
+            wx.MessageBox("\n%s" % update[0], "Videomass: error",
+                          wx.ICON_ERROR, self)
             return
         else:
-            IO_tools.youtubedl_update()
-
-
+            wx.MessageBox("\n%s" % update[0], 'Videomass',
+                          wx.ICON_INFORMATION, self)
+            return
     # ------------------------------------------------------------------#
 
     def Openlog(self, event):
@@ -1124,7 +1189,7 @@ class MainFrame(wx.Frame):
 
     def youtube_Downloader(self, event, data):
         """
-        Show youtube-dl downloader
+        Show youtube-dl downloader panel
         """
         if not data == self.data_url:
             self.ytDownloader.fcode.DeleteAllItems()
@@ -1140,6 +1205,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
         self.btn_saveprf.Hide(), self.btn_duration.Hide(),
         self.btn_metaI.Show(), self.btn_newprf.Hide()
+        self.btn_metaI.SetLabel(_('Show More'))
         self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.menu_items()  # disable some menu items
         self.toolbar.EnableTool(wx.ID_FILE4, False)
@@ -1152,7 +1218,7 @@ class MainFrame(wx.Frame):
         Show Video converter panel
         """
         self.file_destin = self.fileDnDTarget.file_dest
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
+        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.ytDownloader.Hide(), self.PrstsPanel.Hide()
         self.VconvPanel.Show()
         self.statusbar_msg(_('Audio/Video Conversions'), None)
@@ -1169,7 +1235,9 @@ class MainFrame(wx.Frame):
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Hide(), self.btn_delprf.Hide()
         self.btn_editprf.Hide(), self.btn_saveprf.Show()
-        self.btn_duration.Show(), self.btn_metaI.Show(), self.btn_playO.Show()
+        self.btn_duration.Show(), self.btn_metaI.Show()
+        self.btn_metaI.SetLabel(_('Multimedia Streams'))
+        self.btn_playO.Show()
         self.menu_items()  # disable some menu items
         self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_OK, True)
@@ -1199,8 +1267,8 @@ class MainFrame(wx.Frame):
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Show(), self.btn_delprf.Show(), self.btn_editprf.Show()
         self.btn_saveprf.Hide(), self.btn_duration.Show()
-        self.btn_metaI.Show(), self.btn_playO.Show()
-        self.saveme.Enable(True)
+        self.btn_metaI.Show(), self.btn_metaI.SetLabel(_('Multimedia Streams'))
+        self.btn_playO.Show(), self.saveme.Enable(True)
         self.new_prst.Enable(True), self.del_prst.Enable(True),
         self.restore.Enable(True), self.default.Enable(True),
         self.default_all.Enable(True), self.refresh.Enable(True),

@@ -28,11 +28,14 @@
 #########################################################
 import wx
 import wx.lib.agw.hyperlink as hpl
+from videomass3.vdms_io import IO_tools
+import os
 
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
 ydl = get.ydl
+DIRconf = get.DIRconf
 
 
 class Choose_Topic(wx.Panel):
@@ -106,11 +109,61 @@ class Choose_Topic(wx.Panel):
     # ------------------------------------------------------------------#
 
     def on_YoutubeDL(self, event):
+        """
+        Check the installation of youtube-dl depending on the OS in use.
+        """
         if ydl is not None:
-            wx.MessageBox(_('ERROR: {0}\n\nTo use this feature '
-                          'please install youtube-dl.').format(ydl),
-                          'Videomass', wx.ICON_ERROR)
-            return
+            if OS == 'Windows':
+                msg = _('To download video from YouTube and other sites, '
+                        'Videomass needs youtube-dl.exe backend as a third '
+                        'part program. Do you want to download latest version '
+                        'of youtube-dl.exe and use it with Videomass?')
+                if os.path.exists(os.path.join(DIRconf, 'youtube-dl.exe')):
+                    self.parent.Text_import(self, 'Youtube Downloader')
+                    return
+                else:
+                    if wx.MessageBox(msg, _("Videomass: Please confirm"),
+                                     wx.ICON_QUESTION |
+                                     wx.YES_NO, self) == wx.NO:
+                        return
+                    url = 'https://yt-dl.org/update/LATEST_VERSION'
+                    latest = IO_tools.youtubedl_latest(None, url)
+                    if latest[1]:  # failed
+                        wx.MessageBox("\n%s\n\n%s" % (url, latest[1]),
+                                      "Videomass: error", wx.ICON_ERROR, self)
+                        return
+                    upgrade = IO_tools.youtubedl_upgrade(latest[0])
+                    if upgrade[1]:  # failed
+                        wx.MessageBox("%s" % (upgrade[1]),
+                                      "Videomass: error", wx.ICON_ERROR, self)
+                        return
+                    else:
+                        wx.MessageBox(_('Successful downloading! youtube-dl '
+                                        'backend is ready.'),
+                                      'Videomass', wx.ICON_INFORMATION)
+                    return
+            else:
+                if OS == 'Darwin':
+                    msg = _('To download video from YouTube and other sites, '
+                            'Videomass needs "youtube-dl" pytyon package. You can '
+                            'install it using a package manager like "homebrew" '
+                            'or "macport". '
+                            )
+                else:
+                    msg = _('To download video from YouTube and other sites, '
+                            'Videomass needs "youtube-dl" pytyon package.\n\n'
+                            'I suggest installing youtube-dl using the "pip" '
+                            'tool for Python3. For a debian-based distro you '
+                            'can search for it with the terminal by entering '
+                            'the following search terms: `$ apt search '
+                            'python3-pip`.\n\nIf you have already installed '
+                            '"pip" you can install "youtube-dl" with the '
+                            'following command: `pip3 install --user '
+                            'youtube-dl`'
+                            )
+                wx.MessageBox(_('ERROR: {0}\n\n{1}').format(ydl, msg),
+                              'Videomass', wx.ICON_ERROR)
+                return
 
         self.parent.Text_import(self, 'Youtube Downloader')
     # ------------------------------------------------------------------#

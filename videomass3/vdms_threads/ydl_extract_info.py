@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ydl_extract.py
+# Name: ydl_extract_info.py
 # Porpose: get informations data with youtube_dl
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -25,11 +25,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 #########################################################
-from __future__ import unicode_literals
-try:
-    import youtube_dl
-except ModuleNotFoundError as noydl:
-    print(noydl)
 import wx
 from pubsub import pub
 from threading import Thread
@@ -37,16 +32,16 @@ from threading import Thread
 # get data from bootstrap
 get = wx.GetApp()
 OS = get.OS
-#ydl = get.ydl
+ydl = get.ydl
 
-#if ydl is None:  # youtube-dl is installed
-    #import youtube_dl
+if ydl is None:  # youtube-dl is installed
+    import youtube_dl
 
 
 
 class MyLogger(object):
     """
-    Intercepts youtube-dl's output by setting a logger object.
+    Intercepts youtube-dl's output by setting a logger object .
     Log messages to a logging.Logger instance.
     https://github.com/ytdl-org/youtube-dl/tree/3e4cedf9e8cd3157df2457df7274d0c842421945#embedding-youtube-dl
     """
@@ -70,17 +65,16 @@ class MyLogger(object):
         get message error from error method
         """
         return None if not len(self.msg_error) else self.msg_error.pop()
-#########################################################################
 
 
 class Extract_Info(Thread):
     """
     Embed youtube-dl as module into a separated thread in order
-    to get output during extract informations.
-    See help(youtube_dl.YoutubeDL)
+    to get output during process (see help(youtube_dl.YoutubeDL) ) .
     """
     def __init__(self, url):
         """
+        Attributes defined here:
         self.url  str('url')
         self.data  tupla(None, None)
         """

@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ydl_dowloader.py
+# Name: ydl_fromimport.py
 # Porpose: long processing task with youtube_dl module
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -25,11 +25,6 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-from __future__ import unicode_literals
-try:
-    import youtube_dl
-except ModuleNotFoundError as noydl:
-    print(noydl)
 import wx
 from threading import Thread
 import time
@@ -40,10 +35,10 @@ get = wx.GetApp()
 OS = get.OS
 DIRconf = get.DIRconf  # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
-#ydl = get.ydl
+ydl = get.ydl
 
-#if ydl is None:  # youtube-dl is installed
-    #import youtube_dl
+if ydl is None:  # youtube-dl is installed
+    import youtube_dl
 
 
 class MyLogger(object):
@@ -54,7 +49,7 @@ class MyLogger(object):
     """
     def debug(self, msg):
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_DOWNLOAD_EVT",
+                     "UPDATE_YDL_FROM_IMPORT_EVT",
                      output=msg,
                      duration='',
                      status='DEBUG',
@@ -64,7 +59,7 @@ class MyLogger(object):
     def warning(self, msg):
         msg = 'WARNING: %s' % msg
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_DOWNLOAD_EVT",
+                     "UPDATE_YDL_FROM_IMPORT_EVT",
                      output=msg,
                      duration='',
                      status='WARNING',
@@ -72,7 +67,7 @@ class MyLogger(object):
 
     def error(self, msg):
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_DOWNLOAD_EVT",
+                     "UPDATE_YDL_FROM_IMPORT_EVT",
                      output=msg,
                      duration='',
                      status='ERROR',
@@ -95,7 +90,7 @@ def my_hook(d):
                     percent
                     )
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_DOWNLOAD_EVT",
+                     "UPDATE_YDL_FROM_IMPORT_EVT",
                      output='',
                      duration=duration,
                      status='DOWNLOAD',)
@@ -109,7 +104,7 @@ def my_hook(d):
                      end='ok',
                      )
         wx.CallAfter(pub.sendMessage,
-                     "UPDATE_DOWNLOAD_EVT",
+                     "UPDATE_YDL_FROM_IMPORT_EVT",
                      output='',
                      duration='Done downloading, now converting ...',
                      status='FINISHED',
@@ -120,7 +115,7 @@ def my_hook(d):
 class YoutubeDL_Downloader(Thread):
     """
     Embed youtube-dl as module into a separated thread in order
-    to get output during downloading and conversion in real time.
+    to get output in real time during downloading and conversion .
     For a list of available options see:
 
     <https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/YoutubeDL.py#L129-L279>
@@ -130,6 +125,8 @@ class YoutubeDL_Downloader(Thread):
     """
     def __init__(self, varargs, logname):
         """
+        Attributes defined here:
+        self.stop_work_thread:  process terminate value
         self.urls:          urls list
         self.opt:           option dict data type to adding
         self.outputdir:     pathname destination

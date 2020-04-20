@@ -29,7 +29,8 @@ from __future__ import unicode_literals
 import wx
 from pubsub import pub
 from videomass3.vdms_io.make_filelog import write_log
-from videomass3.vdms_threads.ydl_download import YoutubeDL_Downloader
+from videomass3.vdms_threads.ydl_fromimport import YoutubeDL_Downloader
+from videomass3.vdms_threads.ydl_executable import Youtube_dl_Downloader
 from videomass3.vdms_threads.one_pass import OnePass
 from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
@@ -143,7 +144,8 @@ class Logging_Console(wx.Panel):
         self.button_stop.Enable(True)
         self.button_close.Enable(False)
 
-        pub.subscribe(self.update_download, "UPDATE_DOWNLOAD_EVT")
+        pub.subscribe(self.youtubedl_from_import, "UPDATE_YDL_FROM_IMPORT_EVT")
+        pub.subscribe(self.youtubedl_exec, "UPDATE_YDL_EXECUTABLE_EVT")
         pub.subscribe(self.update_display, "UPDATE_EVT")
         pub.subscribe(self.update_count, "COUNT_EVT")
         pub.subscribe(self.end_proc, "END_EVT")
@@ -177,16 +179,19 @@ class Logging_Console(wx.Panel):
             self.PARENT_THREAD = PicturesFromVideo(varargs, duration,
                                                    self.logname, time_seq
                                                    )
-        elif varargs[0] == 'youtubedl downloader':
+        elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
             self.PARENT_THREAD = YoutubeDL_Downloader(varargs, self.logname)
+
+        elif varargs[0] == 'youtube-dl executable':  # as youtube-dl exec.
+            self.ckbx_text.Hide()
+            self.PARENT_THREAD = Youtube_dl_Downloader(varargs, self.logname)
     # ----------------------------------------------------------------------
 
-    def update_download(self, output, duration, status):
+    def youtubedl_from_import(self, output, duration, status):
         """
-        Receive youtube-dl output message from pubsub
-        "UPDATE_DOWNLOAD_EVT".
-
+        Receiving output messages from youtube_dl.YoutubeDL module via
+        pubsub "UPDATE_YDL_FROM_IMPORT_EVT" and displaying the update.
         """
         if status == 'ERROR':
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
@@ -221,8 +226,45 @@ class Logging_Console(wx.Panel):
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
             self.OutText.AppendText('%s\n' % duration)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+    # ---------------------------------------------------------------------#
+
+    def youtubedl_exec(self, output, duration, status):
+        """
+        Receiving output messages from youtube-dl executable via pubsub
+        "UPDATE_YDL_EXECUTABLE_EVT" and displaying the update.
+
+        """
+        if not status == 0:# error, exit status of the p.wait
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
+            self.OutText.AppendText(_(' ...Failed\n'))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            return
+
+        if '[download]' in output:# ...in processing
+            if not 'Destination' in output:
+                try:
+                    i = float(output.split()[1].split('%')[0])
+                except ValueError:
+                    self.OutText.AppendText(' %s' % output)
+                else:
+                    #if not self.ckbx_text.IsChecked():# not print the output
+                        #self.OutText.AppendText(' %s' % output)
+                    self.barProg.SetValue(i)
+                    self.labPerc.SetLabel("%s" % output)
+                    del output, duration
+
+        else:# append all others lines on the textctrl and log file
+            if not self.ckbx_text.IsChecked():# not print the output
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+                self.OutText.AppendText(' %s' % output)
+                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+
+            with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
+                logerr.write("[YOUTUBE-DL]: %s" % (output))
+                # write a row error into file log
 
     # ---------------------------------------------------------------------#
+
     def update_display(self, output, duration, status):
         """
         Receive message from thread of the second loops process

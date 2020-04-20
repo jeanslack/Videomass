@@ -38,6 +38,7 @@ from videomass3.vdms_threads.check_bin import ff_codecs
 from videomass3.vdms_threads.check_bin import ff_topics
 from videomass3.vdms_threads.opendir import browse
 from videomass3.vdms_threads.ydl_extract_info import Extract_Info
+from videomass3.vdms_threads.ydl_executable import GetFormatCode_Executable
 from videomass3.vdms_threads import ydl_update
 from videomass3.vdms_frames import ffmpeg_conf
 from videomass3.vdms_frames import ffmpeg_formats
@@ -109,7 +110,7 @@ def probeInfo(filename):
 
 def volumeDetectProcess(filelist, time_seq, audiomap):
     """
-    Run a thread to get audio peak level data and show a
+    Run thread to get audio peak level data and show a
     pop-up dialog with message.
     """
     thread = VolumeDetectThread(time_seq, filelist, audiomap, OS)
@@ -225,9 +226,10 @@ def openpath(where):
 
 def youtube_info(url):
     """
-    Call a separated thread to get extract info data object from
+    Call the thread to get extract info data object with
+    youtube_dl python package and show a wait pop-up dialog .
     youtube_dl module.
-    example without popup dialog:
+    example without pop-up dialog:
     thread = Extract_Info(url)
     thread.join()
     data = thread.data
@@ -245,49 +247,48 @@ def youtube_info(url):
 # --------------------------------------------------------------------------#
 
 
-def youtubedl_latest(thisvers):
+def youtube_getformatcode_exec(url):
     """
-    Calls thread for check new youtube-dl release
+    Call the thread to get format code data object with youtube-dl
+    executable, (e.g. `youtube-dl -F url`) and show a wait pop-up dialog.
     """
-    if not thisvers:
-        info = _("The latest version of youtube-dl on GitHub is:")
-    else:
-        info = _("A new version of youtube-dl is available on GitHub:")
+    thread = GetFormatCode_Executable(url)
+    loadDlg = PopupDialog(None,
+                          _("Videomass - Loading..."),
+                          _("\nWait....\nRetrieving required data.\n"))
+    loadDlg.ShowModal()
+    # thread.join()
+    data = thread.data
+    loadDlg.Destroy()
+    yield data
 
-    url = 'https://yt-dl.org/update/LATEST_VERSION'
+
+# --------------------------------------------------------------------------#
+
+def youtubedl_latest(thisvers, url):
+    """
+    Calls thread for check new youtube-dl release and show a
+    wait pop-up dialog
+    """
     thread = ydl_update.CheckNewRelease(url)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
                           _("\nWait....\nCheck for new release.\n"))
     loadDlg.ShowModal()
     # thread.join()
-    newversion = thread.data
+    latest = thread.data
     loadDlg.Destroy()
 
-    if newversion[1]:  # failed
-        wx.MessageBox("\n{0}\n\n{1}".format(url, newversion[1]),
-                      "Videomass: error",
-                        wx.ICON_ERROR, None)
-        return
-
-    if newversion[0] == thisvers:
-
-        wx.MessageBox(_("youtube-dl is up to "
-                      "date {}".format(thisvers)),
-                      "Videomass", wx.ICON_INFORMATION, None)
-        return
-    else:
-        wx.MessageBox(_("{} {}".format(info, newversion[0])),
-                      'Videomass', wx.ICON_INFORMATION, None)
-        return
+    return latest
 # --------------------------------------------------------------------------#
 
 
-def youtubedl_update():
+def youtubedl_update(cmd):
     """
-    Calls thread for update to new youtube-dl release
+    Calls thread to update a local copy (not installed from package
+    manager) of the youtube-dl prg and show a wait pop-up dialog.
     """
-    thread = ydl_update.Update(OS)
+    thread = ydl_update.Update(OS, cmd)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
                           _("\nWait....\nCheck for update.\n"))
@@ -296,14 +297,22 @@ def youtubedl_update():
     update = thread.data
     loadDlg.Destroy()
 
-    if update[1]:  # failed
-        wx.MessageBox("\n{}".format(update[0]),
-                      "Videomass: error",
-                        wx.ICON_ERROR, None)
-        return
+    return update
+# --------------------------------------------------------------------------#
 
-    else:
-        wx.MessageBox(_("{}".format(update[0])),
-                      'Videomass', wx.ICON_INFORMATION, None)
-        return
-# -------------
+def youtubedl_upgrade(latest):
+    """
+    Calls thread for check new youtube-dl release and show a
+    wait pop-up dialog
+    """
+    dest = os.path.join(DIRconf, 'youtube-dl.exe')
+    thread = ydl_update.Upgrade_Latest(latest, dest)
+
+    loadDlg = PopupDialog(None, _("Videomass - Loading..."),
+                          _("\nWait....\nDownloading youtube-dl.\n"))
+    loadDlg.ShowModal()
+    # thread.join()
+    status = thread.data
+    loadDlg.Destroy()
+
+    return status
