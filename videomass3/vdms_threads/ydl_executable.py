@@ -1,7 +1,7 @@
  # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ydl_executable.py
+# Name: Ydl_DL_Exec.py
 # Porpose: long processing task with youtube-dl executable
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -66,9 +66,9 @@ def logWrite(cmd, sterr, logname):
         log.write(apnd)
 
 
-class Youtube_dl_Downloader(Thread):
+class Ydl_DL_Exec(Thread):
     """
-    Youtube_dl_Downloader represents a separate thread for running
+    Ydl_DL_Exec represents a separate thread for running
     youtube-dl executable from subprocess class and capturing its
     stdout/stderr output in real time .
     """
@@ -201,9 +201,9 @@ class Youtube_dl_Downloader(Thread):
 # ------------------------------------------------------------------------#
 
 
-class GetFormatCode_Executable(Thread):
+class Ydl_EI_Exec(Thread):
     """
-    GetFormatCode_Executable it is a separate thread to run
+    Ydl_EI_Exec it is a separate thread to run
     youtube-dl executable from subprocess class and getting
     its stdout/stderr output at the end of the process .
     """

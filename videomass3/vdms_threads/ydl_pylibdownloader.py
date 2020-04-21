@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ydl_fromimport.py
-# Porpose: long processing task with youtube_dl module
+# Name: ydl_pylibrary.py
+# Porpose: long processing task with youtube_dl python library
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -112,7 +112,7 @@ def my_hook(d):
 # -------------------------------------------------------------------------#
 
 
-class YoutubeDL_Downloader(Thread):
+class Ydl_DL_Pylib(Thread):
     """
     Embed youtube-dl as module into a separated thread in order
     to get output in real time during downloading and conversion .

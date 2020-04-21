@@ -37,9 +37,9 @@ from videomass3.vdms_threads.check_bin import ff_formats
 from videomass3.vdms_threads.check_bin import ff_codecs
 from videomass3.vdms_threads.check_bin import ff_topics
 from videomass3.vdms_threads.opendir import browse
-from videomass3.vdms_threads.ydl_extract_info import Extract_Info
-from videomass3.vdms_threads.ydl_executable import GetFormatCode_Executable
-from videomass3.vdms_threads import ydl_update
+from videomass3.vdms_threads.ydl_pylibextractinfo import Ydl_EI_Pylib
+from videomass3.vdms_threads.ydl_executable import Ydl_EI_Exec
+from videomass3.vdms_threads import youtubedlupdater
 from videomass3.vdms_frames import ffmpeg_conf
 from videomass3.vdms_frames import ffmpeg_formats
 from videomass3.vdms_frames import ffmpeg_codecs
@@ -230,12 +230,12 @@ def youtube_info(url):
     youtube_dl python package and show a wait pop-up dialog .
     youtube_dl module.
     example without pop-up dialog:
-    thread = Extract_Info(url)
+    thread = Ydl_EI_Pylib(url)
     thread.join()
     data = thread.data
     yield data
     """
-    thread = Extract_Info(url)
+    thread = Ydl_EI_Pylib(url)
     loadDlg = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
@@ -253,7 +253,7 @@ def youtube_getformatcode_exec(url):
     executable, (e.g. `youtube-dl -F url`) .
     While waiting, a pop-up dialog is shown.
     """
-    thread = GetFormatCode_Executable(url)
+    thread = Ydl_EI_Exec(url)
     loadDlg = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nRetrieving required data.\n"))
@@ -271,7 +271,7 @@ def youtubedl_latest(thisvers, url):
     Call the thread to read the latest version of youtube-dl via the web.
     While waiting, a pop-up dialog is shown.
     """
-    thread = ydl_update.CheckNewRelease(url)
+    thread = youtubedlupdater.CheckNewRelease(url)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
                           _("\nWait....\nCheck for update.\n"))
@@ -291,7 +291,7 @@ def youtubedl_update(cmd, waitmsg):
     the local copy (not installed by the package manager) of youtube-dl.
     While waiting, a pop-up dialog is shown.
     """
-    thread = ydl_update.Command_Execution(OS, cmd)
+    thread = youtubedlupdater.Command_Execution(OS, cmd)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
                           _("\nWait....\n%s\n" % waitmsg))
@@ -310,7 +310,7 @@ def youtubedl_upgrade(latest):
     While waiting, a pop-up dialog is shown.
     """
     dest = os.path.join(DIRconf, 'youtube-dl.exe')
-    thread = ydl_update.Upgrade_Latest(latest, dest)
+    thread = youtubedlupdater.Upgrade_Latest(latest, dest)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
                           _("\nWait....\nDownloading youtube-dl.\n"))

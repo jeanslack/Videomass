@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ydl_extract_info.py
+# Name: ydl_pylibextractinfo.py
 # Porpose: get informations data with youtube_dl
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -67,7 +67,7 @@ class MyLogger(object):
         return None if not len(self.msg_error) else self.msg_error.pop()
 
 
-class Extract_Info(Thread):
+class Ydl_EI_Pylib(Thread):
     """
     Embed youtube-dl as module into a separated thread in order
     to get output during process (see help(youtube_dl.YoutubeDL) ) .

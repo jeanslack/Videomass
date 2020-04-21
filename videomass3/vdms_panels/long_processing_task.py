@@ -29,8 +29,8 @@ from __future__ import unicode_literals
 import wx
 from pubsub import pub
 from videomass3.vdms_io.make_filelog import write_log
-from videomass3.vdms_threads.ydl_fromimport import YoutubeDL_Downloader
-from videomass3.vdms_threads.ydl_executable import Youtube_dl_Downloader
+from videomass3.vdms_threads.ydl_pylibdownloader import Ydl_DL_Pylib
+from videomass3.vdms_threads.ydl_executable import Ydl_DL_Exec
 from videomass3.vdms_threads.one_pass import OnePass
 from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
@@ -181,17 +181,17 @@ class Logging_Console(wx.Panel):
                                                    )
         elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = YoutubeDL_Downloader(varargs, self.logname)
+            self.PARENT_THREAD = Ydl_DL_Pylib(varargs, self.logname)
 
         elif varargs[0] == 'youtube-dl executable':  # as youtube-dl exec.
             self.ckbx_text.Hide()
-            self.PARENT_THREAD = Youtube_dl_Downloader(varargs, self.logname)
+            self.PARENT_THREAD = Ydl_DL_Exec(varargs, self.logname)
     # ----------------------------------------------------------------------
 
     def youtubedl_from_import(self, output, duration, status):
         """
-        Receiving output messages from youtube_dl.YoutubeDL module via
-        pubsub "UPDATE_YDL_FROM_IMPORT_EVT" and displaying the update.
+        Receiving output messages from youtube_dl library via
+        pubsub "UPDATE_YDL_FROM_IMPORT_EVT" .
         """
         if status == 'ERROR':
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
@@ -230,8 +230,8 @@ class Logging_Console(wx.Panel):
 
     def youtubedl_exec(self, output, duration, status):
         """
-        Receiving output messages from youtube-dl executable via pubsub
-        "UPDATE_YDL_EXECUTABLE_EVT" and displaying the update.
+        Receiving output messages from youtube-dl command line execution
+        via pubsub "UPDATE_YDL_EXECUTABLE_EVT" .
 
         """
         if not status == 0:# error, exit status of the p.wait

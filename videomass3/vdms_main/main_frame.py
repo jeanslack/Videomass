@@ -678,7 +678,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
         self.Bind(wx.EVT_MENU, self.ydl_used, ydlused)
         self.Bind(wx.EVT_MENU, self.ydl_latest, ydllatest)
-        self.Bind(wx.EVT_MENU, self.ydl_update, ydlupdate)
+        self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, ydlupdate)
         # ----SETUP----
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
@@ -916,7 +916,7 @@ class MainFrame(wx.Frame):
             return
     # -----------------------------------------------------------------#
 
-    def ydl_update(self, event):
+    def youtubedl_uptodater(self, event):
         """
         Update to latest version from 'Update youtube-dl' bar menu
         """

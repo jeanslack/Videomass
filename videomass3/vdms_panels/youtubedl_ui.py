@@ -440,7 +440,7 @@ class Downloader(wx.Panel):
     def on_Start(self):
         """
         Builds command string to use with an embed youtube_dl as
-        python module or using standard youtube-dl command line
+        python library or using standard youtube-dl command line
         with subprocess. This depends on some cases.
         """
         urls = self.parent.data_url
@@ -464,27 +464,42 @@ class Downloader(wx.Panel):
                 return
             return code
 
-        if ydl is None:  # ----------- YuotubeDL is used as module
+        if ydl is None:  # ----------- youtube-dl is used as library
+            postprocessors = []
+            if self.choice.GetSelection() == 2:
+                postprocessors.append({'key': 'FFmpegExtractAudio',
+                                       'preferredcodec': opt["A_FORMAT"][0]
+                                       })
+            if opt["METADATA"][0]:
+                postprocessors.append({'key': 'FFmpegMetadata'})
+
+            if opt["THUMB"][0]:
+                postprocessors.append({'key': 'EmbedThumbnail',
+                                       'already_have_thumbnail': False
+                                       })
+            if opt["SUBTITLES"][0]:
+                postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
+
             if self.choice.GetSelection() == 0:
-                data = {'format': opt["V_QUALITY"],
+                data = {'format': opt["V_QUALITY"][0],
                         'noplaylist': opt["NO_PLAYLIST"][0],
                         'writethumbnail': opt["THUMB"][0],
                         'outtmpl': '%(title)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': opt["METADATA"][0],
                         'writesubtitles': opt["SUBTITLES"][0],
-                        'postprocessors': []
+                        'postprocessors': postprocessors
                         }
             if self.choice.GetSelection() == 1:  # audio files and video files
-                data = {'format': '{}video,{}audio'.format(opt["V_QUALITY"],
-                                                           opt["A_QUALITY"]),
+                data = {'format': '%svideo,%saudio' % (opt["V_QUALITY"][0],
+                                                       opt["A_QUALITY"][0]),
                         'noplaylist': opt["NO_PLAYLIST"][0],
                         'writethumbnail': opt["THUMB"][0],
                         'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': opt["METADATA"][0],
                         'writesubtitles': opt["SUBTITLES"][0],
-                        'postprocessors': []
+                        'postprocessors': postprocessors
                         }
             elif self.choice.GetSelection() == 2:  # audio only
 
@@ -495,11 +510,7 @@ class Downloader(wx.Panel):
                         'extractaudio': True,
                         'addmetadata': opt["METADATA"][0],
                         'writesubtitles': False,
-                        'postprocessors':
-                            [{'key': 'FFmpegExtractAudio',
-                              'preferredcodec': opt["A_FORMAT"][0],
-                              }
-                            ]
+                        'postprocessors': postprocessors
                         }
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
@@ -512,7 +523,7 @@ class Downloader(wx.Panel):
                         'extractaudio': False,
                         'addmetadata': opt["METADATA"][0],
                         'writesubtitles': opt["SUBTITLES"][0],
-                        'postprocessors': []
+                        'postprocessors': postprocessors
                         }
             self.parent.switch_Process('youtube_dl python package',
                                        urls,
@@ -525,31 +536,41 @@ class Downloader(wx.Panel):
                                        logname,
                                        len(urls),
                                        )
-        else:  # ----------- with youtube-dl executable
+        else:  # ----------- with youtube-dl command line execution
 
             if self.choice.GetSelection() == 0:  # default
-                cmd = [(f'--format {opt["V_QUALITY"][1]} {opt["METADATA"][1]} '
-                        f'{opt["SUBTITLES"][1]} {opt["NO_PLAYLIST"][1]}'),
+                cmd = [(f'--format '
+                        f'{opt["V_QUALITY"][1]} '
+                        f'{opt["METADATA"][1]} '
+                        f'{opt["SUBTITLES"][1]} '
+                        f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.%(ext)s')
                        ]
 
-            if self.choice.GetSelection() == 1:  # audio files and video files
-                cmd = [(f'--format {opt["V_QUALITY"][1]}video,{opt["A_QUALITY"][1]}'
-                        f'audio {opt["METADATA"][1]} {opt["SUBTITLES"][1]} '
+            if self.choice.GetSelection() == 1:  # audio files + video files
+                cmd = [(f'--format '
+                        f'{opt["V_QUALITY"][1]}video,'
+                        f'{opt["A_QUALITY"][1]}audio'
+                        f'{opt["METADATA"][1]} '
+                        f'{opt["SUBTITLES"][1]} '
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
             elif self.choice.GetSelection() == 2: # audio only
-                cmd = [(f'{opt["A_FORMAT"][1]} {opt["THUMB"][1]} '
-                        f'{opt["METADATA"][1]} {opt["NO_PLAYLIST"][1]}'),
+                cmd = [(f'{opt["A_FORMAT"][1]} '
+                        f'{opt["THUMB"][1]} '
+                        f'{opt["METADATA"][1]} '
+                        f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.%(ext)s')
                        ]
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
                 if not code:
                     return
-                cmd = [(f'--format {code} {opt["METADATA"][1]} '
-                        f'{opt["SUBTITLES"][1]} {opt["NO_PLAYLIST"][1]}'),
+                cmd = [(f'--format {code} '
+                        f'{opt["METADATA"][1]} '
+                        f'{opt["SUBTITLES"][1]} '
+                        f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
             self.parent.switch_Process('youtube-dl executable',
