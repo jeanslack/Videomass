@@ -36,10 +36,12 @@ from threading import Thread
 
 class CheckNewRelease(Thread):
     """
-    Read the latest version of youtube-dl on github (see url) .
+    Read the latest version of youtube-dl on github website (see url) .
     """
     def __init__(self, url):
         """
+        Attributes defined here:
+        self.data: tuple object with exit status of the process
         """
         Thread.__init__(self)
         """initialize"""
@@ -73,15 +75,16 @@ class CheckNewRelease(Thread):
 
 class Command_Execution(Thread):
     """
-    Executes commands from the youtube-dl executable by subprocess
-    class, e.g. read the installed version or update the downloaded
-    sources.
+    Executes generic command line from executable e.g.
+    - read the installed version of youtube-dl
+    - update the downloaded sources of youtube-dl
     """
     def __init__(self, OS, cmd):
         """
-        self.cmd is a list object
-        self.data content output of the self.status
-        self.status is a tuple object with exit status of the process
+        self.OS: Operative System id
+        self.cmd: command line list object
+        self.status: tuple object with exit status of the process
+        self.data: returned output of the self.status
         """
         Thread.__init__(self)
         """initialize"""
@@ -95,6 +98,8 @@ class Command_Execution(Thread):
 
     def run(self):
         """
+        Execute command line via subprocess class and get output
+        at the end of the process.
         """
         if self.OS == 'Windows':
             cmd = " ".join(self.cmd)
@@ -137,8 +142,11 @@ class Upgrade_Latest(Thread):
     """
     def __init__(self, latest, dest):
         """
-        latest is the latest version getted by CheckNewRelease(Thread)
-        self.dest is the location pathname to download
+        Attributes defined here:
+        latest: latest version available .
+        self.dest: location pathname to download
+        self.data: returned output of the self.status
+        self.status: tuple object with exit status of the process
 
         """
         Thread.__init__(self)
@@ -159,7 +167,7 @@ class Upgrade_Latest(Thread):
         context = ssl._create_unverified_context()
         try:
             with urllib.request.urlopen(self.url, context=context) as \
-                response, open(self.dest, 'wb') as out_file:
+                 response, open(self.dest, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
 
             self.status = self.url, None
@@ -176,4 +184,3 @@ class Upgrade_Latest(Thread):
                      "RESULT_EVT",
                      status=''
                      )
-# -------------------------------------------------------------------------#

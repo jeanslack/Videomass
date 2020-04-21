@@ -809,7 +809,7 @@ class Lacing(wx.Dialog):
         self.rdbx_w3fdif_d.SetToolTip(_('Specify which frames to '
                                         'deinterlace.'))
         toolt = _('Deinterlace the input video with `yadif` filter. '
-                'For FFmpeg is the best and fastest choice ')
+                  'For FFmpeg is the best and fastest choice ')
         self.ckbx_deintYadif.SetToolTip(toolt)
         self.rdbx_Yadif_mode.SetToolTip(_('mode\n'
                                           'The interlacing mode to adopt.'))

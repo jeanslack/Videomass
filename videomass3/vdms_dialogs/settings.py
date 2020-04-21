@@ -120,8 +120,9 @@ class Setup(wx.Dialog):
         sizerGeneral.Add(boxLabThreads, 1, wx.ALL | wx.EXPAND, 15)
         gridThreads = wx.BoxSizer(wx.VERTICAL)
         boxLabThreads.Add(gridThreads, 1, wx.ALL | wx.EXPAND, 15)
-        lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY, (_("Set the number of "
-            "threads (from 0 to 32)")))
+        lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,
+                                   (_("Set the number of threads "
+                                      "(from 0 to 32)")))
         gridThreads.Add(lab1_pane1, 0,
                         wx.ALL |
                         wx.ALIGN_CENTER_VERTICAL |
@@ -226,7 +227,7 @@ class Setup(wx.Dialog):
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[("Videomass_Sign_Icons"),
                                                ("Material_Design_Icons_black"),
-                                               ("Flat_Color_Icons"),],
+                                               ("Flat_Color_Icons")],
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
         boxLabIcons.Add(self.cmbx_icons, 0,
@@ -271,7 +272,8 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
         btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR,
-                                                _("Restore default settings"))
+                                        _("Restore default settings")
+                                        )
         gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL |
                            wx.EXPAND |
                            wx.ALIGN_CENTER_HORIZONTAL, 15
@@ -298,39 +300,30 @@ class Setup(wx.Dialog):
 
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
-        self.checkbox_exeFFmpeg.SetToolTip(_("Enable custom search for "
-                       "the executable FFmpeg. If the checkbox is disabled or "
-                       "if the path field is empty, the search of the "
-                       "executable is entrusted to the system."))
+        msg = _("Enable custom search for the executable FFmpeg. If the "
+                "checkbox is disabled or if the path field is empty, the "
+                "search of the executable is entrusted to the system.")
+        self.checkbox_exeFFmpeg.SetToolTip(msg)
 
         self.btn_pathFFmpeg.SetToolTip(_("Open path FFmpeg"))
         self.txtctrl_ffmpeg.SetMinSize((200, -1))
-        self.txtctrl_ffmpeg.SetToolTip(
-                                    _("path to executable binary FFmpeg")
-                                                    )
+        self.txtctrl_ffmpeg.SetToolTip(_("path to executable binary FFmpeg"))
         self.checkbox_exeFFprobe.SetToolTip(_("Path generation file"))
-
-        self.checkbox_exeFFmpeg.SetToolTip(_("Enable custom search for "
-                    "the executable FFprobe. If the checkbox is disabled or "
-                    "if the path field is empty, the search of the "
-                    "executable is entrusted to the system."))
-
+        msg = _("Enable custom search for the executable FFprobe. If the "
+                "checkbox is disabled or if the path field is empty, the "
+                "search of the executable is entrusted to the system.")
+        self.checkbox_exeFFmpeg.SetToolTip(msg)
         self.btn_pathFFprobe.SetToolTip(_("Open path FFprobe"))
         self.txtctrl_ffprobe.SetMinSize((200, -1))
-        self.txtctrl_ffprobe.SetToolTip(
-                                    _("path to executable binary FFprobe")
-                                                    )
-        self.checkbox_exeFFplay.SetToolTip(_("Path generation file")
-                                                 )
-        self.checkbox_exeFFmpeg.SetToolTip(_("Enable custom search for "
-                    "the executable FFplay. If the checkbox is disabled or "
-                    "if the path field is empty, the search of the "
-                    "executable is entrusted to the system.")
-                                                  )
+        self.txtctrl_ffprobe.SetToolTip(_("path to executable binary FFprobe"))
+        self.checkbox_exeFFplay.SetToolTip(_("Path generation file"))
+        msg = _("Enable custom search for the executable FFplay. If the "
+                "checkbox is disabled or if the path field is empty, the "
+                "search of the executable is entrusted to the system.")
+        self.checkbox_exeFFmpeg.SetToolTip(msg)
         self.btn_pathFFplay.SetToolTip(_("Open path FFplay"))
         self.txtctrl_ffplay.SetMinSize((200, -1))
-        self.txtctrl_ffplay.SetToolTip(
-                                     _("path to executable binary FFplay"))
+        self.txtctrl_ffplay.SetToolTip(_("path to executable binary FFplay"))
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
@@ -595,7 +588,6 @@ class Setup(wx.Dialog):
         self.full_list[self.rowsNum[12]] = '83,171,173,255\n'
         self.full_list[self.rowsNum[13]] = '255,255,255\n'
         self.full_list[self.rowsNum[14]] = '4,60,61,255\n'
-
     # ----------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -603,7 +595,6 @@ class Setup(wx.Dialog):
         """
         page = 'https://jeanslack.github.io/Videomass/Pages/Startup/Setup.html'
         webbrowser.open(page)
-
     # --------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -613,36 +604,12 @@ class Setup(wx.Dialog):
     def on_ok(self, event):
         """
         Applies all changes writing the new entries
-
         """
-        #if self.checkbox_exeFFmpeg.IsChecked():
-            #if not self.txtctrl_ffmpeg.GetValue() == '':
-                #ffmpeg_src = self.txtctrl_ffmpeg.GetValue()
-                #if not ffmpeg_link == ffmpeg_src:# if not modified
-                    #if os.path.exists("%s/FFMPEG_BIN/bin" % PWD):
-                        #os.symlink(ffmpeg_src, "%s/FFMPEG_BIN/bin/ffmpeg" % PWD)
-
-        #if self.checkbox_exeFFprobe.IsChecked():
-            #if not self.txtctrl_ffprobe.GetValue() == '':
-                #ffprobe_src = self.txtctrl_ffprobe.GetValue()
-                #if not ffprobe_link == ffprobe_src:# if not modified
-                    #if os.path.exists("%s/FFMPEG_BIN" % PWD):
-                        #os.symlink(ffprobe_src, "%s/FFMPEG_BIN/bin/ffprobe" % PWD)
-
-        #if self.checkbox_exeFFplay.IsChecked():
-            #if not self.txtctrl_ffplay.GetValue() == '':
-                #ffplay_src = self.txtctrl_ffplay.GetValue()
-                #if not ffplay_link == ffplay_src:# if not modified
-                    #if os.path.exists("%s/FFMPEG_BIN" % PWD):
-                        #os.symlink(ffplay_src, "%s/FFMPEG_BIN/bin/ffplay" % PWD)
-
-        with open (self.FILEconf, 'w') as fileconf:
+        with open(self.FILEconf, 'w') as fileconf:
             for i in self.full_list:
                 fileconf.write('%s' % i)
         wx.MessageBox(_("Changes will take affect once the program "
                         "has been restarted"))
-
         # self.Destroy() # WARNING on mac not close corretly, on linux ok
         self.Close()
         event.Skip()
-

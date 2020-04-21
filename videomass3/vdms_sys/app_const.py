@@ -12,4 +12,4 @@ langDomain = "videomass"
 # languages you want to support
 supLang = {"en": wx.LANGUAGE_ENGLISH,
            "it": wx.LANGUAGE_ITALIAN,
-          }
+           }

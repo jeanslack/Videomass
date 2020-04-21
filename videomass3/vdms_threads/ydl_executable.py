@@ -1,4 +1,4 @@
- # -*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 
 #########################################################
 # Name: Ydl_DL_Exec.py
@@ -35,7 +35,7 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf # path to the configuration directory:
+DIRconf = get.DIRconf  # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
 
 if not OS == 'Windows':
@@ -45,9 +45,6 @@ else:
     binary = os.path.join(DIRconf, 'youtube-dl.exe')
     if not os.path.exists(binary):
         binary = 'youtube-dl'
-
-
-
 
 executable_not_found_msg = _("Is 'youtube-dl' installed on your system?")
 
@@ -96,7 +93,7 @@ class Ydl_DL_Exec(Thread):
         self.countmax = len(varargs[1])
         self.logname = logname
 
-        self.start() # start the thread (va in self.run())
+        self.start()  # start the thread (va in self.run())
 
     def run(self):
         """
@@ -126,7 +123,7 @@ class Ydl_DL_Exec(Thread):
                          fname=url,
                          end='',
                          )
-            logWrite(com, '', self.logname)# write n/n + command only
+            logWrite(com, '', self.logname)  # write n/n + command only
 
             if not OS == 'Windows':
                 cmd = shlex.split(cmd)
@@ -144,7 +141,6 @@ class Ydl_DL_Exec(Thread):
                                       startupinfo=info,) as p:
 
                     for line in p.stdout:
-                        #print('PROVA ', line, end='')
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
@@ -155,7 +151,7 @@ class Ydl_DL_Exec(Thread):
                             p.terminate()
                             break
 
-                    if p.wait(): # error
+                    if p.wait():  # error
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
@@ -164,8 +160,8 @@ class Ydl_DL_Exec(Thread):
                                      )
                         logWrite('',
                                  "Exit status: %s" % p.wait(),
-                                 self.logname)
-                                 # append exit error number
+                                 self.logname
+                                 )  # append exit error number
                     else:  # ok
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
@@ -173,7 +169,7 @@ class Ydl_DL_Exec(Thread):
                                      duration='',
                                      fname='',
                                      end='ok'
-                                        )
+                                     )
             except OSError as err:
                 e = "%s\n  %s" % (err, executable_not_found_msg)
                 wx.CallAfter(pub.sendMessage,
@@ -217,7 +213,7 @@ class Ydl_EI_Exec(Thread):
         self.status = None
         self.data = None
 
-        self.start() # start the thread (va in self.run())
+        self.start()  # start the thread (va in self.run())
 
     def run(self):
         """

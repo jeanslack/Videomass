@@ -38,7 +38,6 @@ if ydl is None:  # youtube-dl is installed
     import youtube_dl
 
 
-
 class MyLogger(object):
     """
     Intercepts youtube-dl's output by setting a logger object .

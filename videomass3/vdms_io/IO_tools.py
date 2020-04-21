@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: IO_tools.py
-# Porpose: Redirect some input/output resources to process
+# Porpose: input/output redirection to processes
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -142,11 +142,11 @@ def test_conf():
         return
     else:
         miniframe = ffmpeg_conf.Checkconf(out,
-                                         ffmpeg_url,
-                                         ffprobe_url,
-                                         ffplay_url,
-                                         OS,
-                                         )
+                                          ffmpeg_url,
+                                          ffprobe_url,
+                                          ffplay_url,
+                                          OS,
+                                          )
         miniframe.Show()
 # -------------------------------------------------------------------------#
 
@@ -266,7 +266,7 @@ def youtube_getformatcode_exec(url):
 
 # --------------------------------------------------------------------------#
 
-def youtubedl_latest(thisvers, url):
+def youtubedl_latest(url):
     """
     Call the thread to read the latest version of youtube-dl via the web.
     While waiting, a pop-up dialog is shown.
@@ -294,7 +294,7 @@ def youtubedl_update(cmd, waitmsg):
     thread = youtubedlupdater.Command_Execution(OS, cmd)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
-                          _("\nWait....\n%s\n" % waitmsg))
+                          _("\nWait....\n{0}\n".format(waitmsg)))
     loadDlg.ShowModal()
     # thread.join()
     update = thread.data
@@ -303,20 +303,38 @@ def youtubedl_update(cmd, waitmsg):
     return update
 # --------------------------------------------------------------------------#
 
-def youtubedl_upgrade(latest):
+
+def youtubedl_upgrade(latest, executable, upgrade=False):
     """
-    Run thread to download the latest version of youtube-dl if not
-    installed on Ms Windows.
+    Run thread to download locally the latest version of youtube-dl
+    on Ms Windows.
     While waiting, a pop-up dialog is shown.
     """
-    dest = os.path.join(DIRconf, 'youtube-dl.exe')
+    dest = os.path.join(DIRconf, executable)
+    if upgrade:
+        msg = 'Upgrading youtube-dl.'
+        if os.path.basename(dest) == executable:
+            new = os.path.join(os.path.dirname(dest), 'youtube-dl-OLD')
+            try:
+                os.rename(dest, new)
+            except FileNotFoundError as err:
+                return None, err
+    else:
+        msg = 'Downloading youtube-dl.'
+
     thread = youtubedlupdater.Upgrade_Latest(latest, dest)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
-                          _("\nWait....\nDownloading youtube-dl.\n"))
+                          _("\nWait....\n{0}\n".format(msg)))
     loadDlg.ShowModal()
     # thread.join()
     status = thread.data
     loadDlg.Destroy()
+
+    if upgrade:
+        if not status[1]:
+            os.remove(new)
+        else:
+            os.rename(new, os.path.join(os.path.dirname(new), executable))
 
     return status

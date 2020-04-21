@@ -125,27 +125,24 @@ class Downloader(wx.Panel):
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
 
         self.txt_maincode = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    style=wx.TE_PROCESS_ENTER, size=(50, -1)
-                                    )
+                                        style=wx.TE_PROCESS_ENTER,
+                                        size=(50, -1)
+                                        )
         self.txt_maincode.Disable()
-        self.stext1 = wx.StaticText(self, wx.ID_ANY,
-                                   (_('Enter Format Code:'))
-                                   )
+        self.stext1 = wx.StaticText(self, wx.ID_ANY, (_('Enter Format Code:')))
         self.stext1.Disable()
         grid_v.Add(self.stext1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grid_v.Add(self.txt_maincode, 0, wx.ALL, 5)
         self.txt_maincode.WriteText('18')
         self.txt_mergecode = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    style=wx.TE_PROCESS_ENTER, size=(50, -1)
-                                    )
+                                         style=wx.TE_PROCESS_ENTER,
+                                         size=(50, -1)
+                                         )
         self.txt_mergecode.Disable()
-        self.stext2 = wx.StaticText(self, wx.ID_ANY,
-                                   (_('Merge With:'))
-                                   )
+        self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge With:')))
         self.stext2.Disable()
         grid_v.Add(self.stext2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grid_v.Add(self.txt_mergecode, 0, wx.ALL, 5)
-        #self.txt_mergecode.WriteText('18')
         # -------------opt
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
@@ -206,7 +203,7 @@ class Downloader(wx.Panel):
         else:
             self.fcode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
-        #self.fcode.Hide()
+        # self.fcode.Hide()
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
@@ -313,11 +310,8 @@ class Downloader(wx.Panel):
                 data = IO_tools.youtube_getformatcode_exec(link)
                 for meta in data:
                     if meta[1]:
-                        wx.MessageBox(meta[0], 'youtube-dl ERROR',
-                                    wx.ICON_ERROR
-                                    )
+                        wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)
                         return
-
                     self.info.append(link)
                     for fc in meta[0].split('\n'):
                         if fc is not '':
@@ -452,13 +446,13 @@ class Downloader(wx.Panel):
             code2 = self.txt_mergecode.GetValue().strip()
             code = code1 if not code2 else code1 + '+' + code2
             ckstr = [x.isdigit() for x in code if x
-                     not in [c for c in ['/','+']]
+                     not in [c for c in ['/', '+']]
                      ]
             if False in ckstr or not ckstr or not code1:
                 wx.MessageBox(_('Enter only "Format Code" numbers in the '
                                 'text box, please. You can specify multiple '
                                 'format codes by using slash, e.g. 22/17/18'),
-                                'Videomass', wx.ICON_INFORMATION)
+                              'Videomass', wx.ICON_INFORMATION)
                 self.txt_maincode.SetBackgroundColour((255, 192, 255))
                 self.txt_mergecode.SetBackgroundColour((255, 192, 255))
                 return
@@ -556,7 +550,7 @@ class Downloader(wx.Panel):
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
-            elif self.choice.GetSelection() == 2: # audio only
+            elif self.choice.GetSelection() == 2:  # audio only
                 cmd = [(f'{opt["A_FORMAT"][1]} '
                         f'{opt["THUMB"][1]} '
                         f'{opt["METADATA"][1]} '
@@ -574,13 +568,13 @@ class Downloader(wx.Panel):
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
             self.parent.switch_Process('youtube-dl executable',
-                                        urls,
-                                        '',
-                                        self.parent.file_destin,
-                                        cmd,
-                                        None,
-                                        '',
-                                        '',
-                                        logname,
-                                        len(urls),
-                                        )
+                                       urls,
+                                       '',
+                                       self.parent.file_destin,
+                                       cmd,
+                                       None,
+                                       '',
+                                       '',
+                                       logname,
+                                       len(urls),
+                                       )

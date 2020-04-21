@@ -234,32 +234,32 @@ class Logging_Console(wx.Panel):
         via pubsub "UPDATE_YDL_EXECUTABLE_EVT" .
 
         """
-        if not status == 0:# error, exit status of the p.wait
+        if not status == 0:  # error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
             self.OutText.AppendText(_(' ...Failed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             return
 
-        if '[download]' in output:# ...in processing
-            if not 'Destination' in output:
+        if '[download]' in output:  # ...in processing
+            if 'Destination' not in output:
                 try:
                     i = float(output.split()[1].split('%')[0])
                 except ValueError:
                     self.OutText.AppendText(' %s' % output)
                 else:
-                    #if not self.ckbx_text.IsChecked():# not print the output
-                        #self.OutText.AppendText(' %s' % output)
+                    # if not self.ckbx_text.IsChecked():# not print output
+                    #    self.OutText.AppendText(' %s' % output)
                     self.barProg.SetValue(i)
                     self.labPerc.SetLabel("%s" % output)
                     del output, duration
 
-        else:# append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():# not print the output
+        else:  # append all others lines on the textctrl and log file
+            if not self.ckbx_text.IsChecked():  # not print the output
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
                 self.OutText.AppendText(' %s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
-            with open("%s/log/%s" %(DIRconf, self.logname),"a") as logerr:
+            with open("%s/log/%s" % (DIRconf, self.logname), "a") as logerr:
                 logerr.write("[YOUTUBE-DL]: %s" % (output))
                 # write a row error into file log
 
