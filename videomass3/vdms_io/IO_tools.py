@@ -29,6 +29,9 @@
 
 import wx
 import os
+import shutil
+import stat
+import tarfile
 from videomass3.vdms_threads.ffplay_reproduction import Play
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
 from videomass3.vdms_threads.volumedetect import VolumeDetectThread
@@ -291,7 +294,7 @@ def youtubedl_update(cmd, waitmsg):
     the local copy (not installed by the package manager) of youtube-dl.
     While waiting, a pop-up dialog is shown.
     """
-    thread = youtubedlupdater.Command_Execution(OS, cmd)
+    thread = youtubedlupdater.Command_Execution(cmd)
 
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
                           _("\nWait....\n{0}\n".format(waitmsg)))
@@ -306,24 +309,39 @@ def youtubedl_update(cmd, waitmsg):
 
 def youtubedl_upgrade(latest, executable, upgrade=False):
     """
-    Run thread to download locally the latest version of youtube-dl
-    on Ms Windows.
+    Run thread to download locally the latest version of youtube-dl.
     While waiting, a pop-up dialog is shown.
+    FIXME make this code better
+
     """
-    dest = os.path.join(DIRconf, executable)
     if upgrade:
         msg = 'Upgrading youtube-dl.'
-        if os.path.basename(dest) == executable:
-            new = os.path.join(os.path.dirname(dest), 'youtube-dl-OLD')
-            try:
-                os.rename(dest, new)
-            except FileNotFoundError as err:
-                return None, err
     else:
         msg = 'Downloading youtube-dl.'
 
-    thread = youtubedlupdater.Upgrade_Latest(latest, dest)
+    dirname = os.path.basename(os.path.dirname(executable))
 
+    if dirname == 'youtube-dl':  # is the src folder
+        name = os.path.basename(os.path.dirname(executable))
+        filebase = os.path.join(DIRconf, '%s-%s.tar.gz' % (dirname, latest))
+        url = ('https://github.com/ytdl-org/youtube-dl/releases/'
+               'download/%s/%s-%s.tar.gz' % (latest, name, latest))
+    else:  # is a file executable
+        name = os.path.basename(executable)
+        filebase = os.path.join(DIRconf, name)
+        url = ('https://github.com/ytdl-org/youtube-dl/releases/'
+               'download/%s/%s' % (latest, name))
+
+    dest = os.path.join(DIRconf, name)  # real path
+
+    if os.path.exists(os.path.join(DIRconf, name)):
+        # make back-up for outdated
+        try:
+            os.rename(dest, '%s_OLD' % dest)
+        except FileNotFoundError as err:
+            return None, err
+
+    thread = youtubedlupdater.Upgrade_Latest(url, filebase)
     loadDlg = PopupDialog(None, _("Videomass - Loading..."),
                           _("\nWait....\n{0}\n".format(msg)))
     loadDlg.ShowModal()
@@ -331,10 +349,31 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     status = thread.data
     loadDlg.Destroy()
 
-    if upgrade:
-        if not status[1]:
-            os.remove(new)
-        else:
-            os.rename(new, os.path.join(os.path.dirname(new), executable))
+    tarball = os.path.join(DIRconf, '%s-%s.tar.gz' % (dirname, latest))
 
+    if os.path.exists(tarball):
+        # extract the archive if present
+        with tarfile.open(tarball) as tar:
+            tar.extractall(DIRconf)
+            tar.close()
+        # WARNING make return here if error
+        os.remove(tarball)
+
+    if os.path.exists('%s_OLD' % dest):
+        # remove outdated back-up
+        if not status[1]:
+            if os.path.isfile('%s_OLD' % dest):
+                os.remove('%s_OLD' % dest)
+            elif os.path.isdir('%s_OLD' % dest):
+                shutil.rmtree('%s_OLD' % dest)
+        else:
+            # come back previous status
+            os.rename('%s_OLD' % dest, dest)
+
+    if not os.path.basename(dest) == 'youtube-dl.exe':
+        # make it executable by everyone
+        if os.path.isfile(dest):
+            st = os.stat(dest)
+            os.chmod(dest, st.st_mode | stat.S_IXUSR |
+                     stat.S_IXGRP | stat.S_IXOTH)
     return status

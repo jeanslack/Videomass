@@ -61,7 +61,7 @@ opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
 
 # get videomass wx.App attribute
 get = wx.GetApp()
-ydl = get.ydl
+pylibYdl = get.pylibYdl
 
 
 class Downloader(wx.Panel):
@@ -171,7 +171,7 @@ class Downloader(wx.Panel):
         sizer.Add(self.fcode, 1, wx.EXPAND | wx.ALL |
                   wx.ALIGN_CENTER_HORIZONTAL, 10
                   )
-        if ydl is None:  # YuotubeDL is not used as module
+        if pylibYdl is None:  # YuotubeDL is not used as module
             self.fcode.InsertColumn(0, (_('TITLE')), width=180)
             self.fcode.InsertColumn(1, (_('URL')), width=80)
             self.fcode.InsertColumn(2, (_('Format Code')), width=100)
@@ -330,7 +330,7 @@ class Downloader(wx.Panel):
         when the 'show stream information' button is pressed.
 
         """
-        if ydl is not None:  # YuotubeDL is not used as module
+        if pylibYdl is not None:  # YuotubeDL is not used as module
             wx.MessageBox(_('Sorry, This feature is disabled.'),
                           'Videomass', wx.ICON_INFORMATION)
             return
@@ -349,7 +349,7 @@ class Downloader(wx.Panel):
         Show listctrl to choose format code
 
         """
-        if ydl is not None:  # YuotubeDL is not used as module
+        if pylibYdl is not None:  # YuotubeDL is not used as module
             self.get_formatcodefromexecutable()
             self.fcode.Show()
             self.Layout()
@@ -458,7 +458,7 @@ class Downloader(wx.Panel):
                 return
             return code
 
-        if ydl is None:  # ----------- youtube-dl is used as library
+        if pylibYdl is None:  # ----------- youtube-dl is used as library
             postprocessors = []
             if self.choice.GetSelection() == 2:
                 postprocessors.append({'key': 'FFmpegExtractAudio',
@@ -471,8 +471,8 @@ class Downloader(wx.Panel):
                 postprocessors.append({'key': 'EmbedThumbnail',
                                        'already_have_thumbnail': False
                                        })
-            if opt["SUBTITLES"][0]:
-                postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
+            #if opt["SUBTITLES"][0]:
+                #postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
             if self.choice.GetSelection() == 0:
                 data = {'format': opt["V_QUALITY"][0],
@@ -482,6 +482,8 @@ class Downloader(wx.Panel):
                         'extractaudio': False,
                         'addmetadata': opt["METADATA"][0],
                         'writesubtitles': opt["SUBTITLES"][0],
+                        'writeautomaticsub': opt["SUBTITLES"][0],
+                        'allsubtitles': opt["SUBTITLES"][0],
                         'postprocessors': postprocessors
                         }
             if self.choice.GetSelection() == 1:  # audio files and video files
@@ -493,6 +495,8 @@ class Downloader(wx.Panel):
                         'extractaudio': False,
                         'addmetadata': opt["METADATA"][0],
                         'writesubtitles': opt["SUBTITLES"][0],
+                        'writeautomaticsub': opt["SUBTITLES"][0],
+                        'allsubtitles': opt["SUBTITLES"][0],
                         'postprocessors': postprocessors
                         }
             elif self.choice.GetSelection() == 2:  # audio only
@@ -503,7 +507,9 @@ class Downloader(wx.Panel):
                         'outtmpl': '%(title)s.%(ext)s',
                         'extractaudio': True,
                         'addmetadata': opt["METADATA"][0],
-                        'writesubtitles': False,
+                        'writesubtitles': opt["SUBTITLES"][0],
+                        'writeautomaticsub': opt["SUBTITLES"][0],
+                        'allsubtitles': opt["SUBTITLES"][0],
                         'postprocessors': postprocessors
                         }
             if self.choice.GetSelection() == 3:  # format code
@@ -517,6 +523,8 @@ class Downloader(wx.Panel):
                         'extractaudio': False,
                         'addmetadata': opt["METADATA"][0],
                         'writesubtitles': opt["SUBTITLES"][0],
+                        'writeautomaticsub': opt["SUBTITLES"][0],
+                        'allsubtitles': opt["SUBTITLES"][0],
                         'postprocessors': postprocessors
                         }
             self.parent.switch_Process('youtube_dl python package',
@@ -537,6 +545,7 @@ class Downloader(wx.Panel):
                         f'{opt["V_QUALITY"][1]} '
                         f'{opt["METADATA"][1]} '
                         f'{opt["SUBTITLES"][1]} '
+                        f'{opt["THUMB"][1]} '
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.%(ext)s')
                        ]
@@ -544,16 +553,18 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 1:  # audio files + video files
                 cmd = [(f'--format '
                         f'{opt["V_QUALITY"][1]}video,'
-                        f'{opt["A_QUALITY"][1]}audio'
+                        f'{opt["A_QUALITY"][1]}audio '
                         f'{opt["METADATA"][1]} '
                         f'{opt["SUBTITLES"][1]} '
+                        f'{opt["THUMB"][1]} '
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
             elif self.choice.GetSelection() == 2:  # audio only
                 cmd = [(f'{opt["A_FORMAT"][1]} '
-                        f'{opt["THUMB"][1]} '
                         f'{opt["METADATA"][1]} '
+                        f'{opt["SUBTITLES"][1]} '
+                        f'{opt["THUMB"][1]} '
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.%(ext)s')
                        ]
@@ -564,6 +575,7 @@ class Downloader(wx.Panel):
                 cmd = [(f'--format {code} '
                         f'{opt["METADATA"][1]} '
                         f'{opt["SUBTITLES"][1]} '
+                        f'{opt["THUMB"][1]} '
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]

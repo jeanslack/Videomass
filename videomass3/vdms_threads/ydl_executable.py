@@ -37,14 +37,10 @@ get = wx.GetApp()
 OS = get.OS
 DIRconf = get.DIRconf  # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
+execYdl = get.execYdl
 
 if not OS == 'Windows':
     import shlex
-    binary = 'youtube-dl'
-else:
-    binary = os.path.join(DIRconf, 'youtube-dl.exe')
-    if not os.path.exists(binary):
-        binary = 'youtube-dl'
 
 executable_not_found_msg = _("Is 'youtube-dl' installed on your system?")
 
@@ -102,16 +98,15 @@ class Ydl_DL_Exec(Thread):
         ssl = '--no-check-certificate' if OS == 'Windows' else ''
 
         for url in self.urls:
-
-            cmd = ('{6} {0} --newline --ignore-errors -o '
-                   '"{1}/{2}" {3} --ignore-config --restrict-filenames '
-                   '"{4}" --ffmpeg-location "{5}"'.format(ssl,
+            cmd = ('{0} {1} --newline --ignore-errors -o '
+                   '"{2}/{3}" {4} --ignore-config --restrict-filenames '
+                   '"{5}" --ffmpeg-location "{6}"'.format(execYdl,
+                                                          ssl,
                                                           self.outputdir,
                                                           self.outtmpl,
                                                           self.opt,
                                                           url,
                                                           ffmpeg_url,
-                                                          binary,
                                                           ))
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
@@ -220,8 +215,8 @@ class Ydl_EI_Exec(Thread):
         Subprocess initialize thread.
         """
         ssl = '--no-check-certificate' if OS == 'Windows' else ''
-        cmd = ('{2} {0} --newline --ignore-errors --ignore-config '
-               '--restrict-filenames -F "{1}"'.format(ssl, self.url, binary)
+        cmd = ('{0} {1} --newline --ignore-errors --ignore-config '
+               '--restrict-filenames -F "{2}"'.format(execYdl, ssl, self.url)
                )
         if not OS == 'Windows':
             cmd = shlex.split(cmd)

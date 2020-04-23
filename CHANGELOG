@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-April 21, 2020 V.2.0.5
+April 23, 2020 V.2.0.5
 +------------------------------------+
 
 BUGS:
@@ -19,9 +19,9 @@ BUGS:
 
 IMPROVEMENTS:
     * Code thinning for pupup dialog
-    * Fixed error with open log directory when log has not been created
-    * on MS Windows it is now possible to install and update the executable
-      youtube-dl.exe if youtube-dl is not used as Python library.
+    * Fixed error when opening log directory and log has not been created
+    * On MS-Windows and MacOs it is now possible to automatically install
+      and update youtube-dl if not used as a Python library.
 
 NEWS:
     * New optional box to merge audio to video when using a format code

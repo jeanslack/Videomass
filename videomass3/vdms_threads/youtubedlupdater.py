@@ -33,6 +33,9 @@ import wx
 from pubsub import pub
 from threading import Thread
 
+get = wx.GetApp()
+OS = get.OS
+
 
 class CheckNewRelease(Thread):
     """
@@ -75,20 +78,19 @@ class CheckNewRelease(Thread):
 
 class Command_Execution(Thread):
     """
-    Executes generic command line from executable e.g.
+    Executes generic command line with an executable, e.g.
     - read the installed version of youtube-dl
     - update the downloaded sources of youtube-dl
     """
-    def __init__(self, OS, cmd):
+    def __init__(self, cmd):
         """
-        self.OS: Operative System id
+        OS: Operative System id
         self.cmd: command line list object
         self.status: tuple object with exit status of the process
         self.data: returned output of the self.status
         """
         Thread.__init__(self)
         """initialize"""
-        self.OS = OS
         self.cmd = cmd
         self.data = None
         self.status = None
@@ -101,7 +103,7 @@ class Command_Execution(Thread):
         Execute command line via subprocess class and get output
         at the end of the process.
         """
-        if self.OS == 'Windows':
+        if OS == 'Windows':
             cmd = " ".join(self.cmd)
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -140,7 +142,7 @@ class Upgrade_Latest(Thread):
     """
     Download latest version of youtube-dl.exe, see self.url .
     """
-    def __init__(self, latest, dest):
+    def __init__(self, url, dest):
         """
         Attributes defined here:
         latest: latest version available .
@@ -151,8 +153,7 @@ class Upgrade_Latest(Thread):
         """
         Thread.__init__(self)
         """initialize"""
-        self.url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-                    'download/%s/youtube-dl.exe' % latest)
+        self.url = url
         self.dest = dest
         self.data = None
         self.status = None

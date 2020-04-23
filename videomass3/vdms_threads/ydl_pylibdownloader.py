@@ -35,9 +35,9 @@ get = wx.GetApp()
 OS = get.OS
 DIRconf = get.DIRconf  # path to the configuration directory:
 ffmpeg_url = get.ffmpeg_url
-ydl = get.ydl
+pylibYdl = get.pylibYdl
 
-if ydl is None:  # youtube-dl is installed
+if pylibYdl is None:  # youtube-dl is installed
     import youtube_dl
 
 

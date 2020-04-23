@@ -29,6 +29,7 @@
 #########################################################
 import wx
 import os
+import shutil
 from videomass3.vdms_sys.ctrl_run import system_check
 from videomass3.vdms_sys.appearance import Appearance
 # add translation macro to builtin similar to what gettext does
@@ -62,7 +63,8 @@ class Videomass(wx.App):
         self.ffprobe_url = None
         self.ffmpeg_loglev = None
         self.ffplay_loglev = None
-        self.ydl = None
+        self.pylibYdl = None
+        self.execYdl = False
         self.userpath = None
 
         # print ("App __init__")
@@ -101,11 +103,23 @@ class Videomass(wx.App):
         self.ffplay_check = setui[4][9]
         self.threads = setui[4][2]
         self.userpath = None if setui[4][1] == 'none' else setui[4][1]
+        # ----- youtube-dl
+        if shutil.which('youtube-dl'):  # need youtube-dl only
+            exe = 'youtube-dl'
+        elif shutil.which('python'):  # need all youtube-dl package
+            ydl = 'youtube-dl/youtube-dl'
+            exe = 'youtube-dl.exe' if self.OS == 'Windows' else ydl
+        else:
+            exe = 'youtube-dl.exe' if self.OS == 'Windows' else False
         try:
             from youtube_dl import YoutubeDL
+            self.execYdl = False
         except (ModuleNotFoundError, ImportError) as nomodule:
-            self.ydl = (nomodule)
-
+            self.pylibYdl = nomodule
+            exe = os.path.join(self.DIRconf, exe)
+            if exe:
+                self.execYdl = exe
+        # ----- ffmpeg
         if setui[0] == 'Darwin':
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"
                                    "/bin:/usr/sbin:/sbin"

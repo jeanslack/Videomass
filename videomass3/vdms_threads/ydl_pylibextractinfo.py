@@ -32,9 +32,9 @@ from threading import Thread
 # get data from bootstrap
 get = wx.GetApp()
 OS = get.OS
-ydl = get.ydl
+pylibYdl = get.pylibYdl
 
-if ydl is None:  # youtube-dl is installed
+if pylibYdl is None:  # youtube-dl is installed
     import youtube_dl
 
 

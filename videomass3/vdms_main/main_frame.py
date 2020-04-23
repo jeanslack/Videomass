@@ -50,7 +50,8 @@ from videomass3.vdms_sys.msg_info import current_release
 
 # get videomass wx.App attribute
 get = wx.GetApp()
-ydl = get.ydl  # if youtube_dl.YoutubeDL module exist is None
+pylibYdl = get.pylibYdl  # youtube_dl library with None is in use
+execYdl = get.execYdl  # youtube-dl executable with False do not exist
 OS = get.OS  # ID of the operative system:
 DIRconf = get.DIRconf  # default configuration directory
 FILEconf = get.FILEconf  # pathname of the file configuration
@@ -367,15 +368,14 @@ class MainFrame(wx.Frame):
         self.new_prst.Enable(False), self.del_prst.Enable(False)
         self.restore.Enable(False), self.default.Enable(False)
         self.default_all.Enable(False), self.refresh.Enable(False)
-        if ydl is not None:
-            if OS == 'Windows':
-                exe = os.path.join(DIRconf, 'youtube-dl.exe')
-                if os.path.exists(exe):
+        if pylibYdl is not None:
+            if execYdl:
+                if os.path.exists(execYdl):
                     return
             self.ydlupdate.Enable(False)
             self.ydllatest.Enable(False)
             self.ydlused.Enable(False)
-        if OS == 'Linux':
+        else:
             self.ydlupdate.Enable(False)
 
     # ---------------------- Event handler (callback) ------------------#
@@ -618,14 +618,14 @@ class MainFrame(wx.Frame):
 
         ydlButton = wx.Menu()  # ydl sub menu
         dscrp = (_("Version in Use"),
-                 _("Shows the version in use if installed"))
+                 _("Shows the version in use"))
         self.ydlused = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Check for Update"),
                  _("Check for the latest version available on GitHub"))
         self.ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ydlButton.AppendSeparator()
         dscrp = (_("Update youtube-dl"),
-                 _("Try to update with latest version of youtube-dl"))
+                 _("Update with latest version of youtube-dl"))
         self.ydlupdate = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.Append(wx.ID_ANY, _("&Youtube-dl"), ydlButton, )
 
@@ -848,83 +848,64 @@ class MainFrame(wx.Frame):
         check version of youtube-dl used from 'Version in Use' bar menu
         """
         waitmsg = _('Check installed version')
-        if ydl is None:  # youtube-dl is installed
+        if pylibYdl is None:  # youtube-dl library
             import youtube_dl
-            vrs = youtube_dl.version.__version__
+            this = youtube_dl.version.__version__
             if msgbox:
-                wx.MessageBox(_('You are using youtube-dl version %s') % vrs,
-                              'Videomass')
-            return vrs
+                wx.MessageBox(_('You are using youtube-dl '
+                                'version {}'.format(this)), 'Videomass')
+            return this
         else:
-            if OS == 'Windows':
-                exe = os.path.join(DIRconf, 'youtube-dl.exe')
-                if os.path.exists(exe):
-                    update = IO_tools.youtubedl_update([exe, '--version'],
-                                                       waitmsg
-                                                       )
-                    if update[1] and msgbox:  # failed
-                        wx.MessageBox("%s" % update[0], "Videomass: error",
-                                      wx.ICON_ERROR, self)
-                    else:
-                        if msgbox:
-                            wx.MessageBox(_('You are using youtube-dl version '
-                                            '%s') % update[0], 'Videomass')
-                    return update
-                else:
-                    if not msgbox:
-                        return ('youtube-dl has not been installed yet.', True)
-                    msg = ''
-            else:
-                msg = ydl
+            if os.path.exists(execYdl):
+                this = IO_tools.youtubedl_update([execYdl, '--version'],
+                                                 waitmsg)
+                if this[1]:  # failed
+                    wx.MessageBox("%s" % this[0], "Videomass: error",
+                                    wx.ICON_ERROR, self)
+                    return None
 
-            wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(msg),
-                          'Videomass', wx.ICON_ERROR)
-            return
+                if msgbox:
+                    wx.MessageBox(_('You are using youtube-dl '
+                                    'version {}'.format(this[0])), 'Videomass')
+                    return this[0]
+                if msgbox:
+                    wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
+                                    'installed yet.').format(pylibYdl),
+                                'Videomass', wx.ICON_ERROR)
+            return this[0].strip()
+        return None
     # -----------------------------------------------------------------#
 
-    def ydl_latest(self, event):
+    def ydl_latest(self, event, msgbox=True):
         """
-        check for new releases of youtube-dl backand from 'Check for Update'
+        check for new releases of youtube-dl from 'Check for Update'
         bar menu
         """
         url = 'https://yt-dl.org/update/LATEST_VERSION'
+        this = None if msgbox is False else self.ydl_used(self, False)
 
-        if ydl is None:  # youtube-dl is installed
-            thisvers = self.ydl_used(self, msgbox=False)
-            latest = IO_tools.youtubedl_latest(url)
-        else:
-            if OS == 'Windows':
-                thisvers = self.ydl_used(self, msgbox=False)
-                if thisvers[1]:
-                    wx.MessageBox("%s" % thisvers[0], "Videomass: error",
-                                  wx.ICON_ERROR, self)
-                    return
-                latest = IO_tools.youtubedl_latest(url)
-                thisvers = thisvers[0].strip()
-            else:
-                thisvers = None
-                latest = IO_tools.youtubedl_latest(url)
-
-        if not thisvers:
-            info = _("The latest version of youtube-dl on GitHub is:")
-        else:
+        if this:  # youtube-dl as pylibrary
             info = _("A new version of youtube-dl is available on GitHub:")
+        else:
+            info = _("The latest version of youtube-dl on GitHub is:")
+
+        latest = IO_tools.youtubedl_latest(url)
 
         if latest[1]:  # failed
             wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
                           "Videomass: error", wx.ICON_ERROR, self)
-            return
+            return latest
 
-        if latest[0] == thisvers:
-
-            wx.MessageBox(_("youtube-dl is up-to-date {}".format(thisvers)),
-                          "Videomass", wx.ICON_INFORMATION, self)
-            return
+        if latest[0].strip() == this:
+            if msgbox:
+                wx.MessageBox(_("youtube-dl is up-to-date {}".format(this)),
+                                "Videomass", wx.ICON_INFORMATION, self)
+            return None, None
         else:
-            wx.MessageBox(_("{} {}".format(info, latest[0])),
-                          'Videomass', wx.ICON_INFORMATION, self)
-            return
+            if msgbox:
+                wx.MessageBox(_("{} {}".format(info, latest[0])),
+                              'Videomass', wx.ICON_INFORMATION, self)
+            return latest
     # -----------------------------------------------------------------#
 
     def youtubedl_uptodater(self, event):
@@ -932,43 +913,43 @@ class MainFrame(wx.Frame):
         Update to latest version from 'Update youtube-dl' bar menu
         """
         waitmsg = _('Updating youtube-dl')
-        if ydl is None:  # youtube-dl module exist
-            update = IO_tools.youtubedl_update(['youtube-dl', '--update'],
-                                               waitmsg)
-            if update[1]:  # failed
-                wx.MessageBox("\n%s" % update[0], "Videomass: error",
-                              wx.ICON_ERROR, self)
-                return
+
+        #if pylibYdl is not None:  # not youtube-dl as pylibrary
+        if os.path.exists(execYdl) and pylibYdl is not None:
+            if os.path.basename(execYdl) == 'youtube-dl':  # not youtube-dl.exe
+                update = IO_tools.youtubedl_update([execYdl, '--update'],
+                                                    waitmsg)
+                if update[1]:  # failed
+                    wx.MessageBox("\n%s" % update[0], "Videomass: error",
+                                  wx.ICON_ERROR, self)
+                    return
+                else:
+                    wx.MessageBox("\n%s" % update[0], 'Videomass',
+                                  wx.ICON_INFORMATION, self)
+                    return
             else:
-                wx.MessageBox("\n%s" % update[0], 'Videomass',
-                              wx.ICON_INFORMATION, self)
-                return
-        else:
-            if OS == 'Windows':
-                exe = os.path.join(DIRconf, 'youtube-dl.exe')
-                if os.path.exists(exe):
-                    url = 'https://yt-dl.org/update/LATEST_VERSION'
-                    latest = IO_tools.youtubedl_latest(url)
-                    if latest[1]:  # failed
-                        wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
-                                      "Videomass: error", wx.ICON_ERROR, self)
-                        return
-                    upgrade = IO_tools.youtubedl_upgrade(latest[0],
-                                                         'youtube-dl.exe',
-                                                         upgrade=True,
-                                                         )
-                    if upgrade[1]:  # failed
-                        wx.MessageBox("%s" % (upgrade[1]),
-                                      "Videomass: error", wx.ICON_ERROR, self)
-                        return
-                    wx.MessageBox(_('Successful! youtube-dl is up-to-date '
-                                    '({0})'.format(latest[0])),
-                                  'Videomass', wx.ICON_INFORMATION)
+                url = 'https://yt-dl.org/update/LATEST_VERSION'
+                latest = IO_tools.youtubedl_latest(url)
+                if latest[1]:  # failed
+                    wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
+                                  "Videomass: error", wx.ICON_ERROR, self)
                     return
 
-        wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                        'installed yet.').format(ydl),
-                      'Videomass', wx.ICON_ERROR)
+                upgrade = IO_tools.youtubedl_upgrade(latest[0], execYdl)
+
+                if upgrade[1]:  # failed
+                    wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
+                                  wx.ICON_ERROR, self)
+                    return
+                wx.MessageBox(_('Successful! youtube-dl is up-to-date '
+                                '({0})'.format(latest[0])),
+                              'Videomass', wx.ICON_INFORMATION)
+                return
+        else:
+
+            wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
+                            'installed yet.').format(pylibYdl),
+                          'Videomass', wx.ICON_ERROR)
         return
     # ------------------------------------------------------------------#
 
