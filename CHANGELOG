@@ -7,27 +7,31 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-April 23, 2020 V.2.0.5
+April 24, 2020 V.2.0.5
 +------------------------------------+
 
 BUGS:
-    * Fixed format string error on first_time_start.py dialog
-    * [youtube download] fixed functionality inconsistencies on "add thumbnail
+    * Fixed format string error on first_time_start.py dialog.
+    * [YOUTUBE DONLOADER] fixed functionality inconsistencies on "add thumbnail
       to audio file", "add metadata to file" and "write subtitle to video"
       features.
-    * Fixed broken link to help on profile dialog
+    * Fixed broken link to help on profile dialog.
+    * Re-Fixed video preview on Videomass.exe .
 
 IMPROVEMENTS:
-    * Code thinning for pupup dialog
-    * Fixed error when opening log directory and log has not been created
-    * On MS-Windows and MacOs it is now possible to automatically install
-      and update youtube-dl if not used as a Python library.
+    * Code thinning for pupup dialog.
+    * Fixed error when opening log directory and log has not been created.
+    * [YOUTUBE DONLOADER] now Videomass display the youtube-dl version and check
+      for updates on Videomass bar menu items.
+    * [YOUTUBE DONLOADER] in some cases (MS-Windows and MacOs only) it is
+      possible to automatically update youtube-dl with the latest version if
+      not used as a Python library. All of this is on the Tools/youtube-dl
+      menu bar.
 
 NEWS:
-    * New optional box to merge audio to video when using a format code
-      indicating video without audio.
-    * New bar menu items to check youtube-dl installed version, latest
-      and updates.
+    * [YOUTUBE DONLOADER] New optional box to merge audio to video when using a
+      format code indicating video without audio.
+    * New adds on the menu Tools: FFmpeg and Youtube-dl items
 
 +------------------------------------+
 April 11, 2020 V.2.0.3

@@ -861,7 +861,7 @@ class MainFrame(wx.Frame):
                                                  waitmsg)
                 if this[1]:  # failed
                     wx.MessageBox("%s" % this[0], "Videomass: error",
-                                    wx.ICON_ERROR, self)
+                                  wx.ICON_ERROR, self)
                     return None
 
                 if msgbox:
@@ -870,8 +870,8 @@ class MainFrame(wx.Frame):
                     return this[0]
                 if msgbox:
                     wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                                    'installed yet.').format(pylibYdl),
-                                'Videomass', wx.ICON_ERROR)
+                                  'installed yet.').format(pylibYdl),
+                                  'Videomass', wx.ICON_ERROR)
             return this[0].strip()
         return None
     # -----------------------------------------------------------------#
@@ -899,7 +899,7 @@ class MainFrame(wx.Frame):
         if latest[0].strip() == this:
             if msgbox:
                 wx.MessageBox(_("youtube-dl is up-to-date {}".format(this)),
-                                "Videomass", wx.ICON_INFORMATION, self)
+                              "Videomass", wx.ICON_INFORMATION, self)
             return None, None
         else:
             if msgbox:
@@ -914,11 +914,11 @@ class MainFrame(wx.Frame):
         """
         waitmsg = _('Updating youtube-dl')
 
-        #if pylibYdl is not None:  # not youtube-dl as pylibrary
+        # if pylibYdl is not None:  # not youtube-dl as pylibrary
         if os.path.exists(execYdl) and pylibYdl is not None:
             if os.path.basename(execYdl) == 'youtube-dl':  # not youtube-dl.exe
                 update = IO_tools.youtubedl_update([execYdl, '--update'],
-                                                    waitmsg)
+                                                   waitmsg)
                 if update[1]:  # failed
                     wx.MessageBox("\n%s" % update[0], "Videomass: error",
                                   wx.ICON_ERROR, self)
@@ -934,8 +934,14 @@ class MainFrame(wx.Frame):
                     wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
                                   "Videomass: error", wx.ICON_ERROR, self)
                     return
-
-                upgrade = IO_tools.youtubedl_upgrade(latest[0], execYdl)
+                this = self.ydl_used(self, False)
+                if latest[0].strip() == this:
+                    wx.MessageBox(_('youtube-dl is already '
+                                    'up-to-date {}'.format(this)),
+                                  "Videomass", wx.ICON_INFORMATION, self)
+                    return
+                else:
+                    upgrade = IO_tools.youtubedl_upgrade(latest[0], execYdl)
 
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
@@ -1020,6 +1026,7 @@ class MainFrame(wx.Frame):
         <https://stackoverflow.com/questions/35569042/ssl-certificate-
         verify-failed-with-python3>
         """
+        # HACK fix soon the ssl certificate
         cr = current_release()
         # ssl._create_default_https_context = ssl._create_unverified_context
         try:

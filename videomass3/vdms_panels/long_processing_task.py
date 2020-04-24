@@ -235,6 +235,8 @@ class Logging_Console(wx.Panel):
 
         """
         if not status == 0:  # error, exit status of the p.wait
+            if output:
+                self.OutText.AppendText('%s\n' % output)
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
             self.OutText.AppendText(_(' ...Failed\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))

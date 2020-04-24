@@ -314,7 +314,7 @@ class Downloader(wx.Panel):
                         return
                     self.info.append(link)
                     for fc in meta[0].split('\n'):
-                        if fc is not '':
+                        if fc != '':
                             if fc.split()[0].isdigit():
                                 index += 1
                                 self.fcode.InsertItem(index, '')
@@ -471,8 +471,8 @@ class Downloader(wx.Panel):
                 postprocessors.append({'key': 'EmbedThumbnail',
                                        'already_have_thumbnail': False
                                        })
-            #if opt["SUBTITLES"][0]:
-                #postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
+            if opt["SUBTITLES"][0]:
+                postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
             if self.choice.GetSelection() == 0:
                 data = {'format': opt["V_QUALITY"][0],

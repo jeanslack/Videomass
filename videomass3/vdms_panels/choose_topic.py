@@ -42,22 +42,27 @@ DIRconf = get.DIRconf
 msgready = _('Successful! \n\n'
              'youtube-dl is ready\n\n'
              'Important: youtube-dl is very often updated, remember to '
-             'check for updates weekly with the functions in the menu bar '
-             '"Tools/youtube-dl" .\n\n'
+             'check for updates weekly.\nYou can use the dedicated functions '
+             'in the menu bar of Videomass: Tools/youtube-dl" .\n\n'
              'Do you want to close Videomass now and restart it manually?')
 
 if OS == 'Windows':
-    win = '- Require: Microsoft Visual C++ 2010 Redistributable Package (x86)'
-
-if OS in ['Windows', 'Darwin']:
     msg = _('{}\n\n'
             'To download video from YouTube and other sites, Videomass needs '
-            'an updated version of youtube-dl.\n\n'
-            'Do you want to download youtube-dl now?\n\n'
-            '- website: <https://github.com/ytdl-org/youtube-dl/releases>\n'
-            '- youtube-dl will be automatically detected by Videomass\n'
-            '{}'
-            'Videomass.').format(pylibYdl, win)
+            'an updated\nversion of youtube-dl.exe from https://github.com/'
+            'ytdl-org/youtube-dl/releases\n\n'
+            '- Require: Microsoft Visual C++ 2010 Redistributable Package '
+            '(x86)\n   for major information visit http://ytdl-org.'
+            'github.io/youtube-dl/download.html\n\n'
+            'Do you want to download youtube-dl now?',
+            'Videomass.').format(pylibYdl)
+elif OS == 'Darwin':
+    msg = _('{}\n\n'
+            'To download video from YouTube and other sites, Videomass needs '
+            'an updated\nversion of youtube-dl from  https://github.com/ytdl-'
+            'org/youtube-dl/releases\n\n'
+            'Do you want to download youtube-dl now?',
+            'Videomass.').format(pylibYdl)
 else:
     msg = _('{}\n\nTo download video from YouTube and other sites, Videomass '
             'needs an updated version of youtube-dl .\n\n'
@@ -154,19 +159,21 @@ class Choose_Topic(wx.Panel):
                 self.parent.Text_import(self, 'Youtube Downloader')
                 return
             else:
-                if OS in ['Windows', 'Darwin', 'FreeBsd']:
+                if OS in ['Windows', 'Darwin']:
                     if wx.MessageBox(msg, _("Videomass: Please confirm"),
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
                 else:
-                    wx.MessageBox(_('ERROR: {}').format(msg),'Videomass',
+                    wx.MessageBox(_('ERROR: {}').format(msg), 'Videomass',
                                   wx.ICON_ERROR, self)
                     return
                 latest = self.parent.ydl_latest(self, msgbox=False)
-                if latest[1]: return
-                else: upgrade = IO_tools.youtubedl_upgrade(latest[0],
-                                                           execYdl)
+                if latest[1]:
+                    return
+                else:
+                    upgrade = IO_tools.youtubedl_upgrade(latest[0],
+                                                         execYdl)
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]),
                                   "Videomass: error", wx.ICON_ERROR, self)
@@ -181,7 +188,7 @@ class Choose_Topic(wx.Panel):
 
         elif execYdl is False:
             wx.MessageBox(_('ERROR: {0}\n\n{1}').format(pylibYdl, msgerr),
-                            'Videomass', wx.ICON_ERROR)
+                          'Videomass', wx.ICON_ERROR)
             return
     # ------------------------------------------------------------------#
 

@@ -41,6 +41,13 @@ execYdl = get.execYdl
 
 if not OS == 'Windows':
     import shlex
+    linemsg = 'Unrecognized error'
+else:
+    if os.path.isfile(execYdl):
+        linemsg = ('\nRequire MSVCR100.dll\nTo resolve this problem install: '
+                   'Microsoft Visual C++ 2010 Redistributable Package (x86)')
+    else:
+        linemsg = 'Unrecognized error'
 
 executable_not_found_msg = _("Is 'youtube-dl' installed on your system?")
 
@@ -147,6 +154,8 @@ class Ydl_DL_Exec(Thread):
                             break
 
                     if p.wait():  # error
+                        if 'line' not in locals():
+                            line = linemsg
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
@@ -238,7 +247,10 @@ class Ydl_EI_Exec(Thread):
             self.status = ('%s' % oserr, 'error')
         else:
             if p.returncode:  # if returncode == 1
-                self.status = (out[0], 'error')
+                if not out[0] and not out[1] and OS == 'Windows':
+                    self.status = linemsg, 'error'
+                else:
+                    self.status = (out[0], 'error')
             else:
                 self.status = (out[0], out[1])
 

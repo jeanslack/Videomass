@@ -58,6 +58,8 @@ class CheckNewRelease(Thread):
         """
         Check for new version release
         """
+        # HACK fix soon the ssl certificate
+        ssl._create_default_https_context = ssl._create_unverified_context
         try:
             req = (urllib.request.build_opener().open(
                    self.url).read().decode('utf-8').strip())
@@ -125,10 +127,15 @@ class Command_Execution(Thread):
             self.status = ('%s' % oserr, 'error')
         else:
             if p.returncode:  # if returncode == 1
-                self.status = (out[0], 'error')
+                if not out[0] and not out[1] and OS == 'Windows':
+                    self.status = ('Require MSVCR100.dll\nTo resolve this '
+                                   'problem install: Microsoft Visual C++ '
+                                   '2010 Redistributable Package (x86)',
+                                   'error')
+                else:
+                    self.status = (out[0], 'error')
             else:
                 self.status = (out[0], out[1])
-
         self.data = self.status
 
         wx.CallAfter(pub.sendMessage,
@@ -165,6 +172,7 @@ class Upgrade_Latest(Thread):
         """
         Check for new version release
         """
+        # HACK fix soon the ssl certificate
         context = ssl._create_unverified_context()
         try:
             with urllib.request.urlopen(self.url, context=context) as \

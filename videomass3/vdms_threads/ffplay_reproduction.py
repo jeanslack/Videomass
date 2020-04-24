@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: ffplay_reproduction.py
-# Porpose: simple media player with x-window-terminal-emulator
+# Porpose: playback media via ffplay
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -38,13 +38,14 @@ DIRconf = get.DIRconf  # path to the configuration directory
 ffplay_url = get.ffplay_url
 ffplay_loglev = get.ffplay_loglev
 OS = get.OS
+
 if not OS == 'Windows':
     import shlex
 
 
 def msg_Error(msg):
     """
-    Receive error messages from Play(Thread) via wxCallafter
+    Receive error messages via wxCallafter
     """
     wx.MessageBox("FFplay ERROR:  %s" % (msg),
                   "Videomass: FFplay",
@@ -54,7 +55,7 @@ def msg_Error(msg):
 
 def msg_Info(msg):
     """
-    Receive info messages from Play(Thread) via wxCallafter
+    Receive info messages via wxCallafter
     """
     wx.MessageBox("FFplay INFORMATION:  %s" % (msg),
                   "Videomass: FFplay",
@@ -64,15 +65,14 @@ def msg_Info(msg):
 
 class Play(Thread):
     """
-    Run a separate process thread for media reproduction with
-    a called at ffplay witch need x-window-terminal-emulator
-    to show files streaming.
+    Simple multimedia playback with subprocess.Popen class to run ffplay
+    by FFmpeg (ffplay is a player which need x-window-terminal-emulator)
     """
     def __init__(self, filepath, timeseq, param):
         """
         The self.ffplay_loglevel has flag 'error -hide_banner'
-        by default (see conf. file).
-        NOTE: Do not use '-stats' option do not work.
+        by default (see videomass.conf).
+        NOTE: Do not use '-stats' option it do not work.
         """
         Thread.__init__(self)
         ''' constructor'''
@@ -84,15 +84,14 @@ class Play(Thread):
         write_log('Videomass_FFplay.log', "%s/log" % DIRconf)
         # set initial file LOG
 
-        self.start()  # start the thread (va in self.run())
+        self.start()
     # ----------------------------------------------------------------#
 
     def run(self):
         """
-        In this thread the ffplay subprocess is managed so as to direct
-        the output of "p.returncode" and the "OSError" exception on the
-        errors, while all the rest of the output as information given by
-        "error [1]" .
+        Get and redirect output errors on p.returncode instance and on
+        OSError exception. Otherwise the getted output as information
+        given by error [1] .
         """
 
         # time.sleep(.5)
@@ -106,11 +105,17 @@ class Play(Thread):
         if not OS == 'Windows':
             cmd = shlex.split(cmd)
             info = None
-        else:  # Hide subprocess window on MS Windows
-            info = subprocess.STARTUPINFO()
-            info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+            shell = False
+        else:
+            # NOTE: info flag do not work with ffplay
+            # on MS-Windows. Fixed with shell=True flag.
+            shell = True
+            info = None
+            # info = subprocess.STARTUPINFO()
+            # info.dwFlags |= subprocess.SW_HIDE
         try:
             p = subprocess.Popen(cmd,
+                                 shell=shell,
                                  stderr=subprocess.PIPE,
                                  universal_newlines=True,
                                  startupinfo=info,
@@ -122,7 +127,7 @@ class Play(Thread):
             self.logError(err)  # append log error
             return
 
-        else:  # WARNING else fa parte del blocco try
+        else:
             if p.returncode:  # ffplay error
                 if error[1]:
                     msg = error[1]
