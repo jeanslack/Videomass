@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-25 09:49+0200\n"
-"PO-Revision-Date: 2020-04-25 09:50+0200\n"
+"PO-Revision-Date: 2020-04-25 10:53+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../videomass3/Videomass3.py:92
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../videomass3/Videomass3.py:122
 msgid "youtube-dl is installed but not writable for updates."
-msgstr ""
+msgstr "youtube-dl è installato ma non scrivibile per gli aggiornamenti."
 
 #: ../videomass3/vdms_dialogs/audiodialogs.py:249
 msgid ""
@@ -1341,7 +1341,7 @@ msgstr ""
 
 #: ../videomass3/vdms_io/IO_tools.py:220
 msgid "Output log has not been created yet."
-msgstr ""
+msgstr "Il log di output non è stato ancora creato."
 
 #: ../videomass3/vdms_io/IO_tools.py:244 ../videomass3/vdms_io/IO_tools.py:262
 msgid ""
@@ -1359,6 +1359,9 @@ msgid ""
 "Wait....\n"
 "Check for update.\n"
 msgstr ""
+"\n"
+"Attendi….\n"
+"Verifica aggiornamenti.\n"
 
 #: ../videomass3/vdms_io/IO_tools.py:300 ../videomass3/vdms_io/IO_tools.py:346
 #, python-brace-format
@@ -1367,6 +1370,9 @@ msgid ""
 "Wait....\n"
 "{0}\n"
 msgstr ""
+"\n"
+"Attendi….\n"
+"{0}\n"
 
 #: ../videomass3/vdms_io/presets_manager_properties.py:51
 #, python-format
@@ -1555,6 +1561,8 @@ msgstr "Durante la riproduzione"
 #: ../videomass3/vdms_main/main_frame.py:596
 msgid "Show useful keyboard shortcuts when playing or previewing with ffplay"
 msgstr ""
+"Mostra utili scorciatoie da tastiera durante la riproduzione o l'anteprima "
+"con ffplay"
 
 #: ../videomass3/vdms_main/main_frame.py:600
 msgid "Integrated specifications"
@@ -1566,11 +1574,11 @@ msgstr "Mostra le funzionalità di configurazione integrate di FFmpeg"
 
 #: ../videomass3/vdms_main/main_frame.py:604
 msgid "Muxers and Demuxers"
-msgstr ""
+msgstr "Muxers e Demuxers"
 
 #: ../videomass3/vdms_main/main_frame.py:605
 msgid "Muxers and demuxers available on FFmpeg in use."
-msgstr ""
+msgstr "Muxers e demuxers disponibili su FFmpeg in uso."
 
 #: ../videomass3/vdms_main/main_frame.py:608
 msgid "Encoders"
@@ -1595,30 +1603,32 @@ msgstr "Ricerca argomenti"
 #: ../videomass3/vdms_main/main_frame.py:614
 msgid "A easy utility to search for information on FFmpeg topics and options"
 msgstr ""
+"Una facile utilità per la ricerca di informazioni su argomenti e opzioni "
+"FFmpeg"
 
 #: ../videomass3/vdms_main/main_frame.py:620
 msgid "Version in Use"
-msgstr ""
+msgstr "Versione in uso"
 
 #: ../videomass3/vdms_main/main_frame.py:621
 msgid "Shows the version in use"
-msgstr ""
+msgstr "Mostra la versione in uso"
 
 #: ../videomass3/vdms_main/main_frame.py:623
 msgid "Check for Update"
-msgstr ""
+msgstr "Ricerca Aggiornamenti"
 
 #: ../videomass3/vdms_main/main_frame.py:624
 msgid "Check for the latest version available on GitHub"
-msgstr ""
+msgstr "Ricerca l’ultima versione disponibile su GitHub"
 
 #: ../videomass3/vdms_main/main_frame.py:627
 msgid "Update youtube-dl"
-msgstr ""
+msgstr "Aggiorna youtube-dl"
 
 #: ../videomass3/vdms_main/main_frame.py:628
 msgid "Update with latest version of youtube-dl"
-msgstr ""
+msgstr "Aggiornamento con l’ultima versione di youtube-dl"
 
 #: ../videomass3/vdms_main/main_frame.py:630
 msgid "&Youtube-dl"
@@ -1698,12 +1708,12 @@ msgstr "Videomass: Scegli una cartella di destinazione"
 
 #: ../videomass3/vdms_main/main_frame.py:850
 msgid "Check installed version"
-msgstr ""
+msgstr "Verifica la versione installata"
 
 #: ../videomass3/vdms_main/main_frame.py:855
 #: ../videomass3/vdms_main/main_frame.py:868
 msgid "You are using youtube-dl version {}"
-msgstr ""
+msgstr "Stai usando youtube-dl versione {}"
 
 #: ../videomass3/vdms_main/main_frame.py:872
 #: ../videomass3/vdms_main/main_frame.py:956
@@ -1719,32 +1729,32 @@ msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:888
 msgid "A new version of youtube-dl is available on GitHub:"
-msgstr ""
+msgstr "Una nuova versione di youtube-dl è disponibile su GitHub:"
 
 #: ../videomass3/vdms_main/main_frame.py:890
 msgid "The latest version of youtube-dl on GitHub is:"
-msgstr ""
+msgstr "L’ultima versione di youtube-dl su GitHub è:"
 
 #: ../videomass3/vdms_main/main_frame.py:901
 msgid "youtube-dl is up-to-date {}"
-msgstr ""
+msgstr "youtube-dl è aggiornato {}"
 
 #: ../videomass3/vdms_main/main_frame.py:906
 msgid "{} {}"
-msgstr ""
+msgstr "{} {}"
 
 #: ../videomass3/vdms_main/main_frame.py:915
 msgid "Updating youtube-dl"
-msgstr ""
+msgstr "Aggiornamento di youtube-dl"
 
 #: ../videomass3/vdms_main/main_frame.py:939
 msgid "youtube-dl is already up-to-date {}"
-msgstr ""
+msgstr "youtube-dl è già aggiornato {}"
 
 #: ../videomass3/vdms_main/main_frame.py:950
 #, python-brace-format
 msgid "Successful! youtube-dl is up-to-date ({0})"
-msgstr ""
+msgstr "Riuscito! youtube-dl è aggiornato ({0})"
 
 #: ../videomass3/vdms_main/main_frame.py:1063
 #, python-brace-format
@@ -1809,7 +1819,7 @@ msgstr "Gestionale Presets"
 
 #: ../videomass3/vdms_main/main_frame.py:1325
 msgid "Processing Status - Videomass"
-msgstr ""
+msgstr "Stato di elaborazione - Videomass"
 
 #: ../videomass3/vdms_panels/av_conversions.py:224
 msgid "Video Encoder"
@@ -1817,7 +1827,7 @@ msgstr "Codificatore Video"
 
 #: ../videomass3/vdms_panels/av_conversions.py:231
 msgid "Codec"
-msgstr ""
+msgstr "Codec"
 
 #: ../videomass3/vdms_panels/av_conversions.py:241
 msgid "Pass"
@@ -2397,6 +2407,16 @@ msgid ""
 "\n"
 "Do you want to close Videomass now and restart it manually?"
 msgstr ""
+"Riuscito! \n"
+"\n"
+"youtube-dl è pronto\n"
+"\n"
+"Importante: youtube-dl viene aggiornato molto spesso, ricordati di "
+"controllare gli aggiornamenti settimanalmente.\n"
+"È possibile utilizzare le funzioni dedicate nella barra dei menu di "
+"Videomass: Tools/youtube-dl .\n"
+"\n"
+"Vuoi chiudere Videomass ora e riavviarlo manualmente?"
 
 #: ../videomass3/vdms_panels/choose_topic.py:50
 msgid ""
@@ -2412,6 +2432,18 @@ msgid ""
 "\n"
 "Do you want to download youtube-dl now?"
 msgstr ""
+"{}\n"
+"\n"
+"Per scaricare video da YouTube e altri siti, Videomass necessita di una "
+"versione\n"
+"aggiornata di youtube-dl.exe da https://github.com/ytdl-org/youtube-dl/"
+"releases\n"
+"\n"
+"- Richiede: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
+"   per maggiori informazioni visitare http://ytdl-org.github.io/youtube-dl/"
+"download.html\n"
+"\n"
+"Vuoi scaricare youtube-dl ora?"
 
 #: ../videomass3/vdms_panels/choose_topic.py:59
 msgid ""
@@ -2422,6 +2454,13 @@ msgid ""
 "\n"
 "Do you want to download youtube-dl now?"
 msgstr ""
+"{}\n"
+"\n"
+"Per scaricare video da YouTube e altri siti, Videomass necessita di una "
+"versione\n"
+"aggiornata di youtube-dl da https://github.com/ytdl-org/youtube-dl/releases\n"
+"\n"
+"Vuoi scaricare youtube-dl ora?"
 
 #: ../videomass3/vdms_panels/choose_topic.py:65
 msgid ""
@@ -2434,6 +2473,14 @@ msgid ""
 "\n"
 "Videomass recommends pip to install youtube-dl and keep it updated."
 msgstr ""
+"{}\n"
+"\n"
+"Per scaricare video da YouTube e altri siti, Videomass necessita di una "
+"versione aggiornata di youtube-dl.\n"
+"\n"
+"Si prega di utilizzare un gestore di pacchetti per installarlo.\n"
+"\n"
+"Videomass consiglia pip per installare youtube-dl e mantenerlo aggiornato."
 
 #: ../videomass3/vdms_panels/choose_topic.py:70
 msgid ""
@@ -2445,6 +2492,13 @@ msgid ""
 "\n"
 "Do you want to local update youtube-dl now?"
 msgstr ""
+"{}\n"
+"\n"
+"Per scaricare video da YouTube e altri siti, Videomass necessita di una "
+"versione aggiornata di youtube-dl da:\n"
+"<https://github.com/ytdl-org/youtube-dl/releases>\n"
+"\n"
+"Vuoi aggiornare localmente youtube-dl ora?"
 
 #: ../videomass3/vdms_panels/choose_topic.py:75
 msgid ""
@@ -2452,6 +2506,9 @@ msgid ""
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
+"{}\n"
+"\n"
+"youtube-dl: nessuna libreria o file eseguibile trovato."
 
 #: ../videomass3/vdms_panels/choose_topic.py:89
 msgid "Welcome to Videomass"
@@ -2476,7 +2533,7 @@ msgstr "Videomass conferma"
 
 #: ../videomass3/vdms_panels/choose_topic.py:171
 msgid "ERROR: {}"
-msgstr ""
+msgstr "ERRORE: {}"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:91
 msgid "Default"
@@ -2500,7 +2557,7 @@ msgstr "Inserire il Codice Formato:"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:142
 msgid "Merge with:"
-msgstr ""
+msgstr "Unisci con:"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:150
 msgid "Download all playlist"
@@ -2557,6 +2614,9 @@ msgid ""
 "Enter the media \"Format Code\" here. You can specify multiple format codes "
 "by using slash, e.g. 22/17/18 . This box cannot left empty."
 msgstr ""
+"Immettere qui il “Codice formato” multimediale. Puoi specificare più codici "
+"di formato usando la barra, ad es. 22/17/18. Questa casella non può essere "
+"lasciata vuota."
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:195
 msgid ""
@@ -2564,12 +2624,17 @@ msgid ""
 "is optional. You can specify multiple format codes by using slash, e.g. "
 "140/130/151 ."
 msgstr ""
+"Per unire audio/video utilizzare questa casella per indicare un secondo "
+"“Codice formato”; questo è facoltativo. Puoi specificare più codici di "
+"formato usando la barra, ad es. 140/130/151."
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:334
 msgid ""
 "\"Show more\" is enabled when Videomass uses youtube-dl only as imported "
 "library."
 msgstr ""
+"“Mostra altro” è abilitato quando Videomass utilizza youtube-dl solo come "
+"libreria importata."
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:453
 msgid ""
@@ -2938,6 +3003,10 @@ msgid ""
 "To resolve this problem install: Microsoft Visual C++ 2010 Redistributable "
 "Package (x86)"
 msgstr ""
+"\n"
+"Richiede MSVCR100.dll\n"
+"Per risolvere il problema installare: Microsoft Visual C++ 2010 "
+"Redistributable Package (x86)"
 
 #: ../videomass3/vdms_threads/ydl_executable.py:52
 msgid "Is 'youtube-dl' installed on your system?"
@@ -2949,6 +3018,9 @@ msgid ""
 "To resolve this problem install: Microsoft Visual C++ 2010 Redistributable "
 "Package (x86)"
 msgstr ""
+"Richiede MSVCR100.dll\n"
+"Per risolvere il problema installare: Microsoft Visual C++ 2010 "
+"Redistributable Package (x86)"
 
 #~ msgid ""
 #~ "{}\n"
