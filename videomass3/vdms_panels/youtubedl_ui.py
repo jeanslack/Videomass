@@ -331,8 +331,8 @@ class Downloader(wx.Panel):
 
         """
         if pylibYdl is not None:  # YuotubeDL is not used as module
-            wx.MessageBox(_('"Show more" is enabled when Videomass '
-                            'uses youtube-dl only as imported library.'),
+            wx.MessageBox(_('"Show more" only is enabled when Videomass '
+                            'uses youtube-dl as imported library.'),
                           'Videomass', wx.ICON_INFORMATION)
             return
 

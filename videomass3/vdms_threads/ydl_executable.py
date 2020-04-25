@@ -105,7 +105,7 @@ class Ydl_DL_Exec(Thread):
         ssl = '--no-check-certificate' if OS == 'Windows' else ''
 
         for url in self.urls:
-            cmd = ('{0} {1} --newline --ignore-errors -o '
+            cmd = ('"{0}" {1} --newline --ignore-errors -o '
                    '"{2}/{3}" {4} --ignore-config --restrict-filenames '
                    '"{5}" --ffmpeg-location "{6}"'.format(execYdl,
                                                           ssl,
@@ -224,9 +224,10 @@ class Ydl_EI_Exec(Thread):
         Subprocess initialize thread.
         """
         ssl = '--no-check-certificate' if OS == 'Windows' else ''
-        cmd = ('{0} {1} --newline --ignore-errors --ignore-config '
-               '--restrict-filenames -F "{2}"'.format(execYdl, ssl, self.url)
-               )
+        cmd = ('"{0}" {1} --newline --ignore-errors --ignore-config '
+               '--restrict-filenames -F "{2}"'.format(execYdl, 
+                                                      ssl, 
+                                                      self.url))
         if not OS == 'Windows':
             cmd = shlex.split(cmd)
             info = None

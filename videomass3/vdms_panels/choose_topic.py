@@ -55,10 +55,11 @@ if OS == 'Windows':
              '(x86)\n   for major information visit http://ytdl-org.'
              'github.io/youtube-dl/download.html\n\n'
              'Do you want to download youtube-dl now?')).format(pylibYdl)
+             
 elif OS == 'Darwin':
     msg = (_('{}\n\n'
              'To download video from YouTube and other sites, Videomass needs '
-             'an updated\nversion of youtube-dl from https://github.com/ytdl-'
+             'an updated version of youtube-dl from https://github.com/ytdl-'
              'org/youtube-dl/releases\n\n'
              'Do you want to download youtube-dl now?')).format(pylibYdl)
 else:

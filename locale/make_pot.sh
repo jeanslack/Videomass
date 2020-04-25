@@ -3,6 +3,7 @@
 
 CWD=$(pwd)
 
+# macos use /usr/local/Cellar/gettext/0.20.1/bin/xgettext
 
 xgettext -d videomass "../videomass3/Videomass3.py" \
 "../videomass3/vdms_dialogs/audiodialogs.py" \

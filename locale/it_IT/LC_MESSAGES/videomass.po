@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-25 12:19+0200\n"
-"PO-Revision-Date: 2020-04-25 12:21+0200\n"
+"POT-Creation-Date: 2020-04-25 19:04+0200\n"
+"PO-Revision-Date: 2020-04-25 19:09+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../videomass3/Videomass3.py:92
@@ -31,7 +31,7 @@ msgstr ""
 "\n"
 "Spiacente, impossibile continuare.."
 
-#: ../videomass3/Videomass3.py:122
+#: ../videomass3/Videomass3.py:123
 msgid "youtube-dl is installed but not writable for updates."
 msgstr "youtube-dl è installato ma non scrivibile per gli aggiornamenti."
 
@@ -1323,9 +1323,9 @@ msgstr "Videomass: Errore sulla cartella di destinazione"
 msgid "File does not exist or not a valid file:  %s"
 msgstr "File invalido o non esistente:  %s"
 
-#: ../videomass3/vdms_io/IO_tools.py:121 ../videomass3/vdms_io/IO_tools.py:243
-#: ../videomass3/vdms_io/IO_tools.py:261 ../videomass3/vdms_io/IO_tools.py:279
-#: ../videomass3/vdms_io/IO_tools.py:299 ../videomass3/vdms_io/IO_tools.py:344
+#: ../videomass3/vdms_io/IO_tools.py:121 ../videomass3/vdms_io/IO_tools.py:246
+#: ../videomass3/vdms_io/IO_tools.py:264 ../videomass3/vdms_io/IO_tools.py:282
+#: ../videomass3/vdms_io/IO_tools.py:302 ../videomass3/vdms_io/IO_tools.py:347
 msgid "Videomass - Loading..."
 msgstr "Caricamento in corso..."
 
@@ -1339,11 +1339,11 @@ msgstr ""
 "Attendi....\n"
 "Analisi livello di picco.\n"
 
-#: ../videomass3/vdms_io/IO_tools.py:220
+#: ../videomass3/vdms_io/IO_tools.py:223
 msgid "Output log has not been created yet."
 msgstr "Il log di output non è stato ancora creato."
 
-#: ../videomass3/vdms_io/IO_tools.py:244 ../videomass3/vdms_io/IO_tools.py:262
+#: ../videomass3/vdms_io/IO_tools.py:247 ../videomass3/vdms_io/IO_tools.py:265
 msgid ""
 "\n"
 "Wait....\n"
@@ -1353,7 +1353,7 @@ msgstr ""
 "Attendi....\n"
 "Recupero i dati richiesti.\n"
 
-#: ../videomass3/vdms_io/IO_tools.py:280
+#: ../videomass3/vdms_io/IO_tools.py:283
 msgid ""
 "\n"
 "Wait....\n"
@@ -1363,7 +1363,7 @@ msgstr ""
 "Attendi….\n"
 "Verifica aggiornamenti.\n"
 
-#: ../videomass3/vdms_io/IO_tools.py:317
+#: ../videomass3/vdms_io/IO_tools.py:320
 msgid ""
 "\n"
 "Wait....\n"
@@ -1373,7 +1373,7 @@ msgstr ""
 "Attendi....\n"
 "Aggiornamento di youtube-dl\n"
 
-#: ../videomass3/vdms_io/IO_tools.py:319
+#: ../videomass3/vdms_io/IO_tools.py:322
 msgid ""
 "\n"
 "Wait....\n"
@@ -1825,12 +1825,12 @@ msgid "Show More"
 msgstr "Mostra Altro"
 
 #: ../videomass3/vdms_main/main_frame.py:1240
-#: ../videomass3/vdms_panels/choose_topic.py:98
+#: ../videomass3/vdms_panels/choose_topic.py:99
 msgid "Audio/Video Conversions"
 msgstr "Conversioni Audio/Video"
 
 #: ../videomass3/vdms_main/main_frame.py:1272
-#: ../videomass3/vdms_panels/choose_topic.py:100
+#: ../videomass3/vdms_panels/choose_topic.py:101
 msgid "Presets Manager"
 msgstr "Gestionale Presets"
 
@@ -2462,11 +2462,11 @@ msgstr ""
 "\n"
 "Vuoi scaricare youtube-dl ora?"
 
-#: ../videomass3/vdms_panels/choose_topic.py:59
+#: ../videomass3/vdms_panels/choose_topic.py:60
 msgid ""
 "{}\n"
 "\n"
-"To download video from YouTube and other sites, Videomass needs an updated\n"
+"To download video from YouTube and other sites, Videomass needs an updated "
 "version of youtube-dl from https://github.com/ytdl-org/youtube-dl/releases\n"
 "\n"
 "Do you want to download youtube-dl now?"
@@ -2474,12 +2474,12 @@ msgstr ""
 "{}\n"
 "\n"
 "Per scaricare video da YouTube e altri siti, Videomass necessita di una "
-"versione\n"
-"aggiornata di youtube-dl da https://github.com/ytdl-org/youtube-dl/releases\n"
+"versione aggiornata di youtube-dl da https://github.com/ytdl-org/youtube-dl/"
+"releases\n"
 "\n"
 "Vuoi scaricare youtube-dl ora?"
 
-#: ../videomass3/vdms_panels/choose_topic.py:65
+#: ../videomass3/vdms_panels/choose_topic.py:66
 msgid ""
 "{}\n"
 "\n"
@@ -2499,7 +2499,7 @@ msgstr ""
 "\n"
 "Videomass consiglia pip per installare youtube-dl e mantenerlo aggiornato."
 
-#: ../videomass3/vdms_panels/choose_topic.py:70
+#: ../videomass3/vdms_panels/choose_topic.py:71
 msgid ""
 "{}\n"
 "\n"
@@ -2517,7 +2517,7 @@ msgstr ""
 "\n"
 "Vuoi aggiornare localmente youtube-dl ora?"
 
-#: ../videomass3/vdms_panels/choose_topic.py:75
+#: ../videomass3/vdms_panels/choose_topic.py:76
 msgid ""
 "{}\n"
 "\n"
@@ -2527,28 +2527,28 @@ msgstr ""
 "\n"
 "youtube-dl: nessuna libreria o file eseguibile trovato."
 
-#: ../videomass3/vdms_panels/choose_topic.py:89
+#: ../videomass3/vdms_panels/choose_topic.py:90
 msgid "Welcome to Videomass"
 msgstr "Benvenuto su Videomass"
 
-#: ../videomass3/vdms_panels/choose_topic.py:99
+#: ../videomass3/vdms_panels/choose_topic.py:100
 msgid "Download from YouTube"
 msgstr "Scarica da YouTube"
 
-#: ../videomass3/vdms_panels/choose_topic.py:125
+#: ../videomass3/vdms_panels/choose_topic.py:126
 msgid "Download additional presets or contribute to making new ones "
 msgstr "Scarica presets aggiuntivi o contribuisci a crearne di nuovi "
 
-#: ../videomass3/vdms_panels/choose_topic.py:128
+#: ../videomass3/vdms_panels/choose_topic.py:129
 msgid "Additional Presets"
 msgstr "Presets Aggiuntivi"
 
-#: ../videomass3/vdms_panels/choose_topic.py:166
-#: ../videomass3/vdms_panels/choose_topic.py:175
+#: ../videomass3/vdms_panels/choose_topic.py:167
+#: ../videomass3/vdms_panels/choose_topic.py:176
 msgid "Videomass confirmation"
 msgstr "Videomass conferma"
 
-#: ../videomass3/vdms_panels/choose_topic.py:171
+#: ../videomass3/vdms_panels/choose_topic.py:172
 msgid "ERROR: {}"
 msgstr "ERRORE: {}"
 
@@ -2647,10 +2647,10 @@ msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:334
 msgid ""
-"\"Show more\" is enabled when Videomass uses youtube-dl only as imported "
+"\"Show more\" only is enabled when Videomass uses youtube-dl as imported "
 "library."
 msgstr ""
-"“Mostra altro” è abilitato quando Videomass utilizza youtube-dl solo come "
+"“Mostra altro” è abilitato solo quando Videomass utilizza youtube-dl come "
 "libreria importata."
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:453
@@ -2718,10 +2718,10 @@ msgstr " ...Completato\n"
 #: ../videomass3/vdms_panels/long_processing_task.py:361
 msgid ""
 "\n"
-" Sorry, tasks failed !\n"
+" Sorry, task failed !\n"
 msgstr ""
 "\n"
-" Spiacenti, attività non riuscite!\n"
+" Spiacente, attività non riuscita !\n"
 
 #: ../videomass3/vdms_panels/long_processing_task.py:366
 msgid ""

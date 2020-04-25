@@ -358,7 +358,7 @@ class Logging_Console(wx.Panel):
         """
         if self.ERROR is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
-            self.OutText.AppendText(_('\n Sorry, tasks failed !\n'))
+            self.OutText.AppendText(_('\n Sorry, task failed !\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         elif self.ABORT is True:
