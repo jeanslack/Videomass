@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-25 19:04+0200\n"
-"PO-Revision-Date: 2020-04-25 19:10+0200\n"
+"POT-Creation-Date: 2020-04-26 00:16+0200\n"
+"PO-Revision-Date: 2020-04-26 00:20+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../videomass3/Videomass3.py:92
 #, python-brace-format
@@ -26,8 +26,8 @@ msgid ""
 "Sorry, cannot continue.."
 msgstr ""
 
-#: ../videomass3/Videomass3.py:123
-msgid "youtube-dl is installed but not writable for updates."
+#: ../videomass3/Videomass3.py:120
+msgid "youtube-dl is installed but not writable by user for updates."
 msgstr ""
 
 #: ../videomass3/vdms_dialogs/audiodialogs.py:249
@@ -1149,50 +1149,50 @@ msgstr ""
 msgid "Videomass: Output folder error"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:74 ../videomass3/vdms_io/IO_tools.py:89
+#: ../videomass3/vdms_io/IO_tools.py:72 ../videomass3/vdms_io/IO_tools.py:87
 #, python-format
 msgid "File does not exist or not a valid file:  %s"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:121 ../videomass3/vdms_io/IO_tools.py:246
-#: ../videomass3/vdms_io/IO_tools.py:264 ../videomass3/vdms_io/IO_tools.py:282
-#: ../videomass3/vdms_io/IO_tools.py:302 ../videomass3/vdms_io/IO_tools.py:347
+#: ../videomass3/vdms_io/IO_tools.py:119 ../videomass3/vdms_io/IO_tools.py:244
+#: ../videomass3/vdms_io/IO_tools.py:262 ../videomass3/vdms_io/IO_tools.py:280
+#: ../videomass3/vdms_io/IO_tools.py:300 ../videomass3/vdms_io/IO_tools.py:330
 msgid "Videomass - Loading..."
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:122
+#: ../videomass3/vdms_io/IO_tools.py:120
 msgid ""
 "\n"
 "Wait....\n"
 "Audio peak analysis.\n"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:223
+#: ../videomass3/vdms_io/IO_tools.py:221
 msgid "Output log has not been created yet."
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:247 ../videomass3/vdms_io/IO_tools.py:265
+#: ../videomass3/vdms_io/IO_tools.py:245 ../videomass3/vdms_io/IO_tools.py:263
 msgid ""
 "\n"
 "Wait....\n"
 "Retrieving required data.\n"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:283
+#: ../videomass3/vdms_io/IO_tools.py:281
 msgid ""
 "\n"
 "Wait....\n"
 "Check for update.\n"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:320
+#: ../videomass3/vdms_io/IO_tools.py:316
 msgid ""
 "\n"
 "Wait....\n"
 "Upgrading youtube-dl.\n"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:322
+#: ../videomass3/vdms_io/IO_tools.py:318
 msgid ""
 "\n"
 "Wait....\n"
@@ -1226,8 +1226,8 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:125
-#: ../videomass3/vdms_main/main_frame.py:1255
-#: ../videomass3/vdms_main/main_frame.py:1286
+#: ../videomass3/vdms_main/main_frame.py:1254
+#: ../videomass3/vdms_main/main_frame.py:1285
 msgid "Multimedia Streams"
 msgstr ""
 
@@ -1523,7 +1523,7 @@ msgid "You are using youtube-dl version {}"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:872
-#: ../videomass3/vdms_main/main_frame.py:956
+#: ../videomass3/vdms_main/main_frame.py:955
 #, python-brace-format
 msgid ""
 "ERROR: {0}\n"
@@ -1550,73 +1550,73 @@ msgid ""
 "Updating youtube-dl"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:939
+#: ../videomass3/vdms_main/main_frame.py:938
 msgid "youtube-dl is already up-to-date {}"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:950
+#: ../videomass3/vdms_main/main_frame.py:949
 #, python-brace-format
 msgid "Successful! youtube-dl is up-to-date ({0})"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1063
+#: ../videomass3/vdms_main/main_frame.py:1062
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
 "from <https://pypi.org/project/videomass/>"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1069
+#: ../videomass3/vdms_main/main_frame.py:1068
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1074
+#: ../videomass3/vdms_main/main_frame.py:1073
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1107
+#: ../videomass3/vdms_main/main_frame.py:1106
 msgid "Start"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1142
-#: ../videomass3/vdms_main/main_frame.py:1160
+#: ../videomass3/vdms_main/main_frame.py:1141
+#: ../videomass3/vdms_main/main_frame.py:1159
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1152
+#: ../videomass3/vdms_main/main_frame.py:1151
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1184
+#: ../videomass3/vdms_main/main_frame.py:1183
 msgid "Add Files"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1203
+#: ../videomass3/vdms_main/main_frame.py:1202
 msgid "Add URLs"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1220
+#: ../videomass3/vdms_main/main_frame.py:1219
 msgid "Youtube Downloader"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1224
+#: ../videomass3/vdms_main/main_frame.py:1223
 msgid "Show More"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1240
-#: ../videomass3/vdms_panels/choose_topic.py:99
+#: ../videomass3/vdms_main/main_frame.py:1239
+#: ../videomass3/vdms_panels/choose_topic.py:95
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1272
-#: ../videomass3/vdms_panels/choose_topic.py:101
+#: ../videomass3/vdms_main/main_frame.py:1271
+#: ../videomass3/vdms_panels/choose_topic.py:97
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1325
+#: ../videomass3/vdms_main/main_frame.py:1324
 msgid "Processing Status - Videomass"
 msgstr ""
 
@@ -2139,52 +2139,37 @@ msgid ""
 "To download video from YouTube and other sites, Videomass needs an updated "
 "version of youtube-dl .\n"
 "\n"
-"Please use a package manager to install it.\n"
-"\n"
-"Videomass recommends pip to install youtube-dl and keep it updated."
+"Videomass recommends pip to install youtube-dl and keep it updated by the "
+"user. If you can not, do you want to locally download an updated copy of "
+"youtube-dl now?"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:71
-msgid ""
-"{}\n"
-"\n"
-"To download video from YouTube and other sites, Videomass needs an updated "
-"version of youtube-dl from:\n"
-"<https://github.com/ytdl-org/youtube-dl/releases>\n"
-"\n"
-"Do you want to local update youtube-dl now?"
-msgstr ""
-
-#: ../videomass3/vdms_panels/choose_topic.py:76
+#: ../videomass3/vdms_panels/choose_topic.py:72
 msgid ""
 "{}\n"
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:90
+#: ../videomass3/vdms_panels/choose_topic.py:86
 msgid "Welcome to Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:100
+#: ../videomass3/vdms_panels/choose_topic.py:96
 msgid "Download from YouTube"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:126
+#: ../videomass3/vdms_panels/choose_topic.py:122
 msgid "Download additional presets or contribute to making new ones "
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:129
+#: ../videomass3/vdms_panels/choose_topic.py:125
 msgid "Additional Presets"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:167
-#: ../videomass3/vdms_panels/choose_topic.py:176
+#: ../videomass3/vdms_panels/choose_topic.py:159
+#: ../videomass3/vdms_panels/choose_topic.py:164
 msgid "Videomass confirmation"
-msgstr ""
-
-#: ../videomass3/vdms_panels/choose_topic.py:172
-msgid "ERROR: {}"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:91

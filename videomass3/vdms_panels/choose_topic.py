@@ -55,7 +55,7 @@ if OS == 'Windows':
              '(x86)\n   for major information visit http://ytdl-org.'
              'github.io/youtube-dl/download.html\n\n'
              'Do you want to download youtube-dl now?')).format(pylibYdl)
-             
+
 elif OS == 'Darwin':
     msg = (_('{}\n\n'
              'To download video from YouTube and other sites, Videomass needs '
@@ -63,15 +63,11 @@ elif OS == 'Darwin':
              'org/youtube-dl/releases\n\n'
              'Do you want to download youtube-dl now?')).format(pylibYdl)
 else:
-    msg1 = (_('{}\n\nTo download video from YouTube and other sites, '
+    msg = (_('{}\n\nTo download video from YouTube and other sites, '
               'Videomass needs an updated version of youtube-dl .\n\n'
-              'Please use a package manager to install it.\n\n'
               'Videomass recommends pip to install youtube-dl and keep it '
-              'updated.')).format(pylibYdl)
-    msg2 = (_('{}\n\nTo download video from YouTube and other sites, '
-              'Videomass needs an updated version of youtube-dl from:\n'
-              '<https://github.com/ytdl-org/youtube-dl/releases>\n\n'
-              'Do you want to local update youtube-dl now?')).format(pylibYdl)
+              'updated by the user. If you can not, do you want to locally '
+              'download an updated copy of youtube-dl now?')).format(pylibYdl)
 
     msgerr = _('{}\n\nyoutube-dl: no library or executable '
                'found .').format(pylibYdl)
@@ -155,11 +151,7 @@ class Choose_Topic(wx.Panel):
             self.parent.Text_import(self, 'Youtube Downloader')
             return
         elif execYdl:
-            filedir = os.path.basename(os.path.dirname(execYdl))
-            if filedir == 'youtube-dl' and os.path.exists(execYdl):
-                self.parent.Text_import(self, 'Youtube Downloader')
-                return
-            elif filedir == 'videomass' and os.path.exists(execYdl):
+            if os.path.isfile(execYdl):
                 self.parent.Text_import(self, 'Youtube Downloader')
                 return
             else:
@@ -168,12 +160,8 @@ class Choose_Topic(wx.Panel):
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
-                elif OS in['Linux', 'FreeBsd'] and filedir == 'youtube-dl':
-                    wx.MessageBox(_('ERROR: {}').format(msg1), 'Videomass',
-                                  wx.ICON_ERROR, self)
-                    return
                 else:
-                    if wx.MessageBox(msg2, _("Videomass confirmation"),
+                    if wx.MessageBox(msg, _("Videomass confirmation"),
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return

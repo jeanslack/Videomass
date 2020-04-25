@@ -914,7 +914,6 @@ class MainFrame(wx.Frame):
         """
         waitmsg = _('\nWait....\nUpdating youtube-dl')
 
-        # if pylibYdl is not None:  # not youtube-dl as pylibrary
         if os.path.exists(execYdl) and pylibYdl is not None:
             if os.path.basename(execYdl) == 'youtube-dl':  # not youtube-dl.exe
                 update = IO_tools.youtubedl_update([execYdl, '--update'],
@@ -927,7 +926,7 @@ class MainFrame(wx.Frame):
                     wx.MessageBox("\n%s" % update[0], 'Videomass',
                                   wx.ICON_INFORMATION, self)
                     return
-            else:
+            else:  # youtube-dl.exe
                 url = 'https://yt-dl.org/update/LATEST_VERSION'
                 latest = IO_tools.youtubedl_latest(url)
                 if latest[1]:  # failed

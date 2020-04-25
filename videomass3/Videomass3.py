@@ -113,15 +113,12 @@ class Videomass(wx.App):
             if writable:
                 exe = ('youtube-dl.exe' if self.OS == 'Windows' else
                        'youtube-dl')
-        elif shutil.which('python'):  # need gzip archive
-            exe = ('youtube-dl.exe' if self.OS == 'Windows' else
-                   'youtube-dl/youtube-dl')
         else:  # only with Videomass.exe or Videomass.app
-            exe = 'youtube-dl.exe' if self.OS == 'Windows' else False
+            exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
 
         if not writable:
             self.pylibYdl = _('youtube-dl is installed but not '
-                              'writable for updates.')
+                              'writable by user for updates.')
             self.execYdl = os.path.join(self.DIRconf, 'youtube-dl')
         else:
             try:
