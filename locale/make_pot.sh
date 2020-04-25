@@ -26,7 +26,7 @@ xgettext -d videomass "../videomass3/Videomass3.py" \
 "../videomass3/vdms_main/main_frame.py" \
 "../videomass3/vdms_panels/av_conversions.py" \
 "../videomass3/vdms_panels/choose_topic.py" \
-"../videomass3/vdms_panels/downloader.py" \
+"../videomass3/vdms_panels/youtubedl_ui.py" \
 "../videomass3/vdms_panels/filedrop.py" \
 "../videomass3/vdms_panels/long_processing_task.py" \
 "../videomass3/vdms_panels/presets_manager.py" \
@@ -38,7 +38,8 @@ xgettext -d videomass "../videomass3/Videomass3.py" \
 "../videomass3/vdms_threads/two_pass_EBU.py" \
 "../videomass3/vdms_threads/two_pass.py" \
 "../videomass3/vdms_threads/volumedetect.py" \
-"../videomass3/vdms_threads/ydl_extract_info.py" \
+"../videomass3/vdms_threads/ydl_executable.py" \
+"../videomass3/vdms_threads/youtubedlupdater.py" \
 
 
 

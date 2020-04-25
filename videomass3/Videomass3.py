@@ -40,7 +40,7 @@ from videomass3.vdms_sys import app_const as appC
 
 class Videomass(wx.App):
     """
-    Check for the essentials Before starting the main frame
+    Check for the essentials Before starting the Videomass main frame
 
     """
     def __init__(self, redirect=True, filename=None):
@@ -48,10 +48,14 @@ class Videomass(wx.App):
         The following attributes will be used in some class
         with wx.GetApp()
         -------
+        attribute definition:
         self.DIRconf > location of the configuration directory
-        self.FILEconf > location and type of conf. file (Windows or Unix?)
-        self.WORKdir > location of the current program directory
+        self.FILEconf > location videomass.conf (Windows or Unix?)
+        self.WORKdir > (PWD) location of the current program directory
         self.OS > operating system name
+        self.pylibYdl > if None youtube-dl is used as library
+        self.execYdl > if False is not used a local executable
+        self.userpath > set user path folder for file destination
 
         """
         self.DIRconf = None
@@ -73,9 +77,8 @@ class Videomass(wx.App):
 
     def OnInit(self):
         """
-        This is bootstrap interface. The 'setui' calls the function that
-        prepares the environment configuration. The 'setui' take all
-        values of the file configuration.
+        This is bootstrap interface. ``setui`` get data
+        of the file configuration and set the environment.
 
         """
         setui = system_check()  # user-space and interface settings
@@ -92,10 +95,10 @@ class Videomass(wx.App):
 
         icons = Appearance(setui[3], setui[4][11])  # set appearance instance
         pathicons = icons.icons_set()  # get paths icons
-        self.OS = setui[0]  # set OS type
-        self.FILEconf = setui[6]  # set file conf. pathname
-        self.WORKdir = setui[7]  # set PWD current dir
-        self.DIRconf = setui[8]  # set location dir conf pathname
+        self.OS = setui[0]
+        self.FILEconf = setui[6]
+        self.WORKdir = setui[7]
+        self.DIRconf = setui[8]
         self.ffmpeg_loglev = setui[4][4]
         self.ffplay_loglev = setui[4][3]
         self.ffmpeg_check = setui[4][5]
@@ -104,23 +107,32 @@ class Videomass(wx.App):
         self.threads = setui[4][2]
         self.userpath = None if setui[4][1] == 'none' else setui[4][1]
         # ----- youtube-dl
-        if shutil.which('youtube-dl'):  # need youtube-dl only
-            exe = 'youtube-dl'
-        elif shutil.which('python'):  # need all youtube-dl package
-            ydl = 'youtube-dl/youtube-dl'
-            exe = 'youtube-dl.exe' if self.OS == 'Windows' else ydl
-        else:
+        writable = True
+        if shutil.which('youtube-dl'):  # need application/octet-stream
+            writable = os.access(shutil.which('youtube-dl'), os.W_OK)
+            if writable:
+                exe = 'youtube-dl'
+        elif shutil.which('python'):  # need gzip archive
+            exe = ('youtube-dl.exe' if self.OS == 'Windows' else
+                   'youtube-dl/youtube-dl')
+        else:  # only with Videomass.exe or Videomass.app
             exe = 'youtube-dl.exe' if self.OS == 'Windows' else False
-        try:
-            from youtube_dl import YoutubeDL
-            self.execYdl = False
-        except (ModuleNotFoundError, ImportError) as nomodule:
-            self.pylibYdl = nomodule
-            exe = os.path.join(self.DIRconf, exe)
-            if exe:
-                self.execYdl = exe
+
+        if not writable:
+            self.pylibYdl = _('youtube-dl is installed but not '
+                              'writable for updates.')
+            self.execYdl = os.path.join(self.DIRconf, 'youtube-dl')
+        else:
+            try:
+                from youtube_dl import YoutubeDL
+                self.execYdl = False
+            except (ModuleNotFoundError, ImportError) as nomodule:
+                self.pylibYdl = nomodule
+                exe = os.path.join(self.DIRconf, exe)
+                if exe:
+                    self.execYdl = exe
         # ----- ffmpeg
-        if setui[0] == 'Darwin':
+        if setui[0] == 'Darwin':  # ffmpeg on MacOs
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"
                                    "/bin:/usr/sbin:/sbin"
                                    )
@@ -138,7 +150,7 @@ class Videomass(wx.App):
                 self.ffprobe_url = setui[4][8]
                 self.ffplay_url = setui[4][10]
 
-        elif setui[0] == 'Windows':
+        elif setui[0] == 'Windows':  # ffmpeg on MS-Windows
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
@@ -153,7 +165,7 @@ class Videomass(wx.App):
                 self.ffprobe_url = setui[4][8]
                 self.ffplay_url = setui[4][10]
 
-        else:  # is Linux
+        else:  # ffmpeg on Linux
             self.ffmpeg_url = setui[4][6]
             self.ffprobe_url = setui[4][8]
             self.ffplay_url = setui[4][10]

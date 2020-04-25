@@ -128,10 +128,10 @@ class Command_Execution(Thread):
         else:
             if p.returncode:  # if returncode == 1
                 if not out[0] and not out[1] and OS == 'Windows':
-                    self.status = ('Require MSVCR100.dll\nTo resolve this '
-                                   'problem install: Microsoft Visual C++ '
-                                   '2010 Redistributable Package (x86)',
-                                   'error')
+                    self.status = (_('Requires MSVCR100.dll\nTo resolve this '
+                                    'problem install: Microsoft Visual C++ '
+                                    '2010 Redistributable Package (x86)',
+                                    'error'))
                 else:
                     self.status = (out[0], 'error')
             else:

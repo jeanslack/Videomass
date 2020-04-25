@@ -139,7 +139,7 @@ class Downloader(wx.Panel):
                                          size=(50, -1)
                                          )
         self.txt_mergecode.Disable()
-        self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge With:')))
+        self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge with:')))
         self.stext2.Disable()
         grid_v.Add(self.stext2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grid_v.Add(self.txt_mergecode, 0, wx.ALL, 5)
@@ -331,7 +331,8 @@ class Downloader(wx.Panel):
 
         """
         if pylibYdl is not None:  # YuotubeDL is not used as module
-            wx.MessageBox(_('Sorry, This feature is disabled.'),
+            wx.MessageBox(_('"Show more" is enabled when Videomass '
+                            'uses youtube-dl only as imported library.'),
                           'Videomass', wx.ICON_INFORMATION)
             return
 

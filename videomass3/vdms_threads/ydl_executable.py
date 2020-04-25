@@ -41,13 +41,13 @@ execYdl = get.execYdl
 
 if not OS == 'Windows':
     import shlex
-    linemsg = 'Unrecognized error'
+    linemsg = _('Unrecognized error')
 else:
     if os.path.isfile(execYdl):
-        linemsg = ('\nRequire MSVCR100.dll\nTo resolve this problem install: '
-                   'Microsoft Visual C++ 2010 Redistributable Package (x86)')
+        linemsg = (_('\nRequires MSVCR100.dll\nTo resolve this problem install: '
+                    'Microsoft Visual C++ 2010 Redistributable Package (x86)'))
     else:
-        linemsg = 'Unrecognized error'
+        linemsg = _('Unrecognized error')
 
 executable_not_found_msg = _("Is 'youtube-dl' installed on your system?")
 

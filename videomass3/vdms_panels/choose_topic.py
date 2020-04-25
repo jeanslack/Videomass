@@ -39,38 +39,41 @@ pylibYdl = get.pylibYdl
 execYdl = get.execYdl
 DIRconf = get.DIRconf
 
-msgready = _('Successful! \n\n'
+msgready = (_('Successful! \n\n'
              'youtube-dl is ready\n\n'
              'Important: youtube-dl is very often updated, remember to '
              'check for updates weekly.\nYou can use the dedicated functions '
              'in the menu bar of Videomass: Tools/youtube-dl" .\n\n'
-             'Do you want to close Videomass now and restart it manually?')
+             'Do you want to close Videomass now and restart it manually?'))
 
 if OS == 'Windows':
-    msg = _('{}\n\n'
-            'To download video from YouTube and other sites, Videomass needs '
-            'an updated\nversion of youtube-dl.exe from https://github.com/'
-            'ytdl-org/youtube-dl/releases\n\n'
-            '- Require: Microsoft Visual C++ 2010 Redistributable Package '
-            '(x86)\n   for major information visit http://ytdl-org.'
-            'github.io/youtube-dl/download.html\n\n'
-            'Do you want to download youtube-dl now?',
-            'Videomass.').format(pylibYdl)
+    msg = (_('{}\n\n'
+             'To download video from YouTube and other sites, Videomass needs '
+             'an updated\nversion of youtube-dl.exe from https://github.com/'
+             'ytdl-org/youtube-dl/releases\n\n'
+             '- Requires: Microsoft Visual C++ 2010 Redistributable Package '
+             '(x86)\n   for major information visit http://ytdl-org.'
+             'github.io/youtube-dl/download.html\n\n'
+             'Do you want to download youtube-dl now?')).format(pylibYdl)
 elif OS == 'Darwin':
-    msg = _('{}\n\n'
-            'To download video from YouTube and other sites, Videomass needs '
-            'an updated\nversion of youtube-dl from  https://github.com/ytdl-'
-            'org/youtube-dl/releases\n\n'
-            'Do you want to download youtube-dl now?',
-            'Videomass.').format(pylibYdl)
+    msg = (_('{}\n\n'
+             'To download video from YouTube and other sites, Videomass needs '
+             'an updated\nversion of youtube-dl from https://github.com/ytdl-'
+             'org/youtube-dl/releases\n\n'
+             'Do you want to download youtube-dl now?')).format(pylibYdl)
 else:
-    msg = _('{}\n\nTo download video from YouTube and other sites, Videomass '
-            'needs an updated version of youtube-dl .\n\n'
-            'Please use a package manager to install it.\n\n'
-            'Videomass recommends pip to install youtube-dl and keep it '
-            'updated.').format(pylibYdl)
+    msg1 = (_('{}\n\nTo download video from YouTube and other sites, '
+              'Videomass needs an updated version of youtube-dl .\n\n'
+              'Please use a package manager to install it.\n\n'
+              'Videomass recommends pip to install youtube-dl and keep it '
+              'updated.')).format(pylibYdl)
+    msg2 = (_('{}\n\nTo download video from YouTube and other sites, '
+              'Videomass needs an updated version of youtube-dl from:\n'
+              '<https://github.com/ytdl-org/youtube-dl/releases>\n\n'
+              'Do you want to local update youtube-dl now?')).format(pylibYdl)
 
-    msgerr = _('{}\n\nPlease install "youtube-dl".').format(pylibYdl)
+    msgerr = _('{}\n\nyoutube-dl: no library or executable '
+               'found .').format(pylibYdl)
 
 
 class Choose_Topic(wx.Panel):
@@ -160,14 +163,19 @@ class Choose_Topic(wx.Panel):
                 return
             else:
                 if OS in ['Windows', 'Darwin']:
-                    if wx.MessageBox(msg, _("Videomass: Please confirm"),
+                    if wx.MessageBox(msg, _("Videomass confirmation"),
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
-                else:
-                    wx.MessageBox(_('ERROR: {}').format(msg), 'Videomass',
+                elif OS in['Linux', 'FreeBsd'] and filedir == 'youtube-dl':
+                    wx.MessageBox(_('ERROR: {}').format(msg1), 'Videomass',
                                   wx.ICON_ERROR, self)
                     return
+                else:
+                    if wx.MessageBox(msg2, _("Videomass confirmation"),
+                                     wx.ICON_QUESTION |
+                                     wx.YES_NO, self) == wx.NO:
+                        return
                 latest = self.parent.ydl_latest(self, msgbox=False)
                 if latest[1]:
                     return
@@ -176,10 +184,10 @@ class Choose_Topic(wx.Panel):
                                                          execYdl)
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]),
-                                  "Videomass: error", wx.ICON_ERROR, self)
+                                  "Videomass error", wx.ICON_ERROR, self)
                     return
                 else:
-                    if wx.MessageBox(msgready, _("Videomass: question"),
+                    if wx.MessageBox(msgready, "Videomass",
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
@@ -187,8 +195,7 @@ class Choose_Topic(wx.Panel):
                 return
 
         elif execYdl is False:
-            wx.MessageBox(_('ERROR: {0}\n\n{1}').format(pylibYdl, msgerr),
-                          'Videomass', wx.ICON_ERROR)
+            wx.MessageBox(msgerr, 'Videomass error', wx.ICON_ERROR)
             return
     # ------------------------------------------------------------------#
 
