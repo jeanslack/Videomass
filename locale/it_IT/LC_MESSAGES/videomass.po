@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-25 09:49+0200\n"
-"PO-Revision-Date: 2020-04-25 10:53+0200\n"
+"POT-Creation-Date: 2020-04-25 12:19+0200\n"
+"PO-Revision-Date: 2020-04-25 12:21+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../videomass3/Videomass3.py:92
@@ -1325,7 +1325,7 @@ msgstr "File invalido o non esistente:  %s"
 
 #: ../videomass3/vdms_io/IO_tools.py:121 ../videomass3/vdms_io/IO_tools.py:243
 #: ../videomass3/vdms_io/IO_tools.py:261 ../videomass3/vdms_io/IO_tools.py:279
-#: ../videomass3/vdms_io/IO_tools.py:299 ../videomass3/vdms_io/IO_tools.py:345
+#: ../videomass3/vdms_io/IO_tools.py:299 ../videomass3/vdms_io/IO_tools.py:344
 msgid "Videomass - Loading..."
 msgstr "Caricamento in corso..."
 
@@ -1363,16 +1363,25 @@ msgstr ""
 "Attendi….\n"
 "Verifica aggiornamenti.\n"
 
-#: ../videomass3/vdms_io/IO_tools.py:300 ../videomass3/vdms_io/IO_tools.py:346
-#, python-brace-format
+#: ../videomass3/vdms_io/IO_tools.py:317
 msgid ""
 "\n"
 "Wait....\n"
-"{0}\n"
+"Upgrading youtube-dl.\n"
 msgstr ""
 "\n"
-"Attendi….\n"
-"{0}\n"
+"Attendi....\n"
+"Aggiornamento di youtube-dl\n"
+
+#: ../videomass3/vdms_io/IO_tools.py:319
+msgid ""
+"\n"
+"Wait....\n"
+"Downloading youtube-dl.\n"
+msgstr ""
+"\n"
+"Attendi....\n"
+"Download di youtube-dl\n"
 
 #: ../videomass3/vdms_io/presets_manager_properties.py:51
 #, python-format
@@ -1707,8 +1716,14 @@ msgid "Videomass: Choose a directory"
 msgstr "Videomass: Scegli una cartella di destinazione"
 
 #: ../videomass3/vdms_main/main_frame.py:850
-msgid "Check installed version"
-msgstr "Verifica la versione installata"
+msgid ""
+"\n"
+"Wait....\n"
+"Check installed version\n"
+msgstr ""
+"\n"
+"Attendi....\n"
+"Verifica della versione installata\n"
 
 #: ../videomass3/vdms_main/main_frame.py:855
 #: ../videomass3/vdms_main/main_frame.py:868
@@ -1739,13 +1754,15 @@ msgstr "L’ultima versione di youtube-dl su GitHub è:"
 msgid "youtube-dl is up-to-date {}"
 msgstr "youtube-dl è aggiornato {}"
 
-#: ../videomass3/vdms_main/main_frame.py:906
-msgid "{} {}"
-msgstr "{} {}"
-
 #: ../videomass3/vdms_main/main_frame.py:915
-msgid "Updating youtube-dl"
-msgstr "Aggiornamento di youtube-dl"
+msgid ""
+"\n"
+"Wait....\n"
+"Updating youtube-dl"
+msgstr ""
+"\n"
+"Attendi....\n"
+"Aggiornamento di youtube-dl"
 
 #: ../videomass3/vdms_main/main_frame.py:939
 msgid "youtube-dl is already up-to-date {}"
@@ -2540,16 +2557,16 @@ msgid "Default"
 msgstr "Predefinito"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:92
-msgid "Split audio and video"
-msgstr "Unione di audio e video"
+msgid "Download audio and video splitted"
+msgstr "Scarica audio e video divisi"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:93
-msgid "Audio only"
-msgstr "Solo Audio"
+msgid "Download Audio only"
+msgstr "Scarica solo il file audio"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:94
-msgid "by format code"
-msgstr "codice formato"
+msgid "Download by format code"
+msgstr "Scarica per codice formato"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:132
 msgid "Enter Format Code:"
@@ -2638,9 +2655,12 @@ msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:453
 msgid ""
-"Enter only \"Format Code\" numbers in the text box, please. You can specify "
+"Enter only \"Format Code\" integer in the text box, please. You can specify "
 "multiple format codes by using slash, e.g. 22/17/18"
 msgstr ""
+"Inserisci solo il numero intero del \"Codice formato\" nella casella di "
+"testo, per favore. Puoi specificare più codici di formato usando la barra, "
+"ad es. 22/17/18"
 
 #: ../videomass3/vdms_panels/filedrop.py:68
 msgid "Directories are not allowed, just add files, please."
@@ -3021,6 +3041,18 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid ""
+#~ "\n"
+#~ "Wait....\n"
+#~ "{0}\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Attendi….\n"
+#~ "{0}\n"
+
+#~ msgid "{} {}"
+#~ msgstr "{} {}"
 
 #~ msgid ""
 #~ "{}\n"

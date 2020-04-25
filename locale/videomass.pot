@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-25 09:49+0200\n"
+"POT-Creation-Date: 2020-04-25 12:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1155,7 +1155,7 @@ msgstr ""
 
 #: ../videomass3/vdms_io/IO_tools.py:121 ../videomass3/vdms_io/IO_tools.py:243
 #: ../videomass3/vdms_io/IO_tools.py:261 ../videomass3/vdms_io/IO_tools.py:279
-#: ../videomass3/vdms_io/IO_tools.py:299 ../videomass3/vdms_io/IO_tools.py:345
+#: ../videomass3/vdms_io/IO_tools.py:299 ../videomass3/vdms_io/IO_tools.py:344
 msgid "Videomass - Loading..."
 msgstr ""
 
@@ -1184,12 +1184,18 @@ msgid ""
 "Check for update.\n"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:300 ../videomass3/vdms_io/IO_tools.py:346
-#, python-brace-format
+#: ../videomass3/vdms_io/IO_tools.py:317
 msgid ""
 "\n"
 "Wait....\n"
-"{0}\n"
+"Upgrading youtube-dl.\n"
+msgstr ""
+
+#: ../videomass3/vdms_io/IO_tools.py:319
+msgid ""
+"\n"
+"Wait....\n"
+"Downloading youtube-dl.\n"
 msgstr ""
 
 #: ../videomass3/vdms_io/presets_manager_properties.py:51
@@ -1504,7 +1510,10 @@ msgid "Videomass: Choose a directory"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:850
-msgid "Check installed version"
+msgid ""
+"\n"
+"Wait....\n"
+"Check installed version\n"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:855
@@ -1533,12 +1542,11 @@ msgstr ""
 msgid "youtube-dl is up-to-date {}"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:906
-msgid "{} {}"
-msgstr ""
-
 #: ../videomass3/vdms_main/main_frame.py:915
-msgid "Updating youtube-dl"
+msgid ""
+"\n"
+"Wait....\n"
+"Updating youtube-dl"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:939
@@ -2183,15 +2191,15 @@ msgid "Default"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:92
-msgid "Split audio and video"
+msgid "Download audio and video splitted"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:93
-msgid "Audio only"
+msgid "Download Audio only"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:94
-msgid "by format code"
+msgid "Download by format code"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:132
@@ -2273,7 +2281,7 @@ msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:453
 msgid ""
-"Enter only \"Format Code\" numbers in the text box, please. You can specify "
+"Enter only \"Format Code\" integer in the text box, please. You can specify "
 "multiple format codes by using slash, e.g. 22/17/18"
 msgstr ""
 

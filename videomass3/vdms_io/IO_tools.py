@@ -296,8 +296,7 @@ def youtubedl_update(cmd, waitmsg):
     """
     thread = youtubedlupdater.Command_Execution(cmd)
 
-    loadDlg = PopupDialog(None, _("Videomass - Loading..."),
-                          _("\nWait....\n{0}\n".format(waitmsg)))
+    loadDlg = PopupDialog(None, _("Videomass - Loading..."), waitmsg)
     loadDlg.ShowModal()
     # thread.join()
     update = thread.data
@@ -315,9 +314,9 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
 
     """
     if upgrade:
-        msg = 'Upgrading youtube-dl.'
+        msg = _('\nWait....\nUpgrading youtube-dl.\n')
     else:
-        msg = 'Downloading youtube-dl.'
+        msg = _('\nWait....\nDownloading youtube-dl.\n')
 
     dirname = os.path.basename(os.path.dirname(executable))
 
@@ -342,8 +341,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
             return None, err
 
     thread = youtubedlupdater.Upgrade_Latest(url, filebase)
-    loadDlg = PopupDialog(None, _("Videomass - Loading..."),
-                          _("\nWait....\n{0}\n".format(msg)))
+    loadDlg = PopupDialog(None, _("Videomass - Loading..."), msg)
     loadDlg.ShowModal()
     # thread.join()
     status = thread.data

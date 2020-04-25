@@ -89,9 +89,9 @@ class Downloader(wx.Panel):
         frame.Add(sizer, 1, wx.ALL | wx.EXPAND, 5)
         self.choice = wx.Choice(self, wx.ID_ANY,
                                 choices=[_('Default'),
-                                         _('Split audio and video'),
-                                         _('Audio only'),
-                                         _('by format code')],
+                                         _('Download audio and video splitted'),
+                                         _('Download Audio only'),
+                                         _('Download by format code')],
                                 size=(-1, -1),
                                 )
         self.choice.SetSelection(0)
@@ -450,7 +450,7 @@ class Downloader(wx.Panel):
                      not in [c for c in ['/', '+']]
                      ]
             if False in ckstr or not ckstr or not code1:
-                wx.MessageBox(_('Enter only "Format Code" numbers in the '
+                wx.MessageBox(_('Enter only "Format Code" integer in the '
                                 'text box, please. You can specify multiple '
                                 'format codes by using slash, e.g. 22/17/18'),
                               'Videomass', wx.ICON_INFORMATION)

@@ -847,13 +847,13 @@ class MainFrame(wx.Frame):
         """
         check version of youtube-dl used from 'Version in Use' bar menu
         """
-        waitmsg = _('Check installed version')
+        waitmsg = _('\nWait....\nCheck installed version\n')
         if pylibYdl is None:  # youtube-dl library
             import youtube_dl
             this = youtube_dl.version.__version__
             if msgbox:
                 wx.MessageBox(_('You are using youtube-dl '
-                                'version {}'.format(this)), 'Videomass')
+                                'version {}').format(this), 'Videomass')
             return this
         else:
             if os.path.exists(execYdl):
@@ -866,7 +866,7 @@ class MainFrame(wx.Frame):
 
                 if msgbox:
                     wx.MessageBox(_('You are using youtube-dl '
-                                    'version {}'.format(this[0])), 'Videomass')
+                                    'version {}').format(this[0]), 'Videomass')
                     return this[0]
                 if msgbox:
                     wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
@@ -898,13 +898,13 @@ class MainFrame(wx.Frame):
 
         if latest[0].strip() == this:
             if msgbox:
-                wx.MessageBox(_("youtube-dl is up-to-date {}".format(this)),
+                wx.MessageBox(_("youtube-dl is up-to-date {}").format(this),
                               "Videomass", wx.ICON_INFORMATION, self)
             return None, None
         else:
             if msgbox:
-                wx.MessageBox(_("{} {}".format(info, latest[0])),
-                              'Videomass', wx.ICON_INFORMATION, self)
+                wx.MessageBox(info, latest[0], 'Videomass',
+                              wx.ICON_INFORMATION, self)
             return latest
     # -----------------------------------------------------------------#
 
@@ -912,7 +912,7 @@ class MainFrame(wx.Frame):
         """
         Update to latest version from 'Update youtube-dl' bar menu
         """
-        waitmsg = _('Updating youtube-dl')
+        waitmsg = _('\nWait....\nUpdating youtube-dl')
 
         # if pylibYdl is not None:  # not youtube-dl as pylibrary
         if os.path.exists(execYdl) and pylibYdl is not None:
@@ -937,7 +937,7 @@ class MainFrame(wx.Frame):
                 this = self.ydl_used(self, False)
                 if latest[0].strip() == this:
                     wx.MessageBox(_('youtube-dl is already '
-                                    'up-to-date {}'.format(this)),
+                                    'up-to-date {}').format(this),
                                   "Videomass", wx.ICON_INFORMATION, self)
                     return
                 else:
@@ -948,7 +948,7 @@ class MainFrame(wx.Frame):
                                   wx.ICON_ERROR, self)
                     return
                 wx.MessageBox(_('Successful! youtube-dl is up-to-date '
-                                '({0})'.format(latest[0])),
+                                '({0})').format(latest[0]),
                               'Videomass', wx.ICON_INFORMATION)
                 return
         else:
