@@ -972,7 +972,7 @@ class MainFrame(wx.Frame):
         Open the configuration folder with file manager
 
         """
-        IO_tools.openpath('')
+        IO_tools.openpath(None)
 
     # --------- Menu Edit
 

@@ -111,7 +111,8 @@ class Videomass(wx.App):
         if shutil.which('youtube-dl'):  # need application/octet-stream
             writable = os.access(shutil.which('youtube-dl'), os.W_OK)
             if writable:
-                exe = 'youtube-dl'
+                exe = ('youtube-dl.exe' if self.OS == 'Windows' else
+                       'youtube-dl')
         elif shutil.which('python'):  # need gzip archive
             exe = ('youtube-dl.exe' if self.OS == 'Windows' else
                    'youtube-dl/youtube-dl')

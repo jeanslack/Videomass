@@ -35,6 +35,7 @@ def browse(OS, pathname):
     open file browser in a specific location with
     file manager of the OS
     """
+    status = 'Unrecognized error'
     if OS == 'Windows':
         cmd = ' '.join(['cmd', '/c', 'start', pathname])
         info = subprocess.STARTUPINFO()
@@ -47,7 +48,6 @@ def browse(OS, pathname):
     else:  # xdg-open *should* be supported by recent Gnome, KDE, Xfce
         cmd = ['xdg-open', pathname]
         info = None
-
     try:
         p = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
@@ -58,10 +58,13 @@ def browse(OS, pathname):
         out = p.communicate()
 
     except OSError as oserr:  # executable do not exist
-        return('%s' % oserr)
-
-    if p.returncode:  # if returncode == 1
-        return(out[0])
+        status = '%s' % oserr
+    else:
+        if p.returncode:  # if returncode == 1
+            status = out[0]
+        else:
+            status = None
+    return status
 
     """
     NOTE The following code work, but on MS-Windows it show a short of
