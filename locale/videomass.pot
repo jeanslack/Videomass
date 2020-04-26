@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 08:31+0200\n"
+"POT-Creation-Date: 2020-04-26 10:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1154,8 +1154,7 @@ msgid "File does not exist or not a valid file:  %s"
 msgstr ""
 
 #: ../videomass3/vdms_io/IO_tools.py:119 ../videomass3/vdms_io/IO_tools.py:244
-#: ../videomass3/vdms_io/IO_tools.py:262 ../videomass3/vdms_io/IO_tools.py:280
-#: ../videomass3/vdms_io/IO_tools.py:300 ../videomass3/vdms_io/IO_tools.py:330
+#: ../videomass3/vdms_io/IO_tools.py:262 ../videomass3/vdms_io/IO_tools.py:300
 msgid "Videomass - Loading..."
 msgstr ""
 
@@ -1177,6 +1176,10 @@ msgid ""
 "Retrieving required data.\n"
 msgstr ""
 
+#: ../videomass3/vdms_io/IO_tools.py:280
+msgid "Videomass - Reading..."
+msgstr ""
+
 #: ../videomass3/vdms_io/IO_tools.py:281
 msgid ""
 "\n"
@@ -1196,6 +1199,10 @@ msgid ""
 "\n"
 "Wait....\n"
 "Downloading youtube-dl.\n"
+msgstr ""
+
+#: ../videomass3/vdms_io/IO_tools.py:330
+msgid "Videomass - Downloading..."
 msgstr ""
 
 #: ../videomass3/vdms_io/presets_manager_properties.py:51

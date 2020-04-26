@@ -277,7 +277,7 @@ def youtubedl_latest(url):
     """
     thread = youtubedlupdater.CheckNewRelease(url)
 
-    loadDlg = PopupDialog(None, _("Videomass - Loading..."),
+    loadDlg = PopupDialog(None, _("Videomass - Reading..."),
                           _("\nWait....\nCheck for update.\n"))
     loadDlg.ShowModal()
     # thread.join()
@@ -327,7 +327,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
             return None, err
 
     thread = youtubedlupdater.Upgrade_Latest(url, executable)
-    loadDlg = PopupDialog(None, _("Videomass - Loading..."), msg)
+    loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
     loadDlg.ShowModal()
     # thread.join()
     status = thread.data

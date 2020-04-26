@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 08:31+0200\n"
-"PO-Revision-Date: 2020-04-26 08:37+0200\n"
+"POT-Creation-Date: 2020-04-26 10:38+0200\n"
+"PO-Revision-Date: 2020-04-26 10:43+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../videomass3/Videomass3.py:92
 #, python-brace-format
@@ -1155,8 +1155,7 @@ msgid "File does not exist or not a valid file:  %s"
 msgstr ""
 
 #: ../videomass3/vdms_io/IO_tools.py:119 ../videomass3/vdms_io/IO_tools.py:244
-#: ../videomass3/vdms_io/IO_tools.py:262 ../videomass3/vdms_io/IO_tools.py:280
-#: ../videomass3/vdms_io/IO_tools.py:300 ../videomass3/vdms_io/IO_tools.py:330
+#: ../videomass3/vdms_io/IO_tools.py:262 ../videomass3/vdms_io/IO_tools.py:300
 msgid "Videomass - Loading..."
 msgstr ""
 
@@ -1178,6 +1177,10 @@ msgid ""
 "Retrieving required data.\n"
 msgstr ""
 
+#: ../videomass3/vdms_io/IO_tools.py:280
+msgid "Videomass - Reading..."
+msgstr ""
+
 #: ../videomass3/vdms_io/IO_tools.py:281
 msgid ""
 "\n"
@@ -1197,6 +1200,10 @@ msgid ""
 "\n"
 "Wait....\n"
 "Downloading youtube-dl.\n"
+msgstr ""
+
+#: ../videomass3/vdms_io/IO_tools.py:330
+msgid "Videomass - Downloading..."
 msgstr ""
 
 #: ../videomass3/vdms_io/presets_manager_properties.py:51

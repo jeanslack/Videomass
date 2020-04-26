@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 08:31+0200\n"
-"PO-Revision-Date: 2020-04-26 08:36+0200\n"
+"POT-Creation-Date: 2020-04-26 10:38+0200\n"
+"PO-Revision-Date: 2020-04-26 10:43+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: ../videomass3/Videomass3.py:92
@@ -1325,8 +1325,7 @@ msgid "File does not exist or not a valid file:  %s"
 msgstr "File invalido o non esistente:  %s"
 
 #: ../videomass3/vdms_io/IO_tools.py:119 ../videomass3/vdms_io/IO_tools.py:244
-#: ../videomass3/vdms_io/IO_tools.py:262 ../videomass3/vdms_io/IO_tools.py:280
-#: ../videomass3/vdms_io/IO_tools.py:300 ../videomass3/vdms_io/IO_tools.py:330
+#: ../videomass3/vdms_io/IO_tools.py:262 ../videomass3/vdms_io/IO_tools.py:300
 msgid "Videomass - Loading..."
 msgstr "Caricamento in corso..."
 
@@ -1353,6 +1352,10 @@ msgstr ""
 "\n"
 "Attendi....\n"
 "Recupero i dati richiesti.\n"
+
+#: ../videomass3/vdms_io/IO_tools.py:280
+msgid "Videomass - Reading..."
+msgstr "Lettura in corso..."
 
 #: ../videomass3/vdms_io/IO_tools.py:281
 msgid ""
@@ -1383,6 +1386,10 @@ msgstr ""
 "\n"
 "Attendi....\n"
 "Download di youtube-dl\n"
+
+#: ../videomass3/vdms_io/IO_tools.py:330
+msgid "Videomass - Downloading..."
+msgstr "Download in corso..."
 
 #: ../videomass3/vdms_io/presets_manager_properties.py:51
 #, python-format
@@ -2431,8 +2438,8 @@ msgstr ""
 "\n"
 "Importante: youtube-dl viene aggiornato molto spesso, ricordati di "
 "controllare gli aggiornamenti settimanalmente.\n"
-"È possibile utilizzare le funzioni dedicate nella barra dei menu di "
-"Videomass: Tools/youtube-dl .\n"
+"È possibile utilizzare le funzioni dedicate nella barra dei menu > Strumenti/"
+"youtube-dl .\n"
 "\n"
 "Vuoi chiudere Videomass ora e riavviarlo manualmente?"
 
