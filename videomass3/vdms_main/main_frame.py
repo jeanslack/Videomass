@@ -372,9 +372,9 @@ class MainFrame(wx.Frame):
             if execYdl:
                 if os.path.exists(execYdl):
                     return
-            self.ydlupdate.Enable(False)
-            self.ydllatest.Enable(False)
             self.ydlused.Enable(False)
+            self.ydllatest.Enable(False)
+            self.ydlupdate.Enable(False)
         else:
             self.ydlupdate.Enable(False)
 

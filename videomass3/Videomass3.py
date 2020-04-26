@@ -108,27 +108,25 @@ class Videomass(wx.App):
         self.userpath = None if setui[4][1] == 'none' else setui[4][1]
         # ----- youtube-dl
         writable = True
-        if shutil.which('youtube-dl'):  # need application/octet-stream
+        if shutil.which('youtube-dl'):
+            # if false need application/octet-stream in local
             writable = os.access(shutil.which('youtube-dl'), os.W_OK)
-            if writable:
-                exe = ('youtube-dl.exe' if self.OS == 'Windows' else
-                       'youtube-dl')
         else:  # only with Videomass.exe or Videomass.app
             exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
 
         if not writable:
+            exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
+            self.execYdl = os.path.join(self.DIRconf, exe)
             self.pylibYdl = _('youtube-dl is installed but not '
                               'writable by user for updates.')
-            self.execYdl = os.path.join(self.DIRconf, 'youtube-dl')
         else:
             try:
                 from youtube_dl import YoutubeDL
                 self.execYdl = False
             except (ModuleNotFoundError, ImportError) as nomodule:
                 self.pylibYdl = nomodule
-                exe = os.path.join(self.DIRconf, exe)
-                if exe:
-                    self.execYdl = exe
+                exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
+                self.execYdl = os.path.join(self.DIRconf, exe)
         # ----- ffmpeg
         if setui[0] == 'Darwin':  # ffmpeg on MacOs
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"

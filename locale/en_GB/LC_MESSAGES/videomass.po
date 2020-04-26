@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-26 00:16+0200\n"
-"PO-Revision-Date: 2020-04-26 00:20+0200\n"
+"POT-Creation-Date: 2020-04-26 08:31+0200\n"
+"PO-Revision-Date: 2020-04-26 08:37+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -1607,12 +1607,12 @@ msgid "Show More"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:1239
-#: ../videomass3/vdms_panels/choose_topic.py:95
+#: ../videomass3/vdms_panels/choose_topic.py:96
 msgid "Audio/Video Conversions"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:1271
-#: ../videomass3/vdms_panels/choose_topic.py:97
+#: ../videomass3/vdms_panels/choose_topic.py:98
 msgid "Presets Manager"
 msgstr ""
 
@@ -2136,39 +2136,41 @@ msgstr ""
 msgid ""
 "{}\n"
 "\n"
-"To download video from YouTube and other sites, Videomass needs an updated "
-"version of youtube-dl .\n"
-"\n"
+"To download videos from YouTube and other sites, Videomass needs an updated "
+"version of youtube-dl.\n"
 "Videomass recommends pip to install youtube-dl and keep it updated by the "
-"user. If you can not, do you want to locally download an updated copy of "
-"youtube-dl now?"
+"user.\n"
+"\n"
+"However, an updated copy of youtube-dl can be downloaded locally.\n"
+"\n"
+"...Do you wish to continue?"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:72
+#: ../videomass3/vdms_panels/choose_topic.py:73
 msgid ""
 "{}\n"
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:86
+#: ../videomass3/vdms_panels/choose_topic.py:87
 msgid "Welcome to Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:96
+#: ../videomass3/vdms_panels/choose_topic.py:97
 msgid "Download from YouTube"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:122
+#: ../videomass3/vdms_panels/choose_topic.py:123
 msgid "Download additional presets or contribute to making new ones "
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:125
+#: ../videomass3/vdms_panels/choose_topic.py:126
 msgid "Additional Presets"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:159
-#: ../videomass3/vdms_panels/choose_topic.py:164
+#: ../videomass3/vdms_panels/choose_topic.py:160
+#: ../videomass3/vdms_panels/choose_topic.py:165
 msgid "Videomass confirmation"
 msgstr ""
 

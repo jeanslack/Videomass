@@ -63,11 +63,12 @@ elif OS == 'Darwin':
              'org/youtube-dl/releases\n\n'
              'Do you want to download youtube-dl now?')).format(pylibYdl)
 else:
-    msg = (_('{}\n\nTo download video from YouTube and other sites, '
-              'Videomass needs an updated version of youtube-dl .\n\n'
-              'Videomass recommends pip to install youtube-dl and keep it '
-              'updated by the user. If you can not, do you want to locally '
-              'download an updated copy of youtube-dl now?')).format(pylibYdl)
+    msg = (_('{}\n\nTo download videos from YouTube and other sites, '
+             'Videomass needs an updated version of youtube-dl.\n'
+             'Videomass recommends pip to install youtube-dl and keep '
+             'it updated by the user.\n\nHowever, an updated copy of '
+             'youtube-dl can be downloaded locally.\n\n'
+             '...Do you wish to continue?')).format(pylibYdl)
 
     msgerr = _('{}\n\nyoutube-dl: no library or executable '
                'found .').format(pylibYdl)

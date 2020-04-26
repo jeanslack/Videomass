@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-April 24, 2020 V.2.0.5
+April 26, 2020 V.2.0.5
 +------------------------------------+
 
 BUGS:
@@ -23,7 +23,7 @@ IMPROVEMENTS:
     * Code thinning for pupup dialog.
     * Fixed error when opening log directory and log has not been created.
     * [YOUTUBE DONLOADER] now Videomass display version, check for updates
-      and Update youtube-dl on bar menu items.
+      and Update youtube-dl on bar menu items if.
     * [YOUTUBE DONLOADER] in some cases it is possible to automatically update
       youtube-dl with the latest version if not used as a Python library. All
       of this is on the Tools/youtube-dl menu bar.
