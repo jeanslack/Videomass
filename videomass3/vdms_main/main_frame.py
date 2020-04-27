@@ -53,21 +53,23 @@ get = wx.GetApp()
 pylibYdl = get.pylibYdl  # youtube_dl library with None is in use
 execYdl = get.execYdl  # youtube-dl executable with False do not exist
 OS = get.OS  # ID of the operative system:
-DIRconf = get.DIRconf  # default configuration directory
-FILEconf = get.FILEconf  # pathname of the file configuration
-WORKdir = get.WORKdir  # pathname of the current work directory
-threads = get.threads  # ffmpeg option, set the cpu threads
-
+DIR_CONF = get.DIRconf  # default configuration directory
+FILE_CONF = get.FILEconf  # pathname of the file configuration
+WORK_DIR = get.WORKdir  # pathname of the current work directory
+# # colour rappresentetion in rgb
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
+BLUE = 0, 7, 12
+# colour rappresentetion in html
+ORANGE = '#f28924'
 
 # set widget colours in some case with html rappresentetion:
-azure = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
-yellow = '#a29500'
-red = '#ea312d'
-orange = '#f28924'
-greenolive = '#6aaf23'
-green = '#268826'
+# AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
+# YELLOW = '#a29500'
+# RED = '#ea312d'
+# ORANGE = '#f28924'
+# GREENOLIVE = '#6aaf23'
+# GREEN = '#268826'
 
 
 class MainFrame(wx.Frame):
@@ -101,7 +103,7 @@ class MainFrame(wx.Frame):
         self.data_url = None  # list of urls in text box
         self.file_destin = None  # path name for file saved destination
         self.file_src = None  # input files list
-        self.filedropselected = None  # list object selected name on Add files
+        self.filedropselected = None  # selected name on file drop
         self.time_seq = ''  # ffmpeg format time specifier with flag -ss, -t
         self.time_read = {'start seek': ['', ''], 'time': ['', '']}
         self.duration = []  # empty if not file imported
@@ -218,7 +220,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[18],
                                                      pathicons[19]
                                                      )
-        # self.ChooseTopic.SetBackgroundColour(barColor)
+        self.ChooseTopic.SetBackgroundColour(BLUE)
         self.ytDownloader = youtubedl_ui.Downloader(self, OS)
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                  OS,
@@ -241,8 +243,8 @@ class MainFrame(wx.Frame):
         self.ProcessPanel = Logging_Console(self)
         self.PrstsPanel = presets_manager.PrstPan(self,
                                                   SRCpath,
-                                                  DIRconf,
-                                                  WORKdir,
+                                                  DIR_CONF,
+                                                  WORK_DIR,
                                                   OS,
                                                   pathicons[14],  # analyzes
                                                   pathicons[17],  # peaklevel
@@ -362,7 +364,7 @@ class MainFrame(wx.Frame):
 
     def menu_items(self):
         """
-        enable or disable some menu items according by showing panels
+        enable or disable some menu items in according by showing panels
         """
         self.saveme.Enable(False),
         self.new_prst.Enable(False), self.del_prst.Enable(False)
@@ -416,20 +418,9 @@ class MainFrame(wx.Frame):
             return
     # ------------------------------ Menu  Streams -----------------------#
 
-    def ImportPlay(self, filepath):
-        """
-        Redirect input file clicked at stream_play for playback feature.
-        This feature is available by context menu in drag n drop panel only.
-        """
-        IO_tools.stream_play(filepath,
-                             self.time_seq,
-                             '',  # parameters
-                             )
-    # ------------------------------------------------------------------#
-
     def ImportInfo(self, event):
         """
-        Redirect input file clicked at stream_info for metadata display
+        Redirect input files at stream_info for media information
         """
         if self.topicname == 'Youtube Downloader':
             self.ytDownloader.on_show_info()
@@ -868,11 +859,12 @@ class MainFrame(wx.Frame):
                     wx.MessageBox(_('You are using youtube-dl '
                                     'version {}').format(this[0]), 'Videomass')
                     return this[0]
-                if msgbox:
-                    wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                                  'installed yet.').format(pylibYdl),
-                                  'Videomass', wx.ICON_ERROR)
-            return this[0].strip()
+
+                return this[0].strip()
+        if msgbox:
+                wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
+                              'installed yet.').format(pylibYdl),
+                              'Videomass', wx.ICON_ERROR)
         return None
     # -----------------------------------------------------------------#
 
@@ -903,7 +895,7 @@ class MainFrame(wx.Frame):
             return None, None
         else:
             if msgbox:
-                wx.MessageBox(info, latest[0], 'Videomass',
+                wx.MessageBox('{} {}'.format(info, latest[0]), 'Videomass',
                               wx.ICON_INFORMATION, self)
             return latest
     # -----------------------------------------------------------------#
@@ -1089,23 +1081,25 @@ class MainFrame(wx.Frame):
         Makes and attaches the view toolsBtn bar
         """
         # -------- Properties
-        self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT |
-                                                 wx.TB_FLAT |
+        #self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT |
+                                                 #wx.TB_FLAT |
+                                                 #wx.TB_TEXT))
+        self.toolbar = self.CreateToolBar(style=(wx.TB_FLAT |
                                                  wx.TB_TEXT))
         self.toolbar.SetToolBitmapSize((32, 32))
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         # ------- Run process button
         self.toolbar.AddStretchableSpace()
-        self.toolbar.AddSeparator()
-        back = self.toolbar.AddTool(wx.ID_FILE3, (''),
+        #self.toolbar.AddSeparator()
+        back = self.toolbar.AddTool(wx.ID_FILE3, ('Back'),
                                     wx.Bitmap(self.icon_mainback))
-        self.toolbar.AddSeparator()
-        forward = self.toolbar.AddTool(wx.ID_FILE4, (''),
+        #self.toolbar.AddSeparator()
+        forward = self.toolbar.AddTool(wx.ID_FILE4, ('Forward'),
                                        wx.Bitmap(self.icon_mainforward))
-        self.toolbar.AddSeparator()
+        #self.toolbar.AddSeparator()
         run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'),
                                           wx.Bitmap(self.icon_runconversion))
-        self.toolbar.AddSeparator()
+        #self.toolbar.AddSeparator()
         self.toolbar.AddStretchableSpace()
 
         # finally, create it
@@ -1124,7 +1118,6 @@ class MainFrame(wx.Frame):
         """
         if self.textDnDTarget.IsShown() or self.fileDnDTarget.IsShown():
             self.choosetopicRetrieve()
-
         elif self.topicname in ('Audio/Video Conversions', 'Presets Manager'):
             self.File_import(self, self.topicname)
         elif self.topicname == 'Youtube Downloader':
@@ -1241,6 +1234,9 @@ class MainFrame(wx.Frame):
                      self.data_files if f['format']['filename']
                      ]
         if not filenames == self.file_src:
+            if self.file_src:
+                self.statusbar_msg(_('Warning: the previous settings may be '
+                                    'reset to default values.'), ORANGE)
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']
@@ -1273,6 +1269,9 @@ class MainFrame(wx.Frame):
                      self.data_files if f['format']['filename']
                      ]
         if not filenames == self.file_src:
+            if self.file_src:
+                self.statusbar_msg(_('Warning: the previous settings may be '
+                                    'reset to default values.'), ORANGE)
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']

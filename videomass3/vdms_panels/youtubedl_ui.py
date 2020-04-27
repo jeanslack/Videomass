@@ -76,7 +76,7 @@ class Downloader(wx.Panel):
         self.error attribute.
         """
         self.parent = parent
-        self.OS = OS
+        self.oS = OS
         self.info = []
         self.error = False
         wx.Panel.__init__(self, parent, -1)
@@ -341,7 +341,7 @@ class Downloader(wx.Panel):
             if error:
                 return
 
-        dialog = YDL_Mediainfo(self.info, self.OS)
+        dialog = YDL_Mediainfo(self.info, self.oS)
         dialog.Show()
     # -----------------------------------------------------------------#
 

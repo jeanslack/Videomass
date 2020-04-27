@@ -47,7 +47,7 @@ AZURE = 30, 62, 164
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf  # path to the configuration directory:
+DIR_CONF = get.DIRconf  # path to the configuration directory:
 
 
 def pairwise(iterable):
@@ -161,7 +161,7 @@ class Logging_Console(wx.Panel):
         self.logname = varargs[8]  # example: Videomass_VideoConversion.log
         time_seq = self.parent.time_seq  # a time segment
 
-        write_log(self.logname, "%s/log" % DIRconf)  # set initial file LOG
+        write_log(self.logname, "%s/log" % DIR_CONF)  # set initial file LOG
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
             self.PARENT_THREAD = OnePass(varargs, duration,
@@ -261,7 +261,7 @@ class Logging_Console(wx.Panel):
                 self.OutText.AppendText(' %s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
-            with open("%s/log/%s" % (DIRconf, self.logname), "a") as logerr:
+            with open("%s/log/%s" % (DIR_CONF, self.logname), "a") as logerr:
                 logerr.write("[YOUTUBE-DL]: %s" % (output))
                 # write a row error into file log
 
@@ -320,7 +320,7 @@ class Logging_Console(wx.Panel):
                 self.OutText.AppendText('%s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
-            with open("%s/log/%s" % (DIRconf, self.logname), "a") as logerr:
+            with open("%s/log/%s" % (DIR_CONF, self.logname), "a") as logerr:
                 logerr.write("[FFMPEG]: %s" % (output))
                 # write a row error into file log
     # ----------------------------------------------------------------------

@@ -33,8 +33,8 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf  # path to the configuration directory:
-ffmpeg_url = get.ffmpeg_url
+DIR_CONF = get.DIRconf  # path to the configuration directory:
+FFMPEG_URL = get.FFMPEG_url
 pylibYdl = get.pylibYdl
 
 if pylibYdl is None:  # youtube-dl is installed
@@ -180,7 +180,7 @@ class Ydl_DL_Pylib(Thread):
                         'noplaylist': self.opt['noplaylist'],
                         'no_color': True,
                         'nocheckcertificate': self.nocheckcertificate,
-                        'ffmpeg_location': '{}'.format(ffmpeg_url),
+                        'ffmpeg_location': '{}'.format(FFMPEG_URL),
                         'postprocessors': self.opt['postprocessors'],
                         'logger': MyLogger(),
                         'progress_hooks': [my_hook],

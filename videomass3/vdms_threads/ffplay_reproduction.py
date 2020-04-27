@@ -34,9 +34,9 @@ from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 # get data from bootstrap
 get = wx.GetApp()
-DIRconf = get.DIRconf  # path to the configuration directory
-ffplay_url = get.ffplay_url
-ffplay_loglev = get.ffplay_loglev
+DIR_CONF = get.DIRconf  # path to the configuration directory
+FFPLAY_URL = get.FFPLAY_url
+ffplay_loglev = get.FFPLAY_loglev
 OS = get.OS
 
 if not OS == 'Windows':
@@ -70,7 +70,7 @@ class Play(Thread):
     """
     def __init__(self, filepath, timeseq, param):
         """
-        The self.ffplay_loglevel has flag 'error -hide_banner'
+        The self.FFPLAY_loglevel has flag 'error -hide_banner'
         by default (see videomass.conf).
         NOTE: Do not use '-stats' option it do not work.
         """
@@ -79,9 +79,9 @@ class Play(Thread):
         self.filename = filepath  # file name selected
         self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
-        self.logf = "%s/log/%s" % (DIRconf, 'Videomass_FFplay.log')
+        self.logf = "%s/log/%s" % (DIR_CONF, 'Videomass_FFplay.log')
 
-        write_log('Videomass_FFplay.log', "%s/log" % DIRconf)
+        write_log('Videomass_FFplay.log', "%s/log" % DIR_CONF)
         # set initial file LOG
 
         self.start()
@@ -95,7 +95,7 @@ class Play(Thread):
         """
 
         # time.sleep(.5)
-        cmd = '%s %s %s -i "%s" %s' % (ffplay_url,
+        cmd = '%s %s %s -i "%s" %s' % (FFPLAY_URL,
                                        self.time_seq,
                                        ffplay_loglev,
                                        self.filename,

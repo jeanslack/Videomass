@@ -68,7 +68,7 @@ def subp(args, OS):
 # -----------------------------------------------------------#
 
 
-def ff_conf(ffmpeg_link, OS):
+def ff_conf(FFMPEG_LINK, OS):
     """
     Receive output of the passed command to parse
     configuration messages of FFmpeg
@@ -83,7 +83,7 @@ def ff_conf(ffmpeg_link, OS):
     """
 
     # ------- grab generic informations:
-    version = subp([ffmpeg_link, '-loglevel', 'error', '-version'], OS)
+    version = subp([FFMPEG_LINK, '-loglevel', 'error', '-version'], OS)
 
     if 'Not found' in version[0]:
         return(version[0], version[1])
@@ -98,7 +98,7 @@ def ff_conf(ffmpeg_link, OS):
             info.append(vers.strip())
 
     # ------- grab buildconf:
-    build = subp([ffmpeg_link, '-loglevel', 'error', '-buildconf'], OS)
+    build = subp([FFMPEG_LINK, '-loglevel', 'error', '-buildconf'], OS)
 
     if 'Not found' in build[0]:
         return(build[0], build[1])
@@ -123,7 +123,7 @@ def ff_conf(ffmpeg_link, OS):
 # -------------------------------------------------------------------#
 
 
-def ff_formats(ffmpeg_link, OS):
+def ff_formats(FFMPEG_LINK, OS):
     """
     Receive output of *ffmpeg -formats* command and return a
     ditionary with the follow keys and values:
@@ -135,7 +135,7 @@ def ff_formats(ffmpeg_link, OS):
     """
 
     # ------- grab buildconf:
-    ret = subp([ffmpeg_link, '-loglevel', 'error', '-formats'], OS)
+    ret = subp([FFMPEG_LINK, '-loglevel', 'error', '-formats'], OS)
 
     if 'Not found' in ret[0]:
         return({ret[0]: ret[1], '': '', '': ''})
@@ -158,7 +158,7 @@ def ff_formats(ffmpeg_link, OS):
 # -------------------------------------------------------------------#
 
 
-def ff_codecs(ffmpeg_link, type_opt, OS):
+def ff_codecs(FFMPEG_LINK, type_opt, OS):
     """
     Receive output of *ffmpeg -encoders* or *ffmpeg -decoders*
     command and return a ditionary with the follow keys and values:
@@ -178,7 +178,7 @@ def ff_codecs(ffmpeg_link, type_opt, OS):
     """
 
     # ------- grab encoders or decoders output:
-    ret = subp([ffmpeg_link, '-loglevel', 'error', type_opt], OS)
+    ret = subp([FFMPEG_LINK, '-loglevel', 'error', type_opt], OS)
 
     if 'Not found' in ret[0]:
         return({ret[0], ret[1]})
@@ -204,14 +204,14 @@ def ff_codecs(ffmpeg_link, type_opt, OS):
 # -------------------------------------------------------------------#
 
 
-def ff_topics(ffmpeg_link, topic, OS):
+def ff_topics(FFMPEG_LINK, topic, OS):
     """
     Get output of the options help command of FFmpeg.
     Note that the 'topic' parameter is always a list.
     """
 
     # ------ get output:
-    arr = [ffmpeg_link, '-loglevel', 'error'] + topic
+    arr = [FFMPEG_LINK, '-loglevel', 'error'] + topic
     ret = subp(arr, OS)
 
     if 'Not found' in ret[0]:

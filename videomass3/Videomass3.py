@@ -55,21 +55,21 @@ class Videomass(wx.App):
         self.OS > operating system name
         self.pylibYdl > if None youtube-dl is used as library
         self.execYdl > if False is not used a local executable
-        self.userpath > set user path folder for file destination
+        self.USERfilesave > set user path folder for file destination
 
         """
         self.DIRconf = None
         self.FILEconf = None
         self.WORKdir = None
         self.OS = None
-        self.ffmpeg_url = None
-        self.ffplay_url = None
-        self.ffprobe_url = None
-        self.ffmpeg_loglev = None
-        self.ffplay_loglev = None
+        self.FFMPEG_url = None
+        self.FFPLAY_url = None
+        self.FFPROBE_url = None
+        self.FFMPEG_loglev = None
+        self.FFPLAY_loglev = None
         self.pylibYdl = None
         self.execYdl = False
-        self.userpath = None
+        self.USERfilesave = None
 
         # print ("App __init__")
         wx.App.__init__(self, redirect, filename)  # constructor
@@ -99,23 +99,20 @@ class Videomass(wx.App):
         self.FILEconf = setui[6]
         self.WORKdir = setui[7]
         self.DIRconf = setui[8]
-        self.ffmpeg_loglev = setui[4][4]
-        self.ffplay_loglev = setui[4][3]
-        self.ffmpeg_check = setui[4][5]
-        self.ffprobe_check = setui[4][7]
-        self.ffplay_check = setui[4][9]
-        self.threads = setui[4][2]
-        self.userpath = None if setui[4][1] == 'none' else setui[4][1]
+        self.FFMPEG_loglev = setui[4][4]
+        self.FFPLAY_loglev = setui[4][3]
+        self.FFMPEG_check = setui[4][5]
+        self.FFPROBE_check = setui[4][7]
+        self.FFPLAY_check = setui[4][9]
+        self.FFthreads = setui[4][2]
+        self.USERfilesave = None if setui[4][1] == 'none' else setui[4][1]
         # ----- youtube-dl
         writable = True
+        exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
         if shutil.which('youtube-dl'):
             # if false need application/octet-stream in local
             writable = os.access(shutil.which('youtube-dl'), os.W_OK)
-        else:  # only with Videomass.exe or Videomass.app
-            exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
-
         if not writable:
-            exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
             self.execYdl = os.path.join(self.DIRconf, exe)
             self.pylibYdl = _('youtube-dl is installed but not '
                               'writable by user for updates.')
@@ -125,10 +122,9 @@ class Videomass(wx.App):
                 self.execYdl = False
             except (ModuleNotFoundError, ImportError) as nomodule:
                 self.pylibYdl = nomodule
-                exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
                 self.execYdl = os.path.join(self.DIRconf, exe)
         # ----- ffmpeg
-        if setui[0] == 'Darwin':  # ffmpeg on MacOs
+        if setui[0] == 'Darwin':  # on MacOs
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"
                                    "/bin:/usr/sbin:/sbin"
                                    )
@@ -142,11 +138,11 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[16])
                 return True
             else:
-                self.ffmpeg_url = setui[4][6]
-                self.ffprobe_url = setui[4][8]
-                self.ffplay_url = setui[4][10]
+                self.FFMPEG_url = setui[4][6]
+                self.FFPROBE_url = setui[4][8]
+                self.FFPLAY_url = setui[4][10]
 
-        elif setui[0] == 'Windows':  # ffmpeg on MS-Windows
+        elif setui[0] == 'Windows':  # on MS-Windows
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
@@ -157,14 +153,14 @@ class Videomass(wx.App):
                 self.firstrun(pathicons[16])
                 return True
             else:
-                self.ffmpeg_url = setui[4][6]
-                self.ffprobe_url = setui[4][8]
-                self.ffplay_url = setui[4][10]
+                self.FFMPEG_url = setui[4][6]
+                self.FFPROBE_url = setui[4][8]
+                self.FFPLAY_url = setui[4][10]
 
-        else:  # ffmpeg on Linux
-            self.ffmpeg_url = setui[4][6]
-            self.ffprobe_url = setui[4][8]
-            self.ffplay_url = setui[4][10]
+        else:  # on Linux
+            self.FFMPEG_url = setui[4][6]
+            self.FFPROBE_url = setui[4][8]
+            self.FFPLAY_url = setui[4][10]
             # --- used for debug only ---#
             # self.firstrun(pathicons[16])
             # return True

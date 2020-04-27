@@ -35,18 +35,18 @@ dirname = os.path.expanduser('~')  # /home/user/
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-threads = get.threads
+FF_THREADS = get.FFthreads
 PWD = get.WORKdir
-fileconf = get.FILEconf
-ffmpeg_link = get.ffmpeg_url
-ffplay_link = get.ffplay_url
-ffprobe_link = get.ffprobe_url
-ffmpeg_loglevel = get.ffmpeg_loglev
-ffplay_loglevel = get.ffplay_loglev
-ffmpeg_check = get.ffmpeg_check
-ffprobe_check = get.ffprobe_check
-ffplay_check = get.ffplay_check
-userpath = get.userpath
+FILE_CONF = get.FILEconf
+FFMPEG_LINK = get.FFMPEG_url
+FFPLAY_LINK = get.FFPLAY_url
+FFPROBE_LINK = get.FFPROBE_url
+FFMPEG_LOGLEVel = get.FFMPEG_loglev
+ffplay_loglevel = get.FFPLAY_loglev
+FFMPEG_CHECK = get.FFMPEG_check
+FFPROBE_CHECK = get.FFPROBE_check
+FFPLAY_CHECK = get.FFPLAY_check
+USER_FILESAVE = get.USERfilesave
 
 MSGLOG = _("The following settings affect output messages "
            "and the log messages\nduring processes. "
@@ -81,7 +81,7 @@ class Setup(wx.Dialog):
         # Make a items list of
         self.rowsNum = []  # rows number list
         dic = {}  # used for debug
-        with open(fileconf, 'r') as f:
+        with open(FILE_CONF, 'r') as f:
             self.full_list = f.readlines()
         for a, b in enumerate(self.full_list):
             if not b.startswith('#'):
@@ -96,9 +96,9 @@ class Setup(wx.Dialog):
         # for n, k in enumerate(sorted(dic)):
             # print(n, ' -------> ', k, ' --> ', dic[k])
 
-        self.userpath = dirname if not userpath else userpath
+        self.userpath = dirname if not USER_FILESAVE else USER_FILESAVE
         self.iconset = iconset
-        self.FILEconf = fileconf
+        self.getfileconf = FILE_CONF
 
         if OS == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
@@ -129,7 +129,7 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 5
                         )
         self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY,
-                                            "%s" % threads[9:],
+                                            "%s" % FF_THREADS[9:],
                                             size=(-1, -1), min=0, max=32,
                                             style=wx.TE_PROCESS_ENTER
                                             )
@@ -361,35 +361,35 @@ class Setup(wx.Dialog):
                 self.rdbFFplay.SetSelection(s)
 
         for s in range(self.rdbFFmpeg.GetCount()):
-            if (ffmpeg_loglevel.split()[1] in
+            if (FFMPEG_LOGLEVel.split()[1] in
                self.rdbFFmpeg.GetString(s).split()[0]):
                 self.rdbFFmpeg.SetSelection(s)
 
-        if ffmpeg_check == 'false':
+        if FFMPEG_CHECK == 'false':
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.SetValue("")
             self.checkbox_exeFFmpeg.SetValue(False)
         else:
-            self.txtctrl_ffmpeg.AppendText(ffmpeg_link)
+            self.txtctrl_ffmpeg.AppendText(FFMPEG_LINK)
             self.checkbox_exeFFmpeg.SetValue(True)
 
-        if ffprobe_check == 'false':
+        if FFPROBE_CHECK == 'false':
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.SetValue("")
             self.checkbox_exeFFprobe.SetValue(False)
         else:
-            self.txtctrl_ffprobe.AppendText(ffprobe_link)
+            self.txtctrl_ffprobe.AppendText(FFPROBE_LINK)
             self.checkbox_exeFFprobe.SetValue(True)
 
-        if ffplay_check == 'false':
+        if FFPLAY_CHECK == 'false':
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.SetValue("")
             self.checkbox_exeFFplay.SetValue(False)
         else:
-            self.txtctrl_ffplay.AppendText(ffplay_link)
+            self.txtctrl_ffplay.AppendText(FFPLAY_LINK)
             self.checkbox_exeFFplay.SetValue(True)
     # --------------------------------------------------------------------#
 
@@ -605,9 +605,9 @@ class Setup(wx.Dialog):
         """
         Applies all changes writing the new entries
         """
-        with open(self.FILEconf, 'w') as fileconf:
+        with open(self.getfileconf, 'w') as fconf:
             for i in self.full_list:
-                fileconf.write('%s' % i)
+                fconf.write('%s' % i)
         wx.MessageBox(_("Changes will take affect once the program "
                         "has been restarted"))
         # self.Destroy() # WARNING on mac not close corretly, on linux ok

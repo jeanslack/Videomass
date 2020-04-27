@@ -36,10 +36,9 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf  # path to the configuration directory:
-ffmpeg_url = get.ffmpeg_url
-ffmpeg_loglev = get.ffmpeg_loglev
-threads = get.threads
+DIR_CONF = get.DIRconf  # path to the configuration directory:
+FFMPEG_URL = get.FFMPEG_url
+FF_THREADS = get.FFthreads
 
 if not OS == 'Windows':
     import shlex
@@ -56,7 +55,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open("%s/log/%s" % (DIRconf, logname), "a") as log:
+    with open("%s/log/%s" % (DIR_CONF, logname), "a") as log:
         log.write(apnd)
 
 
@@ -125,11 +124,11 @@ class Loudnorm(Thread):
 
             # --------------- first pass
             pass1 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {4} -y {5}'.format(ffmpeg_url,
+                     '{1} -i "{2}" {3} {4} -y {5}'.format(FFMPEG_URL,
                                                           self.time_seq,
                                                           files,
                                                           self.passList[0],
-                                                          threads,
+                                                          FF_THREADS,
                                                           self.nul,
                                                           ))
             self.count += 1
@@ -224,12 +223,12 @@ class Loudnorm(Thread):
 
             pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
                      '{1} -i "{2}" {3} -filter:a:{9} {4} {5} '
-                     '-y "{6}/{7}.{8}"'.format(ffmpeg_url,
+                     '-y "{6}/{7}.{8}"'.format(FFMPEG_URL,
                                                self.time_seq,
                                                files,
                                                self.passList[1],
                                                filters,
-                                               threads,
+                                               FF_THREADS,
                                                folders,
                                                filename,
                                                outext,

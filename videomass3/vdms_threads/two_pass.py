@@ -36,10 +36,10 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf  # path to the configuration directory:
-ffmpeg_url = get.ffmpeg_url
-ffmpeg_loglev = get.ffmpeg_loglev
-threads = get.threads
+DIR_CONF = get.DIRconf  # path to the configuration directory:
+FFMPEG_URL = get.FFMPEG_url
+FFMPEG_LOGLEV = get.FFMPEG_loglev
+FF_THREADS = get.FFthreads
 
 if not OS == 'Windows':
     import shlex
@@ -56,7 +56,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open("%s/log/%s" % (DIRconf, logname), "a") as log:
+    with open("%s/log/%s" % (DIR_CONF, logname), "a") as log:
         log.write(apnd)
 
 
@@ -125,12 +125,12 @@ class TwoPass(Thread):
 
             # --------------- first pass
             pass1 = ('%s %s %s -i "%s" %s %s '
-                     '-y %s' % (ffmpeg_url,
-                                ffmpeg_loglev,
+                     '-y %s' % (FFMPEG_URL,
+                                FFMPEG_LOGLEV,
                                 self.time_seq,
                                 files,
                                 self.passList[0],
-                                threads,
+                                FF_THREADS,
                                 self.nul,
                                 ))
             self.count += 1
@@ -205,13 +205,13 @@ class TwoPass(Thread):
                              )
             # --------------- second pass ----------------#
             pass2 = ('%s %s %s -i "%s" %s %s %s '
-                     '-y "%s/%s.%s"' % (ffmpeg_url,
-                                        ffmpeg_loglev,
+                     '-y "%s/%s.%s"' % (FFMPEG_URL,
+                                        FFMPEG_LOGLEV,
                                         self.time_seq,
                                         files,
                                         self.passList[1],
                                         volume,
-                                        threads,
+                                        FF_THREADS,
                                         folders,
                                         filename,
                                         outext,

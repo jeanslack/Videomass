@@ -46,14 +46,14 @@ from videomass3.vdms_frames import shownormlist
 GREY_DISABLED = 165, 165, 165
 AZURE_NEON = 158, 201, 232
 # set colour in HTML rappresentetion:
-azure = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
-yellow = '#a29500'
-red = '#ea312d'
-orange = '#f28924'
-greenolive = '#8aab3c'
-green = '#268826'
-limegreen = '#87A615'
-tropgreen = '#15A660'
+AZURE = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
+YELLOW = '#a29500'
+RED = '#ea312d'
+ORANGE = '#f28924'
+GREENOLIVE = '#8aab3c'
+GREEN = '#268826'
+LIMEGREEN = '#87A615'
+TROPGREEN = '#15A660'
 # Parameters of the selected profile:
 array = []
 # default options:
@@ -87,7 +87,7 @@ class PrstPan(wx.Panel):
         self.src_prst = os.path.join(path_srcShare, 'presets')  # origin/share
         self.user_prst = os.path.join(path_confdir, 'presets')  # conf dir
         self.PWD = PWD  # current work of videomass
-        self.OS = OS
+        self.oS = OS
         self.parent = parent
         self.txtcmdedited = False  # show dlg if cmdline is edited
         self.normdetails = []
@@ -535,10 +535,10 @@ class PrstPan(wx.Panel):
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
 
             if self.rdbx_norm.GetSelection() == 1:
-                self.parent.statusbar_msg(msg_1, azure)
+                self.parent.statusbar_msg(msg_1, AZURE)
                 self.spin_target.SetValue(-1.0)
             else:
-                self.parent.statusbar_msg(msg_2, tropgreen)
+                self.parent.statusbar_msg(msg_2, TROPGREEN)
                 self.spin_target.SetValue(-20.0)
 
             self.peakpanel.Show(), self.btn_voldect.Enable()
@@ -548,7 +548,7 @@ class PrstPan(wx.Panel):
             del self.normdetails[:]
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
-            self.parent.statusbar_msg(msg_3, limegreen)
+            self.parent.statusbar_msg(msg_3, LIMEGREEN)
             self.peakpanel.Hide(), self.ebupanel.Show()
             cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
             del self.normdetails[:]
@@ -641,12 +641,12 @@ class PrstPan(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, orange)
+            self.parent.statusbar_msg(msg3, ORANGE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, yellow)
+                self.parent.statusbar_msg(msg2, YELLOW)
         if self.rdbx_norm.GetSelection() == 1:
             cmd_opt["PEAK"] = volume
         elif self.rdbx_norm.GetSelection() == 2:
@@ -669,7 +669,7 @@ class PrstPan(wx.Panel):
 
         audionormlist = shownormlist.NormalizationList(title,
                                                        self.normdetails,
-                                                       self.OS)
+                                                       self.oS)
         audionormlist.Show()
     # ------------------------------------------------------------------#
 
@@ -856,7 +856,7 @@ class PrstPan(wx.Panel):
         """
         if array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      yellow)
+                                      YELLOW)
             return
         else:
             filename = self.cmbx_prst.GetValue()
@@ -879,7 +879,7 @@ class PrstPan(wx.Panel):
         """
         if array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      yellow)
+                                      YELLOW)
         else:
             filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
@@ -917,7 +917,7 @@ class PrstPan(wx.Panel):
         # ------------ VALIDAZIONI: --------------
         if array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      yellow)
+                                      YELLOW)
             return
 
         if(array[2].strip() != self.txt_1cmd.GetValue().strip() or

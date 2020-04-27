@@ -7,6 +7,22 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+April 27, 2020 V.2.0.6
++------------------------------------+
+
+BUGS:
+    * Fixed main_frame.py, line 908, in ydl_latest wx.ICON_INFORMATION, self)
+      TypeError: MessageBox(): argument 3 has unexpected type 'str'
+
+IMPROVEMENTS:
+    * warning message in the status bar when the list of incoming files has
+      changed
+    * Improve choose topic panel
+
+NEWS:
+    *
+
++------------------------------------+
 April 26, 2020 V.2.0.5
 +------------------------------------+
 

@@ -39,26 +39,26 @@ from videomass3.vdms_dialogs import presets_addnew
 from videomass3.vdms_dialogs import video_filters
 from videomass3.vdms_frames import shownormlist
 from videomass3.vdms_utils import optimizations
-
+# # colour rappresentetion in rgb
 GREY_DISABLED = 165, 165, 165
 GREY_DARK = 28, 28, 28
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
-# set widget colours in some case with html rappresentetion:
-azure = '#15a6a6'
-yellow = '#a29500'
-red = '#ea312d'
-orange = '#f28924'
-greenolive = '#6aaf23'
-green = '#268826'
-ciano = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
-violet = '#D64E93'
-limegreen = '#87A615'
-tropgreen = '#15A660'
+# colour rappresentetion in html
+AZURE = '#15a6a6'
+YELLOW = '#a29500'
+RED = '#ea312d'
+ORANGE = '#f28924'
+GREENOLIVE = '#6aaf23'
+GREEN = '#268826'
+CIANO = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
+VIOLET = '#D64E93'
+LIMEGREEN = '#87A615'
+TROPGREEN = '#15A660'
 
 # setting the path to the configuration directory:
 get = wx.GetApp()
-DIRconf = get.DIRconf
+DIR_CONF = get.DIRconf
 
 # Dictionary definition for command settings:
 cmd_opt = {"VidCmbxStr": "x264", "OutputFormat": "mkv",
@@ -199,7 +199,7 @@ class AV_Conv(wx.Panel):
         # set attributes:
         self.parent = parent
         self.normdetails = []
-        self.OS = OS
+        self.oS = OS
         self.btn_color = btn_color
         self.fBtnC = fontBtncolor
 
@@ -1704,16 +1704,16 @@ class AV_Conv(wx.Panel):
                    ))
         if self.rdbx_normalize.GetSelection() == 1:  # is checked
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_1, azure)
+            self.parent.statusbar_msg(msg_1, AZURE)
             self.peakpanel.Show()
 
         elif self.rdbx_normalize.GetSelection() == 2:
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_2, tropgreen)
+            self.parent.statusbar_msg(msg_2, TROPGREEN)
             self.peakpanel.Show(), self.spin_target.SetValue(-20)
 
         elif self.rdbx_normalize.GetSelection() == 3:
-            self.parent.statusbar_msg(msg_3, limegreen)
+            self.parent.statusbar_msg(msg_3, LIMEGREEN)
             self.normalize_default(False)
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
@@ -1815,12 +1815,12 @@ class AV_Conv(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, orange)
+            self.parent.statusbar_msg(msg3, ORANGE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, yellow)
+                self.parent.statusbar_msg(msg2, YELLOW)
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             cmd_opt["PEAK"] = volume
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
@@ -1842,7 +1842,7 @@ class AV_Conv(wx.Panel):
 
         audionormlist = shownormlist.NormalizationList(title,
                                                        self.normdetails,
-                                                       self.OS)
+                                                       self.oS)
         audionormlist.Show()
     # ------------------------------------------------------------------#
 
@@ -2440,7 +2440,7 @@ class AV_Conv(wx.Panel):
 
         with wx.FileDialog(None, _("Videomass: Choose a preset to "
                                    "storing new profile"),
-                           defaultDir=os.path.join(DIRconf, 'presets'),
+                           defaultDir=os.path.join(DIR_CONF, 'presets'),
                            wildcard="Videomass presets (*.prst;)|*.prst;",
                            style=wx.FD_OPEN |
                            wx.FD_FILE_MUST_EXIST) as fileDialog:

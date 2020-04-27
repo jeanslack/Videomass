@@ -58,8 +58,10 @@ def info(parent, videomass_icon):
     info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
     info.SetName("%s" % Name)
     info.SetVersion("v%s" % Version)
-    info.SetDescription(_("Yet another UI for audio and video "
-                          "conversions with FFmpeg"))
+    #info.SetDescription(_("Yet another UI for audio and video "
+                          #"conversions with FFmpeg"))
+    info.SetDescription(_("Multiplatform graphic interface "
+                          "for FFmpeg and youtube-dl.\n"))
     info.SetCopyright("Copyright %s %s" % (Copyright, Author))
     info.SetWebSite(Website)
     info.SetLicence(Long_Lic)

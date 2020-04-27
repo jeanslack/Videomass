@@ -48,10 +48,10 @@ from videomass3.vdms_dialogs.popup import PopupDialog
 
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf
-ffprobe_url = get.ffprobe_url
-ffmpeg_url = get.ffmpeg_url
-ffplay_url = get.ffplay_url
+DIR_CONF = get.DIRconf
+FFPROBE_URL = get.FFPROBE_url
+FFMPEG_URL = get.FFMPEG_url
+FFPLAY_URL = get.FFPLAY_url
 
 
 def stream_info(title, filepath):
@@ -63,7 +63,7 @@ def stream_info(title, filepath):
         with open(filepath):
             miniframe = Mediainfo(title,
                                   filepath,
-                                  ffprobe_url,
+                                  FFPROBE_URL,
                                   OS,
                                   )
             miniframe.Show()
@@ -96,7 +96,7 @@ def probeInfo(filename):
     It is called by MyListCtrl(wx.ListCtrl) only.
     Return tuple object with two items: (data, None) or (None, error).
     """
-    metadata = FFProbe(ffprobe_url, filename, parse=False, writer='json')
+    metadata = FFProbe(FFPROBE_URL, filename, parse=False, writer='json')
 
     if metadata.ERROR():  # first execute a control for errors:
         err = metadata.error
@@ -134,7 +134,7 @@ def test_conf():
     and send it to dialog box.
 
     """
-    out = ff_conf(ffmpeg_url, OS)
+    out = ff_conf(FFMPEG_URL, OS)
     if 'Not found' in out[0]:
         wx.MessageBox("\n{0}".format(out[1]),
                       "Videomass: error",
@@ -143,9 +143,9 @@ def test_conf():
         return
     else:
         miniframe = ffmpeg_conf.Checkconf(out,
-                                          ffmpeg_url,
-                                          ffprobe_url,
-                                          ffplay_url,
+                                          FFMPEG_URL,
+                                          FFPROBE_URL,
+                                          FFPLAY_URL,
                                           OS,
                                           )
         miniframe.Show()
@@ -158,7 +158,7 @@ def test_formats():
     imported FFmpeg executable and send it to dialog box.
 
     """
-    diction = ff_formats(ffmpeg_url, OS)
+    diction = ff_formats(FFMPEG_URL, OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
                       "Videomass: error",
@@ -178,7 +178,7 @@ def test_codecs(type_opt):
     corresponding dialog box.
 
     """
-    diction = ff_codecs(ffmpeg_url, type_opt, OS)
+    diction = ff_codecs(FFMPEG_URL, type_opt, OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
                       "Videomass: error",
@@ -194,10 +194,10 @@ def test_codecs(type_opt):
 def findtopic(topic):
     """
     Call * check_bin.ff_topic * to run the ffmpeg command to search
-    a certain topic. The ffmpeg_url is given by ffmpeg-search dialog.
+    a certain topic. The FFMPEG_URL is given by ffmpeg-search dialog.
 
     """
-    retcod = ff_topics(ffmpeg_url, topic, OS)
+    retcod = ff_topics(FFMPEG_URL, topic, OS)
 
     if 'Not found' in retcod[0]:
         s = ("\n{0}".format(retcod[1]))
@@ -214,9 +214,9 @@ def openpath(where):
 
     """
     if not where:
-        pathname = DIRconf
+        pathname = DIR_CONF
     else:
-        pathname = os.path.join(DIRconf, where)
+        pathname = os.path.join(DIR_CONF, where)
     if not os.path.exists(pathname):
         wx.MessageBox(_("Output log has not been created yet."),
                       "Videomass",

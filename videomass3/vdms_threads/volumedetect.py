@@ -33,9 +33,9 @@ from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 # path to the configuration directory:
 get = wx.GetApp()
-DIRconf = get.DIRconf
+DIR_CONF = get.DIRconf
 OS = get.OS
-ffmpeg_url = get.ffmpeg_url
+FFMPEG_URL = get.FFMPEG_url
 
 if not OS == 'Windows':
     import shlex
@@ -71,9 +71,9 @@ class VolumeDetectThread(Thread):
         self.data = None
         self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
 
-        self.logf = "%s/log/%s" % (DIRconf, 'Videomass_volumedected.log')
+        self.logf = "%s/log/%s" % (DIR_CONF, 'Videomass_volumedected.log')
 
-        write_log('Videomass_volumedected.log', "%s/log" % DIRconf)
+        write_log('Videomass_volumedected.log', "%s/log" % DIR_CONF)
         # set initial file LOG
 
         self.start()  # start the thread (va in self.run())
@@ -91,7 +91,7 @@ class VolumeDetectThread(Thread):
 
         for files in self.filelist:
             cmd = ('{0} {1} -i "{2}" -hide_banner {3} -af volumedetect '
-                   '-vn -sn -dn -f null {4}').format(ffmpeg_url,
+                   '-vn -sn -dn -f null {4}').format(FFMPEG_URL,
                                                      self.time_seq,
                                                      files,
                                                      self.audiomap,

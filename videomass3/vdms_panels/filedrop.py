@@ -41,7 +41,7 @@ dirname = os.path.expanduser('~')  # /home/user/
 data_files = []
 
 get = wx.GetApp()
-userpath = get.userpath  # path to the configuration directory
+USER_FILESAVE = get.USERfilesave  # path to the configuration directory
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -129,7 +129,7 @@ class FileDnD(wx.Panel):
     def __init__(self, parent):
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent  # parent is the MainFrame
-        self.file_dest = dirname if not userpath else userpath
+        self.file_dest = dirname if not USER_FILESAVE else USER_FILESAVE
         self.selected = None  # tells if an imported file is selected or not
         wx.Panel.__init__(self, parent=parent)
         # This builds the list control box:
@@ -198,11 +198,11 @@ class FileDnD(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID1"):
-            self.itemThreeId = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.itemThreeId)
+            self.popupID1 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
         # build the menu
         menu = wx.Menu()
-        itemThree = menu.Append(self.itemThreeId,
+        itemThree = menu.Append(self.popupID1,
                                 _("Remove the selected file")
                                 )
         # show the popup menu

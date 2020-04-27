@@ -51,9 +51,9 @@ class FirstStart(wx.Dialog):
         Set attribute with GetApp (see Videomass.py __init__)
         """
         get = wx.GetApp()
-        self.FILEconf = get.FILEconf
-        self.WORKdir = get.WORKdir
-        self.OS = get.OS
+        self.getfileconf = get.FILEconf
+        self.workdir = get.WORKdir
+        self.oS = get.OS
 
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor"""
@@ -122,7 +122,7 @@ class FirstStart(wx.Dialog):
         ffplay.exe inside on Windows NT.
 
         """
-        if self.OS == 'Windows':
+        if self.oS == 'Windows':
             listFF = {'ffmpeg.exe': "", 'ffprobe.exe': "", 'ffplay.exe': ""}
         else:
             listFF = {'ffmpeg': "", 'ffprobe': "", 'ffplay': ""}
@@ -170,7 +170,7 @@ class FirstStart(wx.Dialog):
         otherwise write the executable pathname in the configuration file.
         """
         local = False
-        if self.OS == 'Windows':
+        if self.oS == 'Windows':
             biname = ['ffmpeg.exe', 'ffprobe.exe', 'ffplay.exe']
         else:
             biname = ['ffmpeg', 'ffprobe', 'ffplay']
@@ -181,7 +181,7 @@ class FirstStart(wx.Dialog):
                 no_which = False
             else:
                 print("Check for: '%s' ..Not Installed" % required)
-                if self.OS == 'Darwin':
+                if self.oS == 'Darwin':
                     if os.path.isfile("/usr/local/bin/%s" % required):
                         local = True
                         no_which = False
@@ -190,13 +190,13 @@ class FirstStart(wx.Dialog):
                         local = False
                         no_which = True
                         break
-                elif self.OS == 'Windows':
+                elif self.oS == 'Windows':
                     no_which = True
                     break
         if no_which:
             for x in biname:
                 if not os.path.isfile("%s/FFMPEG_BIN/bin/%s" %
-                                      (self.WORKdir, x)):
+                                      (self.workdir, x)):
                     noexists = True
                     break
                 else:
@@ -217,13 +217,13 @@ class FirstStart(wx.Dialog):
                                  wx.ICON_QUESTION |
                                  wx.YES_NO,
                                  None) == wx.YES:
-                    ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir,
+                    ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
                                                        biname[0]
                                                        )
-                    ffprobe = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir,
+                    ffprobe = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
                                                         biname[1]
                                                         )
-                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (self.WORKdir,
+                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
                                                        biname[2]
                                                        )
                 else:
@@ -250,7 +250,7 @@ class FirstStart(wx.Dialog):
         ffplay = FFmpeg[2]
         rowsNum = []  # rows number list
         dic = {}  # used for debug
-        with open(self.FILEconf, 'r') as f:
+        with open(self.getfileconf, 'r') as f:
             full_list = f.readlines()
         for a, b in enumerate(full_list):
             if not b.startswith('#'):
@@ -261,7 +261,7 @@ class FirstStart(wx.Dialog):
         full_list[rowsNum[8]] = '%s\n' % ffprobe
         full_list[rowsNum[10]] = '%s\n' % ffplay
 
-        with open(self.FILEconf, 'w') as fileconf:
+        with open(self.getfileconf, 'w') as fileconf:
             for i in full_list:
                 fileconf.write('%s' % i)
 

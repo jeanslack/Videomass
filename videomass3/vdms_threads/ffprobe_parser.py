@@ -37,7 +37,7 @@ class FFProbe(object):
     FFProbe wraps the ffprobe command and pulls the data into
     an object form:
 
-    `data = FFProbe(ffprobe_url, filename_url, parse=True,
+    `data = FFProbe(FFPROBE_URL, filename_url, parse=True,
                     pretty=True, select=None, entries=None,
                     show_format=True, show_streams=True, writer=None)`
 
@@ -78,7 +78,7 @@ class FFProbe(object):
         Get simple output data:
         -----------------------
 
-            `data = FFProbe(ffprobe_url,
+            `data = FFProbe(FFPROBE_URL,
                             filename_url,
                             parse=False,
                             writer='xml')
@@ -100,7 +100,7 @@ class FFProbe(object):
 
              A example entry of a first audio streams section
 
-            `data = FFProbe(ffprobe_url,
+            `data = FFProbe(FFPROBE_URL,
                             filename_url,
                             parse=False,
                             pretty=True,
@@ -152,14 +152,14 @@ class FFProbe(object):
         <https://github.com/simonh10/ffprobe/blob/master/ffprobe/ffprobe.py>
 
     """
-    def __init__(self, ffprobe_url, filename, parse=True,
+    def __init__(self, FFPROBE_URL, filename, parse=True,
                  pretty=True, select=None, entries=None,
                  show_format=True, show_streams=True, writer=None):
         """
         -------------------
         Parameters meaning:
         -------------------
-            ffprobe_url     command name by $PATH defined or a binary url
+            FFPROBE_URL     command name by $PATH defined or a binary url
             filename_url    a pathname appropriately quoted
             parse           defines the output mode
             show_format     show format informations
@@ -197,14 +197,14 @@ class FFProbe(object):
 
         if parse:
             cmnd = ('%s -i "%s" -v error %s %s %s '
-                    '-print_format default' % (ffprobe_url,
+                    '-print_format default' % (FFPROBE_URL,
                                                filename,
                                                pretty,
                                                show_format,
                                                show_streams,)
                     )
         else:
-            cmnd = '%s -i "%s" -v error %s %s %s %s %s %s' % (ffprobe_url,
+            cmnd = '%s -i "%s" -v error %s %s %s %s %s %s' % (FFPROBE_URL,
                                                               filename,
                                                               pretty,
                                                               select,
@@ -383,7 +383,7 @@ class FFProbe(object):
         you must specify parse=False, example:
 
         `data = FFProbe(filename_url,
-                        ffprobe_url,
+                        FFPROBE_URL,
                         parse=False,
                         writer='json')`
 

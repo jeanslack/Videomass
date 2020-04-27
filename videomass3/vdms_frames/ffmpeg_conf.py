@@ -37,7 +37,7 @@ class Checkconf(wx.MiniFrame):
     sorted by topic
 
     """
-    def __init__(self, out, ffmpeg_link, ffprobe_link, ffplay_link, OS):
+    def __init__(self, out, FFMPEG_LINK, FFPROBE_LINK, FFPLAY_LINK, OS):
         """
         with 'None' not depend from parent:
         wx.Dialog.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
@@ -143,13 +143,13 @@ class Checkconf(wx.MiniFrame):
         if which(biname[0]):
             ffmpeg = _("FFmpeg   ...installed")
         else:
-            if os.path.exists(ffmpeg_link):
+            if os.path.exists(FFMPEG_LINK):
                 ffmpeg = _("FFmpeg   ...was imported locally")
 
         if which(biname[1]):
             ffprobe = _("FFprobe   ...installed")
         else:
-            if os.path.exists(ffprobe_link):
+            if os.path.exists(FFPROBE_LINK):
                 ffprobe = _("FFprobe   ...was imported locally")
             else:
                 ffprobe = _("FFprobe   ...not found !")
@@ -157,7 +157,7 @@ class Checkconf(wx.MiniFrame):
         if which(biname[2]):
             ffplay = _("FFplay   ...installed")
         else:
-            if os.path.exists(ffplay_link):
+            if os.path.exists(FFPLAY_LINK):
                 ffplay = _("FFplay   ...was imported locally")
             else:
                 ffplay = _("FFplay   ...not found !")

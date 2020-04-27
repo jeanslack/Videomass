@@ -33,7 +33,7 @@ import json
 
 # setting the path to the configuration directory:
 get = wx.GetApp()
-DIRconf = get.DIRconf
+DIR_CONF = get.DIRconf
 OS = get.OS
 
 PASS_1 = _("1-PASS, Do not start with `ffmpeg "
@@ -60,7 +60,7 @@ class MemPresets(wx.Dialog):
         arg = 'addprofile' from video and audio conversions
 
         """
-        self.path_prst = os.path.join(DIRconf, 'presets',
+        self.path_prst = os.path.join(DIR_CONF, 'presets',
                                       '%s.prst' % filename
                                       )
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'

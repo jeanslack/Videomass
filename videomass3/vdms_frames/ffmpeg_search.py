@@ -43,7 +43,7 @@ class FFmpeg_Search(wx.MiniFrame):
         given by the -h option on the FFmpeg command line.
 
         """
-        self.OS = OS
+        self.oS = OS
         self.row = None
         wx.MiniFrame.__init__(self, None)
         """

@@ -44,12 +44,17 @@ def current_release():
     Author = 'Gianluca Pernigotto (aka jeanslack)'
     Mail = '<jeanlucperni@gmail.com>'
     Comment = ("\nThanks to:\n"
-               "FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
+               "- Python <https://www.python.org/>, programming language\n"
+               "- wxPython <https://wxpython.org/>, cross-platform\n"
+               "GUI toolkit for the Python language\n"
+               "- FFmpeg, FFmpeg is a trademark of Fabrice Bellard, \n"
                "originator of the FFmpeg project:\n"
                "<http://ffmpeg.org/>\n"
-               "Material design icons from Google:\n"
-               "http://google.github.io/material-design-icons/#getting-icons"
-               "Flat Color Icons:\n"
+               "- youtube-dl: <http://ytdl-org.github.io/youtube-dl\n"
+                "Download videos from YouTube and more sites\n"
+               "- Material design icons from Google:\n"
+               "http://google.github.io/material-design-icons/#getting-icons\n"
+               "- Flat Color Icons:\n"
                "https://icons8.com/color-icons"
                )
     return (Release_Name, Program_Name, Version, Release,
@@ -64,10 +69,12 @@ def descriptions_release():
     Author = current_release()
     Mail = current_release()
 
-    short_d = ("Videomass is a cross-platform GUI for FFmpeg")
+    short_d = ("Videomass is a cross-platform GUI for FFmpeg and youtube-dl")
 
     long_d = ("-Videomass- is not a converter. It provides a graphical\n"
-              "interface to writing presets for FFmpeg\n")
+              "interface to writing presets for FFmpeg. It also provides a "
+              "simple graphical interface for downloading videos using "
+              "youtube-dl\n")
 
     short_l = ("GPL3 (Gnu Public License)")
 

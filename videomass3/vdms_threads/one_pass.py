@@ -36,10 +36,10 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIRconf = get.DIRconf  # path to the configuration directory:
-ffmpeg_url = get.ffmpeg_url
-ffmpeg_loglev = get.ffmpeg_loglev
-threads = get.threads
+DIR_CONF = get.DIRconf  # path to the configuration directory:
+FFMPEG_URL = get.FFMPEG_url
+FFMPEG_LOGLEV = get.FFMPEG_loglev
+FF_THREADS = get.FFthreads
 
 if not OS == 'Windows':
     import shlex
@@ -56,7 +56,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open("%s/log/%s" % (DIRconf, logname), "a") as log:
+    with open("%s/log/%s" % (DIR_CONF, logname), "a") as log:
         log.write(apnd)
 
 # ------------------------------ THREADS -------------------------------#
@@ -126,13 +126,13 @@ class OnePass(Thread):
             outext = source_ext if not self.extoutput else self.extoutput
 
             cmd = ('%s %s %s -i "%s" %s %s %s '
-                   '-y "%s/%s.%s"' % (ffmpeg_url,
+                   '-y "%s/%s.%s"' % (FFMPEG_URL,
                                       self.time_seq,
-                                      ffmpeg_loglev,
+                                      FFMPEG_LOGLEV,
                                       files,
                                       self.command,
                                       volume,
-                                      threads,
+                                      FF_THREADS,
                                       folders,
                                       filename,
                                       outext,
