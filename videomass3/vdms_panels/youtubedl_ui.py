@@ -96,11 +96,11 @@ class Downloader(wx.Panel):
                                 )
         self.choice.SetSelection(0)
         sizer.Add(self.choice, 0, wx.EXPAND | wx.ALL, 15)
-        grid_v = wx.FlexGridSizer(1, 7, 0, 0)
+        grid_v = wx.FlexGridSizer(1, 3, 0, 0)
         sizer.Add(grid_v, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         f = [x for x in VQUALITY.keys()]
         self.cmbx_vq = wx.ComboBox(self, wx.ID_ANY, choices=f,
-                                   size=(150, -1), style=wx.CB_DROPDOWN |
+                                   size=(200, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
                                    )
         self.cmbx_vq.SetSelection(0)
@@ -108,7 +108,7 @@ class Downloader(wx.Panel):
         grid_v.Add(self.cmbx_vq, 0, wx.ALL, 5)
         self.cmbx_aq = wx.ComboBox(self, wx.ID_ANY,
                                    choices=[x for x in AQUALITY.keys()],
-                                   size=(150, -1), style=wx.CB_DROPDOWN |
+                                   size=(200, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
                                    )
         self.cmbx_aq.SetSelection(0)
@@ -117,32 +117,35 @@ class Downloader(wx.Panel):
         grid_v.Add(self.cmbx_aq, 0, wx.ALL, 5)
         self.cmbx_af = wx.ComboBox(self, wx.ID_ANY,
                                    choices=[x for x in AFORMATS.keys()],
-                                   size=(150, -1), style=wx.CB_DROPDOWN |
+                                   size=(200, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
                                    )
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
 
+        # ----------- format code
+        grid_cod = wx.FlexGridSizer(1, 4, 0, 0)
+        sizer.Add(grid_cod, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.txt_maincode = wx.TextCtrl(self, wx.ID_ANY, "",
                                         style=wx.TE_PROCESS_ENTER,
-                                        size=(50, -1)
+                                        size=(300, -1)
                                         )
         self.txt_maincode.Disable()
         self.stext1 = wx.StaticText(self, wx.ID_ANY, (_('Enter Format Code:')))
         self.stext1.Disable()
-        grid_v.Add(self.stext1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_v.Add(self.txt_maincode, 0, wx.ALL, 5)
+        grid_cod.Add(self.stext1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_cod.Add(self.txt_maincode, 0, wx.ALL, 5)
         self.txt_maincode.WriteText('18')
         self.txt_mergecode = wx.TextCtrl(self, wx.ID_ANY, "",
                                          style=wx.TE_PROCESS_ENTER,
-                                         size=(50, -1)
+                                         size=(300, -1)
                                          )
         self.txt_mergecode.Disable()
         self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge with:')))
         self.stext2.Disable()
-        grid_v.Add(self.stext2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_v.Add(self.txt_mergecode, 0, wx.ALL, 5)
+        grid_cod.Add(self.stext2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_cod.Add(self.txt_mergecode, 0, wx.ALL, 5)
         # -------------opt
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
@@ -162,8 +165,8 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
-        line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 0))
-        sizer.Add(line_1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 10)
+        #line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 0))
+        #sizer.Add(line_1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 10)
 
         self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
                                  wx.SUNKEN_BORDER
@@ -241,27 +244,30 @@ class Downloader(wx.Panel):
                         return self.error
                     if 'entries' in meta[0]:
                         meta[0]['entries'][0]  # not parse all playlist
-                    ftime = '%s (%s sec.)' % (time_human(meta[0]['duration']),
-                                              meta[0]['duration'])
-                    date = '%s/%s/%s' % (meta[0]['upload_date'][:4],
-                                         meta[0]['upload_date'][4:6],
-                                         meta[0]['upload_date'][6:8])
+                    if 'duration' in meta[0]:
+                        ftime = '%s (%s sec.)' % (
+                                            time_human(meta[0]['duration']),
+                                            meta[0]['duration'])
+                    else:
+                        ftime = 'N/A'
+                    date = meta[0].get('upload_date')
                     self.info.append({
                                 'url': link,
-                                'title': meta[0]['title'],
-                                'categories': meta[0]['categories'],
-                                'license': meta[0]['license'],
-                                'format': meta[0]['format'],
+                                'title': meta[0].get('title'),
+                                'categories': meta[0].get('categories'),
+                                'license': meta[0].get('license'),
+                                'format': meta[0].get('format'),
                                 'upload_date': date,
-                                'uploader': meta[0]['uploader'],
-                                'view': meta[0]['view_count'],
-                                'like': meta[0]['like_count'],
-                                'dislike': meta[0]['dislike_count'],
-                                'average_rating': meta[0]['average_rating'],
-                                'id': meta[0]['id'],
+                                'uploader': meta[0].get('uploader'),
+                                'view': meta[0].get('view_count'),
+                                'like': meta[0].get('like_count'),
+                                'dislike': meta[0].get('dislike_count'),
+                                'average_rating': meta[0].get('average_rating'),
+                                'id': meta[0].get('id'),
                                 'duration': ftime,
-                                'description': meta[0]['description'],
+                                'description': meta[0].get('description'),
                                     })
+
                     self.fcode.InsertItem(index, meta[0]['title'])
                     self.fcode.SetItem(index, 1, link)
                     self.fcode.SetItemBackgroundColour(index, 'GREEN')
@@ -269,20 +275,20 @@ class Downloader(wx.Panel):
                     formats = meta[0].get('formats', [meta[0]])
                     for f in formats:
                         index += 1
-                        if f['vcodec'] == 'none':
+                        if f.get('vcodec'):
+                            vcodec = f['vcodec']
+                            fps = '%sfps' % f.get('fps')
+                        else:
                             vcodec = ''
                             fps = ''
-                        else:
-                            vcodec = f['vcodec']
-                            fps = '%sfps' % f['fps']
-                        if f['acodec'] == 'none':
-                            acodec = 'Video only'
-                        else:
+                        if f.get('acodec'):
                             acodec = f['acodec']
-                        if f['filesize']:
+                        else:
+                            acodec = 'Video only'
+                        if f.get('filesize'):
                             size = format_bytes(float(f['filesize']))
                         else:
-                            size = ''
+                            size = 'N/A'
 
                         self.fcode.InsertItem(index, '')
                         self.fcode.SetItem(index, 1, '')
@@ -302,6 +308,7 @@ class Downloader(wx.Panel):
         Parsing the iterated items getting from the output
         of the generator object *youtube_getformatcode_exec* .
         """
+        array = list()
         if not self.info:
             index = 0
             for link in self.parent.data_url:
@@ -313,15 +320,22 @@ class Downloader(wx.Panel):
                         wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)
                         return
                     self.info.append(link)
-                    for fc in meta[0].split('\n'):
-                        if fc != '':
-                            if fc.split()[0].isdigit():
-                                index += 1
-                                self.fcode.InsertItem(index, '')
-                                self.fcode.SetItem(index, 1, fc.split()[0])
-                                self.fcode.SetItem(index, 2, fc.split()[1])
-                                note = ' '.join(fc.split()[2:])
-                                self.fcode.SetItem(index, 3, note)
+                    i = 0
+                    for count, fc in enumerate(meta[0].split('\n')):
+                        if not count > i:
+                            i +=1
+                        elif fc != '':
+                            print(count, i ,fc)
+                            # listctrl
+                            index += 1
+                            self.fcode.InsertItem(index, '')
+                            self.fcode.SetItem(index, 1, fc.split()[0])
+                            self.fcode.SetItem(index, 2, fc.split()[1])
+                            note = ' '.join(fc.split()[2:])
+                            self.fcode.SetItem(index, 3, note)
+
+                        if fc.startswith('format code '):
+                            i = count  # limit
     # -----------------------------------------------------------------#
 
     def on_show_info(self):
@@ -446,17 +460,17 @@ class Downloader(wx.Panel):
             code1 = self.txt_maincode.GetValue().strip()
             code2 = self.txt_mergecode.GetValue().strip()
             code = code1 if not code2 else code1 + '+' + code2
-            ckstr = [x.isdigit() for x in code if x
-                     not in [c for c in ['/', '+']]
-                     ]
-            if False in ckstr or not ckstr or not code1:
-                wx.MessageBox(_('Enter only "Format Code" integer in the '
-                                'text box, please. You can specify multiple '
-                                'format codes by using slash, e.g. 22/17/18'),
-                              'Videomass', wx.ICON_INFORMATION)
-                self.txt_maincode.SetBackgroundColour((255, 192, 255))
-                self.txt_mergecode.SetBackgroundColour((255, 192, 255))
-                return
+            #ckstr = [x.isdigit() for x in code if x
+                     #not in [c for c in ['/', '+']]
+                     #]
+            #if False in ckstr or not ckstr or not code1:
+                #wx.MessageBox(_('Enter only "Format Code" integer in the '
+                                #'text box, please. You can specify multiple '
+                                #'format codes by using slash, e.g. 22/17/18'),
+                              #'Videomass', wx.ICON_INFORMATION)
+                #self.txt_maincode.SetBackgroundColour((255, 192, 255))
+                #self.txt_mergecode.SetBackgroundColour((255, 192, 255))
+                #return
             return code
 
         if pylibYdl is None:  # ----------- youtube-dl is used as library

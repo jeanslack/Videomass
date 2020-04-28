@@ -84,29 +84,27 @@ class Choose_Topic(wx.Panel):
         self.oS = OS
         version = current_release()
 
-        wx.Panel.__init__(self, parent, -1)
+        wx.Panel.__init__(self, parent, -1, style=wx.SUNKEN_BORDER)
 
         welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")))
         version = wx.StaticText(self, wx.ID_ANY, (_('Version {}'
                                                     ).format(version[2])))
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        #sizer_base.Add(welcome, 0, wx.TOP |
-                       #wx.ALIGN_CENTER_VERTICAL |
-                       #wx.ALIGN_CENTER_HORIZONTAL, 15
-                       #)
         grid_buttons = wx.FlexGridSizer(5, 0, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
 
-        prst_mng = _('Presets Manager   -   Create, edit and use your favorite presets directly with full support for all FFmpeg formats')
-        video_lab = _('    Audio/Video Conversions   -   Set basic parameters for audio and video conversion control')
-        youtube_lab = _('    Download from YouTube   -   Simply download videos from YouTube, Facebook and many other sites.')
+        prst_mng = _('\tPresets Manager - Create, edit and use your favorite presets directly with full support for all FFmpeg formats')
+        video_lab = _('\tAudio/Video Conversions - Set basic parameters for audio and video conversion control')
+        youtube_lab = _('\tDownload from YouTube - Simply download videos from YouTube, Facebook and many other sites.')
 
-
-        self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1, -1))
+        self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng,
+                                     size=(-1, -1), style=wx.BU_LEFT)
         self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
-        self.video = wx.Button(self, wx.ID_ANY, video_lab, size=(-1, -1))
+        self.video = wx.Button(self, wx.ID_ANY, video_lab,
+                               size=(-1, -1), style=wx.BU_LEFT)
         self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
-        self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1, -1))
+        self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab,
+                                 size=(-1, -1), style=wx.BU_LEFT)
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn), wx.LEFT)
 
         grid_buttons.AddMany([(welcome, 0, wx.ALIGN_CENTER_VERTICAL |
@@ -144,8 +142,8 @@ class Choose_Topic(wx.Panel):
             welcome.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            welcome.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
-            version.SetFont(wx.Font(9, wx.SWISS, wx.ITALIC, wx.NORMAL))
+            welcome.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
 
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.video)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
