@@ -131,7 +131,7 @@ class Downloader(wx.Panel):
                                         style=wx.TE_MULTILINE |
                                         wx.HSCROLL |
                                         wx.TE_RICH2,
-                                        size=(180, -1)
+                                        size=(180, 35)
                                         )
         self.txt_maincode.Disable()
         self.stext1 = wx.StaticText(self, wx.ID_ANY, (_('Enter Format Code:')))
@@ -142,7 +142,7 @@ class Downloader(wx.Panel):
                                          style=wx.TE_MULTILINE |
                                          wx.HSCROLL |
                                          wx.TE_RICH2,
-                                         size=(180, -1)
+                                         size=(180, 35)
                                          )
         self.txt_mergecode.Disable()
         self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge with:')))
@@ -417,7 +417,7 @@ class Downloader(wx.Panel):
     def on_show_info(self):
         """
         show data information. This method is called by the main frame
-        when the 'show stream information' button is pressed.
+        when the 'Show More' button is pressed.
 
         """
         if pylibYdl is not None:  # YuotubeDL is not used as module
@@ -437,28 +437,15 @@ class Downloader(wx.Panel):
 
     def on_format_codes(self):
         """
-        Show listctrl to choose format code
-
+        get data and info and show listctrl to choose format code
         """
         if not self.info:
             if pylibYdl is not None:  # youtube-dl as executable
                 self.get_executableformatcode()
-                #self.txt_maincode.Clear()
-                #self.txt_mergecode.Clear()
-                #self.fcode.Enable()
-                #self.Layout()
             else:
                 self.get_libraryformatcode()
-
-            #if not self.info:  # youtube-dl as library
-                #error = self.get_libraryformatcode()
-                #if error:
-                    #return
-
-        self.txt_maincode.Clear()
-        self.txt_mergecode.Clear()
         self.fcode.Enable()
-        #self.Layout()
+        #self.Layout()  # only if self.fcode.Show()
     # -----------------------------------------------------------------#
 
     def on_Choice(self, event):
@@ -467,24 +454,26 @@ class Downloader(wx.Panel):
             self.cmbx_vq.Enable(), self.txt_maincode.Disable()
             self.fcode.Disable(), self.stext1.Disable()
             self.stext2.Disable(), self.txt_mergecode.Disable()
+            self.txt_maincode.Clear(), self.txt_mergecode.Clear()
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
             self.cmbx_vq.Enable(), self.txt_maincode.Disable()
             self.fcode.Disable(), self.stext1.Disable()
             self.stext2.Disable(), self.txt_mergecode.Disable()
+            self.txt_maincode.Clear(), self.txt_mergecode.Clear()
 
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Enable(), self.txt_maincode.Disable()
             self.fcode.Disable(), self.stext1.Disable()
             self.stext2.Disable(), self.txt_mergecode.Disable()
+            self.txt_maincode.Clear(), self.txt_mergecode.Clear()
 
         elif self.choice.GetSelection() == 3:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable(), self.txt_maincode.Enable()
-            self.fcode.Enable(),
-            self.stext1.Enable()
+            self.fcode.Enable(), self.stext1.Enable()
             self.stext2.Enable(), self.txt_mergecode.Enable()
             self.on_format_codes()
     # -----------------------------------------------------------------#
@@ -543,17 +532,9 @@ class Downloader(wx.Panel):
             code1 = self.txt_maincode.GetValue().strip()
             code2 = self.txt_mergecode.GetValue().strip()
             code = code1 if not code2 else code1 + '+' + code2
-            #ckstr = [x.isdigit() for x in code if x
-                     #not in [c for c in ['/', '+']]
-                     #]
-            #if False in ckstr or not ckstr or not code1:
-                #wx.MessageBox(_('Enter only "Format Code" integer in the '
-                                #'text box, please. You can specify multiple '
-                                #'format codes by using slash, e.g. 22/17/18'),
-                              #'Videomass', wx.ICON_INFORMATION)
-                #self.txt_maincode.SetBackgroundColour((255, 192, 255))
-                #self.txt_mergecode.SetBackgroundColour((255, 192, 255))
-                #return
+            # ckstr = [x.isdigit() for x in code if x
+                     # not in [c for c in ['/', '+']]
+                     # ]
             return code
 
         if pylibYdl is None:  # ----------- youtube-dl is used as library

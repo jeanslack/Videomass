@@ -62,6 +62,7 @@ YELLOW_LMN = 255, 255, 0
 BLUE = 0, 7, 12
 # colour rappresentetion in html
 ORANGE = '#f28924'
+YELLOW = '#a29500'
 
 # set widget colours in some case with html rappresentetion:
 # AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
@@ -976,7 +977,6 @@ class MainFrame(wx.Frame):
         """
         jump on start panel
         """
-        print('start')
         self.choosetopicRetrieve()
     # ------------------------------------------------------------------#
 
@@ -984,30 +984,33 @@ class MainFrame(wx.Frame):
         """
         jump on Presets Manager panel
         """
-        self.topicname = 'Presets Manager'
-        print('prst')
-
-        self.on_Forward(self)
+        if not self.file_src:
+            self.statusbar_msg('No files added yet', YELLOW)
+        else:
+            self.topicname = 'Presets Manager'
+            self.on_Forward(self)
     # ------------------------------------------------------------------#
 
     def avPan(self, event):
         """
         jump on AVconversions panel
         """
-        self.topicname = 'Audio/Video Conversions'
-        print('avpan')
-
-        self.on_Forward(self)
+        if not self.file_src:
+            self.statusbar_msg('No files added yet', YELLOW)
+        else:
+            self.topicname = 'Audio/Video Conversions'
+            self.on_Forward(self)
     # ------------------------------------------------------------------#
 
     def ydlPan(self, event):
         """
         jumpe on youtube downloader
         """
-        self.topicname = 'Youtube Downloader'
-        print('ydlpan')
-
-        self.on_Forward(self)
+        if not self.data_url:
+            self.statusbar_msg('No URL added yet', YELLOW)
+        else:
+            self.topicname = 'Youtube Downloader'
+            self.on_Forward(self)
     # ------------------------------------------------------------------#
 
 
@@ -1205,7 +1208,7 @@ class MainFrame(wx.Frame):
         elif self.topicname == 'Youtube Downloader':
             data = self.textDnDTarget.topic_Redirect()
             if not data:
-                wx.MessageBox(_('No URL added'), "Videomass",
+                wx.MessageBox(_('No URL added yet'), "Videomass",
                               wx.ICON_INFORMATION, self)
                 return
             self.youtube_Downloader(self, data)
