@@ -7,25 +7,30 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-April 27, 2020 V.2.0.6
+April 29, 2020 V.2.1.0
 +------------------------------------+
 
 BUGS:
     * Fixed main_frame.py, line 908, in ydl_latest wx.ICON_INFORMATION, self)
-      TypeError: MessageBox(): argument 3 has unexpected type 'str'
+      TypeError: MessageBox(): argument 3 has unexpected type 'str' .
     * [YOUTUBE DOWNLOADER] fixed `Download by Format Code` from sites other
-      that YouTube
+      that YouTube.
     * [YOUTUBE DOWNLOADER] fixed `Show More` information from sites other
       that YouTube.
 
 
 IMPROVEMENTS:
     * warning message in the status bar when the list of incoming files has
-      changed
-    * Improve choose topic panel buttons
+      changed.
+    * Improve choose topic panel buttons.
+    * Some cosmetic layout.
+    * [YOUTUBE DOWNLOADER] Improved method and design on inserting and appending
+      `Format Code` on text boxes.
+    * Added new menu to quickly jump on panels.
 
 NEWS:
-    *
+    * [YOUTUBE DOWNLOADER] New context menu on list control to choice quickly
+      the Foemat Code to appending on text boxes.
 
 +------------------------------------+
 April 26, 2020 V.2.0.5

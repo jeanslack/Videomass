@@ -74,6 +74,13 @@ else:
     msgerr = _('{}\n\nyoutube-dl: no library or executable '
                'found .').format(pylibYdl)
 
+prst_mng = _('\tPresets Manager - Create and use directly your favorite '
+             'FFmpeg presets with full formats support. ')
+video_lab = _('\tA set of useful tools for audio and video. Convert or save '
+              'your profiles and reuse them with Presets Manager. ')
+youtube_lab = _('\tEasily download videos in different formats from YouTube, '
+                'Facebook and many other sites. ')
+
 
 class Choose_Topic(wx.Panel):
     """
@@ -92,10 +99,6 @@ class Choose_Topic(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_buttons = wx.FlexGridSizer(5, 0, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
-
-        prst_mng = _('\tPresets Manager - Create, edit and use your favorite presets directly with full support for all FFmpeg formats')
-        video_lab = _('\tAudio/Video Conversions - Set basic parameters for audio and video conversion control')
-        youtube_lab = _('\tDownload from YouTube - Simply download videos from YouTube, Facebook and many other sites.')
 
         self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng,
                                      size=(-1, -1), style=wx.BU_LEFT)

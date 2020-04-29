@@ -60,7 +60,7 @@ def info(parent, videomass_icon):
     info.SetVersion("v%s" % Version)
     #info.SetDescription(_("Yet another UI for audio and video "
                           #"conversions with FFmpeg"))
-    info.SetDescription(_("Multiplatform graphic interface "
+    info.SetDescription(_("Multi-platform graphic interface "
                           "for FFmpeg and youtube-dl.\n"))
     info.SetCopyright("Copyright %s %s" % (Copyright, Author))
     info.SetWebSite(Website)

@@ -33,6 +33,8 @@ from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
 
 # cnostants
+RED = '#ea312d'
+
 VQUALITY = {('Best quality video'): ['best', 'best'],
             ('Worst quality video'): ['worst', 'worst']}
 
@@ -72,13 +74,11 @@ class Downloader(wx.Panel):
         """
         The first item of the self.info is a complete list of all
         informations getting by extract_info method from youtube_dl
-        module. The second item can be a status error witch sets the
-        self.error attribute.
+        module.
         """
         self.parent = parent
         self.oS = OS
         self.info = []
-        self.error = False
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -128,18 +128,21 @@ class Downloader(wx.Panel):
         grid_cod = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_cod, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.txt_maincode = wx.TextCtrl(self, wx.ID_ANY, "",
-                                        style=wx.TE_PROCESS_ENTER,
-                                        size=(300, -1)
+                                        style=wx.TE_MULTILINE |
+                                        wx.HSCROLL |
+                                        wx.TE_RICH2,
+                                        size=(180, -1)
                                         )
         self.txt_maincode.Disable()
         self.stext1 = wx.StaticText(self, wx.ID_ANY, (_('Enter Format Code:')))
         self.stext1.Disable()
         grid_cod.Add(self.stext1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grid_cod.Add(self.txt_maincode, 0, wx.ALL, 5)
-        self.txt_maincode.WriteText('18')
         self.txt_mergecode = wx.TextCtrl(self, wx.ID_ANY, "",
-                                         style=wx.TE_PROCESS_ENTER,
-                                         size=(300, -1)
+                                         style=wx.TE_MULTILINE |
+                                         wx.HSCROLL |
+                                         wx.TE_RICH2,
+                                         size=(180, -1)
                                          )
         self.txt_mergecode.Disable()
         self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge with:')))
@@ -205,8 +208,10 @@ class Downloader(wx.Panel):
             self.fcode.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.fcode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+            self.txt_maincode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.txt_mergecode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
 
-        # self.fcode.Hide()
+        # self.fcode.Disable()
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
@@ -219,16 +224,90 @@ class Downloader(wx.Panel):
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
+        self.txt_maincode.Bind(wx.EVT_TEXT, self.main_code)
+        self.fcode.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
     # -----------------------------------------------------------------#
 
-    def parse_info(self):
+    def main_code(self, event):
+        '''default status bar when edit'''
+        if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
+            self.parent.statusbar_msg('Youtube Downloader', None)
+    # ----------------------------------------------------------------------
+
+    def onContext(self, event):
+        """
+        Create and show a Context Menu
+        """
+        # only do this part the first time so the events are only bound once
+        if not hasattr(self, "popupID1"):
+            self.popupID1 = wx.NewId()
+            self.popupID2 = wx.NewId()
+            self.popupID3 = wx.NewId()
+            self.popupID4 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID3)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID4)
+        # build the menu
+        menu = wx.Menu()
+        itemOne = menu.Append(self.popupID1, _("Insert Format Code"))
+        itemThree = menu.Append(self.popupID3, _("Append Format Code"))
+        menu.AppendSeparator()
+        itemTwo = menu.Append(self.popupID2, _("Insert for merging"))
+        itemFour = menu.Append(self.popupID4, _("Append for merging"))
+        # show the popup menu
+        self.PopupMenu(menu)
+        menu.Destroy()
+    # ----------------------------------------------------------------------
+
+    def onPopup(self, event):
+        """
+        Evaluate the label string of the menu item selected and starts
+        the related process
+        """
+        itemId = event.GetId()
+        menu = event.GetEventObject()
+        menuItem = menu.FindItemById(itemId)
+        col = 2 if pylibYdl is None else 1
+
+        item = self.fcode.GetFocusedItem()
+        fc = self.fcode.GetItemText(item, col)
+
+        if menuItem.GetLabel() == _("Append Format Code"):
+            if self.txt_maincode.GetValue().strip() == '':
+                self.txt_maincode.WriteText(fc)
+            else:
+                self.txt_maincode.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
+                self.txt_maincode.WriteText('/')
+                self.txt_maincode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                self.txt_maincode.WriteText('%s' % fc)
+
+        elif menuItem.GetLabel() == _("Append for merging"):
+            if self.txt_mergecode.GetValue().strip() == '':
+                self.txt_mergecode.WriteText(fc)
+            else:
+                self.txt_mergecode.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
+                self.txt_mergecode.WriteText('/')
+                self.txt_mergecode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                self.txt_mergecode.WriteText('%s' % fc)
+
+        elif menuItem.GetLabel() == _("Insert Format Code"):
+            self.txt_maincode.Clear()
+            self.txt_maincode.WriteText(fc)
+
+        elif menuItem.GetLabel() == _("Insert for merging"):
+            self.txt_mergecode.Clear()
+            self.txt_mergecode.WriteText(fc)
+    # ----------------------------------------------------------------------
+
+    def get_libraryformatcode(self):
         """
         Data parsing from youtube-dl extract_info. This method should
         also populate the listctrl and fill the self.info list.
 
         If meta[1] is None, sets self.info attribute with dict objetc
-        items and return error=False. Otherwise self.info is a empty
-        list and return error=True.
+        items and return. Otherwise self.info is a empty
+        list.
         """
         index = 0
         if not self.info:
@@ -240,8 +319,8 @@ class Downloader(wx.Panel):
                         wx.MessageBox(meta[1], 'youtube_dl ERROR',
                                       wx.ICON_ERROR
                                       )
-                        self.info, self.error = [], True
-                        return self.error
+                        self.info = []
+                        return
                     if 'entries' in meta[0]:
                         meta[0]['entries'][0]  # not parse all playlist
                     if 'duration' in meta[0]:
@@ -299,16 +378,13 @@ class Downloader(wx.Panel):
                         self.fcode.SetItem(index, 6, fps)
                         self.fcode.SetItem(index, 7, acodec)
                         self.fcode.SetItem(index, 8, size)
-        # self.parent.statusbar_msg(_('Ready, Youtube Downloader'), None)
-        return self.error
     # -----------------------------------------------------------------#
 
-    def get_formatcodefromexecutable(self):
+    def get_executableformatcode(self):
         """
         Parsing the iterated items getting from the output
         of the generator object *youtube_getformatcode_exec* .
         """
-        array = list()
         if not self.info:
             index = 0
             for link in self.parent.data_url:
@@ -318,15 +394,15 @@ class Downloader(wx.Panel):
                 for meta in data:
                     if meta[1]:
                         wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)
+                        self.info = []
                         return
                     self.info.append(link)
                     i = 0
                     for count, fc in enumerate(meta[0].split('\n')):
                         if not count > i:
-                            i +=1
+                            i += 1
                         elif fc != '':
-                            print(count, i ,fc)
-                            # listctrl
+                            # wx listctrl
                             index += 1
                             self.fcode.InsertItem(index, '')
                             self.fcode.SetItem(index, 1, fc.split()[0])
@@ -351,7 +427,7 @@ class Downloader(wx.Panel):
             return
 
         if not self.info:
-            error = self.parse_info()
+            error = self.get_libraryformatcode()
             if error:
                 return
 
@@ -364,43 +440,50 @@ class Downloader(wx.Panel):
         Show listctrl to choose format code
 
         """
-        if pylibYdl is not None:  # YuotubeDL is not used as module
-            self.get_formatcodefromexecutable()
-            self.fcode.Show()
-            self.Layout()
-            return
-
         if not self.info:
-            error = self.parse_info()
-            if error:
-                return
-        self.fcode.Show()
-        self.Layout()
+            if pylibYdl is not None:  # youtube-dl as executable
+                self.get_executableformatcode()
+                #self.txt_maincode.Clear()
+                #self.txt_mergecode.Clear()
+                #self.fcode.Enable()
+                #self.Layout()
+            else:
+                self.get_libraryformatcode()
+
+            #if not self.info:  # youtube-dl as library
+                #error = self.get_libraryformatcode()
+                #if error:
+                    #return
+
+        self.txt_maincode.Clear()
+        self.txt_mergecode.Clear()
+        self.fcode.Enable()
+        #self.Layout()
     # -----------------------------------------------------------------#
 
     def on_Choice(self, event):
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
             self.cmbx_vq.Enable(), self.txt_maincode.Disable()
-            self.fcode.Hide(), self.stext1.Disable()
+            self.fcode.Disable(), self.stext1.Disable()
             self.stext2.Disable(), self.txt_mergecode.Disable()
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
             self.cmbx_vq.Enable(), self.txt_maincode.Disable()
-            self.fcode.Hide(), self.stext1.Disable()
+            self.fcode.Disable(), self.stext1.Disable()
             self.stext2.Disable(), self.txt_mergecode.Disable()
 
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Enable(), self.txt_maincode.Disable()
-            self.fcode.Hide(), self.stext1.Disable()
+            self.fcode.Disable(), self.stext1.Disable()
             self.stext2.Disable(), self.txt_mergecode.Disable()
 
         elif self.choice.GetSelection() == 3:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable(), self.txt_maincode.Enable()
-            # self.fcode.Enable(),
+            self.fcode.Enable(),
             self.stext1.Enable()
             self.stext2.Enable(), self.txt_mergecode.Enable()
             self.on_format_codes()
@@ -530,6 +613,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
                 if not code:
+                    self.parent.statusbar_msg('Missing Format Code', RED)
                     return
                 data = {'format': code,
                         'noplaylist': opt["NO_PLAYLIST"][0],
@@ -586,6 +670,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
                 if not code:
+                    self.parent.statusbar_msg('Missing Format Code', RED)
                     return
                 cmd = [(f'--format {code} '
                         f'{opt["METADATA"][1]} '

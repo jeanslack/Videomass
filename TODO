@@ -21,9 +21,6 @@ URGENCY: high
 -------------
 URGENCY: low
 -------------
-- YoutubeDL add one specific `format code` to any url indexing with the urls
-  list, e.g. using a check box into list ctrl or button to append a selected
-  format code to list.
 
 ---------------
 URGENCY: medium
