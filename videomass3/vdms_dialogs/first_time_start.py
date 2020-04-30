@@ -30,16 +30,16 @@ import wx
 import os
 from shutil import which
 
-MSG1 = ("This wizard will attempt to automatically detect FFmpeg in\n"
-        "your system.\n\n"
-        "In addition, it allows you to manually set a custom path\n"
-        "to locate FFmpeg and its associated executables.\n\n"
-        "Also, Remember that you can always change these settings\n"
-        "later, through the Setup dialog.\n\n"
-        "- Press 'Auto-detection' to start the system search now."
-        "\n\n"
-        "- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
-        )
+MSG1 = _("This wizard will attempt to automatically detect FFmpeg in\n"
+         "your system.\n\n"
+         "In addition, it allows you to manually set a custom path\n"
+         "to locate FFmpeg and its associated executables.\n\n"
+         "Also, Remember that you can always change these settings\n"
+         "later, through the Setup dialog.\n\n"
+         "- Press 'Auto-detection' to start the system search now."
+         "\n\n"
+         "- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
+         )
 
 
 class FirstStart(wx.Dialog):
