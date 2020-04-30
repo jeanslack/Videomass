@@ -36,9 +36,8 @@ import shutil
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-pylibYdl = get.pylibYdl
-execYdl = get.execYdl
-DIR_CONF = get.DIRconf
+PYLIB_YDL = get.pylibYdl
+EXEC_YDL = get.execYdl
 
 msgready = (_('Successful! \n\n'
              'youtube-dl is ready\n\n'
@@ -55,24 +54,24 @@ if OS == 'Windows':
              '- Requires: Microsoft Visual C++ 2010 Redistributable Package '
              '(x86)\n   for major information visit http://ytdl-org.'
              'github.io/youtube-dl/download.html\n\n'
-             'Do you want to download youtube-dl now?')).format(pylibYdl)
+             'Do you want to download youtube-dl now?')).format(PYLIB_YDL)
 
 elif OS == 'Darwin':
     msg = (_('{}\n\n'
              'To download video from YouTube and other sites, Videomass needs '
              'an updated version of youtube-dl from https://github.com/ytdl-'
              'org/youtube-dl/releases\n\n'
-             'Do you want to download youtube-dl now?')).format(pylibYdl)
+             'Do you want to download youtube-dl now?')).format(PYLIB_YDL)
 else:
     msg = (_('{}\n\nTo download videos from YouTube and other sites, '
              'Videomass needs an updated version of youtube-dl.\n'
              'Videomass recommends pip to install youtube-dl and keep '
              'it updated by the user.\n\nHowever, an updated copy of '
              'youtube-dl can be downloaded locally.\n\n'
-             '...Do you wish to continue?')).format(pylibYdl)
+             '...Do you wish to continue?')).format(PYLIB_YDL)
 
     msgerr = _('{}\n\nyoutube-dl: no library or executable '
-               'found .').format(pylibYdl)
+               'found .').format(PYLIB_YDL)
 
 prst_mng = _('  Presets Manager - Create, edit and use quickly your favorite\n'
              '  FFmpeg presets and profiles with full formats support and '
@@ -163,11 +162,11 @@ class Choose_Topic(wx.Panel):
         """
         Check the installation of youtube-dl depending on the OS in use.
         """
-        if pylibYdl is None:
+        if PYLIB_YDL is None:
             self.parent.Text_import(self, 'Youtube Downloader')
             return
-        elif execYdl:
-            if os.path.isfile(execYdl):
+        elif EXEC_YDL:
+            if os.path.isfile(EXEC_YDL):
                 self.parent.Text_import(self, 'Youtube Downloader')
                 return
             else:
@@ -186,7 +185,7 @@ class Choose_Topic(wx.Panel):
                     return
                 else:
                     upgrade = IO_tools.youtubedl_upgrade(latest[0],
-                                                         execYdl)
+                                                         EXEC_YDL)
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]),
                                   "Videomass error", wx.ICON_ERROR, self)
@@ -199,7 +198,7 @@ class Choose_Topic(wx.Panel):
                     self.parent.on_Kill()
                 return
 
-        elif execYdl is False:
+        elif EXEC_YDL is False:
             wx.MessageBox(msgerr, 'Videomass error', wx.ICON_ERROR)
             return
     # ------------------------------------------------------------------#

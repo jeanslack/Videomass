@@ -213,16 +213,11 @@ def openpath(where):
     configuration directory or log directory.
 
     """
-    if not where:
-        pathname = DIR_CONF
-    else:
-        pathname = os.path.join(DIR_CONF, where)
-    if not os.path.exists(pathname):
-        wx.MessageBox(_("Output log has not been created yet."),
-                      "Videomass",
+    if not os.path.exists(where):
+        wx.MessageBox(_("Output log has not been created yet."), "Videomass",
                       wx.ICON_INFORMATION, None)
         return
-    ret = browse(OS, pathname)
+    ret = browse(OS, where)
     if ret:
         wx.MessageBox(ret, 'Videomass Error', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#

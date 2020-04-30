@@ -56,6 +56,7 @@ OS = get.OS  # ID of the operative system:
 DIR_CONF = get.DIRconf  # default configuration directory
 FILE_CONF = get.FILEconf  # pathname of the file configuration
 WORK_DIR = get.WORKdir  # pathname of the current work directory
+LOGDIR = get.LOGdir
 # # colour rappresentetion in rgb
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
@@ -1020,7 +1021,7 @@ class MainFrame(wx.Frame):
         Open the log diretctory with file manager
 
         """
-        IO_tools.openpath('log')
+        IO_tools.openpath(LOGDIR)
     # ------------------------------------------------------------------#
 
     def Openconf(self, event):
@@ -1028,7 +1029,7 @@ class MainFrame(wx.Frame):
         Open the configuration folder with file manager
 
         """
-        IO_tools.openpath(None)
+        IO_tools.openpath(DIR_CONF)
 
     # --------- Menu Edit
 
@@ -1153,10 +1154,10 @@ class MainFrame(wx.Frame):
         # ------- Run process button
         self.toolbar.AddStretchableSpace()
         #self.toolbar.AddSeparator()
-        back = self.toolbar.AddTool(wx.ID_FILE3, ('Back'),
+        back = self.toolbar.AddTool(wx.ID_FILE3, _('Back'),
                                     wx.Bitmap(self.icon_mainback))
         #self.toolbar.AddSeparator()
-        forward = self.toolbar.AddTool(wx.ID_FILE4, ('Forward'),
+        forward = self.toolbar.AddTool(wx.ID_FILE4, _('Forward'),
                                        wx.Bitmap(self.icon_mainforward))
         #self.toolbar.AddSeparator()
         self.run_coding = self.toolbar.AddTool(wx.ID_FILE5, _('Convert'),

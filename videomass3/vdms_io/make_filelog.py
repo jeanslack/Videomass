@@ -2,12 +2,12 @@
 
 #########################################################
 # File Name: make_filelog.py
-# Porpose: Module to generate log files durin jobs start
+# Porpose: generate log file
 # Compatibility: Python3, Python2
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: April.30.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -31,24 +31,24 @@ import time
 import os
 
 
-def write_log(logname, dirconf):
+def write_log(logfile, logdir):
     """
-    During the process, it write log about what the program does,
-    command output and including errors.
-    The log is stored in 'videomass/log' by default.
+    Before starting the process, a log file stored in the conventional
+    path of the OS is created, see `vdms_sys/ctrl_run.py` .
 
-    - logname è il nome del pannello da cui è stato composto il comando
+    - logfile è il nome del pannello da cui è stato composto il comando
     """
-    if not os.path.isdir(dirconf):
+    if not os.path.isdir(logdir):
         try:
-            os.mkdir(dirconf)
-        except OSError as e:
-            print(e)
-            print("Directory creation failed '%s'" % dirconf)
+            os.makedirs(logdir)
+        except OSError as error:
+            print(error)
+            return error
 
     current_date = time.strftime("%c")  # date/time
+    path = os.path.join(logdir, logfile)
 
-    with open("%s/%s" % (dirconf, logname), "w") as log:
+    with open(path, "w") as log:
         log.write("""[PYTHON] CURRENT DATE/TIME:
 %s\n
 -----------------------------------------

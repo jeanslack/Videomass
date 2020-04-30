@@ -33,7 +33,7 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIR_CONF = get.DIRconf  # path to the configuration directory:
+LOGDIR = get.LOGdir
 FFMPEG_URL = get.FFMPEG_url
 pylibYdl = get.pylibYdl
 

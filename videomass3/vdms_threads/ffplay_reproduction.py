@@ -29,12 +29,13 @@
 import wx
 import subprocess
 import time
+import os
 from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 # get data from bootstrap
 get = wx.GetApp()
-DIR_CONF = get.DIRconf  # path to the configuration directory
+LOGDIR = get.LOGdir
 FFPLAY_URL = get.FFPLAY_url
 ffplay_loglev = get.FFPLAY_loglev
 OS = get.OS
@@ -79,9 +80,8 @@ class Play(Thread):
         self.filename = filepath  # file name selected
         self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
-        self.logf = "%s/log/%s" % (DIR_CONF, 'Videomass_FFplay.log')
-
-        write_log('Videomass_FFplay.log', "%s/log" % DIR_CONF)
+        self.logf = os.path.join(LOGDIR, 'Videomass_FFplay.log')
+        write_log('Videomass_FFplay.log', LOGDIR)
         # set initial file LOG
 
         self.start()
@@ -156,7 +156,6 @@ class Play(Thread):
         """
         write ffmpeg volumedected errors
         """
-        print(error)
         with open(self.logf, "a") as logerr:
             logerr.write("[FFMPEG] FFplay "
                          "ERRORS:\n%s\n\n" % (error))

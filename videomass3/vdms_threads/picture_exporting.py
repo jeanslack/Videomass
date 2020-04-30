@@ -35,7 +35,7 @@ from pubsub import pub
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIR_CONF = get.DIRconf  # path to the configuration directory:
+LOGDIR = get.LOGdir
 FFMPEG_URL = get.FFMPEG_url
 FFMPEG_LOGLEV = get.FFMPEG_loglev
 
@@ -54,7 +54,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open("%s/log/%s" % (DIR_CONF, logname), "a") as log:
+    with open(os.path.join(LOGDIR, logname), "a") as log:
         log.write(apnd)
 
 # ------------------------------ THREADS -------------------------------#

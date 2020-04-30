@@ -587,7 +587,7 @@ class Setup(wx.Dialog):
         self.full_list[self.rowsNum[11]] = "Material_Design_Icons_black\n"
         self.full_list[self.rowsNum[12]] = '228, 21, 68\n'
         self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
-        self.full_list[self.rowsNum[14]] = '255, 0, 58\n'
+        self.full_list[self.rowsNum[14]] = '0, 0, 0\n'
     # ----------------------------------------------------------------------#
 
     def on_help(self, event):

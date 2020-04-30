@@ -70,7 +70,6 @@ class Videomass(wx.App):
         self.pylibYdl = None
         self.execYdl = False
         self.USERfilesave = None
-
         # print ("App __init__")
         wx.App.__init__(self, redirect, filename)  # constructor
     # -------------------------------------------------------------------
@@ -106,6 +105,9 @@ class Videomass(wx.App):
         self.FFPLAY_check = setui[4][9]
         self.FFthreads = setui[4][2]
         self.USERfilesave = None if setui[4][1] == 'none' else setui[4][1]
+        self.LOGdir = setui[9]  # dir for logging
+        self.CACHEdir = setui[10]  # dir cache for updates
+
         # ----- youtube-dl
         writable = True
         exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
@@ -113,7 +115,7 @@ class Videomass(wx.App):
             # if false need application/octet-stream in local
             writable = os.access(shutil.which('youtube-dl'), os.W_OK)
         if not writable:
-            self.execYdl = os.path.join(self.DIRconf, exe)
+            self.execYdl = os.path.join(self.CACHEdir, exe)
             self.pylibYdl = _('youtube-dl is installed but not '
                               'writable by user for updates.')
         else:
@@ -122,7 +124,7 @@ class Videomass(wx.App):
                 self.execYdl = False
             except (ModuleNotFoundError, ImportError) as nomodule:
                 self.pylibYdl = nomodule
-                self.execYdl = os.path.join(self.DIRconf, exe)
+                self.execYdl = os.path.join(self.CACHEdir, exe)
         # ----- ffmpeg
         if setui[0] == 'Darwin':  # on MacOs
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"

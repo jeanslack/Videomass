@@ -32,6 +32,19 @@ NEWS:
     * [YOUTUBE DOWNLOADER] New context menu on list control to choice quickly
       the Foemat Code to appending on text boxes.
 
+REMOVALS and DISPLACEMENTS:
+
+    * Changed default location of the 'videomass' log
+        on the user space, following the typical conventions of the OS.
+        On *nix OS's: use standard $XDG_DATA_HOME ($HOME/.local/share)
+        On MacOs:      '~/Library/Logs/videomass'
+        On Windows:    'C:\Users\username\AppData\Roaming\videomass\log'
+
+    * Changed default location of the cache files
+        On *nix OS's: use standard $XDG_CACHE_HOME ($HOME/.cache/videomass)
+        On MacOs:      '~/Library/Caches/videomass'
+        On Windows:    'C:\Users\username\AppData\Roaming\videomass'
+
 +------------------------------------+
 April 26, 2020 V.2.0.5
 +------------------------------------+

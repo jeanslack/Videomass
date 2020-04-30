@@ -27,6 +27,7 @@
 #########################################################
 from __future__ import unicode_literals
 import wx
+import os
 from pubsub import pub
 from videomass3.vdms_io.make_filelog import write_log
 from videomass3.vdms_threads.ydl_pylibdownloader import Ydl_DL_Pylib
@@ -47,7 +48,7 @@ AZURE = 30, 62, 164
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
-DIR_CONF = get.DIRconf  # path to the configuration directory:
+LOGDIR = get.LOGdir
 
 
 def pairwise(iterable):
@@ -161,7 +162,7 @@ class Logging_Console(wx.Panel):
         self.logname = varargs[8]  # example: Videomass_VideoConversion.log
         time_seq = self.parent.time_seq  # a time segment
 
-        write_log(self.logname, "%s/log" % DIR_CONF)  # set initial file LOG
+        write_log(self.logname, LOGDIR)  # set initial file LOG
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
             self.PARENT_THREAD = OnePass(varargs, duration,
@@ -261,7 +262,7 @@ class Logging_Console(wx.Panel):
                 self.OutText.AppendText(' %s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
-            with open("%s/log/%s" % (DIR_CONF, self.logname), "a") as logerr:
+            with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                 logerr.write("[YOUTUBE-DL]: %s" % (output))
                 # write a row error into file log
 
@@ -319,8 +320,7 @@ class Logging_Console(wx.Panel):
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
                 self.OutText.AppendText('%s' % output)
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-
-            with open("%s/log/%s" % (DIR_CONF, self.logname), "a") as logerr:
+            with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                 logerr.write("[FFMPEG]: %s" % (output))
                 # write a row error into file log
     # ----------------------------------------------------------------------

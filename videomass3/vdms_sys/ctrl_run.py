@@ -38,21 +38,27 @@ USERName = os.path.expanduser('~')  # /home/user (current user directory)
 OS = platform.system()  # What is the OS ??
 
 # Establish the conventional paths on the different OS where
-# the videomass configuration directory will be stored:
+# the videomass directories will be stored:
 if OS == 'Windows':
     bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + "\\AppData\\Roaming\\videomass")
+    LOGdir = os.path.join(DIRconf, 'log') # logs
+    CACHEdir = DIRconf  # updates
 
 elif OS == "Darwin":
-    bpath = "/Library/Application Support/videomass/videomass.conf"
-    FILEconf = os.path.join(USERName + bpath)
-    DIRconf = os.path.join(USERName + os.path.dirname(bpath))
+    bpath = "Library/Application Support/videomass/videomass.conf"
+    FILEconf = os.path.join(USERName, bpath)
+    DIRconf = os.path.join(USERName, os.path.dirname(bpath))
+    LOGdir = os.path.join(USERName, "Library/Logs/videomass")  # logs
+    CACHEdir = os.path.join(USERName, "Library/Caches/videomass")  # updates
 
 else:  # Linux, FreeBsd, etc.
-    bpath = "/.config/videomass/videomass.conf"
-    FILEconf = os.path.join(USERName + bpath)
-    DIRconf = os.path.join(USERName + "/.config/videomass")
+    bpath = ".config/videomass/videomass.conf"
+    FILEconf = os.path.join(USERName, bpath)
+    DIRconf = os.path.join(USERName, ".config/videomass")
+    LOGdir = os.path.join(USERName, ".local/share/videomass/log")  # logs
+    CACHEdir = os.path.join(USERName, ".cache/videomass")  # updates
 # ------------------------------------------------------------------------#
 
 
@@ -165,4 +171,6 @@ def system_check():
             FILEconf,
             WORKdir,
             DIRconf,
+            LOGdir,
+            CACHEdir,
             )

@@ -26,6 +26,7 @@
 
 #########################################################
 import wx
+import os
 from pubsub import pub
 import subprocess
 from threading import Thread
@@ -33,7 +34,7 @@ from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 # path to the configuration directory:
 get = wx.GetApp()
-DIR_CONF = get.DIRconf
+LOGDIR = get.LOGdir
 OS = get.OS
 FFMPEG_URL = get.FFMPEG_url
 
@@ -70,10 +71,9 @@ class VolumeDetectThread(Thread):
         self.status = None
         self.data = None
         self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
+        self.logf = os.path.join(LOGDIR, 'Videomass_volumedected.log')
 
-        self.logf = "%s/log/%s" % (DIR_CONF, 'Videomass_volumedected.log')
-
-        write_log('Videomass_volumedected.log', "%s/log" % DIR_CONF)
+        write_log('Videomass_volumedected.log', LOGDIR)
         # set initial file LOG
 
         self.start()  # start the thread (va in self.run())
