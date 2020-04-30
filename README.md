@@ -1,4 +1,4 @@
-# **Videomass** provides a graphical interface for audio and video conversions through FFmpeg.
+# **Videomass** is a cross-platform graphical interface for FFmpeg and youtube-dl.
 
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [GitHub Page](https://github.com/jeanslack/Videomass)
@@ -21,7 +21,7 @@
 - Three audio normalization modes: Peak, RMS and EBU R128.
 - Audio index from videos selectable to apply normalization.
 - Setting duration portions for imported files, filters, export and tests.
-- Download multiple URLs from YouTube and other sites.
+- Download multiple URLs from YouTube and more sites.
 - View video information without downloading it.
 - Ability to download videos using the 'format code'.
 - Log management.
@@ -39,4 +39,3 @@
 ## Optionals
 
 - youtube-dl (https://pypi.org/project/youtube_dl/)
-

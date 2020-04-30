@@ -98,8 +98,6 @@ LONG_DESCRIPTION = dr[1]
 CLASSIFIERS = [
             'Development Status :: 5 - Production/Stable',
             'Operating System :: MacOS',
-            'Operating System :: Microsoft :: Windows :: Windows 7',
-            'Operating System :: Microsoft :: Windows :: Windows 8',
             'Operating System :: Microsoft :: Windows :: Windows 10',
             'Operating System :: POSIX :: BSD :: FreeBSD',
             'Operating System :: POSIX :: Linux',
@@ -113,7 +111,6 @@ CLASSIFIERS = [
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX',
             'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.6',
             'Programming Language :: Python :: 3.7',
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',

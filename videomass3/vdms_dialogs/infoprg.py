@@ -28,7 +28,8 @@
 #########################################################
 import wx
 import wx.adv
-from videomass3.vdms_sys.msg_info import current_release, descriptions_release
+from videomass3.vdms_sys.msg_info import current_release
+from videomass3.vdms_sys.msg_info import descriptions_release
 
 cr = current_release()
 Name = cr[0]
@@ -60,7 +61,7 @@ def info(parent, videomass_icon):
     info.SetVersion("v%s" % Version)
     #info.SetDescription(_("Yet another UI for audio and video "
                           #"conversions with FFmpeg"))
-    info.SetDescription(_("Multi-platform graphic interface "
+    info.SetDescription(_("Multi-platform graphical interface "
                           "for FFmpeg and youtube-dl.\n"))
     info.SetCopyright("Copyright %s %s" % (Copyright, Author))
     info.SetWebSite(Website)
