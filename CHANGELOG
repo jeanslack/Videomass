@@ -26,7 +26,7 @@ IMPROVEMENTS:
     * Some cosmetic layout.
     * [YOUTUBE DOWNLOADER] Improved method and design on inserting and appending
       `Format Code` on text boxes.
-    * Added new menu to quickly jump on panels.
+    * Added new menu items to quickly jump on panels.
 
 NEWS:
     * [YOUTUBE DOWNLOADER] New context menu on list control to choice quickly

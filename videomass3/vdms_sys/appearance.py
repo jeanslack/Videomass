@@ -115,6 +115,7 @@ class Appearance(object):
         icon_process = '%s/icon_process.png' % self.x32
         icon_toolback = '%s/icon_mainback.png' % self.x32
         icon_toolforward = '%s/icon_mainforward.png' % self.x32
+        icon_ydl = '%s/youtubeDL.png' % self.x32
         # x24 icons 24x24:
         icn_infosource = '%s/infosource.png' % self.x24
         icn_preview = '%s/preview.png' % self.x24
@@ -160,5 +161,6 @@ class Appearance(object):
                                                 icn_delprf,  # 21
                                                 icn_editprf,  # 22
                                                 icon_toolback,  # 23
-                                                icon_toolforward  # 24
+                                                icon_toolforward,  # 24
+                                                icon_ydl,  # 25
                                                 ]]

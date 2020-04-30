@@ -131,7 +131,7 @@ class Downloader(wx.Panel):
                                         style=wx.TE_MULTILINE |
                                         wx.HSCROLL |
                                         wx.TE_RICH2,
-                                        size=(180, 35)
+                                        size=(180, 40)
                                         )
         self.txt_maincode.Disable()
         self.stext1 = wx.StaticText(self, wx.ID_ANY, (_('Enter Format Code:')))
@@ -142,7 +142,7 @@ class Downloader(wx.Panel):
                                          style=wx.TE_MULTILINE |
                                          wx.HSCROLL |
                                          wx.TE_RICH2,
-                                         size=(180, 35)
+                                         size=(180, 40)
                                          )
         self.txt_mergecode.Disable()
         self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge with:')))
@@ -170,7 +170,8 @@ class Downloader(wx.Panel):
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
         #line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 0))
         #sizer.Add(line_1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 10)
-
+        sfcode = wx.StaticText(self, wx.ID_ANY, (_('Format Code list:')))
+        sizer.Add(sfcode, 0, wx.LEFT, 10)
         self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
                                  wx.SUNKEN_BORDER
                                  )
@@ -202,6 +203,7 @@ class Downloader(wx.Panel):
                  '"Format Code"; this is optional. You can specify multiple '
                  'format codes by using slash, e.g. 140/130/151 .'))
         self.txt_mergecode.SetToolTip(tip)
+        self.fcode.SetToolTip(_('right click to speed up'))
 
         # ----------------------- Properties
         if OS == 'Darwin':
@@ -275,29 +277,29 @@ class Downloader(wx.Panel):
 
         if menuItem.GetLabel() == _("Append Format Code"):
             if self.txt_maincode.GetValue().strip() == '':
-                self.txt_maincode.WriteText(fc)
+                self.txt_maincode.AppendText(fc)
             else:
                 self.txt_maincode.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
-                self.txt_maincode.WriteText('/')
+                self.txt_maincode.AppendText('/')
                 self.txt_maincode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-                self.txt_maincode.WriteText('%s' % fc)
+                self.txt_maincode.AppendText('%s' % fc)
 
         elif menuItem.GetLabel() == _("Append for merging"):
             if self.txt_mergecode.GetValue().strip() == '':
-                self.txt_mergecode.WriteText(fc)
+                self.txt_mergecode.AppendText(fc)
             else:
                 self.txt_mergecode.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
-                self.txt_mergecode.WriteText('/')
+                self.txt_mergecode.AppendText('/')
                 self.txt_mergecode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-                self.txt_mergecode.WriteText('%s' % fc)
+                self.txt_mergecode.AppendText('%s' % fc)
 
         elif menuItem.GetLabel() == _("Insert Format Code"):
             self.txt_maincode.Clear()
-            self.txt_maincode.WriteText(fc)
+            self.txt_maincode.AppendText(fc)
 
         elif menuItem.GetLabel() == _("Insert for merging"):
             self.txt_mergecode.Clear()
-            self.txt_mergecode.WriteText(fc)
+            self.txt_mergecode.AppendText(fc)
     # ----------------------------------------------------------------------
 
     def get_libraryformatcode(self):
@@ -320,7 +322,7 @@ class Downloader(wx.Panel):
                                       wx.ICON_ERROR
                                       )
                         self.info = []
-                        return
+                        return True
                     if 'entries' in meta[0]:
                         meta[0]['entries'][0]  # not parse all playlist
                     if 'duration' in meta[0]:
@@ -378,6 +380,7 @@ class Downloader(wx.Panel):
                         self.fcode.SetItem(index, 6, fps)
                         self.fcode.SetItem(index, 7, acodec)
                         self.fcode.SetItem(index, 8, size)
+        return
     # -----------------------------------------------------------------#
 
     def get_executableformatcode(self):
@@ -395,7 +398,7 @@ class Downloader(wx.Panel):
                     if meta[1]:
                         wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)
                         self.info = []
-                        return
+                        return True
                     self.info.append(link)
                     i = 0
                     for count, fc in enumerate(meta[0].split('\n')):
@@ -412,13 +415,13 @@ class Downloader(wx.Panel):
 
                         if fc.startswith('format code '):
                             i = count  # limit
+        return
     # -----------------------------------------------------------------#
 
     def on_show_info(self):
         """
         show data information. This method is called by the main frame
         when the 'Show More' button is pressed.
-
         """
         if pylibYdl is not None:  # YuotubeDL is not used as module
             wx.MessageBox(_('"Show more" only is enabled when Videomass '
@@ -427,8 +430,8 @@ class Downloader(wx.Panel):
             return
 
         if not self.info:
-            error = self.get_libraryformatcode()
-            if error:
+            ret = self.get_libraryformatcode()
+            if ret:
                 return
 
         dialog = YDL_Mediainfo(self.info, self.oS)
@@ -439,11 +442,14 @@ class Downloader(wx.Panel):
         """
         get data and info and show listctrl to choose format code
         """
+        ret = True
         if not self.info:
             if pylibYdl is not None:  # youtube-dl as executable
-                self.get_executableformatcode()
+                ret = self.get_executableformatcode()
             else:
-                self.get_libraryformatcode()
+                ret = self.get_libraryformatcode()
+        if ret:
+            return
         self.fcode.Enable()
         #self.Layout()  # only if self.fcode.Show()
     # -----------------------------------------------------------------#
@@ -473,7 +479,7 @@ class Downloader(wx.Panel):
         elif self.choice.GetSelection() == 3:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable(), self.txt_maincode.Enable()
-            self.fcode.Enable(), self.stext1.Enable()
+            self.stext1.Enable()
             self.stext2.Enable(), self.txt_mergecode.Enable()
             self.on_format_codes()
     # -----------------------------------------------------------------#

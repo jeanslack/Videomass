@@ -78,12 +78,12 @@ cmd_opt = {"VidCmbxStr": "x264", "OutputFormat": "mkv",
            "VFilters": "", "PixFmt": "-pix_fmt yuv420p", "Deadline": "",
            "CpuUsed": "", "RowMthreading": "",
            }
-# muxers dictionary:
-muxers = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
+# MUXERS dictionary:
+MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
           'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
           }
 # Namings in the video container selection combo box:
-vcodecs = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
+VCODECS = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
             "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "flv", "m4v"]},
             "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
             "Theora": {"-c:v libtheora": ["ogv"]},
@@ -94,7 +94,7 @@ vcodecs = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
                                    "m4v", "ogv", "webm", "Copy"]}
             })
 # Namings in the audio codec selection on audio radio box:
-acodecs = {('Auto'): (""),
+ACODECS = {('Auto'): (""),
            ('PCM'): ("pcm_s16le"),
            ('FLAC'): ("flac"),
            ('AAC'): ("aac"),
@@ -107,10 +107,10 @@ acodecs = {('Auto'): (""),
            ('No Audio'): ("-an")
            }
 # Namings in the audio format selection on Container combobox:
-a_formats = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac'
+A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac'
              )
 # compatibility between video formats and related audio codecs:
-av_formats = {('avi'): ('default', 'wav', None, None, None, 'ac3', None,
+AV_FORMATS = {('avi'): ('default', 'wav', None, None, None, 'ac3', None,
                         'mp3', None, 'copy', 'mute'),
               ('flv'): ('default', None, None, 'aac', None, 'ac3', None,
                         'mp3', None, 'copy', 'mute'),
@@ -140,7 +140,7 @@ av_formats = {('avi'): ('default', 'wav', None, None, None, 'ac3', None,
                         None, 'copy', None),
               }
 # presets used by x264 and h265:
-x264_opt = {("Presets"): ("None", "ultrafast", "superfast",
+X264_OPT = {("Presets"): ("None", "ultrafast", "superfast",
                           "veryfast", "faster", "fast", "medium",
                           "slow", "slower", "veryslow", "placebo"
                           ),
@@ -153,7 +153,7 @@ x264_opt = {("Presets"): ("None", "ultrafast", "superfast",
                         )
             }
 # Used by x265 only
-x265_opt = {("Presets"): ("None", "ultrafast", "superfast",
+X265_OPT = {("Presets"): ("None", "ultrafast", "superfast",
                           "veryfast", "faster", "fast", "medium",
                           "slow", "slower", "veryslow", "placebo"
                           ),
@@ -170,22 +170,22 @@ x265_opt = {("Presets"): ("None", "ultrafast", "superfast",
                         "zerolatency")
             }
 # profile level for profiles x264/x265
-levels = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
+LEVELS = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
           '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
           )
 # optimization list for vp8/vp9
-optimization_vp9 = ('Default',
-                    'Vp9 best for Archive',
-                    'Vp9 CBR Web streaming',
-                    'Vp9 Constrained ABR-VBV live streaming')
+OPTIMIZ_VP9 = ('Default',
+               'Vp9 best for Archive',
+               'Vp9 CBR Web streaming',
+               'Vp9 Constrained ABR-VBV live streaming')
 # optimization list for x264/x265
-optimization_hevc_avc = ('Default',
-                         'x264 best for Archive',
-                         'x265 best for Archive',
-                         'x264 ABR for devices',
-                         'x265 ABR for devices',
-                         'x264 ABR-VBV live streaming',
-                         'x265 ABR-VBV live streaming')
+OPTIMIZ_HEVC_AVC = ('Default',
+                    'x264 best for Archive',
+                    'x265 best for Archive',
+                    'x264 ABR for devices',
+                    'x265 ABR for devices',
+                    'x264 ABR-VBV live streaming',
+                    'x265 ABR-VBV live streaming')
 
 
 class AV_Conv(wx.Panel):
@@ -208,7 +208,7 @@ class AV_Conv(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.notebook = wx.Notebook(self, wx.ID_ANY,
                                     style=wx.NB_NOPAGETHEME |
-                                    wx.NB_TOP
+                                    wx.NB_BOTTOM
                                     )
         sizer_base.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 5)
         # -------------- notebook panel 1:
@@ -231,7 +231,7 @@ class AV_Conv(wx.Panel):
         txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Codec'))
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
-                                    choices=[x for x in vcodecs.keys()],
+                                    choices=[x for x in VCODECS.keys()],
                                     size=(160, -1), style=wx.CB_DROPDOWN |
                                     wx.CB_READONLY
                                     )
@@ -393,7 +393,7 @@ class AV_Conv(wx.Panel):
                               wx.ALIGN_CENTER_VERTICAL, 5
                               )
         self.cmb_vp9opti = wx.ComboBox(self.vp9panel, wx.ID_ANY,
-                                       choices=optimization_vp9,
+                                       choices=OPTIMIZ_VP9,
                                        size=(180, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
@@ -452,7 +452,7 @@ class AV_Conv(wx.Panel):
                                wx.ALIGN_CENTER_VERTICAL, 5
                                )
         self.cmb_x26opti = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                       choices=optimization_hevc_avc,
+                                       choices=OPTIMIZ_HEVC_AVC,
                                        size=(180, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
@@ -472,7 +472,7 @@ class AV_Conv(wx.Panel):
                            wx.ALIGN_CENTER_VERTICAL, 5
                            )
         self.cmb_preset = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                      choices=[p for p in x264_opt["Presets"]],
+                                      choices=[p for p in X264_OPT["Presets"]],
                                       size=(120, -1), style=wx.CB_DROPDOWN |
                                       wx.CB_READONLY
                                       )
@@ -483,7 +483,7 @@ class AV_Conv(wx.Panel):
         grid_h264panel.Add(txtprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_profile = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                        choices=[p for p in
-                                                x264_opt["Profiles"]],
+                                                X264_OPT["Profiles"]],
                                        size=(120, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
@@ -493,7 +493,7 @@ class AV_Conv(wx.Panel):
         txtlevel = wx.StaticText(self.h264panel, wx.ID_ANY, _('Level'))
         grid_h264panel.Add(txtlevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_level = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                     choices=levels, size=(80, -1),
+                                     choices=LEVELS, size=(80, -1),
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
         grid_h264panel.Add(self.cmb_level, 0, wx.ALL |
@@ -502,7 +502,7 @@ class AV_Conv(wx.Panel):
         txttune = wx.StaticText(self.h264panel, wx.ID_ANY, _('Tune'))
         grid_h264panel.Add(txttune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_tune = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                    choices=[p for p in x264_opt["Tunes"]],
+                                    choices=[p for p in X264_OPT["Tunes"]],
                                     size=(120, -1), style=wx.CB_DROPDOWN |
                                     wx.CB_READONLY)
         grid_h264panel.Add(self.cmb_tune, 0, wx.ALL |
@@ -535,7 +535,7 @@ class AV_Conv(wx.Panel):
         grid_dx_frmt.Add(txtFormat, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Vcont = wx.ComboBox(self.nb_Video, wx.ID_ANY,
                                      choices=[f for f in
-                                              vcodecs.get('x264').values()][0],
+                                              VCODECS.get('x264').values()][0],
                                      size=(160, -1), style=wx.CB_DROPDOWN |
                                      wx.CB_READONLY
                                      )
@@ -549,10 +549,10 @@ class AV_Conv(wx.Panel):
         sizer_nbAudio = wx.BoxSizer(wx.VERTICAL)
         self.rdb_a = wx.RadioBox(self.nb_Audio, wx.ID_ANY, (
                                  _("Audio Encoder")),
-                                 choices=[x for x in acodecs.keys()],
+                                 choices=[x for x in ACODECS.keys()],
                                  majorDimension=5, style=wx.RA_SPECIFY_COLS
                                  )
-        for n, v in enumerate(av_formats["mkv"]):
+        for n, v in enumerate(AV_FORMATS["mkv"]):
             if not v:  # disable only not compatible with mkv
                 self.rdb_a.EnableItem(n, enable=False)
         sizer_nbAudio.Add(self.rdb_a, 1, wx.ALL | wx.EXPAND, 10)
@@ -968,15 +968,15 @@ class AV_Conv(wx.Panel):
             self.cmb_tune.Clear(), self.cmb_profile.Clear()
             if cmd_opt["VideoCodec"] == "-c:v libx264":
                 self.slider_CRF.SetValue(23), self.spin_Vbrate.SetValue(1500)
-                for tune in x264_opt['Tunes']:
+                for tune in X264_OPT['Tunes']:
                     self.cmb_tune.Append((tune),)
-                for prof in x264_opt["Profiles"]:
+                for prof in X264_OPT["Profiles"]:
                     self.cmb_profile.Append((prof),)
             elif cmd_opt["VideoCodec"] == "-c:v libx265":
                 self.slider_CRF.SetValue(28), self.spin_Vbrate.SetValue(1500)
-                for tune in x265_opt["Tunes"]:
+                for tune in X265_OPT["Tunes"]:
                     self.cmb_tune.Append((tune),)
-                for prof in x265_opt["Profiles"]:
+                for prof in X265_OPT["Profiles"]:
                     self.cmb_profile.Append((prof),)
             self.filterVpanel.Show(), self.slider_CRF.SetMax(51)
             self.cmb_preset.SetSelection(0), self.cmb_profile.SetSelection(0)
@@ -1059,7 +1059,7 @@ class AV_Conv(wx.Panel):
         determines the default status, enabling or disabling some
         functions depending on the type of video format chosen.
         """
-        selected = vcodecs.get(self.cmb_Vcod.GetValue())
+        selected = VCODECS.get(self.cmb_Vcod.GetValue())
         libcodec = list(selected.keys())[0]
         self.cmb_Vcont.Clear()
         for f in selected.values():
@@ -1095,7 +1095,7 @@ class AV_Conv(wx.Panel):
             self.audio_default()
             self.codVpanel.Disable()
             self.cmb_Vcont.Clear()
-            for f in a_formats:
+            for f in A_FORMATS:
                 self.cmb_Vcont.Append((f),)
             self.cmb_Vcont.SetSelection(0)
             self.UI_set()
@@ -1472,7 +1472,7 @@ class AV_Conv(wx.Panel):
     def setAudioRadiobox(self, event):
         """
         Container combobox sets compatible audio codecs to selected format.
-        see av_formats dict
+        see AV_FORMATS dict
 
         """
         if self.cmb_Media.GetValue() == 'Video':
@@ -1480,7 +1480,7 @@ class AV_Conv(wx.Panel):
                 for n in range(self.rdb_a.GetCount()):
                     self.rdb_a.EnableItem(n, enable=True)
             else:
-                for n, v in enumerate(av_formats[self.cmb_Vcont.GetValue()]):
+                for n, v in enumerate(AV_FORMATS[self.cmb_Vcont.GetValue()]):
                     if v:
                         self.rdb_a.EnableItem(n, enable=True)
                     else:
@@ -1488,7 +1488,7 @@ class AV_Conv(wx.Panel):
             self.rdb_a.SetSelection(0)
 
         if self.cmb_Media.GetValue() == 'Audio':
-            for n, v in enumerate(av_formats[self.cmb_Vcont.GetValue()]):
+            for n, v in enumerate(AV_FORMATS[self.cmb_Vcont.GetValue()]):
                 if v:
                     self.rdb_a.EnableItem(n, enable=True)
                     # self.rdb_a.SetSelection(n)
@@ -1504,7 +1504,7 @@ class AV_Conv(wx.Panel):
     def on_AudioCodecs(self, event):
         """
         When choose an item on audio radiobox list, set the audio format
-        name and audio codec command (see acodecs dict.). Also  set the
+        name and audio codec command (see ACODECS dict.). Also  set the
         view of the audio normalize widgets and reset values some cmd_opt
         keys.
         """
@@ -1531,7 +1531,7 @@ class AV_Conv(wx.Panel):
                 self.btn_aparam.SetForegroundColour(wx.Colour(GREY_DISABLED))
                 self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         # --------------------------------------------------------
-        for k, v in acodecs.items():
+        for k, v in ACODECS.items():
             if audiocodec in k:
                 if audiocodec == "Auto":
                     self.audio_default()
@@ -2182,7 +2182,7 @@ class AV_Conv(wx.Panel):
                      f'{cmd_opt["PixFmt"]} {cmd_opt["WebOptim"]} '
                      f'-map 0:v? {cmd_opt["AudioInMap"][0]}  '
                      f'{opt1} -sn -filter:a: {loudfilter} '
-                     f'-f {muxers[cmd_opt["OutputFormat"]]}'
+                     f'-f {MUXERS[cmd_opt["OutputFormat"]]}'
                      )
             cmd_2 = (f'{cmd_opt["VideoCodec"]} {cmd_opt["VideoBitrate"]} '
                      f'{cmd_opt["MinRate"]} {cmd_opt["MaxRate"]} '

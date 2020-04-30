@@ -669,6 +669,8 @@ class Lacing(wx.Dialog):
             pass
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
+        self.enable_opt = wx.ToggleButton(self, wx.ID_ANY,
+                                          _("Advanced Options"))
         zone1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                     _("Deinterlace"))), wx.VERTICAL)
         zone2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -729,8 +731,6 @@ class Lacing(wx.Dialog):
                                               majorDimension=0,
                                               style=wx.RA_SPECIFY_ROWS
                                               )
-        self.enable_opt = wx.ToggleButton(self, wx.ID_ANY,
-                                          _("Advanced Options"))
         # ----- confirm buttons section
         btn_help = wx.Button(self, wx.ID_HELP, "")
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
@@ -763,6 +763,10 @@ class Lacing(wx.Dialog):
 
         # ------ set Layout
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
+        self.sizer_base.Add(self.enable_opt, 0, wx.ALL |
+                            wx.ALIGN_RIGHT |
+                            wx.ALIGN_CENTER_VERTICAL, 10
+                            )
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
         grid_sizer_base.Add(zone1, 1, wx.ALL | wx.EXPAND, 5)
         deint_grid = wx.FlexGridSizer(2, 4, 0, 0)
@@ -781,9 +785,7 @@ class Lacing(wx.Dialog):
         inter_grid.Add(self.ckbx_interlace, 0, wx.ALL, 15)
         inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 15)
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
-        grid_sizer_base.Add(self.enable_opt, 1, wx.ALL |
-                            wx.ALIGN_CENTER_VERTICAL, 5
-                            )
+
         # confirm btn section:
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         grid_sizer_base.Add(gridBtn, 1, wx.ALL | wx.ALIGN_CENTRE, 0)

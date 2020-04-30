@@ -93,7 +93,7 @@ class Videomass(wx.App):
                 setui[2])), 'Videomass: Fatal Error', wx.ICON_STOP)
             return False
 
-        icons = Appearance(setui[3], setui[4][11])  # set appearance instance
+        icons = Appearance(setui[3], setui[4][11])  # set appearance
         pathicons = icons.icons_set()  # get paths icons
         self.OS = setui[0]
         self.FILEconf = setui[6]

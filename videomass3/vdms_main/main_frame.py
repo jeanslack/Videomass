@@ -97,6 +97,7 @@ class MainFrame(wx.Frame):
         self.iconset = setui[4][11]
         self.videomass_icon = pathicons[0]
         self.icon_runconversion = pathicons[2]
+        self.icon_ydl = pathicons[25]
         self.icon_mainback = pathicons[23]
         self.icon_mainforward = pathicons[24]
         # -------------------------------#
@@ -638,13 +639,13 @@ class MainFrame(wx.Frame):
         self.menuBar.Append(toolsButton, _("&Tools"))
         # ------------------ Go button
         goButton = wx.Menu()
-        self.startpan = goButton.Append(wx.ID_ANY, _("Start Panel"),
+        self.startpan = goButton.Append(wx.ID_ANY, _("Initial topics"),
                                         _("jump to the start panel"))
-        self.prstpan = goButton.Append(wx.ID_ANY, _("Presets Manager panel"),
+        self.prstpan = goButton.Append(wx.ID_ANY, _("Presets manager"),
                                        _("jump to the Presets Manager panel"))
-        self.avpan = goButton.Append(wx.ID_ANY, _("Audio/Video Conversions panel"),
+        self.avpan = goButton.Append(wx.ID_ANY, _("A/V conversions"),
                                      _("jump to the Audio/Video Conv. panel"))
-        self.ydlpan = goButton.Append(wx.ID_ANY, _("YouTube Downloader panel"),
+        self.ydlpan = goButton.Append(wx.ID_ANY, _("YouTube downloader"),
                                     _("jump to the YouTube Downloader panel"))
         self.menuBar.Append(goButton, _("&Go"))
 
@@ -1007,7 +1008,7 @@ class MainFrame(wx.Frame):
         jumpe on youtube downloader
         """
         if not self.data_url:
-            self.statusbar_msg('No URL added yet', YELLOW)
+            self.statusbar_msg('No URLs added yet', YELLOW)
         else:
             self.topicname = 'Youtube Downloader'
             self.on_Forward(self)
@@ -1145,9 +1146,6 @@ class MainFrame(wx.Frame):
         Makes and attaches the view toolsBtn bar
         """
         # -------- Properties
-        #self.toolbar = self.CreateToolBar(style=(wx.TB_HORZ_LAYOUT |
-                                                 #wx.TB_FLAT |
-                                                 #wx.TB_TEXT))
         self.toolbar = self.CreateToolBar(style=(wx.TB_FLAT |
                                                  wx.TB_TEXT))
         self.toolbar.SetToolBitmapSize((32, 32))
@@ -1161,8 +1159,10 @@ class MainFrame(wx.Frame):
         forward = self.toolbar.AddTool(wx.ID_FILE4, ('Forward'),
                                        wx.Bitmap(self.icon_mainforward))
         #self.toolbar.AddSeparator()
-        run_coding = self.toolbar.AddTool(wx.ID_OK, _('Start'),
+        self.run_coding = self.toolbar.AddTool(wx.ID_FILE5, _('Convert'),
                                           wx.Bitmap(self.icon_runconversion))
+        self.run_download = self.toolbar.AddTool(wx.ID_FILE6, _('Download'),
+                                          wx.Bitmap(self.icon_ydl))
         #self.toolbar.AddSeparator()
         self.toolbar.AddStretchableSpace()
 
@@ -1170,7 +1170,8 @@ class MainFrame(wx.Frame):
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
-        self.Bind(wx.EVT_TOOL, self.Run_Coding, run_coding)
+        self.Bind(wx.EVT_TOOL, self.Run_Coding, self.run_coding)
+        self.Bind(wx.EVT_TOOL, self.Run_Coding, self.run_download)
         self.Bind(wx.EVT_TOOL, self.on_Back, back)
         self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
 
@@ -1195,7 +1196,7 @@ class MainFrame(wx.Frame):
         if self.topicname in ['Audio/Video Conversions', 'Presets Manager']:
             data = self.fileDnDTarget.on_Redirect()
             if not data:
-                wx.MessageBox(_('No files added yet'), "Videomass",
+                wx.MessageBox(_('Drag at least one file'), "Videomass",
                               wx.ICON_INFORMATION, self)
                 return
 
@@ -1208,7 +1209,7 @@ class MainFrame(wx.Frame):
         elif self.topicname == 'Youtube Downloader':
             data = self.textDnDTarget.topic_Redirect()
             if not data:
-                wx.MessageBox(_('No URL added yet'), "Videomass",
+                wx.MessageBox(_('Append at least one URL'), "Videomass",
                               wx.ICON_INFORMATION, self)
                 return
             self.youtube_Downloader(self, data)
@@ -1231,7 +1232,8 @@ class MainFrame(wx.Frame):
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.toolbar.Show(), self.btnpanel.Hide()
         self.toolbar.EnableTool(wx.ID_FILE4, True)
-        self.toolbar.EnableTool(wx.ID_OK, False)
+        self.toolbar.EnableTool(wx.ID_FILE5, False)
+        self.toolbar.EnableTool(wx.ID_FILE6, False)
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
     # ------------------------------------------------------------------#
@@ -1252,7 +1254,8 @@ class MainFrame(wx.Frame):
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.toolbar.Show(), self.btnpanel.Hide()
         self.toolbar.EnableTool(wx.ID_FILE4, True)
-        self.toolbar.EnableTool(wx.ID_OK, False)
+        self.toolbar.EnableTool(wx.ID_FILE5, False)
+        self.toolbar.EnableTool(wx.ID_FILE6, False)
         self.Layout()
         self.statusbar_msg(_('Add URLs'), None)
     # ------------------------------------------------------------------#
@@ -1285,7 +1288,8 @@ class MainFrame(wx.Frame):
         self.avpan.Enable(True), self.prstpan.Enable(True),
         self.ydlpan.Enable(False), self.startpan.Enable(True)
         self.toolbar.EnableTool(wx.ID_FILE4, False)
-        self.toolbar.EnableTool(wx.ID_OK, True)
+        self.toolbar.EnableTool(wx.ID_FILE5, False)
+        self.toolbar.EnableTool(wx.ID_FILE6, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1315,13 +1319,14 @@ class MainFrame(wx.Frame):
         self.btn_newprf.Hide(), self.btn_delprf.Hide()
         self.btn_editprf.Hide(), self.btn_saveprf.Show()
         self.btn_duration.Show(), self.btn_metaI.Show()
-        self.btn_metaI.SetLabel(_('Multimedia Streams'))
+        self.btn_metaI.SetLabel(_('Streams'))
         self.btn_playO.Show()
         self.menu_items()  # disable some menu items
         self.avpan.Enable(False), self.prstpan.Enable(True),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.toolbar.EnableTool(wx.ID_FILE4, False)
-        self.toolbar.EnableTool(wx.ID_OK, True)
+        self.toolbar.EnableTool(wx.ID_FILE5, True)
+        self.toolbar.EnableTool(wx.ID_FILE6, False)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1359,7 +1364,8 @@ class MainFrame(wx.Frame):
         self.avpan.Enable(True), self.prstpan.Enable(False),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.toolbar.EnableTool(wx.ID_FILE4, False)
-        self.toolbar.EnableTool(wx.ID_OK, True)
+        self.toolbar.EnableTool(wx.ID_FILE5, True)
+        self.toolbar.EnableTool(wx.ID_FILE6, False)
         self.Layout()
     # ------------------------------------------------------------------#
 

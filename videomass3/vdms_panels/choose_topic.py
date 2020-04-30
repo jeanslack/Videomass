@@ -74,12 +74,14 @@ else:
     msgerr = _('{}\n\nyoutube-dl: no library or executable '
                'found .').format(pylibYdl)
 
-prst_mng = _('\tPresets Manager - Create and use directly your favorite '
-             'FFmpeg presets with full formats support. ')
-video_lab = _('\tA set of useful tools for audio and video. Convert or save '
-              'your profiles and reuse them with Presets Manager. ')
-youtube_lab = _('\tEasily download videos in different formats from YouTube, '
-                'Facebook and many other sites. ')
+prst_mng = _('  Presets Manager - Create, edit and use quickly your favorite\n'
+             '  FFmpeg presets and profiles with full formats support and '
+             'codecs. ')
+video_lab = _('  A set of useful tools for audio and video manipulations;\n'
+              '  convert or save your profiles and reuse them with '
+              'Presets Manager. ')
+youtube_lab = _('  Easily download videos and audio in different formats\n'
+                '  and quality from YouTube, Facebook and more sites. ')
 
 
 class Choose_Topic(wx.Panel):
@@ -91,7 +93,7 @@ class Choose_Topic(wx.Panel):
         self.oS = OS
         version = current_release()
 
-        wx.Panel.__init__(self, parent, -1, style=wx.SUNKEN_BORDER)
+        wx.Panel.__init__(self, parent, -1,)
 
         welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")))
         version = wx.StaticText(self, wx.ID_ANY, (_('Version {}'
@@ -101,13 +103,13 @@ class Choose_Topic(wx.Panel):
         grid_base = wx.GridSizer(1, 1, 0, 0)
 
         self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng,
-                                     size=(-1, -1), style=wx.BU_LEFT)
+                                     size=(-1, -1), style=wx.BU_LEFT|wx.BORDER_NONE)
         self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
         self.video = wx.Button(self, wx.ID_ANY, video_lab,
-                               size=(-1, -1), style=wx.BU_LEFT)
+                               size=(-1, -1), style=wx.BU_LEFT|wx.BORDER_NONE)
         self.video.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
         self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab,
-                                 size=(-1, -1), style=wx.BU_LEFT)
+                                 size=(-1, -1), style=wx.BU_LEFT|wx.BORDER_NONE)
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn), wx.LEFT)
 
         grid_buttons.AddMany([(welcome, 0, wx.ALIGN_CENTER_VERTICAL |

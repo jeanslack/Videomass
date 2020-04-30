@@ -584,10 +584,10 @@ class Setup(wx.Dialog):
         """
         Restore to default settings colors and icons set
         """
-        self.full_list[self.rowsNum[11]] = "Videomass_Sign_Icons\n"
-        self.full_list[self.rowsNum[12]] = '83,171,173,255\n'
-        self.full_list[self.rowsNum[13]] = '255,255,255\n'
-        self.full_list[self.rowsNum[14]] = '4,60,61,255\n'
+        self.full_list[self.rowsNum[11]] = "Material_Design_Icons_black\n"
+        self.full_list[self.rowsNum[12]] = '228, 21, 68\n'
+        self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
+        self.full_list[self.rowsNum[14]] = '255, 0, 58\n'
     # ----------------------------------------------------------------------#
 
     def on_help(self, event):
