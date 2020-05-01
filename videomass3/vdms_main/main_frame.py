@@ -50,13 +50,14 @@ from videomass3.vdms_sys.msg_info import current_release
 
 # get videomass wx.App attribute
 get = wx.GetApp()
-pylibYdl = get.pylibYdl  # youtube_dl library with None is in use
-execYdl = get.execYdl  # youtube-dl executable with False do not exist
+PYLIB_YDL = get.pylibYdl  # youtube_dl library with None is in use
+EXEC_YDL = get.execYdl  # youtube-dl executable with False do not exist
 OS = get.OS  # ID of the operative system:
 DIR_CONF = get.DIRconf  # default configuration directory
 FILE_CONF = get.FILEconf  # pathname of the file configuration
 WORK_DIR = get.WORKdir  # pathname of the current work directory
 LOGDIR = get.LOGdir
+CACHEDIR = get.CACHEdir
 # # colour rappresentetion in rgb
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
@@ -360,9 +361,10 @@ class MainFrame(wx.Frame):
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.Hide()
 
-        self.ChooseTopic.Show(), self.toolbar.Hide(), self.btnpanel.Hide()
-        self.avpan.Enable(False), self.prstpan.Enable(False),
-        self.ydlpan.Enable(False), self.startpan.Enable(False)
+        self.ChooseTopic.Show(), self.toolbar.Hide()
+        self.btnpanel.Hide(), self.avpan.Enable(False)
+        self.prstpan.Enable(False), self.ydlpan.Enable(False)
+        self.startpan.Enable(False), self.logpan.Enable(False)
 
         self.statusbar_msg('', None)
         self.Layout()
@@ -379,9 +381,10 @@ class MainFrame(wx.Frame):
         if self.ChooseTopic.IsShown() == True:
             self.avpan.Enable(False), self.prstpan.Enable(False),
             self.ydlpan.Enable(False), self.startpan.Enable(False)
-        if pylibYdl is not None:
-            if execYdl:
-                if os.path.exists(execYdl):
+            self.logpan.Enable(False)
+        if PYLIB_YDL is not None:
+            if EXEC_YDL:
+                if os.path.exists(EXEC_YDL):
                     return
             self.ydlused.Enable(False)
             self.ydllatest.Enable(False)
@@ -629,27 +632,38 @@ class MainFrame(wx.Frame):
         self.ydlupdate = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.Append(wx.ID_ANY, _("&Youtube-dl"), ydlButton, )
 
-        toolsButton.AppendSeparator()
-        dscrp = (_("Log directory"),
-                 _("Opens the Videomass log directory if it exists"))
-        openlogdir = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Configuration directory"),
-                 _("Opens the Videomass configuration directory"))
-        openconfdir = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-
         self.menuBar.Append(toolsButton, _("&Tools"))
         # ------------------ Go button
         goButton = wx.Menu()
-        self.startpan = goButton.Append(wx.ID_ANY, _("Initial topics"),
+        self.startpan = goButton.Append(wx.ID_ANY, _("Home panel"),
                                         _("jump to the start panel"))
+        goButton.AppendSeparator()
         self.prstpan = goButton.Append(wx.ID_ANY, _("Presets manager"),
                                        _("jump to the Presets Manager panel"))
         self.avpan = goButton.Append(wx.ID_ANY, _("A/V conversions"),
                                      _("jump to the Audio/Video Conv. panel"))
+        goButton.AppendSeparator()
         self.ydlpan = goButton.Append(wx.ID_ANY, _("YouTube downloader"),
                                     _("jump to the YouTube Downloader panel"))
-        self.menuBar.Append(goButton, _("&Go"))
+        goButton.AppendSeparator()
+        dscrp = (_("Log viewing console"),
+                _("View log messages of the last process executed"))
 
+        self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+
+        sysButton = wx.Menu()  # system sub menu
+        dscrp = (_("Configuration directory"),
+                 _("Opens the Videomass configuration directory"))
+        openconfdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Log directory"),
+                 _("Opens the Videomass log directory if it exists"))
+        openlogdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Cache directory"),
+                 _("Opens the Videomass cache directory if exists"))
+        opencachedir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        goButton.Append(wx.ID_ANY, _("&System"), sysButton)
+
+        self.menuBar.Append(goButton, _("&View"))
         # ------------------ setup button
         setupButton = wx.Menu()
         setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"),
@@ -694,8 +708,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Check_enc, ckcoders)
         self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
-        self.Bind(wx.EVT_MENU, self.Openlog, openlogdir)
-        self.Bind(wx.EVT_MENU, self.Openconf, openconfdir)
         self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
         self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
         self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
@@ -704,6 +716,10 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.prstPan, self.prstpan)
         self.Bind(wx.EVT_MENU, self.avPan, self.avpan)
         self.Bind(wx.EVT_MENU, self.ydlPan, self.ydlpan)
+        self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
+        self.Bind(wx.EVT_MENU, self.openLog, openlogdir)
+        self.Bind(wx.EVT_MENU, self.openConf, openconfdir)
+        self.Bind(wx.EVT_MENU, self.openCache, opencachedir)
         # ----SETUP----
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
@@ -864,7 +880,7 @@ class MainFrame(wx.Frame):
         check version of youtube-dl used from 'Version in Use' bar menu
         """
         waitmsg = _('\nWait....\nCheck installed version\n')
-        if pylibYdl is None:  # youtube-dl library
+        if PYLIB_YDL is None:  # youtube-dl library
             import youtube_dl
             this = youtube_dl.version.__version__
             if msgbox:
@@ -872,8 +888,8 @@ class MainFrame(wx.Frame):
                                 'version {}').format(this), 'Videomass')
             return this
         else:
-            if os.path.exists(execYdl):
-                this = IO_tools.youtubedl_update([execYdl, '--version'],
+            if os.path.exists(EXEC_YDL):
+                this = IO_tools.youtubedl_update([EXEC_YDL, '--version'],
                                                  waitmsg)
                 if this[1]:  # failed
                     wx.MessageBox("%s" % this[0], "Videomass: error",
@@ -888,7 +904,7 @@ class MainFrame(wx.Frame):
                 return this[0].strip()
         if msgbox:
                 wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                              'installed yet.').format(pylibYdl),
+                              'installed yet.').format(PYLIB_YDL),
                               'Videomass', wx.ICON_ERROR)
         return None
     # -----------------------------------------------------------------#
@@ -931,9 +947,9 @@ class MainFrame(wx.Frame):
         """
         waitmsg = _('\nWait....\nUpdating youtube-dl')
 
-        if os.path.exists(execYdl) and pylibYdl is not None:
-            if os.path.basename(execYdl) == 'youtube-dl':  # not youtube-dl.exe
-                update = IO_tools.youtubedl_update([execYdl, '--update'],
+        if os.path.exists(EXEC_YDL) and PYLIB_YDL is not None:
+            if os.path.basename(EXEC_YDL) == 'youtube-dl':  # not youtube-dl.exe
+                update = IO_tools.youtubedl_update([EXEC_YDL, '--update'],
                                                    waitmsg)
                 if update[1]:  # failed
                     wx.MessageBox("\n%s" % update[0], "Videomass: error",
@@ -957,7 +973,7 @@ class MainFrame(wx.Frame):
                                   "Videomass", wx.ICON_INFORMATION, self)
                     return
                 else:
-                    upgrade = IO_tools.youtubedl_upgrade(latest[0], execYdl)
+                    upgrade = IO_tools.youtubedl_upgrade(latest[0], EXEC_YDL)
 
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
@@ -970,7 +986,7 @@ class MainFrame(wx.Frame):
         else:
 
             wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(pylibYdl),
+                            'installed yet.').format(PYLIB_YDL),
                           'Videomass', wx.ICON_ERROR)
         return
     # ------------------------------------------------------------------#
@@ -1015,21 +1031,43 @@ class MainFrame(wx.Frame):
             self.on_Forward(self)
     # ------------------------------------------------------------------#
 
+    def logPan(self, event):
+        """
+        view last log on console
+        """
+        self.switch_Process('console view only')
+    # ------------------------------------------------------------------#
 
-    def Openlog(self, event):
+
+    def openLog(self, event):
         """
         Open the log diretctory with file manager
 
         """
+        if not os.path.exists(LOGDIR):
+            wx.MessageBox(_("Output log has not been created yet."),
+                          "Videomass", wx.ICON_INFORMATION, None)
+            return
         IO_tools.openpath(LOGDIR)
     # ------------------------------------------------------------------#
 
-    def Openconf(self, event):
+    def openConf(self, event):
         """
         Open the configuration folder with file manager
 
         """
         IO_tools.openpath(DIR_CONF)
+    # -------------------------------------------------------------------#
+
+    def openCache(self, event):
+        """
+        Open the cache dir with file manager if exists
+        """
+        if not os.path.exists(CACHEDIR):
+            wx.MessageBox(_("cache directory has not been created yet."),
+                          "Videomass", wx.ICON_INFORMATION, None)
+            return
+        IO_tools.openpath(CACHEDIR)
 
     # --------- Menu Edit
 
@@ -1232,6 +1270,7 @@ class MainFrame(wx.Frame):
         self.avpan.Enable(True), self.prstpan.Enable(True),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.toolbar.Show(), self.btnpanel.Hide()
+        self.logpan.Enable(False)
         self.toolbar.EnableTool(wx.ID_FILE4, True)
         self.toolbar.EnableTool(wx.ID_FILE5, False)
         self.toolbar.EnableTool(wx.ID_FILE6, False)
@@ -1254,6 +1293,7 @@ class MainFrame(wx.Frame):
         self.avpan.Enable(True), self.prstpan.Enable(True),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.toolbar.Show(), self.btnpanel.Hide()
+        self.logpan.Enable(False)
         self.toolbar.EnableTool(wx.ID_FILE4, True)
         self.toolbar.EnableTool(wx.ID_FILE5, False)
         self.toolbar.EnableTool(wx.ID_FILE6, False)
@@ -1277,17 +1317,18 @@ class MainFrame(wx.Frame):
                 self.statusbar_msg(_('Youtube Downloader'), None)
         self.data_url = data
         self.file_destin = self.textDnDTarget.file_dest
-        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
-        self.VconvPanel.Hide(), self.PrstsPanel.Hide(),
+        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
+        self.VconvPanel.Hide(), self.PrstsPanel.Hide()
         self.ytDownloader.Show()
         self.toolbar.Show(), self.btnpanel.Show(), self.btn_playO.Show()
-        self.btn_saveprf.Hide(), self.btn_duration.Hide(),
+        self.btn_saveprf.Hide(), self.btn_duration.Hide()
         self.btn_metaI.Show(), self.btn_newprf.Hide()
         self.btn_metaI.SetLabel(_('Show More'))
         self.btn_delprf.Hide(), self.btn_editprf.Hide()
         self.menu_items()  # disable some menu items
-        self.avpan.Enable(True), self.prstpan.Enable(True),
+        self.avpan.Enable(True), self.prstpan.Enable(True)
         self.ydlpan.Enable(False), self.startpan.Enable(True)
+        self.logpan.Enable(True)
         self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_FILE5, False)
         self.toolbar.EnableTool(wx.ID_FILE6, True)
@@ -1323,8 +1364,9 @@ class MainFrame(wx.Frame):
         self.btn_metaI.SetLabel(_('Streams'))
         self.btn_playO.Show()
         self.menu_items()  # disable some menu items
-        self.avpan.Enable(False), self.prstpan.Enable(True),
+        self.avpan.Enable(False), self.prstpan.Enable(True)
         self.ydlpan.Enable(True), self.startpan.Enable(True)
+        self.logpan.Enable(True)
         self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_FILE5, True)
         self.toolbar.EnableTool(wx.ID_FILE6, False)
@@ -1364,6 +1406,7 @@ class MainFrame(wx.Frame):
         self.default_all.Enable(True), self.refresh.Enable(True)
         self.avpan.Enable(True), self.prstpan.Enable(False),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
+        self.logpan.Enable(True)
         self.toolbar.EnableTool(wx.ID_FILE4, False)
         self.toolbar.EnableTool(wx.ID_FILE5, True)
         self.toolbar.EnableTool(wx.ID_FILE6, False)

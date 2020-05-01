@@ -213,10 +213,6 @@ def openpath(where):
     configuration directory or log directory.
 
     """
-    if not os.path.exists(where):
-        wx.MessageBox(_("Output log has not been created yet."), "Videomass",
-                      wx.ICON_INFORMATION, None)
-        return
     ret = browse(OS, where)
     if ret:
         wx.MessageBox(ret, 'Videomass Error', wx.ICON_ERROR, None)
@@ -261,9 +257,8 @@ def youtube_getformatcode_exec(url):
     data = thread.data
     loadDlg.Destroy()
     yield data
-
-
 # --------------------------------------------------------------------------#
+
 
 def youtubedl_latest(url):
     """
@@ -319,6 +314,12 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
         try:  # make back-up for outdated
             os.rename(executable, '%s_OLD' % executable)
         except FileNotFoundError as err:
+            return None, err
+    elif not os.path.exists(os.path.dirname(executable)):
+        print('non esiste')
+        try:  # make cache dir
+            os.makedirs(os.path.dirname(executable))
+        except OSError as err:
             return None, err
 
     thread = youtubedlupdater.Upgrade_Latest(url, executable)

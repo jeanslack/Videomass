@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-April 29, 2020 V.2.1.0
+May 1, 2020 V.2.1.0
 +------------------------------------+
 
 BUGS:
@@ -18,22 +18,20 @@ BUGS:
     * [YOUTUBE DOWNLOADER] fixed `Show More` information from sites other
       that YouTube.
 
-
 IMPROVEMENTS:
     * warning message in the status bar when the list of incoming files has
       changed.
-    * Improve choose topic panel buttons.
+    * Improve Home panel buttons `choose_topic.py`
     * Some cosmetic layout.
     * [YOUTUBE DOWNLOADER] Improved method and design on inserting and appending
       `Format Code` on text boxes.
-    * Added new menu items to quickly jump on panels.
+    * Added new menu items to quickly jump between panels.
 
 NEWS:
     * [YOUTUBE DOWNLOADER] New context menu on list control to choice quickly
-      the Foemat Code to appending on text boxes.
+      the Format Code to appending on text boxes.
 
 REMOVALS and DISPLACEMENTS:
-
     * Changed default location of the 'videomass' log
         on the user space, following the typical conventions of the OS.
         On *nix OS's: use standard $XDG_DATA_HOME ($HOME/.local/share)

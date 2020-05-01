@@ -82,8 +82,8 @@ class Logging_Console(wx.Panel):
     displays a text control for the output logging, a progress bar
     and a progressive percentage text label. This panel is used
     in combination with separated threads for long processing tasks.
-    It also implements the buttons to stop the current process and
-    close the panel during final activities.
+    It also implements stop and close buttons to stop the current
+    process and close the panel at the end.
 
     """
     def __init__(self, parent):
@@ -104,7 +104,7 @@ class Logging_Console(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
 
-        lbl = wx.StaticText(self, label=_("Log View Console:"))
+        lbl = wx.StaticText(self, label=_("Log viewing console:"))
         self.OutText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
                                    wx.TE_READONLY |
@@ -159,6 +159,13 @@ class Logging_Console(wx.Panel):
         duration: total duration or partial if set timeseq
         """
         self.previus = panel  # stores the panel from which it starts
+
+        if varargs[0] == 'console view only':
+            self.button_stop.Enable(False)
+            self.button_close.Enable(True)
+            return
+
+        self.OutText.Clear(), self.labPerc.SetLabel('')
         self.logname = varargs[8]  # example: Videomass_VideoConversion.log
         time_seq = self.parent.time_seq  # a time segment
 
@@ -395,6 +402,12 @@ class Logging_Console(wx.Panel):
         close dialog and retrieve at previusly panel
 
         """
+        if not self.logname:  # there is not process
+            self.ckbx_text.Show()
+            self.button_stop.Enable(True)
+            self.button_close.Enable(False)
+            self.parent.panelShown(self.previus)  # retrieve at previusly panel
+
         if self.PARENT_THREAD is not None:
             if wx.MessageBox(_('There are still processes running.. if you '
                                'want to stop them, use the "Abort" button.\n\n'
@@ -412,7 +425,8 @@ class Logging_Console(wx.Panel):
         self.PARENT_THREAD = None
         self.ABORT = False
         self.ERROR = False
-        self.OutText.Clear()
-        self.labPerc.SetLabel('')
+        self.logname = None
+        # self.OutText.Clear()
+        # self.labPerc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel
         # event.Skip()

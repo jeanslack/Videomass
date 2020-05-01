@@ -63,7 +63,7 @@ opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
 
 # get videomass wx.App attribute
 get = wx.GetApp()
-pylibYdl = get.pylibYdl
+PYLIB_YDL = get.pylibYdl
 
 
 class Downloader(wx.Panel):
@@ -178,7 +178,7 @@ class Downloader(wx.Panel):
         sizer.Add(self.fcode, 1, wx.EXPAND | wx.ALL |
                   wx.ALIGN_CENTER_HORIZONTAL, 10
                   )
-        if pylibYdl is None:  # YuotubeDL is not used as module
+        if PYLIB_YDL is None:  # YuotubeDL is not used as module
             self.fcode.InsertColumn(0, (_('TITLE')), width=180)
             self.fcode.InsertColumn(1, (_('URL')), width=80)
             self.fcode.InsertColumn(2, (_('Format Code')), width=100)
@@ -270,7 +270,7 @@ class Downloader(wx.Panel):
         itemId = event.GetId()
         menu = event.GetEventObject()
         menuItem = menu.FindItemById(itemId)
-        col = 2 if pylibYdl is None else 1
+        col = 2 if PYLIB_YDL is None else 1
 
         item = self.fcode.GetFocusedItem()
         fc = self.fcode.GetItemText(item, col)
@@ -423,7 +423,7 @@ class Downloader(wx.Panel):
         show data information. This method is called by the main frame
         when the 'Show More' button is pressed.
         """
-        if pylibYdl is not None:  # YuotubeDL is not used as module
+        if PYLIB_YDL is not None:  # YuotubeDL is not used as module
             wx.MessageBox(_('"Show more" only is enabled when Videomass '
                             'uses youtube-dl as imported library.'),
                           'Videomass', wx.ICON_INFORMATION)
@@ -444,7 +444,7 @@ class Downloader(wx.Panel):
         """
         ret = True
         if not self.info:
-            if pylibYdl is not None:  # youtube-dl as executable
+            if PYLIB_YDL is not None:  # youtube-dl as executable
                 ret = self.get_executableformatcode()
             else:
                 ret = self.get_libraryformatcode()
@@ -543,7 +543,7 @@ class Downloader(wx.Panel):
                      # ]
             return code
 
-        if pylibYdl is None:  # ----------- youtube-dl is used as library
+        if PYLIB_YDL is None:  # ----------- youtube-dl is used as library
             postprocessors = []
             if self.choice.GetSelection() == 2:
                 postprocessors.append({'key': 'FFmpegExtractAudio',
