@@ -40,7 +40,7 @@ def write_log(logfile, logdir):
     """
     if not os.path.isdir(logdir):
         try:
-            os.makedirs(logdir)
+            os.makedirs(logdir, mode=0o777)
         except OSError as error:
             print(error)
             return error

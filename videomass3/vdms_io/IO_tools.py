@@ -317,7 +317,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
             return None, err
     elif not os.path.exists(os.path.dirname(executable)):
         try:  # make cache dir
-            os.makedirs(os.path.dirname(executable))
+            os.makedirs(os.path.dirname(executable), mode=0o777)
         except OSError as err:
             return None, err
 
