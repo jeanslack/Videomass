@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-01 10:55+0200\n"
-"PO-Revision-Date: 2020-05-01 10:57+0200\n"
+"POT-Creation-Date: 2020-05-01 23:17+0200\n"
+"PO-Revision-Date: 2020-05-01 23:19+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -1214,7 +1214,7 @@ msgid ""
 "Downloading youtube-dl.\n"
 msgstr ""
 
-#: ../videomass3/vdms_io/IO_tools.py:326
+#: ../videomass3/vdms_io/IO_tools.py:325
 msgid "Videomass - Downloading..."
 msgstr ""
 
@@ -1631,6 +1631,15 @@ msgstr ""
 #: ../videomass3/vdms_main/main_frame.py:982
 #, python-brace-format
 msgid "Successful! youtube-dl is up-to-date ({0})"
+msgstr ""
+
+#: ../videomass3/vdms_main/main_frame.py:1006
+#: ../videomass3/vdms_main/main_frame.py:1017
+msgid "No files added yet"
+msgstr ""
+
+#: ../videomass3/vdms_main/main_frame.py:1028
+msgid "No URLs added yet"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:1048

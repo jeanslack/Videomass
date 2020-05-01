@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-01 10:55+0200\n"
-"PO-Revision-Date: 2020-05-01 10:57+0200\n"
+"POT-Creation-Date: 2020-05-01 23:17+0200\n"
+"PO-Revision-Date: 2020-05-01 23:19+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -1411,7 +1411,7 @@ msgstr ""
 "Attendi....\n"
 "Download di youtube-dl\n"
 
-#: ../videomass3/vdms_io/IO_tools.py:326
+#: ../videomass3/vdms_io/IO_tools.py:325
 msgid "Videomass - Downloading..."
 msgstr "Download in corso..."
 
@@ -1859,6 +1859,15 @@ msgstr "youtube-dl è già aggiornato {}"
 #, python-brace-format
 msgid "Successful! youtube-dl is up-to-date ({0})"
 msgstr "Riuscito! youtube-dl è aggiornato ({0})"
+
+#: ../videomass3/vdms_main/main_frame.py:1006
+#: ../videomass3/vdms_main/main_frame.py:1017
+msgid "No files added yet"
+msgstr "Ancora nessun file aggiunto"
+
+#: ../videomass3/vdms_main/main_frame.py:1028
+msgid "No URLs added yet"
+msgstr "Ancora nessun URL aggiunto"
 
 #: ../videomass3/vdms_main/main_frame.py:1048
 msgid "Output log has not been created yet."
@@ -3400,9 +3409,6 @@ msgstr ""
 
 #~ msgid "Videomass: media streams"
 #~ msgstr "Videomass: flussi multimediali"
-
-#~ msgid "No files exported yet"
-#~ msgstr "Ancora nessun file esportato"
 
 #~ msgid "Add File.. "
 #~ msgstr "Aggiungi File.. "

@@ -102,7 +102,7 @@ class Choose_Topic(wx.Panel):
         grid_base = wx.GridSizer(1, 1, 0, 0)
 
         self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng,
-                                     size=(-1, -1), style=wx.BU_LEFT|wx.BORDER_NONE)
+                                     size=(-1, -1), style=wx.BU_LEFT|wx.NO_BORDER)
         self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
         self.video = wx.Button(self, wx.ID_ANY, video_lab,
                                size=(-1, -1), style=wx.BU_LEFT|wx.BORDER_NONE)

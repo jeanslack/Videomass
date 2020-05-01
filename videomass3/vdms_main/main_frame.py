@@ -1003,7 +1003,7 @@ class MainFrame(wx.Frame):
         jump on Presets Manager panel
         """
         if not self.file_src:
-            self.statusbar_msg('No files added yet', YELLOW)
+            self.statusbar_msg (_('No files added yet'), YELLOW)
         else:
             self.topicname = 'Presets Manager'
             self.on_Forward(self)
@@ -1014,7 +1014,7 @@ class MainFrame(wx.Frame):
         jump on AVconversions panel
         """
         if not self.file_src:
-            self.statusbar_msg('No files added yet', YELLOW)
+            self.statusbar_msg (_('No files added yet'), YELLOW)
         else:
             self.topicname = 'Audio/Video Conversions'
             self.on_Forward(self)
@@ -1025,7 +1025,7 @@ class MainFrame(wx.Frame):
         jumpe on youtube downloader
         """
         if not self.data_url:
-            self.statusbar_msg('No URLs added yet', YELLOW)
+            self.statusbar_msg (_('No URLs added yet'), YELLOW)
         else:
             self.topicname = 'Youtube Downloader'
             self.on_Forward(self)
@@ -1267,8 +1267,8 @@ class MainFrame(wx.Frame):
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.file_destin)
         self.menu_items()  # disable some menu items
-        self.avpan.Enable(True), self.prstpan.Enable(True),
-        self.ydlpan.Enable(True), self.startpan.Enable(True)
+        self.avpan.Enable(False), self.prstpan.Enable(False),
+        self.ydlpan.Enable(False), self.startpan.Enable(True)
         self.toolbar.Show(), self.btnpanel.Hide()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(wx.ID_FILE4, True)
@@ -1290,8 +1290,8 @@ class MainFrame(wx.Frame):
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.file_destin)
         self.menu_items()  # disable some menu items
-        self.avpan.Enable(True), self.prstpan.Enable(True),
-        self.ydlpan.Enable(True), self.startpan.Enable(True)
+        self.avpan.Enable(False), self.prstpan.Enable(False),
+        self.ydlpan.Enable(False), self.startpan.Enable(True)
         self.toolbar.Show(), self.btnpanel.Hide()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(wx.ID_FILE4, True)
