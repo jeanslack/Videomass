@@ -56,8 +56,8 @@ OS = get.OS  # ID of the operative system:
 DIR_CONF = get.DIRconf  # default configuration directory
 FILE_CONF = get.FILEconf  # pathname of the file configuration
 WORK_DIR = get.WORKdir  # pathname of the current work directory
-LOGDIR = get.LOGdir
-CACHEDIR = get.CACHEdir
+LOGDIR = get.LOGdir  # log directory pathname
+CACHEDIR = get.CACHEdir  # cache directory pathname
 # # colour rappresentetion in rgb
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
@@ -1041,7 +1041,7 @@ class MainFrame(wx.Frame):
 
     def openLog(self, event):
         """
-        Open the log diretctory with file manager
+        Open the log directory with file manager
 
         """
         if not os.path.exists(LOGDIR):

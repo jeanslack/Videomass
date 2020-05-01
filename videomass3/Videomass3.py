@@ -120,7 +120,7 @@ class Videomass(wx.App):
                               'writable by user for updates.')
         else:
             try:
-                from youtube_dl_ import YoutubeDL
+                from youtube_dl import YoutubeDL
                 self.execYdl = False
             except (ModuleNotFoundError, ImportError) as nomodule:
                 self.pylibYdl = nomodule

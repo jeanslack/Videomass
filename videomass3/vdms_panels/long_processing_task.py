@@ -417,7 +417,6 @@ class Logging_Console(wx.Panel):
                 return
 
             self.parent.on_Kill()
-
         # reset all before close
         self.ckbx_text.Show()
         self.button_stop.Enable(True)
