@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-May 1, 2020 V.2.1.0
+May 2, 2020 V.2.1.0
 +------------------------------------+
 
 BUGS:
@@ -30,6 +30,8 @@ IMPROVEMENTS:
 NEWS:
     * [YOUTUBE DOWNLOADER] New context menu on list control to choice quickly
       the Format Code to appending on text boxes.
+    * [PRESETS MANAGER] New context menu on list control to choice quickly
+      new profile, edit profile and deleting.
 
 REMOVALS and DISPLACEMENTS:
     * Changed default location of the 'videomass' log

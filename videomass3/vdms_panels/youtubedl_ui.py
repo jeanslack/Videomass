@@ -241,22 +241,22 @@ class Downloader(wx.Panel):
         Create and show a Context Menu
         """
         # only do this part the first time so the events are only bound once
-        if not hasattr(self, "popupID1"):
-            self.popupID1 = wx.NewId()
+        if not hasattr(self, "popupID2"):
             self.popupID2 = wx.NewId()
             self.popupID3 = wx.NewId()
             self.popupID4 = wx.NewId()
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
+            self.popupID5 = wx.NewId()
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID3)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID4)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID5)
         # build the menu
         menu = wx.Menu()
-        itemOne = menu.Append(self.popupID1, _("Insert Format Code"))
-        itemThree = menu.Append(self.popupID3, _("Append Format Code"))
+        itemOne = menu.Append(self.popupID2, _("Insert Format Code"))
+        itemThree = menu.Append(self.popupID4, _("Append Format Code"))
         menu.AppendSeparator()
-        itemTwo = menu.Append(self.popupID2, _("Insert for merging"))
-        itemFour = menu.Append(self.popupID4, _("Append for merging"))
+        itemTwo = menu.Append(self.popupID3, _("Insert for merging"))
+        itemFour = menu.Append(self.popupID5, _("Append for merging"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()

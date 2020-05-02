@@ -339,6 +339,8 @@ class PrstPan(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.Run_Coding,
                   self.list_ctrl
                   )
+        #self.Bind(wx.EVT_CONTEXT_MENU, self.onContext, self.list_ctrl)
+        self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         self.Bind(wx.EVT_RADIOBOX, self.on_Enable_norm, self.rdbx_norm)
         self.Bind(wx.EVT_BUTTON, self.on_Analyzes, self.btn_voldect)
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
@@ -409,6 +411,48 @@ class PrstPan(wx.Panel):
             cmd_opt["AudioOutMap"] = ['-map 0:a%s?' % str(sel),
                                       '%s' % str(sel)
                                       ]
+    # ----------------------------------------------------------------------
+
+    def onContext(self, event):
+        """
+        Create and show a Context Menu on list_ctrl
+        """
+        # only do this part the first time so the events are only bound once
+        if not hasattr(self, "popupID5"):
+            self.popupID6 = wx.NewId()
+            self.popupID7 = wx.NewId()
+            self.popupID8 = wx.NewId()
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID6)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID7)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID8)
+        # build the menu
+        menu = wx.Menu()
+        itemOne = menu.Append(self.popupID6,  _("New profile"))
+        menu.AppendSeparator()
+        itemThree = menu.Append(self.popupID7, _("Edit selected profile"))
+        menu.AppendSeparator()
+        itemTwo = menu.Append(self.popupID8, _("Delete selected profile"))
+        # show the popup menu
+        self.PopupMenu(menu)
+        menu.Destroy()
+    # ----------------------------------------------------------------------
+
+    def onPopup(self, event):
+        """
+        Evaluate the label string of the menu item selected and starts
+        the related process
+        """
+        itemId = event.GetId()
+        menu = event.GetEventObject()
+        menuItem = menu.FindItemById(itemId)
+        # item = self.list_ctrl.GetFocusedItem()
+
+        if menuItem.GetLabel() == _("New profile"):
+                self.Addprof()
+        elif menuItem.GetLabel() == _("Edit selected profile"):
+                self.Editprof(self)
+        elif menuItem.GetLabel() == _("Delete selected profile"):
+            self.Delprof()
     # ------------------------------------------------------------------#
 
     def reset_list(self, reset_cmbx=False):
@@ -679,7 +723,7 @@ class PrstPan(wx.Panel):
 
         """
         filename = None
-        with wx.FileDialog(self, "Enter name for new preset",
+        with wx.FileDialog(self, _("Enter name for new preset"),
                            defaultDir=self.user_prst,
                            wildcard="Videomass presets (*.prst;)|*.prst;",
                            style=wx.FD_SAVE |
@@ -692,8 +736,8 @@ class PrstPan(wx.Panel):
                 with open(filename, 'w') as file:
                     file.write('[]')
             except IOError:
-                wx.LogError("Cannot save current "
-                            "data in file '%s'." % filename)
+                wx.LogError(_("Cannot save current "
+                            "data in file '{}'.").format(filename))
                 return
         if filename:
             wx.MessageBox(_("'Successful!\n\n"
