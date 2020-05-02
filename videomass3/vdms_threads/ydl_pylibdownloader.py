@@ -26,6 +26,7 @@
 
 #########################################################
 import wx
+import os
 from threading import Thread
 import time
 from pubsub import pub
@@ -39,6 +40,20 @@ pylibYdl = get.pylibYdl
 
 if pylibYdl is None:  # youtube-dl is installed
     import youtube_dl
+
+
+def logWrite(cmd, sterr, logname):
+    """
+    writes youtube-dl commands and status error during
+    threads below
+    """
+    if sterr:
+        apnd = "...%s\n\n" % (sterr)
+    else:
+        apnd = "%s\n\n" % (cmd)
+
+    with open(os.path.join(LOGDIR, logname), "a") as log:
+        log.write(apnd)
 
 
 class MyLogger(object):
@@ -185,6 +200,8 @@ class Ydl_DL_Pylib(Thread):
                         'logger': MyLogger(),
                         'progress_hooks': [my_hook],
                         }
+
+            logWrite(ydl_opts, '', self.logname)  # write n/n + command only
 
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download(["{}".format(url)])

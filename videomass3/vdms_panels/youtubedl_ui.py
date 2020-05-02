@@ -531,7 +531,7 @@ class Downloader(wx.Panel):
         with subprocess. This depends on some cases.
         """
         urls = self.parent.data_url
-        logname = 'Youtube_downloader.log'
+        logname = 'Youtube_LIB_downloader.log'
 
         def _getformatcode():
             """return format code"""
@@ -621,7 +621,7 @@ class Downloader(wx.Panel):
                                        None,
                                        '',
                                        '',
-                                       logname,
+                                       'Youtube_LIB_downloader.log',
                                        len(urls),
                                        )
         else:  # ----------- with youtube-dl command line execution
@@ -674,6 +674,6 @@ class Downloader(wx.Panel):
                                        None,
                                        '',
                                        '',
-                                       logname,
+                                       'Youtube_EXEC_downloader.log',
                                        len(urls),
                                        )

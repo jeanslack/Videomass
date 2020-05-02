@@ -69,7 +69,7 @@ def logWrite(cmd, sterr, logname):
 class Ydl_DL_Exec(Thread):
     """
     Ydl_DL_Exec represents a separate thread for running
-    youtube-dl executable from subprocess class and capturing its
+    youtube-dl executable with subprocess class and capturing its
     stdout/stderr output in real time .
     """
     def __init__(self, varargs, logname):
@@ -203,9 +203,9 @@ class Ydl_DL_Exec(Thread):
 
 class Ydl_EI_Exec(Thread):
     """
-    Ydl_EI_Exec it is a separate thread to run
-    youtube-dl executable from subprocess class and getting
-    its stdout/stderr output at the end of the process .
+    Ydl_EI_Exec it is a separate thread to run youtube-dl executable
+    with subprocess class to get -at the end of the process- 'Format
+    code' data and exit status from stdout/stderr output .
     """
     def __init__(self, url):
         """

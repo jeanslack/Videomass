@@ -11,7 +11,7 @@ Compile with pyinstaller:
 
 NOTE: when you use installerpy.py script will generate a Videomass.spec which
       you can handle by edit the statements of the class instance to leading
-      any aspect on next bundled application, e.g `excludes=['youtube-dl']`
+      any aspect on next bundled application, e.g `excludes=['youtube_dl']`
       in Analysis to excludes that python package from bundle.
 
       see https://pyinstaller.readthedocs.io/en/stable/spec-files.html

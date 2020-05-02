@@ -19,6 +19,7 @@ BUGS:
       that YouTube.
 
 IMPROVEMENTS:
+	* [YOUTUBE DOWNLOADER] now write file log.
     * warning message in the status bar when the list of incoming files has
       changed.
     * Improve Home panel buttons `choose_topic.py`

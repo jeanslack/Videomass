@@ -44,7 +44,7 @@ if OS == 'Windows':
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + "\\AppData\\Roaming\\videomass")
     LOGdir = os.path.join(DIRconf, 'log') # logs
-    CACHEdir = DIRconf  # updates
+    CACHEdir = os.path.join(DIRconf, 'cache')  # updates executable
 
 elif OS == "Darwin":
     bpath = "Library/Application Support/videomass/videomass.conf"
@@ -131,7 +131,7 @@ def system_check():
             if not DATAconf:
                 print("The file configuration is damaged! try to restore..")
                 existfileconf = False
-            if float(DATAconf[0]) != 1.8:
+            if float(DATAconf[0]) != 1.9:
                 existfileconf = False
         else:
             existfileconf = False

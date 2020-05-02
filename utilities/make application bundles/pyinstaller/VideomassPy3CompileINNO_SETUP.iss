@@ -3,7 +3,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Videomass"
-#define MyAppVersion "2.0.5 (64-bit)"
+#define MyAppVersion "2.1.0 (64-bit)"
 #define MyAppPublisher "Gianluca Pernigotto"
 #define MyAppURL "http://jeanslack.github.io/Videomass/"
 #define MyAppExeName "Videomass.exe"
@@ -28,7 +28,7 @@ LicenseFile=C:\Users\gianluca\Documents\Videomass\DOC\COPYING
 InfoBeforeFile=C:\Users\gianluca\Documents\Videomass\DOC\NOTICE.rtf
 InfoAfterFile=C:\Users\gianluca\Documents\Videomass\DOC\AUTHORS
 OutputDir=C:\Users\gianluca\Documents
-OutputBaseFilename=Videomass-v2.0.5-py3-x64-Setup
+OutputBaseFilename=Videomass-v2.1.0-py3-x64-Setup
 SetupIconFile=C:\Users\gianluca\Documents\Videomass\art\videomass.ico
 Password=
 Compression=lzma

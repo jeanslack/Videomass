@@ -29,7 +29,7 @@
 
 ## Requirements
 
-- Python3  >= 3.6.9
+- Python3  >= 3.7.0
 - wxPython4 (phoenix)
 - PyPubSub (https://pypi.org/project/PyPubSub/)
 - ffmpeg >= 4.1.4
