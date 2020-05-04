@@ -49,9 +49,9 @@ msgready = (_('Successful! \n\n'
 
 if OS == 'Windows':
     msg = (_('{}\n\n'
-             'To download video from YouTube and other sites, Videomass needs '
-             'an updated\nversion of youtube-dl.exe from https://github.com/'
-             'ytdl-org/youtube-dl/releases\n\n'
+             'To download video from YouTube.com and other video sites, '
+             'Videomass needs an updated\nversion of youtube-dl.exe from '
+             'https://github.com/ytdl-org/youtube-dl/releases\n\n'
              '- Requires: Microsoft Visual C++ 2010 Redistributable Package '
              '(x86)\n   for major information visit http://ytdl-org.'
              'github.io/youtube-dl/download.html\n\n'
@@ -59,12 +59,13 @@ if OS == 'Windows':
 
 elif OS == 'Darwin':
     msg = (_('{}\n\n'
-             'To download video from YouTube and other sites, Videomass needs '
-             'an updated version of youtube-dl from https://github.com/ytdl-'
-             'org/youtube-dl/releases\n\n'
+             'To download video from YouTube.com and other video sites, '
+             'Videomass needs an updated version of youtube-dl from '
+             'https://github.com/ytdl-org/youtube-dl/releases\n\n'
              'Do you want to download youtube-dl now?')).format(PYLIB_YDL)
 else:
-    msg = (_('{}\n\nTo download videos from YouTube and other sites, '
+    msg = (_('{}\n\n'
+             'To download video from YouTube.com and other video sites, '
              'Videomass needs an updated version of youtube-dl.\n'
              'Videomass recommends pip to install youtube-dl and keep '
              'it updated by the user.\n\nHowever, an updated copy of '

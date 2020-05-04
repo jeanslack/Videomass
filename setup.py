@@ -9,7 +9,7 @@
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: MAy-05.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -68,7 +68,7 @@ except ImportError:
 
 # check platform for requires
 if platform.system() in ['Windows', 'Darwin']:
-    EXCLUDE = []
+    EXCLUDE = ['youtube_dl']
     REQUIRES = ['wxpython>=4.0.3"', 'PyPubSub>=4.0.0']
 else:
     EXCLUDE = []
