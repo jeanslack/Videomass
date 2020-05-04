@@ -312,75 +312,69 @@ class Downloader(wx.Panel):
         list.
         """
         index = 0
-        if not self.info:
-            for link in self.parent.data_url:
-                data = IO_tools.youtube_info(link)
-                for meta in data:
-                    if meta[1]:
-                        # self.parent.statusbar_msg('Youtube Downloader', None)
-                        wx.MessageBox(meta[1], 'youtube_dl ERROR',
-                                      wx.ICON_ERROR
-                                      )
-                        self.info = []
-                        return True
-                    if 'entries' in meta[0]:
-                        meta[0]['entries'][0]  # not parse all playlist
-                    if 'duration' in meta[0]:
-                        ftime = '%s (%s sec.)' % (
-                                            time_human(meta[0]['duration']),
-                                            meta[0]['duration'])
+        for link in self.parent.data_url:
+            data = IO_tools.youtube_info(link)
+            for meta in data:
+                if meta[1]:
+                    # self.parent.statusbar_msg('Youtube Downloader', None)
+                    wx.MessageBox(meta[1], 'youtube_dl ERROR', wx.ICON_ERROR)
+                    del self.info[:]
+                    return True
+                if 'entries' in meta[0]:
+                    meta[0]['entries'][0]  # not parse all playlist
+                if 'duration' in meta[0]:
+                    ftime = '%s (%s sec.)' % (time_human(meta[0]['duration']),
+                                              meta[0]['duration'])
+                else:
+                    ftime = 'N/A'
+                date = meta[0].get('upload_date')
+                self.info.append({
+                            'url': link,
+                            'title': meta[0].get('title'),
+                            'categories': meta[0].get('categories'),
+                            'license': meta[0].get('license'),
+                            'format': meta[0].get('format'),
+                            'upload_date': date,
+                            'uploader': meta[0].get('uploader'),
+                            'view': meta[0].get('view_count'),
+                            'like': meta[0].get('like_count'),
+                            'dislike': meta[0].get('dislike_count'),
+                            'average_rating': meta[0].get('average_rating'),
+                            'id': meta[0].get('id'),
+                            'duration': ftime,
+                            'description': meta[0].get('description'),
+                            })
+
+                self.fcode.InsertItem(index, meta[0]['title'])
+                self.fcode.SetItem(index, 1, link)
+                self.fcode.SetItemBackgroundColour(index, 'GREEN')
+
+                formats = meta[0].get('formats', [meta[0]])
+                for f in formats:
+                    index += 1
+                    if f.get('vcodec'):
+                        vcodec, fps = f['vcodec'], '%sfps' % f.get('fps')
                     else:
-                        ftime = 'N/A'
-                    date = meta[0].get('upload_date')
-                    self.info.append({
-                                'url': link,
-                                'title': meta[0].get('title'),
-                                'categories': meta[0].get('categories'),
-                                'license': meta[0].get('license'),
-                                'format': meta[0].get('format'),
-                                'upload_date': date,
-                                'uploader': meta[0].get('uploader'),
-                                'view': meta[0].get('view_count'),
-                                'like': meta[0].get('like_count'),
-                                'dislike': meta[0].get('dislike_count'),
-                                'average_rating': meta[0].get('average_rating'),
-                                'id': meta[0].get('id'),
-                                'duration': ftime,
-                                'description': meta[0].get('description'),
-                                    })
+                        vcodec, fps = '', ''
+                    if f.get('acodec'):
+                        acodec = f['acodec']
+                    else:
+                        acodec = 'Video only'
+                    if f.get('filesize'):
+                        size = format_bytes(float(f['filesize']))
+                    else:
+                        size = 'N/A'
 
                     self.fcode.InsertItem(index, meta[0]['title'])
-                    self.fcode.SetItem(index, 1, link)
-                    self.fcode.SetItemBackgroundColour(index, 'GREEN')
-
-                    formats = meta[0].get('formats', [meta[0]])
-                    for f in formats:
-                        index += 1
-                        if f.get('vcodec'):
-                            vcodec = f['vcodec']
-                            fps = '%sfps' % f.get('fps')
-                        else:
-                            vcodec = ''
-                            fps = ''
-                        if f.get('acodec'):
-                            acodec = f['acodec']
-                        else:
-                            acodec = 'Video only'
-                        if f.get('filesize'):
-                            size = format_bytes(float(f['filesize']))
-                        else:
-                            size = 'N/A'
-
-                        self.fcode.InsertItem(index, '')
-                        self.fcode.SetItem(index, 1, '')
-                        self.fcode.SetItem(index, 2, f['format_id'])
-                        self.fcode.SetItem(index, 3, f['ext'])
-                        self.fcode.SetItem(index, 4, f['format'].split('-')[1])
-                        self.fcode.SetItem(index, 5, vcodec)
-                        self.fcode.SetItem(index, 6, fps)
-                        self.fcode.SetItem(index, 7, acodec)
-                        self.fcode.SetItem(index, 8, size)
-        return
+                    self.fcode.SetItem(index, 1, '')
+                    self.fcode.SetItem(index, 2, f['format_id'])
+                    self.fcode.SetItem(index, 3, f['ext'])
+                    self.fcode.SetItem(index, 4, f['format'].split('-')[1])
+                    self.fcode.SetItem(index, 5, vcodec)
+                    self.fcode.SetItem(index, 6, fps)
+                    self.fcode.SetItem(index, 7, acodec)
+                    self.fcode.SetItem(index, 8, size)
+        return None
     # -----------------------------------------------------------------#
 
     def get_executableformatcode(self):
@@ -388,34 +382,33 @@ class Downloader(wx.Panel):
         Parsing the iterated items getting from the output
         of the generator object *youtube_getformatcode_exec* .
         """
-        if not self.info:
-            index = 0
-            for link in self.parent.data_url:
-                self.fcode.InsertItem(index, link)
-                self.fcode.SetItemBackgroundColour(index, 'GREEN')
-                data = IO_tools.youtube_getformatcode_exec(link)
-                for meta in data:
-                    if meta[1]:
-                        wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)
-                        self.info = []
-                        return True
-                    self.info.append(link)
-                    i = 0
-                    for count, fc in enumerate(meta[0].split('\n')):
-                        if not count > i:
-                            i += 1
-                        elif fc != '':
-                            # wx listctrl
-                            index += 1
-                            self.fcode.InsertItem(index, '')
-                            self.fcode.SetItem(index, 1, fc.split()[0])
-                            self.fcode.SetItem(index, 2, fc.split()[1])
-                            note = ' '.join(fc.split()[2:])
-                            self.fcode.SetItem(index, 3, note)
+        index = 0
+        for link in self.parent.data_url:
+            self.fcode.InsertItem(index, link)
+            self.fcode.SetItemBackgroundColour(index, 'GREEN')
+            data = IO_tools.youtube_getformatcode_exec(link)
+            for meta in data:
+                if meta[1]:
+                    wx.MessageBox(meta[0], 'Videomass', wx.ICON_ERROR)
+                    self.info = []
+                    return True
+                self.info.append(link)
+                i = 0
+                for count, fc in enumerate(meta[0].split('\n')):
+                    if not count > i:
+                        i += 1
+                    elif fc != '':
+                        # wx listctrl
+                        index += 1
+                        self.fcode.InsertItem(index, '')
+                        self.fcode.SetItem(index, 1, fc.split()[0])
+                        self.fcode.SetItem(index, 2, fc.split()[1])
+                        note = ' '.join(fc.split()[2:])
+                        self.fcode.SetItem(index, 3, note)
 
-                        if fc.startswith('format code '):
-                            i = count  # limit
-        return
+                    if fc.startswith('format code '):
+                        i = count  # limit
+        return None
     # -----------------------------------------------------------------#
 
     def on_show_info(self):
@@ -442,16 +435,16 @@ class Downloader(wx.Panel):
         """
         get data and info and show listctrl to choose format code
         """
-        ret = True
         if not self.info:
             if PYLIB_YDL is not None:  # youtube-dl as executable
                 ret = self.get_executableformatcode()
             else:
                 ret = self.get_libraryformatcode()
-        if ret:
-            return
+            if ret:
+                return  # do not enable fcode
+
         self.fcode.Enable()
-        #self.Layout()  # only if self.fcode.Show()
+        # self.Layout()  # only if self.fcode.Show()
     # -----------------------------------------------------------------#
 
     def on_Choice(self, event):

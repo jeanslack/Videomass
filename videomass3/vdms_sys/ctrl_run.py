@@ -51,7 +51,7 @@ elif OS == "Darwin":
     FILEconf = os.path.join(USERName, bpath)
     DIRconf = os.path.join(USERName, os.path.dirname(bpath))
     LOGdir = os.path.join(USERName, "Library/Logs/videomass")  # logs
-    CACHEdir = os.path.join(USERName, "Library/Caches/videomass")  # updates
+    CACHEdir = os.path.join(USERName, "Library/Caches/videomass")  # upds
 
 else:  # Linux, FreeBsd, etc.
     bpath = ".config/videomass/videomass.conf"

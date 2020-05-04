@@ -32,6 +32,7 @@ import webbrowser
 import ssl
 import urllib.request
 import os
+import sys
 from videomass3.vdms_dialogs import time_selection
 from videomass3.vdms_dialogs import settings
 from videomass3.vdms_dialogs import infoprg
@@ -389,8 +390,8 @@ class MainFrame(wx.Frame):
             self.ydlused.Enable(False)
             self.ydllatest.Enable(False)
             self.ydlupdate.Enable(False)
-        else:
-            self.ydlupdate.Enable(False)
+        # else:
+            # self.ydlupdate.Enable(False)
 
     # ---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the filedrop panel
@@ -946,9 +947,45 @@ class MainFrame(wx.Frame):
         Update to latest version from 'Update youtube-dl' bar menu
         """
         waitmsg = _('\nWait....\nUpdating youtube-dl')
+        #----------------------------------------------------------
+        def _check():
+            """
+            check latest and installed versions of youtube-dl
+            and return latest or None if error
+            """
+            url = 'https://yt-dl.org/update/LATEST_VERSION'
+            latest = IO_tools.youtubedl_latest(url)
+            if latest[1]:  # failed
+                wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
+                              "Videomass: error", wx.ICON_ERROR, self)
+                return None
 
-        if os.path.exists(EXEC_YDL) and PYLIB_YDL is not None:
-            if os.path.basename(EXEC_YDL) == 'youtube-dl':  # not youtube-dl.exe
+            this = self.ydl_used(self, False)
+            if latest[0].strip() == this:
+                wx.MessageBox(_('youtube-dl is already '
+                                'up-to-date {}').format(this),
+                              "Videomass", wx.ICON_INFORMATION, self)
+                return None
+            return latest
+        #----------------------------------------------------------
+        if os.path.join(CACHEDIR, 'youtube-dl') in sys.path:  # local pkg
+            ck = _check()
+            if not ck:
+                return
+            else:
+                exe = os.path.join(CACHEDIR, 'youtube-dl')
+                upgrade = IO_tools.youtubedl_upgrade(ck[0], exe, upgrade=True)
+            if upgrade[1]:  # failed
+                wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
+                              wx.ICON_ERROR, self)
+                return
+            wx.MessageBox(_('Successful! youtube-dl is up-to-date ({0})\n\n'
+                            'Please, Restart Videomass.').format(ck[0]),
+                          'Videomass', wx.ICON_INFORMATION)
+            return
+
+        elif os.path.exists(EXEC_YDL) and PYLIB_YDL is not None:  # local exec.
+            if os.path.basename(EXEC_YDL) == 'youtube-dl':  # not .exe
                 update = IO_tools.youtubedl_update([EXEC_YDL, '--update'],
                                                    waitmsg)
                 if update[1]:  # failed
@@ -960,35 +997,30 @@ class MainFrame(wx.Frame):
                                   wx.ICON_INFORMATION, self)
                     return
             else:  # youtube-dl.exe
-                url = 'https://yt-dl.org/update/LATEST_VERSION'
-                latest = IO_tools.youtubedl_latest(url)
-                if latest[1]:  # failed
-                    wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
-                                  "Videomass: error", wx.ICON_ERROR, self)
-                    return
-                this = self.ydl_used(self, False)
-                if latest[0].strip() == this:
-                    wx.MessageBox(_('youtube-dl is already '
-                                    'up-to-date {}').format(this),
-                                  "Videomass", wx.ICON_INFORMATION, self)
+                ck = _check()
+                if not ck:
                     return
                 else:
-                    upgrade = IO_tools.youtubedl_upgrade(latest[0], EXEC_YDL)
+                    upgrade = IO_tools.youtubedl_upgrade(ck[0], EXEC_YDL)
 
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
                                   wx.ICON_ERROR, self)
                     return
                 wx.MessageBox(_('Successful! youtube-dl is up-to-date '
-                                '({0})').format(latest[0]),
+                                '({0})').format(ck[0]),
                               'Videomass', wx.ICON_INFORMATION)
                 return
+        elif PYLIB_YDL is None:  # system installed
+            wx.MessageBox(_('It looks like you installed youtube-dl with a '
+                            'package manager. Please use that to update.'),
+                          'Videomass', wx.ICON_INFORMATION)
+            return
         else:
-
             wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
                             'installed yet.').format(PYLIB_YDL),
                           'Videomass', wx.ICON_ERROR)
-        return
+            return
     # ------------------------------------------------------------------#
 
     def startPan(self, event):

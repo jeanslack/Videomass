@@ -29,6 +29,7 @@
 #########################################################
 import wx
 import os
+import sys
 import shutil
 from videomass3.vdms_sys.ctrl_run import system_check
 from videomass3.vdms_sys.appearance import Appearance
@@ -109,22 +110,30 @@ class Videomass(wx.App):
         self.CACHEdir = setui[10]  # dir cache for updates
 
         # ----- youtube-dl
-        writable = True
-        exe = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
-        if shutil.which('youtube-dl'):
-            # if false need application/octet-stream in local
-            writable = os.access(shutil.which('youtube-dl'), os.W_OK)
-        if not writable:
-            self.execYdl = os.path.join(self.CACHEdir, exe)
-            self.pylibYdl = _('youtube-dl is installed but not '
-                              'writable by user for updates.')
-        else:
+        if self.OS == 'Windows':
             try:
                 from youtube_dl import YoutubeDL
                 self.execYdl = False
             except (ModuleNotFoundError, ImportError) as nomodule:
                 self.pylibYdl = nomodule
-                self.execYdl = os.path.join(self.CACHEdir, exe)
+                self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl.exe')
+        else:
+            src = os.path.join(self.CACHEdir, 'youtube-dl')
+            if shutil.which('youtube-dl'):
+                writable = os.access(shutil.which('youtube-dl'), os.W_OK)
+                if not writable:
+                    sys.path.append(src)
+                    self.execYdl = src
+                    self.pylibYdl = _('youtube-dl is installed but not '
+                                      'writable by user for updates.')
+            else:
+                sys.path.append(src)
+            try:
+                from youtube_dl import YoutubeDL
+                self.execYdl = False
+            except (ModuleNotFoundError, ImportError) as nomodule:
+                self.pylibYdl = (nomodule)
+                self.execYdl = src
         # ----- ffmpeg
         if setui[0] == 'Darwin':  # on MacOs
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"

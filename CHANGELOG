@@ -7,6 +7,19 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+May 3, 2020 V.2.1.1
++------------------------------------+
+
+BUGS:
+    * Fixed wrong code indentation on `if ret` statement in youtubedl_ui.py
+      `on_format_codes(self)` method which was cause block on list control .
+
+IMPROVEMENTS:
+    * Management of executables and updates of youtube-dl via source tarball
+      on * nix operating systems by importing youtube_dl as a python library.
+
+
++------------------------------------+
 May 2, 2020 V.2.1.0
 +------------------------------------+
 
