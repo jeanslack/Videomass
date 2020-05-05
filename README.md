@@ -23,7 +23,7 @@
 - Setting duration portions for imported files, filters, export and tests.
 - Download multiple URLs from YouTube and more sites.
 - View video information without downloading it.
-- Ability to download videos using the 'format code'.
+- Ability to download videos using the 'format code' with audio merging.
 - Log management.
 - Multi language (English and Italian Languages support for now).
 
