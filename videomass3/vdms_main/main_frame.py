@@ -649,8 +649,8 @@ class MainFrame(wx.Frame):
         goButton.AppendSeparator()
         dscrp = (_("Log viewing console"),
                 _("View log messages of the last process executed"))
-
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        goButton.AppendSeparator()
 
         sysButton = wx.Menu()  # system sub menu
         dscrp = (_("Configuration directory"),

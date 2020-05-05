@@ -3,8 +3,6 @@
 URGENCY: to do soon
 --------------------
 
-- YOUTUBE DOWNLOADER: fix wrong appending with multiple URLs on list control
-
 - add 'Pictures' on the Media list to export image sequences in jpg, png, bmp
   formats.
 

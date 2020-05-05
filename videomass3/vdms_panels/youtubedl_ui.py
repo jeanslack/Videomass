@@ -311,8 +311,8 @@ class Downloader(wx.Panel):
         items and return. Otherwise self.info is a empty
         list.
         """
-        index = 0
         for link in self.parent.data_url:
+
             data = IO_tools.youtube_info(link)
             for meta in data:
                 if meta[1]:
@@ -344,36 +344,36 @@ class Downloader(wx.Panel):
                             'duration': ftime,
                             'description': meta[0].get('description'),
                             })
+            index = 0
+            self.fcode.InsertItem(index, meta[0]['title'])
+            self.fcode.SetItem(index, 1, link)
+            self.fcode.SetItemBackgroundColour(index, 'GREEN')
 
+            formats = meta[0].get('formats', [meta[0]])
+            for f in formats:
+                if f.get('vcodec'):
+                    vcodec, fps = f['vcodec'], '%sfps' % f.get('fps')
+                else:
+                    vcodec, fps = '', ''
+                if f.get('acodec'):
+                    acodec = f['acodec']
+                else:
+                    acodec = 'Video only'
+                if f.get('filesize'):
+                    size = format_bytes(float(f['filesize']))
+                else:
+                    size = 'N/A'
+
+                index += 1
                 self.fcode.InsertItem(index, meta[0]['title'])
-                self.fcode.SetItem(index, 1, link)
-                self.fcode.SetItemBackgroundColour(index, 'GREEN')
-
-                formats = meta[0].get('formats', [meta[0]])
-                for f in formats:
-                    index += 1
-                    if f.get('vcodec'):
-                        vcodec, fps = f['vcodec'], '%sfps' % f.get('fps')
-                    else:
-                        vcodec, fps = '', ''
-                    if f.get('acodec'):
-                        acodec = f['acodec']
-                    else:
-                        acodec = 'Video only'
-                    if f.get('filesize'):
-                        size = format_bytes(float(f['filesize']))
-                    else:
-                        size = 'N/A'
-
-                    self.fcode.InsertItem(index, meta[0]['title'])
-                    self.fcode.SetItem(index, 1, '')
-                    self.fcode.SetItem(index, 2, f['format_id'])
-                    self.fcode.SetItem(index, 3, f['ext'])
-                    self.fcode.SetItem(index, 4, f['format'].split('-')[1])
-                    self.fcode.SetItem(index, 5, vcodec)
-                    self.fcode.SetItem(index, 6, fps)
-                    self.fcode.SetItem(index, 7, acodec)
-                    self.fcode.SetItem(index, 8, size)
+                self.fcode.SetItem(index, 1, '')
+                self.fcode.SetItem(index, 2, f['format_id'])
+                self.fcode.SetItem(index, 3, f['ext'])
+                self.fcode.SetItem(index, 4, f['format'].split('-')[1])
+                self.fcode.SetItem(index, 5, vcodec)
+                self.fcode.SetItem(index, 6, fps)
+                self.fcode.SetItem(index, 7, acodec)
+                self.fcode.SetItem(index, 8, size)
         return None
     # -----------------------------------------------------------------#
 
@@ -382,8 +382,8 @@ class Downloader(wx.Panel):
         Parsing the iterated items getting from the output
         of the generator object *youtube_getformatcode_exec* .
         """
-        index = 0
         for link in self.parent.data_url:
+            index = 0
             self.fcode.InsertItem(index, link)
             self.fcode.SetItemBackgroundColour(index, 'GREEN')
             data = IO_tools.youtube_getformatcode_exec(link)
