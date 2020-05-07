@@ -444,23 +444,33 @@ class MainFrame(wx.Frame):
 
     def ExportPlay(self, event):
         """
-        Playback with FFplay
+        Playback file with FFplay or mpv player for urls
 
         """
-        with wx.FileDialog(self, "Videomass: Open a file to playback",
-                           defaultDir=self.file_destin,
-                           # wildcard="Audio source (%s)|%s" % (f, f),
-                           style=wx.FD_OPEN |
-                           wx.FD_FILE_MUST_EXIST) as fileDialog:
-
-            if fileDialog.ShowModal() == wx.ID_CANCEL:
+        if self.ytDownloader.IsShown():
+            if self.ytDownloader.fcode.GetSelectedItemCount() == 0:
+                wx.MessageBox(_('For playback, first make sure you select a '
+                                'URL in the list control'),
+                              'Videomass', wx.ICON_INFORMATION, self)
                 return
-            pathname = fileDialog.GetPath()
+            else:
+                item = self.ytDownloader.fcode.GetFocusedItem()
+                url = self.ytDownloader.fcode.GetItemText(item, 0)
+                quality = self.ytDownloader.fcode.GetItemText(item, 2)
+                opt = '--ytdl-format %s %s' % (quality, url)
+                IO_tools.url_play(opt)
+        else:
+            with wx.FileDialog(self, "Videomass: Open a file to playback",
+                            defaultDir=self.file_destin,
+                            # wildcard="Audio source (%s)|%s" % (f, f),
+                            style=wx.FD_OPEN |
+                            wx.FD_FILE_MUST_EXIST) as fileDialog:
 
-        IO_tools.stream_play(pathname,
-                             '',  # time_seq is useless for the exported file
-                             '',  # no others parameters are needed
-                             )
+                if fileDialog.ShowModal() == wx.ID_CANCEL:
+                    return
+                pathname = fileDialog.GetPath()
+
+            IO_tools.stream_play(pathname,'', '')
     # ------------------------------------------------------------------#
 
     def Saveprofile(self, event):
@@ -1338,16 +1348,19 @@ class MainFrame(wx.Frame):
         Show youtube-dl downloader panel
         """
         if not data == self.data_url:
-            self.ytDownloader.fcode.DeleteAllItems()
-            self.ytDownloader.choice.SetSelection(0)
-            self.ytDownloader.on_Choice(self)
-            self.ytDownloader.info, self.ytDownloader.error = [], False
             if self.data_url:
                 self.statusbar_msg(_('Warning: the previous settings may be '
                                     'reset to default values.'), ORANGE)
             else:
                 self.statusbar_msg(_('Youtube Downloader'), None)
-        self.data_url = data
+
+            self.data_url = data
+            #self.ytDownloader.fcode.ClearAll()
+            self.ytDownloader.choice.SetSelection(0)
+            self.ytDownloader.on_Choice(self)
+            del self.ytDownloader.info[:]
+        #else:
+            #self.data_url = data
         self.file_destin = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.VconvPanel.Hide(), self.PrstsPanel.Hide()

@@ -102,7 +102,7 @@ class PrstPan(wx.Panel):
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
-                                     wx.SUNKEN_BORDER
+                                     wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                      )
         sizer_base.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
         nb1 = wx.Notebook(self, wx.ID_ANY, style=0)
@@ -339,7 +339,6 @@ class PrstPan(wx.Panel):
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.Run_Coding,
                   self.list_ctrl
                   )
-        #self.Bind(wx.EVT_CONTEXT_MENU, self.onContext, self.list_ctrl)
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         self.Bind(wx.EVT_RADIOBOX, self.on_Enable_norm, self.rdbx_norm)
         self.Bind(wx.EVT_BUTTON, self.on_Analyzes, self.btn_voldect)

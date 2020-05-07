@@ -7,6 +7,35 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+May 7, 2020 V.2.1.5
++------------------------------------+
+
+BUGS:
+    * Fixed the issue of updating youtube-dl when using an old installed
+      version of youtube_dl, e.g. if you use pip to install a previous version
+      of youtube-dl and update youtube-dl with Videomass, the update is blocked
+      with a warning.
+
+NEWS:
+    * [YOUTUBE DOWNLOADER] added wrapper for `mpv` player to playback selected
+      url on list control with the quality setted .
+
+    * `youtube_dl` has been added as dependency on setup.py and the pip tool
+      should automatically install it.
+
+    * `mpv' media player has been added as an optional dependency to be
+      installed separately.
+
+IMPROVEMENTS:
+    * [YOUTUBE DOWNLOADER] now the `Show more` function is an independent
+      process and no longer linked to get format codes to insert on the list
+      control .
+
+REMOVALS and DISPLACEMENTS:
+    * [YOUTUBE DOWNLOADER] now the list control is always enabled and populated
+      with the selectable urls
+
++------------------------------------+
 May 5, 2020 V.2.1.3
 +------------------------------------+
 

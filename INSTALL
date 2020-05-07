@@ -11,14 +11,15 @@ BASE DEPENDENCIES
 -----------------
 
     Required:
-        - Python >=3.6.9
+        - Python >=3.7
         - wxPython4 (Phoenix)
         - PyPubSub (install it with pip)
         - pip (On Windows and MacOS it is included with Python3.7)
         - FFmpeg (with ffplay and ffprobe) >=4.1.4
+        - youtube-dl (install it with pip)
 
     Optionals:
-        - youtube-dl (install it with pip)
+        - mpv (media player) for playing URLs
 
 Videomass can be run without installing by un-tarring the source package and
 executing the "launcher" script in the un-tarred directory.

@@ -35,7 +35,10 @@
 - ffmpeg >= 4.1.4
 - ffprobe (for multimedia streams analysis)
 - ffplay (for playback)
+- youtube-dl (https://pypi.org/project/youtube_dl/)
 
 ## Optionals
 
-- youtube-dl (https://pypi.org/project/youtube_dl/)
+- mpv (media player) for playing URLs
+
+

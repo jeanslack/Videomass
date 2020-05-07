@@ -32,7 +32,8 @@ import os
 import shutil
 import stat
 import tarfile
-from videomass3.vdms_threads.ffplay_reproduction import Play
+from videomass3.vdms_threads.mpv_url import Url_Play
+from videomass3.vdms_threads.ffplay_file import File_Play
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
 from videomass3.vdms_threads.volumedetect import VolumeDetectThread
 from videomass3.vdms_threads.check_bin import ff_conf
@@ -82,13 +83,23 @@ def stream_play(filepath, timeseq, param):
     """
     try:
         with open(filepath):
-            thread = Play(filepath, timeseq, param)
+            thread = File_Play(filepath, timeseq, param)
             # thread.join() > attende fine thread, se no ritorna subito
             # error = thread.data
     except IOError:
         wx.MessageBox(_("File does not exist or not a valid file:  %s") % (
             filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
         return
+# -----------------------------------------------------------------------#
+
+
+def url_play(url):
+    """
+    Thread for urls reproduction with mpv player
+    """
+    thread = Url_Play(url)
+    # thread.join() > attende fine thread, se no ritorna subito
+    # error = thread.data
 # -----------------------------------------------------------------------#
 
 

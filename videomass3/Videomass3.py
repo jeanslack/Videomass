@@ -118,14 +118,18 @@ class Videomass(wx.App):
                 self.pylibYdl = nomodule
                 self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl.exe')
         else:
-            src = os.path.join(self.CACHEdir, 'youtube-dl')
-            sys.path.append(src)  # add src if used else use the installed one
             try:
                 from youtube_dl import YoutubeDL
                 self.execYdl = False
             except (ModuleNotFoundError, ImportError) as nomodule:
-                self.pylibYdl = (nomodule)
-                self.execYdl = src
+                src = os.path.join(self.CACHEdir, 'youtube-dl')
+                sys.path.append(src)
+                try:
+                    from youtube_dl import YoutubeDL
+                    self.execYdl = False
+                except (ModuleNotFoundError, ImportError) as nomodule:
+                    self.pylibYdl = (nomodule)
+                    self.execYdl = src
         # ----- ffmpeg
         if setui[0] == 'Darwin':  # on MacOs
             os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"

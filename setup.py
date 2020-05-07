@@ -9,7 +9,7 @@
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: MAy-05.2020 *PEP8 compatible*
+# Rev: MAy-06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -65,14 +65,6 @@ except ImportError:
                          "<https://wxpython.org/>\n"
                          )
         sys.exit(1)
-
-# check platform for requires
-if platform.system() in ['Windows', 'Darwin']:
-    EXCLUDE = ['youtube_dl']
-    REQUIRES = ['wxpython>=4.0.3"', 'PyPubSub>=4.0.0']
-else:
-    EXCLUDE = []
-    REQUIRES = ['PyPubSub>=4.0.0']
 
 # ---- current work directory path ----#
 PWD = os.getcwd()
@@ -163,6 +155,8 @@ def SOURCE_BUILD():
     Source/Build distributions
 
     """
+    EXCLUDE = ['']
+    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0', 'youtube_dl']
     DATA_FILES = [  # even path must be relative-path
                   ('share/videomass/config/presets',
                    glob_files('share/presets/*.prst')),
@@ -207,6 +201,8 @@ def MacOS():
     build videomass.app
 
     """
+    EXCLUDE = ['youtube_dl']
+    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0', 'youtube_dl']
     PATH_ICON = '%s/art/videomass.icns' % PWD
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
 
@@ -273,6 +269,9 @@ def WIN32():
 
     """
     import py2exe
+
+    EXCLUDE = ['youtube_dl']
+    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0',]
 
     if not os.path.exists('%s/bin/Videomass.py' % PWD):
         shutil.copyfile('%s/bin/videomass' % PWD,

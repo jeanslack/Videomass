@@ -32,8 +32,9 @@ xgettext -d videomass "../videomass3/Videomass3.py" \
 "../videomass3/vdms_panels/long_processing_task.py" \
 "../videomass3/vdms_panels/presets_manager.py" \
 "../videomass3/vdms_panels/textdrop.py" \
-"../videomass3/vdms_threads/ffplay_reproduction.py" \
+"../videomass3/vdms_threads/ffplay_file.py" \
 "../videomass3/vdms_threads/ffprobe_parser.py" \
+"../videomass3/vdms_threads/mpv_url.py" \
 "../videomass3/vdms_threads/one_pass.py" \
 "../videomass3/vdms_threads/picture_exporting.py" \
 "../videomass3/vdms_threads/two_pass_EBU.py" \
