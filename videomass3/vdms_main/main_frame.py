@@ -457,7 +457,7 @@ class MainFrame(wx.Frame):
                 item = self.ytDownloader.fcode.GetFocusedItem()
                 url = self.ytDownloader.fcode.GetItemText(item, 0)
                 quality = self.ytDownloader.fcode.GetItemText(item, 2)
-                opt = '--ytdl-format %s %s' % (quality, url)
+                opt = '--ytdl-format=%s %s' % (quality, url)
                 IO_tools.url_play(opt)
         else:
             with wx.FileDialog(self, "Videomass: Open a file to playback",
