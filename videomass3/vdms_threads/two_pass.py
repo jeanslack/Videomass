@@ -180,7 +180,7 @@ class TwoPass(Thread):
                                  "Exit status: %s" % p1.wait(),
                                  self.logname)  # append exit error number
 
-            except OSError as err:
+            except (OSError, FileNotFoundError) as err:
                 e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",

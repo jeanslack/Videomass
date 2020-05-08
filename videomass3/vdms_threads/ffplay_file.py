@@ -28,7 +28,6 @@
 #########################################################
 import wx
 import subprocess
-import time
 import os
 from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log

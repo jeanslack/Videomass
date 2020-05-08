@@ -93,11 +93,11 @@ def stream_play(filepath, timeseq, param):
 # -----------------------------------------------------------------------#
 
 
-def url_play(url):
+def url_play(url, quality):
     """
     Thread for urls reproduction with mpv player
     """
-    thread = Url_Play(url)
+    thread = Url_Play(url, quality)
     # thread.join() > attende fine thread, se no ritorna subito
     # error = thread.data
 # -----------------------------------------------------------------------#

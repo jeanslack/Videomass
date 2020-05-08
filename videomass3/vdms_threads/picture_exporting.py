@@ -165,7 +165,7 @@ class PicturesFromVideo(Thread):
                                  fname='',
                                  end='ok'
                                  )
-        except OSError as err:
+        except (OSError, FileNotFoundError) as err:
             e = "%s\n  %s" % (err, not_exist_msg)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",

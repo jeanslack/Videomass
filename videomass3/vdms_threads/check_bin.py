@@ -58,7 +58,7 @@ def subp(args, OS):
                              )
         out = p.communicate()
 
-    except OSError as oserr:  # if ffmpeg do not exist
+    except (OSError, FileNotFoundError) as oserr:  # if ffmpeg do not exist
         return('Not found', oserr)
 
     if p.returncode:  # if returncode == 1

@@ -57,7 +57,7 @@ def browse(OS, pathname):
                              )
         out = p.communicate()
 
-    except OSError as oserr:  # executable do not exist
+    except (OSError, FileNotFoundError) as oserr:  # executable do not exist
         status = '%s' % oserr
     else:
         if p.returncode:  # if returncode == 1

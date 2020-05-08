@@ -185,7 +185,7 @@ class Loudnorm(Thread):
                                  self.logname)  # append exit error number
                         break
 
-            except OSError as err:
+            except (OSError, FileNotFoundError) as err:
                 e = "%s\n  %s" % (err, not_exist_msg)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",

@@ -174,7 +174,7 @@ class Ydl_DL_Exec(Thread):
                                      fname='',
                                      end='ok'
                                      )
-            except OSError as err:
+            except (OSError, FileNotFoundError) as err:
                 e = "%s\n  %s" % (err, executable_not_found_msg)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",

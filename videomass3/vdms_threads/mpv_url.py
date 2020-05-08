@@ -28,7 +28,6 @@
 #########################################################
 import wx
 import subprocess
-import time
 import os
 from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
@@ -66,41 +65,39 @@ class Url_Play(Thread):
     """
     subprocess.Popen class to run mpv media player for playback URLs .
     """
-    def __init__(self, url):
+    def __init__(self, url, quality):
         """
-        self.url : It can have the quality `--ytdl-format` flag set
+        quality: is flag to set media quality result
         """
         Thread.__init__(self)
         ''' constructor'''
-        self.url = url  # file name selected
+        self.url = url
+        self.quality = quality
         self.logf = os.path.join(LOGDIR, 'Videomass_mpv.log')
-        write_log('Videomass_mpv.log', LOGDIR)
-        # set initial file LOG
+        write_log('Videomass_mpv.log', LOGDIR)  # set initial file LOG
 
         self.start()
     # ----------------------------------------------------------------#
 
     def run(self):
         """
-        Get and redirect output errors on p.returncode instance and on
-        OSError exception. Otherwise the getted output as information
+        Get and redirect output and errors on p.returncode instance and on
+        exceptions. Otherwise the getted output as information
         given by output .
         """
-
-        # time.sleep(.5)
-        cmd = 'mpv %s' % (self.url)
-        self.logWrite(cmd)
-        if not OS == 'Windows':
+        if OS == 'Windows':
+            cmd = ('mpv.exe --ytdl-raw-options=no-check-certificate= %s '
+                  '--ytdl-format=%s %s' % (self.url, self.quality, self.url))
+            shell = False
+            info = subprocess.STARTUPINFO()
+            info.dwFlags |= subprocess.SW_HIDE
+        else:
+            cmd = 'mpv --ytdl-format=%s %s' % (self.quality, self.url)
             cmd = shlex.split(cmd)
             info = None
             shell = False
-        else:
-            # NOTE: info flag do not work with ffplay
-            # on MS-Windows. Fixed with shell=True flag.
-            shell = True
-            info = None
-            # info = subprocess.STARTUPINFO()
-            # info.dwFlags |= subprocess.SW_HIDE
+
+        self.logWrite(cmd)
         try:
             p = subprocess.Popen(cmd,
                                  shell=shell,
@@ -111,9 +108,9 @@ class Url_Play(Thread):
                                  )
             error, output = p.communicate()
 
-        except OSError as err:  # subprocess error
+        except (OSError, FileNotFoundError) as err:  # subprocess error
             wx.CallAfter(msg_Error, _('{}\n\nYou need mpv to play urls '
-                                    'but mpv is not installed.').format(err))
+                                      'but mpv is not installed.').format(err))
             self.logError(err)  # append log error
             return
 
@@ -123,7 +120,6 @@ class Url_Play(Thread):
                     msg = error
                 else:
                     msg = "Unrecognized error"
-
                 wx.CallAfter(msg_Error, error)
                 self.logError(error)  # append log error
                 return
@@ -144,7 +140,7 @@ class Url_Play(Thread):
 
     def logError(self, error):
         """
-        write  mpv errors
+        write mpv errors
         """
         with open(self.logf, "a") as logerr:
             logerr.write("[MPV] MESSAGE:\n%s\n\n" % (error))

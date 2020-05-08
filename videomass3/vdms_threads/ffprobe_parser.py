@@ -230,7 +230,7 @@ class FFProbe(object):
                                  )
             output, error = p.communicate()
 
-        except OSError as e:
+        except (OSError, FileNotFoundError) as e:
             self.error = e
             return
 
