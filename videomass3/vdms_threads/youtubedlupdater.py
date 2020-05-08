@@ -123,7 +123,7 @@ class Command_Execution(Thread):
                                  )
             out = p.communicate()
 
-        except (OSError, FileNotFoundError) as oserr:  # executable do not exist
+        except (OSError, FileNotFoundError) as oserr:  # exec. do not exist
             self.status = ('%s' % oserr, 'error')
         else:
             if p.returncode:  # if returncode == 1

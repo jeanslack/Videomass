@@ -108,7 +108,7 @@ class Url_Play(Thread):
                                  )
             error, output = p.communicate()
 
-        except (OSError, FileNotFoundError) as err:  # subprocess error
+        except (OSError, FileNotFoundError) as err:  # exec. do not exists
             wx.CallAfter(msg_Error, _('{}\n\nYou need mpv to play urls '
                                       'but mpv is not installed.').format(err))
             self.logError(err)  # append log error
