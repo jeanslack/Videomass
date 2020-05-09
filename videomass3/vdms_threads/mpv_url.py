@@ -36,6 +36,7 @@ from videomass3.vdms_io.make_filelog import write_log  # write initial log
 get = wx.GetApp()
 LOGDIR = get.LOGdir
 OS = get.OS
+MPV_LINK = get.MPV_url
 
 if not OS == 'Windows':
     import shlex
@@ -86,13 +87,17 @@ class Url_Play(Thread):
         given by output .
         """
         if OS == 'Windows':
-            cmd = ('mpv.exe --ytdl-raw-options=no-check-certificate= %s '
-                  '--ytdl-format=%s %s' % (self.url, self.quality, self.url))
+            cmd = ('%s --ytdl-raw-options=no-check-certificate= %s '
+                   '--ytdl-format=%s %s' % (MPV_LINK,
+                                            self.url,
+                                            self.quality,
+                                            self.url)
+                  )
             shell = False
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.SW_HIDE
         else:
-            cmd = 'mpv --ytdl-format=%s %s' % (self.quality, self.url)
+            cmd = '%s --ytdl-format=%s %s' % (MPV_LINK, self.quality, self.url)
             cmd = shlex.split(cmd)
             info = None
             shell = False

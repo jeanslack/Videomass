@@ -79,6 +79,7 @@ class Downloader(wx.Panel):
         self.parent = parent
         self.oS = OS
         self.info = []
+        self.formats = []
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -317,13 +318,15 @@ class Downloader(wx.Panel):
                 if meta[1]:
                     # self.parent.statusbar_msg('Youtube Downloader', None)
                     wx.MessageBox(meta[1], 'youtube_dl ERROR', wx.ICON_ERROR)
-                    del self.info[:]
                     return True
 
             index = 0
             self.fcode.InsertItem(index, link)
             self.fcode.SetItem(index, 1, meta[0]['title'])
             self.fcode.SetItemBackgroundColour(index, 'GREEN')
+
+            title = meta[0]['title']
+
 
             formats = iter(meta[0].get('formats', [meta[0]]))
 
@@ -481,13 +484,16 @@ class Downloader(wx.Panel):
         """
         get data and info and show listctrl to choose format code
         """
-
         if PYLIB_YDL is not None:  # youtube-dl as executable
             ret = self.get_executableformatcode()
+            if ret:
+                return  # do not enable fcode
+
         else:
             ret = self.get_libraryformatcode()
-        if ret:
-            return  # do not enable fcode
+            if ret:
+                return  # do not enable fcode
+
     # -----------------------------------------------------------------#
 
     def on_Choice(self, event):

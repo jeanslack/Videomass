@@ -93,7 +93,7 @@ class Videomass(wx.App):
                 setui[2])), 'Videomass: Fatal Error', wx.ICON_STOP)
             return False
 
-        icons = Appearance(setui[3], setui[4][11])  # set appearance
+        icons = Appearance(setui[3], setui[4][13])  # set appearance
         pathicons = icons.icons_set()  # get paths icons
         self.OS = setui[0]
         self.FILEconf = setui[6]
@@ -104,6 +104,8 @@ class Videomass(wx.App):
         self.FFMPEG_check = setui[4][5]
         self.FFPROBE_check = setui[4][7]
         self.FFPLAY_check = setui[4][9]
+        self.MPV_check = setui[4][11]
+        self.MPV_url = setui[4][12]
         self.FFthreads = setui[4][2]
         self.USERfilesave = None if setui[4][1] == 'none' else setui[4][1]
         self.LOGdir = setui[9]  # dir for logging

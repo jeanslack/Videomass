@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev (07) Dec.27.2018, Dec.04.2019
+# Rev: May.09.2020
 #########################################################
 
 # This file is part of Videomass.
@@ -46,6 +46,8 @@ ffplay_loglevel = get.FFPLAY_loglev
 FFMPEG_CHECK = get.FFMPEG_check
 FFPROBE_CHECK = get.FFPROBE_check
 FFPLAY_CHECK = get.FFPLAY_check
+MPV_LINK = get.MPV_url
+MPV_CHECK = get.MPV_check
 USER_FILESAVE = get.USERfilesave
 
 MSGLOG = _("The following settings affect output messages "
@@ -88,13 +90,13 @@ class Setup(wx.Dialog):
                 if not b == '\n':
                     self.rowsNum.append(a)
 
-                    # dic [a] = b.strip()# used for easy reading print debug
+                    #dic [a] = b.strip()# used for easy reading print debug
 
-        # #USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
-        # #uncomment the following code for a convenient reading
-        # print("\nPOSITION:    ROW:     VALUE:")
-        # for n, k in enumerate(sorted(dic)):
-            # print(n, ' -------> ', k, ' --> ', dic[k])
+        ##USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
+        ##uncomment the following code for a convenient reading
+        #print("\nPOSITION:    ROW:     VALUE:")
+        #for n, k in enumerate(sorted(dic)):
+            #print(n, ' -------> ', k, ' --> ', dic[k])
 
         self.userpath = dirname if not USER_FILESAVE else USER_FILESAVE
         self.iconset = iconset
@@ -104,10 +106,12 @@ class Setup(wx.Dialog):
             self.ffmpeg = 'ffmpeg.exe'
             self.ffprobe = 'ffprobe.exe'
             self.ffplay = 'ffplay.exe'
+            self.mpv = 'mpv.exe'
         else:
             self.ffmpeg = 'ffmpeg'
             self.ffprobe = 'ffprobe'
             self.ffplay = 'ffplay'
+            self.mpv = 'mpv'
         # ----------------------------set notebook
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
@@ -182,7 +186,7 @@ class Setup(wx.Dialog):
         # -----tab 3
         tabThree = wx.Panel(notebook, wx.ID_ANY)
         gridExec = wx.BoxSizer(wx.VERTICAL)
-        gridExec.Add((0, 50), 0,)
+        gridExec.Add((0, 25), 0,)
         self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (
                                        _(" Use a custom path to run FFmpeg")))
         self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
@@ -216,6 +220,19 @@ class Setup(wx.Dialog):
         gridExec.Add(gridFFplay, 0, wx.ALL | wx.EXPAND, 15)
         gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
         gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ---- mpv
+        self.checkbox_exeMpv = wx.CheckBox(tabThree, wx.ID_ANY, (
+                                    _(" Use a custom path to run mpv player")))
+        self.btn_pathMpv = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_mpv = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        gridExec.Add(self.checkbox_exeMpv, 0, wx.ALL, 15)
+        gridMpv = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridMpv, 0, wx.ALL | wx.EXPAND, 15)
+        gridMpv.Add(self.btn_pathMpv, 0, wx.ALL, 5)
+        gridMpv.Add(self.txtctrl_mpv, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ----
         tabThree.SetSizer(gridExec)
         notebook.AddPage(tabThree, _("Executable paths"))
         # -----tab 4
@@ -300,30 +317,13 @@ class Setup(wx.Dialog):
 
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
-        msg = _("Enable custom search for the executable FFmpeg. If the "
-                "checkbox is disabled or if the path field is empty, the "
-                "search of the executable is entrusted to the system.")
-        self.checkbox_exeFFmpeg.SetToolTip(msg)
-
-        self.btn_pathFFmpeg.SetToolTip(_("Open path FFmpeg"))
+        msg = _("Enable custom paths for executables. If the check boxes are "
+                "disabled or if the path field is empty, the search for "
+                "executables is entrusted to the environment variables.")
+        tabThree.SetToolTip(msg)
         self.txtctrl_ffmpeg.SetMinSize((200, -1))
-        self.txtctrl_ffmpeg.SetToolTip(_("path to executable binary FFmpeg"))
-        self.checkbox_exeFFprobe.SetToolTip(_("Path generation file"))
-        msg = _("Enable custom search for the executable FFprobe. If the "
-                "checkbox is disabled or if the path field is empty, the "
-                "search of the executable is entrusted to the system.")
-        self.checkbox_exeFFmpeg.SetToolTip(msg)
-        self.btn_pathFFprobe.SetToolTip(_("Open path FFprobe"))
         self.txtctrl_ffprobe.SetMinSize((200, -1))
-        self.txtctrl_ffprobe.SetToolTip(_("path to executable binary FFprobe"))
-        self.checkbox_exeFFplay.SetToolTip(_("Path generation file"))
-        msg = _("Enable custom search for the executable FFplay. If the "
-                "checkbox is disabled or if the path field is empty, the "
-                "search of the executable is entrusted to the system.")
-        self.checkbox_exeFFmpeg.SetToolTip(msg)
-        self.btn_pathFFplay.SetToolTip(_("Open path FFplay"))
         self.txtctrl_ffplay.SetMinSize((200, -1))
-        self.txtctrl_ffplay.SetToolTip(_("path to executable binary FFplay"))
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
@@ -339,6 +339,9 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
+        self.Bind(wx.EVT_CHECKBOX, self.exe_MPV, self.checkbox_exeMpv)
+        self.Bind(wx.EVT_BUTTON, self.open_path_MPV, self.btn_pathMpv)
+        self.Bind(wx.EVT_TEXT_ENTER, self.txt_MPV, self.txtctrl_mpv)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
@@ -391,6 +394,15 @@ class Setup(wx.Dialog):
         else:
             self.txtctrl_ffplay.AppendText(FFPLAY_LINK)
             self.checkbox_exeFFplay.SetValue(True)
+
+        if MPV_CHECK == 'false':
+            self.btn_pathMpv.Disable()
+            self.txtctrl_mpv.Disable()
+            self.txtctrl_mpv.SetValue("")
+            self.checkbox_exeMpv.SetValue(False)
+        else:
+            self.txtctrl_mpv.AppendText(MPV_LINK)
+            self.checkbox_exeMpv.SetValue(True)
     # --------------------------------------------------------------------#
 
     def on_threads(self, event):
@@ -542,6 +554,44 @@ class Setup(wx.Dialog):
         t = self.txtctrl_ffplay.GetValue()
         self.full_list[self.rowsNum[10]] = '%s\n' % (t)
 
+    # ----------------------mpv path checkbox--------------------------#
+
+    def exe_MPV(self, event):
+        """Enable or disable ffmpeg binary esecutable"""
+        if self.checkbox_exeMpv.IsChecked():
+            self.btn_pathMpv.Enable()
+            self.txtctrl_mpv.Enable()
+            self.txtctrl_mpv.SetValue("")
+            self.full_list[self.rowsNum[11]] = 'true\n'
+        else:
+            self.btn_pathMpv.Disable()
+            self.txtctrl_mpv.Disable()
+            self.txtctrl_mpv.SetValue("")
+            self.full_list[self.rowsNum[11]] = 'false\n'
+            self.full_list[self.rowsNum[12]] = '%s\n' % self.mpv
+
+    # ----------------------ffmpeg path open dialog----------------------#
+    def open_path_MPV(self, event):
+        """Indicates a new mpv path-name"""
+        dialogfile = wx.FileDialog(self, _("Videomass: Where is the mpv "
+                                           "executable located?"), "", "",
+                                   "mpv binarys (*%s)|*%s| All files "
+                                   "(*.*)|*.*" % (self.mpv, self.mpv),
+                                   wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+                                   )
+
+        if dialogfile.ShowModal() == wx.ID_OK:
+            self.txtctrl_mpv.SetValue("")
+            self.txtctrl_mpv.AppendText(dialogfile.GetPath())
+            self.full_list[self.rowsNum[12]] = '%s\n' % (dialogfile.GetPath())
+            dialogfile.Destroy()
+    # ---------------------------------------------------------------------#
+
+    def txt_MPV(self, event):
+        """write ffmpeg pathname"""
+        t = self.txtctrl_mpv.GetValue()
+        self.full_list[self.rowsNum[12]] = '%s\n' % (t)
+
     # --------------------------------------------------------------------#
 
     def on_Iconthemes(self, event):
@@ -549,7 +599,7 @@ class Setup(wx.Dialog):
         Set themes of icons
         """
         choice = "%s\n" % self.cmbx_icons.GetStringSelection()
-        self.full_list[self.rowsNum[11]] = choice
+        self.full_list[self.rowsNum[13]] = choice
     # ------------------------------------------------------------------#
 
     def onColorDlg(self, event):
@@ -571,11 +621,11 @@ class Setup(wx.Dialog):
             choice = rgb.replace('(', '').replace(')', '').strip()
 
             if identity == _('Bar Colour'):
-                self.full_list[self.rowsNum[12]] = "%s\n" % choice
-            elif identity == _('Buttons Colour'):
-                self.full_list[self.rowsNum[13]] = "%s\n" % choice
-            elif identity == _("Font Colour"):
                 self.full_list[self.rowsNum[14]] = "%s\n" % choice
+            elif identity == _('Buttons Colour'):
+                self.full_list[self.rowsNum[15]] = "%s\n" % choice
+            elif identity == _("Font Colour"):
+                self.full_list[self.rowsNum[16]] = "%s\n" % choice
 
         dlg.Destroy()
     # ----------------------------------------------------------------------#
@@ -584,13 +634,13 @@ class Setup(wx.Dialog):
         """
         Restore to default settings colors and icons set
         """
-        self.full_list[self.rowsNum[11]] = "Material_Design_Icons_black\n"
+        self.full_list[self.rowsNum[13]] = "Material_Design_Icons_black\n"
         if OS == 'Windows':
-            self.full_list[self.rowsNum[12]] = '40, 148, 255, 255\n'
+            self.full_list[self.rowsNum[14]] = '40, 148, 255, 255\n'
         else:
-            self.full_list[self.rowsNum[12]] = '228, 21, 68\n'
-        self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
-        self.full_list[self.rowsNum[14]] = '0, 0, 0\n'
+            self.full_list[self.rowsNum[14]] = '228, 21, 68\n'
+        self.full_list[self.rowsNum[15]] = '176, 176, 176, 255\n'
+        self.full_list[self.rowsNum[16]] = '0, 0, 0\n'
     # ----------------------------------------------------------------------#
 
     def on_help(self, event):

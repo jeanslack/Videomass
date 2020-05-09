@@ -26,6 +26,13 @@ NEWS:
     * `mpv` media player has been added as an optional dependency to be
       installed separately.
 
+    * It is possible to indicate, through the setup dialogue, the path of the
+      executable `mpv`. This should satisfy MS-Windows users since there is
+      still no installer for mpv on MS-Windows.
+
+    * New version (2.0) for the configuration file that will replace the old
+      versions
+
 IMPROVEMENTS:
     * [YOUTUBE DOWNLOADER] now the `Show More` function is an independent
       process and no longer linked to get format codes to insert on the list
