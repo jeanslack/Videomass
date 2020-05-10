@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-07 13:20+0200\n"
-"PO-Revision-Date: 2020-05-07 13:28+0200\n"
+"POT-Creation-Date: 2020-05-10 13:53+0200\n"
+"PO-Revision-Date: 2020-05-10 13:56+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -430,10 +430,11 @@ msgid "Auto-detection"
 msgstr ""
 
 #: ../videomass3/vdms_dialogs/first_time_start.py:70
-#: ../videomass3/vdms_dialogs/settings.py:146
-#: ../videomass3/vdms_dialogs/settings.py:188
-#: ../videomass3/vdms_dialogs/settings.py:199
-#: ../videomass3/vdms_dialogs/settings.py:210
+#: ../videomass3/vdms_dialogs/settings.py:150
+#: ../videomass3/vdms_dialogs/settings.py:192
+#: ../videomass3/vdms_dialogs/settings.py:203
+#: ../videomass3/vdms_dialogs/settings.py:214
+#: ../videomass3/vdms_dialogs/settings.py:226
 msgid "Browse.."
 msgstr ""
 
@@ -573,162 +574,127 @@ msgstr ""
 msgid "Successful changes!"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:51
+#: ../videomass3/vdms_dialogs/settings.py:53
 msgid ""
 "The following settings affect output messages and the log messages\n"
 "during processes. Change only if you know what you are doing."
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:119
+#: ../videomass3/vdms_dialogs/settings.py:123
 msgid "FFmpeg threads option"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:124
+#: ../videomass3/vdms_dialogs/settings.py:128
 msgid "Set the number of threads (from 0 to 32)"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:141
+#: ../videomass3/vdms_dialogs/settings.py:145
 msgid "Where do you prefer to store files?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:160
+#: ../videomass3/vdms_dialogs/settings.py:164
 msgid "General"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:181
+#: ../videomass3/vdms_dialogs/settings.py:185
 msgid "Logging levels"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:187
+#: ../videomass3/vdms_dialogs/settings.py:191
 msgid " Use a custom path to run FFmpeg"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:198
+#: ../videomass3/vdms_dialogs/settings.py:202
 msgid " Use a custom path to run FFprobe"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:209
+#: ../videomass3/vdms_dialogs/settings.py:213
 msgid " Use a custom path to run FFplay"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:220
+#: ../videomass3/vdms_dialogs/settings.py:225
+msgid " Use a custom path to run mpv player"
+msgstr ""
+
+#: ../videomass3/vdms_dialogs/settings.py:237
 msgid "Executable paths"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:225
+#: ../videomass3/vdms_dialogs/settings.py:242
 msgid "Set Icon Themes"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:239
+#: ../videomass3/vdms_dialogs/settings.py:256
 msgid "Custom Colour UI"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:244
+#: ../videomass3/vdms_dialogs/settings.py:261
 msgid "Change Toolbar Colour:"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:250
-#: ../videomass3/vdms_dialogs/settings.py:573
+#: ../videomass3/vdms_dialogs/settings.py:267
+#: ../videomass3/vdms_dialogs/settings.py:623
 msgid "Bar Colour"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:255
+#: ../videomass3/vdms_dialogs/settings.py:272
 msgid "Change Toolbar Buttons Colour:"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:260
-#: ../videomass3/vdms_dialogs/settings.py:575
+#: ../videomass3/vdms_dialogs/settings.py:277
+#: ../videomass3/vdms_dialogs/settings.py:625
 msgid "Buttons Colour"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:265
+#: ../videomass3/vdms_dialogs/settings.py:282
 msgid "Change Buttons Font Colour:"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:270
-#: ../videomass3/vdms_dialogs/settings.py:577
+#: ../videomass3/vdms_dialogs/settings.py:287
+#: ../videomass3/vdms_dialogs/settings.py:627
 msgid "Font Colour"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:275
+#: ../videomass3/vdms_dialogs/settings.py:292
 msgid "Restore default settings"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:282
+#: ../videomass3/vdms_dialogs/settings.py:299
 msgid "Appearance"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:302
-msgid "Videomass: setup"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:303
-msgid ""
-"Enable custom search for the executable FFmpeg. If the checkbox is disabled "
-"or if the path field is empty, the search of the executable is entrusted to "
-"the system."
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:308
-msgid "Open path FFmpeg"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:310
-msgid "path to executable binary FFmpeg"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:311
 #: ../videomass3/vdms_dialogs/settings.py:319
-msgid "Path generation file"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:312
-msgid ""
-"Enable custom search for the executable FFprobe. If the checkbox is disabled "
-"or if the path field is empty, the search of the executable is entrusted to "
-"the system."
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:316
-msgid "Open path FFprobe"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:318
-msgid "path to executable binary FFprobe"
+msgid "Videomass: setup"
 msgstr ""
 
 #: ../videomass3/vdms_dialogs/settings.py:320
 msgid ""
-"Enable custom search for the executable FFplay. If the checkbox is disabled "
-"or if the path field is empty, the search of the executable is entrusted to "
-"the system."
+"Enable custom paths for the executables. If the check boxes are disabled or "
+"if the path field is empty, the search for the executables is entrusted to "
+"the environment variables."
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:324
-msgid "Open path FFplay"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:326
-msgid "path to executable binary FFplay"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:405
+#: ../videomass3/vdms_dialogs/settings.py:417
 msgid "Set a default directory to save files"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:446
+#: ../videomass3/vdms_dialogs/settings.py:458
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:486
+#: ../videomass3/vdms_dialogs/settings.py:498
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:525
+#: ../videomass3/vdms_dialogs/settings.py:537
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:614
+#: ../videomass3/vdms_dialogs/settings.py:576
+msgid "Videomass: Where is the mpv executable located?"
+msgstr ""
+
+#: ../videomass3/vdms_dialogs/settings.py:664
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 
@@ -1237,66 +1203,66 @@ msgid ""
 "menu."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:132
-#: ../videomass3/vdms_main/main_frame.py:1447
+#: ../videomass3/vdms_main/main_frame.py:133
+#: ../videomass3/vdms_main/main_frame.py:1455
 msgid "Multimedia Streams"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:145
+#: ../videomass3/vdms_main/main_frame.py:146
 msgid "Preview"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:158
+#: ../videomass3/vdms_main/main_frame.py:159
 msgid "Duration"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:171
+#: ../videomass3/vdms_main/main_frame.py:172
 msgid "Save Configuration"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:184
+#: ../videomass3/vdms_main/main_frame.py:185
 msgid "New.."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:197
+#: ../videomass3/vdms_main/main_frame.py:198
 msgid "Delete.."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:210
+#: ../videomass3/vdms_main/main_frame.py:211
 msgid "Edit.."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:301
+#: ../videomass3/vdms_main/main_frame.py:302
 msgid ""
 "Specify the duration or portion of the time globally. this can affect many "
 "functions."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:304
+#: ../videomass3/vdms_main/main_frame.py:305
 msgid "Show additional multimedia information."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:305
+#: ../videomass3/vdms_main/main_frame.py:306
 msgid "Choose a file to playback in the destination folder"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:307
+#: ../videomass3/vdms_main/main_frame.py:308
 msgid "Save the settings on presets manager"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:308
+#: ../videomass3/vdms_main/main_frame.py:309
 msgid "Create a new profile from yourself and save it in the selected preset."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:310
+#: ../videomass3/vdms_main/main_frame.py:311
 msgid "Delete the selected profile."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:311
+#: ../videomass3/vdms_main/main_frame.py:312
 msgid "Edit the selected profile."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:452
+#: ../videomass3/vdms_main/main_frame.py:453
 msgid "For playback, first make sure you select a URL in the list control"
 msgstr ""
 
@@ -1703,41 +1669,48 @@ msgstr ""
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1320
+#: ../videomass3/vdms_main/main_frame.py:1300
+msgid ""
+"Malformed URL: \"{}\"\n"
+"\n"
+"Check and correct any errors in the added text."
+msgstr ""
+
+#: ../videomass3/vdms_main/main_frame.py:1330
 msgid "Add Files"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1343
+#: ../videomass3/vdms_main/main_frame.py:1353
 msgid "Add URLs"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1352
-#: ../videomass3/vdms_main/main_frame.py:1397
-#: ../videomass3/vdms_main/main_frame.py:1436
+#: ../videomass3/vdms_main/main_frame.py:1362
+#: ../videomass3/vdms_main/main_frame.py:1405
+#: ../videomass3/vdms_main/main_frame.py:1444
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1355
+#: ../videomass3/vdms_main/main_frame.py:1365
 msgid "Youtube Downloader"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1371
+#: ../videomass3/vdms_main/main_frame.py:1379
 msgid "Show More"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1391
+#: ../videomass3/vdms_main/main_frame.py:1399
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1409
+#: ../videomass3/vdms_main/main_frame.py:1417
 msgid "Streams"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1430
+#: ../videomass3/vdms_main/main_frame.py:1438
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1490
+#: ../videomass3/vdms_main/main_frame.py:1498
 msgid "Processing Status - Videomass"
 msgstr ""
 
@@ -2369,83 +2342,83 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:190
-msgid "right click to speed up"
+msgid "try right-clicking to choose"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:242
-#: ../videomass3/vdms_panels/youtubedl_ui.py:286
+#: ../videomass3/vdms_panels/youtubedl_ui.py:240
+#: ../videomass3/vdms_panels/youtubedl_ui.py:284
 msgid "Insert Format Code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:243
-#: ../videomass3/vdms_panels/youtubedl_ui.py:268
+#: ../videomass3/vdms_panels/youtubedl_ui.py:241
+#: ../videomass3/vdms_panels/youtubedl_ui.py:266
 msgid "Append Format Code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:245
-#: ../videomass3/vdms_panels/youtubedl_ui.py:290
+#: ../videomass3/vdms_panels/youtubedl_ui.py:243
+#: ../videomass3/vdms_panels/youtubedl_ui.py:288
 msgid "Insert for merging"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:246
-#: ../videomass3/vdms_panels/youtubedl_ui.py:277
+#: ../videomass3/vdms_panels/youtubedl_ui.py:244
+#: ../videomass3/vdms_panels/youtubedl_ui.py:275
 msgid "Append for merging"
 msgstr ""
 
+#: ../videomass3/vdms_panels/youtubedl_ui.py:246
 #: ../videomass3/vdms_panels/youtubedl_ui.py:248
-#: ../videomass3/vdms_panels/youtubedl_ui.py:250
-#: ../videomass3/vdms_panels/youtubedl_ui.py:294
+#: ../videomass3/vdms_panels/youtubedl_ui.py:292
 msgid "Play selected url"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:304
-#: ../videomass3/vdms_panels/youtubedl_ui.py:405
-#: ../videomass3/vdms_panels/youtubedl_ui.py:447
+#: ../videomass3/vdms_panels/youtubedl_ui.py:302
+#: ../videomass3/vdms_panels/youtubedl_ui.py:397
+#: ../videomass3/vdms_panels/youtubedl_ui.py:439
 msgid "Url"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:305
-#: ../videomass3/vdms_panels/youtubedl_ui.py:406
-#: ../videomass3/vdms_panels/youtubedl_ui.py:448
+#: ../videomass3/vdms_panels/youtubedl_ui.py:303
+#: ../videomass3/vdms_panels/youtubedl_ui.py:398
+#: ../videomass3/vdms_panels/youtubedl_ui.py:440
 msgid "Title"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:306
-#: ../videomass3/vdms_panels/youtubedl_ui.py:407
+#: ../videomass3/vdms_panels/youtubedl_ui.py:304
+#: ../videomass3/vdms_panels/youtubedl_ui.py:399
 msgid "Format Code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:307
-#: ../videomass3/vdms_panels/youtubedl_ui.py:408
+#: ../videomass3/vdms_panels/youtubedl_ui.py:305
+#: ../videomass3/vdms_panels/youtubedl_ui.py:400
 msgid "Extension"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:308
+#: ../videomass3/vdms_panels/youtubedl_ui.py:306
 msgid "Resolution"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:309
+#: ../videomass3/vdms_panels/youtubedl_ui.py:307
 msgid "Video Codec"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:310
+#: ../videomass3/vdms_panels/youtubedl_ui.py:308
 msgid "fps"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:311
+#: ../videomass3/vdms_panels/youtubedl_ui.py:309
 msgid "Audio Codec"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:312
+#: ../videomass3/vdms_panels/youtubedl_ui.py:310
 msgid "Size"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:409
-#: ../videomass3/vdms_panels/youtubedl_ui.py:449
+#: ../videomass3/vdms_panels/youtubedl_ui.py:401
+#: ../videomass3/vdms_panels/youtubedl_ui.py:441
 msgid "Resolution note"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:466
+#: ../videomass3/vdms_panels/youtubedl_ui.py:458
 msgid ""
 "\"Show more\" only is enabled when Videomass uses youtube-dl as imported "
 "library."
@@ -2761,10 +2734,10 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_panels/textdrop.py:64
-msgid "Enter one or more URLs below"
+msgid "Add one or more URLs below"
 msgstr ""
 
-#: ../videomass3/vdms_threads/mpv_url.py:115
+#: ../videomass3/vdms_threads/mpv_url.py:117
 msgid ""
 "{}\n"
 "\n"

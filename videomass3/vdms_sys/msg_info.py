@@ -38,7 +38,7 @@ def current_release():
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
     Version = '2.1.5'
-    Release = 'May 5 2020'
+    Release = 'May 10 2020'
     Copyright = '© 2013-2020'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'
@@ -74,8 +74,8 @@ def descriptions_release():
     long_d = ("Videomass is not a converter; It provides a graphical "
               "interface for writing presets and profiles to be used with "
               "FFmpeg without limits on formats and codecs; it also provides "
-              "a graphical interface with the basic functions for youtube_dl "
-              "video downloader.\n")
+              "a minimal graphical interface with the basic functions for "
+              "youtube_dl video downloader.\n")
 
     short_l = ("GPL3 (Gnu Public License)")
 

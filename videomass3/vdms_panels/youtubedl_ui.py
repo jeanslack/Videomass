@@ -187,7 +187,7 @@ class Downloader(wx.Panel):
                  '"Format Code"; this is optional. You can specify multiple '
                  'format codes by using slash, e.g. 140/130/151 .'))
         self.txt_mergecode.SetToolTip(tip)
-        self.fcode.SetToolTip(_('right click to speed up'))
+        self.fcode.SetToolTip(_('try right-clicking to choose'))
 
         # ----------------------- Properties
         if OS == 'Darwin':
@@ -196,8 +196,6 @@ class Downloader(wx.Panel):
             self.fcode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
             self.txt_maincode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
             self.txt_mergecode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
-
-        # self.fcode.Disable()
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()

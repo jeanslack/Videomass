@@ -61,7 +61,7 @@ class TextDnD(wx.Panel):
                                           wx.TE_READONLY
                                           )
         self.lbl = wx.StaticText(self,
-                                 label=_("Enter one or more URLs below")
+                                 label=_("Add one or more URLs below")
                                  )
         # create sizers layout
         sizer = wx.BoxSizer(wx.VERTICAL)

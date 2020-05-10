@@ -31,6 +31,7 @@ import wx.lib.agw.gradientbutton as GB
 import webbrowser
 import ssl
 import urllib.request
+from urllib.parse import urlparse
 import os
 import sys
 from videomass3.vdms_dialogs import time_selection
@@ -1292,6 +1293,16 @@ class MainFrame(wx.Frame):
                 wx.MessageBox(_('Append at least one URL'), "Videomass",
                               wx.ICON_INFORMATION, self)
                 return
+
+            for url in data:  # Check malformed url
+                o = urlparse(url)
+                if not o[1]:  # if empty netloc given from ParseResult
+                    wx.MessageBox(_('Malformed URL: "{}"\n\nCheck and '
+                                    'correct any errors in the added '
+                                    'text.').format(url),
+                                    "Videomass", wx.ICON_ERROR, self)
+                    return
+
             self.youtube_Downloader(self, data)
     # ------------------------------------------------------------------#
 
@@ -1354,12 +1365,10 @@ class MainFrame(wx.Frame):
                 self.statusbar_msg(_('Youtube Downloader'), None)
 
             self.data_url = data
-            #self.ytDownloader.fcode.ClearAll()
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
             del self.ytDownloader.info[:]
-        #else:
-            #self.data_url = data
+
         self.file_destin = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.VconvPanel.Hide(), self.PrstsPanel.Hide()

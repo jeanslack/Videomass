@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-May 7, 2020 V.2.1.5
+May 10, 2020 V.2.1.5
 +------------------------------------+
 
 BUGS:
@@ -17,8 +17,8 @@ BUGS:
       now the update is blocked with a warning.
 
 NEWS:
-    * [YOUTUBE DOWNLOADER] added wrapper for `mpv` player to playback selected
-      url on list control with the quality setted .
+    * [YOUTUBE DOWNLOADER] added wrapper for the `mpv` player to play the
+      individual URLs with different qualities on the list control.
 
     * `youtube_dl` has been added as dependency on setup.py and the pip tool
       should automatically install it.
@@ -31,7 +31,7 @@ NEWS:
       still no installer for mpv on MS-Windows.
 
     * New version (2.0) for the configuration file that will replace the old
-      versions
+      versions.
 
 IMPROVEMENTS:
     * [YOUTUBE DOWNLOADER] now the `Show More` function is an independent
@@ -39,7 +39,10 @@ IMPROVEMENTS:
       control .
 
     * [YOUTUBE DOWNLOADER] Improving the order list when has multiple URLs on
-      list control
+      list control.
+
+    * [YOUTUBE DOWNLOADER] Added a minimal validation on the adding URLs
+       through function *urlparse* in module *urllib.parse*  .
 
 REMOVALS and DISPLACEMENTS:
     * [YOUTUBE DOWNLOADER] now the list control is always enabled and populated

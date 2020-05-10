@@ -317,9 +317,9 @@ class Setup(wx.Dialog):
 
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
-        msg = _("Enable custom paths for executables. If the check boxes are "
-                "disabled or if the path field is empty, the search for "
-                "executables is entrusted to the environment variables.")
+        msg = _("Enable custom paths for the executables. If the check boxes "
+                "are disabled or if the path field is empty, the search for "
+                "the executables is entrusted to the environment variables.")
         tabThree.SetToolTip(msg)
         self.txtctrl_ffmpeg.SetMinSize((200, -1))
         self.txtctrl_ffprobe.SetMinSize((200, -1))

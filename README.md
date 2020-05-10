@@ -24,6 +24,7 @@
 - Download multiple URLs from YouTube and more sites.
 - View video information without downloading it.
 - Ability to download videos using the 'format code' with audio merging.
+- Ability to playback individual URLs with different qualities
 - Log management.
 - Multi language (English and Italian Languages support for now).
 
