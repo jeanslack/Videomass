@@ -84,10 +84,10 @@ def system_check():
     checking the configuration folder
     """
     # ----------------------------------------------------------- #
-    # ### Set locale path and source data for restoring if needed #
+    # ### Set resources location #
     # ------------------------------------------------------------#
     if os.path.isdir('%s/art' % WORKdir):
-        # launch in local on any OS or as .exe and .app also
+        # local launch on any O.S. (even if installed also as .exe and .app)
         localepath = 'locale'
         SRCpath = '%s/share' % WORKdir
         IS_LOCAL = True
