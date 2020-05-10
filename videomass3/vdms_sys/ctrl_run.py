@@ -95,9 +95,10 @@ def system_check():
     else:  # Path system installation (usr, usr/local, ~/.local)
         if OS == 'Windows':
             # Installed with 'pip install videomass' command
-            pythonpath = os.path.USERName(sys.executable)
-            localepath = pythonpath + '\\share\\locale'
-            SRCpath = pythonpath + '\\share\\videomass\\config'
+            dirname = os.path.dirname(sys.executable)
+            pythonpath = os.path.join(dirname, 'Script', 'videomass')
+            localepath =  os.path.join(dirname, 'share', 'locale')
+            SRCpath = os.path.join(dirname, 'share', 'videomass', 'config')
             IS_LOCAL = False
         else:
             binarypath = shutil.which('videomass')
