@@ -78,8 +78,7 @@ class Downloader(wx.Panel):
         """
         self.parent = parent
         self.oS = OS
-        self.info = []
-        self.formats = []
+        self.info = []  # has data information for Show More button
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -298,8 +297,8 @@ class Downloader(wx.Panel):
 
     def get_libraryformatcode(self):
         """
-        Get format code and set new items for list control by generator
-        object *youtube_info*
+        Get URLs format code by generator object *youtube_info* and set
+        populate the list control with new entries.
         """
         self.fcode.ClearAll()
         self.fcode.InsertColumn(0, (_('Url')), width=60)
@@ -311,7 +310,7 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(6, (_('fps')), width=60)
         self.fcode.InsertColumn(7, (_('Audio Codec')), width=110)
         self.fcode.InsertColumn(8, (_('Size')), width=80)
-
+        index = 0
         for link in self.parent.data_url:
             data = IO_tools.youtube_info(link)
             for meta in data:
@@ -320,17 +319,8 @@ class Downloader(wx.Panel):
                     wx.MessageBox(meta[1], 'youtube_dl ERROR', wx.ICON_ERROR)
                     return True
 
-            index = 0
-            self.fcode.InsertItem(index, link)
-            self.fcode.SetItem(index, 1, meta[0]['title'])
-            self.fcode.SetItemBackgroundColour(index, 'GREEN')
-
-            title = meta[0]['title']
-
-
             formats = iter(meta[0].get('formats', [meta[0]]))
-
-            for f in formats:
+            for n, f in enumerate(formats):
                 if f.get('vcodec'):
                     vcodec, fps = f['vcodec'], '%sfps' % f.get('fps')
                 else:
@@ -344,9 +334,8 @@ class Downloader(wx.Panel):
                 else:
                     size = 'N/A'
 
-                index += 1
                 self.fcode.InsertItem(index, link)
-                self.fcode.SetItem(index, 1, '')
+                self.fcode.SetItem(index, 1, meta[0]['title'])
                 self.fcode.SetItem(index, 2, f['format_id'])
                 self.fcode.SetItem(index, 3, f['ext'])
                 self.fcode.SetItem(index, 4, f['format'].split('-')[1])
@@ -354,15 +343,17 @@ class Downloader(wx.Panel):
                 self.fcode.SetItem(index, 6, fps)
                 self.fcode.SetItem(index, 7, acodec)
                 self.fcode.SetItem(index, 8, size)
-
+                if n == 0:
+                    self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                index += 1
         return None
     # ----------------------------------------------------------------------
 
     def get_info(self):
         """
         Get media url informations by generator object *youtube_info*  .
-        If meta[1] is None, set self.info attribute with dict objetc items
-        and return None. Otherwise self.info is a empty list.
+        If meta[1] is None set self.info attribute with dict objetc items
+        and return None. Otherwise self.info is a empty list and return True
         """
         for link in self.parent.data_url:
             data = IO_tools.youtube_info(link)

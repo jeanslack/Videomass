@@ -3,8 +3,6 @@
 URGENCY: to do soon
 --------------------
 
-- fix order on list control during getting format code.
-
 - use youtube-dl python library for Videomass.exe also.
 
 - add 'Pictures' on the Media list to export image sequences in jpg, png, bmp

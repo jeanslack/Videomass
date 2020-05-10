@@ -38,6 +38,9 @@ IMPROVEMENTS:
       process and no longer linked to get format codes to insert on the list
       control .
 
+    * [YOUTUBE DOWNLOADER] Improving the order list when has multiple URLs on
+      list control
+
 REMOVALS and DISPLACEMENTS:
     * [YOUTUBE DOWNLOADER] now the list control is always enabled and populated
       with the selectable urls and related qualities.
