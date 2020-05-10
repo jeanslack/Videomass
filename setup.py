@@ -155,8 +155,14 @@ def SOURCE_BUILD():
     Source/Build distributions
 
     """
-    EXCLUDE = ['']
-    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0', 'youtube_dl']
+
+    if platform.system() in ['Windows', 'Darwin']:
+        EXCLUDE = ['']
+        REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0', 'youtube_dl']
+    else:
+        EXCLUDE = ['']
+        REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl']
+
     DATA_FILES = [  # even path must be relative-path
                   ('share/videomass/config/presets',
                    glob_files('share/presets/*.prst')),
@@ -202,7 +208,7 @@ def MacOS():
 
     """
     EXCLUDE = ['youtube_dl']
-    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0', 'youtube_dl']
+    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0']
     PATH_ICON = '%s/art/videomass.icns' % PWD
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
 
