@@ -134,9 +134,9 @@ class Videomass(wx.App):
                     self.execYdl = src
         # ----- ffmpeg
         if setui[0] == 'Darwin':  # on MacOs
-            os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"
-                                   "/bin:/usr/sbin:/sbin"
-                                   )
+            #os.environ["PATH"] += ("/usr/local/bin:/usr/bin:"
+                                   #"/bin:/usr/sbin:/sbin"
+                                   #)
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
                 if os.path.isfile("%s" % link):
                     binaries = False
