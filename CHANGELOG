@@ -21,6 +21,12 @@ BUGS:
 
     * Fixed status bar messages when switch between panels.
 
+    * [MS-WINDOWS] Fixed issue when using pip to install Videomass on Windows,
+      but the executable is not found in the path of Python scripts.
+NEWS:
+    * Update setup.py with new entries for setuptools to fixing start videomass
+      executable.
+
 
 +------------------------------------+
 May 10, 2020 V.2.1.5
