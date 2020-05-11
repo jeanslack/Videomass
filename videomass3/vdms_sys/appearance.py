@@ -79,8 +79,8 @@ class Appearance(object):
                     userbase = site.getuserbase()
                     url = userbase + '/share/videomass/icons'
                     share = '/share/pixmaps'
-                    self.videomass_icon = userbase+share + "/videomass.png"
-                    self.wizard_icon = userbase+url+"/videomass_wizard.png"
+                    self.videomass_icon = userbase + share + "/videomass.png"
+                    self.wizard_icon = url + "/videomass_wizard.png"
 
         # videomass sign
         if iconset == 'Videomass_Sign_Icons':  # default

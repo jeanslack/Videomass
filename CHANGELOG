@@ -7,6 +7,22 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+May 11, 2020 V.2.1.6
++------------------------------------+
+
+BUGS:
+    * [UNIX] Fixed icon 'wizard' path name when Videomass is installed on user
+      space with `pip install --user videomass` command, and wizard dialog
+      is shown. This issue regard appearance.py class on *nix OS's
+
+    * [MS-WINDOWS] Fixed ntpath name resolution on pythonpath variable when
+      Videomass is installed with `pip install videomass` on MS-Windows OS.
+      See ctrl_run.py module on vdms_sys.
+
+    * Fixed status bar messages when switch between panels.
+
+
++------------------------------------+
 May 10, 2020 V.2.1.5
 +------------------------------------+
 

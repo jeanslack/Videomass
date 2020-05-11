@@ -157,7 +157,7 @@ class Choose_Topic(wx.Panel):
     # ------------------------------------------------------------------#
 
     def on_Video(self, event):
-        self.parent.File_import(self, 'Audio/Video Conversions')
+        self.parent.switch_file_import(self, 'Audio/Video Conversions')
     # ------------------------------------------------------------------#
 
     def on_YoutubeDL(self, event):
@@ -165,11 +165,11 @@ class Choose_Topic(wx.Panel):
         Check the installation of youtube-dl depending on the OS in use.
         """
         if PYLIB_YDL is None:
-            self.parent.Text_import(self, 'Youtube Downloader')
+            self.parent.switch_text_import(self, 'Youtube Downloader')
             return
         elif EXEC_YDL:
             if os.path.isfile(EXEC_YDL):
-                self.parent.Text_import(self, 'Youtube Downloader')
+                self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
             else:
                 if OS in ['Windows', 'Darwin']:
@@ -206,4 +206,4 @@ class Choose_Topic(wx.Panel):
     # ------------------------------------------------------------------#
 
     def on_Prst_mng(self, event):
-        self.parent.File_import(self, 'Presets Manager')
+        self.parent.switch_file_import(self, 'Presets Manager')

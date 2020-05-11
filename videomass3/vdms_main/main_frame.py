@@ -60,19 +60,15 @@ FILE_CONF = get.FILEconf  # pathname of the file configuration
 WORK_DIR = get.WORKdir  # pathname of the current work directory
 LOGDIR = get.LOGdir  # log directory pathname
 CACHEDIR = get.CACHEdir  # cache directory pathname
-# # colour rappresentetion in rgb
+# colour rappresentetion in rgb
 AZURE_NEON = 158, 201, 232
 YELLOW_LMN = 255, 255, 0
 BLUE = 0, 7, 12
-# colour rappresentetion in html
+# set widget colours with html rappresentetion:
 ORANGE = '#f28924'
 YELLOW = '#a29500'
-
-# set widget colours in some case with html rappresentetion:
 # AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
-# YELLOW = '#a29500'
 # RED = '#ea312d'
-# ORANGE = '#f28924'
 # GREENOLIVE = '#6aaf23'
 # GREEN = '#268826'
 
@@ -316,6 +312,7 @@ class MainFrame(wx.Frame):
         self.videomass_tool_bar()
         # status bar
         self.sb = self.CreateStatusBar(1)
+        self.statusbar_msg(_('Ready'), None)
         # hide toolbar, buttons bar and disable some file menu items
         self.toolbar.Hide()
         self.btnpanel.Hide()
@@ -368,7 +365,7 @@ class MainFrame(wx.Frame):
         self.prstpan.Enable(False), self.ydlpan.Enable(False)
         self.startpan.Enable(False), self.logpan.Enable(False)
 
-        self.statusbar_msg('', None)
+        self.statusbar_msg(_('Ready'), None)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -439,7 +436,7 @@ class MainFrame(wx.Frame):
         if self.topicname == 'Youtube Downloader':
             self.ytDownloader.on_show_info()
         else:
-            dialog = Mediainfo(self.data_files, OS,)
+            dialog = Mediainfo(self.data_files, OS)
             dialog.Show()
     # ------------------------------------------------------------------#
 
@@ -476,14 +473,11 @@ class MainFrame(wx.Frame):
     def Saveprofile(self, event):
         """
         Store new profile with same current settings of the panel shown
-        (Video Conversion & Audio Conversion)..
-        Every modification on the panel shown will be reported when saving
-        a new profile.
+        (A/V Conversions). Every modification on the panel shown will be
+        reported when saving a new profile.
         """
         if self.VconvPanel.IsShown():
             self.VconvPanel.Addprof()
-        # elif self.AconvPanel.IsShown():
-            # self.AconvPanel.Addprof()
         else:
             print('Videomass: Error, no panels shown')
     # ------------------------------------------------------------------#
@@ -491,8 +485,7 @@ class MainFrame(wx.Frame):
     def Newprofile(self, event):
         """
         Store new profile in the selected preset of the presets manager
-        panel. The list is reloaded automatically after pressed ok button
-        in the dialog for update view.
+        panel and reload list ctrl.
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Addprof()
@@ -1077,7 +1070,7 @@ class MainFrame(wx.Frame):
         """
         view last log on console
         """
-        self.switch_Process('console view only')
+        self.switch_to_processing('console view only')
     # ------------------------------------------------------------------#
 
 
@@ -1251,8 +1244,8 @@ class MainFrame(wx.Frame):
         self.toolbar.Realize()
 
         # ----------------- Tool Bar Binding (evt)-----------------------#
-        self.Bind(wx.EVT_TOOL, self.Run_Coding, self.run_coding)
-        self.Bind(wx.EVT_TOOL, self.Run_Coding, self.run_download)
+        self.Bind(wx.EVT_TOOL, self.click_start, self.run_coding)
+        self.Bind(wx.EVT_TOOL, self.click_start, self.run_download)
         self.Bind(wx.EVT_TOOL, self.on_Back, back)
         self.Bind(wx.EVT_TOOL, self.on_Forward, forward)
 
@@ -1265,9 +1258,9 @@ class MainFrame(wx.Frame):
         if self.textDnDTarget.IsShown() or self.fileDnDTarget.IsShown():
             self.choosetopicRetrieve()
         elif self.topicname in ('Audio/Video Conversions', 'Presets Manager'):
-            self.File_import(self, self.topicname)
+            self.switch_file_import(self, self.topicname)
         elif self.topicname == 'Youtube Downloader':
-            self.Text_import(self, self.topicname)
+            self.switch_text_import(self, self.topicname)
     # ------------------------------------------------------------------#
 
     def on_Forward(self, event):
@@ -1303,10 +1296,10 @@ class MainFrame(wx.Frame):
                                     "Videomass", wx.ICON_ERROR, self)
                     return
 
-            self.youtube_Downloader(self, data)
+            self.switch_youtube_downloader(self, data)
     # ------------------------------------------------------------------#
 
-    def File_import(self, event, which):
+    def switch_file_import(self, event, which):
         """
         Show files import panel.
 
@@ -1330,7 +1323,7 @@ class MainFrame(wx.Frame):
         self.statusbar_msg(_('Add Files'), None)
     # ------------------------------------------------------------------#
 
-    def Text_import(self, event, which):
+    def switch_text_import(self, event, which):
         """
         Show URLs import panel.
         """
@@ -1353,22 +1346,21 @@ class MainFrame(wx.Frame):
         self.statusbar_msg(_('Add URLs'), None)
     # ------------------------------------------------------------------#
 
-    def youtube_Downloader(self, event, data):
+    def switch_youtube_downloader(self, event, data):
         """
         Show youtube-dl downloader panel
         """
+        msg = (_('YouTube Downloader'), None)
         if not data == self.data_url:
             if self.data_url:
-                self.statusbar_msg(_('Warning: the previous settings may be '
-                                    'reset to default values.'), ORANGE)
-            else:
-                self.statusbar_msg(_('Youtube Downloader'), None)
-
+                msg = (_('Warning: the previous settings may be '
+                        'reset to default values.'), ORANGE)
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
             del self.ytDownloader.info[:]
 
+        self.statusbar_msg(msg[0], msg[1])
         self.file_destin = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.VconvPanel.Hide(), self.PrstsPanel.Hide()
@@ -1396,20 +1388,21 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.ytDownloader.Hide(), self.PrstsPanel.Hide()
         self.VconvPanel.Show()
-        self.statusbar_msg(_('Audio/Video Conversions'), None)
+        msg = (_('Audio/Video Conversions'), None)
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
         if not filenames == self.file_src:
             if self.file_src:
-                self.statusbar_msg(_('Warning: the previous settings may be '
-                                    'reset to default values.'), ORANGE)
+                msg = (_('Warning: the previous settings may be '
+                         'reset to default values.'), ORANGE)
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']
                              ]
             self.VconvPanel.normalize_default()
             self.PrstsPanel.normalization_default()
+        self.statusbar_msg(msg[0], msg[1])
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Hide(), self.btn_delprf.Hide()
         self.btn_editprf.Hide(), self.btn_saveprf.Show()
@@ -1435,20 +1428,21 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
         self.PrstsPanel.Show()
-        self.statusbar_msg(_('Presets Manager'), None)
+        msg = (_('Presets Manager'), None)
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
         if not filenames == self.file_src:
             if self.file_src:
-                self.statusbar_msg(_('Warning: the previous settings may be '
-                                    'reset to default values.'), ORANGE)
+                msg = (_('Warning: the previous settings may be '
+                         'reset to default values.'), ORANGE)
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']
                              ]
             self.PrstsPanel.normalization_default()
             self.VconvPanel.normalize_default()
+        self.statusbar_msg(msg[0], msg[1])
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Show(), self.btn_delprf.Show(), self.btn_editprf.Show()
         self.btn_saveprf.Hide(), self.btn_duration.Show()
@@ -1466,7 +1460,7 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def switch_Process(self, *varargs):
+    def switch_to_processing(self, *varargs):
         """
     1) TIME DEFINITION FOR THE PROGRESS BAR
         For a suitable and efficient progress bar, if a specific
@@ -1488,6 +1482,7 @@ class MainFrame(wx.Frame):
         else:
             duration = self.duration
 
+        self.statusbar_msg(_('Processing Status...'), None)
         self.btnpanel.Hide()  # hide buttons bar
         # Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
@@ -1495,7 +1490,7 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide(),
         # Show the panel:
         self.ProcessPanel.Show()
-        self.SetTitle(_('Processing Status - Videomass'))
+        #self.SetTitle('Videomass')
         [self.menuBar.EnableTop(x, False) for x in range(0, 4)]
         # Hide the tool bar
         self.toolbar.Hide()
@@ -1503,19 +1498,21 @@ class MainFrame(wx.Frame):
         self.Layout()
     # ------------------------------------------------------------------#
 
-    def Run_Coding(self, event):
+    def click_start(self, event):
         """
-        By clicking the Start encoding button on the main frame, calls
-        the on_ok method of the corresponding panel shown, which calls
-        the 'switch_Process' method above.
+        By clicking on Convert/Download buttons in the main frame, calls
+        the on_start method of the corresponding panel shown, which calls
+        the 'switch_to_processing' method above.
         """
         if self.ytDownloader.IsShown():
-            self.ytDownloader.on_Start()
+            self.ytDownloader.on_start()
+
         elif self.VconvPanel.IsShown():
             self.file_src = [f['format']['filename'] for f in
                              self.data_files if f['format']['filename']
                              ]
             self.VconvPanel.on_start()
+
         elif self.PrstsPanel.IsShown():
             self.file_src = [f['format']['filename'] for f in
                              self.data_files if f['format']['filename']
@@ -1526,7 +1523,7 @@ class MainFrame(wx.Frame):
     def panelShown(self, panelshown):
         """
         When clicking 'close button' of the long_processing_task panel
-        (see switch_Process method above), Retrieval at previous
+        (see switch_to_processing method above), Retrieval at previous
         panel showing and re-enables the functions provided by
         the menu bar.
         """
@@ -1536,13 +1533,12 @@ class MainFrame(wx.Frame):
             self.btnpanel.Show()
         elif panelshown == 'Youtube Downloader':
             self.ProcessPanel.Hide()
-            self.youtube_Downloader(self, self.data_url)
+            self.switch_youtube_downloader(self, self.data_url)
         elif panelshown == 'Presets Manager':
             self.ProcessPanel.Hide()
             self.switch_presets_manager(self)
             self.btnpanel.Show()
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0, 4)]
-        self.SetTitle("Videomass")  # set the appropriate title
         # show buttons bar if the user has shown it:
         self.Layout()

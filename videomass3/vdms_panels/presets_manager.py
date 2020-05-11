@@ -336,7 +336,7 @@ class PrstPan(wx.Panel):
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.Run_Coding,
+        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.click_start,
                   self.list_ctrl
                   )
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
@@ -938,7 +938,7 @@ class PrstPan(wx.Panel):
             self.reset_list()
     # ------------------------------------------------------------------#
 
-    def on_Start(self):
+    def on_start(self):
         """
         File data redirecting .
 
@@ -1018,17 +1018,17 @@ class PrstPan(wx.Panel):
         valupdate = self.update_dict(cntmax, 'One passes')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('onepass',
-                                       filesrc,
-                                       outext,
-                                       destdir,
-                                       command,
-                                       None,
-                                       '',
-                                       audnorm,
-                                       self.logname,
-                                       cntmax,
-                                       )
+            self.parent.switch_to_processing('onepass',
+                                             filesrc,
+                                             outext,
+                                             destdir,
+                                             command,
+                                             None,
+                                             '',
+                                             audnorm,
+                                             self.logname,
+                                             cntmax,
+                                             )
     # ------------------------------------------------------------------#
 
     def two_Pass(self, filesrc, destdir, cntmax, outext):
@@ -1069,17 +1069,17 @@ class PrstPan(wx.Panel):
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
         if ending.ShowModal() == wx.ID_OK:
 
-            self.parent.switch_Process(typeproc,
-                                       filesrc,
-                                       outext,
-                                       destdir,
-                                       None,
-                                       [pass1, pass2, loudnorm],
-                                       cmd_opt["AudioOutMap"],
-                                       audnorm,
-                                       self.logname,
-                                       cntmax,
-                                       )
+            self.parent.switch_to_processing(typeproc,
+                                             filesrc,
+                                             outext,
+                                             destdir,
+                                             None,
+                                             [pass1, pass2, loudnorm],
+                                             cmd_opt["AudioOutMap"],
+                                             audnorm,
+                                             self.logname,
+                                             cntmax,
+                                             )
     # --------------------------------------------------------------------#
 
     def savepictures(self, dest, file_sources):
@@ -1128,18 +1128,18 @@ class PrstPan(wx.Panel):
                                    os.path.join(outputdir, fileout)
                                    ))
             command = " ".join(cmd.split())  # compact string
-            self.parent.switch_Process('savepictures',
-                                       clicked,
-                                       None,
-                                       None,
-                                       command,
-                                       None,
-                                       None,
-                                       None,
-                                       self.logname,
-                                       1,
-                                       False,  # do not use is reserved
-                                       )
+            self.parent.switch_to_processing('savepictures',
+                                             clicked,
+                                             None,
+                                             None,
+                                             command,
+                                             None,
+                                             None,
+                                             None,
+                                             self.logname,
+                                             1,
+                                             False,  # do not use is reserved
+                                             )
     # ------------------------------------------------------------------#
 
     def update_dict(self, cntmax, passes):

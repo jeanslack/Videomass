@@ -577,7 +577,7 @@ class Downloader(wx.Panel):
             opt["SUBTITLES"] = [False, ""]
     # -----------------------------------------------------------------#
 
-    def on_Start(self):
+    def on_start(self):
         """
         Builds command string to use with an embed youtube_dl as
         python library or using standard youtube-dl command line
@@ -666,17 +666,17 @@ class Downloader(wx.Panel):
                         'allsubtitles': opt["SUBTITLES"][0],
                         'postprocessors': postprocessors
                         }
-            self.parent.switch_Process('youtube_dl python package',
-                                       urls,
-                                       '',
-                                       self.parent.file_destin,
-                                       data,
-                                       None,
-                                       '',
-                                       '',
-                                       'Youtube_LIB_downloader.log',
-                                       len(urls),
-                                       )
+            self.parent.switch_to_processing('youtube_dl python package',
+                                             urls,
+                                             '',
+                                             self.parent.file_destin,
+                                             data,
+                                             None,
+                                             '',
+                                             '',
+                                             'Youtube_LIB_downloader.log',
+                                             len(urls),
+                                             )
         else:  # ----------- with youtube-dl command line execution
 
             if self.choice.GetSelection() == 0:  # default
@@ -719,14 +719,14 @@ class Downloader(wx.Panel):
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
-            self.parent.switch_Process('youtube-dl executable',
-                                       urls,
-                                       '',
-                                       self.parent.file_destin,
-                                       cmd,
-                                       None,
-                                       '',
-                                       '',
-                                       'Youtube_EXEC_downloader.log',
-                                       len(urls),
-                                       )
+            self.parent.switch_to_processing('youtube-dl executable',
+                                             urls,
+                                             '',
+                                             self.parent.file_destin,
+                                             cmd,
+                                             None,
+                                             '',
+                                             '',
+                                             'Youtube_EXEC_downloader.log',
+                                             len(urls),
+                                             )

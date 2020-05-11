@@ -2013,17 +2013,17 @@ class AV_Conv(wx.Panel):
 
             if ending.ShowModal() == wx.ID_OK:
                 # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
-                self.parent.switch_Process('onepass',
-                                           f_src,
-                                           cmd_opt["OutputFormat"],
-                                           destin,
-                                           command,
-                                           None,
-                                           '',
-                                           audnorm,
-                                           logname,
-                                           countmax,
-                                           )
+                self.parent.switch_to_processing('onepass',
+                                                 f_src,
+                                                 cmd_opt["OutputFormat"],
+                                                 destin,
+                                                 command,
+                                                 None,
+                                                 '',
+                                                 audnorm,
+                                                 logname,
+                                                 countmax,
+                                                 )
         elif cmd_opt["Passing"] == "2 pass":
             if cmd_opt["VideoCodec"] == "-c:v libx265":
                 opt1, opt2 = '-x265-params pass=1', '-x265-params pass=2'
@@ -2066,17 +2066,17 @@ class AV_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('twopass',
-                                           f_src,
-                                           cmd_opt["OutputFormat"],
-                                           destin,
-                                           None,
-                                           [pass1, pass2],
-                                           '',
-                                           audnorm,
-                                           logname,
-                                           countmax,
-                                           )
+                self.parent.switch_to_processing('twopass',
+                                                 f_src,
+                                                 cmd_opt["OutputFormat"],
+                                                 destin,
+                                                 None,
+                                                 [pass1, pass2],
+                                                 '',
+                                                 audnorm,
+                                                 logname,
+                                                 countmax,
+                                                 )
         elif cmd_opt["Passing"] == "1 pass":  # Batch-Mode / h264 Codec
             command = (
                     f'{cmd_opt["VideoCodec"]} {cmd_opt["VideoBitrate"]} '
@@ -2103,17 +2103,17 @@ class AV_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('onepass',
-                                           f_src,
-                                           cmd_opt["OutputFormat"],
-                                           destin,
-                                           command,
-                                           None,
-                                           '',
-                                           audnorm,
-                                           logname,
-                                           countmax,
-                                           )
+                self.parent.switch_to_processing('onepass',
+                                                 f_src,
+                                                 cmd_opt["OutputFormat"],
+                                                 destin,
+                                                 command,
+                                                 None,
+                                                 '',
+                                                 audnorm,
+                                                 logname,
+                                                 countmax,
+                                                 )
     # ------------------------------------------------------------------#
 
     def video_ebu_2pass(self, f_src, destin, countmax, logname):
@@ -2159,17 +2159,17 @@ class AV_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('two pass EBU',
-                                           f_src,
-                                           cmd_opt["OutputFormat"],
-                                           destin,
-                                           None,
-                                           [pass1, pass2, loudfilter],
-                                           cmd_opt["AudioOutMap"],
-                                           None,
-                                           logname,
-                                           countmax,
-                                           )
+                self.parent.switch_to_processing('two pass EBU',
+                                                 f_src,
+                                                 cmd_opt["OutputFormat"],
+                                                 destin,
+                                                 None,
+                                                 [pass1, pass2, loudfilter],
+                                                 cmd_opt["AudioOutMap"],
+                                                 None,
+                                                 logname,
+                                                 countmax,
+                                                 )
         else:
             cmd_1 = (f'{cmd_opt["VideoCodec"]} {cmd_opt["VideoBitrate"]} '
                      f'{cmd_opt["MinRate"]} {cmd_opt["MaxRate"]} '
@@ -2208,17 +2208,17 @@ class AV_Conv(wx.Panel):
             ending = Formula(self, valupdate[0], valupdate[1], title)
 
             if ending.ShowModal() == wx.ID_OK:
-                self.parent.switch_Process('two pass EBU',
-                                           f_src,
-                                           cmd_opt["OutputFormat"],
-                                           destin,
-                                           None,
-                                           [pass1, pass2, loudfilter],
-                                           cmd_opt["AudioOutMap"],
-                                           None,
-                                           logname,
-                                           countmax,
-                                           )
+                self.parent.switch_to_processing('two pass EBU',
+                                                 f_src,
+                                                 cmd_opt["OutputFormat"],
+                                                 destin,
+                                                 None,
+                                                 [pass1, pass2, loudfilter],
+                                                 cmd_opt["AudioOutMap"],
+                                                 None,
+                                                 logname,
+                                                 countmax,
+                                                 )
             # ending.Destroy() # con ID_OK e ID_CANCEL non serve Destroy()
     # ------------------------------------------------------------------#
 
@@ -2242,17 +2242,17 @@ class AV_Conv(wx.Panel):
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('onepass',
-                                       f_src,
-                                       cmd_opt["OutputFormat"],
-                                       destin,
-                                       command,
-                                       None,
-                                       '',
-                                       audnorm,
-                                       logname,
-                                       countmax,
-                                       )
+            self.parent.switch_to_processing('onepass',
+                                             f_src,
+                                             cmd_opt["OutputFormat"],
+                                             destin,
+                                             command,
+                                             None,
+                                             '',
+                                             audnorm,
+                                             logname,
+                                             countmax,
+                                             )
     # ------------------------------------------------------------------#
 
     def audio_ebu_2pass(self, f_src, destin, countmax, logname):
@@ -2287,17 +2287,17 @@ class AV_Conv(wx.Panel):
         ending = Formula(self, valupdate[0], valupdate[1], title)
 
         if ending.ShowModal() == wx.ID_OK:
-            self.parent.switch_Process('two pass EBU',
-                                       f_src,
-                                       cmd_opt["OutputFormat"],
-                                       destin,
-                                       None,
-                                       [pass1, pass2, loudfilter],
-                                       ['', ''],  # do not map audio file
-                                       None,
-                                       logname,
-                                       countmax,
-                                       )
+            self.parent.switch_to_processing('two pass EBU',
+                                             f_src,
+                                             cmd_opt["OutputFormat"],
+                                             destin,
+                                             None,
+                                             [pass1, pass2, loudfilter],
+                                             ['', ''],  # do not map audio file
+                                             None,
+                                             logname,
+                                             countmax,
+                                             )
     # ------------------------------------------------------------------#
 
     def update_dict(self, countmax, prof):
