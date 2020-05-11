@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-May 11, 2020 V.2.1.6
+May 11, 2020 V.2.1.7
 +------------------------------------+
 
 BUGS:
@@ -24,8 +24,8 @@ BUGS:
     * [MS-WINDOWS] Fixed issue when using pip to install Videomass on Windows,
       but the executable is not found in the path of Python scripts.
 NEWS:
-    * Update setup.py with new entries for setuptools to fixing start videomass
-      executable.
+    * Updating setup.py with new setuptools entries to fixing start videomass
+      executable on Windows.
 
 
 +------------------------------------+
