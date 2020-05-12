@@ -295,13 +295,10 @@ class MainFrame(wx.Frame):
         # self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:
-        self.btn_duration.SetToolTip(_('Specify the duration or portion of '
-                                       'the time globally. this can affect '
-                                       'many functions.'))
+        self.btn_duration.SetToolTip(_('Duration or time range settings.'))
         self.btn_metaI.SetToolTip(_("Show additional multimedia information."))
-        self.btn_playO.SetToolTip(_("Choose a file to playback in the "
-                                    "destination folder"))
-        self.btn_saveprf.SetToolTip(_("Save the settings on presets manager"))
+        self.btn_playO.SetToolTip(_("Playing a media file or URL."))
+        self.btn_saveprf.SetToolTip(_("Save the settings on presets manager."))
         self.btn_newprf.SetToolTip(_("Create a new profile from yourself "
                                      "and save it in the selected preset."))
         self.btn_delprf.SetToolTip(_("Delete the selected profile."))
@@ -447,11 +444,11 @@ class MainFrame(wx.Frame):
         """
         if self.ytDownloader.IsShown():
             if self.ytDownloader.fcode.GetSelectedItemCount() == 0:
-                wx.MessageBox(_('For playback, first make sure you select a '
-                                'URL in the list control'),
-                              'Videomass', wx.ICON_INFORMATION, self)
+                self.statusbar_msg(_('For playback, first make sure you select'
+                                     ' a URL in the list control'), YELLOW)
                 return
             else:
+                self.statusbar_msg(_('YouTube Downloader'), None)
                 item = self.ytDownloader.fcode.GetFocusedItem()
                 url = self.ytDownloader.fcode.GetItemText(item, 0)
                 quality = self.ytDownloader.fcode.GetItemText(item, 2)

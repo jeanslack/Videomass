@@ -19,12 +19,13 @@ executing the "launcher" script inside the un-tarred directory.
 
     python3 launcher
 
-Videomass can also be run from the Python3 console:
+Videomass can also be run from the Python3 console (interactive mode):
 
     >>> from videomass3 import Videomass3
     >>> Videomass3.main()
 
 #--------------------------------------------------------------------------#
+
 Installing with pip tool: [Linux/Macintosh/Unix/Windows]
 
     python3 -m pip install videomass
@@ -52,7 +53,3 @@ Please, Visit the Wiki page for more info:
 https://github.com/jeanslack/Videomass/wiki/Make-pure-Python-wheels
 
 #--------------------------------------------------------------------------#
-
-
-
-

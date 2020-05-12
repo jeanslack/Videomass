@@ -31,13 +31,10 @@
 """
  USAGE:
 
-   1) Windows:
-      - python3 setup.py py2exe
-
-   2) MacOSX:
+   1) MacOSX:
       - python3 setup.py py2app --packages==wx
 
-   3) All
+   2) All
       - python3 setup.py sdist bdist_wheel
 
  * See the INSTALL file in the sources for major details
@@ -192,9 +189,9 @@ def SOURCE_BUILD():
           platforms=["All"],
           packages=find_packages(exclude=EXCLUDE),
           data_files=DATA_FILES,
-          include_package_data=True, ####
-          zip_safe=False, ####
-          python_requires='>=3.7', ####
+          include_package_data=True,
+          zip_safe=False,
+          python_requires='>=3.7',
           install_requires=REQUIRES,
           entry_points={'gui_scripts':
                             ['videomass = videomass3.Videomass3:main']},
@@ -267,79 +264,9 @@ def MacOS():
           platforms=['MacOS X'],
           setup_requires=["py2app"],
           )
-# ---------------------------------------------------------------------#
-
-
-def WIN32():
-    """
-    build videomass.exe
-
-    """
-    import py2exe
-
-    EXCLUDE = ['youtube_dl']
-    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0',]
-
-    if not os.path.exists('%s/bin/Videomass.py' % PWD):
-        shutil.copyfile('%s/bin/videomass' % PWD,
-                        '%s/bin/Videomass.py' % PWD
-                        )
-
-    data = [('share/presets', glob_files('share/presets/*.prst')),
-            ('share', glob_files('share/*.conf')),
-            ('art/icons', glob_files('art/icons/*.png')),
-            ('', ['art/videomass.ico']),
-            ('', ['AUTHORS', 'BUGS',
-                  'CHANGELOG', 'INSTALL',
-                  'COPYING', 'TODO', 'README.md',
-                  'Win32Setup/NOTICE.rtf']),
-            ('FFMPEG_BIN', glob_files('Win32Setup/FFMPEG_BIN/*')),
-            ]
-    # get the package data
-    DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
-
-    includes = ["wx.lib.pubsub.*", "wx.lib.pubsub.core.*",
-                "wx.lib.pubsub.core.kwargs.*"
-                ]
-    excludes = [EXCLUDE, '_gtkagg', '_tkagg', 'bsddb', 'curses',
-                'email', 'pywin.debugger', 'pywin.debugger.dbgcon',
-                'pywin.dialogs', 'tcl', 'Tkconstants', 'Tkinter'
-                ]
-    packages = find_packages(exclude=EXCLUDE)
-    dll_excludes = ['libgdk-win32-2.0-0.dll', 'libgobject-2.0-0.dll',
-                    'tcl84.dll', 'tk84.dll'
-                    ]
-    # --------------- Setup: --------------------#
-    setup(options={"py2exe": {"compressed": 2,
-                              "optimize": 2,
-                              "includes": includes,
-                              "excludes": excludes,
-                              "packages": packages,
-                              "dll_excludes": dll_excludes,
-                              "bundle_files": 3,
-                              "dist_dir": "dist",
-                              "xref": False,
-                              "skip_archive": False,
-                              "ascii": False,
-                              "custom_boot_script": '',
-                              }},
-          console=[],
-          windows=['bin/Videomass.py'],
-          data_files=DATA_FILES,
-          icon_resources=[(1, "art/videomass.ico")],
-          name=RLS_NAME,
-          version=VERSION,
-          description=DESCRIPTION,
-          author=AUTHOR,
-          )
-# ---------------------------------------------------------------------#
-
 
 if __name__ == '__main__':
-
-    if platform.system() == 'Windows' and 'py2exe' in sys.argv:
-        WIN32()
-    elif platform.system() == 'Darwin' and 'py2app' in sys.argv:
+    if platform.system() == 'Darwin' and 'py2app' in sys.argv:
         MacOS()
     else:
         SOURCE_BUILD()

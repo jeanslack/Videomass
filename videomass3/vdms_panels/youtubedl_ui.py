@@ -168,10 +168,6 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
-        #line_1 = wx.StaticLine(self, pos=(25, 50), size=(650, 0))
-        #sizer.Add(line_1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 10)
-        #sfcode = wx.StaticText(self, wx.ID_ANY, (_('Format Code list:')))
-        #sizer.Add(sfcode, 0, wx.LEFT, 10)
         self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
                                  wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                  )
@@ -187,15 +183,8 @@ class Downloader(wx.Panel):
                  '"Format Code"; this is optional. You can specify multiple '
                  'format codes by using slash, e.g. 140/130/151 .'))
         self.txt_mergecode.SetToolTip(tip)
-        self.fcode.SetToolTip(_('try right-clicking to choose'))
+        #self.fcode.SetToolTip(_('try right-clicking to choose'))
 
-        # ----------------------- Properties
-        if OS == 'Darwin':
-            self.fcode.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        else:
-            self.fcode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-            self.txt_maincode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
-            self.txt_mergecode.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
