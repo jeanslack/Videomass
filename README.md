@@ -41,8 +41,8 @@ Videomass is a [point and click](https://en.wikipedia.org/wiki/Point_and_click) 
 
 Videomass can also be run in interactive mode with the Python interpreter, always within the same unpacked directory:
 
-`>>> from videomass3 import Videomass3`
-`>>> Videomass3.main()`
+`>>> from videomass3 import Videomass3`   
+`>>> Videomass3.main()`   
 
 This can also be done when installing Videomass with [pip](https://pypi.org/project/pip/), only that you no longer need to place yourself in any directory. Keep in mind that on Linux a launcher should be even created in the application launcher of your desktop environment when installing Videomass with pip.
 
