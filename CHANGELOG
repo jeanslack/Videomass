@@ -7,6 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+May 11, 2020 V.2.1.8
++------------------------------------+
+
+BUGS:
+    * Fixed issue on Presets Manager when click Convert button.
+
+IMPROVEMENTS:
+    * improving status bar messages and traslation.
+
++------------------------------------+
 May 11, 2020 V.2.1.7
 +------------------------------------+
 

@@ -600,7 +600,7 @@ class Downloader(wx.Panel):
             postprocessors = []
             if self.choice.GetSelection() == 2:
                 postprocessors.append({'key': 'FFmpegExtractAudio',
-                                       'preferredcodec': opt["A_FORMAT"][0]
+                                       'preferredcodec': opt["A_FORMAT"][0],
                                        })
             if opt["METADATA"][0]:
                 postprocessors.append({'key': 'FFmpegMetadata'})

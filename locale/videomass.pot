@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-11 13:30+0200\n"
+"POT-Creation-Date: 2020-05-12 13:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1203,7 +1203,7 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:129
-#: ../videomass3/vdms_main/main_frame.py:1449
+#: ../videomass3/vdms_main/main_frame.py:1447
 msgid "Multimedia Streams"
 msgstr ""
 
@@ -1674,48 +1674,49 @@ msgid "Append at least one URL"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:1293
-msgid ""
-"Malformed URL: \"{}\"\n"
-"\n"
-"Check and correct any errors in the added text."
+msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1323
+#: ../videomass3/vdms_main/main_frame.py:1321
 msgid "Add Files"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1346
+#: ../videomass3/vdms_main/main_frame.py:1344
 msgid "Add URLs"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1353
+#: ../videomass3/vdms_main/main_frame.py:1351
 msgid "YouTube Downloader"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1356
-#: ../videomass3/vdms_main/main_frame.py:1397
-#: ../videomass3/vdms_main/main_frame.py:1437
+#: ../videomass3/vdms_main/main_frame.py:1354
+#: ../videomass3/vdms_main/main_frame.py:1395
+#: ../videomass3/vdms_main/main_frame.py:1435
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1371
+#: ../videomass3/vdms_main/main_frame.py:1369
 msgid "Show More"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1391
+#: ../videomass3/vdms_main/main_frame.py:1389
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1410
+#: ../videomass3/vdms_main/main_frame.py:1408
 msgid "Streams"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1431
+#: ../videomass3/vdms_main/main_frame.py:1429
 msgid "Presets Manager"
 msgstr ""
 
+#: ../videomass3/vdms_main/main_frame.py:1483
+msgid "Log of the last process"
+msgstr ""
+
 #: ../videomass3/vdms_main/main_frame.py:1485
-msgid "Processing Status..."
+msgid "Under processing..."
 msgstr ""
 
 #: ../videomass3/vdms_panels/av_conversions.py:224

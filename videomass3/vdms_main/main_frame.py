@@ -1290,9 +1290,7 @@ class MainFrame(wx.Frame):
             for url in data:  # Check malformed url
                 o = urlparse(url)
                 if not o[1]:  # if empty netloc given from ParseResult
-                    wx.MessageBox(_('Malformed URL: "{}"\n\nCheck and '
-                                    'correct any errors in the added '
-                                    'text.').format(url),
+                    wx.MessageBox(_('Invalid URL: "{}"').format(url),
                                     "Videomass", wx.ICON_ERROR, self)
                     return
 
@@ -1481,8 +1479,10 @@ class MainFrame(wx.Frame):
             duration = newDuration
         else:
             duration = self.duration
-
-        self.statusbar_msg(_('Processing Status...'), None)
+        if varargs[0] == 'console view only':
+            self.statusbar_msg(_('Log of the last process'), None)
+        else:
+            self.statusbar_msg(_('Under processing...'), None)
         self.btnpanel.Hide()  # hide buttons bar
         # Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
@@ -1517,7 +1517,7 @@ class MainFrame(wx.Frame):
             self.file_src = [f['format']['filename'] for f in
                              self.data_files if f['format']['filename']
                              ]
-            self.PrstsPanel.on_Start()
+            self.PrstsPanel.on_start()
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown):

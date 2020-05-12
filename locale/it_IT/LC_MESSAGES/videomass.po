@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-11 13:30+0200\n"
-"PO-Revision-Date: 2020-05-11 13:34+0200\n"
+"POT-Creation-Date: 2020-05-12 13:46+0200\n"
+"PO-Revision-Date: 2020-05-12 13:48+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -1407,7 +1407,7 @@ msgstr ""
 "\"Ripristina tutti i presets\"."
 
 #: ../videomass3/vdms_main/main_frame.py:129
-#: ../videomass3/vdms_main/main_frame.py:1449
+#: ../videomass3/vdms_main/main_frame.py:1447
 msgid "Multimedia Streams"
 msgstr "Stream multimediali"
 
@@ -1906,54 +1906,52 @@ msgid "Append at least one URL"
 msgstr "Aggiungi almeno un URL"
 
 #: ../videomass3/vdms_main/main_frame.py:1293
-msgid ""
-"Malformed URL: \"{}\"\n"
-"\n"
-"Check and correct any errors in the added text."
-msgstr ""
-"URL malformato: \"{}\"\n"
-"\n"
-"Controlla e correggi eventuali errori nel testo aggiunto."
+msgid "Invalid URL: \"{}\""
+msgstr "URL non valido: \"{}\""
 
-#: ../videomass3/vdms_main/main_frame.py:1323
+#: ../videomass3/vdms_main/main_frame.py:1321
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
-#: ../videomass3/vdms_main/main_frame.py:1346
+#: ../videomass3/vdms_main/main_frame.py:1344
 msgid "Add URLs"
 msgstr "Aggiungi URLs"
 
-#: ../videomass3/vdms_main/main_frame.py:1353
+#: ../videomass3/vdms_main/main_frame.py:1351
 msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
-#: ../videomass3/vdms_main/main_frame.py:1356
-#: ../videomass3/vdms_main/main_frame.py:1397
-#: ../videomass3/vdms_main/main_frame.py:1437
+#: ../videomass3/vdms_main/main_frame.py:1354
+#: ../videomass3/vdms_main/main_frame.py:1395
+#: ../videomass3/vdms_main/main_frame.py:1435
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 "Attenzione: le impostazioni precedenti potrebbero essere ripristinate ai "
 "valori predefiniti."
 
-#: ../videomass3/vdms_main/main_frame.py:1371
+#: ../videomass3/vdms_main/main_frame.py:1369
 msgid "Show More"
 msgstr "Mostra Altro"
 
-#: ../videomass3/vdms_main/main_frame.py:1391
+#: ../videomass3/vdms_main/main_frame.py:1389
 msgid "Audio/Video Conversions"
 msgstr "Conversioni Audio/Video"
 
-#: ../videomass3/vdms_main/main_frame.py:1410
+#: ../videomass3/vdms_main/main_frame.py:1408
 msgid "Streams"
 msgstr "Streams"
 
-#: ../videomass3/vdms_main/main_frame.py:1431
+#: ../videomass3/vdms_main/main_frame.py:1429
 msgid "Presets Manager"
 msgstr "Gestionale Presets"
 
+#: ../videomass3/vdms_main/main_frame.py:1483
+msgid "Log of the last process"
+msgstr "Log dell'ultimo processo"
+
 #: ../videomass3/vdms_main/main_frame.py:1485
-msgid "Processing Status..."
-msgstr "Stato di elaborazione..."
+msgid "Under processing..."
+msgstr "In lavorazione..."
 
 #: ../videomass3/vdms_panels/av_conversions.py:224
 msgid "Video Encoder"
@@ -3234,6 +3232,15 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid ""
+#~ "Malformed URL: \"{}\"\n"
+#~ "\n"
+#~ "Check and correct any errors in the added text."
+#~ msgstr ""
+#~ "URL malformato: \"{}\"\n"
+#~ "\n"
+#~ "Controlla e correggi eventuali errori nel testo aggiunto."
 
 #~ msgid "Youtube Downloader"
 #~ msgstr "Youtube Downloader"
