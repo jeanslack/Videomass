@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-13 00:27+0200\n"
-"PO-Revision-Date: 2020-05-13 00:30+0200\n"
+"POT-Creation-Date: 2020-05-13 17:27+0200\n"
+"PO-Revision-Date: 2020-05-13 17:35+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -1204,7 +1204,7 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:129
-#: ../videomass3/vdms_main/main_frame.py:1444
+#: ../videomass3/vdms_main/main_frame.py:1443
 msgid "Multimedia Streams"
 msgstr ""
 
@@ -1270,7 +1270,7 @@ msgid "For playback, first make sure you select a URL in the list control"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:451
-#: ../videomass3/vdms_main/main_frame.py:1348
+#: ../videomass3/vdms_main/main_frame.py:1347
 msgid "YouTube Downloader"
 msgstr ""
 
@@ -1279,7 +1279,7 @@ msgid "Are you sure you want to exit?"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:531
-#: ../videomass3/vdms_main/main_frame.py:591
+#: ../videomass3/vdms_main/main_frame.py:590
 msgid "Exit"
 msgstr ""
 
@@ -1296,279 +1296,279 @@ msgid "Create new preset "
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:564
-msgid "Create a new preset to use on Presets Manager"
+msgid "Create a new empty preset on Presets Manager"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:567
-msgid "Save the current preset as separated file"
+msgid "Save new copy on media"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:568
-msgid "Make a back-up of the selected preset on combobox"
+msgid "Make a back-up of the selected preset"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:571
-msgid "Restore a previously saved preset"
+msgid "Restoring a preset"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:572
-msgid "Replace the selected preset with other saved custom preset."
+msgid "Replace the selected preset with another saved one."
+msgstr ""
+
+#: ../videomass3/vdms_main/main_frame.py:574
+msgid "Restore default preset"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:575
-msgid "Reset the current preset "
+msgid "Replace the selected preset with the default one."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:576
-msgid "Replace the selected preset with default values."
+#: ../videomass3/vdms_main/main_frame.py:578
+msgid "Restoring all presets"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:579
-msgid "Reset all presets "
-msgstr ""
-
-#: ../videomass3/vdms_main/main_frame.py:580
 msgid "Revert all presets to default values"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:583
-msgid "Remove preset"
+#: ../videomass3/vdms_main/main_frame.py:582
+msgid "Remove the preset in use"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:584
+#: ../videomass3/vdms_main/main_frame.py:583
 msgid "Remove the selected preset on Presets Manager"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:588
+#: ../videomass3/vdms_main/main_frame.py:587
 msgid "Reload presets list"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:589
+#: ../videomass3/vdms_main/main_frame.py:588
 msgid "..Sometimes it can be useful"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:592
+#: ../videomass3/vdms_main/main_frame.py:591
 msgid "Close Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:599
+#: ../videomass3/vdms_main/main_frame.py:598
 msgid "While playing"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:600
+#: ../videomass3/vdms_main/main_frame.py:599
 msgid "Show useful keyboard shortcuts when playing or previewing with ffplay"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:604
+#: ../videomass3/vdms_main/main_frame.py:603
 msgid "Integrated specifications"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:605
+#: ../videomass3/vdms_main/main_frame.py:604
 msgid "Shows the built-ins configuration features of FFmpeg"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:608
+#: ../videomass3/vdms_main/main_frame.py:607
 msgid "Muxers and Demuxers"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:609
+#: ../videomass3/vdms_main/main_frame.py:608
 msgid "Muxers and demuxers available on FFmpeg in use."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:612
+#: ../videomass3/vdms_main/main_frame.py:611
 msgid "Encoders"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:613
+#: ../videomass3/vdms_main/main_frame.py:612
 msgid "Shows available encoders on FFmpeg"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:614
+#: ../videomass3/vdms_main/main_frame.py:613
 msgid "Decoders"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:614
+#: ../videomass3/vdms_main/main_frame.py:613
 msgid "Shows available decoders on FFmpeg"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:617
+#: ../videomass3/vdms_main/main_frame.py:616
 msgid "Search topics"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:618
+#: ../videomass3/vdms_main/main_frame.py:617
 msgid "A easy utility to search for information on FFmpeg topics and options"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:624
+#: ../videomass3/vdms_main/main_frame.py:623
 msgid "Version in Use"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:625
+#: ../videomass3/vdms_main/main_frame.py:624
 msgid "Shows the version in use"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:627
+#: ../videomass3/vdms_main/main_frame.py:626
 msgid "Check for Update"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:628
+#: ../videomass3/vdms_main/main_frame.py:627
 msgid "Check for the latest version available on GitHub"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:631
+#: ../videomass3/vdms_main/main_frame.py:630
 msgid "Update youtube-dl"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:632
+#: ../videomass3/vdms_main/main_frame.py:631
 msgid "Update with latest version of youtube-dl"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:634
+#: ../videomass3/vdms_main/main_frame.py:633
 msgid "&Youtube-dl"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:636
+#: ../videomass3/vdms_main/main_frame.py:635
 msgid "&Tools"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:639
+#: ../videomass3/vdms_main/main_frame.py:638
 msgid "Home panel"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:640
+#: ../videomass3/vdms_main/main_frame.py:639
 msgid "jump to the start panel"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:642
+#: ../videomass3/vdms_main/main_frame.py:641
 msgid "Presets manager"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:643
+#: ../videomass3/vdms_main/main_frame.py:642
 msgid "jump to the Presets Manager panel"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:644
+#: ../videomass3/vdms_main/main_frame.py:643
 msgid "A/V conversions"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:645
+#: ../videomass3/vdms_main/main_frame.py:644
 msgid "jump to the Audio/Video Conv. panel"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:647
+#: ../videomass3/vdms_main/main_frame.py:646
 msgid "YouTube downloader"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:648
+#: ../videomass3/vdms_main/main_frame.py:647
 msgid "jump to the YouTube Downloader panel"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:650
+#: ../videomass3/vdms_main/main_frame.py:649
 msgid "Log viewing console"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:651
+#: ../videomass3/vdms_main/main_frame.py:650
 msgid "View log messages of the last process executed"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:656
+#: ../videomass3/vdms_main/main_frame.py:655
 msgid "Configuration directory"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:657
+#: ../videomass3/vdms_main/main_frame.py:656
 msgid "Opens the Videomass configuration directory"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:659
+#: ../videomass3/vdms_main/main_frame.py:658
 msgid "Log directory"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:660
+#: ../videomass3/vdms_main/main_frame.py:659
 msgid "Opens the Videomass log directory if it exists"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:662
+#: ../videomass3/vdms_main/main_frame.py:661
 msgid "Cache directory"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:663
+#: ../videomass3/vdms_main/main_frame.py:662
 msgid "Opens the Videomass cache directory if exists"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:665
+#: ../videomass3/vdms_main/main_frame.py:664
 msgid "&System"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:667
+#: ../videomass3/vdms_main/main_frame.py:666
 msgid "&View"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:670
+#: ../videomass3/vdms_main/main_frame.py:669
 msgid "Setup"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:671
+#: ../videomass3/vdms_main/main_frame.py:670
 msgid "General Settings"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:673
+#: ../videomass3/vdms_main/main_frame.py:672
 msgid "&Preferences"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:677
+#: ../videomass3/vdms_main/main_frame.py:676
 msgid "User Guide"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:678
+#: ../videomass3/vdms_main/main_frame.py:677
 msgid "Wiki"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:680
+#: ../videomass3/vdms_main/main_frame.py:679
 msgid "Issue tracker"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:682
+#: ../videomass3/vdms_main/main_frame.py:681
 msgid "Translation..."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:684
+#: ../videomass3/vdms_main/main_frame.py:683
 msgid "Donation"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:686
+#: ../videomass3/vdms_main/main_frame.py:685
 msgid "FFmpeg documentation"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:688
+#: ../videomass3/vdms_main/main_frame.py:687
 msgid "Check new releases"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:689
+#: ../videomass3/vdms_main/main_frame.py:688
 msgid "About Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:690
+#: ../videomass3/vdms_main/main_frame.py:689
 msgid "&Help"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:743
+#: ../videomass3/vdms_main/main_frame.py:742
 msgid "Videomass: Choose a directory"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:883
+#: ../videomass3/vdms_main/main_frame.py:882
 msgid ""
 "\n"
 "Wait....\n"
 "Check installed version\n"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:888
-#: ../videomass3/vdms_main/main_frame.py:901
+#: ../videomass3/vdms_main/main_frame.py:887
+#: ../videomass3/vdms_main/main_frame.py:900
 msgid "You are using youtube-dl version {}"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:907
-#: ../videomass3/vdms_main/main_frame.py:1020
+#: ../videomass3/vdms_main/main_frame.py:906
+#: ../videomass3/vdms_main/main_frame.py:1019
 #, python-brace-format
 msgid ""
 "ERROR: {0}\n"
@@ -1576,30 +1576,30 @@ msgid ""
 "youtube-dl has not been installed yet."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:922
+#: ../videomass3/vdms_main/main_frame.py:921
 msgid "A new version of youtube-dl is available on GitHub:"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:924
+#: ../videomass3/vdms_main/main_frame.py:923
 msgid "The latest version of youtube-dl on GitHub is:"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:935
+#: ../videomass3/vdms_main/main_frame.py:934
 msgid "youtube-dl is up-to-date {}"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:949
+#: ../videomass3/vdms_main/main_frame.py:948
 msgid ""
 "\n"
 "Wait....\n"
 "Updating youtube-dl"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:965
+#: ../videomass3/vdms_main/main_frame.py:964
 msgid "youtube-dl is already up-to-date {}"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:982
+#: ../videomass3/vdms_main/main_frame.py:981
 #, python-brace-format
 msgid ""
 "Successful! youtube-dl is up-to-date ({0})\n"
@@ -1607,115 +1607,115 @@ msgid ""
 "Please, Restart Videomass."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1010
+#: ../videomass3/vdms_main/main_frame.py:1009
 #, python-brace-format
 msgid "Successful! youtube-dl is up-to-date ({0})"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1015
+#: ../videomass3/vdms_main/main_frame.py:1014
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1038
-#: ../videomass3/vdms_main/main_frame.py:1049
+#: ../videomass3/vdms_main/main_frame.py:1037
+#: ../videomass3/vdms_main/main_frame.py:1048
 msgid "No files added yet"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1060
+#: ../videomass3/vdms_main/main_frame.py:1059
 msgid "No URLs added yet"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1080
+#: ../videomass3/vdms_main/main_frame.py:1079
 msgid "Output log has not been created yet."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1099
+#: ../videomass3/vdms_main/main_frame.py:1098
 msgid "cache directory has not been created yet."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1190
+#: ../videomass3/vdms_main/main_frame.py:1189
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
 "from <https://pypi.org/project/videomass/>"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1196
+#: ../videomass3/vdms_main/main_frame.py:1195
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1201
+#: ../videomass3/vdms_main/main_frame.py:1200
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1227
+#: ../videomass3/vdms_main/main_frame.py:1226
 msgid "Back"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1230
+#: ../videomass3/vdms_main/main_frame.py:1229
 msgid "Forward"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1233
+#: ../videomass3/vdms_main/main_frame.py:1232
 msgid "Convert"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1235
+#: ../videomass3/vdms_main/main_frame.py:1234
 msgid "Download"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1270
+#: ../videomass3/vdms_main/main_frame.py:1269
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1283
+#: ../videomass3/vdms_main/main_frame.py:1282
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1290
+#: ../videomass3/vdms_main/main_frame.py:1289
 msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1318
+#: ../videomass3/vdms_main/main_frame.py:1317
 msgid "Add Files"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1341
+#: ../videomass3/vdms_main/main_frame.py:1340
 msgid "Add URLs"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1351
-#: ../videomass3/vdms_main/main_frame.py:1392
-#: ../videomass3/vdms_main/main_frame.py:1432
+#: ../videomass3/vdms_main/main_frame.py:1350
+#: ../videomass3/vdms_main/main_frame.py:1391
+#: ../videomass3/vdms_main/main_frame.py:1431
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1366
+#: ../videomass3/vdms_main/main_frame.py:1365
 msgid "Show More"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1386
+#: ../videomass3/vdms_main/main_frame.py:1385
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1405
+#: ../videomass3/vdms_main/main_frame.py:1404
 msgid "Streams"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1426
+#: ../videomass3/vdms_main/main_frame.py:1425
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1480
+#: ../videomass3/vdms_main/main_frame.py:1479
 msgid "Log of the last process"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1482
+#: ../videomass3/vdms_main/main_frame.py:1481
 msgid "Under processing..."
 msgstr ""
 

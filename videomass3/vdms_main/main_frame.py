@@ -561,26 +561,25 @@ class MainFrame(wx.Frame):
         self.file_save = fileButton.Append(wx.ID_SAVE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         dscrp = (_("Create new preset "),
-                 _("Create a new preset to use on Presets Manager"))
+                 _("Create a new empty preset on Presets Manager"))
         self.new_prst = fileButton.Append(wx.ID_NEW, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Save the current preset as separated file"),
-                 _("Make a back-up of the selected preset on combobox"))
+        dscrp = (_("Save new copy on media"),
+                 _("Make a back-up of the selected preset"))
         self.saveme = fileButton.Append(wx.ID_REVERT_TO_SAVED,
                                         dscrp[0], dscrp[1])
-        dscrp = (_("Restore a previously saved preset"),
-                 _("Replace the selected preset with other saved custom "
-                   "preset."))
+        dscrp = (_("Restoring a preset"),
+                 _("Replace the selected preset with another saved one."))
         self.restore = fileButton.Append(wx.ID_REPLACE, dscrp[0], dscrp[1])
-        dscrp = (_("Reset the current preset "),
-                 _("Replace the selected preset with default values."))
+        dscrp = (_("Restore default preset"),
+                 _("Replace the selected preset with the default one."))
         self.default = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Reset all presets "),
+        dscrp = (_("Restoring all presets"),
                  _("Revert all presets to default values"))
         self.default_all = fileButton.Append(wx.ID_UNDO, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Remove preset"),
+        dscrp = (_("Remove the preset in use"),
                  _("Remove the selected preset on Presets Manager"))
         self.del_prst = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
