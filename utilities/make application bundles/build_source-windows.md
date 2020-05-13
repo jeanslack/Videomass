@@ -1,19 +1,34 @@
 ## Installing required dependencies
 -----------------
 
-- Download the latest release of the Python3 for your architecture from [python.org](https://www.python.org/downloads/) and install it. For your convenience, I recommend that you check all the options offered by the installer.
+- Install Python>=3.7 .
 
-- Download the static version of FFmpeg binaries for your system architecture from <https://ffmpeg.zeranoe.com/builds/>, then extract the archive. Inside the *bin* folder
-you will find the FFmpeg's executables: ffmpeg.exe, ffprobe.exe and ffplay.exe
-(the extensions depends to your system settings or preferences).
+- Use pip for install wxPython4 and PyPubSub:   
 
-You may be interested the following explanation:
-<https://video.stackexchange.com/questions/20495/how-do-i-set-up-and-use-ffmpeg-in-windows>
+   `pip install wxPython`
+   `pip install PyPubSub`
+   
+- Since I didn't succeed using py2exe with Python version 3.7.4 I tried pyinstaller and got good results. So go install pyinstaller.   
 
-## Build a Redistributable Package
------------------
+   `pip install pyinstaller`
+
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP sources and extract the archive.
 
-- Install wxPython4, PyPubSub, pyinstaller with pip tool. Since I didn't succeed using py2exe with Python3.7.4 I tried pyinstaller and got good results.
+- To create a redistributable package compile with pyinstaller:
 
-- To create a redistributable package use pyinstaller
+    - If you want start the Videomass.spec (file specification by pyinstaller) type:   
+    `pyinstaller [OPTIONS] Videomass.spec`
+
+- If you want start from installerpy.py script type: python3 [OPTIONS] installer.py
+
+- Remember to copy the /bin/videomass and paste to current folder before to
+  run any pyinstaller command.
+  
+  try: python makespec.main installerpy.py
+
+NOTE: when you use installerpy.py script will generate a Videomass.spec which
+      you can handle by edit the statements of the class instance to leading
+      any aspect on next bundled application, e.g `excludes=['youtube_dl']`
+      in Analysis to excludes that python package from bundle.
+
+      see https://pyinstaller.readthedocs.io/en/stable/spec-files.html
