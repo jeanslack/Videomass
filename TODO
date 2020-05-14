@@ -2,6 +2,20 @@
 --------------------
 URGENCY: to do soon
 --------------------
+
+--------- See Latest News on <https://wxpython.org/> -----------------------
+
+- Use `EnableSystemTheme` to disable the default system theme on Windows for
+  native widgets like wx.ListCtrl, wx.TreeCtrl and wx.dataview.DataViewCtrl.
+  It has no effect on the other platforms. See Latest News on <https://wxpython.org/>
+
+- Use wx.svg code for parsing SVG (Scalable Vector Graphics) files, and also
+  code for integrating with wxPython. It can rasterize the SVG to a wx.Bitmap
+  of any size with no loss of quality, and it can also render the SVG directly
+  to a wx.GraphicsContext using the GC's drawing primitives
+
+--------- End Latest News ---------------------------------------------------
+
 - make time range selection for YouTube Downloader e.g.
      'postprocessor_args': "-ss 00:01:00 -t 00:00:30" on embedded ydl
      --postprocessor-arg "-ss 00:01:00 -t 00:00:30" on subprocess cmd args
