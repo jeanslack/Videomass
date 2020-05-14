@@ -58,9 +58,8 @@ class While_Playing(wx.MiniFrame):
 
     """
     def __init__(self, OS):
-        wx.MiniFrame.__init__(self, None, style=wx.DEFAULT_FRAME_STYLE
-                              & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)
-                              )
+        wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
+                              wx.SYSTEM_MENU)
         """
         with 'None' not depend from parent:
         wx.Frame.__init__(self, None)

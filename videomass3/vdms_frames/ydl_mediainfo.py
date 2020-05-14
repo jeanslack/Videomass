@@ -40,7 +40,9 @@ class YDL_Mediainfo(wx.MiniFrame):
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
-        wx.MiniFrame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
+                              wx.RESIZE_BORDER | wx.SYSTEM_MENU
+                              )
         '''constructor'''
 
         # add panel

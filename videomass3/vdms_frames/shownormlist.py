@@ -40,7 +40,9 @@ class NormalizationList(wx.MiniFrame):
         detailslist is a list of items list.
 
         """
-        wx.MiniFrame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
+                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+                              )
         """constructor"""
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         normlist = wx.ListCtrl(self.panel,
@@ -62,15 +64,15 @@ class NormalizationList(wx.MiniFrame):
                                  wx.ID_ANY,
                                  (_('Post-normalization references:')
                                   ))
-        red = wx.StaticText(self.panel, wx.ID_ANY, "\t")
+        red = wx.StaticText(self.panel, wx.ID_ANY, "\t\t")
         red.SetBackgroundColour(wx.Colour(233, 80, 77))  # #e9504d
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
 
-        grey = wx.StaticText(self.panel, wx.ID_ANY, "\t")
+        grey = wx.StaticText(self.panel, wx.ID_ANY, "\t\t")
         grey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
 
-        yell = wx.StaticText(self.panel, wx.ID_ANY, "\t")
+        yell = wx.StaticText(self.panel, wx.ID_ANY, "\t\t")
         yell.SetBackgroundColour(wx.Colour(198, 180, 38))  # #C6B426
         txtyell = wx.StaticText(self.panel,
                                 wx.ID_ANY, (_("=  Below max peak")))
@@ -79,13 +81,8 @@ class NormalizationList(wx.MiniFrame):
 
         gridbtn = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(normlist, 1, wx.EXPAND | wx.ALL, 5)
-        # sizer.Add(descript, 0, wx.ALL, 10)
-        grid_list = wx.FlexGridSizer(1, 7, 0, 0)
-        grid_list.Add(descript, 1,
-                      wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL |
-                      wx.ALIGN_CENTER_HORIZONTAL, 5
-                      )
+        sizer.Add(descript, 0, wx.ALL, 10)
+        grid_list = wx.FlexGridSizer(1, 6, 0, 0)
         grid_list.Add(red, 1, wx.ALL, 5)
         grid_list.Add(txtred, 1,
                       wx.ALL |

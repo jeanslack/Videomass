@@ -617,7 +617,7 @@ class MainFrame(wx.Frame):
                  _("A easy utility to search for information on FFmpeg "
                    "topics and options"))
         searchtopic = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.Append(wx.ID_ANY, "&FFmpeg", ffmpegButton)
+        toolsButton.AppendSubMenu(ffmpegButton, "&FFmpeg")
 
         ydlButton = wx.Menu()  # ydl sub menu
         dscrp = (_("Version in Use"),
@@ -630,7 +630,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Update youtube-dl"),
                  _("Update with latest version of youtube-dl"))
         self.ydlupdate = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        toolsButton.Append(wx.ID_ANY, _("&Youtube-dl"), ydlButton, )
+        toolsButton.AppendSubMenu(ydlButton, _("&Youtube-dl"))
 
         self.menuBar.Append(toolsButton, _("&Tools"))
         # ------------------ Go button
@@ -661,7 +661,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Cache directory"),
                  _("Opens the Videomass cache directory if exists"))
         opencachedir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        goButton.Append(wx.ID_ANY, _("&System"), sysButton)
+        goButton.AppendSubMenu(sysButton, _("&System"))
 
         self.menuBar.Append(goButton, _("&View"))
         # ------------------ setup button
@@ -1217,7 +1217,10 @@ class MainFrame(wx.Frame):
         """
         # -------- Properties
         self.toolbar = self.CreateToolBar(style=(wx.TB_FLAT |
-                                                 wx.TB_TEXT))
+                                                 wx.TB_TEXT |
+                                                 wx.TB_NODIVIDER |
+                                                 wx.TB_HORIZONTAL
+                                                 ))
         self.toolbar.SetToolBitmapSize((32, 32))
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         # ------- Run process button
@@ -1313,6 +1316,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(wx.ID_FILE4, True)
         self.toolbar.EnableTool(wx.ID_FILE5, False)
         self.toolbar.EnableTool(wx.ID_FILE6, False)
+        self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
     # ------------------------------------------------------------------#
@@ -1336,6 +1340,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(wx.ID_FILE4, True)
         self.toolbar.EnableTool(wx.ID_FILE5, False)
         self.toolbar.EnableTool(wx.ID_FILE6, False)
+        self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Add URLs'), None)
     # ------------------------------------------------------------------#

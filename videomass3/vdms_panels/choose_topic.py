@@ -125,10 +125,7 @@ class Choose_Topic(wx.Panel):
         grid_base.Add(grid_buttons, 0, wx.ALIGN_CENTER_VERTICAL |
                       wx.ALIGN_CENTER_HORIZONTAL, 5
                       )
-        sizer_base.Add(grid_base, 1, wx.EXPAND |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 5
-                       )
+        sizer_base.Add(grid_base, 1, wx.EXPAND, 5)
         sizer_hpl = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_hpl, 0, wx.ALL |
                        wx.ALIGN_CENTER_VERTICAL |

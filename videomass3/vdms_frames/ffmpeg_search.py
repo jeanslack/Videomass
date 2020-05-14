@@ -45,7 +45,9 @@ class FFmpeg_Search(wx.MiniFrame):
         """
         self.oS = OS
         self.row = None
-        wx.MiniFrame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
+                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+                              )
         """
         with 'None' not depend from parent:
         wx.Frame.__init__(self, None)

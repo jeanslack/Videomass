@@ -171,9 +171,7 @@ class Downloader(wx.Panel):
         self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
                                  wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                  )
-        sizer.Add(self.fcode, 1, wx.EXPAND | wx.ALL |
-                  wx.ALIGN_CENTER_HORIZONTAL, 10
-                  )
+        sizer.Add(self.fcode, 1, wx.EXPAND, 10)
         # ---------------------- Tooltip
         tip = (_('Enter the media "Format Code" here. You can specify '
                  'multiple format codes by using slash, e.g. 22/17/18 . '
@@ -252,7 +250,7 @@ class Downloader(wx.Panel):
         item = self.fcode.GetFocusedItem()
         fc = self.fcode.GetItemText(item, 2)
 
-        if menuItem.GetLabel() == _("Append Format Code"):
+        if menuItem.GetItemLabel() == _("Append Format Code"):
             if self.txt_maincode.GetValue().strip() == '':
                 self.txt_maincode.AppendText(fc)
             else:
@@ -261,7 +259,7 @@ class Downloader(wx.Panel):
                 self.txt_maincode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
                 self.txt_maincode.AppendText('%s' % fc)
 
-        elif menuItem.GetLabel() == _("Append for merging"):
+        elif menuItem.GetItemLabel() == _("Append for merging"):
             if self.txt_mergecode.GetValue().strip() == '':
                 self.txt_mergecode.AppendText(fc)
             else:
@@ -270,15 +268,15 @@ class Downloader(wx.Panel):
                 self.txt_mergecode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
                 self.txt_mergecode.AppendText('%s' % fc)
 
-        elif menuItem.GetLabel() == _("Insert Format Code"):
+        elif menuItem.GetItemLabel() == _("Insert Format Code"):
             self.txt_maincode.Clear()
             self.txt_maincode.AppendText(fc)
 
-        elif menuItem.GetLabel() == _("Insert for merging"):
+        elif menuItem.GetItemLabel() == _("Insert for merging"):
             self.txt_mergecode.Clear()
             self.txt_mergecode.AppendText(fc)
 
-        elif menuItem.GetLabel() == _("Play selected url"):
+        elif menuItem.GetItemLabel() == _("Play selected url"):
             self.parent.ExportPlay(self)
     # ----------------------------------------------------------------------
 

@@ -111,14 +111,13 @@ class Time_Duration(wx.Dialog):
         # ----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
-        gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
-        gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
+        gridFlex1 = wx.GridSizer(1, 5, 0, 0)
+        gridFlex2 = wx.GridSizer(1, 5, 0, 0)
 
         grid_sizer_base.Add(sizerbox, 0,
                             wx.ALL | wx.ALIGN_CENTRE, 5
                             )
-        sizerbox.Add(gridFlex1, 0, wx.ALL |
-                     wx.ALIGN_CENTER_VERTICAL, 5
+        sizerbox.Add(gridFlex1, 0, wx.ALL, 5
                      )
         gridFlex1.Add(self.start_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
@@ -134,9 +133,7 @@ class Time_Duration(wx.Dialog):
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
         grid_sizer_base.Add(sizer_2_staticbox, 0, wx.ALL | wx.ALIGN_CENTRE, 5)
-        sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL |
-                              wx.ALIGN_CENTER_VERTICAL, 5
-                              )
+        sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL, 5)
         gridFlex2.Add(self.stop_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )

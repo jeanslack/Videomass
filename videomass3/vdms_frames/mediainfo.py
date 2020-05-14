@@ -41,7 +41,9 @@ class Mediainfo(wx.MiniFrame):
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
-        wx.MiniFrame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
+                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+                              )
         '''constructor'''
 
         # add panel

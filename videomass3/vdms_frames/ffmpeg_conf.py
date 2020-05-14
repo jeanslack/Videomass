@@ -47,7 +47,9 @@ class Checkconf(wx.MiniFrame):
         if close videomass also close parent window:
 
         """
-        wx.MiniFrame.__init__(self, None)
+        wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
+                              wx.CLOSE_BOX | wx.SYSTEM_MENU
+                              )
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_base = wx.BoxSizer(wx.VERTICAL)

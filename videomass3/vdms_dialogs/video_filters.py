@@ -764,8 +764,7 @@ class Lacing(wx.Dialog):
         # ------ set Layout
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.sizer_base.Add(self.enable_opt, 0, wx.ALL |
-                            wx.ALIGN_RIGHT |
-                            wx.ALIGN_CENTER_VERTICAL, 10
+                            wx.ALIGN_RIGHT, 10
                             )
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
         grid_sizer_base.Add(zone1, 1, wx.ALL | wx.EXPAND, 5)

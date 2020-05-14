@@ -131,32 +131,24 @@ class PrstPan(wx.Panel):
                                                   _("1-PASS")),
                                      wx.VERTICAL
                                      )
-        grd_cmd.Add(box_cmd1, 0, wx.ALL | wx.EXPAND |
-                    wx.ALIGN_CENTER_HORIZONTAL |
-                    wx.ALIGN_CENTER_VERTICAL, 15
+        grd_cmd.Add(box_cmd1, 0, wx.ALL | wx.EXPAND, 15
                     )
         self.txt_1cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
-        box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND |
-                     wx.ALIGN_CENTER_HORIZONTAL |
-                     wx.ALIGN_CENTER_VERTICAL, 15
+        box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
         box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY,
                                                   _("2-PASS")), wx.VERTICAL
                                      )
-        grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND |
-                    wx.ALIGN_CENTER_HORIZONTAL |
-                    wx.ALIGN_CENTER_VERTICAL, 15
+        grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND, 15
                     )
         self.txt_2cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
-        box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND |
-                     wx.ALIGN_CENTER_HORIZONTAL |
-                     wx.ALIGN_CENTER_VERTICAL, 15
+        box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
         nb1_p2.SetSizer(grd_cmd)
         nb1.AddPage(nb1_p2, (_("Command line FFmpeg")))

@@ -292,8 +292,7 @@ class Setup(wx.Dialog):
                                         _("Restore default settings")
                                         )
         gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL |
-                           wx.EXPAND |
-                           wx.ALIGN_CENTER_HORIZONTAL, 15
+                           wx.EXPAND, 15
                            )
         tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
         notebook.AddPage(tabFour, _("Appearance"))

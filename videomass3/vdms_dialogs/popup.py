@@ -55,12 +55,10 @@ class PopupDialog(wx.Dialog):
                                           wx.ART_MESSAGE_BOX, (32, 32)
                                           )
         graphic = wx.StaticBitmap(self, -1, bitmap)
-        box2.Add(graphic, 0, wx.EXPAND | wx.ALIGN_CENTER | wx.ALL, 10)
+        box2.Add(graphic, 0, wx.EXPAND | wx.ALL, 10)
         # Add the message
         message = wx.StaticText(self, -1, msg)
-        box2.Add(message, 0, wx.EXPAND | wx.ALIGN_CENTER
-                                       | wx.ALIGN_CENTER_VERTICAL
-                                       | wx.ALL, 10)
+        box2.Add(message, 0, wx.EXPAND | wx.ALL, 10)
         box.Add(box2, 0, wx.EXPAND)
         # Handle layout
         self.SetAutoLayout(True)

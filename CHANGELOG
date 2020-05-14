@@ -7,6 +7,22 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+May 14, 2020 V.2.2.0
++------------------------------------+
+
+BUGS and WARNINGS:
+
+    * Changed code compatibility for new wxPython version 4.1.0
+
+        * Fixed all wx._core.wxAssertionError
+
+
+        * Fixed DeprecationWarning:
+            main_frame.py:620: DeprecationWarning: Menu.Append()
+            main_frame.py:633: DeprecationWarning: Menu.Append()
+            main_frame.py:664: DeprecationWarning: Menu.Append()
+
++------------------------------------+
 May 12, 2020 V.2.1.8
 +------------------------------------+
 
