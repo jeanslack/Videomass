@@ -198,7 +198,7 @@ class FileDnD(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID1"):
-            self.popupID1 = wx.NewId()
+            self.popupID1 = wx.NewIdRef()
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
         # build the menu
         menu = wx.Menu()
@@ -221,12 +221,12 @@ class FileDnD(wx.Panel):
 
         if not self.selected:
             self.parent.statusbar_msg(_('No file selected to `%s` yet') %
-                                      menuItem.GetLabel(), 'GOLDENROD'
+                                      menuItem.GetItemLabel(), 'GOLDENROD'
                                       )
         else:
             self.parent.statusbar_msg('Add Files', None)
 
-            if menuItem.GetLabel() == _("Remove the selected file"):
+            if menuItem.GetItemLabel() == _("Remove the selected file"):
                 if self.flCtrl.GetItemCount() == 1:
                     self.deleteAll(self)
                 else:

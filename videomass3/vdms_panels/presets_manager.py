@@ -410,9 +410,9 @@ class PrstPan(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID5"):
-            self.popupID6 = wx.NewId()
-            self.popupID7 = wx.NewId()
-            self.popupID8 = wx.NewId()
+            self.popupID6 = wx.NewIdRef()
+            self.popupID7 = wx.NewIdRef()
+            self.popupID8 = wx.NewIdRef()
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID6)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID7)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID8)
@@ -438,11 +438,11 @@ class PrstPan(wx.Panel):
         menuItem = menu.FindItemById(itemId)
         # item = self.list_ctrl.GetFocusedItem()
 
-        if menuItem.GetLabel() == _("New profile"):
+        if menuItem.GetItemLabel() == _("New profile"):
                 self.Addprof()
-        elif menuItem.GetLabel() == _("Edit selected profile"):
+        elif menuItem.GetItemLabel() == _("Edit selected profile"):
                 self.Editprof(self)
-        elif menuItem.GetLabel() == _("Delete selected profile"):
+        elif menuItem.GetItemLabel() == _("Delete selected profile"):
             self.Delprof()
     # ------------------------------------------------------------------#
 

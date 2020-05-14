@@ -211,11 +211,11 @@ class Downloader(wx.Panel):
         """
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID2"):
-            self.popupID2 = wx.NewId()
-            self.popupID3 = wx.NewId()
-            self.popupID4 = wx.NewId()
-            self.popupID5 = wx.NewId()
-            self.popupID6 = wx.NewId()
+            self.popupID2 = wx.NewIdRef()
+            self.popupID3 = wx.NewIdRef()
+            self.popupID4 = wx.NewIdRef()
+            self.popupID5 = wx.NewIdRef()
+            self.popupID6 = wx.NewIdRef()
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID3)
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID4)

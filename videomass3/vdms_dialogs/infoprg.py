@@ -80,6 +80,9 @@ def info(parent, videomass_icon):
     info.AddDeveloper("youtube-dl <http://ytdl-org.github.io/youtube-"
                       "dl/>, Download videos from YouTube and more sites"
                       )
+    info.AddDeveloper("mpv <https://mpv.io/>, a free, open source, and "
+                      "cross-platform media player"
+                      )
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
     info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
                      'Material design icons '
