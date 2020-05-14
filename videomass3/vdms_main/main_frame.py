@@ -299,8 +299,8 @@ class MainFrame(wx.Frame):
         self.btn_metaI.SetToolTip(_("Show additional multimedia information."))
         self.btn_playO.SetToolTip(_("Playing a media file or URL."))
         self.btn_saveprf.SetToolTip(_("Save the settings on presets manager."))
-        self.btn_newprf.SetToolTip(_("Create a new profile from yourself "
-                                     "and save it in the selected preset."))
+        self.btn_newprf.SetToolTip(_("Create a new profile and save it "
+                                     "in the current preset."))
         self.btn_delprf.SetToolTip(_("Delete the selected profile."))
         self.btn_editprf.SetToolTip(_("Edit the selected profile."))
         # menu bar
@@ -556,16 +556,16 @@ class MainFrame(wx.Frame):
 
         # ----------------------- file
         fileButton = wx.Menu()
-        dscrp = (_("Choose a Destination folder.."),
-                 _("Choice a folder where save processed files"))
+        dscrp = (_("Choose a destination folder.."),
+                 _("Choose a folder in which to save all the output files."))
         self.file_save = fileButton.Append(wx.ID_SAVE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Create new preset "),
-                 _("Create a new empty preset on Presets Manager"))
+        dscrp = (_("Add new preset"),
+                 _("Create a new empty preset from a template."))
         self.new_prst = fileButton.Append(wx.ID_NEW, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         dscrp = (_("Save new copy on media"),
-                 _("Make a back-up of the selected preset"))
+                 _("Make a back-up of the selected preset."))
         self.saveme = fileButton.Append(wx.ID_REVERT_TO_SAVED,
                                         dscrp[0], dscrp[1])
         dscrp = (_("Restoring a preset"),
@@ -575,12 +575,12 @@ class MainFrame(wx.Frame):
                  _("Replace the selected preset with the default one."))
         self.default = fileButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Restoring all presets"),
-                 _("Revert all presets to default values"))
+        dscrp = (_("Restore all default presets"),
+                 _("Revert all presets to default values."))
         self.default_all = fileButton.Append(wx.ID_UNDO, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
-        dscrp = (_("Remove the preset in use"),
-                 _("Remove the selected preset on Presets Manager"))
+        dscrp = (_("Delete current preset"),
+                 _("Remove the selected preset from the Presets Manager."))
         self.del_prst = fileButton.Append(wx.ID_DELETE, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
         self.refresh = fileButton.Append(wx.ID_REFRESH,

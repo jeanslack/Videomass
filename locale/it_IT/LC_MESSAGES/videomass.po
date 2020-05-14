@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-13 17:27+0200\n"
-"PO-Revision-Date: 2020-05-13 17:35+0200\n"
+"POT-Creation-Date: 2020-05-14 07:58+0200\n"
+"PO-Revision-Date: 2020-05-14 08:05+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -1452,8 +1452,8 @@ msgid "Save the settings on presets manager."
 msgstr "Salva le impostazioni sul gestore dei presets."
 
 #: ../videomass3/vdms_main/main_frame.py:302
-msgid "Create a new profile from yourself and save it in the selected preset."
-msgstr "Crea un nuovo profilo da te stesso e salvalo nel preset selezionato."
+msgid "Create a new profile and save it in the current preset."
+msgstr "Crea un nuovo profilo e salvalo nel preset selezionato."
 
 #: ../videomass3/vdms_main/main_frame.py:304
 msgid "Delete the selected profile."
@@ -1489,28 +1489,28 @@ msgid "Exit"
 msgstr "Esci"
 
 #: ../videomass3/vdms_main/main_frame.py:559
-msgid "Choose a Destination folder.."
+msgid "Choose a destination folder.."
 msgstr "Scegli una cartella di destinazione.."
 
 #: ../videomass3/vdms_main/main_frame.py:560
-msgid "Choice a folder where save processed files"
-msgstr "Cartella di destinazione file processati"
+msgid "Choose a folder in which to save all the output files."
+msgstr "Scegli una cartella in cui salvare tutti i file di output."
 
 #: ../videomass3/vdms_main/main_frame.py:563
-msgid "Create new preset "
-msgstr "Crea un nuovo preset "
+msgid "Add new preset"
+msgstr "Aggiungi un nuovo preset"
 
 #: ../videomass3/vdms_main/main_frame.py:564
-msgid "Create a new empty preset on Presets Manager"
-msgstr "Crea un nuovo preset vuoto sul Gestionale Presets"
+msgid "Create a new empty preset from a template."
+msgstr "Crea un nuovo preset vuoto da un modello."
 
 #: ../videomass3/vdms_main/main_frame.py:567
 msgid "Save new copy on media"
 msgstr "Salva nuova copia su un supporto"
 
 #: ../videomass3/vdms_main/main_frame.py:568
-msgid "Make a back-up of the selected preset"
-msgstr "Effettua un backup del preset selezionato"
+msgid "Make a back-up of the selected preset."
+msgstr "Effettua un backup del preset selezionato."
 
 #: ../videomass3/vdms_main/main_frame.py:571
 msgid "Restoring a preset"
@@ -1529,20 +1529,20 @@ msgid "Replace the selected preset with the default one."
 msgstr "Sostituisci il preset selezionato con quello predefinito."
 
 #: ../videomass3/vdms_main/main_frame.py:578
-msgid "Restoring all presets"
-msgstr "Ripristino di tutti i presets"
+msgid "Restore all default presets"
+msgstr "Ripristina tutti i presets predefiniti"
 
 #: ../videomass3/vdms_main/main_frame.py:579
-msgid "Revert all presets to default values"
-msgstr "Ripristina tutti i presets con i valori predefiniti"
+msgid "Revert all presets to default values."
+msgstr "Ripristina tutti i presets con i valori predefiniti."
 
 #: ../videomass3/vdms_main/main_frame.py:582
-msgid "Remove the preset in use"
-msgstr "Rimuovi il preset in uso"
+msgid "Delete current preset"
+msgstr "Cancella il preset corrente"
 
 #: ../videomass3/vdms_main/main_frame.py:583
-msgid "Remove the selected preset on Presets Manager"
-msgstr "Rimuovere il preset selezionato sul Gestore Presets"
+msgid "Remove the selected preset from the Presets Manager."
+msgstr "Rimuovi il preset selezionato dal Gestore Presets."
 
 #: ../videomass3/vdms_main/main_frame.py:587
 msgid "Reload presets list"
@@ -3224,14 +3224,17 @@ msgstr ""
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
 
+#~ msgid "Restoring all presets"
+#~ msgstr "Ripristino di tutti i presets"
+
+#~ msgid "Remove the preset in use"
+#~ msgstr "Rimuovi il preset in uso"
+
 #~ msgid "Save the current preset as separated file"
 #~ msgstr "Salva il preset corrente come file separato"
 
 #~ msgid "Restore a previously saved preset"
 #~ msgstr "Ripristina un preset precedentemente salvato"
-
-#~ msgid "Reset the current preset "
-#~ msgstr "Ripristina il preset corrente "
 
 #~ msgid "Remove preset"
 #~ msgstr "Rimuovi il preset"

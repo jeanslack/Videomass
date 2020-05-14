@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-13 17:27+0200\n"
+"POT-Creation-Date: 2020-05-14 07:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1248,7 +1248,7 @@ msgid "Save the settings on presets manager."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:302
-msgid "Create a new profile from yourself and save it in the selected preset."
+msgid "Create a new profile and save it in the current preset."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:304
@@ -1283,19 +1283,19 @@ msgid "Exit"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:559
-msgid "Choose a Destination folder.."
+msgid "Choose a destination folder.."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:560
-msgid "Choice a folder where save processed files"
+msgid "Choose a folder in which to save all the output files."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:563
-msgid "Create new preset "
+msgid "Add new preset"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:564
-msgid "Create a new empty preset on Presets Manager"
+msgid "Create a new empty preset from a template."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:567
@@ -1303,7 +1303,7 @@ msgid "Save new copy on media"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:568
-msgid "Make a back-up of the selected preset"
+msgid "Make a back-up of the selected preset."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:571
@@ -1323,19 +1323,19 @@ msgid "Replace the selected preset with the default one."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:578
-msgid "Restoring all presets"
+msgid "Restore all default presets"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:579
-msgid "Revert all presets to default values"
+msgid "Revert all presets to default values."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:582
-msgid "Remove the preset in use"
+msgid "Delete current preset"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:583
-msgid "Remove the selected preset on Presets Manager"
+msgid "Remove the selected preset from the Presets Manager."
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:587
