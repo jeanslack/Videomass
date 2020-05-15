@@ -10,8 +10,7 @@
 limitations:
    * 1) the button for previewing streaming content (Youtube, Facebook, etc) may not work on MacOs.
 
-   * 2) On Windows, the 'Show More' button for reading the information of the streaming content (YouTube, Facebook, etc) will give a message regarding disabling the functionality.During the first installation of Videomass, the logs folder may not yet exist, as it is created during the first conversion process performed with the program. This could cause an error when you want to open the logs directory from the Videomass menu.
-
+   * 2) On Windows, the 'Show More' button for reading the information of the streaming content (YouTube, Facebook, etc) will give a message regarding disabling the functionality.
 
 
 [Home](index.md)
