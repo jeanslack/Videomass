@@ -13,10 +13,11 @@ installed using the **pip** command.
 Please, see the [Wiki](https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-Python-pip) page for more explanations.
 
 ### Windows and MacOS installers
-In addition, installers for Windows and MacOS are available (for some functional 
-limitations, see https://jeanslack.github.io/Videomass/known_problems.html) at the top of this page. 
-They are only available for x86_64 (64-bit) architectures. Both installers contain 
-everything you need to be used in standalone mode, without the need for anything else.
+In addition, installers for Windows and MacOS are available at the top of this page 
+(for some functional limitations see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html)). 
+They are only available for x86_64 (64-bit) architectures. 
+Both installers contain everything you need to be used in standalone mode, without 
+the need for anything else.
 
 Minimum requirements are:
 - MacOS **Sierra**, **High Sierra** and **Mojave** (64-bit only)

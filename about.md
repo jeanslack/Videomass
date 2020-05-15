@@ -7,7 +7,8 @@ Videomass is not a converter; it provides a graphical interface for writing pres
 and profiles to be used with [FFmpeg](https://www.ffmpeg.org/) without limits on 
 formats and codecs; it also provides graphical interface for 
 [youtube_dl](https://pypi.org/project/youtube_dl/) with useful functions for 
-downloading video and audio content from YouTube.com and more sites.    
+downloading video and audio content from [YouTube.com](https://www.youtube.com/) 
+and few more sites.    
 
 From the beginning, the main goal was to give it a high flexibility and 
 expandability in the management and control of the presets and profiles in order 

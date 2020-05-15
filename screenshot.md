@@ -4,7 +4,7 @@
 
 ### On Debian buster with KDE de
  
-![Image](/images/sreenshot/HomePanel.png)   
+![Image](/images/screenshot/HomePanel.png)   
 Home Panel   
 
 ![Image](/images/screenshot/URLs_appending.png)   
