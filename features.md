@@ -14,9 +14,10 @@
 - Three audio normalization modes: Peak, RMS and EBU R128.
 - Audio index from videos selectable to apply normalization.
 - Setting duration portions for imported files, filters, export and tests.
-- Download multiple URLs from youtube with your settings.
+- Download multiple URLs from YouTube and more sites.
 - View video information without downloading it.
-- Ability to download videos using the 'format code'.
+- Ability to download videos using the 'format code' with audio merging.
+- Ability to playback individual URLs with different qualities.
 - Log management.
 - Multi language (English and Italian Languages support for now).
 
