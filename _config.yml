@@ -1,7 +1,7 @@
 theme: jekyll-theme-midnight
 show_downloads: true
 title: Videomass
-description: Videomass is a free, open source and cross-platform GUI for FFmpeg
+description: Videomass is a free, open source and cross-platform GUI for FFmpeg and youtube-dl
 header_pages:
     - about.md
     - features.md
