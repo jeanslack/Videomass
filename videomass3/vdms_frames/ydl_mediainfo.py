@@ -61,7 +61,7 @@ class YDL_Mediainfo(wx.MiniFrame):
         button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
 
         # ----------------------Properties----------------------#
-        self.SetTitle('Videomass - Multimedia Streams Information')
+        self.SetTitle(_('Videomass - youtube-dl show more'))
         self.SetMinSize((640, 400))
         self.url_select.SetMinSize((640, 200))
         self.url_select.InsertColumn(0, _('TITLE'), width=250)

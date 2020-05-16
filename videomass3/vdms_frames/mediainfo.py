@@ -84,7 +84,7 @@ class Mediainfo(wx.MiniFrame):
         button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
 
         # ----------------------Properties----------------------#
-        self.SetTitle('Videomass - Multimedia Streams Information')
+        self.SetTitle(_('Videomass - FFprobe streams analyzer'))
         self.SetMinSize((640, 400))
         self.file_select.SetMinSize((640, 200))
         self.file_select.InsertColumn(0, _('File Selection'), width=500)

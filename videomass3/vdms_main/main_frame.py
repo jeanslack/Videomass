@@ -124,9 +124,9 @@ class MainFrame(wx.Frame):
         editprfbmp = wx.Bitmap(pathicons[22], wx.BITMAP_TYPE_ANY)
 
         self.btn_metaI = GB.GradientButton(self.btnpanel,
-                                           size=(-1, 25),
+                                           size=(-1, -1),
                                            bitmap=infoIbmp,
-                                           label=_("Multimedia Streams")
+                                           label=_("Streams analyzer")
                                            )
         self.btn_metaI.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
                                       foregroundcolour=wx.Colour(self.fBtnC)
@@ -137,7 +137,7 @@ class MainFrame(wx.Frame):
         self.btn_metaI.SetTopEndColour(self.bBtnC)
 
         self.btn_playO = GB.GradientButton(self.btnpanel,
-                                           size=(-1, 25),
+                                           size=(-1, -1),
                                            bitmap=previewbmp,
                                            label=_("Preview")
                                            )
@@ -150,7 +150,7 @@ class MainFrame(wx.Frame):
         self.btn_playO.SetTopEndColour(self.bBtnC)
 
         self.btn_duration = GB.GradientButton(self.btnpanel,
-                                              size=(-1, 25),
+                                              size=(-1, -1),
                                               bitmap=cutbmp,
                                               label=_("Duration")
                                               )
@@ -163,7 +163,7 @@ class MainFrame(wx.Frame):
         self.btn_duration.SetTopEndColour(self.bBtnC)
 
         self.btn_saveprf = GB.GradientButton(self.btnpanel,
-                                             size=(-1, 25),
+                                             size=(-1, -1),
                                              bitmap=saveprfbmp,
                                              label=_("Save Configuration")
                                              )
@@ -176,7 +176,7 @@ class MainFrame(wx.Frame):
         self.btn_saveprf.SetTopEndColour(self.bBtnC)
 
         self.btn_newprf = GB.GradientButton(self.btnpanel,
-                                            size=(-1, 25),
+                                            size=(-1, -1),
                                             bitmap=newprfbmp,
                                             label=_("New..")
                                             )
@@ -189,7 +189,7 @@ class MainFrame(wx.Frame):
         self.btn_newprf.SetTopEndColour(self.bBtnC)
 
         self.btn_delprf = GB.GradientButton(self.btnpanel,
-                                            size=(-1, 25),
+                                            size=(-1, -1),
                                             bitmap=delprfbmp,
                                             label=_("Delete..")
                                             )
@@ -202,7 +202,7 @@ class MainFrame(wx.Frame):
         self.btn_delprf.SetTopEndColour(self.bBtnC)
 
         self.btn_editprf = GB.GradientButton(self.btnpanel,
-                                             size=(-1, 25),
+                                             size=(-1, -1),
                                              bitmap=editprfbmp,
                                              label=_("Edit..")
                                              )
@@ -1406,7 +1406,7 @@ class MainFrame(wx.Frame):
         self.btn_newprf.Hide(), self.btn_delprf.Hide()
         self.btn_editprf.Hide(), self.btn_saveprf.Show()
         self.btn_duration.Show(), self.btn_metaI.Show()
-        self.btn_metaI.SetLabel(_('Streams'))
+        self.btn_metaI.SetLabel(_('Streams analyzer'))
         self.btn_playO.Show()
         self.menu_items()  # disable some menu items
         self.avpan.Enable(False), self.prstpan.Enable(True)
@@ -1445,7 +1445,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Show(), self.btnpanel.Show()
         self.btn_newprf.Show(), self.btn_delprf.Show(), self.btn_editprf.Show()
         self.btn_saveprf.Hide(), self.btn_duration.Show()
-        self.btn_metaI.Show(), self.btn_metaI.SetLabel(_('Multimedia Streams'))
+        self.btn_metaI.Show(), self.btn_metaI.SetLabel(_('Streams analyzer'))
         self.btn_playO.Show(), self.saveme.Enable(True)
         self.new_prst.Enable(True), self.del_prst.Enable(True)
         self.restore.Enable(True), self.default.Enable(True),
