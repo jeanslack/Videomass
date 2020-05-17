@@ -141,8 +141,9 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_VERTICAL |
                         wx.ALIGN_CENTER_HORIZONTAL, 5
                         )
-        boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (_(
-            "Where do you prefer to store files?"))), wx.VERTICAL)
+        msg = _("Where do you prefer to save all the output files?")
+        boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
+                                                     (msg)), wx.VERTICAL)
         sizerGeneral.Add(boxUserpath, 1, wx.ALL | wx.EXPAND, 15)
         gridUserpath = wx.BoxSizer(wx.HORIZONTAL)
         boxUserpath.Add(gridUserpath, 1, wx.ALL | wx.EXPAND, 15)
@@ -162,7 +163,124 @@ class Setup(wx.Dialog):
         self.txtctrl_userpath.AppendText(self.userpath)
         tabOne.SetSizer(sizerGeneral)
         notebook.AddPage(tabOne, _("General"))
+
         # -----tab 2
+        tabThree = wx.Panel(notebook, wx.ID_ANY)
+        gridExec = wx.BoxSizer(wx.VERTICAL)
+        gridExec.Add((0, 25), 0,)
+        # ----
+        self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (
+                                       _(" Use a custom path to run FFmpeg")))
+        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.ALL, 15)
+        gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFmpeg, 0, wx.ALL | wx.EXPAND, 15)
+        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
+        gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ----
+        self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
+                                       _(" Use a custom path to run FFprobe")))
+        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+                                           style=wx.TE_READONLY
+                                           )
+        gridExec.Add(self.checkbox_exeFFprobe, 0, wx.ALL, 15)
+        gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFprobe, 0, wx.ALL | wx.EXPAND, 15)
+        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
+        gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ----
+        self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
+                                       _(" Use a custom path to run FFplay")))
+        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        gridExec.Add(self.checkbox_exeFFplay, 0, wx.ALL, 15)
+        gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFplay, 0, wx.ALL | wx.EXPAND, 15)
+        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
+        gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ----
+        self.checkbox_exeMpv = wx.CheckBox(tabThree, wx.ID_ANY, (
+                                    _(" Use a custom path to run mpv player")))
+        self.btn_pathMpv = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_mpv = wx.TextCtrl(tabThree, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        gridExec.Add(self.checkbox_exeMpv, 0, wx.ALL, 15)
+        gridMpv = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridMpv, 0, wx.ALL | wx.EXPAND, 15)
+        gridMpv.Add(self.btn_pathMpv, 0, wx.ALL, 5)
+        gridMpv.Add(self.txtctrl_mpv, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ----
+        tabThree.SetSizer(gridExec)
+        notebook.AddPage(tabThree, _("Executable paths"))
+        # -----tab 3
+        tabFour = wx.Panel(notebook, wx.ID_ANY)
+        gridappearance = wx.BoxSizer(wx.VERTICAL)
+        boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
+                                        _("Set Icon Themes"))), wx.VERTICAL)
+        gridappearance.Add(boxLabIcons, 1, wx.ALL | wx.EXPAND, 15)
+        self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
+                                      choices=[("Videomass_Sign_Icons"),
+                                               ("Material_Design_Icons_black"),
+                                               ("Flat_Color_Icons")],
+                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                      )
+        boxLabIcons.Add(self.cmbx_icons, 0,
+                        wx.ALL |
+                        wx.ALIGN_CENTER_HORIZONTAL, 15
+                        )
+        self.cmbx_icons.SetValue(self.iconset)
+        boxLabColor = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
+                                    _("Color customization"))), wx.VERTICAL)
+        gridappearance.Add(boxLabColor, 1, wx.ALL | wx.EXPAND, 15)
+        gridTBColor = wx.FlexGridSizer(3, 2, 0, 0)
+        boxLabColor.Add(gridTBColor)
+        labTBColor = wx.StaticText(tabFour, wx.ID_ANY,
+                                   _("Change color of the button bar:")
+                                   )
+        gridTBColor.Add(labTBColor, 0, wx.ALL |
+                        wx.ALIGN_CENTER_HORIZONTAL |
+                        wx.ALIGN_CENTER_VERTICAL, 15
+                        )
+        btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, _("Bar Colour"))
+        gridTBColor.Add(btn_TBcolor, 0, wx.ALL |
+                        wx.ALIGN_CENTER_HORIZONTAL, 15
+                        )
+        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, (
+                                      _("Change color of the bar buttons:")))
+        gridTBColor.Add(labTBColorBtn, 0, wx.ALL |
+                        wx.ALIGN_CENTER_HORIZONTAL |
+                        wx.ALIGN_CENTER_VERTICAL, 15
+                        )
+        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, _("Buttons Colour"))
+        gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL |
+                        wx.ALIGN_CENTER_HORIZONTAL, 15
+                        )
+        labFontColor = wx.StaticText(tabFour, wx.ID_ANY, (
+                                _("Color setting for button fonts:")))
+        gridTBColor.Add(labFontColor, 0, wx.ALL |
+                        wx.ALIGN_CENTER_HORIZONTAL |
+                        wx.ALIGN_CENTER_VERTICAL, 15
+                        )
+        btn_Fontcolor = wx.Button(tabFour, wx.ID_ANY, _("Font Colour"))
+        gridTBColor.Add(btn_Fontcolor, 0, wx.ALL |
+                        wx.ALIGN_CENTER_HORIZONTAL, 15
+                        )
+        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR,
+                                        _("Restore default settings")
+                                        )
+        gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL |
+                           wx.EXPAND, 15
+                           )
+        tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
+        notebook.AddPage(tabFour, _("Appearance"))
+        # -----tab 4
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
         gridLog = wx.BoxSizer(wx.VERTICAL)
         lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, (MSGLOG))
@@ -183,119 +301,6 @@ class Setup(wx.Dialog):
         gridLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 15)
         tabTwo.SetSizer(gridLog)
         notebook.AddPage(tabTwo, _("Logging levels"))
-        # -----tab 3
-        tabThree = wx.Panel(notebook, wx.ID_ANY)
-        gridExec = wx.BoxSizer(wx.VERTICAL)
-        gridExec.Add((0, 25), 0,)
-        self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFmpeg")))
-        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
-        self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                          style=wx.TE_READONLY
-                                          )
-        gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.ALL, 15)
-        gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFmpeg, 0, wx.ALL | wx.EXPAND, 15)
-        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
-        gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALIGN_CENTER_VERTICAL, 5)
-        self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFprobe")))
-        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
-        self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                           style=wx.TE_READONLY
-                                           )
-        gridExec.Add(self.checkbox_exeFFprobe, 0, wx.ALL, 15)
-        gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFprobe, 0, wx.ALL | wx.EXPAND, 15)
-        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
-        gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALIGN_CENTER_VERTICAL, 5)
-        self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFplay")))
-        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
-        self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                          style=wx.TE_READONLY
-                                          )
-        gridExec.Add(self.checkbox_exeFFplay, 0, wx.ALL, 15)
-        gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFplay, 0, wx.ALL | wx.EXPAND, 15)
-        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
-        gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALIGN_CENTER_VERTICAL, 5)
-        # ---- mpv
-        self.checkbox_exeMpv = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                    _(" Use a custom path to run mpv player")))
-        self.btn_pathMpv = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
-        self.txtctrl_mpv = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                          style=wx.TE_READONLY
-                                          )
-        gridExec.Add(self.checkbox_exeMpv, 0, wx.ALL, 15)
-        gridMpv = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridMpv, 0, wx.ALL | wx.EXPAND, 15)
-        gridMpv.Add(self.btn_pathMpv, 0, wx.ALL, 5)
-        gridMpv.Add(self.txtctrl_mpv, 1, wx.ALIGN_CENTER_VERTICAL, 5)
-        # ----
-        tabThree.SetSizer(gridExec)
-        notebook.AddPage(tabThree, _("Executable paths"))
-        # -----tab 4
-        tabFour = wx.Panel(notebook, wx.ID_ANY)
-        gridappearance = wx.BoxSizer(wx.VERTICAL)
-        boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
-                                        _("Set Icon Themes"))), wx.VERTICAL)
-        gridappearance.Add(boxLabIcons, 1, wx.ALL | wx.EXPAND, 15)
-        self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
-                                      choices=[("Videomass_Sign_Icons"),
-                                               ("Material_Design_Icons_black"),
-                                               ("Flat_Color_Icons")],
-                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
-                                      )
-        boxLabIcons.Add(self.cmbx_icons, 0,
-                        wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
-                        )
-        self.cmbx_icons.SetValue(self.iconset)
-        boxLabColor = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
-                                    _("Custom Colour UI"))), wx.VERTICAL)
-        gridappearance.Add(boxLabColor, 1, wx.ALL | wx.EXPAND, 15)
-        gridTBColor = wx.FlexGridSizer(3, 2, 0, 0)
-        boxLabColor.Add(gridTBColor)
-        labTBColor = wx.StaticText(tabFour, wx.ID_ANY,
-                                   _("Change Toolbar Colour:")
-                                   )
-        gridTBColor.Add(labTBColor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 15
-                        )
-        btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, _("Bar Colour"))
-        gridTBColor.Add(btn_TBcolor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
-                        )
-        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, (
-                                      _("Change Toolbar Buttons Colour:")))
-        gridTBColor.Add(labTBColorBtn, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 15
-                        )
-        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, _("Buttons Colour"))
-        gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
-                        )
-        labFontColor = wx.StaticText(tabFour, wx.ID_ANY, (
-                                          _("Change Buttons Font Colour:")))
-        gridTBColor.Add(labFontColor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 15
-                        )
-        btn_Fontcolor = wx.Button(tabFour, wx.ID_ANY, _("Font Colour"))
-        gridTBColor.Add(btn_Fontcolor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
-                        )
-        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR,
-                                        _("Restore default settings")
-                                        )
-        gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL |
-                           wx.EXPAND, 15
-                           )
-        tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
-        notebook.AddPage(tabFour, _("Appearance"))
         # ------ btns bottom
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
