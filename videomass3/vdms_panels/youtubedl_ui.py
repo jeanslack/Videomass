@@ -32,7 +32,9 @@ from videomass3.vdms_utils.utils import time_human
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
 
-# cnostants
+# constants
+MSG_1 = _('Missing "Format Code": you must enter the choosen format code '
+          'on the text box')
 RED = '#ea312d'
 
 VQUALITY = {('Best quality video'): ['best', 'best'],
@@ -177,9 +179,9 @@ class Downloader(wx.Panel):
                  'multiple format codes by using slash, e.g. 22/17/18 . '
                  'This box cannot left empty.'))
         self.txt_maincode.SetToolTip(tip)
-        tip = (_('To merge audio/video use this box to indicate a second '
-                 '"Format Code"; this is optional. You can specify multiple '
-                 'format codes by using slash, e.g. 140/130/151 .'))
+        tip = (_('Optional. To merge an audio file at the video indicate a '
+                 'second audio "Format Code". You can specify multiple format '
+                 'codes by using slash, e.g. 140/130/151 .'))
         self.txt_mergecode.SetToolTip(tip)
         #self.fcode.SetToolTip(_('try right-clicking to choose'))
 
@@ -640,7 +642,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
                 if not code:
-                    self.parent.statusbar_msg('Missing Format Code', RED)
+                    self.parent.statusbar_msg(MSG_1, RED)
                     return
                 data = {'format': code,
                         'noplaylist': opt["NO_PLAYLIST"][0],
@@ -697,7 +699,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
                 if not code:
-                    self.parent.statusbar_msg('Missing Format Code', RED)
+                    self.parent.statusbar_msg(MSG_1, RED)
                     return
                 cmd = [(f'--format {code} '
                         f'{opt["METADATA"][1]} '

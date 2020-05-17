@@ -13,6 +13,7 @@ May 17, 2020 V.2.3.0
 IMPROVEMENTS:
     * improved descriptions and translation on GUI.
     * improved buttons layout on the home panel depending by OS.
+    * improved float spin control view on new wxPython version 4.1 .
 
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-17 12:25+0200\n"
+"POT-Creation-Date: 2020-05-17 19:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -881,13 +881,13 @@ msgid "=  Below max peak"
 msgstr ""
 
 #: ../videomass3/vdms_frames/shownormlist.py:127
-#: ../videomass3/vdms_panels/av_conversions.py:1841
+#: ../videomass3/vdms_panels/av_conversions.py:1840
 #: ../videomass3/vdms_panels/presets_manager.py:703
 msgid "RMS-based volume statistics"
 msgstr ""
 
 #: ../videomass3/vdms_frames/shownormlist.py:149
-#: ../videomass3/vdms_panels/av_conversions.py:1839
+#: ../videomass3/vdms_panels/av_conversions.py:1838
 #: ../videomass3/vdms_panels/presets_manager.py:701
 msgid "PEAK-based volume statistics"
 msgstr ""
@@ -1898,115 +1898,115 @@ msgstr ""
 msgid "Target level:"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:800
+#: ../videomass3/vdms_panels/av_conversions.py:799
 #: ../videomass3/vdms_panels/presets_manager.py:255
 msgid "Set integrated loudness target:  "
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:811
+#: ../videomass3/vdms_panels/av_conversions.py:810
 #: ../videomass3/vdms_panels/presets_manager.py:267
 msgid "Set maximum true peak:"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:822
+#: ../videomass3/vdms_panels/av_conversions.py:821
 #: ../videomass3/vdms_panels/presets_manager.py:277
 msgid "Set loudness range target:"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:834
+#: ../videomass3/vdms_panels/av_conversions.py:833
 msgid "Filters"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:845
+#: ../videomass3/vdms_panels/av_conversions.py:844
 msgid ""
 "Available video codecs. \"Copy\" is not a codec but indicate that the video "
 "stream is not to be re-encoded and allows changing the format or other "
 "parameters"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:849
+#: ../videomass3/vdms_panels/av_conversions.py:848
 msgid ""
 "Output format and file extension. the content may change based on the codec "
 "and media"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:852
+#: ../videomass3/vdms_panels/av_conversions.py:851
 msgid ""
 "\"Video\" to save the output file as a video; \"Audio\" to save as an audio "
 "track"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:855
+#: ../videomass3/vdms_panels/av_conversions.py:854
 msgid "It can reduce the file size, but takes longer."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:857
+#: ../videomass3/vdms_panels/av_conversions.py:856
 msgid "Specifies a minimum tolerance to be used"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:859
+#: ../videomass3/vdms_panels/av_conversions.py:858
 msgid ""
 "Specifies a maximum tolerance. this is only used in conjunction with buffer "
 "size"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:862
+#: ../videomass3/vdms_panels/av_conversions.py:861
 msgid ""
 "Specifies the decoder buffer size, which determines the variability of the "
 "output bitrate "
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:865
+#: ../videomass3/vdms_panels/av_conversions.py:864
 msgid ""
 "\"good\" is the default and recommended for most applications; \"best\" is "
 "recommended if you have lots of time and want the best compression "
 "efficiency; \"realtime\" is recommended for live/fast encoding"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:870
+#: ../videomass3/vdms_panels/av_conversions.py:869
 msgid ""
 "\"cpu-used\" sets how efficient the compression will be. The meaning depends "
 "on the mode above."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:873
+#: ../videomass3/vdms_panels/av_conversions.py:872
 msgid ""
 "specifies the target (average) bit rate for the encoder to use. Higher value "
 "= higher quality. Set -1 to disable this control."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:877
+#: ../videomass3/vdms_panels/av_conversions.py:876
 msgid ""
 "Constant rate factor. Lower values = higher quality and a larger file size. "
 "Set -1 to disable this control."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:880
+#: ../videomass3/vdms_panels/av_conversions.py:879
 msgid "Try filters by playing a preview"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:882
+#: ../videomass3/vdms_panels/av_conversions.py:881
 msgid "Clear all enabled filters "
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:884
+#: ../videomass3/vdms_panels/av_conversions.py:883
 msgid "Video width and video height ratio."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:886
+#: ../videomass3/vdms_panels/av_conversions.py:885
 msgid ""
 "Frames repeat a given number of times per second. In some countries are 30 "
 "NTSC, in PAL countries like Italy are 25."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:889
+#: ../videomass3/vdms_panels/av_conversions.py:888
 #: ../videomass3/vdms_panels/presets_manager.py:306
 msgid ""
 "Gets maximum volume and average volume data in dBFS, then calculates the "
 "offset amount for audio normalization."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:892
+#: ../videomass3/vdms_panels/av_conversions.py:891
 #: ../videomass3/vdms_panels/presets_manager.py:309
 msgid ""
 "Limiter for the maximum peak level or the mean level (when switch to RMS) in "
@@ -2014,109 +2014,109 @@ msgid ""
 "-20.0"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:896
+#: ../videomass3/vdms_panels/av_conversions.py:895
 #: ../videomass3/vdms_panels/presets_manager.py:322
 msgid "Choose from video a specific input audio stream to work out."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:899
+#: ../videomass3/vdms_panels/av_conversions.py:898
 #: ../videomass3/vdms_panels/presets_manager.py:325
 msgid ""
 "Map on the output index. Keep same input map if saving as video; to save as "
 "audio select to \"all\" or \"Auto\""
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:902
+#: ../videomass3/vdms_panels/av_conversions.py:901
 #: ../videomass3/vdms_panels/presets_manager.py:313
 msgid ""
 "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:905
+#: ../videomass3/vdms_panels/av_conversions.py:904
 #: ../videomass3/vdms_panels/presets_manager.py:316
 msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:908
+#: ../videomass3/vdms_panels/av_conversions.py:907
 #: ../videomass3/vdms_panels/presets_manager.py:319
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1237
-#: ../videomass3/vdms_panels/av_conversions.py:1252
+#: ../videomass3/vdms_panels/av_conversions.py:1236
+#: ../videomass3/vdms_panels/av_conversions.py:1251
 msgid "No filter enabled"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1547
+#: ../videomass3/vdms_panels/av_conversions.py:1546
 msgid "No Audio"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1694
+#: ../videomass3/vdms_panels/av_conversions.py:1693
 #: ../videomass3/vdms_panels/presets_manager.py:559
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1697
+#: ../videomass3/vdms_panels/av_conversions.py:1696
 #: ../videomass3/vdms_panels/presets_manager.py:562
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1701
+#: ../videomass3/vdms_panels/av_conversions.py:1700
 #: ../videomass3/vdms_panels/presets_manager.py:566
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1724
+#: ../videomass3/vdms_panels/av_conversions.py:1723
 #: ../videomass3/vdms_panels/presets_manager.py:592
 msgid "Audio normalization off"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1761
+#: ../videomass3/vdms_panels/av_conversions.py:1760
 #: ../videomass3/vdms_panels/presets_manager.py:624
 msgid "Audio normalization is required only for some files"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1762
+#: ../videomass3/vdms_panels/av_conversions.py:1761
 #: ../videomass3/vdms_panels/presets_manager.py:625
 msgid "Audio normalization is not required based to set target level"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:1955
+#: ../videomass3/vdms_panels/av_conversions.py:1954
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "the data on the audio volume."
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2127
+#: ../videomass3/vdms_panels/av_conversions.py:2126
 msgid "Audio/Video EBU normalization"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2231
+#: ../videomass3/vdms_panels/av_conversions.py:2230
 msgid "Audio conversions"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2271
+#: ../videomass3/vdms_panels/av_conversions.py:2270
 msgid "Audio EBU normalization"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2307
+#: ../videomass3/vdms_panels/av_conversions.py:2306
 #, python-format
 msgid "%s file in pending"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2315
-#: ../videomass3/vdms_panels/av_conversions.py:2321
+#: ../videomass3/vdms_panels/av_conversions.py:2314
+#: ../videomass3/vdms_panels/av_conversions.py:2320
 #: ../videomass3/vdms_panels/presets_manager.py:1149
 msgid "Off"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2328
+#: ../videomass3/vdms_panels/av_conversions.py:2327
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2133,7 +2133,7 @@ msgid ""
 "Selected Input Audio index"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2348
+#: ../videomass3/vdms_panels/av_conversions.py:2347
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2155,7 +2155,7 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2374
+#: ../videomass3/vdms_panels/av_conversions.py:2373
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2188,11 +2188,11 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2441
-msgid "Videomass: Choose a preset to storing new profile"
+#: ../videomass3/vdms_panels/av_conversions.py:2440
+msgid "Videomass: Select a preset to storing the new profile"
 msgstr ""
 
-#: ../videomass3/vdms_panels/av_conversions.py:2451
+#: ../videomass3/vdms_panels/av_conversions.py:2450
 msgid "Videomass: Create a new profile"
 msgstr ""
 
@@ -2297,133 +2297,139 @@ msgstr ""
 msgid "Videomass confirmation"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:91
-msgid "Default"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:92
-msgid "Download audio and video splitted"
+#: ../videomass3/vdms_panels/youtubedl_ui.py:36
+msgid ""
+"Missing \"Format Code\": you must enter the choosen format code on the text "
+"box"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:93
-msgid "Download Audio only"
+msgid "Default"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:94
+msgid "Download audio and video splitted"
+msgstr ""
+
+#: ../videomass3/vdms_panels/youtubedl_ui.py:95
+msgid "Download Audio only"
+msgstr ""
+
+#: ../videomass3/vdms_panels/youtubedl_ui.py:96
 msgid "Download by format code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:137
+#: ../videomass3/vdms_panels/youtubedl_ui.py:139
 msgid "Enter Format Code:"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:148
+#: ../videomass3/vdms_panels/youtubedl_ui.py:150
 msgid "Merge with:"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:156
+#: ../videomass3/vdms_panels/youtubedl_ui.py:158
 msgid "Download all playlist"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:160
+#: ../videomass3/vdms_panels/youtubedl_ui.py:162
 msgid "Embed thumbnail in audio file"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:164
+#: ../videomass3/vdms_panels/youtubedl_ui.py:166
 msgid "Add metadata to file"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:168
+#: ../videomass3/vdms_panels/youtubedl_ui.py:170
 msgid "Write subtitles to video"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:176
+#: ../videomass3/vdms_panels/youtubedl_ui.py:178
 msgid ""
 "Enter the media \"Format Code\" here. You can specify multiple format codes "
 "by using slash, e.g. 22/17/18 . This box cannot left empty."
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:180
+#: ../videomass3/vdms_panels/youtubedl_ui.py:182
 msgid ""
-"To merge audio/video use this box to indicate a second \"Format Code\"; this "
-"is optional. You can specify multiple format codes by using slash, e.g. "
+"Optional. To merge an audio file at the video indicate a second audio "
+"\"Format Code\". You can specify multiple format codes by using slash, e.g. "
 "140/130/151 ."
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:227
-#: ../videomass3/vdms_panels/youtubedl_ui.py:271
+#: ../videomass3/vdms_panels/youtubedl_ui.py:229
+#: ../videomass3/vdms_panels/youtubedl_ui.py:273
 msgid "Insert Format Code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:228
-#: ../videomass3/vdms_panels/youtubedl_ui.py:253
+#: ../videomass3/vdms_panels/youtubedl_ui.py:230
+#: ../videomass3/vdms_panels/youtubedl_ui.py:255
 msgid "Append Format Code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:230
-#: ../videomass3/vdms_panels/youtubedl_ui.py:275
+#: ../videomass3/vdms_panels/youtubedl_ui.py:232
+#: ../videomass3/vdms_panels/youtubedl_ui.py:277
 msgid "Insert for merging"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:231
-#: ../videomass3/vdms_panels/youtubedl_ui.py:262
+#: ../videomass3/vdms_panels/youtubedl_ui.py:233
+#: ../videomass3/vdms_panels/youtubedl_ui.py:264
 msgid "Append for merging"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:233
 #: ../videomass3/vdms_panels/youtubedl_ui.py:235
-#: ../videomass3/vdms_panels/youtubedl_ui.py:279
+#: ../videomass3/vdms_panels/youtubedl_ui.py:237
+#: ../videomass3/vdms_panels/youtubedl_ui.py:281
 msgid "Play selected url"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:289
-#: ../videomass3/vdms_panels/youtubedl_ui.py:384
-#: ../videomass3/vdms_panels/youtubedl_ui.py:426
-msgid "Url"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:290
-#: ../videomass3/vdms_panels/youtubedl_ui.py:385
-#: ../videomass3/vdms_panels/youtubedl_ui.py:427
-msgid "Title"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:291
 #: ../videomass3/vdms_panels/youtubedl_ui.py:386
-msgid "Format Code"
+#: ../videomass3/vdms_panels/youtubedl_ui.py:428
+msgid "Url"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:292
 #: ../videomass3/vdms_panels/youtubedl_ui.py:387
-msgid "Extension"
+#: ../videomass3/vdms_panels/youtubedl_ui.py:429
+msgid "Title"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:293
-msgid "Resolution"
+#: ../videomass3/vdms_panels/youtubedl_ui.py:388
+msgid "Format Code"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:294
-msgid "Video Codec"
+#: ../videomass3/vdms_panels/youtubedl_ui.py:389
+msgid "Extension"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:295
-msgid "fps"
+msgid "Resolution"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:296
-msgid "Audio Codec"
+msgid "Video Codec"
 msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:297
+msgid "fps"
+msgstr ""
+
+#: ../videomass3/vdms_panels/youtubedl_ui.py:298
+msgid "Audio Codec"
+msgstr ""
+
+#: ../videomass3/vdms_panels/youtubedl_ui.py:299
 msgid "Size"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:388
-#: ../videomass3/vdms_panels/youtubedl_ui.py:428
+#: ../videomass3/vdms_panels/youtubedl_ui.py:390
+#: ../videomass3/vdms_panels/youtubedl_ui.py:430
 msgid "Resolution note"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:445
+#: ../videomass3/vdms_panels/youtubedl_ui.py:447
 msgid ""
 "\"Show more\" only is enabled when Videomass uses youtube-dl as imported "
 "library."

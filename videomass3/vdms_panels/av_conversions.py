@@ -782,10 +782,9 @@ class AV_Conv(wx.Panel):
                                            )
         sizer_peak.Add(self.lab_amplitude, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY,
-                                        min_val=-99.0,
-                                        max_val=0.0,
+                                        min_val=-99.0, max_val=0.0,
                                         increment=0.5, value=-1.0,
-                                        agwStyle=FS.FS_LEFT, size=(-1, -1)
+                                        agwStyle=FS.FS_LEFT, size=(120, -1)
                                         )
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
@@ -802,7 +801,7 @@ class AV_Conv(wx.Panel):
         self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
                                    min_val=-70.0, max_val=-5.0,
                                    increment=0.5, value=-24.0,
-                                   agwStyle=FS.FS_LEFT, size=(-1, -1)
+                                   agwStyle=FS.FS_LEFT, size=(120, -1)
                                    )
         self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
         sizer_ebu.Add(self.spin_i, 0, wx.ALL, 0)
@@ -813,7 +812,7 @@ class AV_Conv(wx.Panel):
         self.spin_tp = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
                                     min_val=-9.0, max_val=0.0,
                                     increment=0.5, value=-2.0,
-                                    agwStyle=FS.FS_LEFT, size=(-1, -1)
+                                    agwStyle=FS.FS_LEFT, size=(120, -1)
                                     )
         self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
         sizer_ebu.Add(self.spin_tp, 0, wx.ALL, 0)
@@ -824,7 +823,7 @@ class AV_Conv(wx.Panel):
         self.spin_lra = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
                                      min_val=1.0, max_val=20.0,
                                      increment=0.5, value=7.0,
-                                     agwStyle=FS.FS_LEFT, size=(-1, -1)
+                                     agwStyle=FS.FS_LEFT, size=(120, -1)
                                      )
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
@@ -2438,8 +2437,8 @@ class AV_Conv(wx.Panel):
             else:
                 parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
-        with wx.FileDialog(None, _("Videomass: Choose a preset to "
-                                   "storing new profile"),
+        with wx.FileDialog(None, _("Videomass: Select a preset to "
+                                   "storing the new profile"),
                            defaultDir=os.path.join(DIR_CONF, 'presets'),
                            wildcard="Videomass presets (*.prst;)|*.prst;",
                            style=wx.FD_OPEN |
