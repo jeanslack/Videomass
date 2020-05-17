@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-16 08:58+0200\n"
-"PO-Revision-Date: 2020-05-16 09:01+0200\n"
+"POT-Creation-Date: 2020-05-17 12:25+0200\n"
+"PO-Revision-Date: 2020-05-17 12:28+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -517,11 +517,11 @@ msgid "Auto-detection"
 msgstr "Auto-rileva"
 
 #: ../videomass3/vdms_dialogs/first_time_start.py:70
-#: ../videomass3/vdms_dialogs/settings.py:150
-#: ../videomass3/vdms_dialogs/settings.py:192
-#: ../videomass3/vdms_dialogs/settings.py:203
-#: ../videomass3/vdms_dialogs/settings.py:214
-#: ../videomass3/vdms_dialogs/settings.py:226
+#: ../videomass3/vdms_dialogs/settings.py:151
+#: ../videomass3/vdms_dialogs/settings.py:174
+#: ../videomass3/vdms_dialogs/settings.py:186
+#: ../videomass3/vdms_dialogs/settings.py:198
+#: ../videomass3/vdms_dialogs/settings.py:210
 msgid "Browse.."
 msgstr "Sfoglia.."
 
@@ -702,86 +702,86 @@ msgstr "Opzione threads FFmpeg"
 msgid "Set the number of threads (from 0 to 32)"
 msgstr "Imposta il numero dei threads (da 0 a 32)"
 
-#: ../videomass3/vdms_dialogs/settings.py:145
-msgid "Where do you prefer to store files?"
-msgstr "Dove preferisci salvare i files?"
+#: ../videomass3/vdms_dialogs/settings.py:144
+msgid "Where do you prefer to save all the output files?"
+msgstr "Dove preferisci salvare tutti i file in uscita?"
 
-#: ../videomass3/vdms_dialogs/settings.py:164
+#: ../videomass3/vdms_dialogs/settings.py:165
 msgid "General"
 msgstr "Generale"
 
-#: ../videomass3/vdms_dialogs/settings.py:185
-msgid "Logging levels"
-msgstr "Livelli logs"
-
-#: ../videomass3/vdms_dialogs/settings.py:191
+#: ../videomass3/vdms_dialogs/settings.py:173
 msgid " Use a custom path to run FFmpeg"
 msgstr " Usa un percorso personalizzato per avviare FFmpeg"
 
-#: ../videomass3/vdms_dialogs/settings.py:202
+#: ../videomass3/vdms_dialogs/settings.py:185
 msgid " Use a custom path to run FFprobe"
 msgstr " Usa un percorso personalizzato per avviare FFprobe"
 
-#: ../videomass3/vdms_dialogs/settings.py:213
+#: ../videomass3/vdms_dialogs/settings.py:197
 msgid " Use a custom path to run FFplay"
 msgstr " Usa un percorso personalizzato per avviare FFplay"
 
-#: ../videomass3/vdms_dialogs/settings.py:225
+#: ../videomass3/vdms_dialogs/settings.py:209
 msgid " Use a custom path to run mpv player"
 msgstr " Usa un percorso personalizzato per avviare mpv player"
 
-#: ../videomass3/vdms_dialogs/settings.py:237
+#: ../videomass3/vdms_dialogs/settings.py:221
 msgid "Executable paths"
 msgstr "Percorsi eseguibili"
 
-#: ../videomass3/vdms_dialogs/settings.py:242
+#: ../videomass3/vdms_dialogs/settings.py:226
 msgid "Set Icon Themes"
 msgstr "Imposta Temi icona"
 
-#: ../videomass3/vdms_dialogs/settings.py:256
-msgid "Custom Colour UI"
-msgstr "Personalizza Il Colore Grafico"
+#: ../videomass3/vdms_dialogs/settings.py:240
+msgid "Color customization"
+msgstr "Personalizzazione colori"
 
-#: ../videomass3/vdms_dialogs/settings.py:261
-msgid "Change Toolbar Colour:"
-msgstr "Cambia il colore della barra:"
+#: ../videomass3/vdms_dialogs/settings.py:245
+msgid "Change color at the button bar:"
+msgstr "Cambia colore alla barra dei pulsanti:"
 
-#: ../videomass3/vdms_dialogs/settings.py:267
-#: ../videomass3/vdms_dialogs/settings.py:622
+#: ../videomass3/vdms_dialogs/settings.py:251
+#: ../videomass3/vdms_dialogs/settings.py:627
 msgid "Bar Colour"
 msgstr "Colore Barra"
 
-#: ../videomass3/vdms_dialogs/settings.py:272
-msgid "Change Toolbar Buttons Colour:"
-msgstr "Cambia il colore dei pulsanti nella barra:"
+#: ../videomass3/vdms_dialogs/settings.py:256
+msgid "Change color of bar buttons:"
+msgstr "Cambia colore ai pulsanti della barra:"
 
-#: ../videomass3/vdms_dialogs/settings.py:277
-#: ../videomass3/vdms_dialogs/settings.py:624
+#: ../videomass3/vdms_dialogs/settings.py:261
+#: ../videomass3/vdms_dialogs/settings.py:629
 msgid "Buttons Colour"
 msgstr "Colore Pulsanti"
 
-#: ../videomass3/vdms_dialogs/settings.py:282
-msgid "Change Buttons Font Colour:"
-msgstr "Cambia il colore al font dei pulsanti:"
+#: ../videomass3/vdms_dialogs/settings.py:266
+msgid "Color setting for button fonts:"
+msgstr "Impostazione del colore per i caratteri dei pulsanti:"
 
-#: ../videomass3/vdms_dialogs/settings.py:287
-#: ../videomass3/vdms_dialogs/settings.py:626
+#: ../videomass3/vdms_dialogs/settings.py:271
+#: ../videomass3/vdms_dialogs/settings.py:631
 msgid "Font Colour"
 msgstr "Colore Font"
 
-#: ../videomass3/vdms_dialogs/settings.py:292
+#: ../videomass3/vdms_dialogs/settings.py:276
 msgid "Restore default settings"
 msgstr "Ripristina impostazioni predefinite"
 
-#: ../videomass3/vdms_dialogs/settings.py:298
+#: ../videomass3/vdms_dialogs/settings.py:282
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: ../videomass3/vdms_dialogs/settings.py:318
+#: ../videomass3/vdms_dialogs/settings.py:303
+msgid "Logging levels"
+msgstr "Livelli logs"
+
+#: ../videomass3/vdms_dialogs/settings.py:323
 msgid "Videomass: setup"
 msgstr "Videomass: Impostazioni"
 
-#: ../videomass3/vdms_dialogs/settings.py:319
+#: ../videomass3/vdms_dialogs/settings.py:324
 msgid ""
 "Enable custom paths for the executables. If the check boxes are disabled or "
 "if the path field is empty, the search for the executables is entrusted to "
@@ -791,27 +791,27 @@ msgstr ""
 "controllo sono disabilitate o se il campo del percorso è vuoto, la ricerca "
 "degli eseguibili viene affidata alle variabili di ambiente."
 
-#: ../videomass3/vdms_dialogs/settings.py:416
+#: ../videomass3/vdms_dialogs/settings.py:421
 msgid "Set a default directory to save files"
 msgstr "Imposta una directory predefinita per salvare i file"
 
-#: ../videomass3/vdms_dialogs/settings.py:457
+#: ../videomass3/vdms_dialogs/settings.py:462
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile ffmpeg?"
 
-#: ../videomass3/vdms_dialogs/settings.py:497
+#: ../videomass3/vdms_dialogs/settings.py:502
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile ffprobe?"
 
-#: ../videomass3/vdms_dialogs/settings.py:536
+#: ../videomass3/vdms_dialogs/settings.py:541
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile ffplay?"
 
-#: ../videomass3/vdms_dialogs/settings.py:575
+#: ../videomass3/vdms_dialogs/settings.py:580
 msgid "Videomass: Where is the mpv executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile mpv?"
 
-#: ../videomass3/vdms_dialogs/settings.py:663
+#: ../videomass3/vdms_dialogs/settings.py:668
 msgid "Changes will take affect once the program has been restarted"
 msgstr "Le modifiche verranno applicate una volta riavviato il programma"
 
@@ -2655,24 +2655,24 @@ msgstr ""
 "  Scarica facilmente video e audio con formato e qualità diversi da\n"
 "  YouTube, Facebook e altri siti. "
 
-#: ../videomass3/vdms_panels/choose_topic.py:99
+#: ../videomass3/vdms_panels/choose_topic.py:103
 msgid "Welcome to Videomass"
 msgstr "Benvenuti in Videomass"
 
-#: ../videomass3/vdms_panels/choose_topic.py:100
+#: ../videomass3/vdms_panels/choose_topic.py:104
 msgid "Version {}"
 msgstr "Versione {}"
 
-#: ../videomass3/vdms_panels/choose_topic.py:134
+#: ../videomass3/vdms_panels/choose_topic.py:145
 msgid "Download additional presets or contribute to making new ones "
 msgstr "Scarica presets aggiuntivi o contribuisci a crearne di nuovi "
 
-#: ../videomass3/vdms_panels/choose_topic.py:137
+#: ../videomass3/vdms_panels/choose_topic.py:148
 msgid "Additional Presets"
 msgstr "Presets Aggiuntivi"
 
-#: ../videomass3/vdms_panels/choose_topic.py:173
-#: ../videomass3/vdms_panels/choose_topic.py:178
+#: ../videomass3/vdms_panels/choose_topic.py:184
+#: ../videomass3/vdms_panels/choose_topic.py:189
 msgid "Videomass confirmation"
 msgstr "Videomass conferma"
 
@@ -3228,6 +3228,15 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid "Custom Colour UI"
+#~ msgstr "Personalizza Il Colore Grafico"
+
+#~ msgid "Change Toolbar Colour:"
+#~ msgstr "Cambia il colore della barra:"
+
+#~ msgid "Change Buttons Font Colour:"
+#~ msgstr "Cambia il colore al font dei pulsanti:"
 
 #~ msgid "Multimedia Streams"
 #~ msgstr "Stream multimediali"
@@ -4009,9 +4018,6 @@ msgstr ""
 
 #~ msgid "Average volume db"
 #~ msgstr "Volume medio in db"
-
-#~ msgid "Normalization"
-#~ msgstr "Normalizzazione"
 
 #~ msgid "Loudness using EBU R128"
 #~ msgstr "Usando EBU R128 (loudness)"

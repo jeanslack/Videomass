@@ -27,7 +27,6 @@
 
 #########################################################
 import wx
-import wx.lib.agw.gradientbutton as GB
 import wx.lib.agw.hyperlink as hpl
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
@@ -85,10 +84,6 @@ video_lab = _('  A set of useful tools for audio and video manipulations;\n'
 youtube_lab = _('  Easily download videos and audio in different formats\n'
                 '  and quality from YouTube, Facebook and more sites. ')
 
-AZURE_NEON = 158, 201, 232
-YELLOW_LMN = 255, 255, 0
-BLUE = 0, 7, 12
-
 
 class Choose_Topic(wx.Panel):
     """
@@ -111,65 +106,23 @@ class Choose_Topic(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_buttons = wx.FlexGridSizer(5, 0, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
-        ####-----
-        prstmng = wx.Bitmap(prstmng_icn, wx.BITMAP_TYPE_ANY)
-        self.presets_mng = GB.GradientButton(self,
-                                             bitmap=prstmng,
-                                             size=(-1, -1),
-                                             label=prst_mng
-                                             )
-        self.presets_mng.SetBaseColours(startcolour=wx.Colour('PURPLE'),
-                                        foregroundcolour=wx.Colour(255, 255, 255)
-                                      )
-        #self.presets_mng.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                        #foregroundcolour=wx.Colour(0, 0, 0)
-                                      #)
-        #self.presets_mng.SetBottomEndColour((176, 176, 176, 255))
-        #self.presets_mng.SetBottomStartColour((176, 176, 176, 255))
-        #self.presets_mng.SetTopStartColour((176, 176, 176, 255))
-        #self.presets_mng.SetTopEndColour((176, 176, 176, 255))
-        ####------
-        icn_avconv = wx.Bitmap(videoconv_icn, wx.BITMAP_TYPE_ANY)
-        self.avconv = GB.GradientButton(self,
-                                        bitmap=icn_avconv,
-                                        size=(-1, -1),
-                                        label=video_lab
-                                        )
-        self.avconv.SetBaseColours(startcolour=wx.Colour('DARK GREEN'),
-                                      foregroundcolour=wx.Colour(255, 255, 255)
-                                      )
-        #self.presets_mng.SetBottomEndColour(self.bBtnC)
-        #self.presets_mng.SetBottomStartColour(self.bBtnC)
-        #self.presets_mng.SetTopStartColour(self.bBtnC)
-        #self.presets_mng.SetTopEndColour(self.bBtnC)
-        ####------
-        icn_ydl = wx.Bitmap(youtube_icn, wx.BITMAP_TYPE_ANY)
-        self.youtube = GB.GradientButton(self,
-                                         bitmap=icn_ydl,
-                                         size=(-1, -1),
-                                         label=youtube_lab,
-                                         )
-        self.youtube.SetBaseColours(startcolour=wx.Colour('STEEL BLUE'),
-                                      foregroundcolour=wx.Colour(255, 255, 255)
-                                      )
-        #self.presets_mng.SetBottomEndColour(self.bBtnC)
-        #self.presets_mng.SetBottomStartColour(self.bBtnC)
-        #self.presets_mng.SetTopStartColour(self.bBtnC)
-        #self.presets_mng.SetTopEndColour(self.bBtnC)
-        ####------
+        if OS == 'Windows':
+            style=wx.BU_LEFT | wx.BORDER_NONE
+        else:
+            style=wx.BU_LEFT
 
-        #self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1, -1),
-                                     #style=wx.BU_LEFT | wx.BORDER_NONE
-                                     #)
-        #self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
-        #self.avconv = wx.Button(self, wx.ID_ANY, video_lab, size=(-1, -1),
-                               #style=wx.BU_LEFT | wx.BORDER_NONE
-                               #)
-        #self.avconv.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
-        #self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1, -1),
-                                 #style=wx.BU_LEFT|wx.BORDER_NONE
-                                 #)
-        #self.youtube.SetBitmap(wx.Bitmap(youtube_icn), wx.LEFT)
+        self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1, -1),
+                                     style=style
+                                     )
+        self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
+        self.avconv = wx.Button(self, wx.ID_ANY, video_lab, size=(-1, -1),
+                                style=style
+                               )
+        self.avconv.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
+        self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1, -1),
+                                 style=style
+                                 )
+        self.youtube.SetBitmap(wx.Bitmap(youtube_icn), wx.LEFT)
 
         grid_buttons.AddMany([(welcome, 0, wx.ALIGN_CENTER_VERTICAL |
                                wx.ALIGN_CENTER_HORIZONTAL, 0),

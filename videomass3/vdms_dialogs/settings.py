@@ -242,7 +242,7 @@ class Setup(wx.Dialog):
         gridTBColor = wx.FlexGridSizer(3, 2, 0, 0)
         boxLabColor.Add(gridTBColor)
         labTBColor = wx.StaticText(tabFour, wx.ID_ANY,
-                                   _("Change color of the button bar:")
+                                   _("Change color at the button bar:")
                                    )
         gridTBColor.Add(labTBColor, 0, wx.ALL |
                         wx.ALIGN_CENTER_HORIZONTAL |
@@ -253,7 +253,7 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
         labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, (
-                                      _("Change color of the bar buttons:")))
+                                      _("Change color of bar buttons:")))
         gridTBColor.Add(labTBColorBtn, 0, wx.ALL |
                         wx.ALIGN_CENTER_HORIZONTAL |
                         wx.ALIGN_CENTER_VERTICAL, 15

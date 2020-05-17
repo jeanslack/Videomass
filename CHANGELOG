@@ -7,11 +7,12 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-May 16, 2020 V.2.3.0
+May 17, 2020 V.2.3.0
 +------------------------------------+
 
 IMPROVEMENTS:
-    * improving descriptions and translation on GUI
+    * improved descriptions and translation on GUI.
+    * improved buttons layout on the home panel depending by OS.
 
 
 

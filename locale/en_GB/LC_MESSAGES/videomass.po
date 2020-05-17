@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-16 08:58+0200\n"
-"PO-Revision-Date: 2020-05-16 09:01+0200\n"
+"POT-Creation-Date: 2020-05-17 12:25+0200\n"
+"PO-Revision-Date: 2020-05-17 12:29+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -430,11 +430,11 @@ msgid "Auto-detection"
 msgstr ""
 
 #: ../videomass3/vdms_dialogs/first_time_start.py:70
-#: ../videomass3/vdms_dialogs/settings.py:150
-#: ../videomass3/vdms_dialogs/settings.py:192
-#: ../videomass3/vdms_dialogs/settings.py:203
-#: ../videomass3/vdms_dialogs/settings.py:214
-#: ../videomass3/vdms_dialogs/settings.py:226
+#: ../videomass3/vdms_dialogs/settings.py:151
+#: ../videomass3/vdms_dialogs/settings.py:174
+#: ../videomass3/vdms_dialogs/settings.py:186
+#: ../videomass3/vdms_dialogs/settings.py:198
+#: ../videomass3/vdms_dialogs/settings.py:210
 msgid "Browse.."
 msgstr ""
 
@@ -588,113 +588,113 @@ msgstr ""
 msgid "Set the number of threads (from 0 to 32)"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:145
-msgid "Where do you prefer to store files?"
+#: ../videomass3/vdms_dialogs/settings.py:144
+msgid "Where do you prefer to save all the output files?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:164
+#: ../videomass3/vdms_dialogs/settings.py:165
 msgid "General"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:185
-msgid "Logging levels"
-msgstr ""
-
-#: ../videomass3/vdms_dialogs/settings.py:191
+#: ../videomass3/vdms_dialogs/settings.py:173
 msgid " Use a custom path to run FFmpeg"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:202
+#: ../videomass3/vdms_dialogs/settings.py:185
 msgid " Use a custom path to run FFprobe"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:213
+#: ../videomass3/vdms_dialogs/settings.py:197
 msgid " Use a custom path to run FFplay"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:225
+#: ../videomass3/vdms_dialogs/settings.py:209
 msgid " Use a custom path to run mpv player"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:237
+#: ../videomass3/vdms_dialogs/settings.py:221
 msgid "Executable paths"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:242
+#: ../videomass3/vdms_dialogs/settings.py:226
 msgid "Set Icon Themes"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:256
-msgid "Custom Colour UI"
+#: ../videomass3/vdms_dialogs/settings.py:240
+msgid "Color customization"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:261
-msgid "Change Toolbar Colour:"
+#: ../videomass3/vdms_dialogs/settings.py:245
+msgid "Change color at the button bar:"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:267
-#: ../videomass3/vdms_dialogs/settings.py:622
+#: ../videomass3/vdms_dialogs/settings.py:251
+#: ../videomass3/vdms_dialogs/settings.py:627
 msgid "Bar Colour"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:272
-msgid "Change Toolbar Buttons Colour:"
+#: ../videomass3/vdms_dialogs/settings.py:256
+msgid "Change color of bar buttons:"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:277
-#: ../videomass3/vdms_dialogs/settings.py:624
+#: ../videomass3/vdms_dialogs/settings.py:261
+#: ../videomass3/vdms_dialogs/settings.py:629
 msgid "Buttons Colour"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:282
-msgid "Change Buttons Font Colour:"
+#: ../videomass3/vdms_dialogs/settings.py:266
+msgid "Color setting for button fonts:"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:287
-#: ../videomass3/vdms_dialogs/settings.py:626
+#: ../videomass3/vdms_dialogs/settings.py:271
+#: ../videomass3/vdms_dialogs/settings.py:631
 msgid "Font Colour"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:292
+#: ../videomass3/vdms_dialogs/settings.py:276
 msgid "Restore default settings"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:298
+#: ../videomass3/vdms_dialogs/settings.py:282
 msgid "Appearance"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:318
+#: ../videomass3/vdms_dialogs/settings.py:303
+msgid "Logging levels"
+msgstr ""
+
+#: ../videomass3/vdms_dialogs/settings.py:323
 msgid "Videomass: setup"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:319
+#: ../videomass3/vdms_dialogs/settings.py:324
 msgid ""
 "Enable custom paths for the executables. If the check boxes are disabled or "
 "if the path field is empty, the search for the executables is entrusted to "
 "the environment variables."
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:416
+#: ../videomass3/vdms_dialogs/settings.py:421
 msgid "Set a default directory to save files"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:457
+#: ../videomass3/vdms_dialogs/settings.py:462
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:497
+#: ../videomass3/vdms_dialogs/settings.py:502
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:536
+#: ../videomass3/vdms_dialogs/settings.py:541
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:575
+#: ../videomass3/vdms_dialogs/settings.py:580
 msgid "Videomass: Where is the mpv executable located?"
 msgstr ""
 
-#: ../videomass3/vdms_dialogs/settings.py:663
+#: ../videomass3/vdms_dialogs/settings.py:668
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 
@@ -2277,24 +2277,24 @@ msgid ""
 "  and quality from YouTube, Facebook and more sites. "
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:99
+#: ../videomass3/vdms_panels/choose_topic.py:103
 msgid "Welcome to Videomass"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:100
+#: ../videomass3/vdms_panels/choose_topic.py:104
 msgid "Version {}"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:134
+#: ../videomass3/vdms_panels/choose_topic.py:145
 msgid "Download additional presets or contribute to making new ones "
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:137
+#: ../videomass3/vdms_panels/choose_topic.py:148
 msgid "Additional Presets"
 msgstr ""
 
-#: ../videomass3/vdms_panels/choose_topic.py:173
-#: ../videomass3/vdms_panels/choose_topic.py:178
+#: ../videomass3/vdms_panels/choose_topic.py:184
+#: ../videomass3/vdms_panels/choose_topic.py:189
 msgid "Videomass confirmation"
 msgstr ""
 
