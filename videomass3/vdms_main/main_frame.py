@@ -1358,6 +1358,7 @@ class MainFrame(wx.Frame):
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
             del self.ytDownloader.info[:]
+            self.ytDownloader.format_dict.clear()
 
         self.statusbar_msg(msg[0], msg[1])
         self.file_destin = self.textDnDTarget.file_dest

@@ -31,10 +31,13 @@ from videomass3.vdms_utils.utils import format_bytes
 from videomass3.vdms_utils.utils import time_human
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
+import itertools
 
 # constants
-MSG_1 = _('Missing "Format Code": you must enter the choosen format code '
-          'on the text box')
+
+MSG_1 = _('Missing "Format Code": choose a format code and enter it in the '
+          'text box.')
+
 RED = '#ea312d'
 
 VQUALITY = {('Best quality video'): ['best', 'best'],
@@ -54,6 +57,7 @@ AQUALITY = {('Best quality audio'): ['best', 'best'],
             ('Worst quality audio'): ['worst', 'worst']}
 
 # variables
+
 opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
        ("THUMB"): [False, ""],
        ("METADATA"): [False, ""],
@@ -80,7 +84,8 @@ class Downloader(wx.Panel):
         """
         self.parent = parent
         self.oS = OS
-        self.info = []  # has data information for Show More button
+        self.info = list()  # has data information for Show More button
+        self.format_dict = dict()  # format codes order with URL matching
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -125,32 +130,6 @@ class Downloader(wx.Panel):
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
-
-        # ----------- format code
-        grid_cod = wx.FlexGridSizer(1, 4, 0, 0)
-        sizer.Add(grid_cod, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        self.txt_maincode = wx.TextCtrl(self, wx.ID_ANY, "",
-                                        style=wx.TE_MULTILINE |
-                                        wx.HSCROLL |
-                                        wx.TE_RICH2,
-                                        size=(180, 40)
-                                        )
-        self.txt_maincode.Disable()
-        self.stext1 = wx.StaticText(self, wx.ID_ANY, (_('Enter Format Code:')))
-        self.stext1.Disable()
-        grid_cod.Add(self.stext1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_cod.Add(self.txt_maincode, 0, wx.ALL, 5)
-        self.txt_mergecode = wx.TextCtrl(self, wx.ID_ANY, "",
-                                         style=wx.TE_MULTILINE |
-                                         wx.HSCROLL |
-                                         wx.TE_RICH2,
-                                         size=(180, 40)
-                                         )
-        self.txt_mergecode.Disable()
-        self.stext2 = wx.StaticText(self, wx.ID_ANY, (_('Merge with:')))
-        self.stext2.Disable()
-        grid_cod.Add(self.stext2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grid_cod.Add(self.txt_mergecode, 0, wx.ALL, 5)
         # -------------opt
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
@@ -170,21 +149,23 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
+
         self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
                                  wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                  )
         sizer.Add(self.fcode, 1, wx.EXPAND, 10)
-        # ---------------------- Tooltip
-        tip = (_('Enter the media "Format Code" here. You can specify '
-                 'multiple format codes by using slash, e.g. 22/17/18 . '
-                 'This box cannot left empty.'))
-        self.txt_maincode.SetToolTip(tip)
-        tip = (_('Optional. To merge an audio file at the video indicate a '
-                 'second audio "Format Code". You can specify multiple format '
-                 'codes by using slash, e.g. 140/130/151 .'))
-        self.txt_mergecode.SetToolTip(tip)
-        #self.fcode.SetToolTip(_('try right-clicking to choose'))
-
+        self.labcode = wx.StaticText(self, label=_("URLs loaded"))
+        sizer.Add(self.labcode, 0, wx.ALL, 5)
+        self.codesText = wx.TextCtrl(self, wx.ID_ANY, "",
+                                     style=wx.TE_MULTILINE |
+                                     wx.TE_READONLY |
+                                     wx.TE_RICH2,
+                                     # size=(500, -1)
+                                     )
+        sizer.Add(self.codesText, 1, wx.EXPAND, 10)
+        self.labText = wx.StaticText(self, label=_("Added Format Codes"))
+        sizer.Add(self.labText, 0, wx.ALL, 5)
+        self.codesText.Disable(), self.labText.Disable()
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
@@ -197,14 +178,46 @@ class Downloader(wx.Panel):
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
-        self.txt_maincode.Bind(wx.EVT_TEXT, self.main_code)
         self.fcode.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
+        self.fcode.Bind(wx.EVT_LIST_ITEM_CHECKED, self.onCheck)
+        self.fcode.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.onCheck)
     # -----------------------------------------------------------------#
 
-    def main_code(self, event):
-        '''default status bar when edit'''
+    def onCheck(self, event):
+        """
+        get data from row in the enabled checkbox and set the values
+        on corresponding key e.g.:
+        `key=url: values=a: audio v: video format list`
+        Otherwise, reset values when disabled checkbox.
+        """
         if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
             self.parent.statusbar_msg('Youtube Downloader', None)
+
+        if PYLIB_YDL is not None: # YuotubeDL is not used as module
+            viddisp, auddisp = 'video ', 'audio '
+        else:
+            viddisp, auddisp = 'video', 'audio only'
+
+        num = self.fcode.GetItemCount()
+        for url in self.parent.data_url:
+            self.format_dict[url] = []
+            for i in range(num):
+                if self.fcode.IsItemChecked(i):
+                    if (self.fcode.GetItemText(i, 0)) == url:
+                        if viddisp in self.fcode.GetItemText(i, 4):
+                            dv = self.fcode.GetItemText(i, 2)
+                            self.format_dict[url].append('Video: ' + dv)
+                        elif auddisp in self.fcode.GetItemText(i, 4):
+                            da = self.fcode.GetItemText(i, 2)
+                            self.format_dict[url].append('Audio: ' + da)
+                        else:
+                            dv = self.fcode.GetItemText(i, 2)
+                            self.format_dict[url].append('Video: ' + dv)
+
+        self.codesText.Clear()
+        for k, v in self.format_dict.items():
+            self.codesText.AppendText('%s  >>>  %s\n' % (k, v))
+        #print(self.format_dict)
     # ----------------------------------------------------------------------
 
     def onContext(self, event):
@@ -214,27 +227,11 @@ class Downloader(wx.Panel):
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID2"):
             self.popupID2 = wx.NewIdRef()
-            self.popupID3 = wx.NewIdRef()
-            self.popupID4 = wx.NewIdRef()
-            self.popupID5 = wx.NewIdRef()
-            self.popupID6 = wx.NewIdRef()
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID3)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID4)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID5)
-            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID6)
+
         # build the menu
         menu = wx.Menu()
-        if self.choice.GetSelection() == 3:
-            itemOne = menu.Append(self.popupID2, _("Insert Format Code"))
-            itemThree = menu.Append(self.popupID4, _("Append Format Code"))
-            menu.AppendSeparator()
-            itemTwo = menu.Append(self.popupID3, _("Insert for merging"))
-            itemFour = menu.Append(self.popupID5, _("Append for merging"))
-            menu.AppendSeparator()
-            itemfive = menu.Append(self.popupID6, _("Play selected url"))
-        else:
-            itemfive = menu.Append(self.popupID6, _("Play selected url"))
+        itemfive = menu.Append(self.popupID2, _("Play selected url"))
         # show the popup menu
         self.PopupMenu(menu)
 
@@ -249,36 +246,8 @@ class Downloader(wx.Panel):
         itemId = event.GetId()
         menu = event.GetEventObject()
         menuItem = menu.FindItemById(itemId)
-        item = self.fcode.GetFocusedItem()
-        fc = self.fcode.GetItemText(item, 2)
 
-        if menuItem.GetItemLabel() == _("Append Format Code"):
-            if self.txt_maincode.GetValue().strip() == '':
-                self.txt_maincode.AppendText(fc)
-            else:
-                self.txt_maincode.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
-                self.txt_maincode.AppendText('/')
-                self.txt_maincode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-                self.txt_maincode.AppendText('%s' % fc)
-
-        elif menuItem.GetItemLabel() == _("Append for merging"):
-            if self.txt_mergecode.GetValue().strip() == '':
-                self.txt_mergecode.AppendText(fc)
-            else:
-                self.txt_mergecode.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
-                self.txt_mergecode.AppendText('/')
-                self.txt_mergecode.SetDefaultStyle(wx.TextAttr(wx.NullColour))
-                self.txt_mergecode.AppendText('%s' % fc)
-
-        elif menuItem.GetItemLabel() == _("Insert Format Code"):
-            self.txt_maincode.Clear()
-            self.txt_maincode.AppendText(fc)
-
-        elif menuItem.GetItemLabel() == _("Insert for merging"):
-            self.txt_mergecode.Clear()
-            self.txt_mergecode.AppendText(fc)
-
-        elif menuItem.GetItemLabel() == _("Play selected url"):
+        if menuItem.GetItemLabel() == _("Play selected url"):
             self.parent.ExportPlay(self)
     # ----------------------------------------------------------------------
 
@@ -288,6 +257,7 @@ class Downloader(wx.Panel):
         populate the list control with new entries.
         """
         self.fcode.ClearAll()
+        self.fcode.EnableCheckBoxes(enable=True)
         self.fcode.InsertColumn(0, (_('Url')), width=60)
         self.fcode.InsertColumn(1, (_('Title')), width=200)
         self.fcode.InsertColumn(2, (_('Format Code')), width=120)
@@ -383,16 +353,15 @@ class Downloader(wx.Panel):
         *youtube_getformatcode_exec*
         """
         self.fcode.ClearAll()
+        self.fcode.EnableCheckBoxes(enable=True)
         self.fcode.InsertColumn(0, (_('Url')), width=200)
         self.fcode.InsertColumn(1, (_('Title')), width=50)
         self.fcode.InsertColumn(2, (_('Format Code')), width=120)
         self.fcode.InsertColumn(3, (_('Extension')), width=80)
         self.fcode.InsertColumn(4, (_('Resolution note')), width=500)
 
+        index = 0
         for link in self.parent.data_url:
-            index = 0
-            self.fcode.InsertItem(index, link)
-            self.fcode.SetItemBackgroundColour(index, 'GREEN')
             data = IO_tools.youtube_getformatcode_exec(link)
             for meta in data:
                 if meta[1]:
@@ -405,14 +374,16 @@ class Downloader(wx.Panel):
                     if not count > i:
                         i += 1
                     elif fc != '':
-                        # wx listctrl
-                        index += 1
                         self.fcode.InsertItem(index, link)
                         self.fcode.SetItem(index, 1, 'N/A')
                         self.fcode.SetItem(index, 2, fc.split()[0])
                         self.fcode.SetItem(index, 3, fc.split()[1])
                         note = ' '.join(fc.split()[2:])
                         self.fcode.SetItem(index, 4, note)
+
+                        if i + 1 == count:
+                            self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                        index += 1
 
                     if fc.startswith('format code '):
                         i = count  # limit
@@ -424,7 +395,11 @@ class Downloader(wx.Panel):
         Populate list control with new entries as urls and
         related resolutions
         """
+        self.codesText.Disable(), self.labText.Disable()
+        msg = _('URLs loaded')
+        self.labcode.SetLabel(msg)
         self.fcode.ClearAll()
+        self.fcode.EnableCheckBoxes(enable=False)
         self.fcode.InsertColumn(0, (_('Url')), width=500)
         self.fcode.InsertColumn(1, (_('Title')), width=50)
         self.fcode.InsertColumn(2, (_('Resolution note')), width=250)
@@ -462,6 +437,11 @@ class Downloader(wx.Panel):
         """
         get data and info and show listctrl to choose format code
         """
+        msg = _('To select the "Format Code" enable the '
+                'corresponding checkbox')
+        self.labcode.SetLabel(msg)
+        self.codesText.Enable(), self.labText.Enable()
+
         if PYLIB_YDL is not None:  # youtube-dl as executable
             ret = self.get_executableformatcode()
             if ret:
@@ -477,34 +457,23 @@ class Downloader(wx.Panel):
     def on_Choice(self, event):
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_vq.Enable(), self.txt_maincode.Disable()
-            self.stext1.Disable(), self.stext2.Disable()
-            self.txt_mergecode.Disable(), self.txt_maincode.Clear()
-            self.txt_mergecode.Clear()
+            self.cmbx_vq.Enable()
             self.on_urls_list(opt["V_QUALITY"][1])
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
-            self.cmbx_vq.Enable(), self.txt_maincode.Disable()
-            self.stext1.Disable(), self.stext2.Disable()
-            self.txt_mergecode.Disable(), self.txt_maincode.Clear()
-            self.txt_mergecode.Clear()
+            self.cmbx_vq.Enable()
             self.on_urls_list('%svideo+%saudio' % (opt["V_QUALITY"][1],
                                                    opt["A_QUALITY"][1]))
 
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Enable(), self.txt_maincode.Disable()
-            self.stext1.Disable(), self.stext2.Disable()
-            self.txt_mergecode.Disable(), self.txt_maincode.Clear()
-            self.txt_mergecode.Clear()
+            self.cmbx_af.Enable()
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Disable(), self.txt_maincode.Enable()
-            self.stext1.Enable(), self.stext2.Enable()
-            self.txt_mergecode.Enable()
+            self.cmbx_af.Disable()
             self.on_format_codes()
     # -----------------------------------------------------------------#
 
@@ -576,14 +545,56 @@ class Downloader(wx.Panel):
         logname = 'Youtube_LIB_downloader.log'
 
         def _getformatcode():
-            """return format code"""
-            code1 = self.txt_maincode.GetValue().strip()
-            code2 = self.txt_mergecode.GetValue().strip()
-            code = code1 if not code2 else code1 + '+' + code2
-            # ckstr = [x.isdigit() for x in code if x
-                     # not in [c for c in ['/', '+']]
-                     # ]
-            return code
+            """
+            return format code list
+            """
+            format_code = []
+
+            for url, key, val in zip(urls,
+                                     self.format_dict.keys(),
+                                     self.format_dict.values()):
+                if key == url:
+                    video, audio = '', ''
+                    if len(val) == 1:
+                        if val[0].startswith('Audio: '):
+                            audio = val[0].split('Audio: ')[1]
+                        elif val[0].startswith('Video: '):
+                            video = val[0].split('Video: ')[1]
+                        else:
+                            video = val[0].split('Video: ')[1]
+                    else:
+                        index_1, index_2 = 0, 0
+                        for i in val:
+                            if i.startswith('Video: '):
+                                index_1 += 1
+                                if index_1 > 1:
+                                    video += '/%s' % i.split('Video: ')[1]
+                                else:
+                                    video = i.split('Video: ')[1]
+
+                            elif i.startswith('Audio: '):
+                                index_2 += 1
+                                if index_2 > 1:
+                                    audio += '/%s' % i.split('Audio: ')[1]
+                                else:
+                                    audio = i.split('Audio: ')[1]
+                            else:
+                                index_1 += 1
+                                if index_1 > 1:
+                                    video += '/%s' % i.split('Video: ')[1]
+                                else:
+                                    video = i.split('Video: ')[1]
+
+                    if video and audio:
+                        format_code.append('%s+%s' % (video, audio))
+                    elif video:
+                        format_code.append('%s' % video)
+                    elif audio:
+                        format_code.append('%s' % audio)
+
+            if len(format_code) != len(urls):
+                return None
+            return format_code
 
         if PYLIB_YDL is None:  # ----------- youtube-dl is used as library
             postprocessors = []
@@ -602,6 +613,7 @@ class Downloader(wx.Panel):
                 postprocessors.append({'key': 'FFmpegEmbedSubtitle'})
 
             if self.choice.GetSelection() == 0:
+                code = []
                 data = {'format': opt["V_QUALITY"][0],
                         'noplaylist': opt["NO_PLAYLIST"][0],
                         'writethumbnail': opt["THUMB"][0],
@@ -614,6 +626,7 @@ class Downloader(wx.Panel):
                         'postprocessors': postprocessors
                         }
             if self.choice.GetSelection() == 1:  # audio files and video files
+                code = []
                 data = {'format': '%svideo,%saudio' % (opt["V_QUALITY"][0],
                                                        opt["A_QUALITY"][0]),
                         'noplaylist': opt["NO_PLAYLIST"][0],
@@ -627,7 +640,7 @@ class Downloader(wx.Panel):
                         'postprocessors': postprocessors
                         }
             elif self.choice.GetSelection() == 2:  # audio only
-
+                code = []
                 data = {'format': 'best',
                         'noplaylist': opt["NO_PLAYLIST"][0],
                         'writethumbnail': opt["THUMB"][0],
@@ -644,7 +657,7 @@ class Downloader(wx.Panel):
                 if not code:
                     self.parent.statusbar_msg(MSG_1, RED)
                     return
-                data = {'format': code,
+                data = {'format': '',
                         'noplaylist': opt["NO_PLAYLIST"][0],
                         'writethumbnail': opt["THUMB"][0],
                         'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
@@ -661,7 +674,7 @@ class Downloader(wx.Panel):
                                              self.parent.file_destin,
                                              data,
                                              None,
-                                             '',
+                                             code,
                                              '',
                                              'Youtube_LIB_downloader.log',
                                              len(urls),
@@ -669,6 +682,7 @@ class Downloader(wx.Panel):
         else:  # ----------- with youtube-dl command line execution
 
             if self.choice.GetSelection() == 0:  # default
+                code = []
                 cmd = [(f'--format '
                         f'{opt["V_QUALITY"][1]} '
                         f'{opt["METADATA"][1]} '
@@ -679,6 +693,7 @@ class Downloader(wx.Panel):
                        ]
 
             if self.choice.GetSelection() == 1:  # audio files + video files
+                code = []
                 cmd = [(f'--format '
                         f'{opt["V_QUALITY"][1]}video,'
                         f'{opt["A_QUALITY"][1]}audio '
@@ -689,6 +704,7 @@ class Downloader(wx.Panel):
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
             elif self.choice.GetSelection() == 2:  # audio only
+                code = []
                 cmd = [(f'{opt["A_FORMAT"][1]} '
                         f'{opt["METADATA"][1]} '
                         f'{opt["SUBTITLES"][1]} '
@@ -701,20 +717,21 @@ class Downloader(wx.Panel):
                 if not code:
                     self.parent.statusbar_msg(MSG_1, RED)
                     return
-                cmd = [(f'--format {code} '
-                        f'{opt["METADATA"][1]} '
+                cmd = [(f'{opt["METADATA"][1]} '
                         f'{opt["SUBTITLES"][1]} '
                         f'{opt["THUMB"][1]} '
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
+            #print(cmd)
+            #return
             self.parent.switch_to_processing('youtube-dl executable',
                                              urls,
                                              '',
                                              self.parent.file_destin,
                                              cmd,
                                              None,
-                                             '',
+                                             code,
                                              '',
                                              'Youtube_EXEC_downloader.log',
                                              len(urls),

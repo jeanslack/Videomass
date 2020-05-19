@@ -27,6 +27,7 @@
 #########################################################
 import wx
 import subprocess
+import itertools
 import os
 from threading import Thread
 import time
@@ -79,6 +80,7 @@ class Ydl_DL_Exec(Thread):
         self.urls:          urls list
         self.opt:           option strings to adding
         self.outtmpl:       options template to renaming on pathname
+        self.code:          Format Code, else empty string ''
         self.outputdir:     pathname destination
         self.count:         increases with the progressive account elements
         self.countmax:      length of self.urls
@@ -91,6 +93,7 @@ class Ydl_DL_Exec(Thread):
         self.urls = varargs[1]
         self.opt = varargs[4][0]
         self.outtmpl = varargs[4][1]
+        self.code = varargs[6]
         self.outputdir = varargs[3]
         self.count = 0
         self.countmax = len(varargs[1])
@@ -104,13 +107,18 @@ class Ydl_DL_Exec(Thread):
         """
         ssl = '--no-check-certificate' if OS == 'Windows' else ''
 
-        for url in self.urls:
+        for url, code in itertools.zip_longest(self.urls,
+                                               self.code,
+                                               fillvalue='',
+                                               ):
+            format_code = '--format %s' %(code) if code else ''
             cmd = ('"{0}" {1} --newline --ignore-errors -o '
-                   '"{2}/{3}" {4} --ignore-config --restrict-filenames '
-                   '"{5}" --ffmpeg-location "{6}"'.format(execYdl,
+                   '"{2}/{3}" {4} {5} --ignore-config --restrict-filenames '
+                   '"{6}" --ffmpeg-location "{7}"'.format(execYdl,
                                                           ssl,
                                                           self.outputdir,
                                                           self.outtmpl,
+                                                          format_code,
                                                           self.opt,
                                                           url,
                                                           FFMPEG_URL,

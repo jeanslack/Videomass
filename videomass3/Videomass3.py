@@ -132,6 +132,9 @@ class Videomass(wx.App):
                 except (ModuleNotFoundError, ImportError) as nomodule:
                     self.pylibYdl = (nomodule)
                     self.execYdl = src
+            # use for debug executable:
+            #self.pylibYdl = ('Niente modulo')
+            #self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl')
         # ----- ffmpeg
         if setui[0] == 'Darwin':  # on MacOs
             for link in [setui[4][6], setui[4][8], setui[4][10]]:

@@ -27,6 +27,7 @@
 #########################################################
 import wx
 import os
+import itertools
 from threading import Thread
 import time
 from pubsub import pub
@@ -145,6 +146,7 @@ class Ydl_DL_Pylib(Thread):
         self.urls:          urls list
         self.opt:           option dict data type to adding
         self.outputdir:     pathname destination
+        self.code:          Format Code, else empty string ''
         self.count:         increases progressive account elements
         self.countmax:      length of self.urls items list
         self.logname:       file name to log messages for logging
@@ -155,6 +157,7 @@ class Ydl_DL_Pylib(Thread):
         self.urls = varargs[1]
         self.opt = varargs[4]
         self.outputdir = varargs[3]
+        self.code = varargs[6]
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
@@ -168,7 +171,11 @@ class Ydl_DL_Pylib(Thread):
     def run(self):
         """
         """
-        for url in self.urls:
+        for url, code in itertools.zip_longest(self.urls,
+                                               self.code,
+                                               fillvalue='',
+                                               ):
+            format_code = code if code else self.opt['format']
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
             wx.CallAfter(pub.sendMessage,
@@ -182,7 +189,7 @@ class Ydl_DL_Pylib(Thread):
             if self.stop_work_thread:
                 break
 
-            ydl_opts = {'format': self.opt['format'],
+            ydl_opts = {'format': format_code,
                         'extractaudio': self.opt['format'],
                         'outtmpl': '{}/{}'.format(self.outputdir,
                                                   self.opt['outtmpl']),

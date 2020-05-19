@@ -7,14 +7,29 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-May 17, 2020 V.2.3.0
+May 19, 2020 V.2.3.0
 +------------------------------------+
+
+BUGS:
+    * [YOUTUBE DOWNLOADER] Fixed list order when having multiple URLs on the
+      list control (only when using the youtube-dl executable, not the module).
+
+    * [YOUTUBE DOWNLOADER] Fixed issue with "Format Codes" missing when
+      downloading different URLs (on `Download by Format Code` mode).
 
 IMPROVEMENTS:
     * improved descriptions and translation on GUI.
     * improved buttons layout on the home panel depending by OS.
     * improved float spin control view on new wxPython version 4.1 .
+    * The selection of 'Format Codes' has been rewritten, automated and
+      significantly improved
 
+REMOVALS and DISPLACEMENTS:
+    * [YOUTUBE DOWNLOADER] the format code text boxes have been removed and
+      replaced with check boxes on the list control.
+
+    * [YOUTUBE DOWNLOADER] the contextual menu have been removed and
+      replaced with check boxes on the list control.
 
 
 +------------------------------------+
@@ -63,7 +78,6 @@ BUGS:
 NEWS:
     * Updating setup.py with new setuptools entries to fixing start videomass
       executable on Windows.
-
 
 +------------------------------------+
 May 10, 2020 V.2.1.5
