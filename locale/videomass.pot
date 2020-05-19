@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-17 19:05+0200\n"
+"POT-Creation-Date: 2020-05-20 00:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1211,8 +1211,8 @@ msgid ""
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:129
-#: ../videomass3/vdms_main/main_frame.py:1409
-#: ../videomass3/vdms_main/main_frame.py:1448
+#: ../videomass3/vdms_main/main_frame.py:1410
+#: ../videomass3/vdms_main/main_frame.py:1449
 msgid "Streams analyzer"
 msgstr ""
 
@@ -1698,28 +1698,28 @@ msgid "Add URLs"
 msgstr ""
 
 #: ../videomass3/vdms_main/main_frame.py:1355
-#: ../videomass3/vdms_main/main_frame.py:1396
-#: ../videomass3/vdms_main/main_frame.py:1436
+#: ../videomass3/vdms_main/main_frame.py:1397
+#: ../videomass3/vdms_main/main_frame.py:1437
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1370
+#: ../videomass3/vdms_main/main_frame.py:1371
 msgid "Show More"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1390
+#: ../videomass3/vdms_main/main_frame.py:1391
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1430
+#: ../videomass3/vdms_main/main_frame.py:1431
 msgid "Presets Manager"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1484
+#: ../videomass3/vdms_main/main_frame.py:1485
 msgid "Log of the last process"
 msgstr ""
 
-#: ../videomass3/vdms_main/main_frame.py:1486
+#: ../videomass3/vdms_main/main_frame.py:1487
 msgid "Under processing..."
 msgstr ""
 
@@ -2297,142 +2297,107 @@ msgstr ""
 msgid "Videomass confirmation"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:36
-msgid ""
-"Missing \"Format Code\": you must enter the choosen format code on the text "
-"box"
+#: ../videomass3/vdms_panels/youtubedl_ui.py:38
+msgid "At least one \"Format Code\" must be selected for each URL."
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:93
+#: ../videomass3/vdms_panels/youtubedl_ui.py:99
 msgid "Default"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:94
+#: ../videomass3/vdms_panels/youtubedl_ui.py:100
 msgid "Download audio and video splitted"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:95
+#: ../videomass3/vdms_panels/youtubedl_ui.py:101
 msgid "Download Audio only"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:96
+#: ../videomass3/vdms_panels/youtubedl_ui.py:102
 msgid "Download by format code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:139
-msgid "Enter Format Code:"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:150
-msgid "Merge with:"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:158
+#: ../videomass3/vdms_panels/youtubedl_ui.py:138
 msgid "Download all playlist"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:162
+#: ../videomass3/vdms_panels/youtubedl_ui.py:142
 msgid "Embed thumbnail in audio file"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:166
+#: ../videomass3/vdms_panels/youtubedl_ui.py:146
 msgid "Add metadata to file"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:170
+#: ../videomass3/vdms_panels/youtubedl_ui.py:150
 msgid "Write subtitles to video"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:178
-msgid ""
-"Enter the media \"Format Code\" here. You can specify multiple format codes "
-"by using slash, e.g. 22/17/18 . This box cannot left empty."
+#: ../videomass3/vdms_panels/youtubedl_ui.py:153
+#: ../videomass3/vdms_panels/youtubedl_ui.py:407
+msgid "URLs loaded"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:182
-msgid ""
-"Optional. To merge an audio file at the video indicate a second audio "
-"\"Format Code\". You can specify multiple format codes by using slash, e.g. "
-"140/130/151 ."
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:229
-#: ../videomass3/vdms_panels/youtubedl_ui.py:273
-msgid "Insert Format Code"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:230
-#: ../videomass3/vdms_panels/youtubedl_ui.py:255
-msgid "Append Format Code"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:232
-#: ../videomass3/vdms_panels/youtubedl_ui.py:277
-msgid "Insert for merging"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:233
-#: ../videomass3/vdms_panels/youtubedl_ui.py:264
-msgid "Append for merging"
-msgstr ""
-
-#: ../videomass3/vdms_panels/youtubedl_ui.py:235
-#: ../videomass3/vdms_panels/youtubedl_ui.py:237
-#: ../videomass3/vdms_panels/youtubedl_ui.py:281
+#: ../videomass3/vdms_panels/youtubedl_ui.py:242
+#: ../videomass3/vdms_panels/youtubedl_ui.py:258
 msgid "Play selected url"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:291
-#: ../videomass3/vdms_panels/youtubedl_ui.py:386
-#: ../videomass3/vdms_panels/youtubedl_ui.py:428
+#: ../videomass3/vdms_panels/youtubedl_ui.py:269
+#: ../videomass3/vdms_panels/youtubedl_ui.py:365
+#: ../videomass3/vdms_panels/youtubedl_ui.py:411
 msgid "Url"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:292
-#: ../videomass3/vdms_panels/youtubedl_ui.py:387
-#: ../videomass3/vdms_panels/youtubedl_ui.py:429
+#: ../videomass3/vdms_panels/youtubedl_ui.py:270
+#: ../videomass3/vdms_panels/youtubedl_ui.py:366
+#: ../videomass3/vdms_panels/youtubedl_ui.py:412
 msgid "Title"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:293
-#: ../videomass3/vdms_panels/youtubedl_ui.py:388
+#: ../videomass3/vdms_panels/youtubedl_ui.py:271
+#: ../videomass3/vdms_panels/youtubedl_ui.py:367
 msgid "Format Code"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:294
-#: ../videomass3/vdms_panels/youtubedl_ui.py:389
+#: ../videomass3/vdms_panels/youtubedl_ui.py:272
+#: ../videomass3/vdms_panels/youtubedl_ui.py:368
 msgid "Extension"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:295
+#: ../videomass3/vdms_panels/youtubedl_ui.py:273
 msgid "Resolution"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:296
+#: ../videomass3/vdms_panels/youtubedl_ui.py:274
 msgid "Video Codec"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:297
+#: ../videomass3/vdms_panels/youtubedl_ui.py:275
 msgid "fps"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:298
+#: ../videomass3/vdms_panels/youtubedl_ui.py:276
 msgid "Audio Codec"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:299
+#: ../videomass3/vdms_panels/youtubedl_ui.py:277
 msgid "Size"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:390
-#: ../videomass3/vdms_panels/youtubedl_ui.py:430
+#: ../videomass3/vdms_panels/youtubedl_ui.py:369
+#: ../videomass3/vdms_panels/youtubedl_ui.py:413
 msgid "Resolution note"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:447
+#: ../videomass3/vdms_panels/youtubedl_ui.py:430
 msgid ""
 "\"Show more\" only is enabled when Videomass uses youtube-dl as imported "
 "library."
+msgstr ""
+
+#: ../videomass3/vdms_panels/youtubedl_ui.py:448
+msgid "To select the \"Format Code\" enable the corresponding checkbox"
 msgstr ""
 
 #: ../videomass3/vdms_panels/filedrop.py:68
@@ -2762,12 +2727,12 @@ msgstr ""
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr ""
 
-#: ../videomass3/vdms_threads/ydl_executable.py:44
-#: ../videomass3/vdms_threads/ydl_executable.py:50
+#: ../videomass3/vdms_threads/ydl_executable.py:45
+#: ../videomass3/vdms_threads/ydl_executable.py:51
 msgid "Unrecognized error"
 msgstr ""
 
-#: ../videomass3/vdms_threads/ydl_executable.py:47
+#: ../videomass3/vdms_threads/ydl_executable.py:48
 msgid ""
 "\n"
 "Requires MSVCR100.dll\n"
@@ -2775,7 +2740,7 @@ msgid ""
 "Package (x86)"
 msgstr ""
 
-#: ../videomass3/vdms_threads/ydl_executable.py:52
+#: ../videomass3/vdms_threads/ydl_executable.py:53
 msgid "Is 'youtube-dl' installed on your system?"
 msgstr ""
 

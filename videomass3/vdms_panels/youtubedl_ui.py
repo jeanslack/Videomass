@@ -35,10 +35,10 @@ import itertools
 
 # constants
 
-MSG_1 = _('Missing "Format Code": choose a format code and enter it in the '
-          'text box.')
+MSG_1 = _('At least one "Format Code" must be selected for each URL.')
 
 RED = '#ea312d'
+ORANGE = 206, 57, 35
 
 VQUALITY = {('Best quality video'): ['best', 'best'],
             ('Worst quality video'): ['worst', 'worst']}
@@ -69,6 +69,7 @@ opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
 
 # get videomass wx.App attribute
 get = wx.GetApp()
+OS = get.OS
 PYLIB_YDL = get.pylibYdl
 
 
@@ -149,26 +150,28 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
-
+        self.labcode = wx.StaticText(self, label=_("URLs loaded"))
+        sizer.Add(self.labcode, 0, wx.ALL, 5)
         self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
                                  wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                  )
         sizer.Add(self.fcode, 1, wx.EXPAND, 10)
-        self.labcode = wx.StaticText(self, label=_("URLs loaded"))
-        sizer.Add(self.labcode, 0, wx.ALL, 5)
-        self.codesText = wx.TextCtrl(self, wx.ID_ANY, "",
-                                     style=wx.TE_MULTILINE |
-                                     wx.TE_READONLY |
-                                     wx.TE_RICH2,
-                                     # size=(500, -1)
-                                     )
-        sizer.Add(self.codesText, 1, wx.EXPAND, 10)
-        self.labText = wx.StaticText(self, label=_("Added Format Codes"))
-        sizer.Add(self.labText, 0, wx.ALL, 5)
-        self.codesText.Disable(), self.labText.Disable()
+        self.codText = wx.TextCtrl(self, wx.ID_ANY, "",
+                                   style=wx.TE_MULTILINE |
+                                   wx.TE_READONLY |
+                                   wx.TE_RICH2,
+                                   # size=(500, -1)
+                                   )
+        sizer.Add(self.codText, 1, wx.ALL | wx.EXPAND, 10)
+        self.codText.Disable()
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
+        #----------------------- Properties
+        if OS == 'Darwin':
+            self.codText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
+        else:
+            self.codText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
@@ -214,9 +217,14 @@ class Downloader(wx.Panel):
                             dv = self.fcode.GetItemText(i, 2)
                             self.format_dict[url].append('Video: ' + dv)
 
-        self.codesText.Clear()
+        self.codText.Clear()
         for k, v in self.format_dict.items():
-            self.codesText.AppendText('%s  >>>  %s\n' % (k, v))
+            if not v:
+                self.codText.SetDefaultStyle(wx.TextAttr(wx.Colour(ORANGE)))
+                self.codText.AppendText('- %s  >>>  %s\n' % (k, v))
+                self.codText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            else:
+                self.codText.AppendText('- %s  >>>  %s\n' % (k, v))
         #print(self.format_dict)
     # ----------------------------------------------------------------------
 
@@ -395,7 +403,7 @@ class Downloader(wx.Panel):
         Populate list control with new entries as urls and
         related resolutions
         """
-        self.codesText.Disable(), self.labText.Disable()
+        self.codText.Disable()
         msg = _('URLs loaded')
         self.labcode.SetLabel(msg)
         self.fcode.ClearAll()
@@ -440,7 +448,7 @@ class Downloader(wx.Panel):
         msg = _('To select the "Format Code" enable the '
                 'corresponding checkbox')
         self.labcode.SetLabel(msg)
-        self.codesText.Enable(), self.labText.Enable()
+        self.codText.Enable()
 
         if PYLIB_YDL is not None:  # youtube-dl as executable
             ret = self.get_executableformatcode()
@@ -723,8 +731,6 @@ class Downloader(wx.Panel):
                         f'{opt["NO_PLAYLIST"][1]}'),
                        ('%(title)s.f%(format_id)s.%(ext)s')
                        ]
-            #print(cmd)
-            #return
             self.parent.switch_to_processing('youtube-dl executable',
                                              urls,
                                              '',
