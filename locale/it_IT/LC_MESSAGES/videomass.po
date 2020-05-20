@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-20 00:35+0200\n"
-"PO-Revision-Date: 2020-05-20 00:40+0200\n"
+"POT-Creation-Date: 2020-05-20 12:06+0200\n"
+"PO-Revision-Date: 2020-05-20 12:10+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -2677,99 +2677,102 @@ msgid "Videomass confirmation"
 msgstr "Videomass conferma"
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:38
-msgid "At least one \"Format Code\" must be selected for each URL."
-msgstr "È necessario selezionare almeno un \"Codice Formato\" per ciascun URL."
+msgid ""
+"At least one \"Format Code\" must be checked for each URL selected in green."
+msgstr ""
+"È necessario spuntare almeno un \"Codice Formato\" per ciascun URL "
+"selezionato in verde."
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:99
+#: ../videomass3/vdms_panels/youtubedl_ui.py:100
 msgid "Default"
 msgstr "Predefinito"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:100
+#: ../videomass3/vdms_panels/youtubedl_ui.py:101
 msgid "Download audio and video splitted"
 msgstr "Scarica audio e video divisi"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:101
+#: ../videomass3/vdms_panels/youtubedl_ui.py:102
 msgid "Download Audio only"
 msgstr "Scarica solo il file audio"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:102
+#: ../videomass3/vdms_panels/youtubedl_ui.py:103
 msgid "Download by format code"
 msgstr "Scarica per codice formato"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:138
+#: ../videomass3/vdms_panels/youtubedl_ui.py:139
 msgid "Download all playlist"
 msgstr "Scarica tutta la playlist"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:142
+#: ../videomass3/vdms_panels/youtubedl_ui.py:143
 msgid "Embed thumbnail in audio file"
 msgstr "Aggiungi miniatura nel file audio"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:146
+#: ../videomass3/vdms_panels/youtubedl_ui.py:147
 msgid "Add metadata to file"
 msgstr "Aggiungi i meta dati al file"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:150
+#: ../videomass3/vdms_panels/youtubedl_ui.py:151
 msgid "Write subtitles to video"
 msgstr "Scrivi sottotitoli al video"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:153
-#: ../videomass3/vdms_panels/youtubedl_ui.py:407
+#: ../videomass3/vdms_panels/youtubedl_ui.py:154
+#: ../videomass3/vdms_panels/youtubedl_ui.py:414
 msgid "URLs loaded"
 msgstr "URL caricati"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:242
-#: ../videomass3/vdms_panels/youtubedl_ui.py:258
+#: ../videomass3/vdms_panels/youtubedl_ui.py:243
+#: ../videomass3/vdms_panels/youtubedl_ui.py:259
 msgid "Play selected url"
 msgstr "Riproduci l'URL selezionato"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:269
-#: ../videomass3/vdms_panels/youtubedl_ui.py:365
-#: ../videomass3/vdms_panels/youtubedl_ui.py:411
+#: ../videomass3/vdms_panels/youtubedl_ui.py:272
+#: ../videomass3/vdms_panels/youtubedl_ui.py:369
+#: ../videomass3/vdms_panels/youtubedl_ui.py:418
 msgid "Url"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:270
-#: ../videomass3/vdms_panels/youtubedl_ui.py:366
-#: ../videomass3/vdms_panels/youtubedl_ui.py:412
+#: ../videomass3/vdms_panels/youtubedl_ui.py:273
+#: ../videomass3/vdms_panels/youtubedl_ui.py:370
+#: ../videomass3/vdms_panels/youtubedl_ui.py:419
 msgid "Title"
 msgstr "Titolo"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:271
-#: ../videomass3/vdms_panels/youtubedl_ui.py:367
+#: ../videomass3/vdms_panels/youtubedl_ui.py:274
+#: ../videomass3/vdms_panels/youtubedl_ui.py:371
 msgid "Format Code"
 msgstr "Codice Formato"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:272
-#: ../videomass3/vdms_panels/youtubedl_ui.py:368
+#: ../videomass3/vdms_panels/youtubedl_ui.py:275
+#: ../videomass3/vdms_panels/youtubedl_ui.py:372
 msgid "Extension"
 msgstr "Estensione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:273
+#: ../videomass3/vdms_panels/youtubedl_ui.py:276
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:274
+#: ../videomass3/vdms_panels/youtubedl_ui.py:277
 msgid "Video Codec"
 msgstr "Codec Video"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:275
+#: ../videomass3/vdms_panels/youtubedl_ui.py:278
 msgid "fps"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:276
+#: ../videomass3/vdms_panels/youtubedl_ui.py:279
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:277
+#: ../videomass3/vdms_panels/youtubedl_ui.py:280
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:369
-#: ../videomass3/vdms_panels/youtubedl_ui.py:413
+#: ../videomass3/vdms_panels/youtubedl_ui.py:373
+#: ../videomass3/vdms_panels/youtubedl_ui.py:420
 msgid "Resolution note"
 msgstr "Note sulla risoluzione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:430
+#: ../videomass3/vdms_panels/youtubedl_ui.py:437
 msgid ""
 "\"Show more\" only is enabled when Videomass uses youtube-dl as imported "
 "library."
@@ -2777,10 +2780,9 @@ msgstr ""
 "“Mostra altro” è abilitato solo quando Videomass utilizza youtube-dl come "
 "libreria importata."
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:448
-msgid "To select the \"Format Code\" enable the corresponding checkbox"
-msgstr ""
-"Per selezionare il \"Codice Formato\" spuntare la casella corrispondente"
+#: ../videomass3/vdms_panels/youtubedl_ui.py:455
+msgid "Check at least one box for each URL (green selection)"
+msgstr "Seleziona almeno una casella per ciascun URL (selezione verde)"
 
 #: ../videomass3/vdms_panels/filedrop.py:68
 msgid "Directories are not allowed, just add files, please."
@@ -3194,6 +3196,10 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid "To select the \"Format Code\" enable the corresponding checkbox"
+#~ msgstr ""
+#~ "Per selezionare il \"Codice Formato\" spuntare la casella corrispondente"
 
 #~ msgid ""
 #~ "Missing \"Format Code\": you must enter the choosen format code on the "

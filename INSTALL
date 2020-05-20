@@ -9,10 +9,11 @@ BASE DEPENDENCIES
         - PyPubSub
         - pip (On Windows and MacOS it is included with Python3.7)
         - FFmpeg (with ffplay and ffprobe) >=4.1.4
-        - youtube-dl
+        - youtube_dl
 
     Optionals:
         - mpv (media player) for playing URLs
+        - atomicparsley (to embed thumbnail in audio file)
 
 Videomass can be run without installing by un-tarring the source package and
 executing the "launcher" script inside the un-tarred directory.

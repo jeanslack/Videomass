@@ -35,7 +35,8 @@ import itertools
 
 # constants
 
-MSG_1 = _('At least one "Format Code" must be selected for each URL.')
+MSG_1 = _('At least one "Format Code" must be checked for each '
+          'URL selected in green.')
 
 RED = '#ea312d'
 ORANGE = 206, 57, 35
@@ -162,7 +163,7 @@ class Downloader(wx.Panel):
                                    wx.TE_RICH2,
                                    # size=(500, -1)
                                    )
-        sizer.Add(self.codText, 1, wx.ALL | wx.EXPAND, 10)
+        sizer.Add(self.codText, 1, wx.TOP | wx.EXPAND, 10)
         self.codText.Disable()
         # -----------------------
         self.SetSizer(sizer_base)
@@ -189,9 +190,9 @@ class Downloader(wx.Panel):
     def onCheck(self, event):
         """
         get data from row in the enabled checkbox and set the values
-        on corresponding key e.g.:
-        `key=url: values=a: audio v: video format list`
-        Otherwise, reset values when disabled checkbox.
+        on corresponding key depending if check or uncheck e.g.:
+
+            `key=url: values=[Audio: code, Video: code]`
         """
         if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
             self.parent.statusbar_msg('Youtube Downloader', None)
@@ -261,8 +262,10 @@ class Downloader(wx.Panel):
 
     def get_libraryformatcode(self):
         """
-        Get URLs format code by generator object *youtube_info* and set
-        populate the list control with new entries.
+        Get URLs data and format codes by generator object *youtube_info*
+        (using youtube_dl library) and set the list control with new
+        entries. Return `True` if `meta[1]` (error), otherwise return None
+        as exit staus.
         """
         self.fcode.ClearAll()
         self.fcode.EnableCheckBoxes(enable=True)
@@ -316,9 +319,9 @@ class Downloader(wx.Panel):
 
     def get_info(self):
         """
-        Get media url informations by generator object *youtube_info*  .
-        If meta[1] is None set self.info attribute with dict objetc items
-        and return None. Otherwise self.info is a empty list and return True
+        Get media URLs informations by generator object *youtube_info*  .
+        Return `True` if `meta[1]` (error), otherwise return None
+        as exit staus.
         """
         for link in self.parent.data_url:
             data = IO_tools.youtube_info(link)
@@ -357,8 +360,9 @@ class Downloader(wx.Panel):
 
     def get_executableformatcode(self):
         """
-        Get format code and set new items for list control by generator object
-        *youtube_getformatcode_exec*
+        Get URLs format codes data by generator object (using executable)
+        *youtube_getformatcode_exec* and set list control. Return `True`
+        if `meta[1]` (error), otherwise return None as exit staus.
         """
         self.fcode.ClearAll()
         self.fcode.EnableCheckBoxes(enable=True)
@@ -400,9 +404,12 @@ class Downloader(wx.Panel):
 
     def on_urls_list(self, quality):
         """
-        Populate list control with new entries as urls and
-        related resolutions
+        Populate list control with new incoming as urls and
+        related resolutions.
         """
+        if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
+            self.parent.statusbar_msg('Youtube Downloader', None)
+        self.codText.Clear()
         self.codText.Disable()
         msg = _('URLs loaded')
         self.labcode.SetLabel(msg)
@@ -423,8 +430,8 @@ class Downloader(wx.Panel):
 
     def on_show_info(self):
         """
-        show data information. This method is called by the main frame
-        when the 'Show More' button is pressed.
+        show URL data information. This method is called by
+        main frame when the 'Show More' button is pressed.
         """
         if PYLIB_YDL is not None:  # YuotubeDL is not used as module
             wx.MessageBox(_('"Show more" only is enabled when Videomass '
@@ -443,14 +450,13 @@ class Downloader(wx.Panel):
 
     def on_format_codes(self):
         """
-        get data and info and show listctrl to choose format code
+        Evaluate which method to call to enable download from "Format Code"
         """
-        msg = _('To select the "Format Code" enable the '
-                'corresponding checkbox')
+        msg = _('Check at least one box for each URL (green selection)')
         self.labcode.SetLabel(msg)
         self.codText.Enable()
 
-        if PYLIB_YDL is not None:  # youtube-dl as executable
+        if PYLIB_YDL is not None:  # YuotubeDL is not used as module
             ret = self.get_executableformatcode()
             if ret:
                 return  # do not enable fcode
