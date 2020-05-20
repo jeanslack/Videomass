@@ -1,10 +1,13 @@
 [Home](index.md)
 
-## Features:
-
+## General Features
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
-- Drag n' Drop with multiple files at once.
 - Batch processing.
+- Advanced log management.
+- Multi language (English and Italian Languages support for now).
+
+## Features with FFmpeg
+- Drop of files to drag multiple files simultaneously
 - Fully customizable presets and profiles.
 - Possibility to create your new presets and profiles from scratch.
 - Has useful presets to start with.
@@ -14,11 +17,20 @@
 - Three audio normalization modes: Peak, RMS and EBU R128.
 - Audio index from videos selectable to apply normalization.
 - Setting duration portions for imported files, filters, export and tests.
+
+## Features with youtube-dl
+- Drop text to drag multiple URLs.
 - Download multiple URLs from YouTube and more sites.
-- View video information without downloading it.
-- Ability to download videos using the 'format code' with audio merging.
-- Ability to playback individual URLs with different qualities.
-- Log management.
-- Multi language (English and Italian Languages support for now).
+- Four download modes:
+    - Default (choosing between 'best' or 'worst' qualities).
+    - Download audio and video splitted.
+    - Download Audio only (you can choose various formats).
+    - Download videos and audio by 'format code' with audio merging.
+- View video information without downloading it (using youtube_dl library only).
+- Ability to playback individual URLs with different qualities via mpv player.
+- Ability to download all playlist.
+- Embed thumbnail in audio file (via atomicparsley).
+- Add metadata to file.
+- Write subtitles to video.
 
 [Home](index.md)
