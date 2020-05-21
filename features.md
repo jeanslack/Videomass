@@ -7,7 +7,7 @@
 - Multi language (English and Italian Languages support for now).
 
 ## Features with FFmpeg
-- Drop of files to drag multiple files simultaneously
+- Drag and drop to add multiple files simultaneously.
 - Fully customizable presets and profiles.
 - Possibility to create your new presets and profiles from scratch.
 - Has useful presets to start with.
@@ -19,7 +19,7 @@
 - Setting duration portions for imported files, filters, export and tests.
 
 ## Features with youtube-dl
-- Drop text to drag multiple URLs.
+- Add multiple URLs simultaneously.
 - Download multiple URLs from YouTube and more sites.
 - Four download modes:
     - Default (choosing between 'best' or 'worst' qualities).
