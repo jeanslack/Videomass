@@ -368,7 +368,6 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(0, (_('Format Code')), width=120)
         self.fcode.InsertColumn(1, (_('Url')), width=200)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
-        #self.fcode.InsertColumn(2, (_('Format Code')), width=120)
         self.fcode.InsertColumn(3, (_('Extension')), width=80)
         self.fcode.InsertColumn(4, (_('Resolution note')), width=500)
 
