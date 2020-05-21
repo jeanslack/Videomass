@@ -381,10 +381,11 @@ class Logging_Console(wx.Panel):
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         else:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(AZURE)))
-            self.OutText.AppendText(_('\n All finished !\n'))
+            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(GREEN)))
+            self.OutText.AppendText(_('\n FINISHED :-)\n'))
             self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             self.barProg.SetValue(0)
+            # self.parent.statusbar_msg(_('...Done'), None)
 
         self.button_stop.Enable(False)
         self.button_close.Enable(True)

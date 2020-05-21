@@ -450,8 +450,11 @@ class MainFrame(wx.Frame):
             else:
                 self.statusbar_msg(_('YouTube Downloader'), None)
                 item = self.ytDownloader.fcode.GetFocusedItem()
-                url = self.ytDownloader.fcode.GetItemText(item, 0)
-                quality = self.ytDownloader.fcode.GetItemText(item, 2)
+                url = self.ytDownloader.fcode.GetItemText(item, 1)
+                if self.ytDownloader.choice.GetSelection() in [0, 1 ,2 ]:
+                    quality = self.ytDownloader.fcode.GetItemText(item, 3)
+                elif self.ytDownloader.choice.GetSelection() == 3:
+                    quality = self.ytDownloader.fcode.GetItemText(item, 0)
                 IO_tools.url_play(url, quality)
         else:
             with wx.FileDialog(self, "Videomass: Open a file to playback",
@@ -1033,7 +1036,7 @@ class MainFrame(wx.Frame):
         """
         jump on Presets Manager panel
         """
-        if not self.file_src:
+        if not self.data_files:
             self.statusbar_msg (_('No files added yet'), YELLOW)
         else:
             self.topicname = 'Presets Manager'
@@ -1044,7 +1047,7 @@ class MainFrame(wx.Frame):
         """
         jump on AVconversions panel
         """
-        if not self.file_src:
+        if not self.data_files:
             self.statusbar_msg (_('No files added yet'), YELLOW)
         else:
             self.topicname = 'Audio/Video Conversions'

@@ -81,9 +81,18 @@ class TextDnD(wx.Panel):
         self.SetSizer(sizer)
 
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
+        self.Bind(wx.EVT_TEXT, self.on_emptyText, self.textCtrl)
         # ------
         self.text_path_save.SetValue(self.file_dest)
-    # -----------------------------------------------------------
+    # ---------------------------------------------------------
+
+    def on_emptyText(self, event):
+        """
+        Text event, if empty set parent.data_url
+        """
+        if not self.textCtrl.GetValue().strip():
+            self.parent.data_url = None
+    # ----------------------------------------------------------
 
     def topic_Redirect(self):
         """

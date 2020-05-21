@@ -17,6 +17,8 @@ BUGS:
     * [YOUTUBE DOWNLOADER] Fixed issue with "Format Codes" missing when
       downloading different URLs (on `Download by Format Code` mode).
 
+    * Fixed wrong redirection when switch between panels using menu bar items.
+
 IMPROVEMENTS:
     * improved descriptions and translation on GUI.
     * improved buttons layout on the home panel depending by OS.

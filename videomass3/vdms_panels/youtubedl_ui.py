@@ -207,26 +207,26 @@ class Downloader(wx.Panel):
             self.format_dict[url] = []
             for i in range(num):
                 if self.fcode.IsItemChecked(i):
-                    if (self.fcode.GetItemText(i, 0)) == url:
+                    if (self.fcode.GetItemText(i, 1)) == url:
                         if viddisp in self.fcode.GetItemText(i, 4):
-                            dv = self.fcode.GetItemText(i, 2)
+                            dv = self.fcode.GetItemText(i, 0)
                             self.format_dict[url].append('Video: ' + dv)
                         elif auddisp in self.fcode.GetItemText(i, 4):
-                            da = self.fcode.GetItemText(i, 2)
+                            da = self.fcode.GetItemText(i, 0)
                             self.format_dict[url].append('Audio: ' + da)
                         else:
-                            dv = self.fcode.GetItemText(i, 2)
+                            dv = self.fcode.GetItemText(i, 0)
                             self.format_dict[url].append('Video: ' + dv)
 
         self.codText.Clear()
         for k, v in self.format_dict.items():
             if not v:
                 self.codText.SetDefaultStyle(wx.TextAttr(wx.Colour(ORANGE)))
-                self.codText.AppendText('- %s  >>>  %s\n' % (k, v))
+                self.codText.AppendText('- %s  >  !!!\n' % (k))
                 self.codText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             else:
-                self.codText.AppendText('- %s  >>>  %s\n' % (k, v))
-        #print(self.format_dict)
+                self.codText.AppendText('- %s  >  %s ...ok\n' % (k, v))
+        # print(self.format_dict)
     # ----------------------------------------------------------------------
 
     def onContext(self, event):
@@ -240,7 +240,7 @@ class Downloader(wx.Panel):
 
         # build the menu
         menu = wx.Menu()
-        itemfive = menu.Append(self.popupID2, _("Play selected url"))
+        menu.Append(self.popupID2, _("Play selected url"))
         # show the popup menu
         self.PopupMenu(menu)
 
@@ -269,9 +269,9 @@ class Downloader(wx.Panel):
         """
         self.fcode.ClearAll()
         self.fcode.EnableCheckBoxes(enable=True)
-        self.fcode.InsertColumn(0, (_('Url')), width=60)
-        self.fcode.InsertColumn(1, (_('Title')), width=200)
-        self.fcode.InsertColumn(2, (_('Format Code')), width=120)
+        self.fcode.InsertColumn(0, (_('Format Code')), width=120)
+        self.fcode.InsertColumn(1, (_('Url')), width=60)
+        self.fcode.InsertColumn(2, (_('Title')), width=200)
         self.fcode.InsertColumn(3, (_('Extension')), width=80)
         self.fcode.InsertColumn(4, (_('Resolution')), width=160)
         self.fcode.InsertColumn(5, (_('Video Codec')), width=110)
@@ -301,10 +301,9 @@ class Downloader(wx.Panel):
                     size = format_bytes(float(f['filesize']))
                 else:
                     size = 'N/A'
-
-                self.fcode.InsertItem(index, link)
-                self.fcode.SetItem(index, 1, meta[0]['title'])
-                self.fcode.SetItem(index, 2, f['format_id'])
+                self.fcode.InsertItem(index, f['format_id'])
+                self.fcode.SetItem(index, 1, link)
+                self.fcode.SetItem(index, 2, meta[0]['title'])
                 self.fcode.SetItem(index, 3, f['ext'])
                 self.fcode.SetItem(index, 4, f['format'].split('-')[1])
                 self.fcode.SetItem(index, 5, vcodec)
@@ -366,9 +365,10 @@ class Downloader(wx.Panel):
         """
         self.fcode.ClearAll()
         self.fcode.EnableCheckBoxes(enable=True)
-        self.fcode.InsertColumn(0, (_('Url')), width=200)
-        self.fcode.InsertColumn(1, (_('Title')), width=50)
-        self.fcode.InsertColumn(2, (_('Format Code')), width=120)
+        self.fcode.InsertColumn(0, (_('Format Code')), width=120)
+        self.fcode.InsertColumn(1, (_('Url')), width=200)
+        self.fcode.InsertColumn(2, (_('Title')), width=50)
+        #self.fcode.InsertColumn(2, (_('Format Code')), width=120)
         self.fcode.InsertColumn(3, (_('Extension')), width=80)
         self.fcode.InsertColumn(4, (_('Resolution note')), width=500)
 
@@ -386,9 +386,9 @@ class Downloader(wx.Panel):
                     if not count > i:
                         i += 1
                     elif fc != '':
-                        self.fcode.InsertItem(index, link)
-                        self.fcode.SetItem(index, 1, 'N/A')
-                        self.fcode.SetItem(index, 2, fc.split()[0])
+                        self.fcode.InsertItem(index, fc.split()[0])
+                        self.fcode.SetItem(index, 1, link)
+                        self.fcode.SetItem(index, 2, 'N/A')
                         self.fcode.SetItem(index, 3, fc.split()[1])
                         note = ' '.join(fc.split()[2:])
                         self.fcode.SetItem(index, 4, note)
@@ -415,16 +415,18 @@ class Downloader(wx.Panel):
         self.labcode.SetLabel(msg)
         self.fcode.ClearAll()
         self.fcode.EnableCheckBoxes(enable=False)
-        self.fcode.InsertColumn(0, (_('Url')), width=500)
-        self.fcode.InsertColumn(1, (_('Title')), width=50)
-        self.fcode.InsertColumn(2, (_('Resolution note')), width=250)
+        self.fcode.InsertColumn(0, (_('N.')), width=30)
+        self.fcode.InsertColumn(1, (_('Url')), width=500)
+        self.fcode.InsertColumn(2, (_('Title')), width=50)
+        self.fcode.InsertColumn(3, (_('Resolution note')), width=250)
 
         if self.parent.data_url:
             index = 0
             for link in self.parent.data_url:
-                self.fcode.InsertItem(index, link)
-                self.fcode.SetItem(index, 1, 'N/A')
-                self.fcode.SetItem(index, 2, quality)
+                self.fcode.InsertItem(index, str(index + 1 ))
+                self.fcode.SetItem(index, 1, link)
+                self.fcode.SetItem(index, 2, 'N/A')
+                self.fcode.SetItem(index, 3, quality)
                 index += 1
     # -----------------------------------------------------------------#
 
@@ -469,17 +471,19 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Choice(self, event):
+        """
+        - Enable or disable some widgets during switching choice box.
+        - Set media quality parameter for on_urls_list method
+        """
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
             self.cmbx_vq.Enable()
             self.on_urls_list(opt["V_QUALITY"][1])
-
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
             self.cmbx_vq.Enable()
             self.on_urls_list('%svideo+%saudio' % (opt["V_QUALITY"][1],
                                                    opt["A_QUALITY"][1]))
-
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Enable()
@@ -492,32 +496,46 @@ class Downloader(wx.Panel):
     # -----------------------------------------------------------------#
 
     def on_Vq(self, event):
+        """
+        Set video qualities on 'best' or 'worst' during combobox event
+        and self.choice selection == 0
+        """
         opt["V_QUALITY"] = VQUALITY[self.cmbx_vq.GetValue()]
         index = 0
         if self.choice.GetSelection() == 0:
+            # set 'best' parameters on both audio and video.
             q = opt["V_QUALITY"][1]
         elif self.choice.GetSelection() == 1:
+            # set the "worst" and "best" parameters independently
             q = '%svideo+%saudio' % (opt["V_QUALITY"][1], opt["A_QUALITY"][1])
         for link in self.parent.data_url:
-            self.fcode.SetItem(index, 2, q)
+            self.fcode.SetItem(index, 3, q)
             index += 1
     # -----------------------------------------------------------------#
 
     def on_Af(self, event):
+        """
+        Set audio format to exporting during combobox event
+        and self.choice selection == 2
+        """
         opt["A_FORMAT"] = AFORMATS.get(self.cmbx_af.GetValue())
         index = 0
         for link in self.parent.data_url:
-            self.fcode.SetItem(index, 2, '')
+            self.fcode.SetItem(index, 3, '')
             index += 1
     # -----------------------------------------------------------------#
 
     def on_Aq(self, event):
+        """
+        Set audio qualities on 'best' or 'worst' during combobox event
+        and self.choice selection == 1
+        """
         opt["A_QUALITY"] = AQUALITY.get(self.cmbx_aq.GetValue())
-
         index = 0
+        # set string to audio and video qualities independently for player
         q = '%svideo+%saudio' % (opt["V_QUALITY"][1], opt["A_QUALITY"][1])
         for link in self.parent.data_url:
-            self.fcode.SetItem(index, 2, q)
+            self.fcode.SetItem(index, 3, q)
             index += 1
     # -----------------------------------------------------------------#
 
