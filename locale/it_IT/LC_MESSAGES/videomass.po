@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-22 14:28+0200\n"
-"PO-Revision-Date: 2020-05-22 14:30+0200\n"
+"PO-Revision-Date: 2020-05-22 17:08+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -2786,7 +2786,7 @@ msgstr ""
 
 #: ../videomass3/vdms_panels/youtubedl_ui.py:507
 msgid "Check at least one box for each URL (green selection)"
-msgstr "Seleziona almeno una casella per ciascun URL (selezione verde)"
+msgstr "Spuntare almeno una casella per ciascun URL (selezione verde)"
 
 #: ../videomass3/vdms_panels/filedrop.py:68
 msgid "Directories are not allowed, just add files, please."
