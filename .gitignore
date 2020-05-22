@@ -4,6 +4,8 @@ dist
 build
 videomass.egg-info
 deb_dist
+ENV
+env
 *.egg-info
 Pipfile
 Pipfile.lock

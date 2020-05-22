@@ -227,8 +227,7 @@ class Logging_Console(wx.Panel):
                 self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
                 with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
-                    logerr.write("[YOUTUBE_DL]: %s > %s\n" % (status,
-                                                                  output))
+                    logerr.write("[YOUTUBE_DL]: %s > %s\n" % (status, output))
         elif status == 'DOWNLOAD':
             self.labPerc.SetLabel("%s" % duration[0])
             self.barProg.SetValue(duration[1])
@@ -240,7 +239,7 @@ class Logging_Console(wx.Panel):
 
         if status in ['ERROR', 'WARNING']:
             with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
-                    logerr.write("[YOUTUBE_DL]: %s\n" % (output))
+                logerr.write("[YOUTUBE_DL]: %s\n" % (output))
     # ---------------------------------------------------------------------#
 
     def youtubedl_exec(self, output, duration, status):

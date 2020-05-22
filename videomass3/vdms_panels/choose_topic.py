@@ -78,9 +78,8 @@ else:
 prst_mng = _('  Presets Manager - Create, edit and use quickly your favorite\n'
              '  FFmpeg presets and profiles with full formats support and '
              'codecs. ')
-video_lab = _('  A set of useful tools for audio and video manipulations;\n'
-              '  convert or save your profiles and reuse them with '
-              'Presets Manager. ')
+video_lab = _('  A set of useful tools for audio and video conversions.\n'
+              '  Save your profiles and reuse them with Presets Manager. ')
 youtube_lab = _('  Easily download videos and audio in different formats\n'
                 '  and quality from YouTube, Facebook and more sites. ')
 

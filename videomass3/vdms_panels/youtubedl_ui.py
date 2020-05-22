@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: May.22.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -72,6 +72,42 @@ opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
 get = wx.GetApp()
 OS = get.OS
 PYLIB_YDL = get.pylibYdl
+
+if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
+    import wx.lib.mixins.listctrl as listmix
+
+    class TestListCtrl(wx.ListCtrl,
+                       listmix.CheckListCtrlMixin,
+                       listmix.ListCtrlAutoWidthMixin
+                       ):
+        """
+        This is listctrl with checkbox for any row in list.
+        It work on both wxPython==4.1.? and wxPython<=4.1.? (e.g. 4.0.7).
+        Since wxPython <= 4.0.7 has no attributes for fcode.EnableCheckBoxes
+        and the 'wx' module does not have attributes 'EVT_LIST_ITEM_CHECKED',
+        'EVT_LIST_ITEM_UNCHECKED' for binding, this class maintains backward
+        compatibility.
+        """
+        def __init__(self,
+                     parent,
+                     ID,
+                     pos=wx.DefaultPosition,
+                     size=wx.DefaultSize,
+                     style=0
+                     ):
+            self.parent = parent
+            wx.ListCtrl.__init__(self, parent, ID, pos, size, style)
+            listmix.CheckListCtrlMixin.__init__(self)
+            listmix.ListCtrlAutoWidthMixin.__init__(self)
+            # self.setResizeColumn(3)
+
+        def OnCheckItem(self, index, flag):
+            """
+            Send to parent (class Downloader) index and flag.
+            index = int(num) of checked item.
+            flag = boolean True or False of the checked or un-checked item
+            """
+            self.parent.onCheck(self)
 
 
 class Downloader(wx.Panel):
@@ -153,9 +189,15 @@ class Downloader(wx.Panel):
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
         self.labcode = wx.StaticText(self, label=_("URLs loaded"))
         sizer.Add(self.labcode, 0, wx.ALL, 5)
-        self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
-                                 wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
-                                 )
+        if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
+            self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
+                                     wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
+                                     )
+        else:
+            tID = wx.NewIdRef()
+            self.fcode = TestListCtrl(self, tID, style=wx.LC_REPORT |
+                                      wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
+                                      )
         sizer.Add(self.fcode, 1, wx.EXPAND, 10)
         self.codText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
@@ -168,7 +210,7 @@ class Downloader(wx.Panel):
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
-        #----------------------- Properties
+        # ----------------------- Properties
         if OS == 'Darwin':
             self.codText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
         else:
@@ -183,8 +225,9 @@ class Downloader(wx.Panel):
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
         self.fcode.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        self.fcode.Bind(wx.EVT_LIST_ITEM_CHECKED, self.onCheck)
-        self.fcode.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.onCheck)
+        if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
+            self.fcode.Bind(wx.EVT_LIST_ITEM_CHECKED, self.onCheck)
+            self.fcode.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.onCheck)
     # -----------------------------------------------------------------#
 
     def onCheck(self, event):
@@ -194,19 +237,26 @@ class Downloader(wx.Panel):
 
             `key=url: values=[Audio: code, Video: code]`
         """
+        if not self.choice.GetSelection() == 3:
+            return
         if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
             self.parent.statusbar_msg('Youtube Downloader', None)
 
-        if PYLIB_YDL is not None: # YuotubeDL is not used as module
+        if PYLIB_YDL is not None:  # YuotubeDL is not used as module
             viddisp, auddisp = 'video ', 'audio '
         else:
             viddisp, auddisp = 'video', 'audio only'
+
+        if hasattr(self.fcode, 'IsItemChecked'):
+            check = self.fcode.IsItemChecked
+        else:
+            check = self.fcode.IsChecked
 
         num = self.fcode.GetItemCount()
         for url in self.parent.data_url:
             self.format_dict[url] = []
             for i in range(num):
-                if self.fcode.IsItemChecked(i):
+                if check(i):
                     if (self.fcode.GetItemText(i, 1)) == url:
                         if viddisp in self.fcode.GetItemText(i, 4):
                             dv = self.fcode.GetItemText(i, 0)
@@ -221,9 +271,7 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         for k, v in self.format_dict.items():
             if not v:
-                self.codText.SetDefaultStyle(wx.TextAttr(wx.Colour(ORANGE)))
-                self.codText.AppendText('- %s  >  !!!\n' % (k))
-                self.codText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                self.codText.AppendText('- %s  >  ...\n' % (k))
             else:
                 self.codText.AppendText('- %s  >  %s ...ok\n' % (k, v))
         # print(self.format_dict)
@@ -268,7 +316,8 @@ class Downloader(wx.Panel):
         as exit staus.
         """
         self.fcode.ClearAll()
-        self.fcode.EnableCheckBoxes(enable=True)
+        if hasattr(self.fcode, 'EnableCheckBoxes'):
+            self.fcode.EnableCheckBoxes(enable=True)
         self.fcode.InsertColumn(0, (_('Format Code')), width=120)
         self.fcode.InsertColumn(1, (_('Url')), width=60)
         self.fcode.InsertColumn(2, (_('Title')), width=200)
@@ -364,7 +413,8 @@ class Downloader(wx.Panel):
         if `meta[1]` (error), otherwise return None as exit staus.
         """
         self.fcode.ClearAll()
-        self.fcode.EnableCheckBoxes(enable=True)
+        if hasattr(self.fcode, 'EnableCheckBoxes'):
+            self.fcode.EnableCheckBoxes(enable=True)
         self.fcode.InsertColumn(0, (_('Format Code')), width=120)
         self.fcode.InsertColumn(1, (_('Url')), width=200)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
@@ -413,8 +463,9 @@ class Downloader(wx.Panel):
         msg = _('URLs loaded')
         self.labcode.SetLabel(msg)
         self.fcode.ClearAll()
-        self.fcode.EnableCheckBoxes(enable=False)
-        self.fcode.InsertColumn(0, (_('N.')), width=30)
+        if hasattr(self.fcode, 'EnableCheckBoxes'):
+            self.fcode.EnableCheckBoxes(enable=False)
+        self.fcode.InsertColumn(0, (_('N.')), width=50)
         self.fcode.InsertColumn(1, (_('Url')), width=500)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
         self.fcode.InsertColumn(3, (_('Resolution note')), width=250)
@@ -422,7 +473,7 @@ class Downloader(wx.Panel):
         if self.parent.data_url:
             index = 0
             for link in self.parent.data_url:
-                self.fcode.InsertItem(index, str(index + 1 ))
+                self.fcode.InsertItem(index, str(index + 1))
                 self.fcode.SetItem(index, 1, link)
                 self.fcode.SetItem(index, 2, 'N/A')
                 self.fcode.SetItem(index, 3, quality)
