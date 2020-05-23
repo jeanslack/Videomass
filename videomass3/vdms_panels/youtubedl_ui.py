@@ -33,13 +33,15 @@ from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
 import itertools
 
-# constants
+# constants:
 
 MSG_1 = _('At least one "Format Code" must be checked for each '
           'URL selected in green.')
 
 RED = '#ea312d'
-ORANGE = 206, 57, 35
+BLACK = '#121212'
+GREEN = '#008000'
+GREY = '#959595'
 
 VQUALITY = {('Best quality video'): ['best', 'best'],
             ('Worst quality video'): ['worst', 'worst']}
@@ -57,7 +59,13 @@ AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
 AQUALITY = {('Best quality audio'): ['best', 'best'],
             ('Worst quality audio'): ['worst', 'worst']}
 
-# variables
+CHOICE = [_('Default'),
+          _('Download audio and video splitted'),
+          _('Download Audio only'),
+          _('Download by format code')
+          ]
+
+# variables:
 
 opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
        ("THUMB"): [False, ""],
@@ -74,6 +82,7 @@ OS = get.OS
 PYLIB_YDL = get.pylibYdl
 
 if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
+
     import wx.lib.mixins.listctrl as listmix
 
     class TestListCtrl(wx.ListCtrl,
@@ -81,7 +90,7 @@ if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
                        listmix.ListCtrlAutoWidthMixin
                        ):
         """
-        This is listctrl with checkbox for any row in list.
+        This is listctrl with a checkbox for each row in list.
         It work on both wxPython==4.1.? and wxPython<=4.1.? (e.g. 4.0.7).
         Since wxPython <= 4.0.7 has no attributes for fcode.EnableCheckBoxes
         and the 'wx' module does not have attributes 'EVT_LIST_ITEM_CHECKED',
@@ -124,6 +133,7 @@ class Downloader(wx.Panel):
         self.oS = OS
         self.info = list()  # has data information for Show More button
         self.format_dict = dict()  # format codes order with URL matching
+        self.oldwx = None  # test result of hasattr EVT_LIST_ITEM_CHECKED
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -133,10 +143,7 @@ class Downloader(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         frame.Add(sizer, 1, wx.ALL | wx.EXPAND, 5)
         self.choice = wx.Choice(self, wx.ID_ANY,
-                                choices=[_('Default'),
-                                         _('Download audio and video splitted'),
-                                         _('Download Audio only'),
-                                         _('Download by format code')],
+                                choices=CHOICE,
                                 size=(-1, -1),
                                 )
         self.choice.SetSelection(0)
@@ -190,10 +197,12 @@ class Downloader(wx.Panel):
         self.labcode = wx.StaticText(self, label=_("URLs loaded"))
         sizer.Add(self.labcode, 0, wx.ALL, 5)
         if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
+            self.oldwx = False
             self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
                                      wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                      )
         else:
+            self.oldwx = True
             tID = wx.NewIdRef()
             self.fcode = TestListCtrl(self, tID, style=wx.LC_REPORT |
                                       wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
@@ -211,10 +220,11 @@ class Downloader(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------- Properties
+        self.codText.SetBackgroundColour(BLACK)
         if OS == 'Darwin':
-            self.codText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.codText.SetFont(wx.Font(15, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
-            self.codText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.BOLD))
+            self.codText.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
@@ -225,7 +235,7 @@ class Downloader(wx.Panel):
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
         self.fcode.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
+        if self.oldwx is False:
             self.fcode.Bind(wx.EVT_LIST_ITEM_CHECKED, self.onCheck)
             self.fcode.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.onCheck)
     # -----------------------------------------------------------------#
@@ -247,7 +257,7 @@ class Downloader(wx.Panel):
         else:
             viddisp, auddisp = 'video', 'audio only'
 
-        if hasattr(self.fcode, 'IsItemChecked'):
+        if self.oldwx is False:
             check = self.fcode.IsItemChecked
         else:
             check = self.fcode.IsChecked
@@ -271,9 +281,11 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         for k, v in self.format_dict.items():
             if not v:
-                self.codText.AppendText('- %s  >  ...\n' % (k))
+                self.codText.SetForegroundColour(GREY)
+                self.codText.AppendText('- %s :  ?\n' % (k))
             else:
-                self.codText.AppendText('- %s  >  %s ...ok\n' % (k, v))
+                self.codText.SetForegroundColour(GREEN)
+                self.codText.AppendText('- %s :  %s ...ok\n' % (k, v))
         # print(self.format_dict)
     # ----------------------------------------------------------------------
 
@@ -316,7 +328,7 @@ class Downloader(wx.Panel):
         as exit staus.
         """
         self.fcode.ClearAll()
-        if hasattr(self.fcode, 'EnableCheckBoxes'):
+        if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=True)
         self.fcode.InsertColumn(0, (_('Format Code')), width=120)
         self.fcode.InsertColumn(1, (_('Url')), width=60)
@@ -413,7 +425,7 @@ class Downloader(wx.Panel):
         if `meta[1]` (error), otherwise return None as exit staus.
         """
         self.fcode.ClearAll()
-        if hasattr(self.fcode, 'EnableCheckBoxes'):
+        if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=True)
         self.fcode.InsertColumn(0, (_('Format Code')), width=120)
         self.fcode.InsertColumn(1, (_('Url')), width=200)
@@ -463,7 +475,7 @@ class Downloader(wx.Panel):
         msg = _('URLs loaded')
         self.labcode.SetLabel(msg)
         self.fcode.ClearAll()
-        if hasattr(self.fcode, 'EnableCheckBoxes'):
+        if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
         self.fcode.InsertColumn(0, (_('N.')), width=50)
         self.fcode.InsertColumn(1, (_('Url')), width=500)

@@ -39,11 +39,16 @@ from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass3.vdms_utils.utils import time_human
 
 # Used colour
-YELLOW = 200, 183, 47
-RED = 210, 24, 20
-VIOLET = 164, 30, 164
-GREEN = 30, 164, 30
-AZURE = 30, 62, 164
+YELLOW = '#C8B72F'
+RED = '#D21814'
+VIOLET = '#A41EA4'
+GREEN = '#1EA41E'
+AZURE = '#3298FB'
+BLACK = '#121212'
+GREY = '#959595'
+WHITE = '#FFFFFF'
+CYAN = '#31BAA7'
+ORANGE = '#FF4A1B'
 
 # get videomass wx.App attribute
 get = wx.GetApp()
@@ -100,6 +105,7 @@ class Logging_Console(wx.Panel):
         self.ERROR = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
         self.logname = None  # example: Videomass_VideoConversion.log
+        self.endmsg = _('\n Completed :-)\n')
 
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
@@ -127,6 +133,7 @@ class Logging_Console(wx.Panel):
         grid.Add(self.button_stop, 0, wx.ALL, 5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
         # set_properties:
+        self.OutText.SetBackgroundColour(BLACK)
         if OS == 'Darwin':
             self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
@@ -202,29 +209,26 @@ class Logging_Console(wx.Panel):
         pubsub "UPDATE_YDL_FROM_IMPORT_EVT" .
         """
         if status == 'ERROR':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+            self.OutText.SetForegroundColour(YELLOW)
             self.OutText.AppendText('%s\n' % output)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
+            self.OutText.SetForegroundColour(RED)
             self.OutText.AppendText(_(' ...Failed\n'))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            self.endmsg = _('\n Completed, but not everything was '
+                            'successful :-(\n')
 
         elif status == 'WARNING':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+            self.OutText.SetForegroundColour(GREY)
             self.OutText.AppendText('%s\n' % output)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         elif status == 'DEBUG':
             if '[download] Destination' in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+                self.OutText.SetForegroundColour(GREY)
                 self.OutText.AppendText('%s\n' % output)
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
             elif '[download]' not in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+                self.OutText.SetForegroundColour(GREY)
                 self.OutText.AppendText('%s\n' % output)
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
                 with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                     logerr.write("[YOUTUBE_DL]: %s > %s\n" % (status, output))
@@ -233,9 +237,8 @@ class Logging_Console(wx.Panel):
             self.barProg.SetValue(duration[1])
 
         elif status == 'FINISHED':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+            self.OutText.SetForegroundColour(GREY)
             self.OutText.AppendText('%s\n' % duration)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         if status in ['ERROR', 'WARNING']:
             with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
@@ -250,10 +253,13 @@ class Logging_Console(wx.Panel):
         """
         if not status == 0:  # error, exit status of the p.wait
             if output:
+                self.OutText.SetForegroundColour(YELLOW)
                 self.OutText.AppendText('%s\n' % output)
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
+
+            self.OutText.SetForegroundColour(RED)
             self.OutText.AppendText(_(' ...Failed\n'))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            self.endmsg = _('\n Completed, but not everything was '
+                            'successful :-(\n')
             return
 
         if '[download]' in output:  # ...in processing
@@ -261,6 +267,7 @@ class Logging_Console(wx.Panel):
                 try:
                     i = float(output.split()[1].split('%')[0])
                 except ValueError:
+                    self.OutText.SetForegroundColour(YELLOW)
                     self.OutText.AppendText(' %s' % output)
                 else:
                     # if not self.ckbx_text.IsChecked():# not print output
@@ -271,9 +278,8 @@ class Logging_Console(wx.Panel):
 
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # not print the output
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+                self.OutText.SetForegroundColour(GREY)
                 self.OutText.AppendText(' %s' % output)
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
             with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                 logerr.write("[YOUTUBE-DL]: %s" % (output))
@@ -292,7 +298,7 @@ class Logging_Console(wx.Panel):
         NOTE: During conversion the ffmpeg errors do not stop all
               others tasks, if an error occurred it will be marked
               with 'failed' but continue; if it has finished without
-              errors it will be marked with 'completed' on update_count
+              errors it will be marked with 'done' on update_count
               method. Since not all ffmpeg messages are errors, sometimes
               it happens to see more output marked with yellow color.
 
@@ -305,9 +311,10 @@ class Logging_Console(wx.Panel):
         #    self.OutText.AppendText(output)
 
         if not status == 0:  # error, exit status of the p.wait
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
+            self.OutText.SetForegroundColour(RED)
             self.OutText.AppendText(_(' ...Failed\n'))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            self.endmsg = _('\n Completed, but not everything was '
+                            'successful :-(\n')
             return  # must be return here
 
         if 'time=' in output:  # ...in processing
@@ -321,6 +328,7 @@ class Logging_Console(wx.Panel):
             ffprog = []
             for x, y in pairwise(out):
                 ffprog.append("%s: %s | " % (x, y))
+
             remaining = time_human(duration-timesum)
             self.labPerc.SetLabel("Processing... %s%% | %sTime Remaining: %s" %
                                   (str(int(percentage)), "".join(ffprog),
@@ -330,9 +338,13 @@ class Logging_Console(wx.Panel):
 
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # not print the output
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
-                self.OutText.AppendText('%s' % output)
-                self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+                if [x for x in ('Failed', 'failed', 'Error', 'error', 'warning', 'Warning') if x in output]:
+                    self.OutText.SetForegroundColour(YELLOW)
+                    self.OutText.AppendText('%s' % output)
+                else:
+                    self.OutText.SetForegroundColour(GREY)
+                    self.OutText.AppendText('%s' % output)
+
             with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                 logerr.write("[FFMPEG]: %s" % (output))
                 # write a row error into file log
@@ -345,9 +357,8 @@ class Logging_Console(wx.Panel):
 
         """
         if end == 'ok':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(GREEN)))
-            self.OutText.AppendText(_(' ...Completed\n'))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            self.OutText.SetForegroundColour(GREEN)
+            self.OutText.AppendText(_(' ...Done !\n'))
             lab = "%s" % self.labPerc.GetLabel()
             if lab.split('|')[0] == 'Processing... 99% ':
                 relab = lab.replace('Processing... 99%', 'Processing... 100%')
@@ -355,13 +366,13 @@ class Logging_Console(wx.Panel):
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(YELLOW)))
+            self.OutText.SetForegroundColour(YELLOW)
             self.OutText.AppendText('\n%s\n' % (count))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
             self.ERROR = True
         else:
             self.barProg.SetRange(duration)  # set la durata complessiva
             self.barProg.SetValue(0)  # resetto la prog bar
+            self.OutText.SetForegroundColour(WHITE)
             self.OutText.AppendText('\n%s : "%s"\n' % (count, fname))
 
     # ----------------------------------------------------------------------
@@ -370,21 +381,20 @@ class Logging_Console(wx.Panel):
         At the end of the process
         """
         if self.ERROR is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(RED)))
+            self.OutText.SetForegroundColour(RED)
             self.OutText.AppendText(_('\n Sorry, task failed !\n'))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         elif self.ABORT is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(VIOLET)))
+            self.OutText.SetForegroundColour(VIOLET)
             self.OutText.AppendText(_('\n Interrupted Process !\n'))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
 
         else:
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.Colour(GREEN)))
-            self.OutText.AppendText(_('\n FINISHED :-)\n'))
-            self.OutText.SetDefaultStyle(wx.TextAttr(wx.NullColour))
+            if self.endmsg == _('\n Completed :-)\n'):
+                self.OutText.SetForegroundColour(GREEN)
+            else:
+                self.OutText.SetForegroundColour(ORANGE)
+            self.OutText.AppendText(self.endmsg)
             self.barProg.SetValue(0)
-            # self.parent.statusbar_msg(_('...Done'), None)
 
         self.button_stop.Enable(False)
         self.button_close.Enable(True)
@@ -432,6 +442,7 @@ class Logging_Console(wx.Panel):
         self.ABORT = False
         self.ERROR = False
         self.logname = None
+        self.endmsg = _('\n Completed :-)\n')
         # self.OutText.Clear()
         # self.labPerc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel
