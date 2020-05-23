@@ -44,8 +44,8 @@ RED = '#D21814'
 VIOLET = '#A41EA4'
 GREEN = '#1EA41E'
 AZURE = '#3298FB'
-# BLACK = '#242424'
-BLACK = '#262222'
+BLACK = '#242424'
+DARK_BROWN = '#262222'
 GREY = '#959595'
 WHITE = '#FFFFFF'
 CYAN = '#31BAA7'
@@ -134,7 +134,7 @@ class Logging_Console(wx.Panel):
         grid.Add(self.button_stop, 0, wx.ALL, 5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
         # set_properties:
-        self.OutText.SetBackgroundColour(BLACK)
+        self.OutText.SetBackgroundColour(DARK_BROWN)
         if OS == 'Darwin':
             self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:

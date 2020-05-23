@@ -28,6 +28,10 @@
 #########################################################
 import wx
 
+DARK_BROWN = '#262222'
+GREEN = '#008000'
+LIGHT_GREY = '#959595'
+
 keys = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
           "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
           "right mouse click\nleft mouse double-click"
@@ -77,9 +81,9 @@ class While_Playing(wx.MiniFrame):
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: Shortcuts while playing"))
 
-        label1.SetForegroundColour(wx.Colour('#008000'))
-        label2.SetForegroundColour(wx.Colour('#959595'))
-        panel.SetBackgroundColour(wx.Colour('#121212'))
+        label1.SetForegroundColour(wx.Colour(GREEN))
+        label2.SetForegroundColour(wx.Colour(LIGHT_GREY))
+        panel.SetBackgroundColour(wx.Colour(DARK_BROWN))
         # ---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)

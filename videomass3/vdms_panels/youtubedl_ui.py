@@ -39,9 +39,8 @@ MSG_1 = _('At least one "Format Code" must be checked for each '
           'URL selected in green.')
 
 RED = '#ea312d'
-# BLACK = '#121212'
-# BLACK = '#242424'
-BLACK = '#262222'
+BLACK = '#121212'
+DARK_BROWN = '#262222'
 GREEN = '#008000'
 GREY = '#959595'
 
@@ -222,7 +221,7 @@ class Downloader(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------- Properties
-        self.codText.SetBackgroundColour(BLACK)
+        self.codText.SetBackgroundColour(DARK_BROWN)
         if OS == 'Darwin':
             self.codText.SetFont(wx.Font(15, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
