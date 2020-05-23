@@ -39,7 +39,9 @@ MSG_1 = _('At least one "Format Code" must be checked for each '
           'URL selected in green.')
 
 RED = '#ea312d'
-BLACK = '#121212'
+# BLACK = '#121212'
+# BLACK = '#242424'
+BLACK = '#262222'
 GREEN = '#008000'
 GREY = '#959595'
 
@@ -281,10 +283,10 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         for k, v in self.format_dict.items():
             if not v:
-                self.codText.SetForegroundColour(GREY)
+                self.codText.SetDefaultStyle(wx.TextAttr(GREY))
                 self.codText.AppendText('- %s :  ?\n' % (k))
             else:
-                self.codText.SetForegroundColour(GREEN)
+                self.codText.SetDefaultStyle(wx.TextAttr(GREEN))
                 self.codText.AppendText('- %s :  %s ...ok\n' % (k, v))
         # print(self.format_dict)
     # ----------------------------------------------------------------------
