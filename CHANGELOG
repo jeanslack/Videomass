@@ -13,23 +13,26 @@ May 20, 2020 V.2.5.0
 BUGS:
     * [YOUTUBE DOWNLOADER] Fixed list order when having multiple URLs on the
       list control (only when using the youtube-dl executable, not the module).
-
     * [YOUTUBE DOWNLOADER] Fixed issue with "Format Codes" missing when
       downloading different URLs (on `Download by Format Code` mode).
-
     * Fixed wrong redirection when switch between panels using menu bar items.
+
+NEWS:
+    * [YOUTUBE DOWNLOADER] Added checkbox to select 'Format Codes'
+    * [YOUTUBE DOWNLOADER] Added  new text control enabled in read only to
+      view format codes selection
 
 IMPROVEMENTS:
     * improved descriptions and translation on GUI.
     * improved buttons layout on the home panel depending by OS.
     * improved float spin control view on new wxPython version 4.1 .
-    * The selection of 'Format Codes' has been rewritten, automated and
-      significantly improved
+    * The layout design for the 'Format Codes' selection has been rewritten,
+      automated and significantly improved.
+    * Added some cosmetic improvements to interface.
 
 REMOVALS and DISPLACEMENTS:
     * [YOUTUBE DOWNLOADER] the format code text boxes have been removed and
       replaced with check boxes on the list control.
-
     * [YOUTUBE DOWNLOADER] the contextual menu have been removed and
       replaced with check boxes on the list control.
 
