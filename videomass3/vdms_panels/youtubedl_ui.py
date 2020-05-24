@@ -37,6 +37,7 @@ import itertools
 
 MSG_1 = _('At least one "Format Code" must be checked for each '
           'URL selected in green.')
+MSG_2 = _('Function available only if you choose "Download by format code"')
 
 RED = '#ea312d'
 BLACK = '#121212'
@@ -249,7 +250,14 @@ class Downloader(wx.Panel):
             `key=url: values=[Audio: code, Video: code]`
         """
         if not self.choice.GetSelection() == 3:
+            self.codText.Clear()
+            num = self.fcode.GetItemCount()
+            for idx in range(num):
+                if self.fcode.IsChecked(idx):
+                    self.codText.SetDefaultStyle(wx.TextAttr(GREEN))
+                    self.codText.AppendText('- %s\n' % (MSG_2))
             return
+
         if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
             self.parent.statusbar_msg('Youtube Downloader', None)
 

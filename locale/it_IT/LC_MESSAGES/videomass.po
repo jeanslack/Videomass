@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-23 15:09+0200\n"
-"PO-Revision-Date: 2020-05-23 15:14+0200\n"
+"POT-Creation-Date: 2020-05-24 13:56+0200\n"
+"PO-Revision-Date: 2020-05-24 13:57+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -1010,7 +1010,7 @@ msgstr "Statistiche del volume basate su RMS"
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
-#: ../videomass3/vdms_frames/while_playing.py:31
+#: ../videomass3/vdms_frames/while_playing.py:35
 msgid ""
 "q, ESC\n"
 "f\n"
@@ -1052,7 +1052,7 @@ msgstr ""
 "click destro del mouse\n"
 "click sinistro del mouse"
 
-#: ../videomass3/vdms_frames/while_playing.py:35
+#: ../videomass3/vdms_frames/while_playing.py:39
 msgid ""
 "Quiet.\n"
 "Togle full screen.\n"
@@ -1094,7 +1094,7 @@ msgstr ""
 "Cerca la percentuale nel file corrispondente alla frazione di larghezza.\n"
 "Schermo intero."
 
-#: ../videomass3/vdms_frames/while_playing.py:78
+#: ../videomass3/vdms_frames/while_playing.py:82
 msgid "Videomass: Shortcuts while playing"
 msgstr "Videomass: Scorciatoie durante la riproduzione"
 
@@ -2683,100 +2683,104 @@ msgstr ""
 "È necessario spuntare almeno un \"Codice Formato\" per ciascun URL "
 "selezionato in verde."
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:62
+#: ../videomass3/vdms_panels/youtubedl_ui.py:40
+msgid "Function available only if you choose \"Download by format code\""
+msgstr "Funzione disponibile solo se si sceglie \"Scarica per codice formato\""
+
+#: ../videomass3/vdms_panels/youtubedl_ui.py:64
 msgid "Default"
 msgstr "Predefinito"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:63
+#: ../videomass3/vdms_panels/youtubedl_ui.py:65
 msgid "Download audio and video splitted"
 msgstr "Scarica audio e video divisi"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:64
+#: ../videomass3/vdms_panels/youtubedl_ui.py:66
 msgid "Download Audio only"
 msgstr "Scarica solo il file audio"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:65
+#: ../videomass3/vdms_panels/youtubedl_ui.py:67
 msgid "Download by format code"
 msgstr "Scarica per codice formato"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:182
+#: ../videomass3/vdms_panels/youtubedl_ui.py:184
 msgid "Download all playlist"
 msgstr "Scarica tutta la playlist"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:186
+#: ../videomass3/vdms_panels/youtubedl_ui.py:188
 msgid "Embed thumbnail in audio file"
 msgstr "Aggiungi miniatura nel file audio"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:190
+#: ../videomass3/vdms_panels/youtubedl_ui.py:192
 msgid "Add metadata to file"
 msgstr "Aggiungi i meta dati al file"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:194
+#: ../videomass3/vdms_panels/youtubedl_ui.py:196
 msgid "Write subtitles to video"
 msgstr "Scrivi sottotitoli al video"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:197
-#: ../videomass3/vdms_panels/youtubedl_ui.py:475
+#: ../videomass3/vdms_panels/youtubedl_ui.py:199
+#: ../videomass3/vdms_panels/youtubedl_ui.py:484
 msgid "URLs loaded"
 msgstr "URL caricati"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:303
-#: ../videomass3/vdms_panels/youtubedl_ui.py:319
+#: ../videomass3/vdms_panels/youtubedl_ui.py:312
+#: ../videomass3/vdms_panels/youtubedl_ui.py:328
 msgid "Play selected url"
 msgstr "Riproduci l'URL selezionato"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:333
-#: ../videomass3/vdms_panels/youtubedl_ui.py:430
+#: ../videomass3/vdms_panels/youtubedl_ui.py:342
+#: ../videomass3/vdms_panels/youtubedl_ui.py:439
 msgid "Format Code"
 msgstr "Codice Formato"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:334
-#: ../videomass3/vdms_panels/youtubedl_ui.py:431
-#: ../videomass3/vdms_panels/youtubedl_ui.py:481
+#: ../videomass3/vdms_panels/youtubedl_ui.py:343
+#: ../videomass3/vdms_panels/youtubedl_ui.py:440
+#: ../videomass3/vdms_panels/youtubedl_ui.py:490
 msgid "Url"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:335
-#: ../videomass3/vdms_panels/youtubedl_ui.py:432
-#: ../videomass3/vdms_panels/youtubedl_ui.py:482
+#: ../videomass3/vdms_panels/youtubedl_ui.py:344
+#: ../videomass3/vdms_panels/youtubedl_ui.py:441
+#: ../videomass3/vdms_panels/youtubedl_ui.py:491
 msgid "Title"
 msgstr "Titolo"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:336
-#: ../videomass3/vdms_panels/youtubedl_ui.py:433
+#: ../videomass3/vdms_panels/youtubedl_ui.py:345
+#: ../videomass3/vdms_panels/youtubedl_ui.py:442
 msgid "Extension"
 msgstr "Estensione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:337
+#: ../videomass3/vdms_panels/youtubedl_ui.py:346
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:338
+#: ../videomass3/vdms_panels/youtubedl_ui.py:347
 msgid "Video Codec"
 msgstr "Codec Video"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:339
+#: ../videomass3/vdms_panels/youtubedl_ui.py:348
 msgid "fps"
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:340
+#: ../videomass3/vdms_panels/youtubedl_ui.py:349
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:341
+#: ../videomass3/vdms_panels/youtubedl_ui.py:350
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:434
-#: ../videomass3/vdms_panels/youtubedl_ui.py:483
+#: ../videomass3/vdms_panels/youtubedl_ui.py:443
+#: ../videomass3/vdms_panels/youtubedl_ui.py:492
 msgid "Resolution note"
 msgstr "Note sulla risoluzione"
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:480
+#: ../videomass3/vdms_panels/youtubedl_ui.py:489
 msgid "N."
 msgstr ""
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:501
+#: ../videomass3/vdms_panels/youtubedl_ui.py:510
 msgid ""
 "\"Show more\" only is enabled when Videomass uses youtube-dl as imported "
 "library."
@@ -2784,7 +2788,7 @@ msgstr ""
 "“Mostra altro” è abilitato solo quando Videomass utilizza youtube-dl come "
 "libreria importata."
 
-#: ../videomass3/vdms_panels/youtubedl_ui.py:519
+#: ../videomass3/vdms_panels/youtubedl_ui.py:528
 msgid "Check at least one box for each URL (green selection)"
 msgstr "Spuntare almeno una casella per ciascun URL (selezione verde)"
 
@@ -2811,9 +2815,9 @@ msgstr "Rimuovi il file selezionato"
 msgid "No file selected to `%s` yet"
 msgstr "Ancora nessun file selezionato per la funzione `%s`"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:108
-#: ../videomass3/vdms_panels/long_processing_task.py:392
-#: ../videomass3/vdms_panels/long_processing_task.py:445
+#: ../videomass3/vdms_panels/long_processing_task.py:109
+#: ../videomass3/vdms_panels/long_processing_task.py:415
+#: ../videomass3/vdms_panels/long_processing_task.py:468
 msgid ""
 "\n"
 " Completed :-)\n"
@@ -2821,35 +2825,35 @@ msgstr ""
 "\n"
 " Completato :-)\n"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:113
+#: ../videomass3/vdms_panels/long_processing_task.py:114
 msgid "Log viewing console:"
 msgstr "Console di visualizzazione log:"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:119
+#: ../videomass3/vdms_panels/long_processing_task.py:120
 msgid "Suppress excess output"
 msgstr "Sopprime l'output in eccesso"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:123
+#: ../videomass3/vdms_panels/long_processing_task.py:124
 msgid "Abort"
 msgstr "Interrompere"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:142
+#: ../videomass3/vdms_panels/long_processing_task.py:143
 msgid "If activated, hides some output messages."
 msgstr "Se attivato, nasconde l'output di troppo."
 
-#: ../videomass3/vdms_panels/long_processing_task.py:144
+#: ../videomass3/vdms_panels/long_processing_task.py:145
 msgid "Stops current process"
 msgstr "Interrompe il processo corrente"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:216
-#: ../videomass3/vdms_panels/long_processing_task.py:260
-#: ../videomass3/vdms_panels/long_processing_task.py:315
+#: ../videomass3/vdms_panels/long_processing_task.py:217
+#: ../videomass3/vdms_panels/long_processing_task.py:266
+#: ../videomass3/vdms_panels/long_processing_task.py:328
 msgid " ...Failed\n"
 msgstr " ...Fallito\n"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:217
-#: ../videomass3/vdms_panels/long_processing_task.py:261
-#: ../videomass3/vdms_panels/long_processing_task.py:316
+#: ../videomass3/vdms_panels/long_processing_task.py:218
+#: ../videomass3/vdms_panels/long_processing_task.py:267
+#: ../videomass3/vdms_panels/long_processing_task.py:329
 msgid ""
 "\n"
 " Completed, but not everything was successful :-(\n"
@@ -2857,11 +2861,11 @@ msgstr ""
 "\n"
 "Completato, ma non tutto è andato a buon fine :-(\n"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:361
+#: ../videomass3/vdms_panels/long_processing_task.py:384
 msgid " ...Done !\n"
 msgstr " ...Fatto !\n"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:385
+#: ../videomass3/vdms_panels/long_processing_task.py:408
 msgid ""
 "\n"
 " Sorry, task failed !\n"
@@ -2869,7 +2873,7 @@ msgstr ""
 "\n"
 " Spiacente, attività non riuscita !\n"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:389
+#: ../videomass3/vdms_panels/long_processing_task.py:412
 msgid ""
 "\n"
 " Interrupted Process !\n"
@@ -2877,15 +2881,15 @@ msgstr ""
 "\n"
 " Processo Interrotto !\n"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:409
+#: ../videomass3/vdms_panels/long_processing_task.py:432
 msgid "wait... I'm aborting"
 msgstr "attendi... Sto interrompendo"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:411
+#: ../videomass3/vdms_panels/long_processing_task.py:434
 msgid "Status: Interrupted"
 msgstr "Stato: Interrotto"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:429
+#: ../videomass3/vdms_panels/long_processing_task.py:452
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -2897,7 +2901,7 @@ msgstr ""
 "\n"
 "Vuoi uccidere l'applicazione?"
 
-#: ../videomass3/vdms_panels/long_processing_task.py:432
+#: ../videomass3/vdms_panels/long_processing_task.py:455
 msgid "Please confirm"
 msgstr "Prego confermare"
 

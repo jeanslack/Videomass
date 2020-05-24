@@ -1,5 +1,7 @@
 #Files mentioned in this file will be ignored by git
 *.pyc
+*.log
+*.mbtree
 dist
 build
 videomass.egg-info

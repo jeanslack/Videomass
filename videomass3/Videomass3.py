@@ -132,7 +132,7 @@ class Videomass(wx.App):
                 except (ModuleNotFoundError, ImportError) as nomodule:
                     self.pylibYdl = (nomodule)
                     self.execYdl = src
-            #-- use for debug the executable on *nix only:
+            # -- use for debug the executable on *nix only:
             # self.pylibYdl = ('Nothing module')
             # self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl')
         # ----- ffmpeg
