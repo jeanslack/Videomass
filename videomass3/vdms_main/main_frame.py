@@ -223,7 +223,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[19]
                                                      )
         #self.ChooseTopic.SetBackgroundColour(BLUE)
-        self.ytDownloader = youtubedl_ui.Downloader(self, OS)
+        self.ytDownloader = youtubedl_ui.Downloader(self)
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                  OS,
                                                  pathicons[6],  # playfil

@@ -35,15 +35,23 @@ import itertools
 
 # constants:
 
+# get videomass wx.App attribute
+get = wx.GetApp()
+OS = get.OS
+PYLIB_YDL = get.pylibYdl
+
 MSG_1 = _('At least one "Format Code" must be checked for each '
           'URL selected in green.')
 MSG_2 = _('Function available only if you choose "Download by format code"')
 
-RED = '#ea312d'
+RED = '#EA312D'
 BLACK = '#121212'
 DARK_BROWN = '#262222'
 GREEN = '#008000'
 GREY = '#959595'
+AZURE = '#3298FB'
+YELLOW = '#C8B72F'
+ORANGE = '#FF4A1B'
 
 VQUALITY = {('Best quality video'): ['best', 'best'],
             ('Worst quality video'): ['worst', 'worst']}
@@ -78,13 +86,7 @@ opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
        ("SUBTITLES"): [False, ""],
        }
 
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-PYLIB_YDL = get.pylibYdl
-
 if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
-
     import wx.lib.mixins.listctrl as listmix
 
     class TestListCtrl(wx.ListCtrl,
@@ -125,14 +127,13 @@ class Downloader(wx.Panel):
     """
     This panel gives a graphic layout to some features of youtube-dl
     """
-    def __init__(self, parent, OS):
+    def __init__(self, parent):
         """
         The first item of the self.info is a complete list of all
         informations getting by extract_info method from youtube_dl
         module.
         """
         self.parent = parent
-        self.oS = OS
         self.info = list()  # has data information for Show More button
         self.format_dict = dict()  # format codes order with URL matching
         self.oldwx = None  # test result of hasattr EVT_LIST_ITEM_CHECKED
@@ -254,7 +255,7 @@ class Downloader(wx.Panel):
             num = self.fcode.GetItemCount()
             for idx in range(num):
                 if self.fcode.IsChecked(idx):
-                    self.codText.SetDefaultStyle(wx.TextAttr(GREEN))
+                    self.codText.SetDefaultStyle(wx.TextAttr(YELLOW))
                     self.codText.AppendText('- %s\n' % (MSG_2))
             return
 
@@ -290,11 +291,11 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         for k, v in self.format_dict.items():
             if not v:
-                self.codText.SetDefaultStyle(wx.TextAttr(GREY))
-                self.codText.AppendText('- %s :  ?\n' % (k))
+                self.codText.SetDefaultStyle(wx.TextAttr(YELLOW))
+                self.codText.AppendText('- %s :  ? ? ?\n' % (k))
             else:
                 self.codText.SetDefaultStyle(wx.TextAttr(GREEN))
-                self.codText.AppendText('- %s :  %s ...ok\n' % (k, v))
+                self.codText.AppendText('- %s :  %s  ...ok\n' % (k, v))
         # print(self.format_dict)
     # ----------------------------------------------------------------------
 
@@ -517,7 +518,7 @@ class Downloader(wx.Panel):
             if ret:
                 return
 
-        dialog = YDL_Mediainfo(self.info, self.oS)
+        dialog = YDL_Mediainfo(self.info, OS)
         dialog.Show()
     # -----------------------------------------------------------------#
 

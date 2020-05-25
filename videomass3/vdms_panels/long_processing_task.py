@@ -46,7 +46,9 @@ GREY = '#959595'  # all other text messages
 CYAN = '#31BAA7'  # for info text messages
 YELLOW = '#C8B72F'  # for warning text messages
 ORANGE = '#FF4A1B'  # for error text messages
-RED = '#D21814'  # if failed
+#ORANGE = '#E92D15'
+#RED = '#D21814'  # if failed
+RED = '#EA312D'
 VIOLET = '#A41EA4'  # if the user stops the processes
 GREEN = '#1EA41E'  # when it is successful
 AZURE = '#3298FB'
@@ -106,7 +108,7 @@ class Logging_Console(wx.Panel):
         self.ERROR = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
         self.logname = None  # example: Videomass_VideoConversion.log
-        self.endmsg = _('\n Completed :-)\n')
+        self.endmsg = _('\n[Videomass]: Completed :-)\n')
 
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
@@ -214,9 +216,9 @@ class Logging_Console(wx.Panel):
             self.OutText.AppendText('%s\n' % output)
 
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_(' ...Failed\n'))
-            self.endmsg = _('\n Completed, but not everything was '
-                            'successful :-(\n')
+            self.OutText.AppendText(_('[Videomass]: FAILED !\n'))
+            self.endmsg = _('\n[Videomass]: completed, but not everything '
+                            'was successful :-(\n')
 
         elif status == 'WARNING':
             self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
@@ -263,9 +265,9 @@ class Logging_Console(wx.Panel):
                     self.OutText.AppendText('%s\n' % output)
 
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_(' ...Failed\n'))
-            self.endmsg = _('\n Completed, but not everything was '
-                            'successful :-(\n')
+            self.OutText.AppendText(_('[Videomass]: FAILED !\n'))
+            self.endmsg = _('\n[Videomass]: completed, but not everything '
+                            'was successful :-(\n')
             return
 
         if '[download]' in output:  # ...in processing
@@ -325,9 +327,9 @@ class Logging_Console(wx.Panel):
 
         if not status == 0:  # error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_(' ...Failed\n'))
-            self.endmsg = _('\n Completed, but not everything was '
-                            'successful :-(\n')
+            self.OutText.AppendText(_('[Videomass]: FAILED !\n'))
+            self.endmsg = _('\n[Videomass]: completed, but not everything '
+                            'was successful :-(\n')
             return  # must be return here
 
         if 'time=' in output:  # ...in processing
@@ -381,7 +383,7 @@ class Logging_Console(wx.Panel):
         """
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(GREEN))
-            self.OutText.AppendText(_(' ...Done !\n'))
+            self.OutText.AppendText(_('[Videomass]: DONE !\n'))
             lab = "%s" % self.labPerc.GetLabel()
             if lab.split('|')[0] == 'Processing... 99% ':
                 relab = lab.replace('Processing... 99%', 'Processing... 100%')
@@ -405,15 +407,15 @@ class Logging_Console(wx.Panel):
         """
         if self.ERROR is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('\n Sorry, task failed !\n'))
+            self.OutText.AppendText(_('\n[Videomass]: Sorry, task failed !\n'))
 
         elif self.ABORT is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(VIOLET))
-            self.OutText.AppendText(_('\n Interrupted Process !\n'))
+            self.OutText.AppendText(_('\n[Videomass]: Interrupted Process !\n'))
 
         else:
-            if self.endmsg == _('\n Completed :-)\n'):
-                self.OutText.SetDefaultStyle(wx.TextAttr(GREEN))
+            if self.endmsg == _('\n[Videomass]: Completed :-)\n'):
+                self.OutText.SetDefaultStyle(wx.TextAttr(WHITE))
             else:
                 self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
             self.OutText.AppendText(self.endmsg)
