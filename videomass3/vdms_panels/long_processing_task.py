@@ -53,6 +53,15 @@ VIOLET = '#A41EA4'  # if the user stops the processes
 GREEN = '#1EA41E'  # when it is successful
 AZURE = '#3298FB'
 
+# used msg on text
+MSG_done = _('[Videomass]: DONE ! ')  + '👍️ \n'
+MSG_failed = _('[Videomass]: FAILED ! ') + '☹️ \n'
+MSG_taskfailed = _('\n[Videomass]: Sorry, task failed ! ') + '😩️ \n'
+MSG_interrupted = _('\n[Videomass]: Interrupted Process ! ') + '✋️ \n'
+MSG_completed = _('\n[Videomass]: Successfully completed ! ') + '😃️ \n'
+MSG_unfinished = _('\n[Videomass]: completed, but not everything '
+                   'was successful.') + ' 😕️ \n'
+
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
@@ -137,16 +146,10 @@ class Logging_Console(wx.Panel):
         grid.Add(self.button_close, 1, wx.ALL, 5)
         # set_properties:
         self.OutText.SetBackgroundColour(DARK_BROWN)
-        #if OS == 'Darwin':
-            #self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        #else:
-            #self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-
         self.ckbx_text.SetToolTip(_('If activated, hides some '
                                     'output messages.'))
         self.button_stop.SetToolTip(_("Stops current process"))
         self.SetSizerAndFit(sizer)
-
         # bind
         self.Bind(wx.EVT_BUTTON, self.on_stop, self.button_stop)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
@@ -214,9 +217,8 @@ class Logging_Console(wx.Panel):
         if status == 'ERROR':
             self.OutText.SetDefaultStyle(wx.TextAttr(ORANGE))
             self.OutText.AppendText('%s\n' % output)
-
             self.OutText.SetDefaultStyle(wx.TextAttr(RED_DEEP))
-            self.OutText.AppendText(_('[Videomass]: FAILED ! ☹️\n'))
+            self.OutText.AppendText(MSG_failed)
             self.result = 'failed'
 
         elif status == 'WARNING':
@@ -264,7 +266,7 @@ class Logging_Console(wx.Panel):
                     self.OutText.AppendText('%s\n' % output)
 
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('[Videomass]: FAILED ! ☹️\n'))
+            self.OutText.AppendText(MSG_failed)
             self.result = 'failed'
             return
 
@@ -323,7 +325,7 @@ class Logging_Console(wx.Panel):
 
         if not status == 0:  # error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('[Videomass]: FAILED ! ☹️\n'))
+            self.OutText.AppendText(MSG_failed)
             self.result = 'failed'
             return  # must be return here
 
@@ -378,7 +380,7 @@ class Logging_Console(wx.Panel):
         """
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(GREEN))
-            self.OutText.AppendText(_('[Videomass]: DONE ! 👍️\n'))
+            self.OutText.AppendText(MSG_done)
             lab = "%s" % self.labPerc.GetLabel()
             if lab.split('|')[0] == 'Processing... 99% ':
                 relab = lab.replace('Processing... 99%', 'Processing... 100%')
@@ -402,19 +404,18 @@ class Logging_Console(wx.Panel):
         """
         if self.ERROR is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('\n[Videomass]: Sorry, task failed ! 😩️\n'))
+            self.OutText.AppendText(MSG_taskfailed)
 
         elif self.ABORT is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(VIOLET))
-            self.OutText.AppendText(_('\n[Videomass]: Interrupted Process ! ✋️\n'))
+            self.OutText.AppendText(MSG_interrupted)
 
         else:
             if not self.result:
-                endmsg = _('\n[Videomass]: Successfully completed 😃️\n')
+                endmsg = MSG_completed
                 self.OutText.SetDefaultStyle(wx.TextAttr(WHITE))
             else:
-                endmsg = _('\n[Videomass]: completed, but not '
-                           'everything was successful 😕️\n')
+                endmsg = MSG_unfinished
                 self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
             self.parent.statusbar_msg(_('...Finished'), None)
             self.OutText.AppendText(endmsg)
