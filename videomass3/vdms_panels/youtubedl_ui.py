@@ -224,10 +224,10 @@ class Downloader(wx.Panel):
         self.Layout()
         # ----------------------- Properties
         self.codText.SetBackgroundColour(DARK_BROWN)
-        if OS == 'Darwin':
-            self.codText.SetFont(wx.Font(15, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        else:
-            self.codText.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        #if OS == 'Darwin':
+            #self.codText.SetFont(wx.Font(15, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        #else:
+            #self.codText.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
@@ -292,10 +292,10 @@ class Downloader(wx.Panel):
         for k, v in self.format_dict.items():
             if not v:
                 self.codText.SetDefaultStyle(wx.TextAttr(YELLOW))
-                self.codText.AppendText('- %s :  ? ? ?\n' % (k))
+                self.codText.AppendText('- %s :  ❓️\n' % (k))
             else:
                 self.codText.SetDefaultStyle(wx.TextAttr(GREEN))
-                self.codText.AppendText('- %s :  %s  ...ok\n' % (k, v))
+                self.codText.AppendText('- %s :  %s  ✔️\n' % (k, v))
         # print(self.format_dict)
     # ----------------------------------------------------------------------
 

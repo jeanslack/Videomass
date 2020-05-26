@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: May.26.2020 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -38,7 +38,7 @@ from videomass3.vdms_threads.two_pass_EBU import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass3.vdms_utils.utils import time_human
 
-# Used colour
+# Used colour in HTML
 BLACK = '#242424'
 DARK_BROWN = '#262222'  # for background color on TextCtrl
 WHITE = '#FFFFFF'  # file title or URL in progress
@@ -46,9 +46,9 @@ GREY = '#959595'  # all other text messages
 CYAN = '#31BAA7'  # for info text messages
 YELLOW = '#C8B72F'  # for warning text messages
 ORANGE = '#FF4A1B'  # for error text messages
-#ORANGE = '#E92D15'
-#RED = '#D21814'  # if failed
+ORANGE_DEEP = '#E92D15'
 RED = '#EA312D'
+RED_DEEP = '#D21814'  # if failed
 VIOLET = '#A41EA4'  # if the user stops the processes
 GREEN = '#1EA41E'  # when it is successful
 AZURE = '#3298FB'
@@ -108,7 +108,7 @@ class Logging_Console(wx.Panel):
         self.ERROR = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
         self.logname = None  # example: Videomass_VideoConversion.log
-        self.endmsg = _('\n[Videomass]: Completed :-)\n')
+        self.result = None  # result of the final process
 
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
@@ -137,10 +137,10 @@ class Logging_Console(wx.Panel):
         grid.Add(self.button_close, 1, wx.ALL, 5)
         # set_properties:
         self.OutText.SetBackgroundColour(DARK_BROWN)
-        if OS == 'Darwin':
-            self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        else:
-            self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        #if OS == 'Darwin':
+            #self.OutText.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        #else:
+            #self.OutText.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
         self.ckbx_text.SetToolTip(_('If activated, hides some '
                                     'output messages.'))
@@ -215,10 +215,9 @@ class Logging_Console(wx.Panel):
             self.OutText.SetDefaultStyle(wx.TextAttr(ORANGE))
             self.OutText.AppendText('%s\n' % output)
 
-            self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('[Videomass]: FAILED !\n'))
-            self.endmsg = _('\n[Videomass]: completed, but not everything '
-                            'was successful :-(\n')
+            self.OutText.SetDefaultStyle(wx.TextAttr(RED_DEEP))
+            self.OutText.AppendText(_('[Videomass]: FAILED ! ☹️\n'))
+            self.result = 'failed'
 
         elif status == 'WARNING':
             self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
@@ -226,7 +225,7 @@ class Logging_Console(wx.Panel):
 
         elif status == 'DEBUG':
             if '[download] Destination' in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(CYAN))
+                self.OutText.SetDefaultStyle(wx.TextAttr(AZURE))
                 self.OutText.AppendText('%s\n' % output)
 
             elif '[info]' in output:
@@ -265,9 +264,8 @@ class Logging_Console(wx.Panel):
                     self.OutText.AppendText('%s\n' % output)
 
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('[Videomass]: FAILED !\n'))
-            self.endmsg = _('\n[Videomass]: completed, but not everything '
-                            'was successful :-(\n')
+            self.OutText.AppendText(_('[Videomass]: FAILED ! ☹️\n'))
+            self.result = 'failed'
             return
 
         if '[download]' in output:  # ...in processing
@@ -278,8 +276,6 @@ class Logging_Console(wx.Panel):
                     self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
                     self.OutText.AppendText(' %s' % output)
                 else:
-                    # if not self.ckbx_text.IsChecked():# not print output
-                    #    self.OutText.AppendText(' %s' % output)
                     self.barProg.SetValue(i)
                     self.labPerc.SetLabel("%s" % output)
                     del output, duration
@@ -327,9 +323,8 @@ class Logging_Console(wx.Panel):
 
         if not status == 0:  # error, exit status of the p.wait
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('[Videomass]: FAILED !\n'))
-            self.endmsg = _('\n[Videomass]: completed, but not everything '
-                            'was successful :-(\n')
+            self.OutText.AppendText(_('[Videomass]: FAILED ! ☹️\n'))
+            self.result = 'failed'
             return  # must be return here
 
         if 'time=' in output:  # ...in processing
@@ -383,7 +378,7 @@ class Logging_Console(wx.Panel):
         """
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(GREEN))
-            self.OutText.AppendText(_('[Videomass]: DONE !\n'))
+            self.OutText.AppendText(_('[Videomass]: DONE ! 👍️\n'))
             lab = "%s" % self.labPerc.GetLabel()
             if lab.split('|')[0] == 'Processing... 99% ':
                 relab = lab.replace('Processing... 99%', 'Processing... 100%')
@@ -407,18 +402,22 @@ class Logging_Console(wx.Panel):
         """
         if self.ERROR is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(_('\n[Videomass]: Sorry, task failed !\n'))
+            self.OutText.AppendText(_('\n[Videomass]: Sorry, task failed ! 😩️\n'))
 
         elif self.ABORT is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(VIOLET))
-            self.OutText.AppendText(_('\n[Videomass]: Interrupted Process !\n'))
+            self.OutText.AppendText(_('\n[Videomass]: Interrupted Process ! ✋️\n'))
 
         else:
-            if self.endmsg == _('\n[Videomass]: Completed :-)\n'):
+            if not self.result:
+                endmsg = _('\n[Videomass]: Successfully completed 😃️\n')
                 self.OutText.SetDefaultStyle(wx.TextAttr(WHITE))
             else:
+                endmsg = _('\n[Videomass]: completed, but not '
+                           'everything was successful 😕️\n')
                 self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
-            self.OutText.AppendText(self.endmsg)
+            self.parent.statusbar_msg(_('...Finished'), None)
+            self.OutText.AppendText(endmsg)
             self.barProg.SetValue(0)
 
         self.button_stop.Enable(False)
@@ -433,7 +432,7 @@ class Logging_Console(wx.Panel):
         self.PARENT_THREAD.stop()
         self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD')
         self.PARENT_THREAD.join()
-        self.parent.statusbar_msg(_("Status: Interrupted"), None)
+        self.parent.statusbar_msg(_("...Interrupted"), None)
         self.ABORT = True
 
         event.Skip()
@@ -467,7 +466,7 @@ class Logging_Console(wx.Panel):
         self.ABORT = False
         self.ERROR = False
         self.logname = None
-        self.endmsg = _('\n Completed :-)\n')
+        self.result = None
         # self.OutText.Clear()
         # self.labPerc.SetLabel('')
         self.parent.panelShown(self.previus)  # retrieve at previusly panel

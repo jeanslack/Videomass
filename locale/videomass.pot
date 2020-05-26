@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-25 15:57+0200\n"
+"POT-Creation-Date: 2020-05-26 14:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2432,13 +2432,6 @@ msgstr ""
 msgid "No file selected to `%s` yet"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:111
-#: ../videomass3/vdms_panels/long_processing_task.py:417
-msgid ""
-"\n"
-"[Videomass]: Completed :-)\n"
-msgstr ""
-
 #: ../videomass3/vdms_panels/long_processing_task.py:116
 msgid "Log viewing console:"
 msgstr ""
@@ -2460,44 +2453,52 @@ msgid "Stops current process"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:219
-#: ../videomass3/vdms_panels/long_processing_task.py:268
-#: ../videomass3/vdms_panels/long_processing_task.py:330
-msgid "[Videomass]: FAILED !\n"
+#: ../videomass3/vdms_panels/long_processing_task.py:267
+#: ../videomass3/vdms_panels/long_processing_task.py:326
+msgid "[Videomass]: FAILED ! ☹️\n"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:220
-#: ../videomass3/vdms_panels/long_processing_task.py:269
-#: ../videomass3/vdms_panels/long_processing_task.py:331
+#: ../videomass3/vdms_panels/long_processing_task.py:381
+msgid "[Videomass]: DONE ! 👍️\n"
+msgstr ""
+
+#: ../videomass3/vdms_panels/long_processing_task.py:405
 msgid ""
 "\n"
-"[Videomass]: completed, but not everything was successful :-(\n"
+"[Videomass]: Sorry, task failed ! 😩️\n"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:386
-msgid "[Videomass]: DONE !\n"
-msgstr ""
-
-#: ../videomass3/vdms_panels/long_processing_task.py:410
+#: ../videomass3/vdms_panels/long_processing_task.py:409
 msgid ""
 "\n"
-"[Videomass]: Sorry, task failed !\n"
+"[Videomass]: Interrupted Process ! ✋️\n"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:414
+#: ../videomass3/vdms_panels/long_processing_task.py:413
 msgid ""
 "\n"
-"[Videomass]: Interrupted Process !\n"
+"[Videomass]: Successfully completed 😃️\n"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:434
+#: ../videomass3/vdms_panels/long_processing_task.py:416
+msgid ""
+"\n"
+"[Videomass]: completed, but not everything was successful 😕️\n"
+msgstr ""
+
+#: ../videomass3/vdms_panels/long_processing_task.py:419
+msgid "...Finished"
+msgstr ""
+
+#: ../videomass3/vdms_panels/long_processing_task.py:433
 msgid "wait... I'm aborting"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:436
-msgid "Status: Interrupted"
+#: ../videomass3/vdms_panels/long_processing_task.py:435
+msgid "...Interrupted"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:454
+#: ../videomass3/vdms_panels/long_processing_task.py:453
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -2505,14 +2506,8 @@ msgid ""
 "Do you want to kill application?"
 msgstr ""
 
-#: ../videomass3/vdms_panels/long_processing_task.py:457
+#: ../videomass3/vdms_panels/long_processing_task.py:456
 msgid "Please confirm"
-msgstr ""
-
-#: ../videomass3/vdms_panels/long_processing_task.py:470
-msgid ""
-"\n"
-" Completed :-)\n"
 msgstr ""
 
 #: ../videomass3/vdms_panels/presets_manager.py:113

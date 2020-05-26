@@ -12,6 +12,9 @@ May 25, 2020 V.2.6.0
 
 IMPROVEMENTS:
     * Improving log messages colors on log view console panel.
+    * [YOUTUBE DOWNLOADER] Warning message when checked the checkbox and not
+      selection in 'Download by format code'.
+    * Fixed status bar message at the end of the process.
 
 +------------------------------------+
 May 20, 2020 V.2.5.0
