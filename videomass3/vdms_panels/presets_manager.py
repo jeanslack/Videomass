@@ -439,9 +439,9 @@ class PrstPan(wx.Panel):
         # item = self.list_ctrl.GetFocusedItem()
 
         if menuItem.GetItemLabel() == _("New profile"):
-                self.Addprof()
+            self.Addprof()
         elif menuItem.GetItemLabel() == _("Edit selected profile"):
-                self.Editprof(self)
+            self.Editprof(self)
         elif menuItem.GetItemLabel() == _("Delete selected profile"):
             self.Delprof()
     # ------------------------------------------------------------------#

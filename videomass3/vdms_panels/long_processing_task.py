@@ -355,7 +355,7 @@ class Logging_Console(wx.Panel):
                     self.OutText.AppendText('%s' % output)
 
                 elif [x for x in ('Failed', 'failed', 'Error', 'error')
-                    if x in output]:
+                      if x in output]:
                     self.OutText.SetDefaultStyle(wx.TextAttr(ORANGE))
                     self.OutText.AppendText('%s' % output)
 

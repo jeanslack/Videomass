@@ -224,10 +224,6 @@ class Downloader(wx.Panel):
         self.Layout()
         # ----------------------- Properties
         self.codText.SetBackgroundColour(DARK_BROWN)
-        #if OS == 'Darwin':
-            #self.codText.SetFont(wx.Font(15, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        #else:
-            #self.codText.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.NORMAL))
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)

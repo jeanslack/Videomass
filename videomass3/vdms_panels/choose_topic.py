@@ -41,11 +41,11 @@ EXEC_YDL = get.execYdl
 
 
 msgready = (_('Successful! \n\n'
-             'youtube-dl is ready\n\n'
-             'Important: youtube-dl is very often updated, remember to '
-             'check for updates weekly.\nYou can use the dedicated functions '
-             'in the menu bar of Videomass: Tools/youtube-dl" .\n\n'
-             'Do you want to close Videomass now and restart it manually?'))
+              'youtube-dl is ready\n\n'
+              'Important: youtube-dl is very often updated, remember to '
+              'check for updates weekly.\nYou can use the dedicated functions '
+              'in the menu bar of Videomass: Tools/youtube-dl" .\n\n'
+              'Do you want to close Videomass now and restart it manually?'))
 
 if OS == 'Windows':
     msg = (_('{}\n\n'
@@ -106,20 +106,20 @@ class Choose_Topic(wx.Panel):
         grid_buttons = wx.FlexGridSizer(5, 0, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
         if OS == 'Windows':
-            style=wx.BU_LEFT | wx.BORDER_NONE
+            style = wx.BU_LEFT | wx.BORDER_NONE
         else:
-            style=wx.BU_LEFT
+            style = wx.BU_LEFT
 
         self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1, -1),
                                      style=style
                                      )
         self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
-        self.avconv = wx.Button(self, wx.ID_ANY, video_lab, size=(-1, -1),
-                                style=style
-                               )
+        self.avconv = wx.Button(self, wx.ID_ANY, video_lab,
+                                size=(-1, -1), style=style
+                                )
         self.avconv.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
-        self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab, size=(-1, -1),
-                                 style=style
+        self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab,
+                                 size=(-1, -1), style=style
                                  )
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn), wx.LEFT)
 
@@ -128,9 +128,9 @@ class Choose_Topic(wx.Panel):
                               (version, 0, wx.BOTTOM |
                                wx.ALIGN_CENTER_VERTICAL |
                                wx.ALIGN_CENTER_HORIZONTAL, 20),
-                               (self.presets_mng, 0, wx.EXPAND, 5),
-                               (self.avconv, 0, wx.EXPAND, 5),
-                               (self.youtube, 0, wx.EXPAND, 5),
+                              (self.presets_mng, 0, wx.EXPAND, 5),
+                              (self.avconv, 0, wx.EXPAND, 5),
+                              (self.youtube, 0, wx.EXPAND, 5),
                               ])
         grid_base.Add(grid_buttons, 0, wx.ALIGN_CENTER_VERTICAL |
                       wx.ALIGN_CENTER_HORIZONTAL, 5

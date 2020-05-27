@@ -789,7 +789,7 @@ class AV_Conv(wx.Panel):
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.peakpanel.SetSizer(sizer_peak)  # set panel
-        #sizer_nbAudio.Add(self.peakpanel, 0, wx.ALL, 20)
+        # sizer_nbAudio.Add(self.peakpanel, 0, wx.ALL, 20)
         self.ebupanel = wx.Panel(self.nb_filters,
                                  wx.ID_ANY, style=wx.TAB_TRAVERSAL
                                  )
@@ -828,7 +828,7 @@ class AV_Conv(wx.Panel):
         self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
         sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
         self.ebupanel.SetSizer(sizer_ebu)  # set panel
-        #sizer_nbAudio.Add(self.ebupanel, 0, wx.ALL, 20)
+        # sizer_nbAudio.Add(self.ebupanel, 0, wx.ALL, 20)
         self.nb_filters.SetSizer(sizer_nbFilters)
         self.notebook.AddPage(self.nb_filters, _("Filters"))
         # -------------- notebook panel 4:

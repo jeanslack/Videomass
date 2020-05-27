@@ -33,10 +33,10 @@ import sys
 import shutil
 from videomass3.vdms_sys.ctrl_run import system_check
 from videomass3.vdms_sys.appearance import Appearance
+from videomass3.vdms_sys import app_const as appC
 # add translation macro to builtin similar to what gettext does
 import builtins
 builtins.__dict__['_'] = wx.GetTranslation
-from videomass3.vdms_sys import app_const as appC
 
 
 class Videomass(wx.App):

@@ -194,7 +194,7 @@ def SOURCE_BUILD():
           python_requires='>=3.7',
           install_requires=REQUIRES,
           entry_points={'gui_scripts':
-                            ['videomass = videomass3.Videomass3:main']},
+                        ['videomass = videomass3.Videomass3:main']},
           classifiers=CLASSIFIERS,
           )
 # ---------------------------------------------------------------------#
@@ -265,9 +265,9 @@ def MacOS():
           setup_requires=["py2app"],
           )
 
+
 if __name__ == '__main__':
     if platform.system() == 'Darwin' and 'py2app' in sys.argv:
         MacOS()
     else:
         SOURCE_BUILD()
-
