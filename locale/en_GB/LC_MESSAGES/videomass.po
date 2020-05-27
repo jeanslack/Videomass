@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-26 15:41+0200\n"
-"PO-Revision-Date: 2020-05-26 15:45+0200\n"
+"POT-Creation-Date: 2020-05-27 11:33+0200\n"
+"PO-Revision-Date: 2020-05-27 11:35+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -2434,35 +2434,35 @@ msgid "No file selected to `%s` yet"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:57
-msgid "[Videomass]: DONE ! "
+msgid "[Videomass]: DONE !\n"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:58
-msgid "[Videomass]: FAILED ! "
+msgid "[Videomass]: FAILED !\n"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:59
 msgid ""
 "\n"
-"[Videomass]: Sorry, task failed ! "
+"[Videomass]: Sorry, task failed !\n"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:60
 msgid ""
 "\n"
-"[Videomass]: Interrupted Process ! "
+"[Videomass]: Interrupted Process !\n"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:61
 msgid ""
 "\n"
-"[Videomass]: Successfully completed ! "
+"[Videomass]: Successfully completed !\n"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:62
 msgid ""
 "\n"
-"[Videomass]: completed, but not everything was successful."
+"[Videomass]: completed, but not everything was successful.\n"
 msgstr ""
 
 #: ../videomass3/vdms_panels/long_processing_task.py:125

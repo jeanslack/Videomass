@@ -50,7 +50,7 @@ Videomass is not a converter; it provides a graphical interface for writing pres
 - [atomicparsley](http://atomicparsley.sourceforge.net/) if you want to embed thumbnail in audio file
 
 ## How to start Videomass
-Videomass is a [point and click](https://en.wikipedia.org/wiki/Point_and_click) type Python based graphical interface, it can be run without installing by un-tarring the source package and executing the "launcher" script inside the un-tarred/un-zip directory. Just go with the console inside the unzipped directory and run the launcher:
+Videomass can be run without installing it, just unzip the source archive and executing the "launcher" script inside the directory:   
 
 `python3 launcher`   
 
@@ -59,7 +59,7 @@ Videomass can also be run in interactive mode with the Python interpreter, alway
 `>>> from videomass3 import Videomass3`   
 `>>> Videomass3.main()`   
 
-This can also be done when installing Videomass with [pip](https://pypi.org/project/pip/), only that you no longer need to place yourself in any directory. Keep in mind that on Linux a launcher should be even created in the application launcher of your desktop environment when installing Videomass with pip.
+Keep in mind that on Linux a launcher should be even created in the application launcher of your desktop environment when installing Videomass with pip.
 
 On other systems such as Mac-Os and MS-Windows you will still have to open a console to run Videomass and just write `videomass` command. But if the command still doesn't work, you can start Videomass in interactive mode with the Python interpreter, as seen above.
 

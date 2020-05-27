@@ -292,10 +292,10 @@ class Downloader(wx.Panel):
         for k, v in self.format_dict.items():
             if not v:
                 self.codText.SetDefaultStyle(wx.TextAttr(YELLOW))
-                self.codText.AppendText('- %s :  ❓️ \n' % (k))
+                self.codText.AppendText('- %s :  ...?\n' % (k))
             else:
                 self.codText.SetDefaultStyle(wx.TextAttr(GREEN))
-                self.codText.AppendText('- %s :  %s  ✅️ \n' % (k, v))
+                self.codText.AppendText('- %s :  %s  ...Ok\n' % (k, v))
         # print(self.format_dict)
     # ----------------------------------------------------------------------
 

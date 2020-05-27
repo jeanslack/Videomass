@@ -16,7 +16,7 @@ BASE DEPENDENCIES
         - atomicparsley (to embed thumbnail in audio file)
 
 Videomass can be run without installing by un-tarring the source package and
-executing the "launcher" script inside the un-tarred directory.
+executing the "launcher" script inside the directory.
 
     python3 launcher
 

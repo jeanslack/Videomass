@@ -54,13 +54,13 @@ GREEN = '#1EA41E'  # when it is successful
 AZURE = '#3298FB'
 
 # used msg on text
-MSG_done = _('[Videomass]: DONE ! ')  + '👍️ \n'
-MSG_failed = _('[Videomass]: FAILED ! ') + '☹️ \n'
-MSG_taskfailed = _('\n[Videomass]: Sorry, task failed ! ') + '😩️ \n'
-MSG_interrupted = _('\n[Videomass]: Interrupted Process ! ') + '✋️ \n'
-MSG_completed = _('\n[Videomass]: Successfully completed ! ') + '😃️ \n'
+MSG_done = _('[Videomass]: DONE !\n')
+MSG_failed = _('[Videomass]: FAILED !\n')
+MSG_taskfailed = _('\n[Videomass]: Sorry, task failed !\n')
+MSG_interrupted = _('\n[Videomass]: Interrupted Process !\n')
+MSG_completed = _('\n[Videomass]: Successfully completed !\n')
 MSG_unfinished = _('\n[Videomass]: completed, but not everything '
-                   'was successful.') + ' 😕️ \n'
+                   'was successful.\n')
 
 # get videomass wx.App attribute
 get = wx.GetApp()
