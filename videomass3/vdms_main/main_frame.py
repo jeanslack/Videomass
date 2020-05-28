@@ -222,7 +222,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[18],
                                                      pathicons[19]
                                                      )
-        #self.ChooseTopic.SetBackgroundColour(BLUE)
+        # self.ChooseTopic.SetBackgroundColour(BLUE)
         self.ytDownloader = youtubedl_ui.Downloader(self)
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                  OS,
@@ -374,7 +374,7 @@ class MainFrame(wx.Frame):
         self.new_prst.Enable(False), self.del_prst.Enable(False)
         self.restore.Enable(False), self.default.Enable(False)
         self.default_all.Enable(False), self.refresh.Enable(False)
-        if self.ChooseTopic.IsShown() == True:
+        if self.ChooseTopic.IsShown() is True:
             self.avpan.Enable(False), self.prstpan.Enable(False),
             self.ydlpan.Enable(False), self.startpan.Enable(False)
             self.logpan.Enable(False)
@@ -451,23 +451,23 @@ class MainFrame(wx.Frame):
                 self.statusbar_msg(_('YouTube Downloader'), None)
                 item = self.ytDownloader.fcode.GetFocusedItem()
                 url = self.ytDownloader.fcode.GetItemText(item, 1)
-                if self.ytDownloader.choice.GetSelection() in [0, 1 ,2 ]:
+                if self.ytDownloader.choice.GetSelection() in [0, 1, 2]:
                     quality = self.ytDownloader.fcode.GetItemText(item, 3)
                 elif self.ytDownloader.choice.GetSelection() == 3:
                     quality = self.ytDownloader.fcode.GetItemText(item, 0)
                 IO_tools.url_play(url, quality)
         else:
             with wx.FileDialog(self, "Videomass: Open a file to playback",
-                            defaultDir=self.file_destin,
-                            # wildcard="Audio source (%s)|%s" % (f, f),
-                            style=wx.FD_OPEN |
-                            wx.FD_FILE_MUST_EXIST) as fileDialog:
+                               defaultDir=self.file_destin,
+                               # wildcard="Audio source (%s)|%s" % (f, f),
+                               style=wx.FD_OPEN |
+                               wx.FD_FILE_MUST_EXIST) as fileDialog:
 
                 if fileDialog.ShowModal() == wx.ID_CANCEL:
                     return
                 pathname = fileDialog.GetPath()
 
-            IO_tools.stream_play(pathname,'', '')
+            IO_tools.stream_play(pathname, '', '')
     # ------------------------------------------------------------------#
 
     def Saveprofile(self, event):
@@ -646,11 +646,12 @@ class MainFrame(wx.Frame):
         self.avpan = goButton.Append(wx.ID_ANY, _("A/V conversions"),
                                      _("jump to the Audio/Video Conv. panel"))
         goButton.AppendSeparator()
-        self.ydlpan = goButton.Append(wx.ID_ANY, _("YouTube downloader"),
-                                    _("jump to the YouTube Downloader panel"))
+        dscrp = (_("YouTube downloader"),
+                 _("jump to the YouTube Downloader panel"))
+        self.ydlpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
         dscrp = (_("Log viewing console"),
-                _("View log messages of the last process executed"))
+                 _("View log messages of the last process executed"))
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
 
@@ -906,9 +907,9 @@ class MainFrame(wx.Frame):
 
                 return this[0].strip()
         if msgbox:
-                wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                              'installed yet.').format(PYLIB_YDL),
-                              'Videomass', wx.ICON_ERROR)
+            wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
+                            'installed yet.').format(PYLIB_YDL),
+                          'Videomass', wx.ICON_ERROR)
         return None
     # -----------------------------------------------------------------#
 
@@ -949,7 +950,8 @@ class MainFrame(wx.Frame):
         Update to latest version from 'Update youtube-dl' bar menu
         """
         waitmsg = _('\nWait....\nUpdating youtube-dl')
-        #----------------------------------------------------------
+        # ----------------------------------------------------------
+
         def _check():
             """
             check latest and installed versions of youtube-dl
@@ -969,7 +971,7 @@ class MainFrame(wx.Frame):
                               "Videomass", wx.ICON_INFORMATION, self)
                 return None
             return latest
-        #----------------------------------------------------------
+        # ----------------------------------------------------------
         if os.path.join(CACHEDIR, 'youtube-dl') in sys.path:  # local pkg
             ck = _check()
             if not ck:
@@ -1037,7 +1039,7 @@ class MainFrame(wx.Frame):
         jump on Presets Manager panel
         """
         if not self.data_files:
-            self.statusbar_msg (_('No files added yet'), YELLOW)
+            self.statusbar_msg(_('No files added yet'), YELLOW)
         else:
             self.topicname = 'Presets Manager'
             self.on_Forward(self)
@@ -1048,7 +1050,7 @@ class MainFrame(wx.Frame):
         jump on AVconversions panel
         """
         if not self.data_files:
-            self.statusbar_msg (_('No files added yet'), YELLOW)
+            self.statusbar_msg(_('No files added yet'), YELLOW)
         else:
             self.topicname = 'Audio/Video Conversions'
             self.on_Forward(self)
@@ -1059,7 +1061,7 @@ class MainFrame(wx.Frame):
         jumpe on youtube downloader
         """
         if not self.data_url:
-            self.statusbar_msg (_('No URLs added yet'), YELLOW)
+            self.statusbar_msg(_('No URLs added yet'), YELLOW)
         else:
             self.topicname = 'Youtube Downloader'
             self.on_Forward(self)
@@ -1071,7 +1073,6 @@ class MainFrame(wx.Frame):
         """
         self.switch_to_processing('console view only')
     # ------------------------------------------------------------------#
-
 
     def openLog(self, event):
         """
@@ -1228,18 +1229,18 @@ class MainFrame(wx.Frame):
         self.toolbar.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         # ------- Run process button
         self.toolbar.AddStretchableSpace()
-        #self.toolbar.AddSeparator()
+        # self.toolbar.AddSeparator()
         back = self.toolbar.AddTool(wx.ID_FILE3, _('Back'),
                                     wx.Bitmap(self.icon_mainback))
-        #self.toolbar.AddSeparator()
+        # self.toolbar.AddSeparator()
         forward = self.toolbar.AddTool(wx.ID_FILE4, _('Forward'),
                                        wx.Bitmap(self.icon_mainforward))
-        #self.toolbar.AddSeparator()
+        # self.toolbar.AddSeparator()
         self.run_coding = self.toolbar.AddTool(wx.ID_FILE5, _('Convert'),
-                                          wx.Bitmap(self.icon_runconversion))
+                                               wx.Bitmap(self.icon_runconversion))
         self.run_download = self.toolbar.AddTool(wx.ID_FILE6, _('Download'),
-                                          wx.Bitmap(self.icon_ydl))
-        #self.toolbar.AddSeparator()
+                                                 wx.Bitmap(self.icon_ydl))
+        # self.toolbar.AddSeparator()
         self.toolbar.AddStretchableSpace()
 
         # finally, create it
@@ -1293,7 +1294,7 @@ class MainFrame(wx.Frame):
                 o = urlparse(url)
                 if not o[1]:  # if empty netloc given from ParseResult
                     wx.MessageBox(_('Invalid URL: "{}"').format(url),
-                                    "Videomass", wx.ICON_ERROR, self)
+                                  "Videomass", wx.ICON_ERROR, self)
                     return
 
             self.switch_youtube_downloader(self, data)
@@ -1356,7 +1357,7 @@ class MainFrame(wx.Frame):
         if not data == self.data_url:
             if self.data_url:
                 msg = (_('Warning: the previous settings may be '
-                        'reset to default values.'), ORANGE)
+                         'reset to default values.'), ORANGE)
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
@@ -1495,7 +1496,7 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide(),
         # Show the panel:
         self.ProcessPanel.Show()
-        #self.SetTitle('Videomass')
+        # self.SetTitle('Videomass')
         [self.menuBar.EnableTop(x, False) for x in range(0, 4)]
         # Hide the tool bar
         self.toolbar.Hide()

@@ -323,7 +323,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     if os.path.basename(executable) == 'youtube-dl.exe':
         name = os.path.basename(executable)
         url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-            'download/%s/%s' % (latest, name))
+               'download/%s/%s' % (latest, name))
         dest = executable
     else:
         name = os.path.basename(executable)
@@ -355,9 +355,9 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
             with tarfile.open(dest) as tar:
                 tar.extractall(os.path.dirname(dest))
                 tar.close()
-        except:  # WARNING define exception
-            print('error when opening tarfile')
-            return
+        except (FileNotFoundError, tarfile.ReadError) as err:
+            print('%s\nerror when opening tarfile' % err)
+            return None, err
         else:
             os.remove(dest)
 

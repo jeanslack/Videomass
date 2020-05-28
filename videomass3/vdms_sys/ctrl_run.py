@@ -43,7 +43,7 @@ if OS == 'Windows':
     bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
     FILEconf = os.path.join(USERName + bpath)
     DIRconf = os.path.join(USERName + "\\AppData\\Roaming\\videomass")
-    LOGdir = os.path.join(DIRconf, 'log') # logs
+    LOGdir = os.path.join(DIRconf, 'log')  # logs
     CACHEdir = os.path.join(DIRconf, 'cache')  # updates executable
 
 elif OS == "Darwin":
@@ -97,7 +97,7 @@ def system_check():
             # Installed with 'pip install videomass' command
             dirname = os.path.dirname(sys.executable)
             pythonpath = os.path.join(dirname, 'Script', 'videomass')
-            localepath =  os.path.join(dirname, 'share', 'locale')
+            localepath = os.path.join(dirname, 'share', 'locale')
             SRCpath = os.path.join(dirname, 'share', 'videomass', 'config')
             IS_LOCAL = False
         else:

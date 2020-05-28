@@ -45,8 +45,9 @@ if not OS == 'Windows':
     linemsg = _('Unrecognized error')
 else:
     if os.path.isfile(execYdl):
-        linemsg = (_('\nRequires MSVCR100.dll\nTo resolve this problem install: '
-                    'Microsoft Visual C++ 2010 Redistributable Package (x86)'))
+        linemsg = (_('\nRequires MSVCR100.dll\nTo resolve this problem '
+                     'install: Microsoft Visual C++ 2010 Redistributable '
+                     'Package (x86)'))
     else:
         linemsg = _('Unrecognized error')
 
@@ -111,7 +112,7 @@ class Ydl_DL_Exec(Thread):
                                                self.code,
                                                fillvalue='',
                                                ):
-            format_code = '--format %s' %(code) if code else ''
+            format_code = '--format %s' % (code) if code else ''
             cmd = ('"{0}" {1} --newline --ignore-errors -o '
                    '"{2}/{3}" {4} {5} --ignore-config --restrict-filenames '
                    '"{6}" --ffmpeg-location "{7}"'.format(execYdl,

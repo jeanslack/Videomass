@@ -38,7 +38,7 @@ def current_release():
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
     Version = '2.6.0'
-    Release = 'May 24 2020'
+    Release = 'May 28 2020'
     Copyright = '© 2013-2020'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = 'Gianluca Pernigotto (aka jeanslack)'
@@ -51,7 +51,7 @@ def current_release():
                "originator of the FFmpeg project:\n"
                "<http://ffmpeg.org/>\n"
                "- youtube-dl: <http://ytdl-org.github.io/youtube-dl\n"
-                "Download videos from YouTube and more sites\n"
+               "Download videos from YouTube and more sites\n"
                "- Material design icons from Google:\n"
                "http://google.github.io/material-design-icons/#getting-icons\n"
                "- Flat Color Icons:\n"

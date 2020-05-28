@@ -27,6 +27,7 @@
 #########################################################
 from __future__ import unicode_literals
 import wx
+import wx.richtext as rt
 import os
 from pubsub import pub
 from videomass3.vdms_io.make_filelog import write_log
@@ -96,7 +97,8 @@ def pairwise(iterable):
 
 class Logging_Console(wx.Panel):
     """
-    displays a text control for the output logging, a progress bar
+    This is an alternative Rich textctrl style implementation.
+    Displays a text control for the output logging, a progress bar
     and a progressive percentage text label. This panel is used
     in combination with separated threads for long processing tasks.
     It also implements stop and close buttons to stop the current
@@ -123,11 +125,12 @@ class Logging_Console(wx.Panel):
         """ Constructor """
 
         lbl = wx.StaticText(self, label=_("Log viewing console:"))
-        self.OutText = wx.TextCtrl(self, wx.ID_ANY, "",
-                                   style=wx.TE_MULTILINE |
-                                   wx.TE_READONLY |
-                                   wx.TE_RICH2
-                                   )
+        self.OutText = rt.RichTextCtrl(self,
+                                       style=wx.VSCROLL |
+                                       wx.HSCROLL |
+                                       wx.TE_MULTILINE |
+                                       wx.TE_READONLY
+                                       )
         self.ckbx_text = wx.CheckBox(self, wx.ID_ANY, (_("Suppress excess "
                                                          "output")))
         self.barProg = wx.Gauge(self, wx.ID_ANY, range=0)
@@ -215,28 +218,33 @@ class Logging_Console(wx.Panel):
         pubsub "UPDATE_YDL_FROM_IMPORT_EVT" .
         """
         if status == 'ERROR':
-            self.OutText.SetDefaultStyle(wx.TextAttr(ORANGE))
-            self.OutText.AppendText('%s\n' % output)
-            self.OutText.SetDefaultStyle(wx.TextAttr(RED_DEEP))
-            self.OutText.AppendText(MSG_failed)
+            self.OutText.BeginTextColour((RED))
+            self.OutText.WriteText('%s\n' % output)
+            self.OutText.BeginBold()
+            self.OutText.WriteText(MSG_failed)
+            self.OutText.EndBold(), self.OutText.EndTextColour()
             self.result = 'failed'
 
         elif status == 'WARNING':
-            self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
-            self.OutText.AppendText('%s\n' % output)
+            self.OutText.BeginTextColour((YELLOW))
+            self.OutText.WriteText('%s\n' % output)
+            self.OutText.EndTextColour()
 
         elif status == 'DEBUG':
             if '[download] Destination' in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(AZURE))
-                self.OutText.AppendText('%s\n' % output)
+                self.OutText.BeginTextColour((AZURE))
+                self.OutText.WriteText('%s\n' % output)
+                self.OutText.EndTextColour()
 
             elif '[info]' in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(CYAN))
-                self.OutText.AppendText('%s\n' % output)
+                self.OutText.BeginTextColour((CYAN))
+                self.OutText.WriteText('%s\n' % output)
+                self.OutText.EndTextColour()
 
             elif '[download]' not in output:
-                self.OutText.SetDefaultStyle(wx.TextAttr(GREY))
-                self.OutText.AppendText('%s\n' % output)
+                self.OutText.BeginTextColour((GREY))
+                self.OutText.WriteText('%s\n' % output)
+                self.OutText.EndTextColour()
 
                 with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                     logerr.write("[YOUTUBE_DL]: %s > %s\n" % (status, output))
@@ -245,8 +253,9 @@ class Logging_Console(wx.Panel):
             self.barProg.SetValue(duration[1])
 
         elif status == 'FINISHED':
-            self.OutText.SetDefaultStyle(wx.TextAttr(GREY))
-            self.OutText.AppendText('%s\n' % duration)
+            self.OutText.BeginTextColour((GREY))
+            self.OutText.WriteText('%s\n' % duration)
+            self.OutText.EndTextColour()
 
         if status in ['ERROR', 'WARNING']:
             with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
@@ -262,11 +271,11 @@ class Logging_Console(wx.Panel):
         if not status == 0:  # error, exit status of the p.wait
             if output:
                 if 'ERROR:' in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(ORANGE))
-                    self.OutText.AppendText('%s\n' % output)
-
-            self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(MSG_failed)
+                    self.OutText.BeginTextColour((RED))
+                    self.OutText.WriteText('%s\n' % output)
+            self.OutText.BeginBold()
+            self.OutText.WriteText(MSG_failed)
+            self.OutText.EndBold(), self.OutText.EndTextColour()
             self.result = 'failed'
             return
 
@@ -275,8 +284,9 @@ class Logging_Console(wx.Panel):
                 try:
                     i = float(output.split()[1].split('%')[0])
                 except ValueError:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
-                    self.OutText.AppendText(' %s' % output)
+                    self.OutText.BeginTextColour((YELLOW))
+                    self.OutText.WriteText(' %s' % output)
+                    self.OutText.EndTextColour()
                 else:
                     self.barProg.SetValue(i)
                     self.labPerc.SetLabel("%s" % output)
@@ -285,14 +295,17 @@ class Logging_Console(wx.Panel):
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # not print the output
                 if '[info]' in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(CYAN))
-                    self.OutText.AppendText(' %s' % output)
+                    self.OutText.BeginTextColour((CYAN))
+                    self.OutText.WriteText(' %s' % output)
+                    self.OutText.EndTextColour()
                 elif 'WARNING:' in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
-                    self.OutText.AppendText(' %s' % output)
+                    self.OutText.BeginTextColour((YELLOW))
+                    self.OutText.WriteText(' %s' % output)
+                    self.OutText.EndTextColour()
                 elif 'ERROR:' not in output:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(GREY))
-                    self.OutText.AppendText(' %s' % output)
+                    self.OutText.BeginTextColour((GREY))
+                    self.OutText.WriteText(' %s' % output)
+                    self.OutText.EndTextColour()
 
             with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                 logerr.write("[YOUTUBE-DL]: %s" % (output))
@@ -321,11 +334,13 @@ class Logging_Console(wx.Panel):
 
         """
         # if self.ckbx_text.IsChecked(): #ffmpeg output messages in real time:
-        #    self.OutText.AppendText(output)
+        #    self.OutText.WriteText(output)
 
         if not status == 0:  # error, exit status of the p.wait
-            self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(MSG_failed)
+            self.OutText.BeginBold()
+            self.OutText.BeginTextColour((RED))
+            self.OutText.WriteText(MSG_failed)
+            self.OutText.EndBold(), self.OutText.EndTextColour()
             self.result = 'failed'
             return  # must be return here
 
@@ -351,21 +366,25 @@ class Logging_Console(wx.Panel):
         else:  # append all others lines on the textctrl and log file
             if not self.ckbx_text.IsChecked():  # not print the output
                 if [x for x in ('info', 'Info') if x in output]:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(CYAN))
-                    self.OutText.AppendText('%s' % output)
+                    self.OutText.BeginTextColour((CYAN))
+                    self.OutText.WriteText('%s' % output)
+                    self.OutText.EndTextColour()
 
                 elif [x for x in ('Failed', 'failed', 'Error', 'error')
                       if x in output]:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(ORANGE))
-                    self.OutText.AppendText('%s' % output)
+                    self.OutText.BeginTextColour((RED))
+                    self.OutText.WriteText('%s' % output)
+                    self.OutText.EndTextColour()
 
                 elif [x for x in ('warning', 'Warning') if x in output]:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
-                    self.OutText.AppendText('%s' % output)
+                    self.OutText.BeginTextColour((YELLOW))
+                    self.OutText.WriteText('%s' % output)
+                    self.OutText.EndTextColour()
 
                 else:
-                    self.OutText.SetDefaultStyle(wx.TextAttr(GREY))
-                    self.OutText.AppendText('%s' % output)
+                    self.OutText.BeginTextColour((GREY))
+                    self.OutText.WriteText('%s' % output)
+                    self.OutText.EndTextColour()
 
             with open(os.path.join(LOGDIR, self.logname), "a") as logerr:
                 logerr.write("[FFMPEG]: %s" % (output))
@@ -378,13 +397,13 @@ class Logging_Console(wx.Panel):
         This method can be used even for non-loop threads.
 
         """
-        # update scrolling at the last position:
-        self.OutText.SetScrollPos(wx.VERTICAL,
-                                  self.OutText.GetScrollRange(wx.VERTICAL))
-        self.OutText.SetInsertionPoint(-1)
         if end == 'ok':
-            self.OutText.SetDefaultStyle(wx.TextAttr(GREEN))
-            self.OutText.AppendText(MSG_done)
+            self.OutText.SetInsertionPointEnd()
+            self.OutText.BeginBold()
+            self.OutText.BeginTextColour((GREEN))
+            self.OutText.WriteText(MSG_done)
+            self.OutText.EndBold(), self.OutText.EndTextColour()
+            self.OutText.SetInsertionPointEnd()
             lab = "%s" % self.labPerc.GetLabel()
             if lab.split('|')[0] == 'Processing... 99% ':
                 relab = lab.replace('Processing... 99%', 'Processing... 100%')
@@ -392,44 +411,46 @@ class Logging_Console(wx.Panel):
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
-            self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
-            self.OutText.AppendText('\n%s\n' % (count))
+            self.OutText.BeginTextColour((YELLOW))
+            self.OutText.WriteText('\n%s\n' % (count))
             self.ERROR = True
         else:
             self.barProg.SetRange(duration)  # set la durata complessiva
             self.barProg.SetValue(0)  # resetto la prog bar
-            self.OutText.SetDefaultStyle(wx.TextAttr(WHITE))
-            self.OutText.AppendText('\n%s : "%s"\n' % (count, fname))
-
+            self.OutText.BeginTextColour((WHITE))
+            self.OutText.WriteText('\n%s : "%s"\n' % (count, fname))
+        self.OutText.EndTextColour()
     # ----------------------------------------------------------------------
+
     def end_proc(self):
         """
         At the end of the process
         """
+        self.OutText.BeginBold()
+        self.OutText.BeginUnderline()
+
         if self.ERROR is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(RED))
-            self.OutText.AppendText(MSG_taskfailed)
+            self.OutText.BeginTextColour((RED))
+            self.OutText.WriteText(MSG_taskfailed)
 
         elif self.ABORT is True:
-            self.OutText.SetDefaultStyle(wx.TextAttr(VIOLET))
-            self.OutText.AppendText(MSG_interrupted)
+            self.OutText.BeginTextColour((VIOLET))
+            self.OutText.WriteText(MSG_interrupted)
 
         else:
             if not self.result:
                 endmsg = MSG_completed
-                self.OutText.SetDefaultStyle(wx.TextAttr(WHITE))
+                self.OutText.BeginTextColour((WHITE))
             else:
                 endmsg = MSG_unfinished
-                self.OutText.SetDefaultStyle(wx.TextAttr(YELLOW))
+                self.OutText.BeginTextColour((YELLOW))
             self.parent.statusbar_msg(_('...Finished'), None)
-            self.OutText.AppendText(endmsg)
+            self.OutText.WriteText(endmsg)
             self.barProg.SetValue(0)
 
-        # update scrolling at the last position:
-        self.OutText.SetScrollPos(wx.VERTICAL,
-                                  self.OutText.GetScrollRange(wx.VERTICAL))
-        self.OutText.SetInsertionPoint(-1)
-
+        self.OutText.EndBold()
+        self.OutText.EndUnderline()
+        self.OutText.EndTextColour()
         self.button_stop.Enable(False)
         self.button_close.Enable(True)
         self.PARENT_THREAD = None

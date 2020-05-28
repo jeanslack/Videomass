@@ -91,8 +91,8 @@ class Url_Play(Thread):
                    '--ytdl-format=%s %s' % (MPV_LINK,
                                             self.url,
                                             self.quality,
-                                            self.url)
-                  )
+                                            self.url
+                                            ))
             shell = False
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.SW_HIDE

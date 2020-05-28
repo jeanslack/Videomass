@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-May 25, 2020 V.2.6.0
+May 28, 2020 V.2.6.0
 +------------------------------------+
 
 IMPROVEMENTS:
@@ -15,6 +15,9 @@ IMPROVEMENTS:
     * [YOUTUBE DOWNLOADER] Warning message when checked the checkbox and not
       selection in 'Download by format code'.
     * Fixed status bar message at the end of the process.
+    * Updating scrolling at the last position when more text is appending on
+      log console view during processes.
+    * Fixed exception definitions for tarfile on IO_tools.youtubedl_upgrade.
 
 +------------------------------------+
 May 20, 2020 V.2.5.0
