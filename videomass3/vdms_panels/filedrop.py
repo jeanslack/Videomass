@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: June.02.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -31,15 +31,14 @@ import os
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import time_seconds
 
+# CONSTANTS:
+get = wx.GetApp()
+USER_FILESAVE = get.USERfilesave  # path to the configuration directory
 AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
 RED = '#ea312d'
 YELLOW = '#a29500'
 GREENOLIVE = '#6aaf23'
 ORANGE = '#f28924'
-
-get = wx.GetApp()
-USER_FILESAVE = get.USERfilesave  # path to the configuration directory
-data_files = []
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -53,6 +52,7 @@ class MyListCtrl(wx.ListCtrl):
         """Constructor"""
         self.index = 0
         self.parent = parent  # parent is DnDPanel class
+        self.data = self.parent.data
         wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT |
                              wx.LC_SINGLE_SEL
                              )
@@ -68,7 +68,7 @@ class MyListCtrl(wx.ListCtrl):
             self.parent.statusbar_msg(msg_dir, ORANGE)
             return
 
-        if not [x for x in data_files if x['format']['filename'] == path]:
+        if not [x for x in self.data if x['format']['filename'] == path]:
             data = IO_tools.probeInfo(path)
 
             if data[1]:
@@ -84,7 +84,7 @@ class MyListCtrl(wx.ListCtrl):
                 data.get('format')['time'] = data.get('format').pop('duration')
                 t = time_seconds(data.get('format')['time'])
                 data['format']['duration'] = t
-            data_files.append(data)
+            self.data.append(data)
             self.parent.statusbar_msg('', None)
 
         else:
@@ -126,6 +126,7 @@ class FileDnD(wx.Panel):
     def __init__(self, parent):
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent  # parent is the MainFrame
+        self.data = self.parent.data_files  # set items list data on parent
         dirname = os.path.expanduser('~')  # /home/user/
         self.file_dest = dirname if not USER_FILESAVE else USER_FILESAVE
         self.selected = None  # tells if an imported file is selected or not
@@ -169,16 +170,6 @@ class FileDnD(wx.Panel):
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         # -------
         self.text_path_save.SetValue(self.file_dest)
-    # ----------------------------------------------------------------------
-
-    def on_Redirect(self):
-        """
-        Redirects data to specific panel
-        """
-        if self.flCtrl.GetItemCount() == 0:
-            return
-        else:
-            return data_files
     # ----------------------------------------------------------------------
 
     def which(self):
@@ -231,7 +222,7 @@ class FileDnD(wx.Panel):
                     item = self.flCtrl.GetFocusedItem()
                     self.flCtrl.DeleteItem(item)
                     self.selected = None
-                    data_files.pop(item)
+                    self.data.pop(item)
 
     # ----------------------------------------------------------------------
 
@@ -243,7 +234,7 @@ class FileDnD(wx.Panel):
         """
         # self.flCtrl.ClearAll()
         self.flCtrl.DeleteAllItems()
-        del data_files[:]
+        del self.data[:]
         self.parent.filedropselected = None
         self.selected = None
     # ----------------------------------------------------------------------

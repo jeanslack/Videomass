@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: June.02.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -101,7 +101,7 @@ class MainFrame(wx.Frame):
         self.icon_mainback = pathicons[23]
         self.icon_mainforward = pathicons[24]
         # -------------------------------#
-        self.data_files = None  # list of items in list control
+        self.data_files = []  # list of items in list control
         self.data_url = None  # list of urls in text box
         self.file_destin = None  # path name for file saved destination
         self.file_src = None  # input files list
@@ -1271,13 +1271,11 @@ class MainFrame(wx.Frame):
         redirect on corresponding panel
         """
         if self.topicname in ['Audio/Video Conversions', 'Presets Manager']:
-            data = self.fileDnDTarget.on_Redirect()
-            if not data:
+            if not self.data_files:
                 wx.MessageBox(_('Drag at least one file'), "Videomass",
                               wx.ICON_INFORMATION, self)
                 return
 
-            self.data_files = data
             if self.topicname == 'Audio/Video Conversions':
                 self.switch_av_conversions(self)
             else:

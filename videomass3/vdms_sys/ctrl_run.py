@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: June.02.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,43 +26,13 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-
 import sys
 import os
 import shutil
 import platform
 
-# Set default variables
-WORKdir = os.getcwd()  # work current directory (where is Videomsass?)
-USERName = os.path.expanduser('~')  # /home/user (current user directory)
-OS = platform.system()  # What is the OS ??
 
-# Establish the conventional paths on the different OS where
-# the videomass directories will be stored:
-if OS == 'Windows':
-    bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
-    FILEconf = os.path.join(USERName + bpath)
-    DIRconf = os.path.join(USERName + "\\AppData\\Roaming\\videomass")
-    LOGdir = os.path.join(DIRconf, 'log')  # logs
-    CACHEdir = os.path.join(DIRconf, 'cache')  # updates executable
-
-elif OS == "Darwin":
-    bpath = "Library/Application Support/videomass/videomass.conf"
-    FILEconf = os.path.join(USERName, bpath)
-    DIRconf = os.path.join(USERName, os.path.dirname(bpath))
-    LOGdir = os.path.join(USERName, "Library/Logs/videomass")  # logs
-    CACHEdir = os.path.join(USERName, "Library/Caches/videomass")  # upds
-
-else:  # Linux, FreeBsd, etc.
-    bpath = ".config/videomass/videomass.conf"
-    FILEconf = os.path.join(USERName, bpath)
-    DIRconf = os.path.join(USERName, ".config/videomass")
-    LOGdir = os.path.join(USERName, ".local/share/videomass/log")  # logs
-    CACHEdir = os.path.join(USERName, ".cache/videomass")  # updates
-# ------------------------------------------------------------------------#
-
-
-def parsing_fileconf():
+def parsing_fileconf(FILEconf):
     """
     Make a parsing of the configuration file and return
     object list with the current program settings data.
@@ -75,7 +45,6 @@ def parsing_fileconf():
         return
     else:
         return dataconf
-# ------------------------------------------------------------------------#
 
 
 def system_check():
@@ -83,6 +52,33 @@ def system_check():
     assigning shared data paths and
     checking the configuration folder
     """
+    # Set default variables
+    WORKdir = os.getcwd()  # work current directory (where is Videomsass?)
+    USERName = os.path.expanduser('~')  # /home/user (current user directory)
+    OS = platform.system()  # What is the OS ??
+    # Establish the conventional paths on the different OS where
+    # the videomass directories will be stored:
+    if OS == 'Windows':
+        bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
+        FILEconf = os.path.join(USERName + bpath)
+        DIRconf = os.path.join(USERName + "\\AppData\\Roaming\\videomass")
+        LOGdir = os.path.join(DIRconf, 'log')  # logs
+        CACHEdir = os.path.join(DIRconf, 'cache')  # updates executable
+
+    elif OS == "Darwin":
+        bpath = "Library/Application Support/videomass/videomass.conf"
+        FILEconf = os.path.join(USERName, bpath)
+        DIRconf = os.path.join(USERName, os.path.dirname(bpath))
+        LOGdir = os.path.join(USERName, "Library/Logs/videomass")  # logs
+        CACHEdir = os.path.join(USERName, "Library/Caches/videomass")  # upds
+
+    else:  # Linux, FreeBsd, etc.
+        bpath = ".config/videomass/videomass.conf"
+        FILEconf = os.path.join(USERName, bpath)
+        DIRconf = os.path.join(USERName, ".config/videomass")
+        LOGdir = os.path.join(USERName, ".local/share/videomass/log")  # logs
+        CACHEdir = os.path.join(USERName, ".cache/videomass")  # updates
+
     # ----------------------------------------------------------- #
     # ### Set resources location #
     # ------------------------------------------------------------#
@@ -128,7 +124,7 @@ def system_check():
 
     if os.path.exists(DIRconf):  # if exist conf. folder
         if os.path.isfile(FILEconf):
-            DATAconf = parsing_fileconf()  # fileconf data
+            DATAconf = parsing_fileconf(FILEconf)  # fileconf data
             if not DATAconf:
                 print("The file configuration is damaged! try to restore..")
                 existfileconf = False

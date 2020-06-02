@@ -12,6 +12,7 @@ May 31, 2020 V.2.7.0
 
 BUGS:
     * Fixed failure of some downloads which report ` ERROR: '_total_bytes_str' `
+
 IMPROVEMENTS:
     * Removed global vars
 
