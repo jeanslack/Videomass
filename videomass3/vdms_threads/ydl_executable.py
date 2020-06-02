@@ -42,16 +42,16 @@ execYdl = get.execYdl
 
 if not OS == 'Windows':
     import shlex
-    linemsg = _('Unrecognized error')
+    LINE_MSG = _('Unrecognized error')
 else:
     if os.path.isfile(execYdl):
-        linemsg = (_('\nRequires MSVCR100.dll\nTo resolve this problem '
-                     'install: Microsoft Visual C++ 2010 Redistributable '
-                     'Package (x86)'))
+        LINE_MSG = (_('\nRequires MSVCR100.dll\nTo resolve this problem '
+                      'install: Microsoft Visual C++ 2010 Redistributable '
+                      'Package (x86)'))
     else:
-        linemsg = _('Unrecognized error')
+        LINE_MSG = _('Unrecognized error')
 
-executable_not_found_msg = _("Is 'youtube-dl' installed on your system?")
+EXECUTABLE_NOT_FOUND_MSG = _("Is 'youtube-dl' installed on your system?")
 
 
 def logWrite(cmd, sterr, logname):
@@ -164,7 +164,7 @@ class Ydl_DL_Exec(Thread):
 
                     if p.wait():  # error
                         if 'line' not in locals():
-                            line = linemsg
+                            line = LINE_MSG
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_YDL_EXECUTABLE_EVT",
                                      output=line,
@@ -184,7 +184,7 @@ class Ydl_DL_Exec(Thread):
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, executable_not_found_msg)
+                e = "%s\n  %s" % (err, EXECUTABLE_NOT_FOUND_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=e,
@@ -258,7 +258,7 @@ class Ydl_EI_Exec(Thread):
         else:
             if p.returncode:  # if returncode == 1
                 if not out[0] and not out[1] and OS == 'Windows':
-                    self.status = linemsg, 'error'
+                    self.status = LINE_MSG, 'error'
                 else:
                     self.status = (out[0], 'error')
             else:

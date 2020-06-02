@@ -42,7 +42,7 @@ FFMPEG_LOGLEV = get.FFMPEG_loglev
 if not OS == 'Windows':
     import shlex
 
-not_exist_msg = _("Is 'ffmpeg' installed on your system?")
+NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
 
 def logWrite(cmd, sterr, logname):
@@ -166,7 +166,7 @@ class PicturesFromVideo(Thread):
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            e = "%s\n  %s" % (err, not_exist_msg)
+            e = "%s\n  %s" % (err, NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=e,
