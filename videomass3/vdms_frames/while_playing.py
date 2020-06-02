@@ -32,11 +32,11 @@ DARK_BROWN = '#262222'
 GREEN = '#008000'
 LIGHT_GREY = '#959595'
 
-keys = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
+KEYS = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
           "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
           "right mouse click\nleft mouse double-click"
           ))
-explan = (_("Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
+EXPLAN = (_("Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
             "Decrease and increase volume respectively.\n"
             "Decrease and increase volume respectively.\n"
             "Cycle audio channel in the current program.\n"
@@ -75,8 +75,8 @@ class While_Playing(wx.MiniFrame):
         """
         # -------------------- widget --------------------------#
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        label1 = wx.StaticText(panel, wx.ID_ANY, keys)
-        label2 = wx.StaticText(panel, wx.ID_ANY, explan)
+        label1 = wx.StaticText(panel, wx.ID_ANY, KEYS)
+        label2 = wx.StaticText(panel, wx.ID_ANY, EXPLAN)
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: Shortcuts while playing"))

@@ -39,7 +39,7 @@ LOGDIR = get.LOGdir
 FFMPEG_URL = get.FFMPEG_url
 pylibYdl = get.pylibYdl
 
-if pylibYdl is None:  # youtube-dl is installed
+if pylibYdl is None:  # youtube_dl as python library
     import youtube_dl
 
 
@@ -99,10 +99,10 @@ def my_hook(d):
     if d['status'] == 'downloading':
         percent = float(d['_percent_str'].strip().split('%')[0])
         duration = ('Downloading... {} of {} '
-                    'at {} ETA {}'.format(d['_percent_str'],
-                                          d['_total_bytes_str'],
-                                          d['_speed_str'],
-                                          d['_eta_str'],),
+                    'at {} ETA {}'.format(d.get('_percent_str'),
+                                          d.get('_total_bytes_str', 'N/A'),
+                                          d.get('_speed_str'),
+                                          d.get('_eta_str'),),
                     percent
                     )
         wx.CallAfter(pub.sendMessage,

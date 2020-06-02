@@ -37,11 +37,9 @@ YELLOW = '#a29500'
 GREENOLIVE = '#6aaf23'
 ORANGE = '#f28924'
 
-dirname = os.path.expanduser('~')  # /home/user/
-data_files = []
-
 get = wx.GetApp()
 USER_FILESAVE = get.USERfilesave  # path to the configuration directory
+data_files = []
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -66,7 +64,6 @@ class MyListCtrl(wx.ListCtrl):
 
         """
         msg_dir = _("Directories are not allowed, just add files, please.")
-
         if os.path.isdir(path):
             self.parent.statusbar_msg(msg_dir, ORANGE)
             return
@@ -129,6 +126,7 @@ class FileDnD(wx.Panel):
     def __init__(self, parent):
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent  # parent is the MainFrame
+        dirname = os.path.expanduser('~')  # /home/user/
         self.file_dest = dirname if not USER_FILESAVE else USER_FILESAVE
         self.selected = None  # tells if an imported file is selected or not
         wx.Panel.__init__(self, parent=parent)

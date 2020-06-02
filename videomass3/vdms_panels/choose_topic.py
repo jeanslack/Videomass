@@ -40,7 +40,7 @@ PYLIB_YDL = get.pylibYdl
 EXEC_YDL = get.execYdl
 
 
-msgready = (_('Successful! \n\n'
+MSGREADY = (_('Successful! \n\n'
               'youtube-dl is ready\n\n'
               'Important: youtube-dl is very often updated, remember to '
               'check for updates weekly.\nYou can use the dedicated functions '
@@ -48,7 +48,7 @@ msgready = (_('Successful! \n\n'
               'Do you want to close Videomass now and restart it manually?'))
 
 if OS == 'Windows':
-    msg = (_('{}\n\n'
+    MSG = (_('{}\n\n'
              'To download video from YouTube.com and other video sites, '
              'Videomass needs an updated\nversion of youtube-dl.exe from '
              'https://github.com/ytdl-org/youtube-dl/releases\n\n'
@@ -58,13 +58,13 @@ if OS == 'Windows':
              'Do you want to download youtube-dl now?')).format(PYLIB_YDL)
 
 elif OS == 'Darwin':
-    msg = (_('{}\n\n'
+    MSG = (_('{}\n\n'
              'To download video from YouTube.com and other video sites, '
              'Videomass needs an updated version of youtube-dl from '
              'https://github.com/ytdl-org/youtube-dl/releases\n\n'
              'Do you want to download youtube-dl now?')).format(PYLIB_YDL)
 else:
-    msg = (_('{}\n\n'
+    MSG = (_('{}\n\n'
              'To download video from YouTube.com and other video sites, '
              'Videomass needs an updated version of youtube-dl.\n'
              'Videomass recommends pip to install youtube-dl and keep '
@@ -72,16 +72,16 @@ else:
              'youtube-dl can be downloaded locally.\n\n'
              '...Do you wish to continue?')).format(PYLIB_YDL)
 
-    msgerr = _('{}\n\nyoutube-dl: no library or executable '
-               'found .').format(PYLIB_YDL)
+    MSG_ERR = _('{}\n\nyoutube-dl: no library or executable '
+                'found .').format(PYLIB_YDL)
 
-prst_mng = _('  Presets Manager - Create, edit and use quickly your favorite\n'
+PRST_MNG = _('  Presets Manager - Create, edit and use quickly your favorite\n'
              '  FFmpeg presets and profiles with full formats support and '
              'codecs. ')
-video_lab = _('  A set of useful tools for audio and video conversions.\n'
-              '  Save your profiles and reuse them with Presets Manager. ')
-youtube_lab = _('  Easily download videos and audio in different formats\n'
-                '  and quality from YouTube, Facebook and more sites. ')
+AV_CONV = _('  A set of useful tools for audio and video conversions.\n'
+            '  Save your profiles and reuse them with Presets Manager. ')
+YOUTUBE_DL = _('  Easily download videos and audio in different formats\n'
+               '  and quality from YouTube, Facebook and more sites. ')
 
 
 class Choose_Topic(wx.Panel):
@@ -110,15 +110,15 @@ class Choose_Topic(wx.Panel):
         else:
             style = wx.BU_LEFT
 
-        self.presets_mng = wx.Button(self, wx.ID_ANY, prst_mng, size=(-1, -1),
+        self.presets_mng = wx.Button(self, wx.ID_ANY, PRST_MNG, size=(-1, -1),
                                      style=style
                                      )
         self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
-        self.avconv = wx.Button(self, wx.ID_ANY, video_lab,
+        self.avconv = wx.Button(self, wx.ID_ANY, AV_CONV,
                                 size=(-1, -1), style=style
                                 )
         self.avconv.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
-        self.youtube = wx.Button(self, wx.ID_ANY, youtube_lab,
+        self.youtube = wx.Button(self, wx.ID_ANY, YOUTUBE_DL,
                                  size=(-1, -1), style=style
                                  )
         self.youtube.SetBitmap(wx.Bitmap(youtube_icn), wx.LEFT)
@@ -180,12 +180,12 @@ class Choose_Topic(wx.Panel):
                 return
             else:
                 if OS in ['Windows', 'Darwin']:
-                    if wx.MessageBox(msg, _("Videomass confirmation"),
+                    if wx.MessageBox(MSG, _("Videomass confirmation"),
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
                 else:
-                    if wx.MessageBox(msg, _("Videomass confirmation"),
+                    if wx.MessageBox(MSG, _("Videomass confirmation"),
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
@@ -200,7 +200,7 @@ class Choose_Topic(wx.Panel):
                                   "Videomass error", wx.ICON_ERROR, self)
                     return
                 else:
-                    if wx.MessageBox(msgready, "Videomass",
+                    if wx.MessageBox(MSGREADY, "Videomass",
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
@@ -208,7 +208,7 @@ class Choose_Topic(wx.Panel):
                 return
 
         elif EXEC_YDL is False:
-            wx.MessageBox(msgerr, 'Videomass error', wx.ICON_ERROR)
+            wx.MessageBox(MSG_ERR, 'Videomass error', wx.ICON_ERROR)
             return
     # ------------------------------------------------------------------#
 

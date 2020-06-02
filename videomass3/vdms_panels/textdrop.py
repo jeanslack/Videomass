@@ -29,9 +29,6 @@
 import wx
 import os
 
-dirname = os.path.expanduser('~')  # /home/user/
-data_files = []
-
 get = wx.GetApp()
 USER_FILESAVE = get.USERfilesave  # files destination folder
 
@@ -45,6 +42,7 @@ class TextDnD(wx.Panel):
         """
         """
         self.parent = parent  # parent is the MainFrame
+        dirname = os.path.expanduser('~')  # /home/user/
         self.file_dest = dirname if not USER_FILESAVE else USER_FILESAVE
 
         wx.Panel.__init__(self, parent=parent)

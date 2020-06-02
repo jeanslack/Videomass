@@ -54,12 +54,6 @@ GREENOLIVE = '#8aab3c'
 GREEN = '#268826'
 LIMEGREEN = '#87A615'
 TROPGREEN = '#15A660'
-# Parameters of the selected profile:
-array = []
-# default options:
-cmd_opt = {"PEAK": "", "RMS": "", "EBU": "",
-           "AudioInMap": ['', ''], "AudioOutMap": ['', '']
-           }
 
 
 class PrstPan(wx.Panel):
@@ -84,6 +78,11 @@ class PrstPan(wx.Panel):
                  fontBtncolor):
         """
         """
+        self.array = []  # Parameters of the selected profile
+        # default options:
+        self.opt = {"PEAK": "", "RMS": "", "EBU": "",
+                    "AudioInMap": ['', ''], "AudioOutMap": ['', '']
+                    }
         self.src_prst = os.path.join(path_srcShare, 'presets')  # origin/share
         self.user_prst = os.path.join(path_confdir, 'presets')  # conf dir
         self.PWD = PWD  # current work of videomass
@@ -357,7 +356,7 @@ class PrstPan(wx.Panel):
         self.rdbx_norm.SetSelection(0),
         self.peakpanel.Hide(), self.ebupanel.Hide(), self.btn_details.Hide()
         self.spin_target.SetValue(-1.0)
-        cmd_opt["PEAK"], cmd_opt["EBU"], cmd_opt["RMS"] = "", "", ""
+        self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = "", "", ""
         del self.normdetails[:]
     # ------------------------------------------------------------------#
 
@@ -373,11 +372,11 @@ class PrstPan(wx.Panel):
         """
         sel = self.cmb_A_inMap.GetValue()
         if sel == 'Auto':
-            cmd_opt["AudioInMap"] = ['', '']
+            self.opt["AudioInMap"] = ['', '']
             self.cmb_A_outMap.SetSelection(1)
             self.on_audioOUTstream(self)
         else:
-            cmd_opt["AudioInMap"] = ['-map 0:%s' % sel, sel]
+            self.opt["AudioInMap"] = ['-map 0:%s' % sel, sel]
             self.cmb_A_outMap.SetStringSelection(self.cmb_A_inMap.GetValue())
             self.on_audioOUTstream(self)
         if self.rdbx_norm.GetSelection() in [1, 2]:
@@ -394,14 +393,14 @@ class PrstPan(wx.Panel):
         """
         sel = self.cmb_A_outMap.GetValue()
         if sel == 'Auto':
-            cmd_opt["AudioOutMap"] = ['', '']
+            self.opt["AudioOutMap"] = ['', '']
         elif sel == 'All':
-            cmd_opt["AudioOutMap"] = ['-map 0:a?', '']
+            self.opt["AudioOutMap"] = ['-map 0:a?', '']
         else:
             sel = int(sel) - 1
-            cmd_opt["AudioOutMap"] = ['-map 0:a%s?' % str(sel),
-                                      '%s' % str(sel)
-                                      ]
+            self.opt["AudioOutMap"] = ['-map 0:a%s?' % str(sel),
+                                       '%s' % str(sel)
+                                       ]
     # ----------------------------------------------------------------------
 
     def onContext(self, event):
@@ -462,8 +461,8 @@ class PrstPan(wx.Panel):
 
         self.list_ctrl.ClearAll()
         self.txt_1cmd.SetValue(""), self.txt_2cmd.SetValue("")
-        if array != []:
-            del array[0:6]
+        if self.array != []:
+            del self.array[0:6]
         self.set_listctrl()
     # ----------------------------------------------------------------#
 
@@ -522,17 +521,17 @@ class PrstPan(wx.Panel):
         collections = json_data(path)
         selected = event.GetText()  # event.GetText is a Name Profile
         self.txt_1cmd.SetValue(""), self.txt_2cmd.SetValue("")
-        del array[0:6]  # delete all: [0],[1],[2],[3],[4],[5]
+        del self.array[0:6]  # delete all: [0],[1],[2],[3],[4],[5]
 
         try:
             for name in collections:
                 if selected == name["Name"]:  # profile name
-                    array.append(name["Name"])
-                    array.append(name["Description"])
-                    array.append(name["First_pass"])
-                    array.append(name["Second_pass"])
-                    array.append(name["Supported_list"])
-                    array.append(name["Output_extension"])
+                    self.array.append(name["Name"])
+                    self.array.append(name["Description"])
+                    self.array.append(name["First_pass"])
+                    self.array.append(name["Second_pass"])
+                    self.array.append(name["Supported_list"])
+                    self.array.append(name["Output_extension"])
 
         except KeyError as err:
             wx.MessageBox(_('ERROR: Typing error on JSON keys: {}\n\n'
@@ -540,14 +539,14 @@ class PrstPan(wx.Panel):
                           "Videomass", wx.ICON_ERROR, self)
             return
 
-        self.txt_1cmd.AppendText('%s' % (array[2]))  # cmd1 text ctrl
-        if array[3]:
+        self.txt_1cmd.AppendText('%s' % (self.array[2]))  # cmd1 text ctrl
+        if self.array[3]:
             self.txt_2cmd.Enable()
-            self.txt_2cmd.AppendText('%s' % (array[3]))  # cmd2 text ctrl
+            self.txt_2cmd.AppendText('%s' % (self.array[3]))  # cmd2 text ctrl
         else:
             self.txt_2cmd.Disable()
 
-        sel = '{0} - {1}'.format(self.cmbx_prst.GetValue(), array[0])
+        sel = '{0} - {1}'.format(self.cmbx_prst.GetValue(), self.array[0])
         self.parent.statusbar_msg(sel, None)
 
     # ------------------------------------------------------------------#
@@ -579,13 +578,13 @@ class PrstPan(wx.Panel):
             self.peakpanel.Show(), self.btn_voldect.Enable()
             self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
             self.ebupanel.Hide()
-            cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
+            self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
             del self.normdetails[:]
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
             self.parent.statusbar_msg(msg_3, LIMEGREEN)
             self.peakpanel.Hide(), self.ebupanel.Show()
-            cmd_opt["PEAK"], cmd_opt["RMS"], cmd_opt["EBU"] = "", "", ""
+            self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
             del self.normdetails[:]
 
         else:  # usually it is 0
@@ -633,7 +632,7 @@ class PrstPan(wx.Panel):
 
         data = volumeDetectProcess(self.parent.file_src,
                                    self.time_seq,
-                                   cmd_opt["AudioInMap"][0])
+                                   self.opt["AudioInMap"][0])
         if data[1]:
             wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
             return
@@ -649,7 +648,7 @@ class PrstPan(wx.Panel):
                         volume.append('  ')
                     else:
                         volume.append("-filter:a:%s volume=%fdB" % (
-                                                    cmd_opt["AudioOutMap"][1],
+                                                    self.opt["AudioOutMap"][1],
                                                     -offset))
                     self.normdetails.append((f,
                                              maxvol,
@@ -667,7 +666,7 @@ class PrstPan(wx.Panel):
                         volume.append('  ')
                     else:
                         volume.append("-filter:a:%s volume=%fdB" % (
-                                                   cmd_opt["AudioOutMap"][1],
+                                                   self.opt["AudioOutMap"][1],
                                                    -offset))
                     self.normdetails.append((f,
                                              maxvol,
@@ -683,9 +682,9 @@ class PrstPan(wx.Panel):
             else:
                 self.parent.statusbar_msg(msg2, YELLOW)
         if self.rdbx_norm.GetSelection() == 1:
-            cmd_opt["PEAK"] = volume
+            self.opt["PEAK"] = volume
         elif self.rdbx_norm.GetSelection() == 2:
-            cmd_opt["RMS"] = volume
+            self.opt["RMS"] = volume
 
         self.btn_voldect.Disable()
         self.btn_voldect.SetForegroundColour(wx.Colour(GREY_DISABLED))
@@ -889,7 +888,7 @@ class PrstPan(wx.Panel):
         Edit an existing profile
 
         """
-        if array == []:
+        if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       YELLOW)
             return
@@ -900,7 +899,7 @@ class PrstPan(wx.Panel):
             prstdialog = presets_addnew.MemPresets(self,
                                                    'edit',
                                                    filename,
-                                                   array,
+                                                   self.array,
                                                    t)
             ret = prstdialog.ShowModal()
             if ret == wx.ID_OK:
@@ -912,7 +911,7 @@ class PrstPan(wx.Panel):
         Delete a selected profile
 
         """
-        if array == []:
+        if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       YELLOW)
         else:
@@ -926,7 +925,7 @@ class PrstPan(wx.Panel):
             path = os.path.join('%s' % self.user_prst,
                                 '%s.prst' % self.cmbx_prst.GetValue()
                                 )
-            delete_profiles(path, array[0])
+            delete_profiles(path, self.array[0])
             self.reset_list()
     # ------------------------------------------------------------------#
 
@@ -950,13 +949,13 @@ class PrstPan(wx.Panel):
         self.logname = 'Videomass_PresetsManager.log'
 
         # ------------ VALIDAZIONI: --------------
-        if array == []:
+        if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       YELLOW)
             return
 
-        if(array[2].strip() != self.txt_1cmd.GetValue().strip() or
-           array[3].strip() != self.txt_2cmd.GetValue().strip()):
+        if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or
+           self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
             if not self.txtcmdedited:
 
                 msg = _("The selected profile command has been "
@@ -980,8 +979,8 @@ class PrstPan(wx.Panel):
                         # make sure we won't show it again the next time
                         self.txtcmdedited = True
 
-        outext = '' if array[5] == 'copy' else array[5]
-        extlst, outext = array[4], outext
+        outext = '' if self.array[5] == 'copy' else self.array[5]
+        extlst, outext = self.array[4], outext
         file_sources = supported_formats(extlst, self.parent.file_src)
         checking = inspect(file_sources, dir_destin, outext)
 
@@ -993,9 +992,9 @@ class PrstPan(wx.Panel):
         # fname: filename, nome file senza ext.
         # bname: basename, nome file con ext.
         # cntmax: count items for batch proc.
-        if array[5] in ['jpg', 'png', 'bmp']:
+        if self.array[5] in ['jpg', 'png', 'bmp']:
             self.savepictures(dir_destin, file_sources)
-        elif array[3]:  # has double pass
+        elif self.array[3]:  # has double pass
             self.two_Pass(file_sources, dir_destin, cntmax, outext)
         else:
             self.one_Pass(file_sources, dir_destin, cntmax, outext)
@@ -1005,7 +1004,7 @@ class PrstPan(wx.Panel):
         """
 
         """
-        audnorm = cmd_opt["RMS"] if not cmd_opt["PEAK"] else cmd_opt["PEAK"]
+        audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
         command = (self.txt_1cmd.GetValue())
         valupdate = self.update_dict(cntmax, 'One passes')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
@@ -1054,8 +1053,8 @@ class PrstPan(wx.Panel):
 
         else:  # two-pass std
             typeproc, loudnorm = 'twopass', ''
-            audnorm = (cmd_opt["RMS"] if not cmd_opt["PEAK"]
-                       else cmd_opt["PEAK"]
+            audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
+                       else self.opt["PEAK"]
                        )
         valupdate = self.update_dict(cntmax, typeproc)
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
@@ -1067,7 +1066,7 @@ class PrstPan(wx.Panel):
                                              destdir,
                                              None,
                                              [pass1, pass2, loudnorm],
-                                             cmd_opt["AudioOutMap"],
+                                             self.opt["AudioOutMap"],
                                              audnorm,
                                              self.logname,
                                              cntmax,
@@ -1115,7 +1114,7 @@ class PrstPan(wx.Panel):
                 outputdir = "%s/%s-IMAGES_%d" % (dir_destin, fname, prog)
                 os.mkdir(outputdir)
 
-            fileout = "{0}-%d.{1}".format(fname, array[5])
+            fileout = "{0}-%d.{1}".format(fname, self.array[5])
             cmd = ('%s -y "%s"' % (self.txt_1cmd.GetValue(),
                                    os.path.join(outputdir, fileout)
                                    ))
@@ -1139,11 +1138,11 @@ class PrstPan(wx.Panel):
         Update information before send to epilogue
 
         """
-        if cmd_opt["PEAK"]:
+        if self.opt["PEAK"]:
             normalize = 'PEAK'
-        elif cmd_opt["RMS"]:
+        elif self.opt["RMS"]:
             normalize = 'RMS'
-        elif cmd_opt["EBU"]:
+        elif self.opt["EBU"]:
             normalize = 'EBU R128'
         else:
             normalize = _('Off')
@@ -1163,8 +1162,8 @@ class PrstPan(wx.Panel):
         dictions = ("\n\n%s\n%s\n%s\n"
                     "%s\n%s\n%s\n%s\n%s" % (numfile,
                                             passes,
-                                            array[0],
-                                            array[5],
+                                            self.array[0],
+                                            self.array[5],
                                             normalize,
                                             self.cmb_A_inMap.GetValue(),
                                             self.cmb_A_outMap.GetValue(),

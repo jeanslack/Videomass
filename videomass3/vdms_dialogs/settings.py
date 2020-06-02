@@ -30,8 +30,6 @@ import wx
 import os
 import webbrowser
 
-dirname = os.path.expanduser('~')  # /home/user/
-
 # get videomass wx.App attribute
 get = wx.GetApp()
 OS = get.OS
@@ -97,7 +95,7 @@ class Setup(wx.Dialog):
         #print("\nPOSITION:    ROW:     VALUE:")
         #for n, k in enumerate(sorted(dic)):
             #print(n, ' -------> ', k, ' --> ', dic[k])
-
+        dirname = os.path.expanduser('~')  # /home/user/
         self.userpath = dirname if not USER_FILESAVE else USER_FILESAVE
         self.iconset = iconset
         self.getfileconf = FILE_CONF

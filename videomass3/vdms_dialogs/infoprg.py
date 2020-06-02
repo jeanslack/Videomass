@@ -31,23 +31,6 @@ import wx.adv
 from videomass3.vdms_sys.msg_info import current_release
 from videomass3.vdms_sys.msg_info import descriptions_release
 
-cr = current_release()
-Name = cr[0]
-name = cr[1]
-Version = cr[2]
-Release = cr[3]
-Copyright = cr[4]
-Website = cr[5]
-Author = cr[6]
-Mail = cr[7]
-Comment = cr[8]
-
-dr = descriptions_release()
-Short_Dscrp = dr[0]
-Long_Dscrp = dr[1]
-Short_Lic = dr[2]
-Long_Lic = dr[3]
-
 
 def info(parent, videomass_icon):
     """
@@ -55,6 +38,24 @@ def info(parent, videomass_icon):
     the program information
 
     """
+    # ------------------
+    cr = current_release()
+    Name = cr[0]
+    name = cr[1]
+    Version = cr[2]
+    Release = cr[3]
+    Copyright = cr[4]
+    Website = cr[5]
+    Author = cr[6]
+    Mail = cr[7]
+    Comment = cr[8]
+    # -----------------
+    dr = descriptions_release()
+    Short_Dscrp = dr[0]
+    Long_Dscrp = dr[1]
+    Short_Lic = dr[2]
+    Long_Lic = dr[3]
+    # ------------------
     info = wx.adv.AboutDialogInfo()
     info.SetIcon(wx.Icon(videomass_icon, type=wx.BITMAP_TYPE_PNG))
     info.SetName("%s" % Name)
