@@ -1,11 +1,15 @@
 # -*- coding: UTF-8 -*-
 
 # Porpose: Contains test cases for the ffprobe_parser object.
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: June.03.2020 *PEP8 compatible*
 
 import sys
 import os.path
 import unittest
+
+if sys.version_info[0] != 3:
+    sys.exit('\nERROR: You are using an unsupported version of Python. '
+             'Please use Python3.\n')
 
 PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
@@ -13,8 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
 try:
     from videomass3.vdms_threads.ffprobe_parser import FFProbe
 except ImportError as error:
-    print(error)
-    sys.exit(1)
+    sys.exit(error)
 
 
 class FFprobeTestCase(unittest.TestCase):
