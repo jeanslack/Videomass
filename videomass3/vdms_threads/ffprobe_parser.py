@@ -334,7 +334,6 @@ class FFProbe(object):
 
         if astream == []:
             # audio_lang.append('no audio stream')
-            print('No AUDIO stream metadata found')
             return None, None
         else:
             n = len(astream)

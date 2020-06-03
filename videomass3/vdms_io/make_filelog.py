@@ -42,7 +42,6 @@ def write_log(logfile, logdir):
         try:
             os.makedirs(logdir, mode=0o777)
         except OSError as error:
-            print(error)
             return error
 
     current_date = time.strftime("%c")  # date/time

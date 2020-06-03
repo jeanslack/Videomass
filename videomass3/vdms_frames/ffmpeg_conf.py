@@ -179,9 +179,7 @@ class Checkconf(wx.MiniFrame):
                                                   ))
         # populate others_opt listctrl output:
         index = 0
-        if not others:
-            print('No others option found')
-        else:
+        if others:
             others_opt.InsertItem(index, _('Specific compilation options'))
             others_opt.SetItemBackgroundColour(index, "CORAL")
             n = len(others)
@@ -196,9 +194,7 @@ class Checkconf(wx.MiniFrame):
 
         # populate enable_opt listctrl output:
         index = 0
-        if not enable:
-            print('No options enabled')
-        else:
+        if enable:
             enable_opt.InsertItem(index, _('ENABLED:'))
             enable_opt.SetItemBackgroundColour(index, "GREEN")
             n = len(enable)
@@ -211,9 +207,7 @@ class Checkconf(wx.MiniFrame):
 
         # populate disabled_opt listctrl output:
         index = 0
-        if not disable:
-            print('No options disabled')
-        else:
+        if disable:
             disabled_opt.InsertItem(index, _('DISABLED:'))
             disabled_opt.SetItemBackgroundColour(index, "RED")
             n = len(disable)

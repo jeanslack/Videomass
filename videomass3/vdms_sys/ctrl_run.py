@@ -126,7 +126,7 @@ def system_check():
         if os.path.isfile(FILEconf):
             DATAconf = parsing_fileconf(FILEconf)  # fileconf data
             if not DATAconf:
-                print("The file configuration is damaged! try to restore..")
+                # print("The file configuration is damaged! try to restore..")
                 existfileconf = False
             if float(DATAconf[0]) != 2.0:
                 existfileconf = False

@@ -71,7 +71,7 @@ class Videomass(wx.App):
         self.pylibYdl = None
         self.execYdl = False
         self.USERfilesave = None
-        # print ("App __init__")
+
         wx.App.__init__(self, redirect, filename)  # constructor
     # -------------------------------------------------------------------
 
@@ -208,10 +208,8 @@ class Videomass(wx.App):
         # if an unsupported language is requested default to English
         if lang in appC.supLang:
             selLang = appC.supLang[lang]
-            # print ('set a custom language: %s' % selLang)
         else:
             selLang = wx.LANGUAGE_DEFAULT
-            # print ("Set language default\n%s" % appC.supLang)
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2
             del self.locale
@@ -228,7 +226,6 @@ class Videomass(wx.App):
         """
         OnExit provides an interface for exiting the application
         """
-        # print ("OnExit")
         return True
     # -------------------------------------------------------------------
 
@@ -240,4 +237,3 @@ def main():
     app = Videomass(False)
     # app.MainLoop()
     fred = app.MainLoop()
-    # print ("after MainLoop", fred)

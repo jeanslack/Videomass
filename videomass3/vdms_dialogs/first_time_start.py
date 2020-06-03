@@ -177,10 +177,8 @@ class FirstStart(wx.Dialog):
 
         for required in biname:
             if which(required):
-                print("Check for: '%s' ..Ok" % required)
                 no_which = False
             else:
-                print("Check for: '%s' ..Not Installed" % required)
                 if self.oS == 'Darwin':
                     if os.path.isfile("/usr/local/bin/%s" % required):
                         local = True

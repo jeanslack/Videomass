@@ -240,7 +240,6 @@ class TwoPass(Thread):
                                   startupinfo=info,) as p2:
 
                 for line2 in p2.stderr:
-                    # print (line2, end=''),
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line2,

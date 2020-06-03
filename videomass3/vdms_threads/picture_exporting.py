@@ -111,7 +111,6 @@ class PicturesFromVideo(Thread):
                                          ))
         count = 'File %s/%s' % ('1', '1',)
         com = "%s\n%s" % (count, cmd)
-        # print("%s" % com)
 
         wx.CallAfter(pub.sendMessage,
                      "COUNT_EVT",
@@ -135,7 +134,6 @@ class PicturesFromVideo(Thread):
                                   universal_newlines=True,
                                   startupinfo=info,) as p:
                 for line in p.stderr:
-                    # print(line, end=''),
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line,

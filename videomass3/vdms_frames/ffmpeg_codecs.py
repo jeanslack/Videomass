@@ -153,9 +153,7 @@ class FFmpeg_Codecs(wx.MiniFrame):
         # populate vid listctrl output:
         index = 0
         vcodlist = dict_decoders['Video']
-        if not vcodlist:
-            print('No ffmpeg codecs available')
-        else:
+        if vcodlist:
             vid.InsertItem(index, cod)
             vid.SetItemBackgroundColour(index, colctrl)
             for a in vcodlist:
@@ -180,9 +178,7 @@ class FFmpeg_Codecs(wx.MiniFrame):
         # populate aud listctrl output:
         index = 0
         acodlist = dict_decoders['Audio']
-        if not acodlist:
-            print('No ffmpeg codecs available')
-        else:
+        if acodlist:
             aud.InsertItem(index, cod)
             aud.SetItemBackgroundColour(index, colctrl)
             for a in acodlist:
@@ -207,9 +203,7 @@ class FFmpeg_Codecs(wx.MiniFrame):
         # populate sub listctrl output:
         index = 0
         scodlist = dict_decoders['Subtitle']
-        if not scodlist:
-            print('No ffmpeg codecs available')
-        else:
+        if scodlist:
             sub.InsertItem(index, cod)
             sub.SetItemBackgroundColour(index, colctrl)
             for a in scodlist:

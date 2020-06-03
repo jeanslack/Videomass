@@ -128,9 +128,7 @@ class FFmpeg_formats(wx.MiniFrame):
         index = 0
         ds = dict_formats['Demuxing Supported']
 
-        if not ds:
-            print('No ffmpeg formats available')
-        else:
+        if ds:
             dmx.InsertItem(index, ('----'))
             dmx.SetItemBackgroundColour(index, "CORAL")
             for a in ds:
@@ -147,9 +145,7 @@ class FFmpeg_formats(wx.MiniFrame):
         index = 0
         ms = dict_formats['Muxing Supported']
 
-        if not ms:
-            print('No ffmpeg formats available')
-        else:
+        if ms:
             mx.InsertItem(index, ('----'))
             mx.SetItemBackgroundColour(index, "CORAL")
             for a in ms:
@@ -166,9 +162,7 @@ class FFmpeg_formats(wx.MiniFrame):
         index = 0
         mds = dict_formats["Mux/Demux Supported"]
 
-        if not mds:
-            print('No ffmpeg formats available')
-        else:
+        if mds:
             dmx_mx.InsertItem(index, ('----'))
             dmx_mx.SetItemBackgroundColour(index, "CORAL")
             for a in mds:

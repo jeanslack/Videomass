@@ -162,7 +162,6 @@ class OnePass(Thread):
                                       universal_newlines=True,
                                       startupinfo=info,) as p:
                     for line in p.stderr:
-                        # print(line, end=''),
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,

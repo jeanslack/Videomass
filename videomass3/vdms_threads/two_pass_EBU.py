@@ -158,7 +158,6 @@ class Loudnorm(Thread):
                                       startupinfo=info,) as p1:
 
                     for line in p1.stderr:
-                        # print (line, end='', ),
                         wx.CallAfter(pub.sendMessage,
                                      "UPDATE_EVT",
                                      output=line,
@@ -259,7 +258,6 @@ class Loudnorm(Thread):
                                   startupinfo=info,) as p2:
 
                 for line2 in p2.stderr:
-                    # print (line2, end=''),
                     wx.CallAfter(pub.sendMessage,
                                  "UPDATE_EVT",
                                  output=line2,

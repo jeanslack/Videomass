@@ -1248,7 +1248,6 @@ class Denoisers(wx.Dialog):
 
             elif self.denoiser.startswith('hqdn3d'):
                 spl = self.denoiser.split('=')
-                print(spl)
                 if len(spl) == 1:
                     self.rdb_hqdn3d.SetSelection(0)
                 else:

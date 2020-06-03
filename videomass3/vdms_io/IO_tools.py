@@ -113,7 +113,6 @@ def probeInfo(filename):
 
     if metadata.ERROR():  # first execute a control for errors:
         err = metadata.error
-        print("[FFprobe] Error:  %s" % err)
         return (None, err)
 
     data = metadata.custom_output()
@@ -356,7 +355,6 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
                 tar.extractall(os.path.dirname(dest))
                 tar.close()
         except (FileNotFoundError, tarfile.ReadError) as err:
-            print('%s\nerror when opening tarfile' % err)
             return None, err
         else:
             os.remove(dest)

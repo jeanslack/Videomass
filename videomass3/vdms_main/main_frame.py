@@ -478,8 +478,6 @@ class MainFrame(wx.Frame):
         """
         if self.VconvPanel.IsShown():
             self.VconvPanel.Addprof()
-        else:
-            print('Videomass: Error, no panels shown')
     # ------------------------------------------------------------------#
 
     def Newprofile(self, event):
@@ -489,8 +487,6 @@ class MainFrame(wx.Frame):
         """
         if self.PrstsPanel.IsShown():
             self.PrstsPanel.Addprof()
-        else:
-            print('Videomass: Error, no presets manager panel shown')
     # ------------------------------------------------------------------#
 
     def Delprofile(self, event):

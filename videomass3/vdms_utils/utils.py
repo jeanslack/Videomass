@@ -142,8 +142,8 @@ def move_on(ext, name_dir):
     """
     files = glob.glob("*%s" % (ext))
     for sposta in files:
-        # shutil.move(sposta, '%s' % (name_dir))
-        print('%s   %s' % (sposta, name_dir))
+        shutil.move(sposta, '%s' % (name_dir))
+        # print('%s   %s' % (sposta, name_dir))
 # ------------------------------------------------------------------#
 
 
