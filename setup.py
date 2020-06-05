@@ -32,10 +32,14 @@
  USAGE:
 
    1) MacOSX:
-      - python3 setup.py py2app --packages==wx
+      python3 setup.py py2app --packages==wx
 
-   2) All
-      - python3 setup.py sdist bdist_wheel
+   2) All:
+      python3 setup.py sdist bdist_wheel
+
+   3) Debian:
+      python3 setup.py --command-packages=stdeb.command bdist_deb
+
 
  * See the INSTALL file in the sources for major details
 

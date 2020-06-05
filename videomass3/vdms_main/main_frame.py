@@ -1121,14 +1121,14 @@ class MainFrame(wx.Frame):
     # ------------------------------------------------------------------#
 
     def Translations(self, event):
-        """Display Issues page on github"""
-        page = ('https://github.com/jeanslack/Videomass/blob/master/docs/'
+        """Display translation how to on github"""
+        page = ('https://github.com/jeanslack/Videomass/blob/master/utilities/'
                 'localization_howto.md')
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
     def Donation(self, event):
-        """Display Issues page on github"""
+        """Display donation page on github"""
         page = 'https://jeanslack.github.io/Videomass/donation.html'
         webbrowser.open(page)
     # ------------------------------------------------------------------#
@@ -1141,8 +1141,7 @@ class MainFrame(wx.Frame):
 
     def CheckNewReleases(self, event):
         """
-        Check for new version releases of Videomass, useful for
-        users with Videomass installer on Windows and MacOs.
+        Check for new version releases of Videomass.
 
         FIXME : There are was some error regarding
         [SSL: CERTIFICATE_VERIFY_FAILED]

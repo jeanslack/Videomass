@@ -41,8 +41,8 @@ Upgrading with pip tool: [Linux/Macintosh/Unix/Windows]
 
 Please, Visit the Wiki page for more info:
 
-
 https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-Python-pip
+
 #--------------------------------------------------------------------------#
 
 Build as wheel: [Linux/Macintosh/Unix/Windows]
@@ -52,5 +52,13 @@ python3 setup.py sdist bdist_wheel
 Please, Visit the Wiki page for more info:
 
 https://github.com/jeanslack/Videomass/wiki/Make-pure-Python-wheels
+
+#--------------------------------------------------------------------------#
+
+Build as .deb binary: [Linux Debian]
+
+Require: stdeb (visit https://pypi.org/project/stdeb/ for documentation)
+
+python3 setup.py --command-packages=stdeb.command bdist_deb
 
 #--------------------------------------------------------------------------#

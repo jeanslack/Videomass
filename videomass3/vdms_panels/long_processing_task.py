@@ -378,10 +378,6 @@ class Logging_Console(wx.Panel):
         This method can be used even for non-loop threads.
 
         """
-        # update scrolling at the last position:
-        self.OutText.SetScrollPos(wx.VERTICAL,
-                                  self.OutText.GetScrollRange(wx.VERTICAL))
-        self.OutText.SetInsertionPoint(-1)
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(GREEN))
             self.OutText.AppendText(MSG_done)
@@ -424,11 +420,6 @@ class Logging_Console(wx.Panel):
             self.parent.statusbar_msg(_('...Finished'), None)
             self.OutText.AppendText(endmsg)
             self.barProg.SetValue(0)
-
-        # update scrolling at the last position:
-        self.OutText.SetScrollPos(wx.VERTICAL,
-                                  self.OutText.GetScrollRange(wx.VERTICAL))
-        self.OutText.SetInsertionPoint(-1)
 
         self.button_stop.Enable(False)
         self.button_close.Enable(True)

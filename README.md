@@ -1,5 +1,5 @@
 # **Videomass** is a cross-platform graphical interface for FFmpeg and youtube-dl.
-Videomass is not a converter; it provides a graphical interface for writing presets and profiles to be used with [FFmpeg](https://www.ffmpeg.org/) without limits on formats and codecs; it also provides a basic graphical interface for [youtube_dl](https://pypi.org/project/youtube_dl/) video downloader. From the beginning, the main goal was to give it a high flexibility and expandability in the management and control of the presets and profiles in order to facilitate their use with the potential of FFmpeg.
+Videomass is not a converter - it provides a graphical interface for writing presets and profiles for using [FFmpeg](https://www.ffmpeg.org/) without limits on formats and codecs with high flexibility and a wide cataloging expandability in order to make more easy the conversion experiences . Since version 2.0.0 released in December 10, 2019, it also provides a basic graphical interface for [youtube_dl](http://ytdl-org.github.io/youtube-dl/) video downloader.
 
 ## General Features
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.

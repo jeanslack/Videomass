@@ -7,6 +7,23 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+June 5, 2020 V.2.8.0
++------------------------------------+
+
+BUGS:
+    * Removed update scrolling at the last position on 'Log viewing console'.
+    * [stdeb] Fixed error when building .deb binary which report a
+      'RuntimeError: original source dist cannot contain .pyc files'
+      This is fixed by removing 'recursive-include videomass3 *' on MANIFEST.in .
+
+NEWS:
+
+IMPROVEMENTS:
+
+REMOVALS and DISPLACEMENTS:
+
+
++------------------------------------+
 May 31, 2020 V.2.7.0
 +------------------------------------+
 
