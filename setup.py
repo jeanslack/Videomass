@@ -159,7 +159,8 @@ def SOURCE_BUILD():
         REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0', 'youtube_dl']
     else:
         EXCLUDE = ['']
-        REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl']
+        #REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl']
+        REQUIRES = ['PyPubSub>=4.0.0', 'python3-wxgtk4.0', 'ffmpeg']
 
     DATA_FILES = [  # even path must be relative-path
                   ('share/videomass/config/presets',
@@ -175,6 +176,7 @@ def SOURCE_BUILD():
                   ('share/videomass', ['AUTHORS', 'BUGS',
                                        'CHANGELOG', 'INSTALL',
                                        'COPYING', 'TODO', 'README.md']),
+                  ('share/man/man1', ['docs/man/man1/videomass.1']),
                   ]
     # get the package data
     DATA_FILES = AppendPackageFiles(DATA_FILES,

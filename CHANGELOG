@@ -17,6 +17,7 @@ BUGS:
       This is fixed by removing 'recursive-include videomass3 *' on MANIFEST.in .
 
 NEWS:
+    * Added man page '/docs/man/man1/videomass.1' for the Debian project.
 
 IMPROVEMENTS:
 
