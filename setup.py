@@ -45,6 +45,7 @@
 
 """
 from setuptools import setup, find_packages
+from distutils.core import setup
 import platform
 from glob import glob
 import os
@@ -52,17 +53,6 @@ import sys
 import shutil
 from videomass3.vdms_sys.msg_info import current_release
 from videomass3.vdms_sys.msg_info import descriptions_release
-
-try:
-    import wx
-except ImportError:
-    if 'bdist_wheel' not in sys.argv:  # with py2app and py2exe only
-        sys.stderr.write("ERROR: 'wx' module is required; "
-                         "need wxPython4 (phoenix).\n"
-                         "Visit the wxPython web page for more info:\n"
-                         "<https://wxpython.org/>\n"
-                         )
-        sys.exit(1)
 
 # ---- current work directory path ----#
 PWD = os.getcwd()
@@ -156,13 +146,13 @@ def SOURCE_BUILD():
 
     if platform.system() in ['Windows', 'Darwin']:
         EXCLUDE = ['']
-        REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0', 'youtube_dl']
+        INSTALL_REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0',
+                            'youtube_dl>=2020.1.1']
     else:
         EXCLUDE = ['']
-        #REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl']
-        REQUIRES = ['PyPubSub>=4.0.0', 'python3-wxgtk4.0', 'ffmpeg']
+        INSTALL_REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl>=2020.1.1']
 
-    DATA_FILES = [  # even path must be relative-path
+    DATA_FILES = [  # paths must be relative-path
                   ('share/videomass/config/presets',
                    glob_files('share/presets/*.prst')),
                   ('share/videomass/config', ['share/videomass.conf',
@@ -197,8 +187,8 @@ def SOURCE_BUILD():
           data_files=DATA_FILES,
           include_package_data=True,
           zip_safe=False,
-          python_requires='>=3.7',
-          install_requires=REQUIRES,
+          python_requires='~=3.7',
+          install_requires=INSTALL_REQUIRES,
           entry_points={'gui_scripts':
                         ['videomass = videomass3.Videomass3:main']},
           classifiers=CLASSIFIERS,
@@ -211,8 +201,18 @@ def MacOS():
     build videomass.app
 
     """
+    try:
+        import wx
+    except ImportError:
+        sys.stderr.write("ERROR: 'wx' module is required; "
+                         "need wxPython4 (phoenix).\n"
+                         "Visit the wxPython web page for more info:\n"
+                         "<https://wxpython.org/>\n"
+                         )
+        sys.exit(1)
+
     EXCLUDE = ['youtube_dl']
-    REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0']
+    INSTALL_REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0']
     PATH_ICON = '%s/art/videomass.icns' % PWD
     RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
 
@@ -274,6 +274,8 @@ def MacOS():
 
 if __name__ == '__main__':
     if platform.system() == 'Darwin' and 'py2app' in sys.argv:
-        MacOS()
+        #MacOS()
+        pass
     else:
-        SOURCE_BUILD()
+        #SOURCE_BUILD()
+        pass
