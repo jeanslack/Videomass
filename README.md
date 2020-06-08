@@ -8,7 +8,7 @@ includes a graphical interface for the famous video downloader
 - **[Features](https://jeanslack.github.io/Videomass/features.html)**
 - **[Screenshots](https://jeanslack.github.io/Videomass/screenshot.html)**
 
-# Installing and Updating
+# Installing and Dependencies
 
 ### Requirements
 - **[Python ~=3.7](https://www.python.org/)**
@@ -45,6 +45,9 @@ launcher of your desktop environment.
 > To start Videomass on Mac-Os and MS-Windows open a console and just write 
 `videomass` command.   
 
+For more explanations on the installation visit the Videomass 
+[Wiky page](https://github.com/jeanslack/Videomass/wiki)
+
 # Start Videomass manually from source code
 
 Videomass can be run without installing it, just download and unzip the 
@@ -55,6 +58,9 @@ executing the "launcher" script inside the directory:
 
 > First, make sure you have installed at least all the above required 
 dependencies.   
+
+For more explanations on the installation visit the Videomass 
+[Wiky page](https://github.com/jeanslack/Videomass/wiki)
 
 Videomass can also be run in interactive mode with the Python interpreter, 
 always within the same unpacked directory:   
