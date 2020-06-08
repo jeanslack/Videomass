@@ -1,13 +1,15 @@
-# **Videomass** is a cross-platform graphical interface for FFmpeg and youtube-dl.
+# **Videomass** is a cross-platform GUI for FFmpeg and youtube-dl.
 Videomass provides a graphical interface to create presets and write profiles 
 in order to use [FFmpeg](https://www.ffmpeg.org/) without limits on formats and 
 codecs with wide automation capabilities. Among the various tools it also 
 includes a graphical interface for the famous video downloader 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/).
 
-Check out the full list of features: https://jeanslack.github.io/Videomass/features.html
+Check out all the features here: https://jeanslack.github.io/Videomass/features.html
 
-## Requirements
+# Installing and Updating
+
+### Requirements
 - [Python ~=3.7](https://www.python.org/)
 - [wxPython4](https://wxpython.org/)
 - [PyPubSub](https://pypi.org/project/PyPubSub/)
@@ -21,29 +23,32 @@ Check out the full list of features: https://jeanslack.github.io/Videomass/featu
 - [mpv](https://mpv.io/)
 - [atomicparsley](http://atomicparsley.sourceforge.net/)
 
-## First install basic dependencies
+### First install basic dependencies
 
-| **OS**          | **Dependencies**                             |
-|:----------------|:---------------------------------------------|
-|Linux/FreeBSD    | python3, wxpython4, pip for python3, ffmpeg  |
-|MS Windows       | python3, ffmpeg                              |
-|MacOs            | python3, pip for python3, ffmpeg             |
+| **OS**                       | **Basic Dependencies**                       |
+|:-----------------------------|:---------------------------------------------|
+|Linux/FreeBSD                 |python3, wxpython4, pip for python3, ffmpeg   |
+|MS Windows                    |python3, ffmpeg                               |
+|MacOs                         |python3, pip for python3, ffmpeg              |
 
-## Install Videomass using pip
+### Then, install Videomass using pip
 
 `python3 -m pip install videomass`   
 
+This should also automatically install the remaining required dependencies such 
+as wxPython (Mac-Os and Windows only), PyPubSub and youtube-dl.   
 On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   
-
 On Mac-Os and MS-Windows open a console and just write `videomass` command.   
 
-## How to start Videomass manually from source code
+# Start Videomass manually from source code
 Videomass can be run without installing it, just download and unzip the 
-[source code archive](https://github.com/jeanslack/Videomass/releases) and 
+[source code](https://github.com/jeanslack/Videomass/releases) archive and 
 executing the "launcher" script inside the directory:   
 
 `python3 launcher`   
+
+First, make sure you have installed at least all the above required dependencies.   
 
 Videomass can also be run in interactive mode with the Python interpreter, 
 always within the same unpacked directory:   
@@ -51,7 +56,7 @@ always within the same unpacked directory:
 `>>> from videomass3 import Videomass3`   
 `>>> Videomass3.main()`   
 
-## Resources
+# Resources
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [GitHub Page](https://github.com/jeanslack/Videomass)
 * [Support Page and Documentation](http://jeanslack.github.io/Videomass)
