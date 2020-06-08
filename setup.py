@@ -45,7 +45,6 @@
 
 """
 from setuptools import setup, find_packages
-from distutils.core import setup
 import platform
 from glob import glob
 import os
@@ -138,7 +137,7 @@ def AppendPackageFiles(data, baseicons, baselocale):
 # ---------------------------------------------------------------------#
 
 
-def SOURCE_BUILD():
+def source_build():
     """
     Source/Build distributions
 
@@ -150,7 +149,7 @@ def SOURCE_BUILD():
                             'youtube_dl>=2020.1.1']
     else:
         EXCLUDE = ['']
-        INSTALL_REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl>=2020.1.1']
+        INSTALL_REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl>=2019.01.17']
 
     DATA_FILES = [  # paths must be relative-path
                   ('share/videomass/config/presets',
@@ -196,7 +195,7 @@ def SOURCE_BUILD():
 # ---------------------------------------------------------------------#
 
 
-def MacOS():
+def macos_build_app():
     """
     build videomass.app
 
@@ -274,8 +273,6 @@ def MacOS():
 
 if __name__ == '__main__':
     if platform.system() == 'Darwin' and 'py2app' in sys.argv:
-        #MacOS()
-        pass
+        macos_build_app()
     else:
-        #SOURCE_BUILD()
-        pass
+        source_build()
