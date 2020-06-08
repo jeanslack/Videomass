@@ -5,8 +5,8 @@ codecs with wide automation capabilities. Among the various tools it also
 includes a graphical interface for the famous video downloader 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/).
 
-- **[Features]**(https://jeanslack.github.io/Videomass/features.html)
-- **[Screenshots]**(https://jeanslack.github.io/Videomass/screenshot.html)
+- **[Features](https://jeanslack.github.io/Videomass/features.html)**
+- **[Screenshots](https://jeanslack.github.io/Videomass/screenshot.html)**
 
 # Installing and Updating
 
@@ -36,7 +36,7 @@ includes a graphical interface for the famous video downloader
 
 `python3 -m pip install videomass`   
 
-This should also automatically install the remaining required dependencies such 
+> This should also automatically install the remaining required dependencies such 
 as wxPython (Mac-Os and Windows only), PyPubSub and youtube-dl.   
 On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   
