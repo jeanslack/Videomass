@@ -11,39 +11,42 @@ includes a graphical interface for the famous video downloader
 # Installing and Updating
 
 ### Requirements
-- [Python ~=3.7](https://www.python.org/)
-- [wxPython4](https://wxpython.org/)
-- [PyPubSub](https://pypi.org/project/PyPubSub/)
-- [pip](https://pypi.org/project/pip/)
-- [ffmpeg](https://ffmpeg.org/) >= 4.1.4
-- [ffprobe](https://ffmpeg.org/ffprobe.html)
-- [ffplay](http://ffmpeg.org/ffplay.html)
-- [youtube-dl](https://pypi.org/project/youtube_dl/)
+- **[Python ~=3.7](https://www.python.org/)**
+- **[wxPython4](https://wxpython.org/)**
+- **[PyPubSub](https://pypi.org/project/PyPubSub/)**
+- **[pip](https://pypi.org/project/pip/)**
+- **[ffmpeg >=4.1.4](https://ffmpeg.org/)**
+- **[ffprobe](https://ffmpeg.org/ffprobe.html)**
+- **[ffplay](http://ffmpeg.org/ffplay.html)**
+- **[youtube-dl](https://pypi.org/project/youtube_dl/)**
 
 ### Optionals
-- [mpv](https://mpv.io/)
-- [atomicparsley](http://atomicparsley.sourceforge.net/)
+- **[mpv](https://mpv.io/)**
+- **[atomicparsley](http://atomicparsley.sourceforge.net/)**
 
 ### First install basic dependencies
 
-| **OS**                       | **Basic Dependencies**                       |
-|:-----------------------------|:---------------------------------------------|
-|Linux/FreeBSD                 |python3, wxpython4, pip for python3, ffmpeg   |
-|MS Windows                    |python3, ffmpeg                               |
-|MacOs                         |python3, pip for python3, ffmpeg              |
+| **OS**                     | **Basic Dependencies**                       |
+|:---------------------------|:---------------------------------------------|
+|Linux/FreeBSD               |*python3, wxpython4, pip for python3, ffmpeg* |
+|MS Windows                  |*python3, ffmpeg*                             |
+|MacOs                       |*python3, pip for python3, ffmpeg*            |
 
 ### Then, install Videomass using pip
 
 `python3 -m pip install videomass`   
 
-> This should also automatically install the remaining required dependencies such 
-as wxPython (Mac-Os and Windows only), PyPubSub and youtube-dl.   
-On Linux and FreeBSD a launcher should be even created in the application 
+> This should also automatically install the remaining required dependencies 
+such as wxPython (Mac-Os and Windows only), PyPubSub and youtube-dl.   
+>
+> On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   
-To start Videomass on Mac-Os and MS-Windows open a console and just write 
+>
+> To start Videomass on Mac-Os and MS-Windows open a console and just write 
 `videomass` command.   
 
 # Start Videomass manually from source code
+
 Videomass can be run without installing it, just download and unzip the 
 [source code](https://github.com/jeanslack/Videomass/releases) archive and 
 executing the "launcher" script inside the directory:   
