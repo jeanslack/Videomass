@@ -1,11 +1,11 @@
 # **Videomass** is a cross-platform graphical interface for FFmpeg and youtube-dl.
 Videomass provides a graphical interface to create presets and write profiles 
-in order to use [FFmpeg] (https://www.ffmpeg.org/) without limits on formats and 
+in order to use [FFmpeg](https://www.ffmpeg.org/) without limits on formats and 
 codecs with wide automation capabilities. Among the various tools it also 
 includes a graphical interface for the famous video downloader 
-[youtube_dl] (http://ytdl-org.github.io/youtube-dl/).
+[youtube_dl](http://ytdl-org.github.io/youtube-dl/).
 
-[full list of features](https://jeanslack.github.io/Videomass/features.html)
+Check out the full list of features: https://jeanslack.github.io/Videomass/features.html
 
 ## Requirements
 - [Python ~=3.7](https://www.python.org/)
