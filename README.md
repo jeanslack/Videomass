@@ -5,7 +5,8 @@ codecs with wide automation capabilities. Among the various tools it also
 includes a graphical interface for the famous video downloader 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/).
 
-Check out all the features here: https://jeanslack.github.io/Videomass/features.html
+- **[Features]**(https://jeanslack.github.io/Videomass/features.html)
+- **[Screenshots]**(https://jeanslack.github.io/Videomass/screenshot.html)
 
 # Installing and Updating
 
@@ -39,7 +40,8 @@ This should also automatically install the remaining required dependencies such
 as wxPython (Mac-Os and Windows only), PyPubSub and youtube-dl.   
 On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   
-On Mac-Os and MS-Windows open a console and just write `videomass` command.   
+To start Videomass on Mac-Os and MS-Windows open a console and just write 
+`videomass` command.   
 
 # Start Videomass manually from source code
 Videomass can be run without installing it, just download and unzip the 
@@ -48,7 +50,8 @@ executing the "launcher" script inside the directory:
 
 `python3 launcher`   
 
-First, make sure you have installed at least all the above required dependencies.   
+> First, make sure you have installed at least all the above required 
+dependencies.   
 
 Videomass can also be run in interactive mode with the Python interpreter, 
 always within the same unpacked directory:   
