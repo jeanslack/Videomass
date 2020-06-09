@@ -5,6 +5,8 @@ codecs with wide automation capabilities. Among the various tools it also
 includes a graphical interface for the famous video downloader 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/).
 
+[![Home panel](/assets/images/HomePanel.png "Home panel")](https://github.com/jeanslack/Videomass/blob/gh-pages/images/screenshot/HomePanel.png)
+
 - **[Features](https://jeanslack.github.io/Videomass/features.html)**
 - **[Screenshots](https://jeanslack.github.io/Videomass/screenshot.html)**
 
@@ -45,8 +47,8 @@ launcher of your desktop environment.
 > To start Videomass on Mac-Os and MS-Windows open a console and just write 
 `videomass` command.   
 
-For more explanations on the installation visit the Videomass 
-[Wiky page](https://github.com/jeanslack/Videomass/wiki)
+Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/
+wiki/Dependencies) wiki page for more explanations.
 
 # Start Videomass manually from source code
 
@@ -59,8 +61,8 @@ executing the "launcher" script inside the directory:
 > First, make sure you have installed at least all the above required 
 dependencies.   
 
-For more explanations on the installation visit the Videomass 
-[Wiky page](https://github.com/jeanslack/Videomass/wiki)
+Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/
+wiki/Dependencies) wiki page for more explanations.
 
 Videomass can also be run in interactive mode with the Python interpreter, 
 always within the same unpacked directory:   
