@@ -5,7 +5,7 @@ codecs with wide automation capabilities. Among the various tools it also
 includes a graphical interface for the famous video downloader 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/).
 
-[![Home panel](/assets/images/HomePanel.png "Home panel")](https://github.com/jeanslack/Videomass/blob/gh-pages/images/screenshot/HomePanel.png)
+![Home panel](https://github.com/jeanslack/Videomass/blob/gh-pages/images/screenshot/HomePanel.png "Home panel")
 
 - **[Features](https://jeanslack.github.io/Videomass/features.html)**
 - **[Screenshots](https://jeanslack.github.io/Videomass/screenshot.html)**
