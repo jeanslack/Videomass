@@ -5,8 +5,6 @@ codecs with wide automation capabilities. Among the various tools it also
 includes a graphical interface for the famous video downloader 
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/).
 
-![Home panel](https://github.com/jeanslack/Videomass/blob/gh-pages/images/screenshot/HomePanel.png "Home panel")
-
 - **[Features](https://jeanslack.github.io/Videomass/features.html)**
 - **[Screenshots](https://jeanslack.github.io/Videomass/screenshot.html)**
 
@@ -14,7 +12,7 @@ includes a graphical interface for the famous video downloader
 
 ### Requirements
 - **[Python ~=3.7](https://www.python.org/)**
-- **[wxPython4](https://wxpython.org/)**
+- **[wxPython-Phoenix >= 4.0](https://wxpython.org/)**
 - **[PyPubSub](https://pypi.org/project/PyPubSub/)**
 - **[pip](https://pypi.org/project/pip/)**
 - **[ffmpeg >=4.1.4](https://ffmpeg.org/)**
@@ -28,11 +26,11 @@ includes a graphical interface for the famous video downloader
 
 ### First install basic dependencies
 
-| **OS**                     | **Basic Dependencies**                       |
-|:---------------------------|:---------------------------------------------|
-|Linux/FreeBSD               |*python3, wxpython4, pip for python3, ffmpeg* |
-|MS Windows                  |*python3, ffmpeg*                             |
-|MacOs                       |*python3, pip for python3, ffmpeg*            |
+| **OS**           | **Basic Dependencies**                              |
+|:-----------------|:----------------------------------------------------|
+|Linux/FreeBSD     |*python3, wxpython-phoenix, pip for python3, ffmpeg* |
+|MS Windows        |*python3, ffmpeg*                                    |
+|MacOs             |*python3, pip for python3, ffmpeg*                   |
 
 ### Then, install Videomass using pip
 
@@ -47,8 +45,8 @@ launcher of your desktop environment.
 > To start Videomass on Mac-Os and MS-Windows open a console and just write 
 `videomass` command.   
 
-Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/
-wiki/Dependencies) wiki page for more explanations.
+Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/wiki/Dependencies) 
+wiki page for more explanations.
 
 # Start Videomass manually from source code
 
@@ -61,8 +59,8 @@ executing the "launcher" script inside the directory:
 > First, make sure you have installed at least all the above required 
 dependencies.   
 
-Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/
-wiki/Dependencies) wiki page for more explanations.
+Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/wiki/Dependencies) 
+wiki page for more explanations.
 
 Videomass can also be run in interactive mode with the Python interpreter, 
 always within the same unpacked directory:   
