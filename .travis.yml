@@ -6,4 +6,4 @@ install:
   - pip install PyPubSub youtube_dl
 # command to run tests
 script:
-  - tests/test_ffprobe.py
+  - python3 tests/test_ffprobe.py
