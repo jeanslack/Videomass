@@ -5,7 +5,7 @@ description: Videomass is a free, open source and cross-platform GUI for FFmpeg 
 header_pages:
     - about.md
     - features.md
-    - screenshot.md
+    - screenshots.md
     - LICENSE
     - download_installation.md
     - videomass_use.md
