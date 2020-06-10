@@ -1,3 +1,9 @@
 language: python
 python:
   - "3.7"
+# command to install dependencies
+install:
+  - pip install PyPubSub youtube_dl
+# command to run tests
+script:
+  - tests/test_ffprobe.py
