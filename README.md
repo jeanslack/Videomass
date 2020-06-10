@@ -10,10 +10,7 @@ includes a graphical interface for the famous video downloader
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/COPYING)
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-lightgrey)
 [![image](https://img.shields.io/badge/features-yes-brigthgreen)](https://jeanslack.github.io/Videomass/features.html)
-[![image]https://img.shields.io/badge/screenshots-yes-brigthgreen](https://jeanslack.github.io/Videomass/screenshot.html)
-
-- **[Features](https://jeanslack.github.io/Videomass/features.html)**
-- **[Screenshots](https://jeanslack.github.io/Videomass/screenshot.html)**
+[![image](https://img.shields.io/badge/screenshots-yes-brigthgreen)](https://jeanslack.github.io/Videomass/screenshots.html)
 
 # Installing and Dependencies
 
