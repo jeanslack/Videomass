@@ -2,7 +2,7 @@
 
 * [What is Videomass ?](about.md)
 * [Features](features.md)
-* [Screenshot](screenshot.md)
+* [Screenshots](screenshots.md)
 
 ## Getting started
 
