@@ -47,41 +47,48 @@ class TextDnD(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent)
 
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        lbl_info = wx.StaticText(self)
+        sizer.Add(lbl_info, 0, wx.ALL, 5)
         self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_DONTWRAP
                                     )
-        # create widgets
-        btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1, -1))
-        self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
-                                          style=wx.TE_PROCESS_ENTER |
-                                          wx.TE_READONLY
-                                          )
-        self.lbl = wx.StaticText(self,
-                                 label=_("Add one or more URLs below")
-                                 )
-        # create sizers layout
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.lbl, 0, wx.ALL, 5)
         sizer.Add(self.textCtrl, 1, wx.EXPAND | wx.ALL, 5)
+        lbl_listdel = wx.StaticText(self)
+        sizer.Add(lbl_listdel, 0, wx.ALL, 5)
+        btn_clear = wx.Button(self, wx.ID_CLEAR, "")
+        sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 10)
+        lbl_dir = wx.StaticText(self)
+        sizer.Add(lbl_dir, 0, wx.ALL, 5)
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_ctrl.Add(btn_clear, 0, wx.ALL |
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL, 5
-                       )
+        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1, -1))
         sizer_ctrl.Add(self.btn_save, 0, wx.ALL |
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL, 5
                        )
+        self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
+                                          style=wx.TE_PROCESS_ENTER |
+                                          wx.TE_READONLY
+                                          )
         sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
-
+        # properties
+        infostr = _("Add one or more URLs below")
+        lbl_info.SetLabelMarkup("<b>&%s</b>" % infostr)
+        optionsstr = _("Options")
+        lbl_listdel.SetLabelMarkup("<b>&%s</b>" % optionsstr)
+        outdirstr = _("Output Directory")
+        lbl_dir.SetLabelMarkup("<b>&%s</b>" % outdirstr)
+        self.text_path_save.SetValue(self.file_dest)
+        # Tooltip
+        btn_clear.SetToolTip(_('Delete all text from the list'))
+        tip = (_('Choose another output directory for files saving'))
+        self.btn_save.SetToolTip(tip)
+        # Binding
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
         self.Bind(wx.EVT_TEXT, self.on_emptyText, self.textCtrl)
-        # ------
-        self.text_path_save.SetValue(self.file_dest)
     # ---------------------------------------------------------
 
     def on_emptyText(self, event):

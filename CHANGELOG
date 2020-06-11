@@ -18,11 +18,13 @@ BUGS:
 
 NEWS:
     * Added man page '/docs/man/man1/videomass.1' for the Debian project.
+    * Added more informative displays in the drag and drop panel such as
+      duration, media type and file size.
 
 IMPROVEMENTS:
-
-REMOVALS and DISPLACEMENTS:
-
+    * Improved buttons layout for drag and drop panel.
+    * Improved buttons layout on textctrl panel for URLs.
+    * Added some cosmetic improving on static texts for a better reading.
 
 +------------------------------------+
 May 31, 2020 V.2.7.0

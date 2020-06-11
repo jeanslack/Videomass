@@ -122,7 +122,9 @@ class Logging_Console(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
 
-        lbl = wx.StaticText(self, label=_("Log viewing console:"))
+        lbl = wx.StaticText(self)
+        infolbl = _("Log viewing console:")
+        lbl.SetLabelMarkup("<b>&%s</b>" % infolbl)
         self.OutText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
                                    wx.TE_READONLY |

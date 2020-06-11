@@ -50,7 +50,7 @@ class MyListCtrl(wx.ListCtrl):
 
     def __init__(self, parent):
         """Constructor"""
-        self.index = 0
+        self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
         wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT |
@@ -63,6 +63,7 @@ class MyListCtrl(wx.ListCtrl):
         Update list-control during drag and drop
 
         """
+        self.index = self.GetItemCount()
         msg_dir = _("Directories are not allowed, just add files, please.")
         if os.path.isdir(path):
             self.parent.statusbar_msg(msg_dir, ORANGE)
@@ -77,13 +78,25 @@ class MyListCtrl(wx.ListCtrl):
 
             data = eval(data[0])
             self.InsertItem(self.index, path)
-            self.index += 1
+
             if 'duration' not in data['format'].keys():
+                self.SetItem(self.index, 1, 'N/A')
                 data['format']['duration'] = 0
             else:
+
+                t = data['format']['duration'].split(':')
+                s, ms = t[2].split('.')[0], t[2].split('.')[1]
+                t = '%sh : %sm : %ss : %s micro s' % (t[0], t[1], s, ms)
+                self.SetItem(self.index, 1, t)
                 data.get('format')['time'] = data.get('format').pop('duration')
-                t = time_seconds(data.get('format')['time'])
-                data['format']['duration'] = t
+                time = time_seconds(data.get('format')['time'])
+                data['format']['duration'] = time
+
+            media = data['streams'][0]['codec_type']
+            formatname = data['format']['format_long_name']
+            self.SetItem(self.index, 2, '%s: %s' % (media, formatname))
+            self.SetItem(self.index, 3, data['format']['size'])
+            self.index += 1
             self.data.append(data)
             self.parent.statusbar_msg('', None)
 
@@ -130,46 +143,71 @@ class FileDnD(wx.Panel):
         dirname = os.path.expanduser('~')  # /home/user/
         self.file_dest = dirname if not USER_FILESAVE else USER_FILESAVE
         self.selected = None  # tells if an imported file is selected or not
+
         wx.Panel.__init__(self, parent=parent)
+
         # This builds the list control box:
         self.flCtrl = MyListCtrl(self)  # class MyListCtr
         # Establish the listctrl as a drop target:
         file_drop_target = FileDrop(self.flCtrl)
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # create widgets
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        lbl_info = wx.StaticText(self)
+        sizer.Add(lbl_info, 0, wx.ALL, 5)
+        sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 5)
+        lbl_listdel = wx.StaticText(self)
+        sizer.Add(lbl_listdel, 0, wx.ALL, 5)
+        sizer_media = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_media, 0, wx.EXPAND | wx.ALL, 5)
+        btn_delsel = wx.Button(self, wx.ID_REMOVE, "")
+        sizer_media.Add(btn_delsel, 1, wx.ALL | wx.EXPAND, 5)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
+        sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 5)
+        lbl_dir = wx.StaticText(self)
+        sizer.Add(lbl_dir, 0, wx.ALL, 5)
+        sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_outdir, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1, -1))
+        sizer_outdir.Add(self.btn_save, 0, wx.ALL |
+                         wx.ALIGN_CENTER_HORIZONTAL |
+                         wx.ALIGN_CENTER_VERTICAL, 5
+                         )
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
                                           wx.TE_READONLY
                                           )
-        self.lbl = wx.StaticText(self, label=_("Drag one or more files below"))
-        self.flCtrl.InsertColumn(0, '', width=700)
-        # create sizers layout
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.lbl, 0, wx.ALL, 5)
-        sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 5)
+        sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
 
-        sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_ctrl.Add(btn_clear, 0, wx.ALL |
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL, 5
-                       )
-        sizer_ctrl.Add(self.btn_save, 0, wx.ALL |
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL, 5
-                       )
-        sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
 
+        # properties
+        self.flCtrl.InsertColumn(0, _('Input files'), width=550)
+        self.flCtrl.InsertColumn(1, _('Duration'), width=150)
+        self.flCtrl.InsertColumn(2, _('Media type'), width=200)
+        self.flCtrl.InsertColumn(3, _('File size'), width=150)
+        infostr = _("Drag one or more files below")
+        lbl_info.SetLabelMarkup("<b>&%s</b>" % infostr)
+        optionsstr = _("Options")
+        lbl_listdel.SetLabelMarkup("<b>&%s</b>" % optionsstr)
+        outdirstr = _("Output Directory")
+        lbl_dir.SetLabelMarkup("<b>&%s</b>" % outdirstr)
+        self.text_path_save.SetValue(self.file_dest)
+
+        # Tooltip
+        btn_delsel.SetToolTip(_('Remove the selected file from the list'))
+        btn_clear.SetToolTip(_('Delete all files from the list'))
+        tip = (_('Choose another output directory for files saving'))
+        self.btn_save.SetToolTip(tip)
+
+        # Binding (EVT)
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
+        self.Bind(wx.EVT_BUTTON, self.delSelect, btn_delsel)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
         self.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
-        # -------
-        self.text_path_save.SetValue(self.file_dest)
+
     # ----------------------------------------------------------------------
 
     def which(self):
@@ -177,7 +215,6 @@ class FileDnD(wx.Panel):
         return topic name by choose_topic.py selection
 
         """
-        # self.lbl.SetLabel('Drag one or more Video files here')
         return self.parent.topicname
     # ----------------------------------------------------------------------
 
@@ -207,23 +244,27 @@ class FileDnD(wx.Panel):
         itemId = event.GetId()
         menu = event.GetEventObject()
         menuItem = menu.FindItemById(itemId)
+        if menuItem.GetItemLabel() == _("Remove the selected file"):
+            self.delSelect(self)
+    # ----------------------------------------------------------------------
 
+    def delSelect(self, event):
+        """
+        Delete the file selected in the list
+
+        """
         if not self.selected:
-            self.parent.statusbar_msg(_('No file selected to `%s` yet') %
-                                      menuItem.GetItemLabel(), 'GOLDENROD'
-                                      )
+            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD')
         else:
-            self.parent.statusbar_msg('Add Files', None)
+            self.parent.statusbar_msg(_('Add Files'), None)
 
-            if menuItem.GetItemLabel() == _("Remove the selected file"):
-                if self.flCtrl.GetItemCount() == 1:
-                    self.deleteAll(self)
-                else:
-                    item = self.flCtrl.GetFocusedItem()
-                    self.flCtrl.DeleteItem(item)
-                    self.selected = None
-                    self.data.pop(item)
-
+            if self.flCtrl.GetItemCount() == 1:
+                self.deleteAll(self)
+            else:
+                item = self.flCtrl.GetFocusedItem()
+                self.flCtrl.DeleteItem(item)
+                self.selected = None
+                self.data.pop(item)
     # ----------------------------------------------------------------------
 
     def deleteAll(self, event):
