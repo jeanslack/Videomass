@@ -1,9 +1,25 @@
 # **Videomass** is a cross-platform GUI for FFmpeg and youtube-dl.
-Videomass provides a graphical interface to create presets and write profiles 
-in order to use [FFmpeg](https://www.ffmpeg.org/) without limits on formats and 
-codecs with wide automation capabilities. Among the various tools it also 
-includes a graphical interface for the famous video downloader 
-[youtube_dl](http://ytdl-org.github.io/youtube-dl/).   
+Videomass is a GUI that allows more advanced use of [FFmpeg](https://www.ffmpeg.org/) 
+than most other FFmpeg-based GUIs. It features graphic tools with high automation 
+capabilities such as PEAK, RMS and EBU audio normalization filters with selectable 
+audio stream indexing, streams analyzer and more.   
+
+It allows you to create new presets or import/export existing ones, write and
+edit new conversion profiles in order to use FFmpeg without limits of formats,
+codecs and commands.   
+
+In fatc, most of the operations performed with FFmpeg via the command line, can 
+be stored as conversion profiles on Videomass and can be performed or modified 
+on the fly.   
+
+Videomass also offers a graphical interface for the famous video downloader
+[youtube_dl](http://ytdl-org.github.io/youtube-dl/) and allows you to choose 
+between various download options like a specific format codes with the ability 
+to playback individual URLs with different qualities via mpv player. Allows also 
+to download all playlist, embed thumbnail in audio file (via atomicparsley), 
+add metadata to file and write subtitles to video.   
+
+Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 
 [![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8&color=blue)](https://www.python.org/downloads/)
 [![image](https://img.shields.io/badge/wxpython-phoenix-green)](https://www.wxpython.org/)

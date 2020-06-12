@@ -1,22 +1,34 @@
 .\" Created by jeanslack on June 6 2020
 .\"
-.TH VIDEOMASS "1" "5 June 2020" "Version 2.7.0" "videomass"
+.TH VIDEOMASS "1" "12 June 2020" "Version 2.8.0" "videomass"
 
 .SH NAME
-videomass \- Cross-platform Graphical User Interface for FFmpeg and youtube-dl.
+videomass \- Cross-platform Graphical User Interface for \fIFFmpeg\fP and \fIyoutube-dl\fP.
 
 .SH SYNOPSIS
 .B videomass
 
 .SH DESCRIPTION
-Videomass is not a converter - it provides a graphical interface for writing
-presets and profiles for using FFmpeg without limits on formats and codecs with
-high flexibility and a wide cataloging expandability in order to make all around
-the conversion experiences.
-Since version 2.0.0 released in December 10, 2019, it also provides a basic
-graphical interface for youtube-dl video downloader.
-Videomass is written in Python3 with the wxPython4 toolkit and can be started
-on all main platforms.
+Videomass is a GUI that allows more advanced use of FFmpeg than most other
+FFmpeg-based GUIs. It features graphic tools with high automation capabilities
+such as PEAK, RMS and EBU audio normalization filters with selectable audio
+stream indexing, streams analyzer and more.
+
+It allows you to create new presets or import/export existing ones, write and
+edit new conversion profiles in order to use FFmpeg without limits of formats,
+codecs and commands.
+
+Most of the operations performed with FFmpeg via the command line, can be stored
+as conversion profiles on Videomass and can be performed or modified on the fly.
+
+Videomass also offers a graphical interface for the famous video downloader
+youtube_dl and allows you to choose between various download options like a
+specific format codes with the ability to playback individual URLs with different
+qualities via mpv player. Allows also to download all playlist, embed thumbnail
+in audio file (via atomicparsley), add metadata to file and write subtitles to
+video.
+
+Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 
 .SH OPTIONS
 The videomass executable does not take any options.
@@ -39,7 +51,10 @@ This manual page was written by jeanslack <jeanlucperni@gmail.com>, for the
 Debian project (but may be used by others).
 
 .SH "SEE ALSO"
-\&\fBffmpeg\fR\|(1), \&\fByoutube-dl\fR\|(1), \&\fBmpv\fR\|(1)
+.BR ffmpeg (1),
+.BR youtube-dl (1),
+.BR mpv (1),
+
 
 .SH COPYRIGHT
 Copyright  ©  2015-2020  Free Software Foundation, Inc.  License GPLv3+: GNU
