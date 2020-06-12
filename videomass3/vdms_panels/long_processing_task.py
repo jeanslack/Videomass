@@ -80,7 +80,7 @@ def pairwise(iterable):
               bitrate= 435.0kbits/s speed=5.15x  "
     in a list as:
     iterable = ['frame', '1178', 'fps', '155', 'q', '29.0', 'size', '2072kB',
-                'time', '00:00:39.02', 'bitrate', '435.0kbits/s', s'peed',
+                'time', '00:00:39.02', 'bitrate', '435.0kbits/s', speed',
                 '5.15x']
     for x, y in pairwise(iterable):
         print(x,y)
@@ -122,9 +122,10 @@ class Logging_Console(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
 
-        lbl = wx.StaticText(self)
         infolbl = _("Log viewing console:")
-        lbl.SetLabelMarkup("<b>&%s</b>" % infolbl)
+        lbl = wx.StaticText(self, label=infolbl)
+        if OS != 'Darwin':
+            lbl.SetLabelMarkup("<b>%s</b>" % infolbl)
         self.OutText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
                                    wx.TE_READONLY |

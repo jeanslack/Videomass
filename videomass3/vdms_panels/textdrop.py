@@ -31,7 +31,7 @@ import os
 
 get = wx.GetApp()
 USER_FILESAVE = get.USERfilesave  # files destination folder
-
+OS = get.OS
 
 class TextDnD(wx.Panel):
     """
@@ -48,18 +48,21 @@ class TextDnD(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        lbl_info = wx.StaticText(self)
+        infomsg = _("Add one or more URLs below")
+        lbl_info = wx.StaticText(self, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL, 5)
         self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_DONTWRAP
                                     )
         sizer.Add(self.textCtrl, 1, wx.EXPAND | wx.ALL, 5)
-        lbl_listdel = wx.StaticText(self)
+        optionsmsg = _("Options")
+        lbl_listdel = wx.StaticText(self, label=optionsmsg)
         sizer.Add(lbl_listdel, 0, wx.ALL, 5)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 10)
-        lbl_dir = wx.StaticText(self)
+        outdirmsg = _("Output Directory")
+        lbl_dir = wx.StaticText(self, label=outdirmsg)
         sizer.Add(lbl_dir, 0, wx.ALL, 5)
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 5)
@@ -74,18 +77,19 @@ class TextDnD(wx.Panel):
                                           )
         sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer)
+
         # properties
-        infostr = _("Add one or more URLs below")
-        lbl_info.SetLabelMarkup("<b>&%s</b>" % infostr)
-        optionsstr = _("Options")
-        lbl_listdel.SetLabelMarkup("<b>&%s</b>" % optionsstr)
-        outdirstr = _("Output Directory")
-        lbl_dir.SetLabelMarkup("<b>&%s</b>" % outdirstr)
+        if OS != 'Darwin':
+            lbl_info.SetLabelMarkup("<b>%s</b>" % infomsg)
+            lbl_listdel.SetLabelMarkup("<b>%s</b>" % optionsmsg)
+            lbl_dir.SetLabelMarkup("<b>%s</b>" % outdirmsg)
         self.text_path_save.SetValue(self.file_dest)
+
         # Tooltip
         btn_clear.SetToolTip(_('Delete all text from the list'))
         tip = (_('Choose another output directory for files saving'))
         self.btn_save.SetToolTip(tip)
+
         # Binding
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
         self.Bind(wx.EVT_TEXT, self.on_emptyText, self.textCtrl)

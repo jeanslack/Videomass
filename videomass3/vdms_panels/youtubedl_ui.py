@@ -193,7 +193,7 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
-        self.labcode = wx.StaticText(self)
+        self.labcode = wx.StaticText(self, label= _('URLs loaded'))
         sizer.Add(self.labcode, 0, wx.ALL, 5)
         if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
             self.oldwx = False
@@ -475,7 +475,10 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         self.codText.Disable()
         msg = _('URLs loaded')
-        self.labcode.SetLabelMarkup("<b>&%s</b>" % msg)
+        if OS != 'Darwin':
+            self.labcode.SetLabelMarkup("<b>%s</b>" % msg)
+        else:
+            self.labcode.SetLabel(msg)
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
@@ -519,7 +522,10 @@ class Downloader(wx.Panel):
         Evaluate which method to call to enable download from "Format Code"
         """
         msg = _('Check at least one box for each URL (green selection)')
-        self.labcode.SetLabelMarkup("<b>&%s</b>" % msg)
+        if OS != 'Darwin':
+            self.labcode.SetLabelMarkup("<b>%s</b>" % msg)
+        else:
+            self.labcode.SetLabel(msg)
         self.codText.Enable()
 
         if PYLIB_YDL is not None:  # YuotubeDL is not used as module

@@ -76,7 +76,7 @@ class Time_Duration(wx.Dialog):
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizerbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Seeking (start point) [hh,mm,ss]"))), wx.VERTICAL)
+                        _("Seeking - start point [h : m : s]"))), wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                    self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
         lab3 = wx.StaticText(self, wx.ID_ANY, (":"))
@@ -88,7 +88,7 @@ class Time_Duration(wx.Dialog):
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
                 self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
         sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Cut (end point) [hh,mm,ss]"))), wx.VERTICAL)
+                        _("Cut - end point [h : m : s]"))), wx.VERTICAL)
         btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         btn_ok = wx.Button(self, wx.ID_OK, "")
@@ -111,20 +111,15 @@ class Time_Duration(wx.Dialog):
         # ----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
-        gridFlex1 = wx.GridSizer(1, 5, 0, 0)
-        gridFlex2 = wx.GridSizer(1, 5, 0, 0)
+        gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
+        gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
 
-        grid_sizer_base.Add(sizerbox, 0,
-                            wx.ALL | wx.ALIGN_CENTRE, 5
-                            )
-        sizerbox.Add(gridFlex1, 0, wx.ALL, 5
-                     )
+        grid_sizer_base.Add(sizerbox, 0, wx.ALL | wx.ALIGN_CENTRE, 5)
+        sizerbox.Add(gridFlex1, 0, wx.ALL, 5)
         gridFlex1.Add(self.start_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
-        gridFlex1.Add(lab1, 0, wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL, 5
-                      )
+        gridFlex1.Add(lab1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridFlex1.Add(self.start_minute_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
@@ -156,7 +151,7 @@ class Time_Duration(wx.Dialog):
         # gridBtn = wx.BoxSizer()
         gridBtn.Add(gridhelp)
         gridBtn.Add(gridexit)
-        grid_sizer_base.Add(gridBtn, 1, wx.ALL, 5)
+        grid_sizer_base.Add(gridBtn, 1, wx.ALL, 0)
         sizer_base.Add(grid_sizer_base)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)

@@ -34,6 +34,7 @@ from videomass3.vdms_utils.utils import time_seconds
 # CONSTANTS:
 get = wx.GetApp()
 USER_FILESAVE = get.USERfilesave  # path to the configuration directory
+OS = get.OS
 AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
 RED = '#ea312d'
 YELLOW = '#a29500'
@@ -153,19 +154,22 @@ class FileDnD(wx.Panel):
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # create widgets
         sizer = wx.BoxSizer(wx.VERTICAL)
-        lbl_info = wx.StaticText(self)
+        infomsg = _("Drag one or more files below")
+        lbl_info = wx.StaticText(self, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 5)
-        lbl_listdel = wx.StaticText(self)
-        sizer.Add(lbl_listdel, 0, wx.ALL, 5)
+        optionsmsg = _("Options")
+        lbl_options = wx.StaticText(self, label=optionsmsg)
+        sizer.Add(lbl_options, 0, wx.ALL, 5)
         sizer_media = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_media, 0, wx.EXPAND | wx.ALL, 5)
         btn_delsel = wx.Button(self, wx.ID_REMOVE, "")
         sizer_media.Add(btn_delsel, 1, wx.ALL | wx.EXPAND, 5)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 5)
-        lbl_dir = wx.StaticText(self)
-        sizer.Add(lbl_dir, 0, wx.ALL, 5)
+        outdirmsg = _("Output Directory")
+        lbl_outdir = wx.StaticText(self, label=outdirmsg)
+        sizer.Add(lbl_outdir, 0, wx.ALL, 5)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_outdir, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1, -1))
@@ -186,12 +190,10 @@ class FileDnD(wx.Panel):
         self.flCtrl.InsertColumn(1, _('Duration'), width=150)
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('File size'), width=150)
-        infostr = _("Drag one or more files below")
-        lbl_info.SetLabelMarkup("<b>&%s</b>" % infostr)
-        optionsstr = _("Options")
-        lbl_listdel.SetLabelMarkup("<b>&%s</b>" % optionsstr)
-        outdirstr = _("Output Directory")
-        lbl_dir.SetLabelMarkup("<b>&%s</b>" % outdirstr)
+        if OS != 'Darwin':
+            lbl_info.SetLabelMarkup("<b>%s</b>" % infomsg)
+            lbl_options.SetLabelMarkup("<b>%s</b>" % optionsmsg)
+            lbl_outdir.SetLabelMarkup("<b>%s</b>" % outdirmsg)
         self.text_path_save.SetValue(self.file_dest)
 
         # Tooltip
