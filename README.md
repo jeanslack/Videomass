@@ -6,7 +6,7 @@ includes a graphical interface for the famous video downloader
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/).   
 
 [![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8&color=blue)]()
-[![image](https://img.shields.io/badge/wxPython-Phoenix-green)]()
+[![image](https://img.shields.io/badge/wxpython-phoenix-green)]()
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/COPYING)
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-lightgrey)
 [![image](https://img.shields.io/badge/features-yes-brigthgreen)](https://jeanslack.github.io/Videomass/features.html)
@@ -28,7 +28,7 @@ includes a graphical interface for the famous video downloader
 - **[mpv](https://mpv.io/)**
 - **[atomicparsley](http://atomicparsley.sourceforge.net/)**
 
-### First install basic dependencies
+### Install basic dependencies for your OS
 
 | **OS**           | **Basic Dependencies**                              |
 |:-----------------|:----------------------------------------------------|
@@ -36,7 +36,7 @@ includes a graphical interface for the famous video downloader
 |MS Windows        |*python3, ffmpeg*                                    |
 |MacOs             |*python3, pip for python3, ffmpeg*                   |
 
-### Then, install Videomass using pip
+### Install Videomass using pip
 
 `python3 -m pip install videomass`   
 
