@@ -1,4 +1,11 @@
 # **Videomass** is a cross-platform GUI for FFmpeg and youtube-dl.
+[![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8&color=blue)](https://www.python.org/downloads/)
+[![image](https://img.shields.io/badge/wxpython-phoenix-green)](https://www.wxpython.org/)
+[![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/COPYING)
+![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
+[![image](https://img.shields.io/badge/features-yes-brigthgreen)](https://jeanslack.github.io/Videomass/features.html)
+[![image](https://img.shields.io/badge/screenshots-yes-brigthgreen)](https://jeanslack.github.io/Videomass/screenshots.html)
+
 Videomass is a GUI that allows more advanced use of [FFmpeg](https://www.ffmpeg.org/) 
 than most other FFmpeg-based GUIs. It features graphic tools with high automation 
 capabilities such as PEAK, RMS and EBU audio normalization filters with selectable 
@@ -20,13 +27,6 @@ to download all playlist, embed thumbnail in audio file (via atomicparsley),
 add metadata to file and write subtitles to video.   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
-
-[![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8&color=blue)](https://www.python.org/downloads/)
-[![image](https://img.shields.io/badge/wxpython-phoenix-green)](https://www.wxpython.org/)
-[![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/COPYING)
-![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
-[![image](https://img.shields.io/badge/features-yes-brigthgreen)](https://jeanslack.github.io/Videomass/features.html)
-[![image](https://img.shields.io/badge/screenshots-yes-brigthgreen)](https://jeanslack.github.io/Videomass/screenshots.html)
 
 # Installing and Dependencies
 
