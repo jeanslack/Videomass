@@ -18,6 +18,7 @@ BUGS:
 
 NEWS:
     * Added man page '/docs/man/man1/videomass.1' for the Debian project.
+    * New parse for some sys.argv option with command line.
     * Added more informative displays in the drag and drop panel such as
       duration, media type and file size.
 

@@ -30,7 +30,7 @@
 import wx
 import os
 import sys
-import shutil
+from videomass3.vdms_sys.argparser import args
 from videomass3.vdms_sys.ctrl_run import system_check
 from videomass3.vdms_sys.appearance import Appearance
 from videomass3.vdms_sys import app_const as appC
@@ -234,6 +234,10 @@ def main():
     """
     Starts the wx.App mainloop
     """
-    app = Videomass(False)
-    # app.MainLoop()
-    fred = app.MainLoop()
+    if not sys.argv[1:]:
+        app = Videomass(False)
+        # app.MainLoop()
+        fred = app.MainLoop()
+    else:
+        argv = args()
+        sys.exit(0)
