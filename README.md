@@ -65,7 +65,7 @@ launcher of your desktop environment.
 > To start Videomass on Mac-Os and MS-Windows open a console and just write 
 `videomass` command.   
 
-Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/wiki/Dependencies) 
+Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-and-Dependencies) 
 wiki page for more explanations.
 
 # Start Videomass manually from source code
@@ -79,7 +79,7 @@ executing the "launcher" script inside the directory:
 > First, make sure you have installed at least all the above required 
 dependencies.   
 
-Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/wiki/Dependencies) 
+Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-and-Dependencies) 
 wiki page for more explanations.
 
 Videomass can also be run in interactive mode with the Python interpreter, 
