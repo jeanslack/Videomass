@@ -27,7 +27,7 @@
 
 #########################################################
 import os
-
+from shutil import which
 
 class Appearance(object):
     """
@@ -50,6 +50,7 @@ class Appearance(object):
             import sys
             import platform
             OS = platform.system()
+            binarypath = which('videomass')
 
             if OS == 'Windows':  # Installed with 'pip install videomass'
                 pythonpath = os.path.dirname(sys.executable)
@@ -57,8 +58,6 @@ class Appearance(object):
                 self.videomass_icon = url + "\\videomass.png"
                 self.wizard_icon = url + "\\videomass_wizard.png"
             else:
-                from shutil import which
-                binarypath = which('videomass')
                 if binarypath == '/usr/local/bin/videomass':
                     # Installed with super user 'pip install videomass'
                     # usually Linux,MacOs,Unix

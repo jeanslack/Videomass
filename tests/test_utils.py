@@ -13,8 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))
 try:
     from videomass3.vdms_utils import utils
 except ImportError as error:
-    print(error)
-    sys.exit(1)
+    sys.exit(error)
 
 
 class TestFormatBytes(unittest.TestCase):
