@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 #########################################################
@@ -9,7 +9,7 @@
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: June.8.2020 *PEP8 compatible*
+# Rev: June.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -76,20 +76,17 @@ LONG_DESCRIPTION = dr[1]
 # ---- categorize with ----#
 CLASSIFIERS = [
             'Development Status :: 5 - Production/Stable',
-            'Operating System :: MacOS',
+            'Operating System :: MacOS :: MacOS X',
+            'Operating System :: Microsoft :: Windows :: Windows 7',
             'Operating System :: Microsoft :: Windows :: Windows 10',
-            'Operating System :: POSIX :: BSD :: FreeBSD',
-            'Operating System :: POSIX :: Linux',
+            'Operating System :: POSIX',
+            'Environment :: MacOS X :: Cocoa',
             'Environment :: Win32 (MS Windows)',
             'Environment :: X11 Applications :: GTK',
             'Intended Audience :: End Users/Desktop',
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
             'Natural Language :: English',
             'Natural Language :: Italian',
-            'Operating System :: MacOS :: MacOS X',
-            'Operating System :: Microsoft :: Windows',
-            'Operating System :: POSIX',
-            'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.7',
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
@@ -142,14 +139,15 @@ def source_build():
     Source/Build distributions
 
     """
-
+    INSTALL_REQUIRES = ["wxpython>=4.0.3; platform_system=='Windows' or "
+                        "platform_system=='Darwin'",
+                        "PyPubSub>=4.0.3",
+                        "youtube_dl>=2020.1.1"
+                        ]
     if platform.system() in ['Windows', 'Darwin']:
         EXCLUDE = ['']
-        INSTALL_REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0',
-                            'youtube_dl>=2020.1.1']
     else:
         EXCLUDE = ['']
-        INSTALL_REQUIRES = ['PyPubSub>=4.0.0', 'youtube_dl>=2019.01.17']
 
     DATA_FILES = [  # paths must be relative-path
                   ('share/videomass/config/presets',
@@ -188,6 +186,10 @@ def source_build():
           zip_safe=False,
           python_requires='~=3.7',
           install_requires=INSTALL_REQUIRES,
+          setup_requires=["setuptools>=47.1.1",
+                          "wheel>=0.34.2",
+                          "twine>=3.1.1"
+                          ],
           entry_points={'gui_scripts':
                         ['videomass = videomass3.Videomass3:main']},
           classifiers=CLASSIFIERS,
@@ -267,7 +269,7 @@ def macos_build_app():
           license=LICENSE,
           data_files=DATA_FILES,
           platforms=['MacOS X'],
-          setup_requires=["py2app"],
+          setup_requires=["py2app>=0.21", "setuptools>=47.1.1"],
           )
 
 

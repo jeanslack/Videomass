@@ -15,7 +15,7 @@ BUGS:
     * [stdeb] Fixed error when building .deb binary which report a
       RuntimeError: original source dist cannot contain .pyc files .
       This is fixed by removing 'recursive-include videomass3 *' on MANIFEST.in .
-
+    * Fixed `install_requires` dependencies on setup.py
 NEWS:
     * Added man page '/docs/man/man1/videomass.1' for the Debian project.
     * New parse for some sys.argv option with command line.

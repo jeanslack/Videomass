@@ -46,38 +46,22 @@ def args():
     parser.add_argument(
                 '-c', '--check',
                 help=("List of all videomass dependencies (required and "
-                     "optional) and Python modules installed on the system."),
+                      "optional) installed on the system."),
                 action="store_true",
                        )
 
     args = parser.parse_args()
 
     if args.check:
-        listing = ['ffmpeg', 'ffprobe', 'ffplay', 'mpv', 'youtube-dl']
+        listing = ['ffmpeg', 'ffprobe', 'ffplay',
+                   'mpv', 'youtube-dl', 'atomicparsley'
+                   ]
         print('Check for installed dependencies:')
         for required in  listing:
             if which(required, mode=os.F_OK | os.X_OK, path=None):
                 print("\t'%s' ..Ok" % required)
             else:
                 print("\t'%s' ..Not Installed" % required)
-
-        print('Check for Videomass Python modules:')
-        try:
-            import wx
-            print("\t'wx' ..Found")
-        except(ModuleNotFoundError, ImportError) as nomodule:
-            print("\t'wx' ..Not Installed")
-        try:
-            from pubsub import pub
-            print("\t'PyPubSub' ..Found")
-        except(ModuleNotFoundError, ImportError) as nomodule:
-            print("\t'PyPubSub' ..Not Installed")
-        try:
-            import youtube_dl
-            print("\t'youtube_dl' ..Found")
-        except(ModuleNotFoundError, ImportError) as nomodule:
-            print("\t'youtube_dl' ..Not Installed")
-
         return
 
     elif args.version:
