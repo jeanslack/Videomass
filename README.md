@@ -5,6 +5,7 @@
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
 [![image](https://img.shields.io/badge/features-yes-brigthgreen)](https://jeanslack.github.io/Videomass/features.html)
 [![image](https://img.shields.io/badge/screenshots-yes-brigthgreen)](https://jeanslack.github.io/Videomass/screenshots.html)
+[![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
 Videomass is a GUI that allows more advanced use of [FFmpeg](https://www.ffmpeg.org/) 
 than most other FFmpeg-based GUIs. It features graphic tools with high automation 
@@ -32,7 +33,7 @@ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 
 ### Requirements
 - **[Python ~=3.7](https://www.python.org/)**
-- **[wxPython-Phoenix >= 4.0](https://wxpython.org/)**
+- **[wxPython-Phoenix >= 4.0.3](https://wxpython.org/)**
 - **[PyPubSub](https://pypi.org/project/PyPubSub/)**
 - **[pip](https://pypi.org/project/pip/)**
 - **[ffmpeg >=4.1.4](https://ffmpeg.org/)**

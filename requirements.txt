@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# This is requirements.txt for build travis only
+
 PyPubSub >= 4.0.0
 youtube_dl >= 2019.01.17
 
