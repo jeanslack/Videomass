@@ -7,15 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-June 12, 2020 V.2.8.0
+June 15, 2020 V.2.8.6
 +------------------------------------+
 
 BUGS:
     * Removed update scrolling at the last position on 'Log viewing console'.
     * [stdeb] Fixed error when building .deb binary which report a
-      RuntimeError: original source dist cannot contain .pyc files .
-      This is fixed by removing 'recursive-include videomass3 *' on MANIFEST.in .
+      `RuntimeError: original source dist cannot contain .pyc files` .
+      It's fixed by removing 'recursive-include videomass3 *' on MANIFEST.in .
     * Fixed `install_requires` dependencies on setup.py
+    * Fixed installation on virtual environment with pip command.
 NEWS:
     * Added man page '/docs/man/man1/videomass.1' for the Debian project.
     * New parse for some sys.argv option with command line.

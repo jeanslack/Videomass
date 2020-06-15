@@ -1,0 +1,6 @@
+
+[dev]
+argopt
+py-make>=0.1.0
+pydoc-markdown
+twine

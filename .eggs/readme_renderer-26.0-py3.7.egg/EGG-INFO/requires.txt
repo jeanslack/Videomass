@@ -1,0 +1,7 @@
+Pygments>=2.5.1
+bleach>=2.1.0
+docutils>=0.13.1
+six
+
+[md]
+cmarkgfm>=0.2.0

@@ -88,6 +88,7 @@ CLASSIFIERS = [
             'Natural Language :: English',
             'Natural Language :: Italian',
             'Programming Language :: Python :: 3.7',
+            "Programming Language :: Python :: 3.8"
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
             'Topic :: Utilities',
@@ -144,10 +145,7 @@ def source_build():
                         "PyPubSub>=4.0.3",
                         "youtube_dl>=2020.1.1"
                         ]
-    if platform.system() in ['Windows', 'Darwin']:
-        EXCLUDE = ['']
-    else:
-        EXCLUDE = ['']
+    EXCLUDE = ['']
 
     DATA_FILES = [  # paths must be relative-path
                   ('share/videomass/config/presets',

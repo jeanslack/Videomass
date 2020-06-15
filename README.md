@@ -3,8 +3,6 @@
 [![image](https://img.shields.io/badge/wxpython-phoenix-green)](https://www.wxpython.org/)
 [![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/COPYING)
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
-[![image](https://img.shields.io/badge/features-yes-brigthgreen)](https://jeanslack.github.io/Videomass/features.html)
-[![image](https://img.shields.io/badge/screenshots-yes-brigthgreen)](https://jeanslack.github.io/Videomass/screenshots.html)
 [![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
 Videomass is a GUI that allows more advanced use of [FFmpeg](https://www.ffmpeg.org/) 
@@ -28,6 +26,10 @@ to download all playlist, embed thumbnail in audio file (via atomicparsley),
 add metadata to file and write subtitles to video.   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
+
+**[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**   
+**[Features](https://jeanslack.github.io/Videomass/features.html)**   
+**[Screenshots](https://jeanslack.github.io/Videomass/screenshots.html)**   
 
 # Installing and Dependencies
 

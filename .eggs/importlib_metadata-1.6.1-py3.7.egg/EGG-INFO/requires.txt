@@ -1,0 +1,10 @@
+zipp>=0.5
+
+[docs]
+rst.linker
+sphinx
+
+[testing]
+importlib-resources>=1.3
+packaging
+pep517

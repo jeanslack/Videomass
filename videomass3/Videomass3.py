@@ -31,8 +31,7 @@ import wx
 import os
 import sys
 from videomass3.vdms_sys.argparser import args
-from videomass3.vdms_sys.ctrl_run import system_check
-from videomass3.vdms_sys.appearance import Appearance
+from videomass3.vdms_sys.configurator import Data_Source
 from videomass3.vdms_sys import app_const as appC
 # add translation macro to builtin similar to what gettext does
 import builtins
@@ -81,7 +80,8 @@ class Videomass(wx.App):
         of the file configuration and set the environment.
 
         """
-        setui = system_check()  # user-space and interface settings
+        data = Data_Source() # user-space and interface settings
+        setui = data.get_fileconf() # get required data
         # locale
         lang = ''
         self.locale = None
@@ -93,8 +93,8 @@ class Videomass(wx.App):
                 setui[2])), 'Videomass: Fatal Error', wx.ICON_STOP)
             return False
 
-        icons = Appearance(setui[3], setui[4][13])  # set appearance
-        pathicons = icons.icons_set()  # get paths icons
+        pathicons = data.icons_set(setui[4][13]) # get paths icons data
+
         self.OS = setui[0]
         self.FILEconf = setui[6]
         self.WORKdir = setui[7]
@@ -144,7 +144,7 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.firstrun(pathicons[16])
+                self.wizard(pathicons[16])
                 return True
             else:
                 self.FFMPEG_url = setui[4][6]
@@ -159,7 +159,7 @@ class Videomass(wx.App):
                     binaries = True
                     break
             if binaries:
-                self.firstrun(pathicons[16])
+                self.wizard(pathicons[16])
                 return True
             else:
                 self.FFMPEG_url = setui[4][6]
@@ -171,7 +171,7 @@ class Videomass(wx.App):
             self.FFPROBE_url = setui[4][8]
             self.FFPLAY_url = setui[4][10]
             # --- used for debug on Linux only ---#
-            # self.firstrun(pathicons[16])
+            # self.wizard(pathicons[16])
             # return True
 
         from videomass3.vdms_main.main_frame import MainFrame
@@ -181,7 +181,7 @@ class Videomass(wx.App):
         return True
     # -------------------------------------------------------------------
 
-    def firstrun(self, icon):
+    def wizard(self, icon):
         """
         Start a temporary dialog: this is showing during first time
         start of the Videomass application on MacOS and Windows.
