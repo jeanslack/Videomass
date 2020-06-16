@@ -21,8 +21,8 @@ translated. To update an existing translation follow these steps:
 ```
 git clone https://github.com/jeanslack/Videomass.git
 ```
-- Browse the Videomass folder by searching for the 'Videomass.po' file related 
-to the language to be translated in the /local folder. 
+- Browse in the videomass3/local folder package by searching for the 'videomass.po' 
+file related to the language to be translated. 
 
 - Now open the "videomass.po" with 'PoEdit' and go to menu bar > Catalog > 
 Update from POT file...

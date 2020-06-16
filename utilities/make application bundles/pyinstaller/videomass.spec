@@ -6,7 +6,7 @@ block_cipher = None
 a = Analysis(['videomass'],
              pathex=['C:\\Users\\gianluca\\Documents\\Videomass-master'],
              binaries=[],
-             datas=[('C:\\Users\\gianluca\\Documents\\Videomass-master\\art', 'art'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\locale', 'locale'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\share', 'share'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\Win32Setup\\FFMPEG_BIN', 'FFMPEG_BIN'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\Win32Setup\\NOTICE.rtf', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\AUTHORS', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\BUGS', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\CHANGELOG', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\COPYING', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\INSTALL', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\README.md', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\TODO', 'DOC')],
+             datas=[('C:\\Users\\gianluca\\Documents\\Videomass-master\\videomass3\\art', 'videomass3\\art'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\videomass3\\locale', 'videomass3\\locale'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\videomass3\\share', 'videomass3\\share'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\Win32Setup\\FFMPEG_BIN', 'FFMPEG_BIN'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\Win32Setup\\NOTICE.rtf', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\AUTHORS', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\BUGS', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\CHANGELOG', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\COPYING', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\INSTALL', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\README.md', 'DOC'), ('C:\\Users\\gianluca\\Documents\\Videomass-master\\TODO', 'DOC')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -26,7 +26,7 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=False , icon='C:\\Users\\gianluca\\Documents\\Videomass-master\\art\\videomass.ico')
+          console=False , icon='C:\\Users\\gianluca\\Documents\\Videomass-master\\videomass3\\art\\videomass.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

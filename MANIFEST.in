@@ -2,8 +2,8 @@ include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
 include tests/*
 recursive-include utilities *
 recursive-include docs *
-recursive-include art *
-recursive-include share *
-recursive-include locale *
+recursive-include videomass3/art *
+recursive-include videomass3/share *
+recursive-include videomass3/locale *
 recursive-include MAcOsxSetup *
 recursive-include Win32Setup *

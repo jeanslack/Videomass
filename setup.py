@@ -143,31 +143,16 @@ def source_build():
     INSTALL_REQUIRES = ["wxpython>=4.0.3; platform_system=='Windows' or "
                         "platform_system=='Darwin'",
                         "PyPubSub>=4.0.3",
-                        "youtube_dl>=2020.1.1"
+                        "youtube_dl>=2020.1.1",
                         ]
     EXCLUDE = ['']
 
     DATA_FILES = [  # paths must be relative-path
-                  ('share/videomass/config/presets',
-                   glob_files('share/presets/*.prst')),
-                  ('share/videomass/config', ['share/videomass.conf',
-                                              'share/videomassWin32.conf',
-                                              'share/README']),
-                  ('share/videomass/icons', glob_files('art/icons/*.png')),
-                  ('share/applications', ['art/videomass.icns',
-                                          'art/videomass.ico',
-                                          'art/videomass.desktop']),
-                  ('share/pixmaps', ['art/icons/videomass.png']),
-                  ('share/videomass', ['AUTHORS', 'BUGS',
-                                       'CHANGELOG', 'INSTALL',
-                                       'COPYING', 'TODO', 'README.md']),
+                  ('share/applications', ['videomass3/art/videomass.desktop']),
+                  ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
                   ('share/man/man1', ['docs/man/man1/videomass.1']),
                   ]
-    # get the package data
-    DATA_FILES = AppendPackageFiles(DATA_FILES,
-                                    'share/videomass/icons',
-                                    'share/',
-                                    )
+
     setup(name=PRG_NAME,
           version=VERSION,
           description=DESCRIPTION,
@@ -180,6 +165,14 @@ def source_build():
           platforms=["All"],
           packages=find_packages(exclude=EXCLUDE),
           data_files=DATA_FILES,
+          package_data={"videomass3": ["art/icons/*", "locale/*"]
+                        },
+          exclude_package_data={"videomass3": ["art/videomass.icns",
+                                               "art/videomass.ico",
+                                               "locale/make_pot.sh",
+                                               "locale/README",
+                                               "locale/videomass.pot"
+                                               ]},
           include_package_data=True,
           zip_safe=False,
           python_requires='~=3.7',

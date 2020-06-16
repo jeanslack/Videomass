@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-June 15, 2020 V.2.8.6
+June 16, 2020 V.2.8.7
 +------------------------------------+
 
 BUGS:
@@ -27,6 +27,10 @@ IMPROVEMENTS:
     * Improved buttons layout for drag and drop panel.
     * Improved buttons layout on textctrl panel for URLs.
     * Added some cosmetic improving on static texts for a better reading.
+
+REMOVALS and DISPLACEMENTS:
+    * moved folders art, locale and share from base directory onto videomass3 
+      package
 
 +------------------------------------+
 May 31, 2020 V.2.7.0

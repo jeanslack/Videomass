@@ -31,177 +31,184 @@ import sys
 import shutil
 import platform
 
-PATH = os.path.realpath(os.path.abspath(__file__))
-WORKdir = os.path.dirname(os.path.dirname(os.path.dirname(PATH)))  # where is?
-USERName = os.path.expanduser('~')  # /home/user (current user directory)
-OS = platform.system()  # What is the OS ??
-
-# Establish the conventional paths on the different OS where
-# the videomass directories will be stored:
-if OS == 'Windows':
-    bpath = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
-    FILEconf = os.path.join(USERName + bpath)
-    DIRconf = os.path.join(USERName + "\\AppData\\Roaming\\videomass")
-    LOGdir = os.path.join(DIRconf, 'log')  # logs
-    CACHEdir = os.path.join(DIRconf, 'cache')  # updates executable
-
-elif OS == "Darwin":
-    bpath = "Library/Application Support/videomass/videomass.conf"
-    FILEconf = os.path.join(USERName, bpath)
-    DIRconf = os.path.join(USERName, os.path.dirname(bpath))
-    LOGdir = os.path.join(USERName, "Library/Logs/videomass")  # logs
-    CACHEdir = os.path.join(USERName, "Library/Caches/videomass")  # upds
-
-else:  # Linux, FreeBsd, etc.
-    bpath = ".config/videomass/videomass.conf"
-    FILEconf = os.path.join(USERName, bpath)
-    DIRconf = os.path.join(USERName, ".config/videomass")
-    LOGdir = os.path.join(USERName, ".local/share/videomass/log")  # logs
-    CACHEdir = os.path.join(USERName, ".cache/videomass")  # updates
-
-
-def parsing_fileconf():
-    """
-    Make a parsing of the configuration file and return
-    object list with the current program settings data.
-    """
-    with open(FILEconf, 'r') as f:
-        fconf = f.readlines()
-    lst = [line.strip() for line in fconf if not line.startswith('#')]
-    dataconf = [x for x in lst if x]  # list without empties values
-    if not dataconf:
-        return
-    else:
-        return dataconf
-
 
 class Data_Source(object):
     """
-    This class determines the paths to use to set icons
-    on the graphic appearance of the Videomass program.
+    Data_Source class determines the Videomass's configuration
+    according to the Operating System and define the environment
+    paths based on the program execution and/or where it's
+    installed.
     """
+    USER_NAME = os.path.expanduser('~')
+    OS = platform.system()
+
+    # Establish the conventional paths based on OS
+    if OS == 'Windows':
+        DIRPATH = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
+        FILE_CONF = os.path.join(USER_NAME + DIRPATH)
+        DIR_CONF = os.path.join(USER_NAME + "\\AppData\\Roaming\\videomass")
+        LOG_DIR = os.path.join(DIR_CONF, 'log')  # logs
+        CACHE_DIR = os.path.join(DIR_CONF, 'cache')  # updates executable
+
+    elif OS == "Darwin":
+        DIRPATH = "Library/Application Support/videomass/videomass.conf"
+        FILE_CONF = os.path.join(USER_NAME, DIRPATH)
+        DIR_CONF = os.path.join(USER_NAME, os.path.dirname(DIRPATH))
+        LOG_DIR = os.path.join(USER_NAME, "Library/Logs/videomass")
+        CACHE_DIR = os.path.join(USER_NAME, "Library/Caches/videomass")
+
+    else:  # Linux, FreeBsd, etc.
+        DIRPATH = ".config/videomass/videomass.conf"
+        FILE_CONF = os.path.join(USER_NAME, DIRPATH)
+        DIR_CONF = os.path.join(USER_NAME, ".config/videomass")
+        LOG_DIR = os.path.join(USER_NAME, ".local/share/videomass/log")
+        CACHE_DIR = os.path.join(USER_NAME, ".cache/videomass")
+    # -------------------------------------------------------------------
+
     def __init__(self):
         """
-        The paths where the icon sets are located depend where
-        the program is run and on which operating system.
-        Each icons set is defined by the name of the folder that
-        contains it.
+        Given the paths defined by PKG_LOCATION (a configuration
+        folder for recovery > `self.SRCpath`, a set of icons >
+        `self.icodir` and a folder for the locale > `self.localepath`),
+        it performs the initialization described in Data_Source.
         """
-        if os.path.isdir('%s/art' % WORKdir):
-            # local launch on any O.S. (even for .exe and .app)
-            self.localepath = 'locale'
-            self.SRCpath = '%s/share' % WORKdir
-            # ----- for icons
-            self.icodir = '%s/art/icons' % WORKdir  # work current directory
+        try:
+            if getattr(sys, 'frozen'):
+                frozen = True
+        except AttributeError as err:
+                frozen = False
+        if frozen and hasattr(sys, '_MEIPASS'):
+            meipass = True
+            path = getattr(sys, '_MEIPASS',  os.path.abspath(__file__))
+        else:
+            meipass = False
+            path = os.path.realpath(os.path.abspath(__file__))
+
+        self.WORKdir = os.path.dirname(os.path.dirname(os.path.dirname(path)))
+        pkg_location = (os.path.dirname(os.path.dirname(path)))
+        self.localepath = os.path.join(pkg_location, 'locale')
+        self.SRCpath = os.path.join(pkg_location, 'share')
+        self.icodir = os.path.join(pkg_location, 'art', 'icons')
+
+        if frozen and meipass or os.path.isfile('%s/launcher' % self.WORKdir):
+            print('frozen and meipass or launcher', path)
             self.videomass_icon = "%s/videomass.png" % self.icodir
             self.wizard_icon = "%s/videomass_wizard.png" % self.icodir
 
-        else: # Path system installation (usr, usr/local, ~/.local)
-            binarypath = shutil.which('videomass')
-
-            if OS == 'Windows':  # Installed with 'pip install videomass'
+        else: # system installation (usr, usr/local, ~/.local)
+            if Data_Source.OS == 'Windows':  # Installed with pip command
+                print('Installed with pip command on WINDOWS')
+                # HACK check this
                 dirname = os.path.dirname(sys.executable)
                 pythonpath = os.path.join(dirname, 'Script', 'videomass')
-                self.localepath = os.path.join(dirname, 'share', 'locale')
-                self.SRCpath = os.path.join(dirname, 'share',
-                                            'videomass', 'config')
-                # --- for icons
-                self.icodir = dirname + '\\share\\videomass\\icons'
+                #self.icodir = dirname + '\\share\\videomass\\icons'
                 self.videomass_icon = self.icodir + "\\videomass.png"
                 self.wizard_icon = self.icodir + "\\videomass_wizard.png"
             else:
+                binarypath = shutil.which('videomass')
                 if binarypath == '/usr/local/bin/videomass':
-                    # Installed with super user 'pip install videomass'
-                    self.localepath = '/usr/local/share/locale'
-                    self.SRCpath = '/usr/local/share/videomass/config'
-                    # usually Linux,MacOs,Unix
-                    self.icodir = '/usr/local/share/videomass/icons'
+                    print('pip as super user, usually Linux, MacOs, Unix', binarypath)
+                    # pip as super user, usually Linux, MacOs, Unix
                     share = '/usr/local/share/pixmaps'
                     self.videomass_icon = share + '/videomass.png'
                     self.wizard_icon = self.icodir + '/videomass_wizard.png'
                 elif binarypath == '/usr/bin/videomass':
-                    # usually Linux
-                    self.localepath = '/usr/share/locale'
-                    self.SRCpath = '/usr/share/videomass/config'
-                    self.icodir = '/usr/share/videomass/icons'
+                    print('installed via apt, rpm, etc, usually Linux', binarypath)
+                    # installed via apt, rpm, etc, usually Linux
                     share = '/usr/share/pixmaps'
                     self.videomass_icon = share + "/videomass.png"
                     self.wizard_icon = self.icodir + "/videomass_wizard.png"
                 else:
-                    # installed with 'pip install --user videomass' command
+                    print('pip as normal user, usually Linux, MacOs, Unix', binarypath)
+                    # pip as normal user, usually Linux, MacOs, Unix
                     userbase = os.path.dirname(os.path.dirname(binarypath))
-                    self.localepath = os.path.join(userbase + '/share/locale')
-                    self.SRCpath = os.path.join(userbase +
-                                           '/share/videomass/config')
-                    self.icodir = os.path.join(userbase +
-                                               '/share/videomass/icons')
                     pixmaps = '/share/pixmaps/videomass.png'
                     self.videomass_icon = os.path.join(userbase + pixmaps)
                     self.wizard_icon = os.path.join(self.icodir +
                                                     "/videomass_wizard.png")
+    # ---------------------------------------------------------------------
+
+    def parsing_fileconf(self):
+        """
+        Make parsing of the configuration file and return
+        object list with the current program settings data.
+        """
+        with open(Data_Source.FILE_CONF, 'r') as f:
+            fconf = f.readlines()
+        lst = [line.strip() for line in fconf if not line.startswith('#')]
+        dataconf = [x for x in lst if x]  # list without empties values
+        if not dataconf:
+            return
+        else:
+            return dataconf
     # --------------------------------------------------------------------
 
     def get_fileconf(self):
         """
-        check videomass configuration folder
+        check videomass configuration folder and get user data
+        from videomass.conf
         """
         copyerr = False
         existfileconf = True  # True > found, False > not found
 
-        if os.path.exists(DIRconf):  # if exist conf. folder
-            if os.path.isfile(FILEconf):
-                DATAconf = parsing_fileconf()  # fileconf data
-                if not DATAconf:
+        if os.path.exists(Data_Source.DIR_CONF):  # if exist conf. folder
+            if os.path.isfile(Data_Source.FILE_CONF):
+                userconf = self.parsing_fileconf()  # fileconf data
+                if not userconf:
                     existfileconf = False
-                if float(DATAconf[0]) != 2.0:
+                if float(userconf[0]) != 2.0:
                     existfileconf = False
             else:
                 existfileconf = False
 
             if not existfileconf:
                 try:
-                    if OS == ('Windows'):
+                    if Data_Source.OS == ('Windows'):
                         shutil.copyfile('%s/videomassWin32.conf' %
-                                        self.SRCpath, FILEconf)
+                                        self.SRCpath, Data_Source.FILE_CONF)
                     else:
                         shutil.copyfile('%s/videomass.conf' % self.SRCpath,
-                                        FILEconf)
-                    DATAconf = parsing_fileconf()  # read again file conf
+                                        Data_Source.FILE_CONF)
+                    userconf = self.parsing_fileconf()  # read again file conf
                 except IOError as e:
                     copyerr = e
-                    DATAconf = None
-            if not os.path.exists(os.path.join(DIRconf, "presets")):
+                    userconf = None
+            if not os.path.exists(os.path.join(Data_Source.DIR_CONF,
+                                               "presets")):
                 try:
                     shutil.copytree(os.path.join(self.SRCpath, "presets"),
-                                    os.path.join(DIRconf, "presets"))
+                                    os.path.join(Data_Source.DIR_CONF,
+                                                 "presets"))
                 except (OSError, IOError) as e:
                     copyerr = e
-                    DATAconf = None
+                    userconf = None
         else:
             try:
-                shutil.copytree(self.SRCpath, DIRconf)
-                DATAconf = parsing_fileconf()  # read again file conf
+                shutil.copytree(self.SRCpath, Data_Source.DIR_CONF)
+                userconf = self.parsing_fileconf()  # read again file conf
             except (OSError, IOError) as e:
                 copyerr = e
-                DATAconf = None
+                userconf = None
 
-        return (OS,
+        return (Data_Source.OS,
                 self.SRCpath,
                 copyerr,
-                None,
-                DATAconf,
+                None, # unused
+                userconf,
                 self.localepath,
-                FILEconf,
-                WORKdir,
-                DIRconf,
-                LOGdir,
-                CACHEdir,
+                Data_Source.FILE_CONF,
+                self.WORKdir,
+                Data_Source.DIR_CONF,
+                Data_Source.LOG_DIR,
+                Data_Source.CACHE_DIR,
                 )
     # --------------------------------------------------------------------
 
     def icons_set(self, iconset):
         """
-        assignment path at the used icons in according to configuration file.
+        assignment path at the used icons in according to
+        configuration file.
+
         """
         # videomass sign
         if iconset == 'Videomass_Sign_Icons':  # default

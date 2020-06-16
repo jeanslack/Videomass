@@ -76,8 +76,7 @@ class Videomass(wx.App):
 
     def OnInit(self):
         """
-        This is bootstrap interface. ``setui`` get data
-        of the file configuration and set the environment.
+        This is bootstrap interface.
 
         """
         data = Data_Source() # user-space and interface settings
@@ -183,8 +182,8 @@ class Videomass(wx.App):
 
     def wizard(self, icon):
         """
-        Start a temporary dialog: this is showing during first time
-        start of the Videomass application on MacOS and Windows.
+        Show a temporary dialog for setup during first start time
+        of the Videomass application on MacOS and Windows OS only.
         """
         from videomass3.vdms_dialogs.first_time_start import FirstStart
         main_frame = FirstStart(icon)
