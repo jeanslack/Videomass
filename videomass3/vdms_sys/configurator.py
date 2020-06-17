@@ -2,7 +2,7 @@
 
 #########################################################
 # Name: configurator.py
-# Porpose: Set configuration and appearance on startup
+# Porpose: Set Videomass configuration and appearance on startup
 # Compatibility: Python3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -67,7 +67,7 @@ class Data_Source(object):
 
     def __init__(self):
         """
-        Given the paths defined by PKG_LOCATION (a configuration
+        Given the paths defined by `pkg_location` (a configuration
         folder for recovery > `self.SRCpath`, a set of icons >
         `self.icodir` and a folder for the locale > `self.localepath`),
         it performs the initialization described in Data_Source.
