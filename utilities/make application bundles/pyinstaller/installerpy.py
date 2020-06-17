@@ -55,8 +55,11 @@ if platform.system() == 'Windows':
         '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'INSTALL'),
         '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'README.md'),
         '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'TODO'),
-        '--icon=%s' % os.path.join('%s' % PWD, 'art', 'videomass.ico'),
-                                                      'videomass',])
+        '--exclude-module=youtube_dl',
+        '--icon=%s' % os.path.join('%s' % PWD, 'videomass3',
+                                   'art', 'videomass.ico'),
+        'videomass',])
+
 elif platform.system() == 'Darwin':
     PyInstaller.__main__.run([
         '--name=Videomass',
@@ -77,8 +80,10 @@ elif platform.system() == 'Darwin':
         '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'INSTALL'),
         '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'README.md'),
         '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'TODO'),
-        '--icon=%s' % os.path.join('%s' % PWD, 'art', 'videomass.icns'),
-                                                      'videomass',
+        '--exclude-module=youtube_dl',
+        '--icon=%s' % os.path.join('%s' % PWD, 'videomass3',
+                                   'art', 'videomass.icns'),
+        'videomass',
         ])
 
 # add to videomass.spec

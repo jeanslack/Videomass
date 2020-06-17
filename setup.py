@@ -88,7 +88,7 @@ CLASSIFIERS = [
             'Natural Language :: English',
             'Natural Language :: Italian',
             'Programming Language :: Python :: 3.7',
-            "Programming Language :: Python :: 3.8"
+            "Programming Language :: Python :: 3.8",
             'Topic :: Multimedia :: Video :: Conversion',
             'Topic :: Multimedia :: Sound/Audio :: Conversion',
             'Topic :: Utilities',

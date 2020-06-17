@@ -67,7 +67,7 @@ class Data_Source(object):
 
     def __init__(self):
         """
-        Given the paths defined by `pkg_location` (a configuration
+        Given the paths defined by `data_location` (a configuration
         folder for recovery > `self.SRCpath`, a set of icons >
         `self.icodir` and a folder for the locale > `self.localepath`),
         it performs the initialization described in Data_Source.
@@ -80,15 +80,16 @@ class Data_Source(object):
         if frozen and hasattr(sys, '_MEIPASS'):
             meipass = True
             path = getattr(sys, '_MEIPASS',  os.path.abspath(__file__))
+            data_location = path
         else:
             meipass = False
             path = os.path.realpath(os.path.abspath(__file__))
+            data_location = os.path.dirname(os.path.dirname(path))
 
         self.WORKdir = os.path.dirname(os.path.dirname(os.path.dirname(path)))
-        pkg_location = (os.path.dirname(os.path.dirname(path)))
-        self.localepath = os.path.join(pkg_location, 'locale')
-        self.SRCpath = os.path.join(pkg_location, 'share')
-        self.icodir = os.path.join(pkg_location, 'art', 'icons')
+        self.localepath = os.path.join(data_location, 'locale')
+        self.SRCpath = os.path.join(data_location, 'share')
+        self.icodir = os.path.join(data_location, 'art', 'icons')
 
         if frozen and meipass or os.path.isfile('%s/launcher' % self.WORKdir):
             print('frozen and meipass or launcher', path)
