@@ -179,16 +179,11 @@ class Choose_Topic(wx.Panel):
                 self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
             else:
-                if OS in ['Windows', 'Darwin']:
-                    if wx.MessageBox(MSG, _("Videomass confirmation"),
-                                     wx.ICON_QUESTION |
-                                     wx.YES_NO, self) == wx.NO:
-                        return
-                else:
-                    if wx.MessageBox(MSG, _("Videomass confirmation"),
-                                     wx.ICON_QUESTION |
-                                     wx.YES_NO, self) == wx.NO:
-                        return
+                if wx.MessageBox(MSG, _("Videomass confirmation"),
+                                    wx.ICON_QUESTION |
+                                    wx.YES_NO, self) == wx.NO:
+                    return
+
                 latest = self.parent.ydl_latest(self, msgbox=False)
                 if latest[1]:
                     return

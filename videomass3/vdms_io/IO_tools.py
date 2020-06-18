@@ -319,17 +319,9 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     else:
         msg = _('\nWait....\nDownloading youtube-dl.\n')
 
-    if os.path.basename(executable) == 'youtube-dl.exe':
-        name = os.path.basename(executable)
-        url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-               'download/%s/%s' % (latest, name))
-        dest = executable
-    else:
-        name = os.path.basename(executable)
-        url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-               'download/%s/%s-%s.tar.gz' % (latest, name, latest))
-        dest = '%s-%s.tar.gz' % (executable, latest)
-
+    name = os.path.basename(executable)
+    url = ('https://github.com/ytdl-org/youtube-dl/releases/'
+           'download/%s/%s' % (latest, name))
     if os.path.exists(executable):
         try:  # make back-up for outdated
             os.rename(executable, '%s_OLD' % executable)
@@ -341,36 +333,23 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
         except OSError as err:
             return None, err
 
-    thread = youtubedlupdater.Upgrade_Latest(url, dest)
+    thread = youtubedlupdater.Upgrade_Latest(url, executable)
     loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
     loadDlg.ShowModal()
     # thread.join()
     status = thread.data
     loadDlg.Destroy()
 
-    if os.path.splitext(dest)[1] == '.gz' and os.path.exists(dest):
-        # extract the archive if present
-        try:
-            with tarfile.open(dest) as tar:
-                tar.extractall(os.path.dirname(dest))
-                tar.close()
-        except (FileNotFoundError, tarfile.ReadError) as err:
-            return None, err
-        else:
-            os.remove(dest)
-
     if os.path.exists('%s_OLD' % executable):
         # remove outdated back-up
         if not status[1]:
             if os.path.isfile('%s_OLD' % executable):
                 os.remove('%s_OLD' % executable)
-            elif os.path.isdir('%s_OLD' % executable):
-                shutil.rmtree('%s_OLD' % executable)
         else:
             # come back previous status
             os.rename('%s_OLD' % executable, executable)
 
-    if os.path.isfile(executable) and name != 'youtube-dl.exe':
+    if not name == 'youtube-dl.exe':
         # make it executable by everyone
         if os.path.isfile(executable):
             st = os.stat(executable)

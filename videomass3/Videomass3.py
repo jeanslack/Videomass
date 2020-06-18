@@ -114,26 +114,24 @@ class Videomass(wx.App):
         if self.OS == 'Windows':
             try:
                 from youtube_dl import YoutubeDL
-                self.execYdl = False
+
             except (ModuleNotFoundError, ImportError) as nomodule:
                 self.pylibYdl = nomodule
                 self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl.exe')
         else:
+            print(getattr(sys, 'frozen', False), hasattr(sys, '_MEIPASS'))
             try:
                 from youtube_dl import YoutubeDL
-                self.execYdl = False
+
             except (ModuleNotFoundError, ImportError) as nomodule:
-                src = os.path.join(self.CACHEdir, 'youtube-dl')
-                sys.path.append(src)
+                self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl')
+                sys.path.append(self.execYdl)
                 try:
                     from youtube_dl import YoutubeDL
-                    self.execYdl = False
+
                 except (ModuleNotFoundError, ImportError) as nomodule:
-                    self.pylibYdl = (nomodule)
-                    self.execYdl = src
-            # -- use for debug the executable on *nix only:
-            # self.pylibYdl = ('Nothing module')
-            # self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl')
+                    self.pylibYdl = nomodule
+
         # ----- ffmpeg
         if setui[0] == 'Darwin':  # on MacOs
             for link in [setui[4][6], setui[4][8], setui[4][10]]:

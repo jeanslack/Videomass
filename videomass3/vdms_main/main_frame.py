@@ -378,7 +378,7 @@ class MainFrame(wx.Frame):
             self.avpan.Enable(False), self.prstpan.Enable(False),
             self.ydlpan.Enable(False), self.startpan.Enable(False)
             self.logpan.Enable(False)
-        if PYLIB_YDL is not None:
+        if PYLIB_YDL is not None:  # no used as module
             if EXEC_YDL:
                 if os.path.exists(EXEC_YDL):
                     return
@@ -968,24 +968,9 @@ class MainFrame(wx.Frame):
                 return None
             return latest
         # ----------------------------------------------------------
-        if os.path.join(CACHEDIR, 'youtube-dl') in sys.path:  # local pkg
-            ck = _check()
-            if not ck:
-                return
-            else:
-                exe = os.path.join(CACHEDIR, 'youtube-dl')
-                upgrade = IO_tools.youtubedl_upgrade(ck[0], exe, upgrade=True)
-            if upgrade[1]:  # failed
-                wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
-                              wx.ICON_ERROR, self)
-                return
-            wx.MessageBox(_('Successful! youtube-dl is up-to-date ({0})\n\n'
-                            'Please, Restart Videomass.').format(ck[0]),
-                          'Videomass', wx.ICON_INFORMATION)
-            return
 
-        elif os.path.exists(EXEC_YDL) and PYLIB_YDL is not None:  # local exec.
-            if os.path.basename(EXEC_YDL) == 'youtube-dl':  # not .exe
+        if EXEC_YDL is not False and os.path.isfile(EXEC_YDL):
+            if os.path.basename(EXEC_YDL) == 'youtube-dl':
                 update = IO_tools.youtubedl_update([EXEC_YDL, '--update'],
                                                    waitmsg)
                 if update[1]:  # failed

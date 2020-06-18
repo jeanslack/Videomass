@@ -72,17 +72,12 @@ class Data_Source(object):
         `self.icodir` and a folder for the locale > `self.localepath`),
         it performs the initialization described in Data_Source.
         """
-        try:
-            if getattr(sys, 'frozen'):
-                frozen = True
-        except AttributeError as err:
-                frozen = False
-        if frozen and hasattr(sys, '_MEIPASS'):
-            meipass = True
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            frozen, meipass = True, True
             path = getattr(sys, '_MEIPASS',  os.path.abspath(__file__))
             data_location = path
         else:
-            meipass = False
+            frozen, meipass = False, False
             path = os.path.realpath(os.path.abspath(__file__))
             data_location = os.path.dirname(os.path.dirname(path))
 
@@ -92,13 +87,11 @@ class Data_Source(object):
         self.icodir = os.path.join(data_location, 'art', 'icons')
 
         if frozen and meipass or os.path.isfile('%s/launcher' % self.WORKdir):
-            print('frozen and meipass or launcher', path)
             self.videomass_icon = "%s/videomass.png" % self.icodir
             self.wizard_icon = "%s/videomass_wizard.png" % self.icodir
 
         else: # system installation (usr, usr/local, ~/.local)
             if Data_Source.OS == 'Windows':  # Installed with pip command
-                print('Installed with pip command on WINDOWS')
                 # HACK check this
                 dirname = os.path.dirname(sys.executable)
                 pythonpath = os.path.join(dirname, 'Script', 'videomass')
@@ -108,19 +101,16 @@ class Data_Source(object):
             else:
                 binarypath = shutil.which('videomass')
                 if binarypath == '/usr/local/bin/videomass':
-                    print('pip as super user, usually Linux, MacOs, Unix', binarypath)
                     # pip as super user, usually Linux, MacOs, Unix
                     share = '/usr/local/share/pixmaps'
                     self.videomass_icon = share + '/videomass.png'
                     self.wizard_icon = self.icodir + '/videomass_wizard.png'
                 elif binarypath == '/usr/bin/videomass':
-                    print('installed via apt, rpm, etc, usually Linux', binarypath)
                     # installed via apt, rpm, etc, usually Linux
                     share = '/usr/share/pixmaps'
                     self.videomass_icon = share + "/videomass.png"
                     self.wizard_icon = self.icodir + "/videomass_wizard.png"
                 else:
-                    print('pip as normal user, usually Linux, MacOs, Unix', binarypath)
                     # pip as normal user, usually Linux, MacOs, Unix
                     userbase = os.path.dirname(os.path.dirname(binarypath))
                     pixmaps = '/share/pixmaps/videomass.png'
