@@ -28,28 +28,9 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 
 #########################################################
-"""
- USAGE:
-
-   1) MacOSX:
-      python3 setup.py py2app --packages==wx
-
-   2) All:
-      python3 setup.py sdist bdist_wheel
-
-   3) Debian:
-      python3 setup.py --command-packages=stdeb.command bdist_deb
-
-
- * See the INSTALL file in the sources for major details
-
-"""
 from setuptools import setup, find_packages
-import platform
 from glob import glob
 import os
-import sys
-import shutil
 from videomass3.vdms_sys.msg_info import current_release
 from videomass3.vdms_sys.msg_info import descriptions_release
 
@@ -75,7 +56,7 @@ LONG_DESCRIPTION = dr[1]
 
 # ---- categorize with ----#
 CLASSIFIERS = [
-            'Development Status :: 5 - Production/Stable',
+            'Development Status :: 4 - Beta',
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows :: Windows 7',
             'Operating System :: Microsoft :: Windows :: Windows 10',
@@ -102,36 +83,6 @@ def glob_files(pattern):
     with wildcard and put it in a objects list
     """
     return [f for f in glob(pattern) if os.path.isfile(f)]
-# ---------------------------------------------------------------------#
-
-
-def AppendPackageFiles(data, baseicons, baselocale):
-    """
-    Add all icons and all locale files to data list
-    """
-    # get all icons and icons docs
-    for art in os.listdir('art/icons'):
-        if art not in ['videomass_wizard.png', 'videomass.png']:
-            tmp = "art/icons/" + art
-            if os.path.exists(tmp):
-                pathdoc = '%s/%s' % (baseicons, art)
-                data.append((pathdoc, glob_files('%s/*.md' % tmp)))
-                data.append((pathdoc, glob_files('%s/*.txt' % tmp)))
-            for size in ['18x18', '24x24', '32x32', '48x48']:
-                if os.path.exists(tmp + '/' + size):
-                    path = tmp + '/' + size
-                    pathsize = '%s/%s/%s' % (baseicons, art, size)
-                    data.append((pathsize, glob_files('%s/*.png' % path)))
-
-    # Get the locale files
-    for loc_dir in os.listdir("locale"):
-        if loc_dir not in ['videomass.pot', 'README', 'make_pot.sh']:
-            tmp = "locale/" + loc_dir + "/LC_MESSAGES"
-            if os.path.isdir(tmp):
-                tmp2 = tmp + "/videomass.mo"
-                if os.path.exists(tmp2):
-                    data.append((baselocale + tmp, [tmp2]))
-    return data
 # ---------------------------------------------------------------------#
 
 
@@ -188,84 +139,5 @@ def source_build():
 # ---------------------------------------------------------------------#
 
 
-def macos_build_app():
-    """
-    build videomass.app
-
-    """
-    try:
-        import wx
-    except ImportError:
-        sys.stderr.write("ERROR: 'wx' module is required; "
-                         "need wxPython4 (phoenix).\n"
-                         "Visit the wxPython web page for more info:\n"
-                         "<https://wxpython.org/>\n"
-                         )
-        sys.exit(1)
-
-    EXCLUDE = ['youtube_dl']
-    INSTALL_REQUIRES = ['wxpython>=4.0.3', 'PyPubSub>=4.0.0']
-    PATH_ICON = '%s/art/videomass.icns' % PWD
-    RESOURCES = "%s/MacOsxSetup/FFMPEG_BIN" % PWD
-
-    # places data ..path must be relative-path
-    data = [('share/presets', glob_files('share/presets/*.prst')),
-            ('share', ['share/videomass.conf']),
-            ('art/icons', glob_files('art/icons/*.png')),
-            ('', ['AUTHORS', 'BUGS',
-                  'CHANGELOG', 'INSTALL',
-                  'COPYING', 'TODO', 'README.md']), ]
-    # get package data
-    DATA_FILES = AppendPackageFiles(data, 'art/icons/', '')
-
-    OPTIONS = {'argv_emulation': False,
-               'excludes': EXCLUDE,  # list,
-               'includes': ['wx', ],
-               'resources': RESOURCES,
-               'iconfile': PATH_ICON,
-               'site_packages': True,
-               'optimize': '2',
-               'plist': {
-                   # 'LSEnvironment': '$0',
-                   'NSPrincipalClass': 'NSApplication',
-                   'NSAppleScriptEnabled': False,
-                   'CFBundleName': RLS_NAME,
-                   'CFBundleDisplayName': RLS_NAME,
-                   'CFBundleGetInfoString': "Making Videomass",
-                   'CFBundleIdentifier': "com.jeanslack.videomass",
-                   'CFBundleVersion': "%s" % VERSION,
-                   'CFBundleShortVersionString': "%s" % VERSION,
-                   'NSHumanReadableCopyright': "Copyright %s, "
-                                            "Gianluca Pernigotto, "
-                                            "All Rights Reserved" % COPYRIGHT,
-                                            }}
-
-    if not os.path.exists('%s/bin/Videomass.py' % PWD):
-        shutil.copyfile('%s/bin/videomass' % PWD,
-                        '%s/bin/Videomass.py' % PWD
-                        )
-    # --------------- setup: --------------------#
-    setup(app=['bin/Videomass.py'],
-          packages=find_packages(exclude=EXCLUDE),
-          include=['python', 'wx', ],
-          name=RLS_NAME,
-          version=VERSION,
-          options={'py2app': OPTIONS},
-          description=DESCRIPTION,
-          long_description=LONG_DESCRIPTION,
-          classifiers=CLASSIFIERS,
-          author=AUTHOR,
-          author_email=EMAIL,
-          url=WEBSITE,
-          license=LICENSE,
-          data_files=DATA_FILES,
-          platforms=['MacOS X'],
-          setup_requires=["py2app>=0.21", "setuptools>=47.1.1"],
-          )
-
-
 if __name__ == '__main__':
-    if platform.system() == 'Darwin' and 'py2app' in sys.argv:
-        macos_build_app()
-    else:
-        source_build()
+    source_build()

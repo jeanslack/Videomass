@@ -119,7 +119,6 @@ class Videomass(wx.App):
                 self.pylibYdl = nomodule
                 self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl.exe')
         else:
-            print(getattr(sys, 'frozen', False), hasattr(sys, '_MEIPASS'))
             try:
                 from youtube_dl import YoutubeDL
 

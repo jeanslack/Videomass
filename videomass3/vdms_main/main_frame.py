@@ -380,7 +380,7 @@ class MainFrame(wx.Frame):
             self.logpan.Enable(False)
         if PYLIB_YDL is not None:  # no used as module
             if EXEC_YDL:
-                if os.path.exists(EXEC_YDL):
+                if os.path.isfile(EXEC_YDL):
                     return
             self.ydlused.Enable(False)
             self.ydllatest.Enable(False)

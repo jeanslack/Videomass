@@ -31,7 +31,6 @@ import wx
 import os
 import shutil
 import stat
-import tarfile
 from videomass3.vdms_threads.mpv_url import Url_Play
 from videomass3.vdms_threads.ffplay_file import File_Play
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
@@ -345,6 +344,8 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
         if not status[1]:
             if os.path.isfile('%s_OLD' % executable):
                 os.remove('%s_OLD' % executable)
+            elif os.path.isdir('%s_OLD' % executable):
+                shutil.rmtree('%s_OLD' % executable)
         else:
             # come back previous status
             os.rename('%s_OLD' % executable, executable)

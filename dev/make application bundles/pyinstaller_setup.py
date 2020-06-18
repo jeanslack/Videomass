@@ -2,13 +2,13 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: installerpy.py
+# Name: makebundles.py
 # Porpose: Running PyInstaller from Python code
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: May.14.2020
+# Rev: June.18.2020
 #########################################################
 
 # This file is part of Videomass.
@@ -29,34 +29,48 @@
 #########################################################
 """
  USAGE:
-    - python3 [OPTIONS] installerpy.py
+    - python3 [OPTIONS] makebundles.py
 """
 import os
+import sys
+import shutil
 import platform
 import PyInstaller.__main__
 
-PWD = os.getcwd()
+this = os.path.realpath(os.path.abspath(__file__))
+here = os.path.dirname(this)
+videomass = os.path.join(here, 'bin', 'videomass')
+
+if not os.path.exists(os.path.join(here, 'videomass')):
+    if os.path.isfile(videomass):
+        try:
+            shutil.copyfile(videomass, os.path.join(here, 'videomass'))
+        except FileNotFoundError as err:
+            sys.exit(err)
+    else:
+        sys.exit('ERROR: must be the base directory of videomass source')
+
 
 if platform.system() == 'Windows':
     PyInstaller.__main__.run([
         '--name=Videomass',
         '--windowed',
-        '--add-data=%s;art' % os.path.join('%s' % PWD, 'videomass3', 'art'),
-        '--add-data=%s;locale' % os.path.join('%s' % PWD, 'videomass3', 'locale'),
-        '--add-data=%s;share' % os.path.join('%s' % PWD, 'videomass3', 'share'),
-        '--add-data=%s;FFMPEG_BIN' % os.path.join('%s' % PWD, 'Win32Setup',
+        '--add-data=%s;art' % os.path.join('%s' % here, 'videomass3', 'art'),
+        '--add-data=%s;locale' % os.path.join('%s' % here, 'videomass3', 'locale'),
+        '--add-data=%s;share' % os.path.join('%s' % here, 'videomass3', 'share'),
+        '--add-data=%s;FFMPEG_BIN' % os.path.join('%s' % here, 'Win32Setup',
                                                               'FFMPEG_BIN'),
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'Win32Setup','NOTICE.rtf'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'Win32Setup','NOTICE.rtf'),
         # doc
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'AUTHORS'),
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'BUGS'),
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'CHANGELOG'),
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'COPYING'),
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'INSTALL'),
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'README.md'),
-        '--add-data=%s;DOC' % os.path.join('%s' % PWD, 'TODO'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'AUTHORS'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'BUGS'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'CHANGELOG'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'COPYING'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'INSTALL'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'README.md'),
+        '--add-data=%s;DOC' % os.path.join('%s' % here, 'TODO'),
         '--exclude-module=youtube_dl',
-        '--icon=%s' % os.path.join('%s' % PWD, 'videomass3',
+        '--icon=%s' % os.path.join('%s' % here, 'videomass3',
                                    'art', 'videomass.ico'),
         'videomass',])
 
@@ -66,22 +80,21 @@ elif platform.system() == 'Darwin':
         '--windowed',
         #'--onefile',
         '--osx-bundle-identifier=com.jeanslack.videomass',
-        '--add-data=%s:art' % os.path.join('%s' % PWD, 'videomass3', 'art'),
-        '--add-data=%s:locale' % os.path.join('%s' % PWD, 'videomass3', 'locale'),
-        '--add-data=%s:share' % os.path.join('%s' % PWD, 'videomass3', 'share'),
-        '--add-data=%s:videomass3' % os.path.join('%s' % PWD, 'videomass3'),
-        '--add-data=%s:FFMPEG_BIN' % os.path.join('%s' % PWD, 'MacOsxSetup',
+        '--add-data=%s:art' % os.path.join('%s' % here, 'videomass3', 'art'),
+        '--add-data=%s:locale' % os.path.join('%s' % here, 'videomass3', 'locale'),
+        '--add-data=%s:share' % os.path.join('%s' % here, 'videomass3', 'share'),
+        '--add-data=%s:FFMPEG_BIN' % os.path.join('%s' % here, 'MacOsxSetup',
                                                               'FFMPEG_BIN'),
         # doc
-        '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'AUTHORS'),
-        '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'BUGS'),
-        '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'CHANGELOG'),
-        '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'COPYING'),
-        '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'INSTALL'),
-        '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'README.md'),
-        '--add-data=%s:DOC' % os.path.join('%s' % PWD, 'TODO'),
+        '--add-data=%s:DOC' % os.path.join('%s' % here, 'AUTHORS'),
+        '--add-data=%s:DOC' % os.path.join('%s' % here, 'BUGS'),
+        '--add-data=%s:DOC' % os.path.join('%s' % here, 'CHANGELOG'),
+        '--add-data=%s:DOC' % os.path.join('%s' % here, 'COPYING'),
+        '--add-data=%s:DOC' % os.path.join('%s' % here, 'INSTALL'),
+        '--add-data=%s:DOC' % os.path.join('%s' % here, 'README.md'),
+        '--add-data=%s:DOC' % os.path.join('%s' % here, 'TODO'),
         '--exclude-module=youtube_dl',
-        '--icon=%s' % os.path.join('%s' % PWD, 'videomass3',
+        '--icon=%s' % os.path.join('%s' % here, 'videomass3',
                                    'art', 'videomass.icns'),
         'videomass',
         ])

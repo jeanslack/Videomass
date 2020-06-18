@@ -1,7 +1,6 @@
-# Make Videomass standalone app for Mac-Os
+# Installing required dependencies on Mac-Os 
 -----------------
 
-### Installing required dependencies   
 One of the tools to easily install everything that is missing on MacOS is 
 [homebrew](https://brew.sh/) tool. However, homebrew uses the "Command Line Tools" 
 installed on your machine. By default, OS X does not ship with this tool, and you 
@@ -55,55 +54,59 @@ Note, however, that they may have limitations for reasons related to distributio
 (such as lack of AAC support)
 
 ### Build a Redistributable Package    
-To build a Videomass.app I suggest you create a virtual environment, also to 
-avoid some errors that I found when compiling the app without a virtual 
-environment. Exhaustive guides to doing this are as follows:   
+To build a Videomass.app I suggest you create a virtual environment, Exhaustive 
+guides to doing this are as follows:   
 <https://docs.python-guide.org/dev/virtualenvs/>   
 <https://wiki.wxpython.org/wxPythonVirtualenvOnMac>   
 <https://www.metachris.com/2015/11/create-standalone-mac-os-x-applications-with-python-and-py2app/>   
 
-Note that inside Videomass sources already exists a setup.py with certain 
-parameters for your MacOS, then make a virtual env inside Videomass sources, 
-activate it and install **setuptools** and **py2app** with pip tool, then run 
-setup.py   
-```
-~$ python3 setup.py py2app --packages=wx
-```
-This will create a self contained applet in the `./dist/` directory   
+- Make sure you have pip, then install:   
 
-**More details and resources:** (outdated)   
+   `python -m pip install wxPython PyPubSub`   
 
-<https://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies> 
+   `python -m pip install pyinstaller`
 
--Usage for get help:   
+- Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP 
+sources and extract the archive.   
 
-`python3 setup.py py2app --help`   
+# Installing required dependencies on MS Windows 10
+-----------------
 
--Usage for development and debug:   
+### Installing required dependencies
+- Install Python>=3.7   
 
-`python3 setup.py py2app -A`   
+- Make sure you have pip, then install:   
 
-and then debug with terminal:   
+   `python -m pip install wxPython PyPubSub`   
 
-`./dist/Videomass.app/Contents/MacOS/videomass`   
+   `python -m pip install pyinstaller`
 
--Usage for building a redistributable version standalone:   
+- Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP 
+sources and extract the archive.   
 
-`python setup.py py2app`   
 
-On Mac OSX, I installed wxpPthon with Homebrew using:   
+# Building the bundle with pyinstaller
+-----------------
 
-`brew install wxpython`   
-    
-...and I change into virtualenv site-packages directory:   
+### Before to run any command
 
-`cd /venv/lib/python2.7/site-packages`   
+- Copy `pyinstaller_setup.py` file on `dev/make application bundles` and paste it 
+into base/root directory of videomass source. When you use `pyinstaller_setup.py` 
+script will also generate a new videomass.spec file (or it overwrite the existing 
+one) which you can handle by edit the statements of the class instance to leading 
+any aspect on next bundled application.   
+> see https://pyinstaller.readthedocs.io/en/stable/spec-files.html.   
 
-then link the wx.pth   
-    
-```
-ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/wx.pth wx.pth
-```
-```     
-ln -s /usr/local/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/wx-3.0-osx_cocoa wx-3.0-osx_cocoa
-```
+### Create a redistributable package with pyinstaller:
+
+- You can start whit installerpy.py script like this:
+    `python3 pyinstaller_setup.py`   
+
+- If you want to start with videomass.spec (when created), then type:   
+    `pyinstaller [OPTIONS] videomass.spec`   
+
+> <ins>**Note:**</ins>
+>
+> Do not enter the "[OPTIONS]" field on pyinstaller commands if you want start 
+with no options. This is just an example to show the optional flag too.   
+For debug, even enable `console=True` into videomass.spec
