@@ -209,16 +209,16 @@ class Data_Source(object):
             x18 = '%s/Videomass_Sign_Icons/18x18' % self.icodir
         # material design black
         if iconset == 'Material_Design_Icons_black':
-            x48 = '%s/Videomass_Sign_Icons/48x48' % self.icodir
-            x32 = '%s/Material_Design_Icons_black/32x32' % self.icodir
+            x48 = '%s/Videomass_Sign_Icons/48x48_black' % self.icodir
+            x32 = '%s/Videomass_Sign_Icons/32x32_black' % self.icodir
             x24 = '%s/Material_Design_Icons_black/24x24' % self.icodir
             x18 = '%s/Material_Design_Icons_black/18x18' % self.icodir
         # flat-colours
-        elif iconset == 'Flat_Color_Icons':
-            x48 = '%s/Videomass_Sign_Icons/48x48' % self.icodir
-            x32 = '%s/Flat_Color_Icons/32x32' % self.icodir
-            x24 = '%s/Flat_Color_Icons/24x24' % self.icodir
-            x18 = '%s/Flat_Color_Icons/18x18' % self.icodir
+        elif iconset == 'Material_Design_Icons_white':
+            x48 = '%s/Videomass_Sign_Icons/48x48_white' % self.icodir
+            x32 = '%s/Videomass_Sign_Icons/32x32_white' % self.icodir
+            x24 = '%s/Material_Design_Icons_white/24x24' % self.icodir
+            x18 = '%s/Material_Design_Icons_white/18x18' % self.icodir
 
 
         # choose topic icons 48x48:

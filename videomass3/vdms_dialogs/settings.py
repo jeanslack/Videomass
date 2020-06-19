@@ -226,7 +226,7 @@ class Setup(wx.Dialog):
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[("Videomass_Sign_Icons"),
                                                ("Material_Design_Icons_black"),
-                                               ("Flat_Color_Icons")],
+                                               ("Material_Design_Icons_white")],
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
         boxLabIcons.Add(self.cmbx_icons, 0,

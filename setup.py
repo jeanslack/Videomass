@@ -56,14 +56,14 @@ LONG_DESCRIPTION = dr[1]
 
 # ---- categorize with ----#
 CLASSIFIERS = [
+            'Environment :: MacOS X :: Cocoa',
+            'Environment :: Win32 (MS Windows)',
+            'Environment :: X11 Applications :: GTK',
             'Development Status :: 4 - Beta',
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows :: Windows 7',
             'Operating System :: Microsoft :: Windows :: Windows 10',
             'Operating System :: POSIX',
-            'Environment :: MacOS X :: Cocoa',
-            'Environment :: Win32 (MS Windows)',
-            'Environment :: X11 Applications :: GTK',
             'Intended Audience :: End Users/Desktop',
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
             'Natural Language :: English',

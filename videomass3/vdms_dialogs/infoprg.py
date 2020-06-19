@@ -85,13 +85,12 @@ def info(parent, videomass_icon):
                       "cross-platform media player"
                       )
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
-    info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
-                     'Material design icons '
-                     'http://google.github.io/material-design-icons/'
-                     '#getting-icons', 'Flat Color Icons, '
-                     'http://icons8.com/color-icons'])
     info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> "
                        "English to Italian translations."
                        )
+    info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
+                     'Material design icons '
+                     'http://google.github.io/material-design-icons/'
+                     '#getting-icons'])
     wx.adv.AboutBox(info)
     # event.Skip()

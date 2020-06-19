@@ -7,30 +7,38 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-June 16, 2020 V.2.8.7
+June 16, 2020 V.2.8.8
 +------------------------------------+
 
 BUGS:
-    * Removed update scrolling at the last position on 'Log viewing console'.
-    * [stdeb] Fixed error when building .deb binary which report a
+    * [LOG VIEWING CONSOLE] Removed update scrolling at the last position on.
+    * [STDEB] Fixed error when building .deb binary which report a
       `RuntimeError: original source dist cannot contain .pyc files` .
       It's fixed by removing 'recursive-include videomass3 *' on MANIFEST.in .
     * Fixed `install_requires` dependencies on setup.py
     * Fixed installation on virtual environment with pip command.
 NEWS:
-    * Added man page '/docs/man/man1/videomass.1' for the Debian project.
-    * New parse for some sys.argv option with command line.
+    * Added man page '/docs/man/man1/videomass.1' for the Debian project (but
+      may be used by others).
+    * Added new command line arguments to parse for sys.argv (see man page).
     * Added more informative displays in the drag and drop panel such as
       duration, media type and file size.
 
 IMPROVEMENTS:
-    * Improved buttons layout for drag and drop panel.
-    * Improved buttons layout on textctrl panel for URLs.
+    * [DRAG N DROP] Improved buttons layout for drag and drop panel.
+    * [ADDS URLS] Improved buttons layout on textctrl panel for URLs.
     * Added some cosmetic improving on static texts for a better reading.
+    * The icons themes have been fixed, definitively organized and correctly
+      licensed.
+    * [YOUTUBE DOWNLOADER] changed content for cache directory; for all UNIX
+      users (Linux, macOS, etc.) it use youtube-dl for local execution.
+      For Windows users do not change.
 
 REMOVALS and DISPLACEMENTS:
-    * moved folders art, locale and share from base directory onto videomass3 
-      package
+    * moved art, locale and share data folders from base directory to videomass3
+      package.
+    * [OPERATIVE SYSTEM] py2app has definitely been replaced with pyinstaller on
+      On MacOs, so as consequence build app using setup.py no longer works now.
 
 +------------------------------------+
 May 31, 2020 V.2.7.0

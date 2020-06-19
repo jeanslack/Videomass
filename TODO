@@ -5,10 +5,6 @@ URGENCY: to do soon
 
 --------- See Latest News on <https://wxpython.org/> -----------------------
 
-- Use `EnableSystemTheme` to disable the default system theme on Windows for
-  native widgets like wx.ListCtrl, wx.TreeCtrl and wx.dataview.DataViewCtrl.
-  It has no effect on the other platforms. See Latest News on <https://wxpython.org/>
-
 - Use wx.svg code for parsing SVG (Scalable Vector Graphics) files, and also
   code for integrating with wxPython. It can rasterize the SVG to a wx.Bitmap
   of any size with no loss of quality, and it can also render the SVG directly
@@ -24,8 +20,6 @@ URGENCY: to do soon
 
 - add 'Pictures' on the Media list to export image sequences in jpg, png, bmp
   formats.
-
-- Fix themes and icons (deleting useless and making usefull)
 
 
 --------------
