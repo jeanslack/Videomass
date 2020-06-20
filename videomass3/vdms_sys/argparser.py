@@ -57,7 +57,7 @@ def args():
                    'mpv', 'youtube-dl', 'atomicparsley'
                    ]
         print('Check for installed dependencies:')
-        for required in  listing:
+        for required in listing:
             if which(required, mode=os.F_OK | os.X_OK, path=None):
                 print("\t'%s' ..Ok" % required)
             else:
