@@ -1,5 +1,5 @@
-# Description
 -----------------
+# Description
 
 These are the preliminary steps for building a Videomass bundle using
 [pyinstaller](https://pypi.org/project/PyInstaller/) on MacOs and Windows
@@ -11,9 +11,9 @@ your operating system:
 
 Then jump to [Building the bundle with pyinstaller](#building-the-bundle-with-pyinstaller)
 
-
-# Building the bundle with pyinstaller
 -----------------
+# Building the bundle with pyinstaller
+
 Use `pyinstaller_set.py` script to building bundles 
 
 - Copy or move `pyinstaller_setup.py` script into base directory of videomass 
@@ -31,7 +31,6 @@ create two new folders, build and dist. Into dist folder there is the bundle.
 
 -----------------
 # Mac-Os
------------------
 
 One of the tools to easily install everything that is missing on MacOS is
 [homebrew](https://brew.sh/) tool. However, homebrew uses the "Command Line Tools"
@@ -100,11 +99,10 @@ guides to doing this are as follows:
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
 sources and extract the archive.
+
 -----------------
 # MS-Windows
------------------
 
-### Installing required dependencies
 - Install Python>=3.7
 
 - Make sure you have pip, then install:
