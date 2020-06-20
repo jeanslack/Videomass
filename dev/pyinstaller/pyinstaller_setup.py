@@ -32,11 +32,26 @@ import sys
 import shutil
 import platform
 import argparse
+
+this = os.path.realpath(os.path.abspath(__file__))
+# here = os.path.dirname(this)  # if you use this script on videomass root dir
+here = os.path.dirname(os.path.dirname(os.path.dirname(this)))
+sys.path.insert(0, here)
+videomass = os.path.join(here, 'bin', 'videomass')
+
+if not os.path.exists(os.path.join(here, 'videomass')):  # videomass binary
+    if os.path.isfile(videomass):
+        try:
+            shutil.copyfile(videomass, os.path.join(here, 'videomass'))
+        except FileNotFoundError as err:
+            sys.exit(err)
+    else:
+        sys.exit('ERROR: the videomass sources directory must be exists')
 try:
     from videomass3.vdms_sys.msg_info import current_release
     # ---- Get info data
     cr = current_release()
-    RLS_NAME = cr[0]  # release name first letter is Uppercase
+    RLS_NAME = cr[0]  # first letter is Uppercase
     PRG_NAME = cr[1]
     VERSION = cr[2]
     RELEASE = cr[3]
@@ -47,10 +62,6 @@ try:
     COMMENT = cr[8]
 except ModuleNotFoundError as error:
     sys.exit(error)
-
-this = os.path.realpath(os.path.abspath(__file__))
-here = os.path.dirname(this)
-videomass = os.path.join(here, 'bin', 'videomass')
 
 art = os.path.join(here, 'videomass3', 'art')
 locale = os.path.join(here, 'videomass3', 'locale')
@@ -76,7 +87,6 @@ def genspec():
         `pyinstaller videomass.spec`
     """
     if platform.system() == 'Windows':
-
         content = f"""# -*- mode: python ; coding: utf-8 -*-
 block_cipher = None
 
@@ -128,9 +138,8 @@ coll = COLLECT(exe,
     """
 
     elif platform.system() == 'Darwin':
-
         content = f"""# -*- mode: python ; coding: utf-8 -*-
-        
+
 block_cipher = None
 
 
@@ -197,10 +206,10 @@ app = BUNDLE(coll,
                                                }})
 
     """
-
     specfile = os.path.join(here, 'videomass.spec')
     with open(specfile, 'w') as spec:
         spec.write(content)
+
 
 def startbuild():
     """
@@ -228,13 +237,14 @@ def startbuild():
                                 '--add-data=%s;DOC' % todo,
                                 '--exclude-module=youtube_dl',
                                 '--icon=%s' % ico,
-                                'videomass',])
+                                'videomass',
+                                ])
 
     elif platform.system() == 'Darwin':
         PyInstaller.__main__.run([
                                 '--name=Videomass',
                                 '--windowed',
-                                #'--onefile',
+                                # '--onefile',
                                 '--osx-bundle-identifier=com.jeanslack.videomass',
                                 '--add-data=%s:art' % art,
                                 '--add-data=%s:locale' % locale,
@@ -250,23 +260,8 @@ def startbuild():
                                 '--add-data=%s:DOC' % todo,
                                 '--exclude-module=youtube_dl',
                                 '--icon=%s' % icns,
-                                'videomass',])
-
-    # add to videomass.spec
-    #info_plist={
-    #                   # 'LSEnvironment': '$0',
-    #                   'NSPrincipalClass': 'NSApplication',
-    #                   'NSAppleScriptEnabled': False,
-    #                   'CFBundleName': 'Videomass',
-    #                   'CFBundleDisplayName': 'Videomass',
-    #                   'CFBundleGetInfoString': "Making Videomass",
-    #                   'CFBundleIdentifier': "com.jeanslack.videomass",
-    #                   'CFBundleVersion': '1.6.1',
-    #                   'CFBundleShortVersionString': '1.6.1',
-    #                   'NSHumanReadableCopyright': 'Copyright © 2013-2019, '
-    #                                            'Gianluca Pernigotto, '
-    #                                            'All Rights Reserved',
-    #                                            })
+                                'videomass',
+                                ])
 
 
 def args():
@@ -277,7 +272,7 @@ def args():
                 description='Automatize the pyinstaller setup for Videomass',)
     parser.add_argument(
                 '-s', '--genspec',
-                help="Generate a videomass.spec file",
+                help="Generate a videomass.spec file to start building with",
                 action="store_true",
                        )
     parser.add_argument(
@@ -298,17 +293,7 @@ def args():
 
 if __name__ == '__main__':
     if platform.system() in ('Windows', 'Darwin'):
-        if not os.path.exists(os.path.join(here, 'videomass')):
-            if os.path.isfile(videomass):
-                try:
-                    shutil.copyfile(videomass, os.path.join(here, 'videomass'))
-                except FileNotFoundError as err:
-                    sys.exit(err)
-            else:
-                sys.exit('ERROR: must be on the base directory of videomass '
-                         'source.\nSOLUTION: copy or move this file on base '
-                         'videomass sources')
         args()
     else:
-        sys.exit('ERROR: invalid platform. This work on Windows and MacOs '
-                 'only, exit.')
+        sys.exit('ERROR: invalid platform. This script work on Windows and '
+                 'Mac-Os only for now, exit.')
