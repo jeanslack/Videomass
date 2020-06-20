@@ -6,8 +6,8 @@ These are the preliminary steps for building a Videomass bundle using
 operating systems. Before proceeding, install the dependencies required for
 your operating system:
 
-- [MacOs](#installing required dependencies on mac-os)
-- [Windows](#installing required dependencies on mS windows 10)
+- [MacOs](https://github.com/jeanslack/Videomass/edit/master/dev/pyinstaller/README.md#mac-os)
+- [Windows](https://github.com/jeanslack/Videomass/edit/master/dev/pyinstaller/README.md#ms-windows)
 
 Then jump to [Building the bundle with pyinstaller](#building the bundle with pyinstaller)
 
@@ -30,7 +30,7 @@ create two new folders, build and dist. Into dist folder there is the bundle.
 > For debug, even enable `console=True` into videomass.spec
 
 -----------------
-# Installing required dependencies on Mac-Os
+# Mac-Os
 -----------------
 
 One of the tools to easily install everything that is missing on MacOS is
@@ -100,8 +100,8 @@ guides to doing this are as follows:
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
 sources and extract the archive.
-
-# Installing required dependencies on MS Windows 10
+-----------------
+# MS-Windows
 -----------------
 
 ### Installing required dependencies
