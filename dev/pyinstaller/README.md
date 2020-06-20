@@ -12,9 +12,7 @@ your operating system:
 Then jump to [Building the bundle with pyinstaller](#building-the-bundle-with-pyinstaller)
 
 -----------------
-# Building the bundle with pyinstaller
-
-Use `pyinstaller_set.py` script to building bundles 
+# Building the bundle with pyinstaller 
 
 - Copy or move `pyinstaller_setup.py` script into base directory of videomass 
 source (where there are the bin, dev, docs, ..., folders). 
@@ -23,7 +21,7 @@ starting with. You can handle the `spec` file by edit the statements of the clas
 instance to leading any aspect on next bundled application.
 > see https://pyinstaller.readthedocs.io/en/stable/spec-files.html.
 - type `pyinstaller videomass.spec` to building a videomass bundle. This command
-create two new folders, build and dist. Into dist folder there is the bundle.
+create two new folders, `build` and `dist`. The `dist` folder is the location for the bundle.
 
 > <ins>**Note:**</ins>
 >
