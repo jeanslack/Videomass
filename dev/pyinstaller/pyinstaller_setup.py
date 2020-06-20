@@ -130,6 +130,7 @@ coll = COLLECT(exe,
     elif platform.system() == 'Darwin':
 
         content = f"""# -*- mode: python ; coding: utf-8 -*-
+        
 block_cipher = None
 
 
@@ -166,7 +167,7 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True,
+          console=False,
           icon='{icns}')
 coll = COLLECT(exe,
                a.binaries,
@@ -235,18 +236,18 @@ def startbuild():
                                 '--windowed',
                                 #'--onefile',
                                 '--osx-bundle-identifier=com.jeanslack.videomass',
-                                '--add-data=%s;art' % art,
-                                '--add-data=%s;locale' % locale,
-                                '--add-data=%s;share' % share,
-                                '--add-data=%s;FFMPEG_BIN' % ffmpeg_mac,
+                                '--add-data=%s:art' % art,
+                                '--add-data=%s:locale' % locale,
+                                '--add-data=%s:share' % share,
+                                '--add-data=%s:FFMPEG_BIN' % ffmpeg_mac,
                                 # doc
-                                '--add-data=%s;DOC' % auth,
-                                '--add-data=%s;DOC' % bugs,
-                                '--add-data=%s;DOC' % changelog,
-                                '--add-data=%s;DOC' % copying,
-                                '--add-data=%s;DOC' % install,
-                                '--add-data=%s;DOC' % readme,
-                                '--add-data=%s;DOC' % todo,
+                                '--add-data=%s:DOC' % auth,
+                                '--add-data=%s:DOC' % bugs,
+                                '--add-data=%s:DOC' % changelog,
+                                '--add-data=%s:DOC' % copying,
+                                '--add-data=%s:DOC' % install,
+                                '--add-data=%s:DOC' % readme,
+                                '--add-data=%s:DOC' % todo,
                                 '--exclude-module=youtube_dl',
                                 '--icon=%s' % icns,
                                 'videomass',])
