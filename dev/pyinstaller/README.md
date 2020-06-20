@@ -14,6 +14,7 @@ Then jump to [Building the bundle with pyinstaller](#building-the-bundle-with-py
 -----------------
 # Building the bundle with pyinstaller 
 
+- Type `python3 -m pip install --user pyinstaller` to install pyinstaller.
 - Copy or move `pyinstaller_setup.py` script into base directory of videomass 
 source (where there are the bin, dev, docs, ..., folders). 
 - type `pyinstaller_setup.py -s` to generate a videomass.spec already setted for 
