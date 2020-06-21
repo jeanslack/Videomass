@@ -4,7 +4,7 @@
 #########################################################
 # Name: pyinstaller_setup.py
 # Porpose: script to automatize the videomass building with pyinstaller
-# Compatibility: Python3, wxPython Phoenix
+# Compatibility: Python3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
@@ -207,6 +207,7 @@ app = BUNDLE(coll,
                                                }})
 
     """
+
     specfile = os.path.join(here, 'videomass.spec')
     with open(specfile, 'w') as spec:
         spec.write(content)
@@ -243,26 +244,26 @@ def startbuild():
 
     elif platform.system() == 'Darwin':
         PyInstaller.__main__.run([
-                                '--name=Videomass',
-                                '--windowed',
-                                # '--onefile',
-                                '--osx-bundle-identifier=com.jeanslack.videomass',
-                                '--add-data=%s:art' % ART,
-                                '--add-data=%s:locale' % LOCALE,
-                                '--add-data=%s:share' % SHARE,
-                                '--add-data=%s:FFMPEG_BIN' % FFMPEG_MACOS,
-                                # doc
-                                '--add-data=%s:DOC' % AUTH,
-                                '--add-data=%s:DOC' % BUGS,
-                                '--add-data=%s:DOC' % CHANGELOG,
-                                '--add-data=%s:DOC' % COPYING,
-                                '--add-data=%s:DOC' % INSTALL,
-                                '--add-data=%s:DOC' % README,
-                                '--add-data=%s:DOC' % TODO,
-                                '--exclude-module=youtube_dl',
-                                '--icon=%s' % ICNS,
-                                'videomass',
-                                ])
+                            '--name=Videomass',
+                            '--windowed',
+                            # '--onefile',
+                            '--osx-bundle-identifier=com.jeanslack.videomass',
+                            '--add-data=%s:art' % ART,
+                            '--add-data=%s:locale' % LOCALE,
+                            '--add-data=%s:share' % SHARE,
+                            '--add-data=%s:FFMPEG_BIN' % FFMPEG_MACOS,
+                            # doc
+                            '--add-data=%s:DOC' % AUTH,
+                            '--add-data=%s:DOC' % BUGS,
+                            '--add-data=%s:DOC' % CHANGELOG,
+                            '--add-data=%s:DOC' % COPYING,
+                            '--add-data=%s:DOC' % INSTALL,
+                            '--add-data=%s:DOC' % README,
+                            '--add-data=%s:DOC' % TODO,
+                            '--exclude-module=youtube_dl',
+                            '--icon=%s' % ICNS,
+                            'videomass',
+                            ])
 
 
 def args():

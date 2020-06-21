@@ -14,7 +14,7 @@ It allows you to create new presets or import/export existing ones, write and
 edit new conversion profiles in order to use FFmpeg without limits of formats,
 codecs and commands.   
 
-In fatc, most of the operations performed with FFmpeg via the command line, can 
+In fact, most of the operations performed with FFmpeg via the command line, can 
 be stored as conversion profiles on Videomass and can be performed or modified 
 on the fly.   
 
