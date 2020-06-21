@@ -88,24 +88,25 @@ def genspec():
     """
     if platform.system() == 'Windows':
         content = f"""# -*- mode: python ; coding: utf-8 -*-
+
 block_cipher = None
 
 
 a = Analysis(['{PRG_NAME}'],
-             pathex=['{here}'],
+             pathex=[r'{here}'],
              binaries=[],
-             datas=[('{art}', 'art'),
-                    ('{locale}', 'locale'),
-                    ('{share}', 'share'),
-                    ('{ffmpeg_win}', 'FFMPEG_BIN'),
-                    ('{notice}', 'FFMPEG_BIN'),
-                    ('{auth}', 'DOC'),
-                    ('{bugs}', 'DOC'),
-                    ('{changelog}', 'DOC'),
-                    ('{copying}', 'DOC'),
-                    ('{install}', 'DOC'),
-                    ('{readme}', 'DOC'),
-                    ('{todo}', 'DOC')],
+             datas=[(r'{art}', 'art'),
+                    (r'{locale}', 'locale'),
+                    (r'{share}', 'share'),
+                    (r'{ffmpeg_win}', 'FFMPEG_BIN'),
+                    (r'{notice}', 'DOC'),
+                    (r'{auth}', 'DOC'),
+                    (r'{bugs}', 'DOC'),
+                    (r'{changelog}', 'DOC'),
+                    (r'{copying}', 'DOC'),
+                    (r'{install}', 'DOC'),
+                    (r'{readme}', 'DOC'),
+                    (r'{todo}', 'DOC')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -126,7 +127,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           console=False,
-          icon='{ico}')
+          icon=r'{ico}')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
