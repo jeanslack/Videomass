@@ -38,13 +38,13 @@ sys.path.insert(0, here)
 # here = os.path.dirname(this)
 videomass = os.path.join(here, 'dist', 'Videomass')
 
-if not os.path.exists(videomass):
-    if not os.path.isdir(videomass):
-        sys.exit('ERROR: You should first create a videomass bundle with '
-                 'pyinstaller.')
+if not os.path.exists(videomass) and not os.path.isdir(videomass):
+    sys.exit('ERROR: You should first create a videomass bundle with '
+             'pyinstaller.')
+elif not 'Videomass.exe' in os.listdir(videomass):
+    sys.exit('ERROR: Videomass.exe bundle is missing on dist folder.')
 
 from videomass3.vdms_sys.msg_info import current_release
-
 # ---- Get info data
 cr = current_release()
 RLS_NAME = cr[0]  # release name first letter is Uppercase
@@ -109,7 +109,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "%(PATH_EXE)s"; DestDir: "{app}"; Flags: ignoreversion
-Source: "%(here)s\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "%(videomass)s\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
