@@ -270,10 +270,10 @@ class Setup(wx.Dialog):
         gridTBColor.Add(btn_Fontcolor, 0, wx.ALL |
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
-        btn_TBcolorClearBtn = wx.Button(tabFour, wx.ID_CLEAR,
+        self.default_theme = wx.Button(tabFour, wx.ID_CLEAR,
                                         _("Restore default settings")
                                         )
-        gridappearance.Add(btn_TBcolorClearBtn, 0, wx.ALL |
+        gridappearance.Add(self.default_theme, 0, wx.ALL |
                            wx.EXPAND, 15
                            )
         tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
@@ -308,7 +308,7 @@ class Setup(wx.Dialog):
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         grdexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        btn_ok = wx.Button(self, wx.ID_APPLY, "")
+        btn_ok = wx.Button(self, wx.ID_OK, "")
         grdexit.Add(btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         sizer_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 5)
@@ -348,7 +348,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_Fontcolor)
-        self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, btn_TBcolorClearBtn)
+        self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, self.default_theme)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
@@ -602,6 +602,16 @@ class Setup(wx.Dialog):
         """
         choice = "%s\n" % self.cmbx_icons.GetStringSelection()
         self.full_list[self.rowsNum[13]] = choice
+
+        if choice == "Material_Design_Icons_white\n":
+            self.full_list[self.rowsNum[15]] = '26, 26, 26, 255\n'
+            self.full_list[self.rowsNum[16]] = '229, 229, 229, 255\n'
+        else:
+            self.full_list[self.rowsNum[15]] = '176, 176, 176, 255\n'
+            self.full_list[self.rowsNum[16]] = '0, 0, 0\n'
+
+        if not self.default_theme.IsEnabled():
+            self.default_theme.Enable()
     # ------------------------------------------------------------------#
 
     def onColorDlg(self, event):
@@ -628,6 +638,8 @@ class Setup(wx.Dialog):
                 self.full_list[self.rowsNum[15]] = "%s\n" % choice
             elif identity == _("Font Colour"):
                 self.full_list[self.rowsNum[16]] = "%s\n" % choice
+            if not self.default_theme.IsEnabled():
+                self.default_theme.Enable()
 
         dlg.Destroy()
     # ----------------------------------------------------------------------#
@@ -643,6 +655,7 @@ class Setup(wx.Dialog):
             self.full_list[self.rowsNum[14]] = '228, 21, 68\n'
         self.full_list[self.rowsNum[15]] = '176, 176, 176, 255\n'
         self.full_list[self.rowsNum[16]] = '0, 0, 0\n'
+        self.default_theme.Disable()
     # ----------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -650,6 +663,11 @@ class Setup(wx.Dialog):
         """
         page = 'https://jeanslack.github.io/Videomass/Pages/Startup/Setup.html'
         webbrowser.open(page)
+    # --------------------------------------------------------------------#
+
+    def okmsg(self):
+        wx.MessageBox(_("Changes will take affect once the program "
+                        "has been restarted"))
     # --------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -663,8 +681,6 @@ class Setup(wx.Dialog):
         with open(self.getfileconf, 'w') as fconf:
             for i in self.full_list:
                 fconf.write('%s' % i)
-        wx.MessageBox(_("Changes will take affect once the program "
-                        "has been restarted"))
-        # self.Destroy() # WARNING on mac not close corretly, on linux ok
+        #self.Destroy() # WARNING on mac not close corretly, on linux ok
+        self.okmsg()
         self.Close()
-        event.Skip()

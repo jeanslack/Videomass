@@ -57,10 +57,10 @@ AUTHOR = cr[6]
 EMAIL = cr[7]
 COMMENT = cr[8]
 
-copying = os.path.join(videomass, 'DOC', 'COPYING')
-info = os.path.join(videomass, 'DOC', 'NOTICE.rtf')
-auth = os.path.join(videomass, 'DOC', 'AUTHORS')
-ico = os.path.join(videomass, 'art', 'videomass.ico')
+COPYING = os.path.join(videomass, 'DOC', 'COPYING')
+INFO_RTF = os.path.join(videomass, 'DOC', 'NOTICE.rtf')
+AUTH = os.path.join(videomass, 'DOC', 'AUTHORS')
+ICONS_PATH = os.path.join(videomass, 'art', 'videomass.ico')
 PATH_EXE = os.path.join(videomass, 'Videomass.exe')
 
 def createinno():
@@ -90,12 +90,12 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={commonpf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
-LicenseFile=%(copying)s
-InfoBeforeFile=%(info)s
-InfoAfterFile=%(auth)s
+LicenseFile=%(COPYING)s
+InfoBeforeFile=%(INFO_RTF)s
+InfoAfterFile=%(AUTH)s
 OutputDir=%(here)s
 OutputBaseFilename=Videomass-v%(VERSION)s-py3-x64-Setup
-SetupIconFile=%(ico)s
+SetupIconFile=%(ICONS_PATH)s
 Password=
 Compression=lzma
 SolidCompression=yes
@@ -123,8 +123,9 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}";IconFile
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-""" % {"VERSION": VERSION, "copying": copying, "info": info,
-       "auth": auth, "here": here, "ico": ico, "PATH_EXE": PATH_EXE
+""" % {"VERSION": VERSION, "COPYING": COPYING, "INFO_RTF": INFO_RTF,
+       "AUTH": AUTH, "here": here, "ICONS_PATH": ICONS_PATH,
+       "PATH_EXE": PATH_EXE
        }
     specfile = os.path.join(here, 'videomass_v%s.iss' % VERSION)
     with open(specfile, 'w') as spec:

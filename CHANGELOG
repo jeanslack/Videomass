@@ -17,6 +17,7 @@ BUGS:
       It's fixed by removing 'recursive-include videomass3 *' on MANIFEST.in .
     * Fixed `install_requires` dependencies on setup.py
     * Fixed installation on virtual environment with pip command.
+    * Fixed time range dialog layout on wxpython<4.1.0
 NEWS:
     * Added man page '/docs/man/man1/videomass.1' for the Debian project (but
       may be used by others).
@@ -33,6 +34,7 @@ IMPROVEMENTS:
     * [YOUTUBE DOWNLOADER] changed content for cache directory; for all UNIX
       users (Linux, macOS, etc.) it use youtube-dl for local execution.
       For Windows users do not change.
+    * Improved closing windows on setup dialog when ok button is pressed.
 
 REMOVALS and DISPLACEMENTS:
     * moved art, locale and share data folders from base directory to videomass3

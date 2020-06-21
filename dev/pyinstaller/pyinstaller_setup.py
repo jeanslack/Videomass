@@ -36,7 +36,6 @@ import argparse
 this = os.path.realpath(os.path.abspath(__file__))
 # here = os.path.dirname(this)  # if you use this script on videomass root dir
 here = os.path.dirname(os.path.dirname(os.path.dirname(this)))
-sys.path.insert(0, here)
 videomass = os.path.join(here, 'bin', 'videomass')
 
 if not os.path.exists(os.path.join(here, 'videomass')):  # videomass binary
@@ -48,6 +47,7 @@ if not os.path.exists(os.path.join(here, 'videomass')):  # videomass binary
     else:
         sys.exit('ERROR: the videomass sources directory must be exists')
 try:
+    sys.path.insert(0, here)
     from videomass3.vdms_sys.msg_info import current_release
     # ---- Get info data
     cr = current_release()
@@ -63,21 +63,21 @@ try:
 except ModuleNotFoundError as error:
     sys.exit(error)
 
-art = os.path.join(here, 'videomass3', 'art')
-locale = os.path.join(here, 'videomass3', 'locale')
-share = os.path.join(here, 'videomass3', 'share')
-ffmpeg_win = os.path.join(here, 'Win32Setup', 'FFMPEG_BIN')
-ffmpeg_mac = os.path.join(here, 'MacOsxSetup', 'FFMPEG_BIN')
-notice = os.path.join(here, 'Win32Setup', 'NOTICE.rtf')
-auth = os.path.join(here, 'AUTHORS')
-bugs = os.path.join(here, 'BUGS')
-changelog = os.path.join(here, 'CHANGELOG')
-copying = os.path.join(here, 'COPYING')
-install = os.path.join(here, 'INSTALL')
-readme = os.path.join(here, 'README.md')
-todo = os.path.join(here, 'TODO')
-icns = os.path.join(here, 'videomass3', 'art', 'videomass.icns')
-ico = os.path.join(here, 'videomass3', 'art', 'videomass.ico')
+ART = os.path.join(here, 'videomass3', 'art')
+LOCALE = os.path.join(here, 'videomass3', 'locale')
+SHARE = os.path.join(here, 'videomass3', 'share')
+FFMPEG_WIN = os.path.join(here, 'Win32Setup', 'FFMPEG_BIN')
+FFMPEG_MACOS = os.path.join(here, 'MacOsxSetup', 'FFMPEG_BIN')
+NOTICE = os.path.join(here, 'Win32Setup', 'NOTICE.rtf')
+AUTH = os.path.join(here, 'AUTHORS')
+BUGS = os.path.join(here, 'BUGS')
+CHANGELOG = os.path.join(here, 'CHANGELOG')
+COPYING = os.path.join(here, 'COPYING')
+INSTALL = os.path.join(here, 'INSTALL')
+README = os.path.join(here, 'README.md')
+TODO = os.path.join(here, 'TODO')
+ICNS = os.path.join(here, 'videomass3', 'art', 'videomass.icns')
+ICO = os.path.join(here, 'videomass3', 'art', 'videomass.ico')
 
 
 def genspec():
@@ -95,18 +95,18 @@ block_cipher = None
 a = Analysis(['{PRG_NAME}'],
              pathex=[r'{here}'],
              binaries=[],
-             datas=[(r'{art}', 'art'),
-                    (r'{locale}', 'locale'),
-                    (r'{share}', 'share'),
-                    (r'{ffmpeg_win}', 'FFMPEG_BIN'),
-                    (r'{notice}', 'DOC'),
-                    (r'{auth}', 'DOC'),
-                    (r'{bugs}', 'DOC'),
-                    (r'{changelog}', 'DOC'),
-                    (r'{copying}', 'DOC'),
-                    (r'{install}', 'DOC'),
-                    (r'{readme}', 'DOC'),
-                    (r'{todo}', 'DOC')],
+             datas=[(r'{ART}', 'art'),
+                    (r'{LOCALE}', 'locale'),
+                    (r'{SHARE}', 'share'),
+                    (r'{FFMPEG_WIN}', 'FFMPEG_BIN'),
+                    (r'{NOTICE}', 'DOC'),
+                    (r'{AUTH}', 'DOC'),
+                    (r'{BUGS}', 'DOC'),
+                    (r'{CHANGELOG}', 'DOC'),
+                    (r'{COPYING}', 'DOC'),
+                    (r'{INSTALL}', 'DOC'),
+                    (r'{README}', 'DOC'),
+                    (r'{TODO}', 'DOC')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -127,7 +127,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           console=False,
-          icon=r'{ico}')
+          icon=r'{ICO}')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -147,17 +147,17 @@ block_cipher = None
 a = Analysis(['{PRG_NAME}'],
              pathex=['{here}'],
              binaries=[],
-             datas=[('{art}', 'art'),
-                    ('{locale}', 'locale'),
-                    ('{share}', 'share'),
-                    ('{ffmpeg_mac}', 'FFMPEG_BIN'),
-                    ('{auth}', 'DOC'),
-                    ('{bugs}', 'DOC'),
-                    ('{changelog}', 'DOC'),
-                    ('{copying}', 'DOC'),
-                    ('{install}', 'DOC'),
-                    ('{readme}', 'DOC'),
-                    ('{todo}', 'DOC')],
+             datas=[('{ART}', 'art'),
+                    ('{LOCALE}', 'locale'),
+                    ('{SHARE}', 'share'),
+                    ('{FFMPEG_MACOS}', 'FFMPEG_BIN'),
+                    ('{AUTH}', 'DOC'),
+                    ('{BUGS}', 'DOC'),
+                    ('{CHANGELOG}', 'DOC'),
+                    ('{COPYING}', 'DOC'),
+                    ('{INSTALL}', 'DOC'),
+                    ('{README}', 'DOC'),
+                    ('{TODO}', 'DOC')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -178,7 +178,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           console=False,
-          icon='{icns}')
+          icon='{ICNS}')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
@@ -189,7 +189,7 @@ coll = COLLECT(exe,
                name='{RLS_NAME}')
 app = BUNDLE(coll,
              name='{RLS_NAME}.app',
-             icon='{icns}',
+             icon='{ICNS}',
              bundle_identifier='com.jeanslack.videomass',
              info_plist={{
                    # 'LSEnvironment': '$0',
@@ -223,21 +223,21 @@ def startbuild():
         PyInstaller.__main__.run([
                                 '--name=Videomass',
                                 '--windowed',
-                                '--add-data=%s;art' % art,
-                                '--add-data=%s;locale' % locale,
-                                '--add-data=%s;share' % share,
-                                '--add-data=%s;FFMPEG_BIN' % ffmpeg_win,
-                                '--add-data=%s;DOC' % notice,
+                                '--add-data=%s;art' % ART,
+                                '--add-data=%s;locale' % LOCALE,
+                                '--add-data=%s;share' % SHARE,
+                                '--add-data=%s;FFMPEG_BIN' % FFMPEG_WIN,
+                                '--add-data=%s;DOC' % NOTICE,
                                 # doc
-                                '--add-data=%s;DOC' % auth,
-                                '--add-data=%s;DOC' % bugs,
-                                '--add-data=%s;DOC' % changelog,
-                                '--add-data=%s;DOC' % copying,
-                                '--add-data=%s;DOC' % install,
-                                '--add-data=%s;DOC' % readme,
-                                '--add-data=%s;DOC' % todo,
+                                '--add-data=%s;DOC' % AUTH,
+                                '--add-data=%s;DOC' % BUGS,
+                                '--add-data=%s;DOC' % CHANGELOG,
+                                '--add-data=%s;DOC' % COPYING,
+                                '--add-data=%s;DOC' % INSTALL,
+                                '--add-data=%s;DOC' % README,
+                                '--add-data=%s;DOC' % TODO,
                                 '--exclude-module=youtube_dl',
-                                '--icon=%s' % ico,
+                                '--icon=%s' % ICO,
                                 'videomass',
                                 ])
 
@@ -247,20 +247,20 @@ def startbuild():
                                 '--windowed',
                                 # '--onefile',
                                 '--osx-bundle-identifier=com.jeanslack.videomass',
-                                '--add-data=%s:art' % art,
-                                '--add-data=%s:locale' % locale,
-                                '--add-data=%s:share' % share,
-                                '--add-data=%s:FFMPEG_BIN' % ffmpeg_mac,
+                                '--add-data=%s:art' % ART,
+                                '--add-data=%s:locale' % LOCALE,
+                                '--add-data=%s:share' % SHARE,
+                                '--add-data=%s:FFMPEG_BIN' % FFMPEG_MACOS,
                                 # doc
-                                '--add-data=%s:DOC' % auth,
-                                '--add-data=%s:DOC' % bugs,
-                                '--add-data=%s:DOC' % changelog,
-                                '--add-data=%s:DOC' % copying,
-                                '--add-data=%s:DOC' % install,
-                                '--add-data=%s:DOC' % readme,
-                                '--add-data=%s:DOC' % todo,
+                                '--add-data=%s:DOC' % AUTH,
+                                '--add-data=%s:DOC' % BUGS,
+                                '--add-data=%s:DOC' % CHANGELOG,
+                                '--add-data=%s:DOC' % COPYING,
+                                '--add-data=%s:DOC' % INSTALL,
+                                '--add-data=%s:DOC' % README,
+                                '--add-data=%s:DOC' % TODO,
                                 '--exclude-module=youtube_dl',
-                                '--icon=%s' % icns,
+                                '--icon=%s' % ICNS,
                                 'videomass',
                                 ])
 
