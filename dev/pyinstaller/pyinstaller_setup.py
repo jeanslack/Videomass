@@ -3,7 +3,7 @@
 
 #########################################################
 # Name: pyinstaller_setup.py
-# Porpose: script to automatize the videomass building with pyinstaller
+# Porpose: Automatize the videomass building with pyinstaller
 # Compatibility: Python3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -33,36 +33,40 @@ import shutil
 import platform
 import argparse
 
+if not platform.system() in ('Windows', 'Darwin'):
+    sys.exit('ERROR: invalid platform. Only work on Windows and '
+             'Mac-Os for now, exit.')
+
 this = os.path.realpath(os.path.abspath(__file__))
 # here = os.path.dirname(this)  # if you use this script on videomass root dir
 here = os.path.dirname(os.path.dirname(os.path.dirname(this)))
-videomass = os.path.join(here, 'bin', 'videomass')
+binary = os.path.join(here, 'bin', 'videomass')
 
 if not os.path.exists(os.path.join(here, 'videomass')):  # videomass binary
-    if os.path.isfile(videomass):
+    if os.path.isfile(bynary):
         try:
             shutil.copyfile(videomass, os.path.join(here, 'videomass'))
         except FileNotFoundError as err:
             sys.exit(err)
     else:
         sys.exit('ERROR: the videomass sources directory must be exists')
+
+sys.path.insert(0, here)
 try:
-    sys.path.insert(0, here)
     from videomass3.vdms_sys.msg_info import current_release
-    # ---- Get info data
-    cr = current_release()
-    RLS_NAME = cr[0]  # first letter is Uppercase
-    PRG_NAME = cr[1]
-    VERSION = cr[2]
-    RELEASE = cr[3]
-    COPYRIGHT = cr[4]
-    WEBSITE = cr[5]
-    AUTHOR = cr[6]
-    EMAIL = cr[7]
-    COMMENT = cr[8]
 except ModuleNotFoundError as error:
     sys.exit(error)
 
+cr = current_release()  # Gets informations
+RLS_NAME = cr[0]  # first letter is Uppercase
+PRG_NAME = cr[1]  # first letter is lower
+VERSION = cr[2]
+RELEASE = cr[3]
+COPYRIGHT = cr[4]
+WEBSITE = cr[5]
+AUTHOR = cr[6]
+EMAIL = cr[7]
+COMMENT = cr[8]
 ART = os.path.join(here, 'videomass3', 'art')
 LOCALE = os.path.join(here, 'videomass3', 'locale')
 SHARE = os.path.join(here, 'videomass3', 'share')
@@ -79,15 +83,7 @@ TODO = os.path.join(here, 'TODO')
 ICNS = os.path.join(here, 'videomass3', 'art', 'videomass.icns')
 ICO = os.path.join(here, 'videomass3', 'art', 'videomass.ico')
 
-
-def genspec():
-    """
-    Generate a videomass.spec file on Windows and MacOs .
-    To running videomass.spec use:
-        `pyinstaller videomass.spec`
-    """
-    if platform.system() == 'Windows':
-        content = f"""# -*- mode: python ; coding: utf-8 -*-
+win32_content = f"""# -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
 
@@ -136,10 +132,9 @@ coll = COLLECT(exe,
                upx=True,
                upx_exclude=[],
                name='{RLS_NAME}')
-    """
+"""
 
-    elif platform.system() == 'Darwin':
-        content = f"""# -*- mode: python ; coding: utf-8 -*-
+darwin_contents = f"""# -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
 
@@ -205,20 +200,40 @@ app = BUNDLE(coll,
                                                'Gianluca Pernigotto, '
                                                'All Rights Reserved',
                                                }})
+"""
 
+
+def genspec():
     """
+    Generate a videomass.spec file on the specified platform.
+    The valid platforms to work are only Windows and MacOs.
+    The videomass.spec file will be saved in the root directory
+    of the videomass sources.
+    To running videomass.spec is required ``pyinstaller``.
+    To use videomass.spec type:
+        `pyinstaller videomass.spec`
+    """
+    if platform.system() == 'Windows':
+        contents = win32_content
+    elif platform.system() == 'Darwin':
+        contents = darwin_contents
 
     specfile = os.path.join(here, 'videomass.spec')
+
     with open(specfile, 'w') as spec:
         spec.write(content)
 
 
 def startbuild():
     """
-    Running pyInstaller from Python code and start to build a
+    Run pyinstaller from Python code starting to build a
     videomass bundle and videomass.spec too.
+    To use this function is required ``pyinstaller``.
     """
-    import PyInstaller.__main__
+    try:
+        import PyInstaller.__main__
+    except ModuleNotFoundError as error:
+        sys.exit('ERROR: %s - pyinstaller is required.' % error)
 
     if platform.system() == 'Windows':
         PyInstaller.__main__.run([
@@ -268,7 +283,7 @@ def startbuild():
 
 def args():
     """
-    Parser of the users inputs (positional/optional arguments)
+    Users inputs parser (positional/optional arguments)
     """
     parser = argparse.ArgumentParser(
                 description='Automatize the pyinstaller setup for Videomass',)
@@ -294,8 +309,5 @@ def args():
 
 
 if __name__ == '__main__':
-    if platform.system() in ('Windows', 'Darwin'):
-        args()
-    else:
-        sys.exit('ERROR: invalid platform. This script work on Windows and '
-                 'Mac-Os only for now, exit.')
+    args()
+
