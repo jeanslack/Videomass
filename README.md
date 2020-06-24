@@ -92,11 +92,12 @@ always within the same unpacked directory:
 `>>> Videomass3.main()`   
 
 # Resources
-* [Videomass on PyPi](https://pypi.org/project/videomass/)
-* [GitHub Page](https://github.com/jeanslack/Videomass)
+
+* [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
 * [Support Page and Documentation](http://jeanslack.github.io/Videomass)
 * [Wiki page](https://github.com/jeanslack/Videomass/wiki)
+* [Videomass on PyPi](https://pypi.org/project/videomass/)
+* [Development](https://github.com/jeanslack/Videomass)
 * [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
-* [Installers for Windows and MacOsX](https://sourceforge.net/projects/videomass2/)
 
 

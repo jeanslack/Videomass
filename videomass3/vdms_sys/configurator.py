@@ -72,6 +72,7 @@ class Data_Source(object):
         `self.icodir` and a folder for the locale > `self.localepath`),
         it performs the initialization described in Data_Source.
         """
+        print(sys.argv)
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             frozen, meipass = True, True
             path = getattr(sys, '_MEIPASS',  os.path.abspath(__file__))
@@ -98,6 +99,15 @@ class Data_Source(object):
                 #self.icodir = dirname + '\\share\\videomass\\icons'
                 self.videomass_icon = self.icodir + "\\videomass.png"
                 self.wizard_icon = self.icodir + "\\videomass_wizard.png"
+
+            elif os.path.basename(sys.argv[0]) == 'videomass':
+                # execute as AppImage ?
+                userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
+                pixmaps = '/share/pixmaps/videomass.png'
+                #pixmaps = '/share/icons/hicolor/128x128/apps/videomass.png'
+                self.videomass_icon = os.path.join(userbase + pixmaps)
+                self.wizard_icon = os.path.join(self.icodir +
+                                                    "/videomass_wizard.png")
             else:
                 binarypath = shutil.which('videomass')
                 if binarypath == '/usr/local/bin/videomass':
@@ -111,6 +121,7 @@ class Data_Source(object):
                     self.videomass_icon = share + "/videomass.png"
                     self.wizard_icon = self.icodir + "/videomass_wizard.png"
                 else:
+                    print('tre')
                     # pip as normal user, usually Linux, MacOs, Unix
                     userbase = os.path.dirname(os.path.dirname(binarypath))
                     pixmaps = '/share/pixmaps/videomass.png'

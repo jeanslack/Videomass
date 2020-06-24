@@ -1,14 +1,11 @@
 #!/usr/bin/env xdg-open
 
 [Desktop Entry]
-Encoding=UTF-8
 Type=Application
 Name=Videomass
 Exec=videomass %U
 GenericName=Graphical interface for FFmpeg and youtube-dl.
 GenericName[it]=Interfaccia grafica per FFmpeg e youtube-dl
-Comment=Graphical interface for FFmpeg and youtube-dl.
-Comment[it]=Interfaccia grafica per FFmpeg e youtube-dl
 Icon=videomass
 Terminal=false
 Categories=AudioVideo

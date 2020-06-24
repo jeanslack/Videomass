@@ -7,12 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-June 21, 2020 V.2.8.9
+June 24, 2020 V.2.8.9
 +------------------------------------+
 
 BUGS:
     * Fixed incorrect assignment for the sources directory in
       `generate_INNO_setup.py` script.
+
+NEWS:
+    * Added AppImage implementation
 
 +------------------------------------+
 June 16, 2020 V.2.8.8
