@@ -15,7 +15,7 @@ BUGS:
       `generate_INNO_setup.py` script.
 
 NEWS:
-    * Added AppImage implementation
+    * Added AppImage implementation on Linux (experimental)
 
 +------------------------------------+
 June 16, 2020 V.2.8.8

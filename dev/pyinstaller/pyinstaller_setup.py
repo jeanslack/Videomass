@@ -3,7 +3,7 @@
 
 #########################################################
 # Name: pyinstaller_setup.py
-# Porpose: Automatize the videomass building with pyinstaller
+# Porpose: Wrap the videomass building with pyinstaller
 # Compatibility: Python3
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -33,9 +33,9 @@ import shutil
 import platform
 import argparse
 
-if not platform.system() in ('Windows', 'Darwin'):
-    sys.exit('ERROR: invalid platform. Only work on Windows and '
-             'Mac-Os for now, exit.')
+if not platform.system() in ('Windows', 'Darwin', 'Linux'):
+    sys.exit('ERROR: invalid platform. Only work on Windows, '
+             'MacOs an Linux for now, exit.')
 
 this = os.path.realpath(os.path.abspath(__file__))
 # here = os.path.dirname(this)  # if you use this script on videomass root dir
@@ -83,7 +83,7 @@ TODO = os.path.join(here, 'TODO')
 ICNS = os.path.join(here, 'videomass3', 'art', 'videomass.icns')
 ICO = os.path.join(here, 'videomass3', 'art', 'videomass.ico')
 
-win32_content = f"""# -*- mode: python ; coding: utf-8 -*-
+WIN32_TEMPL = f"""# -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
 
@@ -134,7 +134,7 @@ coll = COLLECT(exe,
                name='{RLS_NAME}')
 """
 
-darwin_contents = f"""# -*- mode: python ; coding: utf-8 -*-
+DARWIN_TEMPL = f"""# -*- mode: python ; coding: utf-8 -*-
 
 block_cipher = None
 
@@ -202,29 +202,92 @@ app = BUNDLE(coll,
                                                }})
 """
 
+LINUX_TEMPL = f"""# -*- mode: python ; coding: utf-8 -*-
 
-def genspec():
+block_cipher = None
+
+
+a = Analysis(['{PRG_NAME}'],
+             pathex=['{here}'],
+             binaries=[],
+             datas=[('{ART}', 'art'),
+                    ('{LOCALE}', 'locale'),
+                    ('{SHARE}', 'share'),
+                    ('{AUTH}', 'DOC'),
+                    ('{BUGS}', 'DOC'),
+                    ('{CHANGELOG}', 'DOC'),
+                    ('{COPYING}', 'DOC'),
+                    ('{INSTALL}', 'DOC'),
+                    ('{README}', 'DOC'),
+                    ('{TODO}', 'DOC')],
+             hiddenimports=[],
+             hookspath=[],
+             runtime_hooks=[],
+             excludes=['youtube_dl'],
+             win_no_prefer_redirects=False,
+             win_private_assemblies=False,
+             cipher=block_cipher,
+             noarchive=False)
+pyz = PYZ(a.pure, a.zipped_data,
+             cipher=block_cipher)
+exe = EXE(pyz,
+          a.scripts,
+          a.binaries,
+          a.zipfiles,
+          a.datas,
+          [],
+          name='{PRG_NAME}',
+          debug=False,
+          bootloader_ignore_signals=False,
+          strip=False,
+          upx=True,
+          upx_exclude=[],
+          runtime_tmpdir=None,
+          console=True )
+"""
+
+
+def genspec(build=False):
     """
     Generate a videomass.spec file on the specified platform.
-    The valid platforms to work are only Windows and MacOs.
+    The valid platforms to work are only Windows and MacOs and Linux.
     The videomass.spec file will be saved in the root directory
     of the videomass sources.
     To running videomass.spec is required ``pyinstaller``.
     To use videomass.spec type:
+
         `pyinstaller videomass.spec`
+
+    or use option -gb to generate and start with building too.
     """
     if platform.system() == 'Windows':
-        contents = win32_content
+        contents = WIN32_TEMPL
     elif platform.system() == 'Darwin':
-        contents = darwin_contents
+        contents = DARWIN_TEMPL
+    elif platform.system() == 'Linux':
+        contents = LINUX_TEMPL
 
     specfile = os.path.join(here, 'videomass.spec')
 
     with open(specfile, 'w') as spec:
-        spec.write(content)
+        spec.write(contents)
+    print("ready videomass.spec on '%s'" % here)
+    if build:
+        run_pyinst(specfile)
 
 
-def startbuild():
+def run_pyinst(specfile):
+    """
+    wrap `pyinstaller videomass.spec`
+    """
+    if os.path.exists(specfile) and os.path.isfile(specfile):
+        os.system("pyinstaller %s" % specfile)
+        print("\npyinstaller_setup.py: Build finished.\n")
+    else:
+        sys.exit("ERROR: no such file videomass.spec")
+
+
+def usemodule():
     """
     Run pyinstaller from Python code starting to build a
     videomass bundle and videomass.spec too.
@@ -280,34 +343,71 @@ def startbuild():
                             'videomass',
                             ])
 
+    elif platform.system() == 'Linux':
+        PyInstaller.__main__.run([
+                            '--name=videomass',
+                            '--onefile',
+                            '--add-data=%s:art' % ART,
+                            '--add-data=%s:locale' % LOCALE,
+                            '--add-data=%s:share' % SHARE,
+                            # doc
+                            '--add-data=%s:DOC' % AUTH,
+                            '--add-data=%s:DOC' % BUGS,
+                            '--add-data=%s:DOC' % CHANGELOG,
+                            '--add-data=%s:DOC' % COPYING,
+                            '--add-data=%s:DOC' % INSTALL,
+                            '--add-data=%s:DOC' % README,
+                            '--add-data=%s:DOC' % TODO,
+                            '--exclude-module=youtube_dl',
+                            'videomass',
+                            ])
+
 
 def args():
     """
     Users inputs parser (positional/optional arguments)
     """
     parser = argparse.ArgumentParser(
-                description='Automatize the pyinstaller setup for Videomass',)
+                description='Wrap the pyinstaller setup for Videomass',)
     parser.add_argument(
-                '-s', '--genspec',
+                '-g', '--gen_spec',
                 help="Generate a videomass.spec file to start building with",
                 action="store_true",
                        )
+
     parser.add_argument(
-                '-b', '--startbuild',
-                help=("Start building by import PyInstaller.__main__"),
+                '-m', '--use_module',
+                help=("Start building by import PyInstaller.__main__ module\n"
+                      "Warning: using this option pyinstaller will "
+                      "overwrite the previously generated .spec file "
+                      "each time"),
+                action="store_true",
+                       )
+    parser.add_argument(
+                '-gb', '--genspec_build',
+                help="Generate a videomass.spec file and start directly "
+                     "with building. Warning: same as the -m option",
+                action="store_true",
+                       )
+    parser.add_argument(
+                '-s', '--start_build',
+                help="Start the building by an existing videomass.spec file",
                 action="store_true",
                        )
     args = parser.parse_args()
 
-    if args.genspec:
+    if args.gen_spec:
         genspec()
-    elif args.startbuild:
-        startbuild()
+    elif args.use_module:
+        usemodule()
+    elif args.genspec_build:
+        genspec(build=True)
+    elif args.start_build:
+        run_pyinst(os.path.join(here, 'videomass.spec'))
     else:
-        print("Type 'pyinstaller_setup.py -h' for help.")
+        print("\nType 'pyinstaller_setup.py -h' for help.\n")
         return
 
 
 if __name__ == '__main__':
     args()
-

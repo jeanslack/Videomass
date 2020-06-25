@@ -8,4 +8,4 @@ GenericName=Graphical interface for FFmpeg and youtube-dl.
 GenericName[it]=Interfaccia grafica per FFmpeg e youtube-dl
 Icon=videomass
 Terminal=false
-Categories=AudioVideo
+Categories=AudioVideo;
