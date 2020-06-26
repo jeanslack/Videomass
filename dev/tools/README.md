@@ -16,7 +16,7 @@ Then jump to [Building the bundle with pyinstaller](#building-the-bundle-with-py
 
 - Type `python3 -m pip install --user pyinstaller` to install pyinstaller.
 
-- execute `pyinstaller_setup.py` script from its location like this:   
+- execute `pyinstaller_setup.py` script:   
     - `$ python3 pyinstaller_setup.py -s`   
 to generate a videomass.spec onto videomass root directory.   
     > 
