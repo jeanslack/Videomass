@@ -36,6 +36,7 @@ if not platform.system() == 'Linux':
 
 RELEASES = os.path.realpath("./APPDIR_RELESES/")
 
+
 def make_appimage(releases=RELEASES):
     """
     Deploy Videomass.AppImage.
@@ -57,7 +58,7 @@ def make_appimage(releases=RELEASES):
         sys.exit(error)
 
     appdir = os.path.join(releases, version)
-    executable = "./dist/videomass/videomass"
+    executable = "./dist/videomass"
     desktop_file = "./videomass3/art/videomass.desktop"
     icon = "./videomass3/art/icons/videomass.png"
 
@@ -88,8 +89,7 @@ def main(releases=RELEASES):
     if not os.path.isdir(releases):
         os.mkdir(releases)
 
-    dist = os.path.join(os.path.dirname(release),
-                        'dist', 'videomass', 'videomass')
+    dist = os.path.join(os.path.dirname(releases), 'dist', 'videomass')
 
     if not os.path.exists(dist) or not os.path.isfile(dist):
         # run pyinstaller build

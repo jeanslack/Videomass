@@ -9,7 +9,7 @@ deb_dist
 *.tar.gz
 ENV
 env
-APPIMAGE_RELESES
+APPDIR_RELESES
 *.egg-info
 Pipfile
 Pipfile.lock
