@@ -35,16 +35,16 @@ if not platform.system() == 'Linux':
     sys.exit('ERROR: invalid platform, this tool work on Linux only, exit.')
 
 RELEASES = os.path.realpath("./APPDIR_RELESES/")
+MACHINE = platform.machine()  # current machine ARCH (i386, x86_64)
 
 
-def make_appimage(releases=RELEASES):
+def make_appimage(releases=RELEASES, machine=MACHINE):
     """
-    Deploy Videomass.AppImage.
+    Make Videomass.AppImage for deployment.
     All of This assume that follow resources exists:
-        1)  The Videomass source directory is intact (as by git sources)
-        2)  That the '~/Application/linuxdeploy-x86_64.AppImage' exists
-        3)  That the 'dist/videomass/videomass' executable exists (after
-            build it by pyinstaller, of course)
+        1)  The Videomass source directory (as by git sources)
+        2) 'APPDIR_RELESES' directory on videomass sources base dir (root)
+        2)  linuxdeploy.AppImage in '/$HOME/Application' directory
 
     """
     this = os.path.realpath(os.path.abspath(__file__))
@@ -52,19 +52,28 @@ def make_appimage(releases=RELEASES):
     sys.path.insert(0, base_src)
     try:
         from videomass3.vdms_sys.msg_info import current_release
-        cr = current_release()
-        version = cr[2]
     except ModuleNotFoundError as error:
         sys.exit(error)
+    else:
+        cr = current_release()
+        version = cr[2]
 
     appdir = os.path.join(releases, version)
     executable = "./dist/videomass"
     desktop_file = "./videomass3/art/videomass.desktop"
     icon = "./videomass3/art/icons/videomass.png"
 
+    #appdir = os.path.join(releases, version)
+    #executable = os.path.join(base_src + "/dist/videomass")
+    #desktop_file = os.path.join(base_src + "/videomass3/art/videomass.desktop")
+    #icon = os.path.join(base_src + "./videomass3/art/icons/videomass.png")
+
+    #print(appdir, executable, desktop_file, icon)
+    #sys.exit(0)
+
     # create appdir with linuxdeploy.AppImage:
     cmd = ["version={}".format(version),
-           "$HOME/Applications/linuxdeploy-x86_64.AppImage",
+           "$HOME/Applications/linuxdeploy-%s.AppImage" % machine,
            "--appdir={}".format(appdir),
            "--executable={}".format(executable),
            "--desktop-file={}".format(desktop_file),
@@ -74,27 +83,55 @@ def make_appimage(releases=RELEASES):
 
     # package AppImage from appdir
     cmd2 = ["version={}".format(version),
-            "$HOME/Applications/linuxdeploy-x86_64.AppImage",
+            "$HOME/Applications/linuxdeploy-%s.AppImage" % machine,
             "--appdir={}".format(appdir),
             "--output appimage"
             ]
     os.system(" ".join(cmd2))
 
 
-def main(releases=RELEASES):
+def main(releases=RELEASES, machine=MACHINE):
     """
-    check for releases folder and dist folder,
-    if they don't exist, create them.
+    check for resources and requirements to make Videomass.AppImage.
     """
     if not os.path.isdir(releases):
-        os.mkdir(releases)
+        os.mkdir(releases)  # make dir 'APPDIR_RELESES'
+
+    linuxdeploy = os.path.expanduser("~/Applications/linuxdeploy-%s.AppImage"
+                                     % machine)
+    if not os.path.exists(linuxdeploy):
+        if not os.path.isdir(os.path.dirname(linuxdeploy)):
+            os.mkdir(os.path.dirname(linuxdeploy))
+        # try to get linuxdeploy AppImage from url based on machine ARCH
+        import shutil
+        import stat
+        import ssl
+        import urllib.request
+
+        url = ("https://github.com/linuxdeploy/linuxdeploy/releases/"
+               "download/continuous/linuxdeploy-%s.AppImage" % machine)
+        try:
+            with urllib.request.urlopen(url) as response,\
+                 open(linuxdeploy, 'wb') as out_file:
+                shutil.copyfileobj(response, out_file)
+        except urllib.error.HTTPError as error:
+            sys.exit(error)
+
+        except urllib.error.URLError as error:
+            sys.exit(error)
+
+        # make executable linuxdeploy AppImage
+        if os.path.isfile(linuxdeploy):
+            st = os.stat(linuxdeploy)
+            os.chmod(linuxdeploy, st.st_mode | stat.S_IXUSR |
+                     stat.S_IXGRP | stat.S_IXOTH)
 
     dist = os.path.join(os.path.dirname(releases), 'dist', 'videomass')
 
     if not os.path.exists(dist) or not os.path.isfile(dist):
-        # run pyinstaller build
         try:
-            subprocess.check_call(["python3",
+            # run pyinstaller build
+            subprocess.check_call([sys.executable,
                                    "./dev/tools/pyinstaller_setup.py",
                                    "-m"])
         except subprocess.CalledProcessError as err:

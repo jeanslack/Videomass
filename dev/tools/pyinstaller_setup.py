@@ -234,7 +234,7 @@ exe = EXE(pyz,
         upx=True,
         upx_exclude=[],
         runtime_tmpdir=None,
-        console=True )
+        console=False )
 """
 
 
@@ -361,6 +361,7 @@ class MakePyinstallerBuild(Data):
         elif platform.system() in ('Linux', 'FreeBSD'):
             PyInstaller.__main__.run([
                                 '--name=videomass',
+                                '--windowed',  # console=False
                                 '--onefile',
                                 '--add-data=%s:art' % self.ART,
                                 '--add-data=%s:locale' % self.LOCALE,
