@@ -41,9 +41,8 @@ EXEC_YDL = get.execYdl
 
 
 MSGREADY = (_('Successful! \n\n'
-              'youtube-dl is ready\n\n'
-              'Important: youtube-dl is very often updated, remember to '
-              'check for updates weekly.\nYou can use the dedicated functions '
+              'Important: youtube-dl is very often updated, be sure to always '
+              'use the latest version available.\nUse the dedicated functions '
               'in the menu bar of Videomass: Tools/youtube-dl" .\n\n'
               'Do you want to close Videomass now and restart it manually?'))
 
@@ -67,7 +66,7 @@ else:
     MSG = (_('{}\n\n'
              'To download video from YouTube.com and other video sites, '
              'Videomass needs an updated version of youtube-dl.\n'
-             'Videomass recommends pip to install youtube-dl and keep '
+             'Videomass recommends `pip` to install youtube-dl and keep '
              'it updated by the user.\n\nHowever, an updated copy of '
              'youtube-dl can be downloaded locally.\n\n'
              '...Do you wish to continue?')).format(PYLIB_YDL)

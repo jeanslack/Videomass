@@ -16,6 +16,7 @@ BUGS:
 
 NEWS:
     * Added AppImage implementation on Linux (experimental)
+    * Videomass's deployment made by pyinstaller for some Linux flavors
 
 +------------------------------------+
 June 16, 2020 V.2.8.8

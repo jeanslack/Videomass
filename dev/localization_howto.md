@@ -21,14 +21,19 @@ translated. To update an existing translation follow these steps:
 ```
 git clone https://github.com/jeanslack/Videomass.git
 ```
+
+- Otherwise, if you have not git, download it as zip archive:
+Click on to 'Clone' button on [https://github.com/jeanslack/Videomass] and
+choose 'Download ZIP'.
+
 - Browse into the `videomass3/locale` folder package by searching for the 'videomass.po' 
 file related to the language to be translated, example:
-```
-    /videomass3
-        /locale
-            /de_DE
-                /LC_MESSAGES
-                    videomass.po
+``` Videomass base directory
+        /videomass3
+            /locale
+                /de_DE
+                    /LC_MESSAGES
+                        videomass.po
 ```
 
 - Open the "videomass.po" with 'PoEdit' and go to menu bar > Catalog > 
@@ -65,10 +70,11 @@ git clone https://github.com/jeanslack/Videomass.git
 `/Videomass-?.?.?/locale` path (for example create a `de_DE` folder and within 
 which a `LC_MESSAGES` folder for the German language support) with the following tree:
 ```
-    /Videomass
-        /locale
-            /de_DE
-                /LC_MESSAGES
+    Videomass base directory
+        /videomass3
+            /locale
+                /de_DE
+                    /LC_MESSAGES
 ```
                 
 - Copy the **videomass.pot"** file translation template located in the `/locale` 
@@ -79,9 +85,13 @@ folder, and paste into the `LC_MESSAGES` folder.
 - Now open the `videomass.po` with a translation editing program, for example 
 'PoEdit', and start your translation.
 
+- Check the catalog property data on menu bar > Catalog > Property... 
+and make sure it contains at least some information. Otherwise you could provide 
+it here.
+
 - You can close and resume your work whenever you want but you must always save 
-your changes. This generates a file called `videomass.mo` with your new native
- language tanslation.
+your changes. This generates a file called `videomass.mo` with your new native 
+language tanslation.
 
 - Before try your new translation by starting Videomass, open the 
 `Videomass-?.?.?/videomass3/vdms_SYS/app_const.py` module with your favorite 
@@ -107,7 +117,7 @@ sources folder and type:
       `python3 launcher`
 
 When you have completed your translation with 'PoEdit', please send me your 
-`videomass.po` file at:
+`videomass.po` file with language description at:
 
 <jeanlucperni@gmail.com>
 

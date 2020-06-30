@@ -120,7 +120,6 @@ def source_build():
                         },
           exclude_package_data={"videomass3": ["art/videomass.icns",
                                                "art/videomass.ico",
-                                               "locale/make_pot.sh",
                                                "locale/README",
                                                "locale/videomass.pot"
                                                ]},

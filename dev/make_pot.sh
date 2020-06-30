@@ -1,11 +1,31 @@
 #!/bin/bash
-# Make a file po/pot with the current state of files
 
-CWD=$(pwd)
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# license: GPL3
+# Rev: June.30.2020
+#
+# Make a new `videomass.po` file on '../videomass3/locale'.
+# The previus videomass.po file will be overwrite with new one
+# incoming which will update with the current state of strings
+# to tralsated .
 
-# macos use /usr/local/Cellar/gettext/0.20.1/bin/xgettext
+OS=$(uname)  # command to show platform
+self="$(readlink -f -- $0)"  # this file
+here="${self%/*}"  # dirname of this file
+rootdir=$(dirname $here)  # base sources directory
+target="$rootdir/videomass3/locale"  # location to store new incoming
 
-xgettext -d videomass "../Videomass3.py" \
+cd $target
+
+if [ "$OS" = "Darwin" ]; then
+    # my macos xgettext is in '/usr/local/Cellar/gettext/0.20.1/bin/xgettext'
+    XGETTEXT="/usr/local/Cellar/gettext/0.20.1/bin/xgettext"
+elif [ "$OS" = "Linux" ]; then
+    XGETTEXT="xgettext"
+fi
+
+$XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_dialogs/audiodialogs.py" \
 "../vdms_dialogs/video_filters.py" \
 "../vdms_dialogs/time_selection.py" \
