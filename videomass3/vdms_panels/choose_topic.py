@@ -39,40 +39,31 @@ OS = get.OS
 PYLIB_YDL = get.pylibYdl
 EXEC_YDL = get.execYdl
 
+if OS == 'Windows':
+    MSGWIN = (_('- Requires: Microsoft Visual C++ 2010 Redistributable '
+                'Package (x86)\n\nfor major information visit: <http://'
+                'ytdl-org.github.io/youtube-dl/download.html>'))
+
+if OS == 'Darwin':
+    MSGWIN = ''
+
+else:
+    MSGWIN = ''
+    MSG_ERR = _('{}\n\nyoutube-dl: no library or executable '
+                'found .').format(PYLIB_YDL)
+
+MSG = (_('An updated version of youtube-dl is required to download '
+         'videos from YouTube.com and other video sites. Videomass '
+         'can download an updated copy of youtube-dl locally.\n\n'
+         '- Web site: <https://github.com/ytdl-org/youtube-dl/releases>\n'
+         '{}\n\n'
+         '...Do you wish to continue?')).format(MSGWIN)
 
 MSGREADY = (_('Successful! \n\n'
               'Important: youtube-dl is very often updated, be sure to always '
               'use the latest version available.\nUse the dedicated functions '
-              'in the menu bar of Videomass: Tools/youtube-dl" .\n\n'
-              'Do you want to close Videomass now and restart it manually?'))
-
-if OS == 'Windows':
-    MSG = (_('{}\n\n'
-             'To download video from YouTube.com and other video sites, '
-             'Videomass needs an updated\nversion of youtube-dl.exe from '
-             'https://github.com/ytdl-org/youtube-dl/releases\n\n'
-             '- Requires: Microsoft Visual C++ 2010 Redistributable Package '
-             '(x86)\n   for major information visit http://ytdl-org.'
-             'github.io/youtube-dl/download.html\n\n'
-             'Do you want to download youtube-dl now?')).format(PYLIB_YDL)
-
-elif OS == 'Darwin':
-    MSG = (_('{}\n\n'
-             'To download video from YouTube.com and other video sites, '
-             'Videomass needs an updated version of youtube-dl from '
-             'https://github.com/ytdl-org/youtube-dl/releases\n\n'
-             'Do you want to download youtube-dl now?')).format(PYLIB_YDL)
-else:
-    MSG = (_('{}\n\n'
-             'To download video from YouTube.com and other video sites, '
-             'Videomass needs an updated version of youtube-dl.\n'
-             'Videomass recommends `pip` to install youtube-dl and keep '
-             'it updated by the user.\n\nHowever, an updated copy of '
-             'youtube-dl can be downloaded locally.\n\n'
-             '...Do you wish to continue?')).format(PYLIB_YDL)
-
-    MSG_ERR = _('{}\n\nyoutube-dl: no library or executable '
-                'found .').format(PYLIB_YDL)
+              'on menu bar > Tools > youtube-dl.\n\n'
+              'Re-start is required. Do you want to close Videomass now?'))
 
 PRST_MNG = _('  Presets Manager - Create, edit and use quickly your favorite\n'
              '  FFmpeg presets and profiles with full formats support and '

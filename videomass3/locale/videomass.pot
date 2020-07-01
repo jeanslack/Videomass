@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-30 14:11+0200\n"
+"POT-Creation-Date: 2020-07-01 14:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2115,99 +2115,77 @@ msgstr ""
 
 #: ../vdms_panels/choose_topic.py:43
 msgid ""
-"Successful! \n"
-"\n"
-"Important: youtube-dl is very often updated, be sure to always use the "
-"latest version available.\n"
-"Use the dedicated functions in the menu bar of Videomass: Tools/youtube-dl"
-"\" .\n"
-"\n"
-"Do you want to close Videomass now and restart it manually?"
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:50
-msgid ""
-"{}\n"
-"\n"
-"To download video from YouTube.com and other video sites, Videomass needs an "
-"updated\n"
-"version of youtube-dl.exe from https://github.com/ytdl-org/youtube-dl/"
-"releases\n"
-"\n"
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
-"   for major information visit http://ytdl-org.github.io/youtube-dl/download."
-"html\n"
 "\n"
-"Do you want to download youtube-dl now?"
+"for major information visit: <http://ytdl-org.github.io/youtube-dl/download."
+"html>"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:60
-msgid ""
-"{}\n"
-"\n"
-"To download video from YouTube.com and other video sites, Videomass needs an "
-"updated version of youtube-dl from https://github.com/ytdl-org/youtube-dl/"
-"releases\n"
-"\n"
-"Do you want to download youtube-dl now?"
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:66
-msgid ""
-"{}\n"
-"\n"
-"To download video from YouTube.com and other video sites, Videomass needs an "
-"updated version of youtube-dl.\n"
-"Videomass recommends `pip` to install youtube-dl and keep it updated by the "
-"user.\n"
-"\n"
-"However, an updated copy of youtube-dl can be downloaded locally.\n"
-"\n"
-"...Do you wish to continue?"
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:74
+#: ../vdms_panels/choose_topic.py:52
 msgid ""
 "{}\n"
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:77
+#: ../vdms_panels/choose_topic.py:55
+msgid ""
+"An updated version of youtube-dl is required to download videos from YouTube."
+"com and other video sites. Videomass can download an updated copy of youtube-"
+"dl locally.\n"
+"\n"
+"- Web site: <https://github.com/ytdl-org/youtube-dl/releases>\n"
+"{}\n"
+"\n"
+"...Do you wish to continue?"
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:62
+msgid ""
+"Successful! \n"
+"\n"
+"Important: youtube-dl is very often updated, be sure to always use the "
+"latest version available.\n"
+"Use the dedicated functions on menu bar > Tools > youtube-dl.\n"
+"\n"
+"Re-start is required. Do you want to close Videomass now?"
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:68
 msgid ""
 "  Presets Manager - Create, edit and use quickly your favorite\n"
 "  FFmpeg presets and profiles with full formats support and codecs. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:80
+#: ../vdms_panels/choose_topic.py:71
 msgid ""
 "  A set of useful tools for audio and video conversions.\n"
 "  Save your profiles and reuse them with Presets Manager. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:82
+#: ../vdms_panels/choose_topic.py:73
 msgid ""
 "  Easily download videos and audio in different formats\n"
 "  and quality from YouTube, Facebook and more sites. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:101
+#: ../vdms_panels/choose_topic.py:92
 msgid "Welcome to Videomass"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:102
+#: ../vdms_panels/choose_topic.py:93
 msgid "Version {}"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:143
+#: ../vdms_panels/choose_topic.py:134
 msgid "Download additional presets or contribute to making new ones "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:146
+#: ../vdms_panels/choose_topic.py:137
 msgid "Additional Presets"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:181
+#: ../vdms_panels/choose_topic.py:172
 msgid "Videomass confirmation"
 msgstr ""
 

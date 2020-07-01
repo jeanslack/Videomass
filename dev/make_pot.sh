@@ -5,12 +5,12 @@
 # license: GPL3
 # Rev: June.30.2020
 #
-# Make a new `videomass.po` file on '../videomass3/locale'.
+# Make a new `videomass.po` file on '../../videomass3/locale'.
 # The previus videomass.po file will be overwrite with new one
 # incoming which will update with the current state of strings
 # to tralsated .
 
-OS=$(uname)  # command to show platform
+PLATFORM=$(uname)  # command to show platform
 self="$(readlink -f -- $0)"  # this file
 here="${self%/*}"  # dirname of this file
 rootdir=$(dirname $here)  # base sources directory
@@ -18,10 +18,12 @@ target="$rootdir/videomass3/locale"  # location to store new incoming
 
 cd $target
 
-if [ "$OS" = "Darwin" ]; then
-    # my macos xgettext is in '/usr/local/Cellar/gettext/0.20.1/bin/xgettext'
+if [ "$PLATFORM" = "Darwin" ]; then
+    # On my Macos xgettext is in '/usr/local/Cellar/gettext/0.20.1/bin/xgettext'
+    # which is't in $PATH
     XGETTEXT="/usr/local/Cellar/gettext/0.20.1/bin/xgettext"
-elif [ "$OS" = "Linux" ]; then
+
+elif [ "$PLATFORM" = "Linux" ]; then
     XGETTEXT="xgettext"
 fi
 
@@ -63,5 +65,8 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_threads/ydl_executable.py" \
 "../vdms_threads/youtubedlupdater.py" \
 
-
-
+if [ $? != 0 ]; then
+    echo 'Failed!'
+else
+    echo "Ready on: '${target}'"
+fi
