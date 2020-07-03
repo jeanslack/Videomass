@@ -17,8 +17,22 @@ BUGS:
       mini frame.
 
 NEWS:
-    * Added AppImage implementation on Linux (experimental)
-    * Videomass's deployment made by pyinstaller for some Linux flavors
+    * Added AppImage implementation for some Linux flavors (experimental).
+      Videomass's deployment for Linux are tested with success on the
+      following Linux distribuitions with 64 bit Architecture only:
+
+        - Debian 10 buster x86_64
+        - Debian 9 stretch x86_64
+        - AV-Linux 2019.4.10 x86_64
+        - AV-Linux 2020.4.10 x86_64
+        - Ubuntu 16.04 LTS x86_64
+        - Ubuntu 18.04 LTS x86_64
+        - Xubuntu 18.04 x86_64
+        - Ubuntu 20.04 LTS x86_64
+        - Linux Mint 19.3 x86_64 Cinnamon
+        - Fedora 32 (Workstation Edition) x86_64
+        - Manjaro Linux 20.0.3 (Lysia) x86_64
+
     * Created new tools for automate buildings with pyinstaller and
       Linuxdeploy*.AppImage.
 

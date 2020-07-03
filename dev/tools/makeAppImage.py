@@ -63,14 +63,6 @@ def make_appimage(releases=RELEASES, machine=MACHINE):
     desktop_file = "./videomass3/art/videomass.desktop"
     icon = "./videomass3/art/icons/videomass.png"
 
-    #appdir = os.path.join(releases, version)
-    #executable = os.path.join(base_src + "/dist/videomass")
-    #desktop_file = os.path.join(base_src + "/videomass3/art/videomass.desktop")
-    #icon = os.path.join(base_src + "./videomass3/art/icons/videomass.png")
-
-    #print(appdir, executable, desktop_file, icon)
-    #sys.exit(0)
-
     # create appdir with linuxdeploy.AppImage:
     cmd = ["version={}".format(version),
            "$HOME/Applications/linuxdeploy-%s.AppImage" % machine,

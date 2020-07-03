@@ -28,15 +28,16 @@
 
 #########################################################
 import wx
+# add translation macro to builtin similar to what gettext does
+import builtins
+builtins.__dict__['_'] = wx.GetTranslation
 import os
 import sys
 from shutil import which
 from videomass3.vdms_sys.argparser import args
 from videomass3.vdms_sys.configurator import Data_Source
 from videomass3.vdms_sys import app_const as appC
-# add translation macro to builtin similar to what gettext does
-import builtins
-builtins.__dict__['_'] = wx.GetTranslation
+
 
 
 class Videomass(wx.App):
@@ -171,8 +172,8 @@ class Videomass(wx.App):
                     permissions = True
                 else:
                     wx.MessageBox(_('Permission denied: {}\n\n'
-                                    'Check execution permissions.'.format
-                                  (link)), 'Videomass: Error', wx.ICON_STOP)
+                                    'Check execution permissions.').format
+                                  (link), 'Videomass: Error', wx.ICON_STOP)
                     permissions = False
                     break
             if not permissions:
