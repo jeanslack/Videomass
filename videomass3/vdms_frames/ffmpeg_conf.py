@@ -51,7 +51,6 @@ class Checkconf(wx.MiniFrame):
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
                               )
         # add panel
-        print(out)
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self.panel, wx.ID_ANY)
