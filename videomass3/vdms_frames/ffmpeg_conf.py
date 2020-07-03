@@ -51,6 +51,7 @@ class Checkconf(wx.MiniFrame):
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
                               )
         # add panel
+        print(out)
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self.panel, wx.ID_ANY)
@@ -185,7 +186,8 @@ class Checkconf(wx.MiniFrame):
             n = len(others)
             for a in range(n):
                 if '=' in others[a]:
-                    (key, value) = others[a].strip().split('=')
+                    oth = others[a].strip().split('=')
+                    (key, value) = oth[0], oth[1]
                     # (key, value) = others[a][0].strip().split('=')
                     num_items = others_opt.GetItemCount()
                     index += 1

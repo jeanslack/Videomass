@@ -7,16 +7,26 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-June 24, 2020 V.2.8.9
+July 03, 2020 V.2.8.9
 +------------------------------------+
 
 BUGS:
     * Fixed incorrect assignment for the sources directory in
       `generate_INNO_setup.py` script.
+    * Python 3.8 `too many values to unpack` error on ffmpeg_conf.py
+      mini frame.
 
 NEWS:
     * Added AppImage implementation on Linux (experimental)
     * Videomass's deployment made by pyinstaller for some Linux flavors
+    * Created new tools for automate buildings with pyinstaller and
+      Linuxdeploy*.AppImage.
+
+IMPROVEMENTS:
+    * Improved usability on Linux with a wizard dialog to find ffmpeg if not
+      installed or linked in your system.
+    * [UNIX] Added check to verify execution permissions when ffmpeg
+      executables are linked locally
 
 +------------------------------------+
 June 16, 2020 V.2.8.8

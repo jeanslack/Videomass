@@ -8,7 +8,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Jult.03.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -30,6 +30,7 @@
 import wx
 import os
 import sys
+from shutil import which
 from videomass3.vdms_sys.argparser import args
 from videomass3.vdms_sys.configurator import Data_Source
 from videomass3.vdms_sys import app_const as appC
@@ -79,8 +80,8 @@ class Videomass(wx.App):
         This is bootstrap interface.
 
         """
-        data = Data_Source() # user-space and interface settings
-        setui = data.get_fileconf() # get required data
+        data = Data_Source()  # user-space and interface settings
+        setui = data.get_fileconf()  # get required data
         # locale
         lang = ''
         self.locale = None
@@ -92,7 +93,7 @@ class Videomass(wx.App):
                 setui[2])), 'Videomass: Fatal Error', wx.ICON_STOP)
             return False
 
-        pathicons = data.icons_set(setui[4][13]) # get paths icons data
+        pathicons = data.icons_set(setui[4][13])  # get paths icons data
 
         self.OS = setui[0]
         self.FILEconf = setui[6]
@@ -132,14 +133,15 @@ class Videomass(wx.App):
                     self.pylibYdl = nomodule
 
         # ----- ffmpeg
-        if setui[0] == 'Darwin':  # on MacOs
+        #  check for binaries
+        if setui[0] == 'Windows':  # on MS-Windows
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
-                if os.path.isfile("%s" % link):
-                    binaries = False
-                else:
+                if which(link, mode=os.F_OK | os.X_OK, path=None):
                     binaries = True
+                else:
+                    binaries = False
                     break
-            if binaries:
+            if not binaries:
                 self.wizard(pathicons[16])
                 return True
             else:
@@ -147,14 +149,15 @@ class Videomass(wx.App):
                 self.FFPROBE_url = setui[4][8]
                 self.FFPLAY_url = setui[4][10]
 
-        elif setui[0] == 'Windows':  # on MS-Windows
+        else:
+            #  check for binaries
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
                 if os.path.isfile("%s" % link):
-                    binaries = False
-                else:
                     binaries = True
+                else:
+                    binaries = False
                     break
-            if binaries:
+            if not binaries:
                 self.wizard(pathicons[16])
                 return True
             else:
@@ -162,13 +165,18 @@ class Videomass(wx.App):
                 self.FFPROBE_url = setui[4][8]
                 self.FFPLAY_url = setui[4][10]
 
-        else:  # on Linux
-            self.FFMPEG_url = setui[4][6]
-            self.FFPROBE_url = setui[4][8]
-            self.FFPLAY_url = setui[4][10]
-            # --- used for debug on Linux only ---#
-            # self.wizard(pathicons[16])
-            # return True
+            #  check for permissions when linked locally
+            for link in [setui[4][6], setui[4][8], setui[4][10]]:
+                if which(link, mode=os.F_OK | os.X_OK, path=None):
+                    permissions = True
+                else:
+                    wx.MessageBox(_('Permission denied: {}\n\n'
+                                    'Check execution permissions.'.format
+                                  (link)), 'Videomass: Error', wx.ICON_STOP)
+                    permissions = False
+                    break
+            if not permissions:
+                return False
 
         from videomass3.vdms_main.main_frame import MainFrame
         main_frame = MainFrame(setui, pathicons)

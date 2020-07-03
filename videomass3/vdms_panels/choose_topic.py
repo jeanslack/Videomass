@@ -31,47 +31,6 @@ import wx.lib.agw.hyperlink as hpl
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
 import os
-import shutil
-
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-PYLIB_YDL = get.pylibYdl
-EXEC_YDL = get.execYdl
-
-if OS == 'Windows':
-    MSGWIN = (_('- Requires: Microsoft Visual C++ 2010 Redistributable '
-                'Package (x86)\n\nfor major information visit: <http://'
-                'ytdl-org.github.io/youtube-dl/download.html>'))
-
-if OS == 'Darwin':
-    MSGWIN = ''
-
-else:
-    MSGWIN = ''
-    MSG_ERR = _('{}\n\nyoutube-dl: no library or executable '
-                'found .').format(PYLIB_YDL)
-
-MSG = (_('An updated version of youtube-dl is required to download '
-         'videos from YouTube.com and other video sites. Videomass '
-         'can download an updated copy of youtube-dl locally.\n\n'
-         '- Web site: <https://github.com/ytdl-org/youtube-dl/releases>\n'
-         '{}\n\n'
-         '...Do you wish to continue?')).format(MSGWIN)
-
-MSGREADY = (_('Successful! \n\n'
-              'Important: youtube-dl is very often updated, be sure to always '
-              'use the latest version available.\nUse the dedicated functions '
-              'on menu bar > Tools > youtube-dl.\n\n'
-              'Re-start is required. Do you want to close Videomass now?'))
-
-PRST_MNG = _('  Presets Manager - Create, edit and use quickly your favorite\n'
-             '  FFmpeg presets and profiles with full formats support and '
-             'codecs. ')
-AV_CONV = _('  A set of useful tools for audio and video conversions.\n'
-            '  Save your profiles and reuse them with Presets Manager. ')
-YOUTUBE_DL = _('  Easily download videos and audio in different formats\n'
-               '  and quality from YouTube, Facebook and more sites. ')
 
 
 class Choose_Topic(wx.Panel):
@@ -87,6 +46,55 @@ class Choose_Topic(wx.Panel):
         self.oS = OS
         version = current_release()
 
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.PYLIB_YDL = get.pylibYdl
+        self.EXEC_YDL = get.execYdl
+
+        if self.oS == 'Windows':
+            MSGWIN = (_('- Requires: Microsoft Visual C++ 2010 '
+                        'Redistributable Package (x86)\n\nfor major '
+                        'information visit: <http://ytdl-org.github.io'
+                        '/youtube-dl/download.html>'))
+
+        if self.oS == 'Darwin':
+            MSGWIN = ''
+
+        else:
+            MSGWIN = ''
+            self.MSG_ERR = _('{}\n\nyoutube-dl: no library or executable '
+                             'found .').format(self.PYLIB_YDL)
+
+        self.MSG = (_(
+                 'An updated version of youtube-dl is required to download '
+                 'videos from YouTube.com and other video sites. Videomass '
+                 'can download an updated copy of youtube-dl locally.\n\n'
+                 '- Web site: <https://github.com/ytdl-org/youtube-dl/'
+                 'releases>\n{}\n\n'
+                 '...Do you wish to continue?'
+                 )).format(MSGWIN)
+
+        self.MSGREADY = (_(
+                      'Successful! \n\n'
+                      'Important: youtube-dl is very often updated, be sure '
+                      'to always use the latest version available.\nUse the '
+                      'dedicated functions on menu bar > Tools > '
+                      'youtube-dl.\n\n'
+                      'Re-start is required. Do you want to close Videomass '
+                      'now?'
+                      ))
+
+        PRST_MNG = _('  Presets Manager - Create, edit and use quickly your '
+                     'favorite\n  FFmpeg presets and profiles with full '
+                     'formats support and codecs. ')
+
+        AV_CONV = _('  A set of useful tools for audio and video conversions.'
+                    '\n  Save your profiles and reuse them with Presets '
+                    'Manager. ')
+
+        YOUTUBE_DL = _('  Easily download videos and audio in different '
+                       'formats\n  and quality from YouTube, Facebook and '
+                       'more sites. ')
+
         wx.Panel.__init__(self, parent, -1,)
 
         welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")))
@@ -95,7 +103,7 @@ class Choose_Topic(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_buttons = wx.FlexGridSizer(5, 0, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
-        if OS == 'Windows':
+        if self.oS == 'Windows':
             style = wx.BU_LEFT | wx.BORDER_NONE
         else:
             style = wx.BU_LEFT
@@ -141,7 +149,7 @@ class Choose_Topic(wx.Panel):
         sizer_hpl.Add(link)
         self.SetSizerAndFit(sizer_base)
 
-        if OS == 'Darwin':
+        if self.oS == 'Darwin':
             welcome.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
@@ -161,17 +169,17 @@ class Choose_Topic(wx.Panel):
         """
         Check the installation of youtube-dl depending on the OS in use.
         """
-        if PYLIB_YDL is None:
+        if self.PYLIB_YDL is None:
             self.parent.switch_text_import(self, 'Youtube Downloader')
             return
-        elif EXEC_YDL:
-            if os.path.isfile(EXEC_YDL):
+        elif self.EXEC_YDL:
+            if os.path.isfile(self.EXEC_YDL):
                 self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
             else:
-                if wx.MessageBox(MSG, _("Videomass confirmation"),
-                                    wx.ICON_QUESTION |
-                                    wx.YES_NO, self) == wx.NO:
+                if wx.MessageBox(self.MSG, _("Videomass confirmation"),
+                                 wx.ICON_QUESTION |
+                                 wx.YES_NO, self) == wx.NO:
                     return
 
                 latest = self.parent.ydl_latest(self, msgbox=False)
@@ -179,21 +187,21 @@ class Choose_Topic(wx.Panel):
                     return
                 else:
                     upgrade = IO_tools.youtubedl_upgrade(latest[0],
-                                                         EXEC_YDL)
+                                                         self.EXEC_YDL)
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]),
                                   "Videomass error", wx.ICON_ERROR, self)
                     return
                 else:
-                    if wx.MessageBox(MSGREADY, "Videomass",
+                    if wx.MessageBox(self.MSGREADY, "Videomass",
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
                     self.parent.on_Kill()
                 return
 
-        elif EXEC_YDL is False:
-            wx.MessageBox(MSG_ERR, 'Videomass error', wx.ICON_ERROR)
+        elif self.EXEC_YDL is False:
+            wx.MessageBox(self.MSG_ERR, 'Videomass error', wx.ICON_ERROR)
             return
     # ------------------------------------------------------------------#
 

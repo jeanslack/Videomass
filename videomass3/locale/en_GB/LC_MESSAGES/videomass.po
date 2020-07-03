@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-01 14:07+0200\n"
-"PO-Revision-Date: 2020-07-01 14:08+0200\n"
+"POT-Creation-Date: 2020-07-03 12:41+0200\n"
+"PO-Revision-Date: 2020-07-03 12:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -17,12 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: ../Videomass3.py:91
+#: ../Videomass3.py:92
 #, python-brace-format
 msgid ""
 "{0}\n"
 "\n"
 "Sorry, cannot continue.."
+msgstr ""
+
+#: ../Videomass3.py:173
+msgid ""
+"Permission denied: {}\n"
+"\n"
+"Check execution permissions."
 msgstr ""
 
 #: ../vdms_dialogs/audiodialogs.py:249
@@ -681,88 +688,88 @@ msgstr ""
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:66
+#: ../vdms_frames/ffmpeg_conf.py:67
 msgid "Informations"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:77
+#: ../vdms_frames/ffmpeg_conf.py:78
 msgid "System options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:87
+#: ../vdms_frames/ffmpeg_conf.py:88
 msgid "Options enabled"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:97
+#: ../vdms_frames/ffmpeg_conf.py:98
 msgid "Options disabled"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:111
+#: ../vdms_frames/ffmpeg_conf.py:112
 msgid "Videomass: FFmpeg specifications"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:114
+#: ../vdms_frames/ffmpeg_conf.py:115
 msgid "flags"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:115 ../vdms_frames/ffmpeg_conf.py:119
-#: ../vdms_frames/ffmpeg_conf.py:123
+#: ../vdms_frames/ffmpeg_conf.py:116 ../vdms_frames/ffmpeg_conf.py:120
+#: ../vdms_frames/ffmpeg_conf.py:124
 msgid "options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:118 ../vdms_frames/ffmpeg_conf.py:122
+#: ../vdms_frames/ffmpeg_conf.py:119 ../vdms_frames/ffmpeg_conf.py:123
 msgid "status"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:146
+#: ../vdms_frames/ffmpeg_conf.py:147
 msgid "FFmpeg   ...installed"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:149
+#: ../vdms_frames/ffmpeg_conf.py:150
 msgid "FFmpeg   ...was imported locally"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:152
+#: ../vdms_frames/ffmpeg_conf.py:153
 msgid "FFprobe   ...installed"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:155
+#: ../vdms_frames/ffmpeg_conf.py:156
 msgid "FFprobe   ...was imported locally"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:157
+#: ../vdms_frames/ffmpeg_conf.py:158
 msgid "FFprobe   ...not found !"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:160
+#: ../vdms_frames/ffmpeg_conf.py:161
 msgid "FFplay   ...installed"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:163
+#: ../vdms_frames/ffmpeg_conf.py:164
 msgid "FFplay   ...was imported locally"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:165
+#: ../vdms_frames/ffmpeg_conf.py:166
 msgid "FFplay   ...not found !"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:183
+#: ../vdms_frames/ffmpeg_conf.py:184
 msgid "Specific compilation options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:198
+#: ../vdms_frames/ffmpeg_conf.py:200
 msgid "ENABLED:"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:202
+#: ../vdms_frames/ffmpeg_conf.py:204
 msgid "Enabled"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:211
+#: ../vdms_frames/ffmpeg_conf.py:213
 msgid "DISABLED:"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:215
+#: ../vdms_frames/ffmpeg_conf.py:217
 msgid "Disabled"
 msgstr ""
 
@@ -2113,7 +2120,7 @@ msgstr ""
 msgid "Videomass: Create a new profile"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:43
+#: ../vdms_panels/choose_topic.py:54
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -2121,14 +2128,14 @@ msgid ""
 "html>"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:52
+#: ../vdms_panels/choose_topic.py:64
 msgid ""
 "{}\n"
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:55
+#: ../vdms_panels/choose_topic.py:68
 msgid ""
 "An updated version of youtube-dl is required to download videos from YouTube."
 "com and other video sites. Videomass can download an updated copy of youtube-"
@@ -2140,7 +2147,7 @@ msgid ""
 "...Do you wish to continue?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:62
+#: ../vdms_panels/choose_topic.py:77
 msgid ""
 "Successful! \n"
 "\n"
@@ -2151,41 +2158,41 @@ msgid ""
 "Re-start is required. Do you want to close Videomass now?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:68
+#: ../vdms_panels/choose_topic.py:86
 msgid ""
 "  Presets Manager - Create, edit and use quickly your favorite\n"
 "  FFmpeg presets and profiles with full formats support and codecs. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:71
+#: ../vdms_panels/choose_topic.py:90
 msgid ""
 "  A set of useful tools for audio and video conversions.\n"
 "  Save your profiles and reuse them with Presets Manager. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:73
+#: ../vdms_panels/choose_topic.py:94
 msgid ""
 "  Easily download videos and audio in different formats\n"
 "  and quality from YouTube, Facebook and more sites. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:92
+#: ../vdms_panels/choose_topic.py:100
 msgid "Welcome to Videomass"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:93
+#: ../vdms_panels/choose_topic.py:101
 msgid "Version {}"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:134
+#: ../vdms_panels/choose_topic.py:142
 msgid "Download additional presets or contribute to making new ones "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:137
+#: ../vdms_panels/choose_topic.py:145
 msgid "Additional Presets"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:172
+#: ../vdms_panels/choose_topic.py:180
 msgid "Videomass confirmation"
 msgstr ""
 
