@@ -124,7 +124,7 @@ def main(releases=RELEASES, machine=MACHINE):
         try:
             # run pyinstaller build
             subprocess.check_call([sys.executable,
-                                   "./dev/tools/pyinstaller_setup.py",
+                                   "./develop/tools/pyinstaller_setup.py",
                                    "-m"])
         except subprocess.CalledProcessError as err:
             print("\nPyinstaller build FAILED.\n")

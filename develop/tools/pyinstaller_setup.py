@@ -387,7 +387,8 @@ def main():
                 description='Wrap the pyinstaller setup for Videomass',)
     parser.add_argument(
                 '-g', '--gen_spec',
-                help="Generate a videomass.spec file to start building with",
+                help="Generate a videomass.spec file to start building with, "
+                     "but NOT start to building the bundle",
                 action="store_true",
                        )
 

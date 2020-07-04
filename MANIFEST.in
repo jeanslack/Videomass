@@ -1,6 +1,6 @@
 include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
 include tests/*
-recursive-include dev *
+recursive-include develop *
 recursive-include docs *
 recursive-include videomass3/art *
 recursive-include videomass3/share *

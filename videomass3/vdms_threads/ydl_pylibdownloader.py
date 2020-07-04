@@ -94,7 +94,7 @@ class MyLogger(object):
 def my_hook(d):
     """
     progress_hooks is A list of functions that get called on
-    download progress. See  help(youtube_dl.YoutubeDL)
+    download progress. See  `help(youtube_dl.YoutubeDL)`
     """
     if d['status'] == 'downloading':
         percent = float(d['_percent_str'].strip().split('%')[0])

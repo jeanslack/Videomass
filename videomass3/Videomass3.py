@@ -28,15 +28,15 @@
 
 #########################################################
 import wx
-# add translation macro to builtin similar to what gettext does
-import builtins
-builtins.__dict__['_'] = wx.GetTranslation
 import os
 import sys
 from shutil import which
 from videomass3.vdms_sys.argparser import args
 from videomass3.vdms_sys.configurator import Data_Source
 from videomass3.vdms_sys import app_const as appC
+# add translation macro to builtin similar to what gettext does
+import builtins
+builtins.__dict__['_'] = wx.GetTranslation
 
 
 
@@ -134,7 +134,7 @@ class Videomass(wx.App):
                     self.pylibYdl = nomodule
 
         # ----- ffmpeg
-        #  check for binaries
+        #  check for exe
         if setui[0] == 'Windows':  # on MS-Windows
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
                 if which(link, mode=os.F_OK | os.X_OK, path=None):
@@ -151,7 +151,7 @@ class Videomass(wx.App):
                 self.FFPLAY_url = setui[4][10]
 
         else:
-            #  check for binaries
+            #  check for unix binaries
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
                 if os.path.isfile("%s" % link):
                     binaries = True

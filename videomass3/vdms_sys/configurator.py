@@ -103,20 +103,24 @@ class Data_Source(object):
                 #self.icodir = dirname + '\\share\\videomass\\icons'
                 self.videomass_icon = self.icodir + "\\videomass.png"
                 self.wizard_icon = self.icodir + "\\videomass_wizard.png"
+
             else:
                 binarypath = shutil.which('videomass')
+
                 if binarypath == '/usr/local/bin/videomass':
                     print('executable=%s' % binarypath)
                     # pip as super user, usually Linux, MacOs, Unix
                     share = '/usr/local/share/pixmaps'
                     self.videomass_icon = share + '/videomass.png'
                     self.wizard_icon = self.icodir + '/videomass_wizard.png'
+
                 elif binarypath == '/usr/bin/videomass':
                     print('executable=%s' % binarypath)
                     # installed via apt, rpm, etc, usually Linux
                     share = '/usr/share/pixmaps'
                     self.videomass_icon = share + "/videomass.png"
                     self.wizard_icon = self.icodir + "/videomass_wizard.png"
+
                 else:
                     print('executable=%s' % binarypath)
                     # pip as normal user, usually Linux, MacOs, Unix
@@ -144,24 +148,35 @@ class Data_Source(object):
 
     def get_fileconf(self):
         """
-        check videomass configuration folder and get user data
-        from videomass.conf
+        Get videomass configuration data from videomass.conf .
+
+        This method performs the following main steps:
+
+            1) Checks user videomass configuration dir; if not exists try to
+               restore from self.SRCpath
+            2) Read the videomass.conf file; if not exists try to restore
+               from self.SRCpath
+            3) Checks presets folder; if not exists try to restore from
+               self.SRCpath
+
+        Note that when `copyerr` is not False, it causes a fatal error on
+        videomass bootstrap.
         """
         copyerr = False
         existfileconf = True  # True > found, False > not found
 
-        if os.path.exists(Data_Source.DIR_CONF):  # if exist conf. folder
+        if os.path.exists(Data_Source.DIR_CONF):  # if ~/.conf/videomass dir
             if os.path.isfile(Data_Source.FILE_CONF):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 2.0:
+                if float(userconf[0]) != 2.1:
                     existfileconf = False
             else:
                 existfileconf = False
 
             if not existfileconf:
-                try:
+                try:  # try to restore only videomass.conf
                     if Data_Source.OS == ('Windows'):
                         shutil.copyfile('%s/videomassWin32.conf' %
                                         self.SRCpath, Data_Source.FILE_CONF)
@@ -174,14 +189,14 @@ class Data_Source(object):
                     userconf = None
             if not os.path.exists(os.path.join(Data_Source.DIR_CONF,
                                                "presets")):
-                try:
+                try:  # try to restoring presets directory on videomass dir
                     shutil.copytree(os.path.join(self.SRCpath, "presets"),
                                     os.path.join(Data_Source.DIR_CONF,
                                                  "presets"))
                 except (OSError, IOError) as e:
                     copyerr = e
                     userconf = None
-        else:
+        else:  # try to restore entire configuration directory
             try:
                 shutil.copytree(self.SRCpath, Data_Source.DIR_CONF)
                 userconf = self.parsing_fileconf()  # read again file conf
@@ -205,7 +220,7 @@ class Data_Source(object):
 
     def icons_set(self, iconset):
         """
-        assignment path at the used icons in according to
+        Assignment paths at the used icons in according to
         configuration file.
 
         """
