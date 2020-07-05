@@ -27,26 +27,17 @@
 #########################################################
 import wx
 import subprocess
+import platform
+if not platform.system() == 'Windows':
+    import shlex
 import itertools
 import os
 from threading import Thread
 import time
 from pubsub import pub
 
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-LOGDIR = get.LOGdir
-FFMPEG_URL = get.FFMPEG_url
-FF_THREADS = get.FFthreads
 
-if not OS == 'Windows':
-    import shlex
-
-NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
-
-
-def logWrite(cmd, sterr, logname):
+def logWrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -55,9 +46,8 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open(os.path.join(LOGDIR, logname), "a") as log:
+    with open(os.path.join(logdir, logname), "a") as log:
         log.write(apnd)
-
 
 # ------------------------------ THREADS -------------------------------#
 """
@@ -79,7 +69,16 @@ class Loudnorm(Thread):
     """
     Like `TwoPass_Thread` but execute -loudnorm parsing from first
     pass and has definitions to apply on second pass.
+
     """
+    # get videomass wx.App attribute
+    get = wx.GetApp()
+    OS = get.OS
+    LOGDIR = get.LOGdir
+    FFMPEG_URL = get.FFMPEG_url
+    FF_THREADS = get.FFthreads
+    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
+
     def __init__(self, var, duration, logname, timeseq):
         """
         """
@@ -96,7 +95,7 @@ class Loudnorm(Thread):
         self.count = 0  # count first for loop
         self.countmax = len(var[1])  # length file list
         self.logname = logname  # title name of file log
-        self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
+        self.nul = 'NUL' if Loudnorm.OS == 'Windows' else '/dev/null'
 
         self.start()  # start the thread (va in self.run())
 
@@ -124,11 +123,11 @@ class Loudnorm(Thread):
 
             # --------------- first pass
             pass1 = ('{0} -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {4} -y {5}'.format(FFMPEG_URL,
+                     '{1} -i "{2}" {3} {4} -y {5}'.format(Loudnorm.FFMPEG_URL,
                                                           self.time_seq,
                                                           files,
                                                           self.passList[0],
-                                                          FF_THREADS,
+                                                          Loudnorm.FF_THREADS,
                                                           self.nul,
                                                           ))
             self.count += 1
@@ -142,9 +141,13 @@ class Loudnorm(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname)  # write n/n + command only
+            logWrite(cmd,
+                     '',
+                     self.logname,
+                     Loudnorm.LOGDIR
+                     )  # write n/n + command only
 
-            if not OS == 'Windows':
+            if not Loudnorm.OS == 'Windows':
                 pass1 = shlex.split(pass1)
                 info = None
             else:   # Hide subprocess window on MS Windows
@@ -181,11 +184,13 @@ class Loudnorm(Thread):
                                      )
                         logWrite('',
                                  "Exit status: %s" % p1.wait(),
-                                 self.logname)  # append exit error number
+                                 self.logname,
+                                 Loudnorm.LOGDIR,
+                                 )  # append exit error number
                         break
 
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, NOT_EXIST_MSG)
+                e = "%s\n  %s" % (err, Loudnorm.NOT_EXIST_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=e,
@@ -222,12 +227,12 @@ class Loudnorm(Thread):
 
             pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
                      '{1} -i "{2}" {3} -filter:a:{9} {4} {5} '
-                     '-y "{6}/{7}.{8}"'.format(FFMPEG_URL,
+                     '-y "{6}/{7}.{8}"'.format(Loudnorm.FFMPEG_URL,
                                                self.time_seq,
                                                files,
                                                self.passList[1],
                                                filters,
-                                               FF_THREADS,
+                                               Loudnorm.FF_THREADS,
                                                folders,
                                                filename,
                                                outext,
@@ -243,9 +248,9 @@ class Loudnorm(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname)
+            logWrite(cmd, '', self.logname, Loudnorm.LOGDIR)
 
-            if not OS == 'Windows':
+            if not Loudnorm.OS == 'Windows':
                 pass2 = shlex.split(pass2)
                 info = None
             else:  # Hide subprocess window on MS Windows
@@ -277,7 +282,9 @@ class Loudnorm(Thread):
                                  )
                     logWrite('',
                              "Exit status: %s" % p2.wait(),
-                             self.logname)  # append exit error number
+                             self.logname,
+                             Loudnorm.LOGDIR,
+                             )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop
                 p2.terminate()

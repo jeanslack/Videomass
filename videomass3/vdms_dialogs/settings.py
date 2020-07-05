@@ -30,39 +30,40 @@ import wx
 import os
 import webbrowser
 
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-FF_THREADS = get.FFthreads
-PWD = get.WORKdir
-FILE_CONF = get.FILEconf
-FFMPEG_LINK = get.FFMPEG_url
-FFPLAY_LINK = get.FFPLAY_url
-FFPROBE_LINK = get.FFPROBE_url
-FFMPEG_LOGLEVel = get.FFMPEG_loglev
-ffplay_loglevel = get.FFPLAY_loglev
-FFMPEG_CHECK = get.FFMPEG_check
-FFPROBE_CHECK = get.FFPROBE_check
-FFPLAY_CHECK = get.FFPLAY_check
-MPV_LINK = get.MPV_url
-MPV_CHECK = get.MPV_check
-USER_FILESAVE = get.USERfilesave
-
-MSGLOG = _("The following settings affect output messages "
-           "and the log messages\nduring processes. "
-           "Change only if you know what you are doing.")
-OPT_LOGLEV = [("quiet (Show nothing at all)"),
-              ("fatal (Only show fatal errors)"),
-              ("error (Show all errors)"),
-              ("warning (Show all warnings and errors)"),
-              ("info (Show informative messages during processing)"),
-              ]
-
 
 class Setup(wx.Dialog):
     """
     Main settings of the videomass program and configuration storing.
     """
+    # get videomass wx.App attribute
+    get = wx.GetApp()
+    OS = get.OS
+    FF_THREADS = get.FFthreads
+    PWD = get.WORKdir
+    FILE_CONF = get.FILEconf
+    FFMPEG_LINK = get.FFMPEG_url
+    FFPLAY_LINK = get.FFPLAY_url
+    FFPROBE_LINK = get.FFPROBE_url
+    FFMPEG_LOGLEVEL = get.FFMPEG_loglev
+    FFPLAY_LOGLEVEL = get.FFPLAY_loglev
+    FFMPEG_CHECK = get.FFMPEG_check
+    FFPROBE_CHECK = get.FFPROBE_check
+    FFPLAY_CHECK = get.FFPLAY_check
+    MPV_LINK = get.MPV_url
+    MPV_CHECK = get.MPV_check
+    OUTSAVE = get.USERfilesave
+
+    MSGLOG = _("The following settings affect output messages "
+               "and the log messages\nduring processes. "
+               "Change only if you know what you are doing."
+               )
+    OPT_LOGLEV = [("quiet (Show nothing at all)"),
+                  ("fatal (Only show fatal errors)"),
+                  ("error (Show all errors)"),
+                  ("warning (Show all warnings and errors)"),
+                  ("info (Show informative messages during processing)")]
+    # -----------------------------------------------------------------
+
     def __init__(self, parent, iconset):
         """
         NOTE 0): self.rowsNum attribute is a sorted list with a exatly number
@@ -81,7 +82,7 @@ class Setup(wx.Dialog):
         # Make a items list of
         self.rowsNum = []  # rows number list
         dic = {}  # used for debug
-        with open(FILE_CONF, 'r') as f:
+        with open(Setup.FILE_CONF, 'r') as f:
             self.full_list = f.readlines()
         for a, b in enumerate(self.full_list):
             if not b.startswith('#'):
@@ -96,11 +97,11 @@ class Setup(wx.Dialog):
         #for n, k in enumerate(sorted(dic)):
             #print(n, ' -------> ', k, ' --> ', dic[k])
         dirname = os.path.expanduser('~')  # /home/user/
-        self.userpath = dirname if not USER_FILESAVE else USER_FILESAVE
+        self.userpath = dirname if not Setup.OUTSAVE else Setup.OUTSAVE
         self.iconset = iconset
-        self.getfileconf = FILE_CONF
+        self.getfileconf = Setup.FILE_CONF
 
-        if OS == 'Windows':
+        if Setup.OS == 'Windows':
             self.ffmpeg = 'ffmpeg.exe'
             self.ffprobe = 'ffprobe.exe'
             self.ffplay = 'ffplay.exe'
@@ -131,7 +132,7 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 5
                         )
         self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY,
-                                            "%s" % FF_THREADS[9:],
+                                            "%s" % Setup.FF_THREADS[9:],
                                             size=(-1, -1), min=0, max=32,
                                             style=wx.TE_PROCESS_ENTER
                                             )
@@ -281,20 +282,20 @@ class Setup(wx.Dialog):
         # -----tab 4
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
         gridLog = wx.BoxSizer(wx.VERTICAL)
-        lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, (MSGLOG))
+        lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, (Setup.MSGLOG))
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
-        self.rdbFFmpeg = wx.RadioBox(tabTwo, wx.ID_ANY,
-                                     ("Set logging level flags used by "
-                                      "FFmpeg"),
-                                     choices=OPT_LOGLEV, majorDimension=1,
-                                     style=wx.RA_SPECIFY_COLS
+        self.rdbFFmpeg = wx.RadioBox(
+                                tabTwo, wx.ID_ANY,
+                                ("Set logging level flags used by FFmpeg"),
+                                choices=Setup.OPT_LOGLEV, majorDimension=1,
+                                style=wx.RA_SPECIFY_COLS
                                      )
         gridLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 15)
-        self.rdbFFplay = wx.RadioBox(tabTwo, wx.ID_ANY,
-                                     ("Set logging level flags used by "
-                                      "FFplay"),
-                                     choices=OPT_LOGLEV, majorDimension=1,
-                                     style=wx.RA_SPECIFY_COLS
+        self.rdbFFplay = wx.RadioBox(
+                                tabTwo, wx.ID_ANY,
+                                ("Set logging level flags used by FFplay"),
+                                choices=Setup.OPT_LOGLEV, majorDimension=1,
+                                style=wx.RA_SPECIFY_COLS
                                      )
         gridLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 15)
         tabTwo.SetSizer(gridLog)
@@ -361,49 +362,49 @@ class Setup(wx.Dialog):
 
         """
         for s in range(self.rdbFFplay.GetCount()):
-            if (ffplay_loglevel.split()[1] in
+            if (Setup.FFPLAY_LOGLEVEL.split()[1] in
                self.rdbFFplay.GetString(s).split()[0]):
                 self.rdbFFplay.SetSelection(s)
 
         for s in range(self.rdbFFmpeg.GetCount()):
-            if (FFMPEG_LOGLEVel.split()[1] in
+            if (Setup.FFMPEG_LOGLEVEL.split()[1] in
                self.rdbFFmpeg.GetString(s).split()[0]):
                 self.rdbFFmpeg.SetSelection(s)
 
-        if FFMPEG_CHECK == 'false':
+        if Setup.FFMPEG_CHECK == 'false':
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
             self.txtctrl_ffmpeg.SetValue("")
             self.checkbox_exeFFmpeg.SetValue(False)
         else:
-            self.txtctrl_ffmpeg.AppendText(FFMPEG_LINK)
+            self.txtctrl_ffmpeg.AppendText(Setup.FFMPEG_LINK)
             self.checkbox_exeFFmpeg.SetValue(True)
 
-        if FFPROBE_CHECK == 'false':
+        if Setup.FFPROBE_CHECK == 'false':
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
             self.txtctrl_ffprobe.SetValue("")
             self.checkbox_exeFFprobe.SetValue(False)
         else:
-            self.txtctrl_ffprobe.AppendText(FFPROBE_LINK)
+            self.txtctrl_ffprobe.AppendText(Setup.FFPROBE_LINK)
             self.checkbox_exeFFprobe.SetValue(True)
 
-        if FFPLAY_CHECK == 'false':
+        if Setup.FFPLAY_CHECK == 'false':
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
             self.txtctrl_ffplay.SetValue("")
             self.checkbox_exeFFplay.SetValue(False)
         else:
-            self.txtctrl_ffplay.AppendText(FFPLAY_LINK)
+            self.txtctrl_ffplay.AppendText(Setup.FFPLAY_LINK)
             self.checkbox_exeFFplay.SetValue(True)
 
-        if MPV_CHECK == 'false':
+        if Setup.MPV_CHECK == 'false':
             self.btn_pathMpv.Disable()
             self.txtctrl_mpv.Disable()
             self.txtctrl_mpv.SetValue("")
             self.checkbox_exeMpv.SetValue(False)
         else:
-            self.txtctrl_mpv.AppendText(MPV_LINK)
+            self.txtctrl_mpv.AppendText(Setup.MPV_LINK)
             self.checkbox_exeMpv.SetValue(True)
     # --------------------------------------------------------------------#
 
@@ -649,7 +650,7 @@ class Setup(wx.Dialog):
         Restore to default settings colors and icons set
         """
         self.full_list[self.rowsNum[13]] = "Material_Design_Icons_black\n"
-        if OS == 'Windows':
+        if Setup.OS == 'Windows':
             self.full_list[self.rowsNum[14]] = '40, 148, 255, 255\n'
         else:
             self.full_list[self.rowsNum[14]] = '228, 21, 68\n'

@@ -48,25 +48,19 @@ from videomass3.vdms_frames import ffmpeg_formats
 from videomass3.vdms_frames import ffmpeg_codecs
 from videomass3.vdms_dialogs.popup import PopupDialog
 
-get = wx.GetApp()
-OS = get.OS
-DIR_CONF = get.DIRconf
-FFPROBE_URL = get.FFPROBE_url
-FFMPEG_URL = get.FFMPEG_url
-FFPLAY_URL = get.FFPLAY_url
-
 
 def stream_info(title, filepath):
     """
     Show media information of the streams content.
     This function make a bit control of file existance.
     """
+    get = wx.GetApp()
     try:
         with open(filepath):
             miniframe = Mediainfo(title,
                                   filepath,
-                                  FFPROBE_URL,
-                                  OS,
+                                  get.FFPROBE_url,
+                                  get.OS,
                                   )
             miniframe.Show()
 
@@ -80,9 +74,16 @@ def stream_play(filepath, timeseq, param):
     """
     Thread for media reproduction with ffplay
     """
+    get = wx.GetApp()  # get data from bootstrap
     try:
         with open(filepath):
-            thread = File_Play(filepath, timeseq, param)
+            thread = File_Play(filepath,
+                               timeseq,
+                               param,
+                               get.LOGdir,
+                               get.FFPLAY_url,
+                               get.FFPLAY_loglev
+                               )
             # thread.join() > attende fine thread, se no ritorna subito
             # error = thread.data
     except IOError:
@@ -96,7 +97,9 @@ def url_play(url, quality):
     """
     Thread for urls reproduction with mpv player
     """
-    thread = Url_Play(url, quality)
+    # get data from bootstrap
+    get = wx.GetApp()
+    thread = Url_Play(url, quality, get.LOGdir, get.MPV_url)
     # thread.join() > attende fine thread, se no ritorna subito
     # error = thread.data
 # -----------------------------------------------------------------------#
@@ -108,7 +111,8 @@ def probeInfo(filename):
     It is called by MyListCtrl(wx.ListCtrl) only.
     Return tuple object with two items: (data, None) or (None, error).
     """
-    metadata = FFProbe(FFPROBE_URL, filename, parse=False, writer='json')
+    get = wx.GetApp()
+    metadata = FFProbe(get.FFPROBE_url, filename, parse=False, writer='json')
 
     if metadata.ERROR():  # first execute a control for errors:
         err = metadata.error
@@ -125,7 +129,9 @@ def volumeDetectProcess(filelist, time_seq, audiomap):
     Run thread to get audio peak level data and show a
     pop-up dialog with message.
     """
-    thread = VolumeDetectThread(time_seq, filelist, audiomap, OS)
+    get = wx.GetApp()
+    thread = VolumeDetectThread(time_seq, filelist, audiomap,
+                                get.LOGdir, get.FFMPEG_url)
     loadDlg = PopupDialog(None,
                           _("Videomass - Loading..."),
                           _("\nWait....\nAudio peak analysis.\n"))
@@ -145,7 +151,8 @@ def test_conf():
     and send it to dialog box.
 
     """
-    out = ff_conf(FFMPEG_URL, OS)
+    get = wx.GetApp()
+    out = ff_conf(get.FFMPEG_url, get.OS)
     if 'Not found' in out[0]:
         wx.MessageBox("\n{0}".format(out[1]),
                       "Videomass: error",
@@ -154,10 +161,10 @@ def test_conf():
         return
     else:
         miniframe = ffmpeg_conf.Checkconf(out,
-                                          FFMPEG_URL,
-                                          FFPROBE_URL,
-                                          FFPLAY_URL,
-                                          OS,
+                                          get.FFMPEG_url,
+                                          get.FFPROBE_url,
+                                          get.FFPLAY_url,
+                                          get.OS,
                                           )
         miniframe.Show()
 # -------------------------------------------------------------------------#
@@ -169,7 +176,8 @@ def test_formats():
     imported FFmpeg executable and send it to dialog box.
 
     """
-    diction = ff_formats(FFMPEG_URL, OS)
+    get = wx.GetApp()
+    diction = ff_formats(get.FFMPEG_url, get.OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
                       "Videomass: error",
@@ -177,7 +185,7 @@ def test_formats():
                       None)
         return
     else:
-        miniframe = ffmpeg_formats.FFmpeg_formats(diction, OS)
+        miniframe = ffmpeg_formats.FFmpeg_formats(diction, get.OS)
         miniframe.Show()
 # -------------------------------------------------------------------------#
 
@@ -189,7 +197,8 @@ def test_codecs(type_opt):
     corresponding dialog box.
 
     """
-    diction = ff_codecs(FFMPEG_URL, type_opt, OS)
+    get = wx.GetApp()
+    diction = ff_codecs(get.FFMPEG_url, type_opt, get.OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
                       "Videomass: error",
@@ -197,7 +206,7 @@ def test_codecs(type_opt):
                       None)
         return
     else:
-        miniframe = ffmpeg_codecs.FFmpeg_Codecs(diction, OS, type_opt)
+        miniframe = ffmpeg_codecs.FFmpeg_Codecs(diction, get.OS, type_opt)
         miniframe.Show()
 # -------------------------------------------------------------------------#
 
@@ -205,10 +214,11 @@ def test_codecs(type_opt):
 def findtopic(topic):
     """
     Call * check_bin.ff_topic * to run the ffmpeg command to search
-    a certain topic. The FFMPEG_URL is given by ffmpeg-search dialog.
+    a certain topic..
 
     """
-    retcod = ff_topics(FFMPEG_URL, topic, OS)
+    get = wx.GetApp()
+    retcod = ff_topics(get.FFMPEG_url, topic, get.OS)
 
     if 'Not found' in retcod[0]:
         s = ("\n{0}".format(retcod[1]))
@@ -224,7 +234,8 @@ def openpath(where):
     configuration directory or log directory.
 
     """
-    ret = browse(OS, where)
+    get = wx.GetApp()
+    ret = browse(get.OS, where)
     if ret:
         wx.MessageBox(ret, 'Videomass Error', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#

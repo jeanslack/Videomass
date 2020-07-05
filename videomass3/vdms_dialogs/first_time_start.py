@@ -30,7 +30,12 @@ import wx
 import os
 from shutil import which
 
-MSG1 = _("This wizard will attempt to automatically detect FFmpeg in\n"
+
+class FirstStart(wx.Dialog):
+    """
+    Shows a dialog wizard to locate FFmpeg executables
+    """
+    MSG1 = _("This wizard will attempt to automatically detect FFmpeg in\n"
          "your system.\n\n"
          "In addition, it allows you to manually set a custom path\n"
          "to locate FFmpeg and its associated executables.\n\n"
@@ -41,11 +46,6 @@ MSG1 = _("This wizard will attempt to automatically detect FFmpeg in\n"
          "- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
          )
 
-
-class FirstStart(wx.Dialog):
-    """
-    Shows a dialog wizard to locate FFmpeg executables
-    """
     def __init__(self, img):
         """
         Set attribute with GetApp (see Videomass.py __init__)
@@ -65,7 +65,7 @@ class FirstStart(wx.Dialog):
                                       )
         lab_welc1 = wx.StaticText(self, wx.ID_ANY, (
                                         _("Welcome to Videomass Wizard!")))
-        lab_welc2 = wx.StaticText(self, wx.ID_ANY, (_(MSG1)))
+        lab_welc2 = wx.StaticText(self, wx.ID_ANY, (_(FirstStart.MSG1)))
         self.detectBtn = wx.Button(self, wx.ID_ANY, (_("Auto-detection")))
         self.browseBtn = wx.Button(self, wx.ID_ANY, (_("Browse..")))
         close_btn = wx.Button(self, wx.ID_EXIT, "")

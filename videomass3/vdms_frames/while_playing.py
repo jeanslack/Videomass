@@ -28,32 +28,6 @@
 #########################################################
 import wx
 
-DARK_BROWN = '#262222'
-GREEN = '#008000'
-LIGHT_GREY = '#959595'
-
-KEYS = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
-          "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
-          "right mouse click\nleft mouse double-click"
-          ))
-EXPLAN = (_("Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
-            "Decrease and increase volume respectively.\n"
-            "Decrease and increase volume respectively.\n"
-            "Cycle audio channel in the current program.\n"
-            "Cycle video channel.\n"
-            "Cycle subtitle channel in the current program.\n"
-            "Cycle program.\nCycle video filters or show modes.\n"
-            "Step to the next frame. Pause if the stream is not \n"
-            "already paused, step to the next video frame, and pause.\n"
-            "Seek backward/forward 10 seconds.\n"
-            "Seek backward/forward 1 minute.\n"
-            "Seek to the previous/next chapter. Or if there are no \n"
-            "chapters Seek backward/forward 10 minutes.\n"
-            "Seek to percentage in file corresponding to fraction of width.\n"
-            "Toggle full screen."))
-
-# ------------------------------------------------------------------#
-
 
 class While_Playing(wx.MiniFrame):
     """
@@ -61,6 +35,32 @@ class While_Playing(wx.MiniFrame):
     useful when you use playback function with FFplay
 
     """
+    DARK_BROWN = '#262222'
+    GREEN = '#008000'
+    LIGHT_GREY = '#959595'
+
+    KEYS = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
+              "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
+              "right mouse click\nleft mouse double-click"
+              ))
+    EXPLAN = (_(
+        "Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
+        "Decrease and increase volume respectively.\n"
+        "Decrease and increase volume respectively.\n"
+        "Cycle audio channel in the current program.\n"
+        "Cycle video channel.\n"
+        "Cycle subtitle channel in the current program.\n"
+        "Cycle program.\nCycle video filters or show modes.\n"
+        "Step to the next frame. Pause if the stream is not \n"
+        "already paused, step to the next video frame, and pause.\n"
+        "Seek backward/forward 10 seconds.\n"
+        "Seek backward/forward 1 minute.\n"
+        "Seek to the previous/next chapter. Or if there are no \n"
+        "chapters Seek backward/forward 10 minutes.\n"
+        "Seek to percentage in file corresponding to fraction of width.\n"
+        "Toggle full screen."))
+    # ----------------------------------------------------------------------
+
     def __init__(self, OS):
         wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
                               wx.SYSTEM_MENU)
@@ -75,15 +75,15 @@ class While_Playing(wx.MiniFrame):
         """
         # -------------------- widget --------------------------#
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        label1 = wx.StaticText(panel, wx.ID_ANY, KEYS)
-        label2 = wx.StaticText(panel, wx.ID_ANY, EXPLAN)
+        label1 = wx.StaticText(panel, wx.ID_ANY, While_Playing.KEYS)
+        label2 = wx.StaticText(panel, wx.ID_ANY, While_Playing.EXPLAN)
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: Shortcuts while playing"))
 
-        label1.SetForegroundColour(wx.Colour(GREEN))
-        label2.SetForegroundColour(wx.Colour(LIGHT_GREY))
-        panel.SetBackgroundColour(wx.Colour(DARK_BROWN))
+        label1.SetForegroundColour(wx.Colour(While_Playing.GREEN))
+        label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
+        panel.SetBackgroundColour(wx.Colour(While_Playing.DARK_BROWN))
         # ---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)

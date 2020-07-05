@@ -50,33 +50,34 @@ from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
 
-# get videomass wx.App attribute
-get = wx.GetApp()
-PYLIB_YDL = get.pylibYdl  # youtube_dl library with None is in use
-EXEC_YDL = get.execYdl  # youtube-dl executable with False do not exist
-OS = get.OS  # ID of the operative system:
-DIR_CONF = get.DIRconf  # default configuration directory
-FILE_CONF = get.FILEconf  # pathname of the file configuration
-WORK_DIR = get.WORKdir  # pathname of the current work directory
-LOGDIR = get.LOGdir  # log directory pathname
-CACHEDIR = get.CACHEdir  # cache directory pathname
-# colour rappresentetion in rgb
-AZURE_NEON = 158, 201, 232
-YELLOW_LMN = 255, 255, 0
-BLUE = 0, 7, 12
-# set widget colours with html rappresentetion:
-ORANGE = '#f28924'
-YELLOW = '#a29500'
-# AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
-# RED = '#ea312d'
-# GREENOLIVE = '#6aaf23'
-# GREEN = '#268826'
-
 
 class MainFrame(wx.Frame):
     """
     This is the main frame top window for panels implementation.
     """
+    # get videomass wx.App attribute
+    get = wx.GetApp()
+    PYLIB_YDL = get.pylibYdl  # youtube_dl library with None is in use
+    EXEC_YDL = get.execYdl  # youtube-dl executable with False do not exist
+    OS = get.OS  # ID of the operative system:
+    DIR_CONF = get.DIRconf  # default configuration directory
+    FILE_CONF = get.FILEconf  # pathname of the file configuration
+    WORK_DIR = get.WORKdir  # pathname of the current work directory
+    LOGDIR = get.LOGdir  # log directory pathname
+    CACHEDIR = get.CACHEdir  # cache directory pathname
+    # colour rappresentetion in rgb
+    AZURE_NEON = 158, 201, 232
+    YELLOW_LMN = 255, 255, 0
+    BLUE = 0, 7, 12
+    # set widget colours with html rappresentetion:
+    ORANGE = '#f28924'
+    YELLOW = '#a29500'
+    # AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
+    # RED = '#ea312d'
+    # GREENOLIVE = '#6aaf23'
+    # GREEN = '#268826'
+    # -------------------------------------------------------------#
+
     def __init__(self, setui, pathicons):
         """
         NOTE: 'SRCpath' is a current work directory of Videomass
@@ -128,7 +129,7 @@ class MainFrame(wx.Frame):
                                            bitmap=infoIbmp,
                                            label=_("Streams analyzer")
                                            )
-        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(self.AZURE_NEON),
                                       foregroundcolour=wx.Colour(self.fBtnC)
                                       )
         self.btn_metaI.SetBottomEndColour(self.bBtnC)
@@ -141,7 +142,7 @@ class MainFrame(wx.Frame):
                                            bitmap=previewbmp,
                                            label=_("Preview")
                                            )
-        self.btn_playO.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_playO.SetBaseColours(startcolour=wx.Colour(self.AZURE_NEON),
                                       foregroundcolour=wx.Colour(self.fBtnC)
                                       )
         self.btn_playO.SetBottomEndColour(self.bBtnC)
@@ -154,8 +155,9 @@ class MainFrame(wx.Frame):
                                               bitmap=cutbmp,
                                               label=_("Duration")
                                               )
-        self.btn_duration.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                         foregroundcolour=wx.Colour(self.fBtnC)
+        self.btn_duration.SetBaseColours(
+                                    startcolour=wx.Colour(self.AZURE_NEON),
+                                    foregroundcolour=wx.Colour(self.fBtnC)
                                          )
         self.btn_duration.SetBottomEndColour(self.bBtnC)
         self.btn_duration.SetBottomStartColour(self.bBtnC)
@@ -167,7 +169,7 @@ class MainFrame(wx.Frame):
                                              bitmap=saveprfbmp,
                                              label=_("Save Configuration")
                                              )
-        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(self.AZURE_NEON),
                                         foregroundcolour=wx.Colour(self.fBtnC)
                                         )
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
@@ -180,7 +182,7 @@ class MainFrame(wx.Frame):
                                             bitmap=newprfbmp,
                                             label=_("New..")
                                             )
-        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(self.AZURE_NEON),
                                        foregroundcolour=wx.Colour(self.fBtnC)
                                        )
         self.btn_newprf.SetBottomEndColour(self.bBtnC)
@@ -193,7 +195,7 @@ class MainFrame(wx.Frame):
                                             bitmap=delprfbmp,
                                             label=_("Delete..")
                                             )
-        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(self.AZURE_NEON),
                                        foregroundcolour=wx.Colour(self.fBtnC)
                                        )
         self.btn_delprf.SetBottomEndColour(self.bBtnC)
@@ -206,7 +208,7 @@ class MainFrame(wx.Frame):
                                              bitmap=editprfbmp,
                                              label=_("Edit..")
                                              )
-        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(self.AZURE_NEON),
                                         foregroundcolour=wx.Colour(self.fBtnC)
                                         )
         self.btn_editprf.SetBottomEndColour(self.bBtnC)
@@ -217,15 +219,15 @@ class MainFrame(wx.Frame):
         self.btnpanel.SetBackgroundColour(barColor)
         # ---------- others panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self,
-                                                     OS,
+                                                     self.OS,
                                                      pathicons[1],
                                                      pathicons[18],
                                                      pathicons[19]
                                                      )
-        # self.ChooseTopic.SetBackgroundColour(BLUE)
+        # self.ChooseTopic.SetBackgroundColour(self.BLUE)
         self.ytDownloader = youtubedl_ui.Downloader(self)
         self.VconvPanel = av_conversions.AV_Conv(self,
-                                                 OS,
+                                                 self.OS,
                                                  pathicons[6],  # playfil
                                                  pathicons[7],  # resetfil
                                                  pathicons[9],  # resize
@@ -245,9 +247,9 @@ class MainFrame(wx.Frame):
         self.ProcessPanel = Logging_Console(self)
         self.PrstsPanel = presets_manager.PrstPan(self,
                                                   SRCpath,
-                                                  DIR_CONF,
-                                                  WORK_DIR,
-                                                  OS,
+                                                  self.DIR_CONF,
+                                                  self.WORK_DIR,
+                                                  self.OS,
                                                   pathicons[14],  # analyzes
                                                   pathicons[17],  # peaklevel
                                                   self.bBtnC,
@@ -285,9 +287,9 @@ class MainFrame(wx.Frame):
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        if OS == 'Darwin':
+        if self.OS == 'Darwin':
             self.SetSize((1030, 600))
-        elif OS == 'Windows':
+        elif self.OS == 'Windows':
             self.SetSize((980, 650))
         else:
             # self.SetSize((930, 600))
@@ -378,9 +380,9 @@ class MainFrame(wx.Frame):
             self.avpan.Enable(False), self.prstpan.Enable(False),
             self.ydlpan.Enable(False), self.startpan.Enable(False)
             self.logpan.Enable(False)
-        if PYLIB_YDL is not None:  # no used as module
-            if EXEC_YDL:
-                if os.path.isfile(EXEC_YDL):
+        if self.PYLIB_YDL is not None:  # no used as module
+            if self.EXEC_YDL:
+                if os.path.isfile(self.EXEC_YDL):
                     return
             self.ydlused.Enable(False)
             self.ydllatest.Enable(False)
@@ -409,7 +411,9 @@ class MainFrame(wx.Frame):
                 self.time_read['time'] = ['', '']
                 self.btn_duration.SetBottomEndColour(self.bBtnC)
             else:
-                self.btn_duration.SetBottomEndColour(wx.Colour(YELLOW_LMN))
+                self.btn_duration.SetBottomEndColour(
+                                                wx.Colour(self.YELLOW_LMN)
+                                                )
                 # set a more readable time
                 ss = data.split()[1]  # the -ss flag
                 h, m, s = ss.split(':')
@@ -433,7 +437,7 @@ class MainFrame(wx.Frame):
         if self.topicname == 'Youtube Downloader':
             self.ytDownloader.on_show_info()
         else:
-            dialog = Mediainfo(self.data_files, OS)
+            dialog = Mediainfo(self.data_files, self.OS)
             dialog.Show()
     # ------------------------------------------------------------------#
 
@@ -444,8 +448,10 @@ class MainFrame(wx.Frame):
         """
         if self.ytDownloader.IsShown():
             if self.ytDownloader.fcode.GetSelectedItemCount() == 0:
-                self.statusbar_msg(_('For playback, first make sure you select'
-                                     ' a URL in the list control'), YELLOW)
+                self.statusbar_msg(
+                                _('For playback, first make sure you select'
+                                  ' a URL in the list control'), self.YELLOW
+                                   )
                 return
             else:
                 self.statusbar_msg(_('YouTube Downloader'), None)
@@ -830,7 +836,7 @@ class MainFrame(wx.Frame):
         """
         show dialog with shortcuts keyboard for FFplay
         """
-        dlg = while_playing.While_Playing(OS)
+        dlg = while_playing.While_Playing(self.OS)
         dlg.Show()
     # ------------------------------------------------------------------#
 
@@ -871,7 +877,7 @@ class MainFrame(wx.Frame):
         Show a dialog box to help you find FFmpeg topics
 
         """
-        dlg = ffmpeg_search.FFmpeg_Search(OS)
+        dlg = ffmpeg_search.FFmpeg_Search(self.OS)
         dlg.Show()
     # -------------------------------------------------------------------#
 
@@ -880,7 +886,7 @@ class MainFrame(wx.Frame):
         check version of youtube-dl used from 'Version in Use' bar menu
         """
         waitmsg = _('\nWait....\nCheck installed version\n')
-        if PYLIB_YDL is None:  # youtube-dl library
+        if self.PYLIB_YDL is None:  # youtube-dl library
             import youtube_dl
             this = youtube_dl.version.__version__
             if msgbox:
@@ -888,8 +894,8 @@ class MainFrame(wx.Frame):
                                 'version {}').format(this), 'Videomass')
             return this
         else:
-            if os.path.exists(EXEC_YDL):
-                this = IO_tools.youtubedl_update([EXEC_YDL, '--version'],
+            if os.path.exists(self.EXEC_YDL):
+                this = IO_tools.youtubedl_update([self.EXEC_YDL, '--version'],
                                                  waitmsg)
                 if this[1]:  # failed
                     wx.MessageBox("%s" % this[0], "Videomass: error",
@@ -904,7 +910,7 @@ class MainFrame(wx.Frame):
                 return this[0].strip()
         if msgbox:
             wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(PYLIB_YDL),
+                            'installed yet.').format(self.PYLIB_YDL),
                           'Videomass', wx.ICON_ERROR)
         return None
     # -----------------------------------------------------------------#
@@ -969,9 +975,9 @@ class MainFrame(wx.Frame):
             return latest
         # ----------------------------------------------------------
 
-        if EXEC_YDL is not False and os.path.isfile(EXEC_YDL):
-            if os.path.basename(EXEC_YDL) == 'youtube-dl':
-                update = IO_tools.youtubedl_update([EXEC_YDL, '--update'],
+        if self.EXEC_YDL is not False and os.path.isfile(self.EXEC_YDL):
+            if os.path.basename(self.EXEC_YDL) == 'youtube-dl':
+                update = IO_tools.youtubedl_update([self.EXEC_YDL, '--update'],
                                                    waitmsg)
                 if update[1]:  # failed
                     wx.MessageBox("\n%s" % update[0], "Videomass: error",
@@ -986,7 +992,7 @@ class MainFrame(wx.Frame):
                 if not ck:
                     return
                 else:
-                    upgrade = IO_tools.youtubedl_upgrade(ck[0], EXEC_YDL)
+                    upgrade = IO_tools.youtubedl_upgrade(ck[0], self.EXEC_YDL)
 
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
@@ -996,14 +1002,14 @@ class MainFrame(wx.Frame):
                                 '({0})').format(ck[0]),
                               'Videomass', wx.ICON_INFORMATION)
                 return
-        elif PYLIB_YDL is None:  # system installed
+        elif self.PYLIB_YDL is None:  # system installed
             wx.MessageBox(_('It looks like you installed youtube-dl with a '
                             'package manager. Please use that to update.'),
                           'Videomass', wx.ICON_INFORMATION)
             return
         else:
             wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(PYLIB_YDL),
+                            'installed yet.').format(self.PYLIB_YDL),
                           'Videomass', wx.ICON_ERROR)
             return
     # ------------------------------------------------------------------#
@@ -1020,7 +1026,7 @@ class MainFrame(wx.Frame):
         jump on Presets Manager panel
         """
         if not self.data_files:
-            self.statusbar_msg(_('No files added yet'), YELLOW)
+            self.statusbar_msg(_('No files added yet'), self.YELLOW)
         else:
             self.topicname = 'Presets Manager'
             self.on_Forward(self)
@@ -1031,7 +1037,7 @@ class MainFrame(wx.Frame):
         jump on AVconversions panel
         """
         if not self.data_files:
-            self.statusbar_msg(_('No files added yet'), YELLOW)
+            self.statusbar_msg(_('No files added yet'), self.YELLOW)
         else:
             self.topicname = 'Audio/Video Conversions'
             self.on_Forward(self)
@@ -1042,7 +1048,7 @@ class MainFrame(wx.Frame):
         jumpe on youtube downloader
         """
         if not self.data_url:
-            self.statusbar_msg(_('No URLs added yet'), YELLOW)
+            self.statusbar_msg(_('No URLs added yet'), self.YELLOW)
         else:
             self.topicname = 'Youtube Downloader'
             self.on_Forward(self)
@@ -1060,11 +1066,11 @@ class MainFrame(wx.Frame):
         Open the log directory with file manager
 
         """
-        if not os.path.exists(LOGDIR):
+        if not os.path.exists(self.LOGDIR):
             wx.MessageBox(_("Output log has not been created yet."),
                           "Videomass", wx.ICON_INFORMATION, None)
             return
-        IO_tools.openpath(LOGDIR)
+        IO_tools.openpath(self.LOGDIR)
     # ------------------------------------------------------------------#
 
     def openConf(self, event):
@@ -1072,18 +1078,18 @@ class MainFrame(wx.Frame):
         Open the configuration folder with file manager
 
         """
-        IO_tools.openpath(DIR_CONF)
+        IO_tools.openpath(self.DIR_CONF)
     # -------------------------------------------------------------------#
 
     def openCache(self, event):
         """
         Open the cache dir with file manager if exists
         """
-        if not os.path.exists(CACHEDIR):
+        if not os.path.exists(self.CACHEDIR):
             wx.MessageBox(_("cache directory has not been created yet."),
                           "Videomass", wx.ICON_INFORMATION, None)
             return
-        IO_tools.openpath(CACHEDIR)
+        IO_tools.openpath(self.CACHEDIR)
 
     # --------- Menu Edit
 
@@ -1335,7 +1341,7 @@ class MainFrame(wx.Frame):
         if not data == self.data_url:
             if self.data_url:
                 msg = (_('Warning: the previous settings may be '
-                         'reset to default values.'), ORANGE)
+                         'reset to default values.'), self.ORANGE)
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
@@ -1377,7 +1383,7 @@ class MainFrame(wx.Frame):
         if not filenames == self.file_src:
             if self.file_src:
                 msg = (_('Warning: the previous settings may be '
-                         'reset to default values.'), ORANGE)
+                         'reset to default values.'), self.ORANGE)
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']
@@ -1417,7 +1423,7 @@ class MainFrame(wx.Frame):
         if not filenames == self.file_src:
             if self.file_src:
                 msg = (_('Warning: the previous settings may be '
-                         'reset to default values.'), ORANGE)
+                         'reset to default values.'), self.ORANGE)
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']

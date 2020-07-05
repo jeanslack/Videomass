@@ -29,21 +29,23 @@
 import wx
 import os
 
-get = wx.GetApp()
-USER_FILESAVE = get.USERfilesave  # files destination folder
-OS = get.OS
 
 class TextDnD(wx.Panel):
     """
     Accept one or more urls separated by a white space or newline.
 
     """
+    get = wx.GetApp()
+    OUTSAVE = get.USERfilesave  # files destination folder
+    OS = get.OS
+    # ----------------------------------------------------------------#
+
     def __init__(self, parent):
         """
         """
         self.parent = parent  # parent is the MainFrame
         dirname = os.path.expanduser('~')  # /home/user/
-        self.file_dest = dirname if not USER_FILESAVE else USER_FILESAVE
+        self.file_dest = dirname if not TextDnD.OUTSAVE else TextDnD.OUTSAVE
 
         wx.Panel.__init__(self, parent=parent)
 
@@ -79,7 +81,7 @@ class TextDnD(wx.Panel):
         self.SetSizer(sizer)
 
         # properties
-        if OS != 'Darwin':
+        if TextDnD.OS != 'Darwin':
             lbl_info.SetLabelMarkup("<b>%s</b>" % infomsg)
             lbl_listdel.SetLabelMarkup("<b>%s</b>" % optionsmsg)
             lbl_dir.SetLabelMarkup("<b>%s</b>" % outdirmsg)

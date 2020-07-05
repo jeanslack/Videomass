@@ -31,22 +31,17 @@ import os
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import time_seconds
 
-# CONSTANTS:
-get = wx.GetApp()
-USER_FILESAVE = get.USERfilesave  # path to the configuration directory
-OS = get.OS
-AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
-RED = '#ea312d'
-YELLOW = '#a29500'
-GREENOLIVE = '#6aaf23'
-ORANGE = '#f28924'
-
 
 class MyListCtrl(wx.ListCtrl):
     """
     This is the listControl widget. Note that this wideget has DnDPanel
     parent.
     """
+    AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
+    RED = '#ea312d'
+    YELLOW = '#a29500'
+    GREENOLIVE = '#6aaf23'
+    ORANGE = '#f28924'
     # ----------------------------------------------------------------------
 
     def __init__(self, parent):
@@ -67,14 +62,14 @@ class MyListCtrl(wx.ListCtrl):
         self.index = self.GetItemCount()
         msg_dir = _("Directories are not allowed, just add files, please.")
         if os.path.isdir(path):
-            self.parent.statusbar_msg(msg_dir, ORANGE)
+            self.parent.statusbar_msg(msg_dir, MyListCtrl.ORANGE)
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
             data = IO_tools.probeInfo(path)
 
             if data[1]:
-                self.parent.statusbar_msg(data[1], RED)
+                self.parent.statusbar_msg(data[1], MyListCtrl.RED)
                 return
 
             data = eval(data[0])
@@ -103,7 +98,7 @@ class MyListCtrl(wx.ListCtrl):
 
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
-            self.parent.statusbar_msg(mess, YELLOW)
+            self.parent.statusbar_msg(mess, MyListCtrl.YELLOW)
     # ----------------------------------------------------------------------#
 
 
@@ -137,12 +132,17 @@ class FileDnD(wx.Panel):
     """
     Panel for dragNdrop files queue. Accept one or more files.
     """
+    # CONSTANTS:
+    get = wx.GetApp()
+    OUTSAVE = get.USERfilesave  # path to the configuration directory
+    OS = get.OS
+
     def __init__(self, parent):
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent  # parent is the MainFrame
         self.data = self.parent.data_files  # set items list data on parent
         dirname = os.path.expanduser('~')  # /home/user/
-        self.file_dest = dirname if not USER_FILESAVE else USER_FILESAVE
+        self.file_dest = dirname if not self.OUTSAVE else self.OUTSAVE
         self.selected = None  # tells if an imported file is selected or not
 
         wx.Panel.__init__(self, parent=parent)
@@ -190,7 +190,7 @@ class FileDnD(wx.Panel):
         self.flCtrl.InsertColumn(1, _('Duration'), width=150)
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('File size'), width=150)
-        if OS != 'Darwin':
+        if self.OS != 'Darwin':
             lbl_info.SetLabelMarkup("<b>%s</b>" % infomsg)
             lbl_options.SetLabelMarkup("<b>%s</b>" % optionsmsg)
             lbl_outdir.SetLabelMarkup("<b>%s</b>" % outdirmsg)

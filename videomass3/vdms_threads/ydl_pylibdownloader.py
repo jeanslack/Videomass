@@ -32,18 +32,16 @@ from threading import Thread
 import time
 from pubsub import pub
 
-# get videomass wx.App attribute
-get = wx.GetApp()
+get = wx.GetApp()  # get videomass wx.App attribute
+PYLIBYDL = get.pylibYdl
+if PYLIBYDL is None:  # youtube_dl as python library
+    import youtube_dl
 OS = get.OS
 LOGDIR = get.LOGdir
 FFMPEG_URL = get.FFMPEG_url
-pylibYdl = get.pylibYdl
-
-if pylibYdl is None:  # youtube_dl as python library
-    import youtube_dl
 
 
-def logWrite(cmd, sterr, logname):
+def logWrite(cmd, sterr, logname, logdir):
     """
     writes youtube-dl commands and status error during
     threads below
@@ -53,7 +51,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open(os.path.join(LOGDIR, logname), "a") as log:
+    with open(os.path.join(logdir, logname), "a") as log:
         log.write(apnd)
 
 
@@ -138,6 +136,7 @@ class Ydl_DL_Pylib(Thread):
     <https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/options.py>
 
     or by help(youtube_dl.YoutubeDL)
+
     """
     def __init__(self, varargs, logname):
         """
@@ -189,26 +188,31 @@ class Ydl_DL_Pylib(Thread):
             if self.stop_work_thread:
                 break
 
-            ydl_opts = {'format': format_code,
-                        'extractaudio': self.opt['format'],
-                        'outtmpl': '{}/{}'.format(self.outputdir,
-                                                  self.opt['outtmpl']),
-                        'writesubtitles': self.opt['writesubtitles'],
-                        'addmetadata': self.opt['addmetadata'],
-                        'restrictfilenames': True,
-                        'ignoreerrors': True,
-                        'no_warnings': False,
-                        'writethumbnail': self.opt['writethumbnail'],
-                        'noplaylist': self.opt['noplaylist'],
-                        'no_color': True,
-                        'nocheckcertificate': self.nocheckcertificate,
-                        'ffmpeg_location': '{}'.format(FFMPEG_URL),
-                        'postprocessors': self.opt['postprocessors'],
-                        'logger': MyLogger(),
-                        'progress_hooks': [my_hook],
+            ydl_opts = {
+                    'format': format_code,
+                    'extractaudio': self.opt['format'],
+                    'outtmpl': '{}/{}'.format(self.outputdir,
+                                              self.opt['outtmpl']),
+                    'writesubtitles': self.opt['writesubtitles'],
+                    'addmetadata': self.opt['addmetadata'],
+                    'restrictfilenames': True,
+                    'ignoreerrors': True,
+                    'no_warnings': False,
+                    'writethumbnail': self.opt['writethumbnail'],
+                    'noplaylist': self.opt['noplaylist'],
+                    'no_color': True,
+                    'nocheckcertificate': self.nocheckcertificate,
+                    'ffmpeg_location': '{}'.format(FFMPEG_URL),
+                    'postprocessors': self.opt['postprocessors'],
+                    'logger': MyLogger(),
+                    'progress_hooks': [my_hook],
                         }
 
-            logWrite(ydl_opts, '', self.logname)  # write n/n + command only
+            logWrite(ydl_opts,
+                     '',
+                     self.logname,
+                     LOGDIR,
+                     )  # write n/n + command only
 
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download(["{}".format(url)])

@@ -27,27 +27,17 @@
 #########################################################
 import wx
 import subprocess
+import platform
+if not platform.system() == 'Windows':
+    import shlex
 import itertools
 import os
 from threading import Thread
 import time
 from pubsub import pub
 
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-LOGDIR = get.LOGdir
-FFMPEG_URL = get.FFMPEG_url
-FFMPEG_LOGLEV = get.FFMPEG_loglev
-FF_THREADS = get.FFthreads
 
-if not OS == 'Windows':
-    import shlex
-
-NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
-
-
-def logWrite(cmd, sterr, logname):
+def logWrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -56,7 +46,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open(os.path.join(LOGDIR, logname), "a") as log:
+    with open(os.path.join(logdir, logname), "a") as log:
         log.write(apnd)
 
 # ------------------------------ THREADS -------------------------------#
@@ -82,7 +72,17 @@ class OnePass(Thread):
     """
     This class represents a separate thread for running processes,
     which need to read the stdout/stderr in real time.
+
     """
+    # get videomass wx.App attribute
+    get = wx.GetApp()
+    LOGDIR = get.LOGdir
+    FFMPEG_URL = get.FFMPEG_url
+    FFMPEG_LOGLEV = get.FFMPEG_loglev
+    FF_THREADS = get.FFthreads
+    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
+    # ---------------------------------------------------------------
+
     def __init__(self, varargs, duration, logname, timeseq):
         """
         Some attribute can be empty, this depend from conversion type.
@@ -126,13 +126,13 @@ class OnePass(Thread):
             outext = source_ext if not self.extoutput else self.extoutput
 
             cmd = ('%s %s %s -i "%s" %s %s %s '
-                   '-y "%s/%s.%s"' % (FFMPEG_URL,
+                   '-y "%s/%s.%s"' % (OnePass.FFMPEG_URL,
                                       self.time_seq,
-                                      FFMPEG_LOGLEV,
+                                      OnePass.FFMPEG_LOGLEV,
                                       files,
                                       self.command,
                                       volume,
-                                      FF_THREADS,
+                                      OnePass.FF_THREADS,
                                       folders,
                                       filename,
                                       outext,
@@ -147,9 +147,13 @@ class OnePass(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(com, '', self.logname)  # write n/n + command only
+            logWrite(com,
+                     '',
+                     self.logname,
+                     OnePass.LOGDIR,
+                     )  # write n/n + command only
 
-            if not OS == 'Windows':
+            if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
                 info = None
             else:  # Hide subprocess window on MS Windows
@@ -181,7 +185,9 @@ class OnePass(Thread):
                                      )
                         logWrite('',
                                  "Exit status: %s" % p.wait(),
-                                 self.logname)  # append exit error number
+                                 self.logname,
+                                 OnePass.LOGDIR,
+                                 )  # append exit error number
                     else:  # ok
                         wx.CallAfter(pub.sendMessage,
                                      "COUNT_EVT",
@@ -191,7 +197,7 @@ class OnePass(Thread):
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, NOT_EXIST_MSG)
+                e = "%s\n  %s" % (err, OnePass.NOT_EXIST_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=e,

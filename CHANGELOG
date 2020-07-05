@@ -7,17 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-July 03, 2020 V.2.8.9
+July 04, 2020 V.2.8.9
 +------------------------------------+
 
 BUGS:
-    * Fixed incorrect assignment for the sources directory in
+    * [WINDOWS] Fixed incorrect assignment for the sources directory in
       `generate_INNO_setup.py` script.
-    * Python 3.8 `too many values to unpack` error on ffmpeg_conf.py
+    * On Python 3.8 fixed `too many values to unpack` error on ffmpeg_conf.py
       mini frame.
 
 NEWS:
-    * Added AppImage implementation for some Linux flavors (experimental).
+    * [LINUX] Added AppImage implementation for some Linux flavors (experimental).
       Videomass's deployment for Linux are tested with success on the
       following Linux distribuitions with 64 bit Architecture only:
 
@@ -25,8 +25,8 @@ NEWS:
         - Debian 9 stretch x86_64
         - AV-Linux 2019.4.10 x86_64
         - AV-Linux 2020.4.10 x86_64
-        - Sparkylinux xfce x86_64 (rolling edition)
-        - SparkyLinux lxqt x86_64 (stable edition)
+        - Sparkylinux 2020.06 xfce x86_64 (rolling edition)
+        - SparkyLinux 5.11 lxqt x86_64 (stable edition)
         - Ubuntu 16.04 LTS x86_64
         - Ubuntu 18.04 LTS x86_64
         - Xubuntu 18.04 x86_64
@@ -35,14 +35,17 @@ NEWS:
         - Fedora 32 (Workstation Edition) x86_64
         - Manjaro Linux 20.0.3 (Lysia) x86_64
 
-    * Created new tools for automate buildings with pyinstaller and
-      Linuxdeploy*.AppImage.
+    * Created new tools on 'develop/tools' for automate buildings with
+      pyinstaller and linuxdeploy*.AppImage.
+    * Made a bit more readable the configuration file. New version of
+      videomass.conf and videomassWin32.conf will replace the old one
+      installed.
 
 IMPROVEMENTS:
-    * Improved usability on Linux with a wizard dialog to find ffmpeg if not
-      installed or linked in your system.
+    * [LINUX] Improved usability on Linux with a wizard dialog to find ffmpeg
+      if not installed or linked in your system.
     * [UNIX] Added check to verify execution permissions when ffmpeg
-      executables are linked locally
+      executables are linked locally.
 
 +------------------------------------+
 June 16, 2020 V.2.8.8

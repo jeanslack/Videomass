@@ -28,18 +28,13 @@
 #########################################################
 import wx
 import subprocess
+import platform
+if not platform.system() == 'Windows':
+    import shlex
 import os
 from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
-# get data from bootstrap
-get = wx.GetApp()
-LOGDIR = get.LOGdir
-OS = get.OS
-MPV_LINK = get.MPV_url
-
-if not OS == 'Windows':
-    import shlex
 
 
 def msg_Error(msg):
@@ -64,9 +59,11 @@ def msg_Info(msg):
 
 class Url_Play(Thread):
     """
-    subprocess.Popen class to run mpv media player for playback URLs .
+    subprocess.Popen class to run mpv media
+    player for playback URLs .
+
     """
-    def __init__(self, url, quality):
+    def __init__(self, url, quality, logdir, mpv_url):
         """
         quality: is flag to set media quality result
         """
@@ -74,8 +71,10 @@ class Url_Play(Thread):
         ''' constructor'''
         self.url = url
         self.quality = quality
-        self.logf = os.path.join(LOGDIR, 'Videomass_mpv.log')
-        write_log('Videomass_mpv.log', LOGDIR)  # set initial file LOG
+        self.logdir = logdir
+        self.mpv = mpv_url
+        self.logf = os.path.join(self.logdir, 'Videomass_mpv.log')
+        write_log('Videomass_mpv.log', self.logdir)  # set initial file LOG
 
         self.start()
     # ----------------------------------------------------------------#
@@ -86,9 +85,9 @@ class Url_Play(Thread):
         exceptions. Otherwise the getted output as information
         given by output .
         """
-        if OS == 'Windows':
+        if platform.system() == 'Windows':
             cmd = ('%s --ytdl-raw-options=no-check-certificate= %s '
-                   '--ytdl-format=%s %s' % (MPV_LINK,
+                   '--ytdl-format=%s %s' % (self.mpv,
                                             self.url,
                                             self.quality,
                                             self.url
@@ -97,7 +96,10 @@ class Url_Play(Thread):
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.SW_HIDE
         else:
-            cmd = '%s --ytdl-format=%s %s' % (MPV_LINK, self.quality, self.url)
+            cmd = '%s --ytdl-format=%s %s' % (self.mpv,
+                                              self.quality,
+                                              self.url
+                                              )
             cmd = shlex.split(cmd)
             info = None
             shell = False

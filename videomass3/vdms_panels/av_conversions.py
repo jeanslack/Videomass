@@ -40,104 +40,110 @@ from videomass3.vdms_dialogs import video_filters
 from videomass3.vdms_frames import shownormlist
 from videomass3.vdms_utils import optimizations
 
-# CONSTATS:
-# setting the path to the configuration directory:
-get = wx.GetApp()
-DIR_CONF = get.DIRconf
 
-# colour rappresentetion in rgb
-GREY_DISABLED = 165, 165, 165
-GREY_DARK = 28, 28, 28
-AZURE_NEON = 158, 201, 232
-YELLOW_LMN = 255, 255, 0
-# colour rappresentetion in html
-AZURE = '#15a6a6'
-YELLOW = '#a29500'
-RED = '#ea312d'
-ORANGE = '#f28924'
-GREENOLIVE = '#6aaf23'
-GREEN = '#268826'
-CIANO = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
-VIOLET = '#D64E93'
-LIMEGREEN = '#87A615'
-TROPGREEN = '#15A660'
+class AV_Conv(wx.Panel):
+    """
+    Interface panel for video conversions
+    """
+    # setting the path to the configuration directory:
+    get = wx.GetApp()
+    DIR_CONF = get.DIRconf
+    # colour rappresentetion in rgb
+    GREY_DISABLED = 165, 165, 165
+    GREY_DARK = 28, 28, 28
+    AZURE_NEON = 158, 201, 232
+    YELLOW_LMN = 255, 255, 0
+    # colour rappresentetion in html
+    AZURE = '#15a6a6'
+    YELLOW = '#a29500'
+    RED = '#ea312d'
+    ORANGE = '#f28924'
+    GREENOLIVE = '#6aaf23'
+    GREEN = '#268826'
+    CYAN = '#61ccc7'  # rgb form (wx.Colour(97, 204, 199)
+    VIOLET = '#D64E93'
+    LIMEGREEN = '#87A615'
+    TROPGREEN = '#15A660'
 
-# MUXERS dictionary:
-MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
-          'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
-          }
-# Namings in the video container selection combo box:
-VCODECS = ({"Mpeg4": {"-c:v mpeg4": ["avi"]},
-            "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "flv", "m4v"]},
-            "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
-            "Theora": {"-c:v libtheora": ["ogv"]},
-            # "AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
-            "Vp8": {"-c:v libvpx": ["webm"]},
-            "Vp9": {"-c:v libvpx-vp9": ["webm"]},
-            "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "flv",
-                                   "m4v", "ogv", "webm", "Copy"]}
-            })
-# Namings in the audio codec selection on audio radio box:
-ACODECS = {('Auto'): (""),
-           ('PCM'): ("pcm_s16le"),
-           ('FLAC'): ("flac"),
-           ('AAC'): ("aac"),
-           ('ALAC'): ("alac"),
-           ('AC3'): ("ac3"),
-           ('VORBIS'): ("libvorbis"),
-           ('LAME'): ("libmp3lame"),
-           ('OPUS'): ("libopus"),
-           ('Copy'): ("copy"),
-           ('No Audio'): ("-an")
-           }
-# Namings in the audio format selection on Container combobox:
-A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac'
-             )
-# compatibility between video formats and related audio codecs:
-AV_FORMATS = {('avi'): ('default', 'wav', None, None, None, 'ac3', None,
-                        'mp3', None, 'copy', 'mute'),
-              ('flv'): ('default', None, None, 'aac', None, 'ac3', None,
-                        'mp3', None, 'copy', 'mute'),
-              ('mp4'): ('default', None, None, 'aac', None, 'ac3', None,
-                        'mp3', None, 'copy', 'mute'),
-              ('m4v'): ('default', None, None, 'aac', 'alac', None, None,
-                        None, None, 'copy', 'mute'),
-              ('mkv'): ('default', 'wav', 'flac', 'aac', None, 'ac3', 'ogg',
-                        'mp3', 'opus', 'copy', 'mute'),
-              ('webm'): ('default', None, None, None, None, None, 'ogg',
-                         None, 'opus', 'copy', 'mute'),
-              ('ogv'): ('default', None, 'flac', None, None, None, 'ogg',
-                        None, 'opus', 'copy', 'mute'),
-              ('wav'): (None, 'wav', None, None, None, None, None, None,
-                        None, 'copy', None),
-              ('mp3'): (None, None, None, None, None, None, None, 'mp3',
-                        None, 'copy', None),
-              ('ac3'): (None, None, None, None, None, 'ac3', None, None,
-                        None, 'copy', None),
-              ('ogg'): (None, None, None, None, None, None, 'ogg', None,
-                        None, 'copy', None),
-              ('flac'): (None, None, 'flac', None, None, None, None, None,
-                         None, 'copy', None),
-              ('m4a'): (None, None, None, None, 'alac', None, None, None,
-                        None, 'copy', None),
-              ('aac'): (None, None, None, 'aac', None, None, None, None,
-                        None, 'copy', None),
+    # MUXERS dictionary:
+    MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
+              'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
               }
-# presets used by x264 and h265:
-X264_OPT = {("Presets"): ("None", "ultrafast", "superfast",
-                          "veryfast", "faster", "fast", "medium",
-                          "slow", "slower", "veryslow", "placebo"
-                          ),
-            ("Profiles"): ("None", "baseline", "main", "high",
-                           "high10", "high444"
-                           ),
-            ("Tunes"): ("None", "film", "animation", "grain",
-                        "stillimage", "psnr", "ssim", "fastdecode",
-                        "zerolatency"
-                        )
+    # Namings in the video container selection combo box:
+    VCODECS = (
+            {"Mpeg4": {"-c:v mpeg4": ["avi"]},
+             "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "flv", "m4v"]},
+             "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
+             "Theora": {"-c:v libtheora": ["ogv"]},
+             # "AV1": {"-c:v libaom-av1 -strict -2",["mkv"]},
+             "Vp8": {"-c:v libvpx": ["webm"]},
+             "Vp9": {"-c:v libvpx-vp9": ["webm"]},
+             "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "flv",
+                                    "m4v", "ogv", "webm", "Copy"]}
+             })
+    # Namings in the audio codec selection on audio radio box:
+    ACODECS = {
+            ('Auto'): (""),
+            ('PCM'): ("pcm_s16le"),
+            ('FLAC'): ("flac"),
+            ('AAC'): ("aac"),
+            ('ALAC'): ("alac"),
+            ('AC3'): ("ac3"),
+            ('VORBIS'): ("libvorbis"),
+            ('LAME'): ("libmp3lame"),
+            ('OPUS'): ("libopus"),
+            ('Copy'): ("copy"),
+            ('No Audio'): ("-an")
             }
-# Used by x265 only
-X265_OPT = {("Presets"): ("None", "ultrafast", "superfast",
+    # Namings in the audio format selection on Container combobox:
+    A_FORMATS = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac')
+    # compatibility between video formats and related audio codecs:
+    AV_FORMATS = {
+                ('avi'): ('default', 'wav', None, None, None, 'ac3', None,
+                          'mp3', None, 'copy', 'mute'),
+                ('flv'): ('default', None, None, 'aac', None, 'ac3', None,
+                          'mp3', None, 'copy', 'mute'),
+                ('mp4'): ('default', None, None, 'aac', None, 'ac3', None,
+                          'mp3', None, 'copy', 'mute'),
+                ('m4v'): ('default', None, None, 'aac', 'alac', None, None,
+                          None, None, 'copy', 'mute'),
+                ('mkv'): ('default', 'wav', 'flac', 'aac', None, 'ac3', 'ogg',
+                          'mp3', 'opus', 'copy', 'mute'),
+                ('webm'): ('default', None, None, None, None, None, 'ogg',
+                           None, 'opus', 'copy', 'mute'),
+                ('ogv'): ('default', None, 'flac', None, None, None, 'ogg',
+                          None, 'opus', 'copy', 'mute'),
+                ('wav'): (None, 'wav', None, None, None, None, None, None,
+                          None, 'copy', None),
+                ('mp3'): (None, None, None, None, None, None, None, 'mp3',
+                          None, 'copy', None),
+                ('ac3'): (None, None, None, None, None, 'ac3', None, None,
+                          None, 'copy', None),
+                ('ogg'): (None, None, None, None, None, None, 'ogg', None,
+                          None, 'copy', None),
+                ('flac'): (None, None, 'flac', None, None, None, None, None,
+                           None, 'copy', None),
+                ('m4a'): (None, None, None, None, 'alac', None, None, None,
+                          None, 'copy', None),
+                ('aac'): (None, None, None, 'aac', None, None, None, None,
+                          None, 'copy', None),
+                  }
+    # presets used by x264 and h265:
+    X264_OPT = {("Presets"): ("None", "ultrafast", "superfast",
+                              "veryfast", "faster", "fast", "medium",
+                              "slow", "slower", "veryslow", "placebo"
+                              ),
+                ("Profiles"): ("None", "baseline", "main", "high",
+                               "high10", "high444"
+                               ),
+                ("Tunes"): ("None", "film", "animation", "grain",
+                            "stillimage", "psnr", "ssim", "fastdecode",
+                            "zerolatency"
+                            )
+                }
+    # Used by x265 only
+    X265_OPT = {
+            ("Presets"): ("None", "ultrafast", "superfast",
                           "veryfast", "faster", "fast", "medium",
                           "slow", "slower", "veryslow", "placebo"
                           ),
@@ -151,31 +157,30 @@ X265_OPT = {("Presets"): ("None", "ultrafast", "superfast",
                            "main444-16-stillpicture"
                            ),
             ("Tunes"): ("None", "grain", "psnr", "ssim", "fastdecode",
-                        "zerolatency")
+                        "zerolatency"
+                        )
             }
-# profile level for profiles x264/x265
-LEVELS = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
-          '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
-          )
-# optimization list for vp8/vp9
-OPTIMIZ_VP9 = ('Default',
-               'Vp9 best for Archive',
-               'Vp9 CBR Web streaming',
-               'Vp9 Constrained ABR-VBV live streaming')
-# optimization list for x264/x265
-OPTIMIZ_HEVC_AVC = ('Default',
-                    'x264 best for Archive',
-                    'x265 best for Archive',
-                    'x264 ABR for devices',
-                    'x265 ABR for devices',
-                    'x264 ABR-VBV live streaming',
-                    'x265 ABR-VBV live streaming')
+    # profile level for profiles x264/x265
+    LEVELS = ('None', '1', '2', '2.1', '3', '3.1', '4', '4.1',
+              '5', '5.1', '5.2', '6', '6.1', '6.2', '8.5'
+              )
+    # optimization list for vp8/vp9
+    OPTIMIZ_VP9 = ('Default',
+                   'Vp9 best for Archive',
+                   'Vp9 CBR Web streaming',
+                   'Vp9 Constrained ABR-VBV live streaming'
+                   )
+    # optimization list for x264/x265
+    OPTIMIZ_HEVC_AVC = ('Default',
+                        'x264 best for Archive',
+                        'x265 best for Archive',
+                        'x264 ABR for devices',
+                        'x265 ABR for devices',
+                        'x264 ABR-VBV live streaming',
+                        'x265 ABR-VBV live streaming'
+                        )
+    # ------------------------------------------------------------------#
 
-
-class AV_Conv(wx.Panel):
-    """
-    Interface panel for video conversions
-    """
     def __init__(self, parent, OS, iconplay, iconreset, iconresize,
                  iconcrop, iconrotate, icondeinterlace, icondenoiser,
                  iconanalyzes, iconsettings, iconpeaklevel, iconatrack,
@@ -233,10 +238,11 @@ class AV_Conv(wx.Panel):
                           )
         txtVcod = wx.StaticText(self.codVpanel, wx.ID_ANY, _('Codec'))
         grid_sx_Vcod.Add(txtVcod, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_Vcod = wx.ComboBox(self.codVpanel, wx.ID_ANY,
-                                    choices=[x for x in VCODECS.keys()],
-                                    size=(160, -1), style=wx.CB_DROPDOWN |
-                                    wx.CB_READONLY
+        self.cmb_Vcod = wx.ComboBox(
+                                self.codVpanel, wx.ID_ANY,
+                                choices=[x for x in AV_Conv.VCODECS.keys()],
+                                size=(160, -1), style=wx.CB_DROPDOWN |
+                                wx.CB_READONLY
                                     )
         grid_sx_Vcod.Add(self.cmb_Vcod, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5
@@ -396,7 +402,7 @@ class AV_Conv(wx.Panel):
                               wx.ALIGN_CENTER_VERTICAL, 5
                               )
         self.cmb_vp9opti = wx.ComboBox(self.vp9panel, wx.ID_ANY,
-                                       choices=OPTIMIZ_VP9,
+                                       choices=AV_Conv.OPTIMIZ_VP9,
                                        size=(180, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
@@ -455,7 +461,7 @@ class AV_Conv(wx.Panel):
                                wx.ALIGN_CENTER_VERTICAL, 5
                                )
         self.cmb_x26opti = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                       choices=OPTIMIZ_HEVC_AVC,
+                                       choices=AV_Conv.OPTIMIZ_HEVC_AVC,
                                        size=(180, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
@@ -474,11 +480,12 @@ class AV_Conv(wx.Panel):
                            wx.ALIGN_CENTER_HORIZONTAL |
                            wx.ALIGN_CENTER_VERTICAL, 5
                            )
-        self.cmb_preset = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                      choices=[p for p in X264_OPT["Presets"]],
-                                      size=(120, -1), style=wx.CB_DROPDOWN |
-                                      wx.CB_READONLY
-                                      )
+        self.cmb_preset = wx.ComboBox(
+                            self.h264panel, wx.ID_ANY,
+                            choices=[p for p in AV_Conv.X264_OPT["Presets"]],
+                            size=(120, -1), style=wx.CB_DROPDOWN |
+                            wx.CB_READONLY
+                            )
         grid_h264panel.Add(self.cmb_preset, 0, wx.ALL |
                            wx.ALIGN_CENTER_HORIZONTAL |
                            wx.ALIGN_CENTER_VERTICAL, 5)
@@ -486,7 +493,7 @@ class AV_Conv(wx.Panel):
         grid_h264panel.Add(txtprofile, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_profile = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                        choices=[p for p in
-                                                X264_OPT["Profiles"]],
+                                                AV_Conv.X264_OPT["Profiles"]],
                                        size=(120, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
@@ -496,7 +503,7 @@ class AV_Conv(wx.Panel):
         txtlevel = wx.StaticText(self.h264panel, wx.ID_ANY, _('Level'))
         grid_h264panel.Add(txtlevel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_level = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                     choices=LEVELS, size=(80, -1),
+                                     choices=AV_Conv.LEVELS, size=(80, -1),
                                      style=wx.CB_DROPDOWN | wx.CB_READONLY
                                      )
         grid_h264panel.Add(self.cmb_level, 0, wx.ALL |
@@ -504,10 +511,11 @@ class AV_Conv(wx.Panel):
                            )
         txttune = wx.StaticText(self.h264panel, wx.ID_ANY, _('Tune'))
         grid_h264panel.Add(txttune, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_tune = wx.ComboBox(self.h264panel, wx.ID_ANY,
-                                    choices=[p for p in X264_OPT["Tunes"]],
-                                    size=(120, -1), style=wx.CB_DROPDOWN |
-                                    wx.CB_READONLY)
+        self.cmb_tune = wx.ComboBox(
+                            self.h264panel, wx.ID_ANY,
+                            choices=[p for p in AV_Conv.X264_OPT["Tunes"]],
+                            size=(120, -1), style=wx.CB_DROPDOWN |
+                            wx.CB_READONLY)
         grid_h264panel.Add(self.cmb_tune, 0, wx.ALL |
                            wx.ALIGN_CENTER_VERTICAL, 5
                            )
@@ -536,12 +544,13 @@ class AV_Conv(wx.Panel):
                          )
         txtFormat = wx.StaticText(self.nb_Video, wx.ID_ANY, _('Container'))
         grid_dx_frmt.Add(txtFormat, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_Vcont = wx.ComboBox(self.nb_Video, wx.ID_ANY,
-                                     choices=[f for f in
-                                              VCODECS.get('x264').values()][0],
-                                     size=(160, -1), style=wx.CB_DROPDOWN |
-                                     wx.CB_READONLY
-                                     )
+        self.cmb_Vcont = wx.ComboBox(
+                        self.nb_Video, wx.ID_ANY,
+                        choices=[f for f in
+                                 AV_Conv.VCODECS.get('x264').values()][0],
+                        size=(160, -1), style=wx.CB_DROPDOWN |
+                        wx.CB_READONLY
+                        )
         grid_dx_frmt.Add(self.cmb_Vcont, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5
                          )
@@ -552,10 +561,10 @@ class AV_Conv(wx.Panel):
         sizer_nbAudio = wx.BoxSizer(wx.VERTICAL)
         self.rdb_a = wx.RadioBox(self.nb_Audio, wx.ID_ANY, (
                                  _("Audio Encoder")),
-                                 choices=[x for x in ACODECS.keys()],
+                                 choices=[x for x in AV_Conv.ACODECS.keys()],
                                  majorDimension=5, style=wx.RA_SPECIFY_COLS
                                  )
-        for n, v in enumerate(AV_FORMATS["mkv"]):
+        for n, v in enumerate(AV_Conv.AV_FORMATS["mkv"]):
             if not v:  # disable only not compatible with mkv
                 self.rdb_a.EnableItem(n, enable=False)
         sizer_nbAudio.Add(self.rdb_a, 1, wx.ALL | wx.EXPAND, 10)
@@ -572,9 +581,10 @@ class AV_Conv(wx.Panel):
                                             size=(-1, 25),
                                             bitmap=setbmp,
                                             label=_("Settings"))
-        self.btn_aparam.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                       foregroundcolour=wx.Colour(GREY_DISABLED
-                                                                  ))
+        self.btn_aparam.SetBaseColours(
+                            startcolour=wx.Colour(AV_Conv.AZURE_NEON),
+                            foregroundcolour=wx.Colour(AV_Conv.GREY_DISABLED)
+                                )
         self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_aparam.SetTopStartColour(wx.Colour(self.btn_color))
@@ -645,10 +655,10 @@ class AV_Conv(wx.Panel):
                                                size=(-1, 25),
                                                bitmap=resizebmp,
                                                label=_("Resize"))
-        self.btn_videosize.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                          foregroundcolour=wx.Colour(
-                                              self.fBtnC
-                                              ))
+        self.btn_videosize.SetBaseColours(
+                                    startcolour=wx.Colour(AV_Conv.AZURE_NEON),
+                                    foregroundcolour=wx.Colour(self.fBtnC)
+                                    )
         self.btn_videosize.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_videosize.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_videosize.SetTopStartColour(wx.Colour(self.btn_color))
@@ -659,7 +669,7 @@ class AV_Conv(wx.Panel):
                                           size=(-1, 25),
                                           bitmap=cropbmp,
                                           label=_("Crop Dimension"))
-        self.btn_crop.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_crop.SetBaseColours(startcolour=wx.Colour(AV_Conv.AZURE_NEON),
                                      foregroundcolour=wx.Colour(self.fBtnC))
         self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_crop.SetBottomStartColour(wx.Colour(self.btn_color))
@@ -671,8 +681,10 @@ class AV_Conv(wx.Panel):
                                             size=(-1, 25),
                                             bitmap=rotatebmp,
                                             label=_("Rotation"))
-        self.btn_rotate.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                       foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_rotate.SetBaseColours(
+                                startcolour=wx.Colour(AV_Conv.AZURE_NEON),
+                                foregroundcolour=wx.Colour(self.fBtnC
+                                                           ))
         self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_rotate.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_rotate.SetTopStartColour(wx.Colour(self.btn_color))
@@ -684,8 +696,10 @@ class AV_Conv(wx.Panel):
                                             bitmap=deintbmp,
                                             label=_("De/Interlace")
                                             )
-        self.btn_lacing.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                       foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_lacing.SetBaseColours(
+                                startcolour=wx.Colour(AV_Conv.AZURE_NEON),
+                                foregroundcolour=wx.Colour(self.fBtnC
+                                                           ))
         self.btn_lacing.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_lacing.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_lacing.SetTopStartColour(wx.Colour(self.btn_color))
@@ -696,8 +710,10 @@ class AV_Conv(wx.Panel):
                                             size=(-1, 25),
                                             bitmap=denoiserbmp,
                                             label="Denoisers")
-        self.btn_denois.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                       foregroundcolour=wx.Colour(self.fBtnC))
+        self.btn_denois.SetBaseColours(
+                                    startcolour=wx.Colour(AV_Conv.AZURE_NEON),
+                                    foregroundcolour=wx.Colour(self.fBtnC
+                                                               ))
         self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_denois.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_denois.SetTopStartColour(wx.Colour(self.btn_color))
@@ -709,7 +725,9 @@ class AV_Conv(wx.Panel):
                                              size=(-1, 25),
                                              bitmap=playbmp,
                                              )
-        self.btn_preview.SetBaseColours(startcolour=wx.Colour(AZURE_NEON))
+        self.btn_preview.SetBaseColours(
+                                    startcolour=wx.Colour(AV_Conv.AZURE_NEON
+                                                          ))
         self.btn_preview.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_preview.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_preview.SetTopStartColour(wx.Colour(self.btn_color))
@@ -720,7 +738,9 @@ class AV_Conv(wx.Panel):
                                            size=(-1, 25),
                                            bitmap=resetbmp,
                                            )
-        self.btn_reset.SetBaseColours(startcolour=wx.Colour(AZURE_NEON))
+        self.btn_reset.SetBaseColours(
+                                startcolour=wx.Colour(AV_Conv.AZURE_NEON
+                                                      ))
         self.btn_reset.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_reset.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_reset.SetTopStartColour(wx.Colour(self.btn_color))
@@ -758,8 +778,10 @@ class AV_Conv(wx.Panel):
                                              bitmap=analyzebmp,
                                              label=_("Volumedetect")
                                              )
-        self.btn_voldect.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                        foregroundcolour=wx.Colour(GREY_DARK))
+        self.btn_voldect.SetBaseColours(
+                                startcolour=wx.Colour(AV_Conv.AZURE_NEON),
+                                foregroundcolour=wx.Colour(AV_Conv.GREY_DARK)
+                                    )
         self.btn_voldect.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_voldect.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_voldect.SetTopStartColour(wx.Colour(self.btn_color))
@@ -772,8 +794,10 @@ class AV_Conv(wx.Panel):
                                              bitmap=peaklevelbmp,
                                              label=_("Volume Statistics")
                                              )
-        self.btn_details.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
-                                        foregroundcolour=wx.Colour(GREY_DARK))
+        self.btn_details.SetBaseColours(
+                                startcolour=wx.Colour(AV_Conv.AZURE_NEON),
+                                foregroundcolour=wx.Colour(AV_Conv.GREY_DARK)
+                                    )
         self.btn_details.SetBottomEndColour(wx.Colour(self.btn_color))
         self.btn_details.SetBottomStartColour(wx.Colour(self.btn_color))
         self.btn_details.SetTopStartColour(wx.Colour(self.btn_color))
@@ -970,15 +994,15 @@ class AV_Conv(wx.Panel):
             self.cmb_tune.Clear(), self.cmb_profile.Clear()
             if self.opt["VideoCodec"] == "-c:v libx264":
                 self.slider_CRF.SetValue(23), self.spin_Vbrate.SetValue(1500)
-                for tune in X264_OPT['Tunes']:
+                for tune in AV_Conv.X264_OPT['Tunes']:
                     self.cmb_tune.Append((tune),)
-                for prof in X264_OPT["Profiles"]:
+                for prof in AV_Conv.X264_OPT["Profiles"]:
                     self.cmb_profile.Append((prof),)
             elif self.opt["VideoCodec"] == "-c:v libx265":
                 self.slider_CRF.SetValue(28), self.spin_Vbrate.SetValue(1500)
-                for tune in X265_OPT["Tunes"]:
+                for tune in AV_Conv.X265_OPT["Tunes"]:
                     self.cmb_tune.Append((tune),)
-                for prof in X265_OPT["Profiles"]:
+                for prof in AV_Conv.X265_OPT["Profiles"]:
                     self.cmb_profile.Append((prof),)
             self.filterVpanel.Show(), self.slider_CRF.SetMax(51)
             self.cmb_preset.SetSelection(0), self.cmb_profile.SetSelection(0)
@@ -1029,7 +1053,7 @@ class AV_Conv(wx.Panel):
         self.opt["AudioRate"] = ["", ""]
         self.opt["AudioDepth"] = ["", ""]
         self.btn_aparam.Disable()
-        self.btn_aparam.SetForegroundColour(wx.Colour(GREY_DISABLED))
+        self.btn_aparam.SetForegroundColour(wx.Colour(AV_Conv.GREY_DISABLED))
         self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         self.txt_audio_options.Clear()
         # self.rdbx_normalize.Enable()
@@ -1061,7 +1085,7 @@ class AV_Conv(wx.Panel):
         determines the default status, enabling or disabling some
         functions depending on the type of video format chosen.
         """
-        selected = VCODECS.get(self.cmb_Vcod.GetValue())
+        selected = AV_Conv.VCODECS.get(self.cmb_Vcod.GetValue())
         libcodec = list(selected.keys())[0]
         self.cmb_Vcont.Clear()
         for f in selected.values():
@@ -1097,7 +1121,7 @@ class AV_Conv(wx.Panel):
             self.audio_default()
             self.codVpanel.Disable()
             self.cmb_Vcont.Clear()
-            for f in A_FORMATS:
+            for f in AV_Conv.A_FORMATS:
                 self.cmb_Vcont.Append((f),)
             self.cmb_Vcont.SetSelection(0)
             self.UI_set()
@@ -1335,7 +1359,9 @@ class AV_Conv(wx.Panel):
                 self.opt["Setsar"] = ""
                 self.opt["Scale"] = ""
             else:
-                self.btn_videosize.SetBottomEndColour(wx.Colour(YELLOW_LMN))
+                self.btn_videosize.SetBottomEndColour(
+                                                wx.Colour(AV_Conv.YELLOW_LMN)
+                                                )
                 if 'scale' in data:
                     self.opt["Scale"] = data['scale']
                 else:
@@ -1370,7 +1396,9 @@ class AV_Conv(wx.Panel):
             if not data[0]:
                 self.btn_rotate.SetBottomEndColour(wx.Colour(self.btn_color))
             else:
-                self.btn_rotate.SetBottomEndColour(wx.Colour(YELLOW_LMN))
+                self.btn_rotate.SetBottomEndColour(
+                                        wx.Colour(AV_Conv.YELLOW_LMN
+                                                  ))
             self.video_filter_checker()
         else:
             rotate.Destroy()
@@ -1389,7 +1417,7 @@ class AV_Conv(wx.Panel):
                 self.btn_crop.SetBottomEndColour(wx.Colour(self.btn_color))
                 self.opt["Crop"] = ''
             else:
-                self.btn_crop.SetBottomEndColour(wx.Colour(YELLOW_LMN))
+                self.btn_crop.SetBottomEndColour(wx.Colour(AV_Conv.YELLOW_LMN))
                 self.opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
@@ -1413,7 +1441,9 @@ class AV_Conv(wx.Panel):
                 self.opt["Deinterlace"] = ''
                 self.opt["Interlace"] = ''
             else:
-                self.btn_lacing.SetBottomEndColour(wx.Colour(YELLOW_LMN))
+                self.btn_lacing.SetBottomEndColour(
+                                            wx.Colour(AV_Conv.YELLOW_LMN
+                                                      ))
                 if 'deinterlace' in data:
                     self.opt["Deinterlace"] = data["deinterlace"]
                     self.opt["Interlace"] = ''
@@ -1441,7 +1471,9 @@ class AV_Conv(wx.Panel):
                 self.btn_denois.SetBottomEndColour(wx.Colour(self.btn_color))
                 self.opt["Denoiser"] = ''
             else:
-                self.btn_denois.SetBottomEndColour(wx.Colour(YELLOW_LMN))
+                self.btn_denois.SetBottomEndColour(
+                                                wx.Colour(AV_Conv.YELLOW_LMN
+                                                          ))
                 self.opt["Denoiser"] = data
             self.video_filter_checker()
         else:
@@ -1483,7 +1515,8 @@ class AV_Conv(wx.Panel):
                 for n in range(self.rdb_a.GetCount()):
                     self.rdb_a.EnableItem(n, enable=True)
             else:
-                for n, v in enumerate(AV_FORMATS[self.cmb_Vcont.GetValue()]):
+                for n, v in enumerate(AV_Conv.AV_FORMATS[
+                                                  self.cmb_Vcont.GetValue()]):
                     if v:
                         self.rdb_a.EnableItem(n, enable=True)
                     else:
@@ -1491,7 +1524,8 @@ class AV_Conv(wx.Panel):
             self.rdb_a.SetSelection(0)
 
         if self.cmb_Media.GetValue() == 'Audio':
-            for n, v in enumerate(AV_FORMATS[self.cmb_Vcont.GetValue()]):
+            for n, v in enumerate(AV_Conv.AV_FORMATS[
+                                                self.cmb_Vcont.GetValue()]):
                 if v:
                     self.rdb_a.EnableItem(n, enable=True)
                     # self.rdb_a.SetSelection(n)
@@ -1531,10 +1565,12 @@ class AV_Conv(wx.Panel):
             else:
                 self.btn_aparam.Disable(),
                 self.txt_audio_options.SetValue('')
-                self.btn_aparam.SetForegroundColour(wx.Colour(GREY_DISABLED))
+                self.btn_aparam.SetForegroundColour(
+                                            wx.Colour(AV_Conv.GREY_DISABLED)
+                                                )
                 self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         # --------------------------------------------------------
-        for k, v in ACODECS.items():
+        for k, v in AV_Conv.ACODECS.items():
             if audiocodec in k:
                 if audiocodec == "Auto":
                     self.audio_default()
@@ -1639,7 +1675,9 @@ class AV_Conv(wx.Panel):
         if count == 0:
             self.btn_aparam.SetBottomEndColour(wx.Colour(self.btn_color))
         else:
-            self.btn_aparam.SetBottomEndColour(wx.Colour(YELLOW_LMN))
+            self.btn_aparam.SetBottomEndColour(
+                                            wx.Colour(AV_Conv.YELLOW_LMN
+                                                      ))
 
         audiodialog.Destroy()
     # ------------------------------------------------------------------#
@@ -1707,16 +1745,16 @@ class AV_Conv(wx.Panel):
                    ))
         if self.rdbx_normalize.GetSelection() == 1:  # is checked
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_1, AZURE)
+            self.parent.statusbar_msg(msg_1, AV_Conv.AZURE)
             self.peakpanel.Show()
 
         elif self.rdbx_normalize.GetSelection() == 2:
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_2, TROPGREEN)
+            self.parent.statusbar_msg(msg_2, AV_Conv.TROPGREEN)
             self.peakpanel.Show(), self.spin_target.SetValue(-20)
 
         elif self.rdbx_normalize.GetSelection() == 3:
-            self.parent.statusbar_msg(msg_3, LIMEGREEN)
+            self.parent.statusbar_msg(msg_3, AV_Conv.LIMEGREEN)
             self.normalize_default(False)
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
@@ -1818,18 +1856,18 @@ class AV_Conv(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, ORANGE)
+            self.parent.statusbar_msg(msg3, AV_Conv.ORANGE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, YELLOW)
+                self.parent.statusbar_msg(msg2, AV_Conv.YELLOW)
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             self.opt["PEAK"] = volume
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
             self.opt["RMS"] = volume
         self.btn_voldect.Disable()
-        self.btn_voldect.SetForegroundColour(wx.Colour(GREY_DISABLED))
+        self.btn_voldect.SetForegroundColour(wx.Colour(AV_Conv.GREY_DISABLED))
         self.btn_details.Show()
         self.nb_filters.Layout()
     # ------------------------------------------------------------------#
@@ -2187,7 +2225,7 @@ class AV_Conv(wx.Panel):
                      f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
                      f'-map 0:v? {self.opt["AudioInMap"][0]}  '
                      f'{opt1} -sn -filter:a: {loudfilter} '
-                     f'-f {MUXERS[self.opt["OutputFormat"]]}'
+                     f'-f {AV_Conv.MUXERS[self.opt["OutputFormat"]]}'
                      )
             cmd_2 = (
                 f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
@@ -2448,12 +2486,13 @@ class AV_Conv(wx.Panel):
             else:
                 parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
-        with wx.FileDialog(None, _("Videomass: Select a preset to "
-                                   "storing the new profile"),
-                           defaultDir=os.path.join(DIR_CONF, 'presets'),
-                           wildcard="Videomass presets (*.prst;)|*.prst;",
-                           style=wx.FD_OPEN |
-                           wx.FD_FILE_MUST_EXIST) as fileDialog:
+        with wx.FileDialog(
+                        None, _("Videomass: Select a preset to storing "
+                                "the new profile"),
+                        defaultDir=os.path.join(AV_Conv.DIR_CONF, 'presets'),
+                        wildcard="Videomass presets (*.prst;)|*.prst;",
+                        style=wx.FD_OPEN |
+                        wx.FD_FILE_MUST_EXIST) as fileDialog:
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
             filename = os.path.splitext(fileDialog.GetPath())[0]

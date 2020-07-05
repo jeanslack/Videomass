@@ -27,27 +27,17 @@
 #########################################################
 import wx
 import subprocess
+import platform
+if not platform.system() == 'Windows':
+    import shlex
 import itertools
 import os
 from threading import Thread
 import time
 from pubsub import pub
 
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-LOGDIR = get.LOGdir
-FFMPEG_URL = get.FFMPEG_url
-FFMPEG_LOGLEV = get.FFMPEG_loglev
-FF_THREADS = get.FFthreads
 
-if not OS == 'Windows':
-    import shlex
-
-NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
-
-
-def logWrite(cmd, sterr, logname):
+def logWrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -56,7 +46,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open(os.path.join(LOGDIR, logname), "a") as log:
+    with open(os.path.join(logdir, logname), "a") as log:
         log.write(apnd)
 
 
@@ -82,7 +72,16 @@ class TwoPass(Thread):
     stdout/stderr in real time mode. The subprocess module is instantiated
     twice for two different tasks: the process on the first video pass and
     the process on the second video pass for video only.
+
     """
+    get = wx.GetApp()  # get videomass wx.App attribute
+    OS = get.OS
+    LOGDIR = get.LOGdir
+    FFMPEG_URL = get.FFMPEG_url
+    FFMPEG_LOGLEV = get.FFMPEG_loglev
+    FF_THREADS = get.FFthreads
+    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
+
     def __init__(self, varargs, duration, logname, timeseq):
         """
         The 'volume' attribute may have an empty value, but it will
@@ -125,12 +124,12 @@ class TwoPass(Thread):
 
             # --------------- first pass
             pass1 = ('%s %s %s -i "%s" %s %s '
-                     '-y %s' % (FFMPEG_URL,
-                                FFMPEG_LOGLEV,
+                     '-y %s' % (TwoPass.FFMPEG_URL,
+                                TwoPass.FFMPEG_LOGLEV,
                                 self.time_seq,
                                 files,
                                 self.passList[0],
-                                FF_THREADS,
+                                TwoPass.FF_THREADS,
                                 self.nul,
                                 ))
             self.count += 1
@@ -143,7 +142,11 @@ class TwoPass(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname)  # write n/n + command only
+            logWrite(cmd,
+                     '',
+                     self.logname,
+                     TwoPass.LOGDIR,
+                     )  # write n/n + command only
 
             if not OS == 'Windows':
                 pass1 = shlex.split(pass1)
@@ -178,10 +181,12 @@ class TwoPass(Thread):
                                      )
                         logWrite('',
                                  "Exit status: %s" % p1.wait(),
-                                 self.logname)  # append exit error number
+                                 self.logname,
+                                 TwoPass.LOGDIR
+                                 )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, NOT_EXIST_MSG)
+                e = "%s\n  %s" % (err, TwoPass.NOT_EXIST_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=e,
@@ -205,13 +210,13 @@ class TwoPass(Thread):
                              )
             # --------------- second pass ----------------#
             pass2 = ('%s %s %s -i "%s" %s %s %s '
-                     '-y "%s/%s.%s"' % (FFMPEG_URL,
-                                        FFMPEG_LOGLEV,
+                     '-y "%s/%s.%s"' % (TwoPass.FFMPEG_URL,
+                                        TwoPass.FFMPEG_LOGLEV,
                                         self.time_seq,
                                         files,
                                         self.passList[1],
                                         volume,
-                                        FF_THREADS,
+                                        TwoPass.FF_THREADS,
                                         folders,
                                         filename,
                                         outext,
@@ -225,7 +230,7 @@ class TwoPass(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname)
+            logWrite(cmd, '', self.logname, TwoPass.LOGDIR)
 
             if not OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -259,7 +264,9 @@ class TwoPass(Thread):
                                  )
                     logWrite('',
                              "Exit status: %s" % p2.wait(),
-                             self.logname)  # append exit error number
+                             self.logname,
+                             TwoPass.LOGDIR,
+                             )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop
                 p2.terminate()

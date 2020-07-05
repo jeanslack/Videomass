@@ -27,25 +27,16 @@
 #########################################################
 import wx
 import subprocess
+import platform
+if not platform.system() == 'Windows':
+    import shlex
 import os
 from threading import Thread
 import time
 from pubsub import pub
 
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-LOGDIR = get.LOGdir
-FFMPEG_URL = get.FFMPEG_url
-FFMPEG_LOGLEV = get.FFMPEG_loglev
 
-if not OS == 'Windows':
-    import shlex
-
-NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
-
-
-def logWrite(cmd, sterr, logname):
+def logWrite(cmd, sterr, logname, logdir):
     """
     writes ffmpeg commands and status error during threads below
     """
@@ -54,7 +45,7 @@ def logWrite(cmd, sterr, logname):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open(os.path.join(LOGDIR, logname), "a") as log:
+    with open(os.path.join(logdir, logname), "a") as log:
         log.write(apnd)
 
 # ------------------------------ THREADS -------------------------------#
@@ -79,7 +70,17 @@ class PicturesFromVideo(Thread):
     """
     This class represents a separate thread for running simple
     single processes to save video sequences as pictures.
+
     """
+    # get videomass wx.App attribute
+    get = wx.GetApp()
+    OS = get.OS
+    LOGDIR = get.LOGdir
+    FFMPEG_URL = get.FFMPEG_url
+    FFMPEG_LOGLEV = get.FFMPEG_loglev
+    NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
+    # ------------------------------------------------------
+
     def __init__(self, varargs, duration, logname, timeseq):
         """
         self.cmd contains a unique string that comprend filename input
@@ -103,9 +104,9 @@ class PicturesFromVideo(Thread):
         """
         Subprocess initialize thread.
         """
-        cmd = ('%s %s %s -i "%s" %s ' % (FFMPEG_URL,
+        cmd = ('%s %s %s -i "%s" %s ' % (PicturesFromVideo.FFMPEG_URL,
                                          self.time_seq,
-                                         FFMPEG_LOGLEV,
+                                         PicturesFromVideo.FFMPEG_LOGLEV,
                                          self.fname,
                                          self.cmd,
                                          ))
@@ -119,9 +120,13 @@ class PicturesFromVideo(Thread):
                      fname=self.fname,
                      end='',
                      )
-        logWrite(com, '', self.logname)  # write n/n + command only
+        logWrite(com,
+                 '',
+                 self.logname,
+                 PicturesFromVideo.LOGDIR,
+                 )  # write n/n + command only
 
-        if not OS == 'Windows':
+        if not PicturesFromVideo.OS == 'Windows':
             cmd = shlex.split(cmd)
             info = None
         else:  # Hide subprocess window on MS Windows
@@ -153,7 +158,9 @@ class PicturesFromVideo(Thread):
                                  )
                     logWrite('',
                              "Exit status: %s" % p.wait(),
-                             self.logname)  # append exit error number
+                             self.logname,
+                             PicturesFromVideo.LOGDIR,
+                             )  # append exit error number
 
                 else:  # status ok
                     wx.CallAfter(pub.sendMessage,
@@ -164,7 +171,7 @@ class PicturesFromVideo(Thread):
                                  end='ok'
                                  )
         except (OSError, FileNotFoundError) as err:
-            e = "%s\n  %s" % (err, NOT_EXIST_MSG)
+            e = "%s\n  %s" % (err, PicturesFromVideo.NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
                          count=e,

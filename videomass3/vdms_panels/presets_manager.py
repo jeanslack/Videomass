@@ -42,41 +42,42 @@ from videomass3.vdms_dialogs.epilogue import Formula
 from videomass3.vdms_io.IO_tools import volumeDetectProcess
 from videomass3.vdms_frames import shownormlist
 
-# set colour in RGB rappresentetion:
-GREY_DISABLED = 165, 165, 165
-AZURE_NEON = 158, 201, 232
-# set colour in HTML rappresentetion:
-AZURE = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
-YELLOW = '#a29500'
-RED = '#ea312d'
-ORANGE = '#f28924'
-GREENOLIVE = '#8aab3c'
-GREEN = '#268826'
-LIMEGREEN = '#87A615'
-TROPGREEN = '#15A660'
-
 
 class PrstPan(wx.Panel):
     """
     Interface for using and managing presets in the FFmpeg syntax.
-    Each presets is a JSON file (Javascript object notation) which is
-    a list object with a variable number of items (called profiles)
-    of type <class 'dict'>, each of which collect 5 keys object in
-    the following form:
-
-    {'Name': "",
-    "Descritpion": "",
-    "First_pass": "",
-    "Second_pass": "",
-    "Supported_list": "",
-    "Output_extension": "",
-    }
 
     """
+    # set colour in RGB rappresentetion:
+    GREY_DISABLED = 165, 165, 165
+    AZURE_NEON = 158, 201, 232
+    # set colour in HTML rappresentetion:
+    AZURE = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
+    YELLOW = '#a29500'
+    RED = '#ea312d'
+    ORANGE = '#f28924'
+    GREENOLIVE = '#8aab3c'
+    GREEN = '#268826'
+    LIMEGREEN = '#87A615'
+    TROPGREEN = '#15A660'
+    # -----------------------------------------------------------------
+
     def __init__(self, parent, path_srcShare, path_confdir,
                  PWD, OS, iconanalyzes, iconpeaklevel, btn_color,
                  fontBtncolor):
         """
+        Each presets is a JSON file (Javascript object notation) which is
+        a list object with a variable number of items (called profiles)
+        of type <class 'dict'>, each of which collect 5 keys object in
+        the following form:
+
+        {'Name': "",
+        "Descritpion": "",
+        "First_pass": "",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "",
+        }
         """
         self.array = []  # Parameters of the selected profile
         # default options:
@@ -209,7 +210,7 @@ class PrstPan(wx.Panel):
                                              size=(-1, 25),
                                              bitmap=analyzebmp,
                                              label=_("Volumedected"))
-        self.btn_voldect.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_voldect.SetBaseColours(startcolour=wx.Colour(PrstPan.AZURE_NEON),
                                         foregroundcolour=wx.Colour(self.fBtnC)
                                         )
         self.btn_voldect.SetBottomEndColour(wx.Colour(self.btnC))
@@ -224,7 +225,7 @@ class PrstPan(wx.Panel):
                                              bitmap=peaklevelbmp,
                                              label=_("Volume Statistics")
                                              )
-        self.btn_details.SetBaseColours(startcolour=wx.Colour(AZURE_NEON),
+        self.btn_details.SetBaseColours(startcolour=wx.Colour(PrstPan.AZURE_NEON),
                                         foregroundcolour=wx.Colour(self.fBtnC)
                                         )
         self.btn_details.SetBottomEndColour(wx.Colour(self.btnC))
@@ -569,10 +570,10 @@ class PrstPan(wx.Panel):
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
 
             if self.rdbx_norm.GetSelection() == 1:
-                self.parent.statusbar_msg(msg_1, AZURE)
+                self.parent.statusbar_msg(msg_1, PrstPan.AZURE)
                 self.spin_target.SetValue(-1.0)
             else:
-                self.parent.statusbar_msg(msg_2, TROPGREEN)
+                self.parent.statusbar_msg(msg_2, PrstPan.TROPGREEN)
                 self.spin_target.SetValue(-20.0)
 
             self.peakpanel.Show(), self.btn_voldect.Enable()
@@ -582,7 +583,7 @@ class PrstPan(wx.Panel):
             del self.normdetails[:]
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
-            self.parent.statusbar_msg(msg_3, LIMEGREEN)
+            self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN)
             self.peakpanel.Hide(), self.ebupanel.Show()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
             del self.normdetails[:]
@@ -675,19 +676,19 @@ class PrstPan(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, ORANGE)
+            self.parent.statusbar_msg(msg3, PrstPan.ORANGE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, YELLOW)
+                self.parent.statusbar_msg(msg2, PrstPan.YELLOW)
         if self.rdbx_norm.GetSelection() == 1:
             self.opt["PEAK"] = volume
         elif self.rdbx_norm.GetSelection() == 2:
             self.opt["RMS"] = volume
 
         self.btn_voldect.Disable()
-        self.btn_voldect.SetForegroundColour(wx.Colour(GREY_DISABLED))
+        self.btn_voldect.SetForegroundColour(wx.Colour(PrstPan.GREY_DISABLED))
         self.btn_details.Show()
         self.nb1_p3.Layout()
     # ------------------------------------------------------------------#
@@ -890,7 +891,7 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      YELLOW)
+                                      PrstPan.YELLOW)
             return
         else:
             filename = self.cmbx_prst.GetValue()
@@ -913,7 +914,7 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      YELLOW)
+                                      PrstPan.YELLOW)
         else:
             filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
@@ -951,7 +952,7 @@ class PrstPan(wx.Panel):
         # ------------ VALIDAZIONI: --------------
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      YELLOW)
+                                      PrstPan.YELLOW)
             return
 
         if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or

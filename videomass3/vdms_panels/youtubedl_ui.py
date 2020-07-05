@@ -32,48 +32,6 @@ from videomass3.vdms_utils.utils import time_human
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
 
-# COSTANTS:
-
-# get videomass wx.App attribute
-get = wx.GetApp()
-OS = get.OS
-PYLIB_YDL = get.pylibYdl
-
-MSG_1 = _('At least one "Format Code" must be checked for each '
-          'URL selected in green.')
-MSG_2 = _('Function available only if you choose "Download by format code"')
-
-RED = '#EA312D'
-BLACK = '#121212'
-DARK_BROWN = '#262222'
-GREEN = '#008000'
-GREY = '#959595'
-AZURE = '#3298FB'
-YELLOW = '#C8B72F'
-ORANGE = '#FF4A1B'
-
-VQUALITY = {('Best quality video'): ['best', 'best'],
-            ('Worst quality video'): ['worst', 'worst']}
-
-AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
-            ("wav"): ("wav", "--extract-audio --audio-format wav"),
-            ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
-            ("aac"): ("aac", "--extract-audio --audio-format aac"),
-            ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
-            ("vorbis"): ("vorbis", "--extract-audio --audio-format vorbis"),
-            ("opus"): ("opus", "--extract-audio --audio-format opus"),
-            ("flac"): ("flac", "--extract-audio --audio-format flac"),
-            }
-
-AQUALITY = {('Best quality audio'): ['best', 'best'],
-            ('Worst quality audio'): ['worst', 'worst']}
-
-CHOICE = [_('Default'),
-          _('Download audio and video splitted'),
-          _('Download Audio only'),
-          _('Download by format code')
-          ]
-
 if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
     import wx.lib.mixins.listctrl as listmix
 
@@ -114,7 +72,50 @@ if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
 class Downloader(wx.Panel):
     """
     This panel gives a graphic layout to some features of youtube-dl
+
     """
+    # get videomass wx.App attribute
+    get = wx.GetApp()
+    OS = get.OS
+    PYLIB_YDL = get.pylibYdl
+
+    MSG_1 = _('At least one "Format Code" must be checked for each '
+              'URL selected in green.')
+    MSG_2 = _('Function available only if you choose "Download by '
+              'format code"')
+
+    RED = '#EA312D'
+    BLACK = '#121212'
+    DARK_BROWN = '#262222'
+    GREEN = '#008000'
+    GREY = '#959595'
+    AZURE = '#3298FB'
+    YELLOW = '#C8B72F'
+    ORANGE = '#FF4A1B'
+
+    VQUALITY = {('Best quality video'): ['best', 'best'],
+                ('Worst quality video'): ['worst', 'worst']}
+
+    AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
+                ("wav"): ("wav", "--extract-audio --audio-format wav"),
+                ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
+                ("aac"): ("aac", "--extract-audio --audio-format aac"),
+                ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
+                ("vorbis"): ("vorbis", "--extract-audio --audio-format vorbis"),
+                ("opus"): ("opus", "--extract-audio --audio-format opus"),
+                ("flac"): ("flac", "--extract-audio --audio-format flac"),
+                }
+
+    AQUALITY = {('Best quality audio'): ['best', 'best'],
+                ('Worst quality audio'): ['worst', 'worst']}
+
+    CHOICE = [_('Default'),
+              _('Download audio and video splitted'),
+              _('Download Audio only'),
+              _('Download by format code')
+              ]
+    # -----------------------------------------------------------------#
+
     def __init__(self, parent):
         """
         The first item of the self.info is a complete list of all
@@ -142,14 +143,14 @@ class Downloader(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         frame.Add(sizer, 1, wx.ALL | wx.EXPAND, 5)
         self.choice = wx.Choice(self, wx.ID_ANY,
-                                choices=CHOICE,
+                                choices=Downloader.CHOICE,
                                 size=(-1, -1),
                                 )
         self.choice.SetSelection(0)
         sizer.Add(self.choice, 0, wx.EXPAND | wx.ALL, 15)
         grid_v = wx.FlexGridSizer(1, 3, 0, 0)
         sizer.Add(grid_v, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        f = [x for x in VQUALITY.keys()]
+        f = [x for x in Downloader.VQUALITY.keys()]
         self.cmbx_vq = wx.ComboBox(self, wx.ID_ANY, choices=f,
                                    size=(200, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
@@ -157,19 +158,21 @@ class Downloader(wx.Panel):
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
         grid_v.Add(self.cmbx_vq, 0, wx.ALL, 5)
-        self.cmbx_aq = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=[x for x in AQUALITY.keys()],
-                                   size=(200, -1), style=wx.CB_DROPDOWN |
-                                   wx.CB_READONLY
+        self.cmbx_aq = wx.ComboBox(
+                            self, wx.ID_ANY,
+                            choices=[x for x in Downloader.AQUALITY.keys()],
+                            size=(200, -1), style=wx.CB_DROPDOWN |
+                            wx.CB_READONLY
                                    )
         self.cmbx_aq.SetSelection(0)
         self.cmbx_aq.Disable()
         # grid_v.Add((20, 20), 0,)
         grid_v.Add(self.cmbx_aq, 0, wx.ALL, 5)
-        self.cmbx_af = wx.ComboBox(self, wx.ID_ANY,
-                                   choices=[x for x in AFORMATS.keys()],
-                                   size=(200, -1), style=wx.CB_DROPDOWN |
-                                   wx.CB_READONLY
+        self.cmbx_af = wx.ComboBox(
+                            self, wx.ID_ANY,
+                            choices=[x for x in Downloader.AFORMATS.keys()],
+                            size=(200, -1), style=wx.CB_DROPDOWN |
+                            wx.CB_READONLY
                                    )
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
@@ -219,7 +222,7 @@ class Downloader(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------- Properties
-        self.codText.SetBackgroundColour(DARK_BROWN)
+        self.codText.SetBackgroundColour(Downloader.DARK_BROWN)
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
@@ -247,14 +250,14 @@ class Downloader(wx.Panel):
             num = self.fcode.GetItemCount()
             for idx in range(num):
                 if self.fcode.IsChecked(idx):
-                    self.codText.SetDefaultStyle(wx.TextAttr(YELLOW))
-                    self.codText.AppendText('- %s\n' % (MSG_2))
+                    self.codText.SetDefaultStyle(wx.TextAttr(Downloader.YELLOW))
+                    self.codText.AppendText('- %s\n' % (Downloader.MSG_2))
             return
 
         if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
             self.parent.statusbar_msg('Youtube Downloader', None)
 
-        if PYLIB_YDL is not None:  # YuotubeDL is not used as module
+        if Downloader.PYLIB_YDL is not None:  # YuotubeDL isn't used as module
             viddisp, auddisp = 'video ', 'audio '
         else:
             viddisp, auddisp = 'video', 'audio only'
@@ -283,10 +286,10 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         for k, v in self.format_dict.items():
             if not v:
-                self.codText.SetDefaultStyle(wx.TextAttr(YELLOW))
+                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.YELLOW))
                 self.codText.AppendText('- %s :  ...?\n' % (k))
             else:
-                self.codText.SetDefaultStyle(wx.TextAttr(GREEN))
+                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.GREEN))
                 self.codText.AppendText('- %s :  %s  ...Ok\n' % (k, v))
         # print(self.format_dict)
     # ----------------------------------------------------------------------
@@ -374,7 +377,7 @@ class Downloader(wx.Panel):
                 self.fcode.SetItem(index, 7, acodec)
                 self.fcode.SetItem(index, 8, size)
                 if n == 0:
-                    self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                    self.fcode.SetItemBackgroundColour(index, Downloader.GREEN)
                 index += 1
         return None
     # ----------------------------------------------------------------------
@@ -457,7 +460,9 @@ class Downloader(wx.Panel):
                         self.fcode.SetItem(index, 4, note)
 
                         if i + 1 == count:
-                            self.fcode.SetItemBackgroundColour(index, 'GREEN')
+                            self.fcode.SetItemBackgroundColour(index,
+                                                               Downloader.GREEN
+                                                               )
                         index += 1
 
                     if fc.startswith('format code '):
@@ -475,7 +480,7 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         self.codText.Disable()
         msg = _('URLs loaded')
-        if OS != 'Darwin':
+        if Downloader.OS != 'Darwin':
             self.labcode.SetLabelMarkup("<b>%s</b>" % msg)
         else:
             self.labcode.SetLabel(msg)
@@ -502,7 +507,7 @@ class Downloader(wx.Panel):
         show URL data information. This method is called by
         main frame when the 'Show More' button is pressed.
         """
-        if PYLIB_YDL is not None:  # YuotubeDL is not used as module
+        if Downloader.PYLIB_YDL is not None:  # YuotubeDL is not used as module
             wx.MessageBox(_('"Show more" only is enabled when Videomass '
                             'uses youtube-dl as imported library.'),
                           'Videomass', wx.ICON_INFORMATION)
@@ -513,7 +518,7 @@ class Downloader(wx.Panel):
             if ret:
                 return
 
-        dialog = YDL_Mediainfo(self.info, OS)
+        dialog = YDL_Mediainfo(self.info, Downloader.OS)
         dialog.Show()
     # -----------------------------------------------------------------#
 
@@ -522,13 +527,13 @@ class Downloader(wx.Panel):
         Evaluate which method to call to enable download from "Format Code"
         """
         msg = _('Check at least one box for each URL (green selection)')
-        if OS != 'Darwin':
+        if Downloader.OS != 'Darwin':
             self.labcode.SetLabelMarkup("<b>%s</b>" % msg)
         else:
             self.labcode.SetLabel(msg)
         self.codText.Enable()
 
-        if PYLIB_YDL is not None:  # YuotubeDL is not used as module
+        if Downloader.PYLIB_YDL is not None:  # YuotubeDL isn't used as module
             ret = self.get_executableformatcode()
             if ret:
                 return  # do not enable fcode
@@ -570,7 +575,7 @@ class Downloader(wx.Panel):
         Set video qualities on 'best' or 'worst' during combobox event
         and self.choice selection == 0
         """
-        self.opt["V_QUALITY"] = VQUALITY[self.cmbx_vq.GetValue()]
+        self.opt["V_QUALITY"] = Downloader.VQUALITY[self.cmbx_vq.GetValue()]
         index = 0
         if self.choice.GetSelection() == 0:
             # set 'best' parameters on both audio and video.
@@ -590,7 +595,7 @@ class Downloader(wx.Panel):
         Set audio format to exporting during combobox event
         and self.choice selection == 2
         """
-        self.opt["A_FORMAT"] = AFORMATS.get(self.cmbx_af.GetValue())
+        self.opt["A_FORMAT"] = Downloader.AFORMATS.get(self.cmbx_af.GetValue())
         index = 0
         for link in self.parent.data_url:
             self.fcode.SetItem(index, 3, '')
@@ -602,7 +607,7 @@ class Downloader(wx.Panel):
         Set audio qualities on 'best' or 'worst' during combobox event
         and self.choice selection == 1
         """
-        self.opt["A_QUALITY"] = AQUALITY.get(self.cmbx_aq.GetValue())
+        self.opt["A_QUALITY"] = Downloader.AQUALITY.get(self.cmbx_aq.GetValue())
         index = 0
         # set string to audio and video qualities independently for player
         q = '%svideo+%saudio' % (self.opt["V_QUALITY"][1],
@@ -702,7 +707,7 @@ class Downloader(wx.Panel):
                 return None
             return format_code
 
-        if PYLIB_YDL is None:  # ----------- youtube-dl is used as library
+        if Downloader.PYLIB_YDL is None:  # youtube-dl is used as library
             postprocessors = []
             if self.choice.GetSelection() == 2:
                 postprocessors.append({'key': 'FFmpegExtractAudio',
@@ -762,7 +767,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
                 if not code:
-                    self.parent.statusbar_msg(MSG_1, RED)
+                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED)
                     return
                 data = {'format': '',
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
@@ -822,7 +827,7 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = _getformatcode()
                 if not code:
-                    self.parent.statusbar_msg(MSG_1, RED)
+                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED)
                     return
                 cmd = [(f'{self.opt["METADATA"][1]} '
                         f'{self.opt["SUBTITLES"][1]} '

@@ -29,17 +29,11 @@ import wx
 import os
 from pubsub import pub
 import subprocess
+import platform
+if not platform.system() == 'Windows':
+    import shlex
 from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
-
-# path to the configuration directory:
-get = wx.GetApp()
-LOGDIR = get.LOGdir
-OS = get.OS
-FFMPEG_URL = get.FFMPEG_url
-
-if not OS == 'Windows':
-    import shlex
 
 
 class VolumeDetectThread(Thread):
@@ -51,8 +45,9 @@ class VolumeDetectThread(Thread):
     NOTE: all error handling (including verification of the
     existence of files) is entrusted to ffmpeg, except for the
     lack of ffmpeg of course.
+
     """
-    def __init__(self, timeseq, filelist, audiomap, OS):
+    def __init__(self, timeseq, filelist, audiomap, logdir, ffmpeg_url):
         """
         Replace /dev/null with NUL on Windows.
 
@@ -68,12 +63,13 @@ class VolumeDetectThread(Thread):
         self.filelist = filelist
         self.time_seq = timeseq
         self.audiomap = audiomap
+        self.logdir = logdir
+        self.ffmpeg_url = ffmpeg_url
         self.status = None
         self.data = None
-        self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
-        self.logf = os.path.join(LOGDIR, 'Videomass_volumedected.log')
-
-        write_log('Videomass_volumedected.log', LOGDIR)
+        self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
+        self.logf = os.path.join(self.logdir, 'Videomass_volumedected.log')
+        write_log('Videomass_volumedected.log', self.logdir)
         # set initial file LOG
 
         self.start()  # start the thread (va in self.run())
@@ -91,14 +87,14 @@ class VolumeDetectThread(Thread):
 
         for files in self.filelist:
             cmd = ('{0} {1} -i "{2}" -hide_banner {3} -af volumedetect '
-                   '-vn -sn -dn -f null {4}').format(FFMPEG_URL,
+                   '-vn -sn -dn -f null {4}').format(self.ffmpeg_url,
                                                      self.time_seq,
                                                      files,
                                                      self.audiomap,
                                                      self.nul)
             self.logWrite(cmd)
 
-            if not OS == 'Windows':
+            if not platform.system() == 'Windows':
                 cmd = shlex.split(cmd)
                 info = None
             else:  # Hide subprocess window on MS Windows

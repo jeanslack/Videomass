@@ -26,15 +26,13 @@
 
 #########################################################
 import subprocess
+import platform
 import shutil
 import ssl
 import urllib.request
 import wx
 from pubsub import pub
 from threading import Thread
-
-get = wx.GetApp()
-OS = get.OS
 
 
 class CheckNewRelease(Thread):
@@ -83,6 +81,7 @@ class Command_Execution(Thread):
     Executes generic command line with an executable, e.g.
     - read the installed version of youtube-dl
     - update the downloaded sources of youtube-dl
+
     """
     def __init__(self, cmd):
         """
@@ -93,6 +92,7 @@ class Command_Execution(Thread):
         """
         Thread.__init__(self)
         """initialize"""
+        self.OS = platform.system()
         self.cmd = cmd
         self.data = None
         self.status = None
@@ -105,7 +105,7 @@ class Command_Execution(Thread):
         Execute command line via subprocess class and get output
         at the end of the process.
         """
-        if OS == 'Windows':
+        if self.OS == 'Windows':
             cmd = " ".join(self.cmd)
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
@@ -127,7 +127,7 @@ class Command_Execution(Thread):
             self.status = ('%s' % oserr, 'error')
         else:
             if p.returncode:  # if returncode == 1
-                if not out[0] and not out[1] and OS == 'Windows':
+                if not out[0] and not out[1] and self.OS == 'Windows':
                     self.status = (_('Requires MSVCR100.dll\nTo resolve this '
                                      'problem install: Microsoft Visual C++ '
                                      '2010 Redistributable Package (x86)',

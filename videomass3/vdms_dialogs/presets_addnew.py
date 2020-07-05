@@ -31,26 +31,27 @@ import os
 import webbrowser
 import json
 
-# setting the path to the configuration directory:
-get = wx.GetApp()
-DIR_CONF = get.DIRconf
-OS = get.OS
-
-PASS_1 = _("1-PASS, Do not start with `ffmpeg "
-           "-i filename`; do not end with "
-           "`output-filename`"
-           )
-PASS_2 = _("2-PASS (optional), Do not start with "
-           "`ffmpeg -i filename`; do not end with "
-           "`output-filename`")
-
-FORMAT = _("Supported Formats list (optional). Do not include the `.`")
-
 
 class MemPresets(wx.Dialog):
     """
     Show dialog to store and edit profiles of a selected preset.
+
     """
+    get = wx.GetApp()
+    DIR_CONF = get.DIRconf
+    OS = get.OS
+
+    PASS_1 = _("1-PASS, Do not start with `ffmpeg "
+            "-i filename`; do not end with "
+            "`output-filename`"
+            )
+    PASS_2 = _("2-PASS (optional), Do not start with "
+            "`ffmpeg -i filename`; do not end with "
+            "`output-filename`")
+
+    FORMAT = _("Supported Formats list (optional). Do not include the `.`")
+    # ------------------------------------------------------------------
+
     def __init__(self, parent, arg, filename, array, title):
         """
         arg: evaluate if this dialog is used for add new profile or
@@ -60,7 +61,7 @@ class MemPresets(wx.Dialog):
         arg = 'addprofile' from video and audio conversions
 
         """
-        self.path_prst = os.path.join(DIR_CONF, 'presets',
+        self.path_prst = os.path.join(MemPresets.DIR_CONF, 'presets',
                                       '%s.prst' % filename
                                       )
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
@@ -89,7 +90,8 @@ class MemPresets(wx.Dialog):
                                         style=wx.TE_PROCESS_ENTER
                                         )
         box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 15)
-        box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, PASS_1),
+        box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                   MemPresets.PASS_1),
                                       wx.VERTICAL
                                       )
         size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 15)
@@ -98,7 +100,8 @@ class MemPresets(wx.Dialog):
                                       wx.TE_MULTILINE
                                       )
         box_pass1.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 15)
-        box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, PASS_2),
+        box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                   MemPresets.PASS_2),
                                       wx.VERTICAL
                                       )
         size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 15)
@@ -109,7 +112,8 @@ class MemPresets(wx.Dialog):
         box_pass2.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 15)
         size_formats = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(size_formats, 0, wx.ALL | wx.EXPAND, 0)
-        box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, FORMAT),
+        box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
+                                                  MemPresets.FORMAT),
                                      wx.VERTICAL
                                      )
         size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 15)
@@ -147,7 +151,7 @@ class MemPresets(wx.Dialog):
 
         # ----------------------Set Properties----------------------#
         # set_properties:
-        if OS == 'Darwin':
+        if MemPresets.OS == 'Darwin':
             self.pass_1_cmd.SetFont(wx.Font(12, wx.MODERN,
                                             wx.NORMAL, wx.NORMAL))
             self.pass_2_cmd.SetFont(wx.Font(12, wx.MODERN,

@@ -39,7 +39,6 @@ import builtins
 builtins.__dict__['_'] = wx.GetTranslation
 
 
-
 class Videomass(wx.App):
     """
     Check for the essentials Before starting the Videomass main frame

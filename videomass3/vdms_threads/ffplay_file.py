@@ -28,19 +28,12 @@
 #########################################################
 import wx
 import subprocess
+import platform
+if not platform.system() == 'Windows':
+    import shlex
 import os
 from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
-
-# get data from bootstrap
-get = wx.GetApp()
-LOGDIR = get.LOGdir
-FFPLAY_URL = get.FFPLAY_url
-ffplay_loglev = get.FFPLAY_loglev
-OS = get.OS
-
-if not OS == 'Windows':
-    import shlex
 
 
 def msg_Error(msg):
@@ -67,8 +60,11 @@ class File_Play(Thread):
     """
     Simple multimedia playback with subprocess.Popen class to run ffplay
     by FFmpeg (ffplay is a player which need x-window-terminal-emulator)
+
     """
-    def __init__(self, filepath, timeseq, param):
+
+    def __init__(self, filepath, timeseq, param, logdir,
+                 ffplay_url, ffplay_loglev):
         """
         The self.FFPLAY_loglevel has flag 'error -hide_banner'
         by default (see videomass.conf).
@@ -79,8 +75,11 @@ class File_Play(Thread):
         self.filename = filepath  # file name selected
         self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
-        self.logf = os.path.join(LOGDIR, 'Videomass_FFplay.log')
-        write_log('Videomass_FFplay.log', LOGDIR)
+        self.logdir = logdir
+        self.ffplay = ffplay_url
+        self.ffplay_loglev = ffplay_loglev
+        self.logf = os.path.join(self.logdir, 'Videomass_FFplay.log')
+        write_log('Videomass_FFplay.log', self.logdir)
         # set initial file LOG
 
         self.start()
@@ -94,14 +93,14 @@ class File_Play(Thread):
         """
 
         # time.sleep(.5)
-        cmd = '%s %s %s -i "%s" %s' % (FFPLAY_URL,
+        cmd = '%s %s %s -i "%s" %s' % (self.ffplay,
                                        self.time_seq,
-                                       ffplay_loglev,
+                                       self.ffplay_loglev,
                                        self.filename,
                                        self.param,
                                        )
         self.logWrite(cmd)
-        if not OS == 'Windows':
+        if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
             info = None
             shell = False
