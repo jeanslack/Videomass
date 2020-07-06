@@ -293,7 +293,7 @@ class MainFrame(wx.Frame):
             self.SetSize((980, 650))
         else:
             # self.SetSize((930, 600))
-            self.SetSize((980, 750))
+            self.SetSize((1280, 800))
         # self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # Tooltips:

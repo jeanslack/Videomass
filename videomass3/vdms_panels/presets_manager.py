@@ -472,10 +472,10 @@ class PrstPan(wx.Panel):
         Populates Presets list with JSON data from *.prst files.
         See presets_manager_properties.py
         """
-        self.list_ctrl.InsertColumn(0, _('Profile Name'), width=150)
-        self.list_ctrl.InsertColumn(1, _('Description'), width=250)
-        self.list_ctrl.InsertColumn(2, _('Output Format'), width=100)
-        self.list_ctrl.InsertColumn(3, _('Supported Formats List'), width=150)
+        self.list_ctrl.InsertColumn(0, _('Profile Name'), width=250)
+        self.list_ctrl.InsertColumn(1, _('Description'), width=350)
+        self.list_ctrl.InsertColumn(2, _('Output Format'), width=200)
+        self.list_ctrl.InsertColumn(3, _('Supported Formats List'), width=220)
 
         path = os.path.join('%s' % self.user_prst,
                             '%s.prst' % self.cmbx_prst.GetValue()

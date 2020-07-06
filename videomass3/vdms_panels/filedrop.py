@@ -187,7 +187,7 @@ class FileDnD(wx.Panel):
 
         # properties
         self.flCtrl.InsertColumn(0, _('Input files'), width=550)
-        self.flCtrl.InsertColumn(1, _('Duration'), width=150)
+        self.flCtrl.InsertColumn(1, _('Duration'), width=230)
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('File size'), width=150)
         if self.OS != 'Darwin':

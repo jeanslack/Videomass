@@ -27,11 +27,11 @@ Videomass can also be run from the Python3 console (interactive mode):
 
 #--------------------------------------------------------------------------#
 
-Installing with pip tool: [Linux/Macintosh/Unix/Windows]
+Installing with pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
 
     python3 -m pip install videomass
 
-Upgrading with pip tool: [Linux/Macintosh/Unix/Windows]
+Upgrading with pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
 
     python3 -m pip install -U videomass
 
@@ -45,13 +45,13 @@ https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-comman
 
 #--------------------------------------------------------------------------#
 
-Build as wheel: [Linux/Macintosh/Unix/Windows]
+Build as wheel: (Linux, MacOs, FreeBSD, Windows, etc.)
 
 python3 setup.py sdist bdist_wheel
 
 #--------------------------------------------------------------------------#
 
-Build as .deb binary: [Linux Debian]
+Build as .deb binary: (Linux Debian, Ubuntu, Mint, etc.)
 
 Require: stdeb (visit https://pypi.org/project/stdeb/ for documentation)
 
@@ -63,7 +63,7 @@ https://github.com/jeanslack/Videomass/wiki/Package-for-Debian-and-derivatives
 
 #--------------------------------------------------------------------------#
 
-Build as executable on Linux, Windows, MacOs
+Build as executable (Linux, Windows, MacOs)
 
 require: pyinstaller
 
