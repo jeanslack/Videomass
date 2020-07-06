@@ -31,6 +31,7 @@ from threading import Thread
 try:
     import youtube_dl
 except (ModuleNotFoundError, ImportError) as nomodule:
+    pass
 
 
 class MyLogger(object):

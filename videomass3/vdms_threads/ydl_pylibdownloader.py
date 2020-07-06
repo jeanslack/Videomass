@@ -34,6 +34,7 @@ from pubsub import pub
 try:
     import youtube_dl
 except (ModuleNotFoundError, ImportError) as nomodule:
+    pass
 
 
 def logWrite(cmd, sterr, logname, logdir):

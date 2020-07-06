@@ -62,3 +62,23 @@ Please, Visit the Wiki page for more info:
 https://github.com/jeanslack/Videomass/wiki/Package-for-Debian-and-derivatives
 
 #--------------------------------------------------------------------------#
+
+Build as executable on Linux, Windows, MacOs
+
+require: pyinstaller
+
+Use the 'develop/tools/pyinstaller_setup.py' script like this
+
+    python3 develop/tools/pyinstaller_setup.py -h
+
+and choose the option you want .
+
+#--------------------------------------------------------------------------#
+
+Build as AppImage (only Linux)
+
+require: pyinstaller
+
+Use the 'develop/tools/makeAppImage.py' script like this:
+
+    python3 develop/tools/makeAppImage.py
