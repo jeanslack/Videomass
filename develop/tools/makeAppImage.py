@@ -35,16 +35,16 @@ if not platform.system() == 'Linux':
     sys.exit('ERROR: invalid platform, this tool work on Linux only, exit.')
 
 RELEASES = os.path.realpath("./APPDIR_RELESES/")
-MACHINE = platform.machine()  # current machine ARCH (i386, x86_64)
+MACHINE = platform.machine()  # current machine ARCH (i386, x86_64, etc.)
 
 
-def make_appimage(releases=RELEASES, machine=MACHINE):
+def make_appimage(arch, releases=RELEASES):
     """
     Make Videomass.AppImage for deployment.
     All of This assume that follow resources exists:
         1)  The Videomass source directory (as by git sources)
         2) 'APPDIR_RELESES' directory on videomass sources base dir (root)
-        2)  linuxdeploy.AppImage in '/$HOME/Application' directory
+        2)  linuxdeploy*.AppImage in '/$HOME/Application' directory
 
     """
     this = os.path.realpath(os.path.abspath(__file__))
@@ -65,7 +65,7 @@ def make_appimage(releases=RELEASES, machine=MACHINE):
 
     # create appdir with linuxdeploy.AppImage:
     cmd = ["version={}".format(version),
-           "$HOME/Applications/linuxdeploy-%s.AppImage" % machine,
+           "$HOME/Applications/linuxdeploy-%s.AppImage" % arch,
            "--appdir={}".format(appdir),
            "--executable={}".format(executable),
            "--desktop-file={}".format(desktop_file),
@@ -75,7 +75,7 @@ def make_appimage(releases=RELEASES, machine=MACHINE):
 
     # package AppImage from appdir
     cmd2 = ["version={}".format(version),
-            "$HOME/Applications/linuxdeploy-%s.AppImage" % machine,
+            "$HOME/Applications/linuxdeploy-%s.AppImage" % arch,
             "--appdir={}".format(appdir),
             "--output appimage"
             ]
@@ -84,24 +84,41 @@ def make_appimage(releases=RELEASES, machine=MACHINE):
 
 def main(releases=RELEASES, machine=MACHINE):
     """
-    check for resources and requirements to make Videomass.AppImage.
+    check for resources and requirements to make
+    Videomass-i386.AppImage or Videomass-x86_64.AppImage .
+    NOTE there are only linuxdeploy for i386 and x86_64 architectures for now
+
     """
+    if not machine:
+        sys.exit('ERROR: CPU architecture value cannot be determined, exit.')
+
+    elif machine in ('i386', 'i486', 'i586', 'i686'):
+        arch = 'i386'
+
+    elif machine == 'x86_64':
+        arch = machine
+
+    else:
+        sys.exit("ERROR: Sorry, there is no linuxdeploy tool available "
+                 "for this architecture '%s' but only for 'i386' and "
+                 "'x86_64' architectures." % machine)
+
     if not os.path.isdir(releases):
         os.mkdir(releases)  # make dir 'APPDIR_RELESES'
 
     linuxdeploy = os.path.expanduser("~/Applications/linuxdeploy-%s.AppImage"
-                                     % machine)
+                                     % arch)
     if not os.path.exists(linuxdeploy):
         if not os.path.isdir(os.path.dirname(linuxdeploy)):
             os.mkdir(os.path.dirname(linuxdeploy))
-        # try to get linuxdeploy AppImage from url based on machine ARCH
+        # try to get linuxdeploy AppImage from url based on machine arch
         import shutil
         import stat
         import ssl
         import urllib.request
 
         url = ("https://github.com/linuxdeploy/linuxdeploy/releases/"
-               "download/continuous/linuxdeploy-%s.AppImage" % machine)
+               "download/continuous/linuxdeploy-%s.AppImage" % arch)
         try:
             with urllib.request.urlopen(url) as response,\
                  open(linuxdeploy, 'wb') as out_file:
@@ -131,7 +148,7 @@ def main(releases=RELEASES, machine=MACHINE):
             sys.exit(err)
         print("\nPyinstaller build done.\n")
 
-    make_appimage()
+    make_appimage(arch)
 
 
 if __name__ == '__main__':
