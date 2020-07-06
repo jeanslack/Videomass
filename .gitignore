@@ -10,6 +10,8 @@ deb_dist
 ENV
 env
 APPDIR_RELESES
+*.spec
+*.AppImage
 *.egg-info
 Pipfile
 Pipfile.lock
