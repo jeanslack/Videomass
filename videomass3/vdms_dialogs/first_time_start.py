@@ -33,18 +33,18 @@ from shutil import which
 
 class FirstStart(wx.Dialog):
     """
-    Shows a dialog wizard to locate FFmpeg self.executables
+    Shows a dialog wizard to locate FFmpeg executables
     """
-    MSG1 = _("This wizard will attempt to automatically detect FFmpeg in\n"
-         "your system.\n\n"
-         "In addition, it allows you to manually set a custom path\n"
-         "to locate FFmpeg and its associated self.executables.\n\n"
-         "Also, Remember that you can always change these settings\n"
-         "later, through the Setup dialog.\n\n"
-         "- Press 'Auto-detection' to start the system search now."
-         "\n\n"
-         "- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
-         )
+    MSG1 = (_("This wizard will attempt to automatically detect FFmpeg in\n"
+              "your system.\n\n"
+              "In addition, it allows you to manually set a custom path\n"
+              "to locate FFmpeg and its associated executables.\n\n"
+              "Also, Remember that you can always change these settings\n"
+              "later, through the Setup dialog.\n\n"
+              "- Press 'Auto-detection' to start the system search now."
+              "\n\n"
+              "- Press 'Browse..' to indicate yourself where FFmpeg is "
+              "located.\n"))
 
     def __init__(self, img):
         """
@@ -54,15 +54,6 @@ class FirstStart(wx.Dialog):
         self.getfileconf = get.FILEconf
         self.workdir = get.WORKdir
         self.oS = get.OS
-
-        if self.oS == 'Windows':
-            self.executables = {'ffmpeg.exe': "",
-                                'ffprobe.exe': "",
-                                'ffplay.exe': ""}
-        else:
-            self.executables = {'ffmpeg': "",
-                                'ffprobe': "",
-                                'ffplay': ""}
 
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor"""
@@ -126,13 +117,23 @@ class FirstStart(wx.Dialog):
 
     def Browse(self, event):
         """
-        The user find and import FFmpeg self.executables folder with
+        The user find and import FFmpeg executables folder with
         ffmpeg, ffprobe, ffplay inside on Posix or ffmpeg.exe, ffprobe.exe,
         ffplay.exe inside on Windows NT.
 
         """
+        if self.oS == 'Windows':
+            executables = {'ffmpeg.exe': "",
+                           'ffprobe.exe': "",
+                           'ffplay.exe': ""}
+        else:
+            executables = {'ffmpeg': "",
+                           'ffprobe': "",
+                           'ffplay': ""}
+
         dirdialog = wx.DirDialog(self,
-                                 _("Videomass: locate the ffmpeg folder"),
+                                 _("Locate the executables folder of "
+                                   "the ffmpeg, ffprobe and ffplay"),
                                  "",
                                  wx.DD_DEFAULT_STYLE |
                                  wx.DD_DIR_MUST_EXIST
@@ -143,25 +144,26 @@ class FirstStart(wx.Dialog):
 
             filelist = []
             for ff in os.listdir(path):
-                if ff in self.executables.keys():
-                    self.executables[ff] = os.path.join("%s" % path, "%s" % ff)
+                if ff in executables.keys():
+                    executables[ff] = os.path.join("%s" % path, "%s" % ff)
 
             error = False
-            for key, val in self.executables.items():
+            for key, val in executables.items():
                 if not val:
                     error = True
                     break
             if error:
-                wx.MessageBox(_("File not found: '{0}'\n"
-                                "'{1}' does not exist!\n\n"
-                                "Need {2}\n\n"
-                                "Please, choose a valid path.").format(
-                                os.path.join("%s" % path, "%s" % key),
-                                key, [k for k in self.executables.keys()]),
-                              "Videomass: warning!", wx.ICON_WARNING, self)
+                wx.MessageBox(
+                        _("File not found: '{0}'\n"
+                          "'{1}' does not exist!\n\n"
+                          "Need {2}\n\n"
+                          "Please, choose a valid path.").format(
+                          os.path.join("%s" % path, "%s" % key),
+                          key, [k for k in executables.keys()]),
+                          "Videomass: warning!", wx.ICON_WARNING, self)
                 return
 
-            self.completion([v for v in self.executables.values()])
+            self.completion([v for v in executables.values()])
     # -------------------------------------------------------------------#
 
     def Detect(self, event):
@@ -174,7 +176,12 @@ class FirstStart(wx.Dialog):
         otherwise write the executable pathname in the configuration file.
         """
         local = False
-        for required in self.executables:
+        if self.oS == 'Windows':
+            executables = ['ffmpeg.exe', 'ffprobe.exe', 'ffplay.exe']
+        else:
+            executables = ['ffmpeg', 'ffprobe', 'ffplay']
+
+        for required in executables:
             if which(required):
                 installed = True
             else:
@@ -195,7 +202,7 @@ class FirstStart(wx.Dialog):
                     break
 
         if not installed:
-            for x in self.executables:
+            for x in executables:
                 if not os.path.isfile("%s/FFMPEG_BIN/bin/%s" %
                                       (self.workdir, x)):
                     bin_on_src_dir = False
@@ -203,7 +210,7 @@ class FirstStart(wx.Dialog):
                 else:
                     bin_on_src_dir = True
             if not bin_on_src_dir:
-                wx.MessageBox(_("'{}' is not installed on the system.\n"
+                wx.MessageBox(_("'{}' is not installed on the system. "
                                 "Please, install it or set a custom path "
                                 "using the 'Browse..' "
                                 "button.").format(required),
@@ -211,8 +218,8 @@ class FirstStart(wx.Dialog):
                 return
             else:
                 if wx.MessageBox(_("Videomass already seems to include "
-                                   "FFmpeg and the self.executables "
-                                   "associated with it.\n\n"
+                                   "FFmpeg and the executables associated "
+                                   "with it.\n\n"
                                    "Are you sure you want to use them?"),
                                  _('Videomass: Please Confirm'),
                                  wx.ICON_QUESTION |
@@ -220,13 +227,13 @@ class FirstStart(wx.Dialog):
                                  None) == wx.YES:
 
                     ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
-                                                       self.executables[0]
+                                                       executables[0]
                                                        )
                     ffprobe = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
-                                                        self.executables[1]
+                                                        executables[1]
                                                         )
                     ffplay = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
-                                                       self.executables[2]
+                                                       executables[2]
                                                        )
                 else:
                     return
@@ -236,9 +243,9 @@ class FirstStart(wx.Dialog):
                 ffprobe = "/usr/local/bin/ffprobe"
                 ffplay = "/usr/local/bin/ffplay"
             else:
-                ffmpeg = which(self.executables[0])
-                ffprobe = which(self.executables[1])
-                ffplay = which(self.executables[2])
+                ffmpeg = which(executables[0])
+                ffprobe = which(executables[1])
+                ffplay = which(executables[2])
 
         self.completion([ffmpeg, ffprobe, ffplay])
     # -------------------------------------------------------------------#
