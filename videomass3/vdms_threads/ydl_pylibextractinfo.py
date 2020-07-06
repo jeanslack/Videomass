@@ -28,12 +28,9 @@
 import wx
 from pubsub import pub
 from threading import Thread
-
-get = wx.GetApp()  # get data from bootstrap
-PYLIBYDL = get.pylibYdl
-if PYLIBYDL is None:  # youtube-dl is installed
+try:
     import youtube_dl
-OS = get.OS
+except (ModuleNotFoundError, ImportError) as nomodule:
 
 
 class MyLogger(object):
@@ -70,6 +67,9 @@ class Ydl_EI_Pylib(Thread):
     to get output during process (see help(youtube_dl.YoutubeDL) ) .
 
     """
+    get = wx.GetApp()  # get data from bootstrap
+    OS = get.OS
+
     def __init__(self, url):
         """
         Attributes defined here:
@@ -80,7 +80,7 @@ class Ydl_EI_Pylib(Thread):
         """initialize"""
         self.url = url
         self.data = None
-        if OS == 'Windows':
+        if Ydl_EI_Pylib.OS == 'Windows':
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

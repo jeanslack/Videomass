@@ -7,13 +7,14 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-July 04, 2020 V.2.8.9
+July 06, 2020 V.2.8.9
 +------------------------------------+
 
 BUGS:
     * [WINDOWS] Fixed incorrect assignment for the sources directory in
       `generate_INNO_setup.py` script.
-    * On Python 3.8 fixed `too many values to unpack` error on ffmpeg_conf.py
+
+    * For Python 3.8 fixed `too many values to unpack` error on ffmpeg_conf.py
       mini frame.
 
 NEWS:
@@ -35,17 +36,26 @@ NEWS:
         - Fedora 32 (Workstation Edition) x86_64
         - Manjaro Linux 20.0.3 (Lysia) x86_64
 
-    * Created new tools on 'develop/tools' for automate buildings with
-      pyinstaller and linuxdeploy*.AppImage.
+    * Made 'develop/tools/pyinstaller_setup.py' script to make Videomass
+      executable with pyinstaller on Linux, Windows and MacOs.
+
+    * [LINUX] Made 'develop/tools/makeAppImage.py' to automate AppImage
+      building for Linux.
+
     * Made a bit more readable the configuration file. New version of
       videomass.conf and videomassWin32.conf will replace the old one
       installed.
 
 IMPROVEMENTS:
-    * [LINUX] Improved usability on Linux with a wizard dialog to find ffmpeg
-      if not installed or linked in your system.
+    * [LINUX] Improved usability on Linux by adding a wizard dialog to set
+      ffmpeg on the system when it's not located with the binary paths in
+      the configuration file.
+
     * [UNIX] Added check to verify execution permissions when ffmpeg
       executables are linked locally.
+
+    * [CODE] Moved as class's members the global CONSTANSTS values to
+      maintenence clear namespace.
 
 +------------------------------------+
 June 16, 2020 V.2.8.8

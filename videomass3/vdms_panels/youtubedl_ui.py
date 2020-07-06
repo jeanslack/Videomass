@@ -74,8 +74,7 @@ class Downloader(wx.Panel):
     This panel gives a graphic layout to some features of youtube-dl
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
+    get = wx.GetApp()  # get videomass wx.App attribute
     OS = get.OS
     PYLIB_YDL = get.pylibYdl
 

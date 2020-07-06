@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 #########################################################
-# Name: ydl_pylibrary.py
+# Name: ydl_pylibdownloader.py
 # Porpose: long processing task with youtube_dl python library
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -31,14 +31,9 @@ import itertools
 from threading import Thread
 import time
 from pubsub import pub
-
-get = wx.GetApp()  # get videomass wx.App attribute
-PYLIBYDL = get.pylibYdl
-if PYLIBYDL is None:  # youtube_dl as python library
+try:
     import youtube_dl
-OS = get.OS
-LOGDIR = get.LOGdir
-FFMPEG_URL = get.FFMPEG_url
+except (ModuleNotFoundError, ImportError) as nomodule:
 
 
 def logWrite(cmd, sterr, logname, logdir):
@@ -138,6 +133,11 @@ class Ydl_DL_Pylib(Thread):
     or by help(youtube_dl.YoutubeDL)
 
     """
+    get = wx.GetApp()  # get videomass wx.App attribute
+    OS = get.OS
+    LOGDIR = get.LOGdir
+    FFMPEG_URL = get.FFMPEG_url
+
     def __init__(self, varargs, logname):
         """
         Attributes defined here:
@@ -160,7 +160,7 @@ class Ydl_DL_Pylib(Thread):
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
-        if OS == 'Windows':
+        if Ydl_DL_Pylib.OS == 'Windows':
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
@@ -202,7 +202,7 @@ class Ydl_DL_Pylib(Thread):
                     'noplaylist': self.opt['noplaylist'],
                     'no_color': True,
                     'nocheckcertificate': self.nocheckcertificate,
-                    'ffmpeg_location': '{}'.format(FFMPEG_URL),
+                    'ffmpeg_location': '{}'.format(Ydl_DL_Pylib.FFMPEG_URL),
                     'postprocessors': self.opt['postprocessors'],
                     'logger': MyLogger(),
                     'progress_hooks': [my_hook],
@@ -211,7 +211,7 @@ class Ydl_DL_Pylib(Thread):
             logWrite(ydl_opts,
                      '',
                      self.logname,
-                     LOGDIR,
+                     Ydl_DL_Pylib.LOGDIR,
                      )  # write n/n + command only
 
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:

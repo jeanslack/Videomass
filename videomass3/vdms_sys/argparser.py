@@ -45,23 +45,27 @@ def args():
                        )
     parser.add_argument(
                 '-c', '--check',
-                help=("List of all videomass dependencies (required and "
-                      "optional) installed on the system."),
+                help=("List of executables used by Videomass found on the "
+                      "system"),
                 action="store_true",
                        )
 
     args = parser.parse_args()
 
     if args.check:
-        listing = ['ffmpeg', 'ffprobe', 'ffplay',
-                   'mpv', 'youtube-dl', 'atomicparsley'
+        listing = ['ffmpeg', 'ffprobe', 'ffplay', 'youtube-dl',
+                   'mpv', 'atomicparsley'
                    ]
-        print('Check for installed dependencies:')
+        print('List of executables used by Videomass:')
         for required in listing:
-            if which(required, mode=os.F_OK | os.X_OK, path=None):
-                print("\t'%s' ..Ok" % required)
+            if required == 'mpv' or required == 'atomicparsley':
+                opt = '[Optional]'
             else:
-                print("\t'%s' ..Not Installed" % required)
+                opt = '[Required]'
+            if which(required, mode=os.F_OK | os.X_OK, path=None):
+                print("\t%s '%s' ..Ok" % (opt, required))
+            else:
+                print("\t%s '%s' ..Not Installed" % (opt, required))
         return
 
     elif args.version:

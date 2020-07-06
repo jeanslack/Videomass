@@ -70,8 +70,8 @@ class AV_Conv(wx.Panel):
               'm4v': 'null', 'ogg': 'ogg', 'webm': 'webm',
               }
     # Namings in the video container selection combo box:
-    VCODECS = (
-            {"Mpeg4": {"-c:v mpeg4": ["avi"]},
+    VCODECS = ({
+             "Mpeg4": {"-c:v mpeg4": ["avi"]},
              "x264": {"-c:v libx264": ["mkv", "mp4", "avi", "flv", "m4v"]},
              "x265": {"-c:v libx265": ["mkv", "mp4", "avi", "m4v"]},
              "Theora": {"-c:v libtheora": ["ogv"]},
@@ -80,7 +80,7 @@ class AV_Conv(wx.Panel):
              "Vp9": {"-c:v libvpx-vp9": ["webm"]},
              "Copy": {"-c:v copy": ["mkv", "mp4", "avi", "flv",
                                     "m4v", "ogv", "webm", "Copy"]}
-             })
+                })
     # Namings in the audio codec selection on audio radio box:
     ACODECS = {
             ('Auto'): (""),
@@ -204,7 +204,7 @@ class AV_Conv(wx.Panel):
             "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "",
             "VFilters": "", "PixFmt": "-pix_fmt yuv420p", "Deadline": "",
             "CpuUsed": "", "RowMthreading": "",
-            }
+                     }
         self.parent = parent
         self.normdetails = []
         self.oS = OS

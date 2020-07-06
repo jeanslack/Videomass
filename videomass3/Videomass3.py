@@ -126,6 +126,7 @@ class Videomass(wx.App):
             except (ModuleNotFoundError, ImportError) as nomodule:
                 self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl')
                 sys.path.append(self.execYdl)
+
                 try:
                     from youtube_dl import YoutubeDL
 
