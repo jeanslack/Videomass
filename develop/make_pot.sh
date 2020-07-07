@@ -68,5 +68,5 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 if [ $? != 0 ]; then
     echo 'Failed!'
 else
-    echo "Ready on: '${target}'"
+    echo "'videomass.po' was created on: '${target}'"
 fi

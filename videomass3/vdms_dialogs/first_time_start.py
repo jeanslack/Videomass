@@ -7,7 +7,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: July.07.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -131,12 +131,9 @@ class FirstStart(wx.Dialog):
                            'ffprobe': "",
                            'ffplay': ""}
 
-        dirdialog = wx.DirDialog(self,
-                                 _("Locate the executables folder of "
-                                   "the ffmpeg, ffprobe and ffplay"),
-                                 "",
-                                 wx.DD_DEFAULT_STYLE |
-                                 wx.DD_DIR_MUST_EXIST
+        dirdialog = wx.DirDialog(self, _("Locate the folder with ffmpeg, "
+                                         "ffprobe and ffplay"), "",
+                                 wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST
                                  )
         if dirdialog.ShowModal() == wx.ID_OK:
             path = "%s" % dirdialog.GetPath()
@@ -154,13 +151,11 @@ class FirstStart(wx.Dialog):
                     break
             if error:
                 wx.MessageBox(
-                        _("File not found: '{0}'\n"
-                          "'{1}' does not exist!\n\n"
-                          "Need {2}\n\n"
+                        _("'{}'\nFile not found: '{}'\n"
+                          "{}  > are required.\n\n"
                           "Please, choose a valid path.").format(
-                          os.path.join("%s" % path, "%s" % key),
-                          key, [k for k in executables.keys()]),
-                          "Videomass: warning!", wx.ICON_WARNING, self)
+                          path, key, [k for k in executables.keys()]),
+                        "Videomass: error!", wx.ICON_ERROR, self)
                 return
 
             self.completion([v for v in executables.values()])
