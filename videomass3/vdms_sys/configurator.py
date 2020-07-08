@@ -100,20 +100,20 @@ class Data_Source(object):
                 # HACK check this
                 dirname = os.path.dirname(sys.executable)
                 pythonpath = os.path.join(dirname, 'Script', 'videomass')
-                #self.icodir = dirname + '\\share\\videomass\\icons'
+                # self.icodir = dirname + '\\share\\videomass\\icons'
                 self.videomass_icon = self.icodir + "\\videomass.png"
                 self.wizard_icon = self.icodir + "\\videomass_wizard.png"
 
             elif '/tmp/.mount_' in sys.executable or \
-                os.path.exists(os.getcwd() + '/AppRun'):
+                 os.path.exists(os.getcwd() + '/AppRun'):
                 # embedded on python appimage
                 print('Embedded on python appimage')
                 userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
                 pixmaps = '/share/pixmaps/videomass.png'
-                #pixmaps = '/share/icons/hicolor/128x128/apps/videomass.png'
+                # pixmaps = '/share/icons/hicolor/128x128/apps/videomass.png'
                 self.videomass_icon = os.path.join(userbase + pixmaps)
                 self.wizard_icon = os.path.join(self.icodir +
-                                                    "/videomass_wizard.png")
+                                                "/videomass_wizard.png")
 
             else:
                 binarypath = shutil.which('videomass')
@@ -218,7 +218,7 @@ class Data_Source(object):
         return (Data_Source.OS,
                 self.SRCpath,
                 copyerr,
-                None, # unused
+                None,  # unused
                 userconf,
                 self.localepath,
                 Data_Source.FILE_CONF,
@@ -253,7 +253,6 @@ class Data_Source(object):
             x32 = '%s/Videomass_Sign_Icons/32x32_white' % self.icodir
             x24 = '%s/Material_Design_Icons_white/24x24' % self.icodir
             x18 = '%s/Material_Design_Icons_white/18x18' % self.icodir
-
 
         # choose topic icons 48x48:
         icon_switchvideomass = '%s/icon_videoconversions.png' % x48

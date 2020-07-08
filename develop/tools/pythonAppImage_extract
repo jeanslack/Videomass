@@ -1,0 +1,72 @@
+#!/bin/bash
+
+
+function help {
+    echo
+    echo "usage: python_setup '*.AppImage'"
+    echo
+    echo "Extracting python appimage and setting environment varialble to \$PATH"
+    echo
+    exit 1
+               }
+
+if [ $# != 1 ]; then  # if lengh arguments isn't equal to 1
+    help
+fi
+
+HERE=$(pwd)
+cd $HERE
+ARGV=$@
+MACHINE_ARCH=$(arch)
+APP_BASENAME=$(basename $1)
+declare -A arch32=([item]='i386' [item2]='i486' [item3]='i586' [item4]='i686')
+
+if [[ $(file $1 | cut -d':' -f 2 | sed 's/ *$//') =~ "ELF 64-bit" ]] ; then
+    APP_ARCH="64bit"
+elif [[ $(file $1 | cut -d':' -f 2 | sed 's/ *$//') =~ "ELF 32-bit" ]] ; then
+    APP_ARCH="32bit"
+else
+    echo "Unknow architecture $1"
+    exit 1
+fi
+
+if [[ "${MACHINE_ARCH}" == 'x86_64' ]] ; then
+
+    if [[ "${APP_ARCH}" == "64bit" && "${APP_BASENAME}" == *".AppImage" ]] ; then
+        if [ -e "squashfs-root" ] ; then
+            echo "ERROR: another 'squashfs-root' dir exists!"
+            exit 1
+        else
+            (./$1 --appimage-extract && mv "squashfs-root" "python3.7" && export PATH="$(pwd)/python3.7/usr/bin:$PATH")
+            exit "$?"
+        fi
+    else
+        echo "ERROR: '$1'"
+        exit 1
+    fi
+
+elif [[ -n "${arch32[$MACHINE_ARCH]}" ]] ; then
+
+    if [[ "${APP_ARCH}" == "32bit" && "${APP_BASENAME}" == *".AppImage" ]] ; then
+        if [ -e "squashfs-root" ] ; then
+            echo "ERROR: another 'squashfs-root' dir exists!"
+            exit 1
+        else
+            exec $1 --appimage-extract
+            mv "squashfs-root" "python3.7"
+            export PATH="$(pwd)/python3.7/usr/bin:$PATH"
+            exit "$?"
+        fi
+    else
+        echo "ERROR: '$1'"
+        exit 1
+    fi
+
+else
+    echo "ERROR: architecture not supported $MACHINE_ARCH"
+    exit 1
+fi
+
+
+
+
