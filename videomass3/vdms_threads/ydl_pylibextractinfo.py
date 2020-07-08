@@ -26,6 +26,8 @@
 #    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 #########################################################
 import wx
+import sys
+import os
 from pubsub import pub
 from threading import Thread
 try:
@@ -81,8 +83,9 @@ class Ydl_EI_Pylib(Thread):
         """initialize"""
         self.url = url
         self.data = None
-        if Ydl_EI_Pylib.OS == 'Windows':
-            self.nocheckcertificate = True
+        if Ydl_EI_Pylib.OS == 'Windows' or '/tmp/.mount_' \
+            in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+                self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
 

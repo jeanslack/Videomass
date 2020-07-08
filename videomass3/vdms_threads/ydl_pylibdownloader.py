@@ -27,6 +27,7 @@
 #########################################################
 import wx
 import os
+import sys
 import itertools
 from threading import Thread
 import time
@@ -161,8 +162,9 @@ class Ydl_DL_Pylib(Thread):
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
-        if Ydl_DL_Pylib.OS == 'Windows':
-            self.nocheckcertificate = True
+        if Ydl_DL_Pylib.OS == 'Windows' or '/tmp/.mount_' \
+            in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+                self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
 

@@ -104,6 +104,17 @@ class Data_Source(object):
                 self.videomass_icon = self.icodir + "\\videomass.png"
                 self.wizard_icon = self.icodir + "\\videomass_wizard.png"
 
+            elif '/tmp/.mount_' in sys.executable or \
+                os.path.exists(os.getcwd() + '/AppRun'):
+                # embedded on python appimage
+                print('Embedded on python appimage')
+                userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
+                pixmaps = '/share/pixmaps/videomass.png'
+                #pixmaps = '/share/icons/hicolor/128x128/apps/videomass.png'
+                self.videomass_icon = os.path.join(userbase + pixmaps)
+                self.wizard_icon = os.path.join(self.icodir +
+                                                    "/videomass_wizard.png")
+
             else:
                 binarypath = shutil.which('videomass')
 

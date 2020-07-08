@@ -85,21 +85,18 @@ class Url_Play(Thread):
         exceptions. Otherwise the getted output as information
         given by output .
         """
+        cmd = ('%s --ytdl-raw-options=no-check-certificate= %s '
+               '--ytdl-format=%s %s' % (self.mpv,
+                                        self.url,
+                                        self.quality,
+                                        self.url
+                                        ))
+
         if platform.system() == 'Windows':
-            cmd = ('%s --ytdl-raw-options=no-check-certificate= %s '
-                   '--ytdl-format=%s %s' % (self.mpv,
-                                            self.url,
-                                            self.quality,
-                                            self.url
-                                            ))
             shell = False
             info = subprocess.STARTUPINFO()
             info.dwFlags |= subprocess.SW_HIDE
         else:
-            cmd = '%s --ytdl-format=%s %s' % (self.mpv,
-                                              self.quality,
-                                              self.url
-                                              )
             cmd = shlex.split(cmd)
             info = None
             shell = False

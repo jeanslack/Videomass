@@ -32,6 +32,7 @@ if not platform.system() == 'Windows':
     import shlex
 import itertools
 import os
+import sys
 from threading import Thread
 import time
 from pubsub import pub
@@ -101,15 +102,19 @@ class Ydl_DL_Exec(Thread):
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
+        if platform.system() == 'Windows' or '/tmp/.mount_' \
+            in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+                self.ssl = '--no-check-certificate'
+        else:
+            self.ssl = ''
 
         self.start()  # start the thread (va in self.run())
 
     def run(self):
         """
         Subprocess initialize thread.
-        """
-        ssl = '--no-check-certificate' if platform.system() == 'Windows' else ''
 
+        """
         for url, code in itertools.zip_longest(self.urls,
                                                self.code,
                                                fillvalue='',
@@ -119,7 +124,7 @@ class Ydl_DL_Exec(Thread):
                    '"{2}/{3}" {4} {5} --ignore-config --restrict-filenames '
                    '"{6}" --ffmpeg-location "{7}"'.format(
                                                         Ydl_DL_Exec.EXECYDL,
-                                                        ssl,
+                                                        self.ssl,
                                                         self.outputdir,
                                                         self.outtmpl,
                                                         format_code,
@@ -247,17 +252,22 @@ class Ydl_EI_Exec(Thread):
         self.url = url
         self.status = None
         self.data = None
+        if platform.system() == 'Windows' or '/tmp/.mount_' \
+            in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+                self.ssl = '--no-check-certificate'
+        else:
+            self.ssl = ''
 
         self.start()  # start the thread (va in self.run())
 
     def run(self):
         """
         Subprocess initialize thread.
+
         """
-        ssl = '--no-check-certificate' if platform.system() == 'Windows' else ''
         cmd = ('"{0}" {1} --newline --ignore-errors --ignore-config '
                '--restrict-filenames -F "{2}"'.format(Ydl_EI_Exec.EXECYDL,
-                                                      ssl,
+                                                      self.ssl,
                                                       self.url))
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
