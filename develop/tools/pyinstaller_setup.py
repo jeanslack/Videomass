@@ -431,7 +431,7 @@ def main():
     elif args.start_build:
         wrap = MakePyinstallerBuild()
         wrap.check()
-        wrap.run_pyinst(os.path.join(here, 'videomass.spec'))
+        wrap.run_pyinst(os.path.join(Data.here, 'videomass.spec'))
 
     else:
         print("\nType 'pyinstaller_setup.py -h' for help.\n")

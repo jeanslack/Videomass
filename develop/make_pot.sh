@@ -63,7 +63,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_threads/two_pass.py" \
 "../vdms_threads/volumedetect.py" \
 "../vdms_threads/ydl_executable.py" \
-"../vdms_threads/youtubedlupdater.py" \
+"../vdms_threads/youtubedlupdater.py"
 
 if [ $? != 0 ]; then
     echo 'Failed!'

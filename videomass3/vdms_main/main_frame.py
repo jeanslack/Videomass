@@ -288,7 +288,7 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if MainFrame.OS == 'Darwin':
-            self.SetSize((1030, 600))
+            self.SetSize((1050, 600))
         elif MainFrame.OS == 'Windows':
             self.SetSize((980, 650))
         else:
