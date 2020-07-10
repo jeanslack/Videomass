@@ -214,9 +214,10 @@ class AV_Conv(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
+        notepos = wx.NB_TOP if self.oS == 'Windows' else wx.NB_LEFT
         self.notebook = wx.Notebook(self, wx.ID_ANY,
                                     style=wx.NB_NOPAGETHEME |
-                                    wx.NB_LEFT
+                                    notepos
                                     )
         sizer_base.Add(self.notebook, 1, wx.ALL | wx.EXPAND, 5)
         # -------------- notebook panel 1:
