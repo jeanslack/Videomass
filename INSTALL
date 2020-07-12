@@ -29,15 +29,15 @@ Videomass can also be run from the Python3 console (interactive mode):
 
 Installing with pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
 
-    python3 -m pip install videomass
+    $ python3 -m pip install --user videomass
 
 Upgrading with pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
 
-    python3 -m pip install -U videomass
+    $ python3 -m pip install --user -U videomass
 
 - To uninstall:
 
-    python3 -m pip uninstall videomass
+    $ python3 -m pip uninstall videomass
 
 Please, Visit the Wiki page for more info:
 
@@ -47,7 +47,7 @@ https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-comman
 
 Build as wheel: (Linux, MacOs, FreeBSD, Windows, etc.)
 
-python3 setup.py sdist bdist_wheel
+    $ python3 setup.py sdist bdist_wheel
 
 #--------------------------------------------------------------------------#
 
@@ -55,7 +55,12 @@ Build as .deb binary: (Linux Debian, Ubuntu, Mint, etc.)
 
 Require: stdeb (visit https://pypi.org/project/stdeb/ for documentation)
 
-python3 setup.py --command-packages=stdeb.command bdist_deb
+    $ python3 -m pip install --user stdeb
+    $ python3 setup.py --command-packages=stdeb.command sdist_dsc
+    $ cd deb_dist/videomass-?.?.?/
+    $ dpkg-buildpackage -rfakeroot -uc -us
+    $ cd ..
+    # dpkg -i python3-videomass_?.?.?-1_all.deb
 
 Please, Visit the Wiki page for more info:
 
@@ -69,7 +74,7 @@ require: pyinstaller
 
 Use the 'develop/tools/pyinstaller_setup.py' script like this
 
-    python3 develop/tools/pyinstaller_setup.py -h
+    $ python3 develop/tools/pyinstaller_setup.py -h
 
 and choose the option you want .
 
@@ -79,6 +84,8 @@ Build as AppImage (only Linux)
 
 require: pyinstaller
 
+    $ python3 -m pip install --user pyinstaller
+
 Use the 'develop/tools/makeAppImage.py' script like this:
 
-    python3 develop/tools/makeAppImage.py
+    $ python3 develop/tools/makeAppImage.py

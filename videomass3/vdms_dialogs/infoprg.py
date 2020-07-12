@@ -62,10 +62,10 @@ def info(parent, videomass_icon):
     info.SetVersion("v%s" % Version)
     info.SetDescription(_("Cross-platform graphical interface "
                           "for FFmpeg and youtube-dl.\n"))
-    info.SetCopyright("Copyright %s %s" % (Copyright, Author))
+    info.SetCopyright("Copyright %s %s %s" % (Copyright, Author[0], Author[1]))
     info.SetWebSite(Website)
     info.SetLicence(Long_Lic)
-    info.AddDeveloper("%s %s" % (Author, Mail))
+    info.AddDeveloper("%s <%s>" % (Author[0], Mail))
     info.AddDeveloper("Thanks to:")
     info.AddDeveloper("Python <https://www.python.org/>, "
                       "programming language"

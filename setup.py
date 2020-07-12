@@ -31,6 +31,7 @@
 from setuptools import setup, find_packages
 from glob import glob
 import os
+import sys
 from videomass3.vdms_sys.msg_info import current_release
 from videomass3.vdms_sys.msg_info import descriptions_release
 
@@ -91,14 +92,27 @@ def source_build():
     Source/Build distributions
 
     """
-    INSTALL_REQUIRES = ["wxpython>=4.0.3; platform_system=='Windows' or "
-                        "platform_system=='Darwin'",
-                        "PyPubSub>=4.0.3",
-                        "youtube_dl>=2020.1.1",
-                        ]
+    if 'sdist' in sys.argv or 'bdist_wheel' in sys.argv:
+
+        INSTALL_REQUIRES = ["wxpython>=4.0.3; platform_system=='Windows' or "
+                            "platform_system=='Darwin'",
+                            "PyPubSub>=4.0.3",
+                            "youtube_dl>=2020.1.1",
+                            ]
+        long_description=open('README.md').read()
+        long_description_content_type='text/markdown'
+
+    else:  # if use stdeb to make .deb or deb pkg src, include wxpython.
+        INSTALL_REQUIRES = ["wxpython>=4.0.3",
+                            "PyPubSub>=4.0.3",
+                            "youtube_dl>=2019.01.17",
+                            ]
+        long_description=LONG_DESCRIPTION
+        long_description_content_type='text'
+
     EXCLUDE = ['']
 
-    DATA_FILES = [  # paths must be relative-path
+    DATA_FILES = [  # must be relative-path
                   ('share/applications', ['videomass3/art/videomass.desktop']),
                   ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
                   ('share/man/man1', ['docs/man/man1/videomass.1']),
@@ -107,9 +121,9 @@ def source_build():
     setup(name=PRG_NAME,
           version=VERSION,
           description=DESCRIPTION,
-          long_description=open('README.md').read(),
-          long_description_content_type='text/markdown',
-          author=AUTHOR,
+          long_description=long_description,
+          long_description_content_type=long_description_content_type,
+          author=AUTHOR[0],
           author_email=EMAIL,
           url=WEBSITE,
           license=LICENSE,
@@ -122,10 +136,11 @@ def source_build():
                                                "art/videomass.ico",
                                                "locale/README",
                                                "locale/videomass.pot"
-                                               ]},
+                                               ]
+                                },
           include_package_data=True,
           zip_safe=False,
-          python_requires='~=3.7',
+          python_requires=">=3.7, <4",
           install_requires=INSTALL_REQUIRES,
           setup_requires=["setuptools>=47.1.1",
                           "wheel>=0.34.2",

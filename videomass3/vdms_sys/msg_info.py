@@ -37,12 +37,12 @@ def current_release():
     """
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
-    Version = '2.9.0'
-    Release = 'July 10 2020'
+    Version = '2.9.1'
+    Release = 'July 11 2020'
     Copyright = '© 2013-2020'
     Website = 'http://jeanslack.github.io/Videomass/'
-    Author = 'Gianluca Pernigotto (aka jeanslack)'
-    Mail = '<jeanlucperni@gmail.com>'
+    Author = ('Gianluca Pernigotto', '(aka jeanslack)')
+    Mail = 'jeanlucperni@gmail.com'
     Comment = ("\nThanks to:\n"
                "- Python <https://www.python.org/>, programming language\n"
                "- wxPython <https://wxpython.org/>, cross-platform\n"
@@ -71,16 +71,34 @@ def descriptions_release():
 
     short_d = ("Videomass is a cross-platform GUI for FFmpeg and youtube-dl")
 
-    long_d = ("Videomass is not a converter; It provides a graphical "
-              "interface for writing presets and profiles to be used with "
-              "FFmpeg without limits on formats and codecs; it also provides "
-              "a minimal graphical interface with the basic functions for "
-              "youtube_dl video downloader.\n")
+    long_d = ("""
+Videomass is a GUI that allows more advanced use of FFmpeg than most other
+FFmpeg-based GUIs. It features graphic tools with high automation
+capabilities such as PEAK, RMS and EBU audio normalization filters with
+selectable audio stream indexing, streams analyzer and more.
+
+It allows you to create new presets or import/export existing ones, write and
+edit new conversion profiles in order to use FFmpeg without limits of formats,
+codecs and commands.
+
+In fact, most of the operations performed with FFmpeg via the command line,
+can be stored as conversion profiles on Videomass and can be performed or
+modified on the fly.
+
+Videomass also offers a graphical interface for the famous video downloader
+youtube_dl and allows you to choose between various download options like a
+specific format codes with the ability to playback individual URLs with
+different qualities via mpv player. Allows also to download all playlist,
+embed thumbnail in audio file (via atomicparsley), add metadata to file and
+write subtitles to video.
+
+Videomass is written in Python3 with the wxPython-Phoenix toolkit.
+""")
 
     short_l = ("GPL3 (Gnu Public License)")
 
     license = ("Copyright - %s %s\n"
-               "Author and Developer: %s\n"
+               "Author and Developer: %s %s\n"
                "Mail: %s\n\n"
                "Videomass is free software: you can redistribute\n"
                "it and/or modify it under the terms of the GNU General\n"
@@ -97,7 +115,8 @@ def descriptions_release():
                "You should have received a copy of the GNU General\n"
                "Public License along with this program. If not, see\n"
                "http://www.gnu.org/licenses/" % (Copyright[4],
-                                                 Author[6],
-                                                 Author[6],
+                                                 Author[6][0],
+                                                 Author[6][0],
+                                                 Author[6][1],
                                                  Mail[7]))
     return (short_d, long_d, short_l, license)
