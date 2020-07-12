@@ -12,6 +12,9 @@ July 11, 2020 V.2.9.1
 +------------------------------------+
 
 BUGS:
+    * [msg_info.py] the local variable `Author` has been splitted inside a tuple 
+      to allow for better string handling.
+    * [setup.py] Fixed Author and others stuff
     * Fixed gpg sign application during `debuild -S -sa` command.
 
 +------------------------------------+
