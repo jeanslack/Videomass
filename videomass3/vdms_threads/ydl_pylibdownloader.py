@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: ydl_pylibdownloader.py
 # Porpose: long processing task with youtube_dl python library
 # Compatibility: Python3, wxPython4 Phoenix

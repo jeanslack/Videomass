@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: ffplay_file.py
 # Porpose: playback media file via ffplay
 # Compatibility: Python3, wxPython Phoenix

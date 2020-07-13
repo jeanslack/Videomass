@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: youtubedlupdater.py
 # Porpose: update tasks
 # Compatibility: Python3, wxPython4 Phoenix

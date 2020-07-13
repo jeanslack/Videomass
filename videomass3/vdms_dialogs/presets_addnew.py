@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: presets_addnew.py
 # Porpose: profiles storing and profiles editing dialog
 # Compatibility: Python3, wxPython Phoenix

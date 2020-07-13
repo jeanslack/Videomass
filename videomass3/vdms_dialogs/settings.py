@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: settings.py
 # Porpose: videomass setup dialog
 # Compatibility: Python3, wxPython Phoenix

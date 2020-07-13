@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: Ydl_DL_Exec.py
 # Porpose: long processing task with youtube-dl executable
 # Compatibility: Python3, wxPython Phoenix

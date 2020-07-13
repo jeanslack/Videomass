@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: ffmpeg_search.py
 # Porpose: Show a box to search FFmpeg topics
 # Compatibility: Python3, wxPython4

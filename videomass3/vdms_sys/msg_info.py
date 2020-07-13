@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: msg_info.py
 # Porpose: Gets Version, Copyright and program Description
 # Compatibility: Python3, Python2

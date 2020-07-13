@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: long_processing_task.py
 # Porpose: Console to show logging messages during processing
 # Compatibility: Python3, wxPython4 Phoenix

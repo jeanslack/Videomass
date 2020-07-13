@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: ydl_pylibextractinfo.py
 # Porpose: get informations data with youtube_dl
 # Compatibility: Python3, wxPython Phoenix

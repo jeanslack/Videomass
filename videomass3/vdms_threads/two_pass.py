@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: two_pass.py
 # Porpose: FFmpeg long processing task on 2 pass conversion
 # Compatibility: Python3, wxPython4 Phoenix

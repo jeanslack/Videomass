@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: filedrop.py
 # Porpose: files drag n drop interface
 # Compatibility: Python3, wxPython Phoenix

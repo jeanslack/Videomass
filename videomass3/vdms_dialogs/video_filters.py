@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: video_filters.py
 # Porpose: a module with multiple dialog tools for video filters
 # Compatibility: Python3, wxPython Phoenix

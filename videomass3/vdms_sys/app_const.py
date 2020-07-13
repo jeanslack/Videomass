@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-#
-#
 # Author:  Werner F. Bruhin
 # Purpose: Application constants
 # Created: 06/04/2012

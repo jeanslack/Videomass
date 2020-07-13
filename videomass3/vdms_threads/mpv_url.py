@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: mpv_url.py
 # Porpose: playback URLs video via mpv
 # Compatibility: Python3, wxPython Phoenix

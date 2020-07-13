@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: infoprog.py
 # Porpose: about videomass
 # Compatibility: Python3, wxPython Phoenix

@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: argparser.py
 # Porpose: Check for command line arguments before starting
 # Compatibility: Python3

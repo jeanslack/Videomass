@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: volumedetect.py
 # Porpose: Audio Peak level volume analyzes
 # Compatibility: Python3, wxPython Phoenix

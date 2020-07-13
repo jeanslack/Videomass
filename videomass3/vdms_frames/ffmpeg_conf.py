@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: ffmpeg_conf.py
 # Porpose: Shows the features of the FFmpeg build configuration
 # Compatibility: Python3, wxPython4

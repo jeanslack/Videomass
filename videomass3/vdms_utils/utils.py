@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: utils.py
 # Porpose: Group the utilities needed for some requests
 # Compatibility: Python3, wxPython Phoenix

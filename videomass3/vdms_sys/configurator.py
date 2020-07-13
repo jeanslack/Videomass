@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: configurator.py
 # Porpose: Set Videomass configuration and appearance on startup
 # Compatibility: Python3

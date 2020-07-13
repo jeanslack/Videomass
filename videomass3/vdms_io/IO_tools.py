@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-#########################################################
 # Name: IO_tools.py
 # Porpose: input/output redirection to processes
 # Compatibility: Python3, wxPython4 Phoenix
