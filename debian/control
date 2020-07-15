@@ -1,0 +1,42 @@
+Source: videomass
+Maintainer: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Section: python
+Priority: optional
+Build-Depends: python3-setuptools, python3-all, debhelper (>= 7.4.3)
+Standards-Version: 3.9.1
+Homepage: https://github.com/jeanslack/Videomass
+
+
+
+
+
+Package: python3-videomass
+Architecture: all
+Depends: ${misc:Depends}, 
+         ${python3:Depends},
+         ffmpeg,
+         youtube-dl,
+         python3-wxgtk4.0,
+         python3-pypubsub
+Suggests: mpv,
+          atomicparsley
+Description: Videomass is a cross-platform GUI for FFmpeg and youtube-dl
+ that allows more advanced use of FFmpeg. It features graphic tools with 
+ high automation capabilities such as PEAK, RMS and EBU audio normalization 
+ filters with selectable audio stream indexing, streams analyzer and more.
+ .
+ It allows you to create new presets or import/export existing ones, write and
+ edit new conversion profiles in order to use FFmpeg without limits of formats,
+ codecs and commands.
+ .
+ In fact, most of the operations performed with FFmpeg via the command line,
+ can be stored as conversion profiles on Videomass and can be performed or
+ modified on the fly.
+ .
+ Videomass also offers a graphical interface for the famous video downloader
+ youtube_dl and allows you to choose between various download options like a
+ specific format codes with the ability to playback individual URLs with
+ different qualities via mpv player. Allows also to download all playlist,
+ embed thumbnail in audio file (via atomicparsley), add metadata to file and
+ write subtitles to video.
+

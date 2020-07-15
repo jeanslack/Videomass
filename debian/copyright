@@ -1,0 +1,35 @@
+Copyright Holders:
+
+    Copyright (C) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+
+License:
+
+    This package is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This package is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+
+On Debian systems, the complete text of the GNU General
+Public License can be found in `/usr/share/common-licenses/GPL-3'.
+
+-------------------------------------------
+
+The Debian packaging is Copyright (C) 2020, Gianluca Pernigoto <jeanlucperni@gmail.com>
+and is licensed under the GPL-3, see above.
+
+
+-------------------------------------------
+
+Icons under 'videomass3/art':
+
+    videomass.png, videomass_wizard.png, Videomass_Sign_Icons-*.png: Copyright (C) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+    Material_Design_Icons_Black: Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
+    Material_Design_Icons_White: Apache License Version 2.0, January 2004 http://www.apache.org/licenses/
