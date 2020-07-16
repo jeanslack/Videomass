@@ -53,11 +53,16 @@ Build as wheel: (Linux, MacOs, FreeBSD, Windows, etc.)
 
 Build as .deb binary: (Linux Debian, Ubuntu, Mint, etc.)
 
-Require: stdeb (visit https://pypi.org/project/stdeb/ for documentation)
+Require: python3-setuptools, python3-all, debhelper, dh-python, devscripts
 
-    $ python3 -m pip install --user stdeb
-    $ python3 setup.py --command-packages=stdeb.command sdist_dsc
-    $ cd deb_dist/videomass-?.?.?/
+    $ python3 setup.py sdist
+    $ cd dist/
+    $ mv videomass-2.9.1.tar.gz videomass_2.9.1.orig.tar.gz
+    $ tar -xvf videomass_2.9.1.orig.tar.gz
+    $ cd videomass-2.9.1/
+    - edit debian/changelog file on row UNRELEASED with specified platform e.g.
+      unstable, bionic or focal, etc. then save it.
+    $ dpkg-source -b .
     $ dpkg-buildpackage -rfakeroot -uc -us
     $ cd ..
     # dpkg -i python3-videomass_?.?.?-1_all.deb

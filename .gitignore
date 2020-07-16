@@ -17,5 +17,5 @@ Pipfile
 Pipfile.lock
 *.DS_Store
 *.directory
-.kate-swp
+*.kate-swp
 *~
