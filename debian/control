@@ -5,7 +5,7 @@ Priority: optional
 Build-Depends: python3-setuptools, python3-all, debhelper (>=11~), dh-python
 Standards-Version: 4.1.4
 Homepage: https://github.com/jeanslack/Videomass
-X-Python3-Version: >= 3.2
+X-Python3-Version: >= 3.6.9
 
 
 
@@ -13,17 +13,17 @@ X-Python3-Version: >= 3.2
 
 Package: python3-videomass
 Architecture: all
-Depends: ${misc:Depends}, 
+Depends: ${misc:Depends},
          ${shlibs:Depends},
          ffmpeg,
          youtube-dl,
          python3-wxgtk4.0,
-         python3-pypubsub
+         python3-pubsub
 Suggests: mpv,
           atomicparsley
 Description: Videomass is a cross-platform GUI for FFmpeg and youtube-dl
- Videomass allows more advanced use of FFmpeg. It features graphic tools with 
- high automation capabilities such as PEAK, RMS and EBU audio normalization 
+ Videomass allows more advanced use of FFmpeg. It features graphic tools with
+ high automation capabilities such as PEAK, RMS and EBU audio normalization
  filters with selectable audio stream indexing, streams analyzer and more.
  .
  It allows you to create new presets or import/export existing ones, write and
