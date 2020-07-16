@@ -5,7 +5,7 @@ Priority: optional
 Build-Depends: python3-setuptools, python3-all, debhelper (>=11~), dh-python
 Standards-Version: 4.1.4
 Homepage: https://github.com/jeanslack/Videomass
-X-Python3-Version: >= 3.6.9
+X-Python3-Version: >= 3.7
 
 
 

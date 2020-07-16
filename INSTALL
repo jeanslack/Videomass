@@ -51,7 +51,10 @@ Build as wheel: (Linux, MacOs, FreeBSD, Windows, etc.)
 
 #--------------------------------------------------------------------------#
 
-Build as .deb binary: (Linux Debian, Ubuntu, Mint, etc.)
+Build as .deb file (aka binary packages):
+ 
+    NOTE: Do this on the same source package for each target distribution i.e 
+    Debian, Ubuntu, Mint, etc.
 
 Require: python3-setuptools, python3-all, debhelper, dh-python, devscripts
 
@@ -60,12 +63,45 @@ Require: python3-setuptools, python3-all, debhelper, dh-python, devscripts
     $ mv videomass-2.9.1.tar.gz videomass_2.9.1.orig.tar.gz
     $ tar -xvf videomass_2.9.1.orig.tar.gz
     $ cd videomass-2.9.1/
-    - edit debian/changelog file on row UNRELEASED with specified platform e.g.
-      unstable, bionic or focal, etc. then save it.
-    $ dpkg-source -b .
-    $ dpkg-buildpackage -rfakeroot -uc -us
+    - edit debian/changelog file and replace UNRELEASED row with specified 
+      debian release e.g. unstable, bionic or focal, etc. then save it.
+    $ debuild -b
     $ cd ..
-    # dpkg -i python3-videomass_?.?.?-1_all.deb
+    # dpkg -i python3-videomass_2.9.1-1_all.deb
+
+See also others info at:
+
+    - https://wiki.debian.org/SimplePackagingTutorial
+    - https://wiki.debian.org/CreatePackageFromPPA#Install_the_Debian_SDK
+    - https://wiki.debian.org/Python/LibraryStyleGuide
+
+Please, Visit the Wiki page for more info:
+
+https://github.com/jeanslack/Videomass/wiki/Package-for-Debian-and-derivatives
+
+#--------------------------------------------------------------------------#
+
+Make a Debian source package: 
+
+    NOTE: This will transform upstream source code into policy-compliant 
+          binary packages.
+
+Require: python3-setuptools, python3-all, debhelper, dh-python, devscripts
+
+    $ python3 setup.py sdist
+    $ cd dist/
+    $ mv videomass-2.9.1.tar.gz videomass_2.9.1.orig.tar.gz
+    $ tar -xvf videomass_2.9.1.orig.tar.gz
+    $ cd videomass-2.9.1/
+    - edit debian/changelog file and replace UNRELEASED row with specified 
+      debian release e.g. unstable, bionic or focal, etc. then save it.
+    $ debuild -S  (you could add the -sa option to digitally sign)
+
+See also others info at:
+
+    - https://wiki.debian.org/SimplePackagingTutorial
+    - https://wiki.debian.org/CreatePackageFromPPA#Install_the_Debian_SDK
+    - https://wiki.debian.org/Python/LibraryStyleGuide
 
 Please, Visit the Wiki page for more info:
 
