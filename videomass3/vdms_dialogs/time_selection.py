@@ -107,11 +107,10 @@ class Time_Duration(wx.Dialog):
         self.stop_second_ctrl.SetToolTip(_("Seconds amount duration"))
         # ----------------------Layout----------------------#
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_base = wx.FlexGridSizer(3, 1, 0, 0)
         gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
         gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
 
-        grid_sizer_base.Add(sizerbox, 0, wx.ALL | wx.ALIGN_CENTRE, 5)
+        sizer_base.Add(sizerbox, 0, wx.ALL | wx.ALIGN_CENTRE, 15)
         sizerbox.Add(gridFlex1, 0, wx.ALL, 5)
         gridFlex1.Add(self.start_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
@@ -124,7 +123,7 @@ class Time_Duration(wx.Dialog):
         gridFlex1.Add(self.start_second_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
-        grid_sizer_base.Add(sizer_2_staticbox, 0, wx.ALL | wx.ALIGN_CENTRE, 5)
+        sizer_base.Add(sizer_2_staticbox, 0, wx.ALL | wx.ALIGN_CENTRE, 15)
         sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL, 5)
         gridFlex2.Add(self.stop_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
@@ -138,18 +137,20 @@ class Time_Duration(wx.Dialog):
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
-        gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridhelp.Add(btn_help, 1, wx.ALL, 5)
-        gridexit = wx.GridSizer(1, 3, 0, 0)
-        gridexit.Add(btn_close, 1, wx.ALL, 5)
-        gridexit.Add(btn_ok, 1, wx.ALL, 5)
-        gridexit.Add(btn_reset, 1, wx.ALL, 5)
+
         gridBtn = wx.GridSizer(1, 2, 0, 0)
-        # gridBtn = wx.BoxSizer()
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridhelp)
-        gridBtn.Add(gridexit)
-        grid_sizer_base.Add(gridBtn, 1, wx.ALL, 0)
-        sizer_base.Add(grid_sizer_base)
+
+        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+
+        gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridBtn.Add(gridexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        sizer_base.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()

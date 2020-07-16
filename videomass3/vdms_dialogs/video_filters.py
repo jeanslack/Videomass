@@ -1153,9 +1153,9 @@ class Denoisers(wx.Dialog):
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         # ------ set Layout
-        self.sizer_base = wx.BoxSizer(wx.VERTICAL)
-        grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
-        grid_sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        #grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
+        sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 10)
         grid_den = wx.FlexGridSizer(2, 2, 0, 0)
         zone.Add(grid_den)
         grid_den.Add(self.ckbx_nlmeans, 0,
@@ -1179,21 +1179,19 @@ class Denoisers(wx.Dialog):
                      wx.ALIGN_CENTER_HORIZONTAL,
                      15)
         # confirm btn section:
-        gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridexit = wx.GridSizer(1, 3, 0, 0)
         gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridhelp)
-        gridBtn.Add(gridexit)
-
-        grid_sizer_base.Add(gridBtn)
-        gridhelp.Add(btn_help, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(btn_close, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(self.btn_ok, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(btn_reset, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+        gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridBtn.Add(gridexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         # final settings:
-        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
-        self.SetSizer(self.sizer_base)
-        self.sizer_base.Fit(self)
+        sizer_base.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+        self.SetSizer(sizer_base)
+        sizer_base.Fit(self)
         self.Layout()
         # set Properties
         self.SetTitle(_("Videomass: denoisers filters"))
