@@ -31,6 +31,14 @@ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 **[Features](https://jeanslack.github.io/Videomass/features.html)**   
 **[Screenshots](https://jeanslack.github.io/Videomass/screenshots.html)**   
 
+# Ubuntu PPA
+This PPA currently publishes packages for Ubuntu 20.04 Focal (for now)   
+
+- Add this PPA to your system:   
+
+    `$ sudo add-apt-repository ppa:jeanslack/videomass`   
+    `$ sudo apt-get update`   
+
 # Installing and Dependencies
 
 ### Requirements
