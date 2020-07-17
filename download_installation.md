@@ -12,6 +12,19 @@ Videomass wheels are available for all systems and architectures from
 installed using the **pip** command.   
 Please, see the [Wiki](https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-Python-pip) page for more explanations.
 
+### Ubuntu PPA
+This PPA currently publishes packages for Ubuntu 20.04 Focal (for now)   
+
+- Add this PPA to your system:   
+
+    `$ sudo add-apt-repository ppa:jeanslack/videomass`   
+    `$ sudo apt-get update`   
+
+### AppImage
+There is also a Videomass AppImage package, which supports some Linux flavors.
+Visit the latest Videomass releases at [SourceForge](https://sourceforge.net/projects/videomass2/files/) 
+page for more details.
+
 ### Windows and MacOS installers
 In addition, installers for Windows and MacOS are available at the top of this page 
 (for some functional limitations see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html)). 
