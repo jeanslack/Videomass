@@ -2,9 +2,7 @@
 --------------------
 URGENCY: to do soon
 --------------------
-- Wrong layout of the buttons at the bottom of some dialogs such as 'duration', 
-  'new profile', and all dialogs of video filters
-  
+
 - use youtube-dl python library for Videomass.exe also.
 
 - add 'Pictures' on the Media list to export image sequences in jpg, png, bmp

@@ -8,7 +8,7 @@ Change Log:
 
 
 +------------------------------------+
-July 11, 2020 V.2.9.2
+July 17, 2020 V.2.9.2
 +------------------------------------+
 
 BUGS:
@@ -20,13 +20,11 @@ BUGS:
     * Fixed gpg sign application during `debuild -S -sa` command.
 
 IMPROVEMENTS:
-    * Improved buttons layout on Duration dialog
-
-    * Improved buttons layout on Denoiser dialog
+    * Improved all dialogs buttons layout for achieve a better look.
 
 NEWS:
     * Maded debian directory with all necessary files to make debian source
-      package (and .deb binary too)
+      package (and .deb binary too). See the INSTALL file for details.
 
     * Added videomass PPA for Ubuntu Focal 20.04, see at
       https://launchpad.net/~jeanslack/+archive/ubuntu/videomass

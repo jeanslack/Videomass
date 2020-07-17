@@ -73,7 +73,7 @@ class MemPresets(wx.Dialog):
         box_name = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                   _("Profile Name")),
                                      wx.VERTICAL)
-        size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 15)
+        size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 10)
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_PROCESS_ENTER
                                     )
@@ -82,7 +82,7 @@ class MemPresets(wx.Dialog):
                                                    _("Description")),
                                       wx.VERTICAL
                                       )
-        size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 15)
+        size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 10)
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "",
                                         style=wx.TE_PROCESS_ENTER
                                         )
@@ -91,7 +91,7 @@ class MemPresets(wx.Dialog):
                                                    MemPresets.PASS_1),
                                       wx.VERTICAL
                                       )
-        size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 15)
+        size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 10)
         self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_PROCESS_ENTER |
                                       wx.TE_MULTILINE
@@ -101,7 +101,7 @@ class MemPresets(wx.Dialog):
                                                    MemPresets.PASS_2),
                                       wx.VERTICAL
                                       )
-        size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 15)
+        size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 10)
         self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_PROCESS_ENTER |
                                       wx.TE_MULTILINE
@@ -113,7 +113,7 @@ class MemPresets(wx.Dialog):
                                                   MemPresets.FORMAT),
                                      wx.VERTICAL
                                      )
-        size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 15)
+        size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 10)
 
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_PROCESS_ENTER
@@ -124,23 +124,25 @@ class MemPresets(wx.Dialog):
                                                       "include the `.`")),
                                        wx.VERTICAL
                                        )
-        size_formats.Add(box_format, 1, wx.ALL | wx.EXPAND, 15)
+        size_formats.Add(box_format, 1, wx.ALL | wx.EXPAND, 10)
 
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_PROCESS_ENTER
                                    )
         box_format.Add(self.txt_ext, 0, wx.ALL | wx.EXPAND, 15)
+
+        grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
         grdhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn = wx.GridSizer(1, 2, 0, 0)
+
         grdBtn.Add(grdhelp)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_canc = wx.Button(self, wx.ID_CANCEL, "")
         grdexit.Add(btn_canc, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         btn_save = wx.Button(self, wx.ID_OK, _("Save.."))
         grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        grdBtn.Add(grdexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         size_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 5)
         # ------ set sizer
         self.SetSizerAndFit(size_base)

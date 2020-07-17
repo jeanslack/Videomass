@@ -139,23 +139,23 @@ class AudioSettings(wx.Dialog):
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_1 = wx.FlexGridSizer(1, 4, 0, 0)  # radiobox
         sizerBase.Add(grid_sizer_1, 0, wx.ALL, 0)
-        grid_sizer_1.Add(self.rdb_bitrate, 0, wx.ALL, 15)
-        grid_sizer_1.Add(self.rdb_channels, 0, wx.ALL, 15)
-        grid_sizer_1.Add(self.rdb_sample_r, 0, wx.ALL, 15)
-        grid_sizer_1.Add(self.rdb_bitdepth, 0, wx.ALL, 15)
-
-        gridhelp = wx.GridSizer(1, 1, 0, 0)  # buttons
-        gridhelp.Add(btn_help, 0, wx.ALL, 5)
-
-        gridexit = wx.GridSizer(1, 3, 0, 0)  # buttons
-        gridexit.Add(self.btn_cancel, 0, wx.ALL, 5)
-        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
-        gridexit.Add(btn_reset, 0, wx.ALL, 5)
+        grid_sizer_1.Add(self.rdb_bitrate, 0, wx.ALL, 10)
+        grid_sizer_1.Add(self.rdb_channels, 0, wx.ALL, 10)
+        grid_sizer_1.Add(self.rdb_sample_r, 0, wx.ALL, 10)
+        grid_sizer_1.Add(self.rdb_bitdepth, 0, wx.ALL, 10)
 
         gridBtn = wx.GridSizer(1, 2, 0, 0)  # buttons
+        gridhelp = wx.GridSizer(1, 1, 0, 0)  # buttons
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridhelp)
-        gridBtn.Add(gridexit)
-        sizerBase.Add(gridBtn, 1, wx.ALL | wx.ALIGN_CENTRE, 10)
+
+        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+        gridexit.Add(self.btn_cancel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()

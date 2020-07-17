@@ -1,3 +1,11 @@
+videomass (2.9.2-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+  * Improved graphic layout on all dialog boxes
+  * Dependency redefinition: `python3-pypubsub` becomes `python3-pubsub` on control file.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 17 Jul 2020 13:40:00 +0200
+
 videomass (2.9.1-1) UNRELEASED; urgency=low
 
   * Initial debian packaging

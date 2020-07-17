@@ -56,12 +56,13 @@ class VideoRotate(wx.Dialog):
                                                     (_("Orientation points"))),
                                        wx.VERTICAL
                                        )
+        #btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         # ----------------------Properties--------------------------------#
-        self.SetTitle(_("Videomass: Set video/image rotation"))
+        self.SetTitle(_("Videomass: Rotation and flipping"))
         # self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTip(_("Reverses visual movie from bottom "
                                     "to top"))
@@ -72,56 +73,44 @@ class VideoRotate(wx.Dialog):
         # self.button_down.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_down.SetToolTip(_("Reverses visual movie from top to "
                                       "bottom"))
-        self.text_rotate.SetMinSize((200, 30))
+        #self.text_rotate.SetMinSize((200, 30))
         self.text_rotate.SetToolTip(_("Display show settings"))
 
         # ----------------------Handle layout------------------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        gridBase = wx.FlexGridSizer(2, 0, 0, 0)
-        sizerBase.Add(gridBase, 0, wx.ALL, 0)
-        gridBtnExit = wx.FlexGridSizer(1, 3, 0, 0)
-        sizer_3 = wx.BoxSizer(wx.VERTICAL)
+        sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 10)
+        boxctrl = wx.BoxSizer(wx.VERTICAL)
+        sizerLabel.Add(boxctrl, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+
         grid_sizerLabel = wx.GridSizer(1, 1, 0, 0)
         grid_sizerBase = wx.GridSizer(1, 2, 0, 0)
 
-        sizer_3.Add(self.button_up, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        boxctrl.Add(self.button_up, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+
         grid_sizerBase.Add(self.button_left, 0, wx.ALL |
                            wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.ALIGN_CENTER_VERTICAL, 5
+                           wx.ALIGN_CENTER_VERTICAL, 15
                            )
         grid_sizerBase.Add(self.button_right, 0, wx.ALL |
                            wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.ALIGN_CENTER_VERTICAL, 5
+                           wx.ALIGN_CENTER_VERTICAL, 15
                            )
-        sizer_3.Add(grid_sizerBase, 1, wx.EXPAND, 0)
-        sizer_3.Add(self.button_down, 0, wx.ALL |
-                    wx.ALIGN_CENTER_HORIZONTAL |
-                    wx.ALIGN_CENTER_VERTICAL, 5
+        boxctrl.Add(grid_sizerBase, 0, wx.EXPAND, 0)
+        boxctrl.Add(self.button_down, 0, wx.ALL |
+                    wx.ALIGN_CENTER_HORIZONTAL, 15
                     )
-        grid_sizerLabel.Add(self.text_rotate, 0, wx.ALL |
-                            wx.ALIGN_CENTER_HORIZONTAL |
-                            wx.ALIGN_CENTER_VERTICAL, 5
-                            )
-        sizer_3.Add(grid_sizerLabel, 1, wx.EXPAND, 0)
-        sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
-        gridBase.Add(sizerLabel, 1, wx.ALL |
-                     wx.ALIGN_CENTER_HORIZONTAL |
-                     wx.ALIGN_CENTER_VERTICAL, 5
-                     )
-        gridBase.Add(gridBtnExit, 1, wx.ALL, 5)
+        grid_sizerLabel.Add(self.text_rotate, 0, wx.EXPAND, 5)
+        boxctrl.Add(grid_sizerLabel,  0, wx.EXPAND, 5)
+        gridBtn = wx.GridSizer(1, 2, 0, 0)
+        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridhelp.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridBtn.Add(gridhelp)
+        gridExit = wx.BoxSizer(wx.HORIZONTAL)
+        gridExit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridExit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridBtn.Add(gridExit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
 
-        gridBtnExit.Add(btn_close, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 5
-                        )
-        gridBtnExit.Add(self.btn_ok, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 5
-                        )
-        gridBtnExit.Add(btn_reset, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 5
-                        )
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
@@ -240,15 +229,15 @@ class VideoCrop(wx.Dialog):
 
         # --------------------Handle layout----------------------#
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        gridBase = wx.FlexGridSizer(2, 1, 0, 0)
-        sizerBase.Add(gridBase, 0, wx.ALL, 0)
-        sizer_3 = wx.BoxSizer(wx.VERTICAL)
+        sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 10)
+        boxctrl = wx.BoxSizer(wx.VERTICAL)
+        sizerLabel.Add(boxctrl, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
 
-        sizer_3.Add(self.label_height, 0, wx.ALL |
+        boxctrl.Add(self.label_height, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL, 5
                     )
-        sizer_3.Add(self.crop_height, 0, wx.ALL |
+        boxctrl.Add(self.crop_height, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL, 5
                     )
         grid_sizerBase.Add(self.label_Y, 0, wx.ALL |
@@ -271,30 +260,26 @@ class VideoCrop(wx.Dialog):
                            wx.ALIGN_CENTER_HORIZONTAL |
                            wx.ALIGN_CENTER_VERTICAL, 5
                            )
-        sizer_3.Add(grid_sizerBase, 1, wx.EXPAND, 0)
-        sizer_3.Add(self.crop_X, 0, wx.ALL |
+        boxctrl.Add(grid_sizerBase, 1, wx.EXPAND, 0)
+        boxctrl.Add(self.crop_X, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL |
                     wx.ALIGN_CENTER_VERTICAL, 5
                     )
-        sizer_3.Add(self.label_X, 0, wx.ALL |
+        boxctrl.Add(self.label_X, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL |
                     wx.ALIGN_CENTER_VERTICAL, 5
                     )
-        sizerLabel.Add(sizer_3, 1, wx.EXPAND, 0)
-        gridBase.Add(sizerLabel, 1, wx.ALL |
-                     wx.ALIGN_CENTER_HORIZONTAL |
-                     wx.ALIGN_CENTER_VERTICAL, 10
-                     )
         gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridBase.Add(gridBtn)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridBtn.Add(gridhelp, 0, wx.ALL, 5)
-        gridexit = wx.GridSizer(1, 3, 0, 0)
-        gridBtn.Add(gridexit, 0, wx.ALL, 5)
-        gridhelp.Add(btn_help, 1, wx.ALL, 5)
-        gridexit.Add(btn_close, 1, wx.ALL, 5)
-        gridexit.Add(self.btn_ok, 1, wx.ALL, 5)
-        gridexit.Add(btn_reset, 1, wx.ALL, 5)
+        gridBtn.Add(gridhelp)
+        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+        gridhelp.Add(btn_help, 0, wx.ALL, 5)
+        gridexit.Add(btn_close, 0, wx.ALL, 5)
+        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
+        gridexit.Add(btn_reset, 0, wx.ALL, 5)
+        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+
+        sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
@@ -485,9 +470,9 @@ class VideoResolution(wx.Dialog):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
         # scaling section:
-        grid_sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 15)
-        grid_sizer_base.Add(v_setdar, 1, wx.ALL | wx.EXPAND, 15)
-        grid_sizer_base.Add(v_setsar, 1, wx.ALL | wx.EXPAND, 15)
+        sizer_base.Add(v_scalingbox, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_base.Add(v_setdar, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_base.Add(v_setsar, 1, wx.ALL | wx.EXPAND, 10)
 
         Flex_scale = wx.FlexGridSizer(1, 5, 0, 0)
         v_scalingbox.Add(Flex_scale, 0, wx.ALL | wx.ALIGN_CENTER, 5)
@@ -524,18 +509,16 @@ class VideoResolution(wx.Dialog):
         Flex_sar.Add(label_den1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         # confirm btn section:
         gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridexit = wx.GridSizer(1, 3, 0, 0)
-        gridexit.Add(btn_close, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(self.btn_ok, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(btn_reset, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridhelp.Add(btn_help, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-
-        gridBtn.Add(gridhelp, 1, wx.ALL, 10)
-        gridBtn.Add(gridexit, 1, wx.ALL, 10)
-        grid_sizer_base.Add(gridBtn)
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridBtn.Add(gridhelp)
+        gridexit = wx.BoxSizer(wx.HORIZONTAL)
+        gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        sizer_base.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         # final settings:
-        sizer_base.Add(grid_sizer_base, 1, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
@@ -763,8 +746,7 @@ class Lacing(wx.Dialog):
         self.sizer_base.Add(self.enable_opt, 0, wx.ALL |
                             wx.ALIGN_RIGHT, 10
                             )
-        grid_sizer_base = wx.FlexGridSizer(4, 1, 0, 0)
-        grid_sizer_base.Add(zone1, 1, wx.ALL | wx.EXPAND, 5)
+        self.sizer_base.Add(zone1, 0, wx.ALL | wx.EXPAND, 10)
         deint_grid = wx.FlexGridSizer(2, 4, 0, 0)
         zone1.Add(deint_grid)
         deint_grid.Add(self.ckbx_deintW3fdif, 0, wx.ALL, 15)
@@ -775,7 +757,7 @@ class Lacing(wx.Dialog):
         deint_grid.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 15)
         deint_grid.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 15)
         deint_grid.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 15)
-        grid_sizer_base.Add(zone2, 1, wx.ALL | wx.EXPAND, 5)
+        self.sizer_base.Add(zone2, 0, wx.ALL | wx.EXPAND, 10)
         inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
         zone2.Add(inter_grid)
         inter_grid.Add(self.ckbx_interlace, 0, wx.ALL, 15)
@@ -783,19 +765,21 @@ class Lacing(wx.Dialog):
         inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
 
         # confirm btn section:
-        gridBtn = wx.GridSizer(1, 2, 0, 0)
-        grid_sizer_base.Add(gridBtn, 1, wx.ALL | wx.ALIGN_CENTRE, 0)
+        self.gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridexit = wx.GridSizer(1, 3, 0, 0)
-        gridBtn.Add(gridhelp)
-        gridBtn.Add(gridexit)
 
-        gridhelp.Add(btn_help, 1, wx.ALL, 5)
-        gridexit.Add(btn_close, 1, wx.ALL, 5)
-        gridexit.Add(self.btn_ok, 1, wx.ALL, 5)
-        gridexit.Add(btn_reset, 1, wx.ALL, 5)
+        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.gridBtn.Add(gridhelp)
+        self.gridexit = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.gridBtn.Add(self.gridexit, 0, wx.ALL |
+                         wx.ALIGN_RIGHT | wx.RIGHT, 0
+                         )
+        self.sizer_base.Add(self.gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         # final settings:
-        self.sizer_base.Add(grid_sizer_base, 1, wx.ALL, 5)
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
@@ -1044,6 +1028,7 @@ class Lacing(wx.Dialog):
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)
         self.Layout()
+
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
@@ -1187,7 +1172,7 @@ class Denoisers(wx.Dialog):
         gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         # final settings:
         sizer_base.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizer_base)

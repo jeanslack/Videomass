@@ -110,8 +110,8 @@ class Time_Duration(wx.Dialog):
         gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
         gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
 
-        sizer_base.Add(sizerbox, 0, wx.ALL | wx.ALIGN_CENTRE, 15)
-        sizerbox.Add(gridFlex1, 0, wx.ALL, 5)
+        sizer_base.Add(sizerbox, 0, wx.ALL | wx.EXPAND, 10)
+        sizerbox.Add(gridFlex1, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         gridFlex1.Add(self.start_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
@@ -123,8 +123,8 @@ class Time_Duration(wx.Dialog):
         gridFlex1.Add(self.start_second_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
-        sizer_base.Add(sizer_2_staticbox, 0, wx.ALL | wx.ALIGN_CENTRE, 15)
-        sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL, 5)
+        sizer_base.Add(sizer_2_staticbox, 0, wx.ALL | wx.EXPAND, 10)
+        sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         gridFlex2.Add(self.stop_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
@@ -148,7 +148,9 @@ class Time_Duration(wx.Dialog):
         gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridexit.Add(btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        gridBtn.Add(gridexit, 0,
+                    flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0
+                    )
         sizer_base.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
 
         self.SetSizer(sizer_base)
