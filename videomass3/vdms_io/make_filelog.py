@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # File Name: make_filelog.py
 # Porpose: generate log file
 # Compatibility: Python3, Python2

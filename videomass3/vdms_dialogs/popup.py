@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: popup.py
 # Porpose: shows a small waiting dialogue
 # Compatibility: Python3, wxPython Phoenix

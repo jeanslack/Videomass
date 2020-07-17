@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 # Name: setup.py
 # Porpose: script to setup Videomass.
 # Compatibility: Python3

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: epilogue.py
 # Porpose: show final settings before start process
 # Compatibility: Python3, wxPython Phoenix

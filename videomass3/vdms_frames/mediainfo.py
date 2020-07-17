@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: mediainfo.py
 # Porpose: show media streams information through ffprobe
 # Compatibility: Python3, wxPython Phoenix

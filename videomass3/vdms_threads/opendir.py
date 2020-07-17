@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: opendir.py
 # Porpose: open file browser on given pathname
 # Compatibility: Python3 (Unix, Windows)

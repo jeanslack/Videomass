@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: while_playing.py
 # Porpose: Show box with shortcuts keyboard when playback with FFplay
 # Compatibility: Python3, wxPython4

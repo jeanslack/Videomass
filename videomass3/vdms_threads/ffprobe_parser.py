@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: ffprobe_parser.py
 # Porpose: cross-platform parsing class for ffprobe
 # Compatibility: Python3, Python2

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: audiodialogs.py
 # Porpose: Dialog for choice and settings audio parameters
 # Compatibility: Python3, wxPython Phoenix

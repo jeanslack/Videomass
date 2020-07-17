@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: choose_topic.py
 # Porpose: shows the topics available in the program
 # Compatibility: Python3, wxPython Phoenix

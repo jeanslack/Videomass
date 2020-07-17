@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 # Name: Videomass3.py
 # Porpose: bootstrap for Videomass app.
 # Compatibility: Python3, wxPython Phoenix

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: time_selection.py
 # Porpose: show dialog to set duration and time sequences
 # Compatibility: Python3, wxPython Phoenix

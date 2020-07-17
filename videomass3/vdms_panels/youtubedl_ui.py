@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: youtubedl_ui.py
 # Porpose: youtube-dl user interface
 # Compatibility: Python3, wxPython Phoenix

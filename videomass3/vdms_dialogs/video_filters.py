@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: video_filters.py
 # Porpose: a module with multiple dialog tools for video filters
 # Compatibility: Python3, wxPython Phoenix
@@ -62,7 +63,7 @@ class VideoRotate(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         # ----------------------Properties--------------------------------#
-        self.SetTitle(_("Videomass: Rotation and flipping"))
+        self.SetTitle(_("Videomass: Rotate and flip"))
         # self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTip(_("Reverses visual movie from bottom "
                                     "to top"))

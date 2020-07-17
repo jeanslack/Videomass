@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # File Name: preset_manager_properties.py
 # Porpose: management of properties of the preset manager panel
 # Compatibility: Python3, wxPython Phoenix

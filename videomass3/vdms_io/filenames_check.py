@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # File Name: filenames_check.py
 # Porpose: input/output file check
 # Compatibility: Python3, wxPython Phoenix

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: main_frame.py
 # Porpose: top window main frame
 # Compatibility: Python3, wxPython Phoenix

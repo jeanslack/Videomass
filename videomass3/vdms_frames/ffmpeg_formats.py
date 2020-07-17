@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: ffmpeg_formats.py
 # Porpose: Show the available formats on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix

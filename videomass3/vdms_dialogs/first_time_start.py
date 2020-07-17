@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # Name: first_time_start.py
 # Porpose: First-time settings guide (MSwindows and MacOs only)
 # Compatibility: Python3, wxPython Phoenix

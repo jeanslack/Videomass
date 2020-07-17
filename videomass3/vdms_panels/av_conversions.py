@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 # FileName: av_conversions.py
 # Porpose: audio/video conversions interface
 # Compatibility: Python3, wxPython4 Phoenix
