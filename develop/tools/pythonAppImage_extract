@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# license: GPL3
+# Rev: July.18.2020
+#
+# Ectract a `Python*.AppImage' and export its environment variable to `$PATH'
+# to install, remove or update the applications installed with pip command.
+# This allows you to upgrade an embedded application for deployment.
+
 
 function help {
     echo

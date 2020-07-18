@@ -3,6 +3,13 @@
 URGENCY: to do soon
 --------------------
 
+- [BUG] if dragging text file without extension the result is:
+
+        Videomass/videomass3/vdms_threads/one_pass.py", line 123, in run
+        source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
+        IndexError: list index out of range
+
+
 - use youtube-dl python library for Videomass.exe also.
 
 - add 'Pictures' on the Media list to export image sequences in jpg, png, bmp
@@ -27,6 +34,9 @@ URGENCY: low
 ---------------
 URGENCY: medium
 ----------------
+
+- [AppImage] idea: to update videomass and youtube-dl from pypi, create a tool
+  for automate the work. This is only for embedding videomass into Python*.AppImage.
 
 
 

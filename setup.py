@@ -69,7 +69,7 @@ def source_build():
         long_description=open('README.md').read()
         long_description_content_type='text/markdown'
 
-    else:  # if use stdeb to make .deb or deb pkg src, include wxpython.
+    else:  # e.g. to make a Debian source package, include wxpython.
         INSTALL_REQUIRES = ["wxpython>=4.0.3",
                             "PyPubSub>=4.0.3",
                             "youtube_dl",
