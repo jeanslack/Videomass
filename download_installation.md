@@ -19,6 +19,7 @@ This PPA currently publishes packages for Ubuntu 20.04 Focal (for now)
 
     `$ sudo add-apt-repository ppa:jeanslack/videomass`   
     `$ sudo apt-get update`   
+    `$ sudo apt install python3-videomass`   
 
 ### AppImage
 There is also a Videomass AppImage package, which supports some Linux flavors.
