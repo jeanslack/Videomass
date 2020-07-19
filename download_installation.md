@@ -13,19 +13,14 @@ to your system:
     `$ sudo apt-get update`   
     `$ sudo apt install python3-videomass`   
 
-### AppImage
-There is also a Videomass AppImage package, which supports some Linux flavors only
-for x86_64 (64-bit) architectures.
-Visit the latest Videomass releases at [SourceForge](https://sourceforge.net/projects/videomass2/files/) 
-page for more details.   
-for some functional limitations see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html)
-
-### Windows and MacOS installers
-In addition, installers for Windows and MacOS are available at the top of this page. 
-They are only available for x86_64 (64-bit) architectures. 
-Both installers contain everything you need to be used in standalone mode, without 
-the need for anything else.   
-for some functional limitations see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html).
+### Linux, Windows and MacOS
+In addition, an AppImage for Linux and installers for Windows and MacOS are 
+available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) 
+web page only for x86_64 (64-bit) architectures. 
+Both installers for Windows and MAcOs contain everything you need to be used in 
+standalone mode, without the need for anything else.   
+AppImage may ask you to install FFmpeg if not found on your Linux system.
+For some functional limitations see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html).
 
 Minimum requirements are:
 - MacOS **Sierra**, **High Sierra** and **Mojave** (64-bit only)
