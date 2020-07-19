@@ -6,7 +6,8 @@
 ### Ubuntu PPA
 This PPA currently publishes packages for Ubuntu 20.04 Focal (for now)   
 
-- Add this PPA to your system:   
+- To install Videomass add this [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) 
+to your system:   
 
     `$ sudo add-apt-repository ppa:jeanslack/videomass`   
     `$ sudo apt-get update`   
