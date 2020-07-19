@@ -14,7 +14,7 @@ to your system:
     `$ sudo apt install python3-videomass`   
 
 ### Linux, Windows and MacOS
-In addition, an AppImage for Linux and installers for Windows and MacOS are 
+In addition, an AppImage for **Linux** and installers for **Windows** and **MacOS** are 
 available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) 
 web page only for x86_64 (64-bit) architectures. 
 Both installers for Windows and MAcOs contain everything you need to be used in 
