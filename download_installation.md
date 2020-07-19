@@ -19,7 +19,7 @@ available at [SourceForge](https://sourceforge.net/projects/videomass2/files/)
 web page only for x86_64 (64-bit) architectures. 
 Both installers for Windows and MAcOs contain everything you need to be used in 
 standalone mode, without the need for anything else.   
-AppImage may ask you to install FFmpeg if not found on your Linux system.
+AppImage may ask you to install FFmpeg if not found on your Linux system.   
 For some functional limitations see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html).
 
 Minimum requirements are:
