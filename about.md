@@ -41,13 +41,14 @@ of versions of FFmpeg packaged with Videomass on the installers for Windows and
 MacOS, FFmpeg is licensed under the GPL. Complete FFmpeg documentation and 
 sources are available at [FFmpeg.org](https://www.ffmpeg.org/)   
 
-## What is [youtube_dl](http://ytdl-org.github.io/youtube-dl/)?
+## What is youtube-dl?
 
-youtube-dl is a command-line program to download videos from YouTube.com and a 
-few more sites. It requires the Python interpreter, version 2.6, 2.7, or 3.2+, 
-and it is not platform specific. It should work on your Unix box, on Windows or 
-on macOS. It is released to the public domain, which means you can modify it, 
-redistribute it or use it however you like.
+[youtube_dl](http://ytdl-org.github.io/youtube-dl/) is a command-line program to 
+download videos from YouTube.com and a few more sites. It requires the Python 
+interpreter, version 2.6, 2.7, or 3.2+, and it is not platform specific. 
+It should work on your Unix box, on Windows or on macOS. It is released to the 
+public domain, which means you can modify it, redistribute it or use it however 
+you like.
 
 ------------------------------------------------
 Copyright © 2015 - 2020 Gianluca Pernigotto   
