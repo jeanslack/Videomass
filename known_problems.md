@@ -14,7 +14,7 @@ activated with the -row-mt 1 switch. Note that this feature is not available
 if you are using an older version of the ffMPEG (eg Version 3.1.5) and should 
 be disabled when using this encoder.
 
-- Standalone installers for Linux (AppImage only), Windows (exe) and MacOS 
+- Standalone installers for Linux (AppImage), Windows (exe) and MacOS 
 (app) may have some functional limitations:
    * 1) the button for previewing streaming content (Youtube, Facebook, etc) may not work.
 
