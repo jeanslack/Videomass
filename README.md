@@ -5,18 +5,20 @@
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
 [![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
-Videomass is a GUI that allows more advanced use of [FFmpeg](https://www.ffmpeg.org/) 
-than most other FFmpeg-based GUIs. It features graphic tools with high automation 
-capabilities such as PEAK, RMS and EBU audio normalization filters with selectable 
-audio stream indexing, streams analyzer and more.   
+Videomass is a cross-platform GUI designed for medium advanced users who
+need to store profiles and automate some conversion processes, but which
+can also be used by beginner users through the use of ready-to-use presets.
+It features graphic tools with high automation capabilities such as PEAK,
+RMS and EBU audio normalization filters with selectable audio stream indexing,
+streams analyzer and more.   
 
 It allows you to create new presets or import/export existing ones, write and
-edit new conversion profiles in order to use FFmpeg without limits of formats,
-codecs and commands.   
+edit new conversion profiles in order to use [FFmpeg](https://www.ffmpeg.org/) 
+without limits of formats, codecs and commands.   
 
-In fact, most of the operations performed with FFmpeg via the command line, can 
-be stored as conversion profiles on Videomass and can be performed or modified 
-on the fly.   
+In fact, most of the operations performed with [FFmpeg](https://www.ffmpeg.org/) 
+via the command line, can be stored as conversion profiles on Videomass and can 
+be performed or modified on the fly.   
 
 Videomass also offers a graphical interface for the famous video downloader
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/) and allows you to choose 
@@ -31,16 +33,12 @@ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 **[Features](https://jeanslack.github.io/Videomass/features.html)**   
 **[Screenshots](https://jeanslack.github.io/Videomass/screenshots.html)**   
 
-# Ubuntu PPA
-This PPA currently publishes packages for Ubuntu 20.04 Focal (for now)   
-
-- Add this PPA to your system:   
-
-    `$ sudo add-apt-repository ppa:jeanslack/videomass`   
-    `$ sudo apt-get update`   
-    `$ sudo apt install python3-videomass`   
-
 # Installing and Dependencies
+
+### For normal users (not developpers)
+To install videomass for any Operative System, please visit 
+[Download and installation](https://jeanslack.github.io/Videomass/download_installation.html) 
+web page.
 
 ### Requirements
 - **[Python ~=3.7](https://www.python.org/)**

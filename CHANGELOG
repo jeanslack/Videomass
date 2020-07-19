@@ -6,6 +6,12 @@ License: GPL3
 
 Change Log:
 
++------------------------------------+
+July 19, 2020 V.2.9.3
++------------------------------------+
+
+BUGS:
+    * Fixed "IndexError" when the file name has no format extension.
 
 +------------------------------------+
 July 17, 2020 V.2.9.2

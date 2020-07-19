@@ -22,9 +22,12 @@ Depends: ${misc:Depends},
 Suggests: mpv,
           atomicparsley
 Description: Videomass is a cross-platform GUI for FFmpeg and youtube-dl
- Videomass allows more advanced use of FFmpeg. It features graphic tools with
- high automation capabilities such as PEAK, RMS and EBU audio normalization
- filters with selectable audio stream indexing, streams analyzer and more.
+ Videomass is a cross-platform GUI designed for medium advanced users who
+ need to store profiles and automate some conversion processes, but which
+ can also be used by beginner users through the use of ready-to-use presets.
+ It features graphic tools with high automation capabilities such as PEAK,
+ RMS and EBU audio normalization filters with selectable audio stream indexing,
+ streams analyzer and more.
  .
  It allows you to create new presets or import/export existing ones, write and
  edit new conversion profiles in order to use FFmpeg without limits of formats,
@@ -40,4 +43,6 @@ Description: Videomass is a cross-platform GUI for FFmpeg and youtube-dl
  different qualities via mpv player. Allows also to download all playlist,
  embed thumbnail in audio file (via atomicparsley), add metadata to file and
  write subtitles to video.
+ .
+ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 

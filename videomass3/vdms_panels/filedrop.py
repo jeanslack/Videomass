@@ -59,8 +59,14 @@ class MyListCtrl(wx.ListCtrl):
         """
         self.index = self.GetItemCount()
         msg_dir = _("Directories are not allowed, just add files, please.")
+        msg_noext = _("File without format extension: please give an "
+                      "appropriate extension to the file name, example "
+                      "'.mkv', '.avi', '.mp3', etc.")
         if os.path.isdir(path):
             self.parent.statusbar_msg(msg_dir, MyListCtrl.ORANGE)
+            return
+        elif os.path.splitext(os.path.basename(path))[1] == '':
+            self.parent.statusbar_msg(msg_noext, MyListCtrl.ORANGE)
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:

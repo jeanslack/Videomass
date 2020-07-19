@@ -35,8 +35,8 @@ def current_release():
     """
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
-    Version = '2.9.2'
-    Release = 'July 11 2020'
+    Version = '2.9.3'
+    Release = 'July 19 2020'
     Copyright = '© 2013-2020'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = ('Gianluca Pernigotto', '(aka jeanslack)')
@@ -70,10 +70,12 @@ def descriptions_release():
     short_d = ("Videomass is a cross-platform GUI for FFmpeg and youtube-dl")
 
     long_d = ("""
-Videomass is a GUI that allows more advanced use of FFmpeg than most other
-FFmpeg-based GUIs. It features graphic tools with high automation
-capabilities such as PEAK, RMS and EBU audio normalization filters with
-selectable audio stream indexing, streams analyzer and more.
+Videomass is a cross-platform GUI designed for medium advanced users who
+need to store profiles and automate some conversion processes, but which
+can also be used by beginner users through the use of ready-to-use presets.
+It features graphic tools with high automation capabilities such as PEAK,
+RMS and EBU audio normalization filters with selectable audio stream indexing,
+streams analyzer and more.
 
 It allows you to create new presets or import/export existing ones, write and
 edit new conversion profiles in order to use FFmpeg without limits of formats,
