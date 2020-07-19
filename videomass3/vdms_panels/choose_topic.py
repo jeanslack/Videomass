@@ -41,12 +41,15 @@ class Choose_Topic(wx.Panel):
         appropriate contextual panel.
         """
         self.parent = parent
+        self.YOUTUBE_DL = 'youtube-dl.exe' if OS == 'Windows' else 'youtube-dl'
         self.oS = OS
+        self.store_ydl_on_cache = True  # show it again the next time
         version = current_release()
 
         get = wx.GetApp()  # get videomass wx.App attribute
         self.PYLIB_YDL = get.pylibYdl
         self.EXEC_YDL = get.execYdl
+        self.CACHEDIR = get.CACHEdir
 
         if self.oS == 'Windows':
             MSGWIN = (_('- Requires: Microsoft Visual C++ 2010 '
@@ -72,14 +75,20 @@ class Choose_Topic(wx.Panel):
                  )).format(MSGWIN)
 
         self.MSGREADY = (_(
-                      'Successful! \n\n'
-                      'Important: youtube-dl is very often updated, be sure '
-                      'to always use the latest version available.\nUse the '
-                      'dedicated functions on menu bar > Tools > '
-                      'youtube-dl.\n\n'
-                      'Re-start is required. Do you want to close Videomass '
-                      'now?'
-                      ))
+                    'Successful! \n\n'
+                    'Important: youtube-dl is very often updated, be sure '
+                    'to always use the latest version available. Use the '
+                    'dedicated functions on menu bar > Tools > youtube-dl.\n\n'
+                    'Re-start is required. Do you want to close Videomass now?'
+                    ))
+
+        self.MSG_YDL_REPLACE = (
+                _('Warning: You are now using a version of youtube-dl '
+                  'installed on your system, but there is another one\nin the '
+                  'cache directory that you previously downloaded which is '
+                  'not longer used.\n\n'
+                  'Do you want to remove it?'
+                  ))
 
         PRST_MNG = _('  Presets Manager - Create, edit and use quickly your '
                      'favorite\n  FFmpeg presets and profiles with full '
@@ -168,8 +177,28 @@ class Choose_Topic(wx.Panel):
         Check the installation of youtube-dl depending on the OS in use.
         """
         if self.PYLIB_YDL is None:
+            fydl = os.path.join(self.CACHEDIR, self.YOUTUBE_DL)
+            if not self.EXEC_YDL and os.path.isfile(fydl):
+                if self.store_ydl_on_cache:
+                    dlg = wx.RichMessageDialog(self, self.MSG_YDL_REPLACE,
+                                               _("Videomass confirmation"),
+                                               wx.ICON_QUESTION |
+                                               wx.YES_NO
+                                               )
+                    dlg.ShowCheckBox(_("Don't show this dialog again"))
+
+                    if dlg.ShowModal() == wx.ID_NO:
+                        if dlg.IsCheckBoxChecked():
+                             # make sure we won't show it again the next time
+                            self.store_ydl_on_cache = False
+                    else:
+                        os.remove(fydl)
+                        if dlg.IsCheckBoxChecked():
+                            self.store_ydl_on_cache = False
+
             self.parent.switch_text_import(self, 'Youtube Downloader')
             return
+
         elif self.EXEC_YDL:
             if os.path.isfile(self.EXEC_YDL):
                 self.parent.switch_text_import(self, 'Youtube Downloader')

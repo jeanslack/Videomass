@@ -87,7 +87,7 @@ class PrstPan(wx.Panel):
         self.PWD = PWD  # current work of videomass
         self.oS = OS
         self.parent = parent
-        self.txtcmdedited = False  # show dlg if cmdline is edited
+        self.txtcmdedited = True  # show dlg if cmdline is edited
         self.normdetails = []
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if
@@ -955,7 +955,7 @@ class PrstPan(wx.Panel):
 
         if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or
            self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
-            if not self.txtcmdedited:
+            if self.txtcmdedited:
 
                 msg = _("The selected profile command has been "
                         "changed manually.\n"
@@ -971,12 +971,12 @@ class PrstPan(wx.Panel):
                 if dlg.ShowModal() == wx.ID_NO:
                     if dlg.IsCheckBoxChecked():
                         # make sure we won't show it again the next time
-                        self.txtcmdedited = True
+                        self.txtcmdedited = False
                     return
                 else:
                     if dlg.IsCheckBoxChecked():
                         # make sure we won't show it again the next time
-                        self.txtcmdedited = True
+                        self.txtcmdedited = False
 
         outext = '' if self.array[5] == 'copy' else self.array[5]
         extlst, outext = self.array[4], outext
