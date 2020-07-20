@@ -7,14 +7,15 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-July 19, 2020 V.2.9.3
+July 20, 2020 V.2.9.3
 +------------------------------------+
 
 BUGS:
     * Fixed "IndexError" when the file name has no format extension.
+    * Fixed "NameError: name 'OS' is not defined"  on two_pass.py thread
 
 IMPROVEMENTS:
-    * Displays a notice in the message box when the cached youtube-dl
+    * Displays a notify in the message box when the cached youtube-dl
       executable is no longer used and is replaced by the one installed on
       the system.
 

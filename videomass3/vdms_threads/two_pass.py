@@ -98,7 +98,7 @@ class TwoPass(Thread):
         self.count = 0  # count first for loop
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
-        self.nul = 'NUL' if OS == 'Windows' else '/dev/null'
+        self.nul = 'NUL' if TwoPass.OS == 'Windows' else '/dev/null'
 
         self.start()  # start the thread (va in self.run())
 
@@ -146,7 +146,7 @@ class TwoPass(Thread):
                      TwoPass.LOGDIR,
                      )  # write n/n + command only
 
-            if not OS == 'Windows':
+            if not TwoPass.OS == 'Windows':
                 pass1 = shlex.split(pass1)
                 info = None
             else:  # Hide subprocess window on MS Windows
@@ -230,7 +230,7 @@ class TwoPass(Thread):
                          )
             logWrite(cmd, '', self.logname, TwoPass.LOGDIR)
 
-            if not OS == 'Windows':
+            if not TwoPass.OS == 'Windows':
                 pass2 = shlex.split(pass2)
                 info = None
             else:  # Hide subprocess window on MS Windows
