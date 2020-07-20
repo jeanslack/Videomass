@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-17 19:13+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2020-07-20 11:26+0200\n"
+"PO-Revision-Date: 2020-07-20 11:38+0200\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../Videomass3.py:90
 #, python-brace-format
@@ -1182,7 +1182,7 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:154 ../vdms_panels/filedrop.py:188
+#: ../vdms_main/main_frame.py:154 ../vdms_panels/filedrop.py:194
 msgid "Duration"
 msgstr ""
 
@@ -1637,7 +1637,7 @@ msgstr ""
 msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1311 ../vdms_panels/filedrop.py:259
+#: ../vdms_main/main_frame.py:1311 ../vdms_panels/filedrop.py:265
 msgid "Add Files"
 msgstr ""
 
@@ -2118,7 +2118,41 @@ msgstr ""
 msgid "Videomass: Create a new profile"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:52
+#: ../vdms_panels/choose_topic.py:54
+msgid ""
+"  Presets Manager - Create, edit and use quickly your favorite\n"
+"  FFmpeg presets and profiles with full formats support and codecs. "
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:58
+msgid ""
+"  A set of useful tools for audio and video conversions.\n"
+"  Save your profiles and reuse them with Presets Manager. "
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:62
+msgid ""
+"  Easily download videos and audio in different formats\n"
+"  and quality from YouTube, Facebook and more sites. "
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:68
+msgid "Welcome to Videomass"
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:69
+msgid "Version {}"
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:110
+msgid "Download additional presets or contribute to making new ones "
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:113
+msgid "Additional Presets"
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:156
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -2126,14 +2160,14 @@ msgid ""
 "html>"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:62
+#: ../vdms_panels/choose_topic.py:167
 msgid ""
 "{}\n"
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:66
+#: ../vdms_panels/choose_topic.py:171
 msgid ""
 "An updated version of youtube-dl is required to download videos from YouTube."
 "com and other video sites. Videomass can download an updated copy of youtube-"
@@ -2145,53 +2179,32 @@ msgid ""
 "...Do you wish to continue?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:75
+#: ../vdms_panels/choose_topic.py:180
 msgid ""
 "Successful! \n"
 "\n"
 "Important: youtube-dl is very often updated, be sure to always use the "
-"latest version available.\n"
-"Use the dedicated functions on menu bar > Tools > youtube-dl.\n"
+"latest version available. Use the dedicated functions on menu bar > Tools > "
+"youtube-dl.\n"
 "\n"
 "Re-start is required. Do you want to close Videomass now?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:84
+#: ../vdms_panels/choose_topic.py:188
 msgid ""
-"  Presets Manager - Create, edit and use quickly your favorite\n"
-"  FFmpeg presets and profiles with full formats support and codecs. "
+"Notice: the youtube-dl executable previously downloaded with Videomass is no "
+"longer in use, since the one installed in the system that has priority is "
+"now used.\n"
+"\n"
+"Do you want to remove the one no longer in use?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:88
-msgid ""
-"  A set of useful tools for audio and video conversions.\n"
-"  Save your profiles and reuse them with Presets Manager. "
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:92
-msgid ""
-"  Easily download videos and audio in different formats\n"
-"  and quality from YouTube, Facebook and more sites. "
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:98
-msgid "Welcome to Videomass"
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:99
-msgid "Version {}"
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:140
-msgid "Download additional presets or contribute to making new ones "
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:143
-msgid "Additional Presets"
-msgstr ""
-
-#: ../vdms_panels/choose_topic.py:178
+#: ../vdms_panels/choose_topic.py:199 ../vdms_panels/choose_topic.py:222
 msgid "Videomass confirmation"
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:203 ../vdms_panels/presets_manager.py:969
+msgid "Don't show this dialog again"
 msgstr ""
 
 #: ../vdms_panels/youtubedl_ui.py:79
@@ -2303,52 +2316,58 @@ msgstr ""
 msgid "Directories are not allowed, just add files, please."
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:98
+#: ../vdms_panels/filedrop.py:62
+msgid ""
+"File without format extension: please give an appropriate extension to the "
+"file name, example '.mkv', '.avi', '.mp3', etc."
+msgstr ""
+
+#: ../vdms_panels/filedrop.py:104
 #, python-format
 msgid "Duplicate files are rejected: > '%s'"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:155
+#: ../vdms_panels/filedrop.py:161
 msgid "Drag one or more files below"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:159 ../vdms_panels/textdrop.py:59
+#: ../vdms_panels/filedrop.py:165 ../vdms_panels/textdrop.py:59
 msgid "Options"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:168 ../vdms_panels/textdrop.py:64
+#: ../vdms_panels/filedrop.py:174 ../vdms_panels/textdrop.py:64
 msgid "Output Directory"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:187
+#: ../vdms_panels/filedrop.py:193
 msgid "Input files"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:189
+#: ../vdms_panels/filedrop.py:195
 msgid "Media type"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:190
+#: ../vdms_panels/filedrop.py:196
 msgid "File size"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:198
+#: ../vdms_panels/filedrop.py:204
 msgid "Remove the selected file from the list"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:199
+#: ../vdms_panels/filedrop.py:205
 msgid "Delete all files from the list"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:200 ../vdms_panels/textdrop.py:90
+#: ../vdms_panels/filedrop.py:206 ../vdms_panels/textdrop.py:90
 msgid "Choose another output directory for files saving"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:232 ../vdms_panels/filedrop.py:247
+#: ../vdms_panels/filedrop.py:238 ../vdms_panels/filedrop.py:253
 msgid "Remove the selected file"
 msgstr ""
 
-#: ../vdms_panels/filedrop.py:257
+#: ../vdms_panels/filedrop.py:263
 msgid "No file selected"
 msgstr ""
 
@@ -2596,10 +2615,6 @@ msgstr ""
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:969
-msgid "Don't show this dialog again"
 msgstr ""
 
 #: ../vdms_panels/presets_manager.py:1009

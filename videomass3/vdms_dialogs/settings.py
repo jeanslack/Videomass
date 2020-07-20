@@ -206,8 +206,8 @@ class Setup(wx.Dialog):
                                     _(" Use a custom path to run mpv player")))
         self.btn_pathMpv = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
         self.txtctrl_mpv = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                          style=wx.TE_READONLY
-                                          )
+                                       style=wx.TE_READONLY
+                                       )
         gridExec.Add(self.checkbox_exeMpv, 0, wx.ALL, 15)
         gridMpv = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridMpv, 0, wx.ALL | wx.EXPAND, 15)
@@ -223,9 +223,11 @@ class Setup(wx.Dialog):
                                         _("Set Icon Themes"))), wx.VERTICAL)
         gridappearance.Add(boxLabIcons, 1, wx.ALL | wx.EXPAND, 15)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
-                                      choices=[("Videomass_Sign_Icons"),
-                                               ("Material_Design_Icons_black"),
-                                               ("Material_Design_Icons_white")],
+                                      choices=[
+                                          ("Videomass_Sign_Icons"),
+                                          ("Material_Design_Icons_black"),
+                                          ("Material_Design_Icons_white")
+                                          ],
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
         boxLabIcons.Add(self.cmbx_icons, 0,
@@ -270,8 +272,7 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
         self.default_theme = wx.Button(tabFour, wx.ID_CLEAR,
-                                        _("Restore default settings")
-                                        )
+                                       _("Restore default settings"))
         gridappearance.Add(self.default_theme, 0, wx.ALL |
                            wx.EXPAND, 15
                            )
@@ -680,6 +681,6 @@ class Setup(wx.Dialog):
         with open(self.getfileconf, 'w') as fconf:
             for i in self.full_list:
                 fconf.write('%s' % i)
-        #self.Destroy() # WARNING on mac not close corretly, on linux ok
+        # self.Destroy() # WARNING on mac not close corretly, on linux ok
         self.okmsg()
         self.Close()

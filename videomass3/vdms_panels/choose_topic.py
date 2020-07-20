@@ -47,48 +47,9 @@ class Choose_Topic(wx.Panel):
         version = current_release()
 
         get = wx.GetApp()  # get videomass wx.App attribute
-        self.PYLIB_YDL = get.pylibYdl
-        self.EXEC_YDL = get.execYdl
+        self.PYLIB_YDL = get.pylibYdl  # None if used else 'string error'
+        self.EXEC_YDL = get.execYdl  # /path/youtube-dl if used else False
         self.CACHEDIR = get.CACHEdir
-
-        if self.oS == 'Windows':
-            MSGWIN = (_('- Requires: Microsoft Visual C++ 2010 '
-                        'Redistributable Package (x86)\n\nfor major '
-                        'information visit: <http://ytdl-org.github.io'
-                        '/youtube-dl/download.html>'))
-
-        if self.oS == 'Darwin':
-            MSGWIN = ''
-
-        else:
-            MSGWIN = ''
-            self.MSG_ERR = _('{}\n\nyoutube-dl: no library or executable '
-                             'found .').format(self.PYLIB_YDL)
-
-        self.MSG = (_(
-                 'An updated version of youtube-dl is required to download '
-                 'videos from YouTube.com and other video sites. Videomass '
-                 'can download an updated copy of youtube-dl locally.\n\n'
-                 '- Web site: <https://github.com/ytdl-org/youtube-dl/'
-                 'releases>\n{}\n\n'
-                 '...Do you wish to continue?'
-                 )).format(MSGWIN)
-
-        self.MSGREADY = (_(
-                    'Successful! \n\n'
-                    'Important: youtube-dl is very often updated, be sure '
-                    'to always use the latest version available. Use the '
-                    'dedicated functions on menu bar > Tools > youtube-dl.\n\n'
-                    'Re-start is required. Do you want to close Videomass now?'
-                    ))
-
-        self.MSG_YDL_REPLACE = (
-                _('Warning: You are now using a version of youtube-dl '
-                  'installed on your system, but there is another one\nin the '
-                  'cache directory that you previously downloaded which is '
-                  'not longer used.\n\n'
-                  'Do you want to remove it?'
-                  ))
 
         PRST_MNG = _('  Presets Manager - Create, edit and use quickly your '
                      'favorite\n  FFmpeg presets and profiles with full '
@@ -166,21 +127,75 @@ class Choose_Topic(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
+
+    # ------------------------------------------------------------------#
+
+    def on_Prst_mng(self, event):
+        """
+        Open drag N drop interface to switch on Presets Manager panel
+        """
+        self.parent.switch_file_import(self, 'Presets Manager')
     # ------------------------------------------------------------------#
 
     def on_Video(self, event):
+        """
+        Open drag N drop interface to switch on AVconversions panel
+        """
         self.parent.switch_file_import(self, 'Audio/Video Conversions')
     # ------------------------------------------------------------------#
 
     def on_YoutubeDL(self, event):
         """
-        Check the installation of youtube-dl depending on the OS in use.
+        Check the existence of youtube-dl based on the set attributes
+        of the bootstrap, then open the text interface, otherwise it
+        requires installation.
+
         """
+        if self.oS == 'Windows':
+            msg_windows = (_(
+                        '- Requires: Microsoft Visual C++ 2010 '
+                        'Redistributable Package (x86)\n\nfor major '
+                        'information visit: <http://ytdl-org.github.io'
+                        '/youtube-dl/download.html>'
+                        ))
+
+        if self.oS == 'Darwin':
+            msg_windows = ''
+
+        else:
+            msg_windows = ''
+            msg_error = _('{}\n\nyoutube-dl: no library or executable '
+                          'found .').format(self.PYLIB_YDL)
+
+        msg_required = (_(
+                 'An updated version of youtube-dl is required to download '
+                 'videos from YouTube.com and other video sites. Videomass '
+                 'can download an updated copy of youtube-dl locally.\n\n'
+                 '- Web site: <https://github.com/ytdl-org/youtube-dl/'
+                 'releases>\n{}\n\n'
+                 '...Do you wish to continue?'
+                 )).format(msg_windows)
+
+        msg_ready = (_(
+                    'Successful! \n\n'
+                    'Important: youtube-dl is very often updated, be sure '
+                    'to always use the latest version available. Use the '
+                    'dedicated functions on menu bar > Tools > youtube-dl.\n\n'
+                    'Re-start is required. Do you want to close Videomass now?'
+                    ))
+
+        msg_system_used = (_(
+                  'Notice: the youtube-dl executable previously downloaded '
+                  'with Videomass is no longer in use, since the one '
+                  'installed in the system that has priority is now used.\n\n'
+                  'Do you want to remove the one no longer in use?'
+                  ))
+
         if self.PYLIB_YDL is None:
             fydl = os.path.join(self.CACHEDIR, self.YOUTUBE_DL)
             if not self.EXEC_YDL and os.path.isfile(fydl):
                 if self.store_ydl_on_cache:
-                    dlg = wx.RichMessageDialog(self, self.MSG_YDL_REPLACE,
+                    dlg = wx.RichMessageDialog(self, msg_system_used,
                                                _("Videomass confirmation"),
                                                wx.ICON_QUESTION |
                                                wx.YES_NO
@@ -189,7 +204,7 @@ class Choose_Topic(wx.Panel):
 
                     if dlg.ShowModal() == wx.ID_NO:
                         if dlg.IsCheckBoxChecked():
-                             # make sure we won't show it again the next time
+                            # make sure we won't show it again the next time
                             self.store_ydl_on_cache = False
                     else:
                         os.remove(fydl)
@@ -204,7 +219,7 @@ class Choose_Topic(wx.Panel):
                 self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
             else:
-                if wx.MessageBox(self.MSG, _("Videomass confirmation"),
+                if wx.MessageBox(msg_required, _("Videomass confirmation"),
                                  wx.ICON_QUESTION |
                                  wx.YES_NO, self) == wx.NO:
                     return
@@ -220,7 +235,7 @@ class Choose_Topic(wx.Panel):
                                   "Videomass error", wx.ICON_ERROR, self)
                     return
                 else:
-                    if wx.MessageBox(self.MSGREADY, "Videomass",
+                    if wx.MessageBox(msg_ready, "Videomass",
                                      wx.ICON_QUESTION |
                                      wx.YES_NO, self) == wx.NO:
                         return
@@ -228,9 +243,5 @@ class Choose_Topic(wx.Panel):
                 return
 
         elif self.EXEC_YDL is False:
-            wx.MessageBox(self.MSG_ERR, 'Videomass error', wx.ICON_ERROR)
+            wx.MessageBox(msg_error, 'Videomass error', wx.ICON_ERROR)
             return
-    # ------------------------------------------------------------------#
-
-    def on_Prst_mng(self, event):
-        self.parent.switch_file_import(self, 'Presets Manager')

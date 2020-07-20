@@ -34,7 +34,6 @@ from threading import Thread
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 
-
 def msg_Error(msg):
     """
     Receive error messages via wxCallafter

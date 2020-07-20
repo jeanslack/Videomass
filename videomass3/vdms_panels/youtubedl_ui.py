@@ -93,15 +93,16 @@ class Downloader(wx.Panel):
     VQUALITY = {('Best quality video'): ['best', 'best'],
                 ('Worst quality video'): ['worst', 'worst']}
 
-    AFORMATS = {("Default audio format"): ("best", "--extract-audio"),
-                ("wav"): ("wav", "--extract-audio --audio-format wav"),
-                ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
-                ("aac"): ("aac", "--extract-audio --audio-format aac"),
-                ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
-                ("vorbis"): ("vorbis", "--extract-audio --audio-format vorbis"),
-                ("opus"): ("opus", "--extract-audio --audio-format opus"),
-                ("flac"): ("flac", "--extract-audio --audio-format flac"),
-                }
+    AFORMATS = {
+        ("Default audio format"): ("best", "--extract-audio"),
+        ("wav"): ("wav", "--extract-audio --audio-format wav"),
+        ("mp3"): ("mp3", "--extract-audio --audio-format mp3"),
+        ("aac"): ("aac", "--extract-audio --audio-format aac"),
+        ("m4a"): ("m4a", "--extract-audio --audio-format m4a"),
+        ("vorbis"): ("vorbis", "--extract-audio --audio-format vorbis"),
+        ("opus"): ("opus", "--extract-audio --audio-format opus"),
+        ("flac"): ("flac", "--extract-audio --audio-format flac"),
+        }
 
     AQUALITY = {('Best quality audio'): ['best', 'best'],
                 ('Worst quality audio'): ['worst', 'worst']}
@@ -193,7 +194,7 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
-        self.labcode = wx.StaticText(self, label= _('URLs loaded'))
+        self.labcode = wx.StaticText(self, label=_('URLs loaded'))
         sizer.Add(self.labcode, 0, wx.ALL, 5)
         if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
             self.oldwx = False

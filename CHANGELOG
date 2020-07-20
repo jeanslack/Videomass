@@ -14,8 +14,9 @@ BUGS:
     * Fixed "IndexError" when the file name has no format extension.
 
 IMPROVEMENTS:
-    * Displays the message box when the cached youtube-dl executable is no
-      longer used in favor of the one installed on the system.
+    * Displays a notice in the message box when the cached youtube-dl
+      executable is no longer used and is replaced by the one installed on
+      the system.
 
 +------------------------------------+
 July 17, 2020 V.2.9.2

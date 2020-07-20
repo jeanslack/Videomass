@@ -283,7 +283,6 @@ class MakePyinstallerBuild(Data):
                      "using this command:\n"
                      "   pyi-makespec options videomass.py\n")
 
-
         specfile = os.path.join(self.here, 'videomass.spec')
 
         with open(specfile, 'w') as spec:

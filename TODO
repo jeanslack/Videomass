@@ -20,9 +20,6 @@ URGENCY: high
 -------------
 URGENCY: low
 -------------
-- make time range selection for YouTube Downloader e.g.
-  'postprocessor_args': "-ss 00:01:00 -t 00:00:30" on embedded ydl
-  --postprocessor-arg "-ss 00:01:00 -t 00:00:30" on subprocess cmd args
 
 ---------------
 URGENCY: medium

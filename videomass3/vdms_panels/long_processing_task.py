@@ -94,7 +94,7 @@ class Logging_Console(wx.Panel):
     MSG_interrupted = _('\n[Videomass]: Interrupted Process !\n')
     MSG_completed = _('\n[Videomass]: Successfully completed !\n')
     MSG_unfinished = _('\n[Videomass]: completed, but not everything '
-                    'was successful.\n')
+                       'was successful.\n')
 
     # get videomass wx.App attribute
     get = wx.GetApp()
@@ -185,8 +185,6 @@ class Logging_Console(wx.Panel):
         time_seq = self.parent.time_seq  # a time segment
 
         write_log(self.logname, Logging_Console.LOGDIR)  # set initial file LOG
-
-
 
         if varargs[0] == 'onepass':  # from Audio/Video Conv.
             self.PARENT_THREAD = OnePass(varargs, duration,

@@ -57,7 +57,6 @@ class VideoRotate(wx.Dialog):
                                                     (_("Orientation points"))),
                                        wx.VERTICAL
                                        )
-        #btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
@@ -74,7 +73,6 @@ class VideoRotate(wx.Dialog):
         # self.button_down.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_down.SetToolTip(_("Reverses visual movie from top to "
                                       "bottom"))
-        #self.text_rotate.SetMinSize((200, 30))
         self.text_rotate.SetToolTip(_("Display show settings"))
 
         # ----------------------Handle layout------------------------------#
@@ -1140,7 +1138,6 @@ class Denoisers(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
         # ------ set Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        #grid_sizer_base = wx.FlexGridSizer(2, 1, 0, 0)
         sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 10)
         grid_den = wx.FlexGridSizer(2, 2, 0, 0)
         zone.Add(grid_den)

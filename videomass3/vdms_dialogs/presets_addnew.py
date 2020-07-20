@@ -40,13 +40,13 @@ class MemPresets(wx.Dialog):
     OS = get.OS
 
     PASS_1 = _("1-PASS, Do not start with `ffmpeg "
-            "-i filename`; do not end with "
-            "`output-filename`"
-            )
+               "-i filename`; do not end with "
+               "`output-filename`"
+               )
     PASS_2 = _("2-PASS (optional), Do not start with "
-            "`ffmpeg -i filename`; do not end with "
-            "`output-filename`")
-
+               "`ffmpeg -i filename`; do not end with "
+               "`output-filename`"
+               )
     FORMAT = _("Supported Formats list (optional). Do not include the `.`")
     # ------------------------------------------------------------------
 

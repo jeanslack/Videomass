@@ -97,6 +97,6 @@ require: pyinstaller
 
     $ python3 -m pip install --user pyinstaller
 
-Use the 'develop/tools/makeAppImage.py' script like this:
+browse on Videomass source root directory and type:
 
     $ python3 develop/tools/makeAppImage.py

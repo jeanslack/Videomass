@@ -275,7 +275,7 @@ class FFProbe(object):
         data video return a empty list
         """
         for datastream in self.mediastreams:
-            if 'codec_type=video'in datastream:
+            if 'codec_type=video' in datastream:
                 self.video.append(datastream)
         return self.video
     # --------------------------------------------------------------#
@@ -286,7 +286,7 @@ class FFProbe(object):
         data audio return a empty list
         """
         for datastream in self.mediastreams:
-            if 'codec_type=audio'in datastream:
+            if 'codec_type=audio' in datastream:
                 self.audio.append(datastream)
         return self.audio
     # --------------------------------------------------------------#
@@ -297,7 +297,7 @@ class FFProbe(object):
         data subtitle return a empty list
         """
         for datastream in self.mediastreams:
-            if 'codec_type=subtitle'in datastream:
+            if 'codec_type=subtitle' in datastream:
                 self.subtitle.append(datastream)
         return self.subtitle
     # --------------------------------------------------------------#

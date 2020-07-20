@@ -65,9 +65,12 @@ def source_build():
                             "PyPubSub>=4.0.3",
                             "youtube_dl>=2020.1.1",
                             ]
-        SETUP_REQUIRES = ["setuptools>=47.1.1", "wheel>=0.34.2","twine>=3.1.1"]
-        long_description=open('README.md').read()
-        long_description_content_type='text/markdown'
+        SETUP_REQUIRES = ["setuptools>=47.1.1",
+                          "wheel>=0.34.2",
+                          "twine>=3.1.1"
+                          ]
+        long_description = open('README.md').read()
+        long_description_content_type = 'text/markdown'
 
     else:  # e.g. to make a Debian source package, include wxpython.
         INSTALL_REQUIRES = ["wxpython>=4.0.3",
@@ -75,8 +78,8 @@ def source_build():
                             "youtube_dl",
                             ]
         SETUP_REQUIRES = []
-        long_description=LONG_DESCRIPTION
-        long_description_content_type='text'
+        long_description = LONG_DESCRIPTION
+        long_description_content_type = 'text'
 
     EXCLUDE = ['']
 

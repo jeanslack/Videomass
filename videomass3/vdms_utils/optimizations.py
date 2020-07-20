@@ -71,7 +71,6 @@ def vp9(prename):
                 self.ckbx_rowMt1.SetValue(True),
                 self.cmb_Pixfrm.SetSelection(1),)'''
 
-
     elif prename == 'Vp9 Constrained ABR-VBV live streaming':
         return '''(
                 self.cmb_Vcod.SetStringSelection('Vp9'), self.videoCodec(self),
@@ -86,7 +85,7 @@ def vp9(prename):
                 self.ckbx_rowMt1.SetValue(True),
                 self.cmb_Pixfrm.SetSelection(0),)'''
 
-#------------------------------------------------------------------------
+
 def hevc_avc(prename):
     """
     x264, x265
