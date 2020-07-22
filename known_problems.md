@@ -20,10 +20,14 @@ be disabled when using this encoder.
    * 2) The 'Show More' button for reading the information of the streaming content (YouTube, Facebook, etc) will give a message regarding disabling the functionality.
    
 - **Videomass.AppImage** for Linux
-  * On Ubuntu and derivatives, if you encounter these error messages by launching the application from the terminal:   
-    `ImportError: libjpeg.so.62: cannot open shared object file: No such file or directory`
-    install `sudo apt-get install libjpeg62`
-    `ImportError: libSDL-1.2.so.0: cannot open shared object file: No such file or directory`   
-    install `sudo apt-get install libsdl1.2debian`
+    * On Ubuntu and derivatives, if you encounter these error messages by launching the application from the terminal:   
+  
+    > `ImportError: libjpeg.so.62: cannot open shared object file: No such file or directory`   
+    >
+    > install `sudo apt-get install libjpeg62`   
+    >
+    > `ImportError: libSDL-1.2.so.0: cannot open shared object file: No such file or directory`   
+    >
+    > install `sudo apt-get install libsdl1.2debian`   
 
 [Home](index.md)
