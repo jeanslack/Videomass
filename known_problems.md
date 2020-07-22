@@ -14,10 +14,16 @@ activated with the -row-mt 1 switch. Note that this feature is not available
 if you are using an older version of the ffMPEG (eg Version 3.1.5) and should 
 be disabled when using this encoder.
 
-- Standalone installers for Linux (AppImage), Windows (exe) and MacOS 
-(app) may have some functional limitations:
+- **Videomass.exe** and **Videomass.app** may have some functional limitations:
    * 1) the button for previewing streaming content (Youtube, Facebook, etc) may not work.
 
    * 2) The 'Show More' button for reading the information of the streaming content (YouTube, Facebook, etc) will give a message regarding disabling the functionality.
+   
+- **Videomass.AppImage** for Linux
+  * On Ubuntu and derivatives, if you encounter these error messages by launching the application from the terminal:   
+    `ImportError: libjpeg.so.62: cannot open shared object file: No such file or directory`
+    install `sudo apt-get install libjpeg62`
+    `ImportError: libSDL-1.2.so.0: cannot open shared object file: No such file or directory`   
+    install `sudo apt-get install libsdl1.2debian`
 
 [Home](index.md)
