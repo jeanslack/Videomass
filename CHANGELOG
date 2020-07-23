@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-July 20, 2020 V.2.9.3
+July 22, 2020 V.2.9.3
 +------------------------------------+
 
 BUGS:
@@ -15,7 +15,7 @@ BUGS:
     * Fixed "NameError: name 'OS' is not defined"  on two_pass.py thread
 
 IMPROVEMENTS:
-    * Displays a notify when the cached youtube-dl executable is no longer 
+    * Displays a notify when the cached youtube-dl executable is no longer
       used to give priority to the one installed on the system.
 
 +------------------------------------+

@@ -1,9 +1,9 @@
-videomass (2.9.3-1) UNRELEASED; urgency=medium
+videomass (3.0.0-1) UNRELEASED; urgency=medium
 
-  * New upstream release
+  * New stable upstream release
   * Fixed "IndexError" when the file name has no format extension.
   * Notify when the cached youtube-dl executable is no longer used to give priority to the one installed on the system.
-  * Fixed "NameError: name 'OS' is not defined"  on two_pass.py thread
+  * Fixed "NameError: name 'OS' is not defined"  on two_pass.py thread (on two pass conversions)
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 19 Jul 2020 11:00:00 +0200
 
