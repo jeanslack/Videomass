@@ -25,7 +25,7 @@ For some functional limitations see [Known Problems](https://jeanslack.github.io
 Minimum requirements are:
 - MacOS **Sierra**, **High Sierra** and **Mojave** (64-bit only)
 - Microsoft **Windows 7** to **Windows 10** (64-bit only)
-- Linux **Ubuntu 16.04** or **Debian 9 "stretch" (old stable)** (64-bit only) 
+- Linux **Debian 9 stretch old-stable** (64-bit only) 
 
 ### For developpers
 please visit
