@@ -35,7 +35,7 @@ be disabled when using this encoder.
         * Fedora 32 (Workstation Edition) x86_64
         * Manjaro Linux 20.0.3 (Lysia) x86_64
         
-    * Not work in the the following linux distro:
+    * It does not work in the the following linux distribuitions:
         * Ubuntu 16.04 LTS x86_64
         * Fedora 28 (Workstation Edition) x86_64
 
