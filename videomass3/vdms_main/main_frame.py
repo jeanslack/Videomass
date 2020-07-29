@@ -672,7 +672,8 @@ class MainFrame(wx.Frame):
         setupButton = wx.Menu()
         setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"),
                                        _("General Settings"))
-
+        setupButton.AppendSeparator()
+        checkItem = setupButton.Append(wx.ID_ANY, _("Check new releases"), "")
         self.menuBar.Append(setupButton, _("&Preferences"))
 
         # ------------------ help buton
@@ -688,7 +689,6 @@ class MainFrame(wx.Frame):
         helpButton.AppendSeparator()
         docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
         helpButton.AppendSeparator()
-        checkItem = helpButton.Append(wx.ID_ANY, _("Check new releases"), "")
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
         self.menuBar.Append(helpButton, _("&Help"))
 
@@ -726,6 +726,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.openCache, opencachedir)
         # ----SETUP----
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
+        self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         # ----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
         self.Bind(wx.EVT_MENU, self.Wiki, wikiItem)
@@ -733,7 +734,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Translations, transItem)
         self.Bind(wx.EVT_MENU, self.Donation, DonationItem)
         self.Bind(wx.EVT_MENU, self.DocFFmpeg, docFFmpeg)
-        self.Bind(wx.EVT_MENU, self.CheckNewReleases, checkItem)
         self.Bind(wx.EVT_MENU, self.Info, infoItem)
 
     # --------Menu Bar Event handler (callback)
@@ -949,10 +949,8 @@ class MainFrame(wx.Frame):
     def youtubedl_uptodater(self, event):
         """
         Update to latest version from 'Update youtube-dl' bar menu
-        """
-        waitmsg = _('\nWait....\nUpdating youtube-dl')
-        # ----------------------------------------------------------
 
+        """
         def _check():
             """
             check latest and installed versions of youtube-dl
@@ -975,44 +973,31 @@ class MainFrame(wx.Frame):
         # ----------------------------------------------------------
 
         if MainFrame.EXEC_YDL is not False and os.path.isfile(MainFrame.EXEC_YDL):
-            if os.path.basename(MainFrame.EXEC_YDL) == 'youtube-dl':
-                update = IO_tools.youtubedl_update([MainFrame.EXEC_YDL,
-                                                    '--update'],
-                                                   waitmsg)
-                if update[1]:  # failed
-                    wx.MessageBox("\n%s" % update[0], "Videomass: error",
-                                  wx.ICON_ERROR, self)
-                    return
-                else:
-                    wx.MessageBox("\n%s" % update[0], 'Videomass',
-                                  wx.ICON_INFORMATION, self)
-                    return
-            else:  # youtube-dl.exe
-                ck = _check()
-                if not ck:
-                    return
-                else:
-                    upgrade = IO_tools.youtubedl_upgrade(ck[0],
-                                                         MainFrame.EXEC_YDL
-                                                         )
-
-                if upgrade[1]:  # failed
-                    wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
-                                  wx.ICON_ERROR, self)
-                    return
-                wx.MessageBox(_('Successful! youtube-dl is up-to-date '
-                                '({0})').format(ck[0]),
-                              'Videomass', wx.ICON_INFORMATION)
+            ck = _check()
+            if not ck:
                 return
+            else:
+                upgrade = IO_tools.youtubedl_upgrade(ck[0], MainFrame.EXEC_YDL)
+
+            if upgrade[1]:  # failed
+                wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
+                              wx.ICON_ERROR, self)
+                return
+
+            if wx.MessageBox(_('Successful! youtube-dl is up-to-date ({0})\n\n'
+                               'Re-start is required. Do you want to close '
+                               'Videomass now?').format(ck[0]),
+                             "Videomass", wx.ICON_QUESTION |
+                             wx.YES_NO, self) == wx.NO:
+                return
+
+            self.on_Kill()
+            return
+
         elif MainFrame.PYLIB_YDL is None:  # system installed
             wx.MessageBox(_('It looks like you installed youtube-dl with a '
                             'package manager. Please use that to update.'),
                           'Videomass', wx.ICON_INFORMATION)
-            return
-        else:
-            wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(MainFrame.PYLIB_YDL),
-                          'Videomass', wx.ICON_ERROR)
             return
     # ------------------------------------------------------------------#
 
@@ -1115,7 +1100,7 @@ class MainFrame(wx.Frame):
 
     def Translations(self, event):
         """Display translation how to on github"""
-        page = ('https://github.com/jeanslack/Videomass/blob/master/utilities/'
+        page = ('https://github.com/jeanslack/Videomass/blob/master/develop/'
                 'localization_howto.md')
         webbrowser.open(page)
     # ------------------------------------------------------------------#

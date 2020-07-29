@@ -51,29 +51,41 @@ Build as wheel: (Linux, MacOs, FreeBSD, Windows, etc.)
 
 #--------------------------------------------------------------------------#
 
-Make a Debian source package: 
+Make a Debian source package from upstream source code: 
 
     NOTE: This will transform upstream source code into policy-compliant 
           binary packages.
 
 Require: python3-setuptools, python3-all, debhelper, dh-python, devscripts
+    
+- clone videomass repo 
+    $ git clone https://github.com/jeanslack/Videomass
+    
+- or download a certain release (substitute v?.?.? with tag release)
+    $ git clone --depth 1 --branch v?.?.? https://github.com/jeanslack/Videomass
 
+- browse into Videomass root directory
+    $ cd Videomass/
+    
+- make a source distribution tarball
     $ python3 setup.py sdist
+    
+- browse into dist directory
     $ cd dist/
-    $ mv videomass-2.9.1.tar.gz videomass_2.9.1.orig.tar.gz
-    $ tar -xvf videomass_2.9.1.orig.tar.gz
-    $ cd videomass-2.9.1/
-    - edit debian/changelog file and replace UNRELEASED row with specified 
-      debian release e.g. unstable, bionic or focal, etc. then save it.
+
+- Use debmake command to create the debian packaging structure 
+    $ debmake -a videomass-?.?.?.tar.gz -b:python3
+    
+- browse into videomass directory
+    $ cd videomass-?.?.?/
+    
+- edit changelog file into debian directory and replace UNRELEASED row with 
+specified debian release e.g. unstable, bionic, focal, etc. then save it.
+
+- Finally make a debian source package    
     $ debuild -S  (you could add the -sa option to digitally sign)
 
-See also others info at:
-
-    - https://wiki.debian.org/SimplePackagingTutorial
-    - https://wiki.debian.org/CreatePackageFromPPA#Install_the_Debian_SDK
-    - https://wiki.debian.org/Python/LibraryStyleGuide
-
-Please, Visit the Wiki page for more info:
+Please, Visit the Videomass Wiki page for more info:
 
 https://github.com/jeanslack/Videomass/wiki/Package-for-Debian-and-derivatives
 
@@ -92,6 +104,8 @@ and choose the option you want .
 #--------------------------------------------------------------------------#
 
 Build as AppImage (only Linux) [DEPRECATED]
+
+NOTE: 
 
 require: pyinstaller
 
