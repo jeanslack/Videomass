@@ -13,6 +13,7 @@ July 29, 2020 V.3.0.2
 BUGS:
     * Fixed `ImportError: No module named site` during youtube-dl updating.
       This problem occurs on AppImage only.
+    * Fixed 'page not found' on menu > Help > Translation...
 
 IMPROVEMENTS:
     * "Check for new versions" has been moved from the help menu to the

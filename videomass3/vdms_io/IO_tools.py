@@ -322,12 +322,12 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     Run thread to download locally the latest version of youtube-dl
     or youtube-dl.exe . While waiting, a pop-up dialog is shown.
     """
-    if upgrade:
-        msg = _('\nWait....\nUpgrading youtube-dl.\n')
-    else:
-        msg = _('\nWait....\nDownloading youtube-dl.\n')
-
     name = os.path.basename(executable)
+    if upgrade:
+        msg = _('\nWait....\nUpgrading {}\n').format(name)
+    else:
+        msg = _('\nWait....\nDownloading {}\n').format(name)
+
     url = ('https://github.com/ytdl-org/youtube-dl/releases/'
            'download/%s/%s' % (latest, name))
     if os.path.exists(executable):

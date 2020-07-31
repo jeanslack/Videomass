@@ -3,8 +3,6 @@
 URGENCY: to do soon
 --------------------
 
-- use youtube-dl python library for Videomass.exe also.
-
 - add 'Pictures' on the Media list to export image sequences in jpg, png, bmp
   formats.
 
@@ -24,9 +22,6 @@ URGENCY: low
 ---------------
 URGENCY: medium
 ----------------
-
-- [AppImage] idea: to update videomass and youtube-dl from pypi, create a tool
-  for automate the work. This is only for embedding videomass into Python*.AppImage.
 
 
 

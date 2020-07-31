@@ -673,7 +673,10 @@ class MainFrame(wx.Frame):
         setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"),
                                        _("General Settings"))
         setupButton.AppendSeparator()
-        checkItem = setupButton.Append(wx.ID_ANY, _("Check new releases"), "")
+        dscrp = (_("Discover new versions of Videomass"),
+                 _("Check for the most latest version of Videomass on "
+                   "<https://pypi.org/>"))
+        checkItem = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(setupButton, _("&Preferences"))
 
         # ------------------ help buton
@@ -977,7 +980,9 @@ class MainFrame(wx.Frame):
             if not ck:
                 return
             else:
-                upgrade = IO_tools.youtubedl_upgrade(ck[0], MainFrame.EXEC_YDL)
+                upgrade = IO_tools.youtubedl_upgrade(ck[0],
+                                                     MainFrame.EXEC_YDL,
+                                                     upgrade=True)
 
             if upgrade[1]:  # failed
                 wx.MessageBox("%s" % (upgrade[1]), "Videomass: error",
