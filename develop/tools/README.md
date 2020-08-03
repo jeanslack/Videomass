@@ -1,26 +1,27 @@
 -----------------
-# Description
+# Make bundle with pyinstaller
 
-These are the preliminary steps for building a Videomass bundle using 
-[pyinstaller](https://pypi.org/project/PyInstaller/) or if you want make an
-[AppImage](https://appimage.org/). Before proceeding, install the dependencies 
-required for your operating system:
-
-- [Gnu/Linux](#gnu/linux)
+Before proceeding, install the dependencies required for your operating system:   
+- [Gnu/Linux](#gnu-linux)
 - [MacOs](#mac-os)
 - [Windows](#ms-windows)
 
-Go to [Building the bundle with pyinstaller](#building-the-bundle-with-pyinstaller)
-if you want make a Videomass bundle   
+Packaging    
+- [Make a Videomass bundle using pyinstaller](#building-the-bundle-with-pyinstaller)
 
-Go to [Make AppImage for deployment](#make-appimage-for-deployment) if you want
-make a Videomass*.AppImage .
+-----------------
+# Make AppImage for deployment 
+
+**IMPORTANT:** do not use the `pyinstaller-appimage.py` which is **deprecated**   
+
+Use the `embed-python-videomass-appimage.sh` script to automate the entire 
+AppImage building process.
 
 -----------------
 # Building the bundle with pyinstaller 
 
-- Make sure you have installed pyinstaller, otherwise type 
-`$ python3 -m pip install --user pyinstaller` to install pyinstaller.
+- Make sure you have installed pyinstaller    
+`$ python3 -m pip install --user pyinstaller`   
 
 - Go to the base directory of the Videomass sources that you just extracted 
 from the archive  e.g. `$ cd Videomass`
@@ -38,18 +39,7 @@ and `dist`. The `dist` folder is the location for the bundle.
     > production and distribution.
 
 -----------------
-# Make AppImage for deployment 
-
-- Make sure you have installed pyinstaller, otherwise type 
-`$ python3 -m pip install --user pyinstaller` to install pyinstaller.
-
-- Go to the base directory of the Videomass sources e.g. `$ cd Videomass`
-
-- To make AppImage just type: `$ python3 develop/tools/makeAppImage.py`   
-this tool automates everything that is needed to create Videomass*.AppImage
-
------------------
-# Gnu/Linux
+# Gnu-Linux
 
 - Make sure you have at least Python version 3.6.9 or higher
 
