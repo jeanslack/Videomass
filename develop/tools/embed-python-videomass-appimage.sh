@@ -8,24 +8,33 @@
 
 set -e  # stop if error
 
+SELF="$(readlink -f -- $0)"  # this file
 MACHINE_ARCH=$(arch)
 PYVERSION="python3.7.8"
 OPT="squashfs-root/opt/python3.7"
 USR_SHARE="squashfs-root/usr/share"
 
+# check for architecture
 if [ "${MACHINE_ARCH}" != 'x86_64' ] ; then
     echo "ERROR: architecture not supported $MACHINE_ARCH, supports x86_64 only"
     exit 1
 fi
 
-if [ -d "squashfs-root" ]; then
-    echo "ERROR: another 'squashfs-root' dir exists!"
-    exit 1
+# Make directory for building
+if [ -d $PWD/APPIMAGE_BUILD ]; then
+    cd $PWD/APPIMAGE_BUILD
+    if [ -d "squashfs-root" ]; then
+        echo "ERROR: another 'squashfs-root' dir exists!"
+        exit 1
+    fi
+else
+    mkdir -p -m 0775 $PWD/APPIMAGE_BUILD
+    cd $PWD/APPIMAGE_BUILD
 fi
 
 # Download an AppImage of Python 3.7 built for manylinux if not exist
 if [ ! -f "$PYVERSION-cp37-cp37m-manylinux1_x86_64.AppImage" ]; then
-    wget -c https://github.com/niess/python-appimage/releases/download/python3.7/${PYVERSION}-cp37-cp37m-manylinux1_x86_64.AppImage
+    wget -c https://github.com/niess/python-appimage/releases/download/python3.7/$PYVERSION-cp37-cp37m-manylinux1_x86_64.AppImage
 fi
 
 # Extract this AppImage
@@ -45,10 +54,11 @@ v1.0/libjpeg.so.62 -P squashfs-root/usr/lib/x86_64-linux-gnu/
 
 # download wxPython4.1 binary wheel
 if [ ! -f "wxPython-4.1.0-cp37-cp37m-linux_x86_64.whl" ]; then
-    wget -c https://github.com/jeanslack/AppImage-utils/releases/download/\
-    v1.0/wxPython-4.1.0-cp37-cp37m-linux_x86_64.whl
+    wget -c https://github.com/jeanslack/AppImage-utils/releases/download/v1.0/wxPython-4.1.0-cp37-cp37m-linux_x86_64.whl
 fi
 
+# update pip
+./squashfs-root/AppRun -m pip install -U pip
 # Install videomass and its dependencies (excluding youtube-dl) into the extracted AppDir
 ./squashfs-root/AppRun -m pip install --no-deps videomass
 ./squashfs-root/AppRun -m pip install PyPubSub
@@ -121,4 +131,4 @@ if [ ! -x "appimagetool-x86_64.AppImage" ]; then
     chmod +x appimagetool-x86_64.AppImage
 fi
 
-#./appimagetool-x86_64.AppImage squashfs-root/
+./appimagetool-x86_64.AppImage squashfs-root/
