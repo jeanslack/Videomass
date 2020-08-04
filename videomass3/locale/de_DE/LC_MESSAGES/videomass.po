@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-20 11:26+0200\n"
-"PO-Revision-Date: 2020-07-20 11:37+0200\n"
+"POT-Creation-Date: 2020-08-04 12:19+0200\n"
+"PO-Revision-Date: 2020-08-04 12:29+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.2.1\n"
 
 #: ../Videomass3.py:90
@@ -84,234 +84,234 @@ msgstr ""
 msgid "Orientation points"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:66
+#: ../vdms_dialogs/video_filters.py:65
 msgid "Videomass: Rotate and flip"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:68
+#: ../vdms_dialogs/video_filters.py:67
 msgid "Reverses visual movie from bottom to top"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:71
+#: ../vdms_dialogs/video_filters.py:70
 msgid "Rotate view movie to left"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:73
+#: ../vdms_dialogs/video_filters.py:72
 msgid "Rotate view movie to Right"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:75
+#: ../vdms_dialogs/video_filters.py:74
 msgid "Reverses visual movie from top to bottom"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:78
+#: ../vdms_dialogs/video_filters.py:76
 msgid "Display show settings"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:137
+#: ../vdms_dialogs/video_filters.py:135
 msgid "180° from bottom to top"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:143
+#: ../vdms_dialogs/video_filters.py:141
 msgid "Rotate 90° Left"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:148
+#: ../vdms_dialogs/video_filters.py:146
 msgid "Rotate 90° Right"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:153
+#: ../vdms_dialogs/video_filters.py:151
 msgid "180° from top to bottom"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:204 ../vdms_dialogs/video_filters.py:419
+#: ../vdms_dialogs/video_filters.py:202 ../vdms_dialogs/video_filters.py:417
 msgid "Width"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:209 ../vdms_dialogs/video_filters.py:429
+#: ../vdms_dialogs/video_filters.py:207 ../vdms_dialogs/video_filters.py:427
 msgid "Height"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:225
+#: ../vdms_dialogs/video_filters.py:223
 msgid "Crop Dimensions"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:289
+#: ../vdms_dialogs/video_filters.py:287
 msgid "Videomass: video/image crop"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:290
+#: ../vdms_dialogs/video_filters.py:288
 msgid ""
 "The height of the output video.\n"
 "Set to -1 for disabling."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:292
+#: ../vdms_dialogs/video_filters.py:290
 msgid ""
 "The width of the output video.\n"
 "Set to -1 for disabling."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:294
+#: ../vdms_dialogs/video_filters.py:292
 msgid "The horizontal position of the left edge."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:295
+#: ../vdms_dialogs/video_filters.py:293
 msgid "The vertical position of the top edge of the left corner."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:296
+#: ../vdms_dialogs/video_filters.py:294
 #, python-format
 msgid ""
 "Width:\n"
 "%s"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:299
+#: ../vdms_dialogs/video_filters.py:297
 #, python-format
 msgid ""
 "Height:\n"
 "%s"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:418
+#: ../vdms_dialogs/video_filters.py:416
 msgid "Scale (resize)"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:432
+#: ../vdms_dialogs/video_filters.py:430
 msgid "Setdar (display aspect ratio):"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:434 ../vdms_dialogs/video_filters.py:451
+#: ../vdms_dialogs/video_filters.py:432 ../vdms_dialogs/video_filters.py:449
 msgid "Numerator"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:446 ../vdms_dialogs/video_filters.py:464
+#: ../vdms_dialogs/video_filters.py:444 ../vdms_dialogs/video_filters.py:462
 msgid "Denominator"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:449
+#: ../vdms_dialogs/video_filters.py:447
 msgid "SetSar (sample aspect ratio):"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:527
+#: ../vdms_dialogs/video_filters.py:525
 msgid "Videomass: resize (change resolution)"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:528
+#: ../vdms_dialogs/video_filters.py:526
 msgid "Scale (resize) the input video or image."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:529
+#: ../vdms_dialogs/video_filters.py:527
 #, python-format
 msgid ""
 "WIDTH:\n"
 "%s"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:530
+#: ../vdms_dialogs/video_filters.py:528
 #, python-format
 msgid ""
 "HEIGHT:\n"
 "%s"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:531
+#: ../vdms_dialogs/video_filters.py:529
 msgid ""
 "Sets the Display Aspect Ratio.\n"
 "Set to 0 to disabling."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:533 ../vdms_dialogs/video_filters.py:537
+#: ../vdms_dialogs/video_filters.py:531 ../vdms_dialogs/video_filters.py:535
 #, python-format
 msgid ""
 "-NUMERATOR-\n"
 "%s"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:534 ../vdms_dialogs/video_filters.py:538
+#: ../vdms_dialogs/video_filters.py:532 ../vdms_dialogs/video_filters.py:536
 #, python-format
 msgid ""
 "-DENOMINATOR-\n"
 "%s"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:535
+#: ../vdms_dialogs/video_filters.py:533
 msgid ""
 "The setsar filter sets the Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disabling."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:654
+#: ../vdms_dialogs/video_filters.py:652
 msgid "Advanced Options"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:656
+#: ../vdms_dialogs/video_filters.py:654
 msgid "Deinterlace"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:658
+#: ../vdms_dialogs/video_filters.py:656
 msgid "Interlace"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:661
+#: ../vdms_dialogs/video_filters.py:659
 msgid "Deinterlaces (Using the 'w3fdif' filter)"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:675
+#: ../vdms_dialogs/video_filters.py:673
 msgid "Deinterlaces (Using the 'yadif' filter)"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:699
+#: ../vdms_dialogs/video_filters.py:697
 msgid "Interlaces (Using the 'interlace' filter)"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:722
+#: ../vdms_dialogs/video_filters.py:720
 msgid "Videomass: deinterlace/interlace"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:788
+#: ../vdms_dialogs/video_filters.py:786
 msgid "Deinterlace the input video with `w3fdif` filter"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:790
+#: ../vdms_dialogs/video_filters.py:788
 msgid "Set the interlacing filter coefficients."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:792 ../vdms_dialogs/video_filters.py:802
+#: ../vdms_dialogs/video_filters.py:790 ../vdms_dialogs/video_filters.py:800
 msgid "Specify which frames to deinterlace."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:794
+#: ../vdms_dialogs/video_filters.py:792
 msgid ""
 "Deinterlace the input video with `yadif` filter. For FFmpeg is the best and "
 "fastest choice "
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:797
+#: ../vdms_dialogs/video_filters.py:795
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:799
+#: ../vdms_dialogs/video_filters.py:797
 msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:804
+#: ../vdms_dialogs/video_filters.py:802
 msgid "Simple interlacing filter from progressive contents."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:806
+#: ../vdms_dialogs/video_filters.py:804
 msgid ""
 "scan:\n"
 "determines whether the interlaced frame is taken from the even (tff - "
 "default) or odd (bff) lines of the progressive frame."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:810
+#: ../vdms_dialogs/video_filters.py:808
 msgid ""
 "lowpas:\n"
 "Enable (default) or disable the vertical lowpass filter to avoid twitter "
@@ -319,31 +319,31 @@ msgid ""
 "Default is no setting."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1112
+#: ../vdms_dialogs/video_filters.py:1110
 msgid "Apply Denoisers Filters"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1115
+#: ../vdms_dialogs/video_filters.py:1113
 msgid "Enable nlmeans denoiser"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1122
+#: ../vdms_dialogs/video_filters.py:1120
 msgid "nlmeans options"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1127
+#: ../vdms_dialogs/video_filters.py:1125
 msgid "Enable hqdn3d denoiser"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1132
+#: ../vdms_dialogs/video_filters.py:1130
 msgid "hqdn3d options"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1183
+#: ../vdms_dialogs/video_filters.py:1180
 msgid "Videomass: denoisers filters"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1184
+#: ../vdms_dialogs/video_filters.py:1181
 msgid ""
 "nlmeans:\n"
 "(Denoise frames using Non-Local Means algorithm is capable of restoring "
@@ -351,7 +351,7 @@ msgid ""
 "quality of old VHS tapes."
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:1189
+#: ../vdms_dialogs/video_filters.py:1186
 msgid ""
 "hqdn3d:\n"
 "This is a high precision/quality 3d denoise filter. It aims to reduce image "
@@ -611,78 +611,78 @@ msgstr ""
 msgid "Set Icon Themes"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:237
+#: ../vdms_dialogs/settings.py:239
 msgid "Color customization"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:242
+#: ../vdms_dialogs/settings.py:244
 msgid "Change color at the button bar:"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:248 ../vdms_dialogs/settings.py:634
+#: ../vdms_dialogs/settings.py:250 ../vdms_dialogs/settings.py:635
 msgid "Bar Colour"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:253
+#: ../vdms_dialogs/settings.py:255
 msgid "Change color of bar buttons:"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:258 ../vdms_dialogs/settings.py:636
+#: ../vdms_dialogs/settings.py:260 ../vdms_dialogs/settings.py:637
 msgid "Buttons Colour"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:263
+#: ../vdms_dialogs/settings.py:265
 msgid "Color setting for button fonts:"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:268 ../vdms_dialogs/settings.py:638
+#: ../vdms_dialogs/settings.py:270 ../vdms_dialogs/settings.py:639
 msgid "Font Colour"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:273
+#: ../vdms_dialogs/settings.py:275
 msgid "Restore default settings"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:279
+#: ../vdms_dialogs/settings.py:280
 msgid "Appearance"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:300
+#: ../vdms_dialogs/settings.py:301
 msgid "Logging levels"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:320
+#: ../vdms_dialogs/settings.py:321
 msgid "Videomass: setup"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:321
+#: ../vdms_dialogs/settings.py:322
 msgid ""
 "Enable custom paths for the executables. If the check boxes are disabled or "
 "if the path field is empty, the search for the executables is entrusted to "
 "the environment variables."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:418
+#: ../vdms_dialogs/settings.py:419
 msgid "Set a default directory to save files"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:459
+#: ../vdms_dialogs/settings.py:460
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:499
+#: ../vdms_dialogs/settings.py:500
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:538
+#: ../vdms_dialogs/settings.py:539
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:577
+#: ../vdms_dialogs/settings.py:578
 msgid "Videomass: Where is the mpv executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:668
+#: ../vdms_dialogs/settings.py:669
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 
@@ -1129,18 +1129,18 @@ msgid ""
 "Check for update.\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:326
+#: ../vdms_io/IO_tools.py:327
 msgid ""
 "\n"
 "Wait....\n"
-"Upgrading youtube-dl.\n"
+"Upgrading {}\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:328
+#: ../vdms_io/IO_tools.py:329
 msgid ""
 "\n"
 "Wait....\n"
-"Downloading youtube-dl.\n"
+"Downloading {}\n"
 msgstr ""
 
 #: ../vdms_io/IO_tools.py:345
@@ -1173,8 +1173,8 @@ msgid ""
 "menu."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:128 ../vdms_main/main_frame.py:1400
-#: ../vdms_main/main_frame.py:1439
+#: ../vdms_main/main_frame.py:128 ../vdms_main/main_frame.py:1390
+#: ../vdms_main/main_frame.py:1429
 msgid "Streams analyzer"
 msgstr ""
 
@@ -1238,7 +1238,7 @@ msgstr ""
 msgid "For playback, first make sure you select a URL in the list control"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:455 ../vdms_main/main_frame.py:1342
+#: ../vdms_main/main_frame.py:455 ../vdms_main/main_frame.py:1332
 msgid "YouTube Downloader"
 msgstr ""
 
@@ -1479,61 +1479,65 @@ msgid "General Settings"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:676
-msgid "&Preferences"
+msgid "Discover new versions of Videomass"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:677
+msgid "Check for the most latest version of Videomass on <https://pypi.org/>"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:680
+msgid "&Preferences"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:684
 msgid "User Guide"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:681
+#: ../vdms_main/main_frame.py:685
 msgid "Wiki"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:683
+#: ../vdms_main/main_frame.py:687
 msgid "Issue tracker"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:685
+#: ../vdms_main/main_frame.py:689
 msgid "Translation..."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:687
+#: ../vdms_main/main_frame.py:691
 msgid "Donation"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:689
+#: ../vdms_main/main_frame.py:693
 msgid "FFmpeg documentation"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:691
-msgid "Check new releases"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:692
+#: ../vdms_main/main_frame.py:695
 msgid "About Videomass"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:693
+#: ../vdms_main/main_frame.py:696
 msgid "&Help"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:746
+#: ../vdms_main/main_frame.py:749
 msgid "Videomass: Choose a directory"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:886
+#: ../vdms_main/main_frame.py:889
 msgid ""
 "\n"
 "Wait....\n"
 "Check installed version\n"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:891 ../vdms_main/main_frame.py:905
+#: ../vdms_main/main_frame.py:894 ../vdms_main/main_frame.py:908
 msgid "You are using youtube-dl version {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:911 ../vdms_main/main_frame.py:1013
+#: ../vdms_main/main_frame.py:914
 #, python-brace-format
 msgid ""
 "ERROR: {0}\n"
@@ -1541,132 +1545,128 @@ msgid ""
 "youtube-dl has not been installed yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:926
+#: ../vdms_main/main_frame.py:929
 msgid "A new version of youtube-dl is available on GitHub:"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:928
+#: ../vdms_main/main_frame.py:931
 msgid "The latest version of youtube-dl on GitHub is:"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:939
+#: ../vdms_main/main_frame.py:942
 msgid "youtube-dl is up-to-date {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:953
-msgid ""
-"\n"
-"Wait....\n"
-"Updating youtube-dl"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:970
+#: ../vdms_main/main_frame.py:971
 msgid "youtube-dl is already up-to-date {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1003
+#: ../vdms_main/main_frame.py:992
 #, python-brace-format
-msgid "Successful! youtube-dl is up-to-date ({0})"
+msgid ""
+"Successful! youtube-dl is up-to-date ({0})\n"
+"\n"
+"Re-start is required. Do you want to close Videomass now?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1008
+#: ../vdms_main/main_frame.py:1003
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1031 ../vdms_main/main_frame.py:1042
+#: ../vdms_main/main_frame.py:1021 ../vdms_main/main_frame.py:1032
 msgid "No files added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1053
+#: ../vdms_main/main_frame.py:1043
 msgid "No URLs added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1072
+#: ../vdms_main/main_frame.py:1062
 msgid "Output log has not been created yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1091
+#: ../vdms_main/main_frame.py:1081
 msgid "cache directory has not been created yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1181
+#: ../vdms_main/main_frame.py:1171
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
 "from <https://pypi.org/project/videomass/>"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1187
+#: ../vdms_main/main_frame.py:1177
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1192
+#: ../vdms_main/main_frame.py:1182
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1221
+#: ../vdms_main/main_frame.py:1211
 msgid "Back"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1224
+#: ../vdms_main/main_frame.py:1214
 msgid "Forward"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1227
+#: ../vdms_main/main_frame.py:1217
 msgid "Convert"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1229
+#: ../vdms_main/main_frame.py:1219
 msgid "Download"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1263
+#: ../vdms_main/main_frame.py:1253
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1275
+#: ../vdms_main/main_frame.py:1265
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1282
+#: ../vdms_main/main_frame.py:1272
 msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1311 ../vdms_panels/filedrop.py:265
+#: ../vdms_main/main_frame.py:1301 ../vdms_panels/filedrop.py:265
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1335
+#: ../vdms_main/main_frame.py:1325
 msgid "Add URLs"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1345 ../vdms_main/main_frame.py:1387
-#: ../vdms_main/main_frame.py:1427
+#: ../vdms_main/main_frame.py:1335 ../vdms_main/main_frame.py:1377
+#: ../vdms_main/main_frame.py:1417
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1361
+#: ../vdms_main/main_frame.py:1351
 msgid "Show More"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1381
+#: ../vdms_main/main_frame.py:1371
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1421
+#: ../vdms_main/main_frame.py:1411
 msgid "Presets Manager"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1475
+#: ../vdms_main/main_frame.py:1465
 msgid "Log of the last process"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1477
+#: ../vdms_main/main_frame.py:1467
 msgid "Under processing..."
 msgstr ""
 
@@ -2216,99 +2216,99 @@ msgstr ""
 msgid "Function available only if you choose \"Download by format code\""
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:109
+#: ../vdms_panels/youtubedl_ui.py:110
 msgid "Default"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:110
+#: ../vdms_panels/youtubedl_ui.py:111
 msgid "Download audio and video splitted"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:111
+#: ../vdms_panels/youtubedl_ui.py:112
 msgid "Download Audio only"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:112
+#: ../vdms_panels/youtubedl_ui.py:113
 msgid "Download by format code"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:181
+#: ../vdms_panels/youtubedl_ui.py:182
 msgid "Download all playlist"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:185
+#: ../vdms_panels/youtubedl_ui.py:186
 msgid "Embed thumbnail in audio file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:189
+#: ../vdms_panels/youtubedl_ui.py:190
 msgid "Add metadata to file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:193
+#: ../vdms_panels/youtubedl_ui.py:194
 msgid "Write subtitles to video"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:196 ../vdms_panels/youtubedl_ui.py:479
+#: ../vdms_panels/youtubedl_ui.py:197 ../vdms_panels/youtubedl_ui.py:480
 msgid "URLs loaded"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:305 ../vdms_panels/youtubedl_ui.py:321
+#: ../vdms_panels/youtubedl_ui.py:306 ../vdms_panels/youtubedl_ui.py:322
 msgid "Play selected url"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:335 ../vdms_panels/youtubedl_ui.py:432
-msgid "Format Code"
-msgstr ""
-
 #: ../vdms_panels/youtubedl_ui.py:336 ../vdms_panels/youtubedl_ui.py:433
-#: ../vdms_panels/youtubedl_ui.py:488
-msgid "Url"
+msgid "Format Code"
 msgstr ""
 
 #: ../vdms_panels/youtubedl_ui.py:337 ../vdms_panels/youtubedl_ui.py:434
 #: ../vdms_panels/youtubedl_ui.py:489
-msgid "Title"
+msgid "Url"
 msgstr ""
 
 #: ../vdms_panels/youtubedl_ui.py:338 ../vdms_panels/youtubedl_ui.py:435
+#: ../vdms_panels/youtubedl_ui.py:490
+msgid "Title"
+msgstr ""
+
+#: ../vdms_panels/youtubedl_ui.py:339 ../vdms_panels/youtubedl_ui.py:436
 msgid "Extension"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:339
+#: ../vdms_panels/youtubedl_ui.py:340
 msgid "Resolution"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:340
+#: ../vdms_panels/youtubedl_ui.py:341
 msgid "Video Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:341
+#: ../vdms_panels/youtubedl_ui.py:342
 msgid "fps"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:342
+#: ../vdms_panels/youtubedl_ui.py:343
 msgid "Audio Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:343
+#: ../vdms_panels/youtubedl_ui.py:344
 msgid "Size"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:436 ../vdms_panels/youtubedl_ui.py:490
+#: ../vdms_panels/youtubedl_ui.py:437 ../vdms_panels/youtubedl_ui.py:491
 msgid "Resolution note"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:487
+#: ../vdms_panels/youtubedl_ui.py:488
 msgid "N."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:508
+#: ../vdms_panels/youtubedl_ui.py:509
 msgid ""
 "\"Show more\" only is enabled when Videomass uses youtube-dl as imported "
 "library."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:526
+#: ../vdms_panels/youtubedl_ui.py:527
 msgid "Check at least one box for each URL (green selection)"
 msgstr ""
 
@@ -2423,19 +2423,19 @@ msgstr ""
 msgid "Stops current process"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:428
+#: ../vdms_panels/long_processing_task.py:426
 msgid "...Finished"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:442
+#: ../vdms_panels/long_processing_task.py:440
 msgid "wait... I'm aborting"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:444
+#: ../vdms_panels/long_processing_task.py:442
 msgid "...Interrupted"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:462
+#: ../vdms_panels/long_processing_task.py:460
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -2443,7 +2443,7 @@ msgid ""
 "Do you want to kill application?"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:465
+#: ../vdms_panels/long_processing_task.py:463
 msgid "Please confirm"
 msgstr ""
 
@@ -2661,7 +2661,7 @@ msgstr ""
 msgid "Delete all text from the list"
 msgstr ""
 
-#: ../vdms_threads/mpv_url.py:114
+#: ../vdms_threads/mpv_url.py:113
 msgid ""
 "{}\n"
 "\n"
