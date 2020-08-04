@@ -7,13 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-July 29, 2020 V.3.0.2
+Aug 04, 2020 V.3.0.2
 +------------------------------------+
 
 BUGS:
     * Fixed `ImportError: No module named site` during youtube-dl updating.
-      This problem occurs on AppImage only.
+      This problem occurs on Videomass AppImage only.
     * Fixed 'page not found' on menu > Help > Translation...
+    * Fixed wrong permissions in Videomass AppImage.
+    * Fixed `python3 setup.py bdist_rpm` to generate the binary for distro
+      based on rpm, I had to created gzip archive for the man page and
+      rename all the default presets correctly without spaces.
 
 IMPROVEMENTS:
     * "Check for new versions" has been moved from the help menu to the
@@ -30,7 +34,6 @@ BUGS:
 IMPROVEMENTS:
     * Displays a notify when the cached youtube-dl executable is no longer
       used to give priority to the one installed on the system.
-
     * Improved Videomass appimage using `python3.7.7-cp37-cp37m-manylinux1_x86_64.AppImage'
       from <https://github.com/niess/python-appimage>
 

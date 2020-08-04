@@ -86,7 +86,7 @@ def source_build():
     DATA_FILES = [  # must be relative-path
                   ('share/applications', ['videomass3/art/videomass.desktop']),
                   ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
-                  ('share/man/man1', ['docs/man/man1/videomass.1']),
+                  ('share/man/man1', ['docs/man/man1/videomass.1.gz']),
                   ]
 
     setup(name=PRG_NAME,
