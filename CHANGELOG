@@ -7,6 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Aug 09, 2020 V.3.0.5
++------------------------------------+
+
+BUGS:
+    * [APPIMAGE] fixed incorrect pathname of videomass.png icon
+
+IMPROVEMENTS:
+    * [APPIMAGE] improve the `embed-python-videomass-appimage.sh`
+
+
++------------------------------------+
 Aug 04, 2020 V.3.0.2
 +------------------------------------+
 
