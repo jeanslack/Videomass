@@ -30,6 +30,9 @@ IMPROVEMENTS:
     * [PRESETS MANAGER] adding more understandable information on the summary
       dialog
 
+    * "Check for new versions" has been restored from preferences menu to
+      the help menu.
+
 
 +------------------------------------+
 Aug 04, 2020 V.3.0.2

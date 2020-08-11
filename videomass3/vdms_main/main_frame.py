@@ -672,11 +672,6 @@ class MainFrame(wx.Frame):
         setupButton = wx.Menu()
         setupItem = setupButton.Append(wx.ID_PREFERENCES, _("Setup"),
                                        _("General Settings"))
-        setupButton.AppendSeparator()
-        dscrp = (_("Discover new versions of Videomass"),
-                 _("Check for the most latest version of Videomass on "
-                   "<https://pypi.org/>"))
-        checkItem = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(setupButton, _("&Preferences"))
 
         # ------------------ help buton
@@ -691,6 +686,11 @@ class MainFrame(wx.Frame):
         DonationItem = helpButton.Append(wx.ID_ANY, _("Donation"), "")
         helpButton.AppendSeparator()
         docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
+        helpButton.AppendSeparator()
+        dscrp = (_("Discover new versions of Videomass"),
+                 _("Check for the most latest version of Videomass on "
+                   "<https://pypi.org/>"))
+        checkItem = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         helpButton.AppendSeparator()
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
         self.menuBar.Append(helpButton, _("&Help"))
