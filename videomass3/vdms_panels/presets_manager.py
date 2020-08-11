@@ -88,7 +88,7 @@ class PrstPan(wx.Panel):
         self.oS = OS
         self.parent = parent
         self.txtcmdedited = True  # show dlg if cmdline is edited
-        self.normdetails = []
+        self.normdetails = []  # normalization parameters by analyzation vol.
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if
                        os.path.splitext(x)[1] == '.prst'
@@ -172,10 +172,10 @@ class PrstPan(wx.Panel):
         grd_autosx.Add(boxamap, 0, wx.ALL | wx.EXPAND, 10)
         grd_map = wx.FlexGridSizer(2, 2, 0, 0)
         boxamap.Add(grd_map, 0, wx.ALL | wx.EXPAND, 5)
-        txtAinmap = wx.StaticText(self.nb1_p3, wx.ID_ANY,
-                                  _('Input Audio Index')
-                                  )
-        grd_map.Add(txtAinmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
+        self.txtAinmap = wx.StaticText(self.nb1_p3, wx.ID_ANY,
+                                       _('Input Audio Index')
+                                       )
+        grd_map.Add(self.txtAinmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
         self.cmb_A_inMap = wx.ComboBox(self.nb1_p3, wx.ID_ANY,
                                        choices=['Auto', '1', '2', '3',
                                                 '4', '5', '6', '7', '8'],
@@ -183,10 +183,10 @@ class PrstPan(wx.Panel):
                                        wx.CB_READONLY
                                        )
         grd_map.Add(self.cmb_A_inMap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
-        txtAoutmap = wx.StaticText(self.nb1_p3, wx.ID_ANY,
-                                   _('Output Audio Index')
-                                   )
-        grd_map.Add(txtAoutmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
+        self.txtAoutmap = wx.StaticText(self.nb1_p3, wx.ID_ANY,
+                                        _('Output Audio Index')
+                                        )
+        grd_map.Add(self.txtAoutmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
 
         self.cmb_A_outMap = wx.ComboBox(self.nb1_p3, wx.ID_ANY,
                                         choices=['Auto', 'All', '1', '2', '3',
@@ -357,6 +357,20 @@ class PrstPan(wx.Panel):
         self.spin_target.SetValue(-1.0)
         self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = "", "", ""
         del self.normdetails[:]
+        self.audio_index_ctrls()
+    # ------------------------------------------------------------------#
+
+    def audio_index_ctrls(self, disable=True):
+        """
+        disable or enable audio idexes control
+
+        """
+        if disable:
+            self.cmb_A_inMap.Disable(), self.cmb_A_outMap.Disable()
+            self.txtAoutmap.Disable(), self.txtAinmap.Disable()
+        else:
+            self.cmb_A_inMap.Enable(), self.cmb_A_outMap.Enable()
+            self.txtAoutmap.Enable(), self.txtAinmap.Enable()
     # ------------------------------------------------------------------#
 
     def on_audioINstream(self, event):
@@ -579,12 +593,14 @@ class PrstPan(wx.Panel):
             self.ebupanel.Hide()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
             del self.normdetails[:]
+            self.audio_index_ctrls(False)
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
             self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN)
             self.peakpanel.Hide(), self.ebupanel.Show()
-            self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
+            self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", "EBU"
             del self.normdetails[:]
+            self.audio_index_ctrls()
 
         else:  # usually it is 0
             self.parent.statusbar_msg(_("Audio normalization off"), None)
@@ -933,6 +949,15 @@ class PrstPan(wx.Panel):
         File data redirecting .
 
         """
+        if self.array == []:
+            self.parent.statusbar_msg(_("First select a profile in the list"),
+                                      PrstPan.YELLOW)
+            return
+        if not self.array[3] and self.rdbx_norm.GetSelection() in [3]:
+            wx.MessageBox(_('Invalid EBU normalization enabled for one-pass.\n'
+                            'Turn off EBU normalization or choose a two-pass '
+                            'profile.'), "Videomass", wx.ICON_INFORMATION)
+            return
         # check normalization data offset, if enable.
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
             if self.btn_voldect.IsEnabled():
@@ -946,12 +971,6 @@ class PrstPan(wx.Panel):
         dir_destin = self.parent.file_destin
         # used for file name log
         self.logname = 'Videomass_PresetsManager.log'
-
-        # ------------ VALIDAZIONI: --------------
-        if self.array == []:
-            self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW)
-            return
 
         if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or
            self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
@@ -1151,22 +1170,29 @@ class PrstPan(wx.Panel):
             t = list(self.parent.time_read.items())
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0],
                                                 t[1][0], t[1][1][0])
+        if not self.cmb_A_inMap.IsEnabled():
+            inamap = _('Disable')
+            outamap = _('Disable')
+        else:
+            inamap = self.cmb_A_inMap.GetValue()
+            outamap = self.cmb_A_outMap.GetValue()
 
         numfile = "%s file in pending" % str(cntmax)
 
         formula = (_("SUMMARY\n\nFile to Queue\nPass Encoding\
-                     \nProfile Used\nOutput Format\nAudio Normalization\
-                     \nSelected Input Audio index\nAudio Output Map index\
-                     \nTime selection"))
-        dictions = ("\n\n%s\n%s\n%s\n"
-                    "%s\n%s\n%s\n%s\n%s" % (numfile,
+                     \nProfile Used\nOutput Format\nTime selection\
+                     \n\nAutomations Enabled:\
+                     \nAudio Normalization\nSelected Input Audio index\
+                     \nAudio Output Map index"))
+        dictions = ("\n\n%s\n%s\n%s\n%s\n"
+                    "%s\n\n\n%s\n%s\n%s" % (numfile,
                                             passes,
                                             self.array[0],
                                             self.array[5],
+                                            time,
                                             normalize,
-                                            self.cmb_A_inMap.GetValue(),
-                                            self.cmb_A_outMap.GetValue(),
-                                            time
+                                            inamap,
+                                            outamap,
                                             ))
 
         return formula, dictions

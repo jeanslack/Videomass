@@ -7,14 +7,28 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Aug 09, 2020 V.3.0.5
+Aug 11, 2020 V.3.0.5
 +------------------------------------+
 
 BUGS:
+-----
     * [APPIMAGE] fixed incorrect pathname of videomass.png icon
 
+    * [PRESETS MANAGER] fixed `Audio Streams Mapping` enabling when
+      normalization automation is on EBU R128 or off.
+
+    * [PRESETS MANAGER] fixed missing `EBU R128` string on summary dialog
+      when EBU automation is enabled.
+
 IMPROVEMENTS:
+-------------
     * [APPIMAGE] improve the `embed-python-videomass-appimage.sh`
+
+    * [PRESETS MANAGER] Added a warning message box when enabling EBU
+      normalization on one-pass conversions.
+
+    * [PRESETS MANAGER] adding more understandable information on the summary
+      dialog
 
 
 +------------------------------------+
