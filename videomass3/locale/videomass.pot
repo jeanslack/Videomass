@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-11 18:14+0200\n"
+"POT-Creation-Date: 2020-08-13 10:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -502,11 +502,11 @@ msgstr ""
 msgid "Supported Formats list (optional). Do not include the `.`"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:75 ../vdms_panels/presets_manager.py:487
+#: ../vdms_dialogs/presets_addnew.py:75 ../vdms_panels/presets_manager.py:494
 msgid "Profile Name"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:83 ../vdms_panels/presets_manager.py:488
+#: ../vdms_dialogs/presets_addnew.py:83 ../vdms_panels/presets_manager.py:495
 msgid "Description"
 msgstr ""
 
@@ -862,13 +862,13 @@ msgstr ""
 msgid "=  Below max peak"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:125 ../vdms_panels/av_conversions.py:1881
-#: ../vdms_panels/presets_manager.py:717
+#: ../vdms_frames/shownormlist.py:125 ../vdms_panels/av_conversions.py:1882
+#: ../vdms_panels/presets_manager.py:724
 msgid "RMS-based volume statistics"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:147 ../vdms_panels/av_conversions.py:1879
-#: ../vdms_panels/presets_manager.py:715
+#: ../vdms_frames/shownormlist.py:147 ../vdms_panels/av_conversions.py:1880
+#: ../vdms_panels/presets_manager.py:722
 msgid "PEAK-based volume statistics"
 msgstr ""
 
@@ -1950,95 +1950,97 @@ msgid ""
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:921 ../vdms_panels/presets_manager.py:320
-msgid "Choose from video a specific input audio stream to work out."
+msgid ""
+"Choose a specific audio stream to map from input file. If not more that one "
+"audio stream, leave to \"Auto\"."
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:924 ../vdms_panels/presets_manager.py:323
 msgid ""
-"Map on the output index. Keep same input map if saving as video; to save as "
-"audio select to \"all\" or \"Auto\""
+"Map on the output index. Keep same input map to preserve indexes; to save as "
+"audio file always select to \"all\" or \"Auto\""
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:927 ../vdms_panels/presets_manager.py:311
+#: ../vdms_panels/av_conversions.py:928 ../vdms_panels/presets_manager.py:311
 msgid ""
 "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:930 ../vdms_panels/presets_manager.py:314
+#: ../vdms_panels/av_conversions.py:931 ../vdms_panels/presets_manager.py:314
 msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:933 ../vdms_panels/presets_manager.py:317
+#: ../vdms_panels/av_conversions.py:934 ../vdms_panels/presets_manager.py:317
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1262 ../vdms_panels/av_conversions.py:1277
+#: ../vdms_panels/av_conversions.py:1263 ../vdms_panels/av_conversions.py:1278
 msgid "No filter enabled"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1585
+#: ../vdms_panels/av_conversions.py:1586
 msgid "No Audio"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1734 ../vdms_panels/presets_manager.py:571
+#: ../vdms_panels/av_conversions.py:1735 ../vdms_panels/presets_manager.py:578
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1737 ../vdms_panels/presets_manager.py:574
+#: ../vdms_panels/av_conversions.py:1738 ../vdms_panels/presets_manager.py:581
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1741 ../vdms_panels/presets_manager.py:578
+#: ../vdms_panels/av_conversions.py:1742 ../vdms_panels/presets_manager.py:585
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1764 ../vdms_panels/presets_manager.py:606
+#: ../vdms_panels/av_conversions.py:1765 ../vdms_panels/presets_manager.py:613
 msgid "Audio normalization off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1801 ../vdms_panels/presets_manager.py:638
+#: ../vdms_panels/av_conversions.py:1802 ../vdms_panels/presets_manager.py:645
 msgid "Audio normalization is required only for some files"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1802 ../vdms_panels/presets_manager.py:639
+#: ../vdms_panels/av_conversions.py:1803 ../vdms_panels/presets_manager.py:646
 msgid "Audio normalization is not required based to set target level"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1995
+#: ../vdms_panels/av_conversions.py:1996
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "the data on the audio volume."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2168
+#: ../vdms_panels/av_conversions.py:2169
 msgid "Audio/Video EBU normalization"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2274
+#: ../vdms_panels/av_conversions.py:2275
 msgid "Audio conversions"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2315
+#: ../vdms_panels/av_conversions.py:2316
 msgid "Audio EBU normalization"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2351
+#: ../vdms_panels/av_conversions.py:2352
 #, python-format
 msgid "%s file in pending"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2359 ../vdms_panels/av_conversions.py:2365
-#: ../vdms_panels/presets_manager.py:1166
+#: ../vdms_panels/av_conversions.py:2360 ../vdms_panels/av_conversions.py:2366
+#: ../vdms_panels/presets_manager.py:1173
 msgid "Off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2372
+#: ../vdms_panels/av_conversions.py:2373
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2055,7 +2057,7 @@ msgid ""
 "Selected Input Audio index"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2393
+#: ../vdms_panels/av_conversions.py:2394
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2077,7 +2079,7 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2421
+#: ../vdms_panels/av_conversions.py:2422
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2110,11 +2112,11 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2489
+#: ../vdms_panels/av_conversions.py:2490
 msgid "Videomass: Select a preset to storing the new profile"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2499
+#: ../vdms_panels/av_conversions.py:2500
 msgid "Videomass: Create a new profile"
 msgstr ""
 
@@ -2203,7 +2205,7 @@ msgstr ""
 msgid "Videomass confirmation"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:203 ../vdms_panels/presets_manager.py:988
+#: ../vdms_panels/choose_topic.py:203 ../vdms_panels/presets_manager.py:995
 msgid "Don't show this dialog again"
 msgstr ""
 
@@ -2483,27 +2485,27 @@ msgstr ""
 msgid "Second pass parameters of the selected profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:433 ../vdms_panels/presets_manager.py:453
+#: ../vdms_panels/presets_manager.py:440 ../vdms_panels/presets_manager.py:460
 msgid "New profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:435 ../vdms_panels/presets_manager.py:455
+#: ../vdms_panels/presets_manager.py:442 ../vdms_panels/presets_manager.py:462
 msgid "Edit selected profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:437 ../vdms_panels/presets_manager.py:457
+#: ../vdms_panels/presets_manager.py:444 ../vdms_panels/presets_manager.py:464
 msgid "Delete selected profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:489
+#: ../vdms_panels/presets_manager.py:496
 msgid "Output Format"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:490
+#: ../vdms_panels/presets_manager.py:497
 msgid "Supported Formats List"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:508 ../vdms_panels/presets_manager.py:550
+#: ../vdms_panels/presets_manager.py:515 ../vdms_panels/presets_manager.py:557
 msgid ""
 "ERROR: Typing error on JSON keys: {}\n"
 "\n"
@@ -2511,55 +2513,55 @@ msgid ""
 "key malformed ?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:731
+#: ../vdms_panels/presets_manager.py:738
 msgid "Enter name for new preset"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:744
+#: ../vdms_panels/presets_manager.py:751
 msgid "Cannot save current data in file '{}'."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:748
+#: ../vdms_panels/presets_manager.py:755
 msgid ""
 "'Successful!\n"
 "\n"
 "A new preset has been created."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:762
+#: ../vdms_panels/presets_manager.py:769
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
 " It will be moved to the \"Removals\" folder in the presets directory"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:765 ../vdms_panels/presets_manager.py:825
-#: ../vdms_panels/presets_manager.py:841 ../vdms_panels/presets_manager.py:866
-#: ../vdms_panels/presets_manager.py:936 ../vdms_panels/presets_manager.py:984
-#: ../vdms_panels/presets_manager.py:1056
+#: ../vdms_panels/presets_manager.py:772 ../vdms_panels/presets_manager.py:832
+#: ../vdms_panels/presets_manager.py:848 ../vdms_panels/presets_manager.py:873
+#: ../vdms_panels/presets_manager.py:943 ../vdms_panels/presets_manager.py:991
+#: ../vdms_panels/presets_manager.py:1063
 msgid "Videomass: Please confirm"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:776
+#: ../vdms_panels/presets_manager.py:783
 msgid ""
 "{}\n"
 "\n"
 "Sorry, removal failed, I can't continue."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:796
+#: ../vdms_panels/presets_manager.py:803
 msgid "Select a directory to save it"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:801
+#: ../vdms_panels/presets_manager.py:808
 msgid "Successfully saved"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:811
+#: ../vdms_panels/presets_manager.py:818
 msgid "Videomass: Choose a videomass preset to restore "
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:820
+#: ../vdms_panels/presets_manager.py:827
 #, python-brace-format
 msgid ""
 "The following preset:\n"
@@ -2570,66 +2572,66 @@ msgid ""
 "Proceed ?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:839
+#: ../vdms_panels/presets_manager.py:846
 msgid ""
 "The selected preset will be overwritten with default profiles!\n"
 "proceed?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:850
+#: ../vdms_panels/presets_manager.py:857
 msgid "Sorry, this preset is not part of default Videomass presets."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:864
+#: ../vdms_panels/presets_manager.py:871
 msgid ""
 "WARNING: you are restoring all default presets!\n"
 "Proceed?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:888
+#: ../vdms_panels/presets_manager.py:895
 #, python-format
 msgid "Create a new profile on \"%s\" preset"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:907 ../vdms_panels/presets_manager.py:930
-#: ../vdms_panels/presets_manager.py:953
+#: ../vdms_panels/presets_manager.py:914 ../vdms_panels/presets_manager.py:937
+#: ../vdms_panels/presets_manager.py:960
 msgid "First select a profile in the list"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:912
+#: ../vdms_panels/presets_manager.py:919
 #, python-format
 msgid "Edit profile of the \"%s\" preset: "
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:934
+#: ../vdms_panels/presets_manager.py:941
 msgid "Are you sure you want to delete the selected profile?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:957
+#: ../vdms_panels/presets_manager.py:964
 msgid ""
 "Invalid EBU normalization enabled for one-pass.\n"
 "Turn off EBU normalization or choose a two-pass profile."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:964
+#: ../vdms_panels/presets_manager.py:971
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "data on the audio volume."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:979
+#: ../vdms_panels/presets_manager.py:986
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1028
-#: ../vdms_panels/presets_manager.py:1078
-#: ../vdms_panels/presets_manager.py:1115
+#: ../vdms_panels/presets_manager.py:1035
+#: ../vdms_panels/presets_manager.py:1085
+#: ../vdms_panels/presets_manager.py:1122
 msgid "Starts"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1052
+#: ../vdms_panels/presets_manager.py:1059
 msgid ""
 "EBU normalization is enabled twice in automation and command line. Command "
 "line has priority.\n"
@@ -2637,17 +2639,17 @@ msgid ""
 "Do you wish to continue?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1106
+#: ../vdms_panels/presets_manager.py:1113
 msgid "To export as pictures, select one file at a time"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1168
-#: ../vdms_panels/presets_manager.py:1174
 #: ../vdms_panels/presets_manager.py:1175
+#: ../vdms_panels/presets_manager.py:1181
+#: ../vdms_panels/presets_manager.py:1182
 msgid "Disable"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1182
+#: ../vdms_panels/presets_manager.py:1189
 msgid ""
 "SUMMARY\n"
 "\n"

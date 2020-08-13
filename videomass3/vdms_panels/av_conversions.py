@@ -918,11 +918,12 @@ class AV_Conv(wx.Panel):
                  '(when switch to RMS) in dBFS. From -99.0 to +0.0; default '
                  'for PEAK level is -1.0; default for RMS is -20.0'))
         self.spin_target.SetToolTip(tip)
-        tip = (_('Choose from video a specific input '
-                 'audio stream to work out.'))
+        tip = (_('Choose a specific audio stream to map from input file. If '
+                 'not more that one audio stream, leave to "Auto".'))
         self.cmb_A_inMap.SetToolTip(tip)
-        tip = (_('Map on the output index. Keep same input map if saving '
-                 'as video; to save as audio select to "all" or "Auto"'))
+        tip = (_('Map on the output index. Keep same input map to preserve '
+                 'indexes; to save as audio file always select to "all" '
+                 'or "Auto"'))
         self.cmb_A_outMap.SetToolTip(tip)
         tip = (_('Integrated Loudness Target in LUFS. '
                  'From -70.0 to -5.0, default is -24.0'))
@@ -2468,8 +2469,7 @@ class AV_Conv(wx.Panel):
 
     def Addprof(self):
         """
-        Storing profile or save new preset for vinc application
-        with the same current setting.
+        Save current setting as profile for the Presets Manager panel
 
         """
         self.update_allentries()

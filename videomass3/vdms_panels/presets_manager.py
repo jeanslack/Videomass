@@ -317,11 +317,12 @@ class PrstPan(wx.Panel):
         toolt = (_('Loudness Range Target in LUFS. From +1.0 to '
                    '+20.0, default is +7.0'))
         self.spin_lra.SetToolTip(toolt)
-        toolt = (_('Choose from video a specific input audio stream to '
-                   'work out.'))
+        toolt = (_('Choose a specific audio stream to map from input file. If '
+                   'not more that one audio stream, leave to "Auto".'))
         self.cmb_A_inMap.SetToolTip(toolt)
-        toolt = (_('Map on the output index. Keep same input map if saving '
-                   'as video; to save as audio select to "all" or "Auto"'))
+        toolt = (_('Map on the output index. Keep same input map to preserve '
+                   'indexes; to save as audio file always select to "all" '
+                   'or "Auto"'))
         self.cmb_A_outMap.SetToolTip(toolt)
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
@@ -360,17 +361,23 @@ class PrstPan(wx.Panel):
         self.audio_index_ctrls()
     # ------------------------------------------------------------------#
 
-    def audio_index_ctrls(self, disable=True):
+    def audio_index_ctrls(self):
         """
-        disable or enable audio idexes control
+        disable or enable audio index controls based on normalization type
 
         """
-        if disable:
+        if self.rdbx_norm.GetSelection() == 0:
             self.cmb_A_inMap.Disable(), self.cmb_A_outMap.Disable()
-            self.txtAoutmap.Disable(), self.txtAinmap.Disable()
-        else:
-            self.cmb_A_inMap.Enable(), self.cmb_A_outMap.Enable()
-            self.txtAoutmap.Enable(), self.txtAinmap.Enable()
+            self.cmb_A_outMap.Enable(), self.txtAoutmap.Enable()
+
+        elif self.rdbx_norm.GetSelection() in (1, 2):
+            self.cmb_A_inMap.Enable(), self.txtAinmap.Enable()
+            self.cmb_A_outMap.Disable(), self.txtAoutmap.Disable()
+
+        elif self.rdbx_norm.GetSelection() == 3:
+            self.cmb_A_inMap.Disable(), self.txtAinmap.Disable()
+            self.cmb_A_outMap.Enable(), self.txtAoutmap.Enable()
+
     # ------------------------------------------------------------------#
 
     def on_audioINstream(self, event):
@@ -593,7 +600,7 @@ class PrstPan(wx.Panel):
             self.ebupanel.Hide()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
             del self.normdetails[:]
-            self.audio_index_ctrls(False)
+            self.audio_index_ctrls()
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
             self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN)
@@ -1170,11 +1177,14 @@ class PrstPan(wx.Panel):
             t = list(self.parent.time_read.items())
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0],
                                                 t[1][0], t[1][1][0])
-        if not self.cmb_A_inMap.IsEnabled():
-            inamap = _('Disable')
-            outamap = _('Disable')
-        else:
+        if self.rdbx_norm.GetSelection() == 0:
             inamap = self.cmb_A_inMap.GetValue()
+            outamap = self.cmb_A_outMap.GetValue()
+        elif self.rdbx_norm.GetSelection() in (1, 2):
+            inamap = self.cmb_A_inMap.GetValue()
+            outamap = _('Disable')
+        elif self.rdbx_norm.GetSelection() == 3:
+            inamap = _('Disable')
             outamap = self.cmb_A_outMap.GetValue()
 
         numfile = "%s file in pending" % str(cntmax)

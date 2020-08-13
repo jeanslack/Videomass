@@ -68,6 +68,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 if [ $? != 0 ]; then
     echo 'Failed!'
 else
+    mv videomass.po videomass.pot
     echo "Done!"
-    echo "'videomass.po' was created on: '${target}'"
+    echo "'videomass.pot' was created on: '${target}'"
 fi
