@@ -2,7 +2,6 @@
 #
 # Description: Build from scratch a Videomass-*-x86_64.AppImage starting
 #              from a python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
-#              or from python3.8.5-x86_64.AppImage
 #
 # Ideally run this inside the manylinux Docker container
 # so that dependencies get bundled from that very container
@@ -45,7 +44,10 @@ fi
 
 # Download required shared library
 if [ ! -d usr ] || [ ! -d lib ]; then
-    wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb
+    wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb \
+    http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb \
+    http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb \
+    http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb
 
     # extract data from .deb files
     ar -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb data.tar.xz && tar -xf data.tar.xz
@@ -75,7 +77,9 @@ fi
 if [ -f wxPython-4.1.0-cp38-cp38-linux_x86_64.whl ]; then
     ./squashfs-root/AppRun -m pip install wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
 else
-    ./squashfs-root/AppRun -m pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
+    ./squashfs-root/AppRun -m pip install -U \
+    -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl \
+    wxPython
 fi
 
 # Change AppRun so that it launches videomass and export shared libraries dir
@@ -149,5 +153,3 @@ if [ ! -x appimagetool-x86_64.AppImage ]; then
 fi
 
 ./appimagetool-x86_64.AppImage squashfs-root/
-
-echo "exit status: " $?
