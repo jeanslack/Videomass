@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Description: Build from scratch a Videomass-*-x86_64.AppImage starting
-#              from a python3.8.5-cp38-cp38m-manylinux1_x86_64.AppImage
+#              from a python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
 #              or from python3.8.5-x86_64.AppImage
 #
 # Ideally run this inside the manylinux Docker container
@@ -9,7 +9,6 @@
 
 set -e  # stop if error
 
-SELF="$(readlink -f -- $0)"  # this file
 MACHINE_ARCH=$(arch)
 PYVERSION="python3.8.5"
 OPT="squashfs-root/opt/python3.8"
@@ -33,9 +32,9 @@ else
     cd $PWD/VIDEOMASS_APPIMAGE
 fi
 
-# Download an AppImage of Python 3.8 built for manylinux if not exist
+# Download Python appimage 3.8 built for manylinux if not exist
 if [ ! -f ${PYVERSION}*x86_64.AppImage ]; then
-     wget -c https://github.com/jeanslack/AppImage-utils/releases/download/v1.1/python3.8.5-x86_64.AppImage
+     wget -c https://github.com/niess/python-appimage/releases/download/python3.8/python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
 fi
 
 # Extract this AppImage
@@ -45,21 +44,19 @@ fi
 ./${PYVERSION}*x86_64.AppImage --appimage-extract
 
 # Download required shared library
-if [ ! -f libs.tar.xz ]; then
-    wget -c https://github.com/jeanslack/Videomass/blob/master/develop/tools/AppImage/libs.tar.xz
-fi
+if [ ! -d usr ] || [ ! -d lib ]; then
+    wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb
 
-# extract libs archive
-if [ ! -d libs ]; then
-    tar -xf libs.tar.xz
+    # extract data from .deb files
+    ar -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libsndio6.1_1.1.0-2_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb data.tar.xz && tar -xf data.tar.xz
 fi
 
 # copy shared libraries
-cp -r libs/libpng12-0/lib squashfs-root/
-cp -r libs/libjpeg-turbo8/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
-cp -r libs/libpng12-0/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
-cp -r libs/libSDL2/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
-cp -r libs/libsndio6.1/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
+cp -r lib/ squashfs-root/
+cp -r usr/ squashfs-root/
 
 # update pip
 ./squashfs-root/AppRun -m pip install -U pip
@@ -78,7 +75,7 @@ fi
 if [ -f wxPython-4.1.0-cp38-cp38-linux_x86_64.whl ]; then
     ./squashfs-root/AppRun -m pip install wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
 else
-    ./squashfs-root/AppRun -m pip install -U -f https://github.com/jeanslack/AppImage-utils/releases/download/v1.1/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
+    ./squashfs-root/AppRun -m pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
 fi
 
 # Change AppRun so that it launches videomass and export shared libraries dir

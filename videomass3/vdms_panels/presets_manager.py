@@ -358,26 +358,6 @@ class PrstPan(wx.Panel):
         self.spin_target.SetValue(-1.0)
         self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = "", "", ""
         del self.normdetails[:]
-        self.audio_index_ctrls()
-    # ------------------------------------------------------------------#
-
-    def audio_index_ctrls(self):
-        """
-        disable or enable audio index controls based on normalization type
-
-        """
-        if self.rdbx_norm.GetSelection() == 0:
-            self.cmb_A_inMap.Disable(), self.cmb_A_outMap.Disable()
-            self.cmb_A_outMap.Enable(), self.txtAoutmap.Enable()
-
-        elif self.rdbx_norm.GetSelection() in (1, 2):
-            self.cmb_A_inMap.Enable(), self.txtAinmap.Enable()
-            self.cmb_A_outMap.Disable(), self.txtAoutmap.Disable()
-
-        elif self.rdbx_norm.GetSelection() == 3:
-            self.cmb_A_inMap.Disable(), self.txtAinmap.Disable()
-            self.cmb_A_outMap.Enable(), self.txtAoutmap.Enable()
-
     # ------------------------------------------------------------------#
 
     def on_audioINstream(self, event):
@@ -600,14 +580,12 @@ class PrstPan(wx.Panel):
             self.ebupanel.Hide()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
             del self.normdetails[:]
-            self.audio_index_ctrls()
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
             self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN)
             self.peakpanel.Hide(), self.ebupanel.Show()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", "EBU"
             del self.normdetails[:]
-            self.audio_index_ctrls()
 
         else:  # usually it is 0
             self.parent.statusbar_msg(_("Audio normalization off"), None)
@@ -1177,15 +1155,6 @@ class PrstPan(wx.Panel):
             t = list(self.parent.time_read.items())
             time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0],
                                                 t[1][0], t[1][1][0])
-        if self.rdbx_norm.GetSelection() == 0:
-            inamap = self.cmb_A_inMap.GetValue()
-            outamap = self.cmb_A_outMap.GetValue()
-        elif self.rdbx_norm.GetSelection() in (1, 2):
-            inamap = self.cmb_A_inMap.GetValue()
-            outamap = _('Disable')
-        elif self.rdbx_norm.GetSelection() == 3:
-            inamap = _('Disable')
-            outamap = self.cmb_A_outMap.GetValue()
 
         numfile = "%s file in pending" % str(cntmax)
 
@@ -1201,8 +1170,8 @@ class PrstPan(wx.Panel):
                                             self.array[5],
                                             time,
                                             normalize,
-                                            inamap,
-                                            outamap,
+                                            self.cmb_A_inMap.GetValue(),
+                                            self.cmb_A_outMap.GetValue(),
                                             ))
 
         return formula, dictions
