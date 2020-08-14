@@ -10,35 +10,6 @@ Packaging
 - [Make a Videomass bundle using pyinstaller](#building-the-bundle-with-pyinstaller)
 
 -----------------
-# Make AppImage for deployment 
-
-**IMPORTANT:** do not use the `pyinstaller-appimage.py` which is **deprecated**   
-
-Use the `embed-python-videomass-appimage.sh` script to automate the entire 
-AppImage building process.
-
------------------
-# Building the bundle with pyinstaller 
-
-- Make sure you have installed pyinstaller    
-`$ python3 -m pip install --user pyinstaller`   
-
-- Go to the base directory of the Videomass sources that you just extracted 
-from the archive  e.g. `$ cd Videomass`
-
-- Run `$ python3 develop/tools/pyinstaller_setup.py -h` script and choose the 
-building option you want:   
-
-- Generally, when you start building Videomass bundle using *pyinstaller_setup.py* 
-with `-m` or `gb` or `-s` options, pyinstaller generates a single executable 
-(one file) ready to use. With these options create two new folders, `build` 
-and `dist`. The `dist` folder is the location for the bundle.
-    > <ins>**Note:**</ins>
-    >
-    > For debug on Windows, even enable `console=True` into videomass.spec, not for
-    > production and distribution.
-
------------------
 # Gnu-Linux
 
 - Make sure you have at least Python version 3.6.9 or higher
@@ -138,3 +109,20 @@ sources and extract the archive.
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
 sources and extract the archive.
+
+-----------------
+# Building the bundle with pyinstaller 
+
+- Make sure you have installed pyinstaller    
+`$ python3 -m pip install --user pyinstaller`   
+
+- Open root directory of the Videomass sources that you just extracted 
+from the archive  e.g. `$ cd Videomass`
+
+- Run `$ python3 develop/tools/pyinstaller_setup.py -h` script and choose the 
+building option you want:   
+
+    > <ins>**Note:**</ins>
+    >
+    > For debug on Windows, even enable `console=True` into videomass.spec, not for
+    > production and distribution.

@@ -46,7 +46,7 @@ fi
 
 # Download required shared library
 if [ ! -f libs.tar.xz ]; then
-    wget -c https://github.com/jeanslack/AppImage-utils/releases/download/v1.1/libs.tar.xz
+    wget -c https://github.com/jeanslack/Videomass/blob/master/develop/tools/AppImage/libs.tar.xz
 fi
 
 # extract libs archive
@@ -58,6 +58,8 @@ fi
 cp -r libs/libpng12-0/lib squashfs-root/
 cp -r libs/libjpeg-turbo8/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
 cp -r libs/libpng12-0/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
+cp -r libs/libSDL2/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
+cp -r libs/libsndio6.1/usr/lib/x86_64-linux-gnu squashfs-root/usr/lib/
 
 # update pip
 ./squashfs-root/AppRun -m pip install -U pip
@@ -81,7 +83,8 @@ fi
 
 # Change AppRun so that it launches videomass and export shared libraries dir
 sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' ./squashfs-root/AppRun
-sed -i -e '/export TKPATH/a export LD_LIBRARY_PATH="${here}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' squashfs-root/AppRun
+sed -i -e '/export TKPATH/a # required shared libraries to run Videomass' squashfs-root/AppRun
+sed -i -e '/# required shared libraries to run Videomass/a export LD_LIBRARY_PATH="${here}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' squashfs-root/AppRun
 sed -i -e '/export LD_LIBRARY_PATH=/a export LD_LIBRARY_PATH="${here}/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' squashfs-root/AppRun
 
 # set new metainfo
