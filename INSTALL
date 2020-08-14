@@ -103,14 +103,8 @@ and choose the option you want .
 
 #--------------------------------------------------------------------------#
 
-Build as AppImage (only Linux) [DEPRECATED]
-
-NOTE: 
-
-require: pyinstaller
-
-    $ python3 -m pip install --user pyinstaller
+Build as AppImage (only Linux)
 
 browse on Videomass source root directory and type:
 
-    $ python3 develop/tools/makeAppImage.py
+    $ ./Videomass/develop/tools/make_videomass_appimage.sh
