@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-13 10:39+0200\n"
-"PO-Revision-Date: 2020-08-13 10:47+0200\n"
+"POT-Creation-Date: 2020-08-14 16:10+0200\n"
+"PO-Revision-Date: 2020-08-14 16:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -502,11 +502,11 @@ msgstr ""
 msgid "Supported Formats list (optional). Do not include the `.`"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:75 ../vdms_panels/presets_manager.py:494
+#: ../vdms_dialogs/presets_addnew.py:75 ../vdms_panels/presets_manager.py:474
 msgid "Profile Name"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:83 ../vdms_panels/presets_manager.py:495
+#: ../vdms_dialogs/presets_addnew.py:83 ../vdms_panels/presets_manager.py:475
 msgid "Description"
 msgstr ""
 
@@ -863,12 +863,12 @@ msgid "=  Below max peak"
 msgstr ""
 
 #: ../vdms_frames/shownormlist.py:125 ../vdms_panels/av_conversions.py:1882
-#: ../vdms_panels/presets_manager.py:724
+#: ../vdms_panels/presets_manager.py:702
 msgid "RMS-based volume statistics"
 msgstr ""
 
 #: ../vdms_frames/shownormlist.py:147 ../vdms_panels/av_conversions.py:1880
-#: ../vdms_panels/presets_manager.py:722
+#: ../vdms_panels/presets_manager.py:700
 msgid "PEAK-based volume statistics"
 msgstr ""
 
@@ -1982,33 +1982,33 @@ msgstr ""
 msgid "No Audio"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1735 ../vdms_panels/presets_manager.py:578
+#: ../vdms_panels/av_conversions.py:1735 ../vdms_panels/presets_manager.py:558
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1738 ../vdms_panels/presets_manager.py:581
+#: ../vdms_panels/av_conversions.py:1738 ../vdms_panels/presets_manager.py:561
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1742 ../vdms_panels/presets_manager.py:585
+#: ../vdms_panels/av_conversions.py:1742 ../vdms_panels/presets_manager.py:565
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1765 ../vdms_panels/presets_manager.py:613
+#: ../vdms_panels/av_conversions.py:1765 ../vdms_panels/presets_manager.py:591
 msgid "Audio normalization off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1802 ../vdms_panels/presets_manager.py:645
+#: ../vdms_panels/av_conversions.py:1802 ../vdms_panels/presets_manager.py:623
 msgid "Audio normalization is required only for some files"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1803 ../vdms_panels/presets_manager.py:646
+#: ../vdms_panels/av_conversions.py:1803 ../vdms_panels/presets_manager.py:624
 msgid "Audio normalization is not required based to set target level"
 msgstr ""
 
@@ -2036,7 +2036,7 @@ msgid "%s file in pending"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:2360 ../vdms_panels/av_conversions.py:2366
-#: ../vdms_panels/presets_manager.py:1173
+#: ../vdms_panels/presets_manager.py:1151
 msgid "Off"
 msgstr ""
 
@@ -2112,11 +2112,11 @@ msgid ""
 "Time selection"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2490
+#: ../vdms_panels/av_conversions.py:2489
 msgid "Videomass: Select a preset to storing the new profile"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2500
+#: ../vdms_panels/av_conversions.py:2499
 msgid "Videomass: Create a new profile"
 msgstr ""
 
@@ -2205,7 +2205,7 @@ msgstr ""
 msgid "Videomass confirmation"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:203 ../vdms_panels/presets_manager.py:995
+#: ../vdms_panels/choose_topic.py:203 ../vdms_panels/presets_manager.py:973
 msgid "Don't show this dialog again"
 msgstr ""
 
@@ -2485,27 +2485,27 @@ msgstr ""
 msgid "Second pass parameters of the selected profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:440 ../vdms_panels/presets_manager.py:460
+#: ../vdms_panels/presets_manager.py:420 ../vdms_panels/presets_manager.py:440
 msgid "New profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:442 ../vdms_panels/presets_manager.py:462
+#: ../vdms_panels/presets_manager.py:422 ../vdms_panels/presets_manager.py:442
 msgid "Edit selected profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:444 ../vdms_panels/presets_manager.py:464
+#: ../vdms_panels/presets_manager.py:424 ../vdms_panels/presets_manager.py:444
 msgid "Delete selected profile"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:496
+#: ../vdms_panels/presets_manager.py:476
 msgid "Output Format"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:497
+#: ../vdms_panels/presets_manager.py:477
 msgid "Supported Formats List"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:515 ../vdms_panels/presets_manager.py:557
+#: ../vdms_panels/presets_manager.py:495 ../vdms_panels/presets_manager.py:537
 msgid ""
 "ERROR: Typing error on JSON keys: {}\n"
 "\n"
@@ -2513,55 +2513,55 @@ msgid ""
 "key malformed ?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:738
+#: ../vdms_panels/presets_manager.py:716
 msgid "Enter name for new preset"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:751
+#: ../vdms_panels/presets_manager.py:729
 msgid "Cannot save current data in file '{}'."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:755
+#: ../vdms_panels/presets_manager.py:733
 msgid ""
 "'Successful!\n"
 "\n"
 "A new preset has been created."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:769
+#: ../vdms_panels/presets_manager.py:747
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
 " It will be moved to the \"Removals\" folder in the presets directory"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:772 ../vdms_panels/presets_manager.py:832
-#: ../vdms_panels/presets_manager.py:848 ../vdms_panels/presets_manager.py:873
-#: ../vdms_panels/presets_manager.py:943 ../vdms_panels/presets_manager.py:991
-#: ../vdms_panels/presets_manager.py:1063
+#: ../vdms_panels/presets_manager.py:750 ../vdms_panels/presets_manager.py:810
+#: ../vdms_panels/presets_manager.py:826 ../vdms_panels/presets_manager.py:851
+#: ../vdms_panels/presets_manager.py:921 ../vdms_panels/presets_manager.py:969
+#: ../vdms_panels/presets_manager.py:1041
 msgid "Videomass: Please confirm"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:783
+#: ../vdms_panels/presets_manager.py:761
 msgid ""
 "{}\n"
 "\n"
 "Sorry, removal failed, I can't continue."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:803
+#: ../vdms_panels/presets_manager.py:781
 msgid "Select a directory to save it"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:808
+#: ../vdms_panels/presets_manager.py:786
 msgid "Successfully saved"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:818
+#: ../vdms_panels/presets_manager.py:796
 msgid "Videomass: Choose a videomass preset to restore "
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:827
+#: ../vdms_panels/presets_manager.py:805
 #, python-brace-format
 msgid ""
 "The following preset:\n"
@@ -2572,66 +2572,66 @@ msgid ""
 "Proceed ?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:846
+#: ../vdms_panels/presets_manager.py:824
 msgid ""
 "The selected preset will be overwritten with default profiles!\n"
 "proceed?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:857
+#: ../vdms_panels/presets_manager.py:835
 msgid "Sorry, this preset is not part of default Videomass presets."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:871
+#: ../vdms_panels/presets_manager.py:849
 msgid ""
 "WARNING: you are restoring all default presets!\n"
 "Proceed?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:895
+#: ../vdms_panels/presets_manager.py:873
 #, python-format
 msgid "Create a new profile on \"%s\" preset"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:914 ../vdms_panels/presets_manager.py:937
-#: ../vdms_panels/presets_manager.py:960
+#: ../vdms_panels/presets_manager.py:892 ../vdms_panels/presets_manager.py:915
+#: ../vdms_panels/presets_manager.py:938
 msgid "First select a profile in the list"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:919
+#: ../vdms_panels/presets_manager.py:897
 #, python-format
 msgid "Edit profile of the \"%s\" preset: "
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:941
+#: ../vdms_panels/presets_manager.py:919
 msgid "Are you sure you want to delete the selected profile?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:964
+#: ../vdms_panels/presets_manager.py:942
 msgid ""
 "Invalid EBU normalization enabled for one-pass.\n"
 "Turn off EBU normalization or choose a two-pass profile."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:971
+#: ../vdms_panels/presets_manager.py:949
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "data on the audio volume."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:986
+#: ../vdms_panels/presets_manager.py:964
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1035
-#: ../vdms_panels/presets_manager.py:1085
-#: ../vdms_panels/presets_manager.py:1122
+#: ../vdms_panels/presets_manager.py:1013
+#: ../vdms_panels/presets_manager.py:1063
+#: ../vdms_panels/presets_manager.py:1100
 msgid "Starts"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1059
+#: ../vdms_panels/presets_manager.py:1037
 msgid ""
 "EBU normalization is enabled twice in automation and command line. Command "
 "line has priority.\n"
@@ -2639,17 +2639,15 @@ msgid ""
 "Do you wish to continue?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1113
+#: ../vdms_panels/presets_manager.py:1091
 msgid "To export as pictures, select one file at a time"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1175
-#: ../vdms_panels/presets_manager.py:1181
-#: ../vdms_panels/presets_manager.py:1182
+#: ../vdms_panels/presets_manager.py:1153
 msgid "Disable"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1189
+#: ../vdms_panels/presets_manager.py:1161
 msgid ""
 "SUMMARY\n"
 "\n"

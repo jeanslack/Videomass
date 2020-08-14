@@ -19,7 +19,7 @@ BUGS:
 
 IMPROVEMENTS:
 -------------
-    * [APPIMAGE] improve the `embed-python-videomass-appimage.sh` .
+    * [APPIMAGE] improve the `make_videomass_appimage.sh` .
 
     * [PRESETS MANAGER] Added a warning message box when enabling EBU
       normalization on one-pass conversions.
@@ -27,7 +27,7 @@ IMPROVEMENTS:
     * [PRESETS MANAGER] adding more understandable information on the summary
       dialog.
 
-    * The tooltip messages of the audio indexes mapping are now a little more
+    * The tooltip messages in the audio indexes mapping are now a little more
       understandable (I suppose)
 
     * "Check for new versions" has been restored from preferences menu to
