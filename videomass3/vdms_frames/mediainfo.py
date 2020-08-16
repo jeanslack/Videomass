@@ -35,7 +35,7 @@ class Mediainfo(wx.MiniFrame):
     """
     def __init__(self, data, OS):
         """
-        NOTE constructor:: with 'None' not depend from videomass.
+        NOTE constructor: with 'None' not depend from videomass.
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
@@ -50,7 +50,8 @@ class Mediainfo(wx.MiniFrame):
         self.file_select = wx.ListCtrl(self.panel,
                                        wx.ID_ANY,
                                        style=wx.LC_REPORT |
-                                       wx.SUNKEN_BORDER
+                                       wx.SUNKEN_BORDER |
+                                       wx.LC_SINGLE_SEL
                                        )
         notebook = wx.Notebook(self.panel, wx.ID_ANY)
         nb_panel_1 = wx.Panel(notebook, wx.ID_ANY)
@@ -171,7 +172,10 @@ class Mediainfo(wx.MiniFrame):
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_desel, self.file_select)
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
-    # ----------------------Event handler (callback)----------------------#
+
+        self.file_select.Focus(0)  # make the line the current line
+        self.file_select.Select(0, on=1)  # default event selection
+    # ----------------------Event handler (callbacks)----------------------#
 
     def on_desel(self, event):
         """
@@ -199,7 +203,7 @@ class Mediainfo(wx.MiniFrame):
                 select = self.data[self.data.index(x)]
                 num_items = self.format_ctrl.GetItemCount()
                 self.format_ctrl.InsertItem(num_items, 'DATA FORMAT:')
-                self.format_ctrl.SetItemBackgroundColour(index, "GOLD")
+                self.format_ctrl.SetItemBackgroundColour(index, "ORANGE")
                 index += 1
                 for k, v in x.get('format').items():
                     self.format_ctrl.InsertItem(index, str(k))

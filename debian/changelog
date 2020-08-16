@@ -6,8 +6,10 @@ videomass (3.0.5-1) UNRELEASED; urgency=medium
   * [PRESETS MANAGER] adding more understandable information on the summary dialog.
   * The tooltip messages in the audio indexes mapping are now a little more understandable (I suppose)
   * "Check for new versions" has been restored from preferences menu to the help menu.
+  * [STREAMS ANALYZER] Adding first item auto selection to prevent empty data view.
+  * Improved some dialog boxes layout and colors.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 04 Aug 2020 18:10:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 15 Aug 2020 10:50:52 +0200
 
 videomass (3.0.2-1) UNRELEASED; urgency=medium
 

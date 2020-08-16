@@ -88,10 +88,10 @@ class While_Playing(wx.MiniFrame):
         gr_s1.Add(label1, 0, wx.ALL, 5)
         gr_s1.Add(label2, 0, wx.ALL, 5)
         btngrid = wx.FlexGridSizer(1, 1, 0, 0)
-        btngrid.Add(self.button_close, 0, wx.ALL, 5)
+        btngrid.Add(self.button_close, 0, wx.ALL, 0)
         panel.SetSizer(gr_s1)
         # s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
-        s1.Add(panel, 0,)
+        s1.Add(panel, 1, wx.ALL, 5)
         s1.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         self.SetSizerAndFit(s1)
         # binding

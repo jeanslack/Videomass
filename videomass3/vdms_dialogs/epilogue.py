@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
 # Name: epilogue.py
-# Porpose: show final settings before start process
+# Porpose: show dialog box before start process
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Aug.16.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -29,27 +29,27 @@ import wx
 
 class Formula(wx.Dialog):
     """
-   Show an final dialog box before run process. It accept a
-   couple of tuples which represent the formula names with
-   corresponding diction names:
+   Show a dialog box before run process. It accept a couple
+   of tuples: settingss and parameters.
 
    Example:
-            formula = ("\nEXAMPLES:\n\\nExample 1:\nExample 2:\n etc."
-            diction = ("type 1\ntype 2\ntype 3\n etc."
+            settings = ("\nEXAMPLES:\n\\nExample 1:\nExample 2:\n etc."
+            param = ("type 1\ntype 2\ntype 3\n etc."
     """
-    def __init__(self, parent, formula, diction, title):
+    def __init__(self, parent, settings, param, title):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        label1 = wx.StaticText(panel, wx.ID_ANY, formula)
-        label2 = wx.StaticText(panel, wx.ID_ANY, diction)
+        label1 = wx.StaticText(panel, wx.ID_ANY, settings)
+        label2 = wx.StaticText(panel, wx.ID_ANY, param)
         self.button_1 = wx.Button(self, wx.ID_CANCEL, "")
         self.button_2 = wx.Button(self, wx.ID_OK, "")
 
         # ----------------------Properties----------------------#
         self.SetTitle(title)
-        label2.SetForegroundColour(wx.Colour(255, 106, 249))
-        # panel.SetBackgroundColour(wx.Colour(212, 255, 249))
+        panel.SetBackgroundColour('#262222')
+        label1.SetForegroundColour('#008000')
+        label2.SetForegroundColour('#959595')
 
         # ---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
@@ -60,8 +60,8 @@ class Formula(wx.Dialog):
         btngrid.Add(self.button_1, 0, wx.ALL, 5)
         btngrid.Add(self.button_2, 0, wx.ALL, 5)
         panel.SetSizer(gr_s1)
-        s1.Add(panel, 1, wx.ALL | wx.EXPAND, 10)
-        s1.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=10)
+        s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
+        s1.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         self.SetSizer(s1)
         s1.Fit(self)
         self.Layout()
