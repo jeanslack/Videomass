@@ -22,22 +22,19 @@ be disabled when using this encoder.
    
 - **Videomass.AppImage** for Linux
     * It has been successfully tested on the following Linux distributions:
-        * Debian 9 stretch x86_64
-        * Debian 10 buster x86_64
-        * SparkyLinux 5.11 lxqt x86_64 (stable edition)
-        * AV-Linux 2020.4.10 x86_64
-        * AV-Linux 2019.4.10 x86_64
-        * Sparkylinux 2020.06 xfce x86_64 (rolling edition)
+        * Ubuntu 16.04 LTS x86_64
         * Ubuntu 18.04 LTS x86_64
         * Xubuntu 18.04 x86_64
         * Ubuntu 20.04 LTS x86_64
         * Linux Mint 19.3 x86_64 Cinnamon
+        * Debian 9 stretch x86_64
+        * Debian 10 buster x86_64
+        * SparkyLinux 5.11 lxqt x86_64 (stable edition)
+        * Sparkylinux 2020.06 xfce x86_64 (rolling edition)
+        * AV-Linux 2019.4.10 x86_64
+        * AV-Linux 2020.4.10 x86_64
         * Fedora 32 (Workstation Edition) x86_64
         * Manjaro Linux 20.0.3 (Lysia) x86_64
-        
-    * It does not work in the the following linux distribuitions:
-        * Ubuntu 16.04 LTS x86_64
-        * Fedora 28 (Workstation Edition) x86_64
 
     * It may be necessary to install FFmpeg since it is not included on the 
     appimage. On some distributions it is already installed by default.
