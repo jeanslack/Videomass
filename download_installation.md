@@ -20,7 +20,7 @@ The [AppImage](https://appimage.org/) is available at [SourceForge](https://sour
 web page.   
 
 Minimum requirements:   
-- **Ubuntu 16.04 LTS** (64-bit only) 
+- **Ubuntu 16.04 LTS** to up (64-bit only)
 
 ## Windows
 Videomass **exe** is available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) web page.   
