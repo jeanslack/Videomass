@@ -1,11 +1,9 @@
 # Welcome to Videomass
-
 * [What is Videomass ?](about.md)
 * [Features](features.md)
 * [Screenshots](screenshots.md)
 
 ## Getting started
-
 * [Download and installation](download_installation.md)
 * [Wiki](https://github.com/jeanslack/Videomass/wiki)
 
@@ -17,12 +15,9 @@
 ## Donation
 * [Donation](donation.md)
 
-Videomass is also on [sourceforge.net](https://sourceforge.net/projects/videomass2/)   
-Videomass now also has wheels on [PyPi](https://pypi.org/project/videomass/)   
-
 Copyright © 2015 - 2020 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)  
 Mail: <jeanlucperni@gmail.com>   
-License: GPL3 (see License page or COPYING file in the source folder)
+License: GPL3 (see License page or [LICENSE](https://github.com/jeanslack/Videomass/blob/gh-pages/LICENSE) file in the source folder)
 
 
