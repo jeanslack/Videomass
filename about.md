@@ -51,14 +51,9 @@ public domain, which means you can modify it, redistribute it or use it however
 you like.
 
 ------------------------------------------------
-Copyright © 2015 - 2020 Gianluca Pernigotto
-Author and Developer: Gianluca Pernigotto (jeanslack)
-Mail: <jeanlucperni@gmail.com>
-License: GPL3 (see LICENSE or COPYING file in the source folder)
-
-Copyright © 2015 - 2020 Gianluca Pernigotto
-Author and Developer: Gianluca Pernigotto (jeanslack)
-Mail: <jeanlucperni@gmail.com>
-License: GPL3, see [LICENSE](https://github.com/jeanslack/Videomass/blob/gh-pages/LICENSE) file in the source folder.
+Copyright © 2015 - 2020 Gianluca Pernigotto   
+Author and Developer: Gianluca Pernigotto (jeanslack)   
+Mail: <jeanlucperni@gmail.com>   
+License: GPL3, see [LICENSE](https://github.com/jeanslack/Videomass/blob/gh-pages/LICENSE) file in the source folder.   
 
 [Home](index.md)
