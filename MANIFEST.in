@@ -7,5 +7,4 @@ recursive-include docs *
 recursive-include videomass3/art *
 recursive-include videomass3/share *
 recursive-include videomass3/locale *
-recursive-include MAcOsxSetup *
-recursive-include Win32Setup *
+recursive-include FFMPEG *

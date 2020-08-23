@@ -28,12 +28,12 @@ choose 'Download ZIP'.
 
 - Browse into the `videomass3/locale` folder package by searching for the 'videomass.po' 
 file related to the language to be translated, example:
-``` Videomass base directory
-        /videomass3
-            /locale
-                /de_DE
-                    /LC_MESSAGES
-                        videomass.po
+``` Videomass(rootdir)
+    |__ videomass3
+        |__ locale
+            |__ de_DE
+                |__ LC_MESSAGES
+                    |__ videomass.po
 ```
 
 - Open the "videomass.po" with 'PoEdit' and go to menu bar > Catalog > 
@@ -70,11 +70,11 @@ git clone https://github.com/jeanslack/Videomass.git
 `/Videomass-?.?.?/locale` path (for example create a `de_DE` folder and within 
 which a `LC_MESSAGES` folder for the German language support) with the following tree:
 ```
-    Videomass base directory
-        /videomass3
-            /locale
-                /de_DE
-                    /LC_MESSAGES
+    Videomass(rootdir)
+    |__ videomass3
+        |__ locale
+            |__ de_DE
+                |__ LC_MESSAGES
 ```
                 
 - Copy the **videomass.pot"** file translation template located in the `/locale` 

@@ -61,9 +61,8 @@ class Data(object):
     ART = os.path.join(here, 'videomass3', 'art')
     LOCALE = os.path.join(here, 'videomass3', 'locale')
     SHARE = os.path.join(here, 'videomass3', 'share')
-    FFMPEG_WIN = os.path.join(here, 'Win32Setup', 'FFMPEG_BIN')
-    FFMPEG_MACOS = os.path.join(here, 'MacOsxSetup', 'FFMPEG_BIN')
-    NOTICE = os.path.join(here, 'Win32Setup', 'NOTICE.rtf')
+    FFMPEG = os.path.join(here, 'FFMPEG')
+    NOTICE = os.path.join(FFMPEG, 'NOTICE.rtf')
     AUTH = os.path.join(here, 'AUTHORS')
     BUGS = os.path.join(here, 'BUGS')
     CHANGELOG = os.path.join(here, 'CHANGELOG')
@@ -85,7 +84,7 @@ a = Analysis(['{PRG_NAME}'],
             datas=[(r'{ART}', 'art'),
                     (r'{LOCALE}', 'locale'),
                     (r'{SHARE}', 'share'),
-                    (r'{FFMPEG_WIN}', 'FFMPEG_BIN'),
+                    (r'{FFMPEG}', 'FFMPEG'),
                     (r'{NOTICE}', 'DOC'),
                     (r'{AUTH}', 'DOC'),
                     (r'{BUGS}', 'DOC'),
@@ -136,7 +135,7 @@ a = Analysis(['{PRG_NAME}'],
             datas=[('{ART}', 'art'),
                     ('{LOCALE}', 'locale'),
                     ('{SHARE}', 'share'),
-                    ('{FFMPEG_MACOS}', 'FFMPEG_BIN'),
+                    ('{FFMPEG}', 'FFMPEG'),
                     ('{AUTH}', 'DOC'),
                     ('{BUGS}', 'DOC'),
                     ('{CHANGELOG}', 'DOC'),
@@ -204,6 +203,7 @@ a = Analysis(['{PRG_NAME}'],
             datas=[('{ART}', 'art'),
                     ('{LOCALE}', 'locale'),
                     ('{SHARE}', 'share'),
+                    ('{FFMPEG}', 'FFMPEG'),
                     ('{AUTH}', 'DOC'),
                     ('{BUGS}', 'DOC'),
                     ('{CHANGELOG}', 'DOC'),
@@ -319,7 +319,7 @@ class MakePyinstallerBuild(Data):
                                 '--add-data=%s;art' % self.ART,
                                 '--add-data=%s;locale' % self.LOCALE,
                                 '--add-data=%s;share' % self.SHARE,
-                                '--add-data=%s;FFMPEG_BIN' % self.FFMPEG_WIN,
+                                '--add-data=%s;FFMPEG' % self.FFMPEG,
                                 '--add-data=%s;DOC' % self.NOTICE,
                                 # doc
                                 '--add-data=%s;DOC' % self.AUTH,
@@ -343,7 +343,7 @@ class MakePyinstallerBuild(Data):
                             '--add-data=%s:art' % self.ART,
                             '--add-data=%s:locale' % self.LOCALE,
                             '--add-data=%s:share' % self.SHARE,
-                            '--add-data=%s:FFMPEG_BIN' % self.FFMPEG_MACOS,
+                            '--add-data=%s:FFMPEG' % self.FFMPEG,
                             # doc
                             '--add-data=%s:DOC' % self.AUTH,
                             '--add-data=%s:DOC' % self.BUGS,
@@ -365,6 +365,7 @@ class MakePyinstallerBuild(Data):
                                 '--add-data=%s:art' % self.ART,
                                 '--add-data=%s:locale' % self.LOCALE,
                                 '--add-data=%s:share' % self.SHARE,
+                                '--add-data=%s:FFMPEG' % self.FFMPEG,
                                 # doc
                                 '--add-data=%s:DOC' % self.AUTH,
                                 '--add-data=%s:DOC' % self.BUGS,

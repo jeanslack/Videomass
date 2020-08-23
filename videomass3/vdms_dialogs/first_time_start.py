@@ -196,7 +196,7 @@ class FirstStart(wx.Dialog):
 
         if not installed:
             for x in executables:
-                if not os.path.isfile("%s/FFMPEG_BIN/bin/%s" %
+                if not os.path.isfile("%s/FFMPEG/bin/%s" %
                                       (self.workdir, x)):
                     bin_on_src_dir = False
                     break
@@ -219,13 +219,13 @@ class FirstStart(wx.Dialog):
                                  wx.YES_NO,
                                  None) == wx.YES:
 
-                    ffmpeg = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
+                    ffmpeg = "%s/FFMPEG/bin/%s" % (self.workdir,
                                                        executables[0]
                                                        )
-                    ffprobe = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
+                    ffprobe = "%s/FFMPEG/bin/%s" % (self.workdir,
                                                         executables[1]
                                                         )
-                    ffplay = "%s/FFMPEG_BIN/bin/%s" % (self.workdir,
+                    ffplay = "%s/FFMPEG/bin/%s" % (self.workdir,
                                                        executables[2]
                                                        )
                 else:
