@@ -2,11 +2,15 @@
 Purpose of the FFMPEG directory
 ========================================
 
-Optionally this folder can contain the static builds of ffmpeg, ffprobe and 
-ffplay. This may only be useful for creating e.g. a Videomass bundle that 
-can be run in standalone mode also including FFmpeg (without need to install 
-anything else).
-If you want to use this approach, be sure to create or copy the `bin/` directory 
+This folder can optionally host static builds of ffmpeg, ffprobe and ffplay.
+This may only be useful for creating e.g. a Videomass bundle that can be run
+in standalone mode also embedding FFmpeg (without need to install anything
+else).
+
+In all other cases FFmpeg will be found in environment variables when installed
+in the O.S. or found by links setted by the user through the setup dialog box.
+
+If you want to use this approach, be sure to create or copy the `bin/` directory
 and its content included in the static builds, like this:
 
     FFMPEG
@@ -14,8 +18,8 @@ and its content included in the static builds, like this:
     |   |__ ffmpeg
     |   |__ ffprobe
     |   |__ ffplay
-    |__ presets 
-    |__ doc 
+    |__ presets
+    |__ doc
     |__ LICENSE.txt
     |__ README.txt
 
@@ -24,28 +28,28 @@ MAcOS
 =======================================
 
 The static builds for MacOS with Intel 64bit can be downloaded at:
-    
+
     - http://www.evermeet.cx/ffmpeg/
 or
     - https://ffmpeg.zeranoe.com/builds/
-    
-If you don't want to use statically compiled builds, leave this folder empty. 
-You can later use Homebrew to install FFmpeg. Building options and steps can be 
+
+If you don't want to use statically compiled builds, leave this folder empty.
+You can later use Homebrew to install FFmpeg. Building options and steps can be
 found here:
-    
+
     https://gist.github.com/clayton/6196167
     https://trac.ffmpeg.org/wiki/CompilationGuide/MacOS
-    
+
 =======================================
 MS-Windows
 =======================================
 
 The static builds for MS Windows can be downloaded at:
-    
+
     https://ffmpeg.zeranoe.com/builds/
 
 Building options and steps can be found here:
-    
+
     https://trac.ffmpeg.org/wiki/CompilationGuide
 
 
@@ -57,10 +61,10 @@ include faac support, which, however, can be obtained from compiling the source 
 If you need the faac codec (or other codecs with special restrictions) in FFmpeg, you
 should compile yourself from the source with the faac codec support.
 More Infos about the legal issues can be found here:
-    
+
     http://www.ffmpeg.org/legal.html
 
 Others resources:
-    
+
     http://www.ffmpeg.org/documentation.html
 

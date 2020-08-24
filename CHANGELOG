@@ -12,9 +12,9 @@ Aug 24, 2020 V.3.0.6
 
 BUGS:
 -----
-    * [MACOS] Fixed issue with searching for ffmpeg executables when embedded
-      in FFMPEG folder if not installed in the operating system or linked via
-      setup dialog box.
+    * [Unix] Fixed issue with searching for ffmpeg executables when embedded in
+      FFMPEG folder if not installed in the operating system or linked via setup
+      dialog box.
 
 IMPROVEMENTS:
 -------------
