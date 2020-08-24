@@ -84,6 +84,7 @@ class Data_Source(object):
         self.localepath = os.path.join(data_location, 'locale')
         self.SRCpath = os.path.join(data_location, 'share')
         self.icodir = os.path.join(data_location, 'art', 'icons')
+        self.FFmpeglocaldir = os.path.join(data_location, 'FFMPEG')
         launcher = os.path.isfile('%s/launcher' % self.WORKdir)
 
         if frozen and meipass or launcher:
@@ -224,6 +225,7 @@ class Data_Source(object):
                 Data_Source.DIR_CONF,
                 Data_Source.LOG_DIR,
                 Data_Source.CACHE_DIR,
+                self.FFmpeglocaldir,
                 )
     # --------------------------------------------------------------------
 

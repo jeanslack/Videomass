@@ -1,18 +1,27 @@
-=======================================
-FFMPEG/ directory on MAcOS
-=======================================
+========================================
+Purpose of the FFMPEG directory
+========================================
 
-Optionally this folder can contain the static builds of ffmpeg, 
-ffprobe and ffplay. This may only be useful for creating a Videomass bundle that 
-can be run in standalone mode.  
+Optionally this folder can contain the static builds of ffmpeg, ffprobe and 
+ffplay. This may only be useful for creating e.g. a Videomass bundle that 
+can be run in standalone mode also including FFmpeg (without need to install 
+anything else).
 If you want to use this approach, be sure to create or copy the `bin/` directory 
-included in the static builds, like this:
-    
+and its content included in the static builds, like this:
+
     FFMPEG
     |__ bin
-        |__ ffmpeg
-        |__ ffprobe
-        |__ ffplay 
+    |   |__ ffmpeg
+    |   |__ ffprobe
+    |   |__ ffplay
+    |__ presets 
+    |__ doc 
+    |__ LICENSE.txt
+    |__ README.txt
+
+=======================================
+MAcOS
+=======================================
 
 The static builds for MacOS with Intel 64bit can be downloaded at:
     
@@ -28,19 +37,8 @@ found here:
     https://trac.ffmpeg.org/wiki/CompilationGuide/MacOS
     
 =======================================
-FFMPEG/ directory on MS-Windows
+MS-Windows
 =======================================
-
-Optionally this folder can contain the static builds of ffmpeg, ffprobe and 
-ffplay. This may only be useful for creating a Videomass bundle that can be run 
-in standalone mode. If you want to use this approach, be sure to create or copy 
-the `bin/` directory included in the static builds, like this:
-    
-    FFMPEG
-    |__ bin
-        |__ ffmpeg.exe
-        |__ ffprobe.exe
-        |__ ffplay.exe 
 
 The static builds for MS Windows can be downloaded at:
     

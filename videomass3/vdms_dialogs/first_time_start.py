@@ -52,6 +52,7 @@ class FirstStart(wx.Dialog):
         self.getfileconf = get.FILEconf
         self.workdir = get.WORKdir
         self.oS = get.OS
+        self.ffmpeglocaldir = get.FFMPEGlocaldir
 
         wx.Dialog.__init__(self, None, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor"""
@@ -196,8 +197,7 @@ class FirstStart(wx.Dialog):
 
         if not installed:
             for x in executables:
-                if not os.path.isfile("%s/FFMPEG/bin/%s" %
-                                      (self.workdir, x)):
+                if not os.path.isfile("%s/bin/%s" % (self.ffmpeglocaldir, x)):
                     bin_on_src_dir = False
                     break
                 else:
@@ -219,15 +219,12 @@ class FirstStart(wx.Dialog):
                                  wx.YES_NO,
                                  None) == wx.YES:
 
-                    ffmpeg = "%s/FFMPEG/bin/%s" % (self.workdir,
-                                                       executables[0]
-                                                       )
-                    ffprobe = "%s/FFMPEG/bin/%s" % (self.workdir,
-                                                        executables[1]
-                                                        )
-                    ffplay = "%s/FFMPEG/bin/%s" % (self.workdir,
-                                                       executables[2]
-                                                       )
+                    ffmpeg = "%s/bin/%s" % (self.ffmpeglocaldir,
+                                            executables[0])
+                    ffprobe = "%s/bin/%s" % (self.ffmpeglocaldir,
+                                             executables[1])
+                    ffplay = "%s/bin/%s" % (self.ffmpeglocaldir,
+                                            executables[2])
                 else:
                     return
         else:  # only for MacOs

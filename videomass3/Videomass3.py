@@ -108,6 +108,7 @@ class Videomass(wx.App):
         self.USERfilesave = None if setui[4][1] == 'none' else setui[4][1]
         self.LOGdir = setui[9]  # dir for logging
         self.CACHEdir = setui[10]  # dir cache for updates
+        self.FFMPEGlocaldir = setui[11]  # embed local executables ffmpeg
 
         # ----- youtube-dl
         if self.OS == 'Windows':

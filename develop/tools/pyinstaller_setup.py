@@ -61,7 +61,7 @@ class Data(object):
     ART = os.path.join(here, 'videomass3', 'art')
     LOCALE = os.path.join(here, 'videomass3', 'locale')
     SHARE = os.path.join(here, 'videomass3', 'share')
-    FFMPEG = os.path.join(here, 'FFMPEG')
+    FFMPEG = os.path.join(here, 'videomass3', 'FFMPEG')
     NOTICE = os.path.join(FFMPEG, 'NOTICE.rtf')
     AUTH = os.path.join(here, 'AUTHORS')
     BUGS = os.path.join(here, 'BUGS')

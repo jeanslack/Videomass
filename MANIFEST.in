@@ -7,4 +7,4 @@ recursive-include docs *
 recursive-include videomass3/art *
 recursive-include videomass3/share *
 recursive-include videomass3/locale *
-recursive-include FFMPEG *
+recursive-include videomass3/FFMPEG *
