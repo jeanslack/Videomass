@@ -11,6 +11,9 @@ URGENCY: high
 
 - check to update all default presets or add new ones
 
+- Make a setup choice that switch for use youtube-dl installed with a package 
+  manager or one downloaded via user.
+
 -------------
 URGENCY: low
 -------------

@@ -12,15 +12,18 @@ Aug 24, 2020 V.3.0.6
 
 BUGS:
 -----
-    * [Unix] Fixed issue with searching for ffmpeg executables when embedded in
-      FFMPEG folder if not installed in the operating system or linked via setup
-      dialog box.
+    * [application bundle] Fixed issue with searching for ffmpeg executables 
+      when embedded in FFMPEG folder if not installed in the operating system or 
+      linked via setup dialog box (specially for macOS).
 
 IMPROVEMENTS:
 -------------
     * The directories `MAcOsxSetup/` and `Win32Setup/` are been unified to
       `FFMPEG/` folder and added to package_data of the videomass3 package.
-
+      
+    * [APPIMAGE] Now youtube-dl is included as dependence in the AppImage  
+      to prevent conflicts and warnings with pip command during installing 
+      Videomass or updating inside AppDir. 
 +------------------------------------+
 Aug 14, 2020 V.3.0.5
 +------------------------------------+
