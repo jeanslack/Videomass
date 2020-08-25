@@ -1,26 +1,20 @@
-=======================
-NOTE FOR share-videomass folder configuration:
-=======================
 
-Update: November 30 2019
+Update: August 24 2020
 -----------------------
 
 When you run the program for the first time, the contents of this folder will 
 be copied to the user's Videomass configuration directory, according to the 
-conventions of each operating system:
+conventions of each operating system which are:
 
-        On *nix OS's:   '~/.config/videomass'
-        On MacOs:       '~/Library/Application Support/videomass'
-        On Windows:     'C:\Users\username\AppData\Roaming\videomass'
+        Linux:       '~/.config/videomass'
+        MacOs:       '~/Library/Application Support/videomass'
+        Windows:     'C:\Users\username\AppData\Roaming\videomass'
         
-videomass.conf and videomassWin32.conf (for MS Windows) are the main 
-Videomass configuration files and are also used for storing user preferences.
+`videomass.conf' and `videomassWin32.conf' (for MS Windows) are the main 
+Videomass configuration files and are used for storing user preferences and 
+to import essential data for the program.
 
-Furthermore, Videomass configuration directory is also used to store log files
-during processes (e.g. during conversions, video downloads, etc.) and to load 
-presets files on /presets folder.
-
-Files with ".prst" format are simple text files with a JSON data structure. 
-Now Videomass uses JSON data for its presets, this allowed some advantages 
-in the presets management and some savings in system resources.
+Furthermore, the Videomass configuration directory is also used to load the 
+presets inside the 'presets/' folder which have the ".prst" format extension 
+and contain text with JSON data structure.
 

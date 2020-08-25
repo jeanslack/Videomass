@@ -1,5 +1,5 @@
 
-All the icons included in this folder are part of Videomass.
+All icons included in this folder are part of Videomass.
 
 Videomass is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
