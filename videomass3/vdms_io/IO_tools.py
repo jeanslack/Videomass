@@ -29,6 +29,8 @@ import wx
 import os
 import shutil
 import stat
+import ssl
+import urllib.request
 from videomass3.vdms_threads.mpv_url import Url_Play
 from videomass3.vdms_threads.ffplay_file import File_Play
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
@@ -366,3 +368,52 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
             os.chmod(executable, st.st_mode | stat.S_IXUSR |
                      stat.S_IXGRP | stat.S_IXOTH)
     return status
+# --------------------------------------------------------------------------#
+
+
+def check_videomass_releases(thisrel):
+        """
+        Check for new version releases of Videomass on
+        <https://pypi.org/project/videomass/> web page.
+
+        FIXME : There are was some error regarding
+        [SSL: CERTIFICATE_VERIFY_FAILED]
+        see:
+        <https://stackoverflow.com/questions/27835619/urllib-and-ssl-
+        certificate-verify-failed-error>
+        <https://stackoverflow.com/questions/35569042/ssl-certificate-
+        verify-failed-with-python3>
+        """
+        # HACK fix soon the ssl certificate
+        # ssl._create_default_https_context = ssl._create_unverified_context
+        try:
+            context = ssl._create_unverified_context()
+            f = urllib.request.urlopen('https://pypi.org/project/videomass/',
+                                       context=context
+                                       )
+            myfile = f.read().decode('UTF-8')
+            page = myfile.strip().split()
+            indx = ''
+            for v in page:
+                if 'class="package-header__name">' in v:
+                    indx = page.index(v)
+
+        except IOError as error:
+            return error, 'error'
+
+        except urllib.error.HTTPError as error:
+            return error, 'error'
+
+        if indx:
+            new_major, new_minor, new_micro = page[indx + 2].split('.')
+            new_version = int('%s%s%s' % (new_major, new_minor, new_micro))
+            this_major, this_minor, this_micro = thisrel[2].split('.')
+            this_version = int('%s%s%s' % (this_major, this_minor, this_micro))
+
+            if new_version > this_version:
+                return page[indx + 2], None
+            else:
+                return None, None  # no new version
+        else:
+            return None, 'unrecognized error'  # unrecognized error
+# --------------------------------------------------------------------------#

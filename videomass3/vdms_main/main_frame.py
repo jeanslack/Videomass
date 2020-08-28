@@ -27,8 +27,6 @@
 import wx
 import wx.lib.agw.gradientbutton as GB
 import webbrowser
-import ssl
-import urllib.request
 from urllib.parse import urlparse
 import os
 import sys
@@ -1125,60 +1123,28 @@ class MainFrame(wx.Frame):
     def CheckNewReleases(self, event):
         """
         Check for new version releases of Videomass.
-
-        FIXME : There are was some error regarding
-        [SSL: CERTIFICATE_VERIFY_FAILED]
-        see:
-        <https://stackoverflow.com/questions/27835619/urllib-and-ssl-
-        certificate-verify-failed-error>
-        <https://stackoverflow.com/questions/35569042/ssl-certificate-
-        verify-failed-with-python3>
         """
-        # HACK fix soon the ssl certificate
         cr = current_release()
-        # ssl._create_default_https_context = ssl._create_unverified_context
-        try:
-            context = ssl._create_unverified_context()
-            f = urllib.request.urlopen('https://pypi.org/project/videomass/',
-                                       context=context
-                                       )
-            myfile = f.read().decode('UTF-8')
-            page = myfile.strip().split()
-            indx = ''
-            for v in page:
-                if 'class="package-header__name">' in v:
-                    indx = page.index(v)
-
-        except IOError as error:
-            wx.MessageBox("%s" % error, "Videomass: ERROR",
-                          wx.ICON_ERROR, None
-                          )
-            return
-
-        except urllib.error.HTTPError as error:
-            wx.MessageBox("%s" % error, "Videomass: ERROR",
+        check = IO_tools.check_videomass_releases(cr)
+        if check[1] == 'error':
+            wx.MessageBox("%s" % check[0], "Videomass: ERROR",
                           wx.ICON_ERROR
                           )
-            return
 
-        if indx:
-            new_major, new_minor, new_micro = page[indx + 2].split('.')
-            new_version = int('%s%s%s' % (new_major, new_minor, new_micro))
-            this_major, this_minor, this_micro = cr[2].split('.')
-            this_version = int('%s%s%s' % (this_major, this_minor, this_micro))
+        elif check[0] and check[1] is None:
+            wx.MessageBox(_('A new version (v{0}) of Videomass is available\n'
+                            'from <https://pypi.org/project/'
+                            'videomass/>').format(check[0]),
+                          _("Videomass: Check for new versions"),
+                          wx.ICON_INFORMATION, None)
 
-            if new_version > this_version:
-                wx.MessageBox(_('A new version (v{0}) of Videomass is '
-                                'available\nfrom <https://pypi.org/project/'
-                                'videomass/>').format(page[indx + 2]),
-                              "Videomass: Check new version",
-                              wx.ICON_INFORMATION, None)
-            else:
-                wx.MessageBox(_('You are already using the latest version '
-                                '(v{0}) of Videomass').format(cr[2]),
-                              "Videomass: Check new version",
-                              wx.ICON_INFORMATION, None)
-        else:
+        elif check[0] is None and check[1] is None:
+            wx.MessageBox(_('You are already using the latest version '
+                            '(v{0}) of Videomass').format(cr[2]),
+                          _("Videomass: Check for new versions"),
+                          wx.ICON_INFORMATION, None)
+
+        elif check[1] == 'unrecognized error':
             wx.MessageBox(_('An error was found in the search for '
                             'the web page.\nSorry for this inconvenience.'),
                           "Videomass: Warning", wx.ICON_EXCLAMATION, None)

@@ -107,6 +107,21 @@ class Choose_Topic(wx.Panel):
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 15
                        )
+        sizer_trad = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizer_trad, 0, wx.ALL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 15
+                       )
+
+        txt_trad = wx.StaticText(self,
+                            label=_('Help me! Videomass would need volunteer '
+                                    'translators. If you are interested '
+                                    'you could read some guidelines on '))
+        link_trad = hpl.HyperLinkCtrl(self, -1, _("Localization howto"),
+                            URL="https://github.com/jeanslack/Videomass"
+                                "/blob/master/develop/localization_howto.md")
+        sizer_trad.Add(txt_trad)
+        sizer_trad.Add(link_trad)
         txt_link = wx.StaticText(self, label=_('Download additional presets '
                                                'or contribute to making new '
                                                'ones '))

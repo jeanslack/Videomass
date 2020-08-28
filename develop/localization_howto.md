@@ -1,34 +1,29 @@
 # Help translate videomass to other languages
 -----------------
 
-### Requirements
-- [GNU gettext](https://www.gnu.org/software/gettext) (To build `.pot` and the 
-`.mo` files)
+### Updates an existing translation
+The following languages have not yet been translated:   
+    - de_DE German
+    - es_ES Spanish
+    - fr_FR French
+    - pl_PL Polish
+
+#### Requirements
 - [poEdit](https://poedit.net/): to do the actual translation I recommend poEdit, 
 it allows you to create or update a translation catalog (.po file) from the .pot file.
-- Some kind of text editor to edit some code (notepad++, nano, Mousepad etc are sufficient)
-- [Git](https://git-scm.com/downloads)
 
-> <ins>**Note:**</ins>
->
-> The instructions below assume basic knowledge of the command line (OS independent)
-
-### Updates an existing translation
 Over time, new releases of Videomass could include new text strings not yet 
 translated. To update an existing translation follow these steps:
 
-- Clone videomass with git command:
-```
-git clone https://github.com/jeanslack/Videomass.git
-```
+- Download latest release of Videomass from [https://github.com/jeanslack/Videomass/releases]
 
-- Otherwise, if you have not git, download it as zip archive:
-Click on to 'Clone' button on [https://github.com/jeanslack/Videomass] and
-choose 'Download ZIP'.
+- Extract the archive and navigate inside the obtained folder.
 
-- Browse into the `videomass3/locale` folder package by searching for the 'videomass.po' 
-file related to the language to be translated, example:
-``` Videomass(rootdir)
+- Browse into the `videomass3/locale` folder, then choose the language folder to translate.
+
+- Browse on by searching for the 'videomass.po' file related to the language to be translated, example:
+
+``` Videomass(base dir.)
     |__ videomass3
         |__ locale
             |__ de_DE
@@ -49,17 +44,27 @@ it here.
 - Now, you are ready to start your translation. When you're done save your work; 
 you can always resume your work from where you left off.
 
-- Try your new tranlation by open a terminal window, go to the 'Videomass-?.?.?' 
-sources folder and type:   
-
-      `python3 launcher`
-
-When you have completed your translation with 'PoEdit', please send me your 
+When you have completed your translation with 'PoEdit', please [Create a pull 
+request](https://github.com/jeanslack/Videomass/pulls) or send me your 
 'videomass.po' file at: <jeanlucperni@gmail.com>   
 
 I will be grateful!!
 
+At your disposal for clarification.
+
 ### Start with a new translation
+
+#### Requirements
+- [GNU gettext](https://www.gnu.org/software/gettext) (To build `.pot` and the 
+`.mo` files)
+- [poEdit](https://poedit.net/): to do the actual translation I recommend poEdit, 
+it allows you to create or update a translation catalog (.po file) from the .pot file.
+- Some kind of text editor to edit some code (notepad++, nano, Mousepad etc are sufficient)
+- [Git](https://git-scm.com/downloads)
+
+> <ins>**Note:**</ins>
+>
+> The instructions below assume basic knowledge of the command line (OS independent)
 
 - To start a new translation, clone videomass with git command:
 ```

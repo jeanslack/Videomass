@@ -21,10 +21,6 @@ IMPROVEMENTS:
     * The directories `MAcOsxSetup/` and `Win32Setup/` are been unified to
       `FFMPEG/` folder and added to package_data of the videomass3 package.
 
-    * [APPIMAGE] youtube-dl has been included as a dependency in AppImage
-      to prevent pip warnings when installing and updating Videomass via
-      pip command within AppDir.
-
     * On Linux it is now possible to include ffmpeg, ffprobe and ffplay
       executables into FFMPEG folder. This could be useful, for instance,
       to make an application bundle all-in-one of Videomass for Linux distros

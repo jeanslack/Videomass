@@ -63,15 +63,16 @@ cp -r usr/ squashfs-root/
 # update pip
 ./squashfs-root/AppRun -m pip install -U pip
 
-# Install videomass and its dependencies into the extracted AppDir
+# Install videomass with `--no-deps' option to exclude youtube-dl
+# because not easily upgradable on AppImage
 if [ -f videomass-*.whl ]; then
-    ./squashfs-root/AppRun -m pip install videomass-*.whl
+    ./squashfs-root/AppRun -m pip install --no-deps videomass-*.whl
 else
-    ./squashfs-root/AppRun -m pip install videomass
+    ./squashfs-root/AppRun -m pip install --no-deps videomass
 fi
 
 # installing pypubsub
-#./squashfs-root/AppRun -m pip install PyPubSub
+./squashfs-root/AppRun -m pip install PyPubSub
 
 # installing wxPython4.1 binary wheel
 if [ -f wxPython-4.1.0-cp38-cp38-linux_x86_64.whl ]; then
