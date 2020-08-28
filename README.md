@@ -23,9 +23,10 @@ be performed or modified on the fly.
 Videomass also offers a graphical interface for the famous video downloader
 [youtube_dl](http://ytdl-org.github.io/youtube-dl/) and allows you to choose 
 between various download options like a specific format codes with the ability 
-to playback individual URLs with different qualities via mpv player. Allows also 
-to download all playlist, embed thumbnail in audio file (via atomicparsley), 
-add metadata to file and write subtitles to video.   
+to playback individual URLs with different qualities via [mpv](https://mpv.io/) 
+player. Allows also to download all playlist, embed thumbnail in audio file via 
+[atomicparsley](http://atomicparsley.sourceforge.net/), add metadata to file and 
+write subtitles to video.   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 

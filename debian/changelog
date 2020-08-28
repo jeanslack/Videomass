@@ -1,3 +1,15 @@
+videomass (3.0.6-1) UNRELEASED; urgency=medium
+
+  * New stable upstream release
+  * The directories `MAcOsxSetup/` and `Win32Setup/` are been unified to 
+`FFMPEG/` folder and added to package_data of the videomass3 package.
+  * On Linux it is now possible to include ffmpeg, ffprobe and ffplay 
+executables into FFMPEG folder. This could be useful, for instance, to make 
+an application bundle all-in-one of Videomass for Linux distros
+without ffmpeg installed on (see videomass3/FFMPEG/README).
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 28 Aug 2020 15:15:35 +0200
+
 videomass (3.0.5-1) UNRELEASED; urgency=medium
 
   * New stable upstream release
