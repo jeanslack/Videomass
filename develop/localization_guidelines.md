@@ -6,7 +6,8 @@ The following languages have not yet been translated:
 - de_DE   (German)
 - es_ES   (Spanish)
 - fr_FR   (French)
-- pl_PL   (Polish)
+- pl_PL   (Polish)   
+
 You can choose the language you prefer to translate.
 
 #### Requirements
@@ -19,9 +20,10 @@ file from a `.pot` file.
 > **`.pot`** file **(portable object template)**. Specifically, the `videomass.pot` 
 > file is just a template that contains the new strings not yet translated and should 
 > never be modified directly. The `videomass.po` file can instead be edited for translation 
-> or updated with the latest strings not yet translated, i.e. by importing `videomass.pot` .
+> or updated with the latest strings not yet translated, i.e. by importing `videomass.pot` 
+> (see below).
 
-### Let's go
+#### Let's go
 
 - Download latest release of Videomass from https://github.com/jeanslack/Videomass/releases
 
@@ -40,13 +42,13 @@ file from a `.pot` file.
 ```
 - Open the "videomass.po" file with 'PoEdit' 
 
-- Find for *Catalog > Update from POT file...* on the poEdit menu, then 
+- Find for *> Catalog > Update from POT file...* on the poEdit menu bar, then 
 import the `videomass.pot` file template sited on `locale` folder. This serves 
 to update current `videomass.po` file at the latest features.
 
-- Check the catalog property data by *Catalog > Property...* of the poEdit menu bar 
+- Check the catalog property data by *> Catalog > Property...* of the poEdit menu bar 
 and make sure it contains at least some information. Otherwise you could provide 
-it here.
+it.
 
 - Now, you are ready to start your translation. When you're done save your work; 
 you can always resume your work from where you left off.
