@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 00:44+0200\n"
-"PO-Revision-Date: 2020-08-28 00:46+0200\n"
+"POT-Creation-Date: 2020-08-28 10:04+0200\n"
+"PO-Revision-Date: 2020-08-28 10:07+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -2488,15 +2488,27 @@ msgstr "Benvenuti in Videomass"
 msgid "Version {}"
 msgstr "Versione {}"
 
-#: ../vdms_panels/choose_topic.py:110
+#: ../vdms_panels/choose_topic.py:117
+msgid ""
+"Videomass would need volunteer translators. If you are interested you could "
+"take a look at the "
+msgstr ""
+"Videomass avrebbe bisogno di traduttori volontari. Se sei interessato "
+"potresti dare un'occhiata alle "
+
+#: ../vdms_panels/choose_topic.py:120
+msgid "Localization guidelines"
+msgstr "Linee guida per la localizzazione"
+
+#: ../vdms_panels/choose_topic.py:125
 msgid "Download additional presets or contribute to making new ones "
 msgstr "Scarica presets aggiuntivi o contribuisci a crearne di nuovi "
 
-#: ../vdms_panels/choose_topic.py:113
+#: ../vdms_panels/choose_topic.py:128
 msgid "Additional Presets"
 msgstr "Presets Aggiuntivi"
 
-#: ../vdms_panels/choose_topic.py:156
+#: ../vdms_panels/choose_topic.py:171
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -2508,7 +2520,7 @@ msgstr ""
 "per maggiori informazioni visitare: <http://ytdl-org.github.io/youtube-dl/"
 "download.html>"
 
-#: ../vdms_panels/choose_topic.py:167
+#: ../vdms_panels/choose_topic.py:182
 msgid ""
 "{}\n"
 "\n"
@@ -2518,7 +2530,7 @@ msgstr ""
 "\n"
 "youtube-dl: nessuna libreria o file eseguibile trovato."
 
-#: ../vdms_panels/choose_topic.py:171
+#: ../vdms_panels/choose_topic.py:186
 msgid ""
 "An updated version of youtube-dl is required to download videos from YouTube."
 "com and other video sites. Videomass can download an updated copy of youtube-"
@@ -2538,7 +2550,7 @@ msgstr ""
 "\n"
 "...Desideri proseguire?"
 
-#: ../vdms_panels/choose_topic.py:180
+#: ../vdms_panels/choose_topic.py:195
 msgid ""
 "Successful! \n"
 "\n"
@@ -2556,7 +2568,7 @@ msgstr ""
 "\n"
 "È necessario il riavvio. Vuoi chiudere Videomass ora?"
 
-#: ../vdms_panels/choose_topic.py:188
+#: ../vdms_panels/choose_topic.py:203
 msgid ""
 "Notice: the youtube-dl executable previously downloaded with Videomass is no "
 "longer in use, since the one installed in the system that has priority is "
@@ -2570,11 +2582,11 @@ msgstr ""
 "\n"
 "Vuoi rimuovere quello non più in uso?"
 
-#: ../vdms_panels/choose_topic.py:199 ../vdms_panels/choose_topic.py:222
+#: ../vdms_panels/choose_topic.py:214 ../vdms_panels/choose_topic.py:237
 msgid "Videomass confirmation"
 msgstr "Videomass conferma"
 
-#: ../vdms_panels/choose_topic.py:203 ../vdms_panels/presets_manager.py:973
+#: ../vdms_panels/choose_topic.py:218 ../vdms_panels/presets_manager.py:973
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 

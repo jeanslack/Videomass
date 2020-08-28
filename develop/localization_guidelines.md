@@ -3,17 +3,25 @@
 
 ### Updates an existing translation
 The following languages have not yet been translated:   
-- de_DE German
-- es_ES Spanish
-- fr_FR French
-- pl_PL Polish
+- de_DE   (German)
+- es_ES   (Spanish)
+- fr_FR   (French)
+- pl_PL   (Polish)
+You can choose the language you prefer to translate.
 
-> #### Requirements
->
-> - [poEdit](https://poedit.net/): to do the actual translation I recommend poEdit, 
-it allows you to create or update a translation catalog (.po file) from the .pot file.
+#### Requirements
 
-Updating an existing translation
+[poEdit](https://poedit.net/): to do the actual translation I recommend poEdit, 
+it allows you to create or update a translation catalog , for instance, a `.po` 
+file from a `.pot` file.
+
+> There is a bit of difference between **`.po`** file **(portable object)** and 
+> **`.pot`** file **(portable object template)**. Specifically, the `videomass.pot` 
+> file is just a template that contains the new strings not yet translated and should 
+> never be modified directly. The `videomass.po` file can instead be edited for translation 
+> or updated with the latest strings not yet translated, i.e. by importing `videomass.pot` .
+
+### Let's go
 
 - Download latest release of Videomass from https://github.com/jeanslack/Videomass/releases
 
@@ -31,17 +39,12 @@ Updating an existing translation
                     |__ videomass.po
 ```
 - Open the "videomass.po" file with 'PoEdit' 
-   > There is a bit of difference between **`.po` (portable object)** file and 
-   > **`.pot` (portable object template)** file. The `videomass.pot` file is just a 
-   > template that contains the new strings not yet translated and should never be 
-   > modified directly. The `videomass.po` file can instead be edited for translation 
-   > or updated with the latest strings not yet translated, i.e. by importing `videomass.pot` .
 
-- Find for *bar > Catalog > Update from POT file...* on the poEdit menu, then 
+- Find for *Catalog > Update from POT file...* on the poEdit menu, then 
 import the `videomass.pot` file template sited on `locale` folder. This serves 
 to update current `videomass.po` file at the latest features.
 
-- Check the catalog property data on menu bar > Catalog > Property... 
+- Check the catalog property data by *Catalog > Property...* of the poEdit menu bar 
 and make sure it contains at least some information. Otherwise you could provide 
 it here.
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-28 00:44+0200\n"
+"POT-Creation-Date: 2020-08-28 10:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2150,15 +2150,25 @@ msgstr ""
 msgid "Version {}"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:110
+#: ../vdms_panels/choose_topic.py:117
+msgid ""
+"Videomass would need volunteer translators. If you are interested you could "
+"take a look at the "
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:120
+msgid "Localization guidelines"
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:125
 msgid "Download additional presets or contribute to making new ones "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:113
+#: ../vdms_panels/choose_topic.py:128
 msgid "Additional Presets"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:156
+#: ../vdms_panels/choose_topic.py:171
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -2166,14 +2176,14 @@ msgid ""
 "html>"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:167
+#: ../vdms_panels/choose_topic.py:182
 msgid ""
 "{}\n"
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:171
+#: ../vdms_panels/choose_topic.py:186
 msgid ""
 "An updated version of youtube-dl is required to download videos from YouTube."
 "com and other video sites. Videomass can download an updated copy of youtube-"
@@ -2185,7 +2195,7 @@ msgid ""
 "...Do you wish to continue?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:180
+#: ../vdms_panels/choose_topic.py:195
 msgid ""
 "Successful! \n"
 "\n"
@@ -2196,7 +2206,7 @@ msgid ""
 "Re-start is required. Do you want to close Videomass now?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:188
+#: ../vdms_panels/choose_topic.py:203
 msgid ""
 "Notice: the youtube-dl executable previously downloaded with Videomass is no "
 "longer in use, since the one installed in the system that has priority is "
@@ -2205,11 +2215,11 @@ msgid ""
 "Do you want to remove the one no longer in use?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:199 ../vdms_panels/choose_topic.py:222
+#: ../vdms_panels/choose_topic.py:214 ../vdms_panels/choose_topic.py:237
 msgid "Videomass confirmation"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:203 ../vdms_panels/presets_manager.py:973
+#: ../vdms_panels/choose_topic.py:218 ../vdms_panels/presets_manager.py:973
 msgid "Don't show this dialog again"
 msgstr ""
 
