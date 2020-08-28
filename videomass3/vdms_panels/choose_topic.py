@@ -114,12 +114,12 @@ class Choose_Topic(wx.Panel):
                        )
 
         txt_trad = wx.StaticText(self,
-                            label=_('Help me! Videomass would need volunteer '
-                                    'translators. If you are interested '
-                                    'you could read some guidelines on '))
-        link_trad = hpl.HyperLinkCtrl(self, -1, _("Localization howto"),
-                            URL="https://github.com/jeanslack/Videomass"
-                                "/blob/master/develop/localization_howto.md")
+                                 label=_('Videomass would need volunteer '
+                                         'translators. If you are interested '
+                                         'you could take a look at the '))
+        link_trad = hpl.HyperLinkCtrl(self, -1, _("Localization guidelines"),
+                        URL="https://github.com/jeanslack/Videomass/blob/"
+                            "master/develop/localization_guidelines.md")
         sizer_trad.Add(txt_trad)
         sizer_trad.Add(link_trad)
         txt_link = wx.StaticText(self, label=_('Download additional presets '

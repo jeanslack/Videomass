@@ -1104,7 +1104,7 @@ class MainFrame(wx.Frame):
     def Translations(self, event):
         """Display translation how to on github"""
         page = ('https://github.com/jeanslack/Videomass/blob/master/develop/'
-                'localization_howto.md')
+                'localization_guidelines.md')
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 
