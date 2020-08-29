@@ -46,7 +46,7 @@ web page.
 - **[wxPython-Phoenix >= 4.0.3](https://wxpython.org/)**
 - **[PyPubSub](https://pypi.org/project/PyPubSub/)**
 - **[pip](https://pypi.org/project/pip/)**
-- **[ffmpeg >=4.1.4](https://ffmpeg.org/)**
+- **[ffmpeg >=3.2](https://ffmpeg.org/)**
 - **[ffprobe](https://ffmpeg.org/ffprobe.html)**
 - **[ffplay](http://ffmpeg.org/ffplay.html)**
 - **[youtube-dl](https://pypi.org/project/youtube_dl/)**
