@@ -7,6 +7,18 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sep 1, 2020 V.3.0.7
++------------------------------------+
+
+BUGS:
+-----
+    * [APPIMAGE] fixed mpv play urL
+
+IMPROVEMENTS:
+-------------
+    * [APPIMAGE] Include youtube-dl as dependency inside AppImage
+
++------------------------------------+
 Aug 28, 2020 V.3.0.6
 +------------------------------------+
 
