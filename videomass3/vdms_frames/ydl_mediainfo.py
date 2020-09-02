@@ -62,7 +62,7 @@ class YDL_Mediainfo(wx.MiniFrame):
         self.SetTitle(_('Videomass - youtube-dl show more'))
         self.SetMinSize((640, 400))
         self.url_select.SetMinSize((640, 200))
-        self.url_select.InsertColumn(0, _('TITLE'), width=250)
+        self.url_select.InsertColumn(0, _('TITLE SELECTION'), width=250)
         self.url_select.InsertColumn(1, _('URL'), width=500)
         self.textCtrl.SetMinSize((640, 300))
 
@@ -101,6 +101,10 @@ class YDL_Mediainfo(wx.MiniFrame):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.url_select)
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)
+
+
+        self.url_select.Focus(0)  # make first line the current line selected
+        self.url_select.Select(0, on=1)  # default event selection
 
     # ----------------------Event handler (callback)----------------------#
 

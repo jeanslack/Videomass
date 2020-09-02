@@ -86,7 +86,7 @@ class Mediainfo(wx.MiniFrame):
         self.SetTitle(_('Videomass - FFprobe streams analyzer'))
         self.SetMinSize((640, 400))
         self.file_select.SetMinSize((640, 200))
-        self.file_select.InsertColumn(0, _('File Selection'), width=500)
+        self.file_select.InsertColumn(0, _('FILE SELECTION'), width=500)
         # file_select.InsertColumn(1, _('Parameters'), width=450)
 
         self.format_ctrl.SetMinSize((640, 300))

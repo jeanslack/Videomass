@@ -902,7 +902,7 @@ class AV_Conv(wx.Panel):
         tip = (_('Constant rate factor. Lower values = higher quality and '
                  'a larger file size. Set -1 to disable this control.'))
         self.slider_CRF.SetToolTip(tip)
-        tip = (_('Try filters by playing a preview'))
+        tip = (_('Preview video filters with FFplay'))
         self.btn_preview.SetToolTip(tip)
         tip = (_("Clear all enabled filters "))
         self.btn_reset.SetToolTip(tip)

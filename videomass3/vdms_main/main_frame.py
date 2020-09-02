@@ -459,7 +459,7 @@ class MainFrame(wx.Frame):
                     quality = self.ytDownloader.fcode.GetItemText(item, 0)
                 IO_tools.url_play(url, quality)
         else:
-            with wx.FileDialog(self, "Videomass: Open a file to playback",
+            with wx.FileDialog(self, _("Videomass: file playback with FFplay"),
                                defaultDir=self.file_destin,
                                # wildcard="Audio source (%s)|%s" % (f, f),
                                style=wx.FD_OPEN |
@@ -596,12 +596,8 @@ class MainFrame(wx.Frame):
         toolsButton = wx.Menu()
 
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
-        dscrp = (_("While playing"),
-                 _("Show useful keyboard shortcuts when playing "
-                   "or previewing with ffplay"))
-        playing = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        ffmpegButton.AppendSeparator()
-        dscrp = (_("Integrated specifications"),
+
+        dscrp = (_("FFmpeg build configuration"),
                  _("Shows the built-ins configuration features of FFmpeg"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
@@ -614,11 +610,19 @@ class MainFrame(wx.Frame):
         dscrp = (_("Decoders"), _("Shows available decoders on FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
+        ffplayButton = wx.Menu()# ffplay sub menu
+        dscrp = (_("While playing"),
+                 _("Show useful keyboard shortcuts when playing "
+                   "or previewing with ffplay"))
+        playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        ffmpegButton.AppendSubMenu(ffplayButton, "&FFplay")
+        ffmpegButton.AppendSeparator()
         dscrp = (_("Search topics"),
                  _("A easy utility to search for information on FFmpeg "
                    "topics and options"))
         searchtopic = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSubMenu(ffmpegButton, "&FFmpeg")
+        toolsButton.AppendSeparator()
 
         ydlButton = wx.Menu()  # ydl sub menu
         dscrp = (_("Version in Use"),

@@ -7,16 +7,23 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sep 1, 2020 V.3.0.7
+Sep 2, 2020 V.3.0.7
 +------------------------------------+
 
 BUGS:
 -----
-    * [APPIMAGE] fixed mpv play urL
+    * [APPIMAGE] fixed mpv play url by embed youtube-dl package
 
 IMPROVEMENTS:
 -------------
-    * [APPIMAGE] Include youtube-dl as dependency inside AppImage
+    * [APPIMAGE] Include youtube-dl as dependency inside AppImage.
+    * Overall improved string search algorithm on 'FFmpeg search topics'
+      mini frame and backwards compatible with wxPython < 4.1 .
+    * added some cosmetic and functional improvements.
+    * [YOUTUBE DOWNLOADER] Adding first item auto selection to prevent empty.
+      data view on 'Show More' mini frame.
+    * Improved FFmpeg menu.
+    * Improved descriptions.
 
 +------------------------------------+
 Aug 28, 2020 V.3.0.6

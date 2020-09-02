@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Spt.02.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -42,7 +42,7 @@ class FFmpeg_Search(wx.MiniFrame):
 
         """
         self.oS = OS
-        self.row = None
+        self.row = None  # output text from `IO_tools.findtopic(topic)'
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
                               )
@@ -82,13 +82,16 @@ class FFmpeg_Search(wx.MiniFrame):
                                     # size=(550,400),
                                     style=wx.TE_READONLY |
                                     wx.TE_MULTILINE |
-                                    wx.TE_RICH |
+                                    wx.TE_RICH2 |
                                     wx.HSCROLL
                                     )
         if OS == 'Darwin':
             self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
+        self.texthelp.SetBackgroundColour('#262222')
+        self.texthelp.SetDefaultStyle(wx.TextAttr('#959595'))
+        self.texthelp.AppendText(_("Choose one of the topics in the list"))
         self.search = wx.SearchCtrl(self.panel,
                                     wx.ID_ANY,
                                     size=(200, 30),
@@ -117,15 +120,28 @@ class FFmpeg_Search(wx.MiniFrame):
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
         self.SetTitle(_("Videomass: FFmpeg search topics"))
-        self.SetSize((550, 400))
+        self.SetSize((700, 550))
         # set_properties:
         # self.texthelp.SetBackgroundColour((217, 255, 255))
         # self.panel.SetSizer(sizer)
         self.panel.SetSizerAndFit(sizer)
 
+        # EVT
+        if not hasattr(wx, 'EVT_SEARCH'):
+            self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
+                      self.on_type_Text, self.search)
+        else:
+            self.Bind(wx.EVT_SEARCH, self.on_type_Text, self.search)
+
+        if not hasattr(wx, 'EVT_SEARCH_CANCEL'):
+            self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.on_Delete,
+                      self.search)
+        else:
+            self.Bind(wx.EVT_SEARCH_CANCEL, self.on_Delete, self.search)
+
         self.Bind(wx.EVT_COMBOBOX, self.on_Selected, self.cmbx_choice)
-        self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN, self.on_Search, self.search)
-        self.Bind(wx.EVT_TEXT_ENTER, self.on_Search, self.search)
+        self.Bind(wx.EVT_TEXT, self.on_type_Text, self.search)
+        self.Bind(wx.EVT_CHECKBOX, self.on_Ckbx, self.case)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
     # ---------------------------------------------------------#
@@ -157,41 +173,50 @@ class FFmpeg_Search(wx.MiniFrame):
         else:
             self.texthelp.Clear()  # reset textctrl
             topic = dicdef[self.cmbx_choice.GetValue()]
-            out = IO_tools.findtopic(topic)
-            self.row = out
+            self.row = IO_tools.findtopic(topic)
+
             if self.row:
                 self.texthelp.AppendText(self.row)
+                search = self.search.GetValue().strip()
+                if search:  # start already with text searching
+                    self.on_type_Text(self, True)
             else:
                 self.texthelp.AppendText(_("\n  ..Nothing available"))
     # --------------------------------------------------------------#
 
-    def on_Search(self, event):
+    def on_type_Text(self, event, by_event=False):
         """
-        Search the string typed on the search control and find
-        on the current self.row output. The result is very similar
-        to
-        `ffmpeg -*option* | grep string`
-        or (if checkbox is True)
-        `ffmpeg -*option* | grep -i string` on the shell.
-        """
-        strsrc = event.GetString()
+        Whenever text is entered it search the string typed on the search
+        control and find on the current `self.row` output. The result is
+        very similar to the grep on shell, i.e:
 
-        if self.row and not strsrc:
+            `ffmpeg -*option* | grep string`
+
+        or if checkbox is True:
+
+            `ffmpeg -*option* | grep -i string`
+        """
+        if not by_event:  # in all other cases
+            is_string = event.GetString()
+        else:  # only during certain events (see on_Selected, on_Ckbx)
+            is_string = self.search.GetValue()
+
+        if self.row and not is_string:
             self.texthelp.Clear()  # reset textctrl
             self.texthelp.AppendText('%s' % self.row)
             return
 
-        if self.row:  # se vuoi una ricerca specifica (è come grep)
+        if self.row and is_string:  # specified search (like grep does)
             find = []
 
-            if self.case.GetValue() is True:  # include tutto Hello/hello
+            if self.case.GetValue() is True:  # case insensitive: Hello/hello
 
                 for lines in self.row.split('\n'):
-                    if re.search(strsrc, lines, re.IGNORECASE):
+                    if re.search(is_string, lines, re.IGNORECASE):
                         find.append("%s\n" % lines)
-            else:
+            else:  # is case sensitive
                 for lines in self.row.split('\n'):  # case sensitive
-                    if strsrc in lines:
+                    if is_string in lines:
                         find.append("%s\n" % lines)
 
             if not find:
@@ -203,12 +228,28 @@ class FFmpeg_Search(wx.MiniFrame):
         else:
             self.texthelp.Clear()  # reset textctrl
             self.texthelp.AppendText(_(
-                                "\n  Choose a topic in the drop down first"))
+                                "\nChoose a topic in the drop down first"))
+    # --------------------------------------------------------------#
+
+    def on_Ckbx(self, event):
+        """
+        This event should allow a quick search since
+        it calls `on_type_Text`
+        """
+        self.on_type_Text(self, True)
+    # --------------------------------------------------------------#
+
+    def on_Delete(self, event):
+        """
+        It does nothing, but it seems needed.
+        During deletion, the "on_type_Text" call is generated automatically
+        """
+        return
     # --------------------------------------------------------------#
 
     def on_close(self, event):
         '''
-        destroy dialog by button and the X
+        destroy dialog by button or the X
         '''
         self.Destroy()
         # event.Skip()

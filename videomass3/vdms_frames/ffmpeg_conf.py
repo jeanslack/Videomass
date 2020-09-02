@@ -72,7 +72,7 @@ class Checkconf(wx.MiniFrame):
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_2.SetSizer(sizer_tab2)
-        notebook.AddPage(nb_panel_2, (_("System options")))
+        notebook.AddPage(nb_panel_2, (_("Build settings")))
         # -- nb 3
         nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
         enable_opt = wx.ListCtrl(nb_panel_3, wx.ID_ANY,
@@ -106,7 +106,7 @@ class Checkconf(wx.MiniFrame):
         self.Layout()
 
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: FFmpeg specifications"))
+        self.SetTitle(_("Videomass: FFmpeg build configuration"))
         self.SetMinSize((700, 500))
         others_opt.SetMinSize((700, 400))
         others_opt.InsertColumn(0, _('flags'), width=300)
@@ -178,7 +178,7 @@ class Checkconf(wx.MiniFrame):
         # populate others_opt listctrl output:
         index = 0
         if others:
-            others_opt.InsertItem(index, _('Specific compilation options'))
+            others_opt.InsertItem(index, '')
             others_opt.SetItemBackgroundColour(index, "CORAL")
             n = len(others)
             for a in range(n):
