@@ -72,7 +72,7 @@ class Checkconf(wx.MiniFrame):
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(others_opt, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_2.SetSizer(sizer_tab2)
-        notebook.AddPage(nb_panel_2, (_("Build settings")))
+        notebook.AddPage(nb_panel_2, (_("Flags settings")))
         # -- nb 3
         nb_panel_3 = wx.Panel(notebook, wx.ID_ANY)
         enable_opt = wx.ListCtrl(nb_panel_3, wx.ID_ANY,
@@ -82,7 +82,7 @@ class Checkconf(wx.MiniFrame):
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(enable_opt, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_3.SetSizer(sizer_tab3)
-        notebook.AddPage(nb_panel_3, (_("Options enabled")))
+        notebook.AddPage(nb_panel_3, (_("Flags enabled")))
         # -- nb 4
         nb_panel_4 = wx.Panel(notebook, wx.ID_ANY)
         disabled_opt = wx.ListCtrl(nb_panel_4, wx.ID_ANY,
@@ -92,7 +92,7 @@ class Checkconf(wx.MiniFrame):
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4.Add(disabled_opt, 1, wx.ALL | wx.EXPAND, 5)
         nb_panel_4.SetSizer(sizer_tab4)
-        notebook.AddPage(nb_panel_4, (_("Options disabled"))
+        notebook.AddPage(nb_panel_4, (_("Flags disabled"))
                          )
         # -- btns
         # button_help = wx.Button(self, wx.ID_HELP, "")
@@ -106,7 +106,7 @@ class Checkconf(wx.MiniFrame):
         self.Layout()
 
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: FFmpeg build configuration"))
+        self.SetTitle(_("FFmpeg: default configuration"))
         self.SetMinSize((700, 500))
         others_opt.SetMinSize((700, 400))
         others_opt.InsertColumn(0, _('flags'), width=300)

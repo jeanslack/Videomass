@@ -11,8 +11,7 @@ URGENCY: high
 
 - check to update all default presets or add new ones
 
-- [YOUTUBE DOWNLOADER]  Adding first item auto selection on `show more'
-  wx.listctrl to prevent empty data view when the user opens the dialog boxe.
+
 
 -------------
 URGENCY: low

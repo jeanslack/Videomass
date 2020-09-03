@@ -31,14 +31,15 @@ import re
 
 class FFmpeg_Search(wx.MiniFrame):
     """
-    Search and view all the FFmpeg help options.
+    Search and view all the FFmpeg help options. It has a real-time string
+    search filter and is case-sensitive by default, but it is possible to
+    ignore upper and lower case by activating the corresponding checkbox.
 
     """
     def __init__(self, OS):
         """
         The list of topics in the combo box is part of the
-        'Print help / information / capabilities:' section
-        given by the -h option on the FFmpeg command line.
+        section given by the -h option on the FFmpeg command line.
 
         """
         self.oS = OS
@@ -94,7 +95,7 @@ class FFmpeg_Search(wx.MiniFrame):
         self.texthelp.AppendText(_("Choose one of the topics in the list"))
         self.search = wx.SearchCtrl(self.panel,
                                     wx.ID_ANY,
-                                    size=(200, 30),
+                                    size=(400, 30),
                                     style=wx.TE_PROCESS_ENTER,
                                     )
         self.search.SetToolTip(_("The search function allows you to find "
@@ -113,14 +114,14 @@ class FFmpeg_Search(wx.MiniFrame):
         grid = wx.GridSizer(1, 1, 0, 0)
         sizer.Add(self.texthelp, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.cmbx_choice, 0, wx.ALL, 5)
-        grid_src.Add(self.search, 0, wx.ALL, 5)
+        grid_src.Add(self.search, 0, wx.ALL, 0)
         grid_src.Add(self.case, 0,  wx.ALIGN_CENTER_VERTICAL, 5)
         sizer.Add(grid_src, 0, wx.ALL, 5)
         sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
-        self.SetTitle(_("Videomass: FFmpeg search topics"))
-        self.SetSize((700, 550))
+        self.SetTitle(_("Videomass: FFmpeg help topics"))
+        self.SetSize((900, 600))
         # set_properties:
         # self.texthelp.SetBackgroundColour((217, 255, 255))
         # self.panel.SetSizer(sizer)
@@ -130,13 +131,13 @@ class FFmpeg_Search(wx.MiniFrame):
         if not hasattr(wx, 'EVT_SEARCH'):
             self.Bind(wx.EVT_SEARCHCTRL_SEARCH_BTN,
                       self.on_type_Text, self.search)
-        else:
+        else:  # is wxPython >= 4.1
             self.Bind(wx.EVT_SEARCH, self.on_type_Text, self.search)
 
         if not hasattr(wx, 'EVT_SEARCH_CANCEL'):
             self.Bind(wx.EVT_SEARCHCTRL_CANCEL_BTN, self.on_Delete,
                       self.search)
-        else:
+        else:  # is wxPython >= 4.1
             self.Bind(wx.EVT_SEARCH_CANCEL, self.on_Delete, self.search)
 
         self.Bind(wx.EVT_COMBOBOX, self.on_Selected, self.cmbx_choice)
@@ -148,10 +149,10 @@ class FFmpeg_Search(wx.MiniFrame):
 
     def on_Selected(self, event):
         """
-        Gets output given ffmpeg -*topic* and set textctrl.
-        The topic options are values of the dicdef dictionary.
+        Gets output given ffmpeg `-arg` and fills the textctrl.
+        The topic options are values of the arg_opt dictionary.
         """
-        dicdef = {"--": 'None',
+        arg_opt = {"--": 'None',
                   _("print basic options"): ['-h'],
                   _("print more options"): ['-h', 'long'],
                   _("print all options (very long)"): ['-h', 'full'],
@@ -167,12 +168,12 @@ class FFmpeg_Search(wx.MiniFrame):
                   _("list sinks of the output device"): ['-sinks', 'device'],
                   _("show available HW acceleration methods"): ['-hwaccels'],
                   }
-        if "None" in dicdef[self.cmbx_choice.GetValue()]:
+        if "None" in arg_opt[self.cmbx_choice.GetValue()]:
             self.row = None
             self.texthelp.Clear()  # reset textctrl
         else:
             self.texthelp.Clear()  # reset textctrl
-            topic = dicdef[self.cmbx_choice.GetValue()]
+            topic = arg_opt[self.cmbx_choice.GetValue()]
             self.row = IO_tools.findtopic(topic)
 
             if self.row:
@@ -190,11 +191,11 @@ class FFmpeg_Search(wx.MiniFrame):
         control and find on the current `self.row` output. The result is
         very similar to the grep on shell, i.e:
 
-            `ffmpeg -*option* | grep string`
+            `ffmpeg -*some option* | grep somestring`
 
         or if checkbox is True:
 
-            `ffmpeg -*option* | grep -i string`
+            `ffmpeg -*some option* | grep -i somestring`
         """
         if not by_event:  # in all other cases
             is_string = event.GetString()
@@ -233,8 +234,7 @@ class FFmpeg_Search(wx.MiniFrame):
 
     def on_Ckbx(self, event):
         """
-        This event should allow a quick search since
-        it calls `on_type_Text`
+        This event updates the quick search with or without case sensitivity
         """
         self.on_type_Text(self, True)
     # --------------------------------------------------------------#

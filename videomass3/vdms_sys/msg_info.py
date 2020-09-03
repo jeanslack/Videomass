@@ -36,7 +36,7 @@ def current_release():
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
     Version = '3.0.6'
-    Release = 'Aug 28 2020'
+    Release = 'Sept 03 2020'
     Copyright = '© 2013-2020'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = ('Gianluca Pernigotto', '(aka jeanslack)')
@@ -70,27 +70,14 @@ def descriptions_release():
     short_d = ("Videomass is a cross-platform GUI for FFmpeg and youtube-dl")
 
     long_d = ("""
-Videomass is a cross-platform GUI designed for medium advanced users who
-need to store profiles and automate some conversion processes, but which
-can also be used by beginner users through the use of ready-to-use presets.
-It features graphic tools with high automation capabilities such as PEAK,
-RMS and EBU audio normalization filters with selectable audio stream indexing,
-streams analyzer and more.
+Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need
+to manage many profiles and automate some conversion processes.
 
-It allows you to create new presets or import/export existing ones, write and
-edit new conversion profiles in order to use FFmpeg without limits of formats,
-codecs and commands.
+It is based on the advanced management of presets and profiles in order to use
+FFmpeg without limits of formats, codecs and commands.
 
-In fact, most of the operations performed with FFmpeg via the command line,
-can be stored as conversion profiles on Videomass and can be performed or
-modified on the fly.
-
-Videomass also offers a graphical interface for the famous video downloader
-youtube_dl and allows you to choose between various download options like a
-specific format codes with the ability to playback individual URLs with
-different qualities via mpv player. Allows also to download all playlist,
-embed thumbnail in audio file (via atomicparsley), add metadata to file and
-write subtitles to video.
+It features graphical tools for viewing, analyzing and processing multimedia
+streams and the video downloading.
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 """)

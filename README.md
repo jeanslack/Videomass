@@ -5,28 +5,15 @@
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
 [![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
-Videomass is a cross-platform GUI designed for medium advanced users who
-need to store profiles and automate some conversion processes, but which
-can also be used by beginner users through the use of ready-to-use presets.
-It features graphic tools with high automation capabilities such as PEAK,
-RMS and EBU audio normalization filters with selectable audio stream indexing,
-streams analyzer and more.   
+Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need 
+to manage many profiles and automate some conversion processes.   
 
-It allows you to create new presets or import/export existing ones, write and
-edit new conversion profiles in order to use [FFmpeg](https://www.ffmpeg.org/) 
-without limits of formats, codecs and commands.   
+It is based on the advanced management of presets and profiles in order to use 
+[FFmpeg](https://www.ffmpeg.org/) without limits of formats, codecs and 
+commands.   
 
-In fact, most of the operations performed with [FFmpeg](https://www.ffmpeg.org/) 
-via the command line, can be stored as conversion profiles on Videomass and can 
-be performed or modified on the fly.   
-
-Videomass also offers a graphical interface for the famous video downloader
-[youtube_dl](http://ytdl-org.github.io/youtube-dl/) and allows you to choose 
-between various download options like a specific format codes with the ability 
-to playback individual URLs with different qualities via [mpv](https://mpv.io/) 
-player. Allows also to download all playlist, embed thumbnail in audio file via 
-[atomicparsley](http://atomicparsley.sourceforge.net/), add metadata to file and 
-write subtitles to video.   
+It features graphical tools for viewing, analyzing and processing multimedia 
+streams and the video downloading.   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 
@@ -107,5 +94,3 @@ always within the same unpacked directory:
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
 * [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
-
-

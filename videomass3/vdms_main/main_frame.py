@@ -597,8 +597,8 @@ class MainFrame(wx.Frame):
 
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
 
-        dscrp = (_("FFmpeg build configuration"),
-                 _("Shows the built-ins configuration features of FFmpeg"))
+        dscrp = (_("Default configuration"),
+                 _("Show FFmpeg's built-in configuration capabilities"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
         dscrp = (_("Muxers and Demuxers"),
@@ -617,9 +617,8 @@ class MainFrame(wx.Frame):
         playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSubMenu(ffplayButton, "&FFplay")
         ffmpegButton.AppendSeparator()
-        dscrp = (_("Search topics"),
-                 _("A easy utility to search for information on FFmpeg "
-                   "topics and options"))
+        dscrp = (_("Help topics"),
+                 _("An easy tool to search for FFmpeg help topics and options"))
         searchtopic = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSubMenu(ffmpegButton, "&FFmpeg")
         toolsButton.AppendSeparator()
