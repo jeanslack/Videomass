@@ -18,8 +18,8 @@ activated with the `-row-mt 1` switch. Note that this feature is not available
 if you are using an older version of the FFmpeg (eg Version 3.1.5) and should
 be disabled when using this encoder.
 
-- **Videomass.exe** and **Videomass.app** may have some functional limitations:
-   * 1) the button for previewing streaming content (Youtube, Facebook, etc) may not work.
+- **Videomass.exe**, **Videomass.app** and **Videomass.AppImage**:
+   * 1) Previewing streaming content (Youtube, Facebook, etc) via mpv player may not work.
 
    * 2) The 'Show More' button for reading the informations of the streaming
    content (YouTube, Facebook, etc) will give a message regarding disabling the functionality.
@@ -41,6 +41,6 @@ be disabled when using this encoder.
         * Manjaro Linux 20.0.3 (Lysia) x86_64
 
     * It may be necessary to install FFmpeg since it is not included on the
-    appimage. On some distributions it is already installed by default.
+    appimage. Some distributions include it by default.
 
 [Home](index.md)
