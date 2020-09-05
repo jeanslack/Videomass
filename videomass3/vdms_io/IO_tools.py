@@ -32,6 +32,7 @@ import stat
 import ssl
 import urllib.request
 from videomass3.vdms_threads.mpv_url import Url_Play
+from videomass3.vdms_threads.mpv_url import Libmpv_Play
 from videomass3.vdms_threads.ffplay_file import File_Play
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
 from videomass3.vdms_threads.volumedetect import VolumeDetectThread
@@ -96,12 +97,31 @@ def stream_play(filepath, timeseq, param):
 def url_play(url, quality):
     """
     Thread for urls reproduction with mpv player
+
     """
-    # get data from bootstrap
-    get = wx.GetApp()
-    thread = Url_Play(url, quality, get.LOGdir, get.MPV_url)
-    # thread.join() > attende fine thread, se no ritorna subito
+    try:
+        import mpv
+    except OSError as err:
+        wx.MessageBox("%s\n\nUnable to reproduce URL, need `mpv`, `libmpv`"
+                      % err, "Videomass: ERROR", wx.ICON_ERROR, None)
+        return
+
+
+    get = wx.GetApp()  # get data from bootstrap
+    #thread = Url_Play(url, quality, get.LOGdir, get.MPV_url)
+    thread = Libmpv_Play(url, quality, get.LOGdir, get.MPV_url)
+    #data = thread.data
+    #print(data)
+    # thread.join() > wait for end thread, otherwise return too soon
     # error = thread.data
+
+    #loadDlg = PopupDialog(None,
+                          #_("Videomass - Loading..."),
+                          #_("\nWait....\nGet URL.\n"))
+    #loadDlg.ShowModal()
+    ## thread.join()
+    #data = thread.data
+    #loadDlg.Destroy()
 # -----------------------------------------------------------------------#
 
 

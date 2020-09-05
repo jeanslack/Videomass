@@ -5,8 +5,9 @@
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
 [![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
-Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need 
-to manage many profiles and automate some conversion processes.   
+Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
+enthusiasts who need to manage many profiles and automate some conversion 
+processes.   
 
 It is based on the advanced management of presets and profiles in order to use 
 [FFmpeg](https://www.ffmpeg.org/) without limits of formats, codecs and 
@@ -83,8 +84,10 @@ wiki page for more explanations.
 Videomass can also be run in interactive mode with the Python interpreter, 
 always within the same unpacked directory:   
 
-`>>> from videomass3 import Videomass3`   
-`>>> Videomass3.main()`   
+```Python
+>>> from videomass3 import Videomass3
+>>> Videomass3.main()
+```
 
 # Resources
 

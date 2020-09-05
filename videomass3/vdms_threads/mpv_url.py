@@ -25,6 +25,11 @@
 
 #########################################################
 import wx
+try:
+    import mpv
+except OSError:
+    pass
+
 import subprocess
 import platform
 if not platform.system() == 'Windows':
@@ -128,6 +133,85 @@ class Url_Play(Thread):
         if output:  # mpv info
             wx.CallAfter(msg_Info, output)
             self.logWrite(output)  # append log info
+            return
+    # ----------------------------------------------------------------#
+
+    def logWrite(self, cmd):
+        """
+        write mpv command log
+        """
+        with open(self.logf, "a") as log:
+            log.write("%s\n\n" % (cmd))
+    # ----------------------------------------------------------------#
+
+    def logError(self, error):
+        """
+        write mpv errors
+        """
+        with open(self.logf, "a") as logerr:
+            logerr.write("[MPV] MESSAGE:\n%s\n\n" % (error))
+
+
+
+class Libmpv_Play(Thread):
+    """
+    Playback media urls from some video site by instance
+    mpv.MPV of python-mpv package.
+
+    """
+    def __init__(self, url, quality, logdir, mpv_url):
+        """
+        quality: is flag to set media quality result
+        """
+        Thread.__init__(self)
+        ''' constructor'''
+        self.url = url
+        self.quality = quality
+        self.logdir = logdir
+        self.mpv = mpv_url
+        self.logf = os.path.join(self.logdir, 'Videomass_mpv.log')
+        write_log('Videomass_mpv.log', self.logdir)  # set initial file LOG
+
+        self.start()
+    # ----------------------------------------------------------------#
+
+    def run(self):
+        """
+        Get and redirect output and errors on p.returncode instance and on
+        exceptions. Otherwise the getted output as information
+        given by output .
+
+        """
+        try :
+            # Enable the on-screen controller and keyboard shortcuts
+            player = mpv.MPV(input_default_bindings=True,
+                             input_vo_keyboard=True,
+                             osc=True,
+                             ytdl=True,
+                             ytdl_format=self.quality
+                             )
+
+            # Alternative version using the old "floating box" style on-screen controller
+            #player = mpv.MPV(ytdl=True, player_operation_mode='pseudo-gui',
+                            #script_opts=('osc-layout=box,osc-seekbarstyle=bar,'
+                                        #'osc-deadzonesize=0,osc-minmousemove=3'),
+                            #input_default_bindings=True,
+                            #input_vo_keyboard=True,
+                            #osc=True,
+                            #ytdl_format=self.quality
+                            #)
+
+            #player.fullscreen = False
+            player.play(self.url)
+            player.wait_for_playback()
+            #player.wait_for_shutdown()
+            player.terminate()  # this or use player.quit
+            #player.quit()
+
+
+        except Exception as err:
+            wx.CallAfter(msg_Error, _('%s' % err))
+            self.logError(err)  # append log error
             return
     # ----------------------------------------------------------------#
 
