@@ -20,10 +20,10 @@ be disabled when using this encoder.
 
 - **Videomass.exe**, **Videomass.app** and **Videomass.AppImage**:
    * 1) Previewing streaming content (Youtube, Facebook, etc) via mpv player may not work. 
-   See https://github.com/jeanslack/Videomass/issues/6
+   See [https://github.com/jeanslack/Videomass/issues/6](https://github.com/jeanslack/Videomass/issues/6)
 
    * 2) Reading information on streaming content (YouTube, Facebook, etc) is disabled, 
-   See https://github.com/jeanslack/Videomass/issues/7
+   See [https://github.com/jeanslack/Videomass/issues/7](https://github.com/jeanslack/Videomass/issues/7)
   
  
 - **Videomass.AppImage** for Linux
