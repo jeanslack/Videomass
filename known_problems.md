@@ -19,11 +19,13 @@ if you are using an older version of the FFmpeg (eg Version 3.1.5) and should
 be disabled when using this encoder.
 
 - **Videomass.exe**, **Videomass.app** and **Videomass.AppImage**:
-   * 1) Previewing streaming content (Youtube, Facebook, etc) via mpv player may not work.
+   * 1) Previewing streaming content (Youtube, Facebook, etc) via mpv player may not work. 
+   See https://github.com/jeanslack/Videomass/issues/6
 
-   * 2) The 'Show More' button for reading the informations of the streaming
-   content (YouTube, Facebook, etc) will give a message regarding disabling the functionality.
-
+   * 2) Reading information on streaming content (YouTube, Facebook, etc) is disabled, 
+   See https://github.com/jeanslack/Videomass/issues/7
+  
+ 
 - **Videomass.AppImage** for Linux
     * It has been successfully tested on the following Linux distributions:
         * Ubuntu 16.04 LTS x86_64
