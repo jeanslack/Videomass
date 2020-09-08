@@ -133,8 +133,7 @@ class Videomass(wx.App):
                     self.pylibYdl = nomodule
 
         # ----- ffmpeg
-        #  check for exe
-        if setui[0] == 'Windows':  # on MS-Windows
+        if setui[0] == 'Windows':  # on MS-Windows check for exe
             for link in [setui[4][6], setui[4][8], setui[4][10]]:
                 if which(link, mode=os.F_OK | os.X_OK, path=None):
                     binaries = True

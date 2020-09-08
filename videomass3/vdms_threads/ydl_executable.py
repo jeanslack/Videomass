@@ -53,8 +53,8 @@ def logWrite(cmd, sterr, logname, logdir):
 class Ydl_DL_Exec(Thread):
     """
     Ydl_DL_Exec represents a separate thread for running
-    youtube-dl executable with subprocess class and capturing its
-    stdout/stderr output in real time .
+    youtube-dl executable with subprocess class to download
+    media and capture its stdout/stderr output in real time .
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
@@ -224,8 +224,8 @@ class Ydl_DL_Exec(Thread):
 class Ydl_EI_Exec(Thread):
     """
     Ydl_EI_Exec it is a separate thread to run youtube-dl executable
-    with subprocess class to get (at the end of the process) 'Format
-    code' data and exit status from stdout/stderr output .
+    with subprocess class to get 'Format code' data and exit status
+    from stdout/stderr output .
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
