@@ -439,7 +439,7 @@ class MainFrame(wx.Frame):
 
     def ExportPlay(self, event):
         """
-        Playback file with FFplay or mpv player for urls
+        Playback file with FFplay
 
         """
         if self.ytDownloader.IsShown():

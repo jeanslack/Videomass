@@ -1,11 +1,12 @@
 # -*- coding: UTF-8 -*-
-# Name: ffplay_url.py
-# Porpose: long processing task with youtube-dl executable
+# Name: ffplay_url_lib.py
+# Porpose: playback online media streams with ffplay media player
+#          using youtube_dl embedding.
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: September.05.2020 *PEP8 compatible*
+# Rev: September.09.2020 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -24,10 +25,6 @@
 
 #########################################################
 import wx
-import subprocess
-import platform
-if not platform.system() == 'Windows':
-    import shlex
 import os
 import sys
 from threading import Thread
@@ -37,116 +34,22 @@ try:
     import youtube_dl
 except (ModuleNotFoundError, ImportError) as nomodule:
     pass
+from videomass3.vdms_io import IO_tools
 
 
 def msg_Error(msg):
     """
     Receive error messages via wxCallafter
     """
-    #wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_ERROR)
-    print("%s" % (msg))
+    wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_ERROR)
 # ------------------------------------------------------------------------#
 
 
-def msg_Info(msg):
+def msg_Warning(msg):
     """
     Receive info messages via wxCallafter
     """
-    #wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_INFORMATION)
-    print("%s" % (msg))
-# ------------------------------------------------------------------------#
-
-
-class File_Play(Thread):
-    """
-    Simple multimedia playback with subprocess.Popen class to run ffplay
-    by FFmpeg (ffplay is a player which need x-window-terminal-emulator)
-
-    """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    LOGDIR = get.LOGdir
-    FFPLAY_URL = get.FFPLAY_url
-    FFPLAY_LOGLEV = get.FFPLAY_loglev
-
-    def __init__(self, fname):
-        """
-        The self.FFPLAY_loglevel has flag 'error -hide_banner'
-        by default (see videomass.conf).
-        NOTE: Do not use '-stats' option it do not work.
-        """
-        Thread.__init__(self)
-        ''' constructor'''
-        self.filename = fname  # file name selected
-        self.logdir = File_Play.LOGDIR
-        self.ffplay = File_Play.FFPLAY_URL
-        self.ffplay_loglev = File_Play.FFPLAY_LOGLEV
-        #self.logf = os.path.join(self.logdir, 'Videomass_FFplay.log')
-        #write_log('Videomass_FFplay.log', self.logdir)
-        # set initial file LOG
-
-        #self.start()
-    # ----------------------------------------------------------------#
-
-    def run(self):
-        """
-        Get and redirect output errors on p.returncode instance and on
-        OSError exception. Otherwise the getted output as information
-        given by error [1] .
-        """
-
-        # time.sleep(.5)
-        cmd = '%s %s -i "%s"' % (self.ffplay,
-                                 self.ffplay_loglev,
-                                 self.filename,
-                                 )
-        #self.logWrite(cmd)
-        if not platform.system() == 'Windows':
-            cmd = shlex.split(cmd)
-            info = None
-            shell = False
-        else:
-            # NOTE: info flag do not work with ffplay
-            # on MS-Windows. Fixed with shell=True flag.
-            shell = True
-            info = None
-            # info = subprocess.STARTUPINFO()
-            # info.dwFlags |= subprocess.SW_HIDE
-        try:
-            p = subprocess.Popen(cmd,
-                                 shell=shell,
-                                 stderr=subprocess.PIPE,
-                                 universal_newlines=True,
-                                 startupinfo=info,
-                                 )
-            error = p.communicate()
-
-        except OSError as err:  # subprocess error
-            #wx.CallAfter(msg_Error, err)
-            #self.logError(err)  # append log error
-            pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
-            return
-
-        else:
-            if p.returncode:  # ffplay error
-                if error[1]:
-                    msg = error[1]
-                else:
-                    msg = "Unrecognized error"
-
-                #wx.CallAfter(msg_Error, error[1])
-                #self.logError(error[1])  # append log error
-                pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
-                return
-            else:
-                #Threads_Handling.stop_download(self, self.filename)
-                pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
-                return
-
-        if error[1]:  # ffplay info
-            #wx.CallAfter(msg_Info, error[1])
-            #self.logWrite(error[1])  # append log info
-            pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
-            return
+    wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_INFORMATION)
 # ------------------------------------------------------------------------#
 
 
@@ -160,60 +63,53 @@ class MyLogger(object):
     def debug(self, msg):
         #print('DEBUG: ', msg)
         if '[download]' in msg:  # ...in processing
+            #print(msg)
             if 'Destination' in msg:
-                print(msg)
+                #print(msg)
                 pub.sendMessage("START_FFPLAY_EVT",
                                 output=msg.split()[2]
                                 )
             elif 'has already been downloaded' in msg:
-                print(msg)
                 pub.sendMessage("START_FFPLAY_EVT",
                                 output=msg.split()[1]
                                 )
         self.msg = msg
 
     def warning(self, msg):
-        msg = 'WARNING: %s' % msg
-        print(msg)
-        #wx.CallAfter(pub.sendMessage,
-                     #"UPDATE_YDL_FROM_IMPORT_EVT",
-                     #output=msg,
-                     #duration='',
-                     #status='WARNING',
-                     #)
+        """
+        send warning messages to masg_
+        """
+        wx.CallAfter(msg_Warning, msg)
+
 
     def error(self, msg):
-        print('ERROR: ', msg)
-        #wx.CallAfter(pub.sendMessage,
-                     #"UPDATE_YDL_FROM_IMPORT_EVT",
-                     #output=msg,
-                     #duration='',
-                     #status='ERROR',
-                     #)
+        wx.CallAfter(msg_Error, msg)
 # -------------------------------------------------------------------------#
 
 
-class Url_Play(Thread):
+class Download_Stream(Thread):
     """
-    Embed youtube-dl as module into a separated thread in order
-    to get output in real time during downloading and conversion .
-    For a list of available options see:
+    Starts the download of only one media stream at a time and
+    saves it in the videomass cache directory until the stored
+    file is cleared. The filename form is:
 
-    <https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/YoutubeDL.py#L129-L279>
-    <https://github.com/ytdl-org/youtube-dl/blob/master/youtube_dl/options.py>
+        title_quality.format
 
-    or by help(youtube_dl.YoutubeDL)
+    This Thread use embedding youtube_dl package
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     OS = get.OS
-    LOGDIR = get.LOGdir
     FFMPEG_URL = get.FFMPEG_url
     CACHEDIR = get.CACHEdir
 
     def __init__(self, url, quality):
         """
-        define attributes:
+        Accept a single url as a string.
+        The quality parameter sets the quality of the stream
+        in the form required by youtube-dl, e.g one of the
+        following strings can be valid:
+            worst, best, bestvideo+bestaudio, Format Code
 
         """
         Thread.__init__(self)
@@ -221,10 +117,9 @@ class Url_Play(Thread):
         self.stop_work_thread = False  # process terminate value
         self.url = url  # single url
         self.quality = quality  # output quality e.g. worst, best, Format code
-        self.outputdir = Url_Play.CACHEDIR  # pathname destination
+        self.outputdir = Download_Stream.CACHEDIR  # pathname destination
         self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
-        #self.logname = logname  # file name to log messages for logging
-        if Url_Play.OS == 'Windows' or '/tmp/.mount_' \
+        if Download_Stream.OS == 'Windows' or '/tmp/.mount_' \
            in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
             self.nocheckcertificate = True
         else:
@@ -233,6 +128,8 @@ class Url_Play(Thread):
 
     def run(self):
         """
+        This atipic method is called by start() method after the instance
+        this class. see Lib_Streaming class below.
         """
         if self.stop_work_thread:
             return
@@ -241,13 +138,13 @@ class Url_Play(Thread):
                 'format': self.quality,
                 'outtmpl': '{}/{}'.format(self.outputdir, self.outtmpl),
                 'restrictfilenames': True,
-                'nopart': True,
+                'nopart': True,  # see --no-part by --help
                 'ignoreerrors': True,
                 'no_warnings': False,
                 'noplaylist': True,
                 'no_color': True,
                 'nocheckcertificate': self.nocheckcertificate,
-                'ffmpeg_location': '{}'.format(Url_Play.FFMPEG_URL),
+                'ffmpeg_location': '{}'.format(Download_Stream.FFMPEG_URL),
                 'logger': MyLogger(),
                     }
 
@@ -263,10 +160,12 @@ class Url_Play(Thread):
 # ------------------------------------------------------------------------#
 
 
-class Play_Streaming(object):
+class Lib_Streaming(object):
     """
+    Handling Threads to download and playback media streams via
+    youtube-dl library and ffmpeg executables.
     """
-    THR = None  # set instance thread
+    DOWNLOAD = None  # set instance thread
     # ---------------------------------------------------------------#
 
     def __init__(self, url=None, quality=None):
@@ -275,34 +174,33 @@ class Play_Streaming(object):
         pub.subscribe(stop_download, "STOP_DOWNLOAD_EVT")
         pub.subscribe(listener, "START_FFPLAY_EVT")
 
-        self.thread_download = Url_Play(url, quality)
-        Play_Streaming.THR = Url_Play(url, quality)
+        self.thread_download = Download_Stream(url, quality)
+        Lib_Streaming.DOWNLOAD = self.thread_download
     # ----------------------------------------------------------------#
 
     def start_download(self):
         """
         """
         #self.thread_download.start()
-        #Play_Streaming.THR = self.thread_download
-        Play_Streaming.THR.start()
+        Lib_Streaming.DOWNLOAD.start()
         return
 
 
 # --------- RECEIVER LISTENERS
 def stop_download(filename):
     """
-    Receiver
+    Receive message from ffplay_file.File_Play class
+    for handle interruption
     """
-    Play_Streaming.THR.stop()
-    #Play_Streaming.THR.join()  # if join, wait end process
+    Lib_Streaming.DOWNLOAD.stop()
+    #Lib_Streaming.DOWNLOAD.join()  # if join, wait end process
     if os.path.isfile(filename):
         os.remove(filename)
     return
 
 def listener(output):
     """
-    Riceiver
+    Riceive messages from MyLogger class
     """
-    play = File_Play(output)
-    play.start()
+    IO_tools.stream_play(output, '', '')
     return

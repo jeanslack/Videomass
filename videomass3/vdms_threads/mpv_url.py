@@ -29,7 +29,6 @@ try:
     import mpv
 except OSError:
     pass
-
 import subprocess
 import platform
 if not platform.system() == 'Windows':
@@ -151,3 +150,60 @@ class Url_Play(Thread):
         with open(self.logf, "a") as logerr:
             logerr.write("[MPV] MESSAGE:\n%s\n\n" % (error))
 
+
+class Libmpv_Play(Thread):
+    """
+    Playback online video stream via python-mpv interface.
+    Need libmpv.so either locally (in your current working
+    directory) or somewhere in your system library search path.
+    """
+    def __init__(self, url, quality):
+        """
+        quality: is flag to set media quality result
+        """
+        Thread.__init__(self)
+        ''' constructor'''
+        self.url = url
+        self.quality = quality
+
+        self.start()
+    # ----------------------------------------------------------------#
+
+    def run(self):
+        """
+        Get and redirect output and errors on p.returncode instance and on
+        exceptions. Otherwise the getted output as information
+        given by output .
+        """
+        try :
+            # Enable the on-screen controller and keyboard shortcuts
+            player = mpv.MPV(input_default_bindings=True,
+                             input_vo_keyboard=True,
+                             osc=True,
+                             ytdl=True,
+                             ytdl_format=self.quality
+                             )
+
+            # Alternative version using the old "floating box" style on-screen controller
+            #player = mpv.MPV(ytdl=True, player_operation_mode='pseudo-gui',
+                            #script_opts=('osc-layout=box,osc-seekbarstyle=bar,'
+                                        #'osc-deadzonesize=0,osc-minmousemove=3'),
+                            #input_default_bindings=True,
+                            #input_vo_keyboard=True,
+                            #osc=True,
+                            #ytdl_format=self.quality
+                            #)
+
+            #player.fullscreen = False
+            player.play(self.url)
+            player.wait_for_playback()
+            #player.wait_for_shutdown()
+            player.terminate()  # this or use player.quit
+            #player.quit()
+            print('ok')
+
+
+        except Exception as err:
+            wx.CallAfter(msg_Error, _('%s' % err))
+            #self.logError(err)  # append log error
+            return

@@ -25,6 +25,7 @@
 
 #########################################################
 import wx
+from pubsub import pub
 import subprocess
 import platform
 if not platform.system() == 'Windows':
@@ -56,17 +57,17 @@ def msg_Info(msg):
 
 class File_Play(Thread):
     """
-    Simple multimedia playback with subprocess.Popen class to run ffplay
-    by FFmpeg (ffplay is a player which need x-window-terminal-emulator)
+    Playback local file with ffplay media player via subprocess.Popen
+    class (ffplay is a player which need x-window-terminal-emulator)
 
     """
-
     def __init__(self, filepath, timeseq, param, logdir,
                  ffplay_url, ffplay_loglev):
         """
-        The self.FFPLAY_loglevel has flag 'error -hide_banner'
-        by default (see videomass.conf).
-        NOTE: Do not use '-stats' option it do not work.
+        The self.FFPLAY_loglevel has flag 'error -hide_banner' by default,
+        see videomass.conf for details.
+        WARNING Do not use the "-stats" option as it does not work here.
+
         """
         Thread.__init__(self)
         ''' constructor'''
@@ -87,9 +88,9 @@ class File_Play(Thread):
         """
         Get and redirect output errors on p.returncode instance and on
         OSError exception. Otherwise the getted output as information
-        given by error [1] .
-        """
+        given by error [1]
 
+        """
         # time.sleep(.5)
         cmd = '%s %s %s -i "%s" %s' % (self.ffplay,
                                        self.time_seq,
@@ -121,6 +122,7 @@ class File_Play(Thread):
         except OSError as err:  # subprocess error
             wx.CallAfter(msg_Error, err)
             self.logError(err)  # append log error
+            pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
             return
 
         else:
@@ -132,11 +134,17 @@ class File_Play(Thread):
 
                 wx.CallAfter(msg_Error, error[1])
                 self.logError(error[1])  # append log error
+                pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
+                return
+            else:
+                #Threads_Handling.stop_download(self, self.filename)
+                pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
                 return
 
         if error[1]:  # ffplay info
             wx.CallAfter(msg_Info, error[1])
             self.logWrite(error[1])  # append log info
+            pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
             return
     # ----------------------------------------------------------------#
 

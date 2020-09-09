@@ -83,6 +83,10 @@ else
     wxPython
 fi
 
+# Add LD_PRELOAD command before any other exporting
+sed -i -e '/APPDIR="${APPDIR:-${here}}"/a # Exporting LD_PRELOAD librares to load before any other library' squashfs-root/AppRun
+sed -i -e '# Exporting LD_PRELOAD librares to load before any other library/a export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0' squashfs-root/AppRun
+
 # Change AppRun so that it launches videomass and export shared libraries dir
 sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' ./squashfs-root/AppRun
 sed -i -e '/export TKPATH/a # required shared libraries to run Videomass' squashfs-root/AppRun
