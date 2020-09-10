@@ -100,9 +100,22 @@ def url_play(url, quality):
     directs to the corresponding thread for playing
     online media streams.
 
+    NOTE I'm looking for a way to tell the youtube_dl thread to terminate
+    (gracefully or not, whatever) when the user clicks the "stop" button.
+    The command-line version of youtube_dl just catches KeyboardInterrupt
+    and terminates, but I've found no documentation on how to do this
+    cleanly (if there's a way at all) when using the embedded module.
+    So I'm still forced to use youtube-dl with the command-line and
+    subprocess module.
+    See https://github.com/ytdl-org/youtube-dl/issues/16175
+
     """
     get = wx.GetApp()  # get data from bootstrap
     youtube_dl = get.pylibYdl
+
+    dowl = ffplay_url_exec.Exec_Streaming(url, quality)
+    dowl.start_download()
+
     # --------------------- playback via subprocess mpv player
     # WARNING does not work in appimage, exe and app packages
     # thread = Url_Play(url, quality, get.LOGdir, get.MPV_url)
@@ -110,12 +123,12 @@ def url_play(url, quality):
     ## error = thread.data
     # ---------------------
 
-    if youtube_dl is not None:  # run youtube-dl executable
-        dowl = ffplay_url_exec.Exec_Streaming(url, quality)
-        dowl.start_download()
-    else:  # run youtube_dl library
-        dowl = ffplay_url_lib.Lib_Streaming(url, quality)
-        dowl.start_download()
+    #if youtube_dl is not None:  # run youtube-dl executable
+        #dowl = ffplay_url_exec.Exe_Download_Stream(url, quality)
+        #dowl.start_download()
+    #else:  # run youtube_dl library
+        #dowl = ffplay_url_lib.Lib_Streaming(url, quality)
+        #dowl.start_download()
 
     ## --------------------- playback via python-mpv and libmpv API
     ## require python-mpv package

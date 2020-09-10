@@ -12,7 +12,6 @@ BASE DEPENDENCIES
         - youtube_dl
 
     Optionals:
-        - mpv (media player) for playing URLs
         - atomicparsley (to embed thumbnail in audio file)
 
 Videomass can be run without installing by unpack the source package archive

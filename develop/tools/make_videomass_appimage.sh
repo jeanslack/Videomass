@@ -3,6 +3,12 @@
 # Description: Build from scratch a Videomass-*-x86_64.AppImage starting
 #              from a python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
 #
+# if you plan to install extra packages we recommend extracting the AppImage,
+# e.g. as:
+#
+#   ./Videomass*.AppImage --appimage-extract
+#   export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
+#
 # Ideally run this inside the manylinux Docker container
 # so that dependencies get bundled from that very container
 

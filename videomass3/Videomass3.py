@@ -91,7 +91,7 @@ class Videomass(wx.App):
                 setui[2])), 'Videomass: Fatal Error', wx.ICON_STOP)
             return False
 
-        pathicons = data.icons_set(setui[4][13])  # get paths icons data
+        pathicons = data.icons_set(setui[4][11])  # get paths icons data
 
         self.OS = setui[0]
         self.FILEconf = setui[6]
@@ -184,13 +184,13 @@ class Videomass(wx.App):
         return True
     # -------------------------------------------------------------------
 
-    def wizard(self, icon):
+    def wizard(self, wizardicon):
         """
         Show a temporary dialog for setup during first start time
         of the Videomass application on MacOS and Windows OS only.
         """
         from videomass3.vdms_dialogs.first_time_start import FirstStart
-        main_frame = FirstStart(icon)
+        main_frame = FirstStart(wizardicon)
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True

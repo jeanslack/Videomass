@@ -180,7 +180,7 @@ class Data_Source(object):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 2.1:
+                if float(userconf[0]) != 2.2:
                     existfileconf = False
             else:
                 existfileconf = False

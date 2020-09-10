@@ -40,7 +40,6 @@ web page.
 - **[youtube-dl](https://pypi.org/project/youtube_dl/)**
 
 ### Optionals
-- **[mpv](https://mpv.io/)**
 - **[atomicparsley](http://atomicparsley.sourceforge.net/)**
 
 ### Install basic dependencies for your OS

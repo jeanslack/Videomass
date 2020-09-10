@@ -89,13 +89,18 @@ class MyLogger(object):
 
 class Download_Stream(Thread):
     """
-    Starts the download of only one media stream at a time and
-    saves it in the videomass cache directory until the stored
-    file is cleared. The filename form is:
+    Download media stream to the videomass cache directory with
+    the same quality defined in the `quality` parameter.
+    This Thread use embedding youtube_dl package.
+    WARNING FIXME stop thead does not work since youtube_dl.YoutubeDL
+                  library does not yet have an interface for stopping
+                  unfinished downloads.
 
-        title_quality.format
+    The file name form stored on cache dir. is
 
-    This Thread use embedding youtube_dl package
+            "title_" + "quality" + ".format"
+
+    NOTE see also ffplay_url_exec.py on sources directory.
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
@@ -164,12 +169,24 @@ class Lib_Streaming(object):
     """
     Handling Threads to download and playback media streams via
     youtube-dl library and ffmpeg executables.
+
+    DOWNLOAD class variable makes the object's attributes available
+    even outside of class, see `stop_download()`
+    FIXME put RICEIVER LISTENER function as methods of this class. For
+          now does not work (???)
+
     """
     DOWNLOAD = None  # set instance thread
     # ---------------------------------------------------------------#
 
     def __init__(self, url=None, quality=None):
         """
+        topic "START_FFPLAY_EVT" subscribes a start download listener
+        to run ffplay at a certain time.
+        topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
+        which call the stop() method of `Download_Stream` class to
+        stop the download and delete file on cache diretrory when
+        ffplay has finished.
         """
         pub.subscribe(stop_download, "STOP_DOWNLOAD_EVT")
         pub.subscribe(listener, "START_FFPLAY_EVT")
@@ -180,8 +197,8 @@ class Lib_Streaming(object):
 
     def start_download(self):
         """
+        call Download_Stream(Thread) to run() method
         """
-        #self.thread_download.start()
         Lib_Streaming.DOWNLOAD.start()
         return
 
@@ -200,7 +217,8 @@ def stop_download(filename):
 
 def listener(output):
     """
-    Riceive messages from MyLogger class
+    Riceive messages from MyLogger to start
+    ffplay in this time.
     """
     IO_tools.stream_play(output, '', '')
     return

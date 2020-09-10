@@ -1,5 +1,6 @@
 #Files mentioned in this file will be ignored by git
 *.pyc
+*.eggs
 *.log
 *.mbtree
 dist

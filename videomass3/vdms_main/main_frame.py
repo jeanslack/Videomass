@@ -80,18 +80,18 @@ class MainFrame(wx.Frame):
                program. How it can be localized depend if Videomass is
                run as portable program or installated program.
         """
-        barC = setui[4][14].split(',')
+        barC = setui[4][12].split(',')
         barColor = wx.Colour(int(barC[0]), int(barC[1]), int(barC[2]))
         # toolbar panel colour
-        bBtnC = setui[4][15].split(',')
+        bBtnC = setui[4][13].split(',')
         self.bBtnC = wx.Colour(int(bBtnC[0]), int(bBtnC[1]), int(bBtnC[2]))
         # toolbar buttons colour
-        fBtnC = setui[4][16].split(',')
+        fBtnC = setui[4][14].split(',')
         self.fBtnC = wx.Colour(int(fBtnC[0]), int(fBtnC[1]), int(fBtnC[2]))
         # Buttons Font Colour
         SRCpath = setui[1]  # share dir (are where the origin files?):
         # ---------------------------#
-        self.iconset = setui[4][13]
+        self.iconset = setui[4][11]
         self.videomass_icon = pathicons[0]
         self.icon_runconversion = pathicons[2]
         self.icon_ydl = pathicons[25]

@@ -7,23 +7,41 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sep 2, 2020 V.3.0.7
+Sep 10, 2020 V.3.1.0
 +------------------------------------+
 
 BUGS:
 -----
-    * [APPIMAGE] fixed mpv play url by embed youtube-dl package
+    * [APPIMAGE] fixed error while playing local files with ffplay.
+      See issue #5
+
+    * [APPIMAGE; EXE; APP) Fixed issue with playing online media streams
+      via mpv player not working on embedded environments. See issue #6
 
 IMPROVEMENTS:
 -------------
-    * [APPIMAGE] Include youtube-dl as dependency inside AppImage.
     * Overall improved string search algorithm on 'FFmpeg search topics'
       mini frame and backwards compatible with wxPython < 4.1 .
-    * added some cosmetic and functional improvements.
-    * [YOUTUBE DOWNLOADER] Adding first item auto selection to prevent empty.
+
+    * Added some cosmetic and functional improvements.
+
+    * [YOUTUBE DOWNLOADER] Adding first item auto selection to prevent empty
       data view on 'Show More' mini frame.
+
     * Improved FFmpeg menu.
-    * Improved descriptions.
+
+    * Improved some contexrual descriptions.
+
+REMOVALS, DISPLACEMENTS, REPLACEMENTS:
+---------------------------
+    * mpv player has been removed from optional dependencies and all widgets
+      created for it, as it is now replaced by ffplay
+
+NEWS:
+-----
+    * [YOUTUBE DOWNLOADER] Implemented a new library to playback online
+      streaming via youtube-dl and ffplay.
+
 
 +------------------------------------+
 Aug 28, 2020 V.3.0.6

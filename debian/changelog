@@ -1,10 +1,26 @@
+videomass (3.1.0-1) UNRELEASED; urgency=medium
+
+  * Overall improved string search algorithm on 'FFmpeg search topics'
+mini frame and backwards compatible with wxPython < 4.1 .
+  * Added some cosmetic and functional improvements.
+  * [YOUTUBE DOWNLOADER] Adding first item auto selection to prevent empty
+data view on 'Show More' mini frame.
+  * Improved FFmpeg menu.
+  * Improved some contexrual descriptions.
+  * mpv player has been removed from optional dependencies and all widgets
+created for it, as it is now replaced by ffplay
+  * [YOUTUBE DOWNLOADER] Implemented a new library to playback online
+streaming via youtube-dl and ffplay.
+
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 10 Sep 2020 23:20:00 +0200
+
 videomass (3.0.6-1) UNRELEASED; urgency=medium
 
   * New stable upstream release
-  * The directories `MAcOsxSetup/` and `Win32Setup/` are been unified to 
+  * The directories `MAcOsxSetup/` and `Win32Setup/` are been unified to
 `FFMPEG/` folder and added to package_data of the videomass3 package.
-  * On Linux it is now possible to include ffmpeg, ffprobe and ffplay 
-executables into FFMPEG folder. This could be useful, for instance, to make 
+  * On Linux it is now possible to include ffmpeg, ffprobe and ffplay
+executables into FFMPEG folder. This could be useful, for instance, to make
 an application bundle all-in-one of Videomass for Linux distros
 without ffmpeg installed on (see videomass3/FFMPEG/README).
 
