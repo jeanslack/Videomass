@@ -43,9 +43,6 @@ class AudioSettings(wx.Dialog):
         but here they are assigned by reference with the instance-object.
 
         """
-        wx.Dialog.__init__(self, parent, -1, title=title,
-                           style=wx.DEFAULT_DIALOG_STYLE
-                           )
         data = TypeAudioParameters(audio_type)  # instance for audio param
         # set attributes:
         self.sample_rate = data.sample_rate
@@ -78,6 +75,9 @@ class AudioSettings(wx.Dialog):
         for d in self.bitdepth.values():
             bitdepth_list.append(d[0])
 
+        wx.Dialog.__init__(self, parent, -1, title=title,
+                           style=wx.DEFAULT_DIALOG_STYLE
+                           )
         self.rdb_bitrate = wx.RadioBox(self, wx.ID_ANY,
                                        ("Audio Bit-Rate"),
                                        choices=bitrate_list,

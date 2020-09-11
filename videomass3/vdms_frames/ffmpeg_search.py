@@ -44,6 +44,7 @@ class FFmpeg_Search(wx.MiniFrame):
         """
         self.oS = OS
         self.row = None  # output text from `IO_tools.findtopic(topic)'
+
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
                               )

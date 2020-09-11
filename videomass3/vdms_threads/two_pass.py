@@ -85,8 +85,6 @@ class TwoPass(Thread):
         The 'volume' attribute may have an empty value, but it will
         have no influence on the type of conversion.
         """
-        Thread.__init__(self)
-        """initialize"""
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (elements)
         self.passList = varargs[5]  # comand list set for double-pass
@@ -100,6 +98,8 @@ class TwoPass(Thread):
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if TwoPass.OS == 'Windows' else '/dev/null'
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: June.13.2020 *PEP8 compatible*
+# Rev: September.11.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -51,8 +51,11 @@ def args():
     args = parser.parse_args()
 
     if args.check:
-        listing = ['ffmpeg', 'ffprobe', 'ffplay', 'youtube-dl',
-                   'mpv', 'atomicparsley'
+        listing = ['ffmpeg',
+                   'ffprobe',
+                   'ffplay',
+                   'youtube-dl',
+                   'atomicparsley'
                    ]
         print('List of executables used by Videomass:')
         for required in listing:

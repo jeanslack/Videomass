@@ -89,8 +89,6 @@ class Ydl_DL_Exec(Thread):
         self.logname:       title log name for logging
 
         """
-        Thread.__init__(self)
-        """initialize"""
         self.stop_work_thread = False  # process terminate
         self.urls = varargs[1]
         self.opt = varargs[4][0]
@@ -106,6 +104,8 @@ class Ydl_DL_Exec(Thread):
         else:
             self.ssl = ''
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):
@@ -245,8 +245,6 @@ class Ydl_EI_Exec(Thread):
         """
         self.urls:          urls list
         """
-        Thread.__init__(self)
-        """initialize"""
         self.url = url
         self.status = None
         self.data = None
@@ -256,6 +254,8 @@ class Ydl_EI_Exec(Thread):
         else:
             self.ssl = ''
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):

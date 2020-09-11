@@ -86,8 +86,6 @@ class PicturesFromVideo(Thread):
         The duration adds another 10 seconds due to problems with the
         progress bar
         """
-        Thread.__init__(self)
-        """initialize"""
         self.stop_work_thread = False  # process terminate
         self.cmd = varargs[4]  # comand set on single pass
         self.duration = duration[0]+10  # duration list
@@ -96,6 +94,8 @@ class PicturesFromVideo(Thread):
         self.logname = logname  # title name of file log
         self.fname = varargs[1]  # file name
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):

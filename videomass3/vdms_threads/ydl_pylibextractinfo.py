@@ -77,8 +77,6 @@ class Ydl_EI_Pylib(Thread):
         self.url  str('url')
         self.data  tupla(None, None)
         """
-        Thread.__init__(self)
-        """initialize"""
         self.url = url
         self.data = None
         if Ydl_EI_Pylib.OS == 'Windows' or '/tmp/.mount_' \
@@ -87,6 +85,8 @@ class Ydl_EI_Pylib(Thread):
         else:
             self.nocheckcertificate = False
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):

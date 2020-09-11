@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Name: ffplay_url.py
-# Porpose: playback online media streams with ffplay media player
+# Porpose: playback online media streams with ffplay player
 #          using youtube-dl as executable.
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -41,8 +41,8 @@ def msg_Error(msg):
     """
     Receive error messages
     """
-    #wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_ERROR)
-    print(msg)
+    wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_ERROR)
+
 # ------------------------------------------------------------------------#
 
 
@@ -53,7 +53,7 @@ class Exec_Download_Stream(Thread):
     progress continues until an interruption signal is detected.
     The interruption signal is defined by `self.stop_work_thread`
     attribute based from boolean values.
-    This Thread use youtube-dl as executable with subprocess class.
+    This Thread use youtube-dl executable with subprocess class.
 
     The file name form stored on cache dir. is
 
@@ -66,6 +66,7 @@ class Exec_Download_Stream(Thread):
     FFMPEG_URL = get.FFMPEG_url
     CACHEDIR = get.CACHEdir
     BINLOCAL = get.execYdl
+    EXCEPTION = None
     EXECUTABLE_NOT_FOUND_MSG = ("Is 'youtube-dl' installed on your system?")
 
     if platform.system() == 'Windows':
@@ -74,10 +75,12 @@ class Exec_Download_Stream(Thread):
         else:
             try:
                 import youtube_dl
+            except Exception as e:
+                EXCEPTION = e
+            else:
                 pypath = youtube_dl.__file__.split('lib')[0]
                 EXECYDL = os.path.join(pypath, 'bin', 'youtube-dl.exe')
-            except Exception as e:
-                print(e)
+
         if os.path.isfile(EXECYDL):
             LINE_MSG = ('\nRequires MSVCR100.dll\nTo resolve this problem '
                           'install: Microsoft Visual C++ 2010 Redistributable '
@@ -91,26 +94,29 @@ class Exec_Download_Stream(Thread):
         else:
             try:
                 import youtube_dl
+            except Exception as e:
+                EXCEPTION = e
+            else:
                 pypath = youtube_dl.__file__.split('lib')[0]
                 EXECYDL = os.path.join(pypath, 'bin', 'youtube-dl')
-            except Exception as e:
-                print(e)
 
         LINE_MSG = ('Unrecognized error')
     # -----------------------------------------------------------------------#
 
     def __init__(self, url, quality):
         """
-        Accept a single url as a string and a quality parameter
+        Accept a single url as string and a quality parameter
         in the form required by youtube-dl, e.g one of the
         following strings can be valid:
 
-            "worst", "best" or a Format Code.
+            "worst", "best" "bestvideo+bestaudio" or a "Format Code"
+            obtained typing `youtube-dl -F <link>`
+
         """
-        Thread.__init__(self)
-        """initialize"""
-        self.stop_work_thread = False  # process terminate valur
-        self.startffplay = False  # to start ffplay
+        if Exec_Download_Stream.EXCEPTION:
+            wx.CallAfter(msg_Error, Exec_Download_Stream.EXCEPTION)
+            return
+        self.stop_work_thread = False  # process terminate value
         self.url = url
         self.quality = quality
         if platform.system() == 'Windows' or '/tmp/.mount_' \
@@ -118,6 +124,9 @@ class Exec_Download_Stream(Thread):
             self.ssl = '--no-check-certificate'
         else:
             self.ssl = ''
+
+        Thread.__init__(self)
+        """initialize Thread class"""
     # ----------------------------------------------------------------------#
 
     def run(self):
@@ -127,14 +136,14 @@ class Exec_Download_Stream(Thread):
         cmd = ('"{0}" {1} --newline --ignore-errors -o '
                '"{2}/%(title)s_{3}.%(ext)s" --format {3} '
                '--no-playlist --no-part --ignore-config '
-               '--restrict-filenames "{4}" '
-               '--ffmpeg-location "{5}"'.format(Exec_Download_Stream.EXECYDL,
-                                                self.ssl,
-                                                Exec_Download_Stream.CACHEDIR,
-                                                self.quality,
-                                                self.url,
-                                                Exec_Download_Stream.FFMPEG_URL,
-                                                ))
+               '--restrict-filenames "{4}" --ffmpeg-location '
+               '"{5}"'.format(Exec_Download_Stream.EXECYDL,
+                              self.ssl,
+                              Exec_Download_Stream.CACHEDIR,
+                              self.quality,
+                              self.url,
+                              Exec_Download_Stream.FFMPEG_URL,
+                              ))
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
             info = None
@@ -165,19 +174,18 @@ class Exec_Download_Stream(Thread):
                         p.terminate()
                         break
 
-                if p.wait():  # error
+                if p.wait():  # error at end process
                     if 'line' not in locals():
                         line = Exec_Download_Stream.LINE_MSG
                     #msg_Error('Error: {}\n{}'.format(p.wait(), line))
-                    msg_Error('{}'.format(line))
+                    if '[download]  ' in line:
+                        return
+                    wx.CallAfter(msg_Error, '{}'.format(line))
+                    return
 
         except (OSError, FileNotFoundError) as err:
-            msg_Error("%s\n  %s" % (
-                       err, Exec_Download_Stream.EXECUTABLE_NOT_FOUND_MSG))
-            return
-
-        if self.stop_work_thread:  # break first 'for' loop
-            p.terminate()
+            wx.CallAfter("%s\n  %s" % (
+                         err, Exec_Download_Stream.EXECUTABLE_NOT_FOUND_MSG))
             return
     # --------------------------------------------------------------------#
 
@@ -211,6 +219,7 @@ class Exec_Streaming(object):
         which call the stop() method of `Exec_Download_Stream` class
         to stop the download and delete file on cache diretrory when
         ffplay has finished.
+
         """
         pub.subscribe(stop_download, "STOP_DOWNLOAD_EVT")
         pub.subscribe(listener, "START_FFPLAY_EVT")
@@ -223,7 +232,8 @@ class Exec_Streaming(object):
         """
         call Exec_Download_Stream(Thread) to run() method
         """
-        Exec_Streaming.DOWNLOAD.start()
+        if not Exec_Download_Stream.EXCEPTION:
+            Exec_Streaming.DOWNLOAD.start()
         return
 
 

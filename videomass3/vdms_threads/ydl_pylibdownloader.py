@@ -150,8 +150,6 @@ class Ydl_DL_Pylib(Thread):
         self.countmax:      length of self.urls items list
         self.logname:       file name to log messages for logging
         """
-        Thread.__init__(self)
-        """initialize"""
         self.stop_work_thread = False  # process terminate
         self.urls = varargs[1]
         self.opt = varargs[4]
@@ -166,6 +164,8 @@ class Ydl_DL_Pylib(Thread):
         else:
             self.nocheckcertificate = False
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):

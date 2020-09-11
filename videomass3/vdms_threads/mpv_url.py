@@ -6,6 +6,7 @@
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: May.07.2020 *PEP8 compatible*
+# WARNING orphan, no longer used, only for reading
 #########################################################
 
 # This file is part of Videomass.
@@ -68,8 +69,6 @@ class Url_Play(Thread):
         """
         quality: is flag to set media quality result
         """
-        Thread.__init__(self)
-        ''' constructor'''
         self.url = url
         self.quality = quality
         self.logdir = logdir
@@ -77,6 +76,8 @@ class Url_Play(Thread):
         self.logf = os.path.join(self.logdir, 'Videomass_mpv.log')
         write_log('Videomass_mpv.log', self.logdir)  # set initial file LOG
 
+        Thread.__init__(self)
+        ''' constructor'''
         self.start()
     # ----------------------------------------------------------------#
 
@@ -204,6 +205,6 @@ class Libmpv_Play(Thread):
 
 
         except Exception as err:
-            wx.CallAfter(msg_Error, _('%s' % err))
+            wx.CallAfter(msg_Error, '%s' % err)
             #self.logError(err)  # append log error
             return

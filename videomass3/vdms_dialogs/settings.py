@@ -73,9 +73,6 @@ class Setup(wx.Dialog):
                  - ROW, is the current numeric rows on the file configuration
                  - VALUE, is the value as writing in the file configuration
         """
-        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        """constructor"""
-
         # Make a items list of
         self.rowsNum = []  # rows number list
         dic = {}  # used for debug
@@ -105,6 +102,9 @@ class Setup(wx.Dialog):
             self.ffmpeg = 'ffmpeg'
             self.ffprobe = 'ffprobe'
             self.ffplay = 'ffplay'
+
+        wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+        """constructor"""
         # ----------------------------set notebook
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)

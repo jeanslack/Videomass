@@ -80,8 +80,6 @@ class Loudnorm(Thread):
     def __init__(self, var, duration, logname, timeseq):
         """
         """
-        Thread.__init__(self)
-        """initialize"""
         self.stop_work_thread = False  # process terminate
         self.filelist = var[1]  # list of files (elements)
         self.ext = var[2]
@@ -95,6 +93,8 @@ class Loudnorm(Thread):
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if Loudnorm.OS == 'Windows' else '/dev/null'
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):

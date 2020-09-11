@@ -69,8 +69,6 @@ class File_Play(Thread):
         WARNING Do not use the "-stats" option as it does not work here.
 
         """
-        Thread.__init__(self)
-        ''' constructor'''
         self.filename = filepath  # file name selected
         self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
@@ -81,6 +79,8 @@ class File_Play(Thread):
         write_log('Videomass_FFplay.log', self.logdir)
         # set initial file LOG
 
+        Thread.__init__(self)
+        ''' constructor'''
         self.start()
     # ----------------------------------------------------------------#
 

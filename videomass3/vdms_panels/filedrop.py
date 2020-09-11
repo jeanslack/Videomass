@@ -47,6 +47,7 @@ class MyListCtrl(wx.ListCtrl):
         self.index = None
         self.parent = parent  # parent is DnDPanel class
         self.data = self.parent.data
+
         wx.ListCtrl.__init__(self, parent, style=wx.LC_REPORT |
                              wx.LC_SINGLE_SEL
                              )

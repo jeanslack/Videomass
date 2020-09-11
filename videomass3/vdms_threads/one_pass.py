@@ -89,8 +89,6 @@ class OnePass(Thread):
         The 'volume' attribute may also have an empty value, but it will
         have no influence on the type of conversion.
         """
-        Thread.__init__(self)
-        """initialize"""
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (elements)
         self.command = varargs[4]  # comand set on single pass
@@ -103,6 +101,8 @@ class OnePass(Thread):
         self.logname = logname  # title name of file log
         self.time_seq = timeseq  # a time segment
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
 
     def run(self):

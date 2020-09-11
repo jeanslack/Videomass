@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # Name: ffplay_url_lib.py
-# Porpose: playback online media streams with ffplay media player
-#          using youtube_dl embedding.
+# Porpose: playback online media streams with ffplay player using
+#          youtube_dl embedding on code.
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -117,8 +117,6 @@ class Download_Stream(Thread):
             worst, best, bestvideo+bestaudio, Format Code
 
         """
-        Thread.__init__(self)
-        """initialize"""
         self.stop_work_thread = False  # process terminate value
         self.url = url  # single url
         self.quality = quality  # output quality e.g. worst, best, Format code
@@ -129,6 +127,9 @@ class Download_Stream(Thread):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
+
+        Thread.__init__(self)
+        """initialize"""
     # --------------------------------------------------------------#
 
     def run(self):

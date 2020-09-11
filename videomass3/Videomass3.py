@@ -6,7 +6,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Jult.03.2020 *PEP8 compatible*
+# Rev: Sept.11.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -39,15 +39,19 @@ builtins.__dict__['_'] = wx.GetTranslation
 
 class Videomass(wx.App):
     """
-    Check for the essentials Before starting the Videomass main frame
+    bootstrap the wxPython system and initialize the underlying gui toolkit
+    and others requirements Before starting the Videomass main frame.
 
     """
     def __init__(self, redirect=True, filename=None):
         """
-        The following attributes will be used in some class
-        with wx.GetApp()
+        redirect=False will send print statements to a console window (in use)
+        redirect=True will be sent to a little textbox window.
+        filename=None Redirect sys.stdout and sys.stderr to a popup window.
+        filename='path/to/file.txt' Redirect sys.stdout and sys.stderr to file
+        See main() function below to settings it.
         -------
-        attribute definition:
+        attribute definition (used in some class with wx.GetApp()):
         self.DIRconf > location of the configuration directory
         self.FILEconf > location videomass.conf (Windows or Unix?)
         self.WORKdir > (PWD) location of the current program directory
@@ -75,7 +79,7 @@ class Videomass(wx.App):
 
     def OnInit(self):
         """
-        This is bootstrap interface.
+        Bootstrap interface.
 
         """
         data = Data_Source()  # user-space and interface settings
@@ -187,7 +191,7 @@ class Videomass(wx.App):
     def wizard(self, wizardicon):
         """
         Show a temporary dialog for setup during first start time
-        of the Videomass application on MacOS and Windows OS only.
+        of the Videomass application.
         """
         from videomass3.vdms_dialogs.first_time_start import FirstStart
         main_frame = FirstStart(wizardicon)
@@ -227,7 +231,9 @@ class Videomass(wx.App):
 
     def OnExit(self):
         """
-        OnExit provides an interface for exiting the application
+        OnExit provides an interface for exiting the application.
+        The ideal place to run the last few things before completely
+        exiting the application, eg. delete temporary files etc.
         """
         return True
     # -------------------------------------------------------------------
@@ -235,10 +241,11 @@ class Videomass(wx.App):
 
 def main():
     """
-    Starts the wx.App mainloop
+    With no arguments starts the wx.App mainloop
+    otherwise print output to console.
     """
     if not sys.argv[1:]:
-        app = Videomass(False)
+        app = Videomass(redirect=False)
         # app.MainLoop()
         fred = app.MainLoop()
     else:

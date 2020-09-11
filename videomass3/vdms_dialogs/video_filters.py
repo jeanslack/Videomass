@@ -197,6 +197,7 @@ class VideoCrop(wx.Dialog):
         self.h = ''  # set -1 = disable
         self.y = ''  # set -1 = disable
         self.x = ''  # set -1 = disable
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
         self.label_width = wx.StaticText(self, wx.ID_ANY, (_("Width")))
@@ -646,6 +647,7 @@ class Lacing(wx.Dialog):
             self.cmd_opt["interlace"] = interlace
         else:
             pass
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
         self.enable_opt = wx.ToggleButton(self, wx.ID_ANY,
@@ -1105,7 +1107,9 @@ class Denoisers(wx.Dialog):
             self.denoiser = denoiser
         else:
             self.denoiser = ''
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
+
         zone = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                               (_("Apply Denoisers Filters"))
                                               ), wx.VERTICAL)

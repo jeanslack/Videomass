@@ -42,10 +42,11 @@ class CheckNewRelease(Thread):
         Attributes defined here:
         self.data: tuple object with exit status of the process
         """
-        Thread.__init__(self)
-        """initialize"""
         self.url = url
         self.data = None
+
+        Thread.__init__(self)
+        """initialize"""
 
         self.start()  # start the thread (va in self.run())
     # ----------------------------------------------------------------#
@@ -88,12 +89,13 @@ class Command_Execution(Thread):
         self.status: tuple object with exit status of the process
         self.data: returned output of the self.status
         """
-        Thread.__init__(self)
-        """initialize"""
         self.OS = platform.system()
         self.cmd = cmd
         self.data = None
         self.status = None
+
+        Thread.__init__(self)
+        """initialize"""
 
         self.start()  # start the thread (va in self.run())
     # ----------------------------------------------------------------#
@@ -156,12 +158,13 @@ class Upgrade_Latest(Thread):
         self.status: tuple object with exit status of the process
 
         """
-        Thread.__init__(self)
-        """initialize"""
         self.url = url
         self.dest = dest
         self.data = None
         self.status = None
+
+        Thread.__init__(self)
+        """initialize"""
 
         self.start()  # start the thread (va in self.run())
     # ----------------------------------------------------------------#

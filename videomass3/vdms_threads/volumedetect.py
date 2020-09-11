@@ -56,8 +56,6 @@ class VolumeDetectThread(Thread):
                    in the form:
                    ([[maxvol, medvol], [etc,etc]], None or "str errors")
         """
-        Thread.__init__(self)
-        """initialize"""
         self.filelist = filelist
         self.time_seq = timeseq
         self.audiomap = audiomap
@@ -70,6 +68,8 @@ class VolumeDetectThread(Thread):
         write_log('Videomass_volumedected.log', self.logdir)
         # set initial file LOG
 
+        Thread.__init__(self)
+        """initialize"""
         self.start()  # start the thread (va in self.run())
     # ----------------------------------------------------------------#
 
