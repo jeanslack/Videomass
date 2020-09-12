@@ -18,12 +18,7 @@ activated with the `-row-mt 1` switch. Note that this feature is not available
 if you are using an older version of the FFmpeg (eg Version 3.1.5) and should
 be disabled when using this encoder.
 
-- **Videomass.exe**, **Videomass.app** and **Videomass.AppImage**:
-   * 1) Previewing streaming content (Youtube, Facebook, etc) via mpv player may not work. 
-   See [https://github.com/jeanslack/Videomass/issues/6](https://github.com/jeanslack/Videomass/issues/6)
-
-   * 2) Reading information on streaming content (YouTube, Facebook, etc) is disabled, 
-   See [https://github.com/jeanslack/Videomass/issues/7](https://github.com/jeanslack/Videomass/issues/7)
+- [Other issues](https://github.com/jeanslack/Videomass/issues)
   
  
 - **Videomass.AppImage** for Linux
