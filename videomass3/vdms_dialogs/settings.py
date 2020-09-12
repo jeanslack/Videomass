@@ -48,6 +48,8 @@ class Setup(wx.Dialog):
     FFPROBE_CHECK = get.FFPROBE_check
     FFPLAY_CHECK = get.FFPLAY_check
     OUTSAVE = get.USERfilesave
+    CLEARCACHE = get.CLEARcache
+    WARNME = get.WARNme
 
     MSGLOG = _("The following settings affect output messages "
                "and the log messages\nduring processes. "
@@ -154,10 +156,34 @@ class Setup(wx.Dialog):
                          wx.ALIGN_CENTER_HORIZONTAL, 5
                          )
         self.txtctrl_userpath.AppendText(self.userpath)
+
+        boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
+                                    _("Cache Settings"))), wx.VERTICAL)
+        sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 15)
+        gridCache = wx.BoxSizer(wx.VERTICAL)
+
+        self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
+                        _(" Clear cached data during application exit "
+                          "(temporary files only)")))
+        gridCache.Add(self.checkbox_cacheclr, 0,
+                      wx.ALL |
+                      wx.ALIGN_CENTER_VERTICAL |
+                      wx.ALIGN_CENTER_HORIZONTAL, 5
+                      )
+
+        self.checkbox_cacheydl = wx.CheckBox(tabOne, wx.ID_ANY, (
+                        _(" Don't warn me when youtube-dl executable is no "
+                          "longer in use")))
+        gridCache.Add(self.checkbox_cacheydl, 0,
+                      wx.ALL |
+                      wx.ALIGN_CENTER_VERTICAL |
+                      wx.ALIGN_CENTER_HORIZONTAL, 5
+                      )
+        boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 15)
+
         tabOne.SetSizer(sizerGeneral)
         notebook.AddPage(tabOne, _("General"))
-
-        # -----tab 2
+        # -----tab 3
         tabThree = wx.Panel(notebook, wx.ID_ANY)
         gridExec = wx.BoxSizer(wx.VERTICAL)
         gridExec.Add((0, 25), 0,)
@@ -200,7 +226,7 @@ class Setup(wx.Dialog):
         # ----
         tabThree.SetSizer(gridExec)
         notebook.AddPage(tabThree, _("Executable paths"))
-        # -----tab 3
+        # -----tab 4
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         gridappearance = wx.BoxSizer(wx.VERTICAL)
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
@@ -262,27 +288,27 @@ class Setup(wx.Dialog):
                            )
         tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
         notebook.AddPage(tabFour, _("Appearance"))
-        # -----tab 4
-        tabTwo = wx.Panel(notebook, wx.ID_ANY)
+        # -----tab 5
+        tabFive = wx.Panel(notebook, wx.ID_ANY)
         gridLog = wx.BoxSizer(wx.VERTICAL)
-        lab3_pane2 = wx.StaticText(tabTwo, wx.ID_ANY, (Setup.MSGLOG))
+        lab3_pane2 = wx.StaticText(tabFive, wx.ID_ANY, (Setup.MSGLOG))
         gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
         self.rdbFFmpeg = wx.RadioBox(
-                                tabTwo, wx.ID_ANY,
+                                tabFive, wx.ID_ANY,
                                 ("Set logging level flags used by FFmpeg"),
                                 choices=Setup.OPT_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
         gridLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 15)
         self.rdbFFplay = wx.RadioBox(
-                                tabTwo, wx.ID_ANY,
+                                tabFive, wx.ID_ANY,
                                 ("Set logging level flags used by FFplay"),
                                 choices=Setup.OPT_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
         gridLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 15)
-        tabTwo.SetSizer(gridLog)
-        notebook.AddPage(tabTwo, _("Logging levels"))
+        tabFive.SetSizer(gridLog)
+        notebook.AddPage(tabFive, _("Logging levels"))
         # ------ btns bottom
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
@@ -303,10 +329,11 @@ class Setup(wx.Dialog):
 
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
-        msg = _("Enable custom paths for the executables. If the check boxes "
+        tip = _("Enable custom paths for the executables. If the check boxes "
                 "are disabled or if the path field is empty, the search for "
                 "the executables is entrusted to the environment variables.")
-        tabThree.SetToolTip(msg)
+        tabThree.SetToolTip(tip)
+
         self.txtctrl_ffmpeg.SetMinSize((200, -1))
         self.txtctrl_ffprobe.SetMinSize((200, -1))
         self.txtctrl_ffplay.SetMinSize((200, -1))
@@ -330,17 +357,30 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
         self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_Fontcolor)
         self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, self.default_theme)
+        self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
+        self.Bind(wx.EVT_CHECKBOX, self.warn_Ydl, self.checkbox_cacheydl)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         # --------------------------------------------#
         self.current_settings()  # call function for initialize setting layout
 
+
     def current_settings(self):
         """
         Setting enable/disable in according to the configuration file
 
         """
+        if Setup.CLEARCACHE == 'false':
+            self.checkbox_cacheclr.SetValue(False)
+        else:
+            self.checkbox_cacheclr.SetValue(True)
+
+        if Setup.WARNME == 'false':
+            self.checkbox_cacheydl.SetValue(False)
+        else:
+            self.checkbox_cacheydl.SetValue(True)
+
         for s in range(self.rdbFFplay.GetCount()):
             if (Setup.FFPLAY_LOGLEVEL.split()[1] in
                self.rdbFFplay.GetString(s).split()[0]):
@@ -575,7 +615,7 @@ class Setup(wx.Dialog):
                 self.default_theme.Enable()
 
         dlg.Destroy()
-    # ----------------------------------------------------------------------#
+    # --------------------------------------------------------------------#
 
     def onAppearanceDefault(self, event):
         """
@@ -589,7 +629,27 @@ class Setup(wx.Dialog):
         self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
         self.full_list[self.rowsNum[14]] = '0, 0, 0\n'
         self.default_theme.Disable()
-    # ----------------------------------------------------------------------#
+    # --------------------------------------------------------------------#
+
+    def clear_Cache(self, event):
+        """
+        if checked, set to clear cached data on exit
+        """
+        if self.checkbox_cacheclr.IsChecked():
+            self.full_list[self.rowsNum[15]] = 'true\n'
+        else:
+            self.full_list[self.rowsNum[15]] = 'false\n'
+    # --------------------------------------------------------------------#
+
+    def warn_Ydl(self, event):
+        """
+        if checked, Notify when youtube-dl is not longer in use
+        """
+        if self.checkbox_cacheydl.IsChecked():
+            self.full_list[self.rowsNum[16]] = 'true\n'
+        else:
+            self.full_list[self.rowsNum[16]] = 'false\n'
+    # --------------------------------------------------------------------#
 
     def on_help(self, event):
         """

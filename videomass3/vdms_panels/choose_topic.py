@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: October.25.2019
+# Rev: Sept.20.2020
 #########################################################
 
 # This file is part of Videomass.
@@ -50,6 +50,7 @@ class Choose_Topic(wx.Panel):
         self.PYLIB_YDL = get.pylibYdl  # None if used else 'string error'
         self.EXEC_YDL = get.execYdl  # /path/youtube-dl if used else False
         self.CACHEDIR = get.CACHEdir
+        self.WARN_YDL = get.WARNme
 
         PRST_MNG = _('  Presets Manager - Create, edit and use quickly your '
                      'favorite\n  FFmpeg presets and profiles with full '
@@ -200,31 +201,33 @@ class Choose_Topic(wx.Panel):
                     ))
 
         msg_system_used = (_(
-                  'Notice: the youtube-dl executable previously downloaded '
+                  'Note: the youtube-dl executable previously downloaded '
                   'with Videomass is no longer in use, since the one '
-                  'installed in the system that has priority is now used.\n\n'
+                  'included in the system is now used.\n\n'
                   'Do you want to remove the one no longer in use?'
                   ))
 
         if self.PYLIB_YDL is None:
             fydl = os.path.join(self.CACHEDIR, self.YOUTUBE_DL)
-            if not self.EXEC_YDL and os.path.isfile(fydl):
-                if self.store_ydl_on_cache:
-                    dlg = wx.RichMessageDialog(self, msg_system_used,
-                                               _("Videomass confirmation"),
-                                               wx.ICON_QUESTION |
-                                               wx.YES_NO
-                                               )
-                    dlg.ShowCheckBox(_("Don't show this dialog again"))
+            if self.WARN_YDL == 'false':
+                if not self.EXEC_YDL and os.path.isfile(fydl):
+                    if self.store_ydl_on_cache:
+                        dlg = wx.RichMessageDialog(self, msg_system_used,
+                                                _("Videomass confirmation"),
+                                                  wx.ICON_QUESTION |
+                                                  wx.YES_NO
+                                                  )
+                        dlg.ShowCheckBox(_("Don't show this dialog again"))
 
-                    if dlg.ShowModal() == wx.ID_NO:
-                        if dlg.IsCheckBoxChecked():
-                            # make sure we won't show it again the next time
-                            self.store_ydl_on_cache = False
-                    else:
-                        os.remove(fydl)
-                        if dlg.IsCheckBoxChecked():
-                            self.store_ydl_on_cache = False
+                        if dlg.ShowModal() == wx.ID_NO:
+                            if dlg.IsCheckBoxChecked():
+                                # make sure we won't show it
+                                # again the next time
+                                self.store_ydl_on_cache = False
+                        else:
+                            os.remove(fydl)
+                            if dlg.IsCheckBoxChecked():
+                                self.store_ydl_on_cache = False
 
             self.parent.switch_text_import(self, 'Youtube Downloader')
             return

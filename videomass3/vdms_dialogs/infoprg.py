@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Sept.12.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -64,23 +64,9 @@ def info(parent, videomass_icon):
     info.SetWebSite(Website)
     info.SetLicence(Long_Lic)
     info.AddDeveloper("%s <%s>" % (Author[0], Mail))
-    info.AddDeveloper("Thanks to:")
-    info.AddDeveloper("Python <https://www.python.org/>, "
-                      "programming language"
-                      )
-    info.AddDeveloper("wxPython <https://wxpython.org/>, cross-platform "
-                      "GUI toolkit for the Python language"
-                      )
-    info.AddDeveloper("FFmpeg <http://ffmpeg.org/>, a complete, "
-                      "cross-platform solution for media"
-                      )
-    info.AddDeveloper("youtube-dl <http://ytdl-org.github.io/youtube-"
-                      "dl/>, Download videos from YouTube and more sites"
-                      )
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
-    info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> "
-                       "English to Italian translations."
-                       )
+    info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> IT")
+    #info.AddTranslator("Nestor Blanco <random@ES.pe> ES")
     info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
                      'Material design icons '
                      'http://google.github.io/material-design-icons/'

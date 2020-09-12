@@ -6,7 +6,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.11.2020 *PEP8 compatible*
+# Rev: Sept.12.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -28,7 +28,7 @@
 import wx
 import os
 import sys
-from shutil import which
+from shutil import which, rmtree
 from videomass3.vdms_sys.argparser import args
 from videomass3.vdms_sys.configurator import Data_Source
 from videomass3.vdms_sys import app_const as appC
@@ -73,6 +73,8 @@ class Videomass(wx.App):
         self.pylibYdl = None
         self.execYdl = False
         self.USERfilesave = None
+        self.CLEARcache = None
+        self.WARNme = None
 
         wx.App.__init__(self, redirect, filename)  # constructor
     # -------------------------------------------------------------------
@@ -113,6 +115,9 @@ class Videomass(wx.App):
         self.LOGdir = setui[9]  # dir for logging
         self.CACHEdir = setui[10]  # dir cache for updates
         self.FFMPEGlocaldir = setui[11]  # embed local executables ffmpeg
+        self.CLEARcache = setui[4][15]  # set clear cache on exit
+        self.WARNme = setui[4][16]  # youtube-dl exec. is no longer in use
+        self.TMP = os.path.join(self.CACHEdir, 'tmp')
 
         # ----- youtube-dl
         if self.OS == 'Windows':
@@ -181,6 +186,13 @@ class Videomass(wx.App):
             if not permissions:
                 return False
 
+        if not os.path.exists(self.TMP):
+            try:  # make temporary folde on cache dir
+                os.makedirs(self.TMP, mode=0o777)
+            except OSError as err:
+                wx.MessageBox('%s' % link, 'Videomass: Error', wx.ICON_STOP)
+                return False
+
         from videomass3.vdms_main.main_frame import MainFrame
         main_frame = MainFrame(setui, pathicons)
         main_frame.Show()
@@ -235,6 +247,16 @@ class Videomass(wx.App):
         The ideal place to run the last few things before completely
         exiting the application, eg. delete temporary files etc.
         """
+        if self.CLEARcache == 'true':
+            tmp = os.path.join(self.CACHEdir, 'tmp')
+            if os.path.exists(tmp):
+                for cache in os.listdir(tmp):
+                    f = os.path.join(tmp, cache)
+                    if os.path.isfile(f):
+                        os.remove(f)
+                    elif os.path.isdir:
+                        rmtree(f)
+
         return True
     # -------------------------------------------------------------------
 

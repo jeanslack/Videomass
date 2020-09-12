@@ -67,6 +67,7 @@ class Exec_Download_Stream(Thread):
     CACHEDIR = get.CACHEdir
     BINLOCAL = get.execYdl
     EXCEPTION = None
+    TMP = get.TMP
     EXECUTABLE_NOT_FOUND_MSG = ("Is 'youtube-dl' installed on your system?")
 
     if platform.system() == 'Windows':
@@ -79,7 +80,7 @@ class Exec_Download_Stream(Thread):
                 EXCEPTION = e
             else:
                 pypath = youtube_dl.__file__.split('lib')[0]
-                EXECYDL = os.path.join(pypath, 'bin', 'youtube-dl.exe')
+                EXECYDL = os.path.join(pypath, 'Scripts', 'youtube-dl.exe')
 
         if os.path.isfile(EXECYDL):
             LINE_MSG = ('\nRequires MSVCR100.dll\nTo resolve this problem '
@@ -139,7 +140,7 @@ class Exec_Download_Stream(Thread):
                '--restrict-filenames "{4}" --ffmpeg-location '
                '"{5}"'.format(Exec_Download_Stream.EXECYDL,
                               self.ssl,
-                              Exec_Download_Stream.CACHEDIR,
+                              Exec_Download_Stream.TMP,
                               self.quality,
                               self.url,
                               Exec_Download_Stream.FFMPEG_URL,
@@ -217,8 +218,8 @@ class Exec_Streaming(object):
         to run ffplay at a certain time.
         topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
         which call the stop() method of `Exec_Download_Stream` class
-        to stop the download and delete file on cache diretrory when
-        ffplay has finished.
+        to stop the download. All the files in the cache will be deleted
+        when Videomass is closed.
 
         """
         pub.subscribe(stop_download, "STOP_DOWNLOAD_EVT")
@@ -245,8 +246,7 @@ def stop_download(filename):
     """
     Exec_Streaming.DOWNLOAD.stop()
     Exec_Streaming.DOWNLOAD.join()
-    if os.path.isfile(filename):
-        os.remove(filename)
+
     return
 
 def listener(output):

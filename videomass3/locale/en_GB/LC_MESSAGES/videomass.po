@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-11 14:45+0200\n"
-"PO-Revision-Date: 2020-09-11 14:46+0200\n"
+"POT-Creation-Date: 2020-09-12 16:46+0200\n"
+"PO-Revision-Date: 2020-09-12 16:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: ../Videomass3.py:94
+#: ../Videomass3.py:96
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -25,7 +25,7 @@ msgid ""
 "Sorry, cannot continue.."
 msgstr ""
 
-#: ../Videomass3.py:176
+#: ../Videomass3.py:181
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -428,9 +428,9 @@ msgstr ""
 msgid "Auto-detection"
 msgstr ""
 
-#: ../vdms_dialogs/first_time_start.py:69 ../vdms_dialogs/settings.py:144
-#: ../vdms_dialogs/settings.py:167 ../vdms_dialogs/settings.py:179
-#: ../vdms_dialogs/settings.py:191
+#: ../vdms_dialogs/first_time_start.py:69 ../vdms_dialogs/settings.py:146
+#: ../vdms_dialogs/settings.py:193 ../vdms_dialogs/settings.py:205
+#: ../vdms_dialogs/settings.py:217
 msgid "Browse.."
 msgstr ""
 
@@ -565,116 +565,128 @@ msgstr ""
 msgid "Successful changes!"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:52
+#: ../vdms_dialogs/settings.py:54
 msgid ""
 "The following settings affect output messages and the log messages\n"
 "during processes. Change only if you know what you are doing."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:116
+#: ../vdms_dialogs/settings.py:118
 msgid "FFmpeg threads option"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:121
+#: ../vdms_dialogs/settings.py:123
 msgid "Set the number of threads (from 0 to 32)"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:137
+#: ../vdms_dialogs/settings.py:139
 msgid "Where do you prefer to save all the output files?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:158
-msgid "General"
+#: ../vdms_dialogs/settings.py:161
+msgid "Cache Settings"
 msgstr ""
 
 #: ../vdms_dialogs/settings.py:166
+msgid " Clear cached data during application exit (temporary files only)"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:175
+msgid " Don't warn me when youtube-dl executable is no longer in use"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:185
+msgid "General"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:192
 msgid " Use a custom path to run FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:178
+#: ../vdms_dialogs/settings.py:204
 msgid " Use a custom path to run FFprobe"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:190
+#: ../vdms_dialogs/settings.py:216
 msgid " Use a custom path to run FFplay"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:202
+#: ../vdms_dialogs/settings.py:228
 msgid "Executable paths"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:207
+#: ../vdms_dialogs/settings.py:233
 msgid "Set Icon Themes"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:223
+#: ../vdms_dialogs/settings.py:249
 msgid "Color customization"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:228
+#: ../vdms_dialogs/settings.py:254
 msgid "Change color at the button bar:"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:234 ../vdms_dialogs/settings.py:568
+#: ../vdms_dialogs/settings.py:260 ../vdms_dialogs/settings.py:608
 msgid "Bar Colour"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:239
+#: ../vdms_dialogs/settings.py:265
 msgid "Change color of bar buttons:"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:244 ../vdms_dialogs/settings.py:570
+#: ../vdms_dialogs/settings.py:270 ../vdms_dialogs/settings.py:610
 msgid "Buttons Colour"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:249
+#: ../vdms_dialogs/settings.py:275
 msgid "Color setting for button fonts:"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:254 ../vdms_dialogs/settings.py:572
+#: ../vdms_dialogs/settings.py:280 ../vdms_dialogs/settings.py:612
 msgid "Font Colour"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:259
+#: ../vdms_dialogs/settings.py:285
 msgid "Restore default settings"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:264
+#: ../vdms_dialogs/settings.py:290
 msgid "Appearance"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:285
+#: ../vdms_dialogs/settings.py:311
 msgid "Logging levels"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:305
+#: ../vdms_dialogs/settings.py:331
 msgid "Videomass: setup"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:306
+#: ../vdms_dialogs/settings.py:332
 msgid ""
 "Enable custom paths for the executables. If the check boxes are disabled or "
 "if the path field is empty, the search for the executables is entrusted to "
 "the environment variables."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:391
+#: ../vdms_dialogs/settings.py:431
 msgid "Set a default directory to save files"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:432
+#: ../vdms_dialogs/settings.py:472
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:472
+#: ../vdms_dialogs/settings.py:512
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:511
+#: ../vdms_dialogs/settings.py:551
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:602
+#: ../vdms_dialogs/settings.py:662
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 
@@ -1161,8 +1173,8 @@ msgid ""
 "menu."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:126 ../vdms_main/main_frame.py:1359
-#: ../vdms_main/main_frame.py:1398
+#: ../vdms_main/main_frame.py:126 ../vdms_main/main_frame.py:1360
+#: ../vdms_main/main_frame.py:1399
 msgid "Streams analyzer"
 msgstr ""
 
@@ -1226,7 +1238,7 @@ msgstr ""
 msgid "For playback, first make sure you select a URL in the list control"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:453 ../vdms_main/main_frame.py:1301
+#: ../vdms_main/main_frame.py:453 ../vdms_main/main_frame.py:1302
 msgid "YouTube Downloader"
 msgstr ""
 
@@ -1561,108 +1573,108 @@ msgid ""
 "Re-start is required. Do you want to close Videomass now?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1004
+#: ../vdms_main/main_frame.py:1005
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1022 ../vdms_main/main_frame.py:1033
+#: ../vdms_main/main_frame.py:1023 ../vdms_main/main_frame.py:1034
 msgid "No files added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1044
+#: ../vdms_main/main_frame.py:1045
 msgid "No URLs added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1063
+#: ../vdms_main/main_frame.py:1064
 msgid "Output log has not been created yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1082
+#: ../vdms_main/main_frame.py:1083
 msgid "cache directory has not been created yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1138
+#: ../vdms_main/main_frame.py:1139
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
 "from <https://pypi.org/project/videomass/>"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1141 ../vdms_main/main_frame.py:1147
+#: ../vdms_main/main_frame.py:1142 ../vdms_main/main_frame.py:1148
 msgid "Videomass: Check for new versions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1145
+#: ../vdms_main/main_frame.py:1146
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1151
+#: ../vdms_main/main_frame.py:1152
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1180
+#: ../vdms_main/main_frame.py:1181
 msgid "Back"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1183
+#: ../vdms_main/main_frame.py:1184
 msgid "Forward"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1186
+#: ../vdms_main/main_frame.py:1187
 msgid "Convert"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1188
+#: ../vdms_main/main_frame.py:1189
 msgid "Download"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1222
+#: ../vdms_main/main_frame.py:1223
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1234
+#: ../vdms_main/main_frame.py:1235
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1241
+#: ../vdms_main/main_frame.py:1242
 msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1270 ../vdms_panels/filedrop.py:266
+#: ../vdms_main/main_frame.py:1271 ../vdms_panels/filedrop.py:266
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1294
+#: ../vdms_main/main_frame.py:1295
 msgid "Add URLs"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1304 ../vdms_main/main_frame.py:1346
-#: ../vdms_main/main_frame.py:1386
+#: ../vdms_main/main_frame.py:1305 ../vdms_main/main_frame.py:1347
+#: ../vdms_main/main_frame.py:1387
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1320
+#: ../vdms_main/main_frame.py:1321
 msgid "Show More"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1340
+#: ../vdms_main/main_frame.py:1341
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1380
+#: ../vdms_main/main_frame.py:1381
 msgid "Presets Manager"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1434
+#: ../vdms_main/main_frame.py:1435
 msgid "Log of the last process"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1436
+#: ../vdms_main/main_frame.py:1437
 msgid "Under processing..."
 msgstr ""
 
@@ -2116,51 +2128,51 @@ msgstr ""
 msgid "Videomass: Create a new profile"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:54
+#: ../vdms_panels/choose_topic.py:55
 msgid ""
 "  Presets Manager - Create, edit and use quickly your favorite\n"
 "  FFmpeg presets and profiles with full formats support and codecs. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:58
+#: ../vdms_panels/choose_topic.py:59
 msgid ""
 "  A set of useful tools for audio and video conversions.\n"
 "  Save your profiles and reuse them with Presets Manager. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:62
+#: ../vdms_panels/choose_topic.py:63
 msgid ""
 "  Easily download videos and audio in different formats\n"
 "  and quality from YouTube, Facebook and more sites. "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:68
+#: ../vdms_panels/choose_topic.py:69
 msgid "Welcome to Videomass"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:69
+#: ../vdms_panels/choose_topic.py:70
 msgid "Version {}"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:117
+#: ../vdms_panels/choose_topic.py:118
 msgid ""
 "Videomass would need volunteer translators. If you are interested you could "
 "take a look at the "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:120
+#: ../vdms_panels/choose_topic.py:121
 msgid "Localization guidelines"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:125
+#: ../vdms_panels/choose_topic.py:126
 msgid "Download additional presets or contribute to making new ones "
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:128
+#: ../vdms_panels/choose_topic.py:129
 msgid "Additional Presets"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:171
+#: ../vdms_panels/choose_topic.py:172
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -2168,14 +2180,14 @@ msgid ""
 "html>"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:182
+#: ../vdms_panels/choose_topic.py:183
 msgid ""
 "{}\n"
 "\n"
 "youtube-dl: no library or executable found ."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:186
+#: ../vdms_panels/choose_topic.py:187
 msgid ""
 "An updated version of youtube-dl is required to download videos from YouTube."
 "com and other video sites. Videomass can download an updated copy of youtube-"
@@ -2187,7 +2199,7 @@ msgid ""
 "...Do you wish to continue?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:195
+#: ../vdms_panels/choose_topic.py:196
 msgid ""
 "Successful! \n"
 "\n"
@@ -2198,20 +2210,19 @@ msgid ""
 "Re-start is required. Do you want to close Videomass now?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:203
+#: ../vdms_panels/choose_topic.py:204
 msgid ""
-"Notice: the youtube-dl executable previously downloaded with Videomass is no "
-"longer in use, since the one installed in the system that has priority is "
-"now used.\n"
+"Note: the youtube-dl executable previously downloaded with Videomass is no "
+"longer in use, since the one included in the system is now used.\n"
 "\n"
 "Do you want to remove the one no longer in use?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:214 ../vdms_panels/choose_topic.py:237
+#: ../vdms_panels/choose_topic.py:216 ../vdms_panels/choose_topic.py:240
 msgid "Videomass confirmation"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:218 ../vdms_panels/presets_manager.py:973
+#: ../vdms_panels/choose_topic.py:220 ../vdms_panels/presets_manager.py:973
 msgid "Don't show this dialog again"
 msgstr ""
 

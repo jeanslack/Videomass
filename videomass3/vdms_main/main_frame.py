@@ -1001,9 +1001,10 @@ class MainFrame(wx.Frame):
             return
 
         elif MainFrame.PYLIB_YDL is None:  # system installed
-            wx.MessageBox(_('It looks like you installed youtube-dl with a '
-                            'package manager. Please use that to update.'),
-                          'Videomass', wx.ICON_INFORMATION)
+            wx.MessageBox(
+                    _('It looks like you installed youtube-dl with a '
+                      'package manager. Please use that to update.'),
+                    'Videomass', wx.ICON_INFORMATION)
             return
     # ------------------------------------------------------------------#
 

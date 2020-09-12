@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: June.15.2020 *PEP8 compatible*
+# Rev: Sept.12.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -180,7 +180,7 @@ class Data_Source(object):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 2.2:
+                if float(userconf[0]) != 2.3:
                     existfileconf = False
             else:
                 existfileconf = False
