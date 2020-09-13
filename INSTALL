@@ -4,7 +4,7 @@ BASE DEPENDENCIES
 -----------------
 
     Required:
-        - Python >=3.7
+        - Python >=3.6.9
         - wxPython4 (Phoenix)
         - PyPubSub
         - pip (On Windows and MacOS it is included with Python3.7)

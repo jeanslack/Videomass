@@ -107,6 +107,7 @@ class Download_Stream(Thread):
     OS = get.OS
     FFMPEG_URL = get.FFMPEG_url
     CACHEDIR = get.CACHEdir
+    TMP = get.TMP
 
     def __init__(self, url, quality):
         """
@@ -120,7 +121,7 @@ class Download_Stream(Thread):
         self.stop_work_thread = False  # process terminate value
         self.url = url  # single url
         self.quality = quality  # output quality e.g. worst, best, Format code
-        self.outputdir = Download_Stream.CACHEDIR  # pathname destination
+        self.outputdir = Download_Stream.TMP  # pathname destination
         self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
         if Download_Stream.OS == 'Windows' or '/tmp/.mount_' \
            in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
@@ -146,6 +147,7 @@ class Download_Stream(Thread):
                 'restrictfilenames': True,
                 'nopart': True,  # see --no-part by --help
                 'ignoreerrors': True,
+                'continue': True,
                 'no_warnings': False,
                 'noplaylist': True,
                 'no_color': True,
@@ -172,7 +174,7 @@ class Lib_Streaming(object):
     youtube-dl library and ffmpeg executables.
 
     DOWNLOAD class variable makes the object's attributes available
-    even outside of class, see `stop_download()`
+    even outside of class, see `stop_download_listener()`
     FIXME put RICEIVER LISTENER function as methods of this class. For
           now does not work (???)
 
@@ -182,18 +184,19 @@ class Lib_Streaming(object):
 
     def __init__(self, url=None, quality=None):
         """
-        topic "START_FFPLAY_EVT" subscribes a start download listener
-        to run ffplay at a certain time.
-        topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
-        which call the stop() method of `Download_Stream` class to
-        stop the download and delete file on cache diretrory when
-        ffplay has finished.
+        - Topic "START_FFPLAY_EVT" subscribes the start playing
+          running ffplay at a certain time.
+        - Topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
+          which call the stop() method of `Download_Stream` class to
+          stop the download when ffplay has finished or been closed by
+          the user.
         """
-        pub.subscribe(stop_download, "STOP_DOWNLOAD_EVT")
-        pub.subscribe(listener, "START_FFPLAY_EVT")
+        pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
+        pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        self.thread_download = Download_Stream(url, quality)
-        Lib_Streaming.DOWNLOAD = self.thread_download
+        Lib_Streaming.DOWNLOAD = Download_Stream(url, quality)
+
+        self.start_download()
     # ----------------------------------------------------------------#
 
     def start_download(self):
@@ -203,23 +206,21 @@ class Lib_Streaming(object):
         Lib_Streaming.DOWNLOAD.start()
         return
 
-
 # --------- RECEIVER LISTENERS
-def stop_download(filename):
+
+
+def stop_download_listener(filename):
     """
     Receive message from ffplay_file.File_Play class
     for handle interruption
     """
     Lib_Streaming.DOWNLOAD.stop()
-    #Lib_Streaming.DOWNLOAD.join()  # if join, wait end process
-    if os.path.isfile(filename):
-        os.remove(filename)
-    return
+    Lib_Streaming.DOWNLOAD.join()  # if join, wait end process
 
-def listener(output):
+def start_palying_listener(output):
     """
     Riceive messages from MyLogger to start
-    ffplay in this time.
+    ffplay in at a given time.
     """
     IO_tools.stream_play(output, '', '')
     return

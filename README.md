@@ -30,7 +30,7 @@ To install videomass for any Operative System, please visit
 web page.
 
 ### Requirements
-- **[Python ~=3.7](https://www.python.org/)**
+- **[Python >= 3.6.9](https://www.python.org/)**
 - **[wxPython-Phoenix >= 4.0.3](https://wxpython.org/)**
 - **[PyPubSub](https://pypi.org/project/PyPubSub/)**
 - **[pip](https://pypi.org/project/pip/)**

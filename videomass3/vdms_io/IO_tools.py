@@ -114,10 +114,9 @@ def url_play(url, quality):
     youtube_dl = get.pylibYdl
 
     dowl = ffplay_url_exec.Exec_Streaming(url, quality)
-    dowl.start_download()
 
     # --------------------- playback via subprocess mpv player
-    # WARNING does not work in appimage, exe and app packages
+    # WARNING does not work on appimage, exe and app packages
     # thread = Url_Play(url, quality, get.LOGdir, get.MPV_url)
     ## thread.join()  # wait for end thread, otherwise return too soon
     ## error = thread.data
@@ -125,10 +124,8 @@ def url_play(url, quality):
 
     #if youtube_dl is not None:  # run youtube-dl executable
         #dowl = ffplay_url_exec.Exe_Download_Stream(url, quality)
-        #dowl.start_download()
     #else:  # run youtube_dl library
         #dowl = ffplay_url_lib.Lib_Streaming(url, quality)
-        #dowl.start_download()
 
     ## --------------------- playback via python-mpv and libmpv API
     ## require python-mpv package

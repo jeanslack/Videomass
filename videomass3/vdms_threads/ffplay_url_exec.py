@@ -37,11 +37,11 @@ from pubsub import pub
 from videomass3.vdms_io import IO_tools
 
 
-def msg_Error(msg):
+def msg_error(msg, title="Videomass"):
     """
     Receive error messages
     """
-    wx.MessageBox("%s" % (msg), "Videomass", wx.ICON_ERROR)
+    wx.MessageBox("%s" % (msg), title, wx.ICON_ERROR)
 
 # ------------------------------------------------------------------------#
 
@@ -53,7 +53,8 @@ class Exec_Download_Stream(Thread):
     progress continues until an interruption signal is detected.
     The interruption signal is defined by `self.stop_work_thread`
     attribute based from boolean values.
-    This Thread use youtube-dl executable with subprocess class.
+    This Thread use youtube-dl executable (not module) with
+    subprocess.Popen class.
 
     The file name form stored on cache dir. is
 
@@ -68,7 +69,6 @@ class Exec_Download_Stream(Thread):
     BINLOCAL = get.execYdl
     EXCEPTION = None
     TMP = get.TMP
-    EXECUTABLE_NOT_FOUND_MSG = ("Is 'youtube-dl' installed on your system?")
 
     if platform.system() == 'Windows':
         if BINLOCAL:
@@ -108,14 +108,14 @@ class Exec_Download_Stream(Thread):
         """
         Accept a single url as string and a quality parameter
         in the form required by youtube-dl, e.g one of the
-        following strings can be valid:
+        following quality strings can be valid:
 
             "worst", "best" "bestvideo+bestaudio" or a "Format Code"
             obtained typing `youtube-dl -F <link>`
 
         """
         if Exec_Download_Stream.EXCEPTION:
-            wx.CallAfter(msg_Error, Exec_Download_Stream.EXCEPTION)
+            wx.CallAfter(msg_error, Exec_Download_Stream.EXCEPTION)
             return
         self.stop_work_thread = False  # process terminate value
         self.url = url
@@ -135,7 +135,7 @@ class Exec_Download_Stream(Thread):
         Starting thread.
         """
         cmd = ('"{0}" {1} --newline --ignore-errors -o '
-               '"{2}/%(title)s_{3}.%(ext)s" --format {3} '
+               '"{2}/%(title)s_{3}.%(ext)s" --continue --format {3} '
                '--no-playlist --no-part --ignore-config '
                '--restrict-filenames "{4}" --ffmpeg-location '
                '"{5}"'.format(Exec_Download_Stream.EXECYDL,
@@ -171,22 +171,23 @@ class Exec_Download_Stream(Thread):
                                 pub.sendMessage("START_FFPLAY_EVT",
                                                 output=line.split()[1]
                                                 )
-                    else:  # self.stop_work_thread:  # break 'for' loop
+                    else:  # self.stop_work_thread:
                         p.terminate()
                         break
 
                 if p.wait():  # error at end process
                     if 'line' not in locals():
                         line = Exec_Download_Stream.LINE_MSG
-                    #msg_Error('Error: {}\n{}'.format(p.wait(), line))
                     if '[download]  ' in line:
                         return
-                    wx.CallAfter(msg_Error, '{}'.format(line))
+                    wx.CallAfter(msg_error,
+                                 line,
+                                 'Videomass: Error %s' % p.wait()
+                                 )
                     return
 
-        except (OSError, FileNotFoundError) as err:
-            wx.CallAfter("%s\n  %s" % (
-                         err, Exec_Download_Stream.EXECUTABLE_NOT_FOUND_MSG))
+        except OSError as err:
+            wx.CallAfter(msg_error, err, 'Videomass: OSError')
             return
     # --------------------------------------------------------------------#
 
@@ -201,7 +202,7 @@ class Exec_Download_Stream(Thread):
 class Exec_Streaming(object):
     """
     Handling Threads to download and playback media streams via
-    youtube-dl and ffmpeg executables.
+    youtube-dl and ffplay executables.
 
     DOWNLOAD class variable makes the object's attributes available
     even outside of class, see `stop_download()`
@@ -214,32 +215,37 @@ class Exec_Streaming(object):
 
     def __init__(self, url=None, quality=None):
         """
-        topic "START_FFPLAY_EVT" subscribes a start download listener
-        to run ffplay at a certain time.
-        topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
-        which call the stop() method of `Exec_Download_Stream` class
-        to stop the download. All the files in the cache will be deleted
-        when Videomass is closed.
+        - Topic "START_FFPLAY_EVT" subscribes the start playing
+          running ffplay at a certain time.
+        - Topic "STOP_DOWNLOAD_EVT" subscribes a stop download listener
+          which call the stop() method of `Download_Stream` class to
+          stop the download when ffplay has finished or been closed by
+          the user.
 
         """
-        pub.subscribe(stop_download, "STOP_DOWNLOAD_EVT")
-        pub.subscribe(listener, "START_FFPLAY_EVT")
+        pub.subscribe(stop_download_listener, "STOP_DOWNLOAD_EVT")
+        pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
-        self.thread_download = Exec_Download_Stream(url, quality)
-        Exec_Streaming.DOWNLOAD = self.thread_download
+        Exec_Streaming.DOWNLOAD = Exec_Download_Stream(url, quality)
+
+        self.start_download()
     # ----------------------------------------------------------------#
 
     def start_download(self):
         """
         call Exec_Download_Stream(Thread) to run() method
         """
+
+
+
         if not Exec_Download_Stream.EXCEPTION:
             Exec_Streaming.DOWNLOAD.start()
         return
 
-
 # --------- RECEIVER LISTENERS
-def stop_download(filename):
+
+
+def stop_download_listener(filename):
     """
     Receive message from ffplay_file.File_Play class
     for handle interruption
@@ -249,10 +255,10 @@ def stop_download(filename):
 
     return
 
-def listener(output):
+def start_palying_listener(output):
     """
     Riceive message from Exec_Download_Stream class to start
-    ffplay in this time.
+    ffplay in at a given time.
     """
     IO_tools.stream_play(output, '', '')
     return

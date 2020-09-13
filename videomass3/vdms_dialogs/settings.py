@@ -114,28 +114,6 @@ class Setup(wx.Dialog):
         # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGeneral = wx.BoxSizer(wx.VERTICAL)
-        boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    _("FFmpeg threads option"))), wx.VERTICAL)
-        sizerGeneral.Add(boxLabThreads, 1, wx.ALL | wx.EXPAND, 15)
-        gridThreads = wx.BoxSizer(wx.VERTICAL)
-        boxLabThreads.Add(gridThreads, 1, wx.ALL | wx.EXPAND, 15)
-        lab1_pane1 = wx.StaticText(tabOne, wx.ID_ANY,
-                                   (_("Set the number of threads "
-                                      "(from 0 to 32)")))
-        gridThreads.Add(lab1_pane1, 0,
-                        wx.ALL |
-                        wx.ALIGN_CENTER_VERTICAL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 5
-                        )
-        self.spinctrl_threads = wx.SpinCtrl(tabOne, wx.ID_ANY,
-                                            "%s" % Setup.FF_THREADS[9:],
-                                            size=(-1, -1), min=0, max=32,
-                                            style=wx.TE_PROCESS_ENTER
-                                            )
-        gridThreads.Add(self.spinctrl_threads, 0, wx.ALL |
-                        wx.ALIGN_CENTER_VERTICAL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 5
-                        )
         msg = _("Where do you prefer to save all the output files?")
         boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
                                                      (msg)), wx.VERTICAL)
@@ -183,6 +161,34 @@ class Setup(wx.Dialog):
 
         tabOne.SetSizer(sizerGeneral)
         notebook.AddPage(tabOne, _("General"))
+        # -----tab 2
+        tabTwo = wx.Panel(notebook, wx.ID_ANY)
+        sizerFFmpeg = wx.BoxSizer(wx.VERTICAL)
+
+        boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY, (
+                                _("Threads Option"))), wx.VERTICAL)
+        sizerFFmpeg.Add(boxLabThreads, 1, wx.ALL | wx.EXPAND, 15)
+        gridThreads = wx.BoxSizer(wx.VERTICAL)
+        boxLabThreads.Add(gridThreads, 1, wx.ALL | wx.EXPAND, 15)
+        lab1_pane2 = wx.StaticText(tabTwo, wx.ID_ANY,
+                                (_("Set the number of threads "
+                                    "(from 0 to 32)")))
+        gridThreads.Add(lab1_pane2, 0,
+                        wx.ALL |
+                        wx.ALIGN_CENTER_VERTICAL |
+                        wx.ALIGN_CENTER_HORIZONTAL, 5
+                        )
+        self.spinctrl_threads = wx.SpinCtrl(tabTwo, wx.ID_ANY,
+                                            "%s" % Setup.FF_THREADS[9:],
+                                            size=(-1, -1), min=0, max=32,
+                                            style=wx.TE_PROCESS_ENTER
+                                            )
+        gridThreads.Add(self.spinctrl_threads, 0, wx.ALL |
+                        wx.ALIGN_CENTER_VERTICAL |
+                        wx.ALIGN_CENTER_HORIZONTAL, 5
+                        )
+        tabTwo.SetSizer(sizerFFmpeg)
+        notebook.AddPage(tabTwo, _("FFmpeg"))
         # -----tab 3
         tabThree = wx.Panel(notebook, wx.ID_ANY)
         gridExec = wx.BoxSizer(wx.VERTICAL)

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-12 16:46+0200\n"
-"PO-Revision-Date: 2020-09-12 16:47+0200\n"
+"PO-Revision-Date: 2020-09-13 13:09+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -706,8 +706,7 @@ msgstr "Impostazioni della Cache"
 #: ../vdms_dialogs/settings.py:166
 msgid " Clear cached data during application exit (temporary files only)"
 msgstr ""
-" Cancella i dati memorizzati nella cache durante l'uscita dell'applicazione "
-"(solo file temporanei)"
+" Cancella la cache durante l'uscita dell'applicazione (i file temporanei)"
 
 #: ../vdms_dialogs/settings.py:175
 msgid " Don't warn me when youtube-dl executable is no longer in use"
