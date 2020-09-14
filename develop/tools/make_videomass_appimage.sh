@@ -14,6 +14,8 @@
 
 set -e  # stop if error
 
+SELF="$(readlink -f -- $0)" # this file
+
 MACHINE_ARCH=$(arch)
 PYVERSION="python3.8.5"
 OPT="squashfs-root/opt/python3.8"
@@ -162,5 +164,13 @@ fi
 if [ ! -x appimagetool-x86_64.AppImage ]; then
     chmod +x appimagetool-x86_64.AppImage
 fi
+# for any updates copy 'appimagetool-x86_64.AppImage' and 'youtube-dl-update' script on bin/
+cp appimagetool-x86_64.AppImage squashfs-root/usr/bin
+cp $SELF squashfs-root/usr/bin
 
+if [ ! -x squashfs-root/usr/bin/$(basename $SELF) ]; then
+    chmod +x squashfs-root/usr/bin/$(basename $SELF)
+fi
+
+# make AppImage
 ./appimagetool-x86_64.AppImage -s squashfs-root/

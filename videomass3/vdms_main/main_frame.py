@@ -1000,6 +1000,46 @@ class MainFrame(wx.Frame):
             self.on_Kill()
             return
 
+        elif '/tmp/.mount_' in sys.executable or \
+                 os.path.exists(os.getcwd() + '/AppRun'):
+            ck = _check()
+            if not ck:
+                return
+            else:
+                if wx.MessageBox(_(
+                            'Notice: To update youtube_dl it is necessary to '
+                            'rebuild the Videomass AppImage. Also, the '
+                            'digital signature may be lost after completion.'
+                            '\n\nDo you want to continue?'),
+                            "Videomass", wx.ICON_QUESTION |
+                             wx.YES_NO, self) == wx.NO:
+                    return
+                cr = current_release()[2]
+                fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
+                          "file to update").format(cr)
+                with wx.FileDialog(None, fname,
+                        defaultDir=os.path.expanduser('~'),
+                        wildcard=("*Videomass-{0}-x86_64.AppImage (*Videomass-"
+                                  "{0}-x86_64.AppImage;)|*Videomass-{0}-"
+                                  "x86_64.AppImage;".format(cr)),
+                        style=wx.FD_OPEN |
+                        wx.FD_FILE_MUST_EXIST) as fileDialog:
+
+                    if fileDialog.ShowModal() == wx.ID_CANCEL:
+                        return
+                    appimage = fileDialog.GetPath()
+
+                upgrade = IO_tools.appimage_update_youtube_dl(appimage)
+
+                if upgrade:
+                    wx.MessageBox(
+                        _('Failed! Cannot update youtube_dl.\n\n'
+                          '{}').format(upgrade),
+                          'Videomass', wx.ICON_ERROR, self)
+                else:
+                    self.on_Kill()
+                return
+
         elif MainFrame.PYLIB_YDL is None:  # system installed
             wx.MessageBox(
                     _('It looks like you installed youtube-dl with a '

@@ -453,3 +453,20 @@ def check_videomass_releases(thisrel):
         else:
             return None, 'unrecognized error'  # unrecognized error
 # --------------------------------------------------------------------------#
+
+
+def appimage_update_youtube_dl(appimage):
+    """
+    Call thread for update youtube_dl package inside AppImage.
+    """
+    thread = youtubedlupdater.Update_Youtube_dl_Appimage(appimage)
+
+    waitmsg = _('...Be patient, this can take a few minutes.')
+
+    loadDlg = PopupDialog(None, _("Videomass - Updating..."), waitmsg)
+    loadDlg.ShowModal()
+    # thread.join()
+    update = thread.status
+    loadDlg.Destroy()
+
+    return update

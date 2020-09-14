@@ -24,7 +24,10 @@
 
 #########################################################
 import subprocess
+import shlex
 import platform
+import sys
+import os
 import shutil
 import ssl
 import urllib.request
@@ -189,6 +192,54 @@ class Upgrade_Latest(Thread):
             self.status = None, error
 
         self.data = self.status
+
+        wx.CallAfter(pub.sendMessage,
+                     "RESULT_EVT",
+                     status=''
+                     )
+# ---------------------------------------------------------------------#
+
+
+class Update_Youtube_dl_Appimage(Thread):
+    """
+    Update `youtube_dl` python package inside AppImage using
+    xterm terminal emulator for displaying the output.
+    """
+    def __init__(self, videomass):
+        """
+        Attributes defined here:
+
+        self.status      exit status value
+        self.cmd         command for execution
+
+        """
+        name = os.path.basename(videomass)
+        binpath = os.path.dirname(sys.executable)
+        exe = os.path.join(binpath + '/youtube-dl-update.sh')
+        self.status = None
+        self.cmd = shlex.split(
+                        'xterm -hold -u8 -bg "grey15" -fa "Monospace" '
+                        '-fs 9 -geometry 120x35 -title "..Updating '
+                        'youtube_dl Python wheel on %s" '
+                        '-e %s %s' % (name, exe, videomass)
+                        )
+
+
+        Thread.__init__(self)
+        """initialize"""
+
+        self.start()  # start the thread
+    # ----------------------------------------------------------------#
+
+    def run(self):
+        """
+        Spawn process to xterm emulator
+        """
+
+        try:
+            subprocess.run(self.cmd, shell=False)
+        except FileNotFoundError as err:
+            self.status = err
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",

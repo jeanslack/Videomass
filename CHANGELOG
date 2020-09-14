@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sep 12, 2020 V.3.1.0
+Sep 14, 2020 V.3.1.0
 +------------------------------------+
 
 BUGS:
@@ -17,6 +17,10 @@ BUGS:
 
     * [APPIMAGE; EXE; APP) Fixed issue with playing online media streams
       via mpv player not working on embedded environments. See issue #6
+
+    * [PRESETS] fixed the problem on the preset "For_Archive_Collection.prst"
+      where I forgot to remove the `-pass 2` parameter on all three profiles.
+      Sorry for the mistake.
 
 IMPROVEMENTS:
 -------------
@@ -34,21 +38,24 @@ IMPROVEMENTS:
 
 REMOVALS, DISPLACEMENTS, REPLACEMENTS:
 ---------------------------
-    * mpv player has been removed from optional dependencies and all widgets
-      created for it, as it is now replaced by ffplay
+    * The mpv player has been removed from optional dependencies, as it has
+      been replaced by FFmpeg's ffplay to playback online streams.
 
 NEWS:
 -----
-    * [YOUTUBE DOWNLOADER] New module to playback online streaming via
+    * [YOUTUBE DOWNLOADER] New modules to playback online streams via
       youtube-dl and ffplay.
 
-    * Creating the tmp directory in the cache directory for online media
-      playback.
+    * A tmp/ directory has been added in the cache/ directory for temporary
+      files downloaded for preview playback.
 
     * Added new checkbox on Settings dialog box to clear or keep cached data.
 
     * Added new checkbox on Settings dialog box to disable permanently
       warnin message if youtube-dl executable is no longer in use.
+
+    * [APPIMAGE] It is possible to update the youtube_dl Python package if
+      included in AppImage. New tools have been made for this task.
 
 
 +------------------------------------+
