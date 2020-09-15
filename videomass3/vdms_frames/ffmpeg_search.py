@@ -60,7 +60,7 @@ class FFmpeg_Search(wx.MiniFrame):
         # add panel
         self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY, choices=[
-                                ("--"),
+                                (_("Topic List...")),
                                 (_("print basic options")),
                                 (_("print more options")),
                                 (_("print all options (very long)")),
@@ -78,7 +78,7 @@ class FFmpeg_Search(wx.MiniFrame):
                                 style=wx.CB_DROPDOWN | wx.CB_READONLY
                                 )
         self.cmbx_choice.SetSelection(0)
-        self.cmbx_choice.SetToolTip(_("Choose one of the topics in the list"))
+        self.cmbx_choice.SetToolTip(_("help topic list"))
         self.texthelp = wx.TextCtrl(self.panel, wx.ID_ANY,
                                     "",
                                     # size=(550,400),
@@ -152,26 +152,28 @@ class FFmpeg_Search(wx.MiniFrame):
         """
         Gets output given ffmpeg `-arg` and fills the textctrl.
         The topic options are values of the arg_opt dictionary.
+
         """
-        arg_opt = {"--": 'None',
-                  _("print basic options"): ['-h'],
-                  _("print more options"): ['-h', 'long'],
-                  _("print all options (very long)"): ['-h', 'full'],
-                  _("show available devices"): ['-devices'],
-                  _("show available bit stream filters"): ['-bsfs'],
-                  _("show available protocols"): ['-protocols'],
-                  _("show available filters"): ['-filters'],
-                  _("show available pixel formats"): ['-pix_fmts'],
-                  _("show available audio sample formats"): ['-sample_fmts'],
-                  _("show available color names"): ['-colors'],
-                  _("list sources of the input device"):
-                      ['-sources', 'device'],
-                  _("list sinks of the output device"): ['-sinks', 'device'],
-                  _("show available HW acceleration methods"): ['-hwaccels'],
-                  }
+        arg_opt = {
+                _("Topic List..."): 'None',
+                _("print basic options"): ['-h'],
+                _("print more options"): ['-h', 'long'],
+                _("print all options (very long)"): ['-h', 'full'],
+                _("show available devices"): ['-devices'],
+                _("show available bit stream filters"): ['-bsfs'],
+                _("show available protocols"): ['-protocols'],
+                _("show available filters"): ['-filters'],
+                _("show available pixel formats"): ['-pix_fmts'],
+                _("show available audio sample formats"): ['-sample_fmts'],
+                _("show available color names"): ['-colors'],
+                _("list sources of the input device"): ['-sources', 'device'],
+                _("list sinks of the output device"): ['-sinks', 'device'],
+                _("show available HW acceleration methods"): ['-hwaccels'],
+                }
         if "None" in arg_opt[self.cmbx_choice.GetValue()]:
             self.row = None
             self.texthelp.Clear()  # reset textctrl
+            self.texthelp.AppendText(_("Choose one of the topics in the list"))
         else:
             self.texthelp.Clear()  # reset textctrl
             topic = arg_opt[self.cmbx_choice.GetValue()]

@@ -32,22 +32,25 @@ import stat
 import ssl
 import urllib.request
 from videomass3.vdms_threads.ffplay_file import File_Play
-from videomass3.vdms_threads import ffplay_url_exec
-from videomass3.vdms_threads import ffplay_url_lib
-#from videomass3.vdms_threads.mpv_url import Libmpv_Play
+from videomass3.vdms_threads import (ffplay_url_exec,
+                                     ffplay_url_lib,
+                                     youtubedlupdater,
+                                     )
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
 from videomass3.vdms_threads.volumedetect import VolumeDetectThread
-from videomass3.vdms_threads.check_bin import ff_conf
-from videomass3.vdms_threads.check_bin import ff_formats
-from videomass3.vdms_threads.check_bin import ff_codecs
-from videomass3.vdms_threads.check_bin import ff_topics
+from videomass3.vdms_threads.check_bin import (ff_conf,
+                                               ff_formats,
+                                               ff_codecs,
+                                               ff_topics,
+                                               )
 from videomass3.vdms_threads.opendir import browse
 from videomass3.vdms_threads.ydl_pylibextractinfo import Ydl_EI_Pylib
 from videomass3.vdms_threads.ydl_executable import Ydl_EI_Exec
-from videomass3.vdms_threads import youtubedlupdater
-from videomass3.vdms_frames import ffmpeg_conf
-from videomass3.vdms_frames import ffmpeg_formats
-from videomass3.vdms_frames import ffmpeg_codecs
+
+from videomass3.vdms_frames import (ffmpeg_conf,
+                                    ffmpeg_formats,
+                                    ffmpeg_codecs,
+                                    )
 from videomass3.vdms_dialogs.popup import PopupDialog
 
 
@@ -115,29 +118,10 @@ def url_play(url, quality):
 
     dowl = ffplay_url_exec.Exec_Streaming(url, quality)
 
-    # --------------------- playback via subprocess mpv player
-    # WARNING does not work on appimage, exe and app packages
-    # thread = Url_Play(url, quality, get.LOGdir, get.MPV_url)
-    ## thread.join()  # wait for end thread, otherwise return too soon
-    ## error = thread.data
-    # ---------------------
-
     #if youtube_dl is not None:  # run youtube-dl executable
-        #dowl = ffplay_url_exec.Exe_Download_Stream(url, quality)
+        #dowl = ffplay_url_exec.Exec_Streaming(url, quality)
     #else:  # run youtube_dl library
         #dowl = ffplay_url_lib.Lib_Streaming(url, quality)
-
-    ## --------------------- playback via python-mpv and libmpv API
-    ## require python-mpv package
-    ## WARNING does not work on AppImage
-    #try:
-        #import mpv
-    #except OSError as err:
-        #wx.MessageBox("%s\n\nUnable to reproduce URL, need `mpv`, `libmpv`"
-                      #% err, "Videomass: ERROR", wx.ICON_ERROR, None)
-        #return
-    #thread = Libmpv_Play(url, quality, get.LOGdir, get.MPV_url)
-    ## ---------------------
 # -----------------------------------------------------------------------#
 
 
@@ -469,4 +453,12 @@ def appimage_update_youtube_dl(appimage):
     update = thread.status
     loadDlg.Destroy()
 
-    return update
+    if update:
+        return update
+    fname = os.path.join(os.path.dirname(appimage), 'build.log')
+    ret = 'error'
+    with open(fname, 'r') as log:
+        for line in log:
+            if '**Sucesfully updated**\n' in line:
+                ret = 'success'
+    return ret

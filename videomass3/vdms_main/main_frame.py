@@ -1031,13 +1031,25 @@ class MainFrame(wx.Frame):
 
                 upgrade = IO_tools.appimage_update_youtube_dl(appimage)
 
-                if upgrade:
-                    wx.MessageBox(
-                        _('Failed! Cannot update youtube_dl.\n\n'
-                          '{}').format(upgrade),
-                          'Videomass', wx.ICON_ERROR, self)
-                else:
+                if upgrade == 'success':
+                    if wx.MessageBox(_(
+                             'Successful! youtube-dl is up-to-date ({0})\n\n'
+                             'Re-start is required. Do you want to close '
+                             'Videomass now?').format(ck[0]),
+                             "Videomass", wx.ICON_QUESTION |
+                             wx.YES_NO, self) == wx.NO:
+                        return
+
                     self.on_Kill()
+
+                elif upgrade == 'error':
+                    wx.MessageBox(
+                        _('Failed! consult log file for further clarification:'
+                          '\n{}/build.log').format(os.path.dirname(appimage),
+                        'Videomass', wx.ICON_ERROR, self))
+                else:
+                    wx.MessageBox(_('Failed! {}').format(upgrade),
+                                  'Videomass', wx.ICON_ERROR, self)
                 return
 
         elif MainFrame.PYLIB_YDL is None:  # system installed

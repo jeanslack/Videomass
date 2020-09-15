@@ -178,7 +178,7 @@ class Exec_Download_Stream(Thread):
                 if p.wait():  # error at end process
                     if 'line' not in locals():
                         line = Exec_Download_Stream.LINE_MSG
-                    if '[download]  ' in line:
+                    if '[download]' in line:
                         return
                     wx.CallAfter(msg_error,
                                  line,

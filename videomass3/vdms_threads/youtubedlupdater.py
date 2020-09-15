@@ -203,7 +203,8 @@ class Upgrade_Latest(Thread):
 class Update_Youtube_dl_Appimage(Thread):
     """
     Update `youtube_dl` python package inside AppImage using
-    xterm terminal emulator for displaying the output.
+    xterm terminal emulator for displaying and redirecting the
+    output to log file.
     """
     def __init__(self, videomass):
         """
@@ -218,13 +219,13 @@ class Update_Youtube_dl_Appimage(Thread):
         exe = os.path.join(binpath + '/youtube-dl-update.sh')
         self.status = None
         self.cmd = shlex.split(
-                        'xterm -hold -u8 -bg "grey15" -fa "Monospace" '
-                        '-fs 9 -geometry 120x35 -title "..Updating '
-                        'youtube_dl Python wheel on %s" '
-                        '-e %s %s' % (name, exe, videomass)
-                        )
-
-
+                        "xterm -u8 -bg 'grey15' -fa 'Monospace' "
+                        "-fs 9 -geometry 120x35 -title '..Updating "
+                        "youtube_dl Python wheel on %s' "
+                        "-e '%s %s 2>&1 | tee build.log'" % (name,
+                                                             exe,
+                                                             videomass,
+                                                             ))
         Thread.__init__(self)
         """initialize"""
 

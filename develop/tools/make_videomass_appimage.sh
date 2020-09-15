@@ -65,7 +65,6 @@ if [ ! -d usr ] || [ ! -d lib ]; then
 fi
 
 # copy shared libraries
-#cp -r lib/ squashfs-root/
 cp -r usr/ squashfs-root/
 
 # update pip
@@ -86,9 +85,6 @@ if [ -f videomass-*.whl ]; then
 else
     ./squashfs-root/AppRun -m pip install videomass
 fi
-
-# installing pypubsub
-#./squashfs-root/AppRun -m pip install PyPubSub
 
 # Change AppRun so that it launches videomass and export shared libraries dir
 sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' ./squashfs-root/AppRun
@@ -143,14 +139,10 @@ ln -s usr/share/icons/hicolor/128x128/apps/videomass.png videomass.png
 ln -s usr/share/applications/videomass.desktop videomass.desktop
 cd ..
 
-# Test that it works
-#./squashfs-root/AppRun
-
-# Convert back into an AppImage
+# retrieve the Videomass version from the package metadata
 export VERSION=$(cat $OPT/lib/python3.8/site-packages/videomass-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
 
-#./linuxdeploy-x86_64.AppImage --appdir squashfs-root/ --output appimage
-
+# check appimagetool
 if [ ! -f appimagetool-x86_64.AppImage ]; then
     wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 fi
@@ -158,13 +150,13 @@ fi
 if [ ! -x appimagetool-x86_64.AppImage ]; then
     chmod +x appimagetool-x86_64.AppImage
 fi
-# for any updates copy 'appimagetool-x86_64.AppImage' and 'youtube-dl-update' script on bin/
-cp appimagetool-x86_64.AppImage squashfs-root/usr/bin
-cp $SELF squashfs-root/usr/bin
+
+# for any updates, copy 'appimagetool' and 'youtube-dl-update.sh' script on bin/
+cp appimagetool-x86_64.AppImage $SELF squashfs-root/usr/bin
 
 if [ ! -x squashfs-root/usr/bin/$(basename $SELF) ]; then
     chmod +x squashfs-root/usr/bin/$(basename $SELF)
 fi
 
-# make AppImage
+# Convert back into an AppImage
 ./appimagetool-x86_64.AppImage -s squashfs-root/
