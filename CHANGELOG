@@ -15,11 +15,18 @@ BUGS:
     * [APPIMAGE] fixed error while playing local files with ffplay.
       See issue #5
 
-    * [APPIMAGE; EXE; APP) Fixed issue with playing online media streams
-      via mpv player not working on embedded environments. See issue #6
+    * [APPIMAGE; EXE; APP) Fixed issue with playing online media streams.
+      See issue #6
 
-    * [PRESETS] fixed the problem on the preset "For_Archive_Collection.prst"
-      where I forgot to remove the `-pass 2` parameter on all three profiles.
+    * [APPIMAGE] Fixed (I hope) missing checkbox on wx.listctrl. This did not
+      allow the selection of Format Codes for download.
+      To solve this problem it was necessary to install the version of
+      'wxPython-4.1.0-cp38-cp38-linux_x86_64.whl' which I had compiled on
+      Debian 9 stretch. But it also made useless the work I had done to make
+      the AppImage work on Ubuntu14.04 :-(
+
+    * [PRESETS] fixed "For_Archive_Collection.prst" preset where I forgot
+      to remove the `-pass 2` parameter on all three profiles.
       Sorry for the mistake.
 
 IMPROVEMENTS:
@@ -53,6 +60,8 @@ NEWS:
 
     * Added new checkbox on Settings dialog box to disable permanently
       warnin message if youtube-dl executable is no longer in use.
+
+    * [APPIMAGE] youtube_dl python package is been included on AppImage.
 
     * [APPIMAGE] It is possible to update the youtube_dl Python package if
       included in AppImage. New tools have been made for this task.

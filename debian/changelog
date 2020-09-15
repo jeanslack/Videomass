@@ -1,18 +1,25 @@
 videomass (3.1.0-1) UNRELEASED; urgency=medium
 
-  * Overall improved string search algorithm on 'FFmpeg search topics'
+  * Overall improved string search algorithm on 'FFmpeg search topics' 
 mini frame and backwards compatible with wxPython < 4.1 .
   * Added some cosmetic and functional improvements.
-  * [YOUTUBE DOWNLOADER] Adding first item auto selection to prevent empty
-data view on 'Show More' mini frame.
+  *fixed "For_Archive_Collection.prst" preset where I forgot to remove the 
+`-pass 2` parameter on all three profiles.
   * Improved FFmpeg menu.
-  * Improved some contexrual descriptions.
-  * mpv player has been removed from optional dependencies and all widgets
-created for it, as it is now replaced by ffplay
-  * [YOUTUBE DOWNLOADER] Implemented a new library to playback online
-streaming via youtube-dl and ffplay.
+  * Improved some contextual descriptions.
+  * [YOUTUBE DOWNLOADER] Adding first item auto selection to prevent empty 
+data view on 'Show More' mini frame.
+  * [YOUTUBE DOWNLOADER] New modules to playback online streams via 
+youtube-dl and ffplay.
+  * The mpv player has been removed from optional dependencies, as it has 
+been replaced by FFmpeg's ffplay to playback online streams.
+  * A tmp/ directory has been added in the cache/ directory for temporary 
+files downloaded for preview playback.
+  * Added new checkbox on Settings dialog box to clear or keep cached data.
+  * Added new checkbox on Settings dialog box to disable permanently warnin 
+message if youtube-dl executable is no longer in use.
 
-  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 10 Sep 2020 23:20:00 +0200
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 15 Sep 2020 15:21:00 +0200
 
 videomass (3.0.6-1) UNRELEASED; urgency=medium
 

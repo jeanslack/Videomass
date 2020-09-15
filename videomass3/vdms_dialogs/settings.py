@@ -141,8 +141,8 @@ class Setup(wx.Dialog):
         gridCache = wx.BoxSizer(wx.VERTICAL)
 
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
-                        _(" Clear cached data during application exit "
-                          "(temporary files only)")))
+                        _(" Clears temporary cached files during application "
+                          "exit")))
         gridCache.Add(self.checkbox_cacheclr, 0,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
@@ -150,8 +150,8 @@ class Setup(wx.Dialog):
                       )
 
         self.checkbox_cacheydl = wx.CheckBox(tabOne, wx.ID_ANY, (
-                        _(" Don't warn me when youtube-dl executable is no "
-                          "longer in use")))
+                        _(" Don't warn me again when youtube-dl executable "
+                          "is not in use")))
         gridCache.Add(self.checkbox_cacheydl, 0,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
@@ -166,7 +166,7 @@ class Setup(wx.Dialog):
         sizerFFmpeg = wx.BoxSizer(wx.VERTICAL)
 
         boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY, (
-                                _("Threads Option"))), wx.VERTICAL)
+                                _("FFmpeg -threads option"))), wx.VERTICAL)
         sizerFFmpeg.Add(boxLabThreads, 1, wx.ALL | wx.EXPAND, 15)
         gridThreads = wx.BoxSizer(wx.VERTICAL)
         boxLabThreads.Add(gridThreads, 1, wx.ALL | wx.EXPAND, 15)

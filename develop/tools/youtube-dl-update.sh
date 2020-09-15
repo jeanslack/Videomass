@@ -5,6 +5,9 @@
 # Remember, you need 'appimagetool-x86_64.AppImage' inside the same
 # directory.
 #
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Update: Sept.15.2020
+
 set -e  # stop if error
 
 MACHINE_ARCH=$(arch)
