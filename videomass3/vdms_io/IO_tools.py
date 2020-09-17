@@ -455,7 +455,7 @@ def appimage_update_youtube_dl(appimage):
 
     if update:
         return update
-    fname = os.path.join(os.path.dirname(appimage), 'build.log')
+    fname = os.path.join(os.path.dirname(appimage), 'build_AppImage.log')
     ret = 'error'
     with open(fname, 'r') as log:
         for line in log:

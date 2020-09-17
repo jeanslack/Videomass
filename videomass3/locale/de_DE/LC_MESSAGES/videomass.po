@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 10:40+0200\n"
-"PO-Revision-Date: 2020-09-15 10:42+0200\n"
+"POT-Creation-Date: 2020-09-17 16:58+0200\n"
+"PO-Revision-Date: 2020-09-17 17:04+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -926,59 +926,67 @@ msgstr ""
 msgid "Videomass: Shortcuts while playing"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:64 ../vdms_frames/ffmpeg_search.py:157
+#: ../vdms_frames/ffmpeg_search.py:63 ../vdms_frames/ffmpeg_search.py:158
+msgid "Topic List..."
+msgstr ""
+
+#: ../vdms_frames/ffmpeg_search.py:64 ../vdms_frames/ffmpeg_search.py:159
 msgid "print basic options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:65 ../vdms_frames/ffmpeg_search.py:158
+#: ../vdms_frames/ffmpeg_search.py:65 ../vdms_frames/ffmpeg_search.py:160
 msgid "print more options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:66 ../vdms_frames/ffmpeg_search.py:159
+#: ../vdms_frames/ffmpeg_search.py:66 ../vdms_frames/ffmpeg_search.py:161
 msgid "print all options (very long)"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:67 ../vdms_frames/ffmpeg_search.py:160
+#: ../vdms_frames/ffmpeg_search.py:67 ../vdms_frames/ffmpeg_search.py:162
 msgid "show available devices"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:68 ../vdms_frames/ffmpeg_search.py:161
+#: ../vdms_frames/ffmpeg_search.py:68 ../vdms_frames/ffmpeg_search.py:163
 msgid "show available bit stream filters"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:69 ../vdms_frames/ffmpeg_search.py:162
+#: ../vdms_frames/ffmpeg_search.py:69 ../vdms_frames/ffmpeg_search.py:164
 msgid "show available protocols"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:70 ../vdms_frames/ffmpeg_search.py:163
+#: ../vdms_frames/ffmpeg_search.py:70 ../vdms_frames/ffmpeg_search.py:165
 msgid "show available filters"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:71 ../vdms_frames/ffmpeg_search.py:164
+#: ../vdms_frames/ffmpeg_search.py:71 ../vdms_frames/ffmpeg_search.py:166
 msgid "show available pixel formats"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:72 ../vdms_frames/ffmpeg_search.py:165
+#: ../vdms_frames/ffmpeg_search.py:72 ../vdms_frames/ffmpeg_search.py:167
 msgid "show available audio sample formats"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:73 ../vdms_frames/ffmpeg_search.py:166
+#: ../vdms_frames/ffmpeg_search.py:73 ../vdms_frames/ffmpeg_search.py:168
 msgid "show available color names"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:74 ../vdms_frames/ffmpeg_search.py:167
+#: ../vdms_frames/ffmpeg_search.py:74 ../vdms_frames/ffmpeg_search.py:169
 msgid "list sources of the input device"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:75 ../vdms_frames/ffmpeg_search.py:169
+#: ../vdms_frames/ffmpeg_search.py:75 ../vdms_frames/ffmpeg_search.py:170
 msgid "list sinks of the output device"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:76 ../vdms_frames/ffmpeg_search.py:170
+#: ../vdms_frames/ffmpeg_search.py:76 ../vdms_frames/ffmpeg_search.py:171
 msgid "show available HW acceleration methods"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:81 ../vdms_frames/ffmpeg_search.py:96
+#: ../vdms_frames/ffmpeg_search.py:81
+msgid "help topic list"
+msgstr ""
+
+#: ../vdms_frames/ffmpeg_search.py:96 ../vdms_frames/ffmpeg_search.py:176
 msgid "Choose one of the topics in the list"
 msgstr ""
 
@@ -1000,19 +1008,19 @@ msgstr ""
 msgid "Videomass: FFmpeg help topics"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:186
+#: ../vdms_frames/ffmpeg_search.py:188
 msgid ""
 "\n"
 "  ..Nothing available"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:226
+#: ../vdms_frames/ffmpeg_search.py:228
 msgid ""
 "\n"
 "  ...Not found"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:233
+#: ../vdms_frames/ffmpeg_search.py:235
 msgid ""
 "\n"
 "Choose a topic in the drop down first"
@@ -1098,64 +1106,64 @@ msgstr ""
 msgid "Videomass: Output folder error"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:70 ../vdms_io/IO_tools.py:92
+#: ../vdms_io/IO_tools.py:73 ../vdms_io/IO_tools.py:95
 #, python-format
 msgid "File does not exist or not a valid file:  %s"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:172 ../vdms_io/IO_tools.py:293
-#: ../vdms_io/IO_tools.py:311 ../vdms_io/IO_tools.py:348
+#: ../vdms_io/IO_tools.py:156 ../vdms_io/IO_tools.py:277
+#: ../vdms_io/IO_tools.py:295 ../vdms_io/IO_tools.py:332
 msgid "Videomass - Loading..."
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:173
+#: ../vdms_io/IO_tools.py:157
 msgid ""
 "\n"
 "Wait....\n"
 "Audio peak analysis.\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:294 ../vdms_io/IO_tools.py:312
+#: ../vdms_io/IO_tools.py:278 ../vdms_io/IO_tools.py:296
 msgid ""
 "\n"
 "Wait....\n"
 "Retrieving required data.\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:328
+#: ../vdms_io/IO_tools.py:312
 msgid "Videomass - Reading..."
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:329
+#: ../vdms_io/IO_tools.py:313
 msgid ""
 "\n"
 "Wait....\n"
 "Check for update.\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:365
+#: ../vdms_io/IO_tools.py:349
 msgid ""
 "\n"
 "Wait....\n"
 "Upgrading {}\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:367
+#: ../vdms_io/IO_tools.py:351
 msgid ""
 "\n"
 "Wait....\n"
 "Downloading {}\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:383
+#: ../vdms_io/IO_tools.py:367
 msgid "Videomass - Downloading..."
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:464
+#: ../vdms_io/IO_tools.py:448
 msgid "...Be patient, this can take a few minutes."
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:466
+#: ../vdms_io/IO_tools.py:450
 msgid "Videomass - Updating..."
 msgstr ""
 
@@ -1185,8 +1193,8 @@ msgid ""
 "menu."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:126 ../vdms_main/main_frame.py:1400
-#: ../vdms_main/main_frame.py:1439
+#: ../vdms_main/main_frame.py:126 ../vdms_main/main_frame.py:1412
+#: ../vdms_main/main_frame.py:1451
 msgid "Streams analyzer"
 msgstr ""
 
@@ -1250,7 +1258,7 @@ msgstr ""
 msgid "For playback, first make sure you select a URL in the list control"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:453 ../vdms_main/main_frame.py:1342
+#: ../vdms_main/main_frame.py:453 ../vdms_main/main_frame.py:1354
 msgid "YouTube Downloader"
 msgstr ""
 
@@ -1577,7 +1585,7 @@ msgstr ""
 msgid "youtube-dl is already up-to-date {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:993
+#: ../vdms_main/main_frame.py:993 ../vdms_main/main_frame.py:1036
 #, python-brace-format
 msgid ""
 "Successful! youtube-dl is up-to-date ({0})\n"
@@ -1597,115 +1605,118 @@ msgstr ""
 msgid "Select the 'Videomass-{}-x86_64.AppImage' file to update"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1036
+#: ../vdms_main/main_frame.py:1047
 msgid ""
-"Failed! Cannot update youtube_dl.\n"
-"\n"
-"{}"
+"Failed! consult log file at:\n"
+"{}/build_AppImage.log"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1045
+#: ../vdms_main/main_frame.py:1051
+msgid "Failed! {}"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1057
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1063 ../vdms_main/main_frame.py:1074
+#: ../vdms_main/main_frame.py:1075 ../vdms_main/main_frame.py:1086
 msgid "No files added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1085
+#: ../vdms_main/main_frame.py:1097
 msgid "No URLs added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1104
+#: ../vdms_main/main_frame.py:1116
 msgid "Output log has not been created yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1123
+#: ../vdms_main/main_frame.py:1135
 msgid "cache directory has not been created yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1179
+#: ../vdms_main/main_frame.py:1191
 #, python-brace-format
 msgid ""
 "A new version (v{0}) of Videomass is available\n"
 "from <https://pypi.org/project/videomass/>"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1182 ../vdms_main/main_frame.py:1188
+#: ../vdms_main/main_frame.py:1194 ../vdms_main/main_frame.py:1200
 msgid "Videomass: Check for new versions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1186
+#: ../vdms_main/main_frame.py:1198
 #, python-brace-format
 msgid "You are already using the latest version (v{0}) of Videomass"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1192
+#: ../vdms_main/main_frame.py:1204
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1221
+#: ../vdms_main/main_frame.py:1233
 msgid "Back"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1224
+#: ../vdms_main/main_frame.py:1236
 msgid "Forward"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1227
+#: ../vdms_main/main_frame.py:1239
 msgid "Convert"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1229
+#: ../vdms_main/main_frame.py:1241
 msgid "Download"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1263
+#: ../vdms_main/main_frame.py:1275
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1275
+#: ../vdms_main/main_frame.py:1287
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1282
+#: ../vdms_main/main_frame.py:1294
 msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1311 ../vdms_panels/filedrop.py:266
+#: ../vdms_main/main_frame.py:1323 ../vdms_panels/filedrop.py:266
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1335
+#: ../vdms_main/main_frame.py:1347
 msgid "Add URLs"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1345 ../vdms_main/main_frame.py:1387
-#: ../vdms_main/main_frame.py:1427
+#: ../vdms_main/main_frame.py:1357 ../vdms_main/main_frame.py:1399
+#: ../vdms_main/main_frame.py:1439
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1361
+#: ../vdms_main/main_frame.py:1373
 msgid "Show More"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1381
+#: ../vdms_main/main_frame.py:1393
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1421
+#: ../vdms_main/main_frame.py:1433
 msgid "Presets Manager"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1475
+#: ../vdms_main/main_frame.py:1487
 msgid "Log of the last process"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1477
+#: ../vdms_main/main_frame.py:1489
 msgid "Under processing..."
 msgstr ""
 

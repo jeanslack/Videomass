@@ -1,7 +1,8 @@
 #!/bin/bash
 #
-# Description: Build from scratch a Videomass-*-x86_64.AppImage starting
-#              from a python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
+# Description: Build from scratch a `Videomass-*-x86_64.AppImage` starting
+#              from a `python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage`
+#              Note that this appimage work on GTK2 toolkit only.
 #
 # if you plan to install extra packages extract the AppImage, e.g. as:
 #
@@ -12,7 +13,7 @@
 # so that dependencies get bundled from that very container
 #
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Update: Sept.15.2020
+# Update: Sept.17.2020
 
 set -e  # stop if error
 
@@ -31,15 +32,15 @@ if [ "${MACHINE_ARCH}" != 'x86_64' ] ; then
 fi
 
 # Make directory for building
-if [ -d "$PWD/VIDEOMASS_APPIMAGE_GTK3" ]; then
-    cd "$PWD/VIDEOMASS_APPIMAGE_GTK3"
+if [ -d "$PWD/VIDEOMASS_APPIMAGE_GTK2" ]; then
+    cd "$PWD/VIDEOMASS_APPIMAGE_GTK2"
     if [ -d squashfs-root ]; then
         echo "ERROR: another 'squashfs-root' dir exists!"
         exit 1
     fi
 else
-    mkdir -p -m 0775 "$PWD/VIDEOMASS_APPIMAGE_GTK3"
-    cd "$PWD/VIDEOMASS_APPIMAGE_GTK3"
+    mkdir -p -m 0775 "$PWD/VIDEOMASS_APPIMAGE_GTK2"
+    cd "$PWD/VIDEOMASS_APPIMAGE_GTK2"
 fi
 
 # Download Python appimage 3.8 built for manylinux if not exist
@@ -54,17 +55,21 @@ fi
 ./${PYVERSION}*x86_64.AppImage --appimage-extract
 
 # Download required shared library
-if [ ! -d usr ]; then
-
-    wget -c http://security.debian.org/debian-security/pool/updates/main/libj/libjpeg-turbo/libjpeg62-turbo_1.5.1-2+deb9u1_amd64.deb \
-        http://ftp.de.debian.org/debian/pool/main/j/jbigkit/libjbig0_2.1-3.1+b2_amd64.deb
+if [ ! -d usr ] || [ ! -d lib ]; then
+    wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb \
+    http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb \
+#     http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb \
+#     http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb
 
     # extract data from .deb files
-    ar -x libjpeg62-turbo_1.5.1-2+deb9u1_amd64.deb data.tar.xz && tar -xf data.tar.xz
-    ar -x libjbig0_2.1-3.1+b2_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
+#     ar -x libsndio6.1_1.1.0-2_amd64.deb data.tar.xz && tar -xf data.tar.xz
+#     ar -x libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb data.tar.xz && tar -xf data.tar.xz
 fi
 
 # copy shared libraries
+cp -r lib/ squashfs-root/
 cp -r usr/ squashfs-root/
 
 # update pip
@@ -75,9 +80,9 @@ if [ -f wxPython-4.1.0-cp38-cp38-linux_x86_64.whl ]; then
     ./squashfs-root/AppRun -m pip install wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
 else
     ./squashfs-root/AppRun -m pip install -U \
-    -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl \
+        -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl \
         wxPython
-    fi
+fi
 
 # Install videomass and its dependencies, PyPubSub, youtube_dl
 if [ -f videomass-*.whl ]; then
@@ -90,6 +95,7 @@ fi
 sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' ./squashfs-root/AppRun
 sed -i -e '/export TKPATH/a # required shared libraries to run Videomass' squashfs-root/AppRun
 sed -i -e '/# required shared libraries to run Videomass/a export LD_LIBRARY_PATH="${here}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' squashfs-root/AppRun
+sed -i -e '/export LD_LIBRARY_PATH=/a export LD_LIBRARY_PATH="${here}/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' squashfs-root/AppRun
 
 # set new metainfo
 cat <<EOF > $USR_SHARE/metainfo/$PYVERSION.appdata.xml
@@ -151,7 +157,7 @@ if [ ! -x appimagetool-x86_64.AppImage ]; then
     chmod +x appimagetool-x86_64.AppImage
 fi
 
-# for any updates, copy 'appimagetool' and 'youtube_dl_update_appimage.sh' script on bin/
+# for any updates, copy 'appimagetool*' and 'youtube_dl_update_appimage.sh' script on bin/
 cp appimagetool-x86_64.AppImage "$HERE/youtube_dl_update_appimage.sh" squashfs-root/usr/bin
 
 if [ ! -x squashfs-root/usr/bin/youtube_dl_update_appimage.sh ]; then

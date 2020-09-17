@@ -1017,7 +1017,7 @@ class MainFrame(wx.Frame):
                 cr = current_release()[2]
                 fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
                           "file to update").format(cr)
-                with wx.FileDialog(None, fname,
+                with wx.FileDialog(None, _(fname),
                         defaultDir=os.path.expanduser('~'),
                         wildcard=("*Videomass-{0}-x86_64.AppImage (*Videomass-"
                                   "{0}-x86_64.AppImage;)|*Videomass-{0}-"
@@ -1044,8 +1044,8 @@ class MainFrame(wx.Frame):
 
                 elif upgrade == 'error':
                     wx.MessageBox(
-                        _('Failed! consult log file for further clarification:'
-                          '\n{}/build.log').format(os.path.dirname(appimage),
+                        _('Failed! consult log file at:\n{}/build_AppImage'
+                          '.log').format(os.path.dirname(appimage),
                         'Videomass', wx.ICON_ERROR, self))
                 else:
                     wx.MessageBox(_('Failed! {}').format(upgrade),

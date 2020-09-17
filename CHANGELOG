@@ -19,8 +19,8 @@ BUGS:
       See issue #6
 
     * [APPIMAGE] Fixed (I hope) missing checkbox on wx.listctrl. This did not
-      allow the selection of Format Codes for download.
-      To solve this problem it was necessary to install the version of
+      allow the selection of Format Codes for download. To solve this problem
+      it was necessary to install
       'wxPython-4.1.0-cp38-cp38-linux_x86_64.whl' which I had compiled on
       Debian 9 stretch. But it also made useless the work I had done to make
       the AppImage work on Ubuntu14.04 :-(
@@ -65,6 +65,9 @@ NEWS:
 
     * [APPIMAGE] It is possible to update the youtube_dl Python package if
       included in AppImage. New tools have been made for this task.
+
+    * [APPIMAGE] Videomass has been split into two specific versions, one for
+      GTK2 and the other for GTK3.
 
 
 +------------------------------------+

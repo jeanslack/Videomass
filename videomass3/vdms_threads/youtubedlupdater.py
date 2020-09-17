@@ -205,6 +205,7 @@ class Update_Youtube_dl_Appimage(Thread):
     Update `youtube_dl` python package inside AppImage using
     xterm terminal emulator for displaying and redirecting the
     output to log file.
+
     """
     def __init__(self, videomass):
         """
@@ -213,19 +214,31 @@ class Update_Youtube_dl_Appimage(Thread):
         self.status      exit status value
         self.cmd         command for execution
 
+        matches of xterm options used here:
+
+        +hold  ......... not retains window after exit
+        -u8 ............ use UTF8 mode coding
+        -bg ............ background console color
+        -fa ............ the font used (FreeType font-selection pattern)
+        -fs ............ the font size
+        -geometry ...... window width and height respectively
+        -title ......... title on the window
+        -e ............. start your command after e.g. 'ls -l'
+
+        type `xterm -h` for major info
+
         """
         name = os.path.basename(videomass)
         binpath = os.path.dirname(sys.executable)
-        exe = os.path.join(binpath + '/youtube-dl-update.sh')
+        exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
+        log = 'build_AppImage.log'
         self.status = None
         self.cmd = shlex.split(
-                        "xterm -u8 -bg 'grey15' -fa 'Monospace' "
+                        "xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
                         "-fs 9 -geometry 120x35 -title '..Updating "
-                        "youtube_dl Python wheel on %s' "
-                        "-e '%s %s 2>&1 | tee build.log'" % (name,
-                                                             exe,
-                                                             videomass,
-                                                             ))
+                        "youtube_dl package on %s' -e '%s %s "
+                        "2>&1 | tee %s'" % (name, exe, videomass, log)
+                        )
         Thread.__init__(self)
         """initialize"""
 
