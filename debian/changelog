@@ -19,7 +19,7 @@ files downloaded for preview playback.
   * Added new checkbox on Settings dialog box to disable permanently warnin 
 message if youtube-dl executable is no longer in use.
 
-  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 15 Sep 2020 15:21:00 +0200
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 17 Sep 2020 19:03:17 +0200
 
 videomass (3.0.6-1) UNRELEASED; urgency=medium
 
