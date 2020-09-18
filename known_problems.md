@@ -23,22 +23,22 @@ be disabled when using this encoder.
  
 ### **Videomass.AppImage** for Linux
 
-**Very Important:** before to start Videomass*.AppImage you need `libsdl2` package 
-which on some Linux distos is not included, i.e all releases of **Ubuntu**.    
-However, as the `ffmpeg` package includes `libdsl2` as its dependency, it is 
-possible to install `ffmpeg` directly since that is also required by Videomass 
-and is not embedded on the Videomass AppImage itself. Thank you!   
+**Very Important:** before to start latest version of Videomass*.AppImage, you should install 
+`libsdl2-2.0-0` package which on some Linux distos is not included, i.e all releases of **Ubuntu**. 
+However, as the `ffmpeg` package includes `libdsl2-2.0-0` as its dependency, it is possible to install 
+`ffmpeg` directly since that is also required by Videomass and it is not embedded on the Videomass 
+AppImage itself. Thank you!   
 
-> then install this package first, typing:   
+> to install *libsdl2-2.0-0* typing:   
 >    `sudo apt install libsdl2-2.0-0`   
 >
-> or install ffmpeg which will also install `libsdl2`:   
+> or (better) install *ffmpeg* which will also install *libsdl2-2.0-0*:   
 >    `sudo apt install ffmpeg`   
 
-Currently, two separate versions have been released for GTK2 and GTK3.
-    
-* Videomass AppImage for GTK3 it has been successfully tested on the following Linux distributions:
-    * ~~Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)~~
+Currently, two separate versions have been released for GTK2 and GTK3.   
+
+Videomass AppImage for **GTK3** it has been successfully tested on the following Linux distributions:
+    * ~~Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)~~ NOT WORK
     * Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
     * Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
     * Ubuntu 20.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
@@ -51,8 +51,8 @@ Currently, two separate versions have been released for GTK2 and GTK3.
     * AV-Linux 2020.4.10 x86_64
     * Fedora 32 (Workstation Edition) x86_64
     * Manjaro Linux 20.0.3 (Lysia) x86_64
-        
-* Videomass AppImage for GTK2 it has been successfully tested on the following Linux distributions:
+
+Videomass AppImage for **GTK2** it has been successfully tested on the following Linux distributions:
     * Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
     * Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
     * Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
@@ -64,7 +64,7 @@ Currently, two separate versions have been released for GTK2 and GTK3.
     * Sparkylinux 2020.06 xfce x86_64 (rolling edition)
     * AV-Linux 2019.4.10 x86_64
     * AV-Linux 2020.4.10 x86_64
-    * ~~Fedora 32 (Workstation Edition) x86_64~~
+    * ~~Fedora 32 (Workstation Edition) x86_64~~ NOT WORK
     * Manjaro Linux 20.0.3 (Lysia) x86_64
 
 [Home](index.md)
