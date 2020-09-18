@@ -23,10 +23,17 @@ be disabled when using this encoder.
  
 ### **Videomass.AppImage** for Linux
 
-**Very Important:** before to start Videomass.AppImage you need `libsdl2` package which on 
-some Linux distos is not included, i.e all releases of Ubuntu. However, as the `ffmpeg` package 
-includes it as a dependency, it is possible to install `ffmpeg` directly since that is also 
-required by Videomass and is not embedded on the Videomass AppImage itself. Thank you!
+**Very Important:** before to start Videomass*.AppImage you need `libsdl2` package 
+which on some Linux distos is not included, i.e all releases of **Ubuntu**.    
+However, as the `ffmpeg` package includes `libdsl2` as its dependency, it is 
+possible to install `ffmpeg` directly since that is also required by Videomass 
+and is not embedded on the Videomass AppImage itself. Thank you!   
+
+> then install this package first, typing:   
+>    `sudo apt install libsdl2-2.0-0`   
+>
+> or install ffmpeg which will also install `libsdl2`:   
+>    `sudo apt install ffmpeg`   
 
 Currently, two separate versions have been released for GTK2 and GTK3.
     
