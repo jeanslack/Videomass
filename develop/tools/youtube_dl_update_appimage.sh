@@ -58,7 +58,8 @@ export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
 ./squashfs-root/opt/python3.8/bin/python3.8 -m pip install -U --target=$SITEPKG youtube_dl
 
 # retrieve the Videomass version from the package metadata
-export VERSION=$(cat $SITEPKG/videomass-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
+export VERSION=$(cat $SITEPKG/videomass-*.dist-info/METADATA | \
+    grep "^Version:.*" | cut -d " " -f 2)
 
 # Convert back into an AppImage
 "squashfs-root/usr/bin/appimagetool-x86_64.AppImage" squashfs-root/

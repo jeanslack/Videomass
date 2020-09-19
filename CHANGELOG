@@ -7,6 +7,13 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Sep 19, 2020 new upstream
++------------------------------------+
+
+    * Fixed 24x24 resetfilters.png
+    * Review debian/control and changelog format
+
++------------------------------------+
 Sep 17, 2020 V.3.1.0
 +------------------------------------+
 

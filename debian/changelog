@@ -1,47 +1,50 @@
 videomass (3.1.0-1) UNRELEASED; urgency=medium
 
-  * Overall improved string search algorithm on 'FFmpeg search topics' 
-mini frame and backwards compatible with wxPython < 4.1 .
+  * Overall improved string search on 'FFmpeg search topics' mini frame.
   * Added some cosmetic and functional improvements.
-  *fixed "For_Archive_Collection.prst" preset where I forgot to remove the 
-`-pass 2` parameter on all three profiles.
+  * fixed some profile on presets file.
   * Improved FFmpeg menu.
   * Improved some contextual descriptions.
-  * [YOUTUBE DOWNLOADER] Adding first item auto selection to prevent empty 
-data view on 'Show More' mini frame.
-  * [YOUTUBE DOWNLOADER] New modules to playback online streams via 
-youtube-dl and ffplay.
-  * The mpv player has been removed from optional dependencies, as it has 
-been replaced by FFmpeg's ffplay to playback online streams.
-  * A tmp/ directory has been added in the cache/ directory for temporary 
-files downloaded for preview playback.
+  * 'Show More' mini frame, added first item auto selection to prevent empty
+    data view.
+  * New modules to playback online streams via youtube-dl and ffplay.
+  * The mpv player has been removed from optional dependencies, as it has
+    been replaced by ffplay to playback online streams.
+  * A tmp/ directory has been added in the cache/ directory for temporary
+    files downloaded for preview playback.
   * Added new checkbox on Settings dialog box to clear or keep cached data.
-  * Added new checkbox on Settings dialog box to disable permanently warnin 
-message if youtube-dl executable is no longer in use.
+  * Added new checkbox on Settings dialog box to disable permanently warning
+    message if youtube-dl executable is no longer in use.
 
-  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 17 Sep 2020 19:03:17 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 19 Sep 2020 10:22:17 +0200
 
 videomass (3.0.6-1) UNRELEASED; urgency=medium
 
   * New stable upstream release
   * The directories `MAcOsxSetup/` and `Win32Setup/` are been unified to
-`FFMPEG/` folder and added to package_data of the videomass3 package.
+    `FFMPEG/` folder and added to package_data of the videomass3 package.
   * On Linux it is now possible to include ffmpeg, ffprobe and ffplay
-executables into FFMPEG folder. This could be useful, for instance, to make
-an application bundle all-in-one of Videomass for Linux distros
-without ffmpeg installed on (see videomass3/FFMPEG/README).
+    executables into FFMPEG folder. This could be useful, for instance, to make
+    an application bundle all-in-one of Videomass for Linux distros
+    without ffmpeg installed on (see videomass3/FFMPEG/README).
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 28 Aug 2020 15:15:35 +0200
 
 videomass (3.0.5-1) UNRELEASED; urgency=medium
 
   * New stable upstream release
-  * [PRESETS MANAGER] fixed missing `EBU R128` string on summary dialog when EBU automation is enabled.
-  * [PRESETS MANAGER] Added a warning message box when enabling EBU normalization on one-pass conversions.
-  * [PRESETS MANAGER] adding more understandable information on the summary dialog.
-  * The tooltip messages in the audio indexes mapping are now a little more understandable (I suppose)
-  * "Check for new versions" has been restored from preferences menu to the help menu.
-  * [STREAMS ANALYZER] Adding first item auto selection to prevent empty data view.
+  * [PRESETS MANAGER] fixed missing `EBU R128` string on summary dialog when
+    EBU automation is enabled.
+  * [PRESETS MANAGER] Added a warning message box when enabling EBU
+    normalization on one-pass conversions.
+  * [PRESETS MANAGER] adding more understandable information on the summary
+    dialog.
+  * The tooltip messages in the audio indexes mapping are now a little more
+    understandable (I suppose)
+  * "Check for new versions" has been restored from preferences menu to the
+    help menu.
+  * [STREAMS ANALYZER] Adding first item auto selection to prevent empty
+    data view.
   * Improved some dialog boxes layout and colors.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 15 Aug 2020 10:50:52 +0200
@@ -50,8 +53,10 @@ videomass (3.0.2-1) UNRELEASED; urgency=medium
 
   * New stable upstream release
   * Fixed 'page not found' on menu > Help > Translation...
-  * Fixed problem with youtube-dl self-update when user click on 'Update youtube-dl'
-  * 'Check for new versions' has been moved from the help menu to the preferences menu.
+  * Fixed problem with youtube-dl self-update when user click on 'Update
+    youtube-dl'.
+  * 'Check for new versions' has been moved from the help menu to the
+    preferences menu.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 04 Aug 2020 18:10:00 +0200
 
@@ -59,8 +64,10 @@ videomass (3.0.0-1) UNRELEASED; urgency=medium
 
   * New stable upstream release
   * Fixed "IndexError" when the file name has no format extension.
-  * Notify when the cached youtube-dl executable is no longer used to give priority to the one installed on the system.
-  * Fixed "NameError: name 'OS' is not defined"  on two_pass.py thread (on two pass conversions)
+  * Notify when the cached youtube-dl executable is no longer used to give
+    priority to the one installed on the system.
+  * Fixed "NameError: name 'OS' is not defined"  on two_pass.py thread (on
+    two pass conversions)
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 19 Jul 2020 11:00:00 +0200
 
@@ -68,7 +75,8 @@ videomass (2.9.2-1) UNRELEASED; urgency=medium
 
   * New upstream release
   * Improved graphic layout on all dialog boxes
-  * Dependency redefinition: `python3-pypubsub` becomes `python3-pubsub` on control file.
+  * Dependency redefinition: `python3-pypubsub` becomes `python3-pubsub` on
+    control file.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 17 Jul 2020 13:40:00 +0200
 

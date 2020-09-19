@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# Name: ffplay_url.py
+# Name: ffplay_url_exec.py
 # Porpose: playback online media streams with ffplay player
 #          using youtube-dl as executable.
 # Compatibility: Python3, wxPython Phoenix
@@ -78,7 +78,8 @@ class Exec_Download_Stream(Thread):
                 import youtube_dl
             except Exception as e:
                 EXCEPTION = e
-            else:
+            else:  # see also inspect: `inspect.getfile(youtube_dl)`
+                   # or the best: shutil.which('python')
                 pypath = youtube_dl.__file__.split('lib')[0]
                 EXECYDL = os.path.join(pypath, 'Scripts', 'youtube-dl.exe')
 
@@ -97,7 +98,7 @@ class Exec_Download_Stream(Thread):
                 import youtube_dl
             except Exception as e:
                 EXCEPTION = e
-            else:
+            else:   # see also inspect: `inspect.getfile(youtube_dl)`
                 pypath = youtube_dl.__file__.split('lib')[0]
                 EXECYDL = os.path.join(pypath, 'bin', 'youtube-dl')
 
