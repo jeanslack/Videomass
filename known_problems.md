@@ -1,6 +1,9 @@
 [Home](index.md)
 
-## Known problems and solutions of Videomass
+# Known problems and solutions of Videomass
+-------------------------------------------
+
+## Common problems
 
 - If you are using an earlier version of FFmpeg equal to or less than 3.1.5, the
 _nlmeans_ filter it may not have been implemented yet, since it exists only in
@@ -21,12 +24,14 @@ be disabled when using this encoder.
 - [Other issues](https://github.com/jeanslack/Videomass/issues)
   
  
-### **Videomass.AppImage** for Linux
+## Videomass AppImage for Linux
 
-**Very Important:** before to start latest version of Videomass AppImage, you should install 
-`libsdl2-2.0-0` package which is not included on some Linux distributions, i.e all releases 
-of **Ubuntu**. Alternatively, you can install the `ffmpeg` package which includes `libdsl2-2.0-0` 
-as a dependency and is required by Videomass as it is not embedded in the AppImage itself. 
+**Very Important:**   
+before to start latest version of Videomass AppImage, you should install 
+*libsdl2-2.0-0* package which is not included on some Linux distributions, 
+i.e all releases of **Ubuntu**. Alternatively, you can install the *ffmpeg* 
+package which includes *libdsl2-2.0-0* as a dependency and is required by 
+Videomass as it is not embedded in the AppImage itself.   
 Thank you!  
 
 to install *libsdl2-2.0-0* typing: `sudo apt install libsdl2-2.0-0`   
