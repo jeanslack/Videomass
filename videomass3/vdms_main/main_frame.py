@@ -444,10 +444,9 @@ class MainFrame(wx.Frame):
         """
         if self.ytDownloader.IsShown():
             if self.ytDownloader.fcode.GetSelectedItemCount() == 0:
-                self.statusbar_msg(
-                                _('For playback, first make sure you select'
-                                  ' a URL in the list control'), MainFrame.YELLOW
-                                   )
+                self.statusbar_msg(_('For playback, be sure to click on '
+                                     'a URL by selecting it in the checklist'),
+                                   MainFrame.YELLOW)
                 return
             else:
                 self.statusbar_msg(_('YouTube Downloader'), None)
