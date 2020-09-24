@@ -444,8 +444,8 @@ class MainFrame(wx.Frame):
         """
         if self.ytDownloader.IsShown():
             if self.ytDownloader.fcode.GetSelectedItemCount() == 0:
-                self.statusbar_msg(_('For playback, be sure to click on '
-                                     'a URL by selecting it in the checklist'),
+                self.statusbar_msg(_('Before playing, click on one of '
+                                     'the items in the URLs checklist'),
                                    MainFrame.YELLOW)
                 return
             else:

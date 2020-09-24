@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: May.22.2020 *PEP8 compatible*
+# Rev: Sept.24.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -197,7 +197,8 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
-        self.labcode = wx.StaticText(self, label=_('URLs checklist'))
+        labcstr = _('URLs checklist')
+        self.labcode = wx.StaticText(self, label=labcstr)
         sizer.Add(self.labcode, 0, wx.ALL, 5)
         if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
             self.oldwx = False
@@ -211,7 +212,8 @@ class Downloader(wx.Panel):
                                       wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                       )
         sizer.Add(self.fcode, 1, wx.EXPAND, 10)
-        self.labtxt = wx.StaticText(self, label=_('Help viewer'))
+        labtstr = _('Help viewer')
+        self.labtxt = wx.StaticText(self, label=labtstr)
         sizer.Add(self.labtxt, 0, wx.ALL, 5)
         self.codText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
@@ -228,8 +230,8 @@ class Downloader(wx.Panel):
         # NOTE do not append text on self.codText here, see `on_Choice meth.`
 
         if Downloader.OS != 'Darwin':
-            self.labcode.SetLabelMarkup("<b>URLs checklist</b>")
-            self.labtxt.SetLabelMarkup("<b>Help viewer</b>")
+            self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
+            self.labtxt.SetLabelMarkup("<b>%s</b>" % labtstr)
 
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
@@ -546,11 +548,12 @@ class Downloader(wx.Panel):
         """
         self.codText.Clear()
         self.codText.SetDefaultStyle(wx.TextAttr(Downloader.MAGENTA))
+        self.codText.write(_('TIPS:\n\n'))
         tip0 = _(
-            '-  Click on each item in the checklist and use the preview '
-            'button for video playback and evaluate the resolution or '
-            'quality based on the settings made.\n\n')
-        self.codText.AppendText(_('{}').format(tip0))
+            '-  Click on one of the items in the checklist and use the '
+            'preview button to play the video and evaluate the resolution '
+            'or quality based on the settings made.\n\n')
+        self.codText.AppendText(tip0)
         tip3 = _(
             '-  Check one or more boxes in the URLs checklist. Each URL '
             '(green selection) can have multiple format codes that correspond '
@@ -575,7 +578,7 @@ class Downloader(wx.Panel):
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
-            self.codText.AppendText(_('{}').format(tip3))
+            self.codText.AppendText(tip3)
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable()
             self.on_format_codes()

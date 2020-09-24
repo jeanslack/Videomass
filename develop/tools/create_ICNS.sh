@@ -4,6 +4,7 @@
 # Before proceeding make sure you have image named `Icon1024.png' with
 # 1024x1024 pixel (px) at 72 pixel-per-inch (ppi) .
 #
+# useful page: https://www.icoconverter.com/
 
 cd $PWD
 mkdir MyIcon.iconset
