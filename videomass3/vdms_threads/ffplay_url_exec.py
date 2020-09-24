@@ -135,7 +135,7 @@ class Exec_Download_Stream(Thread):
         """
         Starting thread.
         """
-        cmd = ('"{0}" {1} --newline --ignore-errors -o '
+        cmd = ('"{0}" {1} --prefer-ffmpeg --newline --ignore-errors -o '
                '"{2}/%(title)s_{3}.%(ext)s" --continue --format {3} '
                '--no-playlist --no-part --ignore-config '
                '--restrict-filenames "{4}" --ffmpeg-location '

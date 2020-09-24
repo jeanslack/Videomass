@@ -89,6 +89,7 @@ class Downloader(wx.Panel):
     AZURE = '#3298FB'
     YELLOW = '#C8B72F'
     ORANGE = '#FF4A1B'
+    MAGENTA = '#f42596'
 
     VQUALITY = {('Best quality video'): ['best', 'best'],
                 ('Worst quality video'): ['worst', 'worst']}
@@ -210,24 +211,26 @@ class Downloader(wx.Panel):
                                       wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                       )
         sizer.Add(self.fcode, 1, wx.EXPAND, 10)
-        self.labtxt = wx.StaticText(self, label=_('Auxiliary viewer'))
+        self.labtxt = wx.StaticText(self, label=_('Help viewer'))
         sizer.Add(self.labtxt, 0, wx.ALL, 5)
         self.codText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
                                    wx.TE_READONLY |
                                    wx.TE_RICH2,
-                                   # size=(500, -1)
+                                   size=(-1, 150)
                                    )
-        sizer.Add(self.codText, 1, wx.TOP | wx.EXPAND, 10)
+        sizer.Add(self.codText, 0, wx.TOP | wx.EXPAND, 10)
         # -----------------------
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------- Properties
         self.codText.SetBackgroundColour(Downloader.DARK_BROWN)
+        # NOTE do not append text on self.codText here, see `on_Choice meth.`
 
         if Downloader.OS != 'Darwin':
             self.labcode.SetLabelMarkup("<b>URLs checklist</b>")
-            self.labtxt.SetLabelMarkup("<b>Auxiliary viewer</b>")
+            self.labtxt.SetLabelMarkup("<b>Help viewer</b>")
+
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
@@ -482,7 +485,6 @@ class Downloader(wx.Panel):
         """
         if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
             self.parent.statusbar_msg('Youtube Downloader', None)
-        self.codText.Clear()
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
@@ -507,8 +509,7 @@ class Downloader(wx.Panel):
         main frame when the 'Show More' button is pressed.
         """
         if Downloader.PYLIB_YDL is not None:  # YuotubeDL is not used as module
-            wx.MessageBox(_('"Show more" only is enabled when Videomass '
-                            'uses youtube-dl as imported library.'),
+            wx.MessageBox(_('Sorry, this feature is disabled.'),
                           'Videomass', wx.ICON_INFORMATION)
             return
 
@@ -524,18 +525,8 @@ class Downloader(wx.Panel):
     def on_format_codes(self):
         """
         Evaluate which method to call to enable download from "Format Code"
-        """
-        tip = _(
-            'Tip: Check one or more boxes in the URL checklist. Each URL can '
-            'have multiple format codes that correspond to different audio '
-            'and video formats. Note that the audio and video streams are '
-            'always separated in this mode; check the boxes of a video '
-            'format code and an audio format code of each URL to merge them '
-            'both into one file.'
-            )
-        self.codText.SetDefaultStyle(wx.TextAttr(Downloader.AZURE))
-        self.codText.AppendText(_('{}').format(tip))
 
+        """
         if Downloader.PYLIB_YDL is not None:  # YuotubeDL isn't used as module
             ret = self.get_executableformatcode()
             if ret:
@@ -553,10 +544,26 @@ class Downloader(wx.Panel):
         - Enable or disable some widgets during switching choice box.
         - Set media quality parameter for on_urls_list method
         """
+        self.codText.Clear()
+        self.codText.SetDefaultStyle(wx.TextAttr(Downloader.MAGENTA))
+        tip0 = _(
+            '-  Click on each item in the checklist and use the preview '
+            'button for video playback and evaluate the resolution or '
+            'quality based on the settings made.\n\n')
+        self.codText.AppendText(_('{}').format(tip0))
+        tip3 = _(
+            '-  Check one or more boxes in the URLs checklist. Each URL '
+            '(green selection) can have multiple format codes that correspond '
+            'to different audio and video formats. Note that the audio and '
+            'video streams are always separated here; check the boxes of '
+            'a video format code and an audio format code of each URL to '
+            'merge them both into a single file.\n\n')
+
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
             self.cmbx_vq.Enable()
             self.on_urls_list(self.opt["V_QUALITY"][1])
+
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
             self.cmbx_vq.Enable()
@@ -568,6 +575,7 @@ class Downloader(wx.Panel):
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
+            self.codText.AppendText(_('{}').format(tip3))
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable()
             self.on_format_codes()
