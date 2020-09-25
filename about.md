@@ -3,27 +3,19 @@
 ## What is Videomass?
 ![Image](/images/videomass.png)
 
-Videomass is a cross-platform GUI designed for medium advanced users who
-need to store profiles and automate some conversion processes, but which
-can also be used by beginner users through the use of ready-to-use presets.
-It features graphic tools with high automation capabilities such as PEAK,
-RMS and EBU audio normalization filters with selectable audio stream indexing,
-streams analyzer and more.
+Videomass is a cross-platform GUI designed especially for medium and advanced 
+users who need to write and store profiles to automate some conversion processes 
+via [FFmpeg](https://www.ffmpeg.org/). It also has some ready-to-use presets that 
+make it easy for inexperienced command line users.
 
-It allows you to create new presets or import/export existing ones, write and
-edit new conversion profiles in order to use [FFmpeg](https://www.ffmpeg.org/)
-without limits of formats, codecs and commands.
+It features graphical tools for viewing, analyzing and processing multimedia 
+streams such as PEAK, RMS and EBU-R128 audio normalization filters with selectable 
+audio stream indexing, streams analyzer, video downloading and more. 
 
-In fact, most of the operations performed with [FFmpeg](https://www.ffmpeg.org/)
-via the command line, can be stored as conversion profiles on Videomass and can
-be performed or modified on the fly.
-
-Videomass also offers a graphical interface for the famous video downloader
-[youtube_dl](http://ytdl-org.github.io/youtube-dl/) and allows you to choose
-between various download options like a specific format codes with the ability
-to playback individual URLs with different qualities via mpv player. Allows also
-to download all playlist, embed thumbnail in audio file (via atomicparsley),
-add metadata to file and write subtitles to video.
+It allows you to create, import or export presets, write new conversion profiles, 
+save changes to existing ones or edit them on the fly without making changes, in 
+order to use [FFmpeg](https://www.ffmpeg.org/) without limits of formats, codecs 
+and commands.
 
 Videomass is a project created by Gianluca Pernigotto (jeanslack) and it was
 written in Python3 with the wxPython4 "Phoenix", then it is cross-platform and
