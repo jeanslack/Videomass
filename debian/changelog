@@ -1,3 +1,13 @@
+videomass (3.1.2-1) UNRELEASED; urgency=medium
+
+  * Redesigned the main videomass icon.
+  * Fixed 24x24 resetfilters.png.
+  * Improved icons 48x48
+  * Review debian/control and changelog format.
+  * [YOUTUBE DOWNLOADER] Improved related panel
+
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 25 Sep 2020 10:44:17 +0200
+
 videomass (3.1.0-1) UNRELEASED; urgency=medium
 
   * Overall improved string search on 'FFmpeg search topics' mini frame.
