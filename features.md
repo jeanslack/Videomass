@@ -29,7 +29,7 @@
 - View video information without downloading it (using youtube_dl library only).
 - Ability to playback individual URLs with different qualities.
 - Ability to download all playlist.
-- Embed thumbnail in audio file (via atomicparsley).
+- Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
 - Add metadata to file.
 - Write subtitles to video.
 
