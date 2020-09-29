@@ -5,6 +5,7 @@ videomass (3.1.2-1) UNRELEASED; urgency=medium
   * Improved icons 48x48
   * Review debian/control and changelog format.
   * [YOUTUBE DOWNLOADER] Improved related panel
+  * Improved `IO_tools > def check_videomass_releases` function.
 
   -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 25 Sep 2020 10:44:17 +0200
 
