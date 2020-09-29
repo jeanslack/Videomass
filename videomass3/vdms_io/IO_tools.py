@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.12.2020 *PEP8 compatible*
+# Rev: Sept.28.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -117,11 +117,12 @@ def url_play(url, quality):
     youtube_dl = get.pylibYdl
 
     dowl = ffplay_url_exec.Exec_Streaming(url, quality)
-
-    #if youtube_dl is not None:  # run youtube-dl executable
-        #dowl = ffplay_url_exec.Exec_Streaming(url, quality)
-    #else:  # run youtube_dl library
-        #dowl = ffplay_url_lib.Lib_Streaming(url, quality)
+    """
+    if youtube_dl is not None:  # run youtube-dl executable
+        dowl = ffplay_url_exec.Exec_Streaming(url, quality)
+    else:  # run youtube_dl library
+        dowl = ffplay_url_lib.Lib_Streaming(url, quality)
+    """
 
 # -----------------------------------------------------------------------#
 
@@ -393,50 +394,66 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
 
 
 def check_videomass_releases(thisrel):
-        """
-        Check for new version releases of Videomass on
-        <https://pypi.org/project/videomass/> web page.
+    """
+    Check for new version releases of Videomass on
+    <https://pypi.org/project/videomass/> web page.
 
-        FIXME : There are was some error regarding
-        [SSL: CERTIFICATE_VERIFY_FAILED]
-        see:
-        <https://stackoverflow.com/questions/27835619/urllib-and-ssl-
-        certificate-verify-failed-error>
-        <https://stackoverflow.com/questions/35569042/ssl-certificate-
-        verify-failed-with-python3>
-        """
-        # HACK fix soon the ssl certificate
-        # ssl._create_default_https_context = ssl._create_unverified_context
-        try:
-            context = ssl._create_unverified_context()
-            f = urllib.request.urlopen('https://pypi.org/project/videomass/',
-                                       context=context
-                                       )
-            myfile = f.read().decode('UTF-8')
-            page = myfile.strip().split()
-            indx = ''
-            for v in page:
-                if 'class="package-header__name">' in v:
-                    indx = page.index(v)
+    FIXME : There are was some error regarding
+    [SSL: CERTIFICATE_VERIFY_FAILED]
+    see:
+    <https://stackoverflow.com/questions/27835619/urllib-and-ssl-
+    certificate-verify-failed-error>
+    <https://stackoverflow.com/questions/35569042/ssl-certificate-
+    verify-failed-with-python3>
 
-        except IOError as error:
-            return error, 'error'
+    """
+    # HACK fix soon the ssl certificate
+    # ssl._create_default_https_context = ssl._create_unverified_context
 
-        except urllib.error.HTTPError as error:
-            return error, 'error'
+    url = 'https://pypi.org/project/videomass/'
+    context = ssl._create_unverified_context()
 
-        if indx:
-            new_major, new_minor, new_micro = page[indx + 2].split('.')
-            new_version = int('%s%s%s' % (new_major, new_minor, new_micro))
-            this_major, this_minor, this_micro = thisrel[2].split('.')
-            this_version = int('%s%s%s' % (this_major, this_minor, this_micro))
+    try:
+        with urllib.request.urlopen(url, context=context) as f:
+            array = f.read().decode('UTF-8').strip().split()
+
+    except urllib.error.HTTPError as error:
+        return error, 'error'
+
+    except urllib.error.URLError as error:
+        return error, 'error'
+
+    else:
+        indx = None
+        for v in array:
+            if 'class="package-header__name">' in v:
+                indx = array.index(v) + 2
+                version = array[indx]
+                break
+        if version:
+            newmajor, newminor, newmicro = version.split('.')
+            new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
+            major, minor, micro = thisrel[2].split('.')
+            this_version = int('%s%s%s' % (major, minor, micro))
 
             if new_version > this_version:
-                return page[indx + 2], None
+                return version, None
             else:
                 return None, None  # no new version
         else:
             return None, 'unrecognized error'  # unrecognized error
+        #if indx:
+            #newmajor, newminor, newmicro = array[indx].split('.')
+            #new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
+            #major, minor, micro = thisrel[2].split('.')
+            #this_version = int('%s%s%s' % (major, minor, micro))
+
+            #if new_version > this_version:
+                #return array[indx], None
+            #else:
+                #return None, None  # no new version
+        #else:
+            #return None, 'unrecognized error'  # unrecognized error
 # --------------------------------------------------------------------------#
 
 

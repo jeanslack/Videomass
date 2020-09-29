@@ -15,6 +15,7 @@ Sep 24, 2020 V.3.1.2
     * Improved icons 48x48
     * Review debian/control and changelog format.
     * [YOUTUBE DOWNLOADER] Improved related panel
+    * Improved `IO_tools > def check_videomass_releases` function.
 
 +------------------------------------+
 Sep 17, 2020 V.3.1.0

@@ -61,11 +61,11 @@ class MyLogger(object):
     57df2457df7274d0c842421945#embedding-youtube-dl>
     """
     def debug(self, msg):
-        #print('DEBUG: ', msg)
+        # print('DEBUG: ', msg)
         if '[download]' in msg:  # ...in processing
-            #print(msg)
+            # print(msg)
             if 'Destination' in msg:
-                #print(msg)
+                # print(msg)
                 pub.sendMessage("START_FFPLAY_EVT",
                                 output=msg.split()[2]
                                 )
@@ -76,13 +76,11 @@ class MyLogger(object):
         self.msg = msg
 
     def warning(self, msg):
-        """
-        send warning messages to masg_
-        """
+        """send warning messages to masg_"""
         wx.CallAfter(msg_Warning, msg)
 
-
     def error(self, msg):
+        """send message errors"""
         wx.CallAfter(msg_Error, msg)
 # -------------------------------------------------------------------------#
 
@@ -216,6 +214,7 @@ def stop_download_listener(filename):
     """
     Lib_Streaming.DOWNLOAD.stop()
     Lib_Streaming.DOWNLOAD.join()  # if join, wait end process
+
 
 def start_palying_listener(output):
     """

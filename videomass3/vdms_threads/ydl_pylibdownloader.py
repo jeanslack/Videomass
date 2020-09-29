@@ -166,7 +166,7 @@ class Ydl_DL_Pylib(Thread):
 
         Thread.__init__(self)
         """initialize"""
-        self.start()  # start the thread (va in self.run())
+        self.start()  # run()
 
     def run(self):
         """

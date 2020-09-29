@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: June.02.2020 *PEP8 compatible*
+# Rev: Sept.25.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -93,7 +93,7 @@ class MainFrame(wx.Frame):
         # ---------------------------#
         self.iconset = setui[4][11]
         self.videomass_icon = pathicons[0]
-        self.icon_runconversion = pathicons[2]
+        self.icon_runconv = pathicons[2]
         self.icon_ydl = pathicons[25]
         self.icon_mainback = pathicons[23]
         self.icon_mainforward = pathicons[24]
@@ -125,8 +125,9 @@ class MainFrame(wx.Frame):
                                            bitmap=infoIbmp,
                                            label=_("Streams analyzer")
                                            )
-        self.btn_metaI.SetBaseColours(startcolour=wx.Colour(MainFrame.AZURE_NEON),
-                                      foregroundcolour=wx.Colour(self.fBtnC)
+        self.btn_metaI.SetBaseColours(
+            startcolour=wx.Colour(MainFrame.AZURE_NEON),
+            foregroundcolour=wx.Colour(self.fBtnC)
                                       )
         self.btn_metaI.SetBottomEndColour(self.bBtnC)
         self.btn_metaI.SetBottomStartColour(self.bBtnC)
@@ -138,8 +139,9 @@ class MainFrame(wx.Frame):
                                            bitmap=previewbmp,
                                            label=_("Preview")
                                            )
-        self.btn_playO.SetBaseColours(startcolour=wx.Colour(MainFrame.AZURE_NEON),
-                                      foregroundcolour=wx.Colour(self.fBtnC)
+        self.btn_playO.SetBaseColours(
+            startcolour=wx.Colour(MainFrame.AZURE_NEON),
+            foregroundcolour=wx.Colour(self.fBtnC)
                                       )
         self.btn_playO.SetBottomEndColour(self.bBtnC)
         self.btn_playO.SetBottomStartColour(self.bBtnC)
@@ -152,8 +154,8 @@ class MainFrame(wx.Frame):
                                               label=_("Duration")
                                               )
         self.btn_duration.SetBaseColours(
-                                    startcolour=wx.Colour(MainFrame.AZURE_NEON),
-                                    foregroundcolour=wx.Colour(self.fBtnC)
+            startcolour=wx.Colour(MainFrame.AZURE_NEON),
+            foregroundcolour=wx.Colour(self.fBtnC)
                                          )
         self.btn_duration.SetBottomEndColour(self.bBtnC)
         self.btn_duration.SetBottomStartColour(self.bBtnC)
@@ -165,8 +167,9 @@ class MainFrame(wx.Frame):
                                              bitmap=saveprfbmp,
                                              label=_("Save Configuration")
                                              )
-        self.btn_saveprf.SetBaseColours(startcolour=wx.Colour(MainFrame.AZURE_NEON),
-                                        foregroundcolour=wx.Colour(self.fBtnC)
+        self.btn_saveprf.SetBaseColours(
+            startcolour=wx.Colour(MainFrame.AZURE_NEON),
+            foregroundcolour=wx.Colour(self.fBtnC)
                                         )
         self.btn_saveprf.SetBottomEndColour(self.bBtnC)
         self.btn_saveprf.SetBottomStartColour(self.bBtnC)
@@ -178,8 +181,9 @@ class MainFrame(wx.Frame):
                                             bitmap=newprfbmp,
                                             label=_("New..")
                                             )
-        self.btn_newprf.SetBaseColours(startcolour=wx.Colour(MainFrame.AZURE_NEON),
-                                       foregroundcolour=wx.Colour(self.fBtnC)
+        self.btn_newprf.SetBaseColours(
+            startcolour=wx.Colour(MainFrame.AZURE_NEON),
+            foregroundcolour=wx.Colour(self.fBtnC)
                                        )
         self.btn_newprf.SetBottomEndColour(self.bBtnC)
         self.btn_newprf.SetBottomStartColour(self.bBtnC)
@@ -191,8 +195,9 @@ class MainFrame(wx.Frame):
                                             bitmap=delprfbmp,
                                             label=_("Delete..")
                                             )
-        self.btn_delprf.SetBaseColours(startcolour=wx.Colour(MainFrame.AZURE_NEON),
-                                       foregroundcolour=wx.Colour(self.fBtnC)
+        self.btn_delprf.SetBaseColours(
+            startcolour=wx.Colour(MainFrame.AZURE_NEON),
+            foregroundcolour=wx.Colour(self.fBtnC)
                                        )
         self.btn_delprf.SetBottomEndColour(self.bBtnC)
         self.btn_delprf.SetBottomStartColour(self.bBtnC)
@@ -204,8 +209,9 @@ class MainFrame(wx.Frame):
                                              bitmap=editprfbmp,
                                              label=_("Edit..")
                                              )
-        self.btn_editprf.SetBaseColours(startcolour=wx.Colour(MainFrame.AZURE_NEON),
-                                        foregroundcolour=wx.Colour(self.fBtnC)
+        self.btn_editprf.SetBaseColours(
+            startcolour=wx.Colour(MainFrame.AZURE_NEON),
+            foregroundcolour=wx.Colour(self.fBtnC)
                                         )
         self.btn_editprf.SetBottomEndColour(self.bBtnC)
         self.btn_editprf.SetBottomStartColour(self.bBtnC)
@@ -609,7 +615,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Decoders"), _("Shows available decoders on FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
-        ffplayButton = wx.Menu()# ffplay sub menu
+        ffplayButton = wx.Menu()  # ffplay sub menu
         dscrp = (_("While playing"),
                  _("Show useful keyboard shortcuts when playing "
                    "or previewing with ffplay"))
@@ -617,7 +623,8 @@ class MainFrame(wx.Frame):
         ffmpegButton.AppendSubMenu(ffplayButton, "&FFplay")
         ffmpegButton.AppendSeparator()
         dscrp = (_("Help topics"),
-                 _("An easy tool to search for FFmpeg help topics and options"))
+                 _("An easy tool to search for FFmpeg help topics and "
+                   "options"))
         searchtopic = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSubMenu(ffmpegButton, "&FFmpeg")
         toolsButton.AppendSeparator()
@@ -975,7 +982,8 @@ class MainFrame(wx.Frame):
             return latest
         # ----------------------------------------------------------
 
-        if MainFrame.EXEC_YDL is not False and os.path.isfile(MainFrame.EXEC_YDL):
+        if (MainFrame.EXEC_YDL is not False and
+                os.path.isfile(MainFrame.EXEC_YDL)):
             ck = _check()
             if not ck:
                 return
@@ -1000,7 +1008,7 @@ class MainFrame(wx.Frame):
             return
 
         elif '/tmp/.mount_' in sys.executable or \
-                 os.path.exists(os.getcwd() + '/AppRun'):
+                os.path.exists(os.getcwd() + '/AppRun'):
             ck = _check()
             if not ck:
                 return
@@ -1010,14 +1018,14 @@ class MainFrame(wx.Frame):
                             'rebuild the Videomass AppImage. Also, the '
                             'digital signature may be lost after completion.'
                             '\n\nDo you want to continue?'),
-                            "Videomass", wx.ICON_QUESTION |
-                             wx.YES_NO, self) == wx.NO:
+                        "Videomass", wx.ICON_QUESTION |
+                        wx.YES_NO, self) == wx.NO:
                     return
                 cr = current_release()[2]
                 fname = _("Select the 'Videomass-{}-x86_64.AppImage' "
                           "file to update").format(cr)
-                with wx.FileDialog(None, _(fname),
-                        defaultDir=os.path.expanduser('~'),
+                with wx.FileDialog(
+                        None, _(fname), defaultDir=os.path.expanduser('~'),
                         wildcard=("*Videomass-{0}-x86_64.AppImage (*Videomass-"
                                   "{0}-x86_64.AppImage;)|*Videomass-{0}-"
                                   "x86_64.AppImage;".format(cr)),
@@ -1042,10 +1050,9 @@ class MainFrame(wx.Frame):
                     self.on_Kill()
 
                 elif upgrade == 'error':
-                    wx.MessageBox(
-                        _('Failed! consult log file at:\n{}/build_AppImage'
-                          '.log').format(os.path.dirname(appimage),
-                        'Videomass', wx.ICON_ERROR, self))
+                    msg = _('Failed! consult log file at:\n{}/build_AppImage'
+                            '.log').format(os.path.dirname(appimage))
+                    wx.MessageBox(msg, 'Videomass', wx.ICON_ERROR, self)
                 else:
                     wx.MessageBox(_('Failed! {}').format(upgrade),
                                   'Videomass', wx.ICON_ERROR, self)
@@ -1236,7 +1243,7 @@ class MainFrame(wx.Frame):
                                        wx.Bitmap(self.icon_mainforward))
         # self.toolbar.AddSeparator()
         self.run_coding = self.toolbar.AddTool(wx.ID_FILE5, _('Convert'),
-                                               wx.Bitmap(self.icon_runconversion))
+                                               wx.Bitmap(self.icon_runconv))
         self.run_download = self.toolbar.AddTool(wx.ID_FILE6, _('Download'),
                                                  wx.Bitmap(self.icon_ydl))
         # self.toolbar.AddSeparator()

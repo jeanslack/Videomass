@@ -78,15 +78,16 @@ class Exec_Download_Stream(Thread):
                 import youtube_dl
             except Exception as e:
                 EXCEPTION = e
-            else:  # see also inspect: `inspect.getfile(youtube_dl)`
-                   # or the best: shutil.which('python')
+            else:
+                # see also inspect: `inspect.getfile(youtube_dl)`
+                # or the best: shutil.which('python')
                 pypath = youtube_dl.__file__.split('lib')[0]
                 EXECYDL = os.path.join(pypath, 'Scripts', 'youtube-dl.exe')
 
         if os.path.isfile(EXECYDL):
             LINE_MSG = ('\nRequires MSVCR100.dll\nTo resolve this problem '
-                          'install: Microsoft Visual C++ 2010 Redistributable '
-                          'Package (x86)')
+                        'install: Microsoft Visual C++ 2010 Redistributable '
+                        'Package (x86)')
         else:
             LINE_MSG = ('Unrecognized error')
 
@@ -235,10 +236,8 @@ class Exec_Streaming(object):
     def start_download(self):
         """
         call Exec_Download_Stream(Thread) to run() method
+
         """
-
-
-
         if not Exec_Download_Stream.EXCEPTION:
             Exec_Streaming.DOWNLOAD.start()
         return
@@ -250,16 +249,19 @@ def stop_download_listener(filename):
     """
     Receive message from ffplay_file.File_Play class
     for handle interruption
+
     """
     Exec_Streaming.DOWNLOAD.stop()
     Exec_Streaming.DOWNLOAD.join()
 
     return
 
+
 def start_palying_listener(output):
     """
     Riceive message from Exec_Download_Stream class to start
     ffplay in at a given time.
+
     """
     IO_tools.stream_play(output, '', '')
     return
