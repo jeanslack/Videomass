@@ -8,7 +8,7 @@ language: python
 python: "3.8"
 before_install:
     - sudo apt-get update
-    - sudo apt-get -y install libsdl2-2.0.so.0
+    - sudo apt-get -y install libsdl2-2.0-0
 # install dependencies via pip
 install:
     - pip install PyPubSub
