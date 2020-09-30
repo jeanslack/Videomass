@@ -1,18 +1,22 @@
 os: linux
 dist: xenial
+sources:
+    - deb http://us.archive.ubuntu.com/ubuntu/ xenial xenial-updates xenial-security main universe
+    - deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates main universe
+    - deb http://us.archive.ubuntu.com/ubuntu/ xenial-security main universe
 language: python
 python: "3.8"
 before_install:
     - sudo apt-get update
     - sudo apt-get -y install ffmpeg # include the required `libSDL2-2.0.so.0` too
-# command to install dependencies
+# install dependencies via pip
 install:
-  - pip install PyPubSub
-  - pip install youtube_dl
-  - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
-# command to run tests
+    - pip install PyPubSub
+    - pip install youtube_dl
+    - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
+# run some tests
 script:
-  - python tests/test_check_bin.py
-  - python tests/test_ffprobe.py
-  - python launcher
+    - python tests/test_check_bin.py
+    - python tests/test_ffprobe.py
+    - python launcher
 
