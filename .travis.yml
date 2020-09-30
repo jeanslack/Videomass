@@ -2,10 +2,9 @@ os: linux
 dist: xenial
 language: python
 python: "3.8"
-addons:
-    apt:
-        packages:
-            - ffmpeg  # this is required which include libSDL2-2.0.so.0
+before_install:
+    - sudo apt-get update
+    - sudo apt-get -y install ffmpeg # include the required `libSDL2-2.0.so.0` too
 # command to install dependencies
 install:
   - pip install PyPubSub
