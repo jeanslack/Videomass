@@ -55,7 +55,6 @@ fi
 
 # Download required shared library
 if [ ! -d usr ]; then
-
     wget -c http://security.debian.org/debian-security/pool/updates/main/libj/libjpeg-turbo/libjpeg62-turbo_1.5.1-2+deb9u1_amd64.deb \
         http://ftp.de.debian.org/debian/pool/main/j/jbigkit/libjbig0_2.1-3.1+b2_amd64.deb
 
