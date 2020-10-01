@@ -4,6 +4,9 @@ sources:
     - deb http://us.archive.ubuntu.com/ubuntu/ xenial xenial-updates xenial-security main universe
     - deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates main universe
     - deb http://us.archive.ubuntu.com/ubuntu/ xenial-security main universe
+env:
+    global:
+        - DISPLAY=:99
 language: python
 python: "3.8"
 before_install:
@@ -16,7 +19,12 @@ install:
     - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
 # run some tests
 script:
+    - Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
     - python tests/test_check_bin.py
     - python tests/test_ffprobe.py
-    - python launcher
+    - python tests/test_display_GUI.py
+
+after_script:
+    - # xpra stop :99
+    - killall Xvfb
 
