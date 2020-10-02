@@ -1,13 +1,22 @@
 #!/bin/bash
 #
-# Description: Update pip and youtube-dl on Videomass.AppImage
-# Place this script on 'AppDir/usr/bin' with execute permissions.
-# Remember, you need 'appimagetool-x86_64.AppImage' inside the same
-# directory.
+# Description: Build a `Videomass-*-x86_64.AppImage` starting
+#              from a `PYTHON_APPIMAGE` and `WX_PYTHON_WHEEL` .
+#              Note that this appimage work on GTK2 toolkit only.
 #
+# if you plan to install extra packages, extract the AppImage, e.g. as:
+#
+#   ./Videomass*.AppImage --appimage-extract
+#   export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
+#
+# Ideally run this inside the manylinux Docker container
+# so that dependencies get bundled from that very container
+#
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Create: Oct.02.2020
 
-#set -x
-set -e
+#set -x  # Print commands and their arguments as they are executed.
+set -e  # Exit immediately if a command exits with a non-zero status.
 
 # building in temporary directory to keep system clean
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
@@ -19,10 +28,11 @@ fi
 
 PYTHON_APPIMAGE=python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
+WX_PYTHON_WHEEL=wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
+WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/${WX_PYTHON_WHEEL}
 
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
 APP_DIR="$BUILD_DIR/AppDir"
-#mkdir $APP_DIR
 
 # make sure to clean up build dir, even if errors occur
 cleanup () {
@@ -66,9 +76,7 @@ cp -r usr/ $APP_DIR/
 
 # Install requirements
 $APP_DIR/AppRun -m pip install -U pip
-$APP_DIR/AppRun -m pip install -U \
-    -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl \
-        wxPython
+$APP_DIR/AppRun -m pip install -U -f ${WX_PYTHON_URL} wxPython
 $APP_DIR/AppRun -m pip install videomass
 
 # Change AppRun so that it launches videomass and export shared libraries dir
@@ -101,7 +109,8 @@ and running from an AppImage.
 EOF
 
 # Edit the desktop file
-mv $APP_DIR/usr/share/applications/python*.desktop $APP_DIR/usr/share/applications/videomass.desktop
+mv $APP_DIR/usr/share/applications/python*.desktop \
+    $APP_DIR/usr/share/applications/videomass.desktop
 
 # set new .desktop
 sed -i -e 's|^Name=.*|Name=Videomass|g' $APP_DIR/usr/share/applications/*.desktop
@@ -122,22 +131,22 @@ cp $APP_DIR/opt/python*/share/pixmaps/videomass.png \
     $APP_DIR/usr/share/icons/hicolor/128x128/apps/videomass.png
 
 # make simlink
-cd $APP_DIR
-ln -s usr/share/icons/hicolor/128x128/apps/videomass.png videomass.png
-ln -s usr/share/applications/videomass.desktop videomass.desktop
-cd ..
+ln -sr usr/share/icons/hicolor/128x128/apps/videomass.png $APP_DIR/videomass.png
+ln -sr usr/share/applications/videomass.desktop $APP_DIR/videomass.desktop
 
 # retrieve the Videomass version from the package metadata
-export VERSION=$(cat $APP_DIR/opt/python*/lib/python3.8/site-packages/videomass-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
+export VERSION=$(cat \
+    $APP_DIR/opt/python*/lib/python3.8/site-packages/videomass-*.dist-info/METADATA \
+        | grep "^Version:.*" | cut -d " " -f 2)
 
-# check appimagetool
+# download appimagetool
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 
 if [ ! -x appimagetool-x86_64.AppImage ]; then
     chmod +x appimagetool-x86_64.AppImage
 fi
 
-# for any updates, copy 'appimagetool*' and 'youtube_dl_update_appimage.sh' script on bin/
+# for any updates, copy 'appimagetool*' and 'youtube_dl_update_appimage.sh' script
 cp appimagetool-x86_64.AppImage "$OLD_CWD/develop/tools/youtube_dl_update_appimage.sh" $APP_DIR/usr/bin
 
 if [ ! -x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh ]; then

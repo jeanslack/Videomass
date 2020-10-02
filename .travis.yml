@@ -10,20 +10,23 @@ env:
 language: python
 python: "3.8"
 before_install:
+    - python -m pip install -U pip
     - sudo apt-get update
     - sudo apt-get -y install libsdl2-2.0-0
 # install dependencies via pip
 install:
-    - pip install PyPubSub
-    - pip install youtube_dl
-    - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
+    - pip install wheel
+    #- pip install PyPubSub
+    #- pip install youtube_dl
+    #- pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl wxPython
 # run some tests
 script:
     - Xvfb :99 -screen 0 800x600x24 >/dev/null 2>&1 &
     - python tests/test_check_bin.py
     - python tests/test_ffprobe.py
-    - python tests/test_display_GUI.py
-    - bash develop/tools/AppImage_build.sh
+    - python setup.py sdist bdist_wheel
+    #- python tests/test_display_GUI.py
+    #- bash develop/tools/AppImage_build.sh
 
 after_script:
     - # xpra stop :99
