@@ -9,19 +9,16 @@
 #set -x
 set -e
 
-# # building in temporary directory to keep system clean
-# # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
-# if [ "$CI" == "" ] && [ -d /dev/shm ]; then
-#     TEMP_BASE=/dev/shm
-# else
-#     TEMP_BASE=/tmp
-# fi
-
-TEMP_BASE=/tmp
+# building in temporary directory to keep system clean
+# use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
+if [ "$CI" == "" ] && [ -d /dev/shm ]; then
+    TEMP_BASE=/dev/shm
+else
+    TEMP_BASE=/tmp
+fi
 
 PYTHON_APPIMAGE=python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
-
 
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
 APP_DIR="$BUILD_DIR/AppDir"
