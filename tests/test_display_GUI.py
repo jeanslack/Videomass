@@ -34,29 +34,27 @@ class GuiTestCase(unittest.TestCase):
         self.app = Videomass3.Videomass(redirect=False)
 
     def tearDown(self):
-        """start MainLoop """
+        """
+        start MainLoop and destroy
+        see:
+            - https://github.com/wxWidgets/Phoenix/blob/master/unittests/wtc.py
+            - https://stackoverflow.com/questions/33292441/how-to-destroy-a-wxpython-frame-in-unittest
+        """
         def _cleanup():
             for tlw in wx.GetTopLevelWindows():
                 if tlw:
-                    #tlw.Close(force=True)
+                    # tlw.Close(force=True)
                     tlw.Destroy()
             wx.WakeUpIdle()
 
-        #timer = wx.PyTimer(_cleanup)
-        #timer.Start(100)
+        # timer = wx.PyTimer(_cleanup)
+        # timer.Start(100)
         wx.CallLater(100, _cleanup)
         self.app.MainLoop()
         del self.app
 
-    def test_instance(self):
-        """
-        test error with an invalid url filename and/or
-        invalid executable.
-
-        """
-        #if self.data.ERROR():
-            #self.assertRaises(AssertionError)
-            #self.assertEqual(self.data.data_format(), [])
+    def test_app(self):
+        """test app"""
         if self.app:
             self.assertTrue(self.app)
 
