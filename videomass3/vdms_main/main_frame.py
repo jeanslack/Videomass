@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.25.2020 *PEP8 compatible*
+# Rev: Oct.03.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -1050,8 +1050,9 @@ class MainFrame(wx.Frame):
                     self.on_Kill()
 
                 elif upgrade == 'error':
-                    msg = _('Failed! consult log file at:\n{}/build_AppImage'
-                            '.log').format(os.path.dirname(appimage))
+                    msg = _('Failed! for more info consult:\n'
+                            '{}/Videomass-AppImage-Update.log').format(
+                                os.path.dirname(appimage))
                     wx.MessageBox(msg, 'Videomass', wx.ICON_ERROR, self)
                 else:
                     wx.MessageBox(_('Failed! {}').format(upgrade),

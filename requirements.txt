@@ -1,9 +1,0 @@
-# -*- coding: utf-8 -*-
-
-# This is requirements.txt for build travis only
-
-PyPubSub >= 4.0.0
-youtube_dl >= 2019.01.17
-
-# environment markers:
-wxpython >= 4.0.3; platform_system == 'Windows' or platform_system == 'Darwin'

@@ -12,17 +12,15 @@
 # so that dependencies get bundled from that very container
 #
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Update: Sept.15.2020
+# Update: Oct.03.2020
 
 set -e  # stop if error
 
 SELF="$(readlink -f -- $0)" # this file
 HERE="${SELF%/*}"  # dirname
-
 MACHINE_ARCH=$(arch)
-PYVERSION="python3.8.5"
-OPT="squashfs-root/opt/python3.8"
-USR_SHARE="squashfs-root/usr/share"
+PYTHON_APPIMAGE=python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
+PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
 
 # check for architecture
 if [ "${MACHINE_ARCH}" != 'x86_64' ] ; then
@@ -42,16 +40,16 @@ else
     cd "$PWD/VIDEOMASS_APPIMAGE_GTK3"
 fi
 
-# Download Python appimage 3.8 built for manylinux if not exist
-if [ ! -f ${PYVERSION}*x86_64.AppImage ]; then
-     wget -c https://github.com/niess/python-appimage/releases/download/python3.8/python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
+# Fetch a python relocatable installation
+if [ ! -f ${PYTHON_APPIMAGE} ]; then
+    wget -c ${PYTHON_APPIMAGE_URL}
 fi
 
 # Extract this AppImage
-if [ ! -x ${PYVERSION}*x86_64.AppImage ]; then
-    chmod +x ${PYVERSION}*x86_64.AppImage
+if [ ! -x ${PYTHON_APPIMAGE} ]; then
+    chmod +x ${PYTHON_APPIMAGE}
 fi
-./${PYVERSION}*x86_64.AppImage --appimage-extract
+./${PYTHON_APPIMAGE} --appimage-extract
 
 # Download required shared library
 if [ ! -d usr ]; then
@@ -73,10 +71,9 @@ cp -r usr/ squashfs-root/
 if [ -f wxPython-4.1.0-cp38-cp38-linux_x86_64.whl ]; then
     ./squashfs-root/AppRun -m pip install wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
 else
-    ./squashfs-root/AppRun -m pip install -U \
-    -f https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-16.04/wxPython-4.1.0-cp38-cp38-linux_x86_64.whl \
-        wxPython
-    fi
+    echo "ERROR: need 'wxPython-4.1.0-cp38-cp38-linux_x86_64.whl' gtk3 builded on Debian 9 stretch x86_64"
+    exit 1
+fi
 
 # Install videomass and its dependencies, PyPubSub, youtube_dl
 if [ -f videomass-*.whl ]; then
@@ -86,12 +83,15 @@ else
 fi
 
 # Change AppRun so that it launches videomass and export shared libraries dir
-sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' ./squashfs-root/AppRun
-sed -i -e '/export TKPATH/a # required shared libraries to run Videomass' squashfs-root/AppRun
-sed -i -e '/# required shared libraries to run Videomass/a export LD_LIBRARY_PATH="${here}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' squashfs-root/AppRun
+sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' \
+    squashfs-root/AppRun
+sed -i -e '/export TKPATH/a # required shared libraries to run Videomass' \
+    squashfs-root/AppRun
+sed -i -e '/# required shared libraries to run Videomass/a export LD_LIBRARY_PATH="${here}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' \
+    squashfs-root/AppRun
 
 # set new metainfo
-cat <<EOF > $USR_SHARE/metainfo/$PYVERSION.appdata.xml
+cat <<EOF > squashfs-root/usr/share/metainfo/python*.appdata.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
     <id>videomass</id>
@@ -114,32 +114,35 @@ cat <<EOF > $USR_SHARE/metainfo/$PYVERSION.appdata.xml
 EOF
 
 # Edit the desktop file
-mv $USR_SHARE/applications/$PYVERSION.desktop $USR_SHARE/applications/videomass.desktop
+mv squashfs-root/usr/share/applications/python*.desktop \
+    squashfs-root/usr/share/applications/videomass.desktop
 
 # set new .desktop
-sed -i -e 's|^Name=.*|Name=Videomass|g' $USR_SHARE/applications/*.desktop
-sed -i -e 's|^Exec=.*|Exec=videomass|g' $USR_SHARE/applications/*.desktop
-sed -i -e 's|^Icon=.*|Icon=videomass|g' $USR_SHARE/applications/*.desktop
-sed -i -e 's|^Comment=.*|Comment=Graphical user interface for FFmpeg and youtube-dl|g' $USR_SHARE/applications/*.desktop
-sed -i -e 's|^Terminal=.*|Terminal=false|g' $USR_SHARE/applications/*.desktop
-sed -i -e 's|^Categories=.*|Categories=AudioVideo;|g' $USR_SHARE/applications/*.desktop
+sed -i -e 's|^Name=.*|Name=Videomass|g' squashfs-root/usr/share/applications/*.desktop
+sed -i -e 's|^Exec=.*|Exec=videomass|g' squashfs-root/usr/share/applications/*.desktop
+sed -i -e 's|^Icon=.*|Icon=videomass|g' squashfs-root/usr/share/applications/*.desktop
+sed -i -e 's|^Comment=.*|Comment=Graphical user interface for FFmpeg and youtube-dl|g' \
+    squashfs-root/usr/share/applications/*.desktop
+sed -i -e 's|^Terminal=.*|Terminal=false|g' squashfs-root/usr/share/applications/*.desktop
+sed -i -e 's|^Categories=.*|Categories=AudioVideo;|g' squashfs-root/usr/share/applications/*.desktop
 
 # del unused *.png and *.desktop
-rm -Rf $USR_SHARE/icons/hicolor/256x256
+rm -Rf squashfs-root/usr/share/icons/hicolor/256x256
 rm squashfs-root/python.png squashfs-root/*.desktop
 
 # Add the new icon
-mkdir -p $USR_SHARE/icons/hicolor/128x128/apps/
-cp $OPT/share/pixmaps/videomass.png $USR_SHARE/icons/hicolor/128x128/apps/videomass.png
+mkdir -p squashfs-root/usr/share/icons/hicolor/128x128/apps/
+cp squashfs-root/opt/python*/share/pixmaps/videomass.png \
+    squashfs-root/usr/share/icons/hicolor/128x128/apps/videomass.png
 
 # make simlink
-cd squashfs-root
-ln -s usr/share/icons/hicolor/128x128/apps/videomass.png videomass.png
-ln -s usr/share/applications/videomass.desktop videomass.desktop
-cd ..
+ln -sr squashfs-root/usr/share/icons/hicolor/128x128/apps/videomass.png \
+    squashfs-root/videomass.png
+ln -sr squashfs-root/usr/share/applications/videomass.desktop \
+    squashfs-root/videomass.desktop
 
 # retrieve the Videomass version from the package metadata
-export VERSION=$(cat $OPT/lib/python3.8/site-packages/videomass-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
+export VERSION=$(cat squashfs-root/opt/python*/lib/python3.8/site-packages/videomass-*.dist-info/METADATA | grep "^Version:.*" | cut -d " " -f 2)
 
 # check appimagetool
 if [ ! -f appimagetool-x86_64.AppImage ]; then

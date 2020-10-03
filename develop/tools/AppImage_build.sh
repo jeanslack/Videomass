@@ -43,8 +43,8 @@ cleanup () {
 trap cleanup EXIT
 
 # Store repo root as variable
-REPO_ROOT=$(dirname $(dirname $(dirname $(realpath $0))))
-OLD_CWD=$(readlink -f .)
+REPO_ROOT=$(dirname $(dirname $(dirname $(realpath $0))))  # repo root (src)
+OLD_CWD=$(readlink -f .)  # path from which you start the script
 
 # switch to build dir
 pushd "$BUILD_DIR"
@@ -74,10 +74,16 @@ fi
 cp -r lib/ $APP_DIR/
 cp -r usr/ $APP_DIR/
 
-# Install requirements
+# Update requirements first
 $APP_DIR/AppRun -m pip install -U pip
 $APP_DIR/AppRun -m pip install -U -f ${WX_PYTHON_URL} wxPython
-$APP_DIR/AppRun -m pip install videomass
+
+# install videomass and its dependencies
+if [ -f $REPO_ROOT/dist/videomass-*.whl ]; then
+    $APP_DIR/AppRun -m pip install $REPO_ROOT/dist/videomass-*.whl
+else
+    $APP_DIR/AppRun -m pip install videomass
+fi
 
 # Change AppRun so that it launches videomass and export shared libraries dir
 sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' $APP_DIR/AppRun
@@ -130,9 +136,9 @@ mkdir -p $APP_DIR/usr/share/icons/hicolor/128x128/apps/
 cp $APP_DIR/opt/python*/share/pixmaps/videomass.png \
     $APP_DIR/usr/share/icons/hicolor/128x128/apps/videomass.png
 
-# make simlink
-ln -sr usr/share/icons/hicolor/128x128/apps/videomass.png $APP_DIR/videomass.png
-ln -sr usr/share/applications/videomass.desktop $APP_DIR/videomass.desktop
+# make videomass.png and videomass.desktop simlinks
+ln -sr $APP_DIR/usr/share/icons/hicolor/128x128/apps/videomass.png $APP_DIR/videomass.png
+ln -sr $APP_DIR/usr/share/applications/videomass.desktop $APP_DIR/videomass.desktop
 
 # retrieve the Videomass version from the package metadata
 export VERSION=$(cat \
@@ -147,13 +153,15 @@ if [ ! -x appimagetool-x86_64.AppImage ]; then
 fi
 
 # for any updates, copy 'appimagetool*' and 'youtube_dl_update_appimage.sh' script
-cp appimagetool-x86_64.AppImage "$OLD_CWD/develop/tools/youtube_dl_update_appimage.sh" $APP_DIR/usr/bin
+cp appimagetool-x86_64.AppImage \
+    "$REPO_ROOT/develop/tools/youtube_dl_update_appimage.sh" \
+        $APP_DIR/usr/bin
 
 if [ ! -x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh ]; then
 chmod +x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh
 fi
 
-# Convert back into an AppImage
+# Convert back into an AppImage using appimagetool + sign
 #./appimagetool-x86_64.AppImage -s $APP_DIR/
 
 # Now, build AppImage using linuxdeploy

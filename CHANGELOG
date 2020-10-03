@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Sep 24, 2020 V.3.1.2
+Oct 03, 2020 V.3.1.2
 +------------------------------------+
 
     * Redesigned the main videomass icon.
@@ -16,6 +16,9 @@ Sep 24, 2020 V.3.1.2
     * Review debian/control and changelog format.
     * [YOUTUBE DOWNLOADER] Improved related panel
     * Improved `IO_tools > def check_videomass_releases` function.
+    * New tool for building videomass appimage.
+    * Update the .travis.yml file with a new test, wheel and AppImage creation.
+    * Improved `youtube_dl_update_appimage.sh`
 
 +------------------------------------+
 Sep 17, 2020 V.3.1.0

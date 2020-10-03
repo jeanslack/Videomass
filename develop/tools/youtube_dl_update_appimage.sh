@@ -19,7 +19,7 @@
 # for colors code.
 #
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Update: Sept.15.2020
+# Update: Oct.03.2020
 
 set -e  # stop if error
 
@@ -29,15 +29,21 @@ APPIMAGE=$1  # selected videomass appimage pathname
 BASENAME="$(basename $APPIMAGE)"  # videomass name
 DIRNAME="$(dirname $APPIMAGE)"  # videomass directory
 
-# make backup previous temporary folder if exists
-if [ -d "$DIRNAME/.TMP_APPDIR" ]; then
-    echo "ERROR: There is another directory with same name '$DIRNAME.TMP_APPDIR'"
-    exit 1
-fi
+# building in temporary directory to keep system clean
+TEMP_BASE=/tmp
 
-# make temporary folder for work
-mkdir -p -m 0775 $DIRNAME/.TMP_APPDIR
-cd "$DIRNAME/.TMP_APPDIR"
+BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-update-XXXXXX)
+
+# make sure to clean up build dir, even if errors occur
+cleanup () {
+    if [ -d "$BUILD_DIR" ]; then
+    rm -rf "$BUILD_DIR"
+    fi
+    }
+trap cleanup EXIT
+
+# switch to build dir
+pushd "$BUILD_DIR"
 
 # check for architecture
 if [ "${MACHINE_ARCH}" != 'x86_64' ] ; then
@@ -45,8 +51,8 @@ if [ "${MACHINE_ARCH}" != 'x86_64' ] ; then
     exit 1
 fi
 
-# extract appimage inside .TMP_APPDIR/
-../$BASENAME --appimage-extract
+# extract appimage inside BUILD_DIR/
+$APPIMAGE --appimage-extract
 
 # export squashfs-root
 export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
@@ -64,9 +70,9 @@ export VERSION=$(cat $SITEPKG/videomass-*.dist-info/METADATA | \
 # Convert back into an AppImage
 "squashfs-root/usr/bin/appimagetool-x86_64.AppImage" squashfs-root/
 
-mv -f Videomass*x86_64.AppImage ../  # overwrites existent appimage
-cd ..
+# move built AppImage back into original DIRNAME
+mv -f Videomass*x86_64.AppImage "$DIRNAME/"  # overwrites existent appimage
+
 echo '**Sucesfully updated**'  # keyword for a successful exit status
 # echo -e '\e[5m\e[92myoutube_dl has been successfully updated!\e[25m\e[39m'
 # echo -e '\e[1m\e[92m...Now close this terminal and restart Videomass.\e[21m\e[39m'
-rm -fr .TMP_APPDIR

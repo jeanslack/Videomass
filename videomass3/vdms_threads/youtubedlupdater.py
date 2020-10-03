@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Oct.03.2020 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -231,7 +231,7 @@ class Update_Youtube_dl_Appimage(Thread):
         name = os.path.basename(videomass)
         binpath = os.path.dirname(sys.executable)
         exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
-        log = 'build_AppImage.log'
+        log = 'Videomass-AppImage-Update.log'
         self.status = None
         self.cmd = shlex.split(
                         "xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "

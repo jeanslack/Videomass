@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.28.2020 *PEP8 compatible*
+# Rev: Oct.03.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -424,7 +424,7 @@ def check_videomass_releases(thisrel):
         return error, 'error'
 
     else:
-        indx = None
+        version = None
         for v in array:
             if 'class="package-header__name">' in v:
                 indx = array.index(v) + 2
@@ -442,18 +442,6 @@ def check_videomass_releases(thisrel):
                 return None, None  # no new version
         else:
             return None, 'unrecognized error'  # unrecognized error
-        #if indx:
-            #newmajor, newminor, newmicro = array[indx].split('.')
-            #new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
-            #major, minor, micro = thisrel[2].split('.')
-            #this_version = int('%s%s%s' % (major, minor, micro))
-
-            #if new_version > this_version:
-                #return array[indx], None
-            #else:
-                #return None, None  # no new version
-        #else:
-            #return None, 'unrecognized error'  # unrecognized error
 # --------------------------------------------------------------------------#
 
 
@@ -473,7 +461,8 @@ def appimage_update_youtube_dl(appimage):
 
     if update:
         return update
-    fname = os.path.join(os.path.dirname(appimage), 'build_AppImage.log')
+    fname = os.path.join(os.path.dirname(appimage),
+                         'Videomass-AppImage-Update.log')
     ret = 'error'
     with open(fname, 'r') as log:
         for line in log:

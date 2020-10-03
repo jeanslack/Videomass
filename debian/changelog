@@ -6,8 +6,11 @@ videomass (3.1.2-1) UNRELEASED; urgency=medium
   * Review debian/control and changelog format.
   * [YOUTUBE DOWNLOADER] Improved related panel
   * Improved `IO_tools > def check_videomass_releases` function.
+  * New tool for building videomass appimage.
+  * Update the .travis.yml file with a new test, wheel and AppImage creation.
+  * Improved `youtube_dl_update_appimage.sh`
 
-  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 25 Sep 2020 10:44:17 +0200
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 03 Oct 2020 13:26:00 +0200
 
 videomass (3.1.0-1) UNRELEASED; urgency=medium
 
