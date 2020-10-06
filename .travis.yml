@@ -8,6 +8,7 @@ env:
     global:
         - DISPLAY=:99
 language: python
+cache: pip
 python: "3.8"
 before_install:
     - python -m pip install -U pip

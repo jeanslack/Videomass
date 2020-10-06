@@ -7,7 +7,7 @@
 # Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: July.15.2020 *PEP8 compatible*
+# Rev: Oct.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -30,6 +30,7 @@ from setuptools import setup, find_packages
 from glob import glob
 import os
 import sys
+import platform
 from videomass3.vdms_sys.msg_info import current_release
 from videomass3.vdms_sys.msg_info import descriptions_release
 
@@ -83,12 +84,27 @@ def source_build():
 
     EXCLUDE = ['']
 
-    DATA_FILES = [  # must be relative-path
-                  ('share/applications', ['videomass3/art/videomass.desktop']),
-                  ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
-                  ('share/man/man1', ['docs/man/man1/videomass.1.gz']),
-                  ]
-
+    if platform.system() == 'Windows':
+        DATA_FILES = [
+            ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
+            ]
+    elif platform.system() == 'Darwin':
+        DATA_FILES = [  # must be relative-path
+                ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
+                ('share/man/man1', ['docs/man/man1/videomass.1.gz']),
+                ]
+    else:
+        DATA_FILES = [  # must be relative-path
+                ('share/applications', ['videomass3/art/videomass.desktop']),
+                ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
+                ('share/icons/hicolor/48x48/apps',
+                 ['videomass3/art/icons/hicolor/48x48/apps/videomass.png']),
+                ('share/icons/hicolor/256x256/apps',
+                 ['videomass3/art/icons/hicolor/256x256/apps/videomass.png']),
+                ('share/icons/hicolor/scalable/apps',
+                 ['videomass3/art/icons/hicolor/scalable/apps/videomass.svg']),
+                ('share/man/man1', ['docs/man/man1/videomass.1.gz']),
+                ]
     setup(name=PRG_NAME,
           version=VERSION,
           description=DESCRIPTION,
@@ -120,7 +136,6 @@ def source_build():
             'Environment :: MacOS X :: Cocoa',
             'Environment :: Win32 (MS Windows)',
             'Environment :: X11 Applications :: GTK',
-            #'Development Status :: 4 - Beta',
             'Development Status :: 5 - Production/Stable',
             'Operating System :: MacOS :: MacOS X',
             'Operating System :: Microsoft :: Windows :: Windows 7',

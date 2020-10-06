@@ -231,7 +231,8 @@ class Update_Youtube_dl_Appimage(Thread):
         name = os.path.basename(videomass)
         binpath = os.path.dirname(sys.executable)
         exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
-        log = 'Videomass-AppImage-Update.log'
+        log = os.path.join(os.path.dirname(videomass),
+                           'Videomass-AppImage-Update.log')
         self.status = None
         self.cmd = shlex.split(
                         "xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "

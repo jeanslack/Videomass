@@ -10,7 +10,6 @@ deb_dist
 *.tar.gz
 ENV
 env
-APPDIR_RELESES
 *.spec
 *.AppImage
 *.egg-info

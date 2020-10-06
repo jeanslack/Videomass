@@ -9,8 +9,11 @@ videomass (3.1.2-1) UNRELEASED; urgency=medium
   * New tool for building videomass appimage.
   * Update the .travis.yml file with a new test, wheel and AppImage creation.
   * Improved `youtube_dl_update_appimage.sh`
+  * Fixing `FileNotFoundError:` when starting videomass AppImage from another
+    path and updating youtube-dl.
+  * Fixed application icon location on Linux.
 
-  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 03 Oct 2020 13:26:00 +0200
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 06 Oct 2020 13:26:00 +0200
 
 videomass (3.1.0-1) UNRELEASED; urgency=medium
 

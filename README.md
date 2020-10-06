@@ -24,10 +24,11 @@ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 
 # Installing and Dependencies
 
-### For normal users (not developpers)
-To install videomass for any Operative System, please visit 
+> **For regular users (not developpers)**   
+> If you are a regular user you can skip the whole part below and visit the 
 [Download and installation](https://jeanslack.github.io/Videomass/download_installation.html) 
-web page.
+web page, which provides the information required to install Videomass on 
+each operating system.
 
 ### Requirements
 - **[Python >= 3.6.9](https://www.python.org/)**

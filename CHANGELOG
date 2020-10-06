@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Oct 03, 2020 V.3.1.2
+Oct 06, 2020 V.3.1.2
 +------------------------------------+
 
     * Redesigned the main videomass icon.
@@ -19,6 +19,9 @@ Oct 03, 2020 V.3.1.2
     * New tool for building videomass appimage.
     * Update the .travis.yml file with a new test, wheel and AppImage creation.
     * Improved `youtube_dl_update_appimage.sh`
+    * Fixing `FileNotFoundError:` when starting videomass AppImage from another
+      path and updating youtube-dl.
+    * Fixed application icon location on Linux.
 
 +------------------------------------+
 Sep 17, 2020 V.3.1.0

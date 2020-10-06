@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 # Porpose: Contains test cases for the ffprobe_parser object.
-# Rev: June.03.2020 *PEP8 compatible*
+# Rev: Oct.04.2020 *PEP8 compatible*
 
 import sys
 import os.path
@@ -9,7 +9,7 @@ import unittest
 
 if sys.version_info[0] != 3:
     sys.exit('\nERROR: You are using an unsupported version of Python. '
-             'Please use Python3.\n')
+             'Python3 is required.\n')
 
 PATH = os.path.realpath(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(os.path.dirname(PATH)))

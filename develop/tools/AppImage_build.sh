@@ -14,25 +14,29 @@
 #
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
+###################################################################
 
-#set -x  # Print commands and their arguments as they are executed.
+set -x  # Print commands and their arguments as they are executed.
 set -e  # Exit immediately if a command exits with a non-zero status.
 
-# building in temporary directory to keep system clean
-# use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
-if [ "$CI" == "" ] && [ -d /dev/shm ]; then
-    TEMP_BASE=/dev/shm
-else
-    TEMP_BASE=/tmp
-fi
+# # building in temporary directory to keep system clean
+# # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
+# if [ "$CI" == "" ] && [ -d /dev/shm ]; then
+#     TEMP_BASE=/dev/shm
+# else
+#     TEMP_BASE=/tmp
+# fi
 
-PYTHON_APPIMAGE=python3.8.5-cp38-cp38-manylinux1_x86_64.AppImage
+TEMP_BASE=/tmp
+
+PYTHON_APPIMAGE=python3.8.6-cp38-cp38-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
 WX_PYTHON_WHEEL=wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
 WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/${WX_PYTHON_WHEEL}
 
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
 APP_DIR="$BUILD_DIR/AppDir"
+mkdir $APP_DIR
 
 # make sure to clean up build dir, even if errors occur
 cleanup () {
@@ -54,7 +58,11 @@ wget -c ${PYTHON_APPIMAGE_URL}
 chmod +x ${PYTHON_APPIMAGE}
 ./${PYTHON_APPIMAGE} --appimage-extract
 
-mv squashfs-root AppDir
+#mv squashfs-root AppDir
+mv squashfs-root/usr $APP_DIR/usr
+mv squashfs-root/opt $APP_DIR/opt
+mv squashfs-root/AppRun $APP_DIR/AppRun
+rm -rf squashfs-root/
 
 # Download required shared library
 if [ ! -d usr ] || [ ! -d lib ]; then
@@ -95,26 +103,27 @@ sed -i -e '/export LD_LIBRARY_PATH=/a export LD_LIBRARY_PATH="${here}/lib/x86_64
 cat <<EOF > $APP_DIR/usr/share/metainfo/python*.appdata.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-<id>videomass</id>
-<metadata_license>MIT</metadata_license>
-<project_license>Python-2.0</project_license>
-<name>Videomass</name>
-<summary>A Python 3.8 runtime with videomass, PyPubSub and wxPython GUI toolkit</summary>
-<description>
-<p>  A relocated Python 3.8 installation containing
-the videomass packages suite (videomass, PyPubSub and wxPython)
-and running from an AppImage.
-</p>
-</description>
-<launchable type="desktop-id">videomass.desktop</launchable>
-<url type="homepage">http://jeanslack.github.io/Videomass</url>
-<provides>
-<binary>python3.8</binary>
-</provides>
+    <id>videomass</id>
+    <metadata_license>MIT</metadata_license>
+    <project_license>Python-2.0</project_license>
+    <name>Videomass</name>
+    <summary>A Python 3.8 runtime with videomass, youtube_dl, PyPubSub
+    and wxPython GUI toolkit</summary>
+    <description>
+        <p>  A relocated Python 3.8 installation containing the videomass
+             packages suite (videomass, youtube_dl, PyPubSub and wxPython)
+             and running from an AppImage.
+        </p>
+    </description>
+    <launchable type="desktop-id">videomass.desktop</launchable>
+    <url type="homepage">http://jeanslack.github.io/Videomass</url>
+    <provides>
+    <binary>python3.8</binary>
+    </provides>
 </component>
 EOF
 
-# Edit the desktop file
+# Edit the .desktop file
 mv $APP_DIR/usr/share/applications/python*.desktop \
     $APP_DIR/usr/share/applications/videomass.desktop
 
@@ -127,18 +136,8 @@ sed -i -e 's|^Comment=.*|Comment=Graphical user interface for FFmpeg and youtube
 sed -i -e 's|^Terminal=.*|Terminal=false|g' $APP_DIR/usr/share/applications/*.desktop
 sed -i -e 's|^Categories=.*|Categories=AudioVideo;|g' $APP_DIR/usr/share/applications/*.desktop
 
-# del unused *.png and *.desktop
-rm -Rf $APP_DIR/usr/share/icons/hicolor/256x256
-rm $APP_DIR/python.png $APP_DIR/*.desktop
-
-# Add the new icon
-mkdir -p $APP_DIR/usr/share/icons/hicolor/128x128/apps/
-cp $APP_DIR/opt/python*/share/pixmaps/videomass.png \
-    $APP_DIR/usr/share/icons/hicolor/128x128/apps/videomass.png
-
-# make videomass.png and videomass.desktop simlinks
-ln -sr $APP_DIR/usr/share/icons/hicolor/128x128/apps/videomass.png $APP_DIR/videomass.png
-ln -sr $APP_DIR/usr/share/applications/videomass.desktop $APP_DIR/videomass.desktop
+# add pixmaps icon
+cp -r $APP_DIR/opt/python*/share/pixmaps/ $APP_DIR/usr/share/
 
 # retrieve the Videomass version from the package metadata
 export VERSION=$(cat \
@@ -161,14 +160,14 @@ if [ ! -x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh ]; then
 chmod +x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh
 fi
 
-# Convert back into an AppImage using appimagetool + sign
-#./appimagetool-x86_64.AppImage -s $APP_DIR/
-
 # Now, build AppImage using linuxdeploy
 export ARCH=x86_64
 wget -c https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
 chmod +x linuxdeploy*.AppImage
-./linuxdeploy-x86_64.AppImage --appdir $APP_DIR --output appimage
+./linuxdeploy-x86_64.AppImage --appdir $APP_DIR \
+    --icon-file $APP_DIR/opt/python*/share/icons/hicolor/256x256/apps/videomass.png \
+        --desktop-file $APP_DIR/opt/python*/share/applications/videomass.desktop \
+            --output appimage
 
 # move built AppImage back into original CWD
 mv Videomass*.AppImage "$OLD_CWD/"
