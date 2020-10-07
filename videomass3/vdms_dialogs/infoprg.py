@@ -65,7 +65,7 @@ def info(parent, videomass_icon):
     info.SetLicence(Long_Lic)
     info.AddDeveloper("%s <%s>" % (Author[0], Mail))
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
-    info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> IT")
+    info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it)")
     #info.AddTranslator("Nestor Blanco <random@ES.pe> ES")
     info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
                      'Material design icons '
