@@ -3,29 +3,29 @@
 ## Screenshots
 
 ### On Debian buster with KDE de
- 
-![Image](/images/screenshot/HomePanel.png)   
-Home Panel   
 
-![Image](/images/screenshot/URLs_appending.png)   
-URLs added   
+![Image](/images/screenshots/HomePanel.png)
+Home Panel
 
-![Image](/images/screenshot/download_by_FormatCode.png)   
-Downloading by format code with audio merging   
-  
-![Image](/images/screenshot/YouTube_downloading.png)   
-While downloading   
+![Image](/images/screenshots/URLs_appending.png)
+URLs added
 
-![Image](/images/screenshot/fileDrop.png)   
-Adding files   
+![Image](/images/screenshots/download_by_FormatCode.png)
+Downloading by format code with audio merging
 
-![Image](/images/screenshot/Presets_manager.png)  
-Presets Manager   
+![Image](/images/screenshots/YouTube_downloading.png)
+While downloading
 
-![Image](/images/screenshot/AV_conversions.png)  
-AV Conversions   
+![Image](/images/screenshots/fileDrop.png)
+Adding files
 
-![Image](/images/screenshot/file_Conversions.png)  
-On two files conversion   
+![Image](/images/screenshots/Presets_manager.png)
+Presets Manager
+
+![Image](/images/screenshots/AV_conversions.png)
+AV Conversions
+
+![Image](/images/screenshots/file_Conversions.png)
+On two files conversion
 
 [Home](index.md)
