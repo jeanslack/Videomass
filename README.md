@@ -24,7 +24,7 @@ Videomass is written in Python3 with the wxPython-Phoenix toolkit.
 
 # Installing and Dependencies
 
-> ### For regular users (not developpers)  
+> ### For regular users (not developpers)   
 > If you are a regular user you can skip the whole part below and visit the 
 [Download and installation](https://jeanslack.github.io/Videomass/download_installation.html) 
 web page, which provides the information required to install Videomass on 
@@ -56,12 +56,12 @@ each operating system.
 `python3 -m pip install videomass`   
 
 > This should also automatically install the remaining required dependencies 
-such as wxPython (Mac-Os and Windows only), PyPubSub and youtube-dl.   
+such as wxPython (only for Mac-Os and Windows), PyPubSub and youtube-dl.   
 >
 > On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   
 >
-> To start Videomass on Mac-Os and MS-Windows open a console and just write 
+> To start Videomass on Mac-Os and MS-Windows open a console and type 
 `videomass` command.   
 
 Visit [Installing and Dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-and-Dependencies) 
