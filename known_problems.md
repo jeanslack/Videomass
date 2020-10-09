@@ -34,8 +34,8 @@ install the *ffmpeg* package which includes *libdsl2-2.0-0* as a dependency and
 is required by Videomass as it is not embedded in the AppImage itself.   
 Thank you!  
 
-**EDIT:** Ubuntu 16.04 needs to install the *libdsl2-2.0-0* package, because the 
-*ffmpeg* package include *libsdl1* and not *libdsl2-2.0-0*.   
+**EDIT:** Ubuntu 16.04 needs to install the *libdsl2-2.0-0* package separately, 
+because the *ffmpeg* package include *libsdl1* and not *libdsl2-2.0-0*.   
 
 to install *libsdl2-2.0-0* on **Ubuntu** typing: `sudo apt install libsdl2-2.0-0`   
 
