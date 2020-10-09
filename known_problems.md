@@ -28,15 +28,16 @@ be disabled when using this encoder.
 
 **Very Important:**   
 before to start latest version of Videomass AppImage, you should install 
-*libsdl2-2.0-0* package which is not included on some Linux distributions, 
-i.e all releases of **Ubuntu**. Alternatively, you can install the *ffmpeg* 
-package which includes *libdsl2-2.0-0* as a dependency and is required by 
-Videomass as it is not embedded in the AppImage itself.   
+*libsdl2-2.0-0* package, which may not be installed by default in some Linux 
+distributions, i.e all releases of **Ubuntu** it seems. Alternatively, you can 
+install the *ffmpeg* package which includes *libdsl2-2.0-0* as a dependency and 
+is required by Videomass as it is not embedded in the AppImage itself.   
 Thank you!  
 
-to install *libsdl2-2.0-0* typing: `sudo apt install libsdl2-2.0-0`   
+**EDIT:** Ubuntu 16.04 needs to install the *libdsl2-2.0-0* package, because the 
+*ffmpeg* package include *libsdl1* and not *libdsl2-2.0-0*.   
 
-rather install *ffmpeg* which will also install *libsdl2-2.0-0*: `sudo apt install ffmpeg`   
+to install *libsdl2-2.0-0* on **Ubuntu** typing: `sudo apt install libsdl2-2.0-0`   
 
 ----
 Currently, two separate versions have been released for GTK2 and GTK3.   

@@ -22,24 +22,23 @@ web page.
 Minimum requirements:   
 - **Ubuntu 16.04 LTS** to up (64-bit only)
 
-## Windows
-Videomass **exe** is available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) web page.   
-This installer contain everything you need to be used in standalone mode, 
-without the need for anything else. 
+## MS Windows
+MS Windows users should use the installer available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) website.   
+The installer contains everything you need to run **Videomass**. 
 
 Minimum requirements:
 - Microsoft **Windows 7** to **Windows 10** (64-bit only)
 
 ## MacOs
-Videomass **dmg** is available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) web page.   
-It contains everything you need to be used in standalone mode, 
-without the need for anything else. 
+MacOs users should use the disk image file (.**dmg**) available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) website.   
+It contains everything you need to run **Videomass**.
 
 Minimum requirements:
 - MacOS **Sierra**, **High Sierra** and **Mojave** (64-bit only)
 
-## Note 
-For some functional limitations see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html).   
+## Limitations 
+For some functional limitations related to the above packages (not for Ubuntu 
+PPA) see [Known Problems](https://jeanslack.github.io/Videomass/known_problems.html).   
 
 ## For developpers
 please visit
