@@ -1,3 +1,15 @@
+videomass (3.1.3-1) UNRELEASED; urgency=medium
+
+  * Fix `ImportError: libSDL2-2.0.so.0` on appimage. This library will be
+    loaded if required.
+  * It is no longer required to pre-install the libsdl2-2.0-0 package to start
+    Videomass AppImage.
+  * The tools for creating the appimages have been redefined.
+  * Improved icons 32x32.
+  * Fix some translation.
+
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 11 Oct 2020 11:45:00 +0200
+
 videomass (3.1.2-1) UNRELEASED; urgency=medium
 
   * Redesigned the main videomass icon.

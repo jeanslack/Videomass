@@ -14,20 +14,23 @@
 #
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
+# Update: Oct.10.2020
 ###################################################################
 
 set -x  # Print commands and their arguments as they are executed.
 set -e  # Exit immediately if a command exits with a non-zero status.
 
-# # building in temporary directory to keep system clean
-# # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
-# if [ "$CI" == "" ] && [ -d /dev/shm ]; then
-#     TEMP_BASE=/dev/shm
-# else
-#     TEMP_BASE=/tmp
-# fi
-
-TEMP_BASE=/tmp
+# building in temporary directory to keep system clean
+# use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
+if [ "$CI" == "" ] && [ -d /dev/shm ]; then
+    if [ -u /dev/shm ]; then  # is set-uid-on-exec
+        TEMP_BASE=/dev/shm
+    else
+        TEMP_BASE=/tmp
+    fi
+else
+    TEMP_BASE=/tmp
+fi
 
 PYTHON_APPIMAGE=python3.8.6-cp38-cp38-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
@@ -36,7 +39,6 @@ WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.
 
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
 APP_DIR="$BUILD_DIR/AppDir"
-mkdir $APP_DIR
 
 # make sure to clean up build dir, even if errors occur
 cleanup () {
@@ -58,32 +60,37 @@ wget -c ${PYTHON_APPIMAGE_URL}
 chmod +x ${PYTHON_APPIMAGE}
 ./${PYTHON_APPIMAGE} --appimage-extract
 
-#mv squashfs-root AppDir
-mv squashfs-root/usr $APP_DIR/usr
-mv squashfs-root/opt $APP_DIR/opt
-mv squashfs-root/AppRun $APP_DIR/AppRun
-rm -rf squashfs-root/
+mv squashfs-root AppDir
 
 # Download required shared library
 if [ ! -d usr ] || [ ! -d lib ]; then
-wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb \
-    http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb \
-#     http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb \
-#     http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb
+    wget -c http://security.ubuntu.com/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1.1_amd64.deb \
+        http://security.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb \
+            http://nl.archive.ubuntu.com/ubuntu/pool/universe/s/sndio/libsndio6.1_1.1.0-2_amd64.deb \
+                http://security.ubuntu.com/ubuntu/pool/universe/libs/libsdl2/libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb
 
     # extract data from .deb files
     ar -x libpng12-0_1.2.54-1ubuntu1.1_amd64.deb data.tar.xz && tar -xf data.tar.xz
     ar -x libjpeg-turbo8_1.4.2-0ubuntu3.4_amd64.deb data.tar.xz && tar -xf data.tar.xz
-#     ar -x libsndio6.1_1.1.0-2_amd64.deb data.tar.xz && tar -xf data.tar.xz
-#     ar -x libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libsndio6.1_1.1.0-2_amd64.deb data.tar.xz && tar -xf data.tar.xz
+    ar -x libsdl2-2.0-0_2.0.4+dfsg1-2ubuntu2.16.04.2_amd64.deb data.tar.xz && tar -xf data.tar.xz
 fi
 
 # copy shared libraries
 cp -r lib/ $APP_DIR/
 cp -r usr/ $APP_DIR/
 
-# Update requirements first
+# move some libraries to link when needed by starting appimage
+mkdir $APP_DIR/x86_64-linux-gnu
+mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.4.0 \
+    $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0 \
+        $APP_DIR/usr/lib/x86_64-linux-gnu/libsndio.so.6.1 \
+            $APP_DIR/x86_64-linux-gnu
+
+# Update pip first
 $APP_DIR/AppRun -m pip install -U pip
+
+# installing wxPython4.1 binary wheel (GTK2 porting)
 $APP_DIR/AppRun -m pip install -U -f ${WX_PYTHON_URL} wxPython
 
 # install videomass and its dependencies
@@ -92,12 +99,6 @@ if [ -f $REPO_ROOT/dist/videomass-*.whl ]; then
 else
     $APP_DIR/AppRun -m pip install videomass
 fi
-
-# Change AppRun so that it launches videomass and export shared libraries dir
-sed -i -e 's|/opt/python3.8/bin/python3.8|/usr/bin/videomass|g' $APP_DIR/AppRun
-sed -i -e '/export TKPATH/a # required shared libraries to run Videomass' $APP_DIR/AppRun
-sed -i -e '/# required shared libraries to run Videomass/a export LD_LIBRARY_PATH="${here}/usr/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' $APP_DIR/AppRun
-sed -i -e '/export LD_LIBRARY_PATH=/a export LD_LIBRARY_PATH="${here}/lib/x86_64-linux-gnu/":$LD_LIBRARY_PATH' $APP_DIR/AppRun
 
 # set new metainfo
 cat <<EOF > $APP_DIR/usr/share/metainfo/python*.appdata.xml
@@ -123,6 +124,14 @@ cat <<EOF > $APP_DIR/usr/share/metainfo/python*.appdata.xml
 </component>
 EOF
 
+# copy new AppRun for Videomass
+cp -f $REPO_ROOT/develop/tools/AppRun $APP_DIR/AppRun
+
+# remove unused .png and .desktop files
+rm $APP_DIR/python.png \
+    $APP_DIR/python*.desktop \
+        $APP_DIR/usr/share/icons/hicolor/256x256/apps/python.png
+
 # Edit the .desktop file
 mv $APP_DIR/usr/share/applications/python*.desktop \
     $APP_DIR/usr/share/applications/videomass.desktop
@@ -139,17 +148,11 @@ sed -i -e 's|^Categories=.*|Categories=AudioVideo;|g' $APP_DIR/usr/share/applica
 # add pixmaps icon
 cp -r $APP_DIR/opt/python*/share/pixmaps/ $APP_DIR/usr/share/
 
-# retrieve the Videomass version from the package metadata
-export VERSION=$(cat \
-    $APP_DIR/opt/python*/lib/python3.8/site-packages/videomass-*.dist-info/METADATA \
-        | grep "^Version:.*" | cut -d " " -f 2)
+# download appimagetool and linuxdeploy
+wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage \
+    https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
 
-# download appimagetool
-wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-
-if [ ! -x appimagetool-x86_64.AppImage ]; then
-    chmod +x appimagetool-x86_64.AppImage
-fi
+chmod +x appimagetool-x86_64.AppImage linuxdeploy-x86_64.AppImage
 
 # for any updates, copy 'appimagetool*' and 'youtube_dl_update_appimage.sh' script
 cp appimagetool-x86_64.AppImage \
@@ -160,10 +163,15 @@ if [ ! -x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh ]; then
 chmod +x $APP_DIR/usr/bin/youtube_dl_update_appimage.sh
 fi
 
-# Now, build AppImage using linuxdeploy
+# set architecture
 export ARCH=x86_64
-wget -c https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-chmod +x linuxdeploy*.AppImage
+
+# retrieve the Videomass version from the package metadata
+export VERSION=$(cat \
+    $APP_DIR/opt/python*/lib/python3.8/site-packages/videomass-*.dist-info/METADATA \
+        | grep "^Version:.*" | cut -d " " -f 2)
+
+# Now, build AppImage using linuxdeploy
 ./linuxdeploy-x86_64.AppImage --appdir $APP_DIR \
     --icon-file $APP_DIR/opt/python*/share/icons/hicolor/256x256/apps/videomass.png \
         --desktop-file $APP_DIR/opt/python*/share/applications/videomass.desktop \

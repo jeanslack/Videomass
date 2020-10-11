@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 16:06+0200\n"
+"POT-Creation-Date: 2020-10-10 23:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -406,7 +406,7 @@ msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:36
 msgid ""
-"This wizard will attempt to automatically detect FFmpeg in\n"
+"This wizard will attempt to automatically detect FFmpeg on\n"
 "your system.\n"
 "\n"
 "In addition, it allows you to manually set a custom path\n"
@@ -415,9 +415,9 @@ msgid ""
 "Also, Remember that you can always change these settings\n"
 "later, through the Setup dialog.\n"
 "\n"
-"- Press 'Auto-detection' to start the system search now.\n"
+"- Click on 'Auto-detection' to start the search now.\n"
 "\n"
-"- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
+"- Click on 'Browse..' to indicate the folder where to locate FFmpeg.\n"
 msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:66
@@ -459,17 +459,16 @@ msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:213
 msgid ""
-"Videomass already seems to include FFmpeg and the executables associated "
-"with it.\n"
+"Videomass already seems to include FFmpeg.\n"
 "\n"
-"Are you sure you want to use them?"
+"Do you want to use that?"
 msgstr ""
 
-#: ../vdms_dialogs/first_time_start.py:217 ../vdms_io/filenames_check.py:78
+#: ../vdms_dialogs/first_time_start.py:216 ../vdms_io/filenames_check.py:78
 msgid "Videomass: Please Confirm"
 msgstr ""
 
-#: ../vdms_dialogs/first_time_start.py:267
+#: ../vdms_dialogs/first_time_start.py:266
 msgid ""
 "\n"
 "Wizard completed successfully.\n"
@@ -478,8 +477,8 @@ msgid ""
 "Thank You!"
 msgstr ""
 
-#: ../vdms_dialogs/first_time_start.py:269
-msgid "That's all folks!"
+#: ../vdms_dialogs/first_time_start.py:268
+msgid "Done!"
 msgstr ""
 
 #: ../vdms_dialogs/infoprg.py:61
@@ -690,7 +689,7 @@ msgstr ""
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:668
+#: ../vdms_dialogs/settings.py:665
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 

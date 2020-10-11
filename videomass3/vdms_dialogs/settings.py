@@ -628,10 +628,7 @@ class Setup(wx.Dialog):
         Restore to default settings colors and icons set
         """
         self.full_list[self.rowsNum[11]] = "Material_Design_Icons_black\n"
-        if Setup.OS == 'Windows':
-            self.full_list[self.rowsNum[12]] = '40, 148, 255, 255\n'
-        else:
-            self.full_list[self.rowsNum[12]] = '228, 21, 68\n'
+        self.full_list[self.rowsNum[12]] = '118, 118, 118\n'
         self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
         self.full_list[self.rowsNum[14]] = '0, 0, 0\n'
         self.default_theme.Disable()

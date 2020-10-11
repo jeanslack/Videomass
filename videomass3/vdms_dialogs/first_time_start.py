@@ -33,16 +33,16 @@ class FirstStart(wx.Dialog):
     """
     Shows a dialog wizard to locate FFmpeg executables
     """
-    MSG1 = (_("This wizard will attempt to automatically detect FFmpeg in\n"
+    MSG1 = (_("This wizard will attempt to automatically detect FFmpeg on\n"
               "your system.\n\n"
               "In addition, it allows you to manually set a custom path\n"
               "to locate FFmpeg and its associated executables.\n\n"
               "Also, Remember that you can always change these settings\n"
               "later, through the Setup dialog.\n\n"
-              "- Press 'Auto-detection' to start the system search now."
+              "- Click on 'Auto-detection' to start the search now."
               "\n\n"
-              "- Press 'Browse..' to indicate yourself where FFmpeg is "
-              "located.\n"))
+              "- Click on 'Browse..' to indicate the folder where to locate "
+              "FFmpeg.\n"))
 
     def __init__(self, img):
         """
@@ -211,9 +211,8 @@ class FirstStart(wx.Dialog):
                 return
             else:
                 if wx.MessageBox(_("Videomass already seems to include "
-                                   "FFmpeg and the executables associated "
-                                   "with it.\n\n"
-                                   "Are you sure you want to use them?"),
+                                   "FFmpeg.\n\n"
+                                   "Do you want to use that?"),
                                  _('Videomass: Please Confirm'),
                                  wx.ICON_QUESTION |
                                  wx.YES_NO,
@@ -266,5 +265,5 @@ class FirstStart(wx.Dialog):
 
         wx.MessageBox(_("\nWizard completed successfully.\n"
                         "Restart Videomass now.\n\nThank You!"),
-                      _("That's all folks!"))
+                      _("Done!"))
         self.Destroy()

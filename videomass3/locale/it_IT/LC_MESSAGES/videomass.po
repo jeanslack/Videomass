@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-03 16:06+0200\n"
-"PO-Revision-Date: 2020-10-03 16:07+0200\n"
+"POT-Creation-Date: 2020-10-10 23:54+0200\n"
+"PO-Revision-Date: 2020-10-11 00:00+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -484,7 +484,7 @@ msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:36
 msgid ""
-"This wizard will attempt to automatically detect FFmpeg in\n"
+"This wizard will attempt to automatically detect FFmpeg on\n"
 "your system.\n"
 "\n"
 "In addition, it allows you to manually set a custom path\n"
@@ -493,9 +493,9 @@ msgid ""
 "Also, Remember that you can always change these settings\n"
 "later, through the Setup dialog.\n"
 "\n"
-"- Press 'Auto-detection' to start the system search now.\n"
+"- Click on 'Auto-detection' to start the search now.\n"
 "\n"
-"- Press 'Browse..' to indicate yourself where FFmpeg is located.\n"
+"- Click on 'Browse..' to indicate the folder where to locate FFmpeg.\n"
 msgstr ""
 "Questo assistente tenterà di individuare automaticamente\n"
 "FFmpeg sul tuo sistema.\n"
@@ -507,9 +507,10 @@ msgstr ""
 "Ricorda che è sempre possibile modificare queste impostazioni\n"
 "anche in seguito, attraverso il dialogo di Setup.\n"
 "\n"
-"- Premi 'Auto-rileva' per iniziare ora la ricerca sul sistema.\n"
+"- Fare click su  'Auto-rileva' per iniziare ora la ricerca.\n"
 "\n"
-"- Premi 'Sfoglia' per indicare tu stesso dove si trova FFmpeg.\n"
+"- Fare click su  'Sfoglia..' per indicare la cartella dove individuare "
+"FFmpeg.\n"
 
 #: ../vdms_dialogs/first_time_start.py:66
 msgid "Welcome to Videomass Wizard!"
@@ -557,20 +558,19 @@ msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:213
 msgid ""
-"Videomass already seems to include FFmpeg and the executables associated "
-"with it.\n"
+"Videomass already seems to include FFmpeg.\n"
 "\n"
-"Are you sure you want to use them?"
+"Do you want to use that?"
 msgstr ""
-"Videomass sembra già includere FFmpeg e i gli eseguibili ad esso associati.\n"
+"Videomass sembra già includere FFmpeg.\n"
 "\n"
-"Confermi di volerli utilizzare?"
+"Vuoi usare quello?"
 
-#: ../vdms_dialogs/first_time_start.py:217 ../vdms_io/filenames_check.py:78
+#: ../vdms_dialogs/first_time_start.py:216 ../vdms_io/filenames_check.py:78
 msgid "Videomass: Please Confirm"
 msgstr "Videomass: Prego confermare"
 
-#: ../vdms_dialogs/first_time_start.py:267
+#: ../vdms_dialogs/first_time_start.py:266
 msgid ""
 "\n"
 "Wizard completed successfully.\n"
@@ -584,9 +584,9 @@ msgstr ""
 "\n"
 "Grazie!"
 
-#: ../vdms_dialogs/first_time_start.py:269
-msgid "That's all folks!"
-msgstr "Questo è tutto!"
+#: ../vdms_dialogs/first_time_start.py:268
+msgid "Done!"
+msgstr " Fatto!"
 
 #: ../vdms_dialogs/infoprg.py:61
 msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
@@ -810,7 +810,7 @@ msgstr "Videomass: Dove si trova l'eseguibile ffprobe?"
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr "Videomass: Dove si trova l'eseguibile ffplay?"
 
-#: ../vdms_dialogs/settings.py:668
+#: ../vdms_dialogs/settings.py:665
 msgid "Changes will take affect once the program has been restarted"
 msgstr "Le modifiche verranno applicate una volta riavviato il programma"
 
@@ -3246,6 +3246,9 @@ msgstr ""
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
 
+#~ msgid "That's all folks!"
+#~ msgstr "Questo è tutto!"
+
 #~ msgid "For playback, first make sure you select a URL in the list control"
 #~ msgstr ""
 #~ "Per la riproduzione, assicurati innanzitutto di selezionare un URL "
@@ -3381,9 +3384,6 @@ msgstr ""
 #~ msgstr ""
 #~ "\n"
 #~ " Completato :-)\n"
-
-#~ msgid " ...Done !\n"
-#~ msgstr " ...Fatto !\n"
 
 #~ msgid ""
 #~ "\n"

@@ -28,6 +28,6 @@ script:
     # make a videomass source dist and wheel
     - python setup.py sdist bdist_wheel
     # build appimage
-    - bash develop/tools/AppImage_build.sh
+    - bash develop/tools/AppImage_build_GTK2.sh
 after_script:
     - killall Xvfb
