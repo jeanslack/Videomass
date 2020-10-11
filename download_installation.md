@@ -22,6 +22,10 @@ web page.
 Minimum requirements:   
 - **Ubuntu 16.04 LTS** to up (64-bit only)
 
+Currently two ports are released for GTK2 and GTK3. Please visit 
+[Known Problems](https://jeanslack.github.io/Videomass/known_problems.html)
+web page to find out which porting is compatible with your Linux distribution.
+
 ## MS Windows
 MS Windows users should use the installer available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) website.   
 The installer contains everything you need to run **Videomass**. 

@@ -26,23 +26,10 @@ be disabled when using this encoder.
  
 ## Videomass AppImage for Linux
 
-**Very Important:**   
-before to start latest version of Videomass AppImage, you should install 
-*libsdl2-2.0-0* package, which may not be installed by default in some Linux 
-distributions, i.e all releases of **Ubuntu** it seems. Alternatively, you can 
-install the *ffmpeg* package which includes *libdsl2-2.0-0* as a dependency and 
-is required by Videomass as it is not embedded in the AppImage itself.   
-Thank you!  
+Currently, two separate portings have been released for GTK2 and GTK3.   
 
-**EDIT:** Ubuntu 16.04 needs to install the *libdsl2-2.0-0* package separately, 
-because the *ffmpeg* package include *libsdl1* and not *libdsl2-2.0-0*.   
+Videomass AppImage for **GTK3** it has been successfully tested on the following Linux distributions:   
 
-to install *libsdl2-2.0-0* on **Ubuntu** typing: `sudo apt install libsdl2-2.0-0`   
-
-----
-Currently, two separate versions have been released for GTK2 and GTK3.   
-
-Videomass AppImage for **GTK3** it has been successfully tested on the following Linux distributions:
 * ~~Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)~~ NOT WORK
 * Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
 * Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
@@ -57,7 +44,8 @@ Videomass AppImage for **GTK3** it has been successfully tested on the following
 * Fedora 32 (Workstation Edition) x86_64
 * Manjaro Linux 20.0.3 (Lysia) x86_64
 
-Videomass AppImage for **GTK2** it has been successfully tested on the following Linux distributions:
+Videomass AppImage for **GTK2** it has been successfully tested on the following Linux distributions:   
+
 * Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
 * Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
 * Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
@@ -71,5 +59,12 @@ Videomass AppImage for **GTK2** it has been successfully tested on the following
 * AV-Linux 2020.4.10 x86_64
 * ~~Fedora 32 (Workstation Edition) x86_64~~ NOT WORK
 * Manjaro Linux 20.0.3 (Lysia) x86_64
+
+----
+
+- The installation of the `libsdl2-2.0-0` package is no longer required as it 
+was included in the appimage. 
+- Videomass AppImage do not include FFmpeg which must be installed separately.
+- For a full list of changes see the **[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**   
 
 [Home](index.md)
