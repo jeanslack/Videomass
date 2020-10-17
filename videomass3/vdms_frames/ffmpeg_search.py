@@ -100,11 +100,8 @@ class FFmpeg_Search(wx.MiniFrame):
                                     style=wx.TE_PROCESS_ENTER,
                                     )
         self.search.SetToolTip(_("The search function allows you to find "
-                                 "entries in the current topic"
-                                 ))
-        self.case = wx.CheckBox(self.panel, wx.ID_ANY,
-                                (_("Ignore-case"))
-                                )
+                                 "entries in the current topic"))
+        self.case = wx.CheckBox(self.panel, wx.ID_ANY, (_("Ignore-case")))
         self.case.SetToolTip(_("Ignore case distinctions, so that characters "
                                "that differ only in case match each other."
                                ))

@@ -213,7 +213,7 @@ class Choose_Topic(wx.Panel):
                 if not self.EXEC_YDL and os.path.isfile(fydl):
                     if self.store_ydl_on_cache:
                         dlg = wx.RichMessageDialog(self, msg_system_used,
-                                                _("Videomass confirmation"),
+                                                _("Please confirm"),
                                                   wx.ICON_QUESTION |
                                                   wx.YES_NO
                                                   )
@@ -237,7 +237,7 @@ class Choose_Topic(wx.Panel):
                 self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
             else:
-                if wx.MessageBox(msg_required, _("Videomass confirmation"),
+                if wx.MessageBox(msg_required, _("Please confirm"),
                                  wx.ICON_QUESTION |
                                  wx.YES_NO, self) == wx.NO:
                     return
@@ -250,7 +250,7 @@ class Choose_Topic(wx.Panel):
                                                          self.EXEC_YDL)
                 if upgrade[1]:  # failed
                     wx.MessageBox("%s" % (upgrade[1]),
-                                  "Videomass error", wx.ICON_ERROR, self)
+                                  "Videomass", wx.ICON_ERROR, self)
                     return
                 else:
                     if wx.MessageBox(msg_ready, "Videomass",
@@ -261,5 +261,5 @@ class Choose_Topic(wx.Panel):
                 return
 
         elif self.EXEC_YDL is False:
-            wx.MessageBox(msg_error, 'Videomass error', wx.ICON_ERROR)
+            wx.MessageBox(msg_error, 'Videomass', wx.ICON_ERROR)
             return

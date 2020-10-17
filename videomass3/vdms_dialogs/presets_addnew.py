@@ -39,11 +39,11 @@ class MemPresets(wx.Dialog):
     DIR_CONF = get.DIRconf
     OS = get.OS
 
-    PASS_1 = _("1-PASS, Do not start with `ffmpeg "
+    PASS_1 = _("One-Pass, Do not start with `ffmpeg "
                "-i filename`; do not end with "
                "`output-filename`"
                )
-    PASS_2 = _("2-PASS (optional), Do not start with "
+    PASS_2 = _("Two-Pass (optional), Do not start with "
                "`ffmpeg -i filename`; do not end with "
                "`output-filename`"
                )

@@ -68,8 +68,9 @@ def info(parent, videomass_icon):
     info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it)")
     #info.AddTranslator("Nestor Blanco <random@ES.pe> ES")
     info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
-                     'Material design icons '
-                     'http://google.github.io/material-design-icons/'
-                     '#getting-icons'])
+                     'Breeze icons '
+                     'https://github.com/KDE/breeze-icons',
+                     'Papirus icons '
+                     'https://github.com/PapirusDevelopmentTeam/papirus-icon-theme'])
     wx.adv.AboutBox(info)
     # event.Skip()

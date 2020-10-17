@@ -71,7 +71,7 @@ def stream_info(title, filepath):
 
     except IOError:
         wx.MessageBox(_("File does not exist or not a valid file:  %s") % (
-            filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
+            filepath), "Videomass", wx.ICON_EXCLAMATION, None)
 # -----------------------------------------------------------------------#
 
 
@@ -93,7 +93,7 @@ def stream_play(filepath, timeseq, param):
             # error = thread.data
     except IOError:
         wx.MessageBox(_("File does not exist or not a valid file:  %s") % (
-            filepath), "Videomass: warning", wx.ICON_EXCLAMATION, None)
+            filepath), "Videomass", wx.ICON_EXCLAMATION, None)
         return
 # -----------------------------------------------------------------------#
 
@@ -177,7 +177,7 @@ def test_conf():
     out = ff_conf(get.FFMPEG_url, get.OS)
     if 'Not found' in out[0]:
         wx.MessageBox("\n{0}".format(out[1]),
-                      "Videomass: error",
+                      "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
@@ -202,7 +202,7 @@ def test_formats():
     diction = ff_formats(get.FFMPEG_url, get.OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
-                      "Videomass: error",
+                      "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
@@ -223,7 +223,7 @@ def test_codecs(type_opt):
     diction = ff_codecs(get.FFMPEG_url, type_opt, get.OS)
     if 'Not found' in diction.keys():
         wx.MessageBox("\n{0}".format(diction['Not found']),
-                      "Videomass: error",
+                      "Videomass",
                       wx.ICON_ERROR,
                       None)
         return
@@ -259,7 +259,7 @@ def openpath(where):
     get = wx.GetApp()
     ret = browse(get.OS, where)
     if ret:
-        wx.MessageBox(ret, 'Videomass Error', wx.ICON_ERROR, None)
+        wx.MessageBox(ret, 'Videomass', wx.ICON_ERROR, None)
 # -------------------------------------------------------------------------#
 
 

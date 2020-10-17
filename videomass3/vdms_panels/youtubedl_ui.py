@@ -360,7 +360,7 @@ class Downloader(wx.Panel):
             for meta in data:
                 if meta[1]:
                     # self.parent.statusbar_msg('Youtube Downloader', None)
-                    wx.MessageBox(meta[1], 'youtube_dl ERROR', wx.ICON_ERROR)
+                    wx.MessageBox(meta[1], 'Videomass', wx.ICON_ERROR)
                     return True
 
             formats = iter(meta[0].get('formats', [meta[0]]))
@@ -403,7 +403,7 @@ class Downloader(wx.Panel):
             for meta in data:
                 if meta[1]:
                     # self.parent.statusbar_msg('Youtube Downloader', None)
-                    wx.MessageBox(meta[1], 'youtube_dl ERROR', wx.ICON_ERROR)
+                    wx.MessageBox(meta[1], 'Videomass', wx.ICON_ERROR)
                     del self.info[:]
                     return True
                 if 'entries' in meta[0]:

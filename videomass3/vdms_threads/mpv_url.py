@@ -44,7 +44,7 @@ def msg_Error(msg):
     Receive error messages via wxCallafter
     """
     wx.MessageBox("%s" % (msg),
-                  "Videomass: mpv ERROR",
+                  "Videomass",
                   wx.ICON_ERROR
                   )
 
@@ -54,7 +54,7 @@ def msg_Info(msg):
     Receive info messages via wxCallafter
     """
     wx.MessageBox("MPV message information:  %s" % (msg),
-                  "Videomass: mpv INFORMATION",
+                  "Videomass",
                   wx.ICON_INFORMATION
                   )
 

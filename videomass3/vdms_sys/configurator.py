@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.12.2020 *PEP8 compatible*
+# Rev: Oct.16.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -179,7 +179,7 @@ class Data_Source(object):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 2.3:
+                if float(userconf[0]) != 2.4:
                     existfileconf = False
             else:
                 existfileconf = False
@@ -234,54 +234,59 @@ class Data_Source(object):
         configuration file.
 
         """
-        # videomass sign
-        if iconset == 'Videomass_Sign_Icons':  # default
-            x48 = '%s/Videomass_Sign_Icons/48x48' % self.icodir
-            x32 = '%s/Videomass_Sign_Icons/32x32' % self.icodir
-            x24 = '%s/Videomass_Sign_Icons/24x24' % self.icodir
-            x18 = '%s/Videomass_Sign_Icons/18x18' % self.icodir
-        # material design black
-        if iconset == 'Material_Design_Icons_black':
-            x48 = '%s/Videomass_Sign_Icons/48x48_black' % self.icodir
-            x32 = '%s/Videomass_Sign_Icons/32x32_black' % self.icodir
-            x24 = '%s/Material_Design_Icons_black/24x24' % self.icodir
-            x18 = '%s/Material_Design_Icons_black/18x18' % self.icodir
-        # flat-colours
-        elif iconset == 'Material_Design_Icons_white':
-            x48 = '%s/Videomass_Sign_Icons/48x48_white' % self.icodir
-            x32 = '%s/Videomass_Sign_Icons/32x32_white' % self.icodir
-            x24 = '%s/Material_Design_Icons_white/24x24' % self.icodir
-            x18 = '%s/Material_Design_Icons_white/18x18' % self.icodir
+        # Breeze for light themes
+        if iconset == 'Breeze':  # default
+            x48 = '%s/Sign_Icons/48x48_light' % self.icodir
+            x22 = '%s/Breeze/22x22' % self.icodir
+            x16 = '%s/Breeze/16x16' % self.icodir
+        # breeze for dark themes
+        elif iconset == 'Breeze-Dark':
+            x48 = '%s/Sign_Icons/48x48_dark' % self.icodir
+            x22 = '%s/Breeze-Dark/22x22' % self.icodir
+            x16 = '%s/Breeze-Dark/16x16' % self.icodir
+        # breeze custom icons colorized
+        elif iconset == 'Breeze-Blues':
+            x48 = '%s/Sign_Icons/48x48' % self.icodir
+            x22 = '%s/Breeze-Blues/22x22' % self.icodir
+            x16 = '%s/Breeze-Blues/16x16' % self.icodir
+        # papirus icons
+        elif iconset == 'Papirus':
+            x48 = '%s/Sign_Icons/48x48_light' % self.icodir
+            x22 = '%s/Papirus/22x22' % self.icodir
+            x16 = '%s/Papirus/16x16' % self.icodir
+        # papirus icons for dark themes
+        elif iconset == 'Papirus-Dark':
+            x48 = '%s/Sign_Icons/48x48_dark' % self.icodir
+            x22 = '%s/Papirus-Dark/22x22' % self.icodir
+            x16 = '%s/Papirus-Dark/16x16' % self.icodir
 
         # choose topic icons 48x48:
         icon_switchvideomass = '%s/icon_videoconversions.png' % x48
         icon_youtube = '%s/icon_youtube.png' % x48
         icon_prst_mng = '%s/icon_prst_mng.png' % x48
-        # choose topic icons 36x36:
-        icon_process = '%s/icon_process.png' % x32
-        icon_toolback = '%s/icon_mainback.png' % x32
-        icon_toolforward = '%s/icon_mainforward.png' % x32
-        icon_ydl = '%s/youtubeDL.png' % x32
-        # x24 icons 24x24:
-        icn_infosource = '%s/infosource.png' % x24
-        icn_preview = '%s/preview.png' % x24
-        icn_cut = '%s/cut.png' % x24
-        icn_saveprf = '%s/saveprf.png' % x24
-        icn_newprf = '%s/newprf.png' % x24
-        icn_delprf = '%s/delprf.png' % x24
-        icn_editprf = '%s/editprf.png' % x24
-        # filters icons 24x24:
-        icn_playfilters = '%s/playfilters.png' % x24
-        icn_resetfilters = '%s/resetfilters.png' % x24
-        # filters icons 18x18:
-        ic_resize = '%s/resize.png' % x18
-        ic_crop = '%s/crop.png' % x18
-        ic_rotate = '%s/rotate.png' % x18
-        ic_deinterlace = '%s/deinterlace.png' % x18
-        ic_denoiser = '%s/denoiser.png' % x18
-        ic_analyzes = '%s/analyzes.png' % x18
-        ic_settings = '%s/settings.png' % x18
-        ic_peaklevel = '%s/peaklevel.png' % x18
+        # toolbar icons 22x22:
+        icon_process = '%s/convert.png' % x22
+        icon_toolback = '%s/back.png' % x22
+        icon_toolforward = '%s/forward.png' % x22
+        icon_ydl = '%s/download.png' % x22
+        icn_infosource = '%s/view-media.png' % x22
+        icn_preview = '%s/media-playback.png' % x22
+        icn_cut = '%s/timeline.png' % x22
+        icn_saveprf = '%s/save.png' % x22
+        icn_newprf = '%s/new.png' % x22
+        icn_delprf = '%s/delete.png' % x22
+        icn_editprf = '%s/edit.png' % x22
+        # button icons 16x16:
+        icn_playfilters = '%s/view-preview.png' % x16
+        icn_resetfilters = '%s/edit-clear.png' % x16
+        ic_resize = '%s/transform-scale.png' % x16
+        ic_crop = '%s/transform-crop.png' % x16
+        ic_rotate = '%s/transform-rotate.png' % x16
+        ic_deinterlace = '%s/deinterlace.png' % x16
+        ic_denoiser = '%s/denoise.png' % x16
+        ic_analyzes = '%s/statistics.png' % x16
+        ic_settings = '%s/configure.png' % x16
+        ic_peaklevel = '%s/player-volume.png' % x16
 
         return [os.path.join(norm) for norm in [self.videomass_icon,  # 0
                                                 icon_switchvideomass,  # 1

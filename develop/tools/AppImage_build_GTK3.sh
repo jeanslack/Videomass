@@ -14,7 +14,7 @@
 #
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Create: Oct.10.2020
-# Update: /
+# Update: Oct.12.2020
 ###################################################################
 
 set -x  # Print commands and their arguments as they are executed.
@@ -23,10 +23,10 @@ set -e  # Exit immediately if a command exits with a non-zero status.
 # building in temporary directory to keep system clean
 # use RAM disk if possible (as in: not building on CI system like Travis, and RAM disk is available)
 if [ "$CI" == "" ] && [ -d /dev/shm ]; then
-    if [ -u /dev/shm ]; then  # is set-uid-on-exec
-        TEMP_BASE=/dev/shm
-    else
+    if mount | grep '/dev/shm' | grep -q 'noexec'; then
         TEMP_BASE=/tmp
+    else
+        TEMP_BASE=/dev/shm
     fi
 else
     TEMP_BASE=/tmp

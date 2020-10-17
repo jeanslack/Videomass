@@ -75,7 +75,7 @@ def inspect(file_sources, dir_destin, extoutput):
         if wx.MessageBox(_('Already exist: \n\n- %s\n\n'
                            'Do you want to overwrite? ') %
                          ('\n- '.join(exclude)),
-                         _('Videomass: Please Confirm'),
+                         _('Please Confirm'),
                          wx.ICON_QUESTION | wx.YES_NO,
                          None) == wx.NO:
             return (False, None, None, None, None)  # user risponde no
@@ -84,14 +84,14 @@ def inspect(file_sources, dir_destin, extoutput):
     for f in file_sources:
         if not os.path.isfile(os.path.abspath(f)):
             wx.MessageBox(_('The file does not exist:\n\n"%s"\n') % (f),
-                          _("Videomass: Input file error"), wx.ICON_ERROR
+                          "Videomass", wx.ICON_ERROR
                           )
             return (False, None, None, None, None)
 
     for d in outputdir:
         if not os.path.isdir(os.path.abspath(d)):
             wx.MessageBox(_('The folder does not exist:\n\n"%s"\n') % (d),
-                          _('Videomass: Output folder error'), wx.ICON_ERROR
+                          'Videomass', wx.ICON_ERROR
                           )
             return (False, None, None, None, None)
 

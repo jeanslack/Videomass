@@ -62,7 +62,7 @@ class VideoRotate(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         # ----------------------Properties--------------------------------#
-        self.SetTitle(_("Videomass: Rotate and flip"))
+        self.SetTitle(_("Rotate and flip"))
         # self.button_up.SetBackgroundColour(wx.Colour(122, 239, 255))
         self.button_up.SetToolTip(_("Reverses visual movie from bottom "
                                     "to top"))
@@ -285,7 +285,7 @@ class VideoCrop(wx.Dialog):
         self.Layout()
 
         # ----------------------Properties-----------------------#
-        self.SetTitle(_("Videomass: video/image crop"))
+        self.SetTitle(_("Video cropping"))
         height = (_('The height of the output video.\n'
                     'Set to -1 for disabling.'))
         width = (_('The width of the output video.\n'
@@ -523,7 +523,7 @@ class VideoResolution(wx.Dialog):
         sizer_base.Fit(self)
         self.Layout()
         # Properties
-        self.SetTitle(_("Videomass: resize (change resolution)"))
+        self.SetTitle(_("Resizing"))
         scale_str = (_('Scale (resize) the input video or image.'))
         self.spin_scale_width.SetToolTip(_('WIDTH:\n%s') % scale_str)
         self.spin_scale_height.SetToolTip(_('HEIGHT:\n%s') % scale_str)
@@ -719,7 +719,7 @@ class Lacing(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         # set Properties
-        self.SetTitle(_("Videomass: deinterlace/interlace"))
+        self.SetTitle(_("Deinterlacing and Interlacing"))
         self.rdbx_w3fdif.Hide()
         self.rdbx_w3fdif_d.Hide()
         self.rdbx_Yadif_mode.Hide()
@@ -1181,7 +1181,7 @@ class Denoisers(wx.Dialog):
         sizer_base.Fit(self)
         self.Layout()
         # set Properties
-        self.SetTitle(_("Videomass: denoisers filters"))
+        self.SetTitle(_("Denoisers filters"))
         tool = _('nlmeans:\n(Denoise frames using Non-Local Means algorithm '
                  'is capable of restoring video sequences with even strong '
                  'noise. It is ideal for enhancing the quality of old VHS '

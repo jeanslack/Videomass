@@ -94,7 +94,7 @@ class Videomass(wx.App):
 
         if setui[2]:  # copyerr = True; the share folder is damaged
             wx.MessageBox(_('{0}\n\nSorry, cannot continue..'.format(
-                setui[2])), 'Videomass: Fatal Error', wx.ICON_STOP)
+                setui[2])), 'Videomass', wx.ICON_STOP)
             return False
 
         pathicons = data.icons_set(setui[4][11])  # get paths icons data
@@ -180,7 +180,7 @@ class Videomass(wx.App):
                 else:
                     wx.MessageBox(_('Permission denied: {}\n\n'
                                     'Check execution permissions.').format
-                                  (link), 'Videomass: Error', wx.ICON_STOP)
+                                  (link), 'Videomass', wx.ICON_STOP)
                     permissions = False
                     break
             if not permissions:
@@ -190,7 +190,7 @@ class Videomass(wx.App):
             try:  # make temporary folde on cache dir
                 os.makedirs(self.TMP, mode=0o777)
             except OSError as err:
-                wx.MessageBox('%s' % link, 'Videomass: Error', wx.ICON_STOP)
+                wx.MessageBox('%s' % link, 'Videomass', wx.ICON_STOP)
                 return False
 
         from videomass3.vdms_main.main_frame import MainFrame

@@ -84,12 +84,14 @@ class Setup(wx.Dialog):
             if not b.startswith('#'):
                 if not b == '\n':
                     self.rowsNum.append(a)
-                    #dic [a] = b.strip()# used for easy reading print debug
-        ##USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
-        ##uncomment the following code for a convenient reading
-        #print("\nPOSITION:    ROW:     VALUE:")
-        #for n, k in enumerate(sorted(dic)):
-            #print(n, ' -------> ', k, ' --> ', dic[k])
+                    """
+                    dic [a] = b.strip()# used for easy reading print debug
+        #USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
+        #uncomment the following code for a convenient reading
+        print("\nPOSITION:    ROW:     VALUE:")
+        for n, k in enumerate(sorted(dic)):
+            print(n, ' -------> ', k, ' --> ', dic[k])
+        """
 
         dirname = os.path.expanduser('~')  # /home/user/
         self.userpath = dirname if not Setup.OUTSAVE else Setup.OUTSAVE
@@ -171,8 +173,8 @@ class Setup(wx.Dialog):
         gridThreads = wx.BoxSizer(wx.VERTICAL)
         boxLabThreads.Add(gridThreads, 1, wx.ALL | wx.EXPAND, 15)
         lab1_pane2 = wx.StaticText(tabTwo, wx.ID_ANY,
-                                (_("Set the number of threads "
-                                    "(from 0 to 32)")))
+                                   (_("Sets threads used on some transcoding "
+                                      "(from 0 to 32)")))
         gridThreads.Add(lab1_pane2, 0,
                         wx.ALL |
                         wx.ALIGN_CENTER_VERTICAL |
@@ -236,14 +238,17 @@ class Setup(wx.Dialog):
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         gridappearance = wx.BoxSizer(wx.VERTICAL)
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
-                                        _("Set Icon Themes"))), wx.VERTICAL)
+                                        _("Set Icons"))), wx.VERTICAL)
         gridappearance.Add(boxLabIcons, 1, wx.ALL | wx.EXPAND, 15)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[
-                                          ("Videomass_Sign_Icons"),
-                                          ("Material_Design_Icons_black"),
-                                          ("Material_Design_Icons_white")
+                                          ("Breeze"),
+                                          ("Breeze-Dark"),
+                                          ("Breeze-Blues"),
+                                          ("Papirus"),
+                                          ("Papirus-Dark"),
                                           ],
+                                      size=(200, -1),
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
                                       )
         boxLabIcons.Add(self.cmbx_icons, 0,
@@ -251,6 +256,7 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
         self.cmbx_icons.SetValue(self.iconset)
+        """
         boxLabColor = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
                                     _("Color customization"))), wx.VERTICAL)
         gridappearance.Add(boxLabColor, 1, wx.ALL | wx.EXPAND, 15)
@@ -287,6 +293,7 @@ class Setup(wx.Dialog):
         gridTBColor.Add(btn_Fontcolor, 0, wx.ALL |
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
+        """
         self.default_theme = wx.Button(tabFour, wx.ID_CLEAR,
                                        _("Restore default settings"))
         gridappearance.Add(self.default_theme, 0, wx.ALL |
@@ -359,9 +366,9 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
-        self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
-        self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
-        self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_Fontcolor)
+        # self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
+        # self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
+        # self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_Fontcolor)
         self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, self.default_theme)
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_CHECKBOX, self.warn_Ydl, self.checkbox_cacheydl)
@@ -370,7 +377,6 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
         # --------------------------------------------#
         self.current_settings()  # call function for initialize setting layout
-
 
     def current_settings(self):
         """
@@ -593,10 +599,9 @@ class Setup(wx.Dialog):
             self.default_theme.Enable()
     # ------------------------------------------------------------------#
 
-    def onColorDlg(self, event):
-        """
-        Colorize the toolbar bar
-        """
+    """def onColorDlg(self, event):
+        # Colorize the toolbar bar
+
         btn = event.GetEventObject()
         identity = btn.GetLabelText()
 
@@ -620,14 +625,14 @@ class Setup(wx.Dialog):
             if not self.default_theme.IsEnabled():
                 self.default_theme.Enable()
 
-        dlg.Destroy()
+        dlg.Destroy()"""
     # --------------------------------------------------------------------#
 
     def onAppearanceDefault(self, event):
         """
         Restore to default settings colors and icons set
         """
-        self.full_list[self.rowsNum[11]] = "Material_Design_Icons_black\n"
+        self.full_list[self.rowsNum[11]] = "Breeze_blues\n"
         self.full_list[self.rowsNum[12]] = '118, 118, 118\n'
         self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
         self.full_list[self.rowsNum[14]] = '0, 0, 0\n'

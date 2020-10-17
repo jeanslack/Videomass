@@ -7,6 +7,18 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Oct 17, 2020 V.3.1.5
+
+     * New redesigned GUI
+     * New icons
+     * Made a new toolbar
+     * New buttons on panels
+     * Fixed issue with close button position on wizzard
+     * Fixed title names in dialog boxes
+     * Fixed some name definitions on the interface
+     * fix translations
+
++------------------------------------+
 Oct 11, 2020 V.3.1.3
 +------------------------------------+
 

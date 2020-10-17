@@ -69,7 +69,7 @@ class FirstStart(wx.Dialog):
         self.browseBtn = wx.Button(self, wx.ID_ANY, (_("Browse..")))
         close_btn = wx.Button(self, wx.ID_EXIT, "")
         # properties
-        self.SetTitle(_("Videomass: Wizard"))
+        self.SetTitle(_("Wizard"))
         lab_welc1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         # layout:
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -89,19 +89,15 @@ class FirstStart(wx.Dialog):
         grd_2.Add(self.browseBtn, 0, wx.ALL, 15)
 
         grd_2.Add((260, 0), 0, wx.ALL, 5)
-        grd_btn = wx.FlexGridSizer(1, 2, 0, 0)
-
-        grd_btn.Add(close_btn, 0, flag=wx.ALL, border=5)
-        grd_2.Add((260, 0), 0, wx.ALL, 15)
-        grd_2.Add(grd_btn, 0,
-                  flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=10)
-        # properties
-        self.detectBtn.SetMinSize((200, -1))
-        self.browseBtn.SetMinSize((200, -1))
         sizer_base.Add(grd_base)
+        sizer_base.Add(close_btn, 0, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=10)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
+
+        # properties
+        # self.detectBtn.SetMinSize((200, -1))
+        # self.browseBtn.SetMinSize((200, -1))
 
         # bindings
         self.Bind(wx.EVT_BUTTON, self.On_close)

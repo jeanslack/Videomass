@@ -3,7 +3,7 @@
 # This AppRun is included in the latest versions of Videomass*.AppImage.
 # During the creation of the appimage, it will be copied to AppDir, replacing
 # the existing one.
-# Always make sure that there are no major changes in the original AppRun.
+# Always make sure that there are no major changes in the original AppRun first.
 
 # Export APPRUN if running from an extracted image
 self="$(readlink -f -- $0)"

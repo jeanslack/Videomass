@@ -93,7 +93,7 @@ class Time_Duration(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")
 
         # ----------------------Properties ----------------------#
-        self.SetTitle(_('Videomass: duration'))
+        self.SetTitle(_('duration and timeline'))
         # self.start_hour_ctrl.SetMinSize((100,-1 ))
         # self.start_minute_ctrl.SetMinSize((100, -1))
         # self.start_second_ctrl.SetMinSize((100, -1))
@@ -251,7 +251,7 @@ class Time_Duration(wx.Dialog):
                                 "then insert it in 'Cut (end point)'. Always "
                                 "consider the total duration of the flow in "
                                 "order to avoid entering incorrect values."),
-                              "Duration",
+                              "Videomass",
                               wx.ICON_INFORMATION, self
                               )
                 return

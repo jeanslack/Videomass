@@ -27,7 +27,6 @@
 import wx
 import os
 import wx.lib.agw.floatspin as FS
-import wx.lib.agw.gradientbutton as GB
 from videomass3.vdms_io.presets_manager_properties import json_data
 from videomass3.vdms_io.presets_manager_properties import supported_formats
 from videomass3.vdms_io.presets_manager_properties import delete_profiles
@@ -47,7 +46,6 @@ class PrstPan(wx.Panel):
 
     """
     # set colour in RGB rappresentetion:
-    GREY_DISABLED = 165, 165, 165
     AZURE_NEON = 158, 201, 232
     # set colour in HTML rappresentetion:
     AZURE = '#15a6a6'  # or rgb form (wx.Colour(217,255,255))
@@ -93,9 +91,6 @@ class PrstPan(wx.Panel):
                        os.listdir(self.user_prst) if
                        os.path.splitext(x)[1] == '.prst'
                        ])
-        self.btnC = btn_color  # tollbar buttons color from conf.
-        self.fBtnC = fontBtncolor  # Buttons Font Colour from conf.
-
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
@@ -126,7 +121,7 @@ class PrstPan(wx.Panel):
         nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         grd_cmd = wx.GridSizer(1, 2, 0, 0)
         box_cmd1 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY,
-                                                  _("1-PASS")),
+                                                  _("One-Pass")),
                                      wx.VERTICAL
                                      )
         grd_cmd.Add(box_cmd1, 0, wx.ALL | wx.EXPAND, 15
@@ -138,7 +133,7 @@ class PrstPan(wx.Panel):
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
         box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY,
-                                                  _("2-PASS")), wx.VERTICAL
+                                                  _("Two-Pass")), wx.VERTICAL
                                      )
         grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND, 15
                     )
@@ -203,33 +198,13 @@ class PrstPan(wx.Panel):
                                   style=wx.TAB_TRAVERSAL
                                   )
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
-        analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
-        self.btn_voldect = GB.GradientButton(self.peakpanel,
-                                             size=(-1, 25),
-                                             bitmap=analyzebmp,
-                                             label=_("Volumedected"))
-        self.btn_voldect.SetBaseColours(startcolour=wx.Colour(PrstPan.AZURE_NEON),
-                                        foregroundcolour=wx.Colour(self.fBtnC)
-                                        )
-        self.btn_voldect.SetBottomEndColour(wx.Colour(self.btnC))
-        self.btn_voldect.SetBottomStartColour(wx.Colour(self.btnC))
-        self.btn_voldect.SetTopStartColour(wx.Colour(self.btnC))
-        self.btn_voldect.SetTopEndColour(wx.Colour(self.btnC))
+        self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
+                                     _("Volumedected"), size=(-1, -1))
+        self.btn_voldect.SetBitmap(wx.Bitmap(iconpeaklevel), wx.LEFT)
         sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-
-        peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
-        self.btn_details = GB.GradientButton(self.peakpanel,
-                                             size=(-1, 25),
-                                             bitmap=peaklevelbmp,
-                                             label=_("Volume Statistics")
-                                             )
-        self.btn_details.SetBaseColours(startcolour=wx.Colour(PrstPan.AZURE_NEON),
-                                        foregroundcolour=wx.Colour(self.fBtnC)
-                                        )
-        self.btn_details.SetBottomEndColour(wx.Colour(self.btnC))
-        self.btn_details.SetBottomStartColour(wx.Colour(self.btnC))
-        self.btn_details.SetTopStartColour(wx.Colour(self.btnC))
-        self.btn_details.SetTopEndColour(wx.Colour(self.btnC))
+        self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
+                                     _("Volume Statistics"), size=(-1, -1))
+        self.btn_details.SetBitmap(wx.Bitmap(iconanalyzes), wx.LEFT)
         sizer_peak.Add(self.btn_details, 0, wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY,
@@ -382,7 +357,6 @@ class PrstPan(wx.Panel):
         if self.rdbx_norm.GetSelection() in [1, 2]:
             if not self.btn_voldect.IsEnabled():
                 self.btn_voldect.Enable()
-                self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
     # -------------------------------------------------------------------#
 
     def on_audioOUTstream(self, event):
@@ -576,7 +550,6 @@ class PrstPan(wx.Panel):
                 self.spin_target.SetValue(-20.0)
 
             self.peakpanel.Show(), self.btn_voldect.Enable()
-            self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
             self.ebupanel.Hide()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
             del self.normdetails[:]
@@ -604,7 +577,6 @@ class PrstPan(wx.Panel):
         """
         if not self.btn_voldect.IsEnabled():
             self.btn_voldect.Enable()
-            self.btn_voldect.SetForegroundColour(wx.Colour(self.fBtnC))
     # ------------------------------------------------------------------#
 
     def on_Analyzes(self, event):
@@ -634,7 +606,7 @@ class PrstPan(wx.Panel):
                                    self.time_seq,
                                    self.opt["AudioInMap"][0])
         if data[1]:
-            wx.MessageBox(data[1], "ERROR! -Videomass", wx.ICON_ERROR)
+            wx.MessageBox(data[1], "Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()
@@ -687,7 +659,6 @@ class PrstPan(wx.Panel):
             self.opt["RMS"] = volume
 
         self.btn_voldect.Disable()
-        self.btn_voldect.SetForegroundColour(wx.Colour(PrstPan.GREY_DISABLED))
         self.btn_details.Show()
         self.nb1_p3.Layout()
     # ------------------------------------------------------------------#
@@ -747,7 +718,7 @@ class PrstPan(wx.Panel):
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
                            'It will be moved to the "Removals" folder in the '
                            'presets directory').format(filename),
-                         _('Videomass: Please confirm'), wx.ICON_QUESTION |
+                         _('Please confirm'), wx.ICON_QUESTION |
                          wx.YES_NO, self) == wx.NO:
             return
 
@@ -760,7 +731,7 @@ class PrstPan(wx.Panel):
         except OSError as err:
             wx.MessageBox(_("{}\n\nSorry, removal failed, I can't "
                             "continue.").format(err),
-                          "ERROR !", wx.ICON_ERROR, self
+                          "Videomass", wx.ICON_ERROR, self
                           )
             return
         s = os.path.join(self.user_prst, '%s.prst' % filename)
@@ -783,7 +754,7 @@ class PrstPan(wx.Panel):
             dirname = dialsave.GetPath()
             copy_backup(filedir, '%s/%s.prst' % (dirname, filename))
             dialsave.Destroy()
-            wx.MessageBox(_("Successfully saved"), "Info", wx.OK, self)
+            wx.MessageBox(_("Successfully saved"), "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
     def Restore(self):
@@ -807,7 +778,7 @@ class PrstPan(wx.Panel):
                                "will be imported and will overwrite "
                                "the one in use.\n"
                                "Proceed ?").format(tail),
-                             _('Videomass: Please confirm'),
+                             _('Please confirm'),
                              wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return
 
@@ -823,7 +794,7 @@ class PrstPan(wx.Panel):
         """
         if wx.MessageBox(_("The selected preset will be overwritten with "
                            "default profiles!\nproceed?"),
-                         _("Videomass: Please confirm"),
+                         _("Please confirm"),
                          wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
 
@@ -834,7 +805,7 @@ class PrstPan(wx.Panel):
         if copy:
             wx.MessageBox(_('Sorry, this preset is not part '
                             'of default Videomass presets.'),
-                          "ERROR !", wx.ICON_ERROR, self
+                          "Videomass", wx.ICON_ERROR, self
                           )
             return
 
@@ -848,7 +819,7 @@ class PrstPan(wx.Panel):
         """
         if wx.MessageBox(_("WARNING: you are restoring all "
                            "default presets!\nProceed?"),
-                         _("Videomass: Please confirm"),
+                         _("Please confirm"),
                          wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
 
@@ -918,7 +889,7 @@ class PrstPan(wx.Panel):
             filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
                                "selected profile?"),
-                             _("Videomass: Please confirm"),
+                             _("Please confirm"),
                              wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return
 
@@ -966,7 +937,7 @@ class PrstPan(wx.Panel):
                         "Do you want to apply it "
                         "during the conversion process?")
                 dlg = wx.RichMessageDialog(self, msg,
-                                           _("Videomass: Please confirm"),
+                                           _("Please confirm"),
                                            wx.ICON_QUESTION |
                                            wx.YES_NO
                                            )
@@ -1038,7 +1009,7 @@ class PrstPan(wx.Panel):
                                    'automation and command line. Command '
                                    'line has priority.\n\nDo you wish to '
                                    'continue?'),
-                                 _("Videomass: Please confirm"),
+                                 _("Please confirm"),
                                  wx.ICON_QUESTION |
                                  wx.YES_NO, self) == wx.NO:
                     return

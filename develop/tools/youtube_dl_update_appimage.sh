@@ -29,7 +29,8 @@ APPIMAGE=$1  # selected videomass appimage pathname
 BASENAME="$(basename $APPIMAGE)"  # videomass name
 DIRNAME="$(dirname $APPIMAGE)"  # videomass directory
 
-# building in temporary directory to keep system clean
+# building in temporary directory to keep system clean.
+# Don't use /dev/shm as on some Linux distributions it may have noexec set
 TEMP_BASE=/tmp
 
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-update-XXXXXX)

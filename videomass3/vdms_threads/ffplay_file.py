@@ -40,7 +40,7 @@ def msg_Error(msg):
     Receive error messages via wxCallafter
     """
     wx.MessageBox("FFplay ERROR:  %s" % (msg),
-                  "Videomass: FFplay",
+                  "Videomass",
                   wx.ICON_ERROR
                   )
 
@@ -50,7 +50,7 @@ def msg_Info(msg):
     Receive info messages via wxCallafter
     """
     wx.MessageBox("FFplay INFORMATION:  %s" % (msg),
-                  "Videomass: FFplay",
+                  "Videomass",
                   wx.ICON_INFORMATION
                   )
 
