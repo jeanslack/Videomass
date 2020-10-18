@@ -1,3 +1,16 @@
+videomass (3.2.0-1) UNRELEASED; urgency=medium
+
+  * New redesigned GUI
+  * New icons
+  * Improved toolbar
+  * New buttons on panels
+  * Fixed issue with close button position on wizzard
+  * Fixed title names in dialog boxes
+  * Fixed some name definitions on the interface
+  * fix translations
+
+  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Oct 2020 10:45:00 +0200
+
 videomass (3.1.3-1) UNRELEASED; urgency=medium
 
   * Fix `ImportError: libSDL2-2.0.so.0` on appimage. This library will be

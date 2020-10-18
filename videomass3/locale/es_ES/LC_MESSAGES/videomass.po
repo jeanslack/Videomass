@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-17 21:49+0200\n"
-"PO-Revision-Date: 2020-10-17 22:03+0200\n"
+"POT-Creation-Date: 2020-10-18 10:44+0200\n"
+"PO-Revision-Date: 2020-10-18 10:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -682,7 +682,7 @@ msgid "Flags disabled"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_conf.py:109
-msgid "FFmpeg: default configuration"
+msgid "FFmpeg configuration"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_conf.py:112
@@ -751,7 +751,7 @@ msgid "CODING ABILITY"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
-msgid "Videomass: FFmpeg encoders"
+msgid "FFmpeg encoders"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_codecs.py:49
@@ -759,7 +759,7 @@ msgid "DECODING CAPABILITY"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_codecs.py:51
-msgid "Videomass: FFmpeg decoders"
+msgid "FFmpeg decoders"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_codecs.py:70
@@ -793,7 +793,7 @@ msgid "Demuxing/Muxing support"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_formats.py:96
-msgid "Videomass: FFmpeg file formats"
+msgid "FFmpeg file formats"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_formats.py:99 ../vdms_frames/ffmpeg_formats.py:103
@@ -894,7 +894,7 @@ msgid ""
 msgstr ""
 
 #: ../vdms_frames/while_playing.py:81
-msgid "Videomass: Shortcuts while playing"
+msgid "Shortcuts while playing with FFplay"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_search.py:63 ../vdms_frames/ffmpeg_search.py:155
@@ -976,7 +976,7 @@ msgid ""
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_search.py:121
-msgid "Videomass: FFmpeg help topics"
+msgid "FFmpeg help topics"
 msgstr ""
 
 #: ../vdms_frames/ffmpeg_search.py:185
@@ -998,7 +998,7 @@ msgid ""
 msgstr ""
 
 #: ../vdms_frames/mediainfo.py:87
-msgid "Videomass - FFprobe streams analyzer"
+msgid "FFprobe - streams analyzer"
 msgstr ""
 
 #: ../vdms_frames/mediainfo.py:90
@@ -1032,7 +1032,7 @@ msgid "Subtitle Streams"
 msgstr ""
 
 #: ../vdms_frames/ydl_mediainfo.py:63
-msgid "Videomass - youtube-dl show more"
+msgid "youtube-dl show more"
 msgstr ""
 
 #: ../vdms_frames/ydl_mediainfo.py:66
@@ -1168,7 +1168,7 @@ msgstr ""
 msgid "Before playing, click on one of the items in the URLs checklist"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:341 ../vdms_main/main_frame.py:1314
+#: ../vdms_main/main_frame.py:341 ../vdms_main/main_frame.py:1325
 msgid "YouTube Downloader"
 msgstr ""
 
@@ -1253,7 +1253,7 @@ msgid "Close Videomass"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:488
-msgid "Default configuration"
+msgid "Configuration"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:489
@@ -1585,116 +1585,132 @@ msgid ""
 "Sorry for this inconvenience."
 msgstr ""
 
+#: ../vdms_main/main_frame.py:1132
+msgid "Go to the previous panel"
+msgstr ""
+
 #: ../vdms_main/main_frame.py:1133
 msgid "Back"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1135
+#: ../vdms_main/main_frame.py:1137
+msgid "Go to the next panel"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1138
 msgid "Next"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1139
+#: ../vdms_main/main_frame.py:1144
 msgid "Show additional multimedia information"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1140
+#: ../vdms_main/main_frame.py:1145
 msgid "Streams"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1144
+#: ../vdms_main/main_frame.py:1149
 msgid "Playing a media file or URL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1145
+#: ../vdms_main/main_frame.py:1150
 msgid "Playback"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1149
-msgid "Duration and time range settings"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:1150 ../vdms_panels/filedrop.py:195
-msgid "Duration"
+#: ../vdms_main/main_frame.py:1154
+msgid "Duration and time sequence setting"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1155
-msgid "Save the settings made as a profile"
-msgstr ""
-
-#: ../vdms_main/main_frame.py:1156
-msgid "Save"
+msgid "Timeline"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1160
-msgid "Create a new profile and save it in the current preset"
+msgid "Save a new profile with the current settings"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1161
-msgid "New"
+msgid "Save as"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1165
-msgid "Delete the selected profile"
+msgid "Create a new profile and save it in the selected preset"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1166
-msgid "Delete"
+msgid "New"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1170
-msgid "Edit the selected profile"
+msgid "Delete the selected profile"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1171
+msgid "Delete"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1175
+msgid "Edit the selected profile"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1176
 msgid "Edit"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1177
+#: ../vdms_main/main_frame.py:1182
+msgid "Convert using FFmpeg"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1183
 msgid "Convert"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1179
+#: ../vdms_main/main_frame.py:1187
+msgid "Download files using youtube-dl"
+msgstr ""
+
+#: ../vdms_main/main_frame.py:1188
 msgid "Download"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1219
+#: ../vdms_main/main_frame.py:1230
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1231
+#: ../vdms_main/main_frame.py:1242
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1238
+#: ../vdms_main/main_frame.py:1249
 msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1275 ../vdms_panels/filedrop.py:266
+#: ../vdms_main/main_frame.py:1286 ../vdms_panels/filedrop.py:266
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1307
+#: ../vdms_main/main_frame.py:1318
 msgid "Add URLs"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1317 ../vdms_main/main_frame.py:1363
-#: ../vdms_main/main_frame.py:1406
+#: ../vdms_main/main_frame.py:1328 ../vdms_main/main_frame.py:1374
+#: ../vdms_main/main_frame.py:1417
 msgid "Warning: the previous settings may be reset to default values."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1357
+#: ../vdms_main/main_frame.py:1368
 msgid "Audio/Video Conversions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1400
+#: ../vdms_main/main_frame.py:1411
 msgid "Presets Manager"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1459
+#: ../vdms_main/main_frame.py:1470
 msgid "Log of the last process"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1461
+#: ../vdms_main/main_frame.py:1472
 msgid "Under processing..."
 msgstr ""
 
@@ -1848,6 +1864,14 @@ msgstr ""
 
 #: ../vdms_panels/av_conversions.py:658
 msgid "Denoisers"
+msgstr ""
+
+#: ../vdms_panels/av_conversions.py:663
+msgid "Preview"
+msgstr ""
+
+#: ../vdms_panels/av_conversions.py:669
+msgid "Clear"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:674
@@ -2411,6 +2435,10 @@ msgstr ""
 
 #: ../vdms_panels/filedrop.py:194
 msgid "File Name"
+msgstr ""
+
+#: ../vdms_panels/filedrop.py:195
+msgid "Duration"
 msgstr ""
 
 #: ../vdms_panels/filedrop.py:196

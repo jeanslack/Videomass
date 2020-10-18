@@ -106,7 +106,7 @@ class Checkconf(wx.MiniFrame):
         self.Layout()
 
         # ----------------------Properties----------------------#
-        self.SetTitle(_("FFmpeg: default configuration"))
+        self.SetTitle(_("FFmpeg configuration"))
         self.SetMinSize((700, 500))
         others_opt.SetMinSize((700, 400))
         others_opt.InsertColumn(0, _('flags'), width=300)

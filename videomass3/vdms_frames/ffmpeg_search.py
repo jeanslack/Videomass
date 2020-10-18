@@ -118,7 +118,7 @@ class FFmpeg_Search(wx.MiniFrame):
         sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
-        self.SetTitle(_("Videomass: FFmpeg help topics"))
+        self.SetTitle(_("FFmpeg help topics"))
         self.SetSize((900, 600))
         # set_properties:
         # self.texthelp.SetBackgroundColour((217, 255, 255))

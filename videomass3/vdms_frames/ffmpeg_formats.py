@@ -93,7 +93,7 @@ class FFmpeg_formats(wx.MiniFrame):
         self.panel.SetSizerAndFit(sizer_base)
         self.Layout()
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: FFmpeg file formats"))
+        self.SetTitle(_("FFmpeg file formats"))
         self.SetMinSize((500, 400))
         # dmx.SetMinSize((500, 400))
         dmx.InsertColumn(0, _('format'), width=150)

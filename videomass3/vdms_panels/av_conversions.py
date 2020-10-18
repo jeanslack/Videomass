@@ -660,13 +660,13 @@ class AV_Conv(wx.Panel):
         grid_vfilters.Add(self.btn_denois)
         # playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.btn_preview = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     size=(-1, -1))
+                                     _("Preview"), size=(-1, 50))
         self.btn_preview.SetBitmap(wx.Bitmap(iconplay), wx.LEFT)
 
         grid_vfilters.Add(self.btn_preview)
         # resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
         self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   size=(-1, -1))
+                                   _("Clear"), size=(-1, 50))
         self.btn_reset.SetBitmap(wx.Bitmap(iconreset), wx.LEFT)
         grid_vfilters.Add(self.btn_reset)
         self.filterVpanel.SetSizer(grid_vfilters)  # set panel

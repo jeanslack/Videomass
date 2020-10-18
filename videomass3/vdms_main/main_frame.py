@@ -485,7 +485,7 @@ class MainFrame(wx.Frame):
 
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
 
-        dscrp = (_("Default configuration"),
+        dscrp = (_("Configuration"),
                  _("Show FFmpeg's built-in configuration capabilities"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
@@ -1129,11 +1129,16 @@ class MainFrame(wx.Frame):
         self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
         # ------- Run process button
-
+        tip = _("Go to the previous panel")
         back = self.toolbar.AddTool(3, _('Back'),
-                                    wx.Bitmap(self.icon_mainback))
+                                    wx.Bitmap(self.icon_mainback),
+                                    tip, wx.ITEM_NORMAL
+                                    )
+        tip = _("Go to the next panel")
         forward = self.toolbar.AddTool(4, _('Next'),
-                                       wx.Bitmap(self.icon_mainforward))
+                                       wx.Bitmap(self.icon_mainforward),
+                                       tip, wx.ITEM_NORMAL
+                                       )
         self.toolbar.AddSeparator()
         # self.toolbar.AddStretchableSpace()
         tip = _("Show additional multimedia information")
@@ -1146,18 +1151,18 @@ class MainFrame(wx.Frame):
                                               wx.Bitmap(self.icon_preview),
                                               tip, wx.ITEM_NORMAL,
                                               )
-        tip = _('Duration and time range settings')
-        self.btn_duration = self.toolbar.AddTool(7, _('Duration'),
+        tip = _('Duration and time sequence setting')
+        self.btn_duration = self.toolbar.AddTool(7, _('Timeline'),
                                                  wx.Bitmap(self.icon_time),
                                                  tip, wx.ITEM_CHECK,
                                                  )
         self.toolbar.AddSeparator()
-        tip = _("Save the settings made as a profile")
-        self.btn_saveprf = self.toolbar.AddTool(8, _('Save'),
+        tip = _("Save a new profile with the current settings")
+        self.btn_saveprf = self.toolbar.AddTool(8, _('Save as'),
                                                 wx.Bitmap(self.icon_saveprf),
                                                 tip, wx.ITEM_NORMAL,
                                                 )
-        tip = _("Create a new profile and save it in the current preset")
+        tip = _("Create a new profile and save it in the selected preset")
         self.btn_newprf = self.toolbar.AddTool(9, _('New'),
                                                wx.Bitmap(self.icon_newprf),
                                                tip, wx.ITEM_NORMAL,
@@ -1174,10 +1179,16 @@ class MainFrame(wx.Frame):
                                                 )
         # self.toolbar.AddStretchableSpace()
         self.toolbar.AddSeparator()
+        tip = _("Convert using FFmpeg")
         self.run_coding = self.toolbar.AddTool(12, _('Convert'),
-                                               wx.Bitmap(self.icon_runconv))
+                                               wx.Bitmap(self.icon_runconv),
+                                               tip, wx.ITEM_NORMAL
+                                               )
+        tip = _("Download files using youtube-dl")
         self.run_download = self.toolbar.AddTool(13, _('Download'),
-                                                 wx.Bitmap(self.icon_ydl))
+                                                 wx.Bitmap(self.icon_ydl),
+                                                 tip, wx.ITEM_NORMAL
+                                                 )
         # self.toolbar.AddStretchableSpace()
 
         # finally, create it

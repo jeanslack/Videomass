@@ -272,7 +272,7 @@ class Data_Source(object):
         icn_infosource = '%s/view-media.png' % x22
         icn_preview = '%s/media-playback.png' % x22
         icn_cut = '%s/timeline.png' % x22
-        icn_saveprf = '%s/save.png' % x22
+        icn_saveprf = '%s/save-as.png' % x22
         icn_newprf = '%s/new.png' % x22
         icn_delprf = '%s/delete.png' % x22
         icn_editprf = '%s/edit.png' % x22

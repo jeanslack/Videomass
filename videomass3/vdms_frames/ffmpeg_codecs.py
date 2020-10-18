@@ -44,11 +44,11 @@ class FFmpeg_Codecs(wx.MiniFrame):
         if type_opt == '-encoders':
             cod = _('CODING ABILITY')
             colctrl = 'ORANGE'
-            title = _("Videomass: FFmpeg encoders")
+            title = _("FFmpeg encoders")
         else:
             cod = _('DECODING CAPABILITY')
             colctrl = 'SIENNA'
-            title = _("Videomass: FFmpeg decoders")
+            title = _("FFmpeg decoders")
 
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
                               wx.CLOSE_BOX | wx.SYSTEM_MENU

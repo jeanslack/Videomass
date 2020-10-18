@@ -78,7 +78,7 @@ class While_Playing(wx.MiniFrame):
         label2 = wx.StaticText(panel, wx.ID_ANY, While_Playing.EXPLAN)
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: Shortcuts while playing"))
+        self.SetTitle(_("Shortcuts while playing with FFplay"))
 
         label1.SetForegroundColour(wx.Colour(While_Playing.GREEN))
         label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
