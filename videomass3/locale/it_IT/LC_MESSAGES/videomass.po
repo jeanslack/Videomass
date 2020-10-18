@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-18 10:44+0200\n"
-"PO-Revision-Date: 2020-10-18 10:54+0200\n"
+"POT-Creation-Date: 2020-10-18 11:58+0200\n"
+"PO-Revision-Date: 2020-10-18 12:00+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -2105,20 +2105,20 @@ msgid "Resize"
 msgstr "Ridimensiona"
 
 #: ../vdms_panels/av_conversions.py:642
-msgid "Crop Dimension"
+msgid "Crop"
 msgstr "Ritaglia"
 
 #: ../vdms_panels/av_conversions.py:647
-msgid "Rotation"
-msgstr "Ruota"
+msgid "Rotate"
+msgstr "Ruotare"
 
 #: ../vdms_panels/av_conversions.py:653
-msgid "De/Interlace"
-msgstr "De/Interlacciamento"
+msgid "De-interlace"
+msgstr "Deinterlacciamento"
 
 #: ../vdms_panels/av_conversions.py:658
-msgid "Denoisers"
-msgstr "Togli Disturbo"
+msgid "Denoiser"
+msgstr "Denoiser"
 
 #: ../vdms_panels/av_conversions.py:663
 msgid "Preview"
@@ -3258,6 +3258,12 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid "Crop Dimension"
+#~ msgstr "Ritaglia"
+
+#~ msgid "De/Interlace"
+#~ msgstr "De/Interlacciamento"
 
 #~ msgid "Videomass: FFmpeg encoders"
 #~ msgstr "Videomass: Codificatori di FFmpeg"

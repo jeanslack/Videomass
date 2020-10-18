@@ -639,23 +639,23 @@ class AV_Conv(wx.Panel):
         grid_vfilters.Add(self.btn_videosize)
         # cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
         self.btn_crop = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                        _("Crop Dimension"), size=(-1, -1))
+                                        _("Crop"), size=(-1, -1))
         self.btn_crop.SetBitmap(wx.Bitmap(iconcrop), wx.LEFT)
         grid_vfilters.Add(self.btn_crop)
         # rotatebmp = wx.Bitmap(iconrotate, wx.BITMAP_TYPE_ANY)
         self.btn_rotate = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                          _("Rotation"), size=(-1, -1))
+                                          _("Rotate"), size=(-1, -1))
         self.btn_rotate.SetBitmap(wx.Bitmap(iconrotate), wx.LEFT)
 
         grid_vfilters.Add(self.btn_rotate)
         # deintbmp = wx.Bitmap(icondeinterlace, wx.BITMAP_TYPE_ANY)
         self.btn_lacing = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                          _("De/Interlace"), size=(-1, -1))
+                                          _("De-interlace"), size=(-1, -1))
         self.btn_lacing.SetBitmap(wx.Bitmap(icondeinterlace), wx.LEFT)
         grid_vfilters.Add(self.btn_lacing)
         # denoiserbmp = wx.Bitmap(icondenoiser, wx.BITMAP_TYPE_ANY)
         self.btn_denois = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                          _("Denoisers"), size=(-1, -1))
+                                          _("Denoiser"), size=(-1, -1))
         self.btn_denois.SetBitmap(wx.Bitmap(icondenoiser), wx.LEFT)
         grid_vfilters.Add(self.btn_denois)
         # playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-18 10:44+0200\n"
-"PO-Revision-Date: 2020-10-18 10:55+0200\n"
+"POT-Creation-Date: 2020-10-18 11:58+0200\n"
+"PO-Revision-Date: 2020-10-18 12:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -1851,19 +1851,19 @@ msgid "Resize"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:642
-msgid "Crop Dimension"
+msgid "Crop"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:647
-msgid "Rotation"
+msgid "Rotate"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:653
-msgid "De/Interlace"
+msgid "De-interlace"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:658
-msgid "Denoisers"
+msgid "Denoiser"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:663
