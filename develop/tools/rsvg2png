@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+#
+# DESCRIPTION:
+#   Batch conversion using the rsvg library.
+#   Given a list of pathnames, recursively converts images found in SVG vector
+#   format to PNG format or to the formats specified in the --format argument.
+#
+#   It is assumed that the `rsvg-convert` command is installed on the system:
+#
+#       - Mac OS : brew install librsvg
+#       - Ubuntu : apt install librsvg2-bin
+#       - available even for Windows
+#
+# AUTHOR:
+#   Gianluca Pernigotto aka jeanslack jeanlucperni@gmail.com
+#
+#########################################################################
+import platform
+import subprocess
+import os
+import glob
+import argparse
+import sys
+
+def svg2png(delete, paths, args, diroutput):
+    """
+    batch conversion using rsvg-convert command
+
+    """
+    filelist = []
+    cmd = ['rsvg-convert']
+
+    if args["-f"] == 'recording':
+        outext = 'png'
+    elif args["-f"]:
+        outext = args["-f"]
+    else:
+        outext = 'png'
+
+    for k, v in args.items():
+        if v:
+            cmd.append(k)
+            cmd.append(str(v))
+
+    for svg in paths:
+        files = glob.glob(os.path.join("%s" % svg, "*.%s" % 'svg'))
+        filelist.append(files)
+        if not files:
+            return("ERROR: no such file `.svg` on '%s'" % svg)
+
+    for i in filelist:
+        for img in i:
+            dirname = os.path.dirname(img)
+            basename = os.path.splitext(os.path.basename(img))
+            if basename[1] == '.svg':
+                out = diroutput if diroutput else dirname
+                output = os.path.join('%s' % out,
+                                      '%s.%s' % (basename[0], outext))
+                if platform.system() == 'Windows':
+                    command = ' '.join(cmd + [img, '-o', output])
+                else:
+                    command = cmd + [img, '-o', output]
+                try:
+                    p = subprocess.run(command,
+                                       capture_output=True,
+                                       universal_newlines=True
+                                       )
+                except FileNotFoundError as err:
+                    return ("ERROR: 'rsvg-convert': Command not found")
+
+                if p.returncode:
+                    return "ARGS: %s\nERROR: %s" % (p.args, p.stderr)
+
+    if delete and not p.returncode:
+        for i in filelist:
+            for img in i:
+                try:
+                    os.remove(img)
+                except OSError as err:
+                    return "ERROR: %s" % err
+
+    return
+    # -------------------------------------------------------------------#
+
+
+def main():
+    """
+    Entry-point of the executable.
+    Users inputs parser (positional/optional arguments)
+
+    """
+    parser = argparse.ArgumentParser(
+                description='Batch conversion using the rsvg library. Given '
+                            'a list of pathnames, recursively converts images '
+                            'found in SVG vector format to PNG format or to '
+                            'the formats specified in the --format argument:'
+                            )
+    parser.add_argument(
+                '-d', '--dpi',
+                #action='append',
+                required=False,
+                #dest='<float>',
+                type=float,
+                help="pixels per inch; defaults to 90dpi",
+                    )
+    parser.add_argument(
+                '-W', '--width',
+                #action='append',
+                required=False,
+                #dest='<int>',
+                type=int,
+                help="width; defaults to the SVG's width",
+                    )
+    parser.add_argument(
+                '-H', '--height',
+                #action='append',
+                required=False,
+                #dest='<int>',
+                type=int,
+                help="height; defaults to the SVG's height",
+                    )
+    parser.add_argument(
+                '-f', '--format',
+                choices=['png', 'pdf', 'ps', 'eps', 'svg', 'xml', 'recording'],
+                #action='append',
+                required=False,
+                #dest='<string>',
+                type=str,
+                help="save format; defaults to 'png'",
+                    )
+    parser.add_argument(
+                '-p', '--paths',
+                #action='append',
+                nargs='+',
+                metavar='..DIR ..DIR',
+                required=True,
+                help="Input dirname list separated by spaces",
+                    )
+    parser.add_argument(
+                '-r', '--remove',
+                action='store_true',
+                required=False,
+                help="when finished it removes all SVG source files",
+                    )
+    parser.add_argument(
+                '-o', '--output',
+                #action='append',
+                #nargs='+',
+                metavar='..DIR',
+                required=False,
+                help="Provide an output directory to save all files",
+                    )
+    args = parser.parse_args()
+
+    for p in args.paths:
+        if not os.path.isdir(p):
+            raise NotADirectoryError("Invalid or inexistent pathname for "
+                                     "inputdir '%s'" % p)
+            break
+
+    if args.output:
+        if not os.path.isdir(args.output):
+            raise NotADirectoryError("Invalid or inexistent pathname for "
+                                     "outputdir '%s'" % args.output)
+
+    if args.format == 'svg' and not args.output:
+        raise FileExistsError('Could not overwrite the SVG files themselves. '
+                              'You must provide an output pathname using the '
+                              '-o argument.')
+
+
+    adds = {'-d' : args.dpi, '-w' : args.width,
+            '-h' : args.height, '-f' : args.format}
+
+    ret = svg2png(args.remove, args.paths, adds, args.output)
+    if ret:
+        sys.exit(ret)
+    else:
+        sys.exit()
+    # ----------------------------------------------------------------#
+
+
+if __name__ == '__main__':
+    main()

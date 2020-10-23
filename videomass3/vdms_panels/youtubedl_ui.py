@@ -520,8 +520,8 @@ class Downloader(wx.Panel):
             if ret:
                 return
 
-        dialog = YDL_Mediainfo(self.info, Downloader.OS)
-        dialog.Show()
+        miniframe = YDL_Mediainfo(self.info, Downloader.OS)
+        miniframe.Show()
     # -----------------------------------------------------------------#
 
     def on_format_codes(self):

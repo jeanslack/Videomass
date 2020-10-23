@@ -68,6 +68,7 @@ class MainFrame(wx.Frame):
     ORANGE = '#f28924'
     YELLOW = '#a29500'
     LIMEGREEN = '#87A615'
+    DARK_BROWN = '#262222'
     # AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
     # RED = '#ea312d'
     # GREENOLIVE = '#6aaf23'
@@ -104,6 +105,7 @@ class MainFrame(wx.Frame):
         self.icon_newprf = pathicons[20]
         self.icon_delprf = pathicons[21]
         self.icon_editprf = pathicons[22]
+        self.icon_viewstatistics = pathicons[26]
 
         # -------------------------------#
         self.data_files = []  # list of items in list control
@@ -119,7 +121,7 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, None, -1, style=wx.DEFAULT_FRAME_STYLE)
         # ----------- panel toolbar buttons
         # self.btnpanel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-        # self.btnpanel.SetBackgroundColour(barColor)
+        # self.btnpanel.SetBackgroundColour(MainFrame.LIMEGREEN)
         # ---------- others panel instances:
         self.ChooseTopic = choose_topic.Choose_Topic(self,
                                                      MainFrame.OS,
@@ -167,16 +169,11 @@ class MainFrame(wx.Frame):
         self.PrstsPanel.Hide()
         # Layout toolbar buttons:
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
-        # grid_pan = wx.FlexGridSizer(1, 7, 0, 0)
-        # grid_pan.Add(self.btn_metaI, 0, wx.CENTER | wx.ALL, 5)
-        # grid_pan.Add(self.btn_playO, 0, wx.CENTER | wx.ALL, 5)
-        # grid_pan.Add(self.btn_duration, 0, wx.CENTER | wx.ALL, 5)
-        # grid_pan.Add(self.btn_saveprf, 0, wx.CENTER | wx.ALL, 5)
-        # grid_pan.Add(self.btn_newprf, 0, wx.CENTER | wx.ALL, 5)
-        # grid_pan.Add(self.btn_delprf, 0, wx.CENTER | wx.ALL, 5)
-        # grid_pan.Add(self.btn_editprf, 0, wx.CENTER | wx.ALL, 5)
+        # grid_pan = wx.BoxSizer(wx.HORIZONTAL)
         # self.btnpanel.SetSizer(grid_pan)  # set panel
-        # self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 0)
+        # self.mainSizer.Add(self.btnpanel, 0, wx.EXPAND, 5)
+        ####
+
         # Layout externals panels:
         self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND | wx.ALL, 0)
         self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND | wx.ALL, 0)
@@ -207,6 +204,7 @@ class MainFrame(wx.Frame):
         self.statusbar_msg(_('Ready'), None)
         # hide toolbar, buttons bar and disable some file menu items
         self.toolbar.Hide()
+        # self.btnpanel.Hide()
         self.menu_items()
 
         self.Layout()
@@ -321,9 +319,10 @@ class MainFrame(wx.Frame):
         """
         if self.topicname == 'Youtube Downloader':
             self.ytDownloader.on_show_info()
+
         else:
-            dialog = Mediainfo(self.data_files, MainFrame.OS)
-            dialog.Show()
+            miniframe = Mediainfo(self.data_files, MainFrame.OS)
+            miniframe.Show()
     # ------------------------------------------------------------------#
 
     def ExportPlay(self, event):
@@ -485,7 +484,7 @@ class MainFrame(wx.Frame):
 
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
 
-        dscrp = (_("Configuration"),
+        dscrp = (_("Show configuration"),
                  _("Show FFmpeg's built-in configuration capabilities"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
@@ -1146,6 +1145,12 @@ class MainFrame(wx.Frame):
                                               wx.Bitmap(self.icon_info),
                                               tip, wx.ITEM_NORMAL
                                               )
+        tip = _("Shows download statistics and information")
+        self.btn_ydlstatistics = self.toolbar.AddTool(
+                                    14, _('Statistics'),
+                                    wx.Bitmap(self.icon_viewstatistics),
+                                    tip, wx.ITEM_NORMAL
+                                    )
         tip = _("Playing a media file or URL")
         self.btn_playO = self.toolbar.AddTool(6, _('Playback'),
                                               wx.Bitmap(self.icon_preview),
@@ -1205,6 +1210,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.Delprofile, self.btn_delprf)
         self.Bind(wx.EVT_TOOL, self.Editprofile, self.btn_editprf)
         self.Bind(wx.EVT_TOOL, self.ImportInfo, self.btn_metaI)
+        self.Bind(wx.EVT_TOOL, self.ImportInfo, self.btn_ydlstatistics)
         self.Bind(wx.EVT_TOOL, self.ExportPlay, self.btn_playO)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
@@ -1273,6 +1279,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, True)
         self.toolbar.EnableTool(5, False)
+        self.toolbar.EnableTool(14, False)
         self.toolbar.EnableTool(6, False)
         self.toolbar.EnableTool(7, False)
         self.toolbar.EnableTool(8, False)
@@ -1305,6 +1312,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, True)
         self.toolbar.EnableTool(5, False)
+        self.toolbar.EnableTool(14, False)
         self.toolbar.EnableTool(6, False)
         self.toolbar.EnableTool(7, False)
         self.toolbar.EnableTool(8, False)
@@ -1345,7 +1353,8 @@ class MainFrame(wx.Frame):
         self.logpan.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
-        self.toolbar.EnableTool(5, True)
+        self.toolbar.EnableTool(5, False)
+        self.toolbar.EnableTool(14, True)
         self.toolbar.EnableTool(6, True)
         self.toolbar.EnableTool(7, False)
         self.toolbar.EnableTool(8, False)
@@ -1388,6 +1397,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
+        self.toolbar.EnableTool(14, False)
         self.toolbar.EnableTool(6, True)
         self.toolbar.EnableTool(7, True)
         self.toolbar.EnableTool(8, True)
@@ -1434,6 +1444,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
+        self.toolbar.EnableTool(14, False)
         self.toolbar.EnableTool(6, True)
         self.toolbar.EnableTool(7, True)
         self.toolbar.EnableTool(8, False)

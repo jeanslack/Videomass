@@ -7,6 +7,16 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Oct 23, 2020 V.3.2.1
+
+     * Add new toolbar item to display download statistics window
+     * Add new statistic icon toolbar
+     * Fix setup.py importings
+     * Fix caption on Strems window
+     * Fix caption on Statistics window
+     * Fixed FFmpeg menu definition
+
++------------------------------------+
 Oct 18, 2020 V.3.2.0
 
      * New redesigned GUI

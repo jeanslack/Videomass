@@ -1,0 +1,202 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+#
+# DESCRIPTION:
+#   Batch conversion using the Inkscape library.
+#   Given a list of pathnames, recursively converts images found in SVG vector
+#   format to PNG format.
+#
+#   It is assumed that the `inkscape` command is installed on the system:
+#
+# AUTHOR:
+#   Gianluca Pernigotto aka jeanslack jeanlucperni@gmail.com
+#
+#########################################################################
+
+#with Inkscape cml:
+        #inkscape -z -w 1024 -h 1024 input.svg -e output.png
+        #inkscape -z videomass.svg -e outputINK.png
+        #version 1.0 > : inkscape -w 1024 -h 1024 input.svg --export-filename output.png
+
+    #with convert by ImageMagick:
+        #'convert -background none -size 1000x1000'
+
+import platform
+import subprocess
+import os
+import glob
+import argparse
+import sys
+
+def svg2png(delete, paths, args, diroutput, formatext):
+    """
+    batch conversion using inkscape command
+
+    """
+    filelist = []
+    cmd = ['inkscape', '-z']
+
+    if formatext == "png":
+        outext = ('-e', 'png')
+    elif formatext == "svg":
+        outext = ('-l', 'svg')
+    elif formatext == "ps":
+        outext = ('-P', 'ps')
+    elif formatext == "eps":
+        outext = ('-E', 'eps')
+    elif formatext == "pdf":
+        outext = ('-A', 'pdf')
+    elif formatext == "emf":
+        outext = ('-M', 'emf')
+    elif formatext == "wmf":
+        outext = ('-m', 'wmf')
+    else:
+        outext = ('-e', 'png')
+
+    for k, v in args.items():
+        if v:
+            cmd.append(k)
+            cmd.append(str(v))
+
+    for svg in paths:
+        files = glob.glob(os.path.join("%s" % svg, "*.%s" % 'svg'))
+        filelist.append(files)
+        if not files:
+            return("ERROR: no such file `.svg` on '%s'" % svg)
+
+    for i in filelist:
+        for img in i:
+            dirname = os.path.dirname(img)
+            basename = os.path.splitext(os.path.basename(img))
+            if basename[1] == '.svg':
+                out = diroutput if diroutput else dirname
+                output = os.path.join('%s' % out,
+                                      '%s.%s' % (basename[0], outext[1]))
+                if platform.system() == 'Windows':
+                    command = ' '.join(cmd + [img, outext[0], output])
+                else:
+                    command = cmd + [img, outext[0], output]
+                try:
+                    p = subprocess.run(command,
+                                       capture_output=True,
+                                       universal_newlines=True
+                                       )
+                except FileNotFoundError as err:
+                    return ("ERROR: 'inkscape': Command not found")
+
+                if p.returncode:
+                    return "ARGS: %s\nERROR: %s" % (p.args, p.stderr)
+
+    if delete and not p.returncode:
+        for i in filelist:
+            for img in i:
+                try:
+                    os.remove(img)
+                except OSError as err:
+                    return "ERROR: %s" % err
+    return
+    # -------------------------------------------------------------------#
+
+
+def main():
+    """
+    Entry-point of the executable.
+    Users inputs parser (positional/optional arguments)
+
+    """
+    parser = argparse.ArgumentParser(
+                description='Batch conversion using the Inkscape library. '
+                            'Given a list of pathnames, recursively converts '
+                            'images files found in SVG vector format to PNG '
+                            'format or to the formats specified in the '
+                            '--format argument:'
+                            )
+    parser.add_argument(
+                '-W',
+                #action='append',
+                required=False,
+                metavar='WIDTH',
+                #dest='<int>',
+                type=int,
+                help="width; defaults to the SVG's width",
+                    )
+    parser.add_argument(
+                '-H',
+                #action='append',
+                required=False,
+                metavar='HEIGHT',
+                #dest='<int>',
+                type=int,
+                help="height; defaults to the SVG's height",
+                    )
+    parser.add_argument(
+                '-d',
+                #action='append',
+                required=False,
+                metavar='DPI',
+                #dest='<float>',
+                type=float,
+                help="pixels per inch; defaults to 90dpi",
+                    )
+    parser.add_argument(
+                '-f', '--format',
+                choices=['png', 'pdf', 'ps', 'eps', 'svg', 'emf', 'wmf'],
+                #action='append',
+                required=False,
+                #dest='<string>',
+                type=str,
+                help="save format; defaults to 'png'",
+                    )
+    parser.add_argument(
+                '-p', '--paths',
+                #action='append',
+                nargs='+',
+                metavar='..DIR ..DIR',
+                required=True,
+                help="Input dirname list separated by spaces",
+                    )
+    parser.add_argument(
+                '-r', '--remove',
+                action='store_true',
+                required=False,
+                help="when finished it removes all SVG source files",
+                    )
+    parser.add_argument(
+                '-o', '--output',
+                #action='append',
+                #nargs='+',
+                metavar='..DIR',
+                required=False,
+                help="Provide an output directory to save all files",
+                    )
+    args = parser.parse_args()
+
+    for p in args.paths:
+        if not os.path.isdir(p):
+            raise NotADirectoryError("Invalid or inexistent pathname for "
+                                     "inputdir '%s'" % p)
+            break
+
+    if args.output:
+        if not os.path.isdir(args.output):
+            raise NotADirectoryError("Invalid or inexistent pathname for "
+                                     "outputdir '%s'" % args.output)
+
+    if args.format == 'svg' and not args.output:
+        raise FileExistsError('Could not overwrite the SVG files themselves. '
+                              'You must provide an output pathname using the '
+                              '-o argument.')
+
+
+    adds = {'-w' : args.W, '-h' : args.H, '-d' : args.d}
+
+    ret = svg2png(args.remove, args.paths, adds, args.output, args.format)
+    if ret:
+        sys.exit(ret)
+    else:
+        sys.exit()
+    # ----------------------------------------------------------------#
+
+
+if __name__ == '__main__':
+    main()

@@ -276,6 +276,7 @@ class Data_Source(object):
         icn_newprf = '%s/new.png' % x22
         icn_delprf = '%s/delete.png' % x22
         icn_editprf = '%s/edit.png' % x22
+        icn_viewstatistics = '%s/view-statistics.png' % x22
         # button icons 16x16:
         icn_playfilters = '%s/view-preview.png' % x16
         icn_resetfilters = '%s/edit-clear.png' % x16
@@ -314,4 +315,5 @@ class Data_Source(object):
                                                 icon_toolback,  # 23
                                                 icon_toolforward,  # 24
                                                 icon_ydl,  # 25
+                                                icn_viewstatistics, # 26
                                                 ]]
