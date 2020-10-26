@@ -1,19 +1,41 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 #
+# Name: rsvg2png
+# Porpose: Wrapper interface to perform batch conversion using the rsvg library
+# Compatibility: Python3
+# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# license: GPL3
+# Rev: Oct.23.2020 *PEP8 compatible*
+
 # DESCRIPTION:
-#   Batch conversion using the rsvg library.
-#   Given a list of pathnames, recursively converts images found in SVG vector
-#   format to PNG format or to the formats specified in the --format argument.
+#   Given a list of pathnames, recursively converts images found in SVG
+#   vector format to PNG raster format or to the formats specified in
+#   the --format argument.
 #
-#   It is assumed that the `rsvg-convert` command is installed on the system:
+#       Assume that the `rsvg-convert` command is installed on the system:
 #
 #       - Mac OS : brew install librsvg
 #       - Ubuntu : apt install librsvg2-bin
 #       - available even for Windows
 #
-# AUTHOR:
-#   Gianluca Pernigotto aka jeanslack jeanlucperni@gmail.com
+#########################################################
+
+# This file is part of Videomass.
+
+#    Videomass is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    Videomass is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
 #
 #########################################################################
 import platform
@@ -23,115 +45,101 @@ import glob
 import argparse
 import sys
 
-def svg2png(delete, paths, args, diroutput):
+
+def svg2png(delete, paths, parameters, outputdir, recursive: bool=False):
     """
-    batch conversion using rsvg-convert command
+    Iterates on a generator given from `glob.iglob` method.
+    glob treats filenames beginning with a dot (.) as special cases,
+    so hidden filenames will not be considered. To convert hidden
+    filenames use `fnmatch` module instead of `glob` module.
 
     """
-    filelist = []
     cmd = ['rsvg-convert']
+    recurs = '**' if recursive else ''
 
-    if args["-f"] == 'recording':
+    if parameters["-f"] == 'recording':
         outext = 'png'
-    elif args["-f"]:
-        outext = args["-f"]
+    elif parameters["-f"]:
+        outext = parameters["-f"]
     else:
         outext = 'png'
 
-    for k, v in args.items():
+    for k, v in parameters.items():
         if v:
             cmd.append(k)
             cmd.append(str(v))
 
-    for svg in paths:
-        files = glob.glob(os.path.join("%s" % svg, "*.%s" % 'svg'))
-        filelist.append(files)
-        if not files:
-            return("ERROR: no such file `.svg` on '%s'" % svg)
+    for path in paths:
+        for files in glob.iglob(os.path.join(path, recurs, '*.svg'),
+                                recursive=recursive
+                                ):
+            out = outputdir if outputdir else os.path.dirname(files)
+            basename = os.path.splitext(os.path.basename(files))
+            saveto = os.path.join('%s' % out, '%s.%s' % (basename[0], outext))
+            if platform.system() == 'Windows':
+                command = ' '.join(cmd + [files, '-o', saveto])
+            else:
+                command = cmd + [files, '-o', saveto]
+            try:
+                p = subprocess.run(command,
+                                   capture_output=True,
+                                   universal_newlines=True
+                                   )
+            except FileNotFoundError as err:
+                return ("ERROR: 'rsvg-convert': Command not found")
 
-    for i in filelist:
-        for img in i:
-            dirname = os.path.dirname(img)
-            basename = os.path.splitext(os.path.basename(img))
-            if basename[1] == '.svg':
-                out = diroutput if diroutput else dirname
-                output = os.path.join('%s' % out,
-                                      '%s.%s' % (basename[0], outext))
-                if platform.system() == 'Windows':
-                    command = ' '.join(cmd + [img, '-o', output])
-                else:
-                    command = cmd + [img, '-o', output]
+            if p.returncode:
+                return "ARGS: %s\nERROR: %s" % (p.args, p.stderr)
+
+            elif delete:
                 try:
-                    p = subprocess.run(command,
-                                       capture_output=True,
-                                       universal_newlines=True
-                                       )
-                except FileNotFoundError as err:
-                    return ("ERROR: 'rsvg-convert': Command not found")
-
-                if p.returncode:
-                    return "ARGS: %s\nERROR: %s" % (p.args, p.stderr)
-
-    if delete and not p.returncode:
-        for i in filelist:
-            for img in i:
-                try:
-                    os.remove(img)
+                    os.remove(files)
                 except OSError as err:
                     return "ERROR: %s" % err
-
     return
     # -------------------------------------------------------------------#
 
 
 def main():
     """
-    Entry-point of the executable.
-    Users inputs parser (positional/optional arguments)
+    Entry-point of the executable (users inputs parser, positional/optional
+    arguments)
 
     """
     parser = argparse.ArgumentParser(
-                description='Batch conversion using the rsvg library. Given '
-                            'a list of pathnames, recursively converts images '
-                            'found in SVG vector format to PNG format or to '
+                description='Wrapper interface to perform batch conversion '
+                            'using the `rsvg` library. Given a list of '
+                            'pathnames, recursively converts images found in '
+                            'SVG vector format to PNG raster format or to '
                             'the formats specified in the --format argument:'
                             )
     parser.add_argument(
                 '-d', '--dpi',
-                #action='append',
                 required=False,
-                #dest='<float>',
                 type=float,
                 help="pixels per inch; defaults to 90dpi",
                     )
     parser.add_argument(
                 '-W', '--width',
-                #action='append',
                 required=False,
-                #dest='<int>',
                 type=int,
                 help="width; defaults to the SVG's width",
                     )
     parser.add_argument(
                 '-H', '--height',
-                #action='append',
                 required=False,
-                #dest='<int>',
                 type=int,
                 help="height; defaults to the SVG's height",
                     )
     parser.add_argument(
                 '-f', '--format',
                 choices=['png', 'pdf', 'ps', 'eps', 'svg', 'xml', 'recording'],
-                #action='append',
                 required=False,
-                #dest='<string>',
                 type=str,
-                help="save format; defaults to 'png'",
+                help="Save format; defaults to 'png'",
                     )
     parser.add_argument(
                 '-p', '--paths',
-                #action='append',
                 nargs='+',
                 metavar='..DIR ..DIR',
                 required=True,
@@ -141,12 +149,18 @@ def main():
                 '-r', '--remove',
                 action='store_true',
                 required=False,
-                help="when finished it removes all SVG source files",
+                help="If successful, remove all SVG source files when "
+                     "finished",
+                    )
+    parser.add_argument(
+                '-R', '--recursive',
+                action='store_true',
+                required=False,
+                help="Recursive use (please be careful when used with "
+                     "the `-r` argument)",
                     )
     parser.add_argument(
                 '-o', '--output',
-                #action='append',
-                #nargs='+',
                 metavar='..DIR',
                 required=False,
                 help="Provide an output directory to save all files",
@@ -167,16 +181,21 @@ def main():
     if args.format == 'svg' and not args.output:
         raise FileExistsError('Could not overwrite the SVG files themselves. '
                               'You must provide an output pathname using the '
-                              '-o argument.')
-
+                              '`-o` argument.')
 
     adds = {'-d' : args.dpi, '-w' : args.width,
             '-h' : args.height, '-f' : args.format}
 
-    ret = svg2png(args.remove, args.paths, adds, args.output)
+    ret = svg2png(args.remove,
+                  args.paths,
+                  adds,
+                  args.output,
+                  args.recursive
+                  )
     if ret:
         sys.exit(ret)
     else:
+        print('Done! :-)')
         sys.exit()
     # ----------------------------------------------------------------#
 
