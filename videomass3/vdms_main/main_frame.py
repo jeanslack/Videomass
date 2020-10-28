@@ -35,6 +35,7 @@ from videomass3.vdms_dialogs import infoprg
 from videomass3.vdms_frames import while_playing
 from videomass3.vdms_frames import ffmpeg_search
 from videomass3.vdms_frames.mediainfo import Mediainfo
+from videomass3.vdms_frames.showlogs import ShowLogs
 from videomass3.vdms_panels import choose_topic
 from videomass3.vdms_panels import filedrop
 from videomass3.vdms_panels import textdrop
@@ -106,6 +107,7 @@ class MainFrame(wx.Frame):
         self.icon_delprf = pathicons[21]
         self.icon_editprf = pathicons[22]
         self.icon_viewstatistics = pathicons[26]
+        self.viewlog = pathicons[27]
 
         # -------------------------------#
         self.data_files = []  # list of items in list control
@@ -1002,7 +1004,7 @@ class MainFrame(wx.Frame):
 
         """
         if not os.path.exists(MainFrame.LOGDIR):
-            wx.MessageBox(_("Output log has not been created yet."),
+            wx.MessageBox(_("The log directory has not yet been created."),
                           "Videomass", wx.ICON_INFORMATION, None)
             return
         IO_tools.openpath(MainFrame.LOGDIR)
@@ -1182,6 +1184,12 @@ class MainFrame(wx.Frame):
                                                 wx.Bitmap(self.icon_editprf),
                                                 tip, wx.ITEM_NORMAL,
                                                 )
+        self.toolbar.AddSeparator()
+        tip = _("Show window for viewing log data")
+        self.btn_logs = self.toolbar.AddTool(15, _('Show Logs'),
+                                               wx.Bitmap(self.viewlog),
+                                               tip, wx.ITEM_NORMAL
+                                               )
         # self.toolbar.AddStretchableSpace()
         self.toolbar.AddSeparator()
         tip = _("Convert using FFmpeg")
@@ -1212,8 +1220,23 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.ImportInfo, self.btn_metaI)
         self.Bind(wx.EVT_TOOL, self.ImportInfo, self.btn_ydlstatistics)
         self.Bind(wx.EVT_TOOL, self.ExportPlay, self.btn_playO)
+        self.Bind(wx.EVT_TOOL, self.View_logs, self.btn_logs)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
+
+    def View_logs(self, event):
+        """
+        Show miniframe to view log files
+        """
+        if not os.path.exists(MainFrame.LOGDIR):
+            wx.MessageBox(_("The log directory has not yet been created."),
+                            "Videomass", wx.ICON_INFORMATION, None)
+            return
+
+        else:
+            miniframe = ShowLogs(MainFrame.LOGDIR, MainFrame.OS)
+            miniframe.Show()
+    # ------------------------------------------------------------------#
 
     def on_Back(self, event):
         """
@@ -1288,6 +1311,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, False)
         self.toolbar.EnableTool(13, False)
+        #self.toolbar.EnableTool(15, False)
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Add Files'), None)
@@ -1321,6 +1345,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, False)
         self.toolbar.EnableTool(13, False)
+        #self.toolbar.EnableTool(15, False)
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Add URLs'), None)
@@ -1363,6 +1388,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, False)
         self.toolbar.EnableTool(13, True)
+        #self.toolbar.EnableTool(15, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1406,6 +1432,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, True)
         self.toolbar.EnableTool(13, False)
+        #self.toolbar.EnableTool(15, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1453,6 +1480,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, True)
         self.toolbar.EnableTool(12, True)
         self.toolbar.EnableTool(13, False)
+        #self.toolbar.EnableTool(15, True)
         self.Layout()
     # ------------------------------------------------------------------#
 

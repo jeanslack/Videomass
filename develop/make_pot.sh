@@ -42,6 +42,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_frames/while_playing.py" \
 "../vdms_frames/ffmpeg_search.py" \
 "../vdms_frames/mediainfo.py" \
+"../vdms_frames/showlogs.py" \
 "../vdms_frames/ydl_mediainfo.py" \
 "../vdms_io/filenames_check.py" \
 "../vdms_io/IO_tools.py" \

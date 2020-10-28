@@ -36,6 +36,9 @@ class FFmpeg_Search(wx.MiniFrame):
     ignore upper and lower case by activating the corresponding checkbox.
 
     """
+    GREY = '#959595'
+    DARK_BROWN = '#262222'
+
     def __init__(self, OS):
         """
         The list of topics in the combo box is part of the
@@ -91,8 +94,8 @@ class FFmpeg_Search(wx.MiniFrame):
             self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        self.texthelp.SetBackgroundColour('#262222')
-        self.texthelp.SetDefaultStyle(wx.TextAttr('#959595'))
+        self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_BROWN)
+        self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.GREY))
         self.texthelp.AppendText(_("Choose one of the topics in the list"))
         self.search = wx.SearchCtrl(self.panel,
                                     wx.ID_ANY,
@@ -121,7 +124,6 @@ class FFmpeg_Search(wx.MiniFrame):
         self.SetTitle(_("FFmpeg help topics"))
         self.SetSize((900, 600))
         # set_properties:
-        # self.texthelp.SetBackgroundColour((217, 255, 255))
         # self.panel.SetSizer(sizer)
         self.panel.SetSizerAndFit(sizer)
 

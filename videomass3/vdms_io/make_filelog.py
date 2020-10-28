@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
 # File Name: make_filelog.py
-# Porpose: generate log file
+# Porpose: log file generator
 # Compatibility: Python3, Python2
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.30.2020 *PEP8 compatible*
+# Rev: October.27.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -31,10 +31,12 @@ import os
 
 def write_log(logfile, logdir):
     """
-    Before starting the process, a log file stored in the conventional
-    path of the OS is created, see `vdms_sys/ctrl_run.py` .
+    Before starting a process, a log file is created from this
+    template and then written later by the process.
+    see also `vdms_sys/ctrl_run.py` .
 
-    - logfile è il nome del pannello da cui è stato composto il comando
+    - logfile,  name of the panel from which the command was generated
+    - logdir, log files location
     """
     if not os.path.isdir(logdir):
         try:
@@ -46,22 +48,15 @@ def write_log(logfile, logdir):
     path = os.path.join(logdir, logfile)
 
     with open(path, "w") as log:
-        log.write("""[PYTHON] CURRENT DATE/TIME:
-%s\n
------------------------------------------
-[VIDEOMASS] INFO FOR USERS:
------------------------------------------
-All FFmpeg and FFplay output messages are on stderr (excluse ffprobe),
-and include both information messages and error messages.
-Changing the logging level into setting dialog would also change the
-behavior of the output on log messages.
------------------------------------------
-On Videomass default ffmpeg loglevel is fixed to 'warning';
-ffplay to 'error' .
-For more details, see videomass.conf or videomassWin32.conf
-into configuration directory.
------------------------------------------
+        log.write("""Log file:
+%s
 
-[VIDEOMASS] COMMAND LINE:
+[LOCATION]:
+%s
 
-""" % (current_date))
+[INFO]:
+For more details, see `videomass.conf` or `videomassWin32.conf`
+(for MS Windows) into configuration directory.
+
+[VIDEOMASS]:
+""" % (current_date, path))
