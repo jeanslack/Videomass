@@ -204,7 +204,7 @@ class AV_Conv(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        # notepos = wx.NB_TOP if self.oS == 'Windows' else wx.NB_LEFT
+        #notepos = wx.NB_TOP if self.oS == 'Windows' else wx.NB_LEFT
         self.notebook = wx.Notebook(self, wx.ID_ANY,
                                     style=wx.NB_NOPAGETHEME | wx.NB_TOP
                                     )
@@ -568,8 +568,8 @@ class AV_Conv(wx.Panel):
         self.box_audioProper.Add(grid_a_ctrl, 0, wx.ALL | wx.EXPAND, 15)
         ####
         # setbmp = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
-        self.btn_aparam = wx.ToggleButton(self.nb_Audio, wx.ID_ANY,
-                                          _("Settings"), size=(-1, -1))
+        self.btn_aparam = wx.Button(self.nb_Audio, wx.ID_ANY,
+                                    _("Settings"), size=(-1, -1))
         self.btn_aparam.SetBitmap(wx.Bitmap(iconsettings), wx.LEFT)
         grid_a_ctrl.Add(self.btn_aparam, 0, wx.ALL |
                         wx.ALIGN_CENTER_VERTICAL, 5
@@ -633,29 +633,29 @@ class AV_Conv(wx.Panel):
                               )
         grid_vfilters = wx.FlexGridSizer(3, 5, 20, 20)
         # resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
-        self.btn_videosize = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                             _("Resize"), size=(-1, -1))
+        self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                        _("Resize"), size=(-1, -1))
         self.btn_videosize.SetBitmap(wx.Bitmap(iconresize), wx.LEFT)
         grid_vfilters.Add(self.btn_videosize)
         # cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
-        self.btn_crop = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                        _("Crop"), size=(-1, -1))
+        self.btn_crop = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                  _("Crop"), size=(-1, -1))
         self.btn_crop.SetBitmap(wx.Bitmap(iconcrop), wx.LEFT)
         grid_vfilters.Add(self.btn_crop)
         # rotatebmp = wx.Bitmap(iconrotate, wx.BITMAP_TYPE_ANY)
-        self.btn_rotate = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                          _("Rotate"), size=(-1, -1))
+        self.btn_rotate = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                    _("Rotate"), size=(-1, -1))
         self.btn_rotate.SetBitmap(wx.Bitmap(iconrotate), wx.LEFT)
 
         grid_vfilters.Add(self.btn_rotate)
         # deintbmp = wx.Bitmap(icondeinterlace, wx.BITMAP_TYPE_ANY)
-        self.btn_lacing = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                          _("De-interlace"), size=(-1, -1))
+        self.btn_lacing = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                    _("De-interlace"), size=(-1, -1))
         self.btn_lacing.SetBitmap(wx.Bitmap(icondeinterlace), wx.LEFT)
         grid_vfilters.Add(self.btn_lacing)
         # denoiserbmp = wx.Bitmap(icondenoiser, wx.BITMAP_TYPE_ANY)
-        self.btn_denois = wx.ToggleButton(self.filterVpanel, wx.ID_ANY,
-                                          _("Denoiser"), size=(-1, -1))
+        self.btn_denois = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                    _("Denoiser"), size=(-1, -1))
         self.btn_denois.SetBitmap(wx.Bitmap(icondenoiser), wx.LEFT)
         grid_vfilters.Add(self.btn_denois)
         # playbmp = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
@@ -852,19 +852,17 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_CHECKBOX, self.on_WebOptimize, self.ckbx_web)
         self.Bind(wx.EVT_SPINCTRL, self.on_Vbitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
-        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_Enable_vsize,
-                  self.btn_videosize)
-        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_Enable_crop, self.btn_crop)
-        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_Enable_rotate, self.btn_rotate)
-        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_Enable_lacing, self.btn_lacing)
-        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_Enable_denoiser,
-                  self.btn_denois)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_lacing, self.btn_lacing)
+        self.Bind(wx.EVT_BUTTON, self.on_Enable_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmb_Vaspect)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vrate, self.cmb_Fps)
         self.Bind(wx.EVT_RADIOBOX, self.on_AudioCodecs, self.rdb_a)
-        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_AudioParam, self.btn_aparam)
+        self.Bind(wx.EVT_BUTTON, self.on_AudioParam, self.btn_aparam)
         self.Bind(wx.EVT_COMBOBOX, self.on_audioINstream, self.cmb_A_inMap)
         self.Bind(wx.EVT_COMBOBOX, self.on_audioOUTstream, self.cmb_A_outMap)
         self.Bind(wx.EVT_RADIOBOX, self.onNormalize, self.rdbx_normalize)
@@ -958,7 +956,7 @@ class AV_Conv(wx.Panel):
         self.opt["AudioRate"] = ["", ""]
         self.opt["AudioDepth"] = ["", ""]
         self.btn_aparam.Disable()
-        self.btn_aparam.SetValue(False)
+        self.btn_aparam.SetBackgroundColour(wx.NullColour)
         self.txt_audio_options.Clear()
         # self.rdbx_normalize.Enable()
     # -------------------------------------------------------------------#
@@ -1187,11 +1185,11 @@ class AV_Conv(wx.Panel):
             self.opt['Setsar'], self.opt['Deinterlace'] = "", ""
             self.opt['Interlace'], self.opt['Denoiser'] = "", ""
             self.opt["VFilters"] = ""
-            self.btn_videosize.SetValue(False)
-            self.btn_crop.SetValue(False)
-            self.btn_denois.SetValue(False)
-            self.btn_lacing.SetValue(False)
-            self.btn_rotate.SetValue(False)
+            self.btn_videosize.SetBackgroundColour(wx.NullColour)
+            self.btn_crop.SetBackgroundColour(wx.NullColour)
+            self.btn_denois.SetBackgroundColour(wx.NullColour)
+            self.btn_lacing.SetBackgroundColour(wx.NullColour)
+            self.btn_rotate.SetBackgroundColour(wx.NullColour)
     # ------------------------------------------------------------------#
 
     def video_filter_checker(self):
@@ -1246,7 +1244,6 @@ class AV_Conv(wx.Panel):
         """
         Enable or disable video/image resolution functionalities
         """
-        self.btn_videosize.SetValue(True)
         sizing = video_filters.VideoResolution(self,
                                                self.opt["Scale"],
                                                self.opt["Setdar"],
@@ -1256,11 +1253,13 @@ class AV_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
             if not data:
-                self.btn_videosize.SetValue(False)
+                self.btn_videosize.SetBackgroundColour(wx.NullColour)
                 self.opt["Setdar"] = ""
                 self.opt["Setsar"] = ""
                 self.opt["Scale"] = ""
             else:
+                self.btn_videosize.SetBackgroundColour(
+                                                wx.Colour(AV_Conv.VIOLET))
                 if 'scale' in data:
                     self.opt["Scale"] = data['scale']
                 else:
@@ -1276,10 +1275,6 @@ class AV_Conv(wx.Panel):
             self.video_filter_checker()
         else:
             sizing.Destroy()
-            if ('scale=' not in self.opt["VFilters"] and 'setdar=' not in
-               self.opt["VFilters"] and 'setsar=' not in
-               self.opt["VFilters"]):
-                self.btn_videosize.SetValue(False)
             return
     # -----------------------------------------------------------------#
 
@@ -1287,7 +1282,6 @@ class AV_Conv(wx.Panel):
         """
         Show a setting dialog for video/image rotate
         """
-        self.btn_rotate.SetValue(True)
         rotate = video_filters.VideoRotate(self,
                                            self.opt["Orientation"][0],
                                            self.opt["Orientation"][1],
@@ -1298,12 +1292,13 @@ class AV_Conv(wx.Panel):
             self.opt["Orientation"][0] = data[0]  # cmd option
             self.opt["Orientation"][1] = data[1]  # msg
             if not data[0]:
-                self.btn_rotate.SetValue(False)
+                self.btn_rotate.SetBackgroundColour(wx.NullColour)
+            else:
+                self.btn_rotate.SetBackgroundColour(
+                                                wx.Colour(AV_Conv.VIOLET))
             self.video_filter_checker()
         else:
             rotate.Destroy()
-            if self.opt["Orientation"] == ['', '']:
-                self.btn_rotate.SetValue(False)
             return
     # ------------------------------------------------------------------#
 
@@ -1311,21 +1306,20 @@ class AV_Conv(wx.Panel):
         """
         Show a setting dialog for video crop functionalities
         """
-        self.btn_crop.SetValue(True)
         crop = video_filters.VideoCrop(self, self.opt["Crop"])
         retcode = crop.ShowModal()
         if retcode == wx.ID_OK:
             data = crop.GetValue()
             if not data:
-                self.btn_crop.SetValue(False)
+                self.btn_crop.SetBackgroundColour(wx.NullColour)
                 self.opt["Crop"] = ''
             else:
+                self.btn_crop.SetBackgroundColour(
+                                                wx.Colour(AV_Conv.VIOLET))
                 self.opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
             crop.Destroy()
-            if self.opt["Crop"] == '':
-                self.btn_crop.SetValue(False)
             return
     # ------------------------------------------------------------------#
 
@@ -1333,7 +1327,6 @@ class AV_Conv(wx.Panel):
         """
         Show a setting dialog for settings Deinterlace/Interlace filters
         """
-        self.btn_lacing.SetValue(True)
         lacing = video_filters.Lacing(self,
                                       self.opt["Deinterlace"],
                                       self.opt["Interlace"],
@@ -1342,10 +1335,12 @@ class AV_Conv(wx.Panel):
         if retcode == wx.ID_OK:
             data = lacing.GetValue()
             if not data:
-                self.btn_lacing.SetValue(False)
+                self.btn_lacing.SetBackgroundColour(wx.NullColour)
                 self.opt["Deinterlace"] = ''
                 self.opt["Interlace"] = ''
             else:
+                self.btn_lacing.SetBackgroundColour(
+                                                wx.Colour(AV_Conv.VIOLET))
                 if 'deinterlace' in data:
                     self.opt["Deinterlace"] = data["deinterlace"]
                     self.opt["Interlace"] = ''
@@ -1355,8 +1350,6 @@ class AV_Conv(wx.Panel):
             self.video_filter_checker()
         else:
             lacing.Destroy()
-            if self.opt["Deinterlace"] == '' and self.opt["Interlace"] == '':
-                self.btn_lacing.SetValue(False)
             return
     # ------------------------------------------------------------------#
 
@@ -1367,21 +1360,20 @@ class AV_Conv(wx.Panel):
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
-        self.btn_denois.SetValue(True)
         den = video_filters.Denoisers(self, self.opt["Denoiser"])
         retcode = den.ShowModal()
         if retcode == wx.ID_OK:
             data = den.GetValue()
             if not data:
-                self.btn_denois.SetValue(False)
+                self.btn_denois.SetBackgroundColour(wx.NullColour)
                 self.opt["Denoiser"] = ''
             else:
+                self.btn_denois.SetBackgroundColour(
+                                             wx.Colour(AV_Conv.VIOLET))
                 self.opt["Denoiser"] = data
             self.video_filter_checker()
         else:
             den.Destroy()
-            if self.opt["Denoiser"] == '':
-                self.btn_denois.SetValue(False)
             return
     # ------------------------------------------------------------------#
 
@@ -1464,10 +1456,11 @@ class AV_Conv(wx.Panel):
             if enablebuttonparameters:
                 self.btn_aparam.Enable()
                 self.txt_audio_options.SetValue('')
+                self.btn_aparam.SetBackgroundColour(wx.NullColour)
             else:
                 self.btn_aparam.Disable(),
                 self.txt_audio_options.SetValue('')
-                self.btn_aparam.SetValue(False)
+                self.btn_aparam.SetBackgroundColour(wx.NullColour)
 
         # --------------------------------------------------------
         for k, v in AV_Conv.ACODECS.items():
@@ -1529,7 +1522,6 @@ class AV_Conv(wx.Panel):
               data[0][1] is ffmpeg option command for audio channels and
               data[0][0] is a simple description for view.
         """
-        self.btn_aparam.SetValue(True)
         audiodialog = audiodialogs.AudioSettings(self,
                                                  audio_type,
                                                  self.opt["AudioRate"],
@@ -1562,10 +1554,6 @@ class AV_Conv(wx.Panel):
         else:
             data = None
             audiodialog.Destroy()
-            if (not self.opt["AudioChannel"][1] and not
-               self.opt["AudioRate"][1] and not
-               self.opt["AudioBitrate"][1]):
-                self.btn_aparam.SetValue(False)
             return
 
         self.txt_audio_options.Clear()
@@ -1578,7 +1566,9 @@ class AV_Conv(wx.Panel):
                 self.txt_audio_options.AppendText(" %s | " % d[0])
 
         if count == 0:
-            self.btn_aparam.SetValue(False)
+            self.btn_aparam.SetBackgroundColour(wx.NullColour)
+        else:
+            self.btn_aparam.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
 
         audiodialog.Destroy()
     # ------------------------------------------------------------------#
@@ -1887,8 +1877,8 @@ class AV_Conv(wx.Panel):
         countmax      : count processing cicles for batch mode
         """
 
+        logname = 'ffmpeg_AVconversions.log'
         # check normalization data offset, if enable
-        logname = 'Videomass_AVconversions.log'
         if self.rdbx_normalize.GetSelection() in [1, 2]:
             if self.btn_voldect.IsEnabled():
                 wx.MessageBox(_('Undetected volume values! use the '

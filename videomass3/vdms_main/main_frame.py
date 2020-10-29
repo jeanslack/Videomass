@@ -135,8 +135,8 @@ class MainFrame(wx.Frame):
         self.ytDownloader = youtubedl_ui.Downloader(self)
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                  MainFrame.OS,
-                                                 pathicons[6],  # playfil
-                                                 pathicons[7],  # resetfil
+                                                 pathicons[6],  # playfilt
+                                                 pathicons[7],  # resetfilt
                                                  pathicons[9],  # resize
                                                  pathicons[10],  # crop
                                                  pathicons[11],  # rotate
@@ -1234,8 +1234,8 @@ class MainFrame(wx.Frame):
             return
 
         else:
-            miniframe = ShowLogs(MainFrame.LOGDIR, MainFrame.OS)
-            miniframe.Show()
+            mf = ShowLogs(self, MainFrame.LOGDIR, MainFrame.OS)
+            mf.Show()
     # ------------------------------------------------------------------#
 
     def on_Back(self, event):

@@ -48,6 +48,7 @@ class NormalizationList(wx.MiniFrame):
                                style=wx.LC_REPORT |
                                wx.SUNKEN_BORDER
                                )
+        normlist.SetMinSize((850, 400))
         # ----------------------Properties----------------------#
         self.SetTitle(_(title))
         self.SetMinSize((850, 400))

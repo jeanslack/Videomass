@@ -115,7 +115,7 @@ class Logging_Console(wx.Panel):
         self.ABORT = False  # if True set to abort current process
         self.ERROR = False  # if True, all the tasks was failed
         self.previus = None  # panel name from which it starts
-        self.logname = None  # example: Videomass_VideoConversion.log
+        self.logname = None  # example: ffmpeg_AVconversions.log
         self.result = None  # result of the final process
 
         wx.Panel.__init__(self, parent=parent)

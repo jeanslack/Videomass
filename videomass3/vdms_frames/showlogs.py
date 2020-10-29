@@ -38,7 +38,7 @@ class ShowLogs(wx.MiniFrame):
     ROYAL_BLUE = '#4169e1ff'
     DARK_BROWN = '#262222'
 
-    def __init__(self, dirlog, OS):
+    def __init__(self, parent, dirlog, OS):
         """
         Attributes defined here:
         self.dirlog > log location directory (depends from OS)
@@ -46,6 +46,7 @@ class ShowLogs(wx.MiniFrame):
         self.selected > None if item on listctrl is not selected
 
         """
+        self.parent = parent
         self.dirlog = dirlog
         self.logdata = {}
         self.selected = None
@@ -53,26 +54,21 @@ class ShowLogs(wx.MiniFrame):
         wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
                               wx.RESIZE_BORDER | wx.SYSTEM_MENU
                               )
-        """
-        NOTE constructor: with 'None' not depend from videomass.
-        With 'parent, -1' if close videomass also close mediainfo window
-        """
 
-        panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
-
-        # ----------------------Properties----------------------#
-        self.SetTitle(_('Showing log data'))
-        self.SetMinSize((850, 550))
-
-
-        self.log_select = wx.ListCtrl(panel,
+        # ----------------------Layout----------------------#
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        self.log_select = wx.ListCtrl(self.panel,
                                       wx.ID_ANY,
                                       style=wx.LC_REPORT |
                                       wx.SUNKEN_BORDER
                                       )
-        self.log_select.SetMinSize((-1, 200))
-        self.log_select.InsertColumn(0, _('Log files list'), width=500)
-        self.textdata = wx.TextCtrl(panel,
+        self.log_select.SetMinSize((850, 200))
+        self.log_select.InsertColumn(0, _('Videomass Log lists'), width=500)
+        sizer_base.Add(self.log_select, 0, wx.ALL | wx.EXPAND, 5)
+        labtxt = wx.StaticText(self.panel, label=_('Log file content'))
+        sizer_base.Add(labtxt, 0, wx.ALL, 5)
+        self.textdata = wx.TextCtrl(self.panel,
                                     wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_READONLY |
@@ -89,34 +85,33 @@ class ShowLogs(wx.MiniFrame):
             self.log_select.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
                                             wx.NORMAL))
             self.textdata.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        # ----------------------Layout--------------------------#
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizer_base.Add(self.log_select, 0, wx.ALL | wx.EXPAND, 5)
-        grid_sizer_base = wx.GridSizer(1, 1, 0, 0)
-        sizer_base.Add(grid_sizer_base, 1, wx.EXPAND, 0)
-        grid_sizer_base.Add(self.textdata, 0, wx.ALL | wx.EXPAND, 5)
+
+        sizer_base.Add(self.textdata, 1, wx.ALL | wx.EXPAND, 5)
         # ------ btns bottom
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
-        button_update = wx.Button(panel, wx.ID_REFRESH,
+        button_update = wx.Button(self.panel, wx.ID_REFRESH,
                                   _("Refresh log messages"))
         grid_funcbtn.Add(button_update, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        button_clear = wx.Button(panel, wx.ID_CLEAR, _("Clear log messages"))
+        button_clear = wx.Button(self.panel, wx.ID_CLEAR, _("Clear log messages"))
         grid_funcbtn.Add(button_clear, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        button_delete = wx.Button(panel, wx.ID_REMOVE, "")
+        button_delete = wx.Button(self.panel, wx.ID_REMOVE, "")
         grid_funcbtn.Add(button_delete, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grid_funcbtn)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
-        button_close = wx.Button(panel, wx.ID_CLOSE, "")
+        button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
         grdexit.Add(button_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         sizer_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 0)
+        # set caption and min size
+        self.SetTitle(_('Showing log data'))
+        self.SetMinSize((850, 650))
         # ------ set sizer
-        panel.SetSizer(sizer_base)
+        self.panel.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
 
-        # populate ListCtrl and set dict
+        # populate ListCtrl and set self.logdata dict
         self.on_update(self)
 
         # ----------------------Binding (EVT)----------------------#
@@ -128,6 +123,16 @@ class ShowLogs(wx.MiniFrame):
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)
 
+    def onprocess(self):
+        """
+        Warns that changes to log files cannot be made
+        during an active process
+
+        """
+        wx.MessageBox(_('In `Log View Console` mode this feature is disabled'),
+                      'Videomass', wx.ICON_WARNING)
+        return
+
     # ----------------------Event handler (callback)----------------------#
 
     def on_clear(self, event):
@@ -135,6 +140,10 @@ class ShowLogs(wx.MiniFrame):
         clear data logging from selected log file
 
         """
+        if self.parent.ProcessPanel.IsShown():
+            self.onprocess()
+            return
+
         if not self.selected:
             wx.MessageBox(_('Please, select a log file from the list.'),
                           'Videomass', wx.ICON_INFORMATION)
@@ -159,6 +168,10 @@ class ShowLogs(wx.MiniFrame):
         remove the selected log files found on log dir
 
         """
+        if self.parent.ProcessPanel.IsShown():
+            self.onprocess()
+            return
+
         if not self.selected:
             wx.MessageBox(_('Please, select a log file from the list.'),
                           'Videomass', wx.ICON_INFORMATION)
@@ -168,14 +181,13 @@ class ShowLogs(wx.MiniFrame):
         name = self.log_select.GetItemText(index, 0)
 
         if wx.MessageBox(_('Are you sure you want to delete the selected '
-                           'log file?'), "Videomass", wx.ICON_QUESTION |
+                         'log file?'), "Videomass", wx.ICON_QUESTION |
                          wx.YES_NO, self) == wx.NO:
             return
         try:
             os.remove(os.path.join(self.dirlog, name))
         except OSError as err:
-            wx.MessageBox('%s' % err,
-                          'Videomass', wx.ICON_ERROR)
+            wx.MessageBox('%s' % err, 'Videomass', wx.ICON_ERROR)
             return
 
         self.on_update(self)
@@ -186,11 +198,19 @@ class ShowLogs(wx.MiniFrame):
         update data with new incoming
 
         """
+        #if self.parent.ProcessPanel.IsShown():
+            #self.onprocess()
+            #return
+
+        lognames = ['ffmpeg_volumedected.log', 'youtubedl_lib.log',
+                    'youtubedl_exec.log', 'ffmpeg_AVconversions.log',
+                    'ffmpeg_presetsmanager.log', 'ffplay.log']
         self.logdata.clear()
         self.log_select.DeleteAllItems()
         index = 0
         for f in os.listdir(self.dirlog):
-            if os.path.splitext(f)[1] == '.log':
+            if os.path.basename(f) in lognames:
+            #if os.path.splitext(f)[1] == '.log':
                 with open(os.path.join(self.dirlog, f), 'r') as log:
                     self.logdata[f] = log.read()  # set value
                     self.log_select.InsertItem(index, f)

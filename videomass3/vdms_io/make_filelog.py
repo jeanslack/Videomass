@@ -47,16 +47,13 @@ def write_log(logfile, logdir):
     current_date = time.strftime("%c")  # date/time
     path = os.path.join(logdir, logfile)
 
-    with open(path, "w") as log:
-        log.write("""Log file:
+    with open(path, "a") as log:
+        log.write("""
+[DATE]:
 %s
 
 [LOCATION]:
 %s
-
-[INFO]:
-For more details, see `videomass.conf` or `videomassWin32.conf`
-(for MS Windows) into configuration directory.
 
 [VIDEOMASS]:
 """ % (current_date, path))

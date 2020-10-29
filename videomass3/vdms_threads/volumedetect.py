@@ -59,13 +59,13 @@ class VolumeDetectThread(Thread):
         self.filelist = filelist
         self.time_seq = timeseq
         self.audiomap = audiomap
-        self.logdir = logdir
+        logdir = logdir
         self.ffmpeg_url = ffmpeg_url
         self.status = None
         self.data = None
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-        self.logf = os.path.join(self.logdir, 'Videomass_volumedected.log')
-        write_log('Videomass_volumedected.log', self.logdir)
+        self.logf = os.path.join(logdir, 'ffmpeg_volumedected.log')
+        write_log('ffmpeg_volumedected.log', logdir)
         # set initial file LOG
 
         Thread.__init__(self)
@@ -142,7 +142,7 @@ class VolumeDetectThread(Thread):
         write ffmpeg command log
         """
         with open(self.logf, "a") as log:
-            log.write("%s\n\n" % (cmd))
+            log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
     def logError(self):
@@ -150,5 +150,5 @@ class VolumeDetectThread(Thread):
         write ffmpeg volumedected errors
         """
         with open(self.logf, "a") as logerr:
-            logerr.write("[FFMPEG] volumedetect "
-                         "ERRORS:\n%s\n\n" % (self.status))
+            logerr.write("\n[FFMPEG] volumedetect "
+                         "ERRORS:\n%s\n" % (self.status))

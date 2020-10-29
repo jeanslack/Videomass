@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Oct 28, 2020 V.3.2.1
+Oct 29, 2020 V.3.2.1
 
      * Add new toolbar item to display download statistics window
      * Add new statistic icon toolbar
@@ -15,7 +15,10 @@ Oct 28, 2020 V.3.2.1
      * Fix caption on Strems window
      * Fix caption on Statistics window
      * Fixed FFmpeg menu definition
-     * New tool for showing log files
+     * New tool to view and read log files more conveniently
+     * Changed log files definitions
+     * All log files are cumulative now
+     * The toggle buttons have been replaced with normal buttons
 
 +------------------------------------+
 Oct 18, 2020 V.3.2.0

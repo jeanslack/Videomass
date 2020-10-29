@@ -72,11 +72,11 @@ class File_Play(Thread):
         self.filename = filepath  # file name selected
         self.time_seq = timeseq  # seeking
         self.param = param  # additional parameters if present
-        self.logdir = logdir
+        logdir = logdir
         self.ffplay = ffplay_url
         self.ffplay_loglev = ffplay_loglev
-        self.logf = os.path.join(self.logdir, 'Videomass_FFplay.log')
-        write_log('Videomass_FFplay.log', self.logdir)
+        self.logf = os.path.join(logdir, 'ffplay.log')
+        write_log('ffplay.log', logdir)
         # set initial file LOG
 
         Thread.__init__(self)
@@ -153,7 +153,7 @@ class File_Play(Thread):
         write ffplay command log
         """
         with open(self.logf, "a") as log:
-            log.write("%s\n\n" % (cmd))
+            log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
     def logError(self, error):
@@ -161,5 +161,5 @@ class File_Play(Thread):
         write ffplay errors
         """
         with open(self.logf, "a") as logerr:
-            logerr.write("[FFMPEG] FFplay "
-                         "ERRORS:\n%s\n\n" % (error))
+            logerr.write("\n[FFMPEG] FFplay "
+                         "ERRORS:\n%s\n" % (error))

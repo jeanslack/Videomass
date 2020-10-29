@@ -667,7 +667,6 @@ class Downloader(wx.Panel):
         with subprocess. This depends on some cases.
         """
         urls = self.parent.data_url
-        logname = 'Youtube_LIB_downloader.log'
 
         def _getformatcode():
             """
@@ -722,6 +721,7 @@ class Downloader(wx.Panel):
             return format_code
 
         if Downloader.PYLIB_YDL is None:  # youtube-dl is used as library
+            logname = 'youtubedl_lib.log'
             postprocessors = []
             if self.choice.GetSelection() == 2:
                 postprocessors.append({'key': 'FFmpegExtractAudio',
@@ -802,10 +802,12 @@ class Downloader(wx.Panel):
                                              None,
                                              code,
                                              '',
-                                             'Youtube_LIB_downloader.log',
+                                             logname,
                                              len(urls),
                                              )
         else:  # ----------- with youtube-dl command line execution
+
+            logname = 'youtubedl_exec.log'
 
             if self.choice.GetSelection() == 0:  # default
                 code = []
@@ -857,6 +859,6 @@ class Downloader(wx.Panel):
                                              None,
                                              code,
                                              '',
-                                             'Youtube_EXEC_downloader.log',
+                                             logname,
                                              len(urls),
                                              )
