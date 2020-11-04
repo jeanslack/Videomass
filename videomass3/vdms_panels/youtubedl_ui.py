@@ -140,11 +140,16 @@ class Downloader(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        frame = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                                "")), wx.VERTICAL)
-        sizer_base.Add(frame, 1, wx.ALL | wx.EXPAND, 5)
+        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                             size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                             name=wx.StaticLineNameStr
+                             )
+        sizer_base.Add(line, 0, wx.ALL | wx.EXPAND, 10)
+        #frame = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
+                                                #"")), wx.VERTICAL)
+        #sizer_base.Add(frame, 1, wx.ALL | wx.EXPAND, 5)
         sizer = wx.BoxSizer(wx.VERTICAL)
-        frame.Add(sizer, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(sizer, 1, wx.ALL | wx.EXPAND, 10)
         self.choice = wx.Choice(self, wx.ID_ANY,
                                 choices=Downloader.CHOICE,
                                 size=(-1, -1),
@@ -498,7 +503,7 @@ class Downloader(wx.Panel):
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
-        self.fcode.InsertColumn(0, (_('N.')), width=50)
+        self.fcode.InsertColumn(0, (_('Item no')), width=50)
         self.fcode.InsertColumn(1, (_('Url')), width=500)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
         self.fcode.InsertColumn(3, (_('Resolution note')), width=250)

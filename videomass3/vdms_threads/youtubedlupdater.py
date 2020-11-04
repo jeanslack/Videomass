@@ -205,9 +205,6 @@ class Update_Youtube_dl_Appimage(Thread):
     Install or Update `youtube_dl` python package (library) using
     xterm terminal emulator with subprocess for displaying and
     redirecting the output to log file.
-    The installation (or upgrade) approach uses the pip command with
-    the --target argument to avoid affecting any other youtube dl
-    installation, for example by using the --user argument.
 
     """
     def __init__(self, log, appimage):

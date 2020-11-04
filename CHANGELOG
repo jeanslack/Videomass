@@ -7,8 +7,10 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 03, 2020 V.3.2.5
+Nov 04, 2020 V.3.2.5
 
+     * Fixed layout bug on some mini frames which did not fit in the sizer
+       especially on MacOs and MS Windows
      * Add new toolbar item to display download statistics window
      * Add new statistic icon toolbar
      * Fix setup.py importings

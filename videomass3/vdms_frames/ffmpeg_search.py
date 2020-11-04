@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Spt.02.2020 *PEP8 compatible*
+# Rev: Oct.04.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -39,6 +39,17 @@ class FFmpeg_Search(wx.MiniFrame):
     GREY = '#959595'
     DARK_BROWN = '#262222'
 
+    # COLORS html
+    # light
+    LAVENDER = '#e6e6faff'
+    NIGHT_BLUE = '#191970ff'
+    # dark
+    DARK_SLATE = '#1c2027ff'
+    HEAVENLY = '#87ceebff'
+    # breeze-blues
+    SOLARIZED = '#11303eff'
+    FOREST_GREEN = '#208320ff'
+
     def __init__(self, OS):
         """
         The list of topics in the combo box is part of the
@@ -47,6 +58,7 @@ class FFmpeg_Search(wx.MiniFrame):
         """
         self.oS = OS
         self.row = None  # output text from `IO_tools.findtopic(topic)'
+        get = wx.GetApp()  # get data from bootstrap
 
         wx.MiniFrame.__init__(self, None, style=wx.RESIZE_BORDER | wx.CAPTION |
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
@@ -90,12 +102,21 @@ class FFmpeg_Search(wx.MiniFrame):
                                     wx.TE_RICH2 |
                                     wx.HSCROLL
                                     )
+        if get.THEME == 'Breeze-Blues':
+            self.texthelp.SetBackgroundColour(FFmpeg_Search.SOLARIZED)
+            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.FOREST_GREEN))
+        elif get.THEME in get.DARKicons:
+            self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_SLATE)
+            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.HEAVENLY))
+        else:
+            self.texthelp.SetBackgroundColour(FFmpeg_Search.LAVENDER)
+            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.NIGHT_BLUE))
+
         if OS == 'Darwin':
             self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))
         else:
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
-        self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_BROWN)
-        self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.GREY))
+
         self.texthelp.AppendText(_("Choose one of the topics in the list"))
         self.search = wx.SearchCtrl(self.panel,
                                     wx.ID_ANY,

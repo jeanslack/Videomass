@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-04 11:17+0100\n"
-"PO-Revision-Date: 2020-11-04 11:49+0100\n"
+"POT-Creation-Date: 2020-11-04 21:54+0100\n"
+"PO-Revision-Date: 2020-11-04 21:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -681,68 +681,68 @@ msgstr ""
 msgid "Flags disabled"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:109
+#: ../vdms_frames/ffmpeg_conf.py:105
 msgid "FFmpeg configuration"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:112
+#: ../vdms_frames/ffmpeg_conf.py:113
 msgid "flags"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:113 ../vdms_frames/ffmpeg_conf.py:117
-#: ../vdms_frames/ffmpeg_conf.py:121
+#: ../vdms_frames/ffmpeg_conf.py:114 ../vdms_frames/ffmpeg_conf.py:118
+#: ../vdms_frames/ffmpeg_conf.py:122
 msgid "options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:116 ../vdms_frames/ffmpeg_conf.py:120
+#: ../vdms_frames/ffmpeg_conf.py:117 ../vdms_frames/ffmpeg_conf.py:121
 msgid "status"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:144
+#: ../vdms_frames/ffmpeg_conf.py:145
 msgid "FFmpeg   ...installed"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:147
+#: ../vdms_frames/ffmpeg_conf.py:148
 msgid "FFmpeg   ...was imported locally"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:150
+#: ../vdms_frames/ffmpeg_conf.py:151
 msgid "FFprobe   ...installed"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:153
+#: ../vdms_frames/ffmpeg_conf.py:154
 msgid "FFprobe   ...was imported locally"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:155
+#: ../vdms_frames/ffmpeg_conf.py:156
 msgid "FFprobe   ...not found !"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:158
+#: ../vdms_frames/ffmpeg_conf.py:159
 msgid "FFplay   ...installed"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:161
+#: ../vdms_frames/ffmpeg_conf.py:162
 msgid "FFplay   ...was imported locally"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:163
+#: ../vdms_frames/ffmpeg_conf.py:164
 msgid "FFplay   ...not found !"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:197
+#: ../vdms_frames/ffmpeg_conf.py:198
 msgid "ENABLED:"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:201
+#: ../vdms_frames/ffmpeg_conf.py:202
 msgid "Enabled"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:210
+#: ../vdms_frames/ffmpeg_conf.py:211
 msgid "DISABLED:"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_conf.py:214
+#: ../vdms_frames/ffmpeg_conf.py:215
 msgid "Disabled"
 msgstr ""
 
@@ -774,9 +774,9 @@ msgstr ""
 msgid "Subtitle"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_codecs.py:112 ../vdms_frames/ffmpeg_codecs.py:121
-#: ../vdms_frames/ffmpeg_codecs.py:130 ../vdms_frames/ffmpeg_formats.py:100
-#: ../vdms_frames/ffmpeg_formats.py:104 ../vdms_frames/ffmpeg_formats.py:108
+#: ../vdms_frames/ffmpeg_codecs.py:107 ../vdms_frames/ffmpeg_codecs.py:116
+#: ../vdms_frames/ffmpeg_codecs.py:125 ../vdms_frames/ffmpeg_formats.py:102
+#: ../vdms_frames/ffmpeg_formats.py:106 ../vdms_frames/ffmpeg_formats.py:110
 msgid "description"
 msgstr ""
 
@@ -792,57 +792,57 @@ msgstr ""
 msgid "Demuxing/Muxing support"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_formats.py:96
+#: ../vdms_frames/ffmpeg_formats.py:94
 msgid "FFmpeg file formats"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_formats.py:99 ../vdms_frames/ffmpeg_formats.py:103
-#: ../vdms_frames/ffmpeg_formats.py:107
+#: ../vdms_frames/ffmpeg_formats.py:101 ../vdms_frames/ffmpeg_formats.py:105
+#: ../vdms_frames/ffmpeg_formats.py:109
 msgid "format"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:56
+#: ../vdms_frames/shownormlist.py:55
 msgid "File name"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:57
+#: ../vdms_frames/shownormlist.py:56
 msgid "Max volume dBFS"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:58
+#: ../vdms_frames/shownormlist.py:57
 msgid "Mean volume dBFS"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:59
+#: ../vdms_frames/shownormlist.py:58
 msgid "Offset dBFS"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:60
+#: ../vdms_frames/shownormlist.py:59
 msgid "Result dBFS"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:64
+#: ../vdms_frames/shownormlist.py:63
 msgid "Post-normalization references:"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:68
+#: ../vdms_frames/shownormlist.py:67
 msgid "=  Clipped peaks"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:72
+#: ../vdms_frames/shownormlist.py:71
 msgid "=  No changes"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:77
+#: ../vdms_frames/shownormlist.py:76
 msgid "=  Below max peak"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:126 ../vdms_panels/av_conversions.py:1770
+#: ../vdms_frames/shownormlist.py:128 ../vdms_panels/av_conversions.py:1770
 #: ../vdms_panels/presets_manager.py:673
 msgid "RMS-based volume statistics"
 msgstr ""
 
-#: ../vdms_frames/shownormlist.py:148 ../vdms_panels/av_conversions.py:1768
+#: ../vdms_frames/shownormlist.py:150 ../vdms_panels/av_conversions.py:1768
 #: ../vdms_panels/presets_manager.py:671
 msgid "PEAK-based volume statistics"
 msgstr ""
@@ -897,101 +897,101 @@ msgstr ""
 msgid "Shortcuts while playing with FFplay"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:66 ../vdms_frames/ffmpeg_search.py:157
+#: ../vdms_frames/ffmpeg_search.py:78 ../vdms_frames/ffmpeg_search.py:178
 msgid "Topic List..."
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:67 ../vdms_frames/ffmpeg_search.py:158
+#: ../vdms_frames/ffmpeg_search.py:79 ../vdms_frames/ffmpeg_search.py:179
 msgid "print basic options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:68 ../vdms_frames/ffmpeg_search.py:159
+#: ../vdms_frames/ffmpeg_search.py:80 ../vdms_frames/ffmpeg_search.py:180
 msgid "print more options"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:69 ../vdms_frames/ffmpeg_search.py:160
+#: ../vdms_frames/ffmpeg_search.py:81 ../vdms_frames/ffmpeg_search.py:181
 msgid "print all options (very long)"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:70 ../vdms_frames/ffmpeg_search.py:161
+#: ../vdms_frames/ffmpeg_search.py:82 ../vdms_frames/ffmpeg_search.py:182
 msgid "show available devices"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:71 ../vdms_frames/ffmpeg_search.py:162
+#: ../vdms_frames/ffmpeg_search.py:83 ../vdms_frames/ffmpeg_search.py:183
 msgid "show available bit stream filters"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:72 ../vdms_frames/ffmpeg_search.py:163
+#: ../vdms_frames/ffmpeg_search.py:84 ../vdms_frames/ffmpeg_search.py:184
 msgid "show available protocols"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:73 ../vdms_frames/ffmpeg_search.py:164
+#: ../vdms_frames/ffmpeg_search.py:85 ../vdms_frames/ffmpeg_search.py:185
 msgid "show available filters"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:74 ../vdms_frames/ffmpeg_search.py:165
+#: ../vdms_frames/ffmpeg_search.py:86 ../vdms_frames/ffmpeg_search.py:186
 msgid "show available pixel formats"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:75 ../vdms_frames/ffmpeg_search.py:166
+#: ../vdms_frames/ffmpeg_search.py:87 ../vdms_frames/ffmpeg_search.py:187
 msgid "show available audio sample formats"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:76 ../vdms_frames/ffmpeg_search.py:167
+#: ../vdms_frames/ffmpeg_search.py:88 ../vdms_frames/ffmpeg_search.py:188
 msgid "show available color names"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:77 ../vdms_frames/ffmpeg_search.py:168
+#: ../vdms_frames/ffmpeg_search.py:89 ../vdms_frames/ffmpeg_search.py:189
 msgid "list sources of the input device"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:78 ../vdms_frames/ffmpeg_search.py:169
+#: ../vdms_frames/ffmpeg_search.py:90 ../vdms_frames/ffmpeg_search.py:190
 msgid "list sinks of the output device"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:79 ../vdms_frames/ffmpeg_search.py:170
+#: ../vdms_frames/ffmpeg_search.py:91 ../vdms_frames/ffmpeg_search.py:191
 msgid "show available HW acceleration methods"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:84
+#: ../vdms_frames/ffmpeg_search.py:96
 msgid "help topic list"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:99 ../vdms_frames/ffmpeg_search.py:175
+#: ../vdms_frames/ffmpeg_search.py:120 ../vdms_frames/ffmpeg_search.py:196
 msgid "Choose one of the topics in the list"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:105
+#: ../vdms_frames/ffmpeg_search.py:126
 msgid "The search function allows you to find entries in the current topic"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:107
+#: ../vdms_frames/ffmpeg_search.py:128
 msgid "Ignore-case"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:108
+#: ../vdms_frames/ffmpeg_search.py:129
 msgid ""
 "Ignore case distinctions, so that characters that differ only in case match "
 "each other."
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:124
+#: ../vdms_frames/ffmpeg_search.py:145
 msgid "FFmpeg help topics"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:187
+#: ../vdms_frames/ffmpeg_search.py:208
 msgid ""
 "\n"
 "  ..Nothing available"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:227
+#: ../vdms_frames/ffmpeg_search.py:248
 msgid ""
 "\n"
 "  ...Not found"
 msgstr ""
 
-#: ../vdms_frames/ffmpeg_search.py:234
+#: ../vdms_frames/ffmpeg_search.py:255
 msgid ""
 "\n"
 "Choose a topic in the drop down first"
@@ -1212,7 +1212,7 @@ msgid "YouTube Downloader"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:352
-msgid "Videomass: file playback with FFplay"
+msgid "Open a playable file with FFplay"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:422
@@ -2371,91 +2371,91 @@ msgstr ""
 msgid "Download by format code"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:188
+#: ../vdms_panels/youtubedl_ui.py:193
 msgid "Download all playlist"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:192
+#: ../vdms_panels/youtubedl_ui.py:197
 msgid "Embed thumbnail in audio file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:196
+#: ../vdms_panels/youtubedl_ui.py:201
 msgid "Add metadata to file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:200
+#: ../vdms_panels/youtubedl_ui.py:205
 msgid "Write subtitles to video"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:203
+#: ../vdms_panels/youtubedl_ui.py:208
 msgid "URLs checklist"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:218
+#: ../vdms_panels/youtubedl_ui.py:223
 msgid "Help viewer"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:326 ../vdms_panels/youtubedl_ui.py:342
+#: ../vdms_panels/youtubedl_ui.py:331 ../vdms_panels/youtubedl_ui.py:347
 msgid "Play selected url"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:356 ../vdms_panels/youtubedl_ui.py:453
+#: ../vdms_panels/youtubedl_ui.py:361 ../vdms_panels/youtubedl_ui.py:458
 msgid "Format Code"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:357 ../vdms_panels/youtubedl_ui.py:454
-#: ../vdms_panels/youtubedl_ui.py:502
+#: ../vdms_panels/youtubedl_ui.py:362 ../vdms_panels/youtubedl_ui.py:459
+#: ../vdms_panels/youtubedl_ui.py:507
 msgid "Url"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:358 ../vdms_panels/youtubedl_ui.py:455
-#: ../vdms_panels/youtubedl_ui.py:503
+#: ../vdms_panels/youtubedl_ui.py:363 ../vdms_panels/youtubedl_ui.py:460
+#: ../vdms_panels/youtubedl_ui.py:508
 msgid "Title"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:359 ../vdms_panels/youtubedl_ui.py:456
+#: ../vdms_panels/youtubedl_ui.py:364 ../vdms_panels/youtubedl_ui.py:461
 msgid "Extension"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:360
+#: ../vdms_panels/youtubedl_ui.py:365
 msgid "Resolution"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:361
+#: ../vdms_panels/youtubedl_ui.py:366
 msgid "Video Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:362
+#: ../vdms_panels/youtubedl_ui.py:367
 msgid "fps"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:363
+#: ../vdms_panels/youtubedl_ui.py:368
 msgid "Audio Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:364 ../vdms_panels/filedrop.py:197
+#: ../vdms_panels/youtubedl_ui.py:369 ../vdms_panels/filedrop.py:197
 msgid "Size"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:457 ../vdms_panels/youtubedl_ui.py:504
+#: ../vdms_panels/youtubedl_ui.py:462 ../vdms_panels/youtubedl_ui.py:509
 msgid "Resolution note"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:501
-msgid "N."
+#: ../vdms_panels/youtubedl_ui.py:506
+msgid "Item no"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:522
+#: ../vdms_panels/youtubedl_ui.py:527
 msgid "Sorry, this feature is disabled."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:559
+#: ../vdms_panels/youtubedl_ui.py:564
 msgid ""
 "TIPS:\n"
 "\n"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:561
+#: ../vdms_panels/youtubedl_ui.py:566
 msgid ""
 "-  Click on one of the items in the checklist and use the preview button to "
 "play the video and evaluate the resolution or quality based on the settings "
@@ -2463,7 +2463,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:566
+#: ../vdms_panels/youtubedl_ui.py:571
 msgid ""
 "-  Check one or more boxes in the URLs checklist. Each URL (green selection) "
 "can have multiple format codes that correspond to different audio and video "

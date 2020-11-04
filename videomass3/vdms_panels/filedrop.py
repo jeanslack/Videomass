@@ -87,7 +87,7 @@ class MyListCtrl(wx.ListCtrl):
 
                 t = data['format']['duration'].split(':')
                 s, ms = t[2].split('.')[0], t[2].split('.')[1]
-                t = '%sh : %sm : %ss : %s micro s' % (t[0], t[1], s, ms)
+                t = '%sh : %sm : %ss : %sms' % (t[0], t[1], s, ms)
                 self.SetItem(self.index, 1, t)
                 data.get('format')['time'] = data.get('format').pop('duration')
                 time = time_seconds(data.get('format')['time'])

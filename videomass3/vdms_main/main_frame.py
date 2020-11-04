@@ -349,7 +349,7 @@ class MainFrame(wx.Frame):
                     quality = self.ytDownloader.fcode.GetItemText(item, 0)
                 IO_tools.url_play(url, quality)
         else:
-            with wx.FileDialog(self, _("Videomass: file playback with FFplay"),
+            with wx.FileDialog(self, _("Open a playable file with FFplay"),
                                defaultDir=self.file_destin,
                                # wildcard="Audio source (%s)|%s" % (f, f),
                                style=wx.FD_OPEN |

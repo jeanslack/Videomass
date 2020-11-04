@@ -90,12 +90,14 @@ class FFmpeg_formats(wx.MiniFrame):
         grid_buttons = wx.GridSizer(1, 1, 0, 0)
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
         sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        self.panel.SetSizerAndFit(sizer_base)
-        self.Layout()
-        # ----------------------Properties----------------------#
+
         self.SetTitle(_("FFmpeg file formats"))
         self.SetMinSize((500, 400))
-        # dmx.SetMinSize((500, 400))
+        dmx.SetMinSize((500, 400))
+        self.panel.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
+        # ----------------------Properties----------------------#
         dmx.InsertColumn(0, _('format'), width=150)
         dmx.InsertColumn(1, _('description'), width=450)
         # dmx.SetBackgroundColour(wx.Colour(217, 255, 255))

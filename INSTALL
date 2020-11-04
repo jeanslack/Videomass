@@ -42,7 +42,7 @@ Upgrading with pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
 
 Please, Visit the Wiki page for more info:
 
-https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-command
+<https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-command>
 
 #--------------------------------------------------------------------------#
 
@@ -76,8 +76,7 @@ Then choose the option you want.
 
 Build as AppImage (only Linux)
 
-browse on Videomass source root directory and type:
+Use the 'develop/tools/AppImage_build_GTK2' script like this
 
-    $ ./Videomass/develop/tools/make_videomass_appimage.sh
-
-It will make a Videomass AppDir by installing the latest version on PYPI
+It will make a Videomass AppImage on current directory by installing the latest
+version on PYPI

@@ -1,5 +1,7 @@
 videomass (3.2.5-1) UNRELEASED; urgency=medium
 
+  * Fixed layout bug on some mini frames which did not fit in the sizer
+    especially on MacOs and MS Windows
   * Add new toolbar item to display download statistics window
   * Add new statistic icon toolbar
   * Fix setup.py importings
@@ -12,7 +14,7 @@ videomass (3.2.5-1) UNRELEASED; urgency=medium
   * The toggle buttons have been replaced with normal buttons
   * The selected icon set adjusts the background of some text controls
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 03 Nov 2020 15:20:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 04 Nov 2020 20:22:00 +0200
 
 videomass (3.2.0-1) UNRELEASED; urgency=medium
 

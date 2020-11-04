@@ -48,11 +48,10 @@ class NormalizationList(wx.MiniFrame):
                                style=wx.LC_REPORT |
                                wx.SUNKEN_BORDER
                                )
-        normlist.SetMinSize((850, 400))
         # ----------------------Properties----------------------#
         self.SetTitle(_(title))
         self.SetMinSize((850, 400))
-        # normlist.SetMinSize((850, 200))
+        normlist.SetMinSize((850, 250))
         normlist.InsertColumn(0, _('File name'), width=300)
         normlist.InsertColumn(1, _('Max volume dBFS'), width=150)
         normlist.InsertColumn(2, _('Mean volume dBFS'), width=150)
@@ -104,7 +103,10 @@ class NormalizationList(wx.MiniFrame):
 
         sizer.Add(gridbtn, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
         gridbtn.Add(self.button_close, 1, wx.ALL, 5)
-        self.panel.SetSizerAndFit(sizer)
+
+        self.panel.SetSizer(sizer)
+        sizer.Fit(self)
+        self.Layout()
 
         if OS == 'Darwin':
             normlist.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))

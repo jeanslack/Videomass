@@ -96,13 +96,8 @@ class FFmpeg_Codecs(wx.MiniFrame):
         grid_buttons = wx.GridSizer(1, 1, 0, 0)
         grid_buttons.Add(button_close, 1, wx.ALL, 5)
         sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        self.panel.SetSizerAndFit(sizer_base)
-        self.Layout()
 
         # ----------------------Properties----------------------#
-        self.SetTitle(title)
-        self.SetMinSize((700, 500))
-        # vid.SetMinSize((600, 300))
         vid.InsertColumn(0, ('codec'), width=150)
         vid.InsertColumn(1, ('F'), width=40)
         vid.InsertColumn(2, ('S'), width=40)
@@ -147,6 +142,13 @@ class FFmpeg_Codecs(wx.MiniFrame):
                "B = Supports draw_horiz_band\n"
                "D = Supports direct rendering method 1")
         stext.SetLabel(leg)
+
+        self.SetTitle(title)
+        self.SetMinSize((700, 500))
+        vid.SetMinSize((600, 300))
+        self.panel.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
 
         # populate vid listctrl output:
         index = 0

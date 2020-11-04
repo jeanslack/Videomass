@@ -102,13 +102,14 @@ class Checkconf(wx.MiniFrame):
         grid_buttons.Add(button_close, 0, wx.ALL, 5)
         sizer_base.Add(grid_buttons, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         # -- set layout
-        self.panel.SetSizerAndFit(sizer_base)
-        self.Layout()
-
-        # ----------------------Properties----------------------#
         self.SetTitle(_("FFmpeg configuration"))
         self.SetMinSize((700, 500))
         others_opt.SetMinSize((700, 400))
+        self.panel.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
+
+        # ----------------------Properties----------------------#
         others_opt.InsertColumn(0, _('flags'), width=300)
         others_opt.InsertColumn(1, _('options'), width=450)
         # others_opt.SetBackgroundColour(wx.Colour(217, 255, 255))
