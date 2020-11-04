@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.20.2020
+# Rev: Oct.31.2020
 #########################################################
 
 # This file is part of Videomass.
@@ -29,6 +29,7 @@ import wx.lib.agw.hyperlink as hpl
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
 import os
+import sys
 
 
 class Choose_Topic(wx.Panel):
@@ -184,12 +185,10 @@ class Choose_Topic(wx.Panel):
                           'found .').format(self.PYLIB_YDL)
 
         msg_required = (_(
-                 'An updated version of youtube-dl is required to download '
-                 'videos from YouTube.com and other video sites. Videomass '
-                 'can download an updated copy of youtube-dl locally.\n\n'
-                 '- Web site: <https://github.com/ytdl-org/youtube-dl/'
-                 'releases>\n{}\n\n'
-                 '...Do you wish to continue?'
+                 'To download videos from YouTube.com and other video sites, '
+                 'you need an updated version of youtube-dl.\n\n'
+                 '{}\n\n'
+                 '...Do you want to install youtube-dl locally now?'
                  )).format(msg_windows)
 
         msg_ready = (_(
@@ -207,7 +206,14 @@ class Choose_Topic(wx.Panel):
                   'Do you want to remove the one no longer in use?'
                   ))
 
-        if self.PYLIB_YDL is None:
+        if ('/tmp/.mount_' in sys.executable or
+            os.path.exists(os.getcwd() + '/AppRun')):
+
+            if self.PYLIB_YDL is None:
+                self.parent.switch_text_import(self, 'Youtube Downloader')
+                return
+
+        elif self.PYLIB_YDL is None:
             fydl = os.path.join(self.CACHEDIR, self.YOUTUBE_DL)
             if self.WARN_YDL == 'false':
                 if not self.EXEC_YDL and os.path.isfile(fydl):

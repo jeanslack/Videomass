@@ -35,7 +35,7 @@ def write_log(logfile, logdir):
     template and then written later by the process.
     see also `vdms_sys/ctrl_run.py` .
 
-    - logfile,  name of the panel from which the command was generated
+    - logfile,  log name from which the command was generated
     - logdir, log files location
     """
     if not os.path.isdir(logdir):

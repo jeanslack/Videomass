@@ -6,7 +6,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.12.2020 *PEP8 compatible*
+# Rev: Nov.03.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -118,6 +118,8 @@ class Videomass(wx.App):
         self.CLEARcache = setui[4][15]  # set clear cache on exit
         self.WARNme = setui[4][16]  # youtube-dl exec. is no longer in use
         self.TMP = os.path.join(self.CACHEdir, 'tmp')
+        self.DARKicons = ('Breeze-Blues', 'Breeze-Dark', 'Papirus-Dark')
+        self.THEME = setui[4][11]
 
         # ----- youtube-dl
         if self.OS == 'Windows':

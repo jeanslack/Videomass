@@ -202,15 +202,18 @@ class Upgrade_Latest(Thread):
 
 class Update_Youtube_dl_Appimage(Thread):
     """
-    Update `youtube_dl` python package inside AppImage using
-    xterm terminal emulator for displaying and redirecting the
-    output to log file.
+    Install or Update `youtube_dl` python package (library) using
+    xterm terminal emulator with subprocess for displaying and
+    redirecting the output to log file.
+    The installation (or upgrade) approach uses the pip command with
+    the --target argument to avoid affecting any other youtube dl
+    installation, for example by using the --user argument.
 
     """
-    def __init__(self, videomass):
+    def __init__(self, log, appimage):
         """
         Attributes defined here:
-
+        executable       current python executable
         self.status      exit status value
         self.cmd         command for execution
 
@@ -228,17 +231,15 @@ class Update_Youtube_dl_Appimage(Thread):
         type `xterm -h` for major info
 
         """
-        name = os.path.basename(videomass)
+        name = os.path.basename(appimage)
         binpath = os.path.dirname(sys.executable)
         exe = os.path.join(binpath + '/youtube_dl_update_appimage.sh')
-        log = os.path.join(os.path.dirname(videomass),
-                           'Videomass-AppImage-Update.log')
         self.status = None
         self.cmd = shlex.split(
                         "xterm +hold -u8 -bg 'grey15' -fa 'Monospace' "
                         "-fs 9 -geometry 120x35 -title '..Updating "
                         "youtube_dl package on %s' -e '%s %s "
-                        "2>&1 | tee %s'" % (name, exe, videomass, log)
+                        "2>&1 | tee %s'" % (name, exe, appimage, log)
                         )
         Thread.__init__(self)
         """initialize"""
@@ -248,13 +249,17 @@ class Update_Youtube_dl_Appimage(Thread):
 
     def run(self):
         """
-        Spawn process to xterm emulator
-        """
+        Spawn process to xterm emulator.
 
+        """
         try:
-            subprocess.run(self.cmd, shell=False)
+            p = subprocess.run(self.cmd, shell=False)
+
         except FileNotFoundError as err:
             self.status = err
+
+        if p.returncode:
+            self.status = "EXIT: %s\nERROR: %s" % (p.returncode, p.stderr)
 
         wx.CallAfter(pub.sendMessage,
                      "RESULT_EVT",

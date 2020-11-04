@@ -81,19 +81,22 @@ class Downloader(wx.Panel):
     MSG_2 = _('Function available only if you choose "Download by '
               'format code"')
 
-    RED = '#EA312D'
-    BLACK = '#121212'
-    DARK_BROWN = '#262222'
+    # light
+    LAVENDER = '#e6e6faff'
+    # dark
+    DARK_SLATE = '#1c2027ff'
+    # breeze-blues
+    SOLARIZED = '#11303eff'
+    # all
+    RED_VIOLET = '#de2689ff'
+    D_GREEN = '#008000'
+    RED = '#ff0000ff'
     GREEN = '#008000'
-    GREY = '#959595'
-    AZURE = '#3298FB'
-    YELLOW = '#C8B72F'
-    ORANGE = '#FF4A1B'
-    MAGENTA = '#f42596'
+    YELLOW = '#bd9f00ff'
 
     VQUALITY = {('Best quality video'): ['best', 'best'],
-                ('Worst quality video'): ['worst', 'worst']}
-
+                ('Worst quality video'): ['worst', 'worst']
+                }
     AFORMATS = {
         ("Default audio format"): ("best", "--extract-audio"),
         ("wav"): ("wav", "--extract-audio --audio-format wav"),
@@ -226,8 +229,13 @@ class Downloader(wx.Panel):
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------- Properties
-        self.codText.SetBackgroundColour(Downloader.DARK_BROWN)
-        # NOTE do not append text on self.codText here, see `on_Choice meth.`
+        # WARNING do not append text on self.codText here, see `on_Choice meth.`
+        if Downloader.get.THEME == 'Breeze-Blues':
+            self.codText.SetBackgroundColour(Downloader.SOLARIZED)
+        elif Downloader.get.THEME in Downloader.get.DARKicons:
+            self.codText.SetBackgroundColour(Downloader.DARK_SLATE)
+        else:
+            self.codText.SetBackgroundColour(Downloader.LAVENDER)
 
         if Downloader.OS != 'Darwin':
             self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
@@ -296,10 +304,10 @@ class Downloader(wx.Panel):
         self.codText.Clear()
         for k, v in self.format_dict.items():
             if not v:
-                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.YELLOW))
+                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.RED))
                 self.codText.AppendText('- %s :\n' % (k))
             else:
-                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.GREEN))
+                self.codText.SetDefaultStyle(wx.TextAttr(Downloader.D_GREEN))
                 self.codText.AppendText('- %s :  %s\n' % (k, v))
         # print(self.format_dict)
     # ----------------------------------------------------------------------
@@ -337,10 +345,10 @@ class Downloader(wx.Panel):
 
     def get_libraryformatcode(self):
         """
-        Get URLs data and format codes by generator object *youtube_info*
-        (using youtube_dl library) and set the list control with new
-        entries. Return `True` if `meta[1]` (error), otherwise return None
-        as exit staus.
+        Get URLs data and format codes by generator object
+        *youtubedl_getstatistics* (using youtube_dl library) and set the list
+        control with new entries. Return `True` if `meta[1]` (error),
+        otherwise return None as exit staus.
         """
         self.fcode.ClearAll()
         if self.oldwx is False:
@@ -356,7 +364,7 @@ class Downloader(wx.Panel):
         self.fcode.InsertColumn(8, (_('Size')), width=100)
         index = 0
         for link in self.parent.data_url:
-            data = IO_tools.youtube_info(link)
+            data = IO_tools.youtubedl_getstatistics(link)
             for meta in data:
                 if meta[1]:
                     # self.parent.statusbar_msg('Youtube Downloader', None)
@@ -392,14 +400,14 @@ class Downloader(wx.Panel):
         return None
     # ----------------------------------------------------------------------
 
-    def get_info(self):
+    def get_statistics(self):
         """
-        Get media URLs informations by generator object *youtube_info*  .
-        Return `True` if `meta[1]` (error), otherwise return None
-        as exit staus.
+        Get media URLs informations by generator object
+        *youtubedl_getstatistics*  . Return `True` if `meta[1]` (error),
+        otherwise return None as exit staus.
         """
         for link in self.parent.data_url:
-            data = IO_tools.youtube_info(link)
+            data = IO_tools.youtubedl_getstatistics(link)
             for meta in data:
                 if meta[1]:
                     # self.parent.statusbar_msg('Youtube Downloader', None)
@@ -505,7 +513,7 @@ class Downloader(wx.Panel):
                 index += 1
     # -----------------------------------------------------------------#
 
-    def on_show_info(self):
+    def on_show_statistics(self):
         """
         show URL data information. This method is called by
         main frame when the 'Show More' button is pressed.
@@ -516,7 +524,7 @@ class Downloader(wx.Panel):
             return
 
         if not self.info:
-            ret = self.get_info()
+            ret = self.get_statistics()
             if ret:
                 return
 
@@ -547,7 +555,7 @@ class Downloader(wx.Panel):
         - Set media quality parameter for on_urls_list method
         """
         self.codText.Clear()
-        self.codText.SetDefaultStyle(wx.TextAttr(Downloader.MAGENTA))
+        self.codText.SetDefaultStyle(wx.TextAttr(Downloader.RED_VIOLET))
         self.codText.write(_('TIPS:\n\n'))
         tip0 = _(
             '-  Click on one of the items in the checklist and use the '

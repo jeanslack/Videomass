@@ -1,3 +1,19 @@
+videomass (3.2.5-1) UNRELEASED; urgency=medium
+
+  * Add new toolbar item to display download statistics window
+  * Add new statistic icon toolbar
+  * Fix setup.py importings
+  * Fix caption on Strems window
+  * Fix caption on Statistics window
+  * Fixed FFmpeg menu definition
+  * New tool to view and read log files more conveniently
+  * Changed log files definitions
+  * All log files are cumulative now
+  * The toggle buttons have been replaced with normal buttons
+  * The selected icon set adjusts the background of some text controls
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 03 Nov 2020 15:20:00 +0200
+
 videomass (3.2.0-1) UNRELEASED; urgency=medium
 
   * New redesigned GUI

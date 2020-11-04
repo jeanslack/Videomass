@@ -263,7 +263,7 @@ def openpath(where):
 # -------------------------------------------------------------------------#
 
 
-def youtube_info(url):
+def youtubedl_getstatistics(url):
     """
     Call the thread to get extract info data object with
     youtube_dl python package and show a wait pop-up dialog .
@@ -447,9 +447,12 @@ def check_videomass_releases(thisrel):
 
 def appimage_update_youtube_dl(appimage):
     """
-    Call thread for update youtube_dl package inside AppImage.
+    Call appropriate thread to update or installing youtube_dl
+    package inside Videomass AppImage.
     """
-    thread = youtubedlupdater.Update_Youtube_dl_Appimage(appimage)
+    get = wx.GetApp()  # get data from bootstrap
+    log = os.path.join(get.LOGdir, 'youtube_dl-update-on-AppImage.log')
+    thread = youtubedlupdater.Update_Youtube_dl_Appimage(log, appimage)
 
     waitmsg = _('...Be patient, this can take a few minutes.')
 
@@ -461,11 +464,10 @@ def appimage_update_youtube_dl(appimage):
 
     if update:
         return update
-    fname = os.path.join(os.path.dirname(appimage),
-                         'Videomass-AppImage-Update.log')
-    ret = 'error'
-    with open(fname, 'r') as log:
-        for line in log:
+
+    ret = None
+    with open(log, 'r') as f:
+        for line in f:
             if '**Sucesfully updated**\n' in line:
                 ret = 'success'
-    return ret
+    return 'success' if ret == 'success' else 'error'

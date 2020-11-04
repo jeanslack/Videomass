@@ -35,6 +35,7 @@ from threading import Thread
 import time
 from pubsub import pub
 from videomass3.vdms_io import IO_tools
+from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 
 def msg_error(msg, title="Videomass"):
@@ -69,6 +70,7 @@ class Exec_Download_Stream(Thread):
     BINLOCAL = get.execYdl
     EXCEPTION = None
     TMP = get.TMP
+    LOGDIR = get.LOGdir
 
     if platform.system() == 'Windows':
         if BINLOCAL:
@@ -116,9 +118,7 @@ class Exec_Download_Stream(Thread):
             obtained typing `youtube-dl -F <link>`
 
         """
-        if Exec_Download_Stream.EXCEPTION:
-            wx.CallAfter(msg_error, Exec_Download_Stream.EXCEPTION)
-            return
+        self.logf = os.path.join(Exec_Download_Stream.LOGDIR, 'ffplay.log')
         self.stop_work_thread = False  # process terminate value
         self.url = url
         self.quality = quality
@@ -127,6 +127,13 @@ class Exec_Download_Stream(Thread):
             self.ssl = '--no-check-certificate'
         else:
             self.ssl = ''
+
+        write_log('ffplay.log', Exec_Download_Stream.LOGDIR)
+
+        if Exec_Download_Stream.EXCEPTION:
+            wx.CallAfter(msg_error, Exec_Download_Stream.EXCEPTION)
+            self.logError(Exec_Download_Stream.EXCEPTION)  # append log error
+            return
 
         Thread.__init__(self)
         """initialize Thread class"""
@@ -147,6 +154,7 @@ class Exec_Download_Stream(Thread):
                               self.url,
                               Exec_Download_Stream.FFMPEG_URL,
                               ))
+        self.logWrite(cmd)  # append log cmd
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
             info = None
@@ -190,6 +198,7 @@ class Exec_Download_Stream(Thread):
 
         except OSError as err:
             wx.CallAfter(msg_error, err, 'Videomass: OSError')
+            self.logError(err)  # append log error
             return
     # --------------------------------------------------------------------#
 
@@ -198,6 +207,23 @@ class Exec_Download_Stream(Thread):
         Sets the stop work thread to terminate the process
         """
         self.stop_work_thread = True
+    # ----------------------------------------------------------------#
+
+    def logWrite(self, cmd):
+        """
+        write ffplay command log
+        """
+        with open(self.logf, "a") as log:
+            log.write("%s\n" % (cmd))
+    # ----------------------------------------------------------------#
+
+    def logError(self, error):
+        """
+        write ffplay errors
+        """
+        with open(self.logf, "a") as logerr:
+            logerr.write("\n[FFMPEG] FFplay "
+                         "ERRORS:\n%s\n" % (error))
 # ------------------------------------------------------------------------#
 
 

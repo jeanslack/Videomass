@@ -31,13 +31,24 @@ import os
 class YDL_Mediainfo(wx.MiniFrame):
     """
     Display streams information from youtube-dl data.
+
     """
+    # light
+    LAVENDER = '#e6e6faff'
+    # dark
+    DARK_SLATE = '#1c2027ff'
+    # breeze-blues
+    SOLARIZED = '#11303eff'
+    # all
+    RED_VIOLET = '#de2689ff'
+
     def __init__(self, data, OS):
         """
         NOTE constructor:: with 'None' not depend from videomass.
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
+        get = wx.GetApp()  # get data from bootstrap
 
         wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
                               wx.RESIZE_BORDER | wx.SYSTEM_MENU
@@ -50,13 +61,23 @@ class YDL_Mediainfo(wx.MiniFrame):
         self.url_select = wx.ListCtrl(self.panel,
                                       wx.ID_ANY,
                                       style=wx.LC_REPORT |
-                                      wx.SUNKEN_BORDER
+                                      wx.SUNKEN_BORDER |
+                                      wx.LC_SINGLE_SEL
                                       )
         self.textCtrl = wx.TextCtrl(self.panel,
                                     wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
-                                    wx.TE_DONTWRAP
-                                    )
+                                          wx.TE_READONLY |
+                                          wx.TE_RICH2
+                                          )
+        if get.THEME == 'Breeze-Blues':
+            self.textCtrl.SetBackgroundColour(YDL_Mediainfo.SOLARIZED)
+        elif get.THEME in get.DARKicons:
+            self.textCtrl.SetBackgroundColour(YDL_Mediainfo.DARK_SLATE)
+        else:
+            self.textCtrl.SetBackgroundColour(YDL_Mediainfo.LAVENDER)
+
+        self.textCtrl.SetDefaultStyle(wx.TextAttr(YDL_Mediainfo.RED_VIOLET))
         button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
 
         # ----------------------Properties----------------------#
@@ -77,7 +98,7 @@ class YDL_Mediainfo(wx.MiniFrame):
             self.url_select.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
                                             wx.NORMAL))
             self.textCtrl.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
-                                          wx.BOLD))
+                                          wx.NORMAL))
         # ----------------------Layout--------------------------#
         sizer_1 = wx.BoxSizer(wx.VERTICAL)
         sizer_1.Add(self.url_select, 0, wx.ALL | wx.EXPAND, 5)

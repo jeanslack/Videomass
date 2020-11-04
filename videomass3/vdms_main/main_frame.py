@@ -194,7 +194,8 @@ class MainFrame(wx.Frame):
         elif MainFrame.OS == 'Windows':
             self.SetSize((1080, 700))
         else:
-            self.SetSize((1280, 800))
+            #self.SetSize((1280, 800))
+            self.SetSize((1150, 730))
         # self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # menu bar
@@ -248,7 +249,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Hide(), self.avpan.Enable(False)
         self.prstpan.Enable(False), self.ydlpan.Enable(False)
         self.startpan.Enable(False), self.logpan.Enable(False)
-
+        self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
     # ------------------------------------------------------------------#
@@ -320,7 +321,7 @@ class MainFrame(wx.Frame):
         Redirect input files at stream_info for media information
         """
         if self.topicname == 'Youtube Downloader':
-            self.ytDownloader.on_show_info()
+            self.ytDownloader.on_show_statistics()
 
         else:
             miniframe = Mediainfo(self.data_files, MainFrame.OS)
@@ -637,7 +638,7 @@ class MainFrame(wx.Frame):
         """
         Open the file browser dialog to choice output file destination
         """
-        dialdir = wx.DirDialog(self, _("Videomass: Choose a directory"))
+        dialdir = wx.DirDialog(self, _("Choose a destination folder"))
         if dialdir.ShowModal() == wx.ID_OK:
             self.file_destin = '%s' % (dialdir.GetPath())
             self.textDnDTarget.on_file_save(self.file_destin)
@@ -899,8 +900,10 @@ class MainFrame(wx.Frame):
             else:
                 if wx.MessageBox(_(
                             'Notice: To update youtube_dl it is necessary to '
-                            'rebuild the Videomass AppImage. Also, the '
-                            'digital signature may be lost after completion.'
+                            'rebuild the Videomass AppImage. This procedure '
+                            'will be completely automatic and will only '
+                            'require you to select the location of the '
+                            'AppImage.'
                             '\n\nDo you want to continue?'),
                         "Videomass", wx.ICON_QUESTION |
                         wx.YES_NO, self) == wx.NO:
@@ -924,23 +927,24 @@ class MainFrame(wx.Frame):
 
                 if upgrade == 'success':
                     if wx.MessageBox(_(
-                             'Successful! youtube-dl is up-to-date ({0})\n\n'
-                             'Re-start is required. Do you want to close '
-                             'Videomass now?').format(ck[0]),
-                             "Videomass", wx.ICON_QUESTION |
-                             wx.YES_NO, self) == wx.NO:
+                            'Successful! youtube-dl is up-to-date ({0})\n\n'
+                            'Re-start is required. Do you want to close '
+                            'Videomass now?').format(ck[0]),
+                            "Videomass", wx.ICON_QUESTION |
+                            wx.YES_NO, self) == wx.NO:
                         return
 
                     self.on_Kill()
 
                 elif upgrade == 'error':
-                    msg = _('Failed! for more info consult:\n'
-                            '{}/Videomass-AppImage-Update.log').format(
-                                os.path.dirname(appimage))
-                    wx.MessageBox(msg, 'Videomass', wx.ICON_ERROR, self)
+                    msg = _('Failed! for more details consult:\n'
+                            '{}/youtube_dl-update-on-AppImage.log').format(
+                                MainFrame.LOGDIR)
+                    wx.MessageBox(msg, 'ERROR', wx.ICON_ERROR, self)
+
                 else:
                     wx.MessageBox(_('Failed! {}').format(upgrade),
-                                  'Videomass', wx.ICON_ERROR, self)
+                                    'ERROR', wx.ICON_ERROR, self)
                 return
 
         elif MainFrame.PYLIB_YDL is None:  # system installed
@@ -1185,7 +1189,7 @@ class MainFrame(wx.Frame):
                                                 tip, wx.ITEM_NORMAL,
                                                 )
         self.toolbar.AddSeparator()
-        tip = _("Show window for viewing log data")
+        tip = _("Viewing log messages")
         self.btn_logs = self.toolbar.AddTool(15, _('Show Logs'),
                                                wx.Bitmap(self.viewlog),
                                                tip, wx.ITEM_NORMAL
@@ -1314,7 +1318,8 @@ class MainFrame(wx.Frame):
         #self.toolbar.EnableTool(15, False)
         self.toolbar.Realize()
         self.Layout()
-        self.statusbar_msg(_('Add Files'), None)
+        self.statusbar_msg(_('Ready'), None)
+        self.SetTitle(_('Videomass - File List'))
     # ------------------------------------------------------------------#
 
     def switch_text_import(self, event, which):
@@ -1348,25 +1353,29 @@ class MainFrame(wx.Frame):
         #self.toolbar.EnableTool(15, False)
         self.toolbar.Realize()
         self.Layout()
-        self.statusbar_msg(_('Add URLs'), None)
+        self.statusbar_msg(_('Ready'), None)
+        self.SetTitle(_('Videomass - URL List'))
+
     # ------------------------------------------------------------------#
 
     def switch_youtube_downloader(self, event, data):
         """
         Show youtube-dl downloader panel
         """
-        msg = (_('YouTube Downloader'), None)
         if not data == self.data_url:
             if self.data_url:
-                msg = (_('Warning: the previous settings may be '
-                         'reset to default values.'), MainFrame.ORANGE)
+                msg = (_('New incoming URLs may restore default settings. '
+                         'Check your settings again.'), MainFrame.ORANGE)
+                self.statusbar_msg(msg[0], msg[1])
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
             del self.ytDownloader.info[:]
             self.ytDownloader.format_dict.clear()
+        else:
+            self.statusbar_msg(_('Ready'), None)
 
-        self.statusbar_msg(msg[0], msg[1])
+        self.SetTitle(_('Videomass - YouTube Downloader'))
         self.file_destin = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.VconvPanel.Hide(), self.PrstsPanel.Hide()
@@ -1400,21 +1409,24 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.ytDownloader.Hide(), self.PrstsPanel.Hide()
         self.VconvPanel.Show()
-        msg = (_('Audio/Video Conversions'), None)
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
         if not filenames == self.file_src:
             if self.file_src:
-                msg = (_('Warning: the previous settings may be '
-                         'reset to default values.'), MainFrame.ORANGE)
+                msg = (_('New incoming files may restore default settings. '
+                         'Check your settings again.'), MainFrame.ORANGE)
+                self.statusbar_msg(msg[0], msg[1])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']
                              ]
             self.VconvPanel.normalize_default()
             self.PrstsPanel.normalization_default()
-        self.statusbar_msg(msg[0], msg[1])
+        else:
+            self.statusbar_msg(_('Ready'), None)
+
+        self.SetTitle(_('Videomass - Audio/Video Conversions'))
         self.toolbar.Show(),
         self.menu_items()  # disable some menu items
         self.avpan.Enable(False), self.prstpan.Enable(True)
@@ -1445,21 +1457,24 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
         self.PrstsPanel.Show()
-        msg = (_('Presets Manager'), None)
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
         if not filenames == self.file_src:
             if self.file_src:
-                msg = (_('Warning: the previous settings may be '
-                         'reset to default values.'), MainFrame.ORANGE)
+                msg = (_('New incoming files may restore default settings. '
+                         'Check your settings again.'), MainFrame.ORANGE)
+                self.statusbar_msg(msg[0], msg[1])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files if f['format']['duration']
                              ]
             self.PrstsPanel.normalization_default()
             self.VconvPanel.normalize_default()
-        self.statusbar_msg(msg[0], msg[1])
+        else:
+            self.statusbar_msg(_('Ready'), None)
+
+        self.SetTitle(_('Videomass - Presets Manager'))
         self.toolbar.Show()
         self.saveme.Enable(True)
         self.new_prst.Enable(True), self.del_prst.Enable(True)
@@ -1509,6 +1524,7 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Log of the last process'), None)
         else:
             self.statusbar_msg(_('Under processing...'), None)
+        self.SetTitle(_('Videomass - Progress Display'))
         # Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),

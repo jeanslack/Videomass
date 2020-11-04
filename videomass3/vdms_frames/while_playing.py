@@ -33,9 +33,15 @@ class While_Playing(wx.MiniFrame):
     useful when you use playback function with FFplay
 
     """
-    DARK_BROWN = '#262222'
-    GREEN = '#008000'
+    # light
+    LAVENDER = '#e6e6faff'
+    LIGHT_SLATE = '#778899ff'
+    # dark
+    DARK_SLATE = '#1c2027ff'
+    DARK_GREEN = '#008000'
     LIGHT_GREY = '#959595'
+    # breeze-blues
+    SOLARIZED = '#11303eff'
 
     KEYS = (_("q, ESC\nf\np, SPC\nm\n9, 0\n/, *\na\nv\nt\nc\n"
               "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
@@ -61,6 +67,8 @@ class While_Playing(wx.MiniFrame):
 
     def __init__(self, OS):
 
+        get = wx.GetApp()  # get data from bootstrap
+
         wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
                               wx.SYSTEM_MENU)
         """
@@ -80,9 +88,18 @@ class While_Playing(wx.MiniFrame):
         # ----------------------Properties----------------------#
         self.SetTitle(_("Shortcuts while playing with FFplay"))
 
-        label1.SetForegroundColour(wx.Colour(While_Playing.GREEN))
-        label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
-        panel.SetBackgroundColour(wx.Colour(While_Playing.DARK_BROWN))
+        if get.THEME == 'Breeze-Blues':
+            panel.SetBackgroundColour(wx.Colour(While_Playing.SOLARIZED))
+            label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
+
+        elif get.THEME in get.DARKicons:
+            panel.SetBackgroundColour(wx.Colour(While_Playing.DARK_SLATE))
+            label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
+        else:
+            panel.SetBackgroundColour(wx.Colour(While_Playing.LAVENDER))
+            label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_SLATE))
+
+        label1.SetForegroundColour(wx.Colour(While_Playing.DARK_GREEN))
         # ---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)

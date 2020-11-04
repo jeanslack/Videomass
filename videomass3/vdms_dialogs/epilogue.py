@@ -36,7 +36,20 @@ class Formula(wx.Dialog):
             settings = ("\nEXAMPLES:\n\\nExample 1:\nExample 2:\n etc."
             param = ("type 1\ntype 2\ntype 3\n etc."
     """
+    # light
+    LAVENDER = '#e6e6faff'
+    LIGHT_SLATE = '#778899ff'
+    # dark
+    DARK_SLATE = '#1c2027ff'
+    DARK_GREEN = '#008000'
+    LIGHT_GREY = '#959595'
+    # breeze-blues
+    SOLARIZED = '#11303eff'
+
     def __init__(self, parent, settings, param, title):
+
+        get = wx.GetApp()  # get data from bootstrap
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
 
         panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
@@ -47,10 +60,19 @@ class Formula(wx.Dialog):
 
         # ----------------------Properties----------------------#
         self.SetTitle(title)
-        panel.SetBackgroundColour('#262222')
-        label1.SetForegroundColour('#008000')
-        label2.SetForegroundColour('#959595')
 
+        if get.THEME == 'Breeze-Blues':
+            panel.SetBackgroundColour(Formula.SOLARIZED)
+            label2.SetForegroundColour(Formula.LIGHT_GREY)
+
+        elif get.THEME in get.DARKicons:
+            panel.SetBackgroundColour(Formula.DARK_SLATE)
+            label2.SetForegroundColour(Formula.LIGHT_GREY)
+        else:
+            panel.SetBackgroundColour(Formula.LAVENDER)
+            label2.SetForegroundColour(Formula.LIGHT_SLATE)
+
+        label1.SetForegroundColour(Formula.DARK_GREEN)
         # ---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
