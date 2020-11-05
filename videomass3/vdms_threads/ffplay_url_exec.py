@@ -194,6 +194,7 @@ class Exec_Download_Stream(Thread):
                                  line,
                                  'Videomass: Error %s' % p.wait()
                                  )
+                    self.logError(line)  # append log error
                     return
 
         except OSError as err:

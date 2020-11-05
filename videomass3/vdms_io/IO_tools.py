@@ -346,14 +346,21 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
     Run thread to download locally the latest version of youtube-dl
     or youtube-dl.exe . While waiting, a pop-up dialog is shown.
     """
+    get = wx.GetApp()  # get videomass wx.App attribute
+    if get.OS == 'Windows':
+        url = ('https://youtube-dl.org/downloads/latest/youtube-dl.exe')
+    else:
+        url = ('https://yt-dl.org/downloads/latest/youtube-dl')
+
     name = os.path.basename(executable)
     if upgrade:
         msg = _('\nWait....\nUpgrading {}\n').format(name)
     else:
         msg = _('\nWait....\nDownloading {}\n').format(name)
 
-    url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-           'download/%s/%s' % (latest, name))
+    #url = ('https://github.com/ytdl-org/youtube-dl/releases/'
+           #'download/%s/%s' % (latest, name))
+
     if os.path.exists(executable):
         try:  # make back-up for outdated
             os.rename(executable, '%s_OLD' % executable)

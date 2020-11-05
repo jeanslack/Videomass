@@ -178,8 +178,10 @@ class Upgrade_Latest(Thread):
         """
         # HACK fix soon the ssl certificate
         context = ssl._create_unverified_context()
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        page = urllib.request.Request(self.url, headers=headers)
         try:
-            with urllib.request.urlopen(self.url, context=context) as \
+            with urllib.request.urlopen(page, context=context) as \
                  response, open(self.dest, 'wb') as out_file:
                 shutil.copyfileobj(response, out_file)
 

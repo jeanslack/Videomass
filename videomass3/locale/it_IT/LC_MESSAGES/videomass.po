@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 1.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-04 21:54+0100\n"
-"PO-Revision-Date: 2020-11-04 21:55+0100\n"
+"POT-Creation-Date: 2020-11-05 11:29+0100\n"
+"PO-Revision-Date: 2020-11-05 13:42+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it\n"
@@ -229,7 +229,7 @@ msgstr "Denominatore"
 msgid "SetSar (sample aspect ratio):"
 msgstr "SetSar (sample aspect ratio):"
 
-#: ../vdms_dialogs/video_filters.py:526
+#: ../vdms_dialogs/video_filters.py:526 ../vdms_panels/av_conversions.py:637
 msgid "Resizing"
 msgstr "Ridimensionamento"
 
@@ -1199,35 +1199,31 @@ msgstr "Flussi Audio"
 msgid "Subtitle Streams"
 msgstr "Flussi Sottotitoli"
 
-#: ../vdms_frames/showlogs.py:81
+#: ../vdms_frames/showlogs.py:80
 msgid "Files"
 msgstr "File"
 
-#: ../vdms_frames/showlogs.py:83
+#: ../vdms_frames/showlogs.py:82
 msgid "Log messages"
 msgstr "Messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:118
+#: ../vdms_frames/showlogs.py:113
 msgid "Refresh log messages"
 msgstr "Aggiorna i messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:120
+#: ../vdms_frames/showlogs.py:115
 msgid "Clear log messages"
 msgstr "Cancella messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:131
+#: ../vdms_frames/showlogs.py:124
 msgid "Showing log messages"
 msgstr "Visualizzazione dei messaggi di registro"
 
-#: ../vdms_frames/showlogs.py:156
-msgid "In `Log View Console` mode this feature is disabled"
-msgstr "Nella modalità \"Log View Console\" questa funzione è disabilitata"
-
-#: ../vdms_frames/showlogs.py:172
+#: ../vdms_frames/showlogs.py:150
 msgid "A log file must be selected"
 msgstr "È necessario selezionare un file di registro"
 
-#: ../vdms_frames/showlogs.py:179
+#: ../vdms_frames/showlogs.py:157
 msgid "Are you sure you want to clear the selected log file?"
 msgstr "Sei sicuro di voler cancellare il file di registro selezionato?"
 
@@ -2002,26 +1998,22 @@ msgid "Videomass - URL List"
 msgstr "Videomass - Lista degli URL"
 
 #: ../vdms_main/main_frame.py:1367
-msgid ""
-"New incoming URLs may restore default settings. Check your settings again."
+msgid "You just added new URLs. Please check your settings again."
 msgstr ""
-"I nuovi URL in entrata potrebbero ripristinare le impostazioni predefinite. "
-"Controlla di nuovo le tue impostazioni."
+"Hai appena aggiunto nuovi URL. Controlla nuovamente le tue impostazioni."
 
 #: ../vdms_main/main_frame.py:1378
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - YouTube Downloader"
 
 #: ../vdms_main/main_frame.py:1417 ../vdms_main/main_frame.py:1465
-msgid ""
-"New incoming files may restore default settings. Check your settings again."
+msgid "You just added new files. Please check your settings again."
 msgstr ""
-"Nuovi file in entrata potrebbero ripristinare le impostazioni predefinite. "
-"Controlla di nuovo le tue impostazioni."
+"Hai appena aggiunto nuovi file. Controlla nuovamente le tue impostazioni."
 
 #: ../vdms_main/main_frame.py:1429
-msgid "Videomass - Audio/Video Conversions"
-msgstr "Videomass - Conversioni Audio/Video"
+msgid "Videomass - AV Conversions"
+msgstr "Videomass - Conversioni AV"
 
 #: ../vdms_main/main_frame.py:1477
 msgid "Videomass - Presets Manager"
@@ -2171,20 +2163,16 @@ msgstr "Indice Audio in Uscita"
 msgid "Video Filters"
 msgstr "Filtri Video"
 
-#: ../vdms_panels/av_conversions.py:637
-msgid "Resize"
-msgstr "Ridimensiona"
-
 #: ../vdms_panels/av_conversions.py:642
-msgid "Crop"
-msgstr "Ritaglia"
+msgid "Cropping"
+msgstr "Ritaglio"
 
 #: ../vdms_panels/av_conversions.py:647
-msgid "Rotate"
-msgstr "Ruotare"
+msgid "Rotation"
+msgstr "Rotazione"
 
 #: ../vdms_panels/av_conversions.py:653
-msgid "De-interlace"
+msgid "Deinterlacing"
 msgstr "Deinterlacciamento"
 
 #: ../vdms_panels/av_conversions.py:658
@@ -2597,8 +2585,8 @@ msgstr ""
 "Tempo impostato (durata)"
 
 #: ../vdms_panels/av_conversions.py:2377
-msgid "Select a preset to store the new profile"
-msgstr "Seleziona un preset nel quale memorizzare il nuovo profilo"
+msgid "Open a preset to store the new profile"
+msgstr "Apri un preset per memorizzare il nuovo profilo"
 
 #: ../vdms_panels/av_conversions.py:2386
 msgid "Create a new profile"
@@ -2836,7 +2824,7 @@ msgstr "Note sulla risoluzione"
 
 #: ../vdms_panels/youtubedl_ui.py:506
 msgid "Item no"
-msgstr ""
+msgstr "Oggetto numero"
 
 #: ../vdms_panels/youtubedl_ui.py:527
 msgid "Sorry, this feature is disabled."
@@ -3329,6 +3317,31 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid "In `Log View Console` mode this feature is disabled"
+#~ msgstr "Nella modalità \"Log View Console\" questa funzione è disabilitata"
+
+#~ msgid ""
+#~ "New incoming URLs may restore default settings. Check your settings again."
+#~ msgstr ""
+#~ "I nuovi URL in entrata potrebbero ripristinare le impostazioni "
+#~ "predefinite. Controlla di nuovo le tue impostazioni."
+
+#~ msgid ""
+#~ "New incoming files may restore default settings. Check your settings "
+#~ "again."
+#~ msgstr ""
+#~ "Nuovi file in entrata potrebbero ripristinare le impostazioni "
+#~ "predefinite. Controlla di nuovo le tue impostazioni."
+
+#~ msgid "Resize"
+#~ msgstr "Ridimensiona"
+
+#~ msgid "Rotate"
+#~ msgstr "Ruotare"
+
+#~ msgid "De-interlace"
+#~ msgstr "Deinterlacciamento"
 
 #~ msgid "Choose a file to play with FFplay"
 #~ msgstr "Scegli un file da riprodurre con FFplay"

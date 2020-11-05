@@ -926,7 +926,7 @@ class PrstPan(wx.Panel):
         self.time_seq = self.parent.time_seq
         dir_destin = self.parent.file_destin
         # used for file name log
-        self.logname = 'ffmpeg_presetsmanager.log'
+        self.logname = 'presets_manager.log'
 
         if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or
            self.array[3].strip() != self.txt_2cmd.GetValue().strip()):

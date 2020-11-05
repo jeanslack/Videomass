@@ -52,7 +52,7 @@ class VolumeDetectThread(Thread):
         self.status: None, if nothing error,
                      'str error' if errors.
         self.data: it is a tuple containing the list of audio volume
-                   parameters and the self.status of the error output,
+                   parameters and the self.status of the output error,
                    in the form:
                    ([[maxvol, medvol], [etc,etc]], None or "str errors")
         """
@@ -64,8 +64,8 @@ class VolumeDetectThread(Thread):
         self.status = None
         self.data = None
         self.nul = 'NUL' if platform.system() == 'Windows' else '/dev/null'
-        self.logf = os.path.join(logdir, 'ffmpeg_volumedected.log')
-        write_log('ffmpeg_volumedected.log', logdir)
+        self.logf = os.path.join(logdir, 'volumedected.log')
+        write_log('volumedected.log', logdir)
         # set initial file LOG
 
         Thread.__init__(self)

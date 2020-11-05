@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-04 21:54+0100\n"
+"POT-Creation-Date: 2020-11-05 13:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,7 +194,7 @@ msgstr ""
 msgid "SetSar (sample aspect ratio):"
 msgstr ""
 
-#: ../vdms_dialogs/video_filters.py:526
+#: ../vdms_dialogs/video_filters.py:526 ../vdms_panels/av_conversions.py:637
 msgid "Resizing"
 msgstr ""
 
@@ -1031,35 +1031,31 @@ msgstr ""
 msgid "Subtitle Streams"
 msgstr ""
 
-#: ../vdms_frames/showlogs.py:81
+#: ../vdms_frames/showlogs.py:80
 msgid "Files"
 msgstr ""
 
-#: ../vdms_frames/showlogs.py:83
+#: ../vdms_frames/showlogs.py:82
 msgid "Log messages"
 msgstr ""
 
-#: ../vdms_frames/showlogs.py:118
+#: ../vdms_frames/showlogs.py:113
 msgid "Refresh log messages"
 msgstr ""
 
-#: ../vdms_frames/showlogs.py:120
+#: ../vdms_frames/showlogs.py:115
 msgid "Clear log messages"
 msgstr ""
 
-#: ../vdms_frames/showlogs.py:131
+#: ../vdms_frames/showlogs.py:124
 msgid "Showing log messages"
 msgstr ""
 
-#: ../vdms_frames/showlogs.py:156
-msgid "In `Log View Console` mode this feature is disabled"
-msgstr ""
-
-#: ../vdms_frames/showlogs.py:172
+#: ../vdms_frames/showlogs.py:150
 msgid "A log file must be selected"
 msgstr ""
 
-#: ../vdms_frames/showlogs.py:179
+#: ../vdms_frames/showlogs.py:157
 msgid "Are you sure you want to clear the selected log file?"
 msgstr ""
 
@@ -1140,29 +1136,29 @@ msgid ""
 "Check for update.\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:351
+#: ../vdms_io/IO_tools.py:357
 msgid ""
 "\n"
 "Wait....\n"
 "Upgrading {}\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:353
+#: ../vdms_io/IO_tools.py:359
 msgid ""
 "\n"
 "Wait....\n"
 "Downloading {}\n"
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:369
+#: ../vdms_io/IO_tools.py:376
 msgid "Videomass - Downloading..."
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:457
+#: ../vdms_io/IO_tools.py:464
 msgid "...Be patient, this can take a few minutes."
 msgstr ""
 
-#: ../vdms_io/IO_tools.py:459
+#: ../vdms_io/IO_tools.py:466
 msgid "Videomass - Updating..."
 msgstr ""
 
@@ -1750,8 +1746,7 @@ msgid "Videomass - URL List"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1367
-msgid ""
-"New incoming URLs may restore default settings. Check your settings again."
+msgid "You just added new URLs. Please check your settings again."
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1378
@@ -1759,12 +1754,11 @@ msgid "Videomass - YouTube Downloader"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1417 ../vdms_main/main_frame.py:1465
-msgid ""
-"New incoming files may restore default settings. Check your settings again."
+msgid "You just added new files. Please check your settings again."
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1429
-msgid "Videomass - Audio/Video Conversions"
+msgid "Videomass - AV Conversions"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:1477
@@ -1915,20 +1909,16 @@ msgstr ""
 msgid "Video Filters"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:637
-msgid "Resize"
-msgstr ""
-
 #: ../vdms_panels/av_conversions.py:642
-msgid "Crop"
+msgid "Cropping"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:647
-msgid "Rotate"
+msgid "Rotation"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:653
-msgid "De-interlace"
+msgid "Deinterlacing"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:658
@@ -2238,7 +2228,7 @@ msgid ""
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:2377
-msgid "Select a preset to store the new profile"
+msgid "Open a preset to store the new profile"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:2386

@@ -503,7 +503,7 @@ class Downloader(wx.Panel):
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
-        self.fcode.InsertColumn(0, (_('Item no')), width=50)
+        self.fcode.InsertColumn(0, (_('Item no')), width=100)
         self.fcode.InsertColumn(1, (_('Url')), width=500)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
         self.fcode.InsertColumn(3, (_('Resolution note')), width=250)

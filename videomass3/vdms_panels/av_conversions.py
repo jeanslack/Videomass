@@ -634,23 +634,23 @@ class AV_Conv(wx.Panel):
         grid_vfilters = wx.FlexGridSizer(3, 5, 20, 20)
         # resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
         self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                        _("Resize"), size=(-1, -1))
+                                        _("Resizing"), size=(-1, -1))
         self.btn_videosize.SetBitmap(wx.Bitmap(iconresize), wx.LEFT)
         grid_vfilters.Add(self.btn_videosize)
         # cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
         self.btn_crop = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                  _("Crop"), size=(-1, -1))
+                                  _("Cropping"), size=(-1, -1))
         self.btn_crop.SetBitmap(wx.Bitmap(iconcrop), wx.LEFT)
         grid_vfilters.Add(self.btn_crop)
         # rotatebmp = wx.Bitmap(iconrotate, wx.BITMAP_TYPE_ANY)
         self.btn_rotate = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("Rotate"), size=(-1, -1))
+                                    _("Rotation"), size=(-1, -1))
         self.btn_rotate.SetBitmap(wx.Bitmap(iconrotate), wx.LEFT)
 
         grid_vfilters.Add(self.btn_rotate)
         # deintbmp = wx.Bitmap(icondeinterlace, wx.BITMAP_TYPE_ANY)
         self.btn_lacing = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                    _("De-interlace"), size=(-1, -1))
+                                    _("Deinterlacing"), size=(-1, -1))
         self.btn_lacing.SetBitmap(wx.Bitmap(icondeinterlace), wx.LEFT)
         grid_vfilters.Add(self.btn_lacing)
         # denoiserbmp = wx.Bitmap(icondenoiser, wx.BITMAP_TYPE_ANY)
@@ -1877,7 +1877,7 @@ class AV_Conv(wx.Panel):
         countmax      : count processing cicles for batch mode
         """
 
-        logname = 'ffmpeg_AVconversions.log'
+        logname = 'AV_conversions.log'
         # check normalization data offset, if enable
         if self.rdbx_normalize.GetSelection() in [1, 2]:
             if self.btn_voldect.IsEnabled():
@@ -2374,7 +2374,7 @@ class AV_Conv(wx.Panel):
                 parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(
-                        None, _("Select a preset to store the new profile"),
+                        None, _("Open a preset to store the new profile"),
                         defaultDir=os.path.join(AV_Conv.DIR_CONF, 'presets'),
                         wildcard="Videomass presets (*.prst;)|*.prst;",
                         style=wx.FD_OPEN |

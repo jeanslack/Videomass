@@ -13,6 +13,8 @@ videomass (3.2.5-1) UNRELEASED; urgency=medium
   * All log files are cumulative now
   * The toggle buttons have been replaced with normal buttons
   * The selected icon set adjusts the background of some text controls
+  * Temporarily fixed `HTTP Error 404: Unavailable for Legal reasons` during
+    installing or updating youtube-dl executable
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 04 Nov 2020 20:22:00 +0200
 

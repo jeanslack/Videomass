@@ -1364,8 +1364,8 @@ class MainFrame(wx.Frame):
         """
         if not data == self.data_url:
             if self.data_url:
-                msg = (_('New incoming URLs may restore default settings. '
-                         'Check your settings again.'), MainFrame.ORANGE)
+                msg = (_('You just added new URLs. Please '
+                         'check your settings again.'), MainFrame.ORANGE)
                 self.statusbar_msg(msg[0], msg[1])
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
@@ -1414,8 +1414,8 @@ class MainFrame(wx.Frame):
                      ]
         if not filenames == self.file_src:
             if self.file_src:
-                msg = (_('New incoming files may restore default settings. '
-                         'Check your settings again.'), MainFrame.ORANGE)
+                msg = (_('You just added new files. Please '
+                         'check your settings again.'), MainFrame.ORANGE)
                 self.statusbar_msg(msg[0], msg[1])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
@@ -1426,7 +1426,7 @@ class MainFrame(wx.Frame):
         else:
             self.statusbar_msg(_('Ready'), None)
 
-        self.SetTitle(_('Videomass - Audio/Video Conversions'))
+        self.SetTitle(_('Videomass - AV Conversions'))
         self.toolbar.Show(),
         self.menu_items()  # disable some menu items
         self.avpan.Enable(False), self.prstpan.Enable(True)
@@ -1462,8 +1462,8 @@ class MainFrame(wx.Frame):
                      ]
         if not filenames == self.file_src:
             if self.file_src:
-                msg = (_('New incoming files may restore default settings. '
-                         'Check your settings again.'), MainFrame.ORANGE)
+                msg = (_('You just added new files. Please '
+                         'check your settings again.'), MainFrame.ORANGE)
                 self.statusbar_msg(msg[0], msg[1])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in

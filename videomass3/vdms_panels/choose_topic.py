@@ -219,10 +219,10 @@ class Choose_Topic(wx.Panel):
                 if not self.EXEC_YDL and os.path.isfile(fydl):
                     if self.store_ydl_on_cache:
                         dlg = wx.RichMessageDialog(self, msg_system_used,
-                                                _("Please confirm"),
-                                                  wx.ICON_QUESTION |
-                                                  wx.YES_NO
-                                                  )
+                                                   _("Please confirm"),
+                                                   wx.ICON_QUESTION |
+                                                   wx.YES_NO
+                                                   )
                         dlg.ShowCheckBox(_("Don't show this dialog again"))
 
                         if dlg.ShowModal() == wx.ID_NO:
