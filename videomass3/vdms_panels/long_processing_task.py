@@ -91,23 +91,32 @@ class Logging_Console(wx.Panel):
         BACKGROUND = '#11303eff'  # SOLARIZED background color for blues icons
         NORM_TEXT = '#FFFFFF'  # WHITE for title or URL in progress
         TEXT_2 = '#959595'  # GREY for all other text messages
+        ERROR = '#FF4A1B'  # ORANGE for error text messages
+        WARN = '#dfb72f'  # YELLOW for warning text messages
+        ERROR_2 = '#EA312D'  # LIGHTRED for errors 2
+        SUCCESS = '#1EA41E'  # GREEN when it is successful
 
     elif get.THEME in get.DARKicons:
         BACKGROUND = '#1c2027ff'  # DARK_SLATE background color for dark theme
         NORM_TEXT = '#FFFFFF'  # WHITE for title or URL in progress
         TEXT_2 = '#959595'  # GREY for all other text messages
+        ERROR = '#FF4A1B'  # ORANGE for error text messages
+        WARN = '#dfb72f'  # YELLOW for warning text messages
+        ERROR_2 = '#EA312D'  # LIGHTRED for errors 2
+        SUCCESS = '#1EA41E'  # GREEN when it is successful
+
     else:
         BACKGROUND = '#e6e6faff'  # LAVENDER background color for light theme
         NORM_TEXT = '#1f1f1fff'  # BLACK for title or URL in progress
         TEXT_2 = '#778899ff'  # LIGHT_SLATE for all other text messages
+        ERROR = '#d25c07'  # ORANGE for error text messages
+        WARN = '#988313'  # YELLOW for warning text messages
+        ERROR_2 = '#c8120b'  # LIGHTRED for errors 2
+        SUCCESS = '#008000'  # DARK_GREEN when it is successful
 
     INFO = '#31BAA7'  # CYAN for info text messages
     DEBUG = '#3298FB'  # AZURE for debug messages
-    WARN = '#dfb72f'  # YELLOW for warning text messages
-    ERROR = '#FF4A1B'  # ORANGE for error text messages
-    ERROR_2 = '#EA312D'  # LIGHTRED for errors 2
     FAILED = '#D21814'  # RED_DEEP if failed
-    SUCCESS = '#1EA41E'  # GREEN when it is successful
     ABORT = '#A41EA4'  # VIOLET if the user stops the processes
     #YELLOW = '#C8B72F'  # for warning text messages
     #RED = '#ff0000ff'
@@ -136,7 +145,7 @@ class Logging_Console(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
 
-        infolbl = _("Log viewing console:")
+        infolbl = _("Output viewing console:")
         lbl = wx.StaticText(self, label=infolbl)
         if Logging_Console.OS != 'Darwin':
             lbl.SetLabelMarkup("<b>%s</b>" % infolbl)

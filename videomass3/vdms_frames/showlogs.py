@@ -180,9 +180,10 @@ class ShowLogs(wx.MiniFrame):
                     self.log_select.InsertItem(index, f)
                 index += 1
 
-        self.log_select.Focus(0)  # make the line the current line
-        self.log_select.Select(0, on=1)  # default event selection
-        self.on_select(self)
+        if index:
+            self.log_select.Focus(0)  # make the line the current line
+            self.log_select.Select(0, on=1)  # default event selection
+            self.on_select(self)
     # --------------------------------------------------------------------#
 
     def on_deselect(self, event):

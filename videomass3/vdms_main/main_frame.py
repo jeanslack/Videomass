@@ -542,8 +542,9 @@ class MainFrame(wx.Frame):
                  _("jump to the YouTube Downloader panel"))
         self.ydlpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
-        dscrp = (_("Log viewing console"),
-                 _("View log messages of the last process executed"))
+        dscrp = (_("Output Monitor"),
+                 _("Keeps track of progress and all output for "
+                   "debugging errors"))
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
 
@@ -1146,8 +1147,8 @@ class MainFrame(wx.Frame):
                                        )
         self.toolbar.AddSeparator()
         # self.toolbar.AddStretchableSpace()
-        tip = _("Show additional multimedia information")
-        self.btn_metaI = self.toolbar.AddTool(5, _('Streams'),
+        tip = _("Show multimedia information and metadata")
+        self.btn_metaI = self.toolbar.AddTool(5, _('Metadata'),
                                               wx.Bitmap(self.icon_info),
                                               tip, wx.ITEM_NORMAL
                                               )
@@ -1319,7 +1320,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
-        self.SetTitle(_('Videomass - File List'))
+        self.SetTitle(_('Videomass - Queued Files'))
     # ------------------------------------------------------------------#
 
     def switch_text_import(self, event, which):
@@ -1354,7 +1355,7 @@ class MainFrame(wx.Frame):
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
-        self.SetTitle(_('Videomass - URL List'))
+        self.SetTitle(_('Videomass - Queued URLs'))
 
     # ------------------------------------------------------------------#
 
@@ -1524,7 +1525,7 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Log of the last process'), None)
         else:
             self.statusbar_msg(_('Under processing...'), None)
-        self.SetTitle(_('Videomass - Progress Display'))
+        self.SetTitle(_('Videomass - Output Monitor'))
         # Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),

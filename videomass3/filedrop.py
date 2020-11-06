@@ -187,7 +187,20 @@ class FileDnD(wx.Panel):
                                           wx.TE_READONLY
                                           )
         sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
+
+
+
+        self.ckbx_dir = wx.CheckBox(self, wx.ID_ANY, (
+                                _("Save destination in source folder")))
+        sizer_outdir.Add(self.ckbx_dir, 0, wx.ALL |
+                         wx.ALIGN_CENTER_VERTICAL, 5
+                         )
+        self.text_suffix = wx.TextCtrl(self, wx.ID_ANY, "", size=(150,-1),
+                                       style=wx.TE_PROCESS_ENTER
+                                       )
+        sizer_outdir.Add(self.text_suffix, 0, wx.ALL, 5)
         self.SetSizer(sizer)
+
         # properties
         self.flCtrl.InsertColumn(0, _('File Name'), width=550)
         self.flCtrl.InsertColumn(1, _('Duration'), width=230)
@@ -204,6 +217,8 @@ class FileDnD(wx.Panel):
         btn_clear.SetToolTip(_('Delete all files from the list'))
         tip = (_('Choose another output directory for files saving'))
         self.btn_save.SetToolTip(tip)
+        tip = (_("Additional suffix assignment to output files (optional)"))
+        self.text_suffix.SetToolTip(tip)
         # Binding (EVT)
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
         self.Bind(wx.EVT_BUTTON, self.delSelect, btn_delsel)

@@ -140,11 +140,11 @@ class Downloader(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                             size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                             name=wx.StaticLineNameStr
-                             )
-        sizer_base.Add(line, 0, wx.ALL | wx.EXPAND, 10)
+        #line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                             #size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                             #name=wx.StaticLineNameStr
+                             #)
+        #sizer_base.Add(line, 0, wx.ALL | wx.EXPAND, 10)
         #frame = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                                 #"")), wx.VERTICAL)
         #sizer_base.Add(frame, 1, wx.ALL | wx.EXPAND, 5)
