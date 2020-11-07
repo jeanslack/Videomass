@@ -75,6 +75,7 @@ class Loudnorm(Thread):
     LOGDIR = get.LOGdir
     FFMPEG_URL = get.FFMPEG_url
     FF_THREADS = get.FFthreads
+    SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, var, duration, logname, timeseq):
@@ -225,17 +226,18 @@ class Loudnorm(Thread):
 
             pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
                      '{1} -i "{2}" {3} -filter:a:{9} {4} {5} '
-                     '-y "{6}/{7}.{8}"'.format(Loudnorm.FFMPEG_URL,
-                                               self.time_seq,
-                                               files,
-                                               self.passList[1],
-                                               filters,
-                                               Loudnorm.FF_THREADS,
-                                               folders,
-                                               filename,
-                                               outext,
-                                               self.audioOUTmap[1]
-                                               ))
+                     '-y "{6}/{7}{10}.{8}"'.format(Loudnorm.FFMPEG_URL,
+                                                   self.time_seq,
+                                                   files,
+                                                   self.passList[1],
+                                                   filters,
+                                                   Loudnorm.FF_THREADS,
+                                                   folders,
+                                                   filename,
+                                                   outext,
+                                                   self.audioOUTmap[1],
+                                                   Loudnorm.SUFFIX,
+                                                   ))
             count = ('Loudnorm ebu: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)

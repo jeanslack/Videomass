@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-# File Name: filenames_check.py
+# File Name: checkup.py
 # Porpose: input/output file check
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
@@ -29,18 +29,15 @@ import wx
 import os
 
 
-def inspect(file_sources, dir_destin, extoutput):
+def check_files(file_sources, dir_destin, same_destin, suffix, extout):
     """
-    La funzione offre un controllo per gestire l'overwriting demandando
-    all'utente la scelta se sovrascrive o meno file già esistenti, e
-    un'altro controllo per la verifica dell'esistenza reale di files
-    e cartelle e un ultimo controllo per la modalità batch o single process.
+    check for overwriting and verify the existence of files
+    and directories.
 
-    The function return following values:
-    typeproc: if one singol file is alone, if multiple file is batch.
+    return following values:
+
     file_sources: a file list filtered by checking.
     outputdir: contains output paths as many as the file sources
-    filename: file names without path and extension
     base_name: file names without path but with extensions
     lenghmax: lengh list useful for count the loop index on the batch process.
 
@@ -56,25 +53,37 @@ def inspect(file_sources, dir_destin, extoutput):
     for path in file_sources:
         dirname = os.path.dirname(path)  # solo path
         basename = os.path.basename(path)  # nome file con ext.
-        filename = os.path.splitext(basename)[0]  # nome file senza ext.
+        filename = os.path.splitext(basename)  # [name, ext]
         # ext. del filesources:
         # sameext = os.path.splitext(basename)[1].replace('.','')
-        if not extoutput:  # uses more extension identity
-            pathname = '%s/%s' % (dir_destin, basename)
-            outputdir.append(dir_destin)
-            base_name.append(basename)
+        if not extout:  # uses more extension identity
+            if same_destin:
+                pathname = '%s/%s%s%s' % (dirname, filename[0], suffix, filename[1])
+                outputdir.append(dirname) # può avere più percorsi diversi
+                #base_name.append(basename)
+                base_name.append(os.path.basename(pathname))
+            else:
+                pathname = '%s/%s' % (dir_destin, basename)
+                outputdir.append(dir_destin)
+                base_name.append(basename)
+
             if os.path.exists(pathname):
                 exclude.append(pathname)
 
         else:  # uses only one extension identity
-            pathname = '%s/%s.%s' % (dir_destin, filename, extoutput)
-            outputdir.append(dir_destin)
+            if same_destin:
+                pathname = '%s/%s%s.%s' % (dirname, filename[0], suffix, extout)
+                outputdir.append(dirname) # può avere più percorsi diversi
+            else:
+                pathname = '%s/%s.%s' % (dir_destin, filename[0], extout)
+                outputdir.append(dir_destin)
+
             if os.path.exists(pathname):
                 exclude.append(pathname)
     if exclude:
-        if wx.MessageBox(_('Already exist: \n\n- %s\n\n'
+        if wx.MessageBox(_('Already exist: \n\n%s\n\n'
                            'Do you want to overwrite? ') %
-                         ('\n- '.join(exclude)),
+                         ('\n'.join(exclude)),
                          _('Please Confirm'),
                          wx.ICON_QUESTION | wx.YES_NO,
                          None) == wx.NO:
@@ -83,23 +92,16 @@ def inspect(file_sources, dir_destin, extoutput):
     # --------------- EXISTING FILES AND DIRECTORIES CONTROL:
     for f in file_sources:
         if not os.path.isfile(os.path.abspath(f)):
-            wx.MessageBox(_('The file does not exist:\n\n"%s"\n') % (f),
+            wx.MessageBox(_('File does not exist:\n\n"%s"\n') % (f),
                           "Videomass", wx.ICON_ERROR
                           )
             return (False, None, None, None, None)
 
     for d in outputdir:
         if not os.path.isdir(os.path.abspath(d)):
-            wx.MessageBox(_('The folder does not exist:\n\n"%s"\n') % (d),
+            wx.MessageBox(_('Output folder does not exist:\n\n"%s"\n') % (d),
                           'Videomass', wx.ICON_ERROR
                           )
             return (False, None, None, None, None)
 
-    # ---------------- SINGLE OR BATCH PROCESS
-    if len(file_sources) > 1:
-        typeproc = 'batch'
-    else:
-        typeproc = 'alone'
-    lenghmax = len(file_sources)
-
-    return (typeproc, file_sources, outputdir, filename, base_name, lenghmax)
+    return (file_sources, outputdir, base_name, len(file_sources))

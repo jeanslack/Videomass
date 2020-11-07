@@ -113,6 +113,8 @@ class MainFrame(wx.Frame):
         self.data_files = []  # list of items in list control
         self.data_url = None  # list of urls in text box
         self.file_destin = None  # path name for file saved destination
+        self.same_destin = False  # same source FFmpeg output destination
+        self.suffix = ''  # append a suffix to FFmpeg output file names
         self.file_src = None  # input files list
         self.filedropselected = None  # selected name on file drop
         self.time_seq = ''  # ffmpeg format time specifier with flag -ss, -t
@@ -543,8 +545,7 @@ class MainFrame(wx.Frame):
         self.ydlpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
         dscrp = (_("Output Monitor"),
-                 _("Keeps track of progress and all output for "
-                   "debugging errors"))
+                 _("Keeps track of the output for debugging errors"))
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
 

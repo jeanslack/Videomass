@@ -48,8 +48,11 @@ class Setup(wx.Dialog):
     FFPROBE_CHECK = get.FFPROBE_check
     FFPLAY_CHECK = get.FFPLAY_check
     OUTSAVE = get.USERfilesave
+    SAMEDIR = get.SAMEdir
+    FILESUFFIX = get.FILEsuffix
     CLEARCACHE = get.CLEARcache
     WARNME = get.WARNme
+
 
     MSGLOG = _("The following settings affect output messages "
                "and the log messages\nduring processes. "
@@ -120,23 +123,33 @@ class Setup(wx.Dialog):
         boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
                                                      (msg)), wx.VERTICAL)
         sizerGeneral.Add(boxUserpath, 1, wx.ALL | wx.EXPAND, 15)
-        gridUserpath = wx.BoxSizer(wx.HORIZONTAL)
-        boxUserpath.Add(gridUserpath, 1, wx.ALL | wx.EXPAND, 15)
+        sizeDirdest = wx.BoxSizer(wx.HORIZONTAL)
+        boxUserpath.Add(sizeDirdest, 1, wx.ALL | wx.EXPAND, 15)
 
         self.btn_userpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
-        gridUserpath.Add(self.btn_userpath, 0, wx.ALL |
+        sizeDirdest.Add(self.btn_userpath, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL |
                          wx.ALIGN_CENTER_HORIZONTAL, 5
                          )
         self.txtctrl_userpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
                                             style=wx.TE_READONLY
                                             )
-        gridUserpath.Add(self.txtctrl_userpath, 1, wx.ALL |
+        sizeDirdest.Add(self.txtctrl_userpath, 1, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL |
                          wx.ALIGN_CENTER_HORIZONTAL, 5
                          )
         self.txtctrl_userpath.AppendText(self.userpath)
-
+        sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
+        boxUserpath.Add(sizeSamedest, 1, wx.ALL | wx.EXPAND, 15)
+        descr = _("Save the FFmpeg output files in the same source folder")
+        self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
+        sizeSamedest.Add(self.ckbx_dir, 0,
+                         wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+                         )
+        self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150,-1),
+                                       style=wx.TE_PROCESS_ENTER
+                                       )
+        sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                     _("Cache Settings"))), wx.VERTICAL)
         sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 15)
@@ -342,6 +355,8 @@ class Setup(wx.Dialog):
 
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
+        tip = (_("Assign additional suffix to output files (optional)"))
+        self.text_suffix.SetToolTip(tip)
         tip = _("Enable custom paths for the executables. If the check boxes "
                 "are disabled or if the path field is empty, the search for "
                 "the executables is entrusted to the environment variables.")
@@ -356,6 +371,8 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
         self.Bind(wx.EVT_BUTTON, self.set_Userpath, self.btn_userpath)
+        self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
+        self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffmpeg, self.txtctrl_ffmpeg)
@@ -429,6 +446,15 @@ class Setup(wx.Dialog):
         else:
             self.txtctrl_ffplay.AppendText(Setup.FFPLAY_LINK)
             self.checkbox_exeFFplay.SetValue(True)
+
+        if Setup.SAMEDIR == 'false':
+            self.text_suffix.Disable()
+            self.ckbx_dir.SetValue(False)
+        else:
+            self.text_suffix.Enable()
+            self.ckbx_dir.SetValue(True)
+            if not Setup.FILESUFFIX == 'none':
+                self.text_suffix.AppendText(Setup.FILESUFFIX)
     # --------------------------------------------------------------------#
 
     def on_threads(self, event):
@@ -448,6 +474,38 @@ class Setup(wx.Dialog):
             self.txtctrl_userpath.AppendText(dlg.GetPath())
             self.full_list[self.rowsNum[1]] = '%s\n' % (dlg.GetPath())
             dlg.Destroy()
+    # --------------------------------------------------------------------#
+
+    def set_Samedest(self, event):
+        """Save the FFmpeg output files in the same source folder"""
+        if self.ckbx_dir.IsChecked():
+            self.text_suffix.Enable()
+            self.full_list[self.rowsNum[17]] = 'true\n'
+        else:
+            self.text_suffix.Clear()
+            self.text_suffix.Disable()
+            self.full_list[self.rowsNum[17]] = 'false\n'
+            self.full_list[self.rowsNum[18]] = 'none\n'
+    # --------------------------------------------------------------------#
+
+    def set_Suffix(self, event):
+        """Set a custom suffix to append at the output file names"""
+        msg = _('Enter only alphanumeric characters. You can also use the '
+                'hyphen ("-") and the underscore ("_"). Blank spaces are '
+                'not allowed.')
+        suffix = self.text_suffix.GetValue()
+
+        if not suffix == '':
+            for c in suffix:
+                if c not in ('_', '-'):
+                    if not c.isalnum():  # alphanumeric
+                        self.text_suffix.Clear()
+                        self.full_list[self.rowsNum[18]] = 'none\n'
+                        wx.MessageBox(msg, 'WARNING', wx.ICON_WARNING)
+                        return
+            self.full_list[self.rowsNum[18]] = '%s\n' % (suffix)
+        else:
+            self.full_list[self.rowsNum[18]] = 'none\n'
     # --------------------------------------------------------------------#
 
     def logging_ffplay(self, event):

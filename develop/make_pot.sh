@@ -44,7 +44,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_frames/mediainfo.py" \
 "../vdms_frames/showlogs.py" \
 "../vdms_frames/ydl_mediainfo.py" \
-"../vdms_io/filenames_check.py" \
+"../vdms_io/checkup.py" \
 "../vdms_io/IO_tools.py" \
 "../vdms_io/presets_manager_properties.py" \
 "../vdms_main/main_frame.py" \

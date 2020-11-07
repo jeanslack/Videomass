@@ -29,7 +29,7 @@ import os
 import wx.lib.agw.floatspin as FS
 from videomass3.vdms_io.IO_tools import volumeDetectProcess
 from videomass3.vdms_io.IO_tools import stream_play
-from videomass3.vdms_io.filenames_check import inspect
+from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs.epilogue import Formula
 from videomass3.vdms_dialogs import audiodialogs
 from videomass3.vdms_dialogs import presets_addnew
@@ -1871,12 +1871,10 @@ class AV_Conv(wx.Panel):
         Check the settings and files before redirecting
         to the build command.
 
-        typeproc      : batch or single process
-        filename      : file name without extension
         base_name     : file name with extension
         countmax      : count processing cicles for batch mode
-        """
 
+        """
         logname = 'AV_conversions.log'
         # check normalization data offset, if enable
         if self.rdbx_normalize.GetSelection() in [1, 2]:
@@ -1891,25 +1889,31 @@ class AV_Conv(wx.Panel):
         self.update_allentries()  # update
 
         if self.cmb_Media.GetValue() == 'Video':  # CHECKING
-            checking = inspect(self.parent.file_src,
-                               self.parent.file_destin,
-                               self.opt["OutputFormat"]
-                               )
+            checking = check_files(self.parent.file_src,
+                                   self.parent.file_destin,
+                                   self.parent.same_destin,
+                                   self.parent.suffix,
+                                   self.opt["OutputFormat"]
+                                   )
             if not checking[0]:  # User changing idea or not such files exist
                 return
-            (typeproc, f_src, destin, filename, base_name, countmax) = checking
+            (f_src, destin, base_name, countmax) = checking
+
             if self.rdbx_normalize.GetSelection() == 3:  # EBU
                 self.video_ebu_2pass(f_src, destin, countmax, logname)
             else:
                 self.video_stdProc(f_src, destin, countmax, logname)
 
         elif self.cmb_Media.GetValue() == 'Audio':  # CHECKING
-            checking = inspect(self.parent.file_src,
-                               self.parent.file_destin,
-                               self.opt["OutputFormat"])
+            checking = check_files(self.parent.file_src,
+                                   self.parent.file_destin,
+                                   self.parent.same_destin,
+                                   self.parent.suffix,
+                                   self.opt["OutputFormat"]
+                                   )
             if not checking[0]:  # User changing idea or not such files exist
                 return
-            (typeproc, f_src, destin, filename, base_name, countmax) = checking
+            (f_src, destin, base_name, countmax) = checking
             if self.rdbx_normalize.GetSelection() == 3:
                 self.audio_ebu_2pass(f_src, destin, countmax, logname)
             else:

@@ -33,7 +33,7 @@ from videomass3.vdms_io.presets_manager_properties import delete_profiles
 from videomass3.vdms_utils.utils import copy_restore
 from videomass3.vdms_utils.utils import copy_backup
 from videomass3.vdms_utils.utils import copy_on
-from videomass3.vdms_io.filenames_check import inspect
+from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs import presets_addnew
 from videomass3.vdms_dialogs.epilogue import Formula
 from videomass3.vdms_io.IO_tools import volumeDetectProcess
@@ -925,6 +925,8 @@ class PrstPan(wx.Panel):
                 return
         self.time_seq = self.parent.time_seq
         dir_destin = self.parent.file_destin
+        samedest = self.parent.same_destin
+        suffix = self.parent.suffix
         # used for file name log
         self.logname = 'presets_manager.log'
 
@@ -956,14 +958,13 @@ class PrstPan(wx.Panel):
         outext = '' if self.array[5] == 'copy' else self.array[5]
         extlst, outext = self.array[4], outext
         file_sources = supported_formats(extlst, self.parent.file_src)
-        checking = inspect(file_sources, dir_destin, outext)
-
+        checking = check_files(file_sources, dir_destin,
+                               samedest, suffix, outext
+                               )
         if not checking[0]:
             # not supported, missing files or user has changed his mind
             return
-        (batch, file_sources, dir_destin, fname, bname, cntmax) = checking
-        # batch: batch or single process
-        # fname: filename, nome file senza ext.
+        (file_sources, dir_destin, bname, cntmax) = checking
         # bname: basename, nome file con ext.
         # cntmax: count items for batch proc.
         if self.array[5] in ['jpg', 'png', 'bmp']:
@@ -1059,10 +1060,9 @@ class PrstPan(wx.Panel):
             clicked = file_sources[0]
 
         elif not self.parent.filedropselected:
-            wx.MessageBox(_("To export as pictures, select "
-                            "one file at a time"), 'Videomass',
-                          wx.ICON_INFORMATION, self
-                          )
+            wx.MessageBox(_("To export images, you need to select the "
+                            "desired file from the list of imported files"),
+                          'Videomass', wx.ICON_INFORMATION, self)
             return
         else:
             clicked = self.parent.filedropselected

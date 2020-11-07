@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 04, 2020 V.3.2.5
+Nov 07, 2020 V.3.2.5
 
   * Fixed layout bug on some mini frames which did not fit in the sizer
     especially on Mac-Os and MS-Windows
@@ -24,6 +24,8 @@ Nov 04, 2020 V.3.2.5
   * The selected icon set adjusts the background of some text controls
   * Temporarily fixed `HTTP Error 404: Unavailable for Legal reasons` during
     installing or updating youtube-dl executable
+  * A new feature in the Setup dialog allows you to write files to the same
+    directory as the source with optional additional suffix
 
 +------------------------------------+
 Oct 18, 2020 V.3.2.0

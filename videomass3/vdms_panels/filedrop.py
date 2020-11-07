@@ -141,6 +141,8 @@ class FileDnD(wx.Panel):
     get = wx.GetApp()
     OUTSAVE = get.USERfilesave  # path to the configuration directory
     OS = get.OS
+    SAMEDIR = get.SAMEdir
+    SUFFIX = get.FILEsuffix
 
     def __init__(self, parent):
         """Constructor. This will initiate with an id and a title"""
@@ -198,6 +200,12 @@ class FileDnD(wx.Panel):
             lbl_options.SetLabelMarkup("<b>%s</b>" % optionsmsg)
             lbl_outdir.SetLabelMarkup("<b>%s</b>" % outdirmsg)
         self.text_path_save.SetValue(self.file_dest)
+
+        if FileDnD.SAMEDIR == 'true':
+            self.btn_save.Disable(), self.text_path_save.Disable()
+            self.parent.same_destin = True
+            if not FileDnD.SUFFIX == 'none':
+                self.parent.suffix = FileDnD.SUFFIX
 
         # Tooltip
         btn_delsel.SetToolTip(_('Remove the selected file from the list'))

@@ -15,8 +15,10 @@ videomass (3.2.5-1) UNRELEASED; urgency=medium
   * The selected icon set adjusts the background of some text controls
   * Temporarily fixed `HTTP Error 404: Unavailable for Legal reasons` during
     installing or updating youtube-dl executable
+  * A new feature in the Setup dialog allows you to write files to the same
+    directory as the source with optional additional suffix
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 04 Nov 2020 20:22:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Nov 2020 20:48:00 +0200
 
 videomass (3.2.0-1) UNRELEASED; urgency=medium
 

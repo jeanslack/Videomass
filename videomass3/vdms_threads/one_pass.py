@@ -78,6 +78,7 @@ class OnePass(Thread):
     FFMPEG_URL = get.FFMPEG_url
     FFMPEG_LOGLEV = get.FFMPEG_loglev
     FF_THREADS = get.FFthreads
+    SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
@@ -90,7 +91,7 @@ class OnePass(Thread):
         have no influence on the type of conversion.
         """
         self.stop_work_thread = False  # process terminate
-        self.filelist = varargs[1]  # list of files (elements)
+        self.filelist = varargs[1]  # list of files (items)
         self.command = varargs[4]  # comand set on single pass
         self.outputdir = varargs[3]  # output path
         self.extoutput = varargs[2]  # format (extension)
@@ -124,7 +125,7 @@ class OnePass(Thread):
             outext = source_ext if not self.extoutput else self.extoutput
 
             cmd = ('%s %s %s -i "%s" %s %s %s '
-                   '-y "%s/%s.%s"' % (OnePass.FFMPEG_URL,
+                   '-y "%s/%s%s.%s"' % (OnePass.FFMPEG_URL,
                                       self.time_seq,
                                       OnePass.FFMPEG_LOGLEV,
                                       files,
@@ -133,6 +134,7 @@ class OnePass(Thread):
                                       OnePass.FF_THREADS,
                                       folders,
                                       filename,
+                                      OnePass.SUFFIX,
                                       outext,
                                       ))
             self.count += 1

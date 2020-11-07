@@ -78,6 +78,7 @@ class TwoPass(Thread):
     FFMPEG_URL = get.FFMPEG_url
     FFMPEG_LOGLEV = get.FFMPEG_loglev
     FF_THREADS = get.FFthreads
+    SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, varargs, duration, logname, timeseq):
@@ -208,7 +209,7 @@ class TwoPass(Thread):
                              )
             # --------------- second pass ----------------#
             pass2 = ('%s %s %s -i "%s" %s %s %s '
-                     '-y "%s/%s.%s"' % (TwoPass.FFMPEG_URL,
+                     '-y "%s/%s%s.%s"' % (TwoPass.FFMPEG_URL,
                                         TwoPass.FFMPEG_LOGLEV,
                                         self.time_seq,
                                         files,
@@ -217,6 +218,7 @@ class TwoPass(Thread):
                                         TwoPass.FF_THREADS,
                                         folders,
                                         filename,
+                                        TwoPass.SUFFIX,
                                         outext,
                                         ))
             count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
