@@ -204,7 +204,7 @@ class FileDnD(wx.Panel):
         if FileDnD.SAMEDIR == 'true':
             self.btn_save.Disable(), self.text_path_save.Disable()
             self.parent.same_destin = True
-            if not FileDnD.SUFFIX == 'none':
+            if not FileDnD.SUFFIX == 'none':  # otherwise must be '' on parent
                 self.parent.suffix = FileDnD.SUFFIX
 
         # Tooltip
