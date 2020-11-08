@@ -1,22 +1,24 @@
 videomass (3.2.5-1) UNRELEASED; urgency=medium
 
+  * Fixed bug using "restore default settings" for icons set in the Setup
+    window which did not allow to start Videomass.
   * Fixed layout bug on some mini frames which did not fit in the sizer
-    especially on MacOs and MS Windows
-  * Add new toolbar item to display download statistics window
-  * Add new statistic icon toolbar
+    especially on Mac-Os and MS-Windows
+  * Add new youtube_dl statistic icon toolbar to display download statistics
   * Fix setup.py importings
-  * Fix caption on Strems window
-  * Fix caption on Statistics window
   * Fixed FFmpeg menu definition
-  * New tool to view and read log files more conveniently
-  * Changed log files definitions
-  * All log files are cumulative now
+  * Made new tool to view and read log files more conveniently
+  * New names for log files with improved references
+  * All log files are now cumulative and the user is responsible for
+    their periodic cleaning
   * The toggle buttons have been replaced with normal buttons
-  * The selected icon set adjusts the background of some text controls
+  * The selected icon-set on Setup dialog box adjusts the background and
+    foreground colors on some text controls
   * Temporarily fixed `HTTP Error 404: Unavailable for Legal reasons` during
     installing or updating youtube-dl executable
   * A new feature in the Setup dialog allows you to write files to the same
     directory as the source with optional additional suffix
+  * New configuration file v2.5
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Nov 2020 20:48:00 +0200
 

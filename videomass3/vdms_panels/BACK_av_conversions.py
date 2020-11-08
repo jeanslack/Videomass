@@ -1871,6 +1871,9 @@ class AV_Conv(wx.Panel):
         Check the settings and files before redirecting
         to the build command.
 
+        base_name     : file name with extension
+        countmax      : items count for batch mode
+
         """
         logname = 'AV_conversions.log'
         # check normalization data offset, if enable
@@ -1885,24 +1888,33 @@ class AV_Conv(wx.Panel):
 
         self.update_allentries()  # update
 
-        checking = check_files(self.parent.file_src,
-                               self.parent.file_destin,
-                               self.parent.same_destin,
-                               self.parent.suffix,
-                               self.opt["OutputFormat"]
-                               )
-        if not checking[0]:  # User changing idea or not such files exist
-            return
-
-        f_src, destin, countmax = checking
-
         if self.cmb_Media.GetValue() == 'Video':  # CHECKING
+            checking = check_files(self.parent.file_src,
+                                   self.parent.file_destin,
+                                   self.parent.same_destin,
+                                   self.parent.suffix,
+                                   self.opt["OutputFormat"]
+                                   )
+            if not checking[0]:  # User changing idea or not such files exist
+                return
+
+            f_src, destin, countmax = checking
             if self.rdbx_normalize.GetSelection() == 3:  # EBU
                 self.video_ebu_2pass(f_src, destin, countmax, logname)
             else:
                 self.video_stdProc(f_src, destin, countmax, logname)
 
         elif self.cmb_Media.GetValue() == 'Audio':  # CHECKING
+            checking = check_files(self.parent.file_src,
+                                   self.parent.file_destin,
+                                   self.parent.same_destin,
+                                   self.parent.suffix,
+                                   self.opt["OutputFormat"]
+                                   )
+            if not checking[0]:  # User changing idea or not such files exist
+                return
+
+            f_src, destin, countmax = checking
             if self.rdbx_normalize.GetSelection() == 3:
                 self.audio_ebu_2pass(f_src, destin, countmax, logname)
             else:

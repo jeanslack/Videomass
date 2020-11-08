@@ -78,6 +78,7 @@ class Setup(wx.Dialog):
                  - ROW, is the current numeric rows on the file configuration
                  - VALUE, is the value as writing in the file configuration
         """
+
         # Make a items list of
         self.rowsNum = []  # rows number list
         dic = {}  # used for debug
@@ -87,6 +88,7 @@ class Setup(wx.Dialog):
             if not b.startswith('#'):
                 if not b == '\n':
                     self.rowsNum.append(a)
+
                     """
                     dic [a] = b.strip()# used for easy reading print debug
         #USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
@@ -253,6 +255,12 @@ class Setup(wx.Dialog):
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
                                         _("Set Icons"))), wx.VERTICAL)
         gridappearance.Add(boxLabIcons, 1, wx.ALL | wx.EXPAND, 15)
+        msg = _("Note: setting the icons also the background and the\n"
+                "foreground of some text boxes will be set automatically\n"
+                "depending on whether the themes are light or dark.")
+        lab_appearance = wx.StaticText(tabFour, wx.ID_ANY, (msg))
+        boxLabIcons.Add(lab_appearance, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL,
+                        15)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[
                                           ("Breeze"),
@@ -269,44 +277,6 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
         self.cmbx_icons.SetValue(self.iconset)
-        """
-        boxLabColor = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
-                                    _("Color customization"))), wx.VERTICAL)
-        gridappearance.Add(boxLabColor, 1, wx.ALL | wx.EXPAND, 15)
-        gridTBColor = wx.FlexGridSizer(3, 2, 0, 0)
-        boxLabColor.Add(gridTBColor)
-        labTBColor = wx.StaticText(tabFour, wx.ID_ANY,
-                                   _("Change color at the button bar:")
-                                   )
-        gridTBColor.Add(labTBColor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 15
-                        )
-        btn_TBcolor = wx.Button(tabFour, wx.ID_ANY, _("Bar Colour"))
-        gridTBColor.Add(btn_TBcolor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
-                        )
-        labTBColorBtn = wx.StaticText(tabFour, wx.ID_ANY, (
-                                      _("Change color of bar buttons:")))
-        gridTBColor.Add(labTBColorBtn, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 15
-                        )
-        btn_TBcolorBtn = wx.Button(tabFour, wx.ID_ANY, _("Buttons Colour"))
-        gridTBColor.Add(btn_TBcolorBtn, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
-                        )
-        labFontColor = wx.StaticText(tabFour, wx.ID_ANY, (
-                                _("Color setting for button fonts:")))
-        gridTBColor.Add(labFontColor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL |
-                        wx.ALIGN_CENTER_VERTICAL, 15
-                        )
-        btn_Fontcolor = wx.Button(tabFour, wx.ID_ANY, _("Font Colour"))
-        gridTBColor.Add(btn_Fontcolor, 0, wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
-                        )
-        """
         self.default_theme = wx.Button(tabFour, wx.ID_CLEAR,
                                        _("Restore default settings"))
         gridappearance.Add(self.default_theme, 0, wx.ALL |
@@ -355,7 +325,8 @@ class Setup(wx.Dialog):
 
         # ----------------------Properties----------------------#
         self.SetTitle(_("Videomass: setup"))
-        tip = (_("Assign additional suffix to output files (optional)"))
+        tip = (_("Assign additional suffix to output files (it is optional "
+                 "but strongly recommended)"))
         self.text_suffix.SetToolTip(tip)
         tip = _("Enable custom paths for the executables. If the check boxes "
                 "are disabled or if the path field is empty, the search for "
@@ -383,9 +354,6 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
-        # self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolor)
-        # self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_TBcolorBtn)
-        # self.Bind(wx.EVT_BUTTON, self.onColorDlg, btn_Fontcolor)
         self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, self.default_theme)
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_CHECKBOX, self.warn_Ydl, self.checkbox_cacheydl)
@@ -657,40 +625,11 @@ class Setup(wx.Dialog):
             self.default_theme.Enable()
     # ------------------------------------------------------------------#
 
-    """def onColorDlg(self, event):
-        # Colorize the toolbar bar
-
-        btn = event.GetEventObject()
-        identity = btn.GetLabelText()
-
-        dlg = wx.ColourDialog(self)
-
-        # Ensure the full colour dialog is displayed,
-        # not the abbreviated version.
-        dlg.GetColourData().SetChooseFull(True)
-
-        if dlg.ShowModal() == wx.ID_OK:
-            data = dlg.GetColourData()
-            rgb = str(data.GetColour().Get())
-            choice = rgb.replace('(', '').replace(')', '').strip()
-
-            if identity == _('Bar Colour'):
-                self.full_list[self.rowsNum[12]] = "%s\n" % choice
-            elif identity == _('Buttons Colour'):
-                self.full_list[self.rowsNum[13]] = "%s\n" % choice
-            elif identity == _("Font Colour"):
-                self.full_list[self.rowsNum[14]] = "%s\n" % choice
-            if not self.default_theme.IsEnabled():
-                self.default_theme.Enable()
-
-        dlg.Destroy()"""
-    # --------------------------------------------------------------------#
-
     def onAppearanceDefault(self, event):
         """
         Restore to default settings colors and icons set
         """
-        self.full_list[self.rowsNum[11]] = "Breeze_blues\n"
+        self.full_list[self.rowsNum[11]] = "Breeze-Blues\n"
         self.full_list[self.rowsNum[12]] = '118, 118, 118\n'
         self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
         self.full_list[self.rowsNum[14]] = '0, 0, 0\n'

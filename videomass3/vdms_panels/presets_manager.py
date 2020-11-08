@@ -59,8 +59,7 @@ class PrstPan(wx.Panel):
     # -----------------------------------------------------------------
 
     def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, OS, iconanalyzes, iconpeaklevel, btn_color,
-                 fontBtncolor):
+                 PWD, OS, iconanalyzes, iconpeaklevel):
         """
         Each presets is a JSON file (Javascript object notation) which is
         a list object with a variable number of items (called profiles)
@@ -923,12 +922,8 @@ class PrstPan(wx.Panel):
                               "Videomass", wx.ICON_INFORMATION
                               )
                 return
-        self.time_seq = self.parent.time_seq
-        dir_destin = self.parent.file_destin
-        samedest = self.parent.same_destin
-        suffix = self.parent.suffix
-        # used for file name log
-        self.logname = 'presets_manager.log'
+        self.time_seq = self.parent.time_seq  # update time_seq
+        self.logname = 'presets_manager.log'  # used for file name log
 
         if(self.array[2].strip() != self.txt_1cmd.GetValue().strip() or
            self.array[3].strip() != self.txt_2cmd.GetValue().strip()):
@@ -957,22 +952,23 @@ class PrstPan(wx.Panel):
 
         outext = '' if self.array[5] == 'copy' else self.array[5]
         extlst, outext = self.array[4], outext
-        file_sources = supported_formats(extlst, self.parent.file_src)
-        checking = check_files(file_sources, dir_destin,
-                               samedest, suffix, outext
+        file_src = supported_formats(extlst, self.parent.file_src)
+        checking = check_files(file_src,
+                               self.parent.file_destin,
+                               self.parent.same_destin,
+                               self.parent.suffix,
+                               outext,
                                )
         if not checking[0]:
             # not supported, missing files or user has changed his mind
             return
-        (file_sources, dir_destin, bname, cntmax) = checking
-        # bname: basename, nome file con ext.
-        # cntmax: count items for batch proc.
+        fsrc, dirdest, cntmax = checking
         if self.array[5] in ['jpg', 'png', 'bmp']:
-            self.savepictures(dir_destin, file_sources)
+            self.savepictures(dirdest, fsrc)
         elif self.array[3]:  # has double pass
-            self.two_Pass(file_sources, dir_destin, cntmax, outext)
+            self.two_Pass(fsrc, dirdest, cntmax, outext)
         else:
-            self.one_Pass(file_sources, dir_destin, cntmax, outext)
+            self.one_Pass(fsrc, dirdest, cntmax, outext)
     # ----------------------------------------------------------------#
 
     def one_Pass(self, filesrc, destdir, cntmax, outext):

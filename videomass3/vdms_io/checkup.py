@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Nov.08.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -38,42 +38,41 @@ def check_files(file_sources, dir_destin, same_destin, suffix, extout):
 
     file_sources: a file list filtered by checking.
     outputdir: contains output paths as many as the file sources
-    base_name: file names without path but with extensions
     lenghmax: lengh list useful for count the loop index on the batch process.
 
     """
     if not file_sources:
         return (False, None, None, None, None)
 
-    exclude = []  # se viene riempita, la usano i dialoghi MessageBox
-    outputdir = []  # contiene percorsi di uscita quanti sono i file_sources
-    base_name = []  # stesso nome e formato di uscita
+    exclude = []  # already exist file names list, used by MessageBox
+    outputdir = []  # output path names list
+    # base_name = []  # represents the complete final basenames
 
-    # --------------- OVERWRITING CONTROL:
+    # --------------- CHECK OVERWRITING:
     for path in file_sources:
-        dirname = os.path.dirname(path)  # solo path
-        basename = os.path.basename(path)  # nome file con ext.
+        dirname = os.path.dirname(path)
+        basename = os.path.basename(path)
         filename = os.path.splitext(basename)  # [name, ext]
-        # ext. del filesources:
-        # sameext = os.path.splitext(basename)[1].replace('.','')
-        if not extout:  # uses more extension identity
+
+        if not extout:  # uses more extensions (copy formats)
             if same_destin:
-                pathname = '%s/%s%s%s' % (dirname, filename[0], suffix, filename[1])
-                outputdir.append(dirname) # può avere più percorsi diversi
-                #base_name.append(basename)
-                base_name.append(os.path.basename(pathname))
+                pathname = '%s/%s%s%s' % (dirname, filename[0],
+                                          suffix, filename[1])
+                outputdir.append(dirname)
+                # base_name.append(os.path.basename(pathname))
             else:
                 pathname = '%s/%s' % (dir_destin, basename)
                 outputdir.append(dir_destin)
-                base_name.append(basename)
+                # base_name.append(basename)
 
             if os.path.exists(pathname):
                 exclude.append(pathname)
 
-        else:  # uses only one extension identity
+        else:  # uses one extension for all output
             if same_destin:
-                pathname = '%s/%s%s.%s' % (dirname, filename[0], suffix, extout)
-                outputdir.append(dirname) # può avere più percorsi diversi
+                pathname = '%s/%s%s.%s' % (dirname, filename[0],
+                                           suffix, extout)
+                outputdir.append(dirname)
             else:
                 pathname = '%s/%s.%s' % (dir_destin, filename[0], extout)
                 outputdir.append(dir_destin)
@@ -87,9 +86,9 @@ def check_files(file_sources, dir_destin, same_destin, suffix, extout):
                          _('Please Confirm'),
                          wx.ICON_QUESTION | wx.YES_NO,
                          None) == wx.NO:
-            return (False, None, None, None, None)  # user risponde no
+            return (False, None, None, None, None)
 
-    # --------------- EXISTING FILES AND DIRECTORIES CONTROL:
+    # --------------- CHECK EXISTING FILES AND DIRECTORIES:
     for f in file_sources:
         if not os.path.isfile(os.path.abspath(f)):
             wx.MessageBox(_('File does not exist:\n\n"%s"\n') % (f),
@@ -104,4 +103,4 @@ def check_files(file_sources, dir_destin, same_destin, suffix, extout):
                           )
             return (False, None, None, None, None)
 
-    return (file_sources, outputdir, base_name, len(file_sources))
+    return (file_sources, outputdir, len(file_sources))

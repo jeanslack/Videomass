@@ -81,16 +81,8 @@ class MainFrame(wx.Frame):
         NOTE: 'SRCpath' is a current work directory of Videomass
                program. How it can be localized depend if Videomass is
                run as portable program or installated program.
+
         """
-        barC = setui[4][12].split(',')
-        barColor = wx.Colour(int(barC[0]), int(barC[1]), int(barC[2]))
-        # toolbar panel colour
-        bBtnC = setui[4][13].split(',')
-        self.bBtnC = wx.Colour(int(bBtnC[0]), int(bBtnC[1]), int(bBtnC[2]))
-        # toolbar buttons colour
-        fBtnC = setui[4][14].split(',')
-        self.fBtnC = wx.Colour(int(fBtnC[0]), int(fBtnC[1]), int(fBtnC[2]))
-        # Buttons Font Colour
         SRCpath = setui[1]  # share dir (are where the origin files?):
         # ---------------------------#
         self.iconset = setui[4][11]
@@ -148,8 +140,6 @@ class MainFrame(wx.Frame):
                                                  pathicons[15],  # settings
                                                  pathicons[17],  # peaklevel
                                                  pathicons[18],  # audiotr
-                                                 self.bBtnC,
-                                                 self.fBtnC,
                                                  )
         self.fileDnDTarget = filedrop.FileDnD(self)
         self.textDnDTarget = textdrop.TextDnD(self)
@@ -161,8 +151,6 @@ class MainFrame(wx.Frame):
                                                   MainFrame.OS,
                                                   pathicons[14],  # analyzes
                                                   pathicons[17],  # peaklevel
-                                                  self.bBtnC,
-                                                  self.fBtnC,
                                                   )
         # hide panels
         self.fileDnDTarget.Hide()
@@ -1148,8 +1136,8 @@ class MainFrame(wx.Frame):
                                        )
         self.toolbar.AddSeparator()
         # self.toolbar.AddStretchableSpace()
-        tip = _("Show multimedia information and metadata")
-        self.btn_metaI = self.toolbar.AddTool(5, _('Metadata'),
+        tip = _("Gathers information from multimedia streams")
+        self.btn_metaI = self.toolbar.AddTool(5, _('Media Streams'),
                                               wx.Bitmap(self.icon_info),
                                               tip, wx.ITEM_NORMAL
                                               )
@@ -1523,7 +1511,7 @@ class MainFrame(wx.Frame):
         else:
             duration = self.duration
         if varargs[0] == 'console view only':
-            self.statusbar_msg(_('Log of the last process'), None)
+            self.statusbar_msg(_('Last output status'), None)
         else:
             self.statusbar_msg(_('Under processing...'), None)
         self.SetTitle(_('Videomass - Output Monitor'))
