@@ -143,21 +143,19 @@ class Setup(wx.Dialog):
         self.txtctrl_userpath.AppendText(self.userpath)
         descr = _("Save the FFmpeg output files in the same source folder")
         self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
-        boxUserpath.Add(self.ckbx_dir, 0,
-                         wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15
-                         )
+        boxUserpath.Add(self.ckbx_dir, 0, wx.LEFT, 15)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
         boxUserpath.Add(sizeSamedest, 1, wx.ALL | wx.EXPAND, 15)
 
         descr = _("Optional suffix assignment (example, _convert):")
         self.lab_suffix = wx.StaticText(tabOne, wx.ID_ANY, (descr))
-        sizeSamedest.Add(self.lab_suffix, 0, wx.ALL |
+        sizeSamedest.Add(self.lab_suffix, 0, wx.LEFT |
                                              wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150,-1),
                                        style=wx.TE_PROCESS_ENTER
                                        )
-        sizeSamedest.Add(self.text_suffix, 0, wx.ALL |
+        sizeSamedest.Add(self.text_suffix, 0, wx.LEFT |
                                               wx.ALIGN_CENTER_VERTICAL, 5)
         boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                     _("Cache Settings"))), wx.VERTICAL)
@@ -167,21 +165,12 @@ class Setup(wx.Dialog):
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
                         _(" Clears temporary cached files during application "
                           "exit")))
-        gridCache.Add(self.checkbox_cacheclr, 0,
-                      wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL |
-                      wx.ALIGN_CENTER_HORIZONTAL, 5
-                      )
-
+        gridCache.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
         self.checkbox_cacheydl = wx.CheckBox(tabOne, wx.ID_ANY, (
                         _(" Don't warn me again when youtube-dl executable "
                           "is not in use")))
-        gridCache.Add(self.checkbox_cacheydl, 0,
-                      wx.ALL |
-                      wx.ALIGN_CENTER_VERTICAL |
-                      wx.ALIGN_CENTER_HORIZONTAL, 5
-                      )
-        boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 15)
+        gridCache.Add(self.checkbox_cacheydl, 0, wx.ALL, 5)
+        boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 10)
 
         tabOne.SetSizer(sizerGeneral)
         notebook.AddPage(tabOne, _("General"))

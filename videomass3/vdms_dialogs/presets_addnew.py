@@ -226,10 +226,6 @@ class MemPresets(wx.Dialog):
 
         # ---------------------------------------------------------------
         if [txt for txt in [name, decript, pass_1] if txt == '']:
-            self.txt_name.SetBackgroundColour('#988313')
-            self.txt_descript.SetBackgroundColour('#988313')
-            self.pass_1_cmd.SetBackgroundColour('#988313')
-            self.txt_ext.SetBackgroundColour('#865dab')
             wx.MessageBox(_("Incomplete profile assignments"),
                           "Videomass ", wx.ICON_INFORMATION, self)
             return
