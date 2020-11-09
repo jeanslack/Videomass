@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-08 13:31+0100\n"
+"POT-Creation-Date: 2020-11-09 12:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -429,8 +429,8 @@ msgid "Auto-detection"
 msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:69 ../vdms_dialogs/settings.py:131
-#: ../vdms_dialogs/settings.py:216 ../vdms_dialogs/settings.py:228
-#: ../vdms_dialogs/settings.py:240
+#: ../vdms_dialogs/settings.py:223 ../vdms_dialogs/settings.py:235
+#: ../vdms_dialogs/settings.py:247
 msgid "Browse.."
 msgstr ""
 
@@ -571,120 +571,118 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/settings.py:124
-msgid "Where do you prefer to save all the output files?"
+msgid "Where do you prefer to save all output files and downloads?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:146
+#: ../vdms_dialogs/settings.py:144
 msgid "Save the FFmpeg output files in the same source folder"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:156
+#: ../vdms_dialogs/settings.py:152
+msgid "Optional suffix assignment (example, _convert):"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:163
 msgid "Cache Settings"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:161
+#: ../vdms_dialogs/settings.py:168
 msgid " Clears temporary cached files during application exit"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:170
+#: ../vdms_dialogs/settings.py:177
 msgid " Don't warn me again when youtube-dl executable is not in use"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:180
+#: ../vdms_dialogs/settings.py:187
 msgid "General"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:186
+#: ../vdms_dialogs/settings.py:193
 msgid "FFmpeg -threads option"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:191
+#: ../vdms_dialogs/settings.py:198
 msgid "Sets threads used on some transcoding (from 0 to 32)"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:208
+#: ../vdms_dialogs/settings.py:215
 msgid "FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:215
+#: ../vdms_dialogs/settings.py:222
 msgid " Use a custom path to run FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:227
+#: ../vdms_dialogs/settings.py:234
 msgid " Use a custom path to run FFprobe"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:239
+#: ../vdms_dialogs/settings.py:246
 msgid " Use a custom path to run FFplay"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:251
+#: ../vdms_dialogs/settings.py:258
 msgid "Executable paths"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:256
+#: ../vdms_dialogs/settings.py:263
 msgid "Set Icons"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:260
+#: ../vdms_dialogs/settings.py:265
 msgid ""
 "Note: setting the icons also the background and the\n"
 "foreground of some text boxes will be set automatically\n"
 "depending on whether the themes are light or dark."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:286
-msgid "Restore default settings"
-msgstr ""
-
-#: ../vdms_dialogs/settings.py:291
+#: ../vdms_dialogs/settings.py:288
 msgid "Appearance"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:312
+#: ../vdms_dialogs/settings.py:309
 msgid "Logging levels"
 msgstr ""
 
+#: ../vdms_dialogs/settings.py:329
+msgid "Videomass Setup"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:330
+msgid "Assign an additional suffix to FFmpeg output files"
+msgstr ""
+
 #: ../vdms_dialogs/settings.py:332
-msgid "Videomass: setup"
-msgstr ""
-
-#: ../vdms_dialogs/settings.py:333
-msgid ""
-"Assign additional suffix to output files (it is optional but strongly "
-"recommended)"
-msgstr ""
-
-#: ../vdms_dialogs/settings.py:336
 msgid ""
 "Enable custom paths for the executables. If the check boxes are disabled or "
 "if the path field is empty, the search for the executables is entrusted to "
 "the environment variables."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:445
+#: ../vdms_dialogs/settings.py:439
 msgid "Set a default directory to save files"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:469
+#: ../vdms_dialogs/settings.py:465
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:518
+#: ../vdms_dialogs/settings.py:519
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:558
+#: ../vdms_dialogs/settings.py:559
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:597
+#: ../vdms_dialogs/settings.py:598
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:675
+#: ../vdms_dialogs/settings.py:655
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 
@@ -2384,91 +2382,91 @@ msgstr ""
 msgid "Download by format code"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:193
+#: ../vdms_panels/youtubedl_ui.py:195
 msgid "Download all playlist"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:197
+#: ../vdms_panels/youtubedl_ui.py:199
 msgid "Embed thumbnail in audio file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:201
+#: ../vdms_panels/youtubedl_ui.py:203
 msgid "Add metadata to file"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:205
+#: ../vdms_panels/youtubedl_ui.py:207
 msgid "Write subtitles to video"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:208
+#: ../vdms_panels/youtubedl_ui.py:212
 msgid "URLs checklist"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:223
+#: ../vdms_panels/youtubedl_ui.py:228
 msgid "Help viewer"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:331 ../vdms_panels/youtubedl_ui.py:347
+#: ../vdms_panels/youtubedl_ui.py:336 ../vdms_panels/youtubedl_ui.py:352
 msgid "Play selected url"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:361 ../vdms_panels/youtubedl_ui.py:458
+#: ../vdms_panels/youtubedl_ui.py:366 ../vdms_panels/youtubedl_ui.py:463
 msgid "Format Code"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:362 ../vdms_panels/youtubedl_ui.py:459
-#: ../vdms_panels/youtubedl_ui.py:507
+#: ../vdms_panels/youtubedl_ui.py:367 ../vdms_panels/youtubedl_ui.py:464
+#: ../vdms_panels/youtubedl_ui.py:512
 msgid "Url"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:363 ../vdms_panels/youtubedl_ui.py:460
-#: ../vdms_panels/youtubedl_ui.py:508
+#: ../vdms_panels/youtubedl_ui.py:368 ../vdms_panels/youtubedl_ui.py:465
+#: ../vdms_panels/youtubedl_ui.py:513
 msgid "Title"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:364 ../vdms_panels/youtubedl_ui.py:461
+#: ../vdms_panels/youtubedl_ui.py:369 ../vdms_panels/youtubedl_ui.py:466
 msgid "Extension"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:365
+#: ../vdms_panels/youtubedl_ui.py:370
 msgid "Resolution"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:366
+#: ../vdms_panels/youtubedl_ui.py:371
 msgid "Video Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:367
+#: ../vdms_panels/youtubedl_ui.py:372
 msgid "fps"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:368
+#: ../vdms_panels/youtubedl_ui.py:373
 msgid "Audio Codec"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:369 ../vdms_panels/filedrop.py:197
+#: ../vdms_panels/youtubedl_ui.py:374 ../vdms_panels/filedrop.py:197
 msgid "Size"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:462 ../vdms_panels/youtubedl_ui.py:509
+#: ../vdms_panels/youtubedl_ui.py:467 ../vdms_panels/youtubedl_ui.py:514
 msgid "Resolution note"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:506
-msgid "Item no"
+#: ../vdms_panels/youtubedl_ui.py:511
+msgid "Item"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:527
+#: ../vdms_panels/youtubedl_ui.py:532
 msgid "Sorry, this feature is disabled."
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:564
+#: ../vdms_panels/youtubedl_ui.py:569
 msgid ""
 "TIPS:\n"
 "\n"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:566
+#: ../vdms_panels/youtubedl_ui.py:571
 msgid ""
 "-  Click on one of the items in the checklist and use the preview button to "
 "play the video and evaluate the resolution or quality based on the settings "
@@ -2476,7 +2474,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../vdms_panels/youtubedl_ui.py:571
+#: ../vdms_panels/youtubedl_ui.py:576
 msgid ""
 "-  Check one or more boxes in the URLs checklist. Each URL (green selection) "
 "can have multiple format codes that correspond to different audio and video "

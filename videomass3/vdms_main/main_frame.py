@@ -700,8 +700,9 @@ class MainFrame(wx.Frame):
         """
         call Pass to reset_list function for re-charging list
         """
-        if self.PrstsPanel.IsShown():
-            self.PrstsPanel.Refresh()
+        self.PrstsPanel.Refresh()
+        #if self.PrstsPanel.IsShown():
+            #self.PrstsPanel.Refresh()
 
     # --------- Menu  Preferences
 

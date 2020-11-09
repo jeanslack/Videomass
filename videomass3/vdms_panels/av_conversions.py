@@ -2384,4 +2384,6 @@ class AV_Conv(wx.Panel):
                                                parameters,
                                                t
                                                )
-        ret = prstdialog.ShowModal()
+        if prstdialog.ShowModal() == wx.ID_CANCEL:
+            return
+        self.parent.Refresh(self)

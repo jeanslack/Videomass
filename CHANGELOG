@@ -7,10 +7,12 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Nov 08, 2020 V.3.2.5
+Nov 09, 2020 V.3.2.5
 
   * Fixed bug using "restore default settings" for icons set in the Setup
     window which did not allow to start Videomass.
+  * Fixed Automatic Refreshing of profile list on Presets Manager when you
+    save a profile from the AV-Conversions panel
   * Fixed layout bug on some mini frames which did not fit in the sizer
     especially on Mac-Os and MS-Windows
   * Add new youtube_dl statistic icon toolbar to display download statistics

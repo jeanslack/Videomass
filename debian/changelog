@@ -1,6 +1,8 @@
 videomass (3.2.5-1) UNRELEASED; urgency=medium
 
   * Fixed bug using "restore default settings" for icons set in the Setup
+  * Fixed Automatic Refreshing of profile list on Presets Manager when you
+    save a profile from the AV-Conversions panel
     window which did not allow to start Videomass.
   * Fixed layout bug on some mini frames which did not fit in the sizer
     especially on Mac-Os and MS-Windows
@@ -20,7 +22,7 @@ videomass (3.2.5-1) UNRELEASED; urgency=medium
     directory as the source with optional additional suffix
   * New configuration file v2.5
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 07 Nov 2020 20:48:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 09 Nov 2020 12:32:00 +0200
 
 videomass (3.2.0-1) UNRELEASED; urgency=medium
 

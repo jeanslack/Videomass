@@ -121,7 +121,7 @@ class Setup(wx.Dialog):
         # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGeneral = wx.BoxSizer(wx.VERTICAL)
-        msg = _("Where do you prefer to save all the output files?")
+        msg = _("Where do you prefer to save all output files and downloads?")
         boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
                                                      (msg)), wx.VERTICAL)
         sizerGeneral.Add(boxUserpath, 1, wx.ALL | wx.EXPAND, 15)
@@ -141,17 +141,24 @@ class Setup(wx.Dialog):
                          wx.ALIGN_CENTER_HORIZONTAL, 5
                          )
         self.txtctrl_userpath.AppendText(self.userpath)
-        sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
-        boxUserpath.Add(sizeSamedest, 1, wx.ALL | wx.EXPAND, 15)
         descr = _("Save the FFmpeg output files in the same source folder")
         self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
-        sizeSamedest.Add(self.ckbx_dir, 0,
-                         wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5
+        boxUserpath.Add(self.ckbx_dir, 0,
+                         wx.ALL | wx.ALIGN_CENTER_VERTICAL, 15
                          )
+        sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
+        boxUserpath.Add(sizeSamedest, 1, wx.ALL | wx.EXPAND, 15)
+
+        descr = _("Optional suffix assignment (example, _convert):")
+        self.lab_suffix = wx.StaticText(tabOne, wx.ID_ANY, (descr))
+        sizeSamedest.Add(self.lab_suffix, 0, wx.ALL |
+                                             wx.ALIGN_CENTER_VERTICAL, 5)
+
         self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150,-1),
                                        style=wx.TE_PROCESS_ENTER
                                        )
-        sizeSamedest.Add(self.text_suffix, 1, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        sizeSamedest.Add(self.text_suffix, 0, wx.ALL |
+                                              wx.ALIGN_CENTER_VERTICAL, 5)
         boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                     _("Cache Settings"))), wx.VERTICAL)
         sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 15)
@@ -277,11 +284,6 @@ class Setup(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
         self.cmbx_icons.SetValue(self.iconset)
-        self.default_theme = wx.Button(tabFour, wx.ID_CLEAR,
-                                       _("Restore default settings"))
-        gridappearance.Add(self.default_theme, 0, wx.ALL |
-                           wx.EXPAND, 15
-                           )
         tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
         notebook.AddPage(tabFour, _("Appearance"))
         # -----tab 5
@@ -324,9 +326,8 @@ class Setup(wx.Dialog):
         self.Layout()
 
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Videomass: setup"))
-        tip = (_("Assign additional suffix to output files (it is optional "
-                 "but strongly recommended)"))
+        self.SetTitle(_("Videomass Setup"))
+        tip = (_("Assign an additional suffix to FFmpeg output files"))
         self.text_suffix.SetToolTip(tip)
         tip = _("Enable custom paths for the executables. If the check boxes "
                 "are disabled or if the path field is empty, the search for "
@@ -354,7 +355,6 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
-        self.Bind(wx.EVT_BUTTON, self.onAppearanceDefault, self.default_theme)
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_CHECKBOX, self.warn_Ydl, self.checkbox_cacheydl)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
@@ -416,9 +416,11 @@ class Setup(wx.Dialog):
             self.checkbox_exeFFplay.SetValue(True)
 
         if Setup.SAMEDIR == 'false':
+            self.lab_suffix.Disable()
             self.text_suffix.Disable()
             self.ckbx_dir.SetValue(False)
         else:
+            self.lab_suffix.Enable()
             self.text_suffix.Enable()
             self.ckbx_dir.SetValue(True)
             if not Setup.FILESUFFIX == 'none':
@@ -447,10 +449,12 @@ class Setup(wx.Dialog):
     def set_Samedest(self, event):
         """Save the FFmpeg output files in the same source folder"""
         if self.ckbx_dir.IsChecked():
+            self.lab_suffix.Enable()
             self.text_suffix.Enable()
             self.full_list[self.rowsNum[17]] = 'true\n'
         else:
             self.text_suffix.Clear()
+            self.lab_suffix.Disable()
             self.text_suffix.Disable()
             self.full_list[self.rowsNum[17]] = 'false\n'
             self.full_list[self.rowsNum[18]] = 'none\n'
@@ -463,13 +467,18 @@ class Setup(wx.Dialog):
                 'not allowed.')
         suffix = self.text_suffix.GetValue()
 
+        if self.text_suffix.GetBackgroundColour() == (152, 131, 19, 255):
+            # html: ('#988313') == rgb: (152, 131, 19, 255) =
+            self.text_suffix.SetBackgroundColour(wx.NullColour)
+
         if not suffix == '':
             for c in suffix:
                 if c not in ('_', '-'):
                     if not c.isalnum():  # alphanumeric
-                        self.text_suffix.Clear()
-                        self.full_list[self.rowsNum[18]] = 'none\n'
+                        self.text_suffix.SetBackgroundColour('#988313')
                         wx.MessageBox(msg, 'WARNING', wx.ICON_WARNING)
+                        self.full_list[self.rowsNum[18]] = 'none\n'
+                        self.text_suffix.Clear()
                         return
             self.full_list[self.rowsNum[18]] = '%s\n' % (suffix)
         else:
@@ -613,27 +622,6 @@ class Setup(wx.Dialog):
         """
         choice = "%s\n" % self.cmbx_icons.GetStringSelection()
         self.full_list[self.rowsNum[11]] = choice
-
-        if choice == "Material_Design_Icons_white\n":
-            self.full_list[self.rowsNum[13]] = '26, 26, 26, 255\n'
-            self.full_list[self.rowsNum[14]] = '229, 229, 229, 255\n'
-        else:
-            self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
-            self.full_list[self.rowsNum[14]] = '0, 0, 0\n'
-
-        if not self.default_theme.IsEnabled():
-            self.default_theme.Enable()
-    # ------------------------------------------------------------------#
-
-    def onAppearanceDefault(self, event):
-        """
-        Restore to default settings colors and icons set
-        """
-        self.full_list[self.rowsNum[11]] = "Breeze-Blues\n"
-        self.full_list[self.rowsNum[12]] = '118, 118, 118\n'
-        self.full_list[self.rowsNum[13]] = '176, 176, 176, 255\n'
-        self.full_list[self.rowsNum[14]] = '0, 0, 0\n'
-        self.default_theme.Disable()
     # --------------------------------------------------------------------#
 
     def clear_Cache(self, event):

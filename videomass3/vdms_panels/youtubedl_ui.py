@@ -140,11 +140,6 @@ class Downloader(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        #line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                             #size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                             #name=wx.StaticLineNameStr
-                             #)
-        #sizer_base.Add(line, 0, wx.ALL | wx.EXPAND, 10)
         #frame = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                                 #"")), wx.VERTICAL)
         #sizer_base.Add(frame, 1, wx.ALL | wx.EXPAND, 5)
@@ -186,6 +181,13 @@ class Downloader(wx.Panel):
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
         grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
+
+        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                             size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                             name=wx.StaticLineNameStr
+                             )
+        sizer.Add(line, 0, wx.ALL | wx.EXPAND, 10)
+
         # -------------opt
         grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
         sizer.Add(grid_opt, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
@@ -205,6 +207,8 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
+
+        # -------------listctrl
         labcstr = _('URLs checklist')
         self.labcode = wx.StaticText(self, label=labcstr)
         sizer.Add(self.labcode, 0, wx.ALL, 5)
@@ -220,6 +224,7 @@ class Downloader(wx.Panel):
                                       wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                       )
         sizer.Add(self.fcode, 1, wx.EXPAND, 10)
+        # -------------textctrl
         labtstr = _('Help viewer')
         self.labtxt = wx.StaticText(self, label=labtstr)
         sizer.Add(self.labtxt, 0, wx.ALL, 5)
@@ -503,7 +508,7 @@ class Downloader(wx.Panel):
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
-        self.fcode.InsertColumn(0, (_('Item no')), width=100)
+        self.fcode.InsertColumn(0, (_('Item')), width=100)
         self.fcode.InsertColumn(1, (_('Url')), width=500)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
         self.fcode.InsertColumn(3, (_('Resolution note')), width=250)
