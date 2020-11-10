@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-09 12:26+0100\n"
-"PO-Revision-Date: 2020-11-09 12:30+0100\n"
+"POT-Creation-Date: 2020-11-10 09:12+0100\n"
+"PO-Revision-Date: 2020-11-10 09:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -428,9 +428,9 @@ msgstr ""
 msgid "Auto-detection"
 msgstr ""
 
-#: ../vdms_dialogs/first_time_start.py:69 ../vdms_dialogs/settings.py:131
-#: ../vdms_dialogs/settings.py:223 ../vdms_dialogs/settings.py:235
-#: ../vdms_dialogs/settings.py:247
+#: ../vdms_dialogs/first_time_start.py:69 ../vdms_dialogs/settings.py:130
+#: ../vdms_dialogs/settings.py:211 ../vdms_dialogs/settings.py:223
+#: ../vdms_dialogs/settings.py:235
 msgid "Browse.."
 msgstr ""
 
@@ -501,7 +501,11 @@ msgstr ""
 msgid "Supported Formats list (optional). Do not include the `.`"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:75 ../vdms_panels/presets_manager.py:447
+#: ../vdms_dialogs/presets_addnew.py:51
+msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
+msgstr ""
+
+#: ../vdms_dialogs/presets_addnew.py:77 ../vdms_panels/presets_manager.py:447
 msgid "Profile Name"
 msgstr ""
 
@@ -509,58 +513,51 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:124
-msgid "Output Format. Do not include the `.`"
-msgstr ""
-
-#: ../vdms_dialogs/presets_addnew.py:144
+#: ../vdms_dialogs/presets_addnew.py:135
 msgid "Save.."
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:165
-msgid "Assign a short name to the profile"
+#: ../vdms_dialogs/presets_addnew.py:158
+msgid "A short profile name"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:166
-msgid "Assign a long description to the profile"
+#: ../vdms_dialogs/presets_addnew.py:159
+msgid "A long description of the profile"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:168
+#: ../vdms_dialogs/presets_addnew.py:160
 msgid "Reserved arguments for the first pass"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:169
+#: ../vdms_dialogs/presets_addnew.py:161
 msgid "Reserved arguments for the second pass"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:170
-msgid ""
-"You can specify one or more comma-separated format names to include in the "
-"profile"
+#: ../vdms_dialogs/presets_addnew.py:162
+msgid "One or more comma-separated format names to include in the profile"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:173
-msgid ""
-"Type the output format extension here. Leave blank to copy codec and format"
+#: ../vdms_dialogs/presets_addnew.py:164
+msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:229
+#: ../vdms_dialogs/presets_addnew.py:253
 msgid "Incomplete profile assignments"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:236
+#: ../vdms_dialogs/presets_addnew.py:260
 msgid "Formats must be comma-separated"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:246
+#: ../vdms_dialogs/presets_addnew.py:270
 msgid "Profile already stored with same name"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:276
+#: ../vdms_dialogs/presets_addnew.py:300
 msgid "Successful storing!"
 msgstr ""
 
-#: ../vdms_dialogs/presets_addnew.py:282
+#: ../vdms_dialogs/presets_addnew.py:306
 msgid "Successful changes!"
 msgstr ""
 
@@ -574,115 +571,115 @@ msgstr ""
 msgid "Where do you prefer to save all output files and downloads?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:144
+#: ../vdms_dialogs/settings.py:143
 msgid "Save the FFmpeg output files in the same source folder"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:152
+#: ../vdms_dialogs/settings.py:149
 msgid "Optional suffix assignment (example, _convert):"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:163
+#: ../vdms_dialogs/settings.py:160
 msgid "Cache Settings"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:168
+#: ../vdms_dialogs/settings.py:165
 msgid " Clears temporary cached files during application exit"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:177
+#: ../vdms_dialogs/settings.py:169
 msgid " Don't warn me again when youtube-dl executable is not in use"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:187
+#: ../vdms_dialogs/settings.py:175
 msgid "General"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:193
+#: ../vdms_dialogs/settings.py:181
 msgid "FFmpeg -threads option"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:198
+#: ../vdms_dialogs/settings.py:186
 msgid "Sets threads used on some transcoding (from 0 to 32)"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:215
+#: ../vdms_dialogs/settings.py:203
 msgid "FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:222
+#: ../vdms_dialogs/settings.py:210
 msgid " Use a custom path to run FFmpeg"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:234
+#: ../vdms_dialogs/settings.py:222
 msgid " Use a custom path to run FFprobe"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:246
+#: ../vdms_dialogs/settings.py:234
 msgid " Use a custom path to run FFplay"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:258
+#: ../vdms_dialogs/settings.py:246
 msgid "Executable paths"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:263
+#: ../vdms_dialogs/settings.py:251
 msgid "Set Icons"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:265
+#: ../vdms_dialogs/settings.py:253
 msgid ""
 "Note: setting the icons also the background and the\n"
 "foreground of some text boxes will be set automatically\n"
 "depending on whether the themes are light or dark."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:288
+#: ../vdms_dialogs/settings.py:276
 msgid "Appearance"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:309
+#: ../vdms_dialogs/settings.py:297
 msgid "Logging levels"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:329
+#: ../vdms_dialogs/settings.py:317
 msgid "Videomass Setup"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:330
+#: ../vdms_dialogs/settings.py:318
 msgid "Assign an additional suffix to FFmpeg output files"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:332
+#: ../vdms_dialogs/settings.py:320
 msgid ""
 "Enable custom paths for the executables. If the check boxes are disabled or "
 "if the path field is empty, the search for the executables is entrusted to "
 "the environment variables."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:439
+#: ../vdms_dialogs/settings.py:427
 msgid "Set a default directory to save files"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:465
+#: ../vdms_dialogs/settings.py:453
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:519
+#: ../vdms_dialogs/settings.py:508
 msgid "Videomass: Where is the ffmpeg executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:559
+#: ../vdms_dialogs/settings.py:548
 msgid "Videomass: Where is the ffprobe executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:598
+#: ../vdms_dialogs/settings.py:587
 msgid "Videomass: Where is the ffplay executable located?"
 msgstr ""
 
-#: ../vdms_dialogs/settings.py:655
+#: ../vdms_dialogs/settings.py:644
 msgid "Changes will take affect once the program has been restarted"
 msgstr ""
 
@@ -1210,9 +1207,9 @@ msgid ""
 msgstr ""
 
 #: ../vdms_main/main_frame.py:197 ../vdms_main/main_frame.py:243
-#: ../vdms_main/main_frame.py:1311 ../vdms_main/main_frame.py:1346
-#: ../vdms_main/main_frame.py:1366 ../vdms_main/main_frame.py:1417
-#: ../vdms_main/main_frame.py:1465
+#: ../vdms_main/main_frame.py:1312 ../vdms_main/main_frame.py:1347
+#: ../vdms_main/main_frame.py:1367 ../vdms_main/main_frame.py:1418
+#: ../vdms_main/main_frame.py:1466
 msgid "Ready"
 msgstr ""
 
@@ -1516,18 +1513,18 @@ msgstr ""
 msgid "Choose a destination folder"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:771
+#: ../vdms_main/main_frame.py:772
 msgid ""
 "\n"
 "Wait....\n"
 "Check installed version\n"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:776 ../vdms_main/main_frame.py:790
+#: ../vdms_main/main_frame.py:777 ../vdms_main/main_frame.py:791
 msgid "You are using youtube-dl version {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:796
+#: ../vdms_main/main_frame.py:797
 #, python-brace-format
 msgid ""
 "ERROR: {0}\n"
@@ -1535,23 +1532,23 @@ msgid ""
 "youtube-dl has not been installed yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:811
+#: ../vdms_main/main_frame.py:812
 msgid "A new version of youtube-dl is available on GitHub:"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:813
+#: ../vdms_main/main_frame.py:814
 msgid "The latest version of youtube-dl on GitHub is:"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:824
+#: ../vdms_main/main_frame.py:825
 msgid "youtube-dl is up-to-date {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:853
+#: ../vdms_main/main_frame.py:854
 msgid "youtube-dl is already up-to-date {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:875 ../vdms_main/main_frame.py:920
+#: ../vdms_main/main_frame.py:876 ../vdms_main/main_frame.py:921
 #, python-brace-format
 msgid ""
 "Successful! youtube-dl is up-to-date ({0})\n"
@@ -1559,7 +1556,7 @@ msgid ""
 "Re-start is required. Do you want to close Videomass now?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:892
+#: ../vdms_main/main_frame.py:893
 msgid ""
 "Notice: To update youtube_dl it is necessary to rebuild the Videomass "
 "AppImage. This procedure will be completely automatic and will only require "
@@ -1568,43 +1565,43 @@ msgid ""
 "Do you want to continue?"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:902
+#: ../vdms_main/main_frame.py:903
 msgid "Select the 'Videomass-{}-x86_64.AppImage' file to update"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:930
+#: ../vdms_main/main_frame.py:931
 msgid ""
 "Failed! for more details consult:\n"
 "{}/youtube_dl-update-on-AppImage.log"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:936
+#: ../vdms_main/main_frame.py:937
 msgid "Failed! {}"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:942
+#: ../vdms_main/main_frame.py:943
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:960 ../vdms_main/main_frame.py:971
+#: ../vdms_main/main_frame.py:961 ../vdms_main/main_frame.py:972
 msgid "No files added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:982
+#: ../vdms_main/main_frame.py:983
 msgid "No URLs added yet"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1001 ../vdms_main/main_frame.py:1226
+#: ../vdms_main/main_frame.py:1002 ../vdms_main/main_frame.py:1227
 msgid "The log directory has not yet been created."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1020
+#: ../vdms_main/main_frame.py:1021
 msgid "cache directory has not been created yet."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1077
+#: ../vdms_main/main_frame.py:1078
 #, python-brace-format
 msgid ""
 "\n"
@@ -1618,11 +1615,11 @@ msgid ""
 "The latest version {1} is available\n"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1082 ../vdms_main/main_frame.py:1091
+#: ../vdms_main/main_frame.py:1083 ../vdms_main/main_frame.py:1092
 msgid "Checking for newer version"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1087
+#: ../vdms_main/main_frame.py:1088
 #, python-brace-format
 msgid ""
 "\n"
@@ -1636,165 +1633,165 @@ msgid ""
 "You are using the latest version\n"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1095
+#: ../vdms_main/main_frame.py:1096
 msgid ""
 "An error was found in the search for the web page.\n"
 "Sorry for this inconvenience."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1127
+#: ../vdms_main/main_frame.py:1128
 msgid "Go to the previous panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1128
+#: ../vdms_main/main_frame.py:1129
 msgid "Back"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1132
+#: ../vdms_main/main_frame.py:1133
 msgid "Go to the next panel"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1133
+#: ../vdms_main/main_frame.py:1134
 msgid "Next"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1139
+#: ../vdms_main/main_frame.py:1140
 msgid "Gathers information from multimedia streams"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1140
+#: ../vdms_main/main_frame.py:1141
 msgid "Media Streams"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1144
+#: ../vdms_main/main_frame.py:1145
 msgid "Shows download statistics and information"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1146
+#: ../vdms_main/main_frame.py:1147
 msgid "Statistics"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1150
+#: ../vdms_main/main_frame.py:1151
 msgid "Playing a media file or URL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1151
+#: ../vdms_main/main_frame.py:1152
 msgid "Playback"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1155
+#: ../vdms_main/main_frame.py:1156
 msgid "Duration and time sequence setting"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1156
+#: ../vdms_main/main_frame.py:1157
 msgid "Timeline"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1161
+#: ../vdms_main/main_frame.py:1162
 msgid "Save a new profile with the current settings"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1162
+#: ../vdms_main/main_frame.py:1163
 msgid "Save as"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1166
+#: ../vdms_main/main_frame.py:1167
 msgid "Create a new profile and save it in the selected preset"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1167
+#: ../vdms_main/main_frame.py:1168
 msgid "New"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1171
+#: ../vdms_main/main_frame.py:1172
 msgid "Delete the selected profile"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1172
+#: ../vdms_main/main_frame.py:1173
 msgid "Delete"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1176
+#: ../vdms_main/main_frame.py:1177
 msgid "Edit the selected profile"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1177
+#: ../vdms_main/main_frame.py:1178
 msgid "Edit"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1182
+#: ../vdms_main/main_frame.py:1183
 msgid "Viewing log messages"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1183
+#: ../vdms_main/main_frame.py:1184
 msgid "Show Logs"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1189
+#: ../vdms_main/main_frame.py:1190
 msgid "Convert using FFmpeg"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1190
+#: ../vdms_main/main_frame.py:1191
 msgid "Convert"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1194
+#: ../vdms_main/main_frame.py:1195
 msgid "Download files using youtube-dl"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1195
+#: ../vdms_main/main_frame.py:1196
 msgid "Download"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1253
+#: ../vdms_main/main_frame.py:1254
 msgid "Drag at least one file"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1265
+#: ../vdms_main/main_frame.py:1266
 msgid "Append at least one URL"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1272
+#: ../vdms_main/main_frame.py:1273
 msgid "Invalid URL: \"{}\""
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1312
+#: ../vdms_main/main_frame.py:1313
 msgid "Videomass - Queued Files"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1347
+#: ../vdms_main/main_frame.py:1348
 msgid "Videomass - Queued URLs"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1357
+#: ../vdms_main/main_frame.py:1358
 msgid "You just added new URLs. Please check your settings again."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1368
+#: ../vdms_main/main_frame.py:1369
 msgid "Videomass - YouTube Downloader"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1407 ../vdms_main/main_frame.py:1455
+#: ../vdms_main/main_frame.py:1408 ../vdms_main/main_frame.py:1456
 msgid "You just added new files. Please check your settings again."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1419
+#: ../vdms_main/main_frame.py:1420
 msgid "Videomass - AV Conversions"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1467
+#: ../vdms_main/main_frame.py:1468
 msgid "Videomass - Presets Manager"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1514
+#: ../vdms_main/main_frame.py:1515
 msgid "Last output status"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1516
+#: ../vdms_main/main_frame.py:1517
 msgid "Under processing..."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1517
+#: ../vdms_main/main_frame.py:1518
 msgid "Videomass - Output Monitor"
 msgstr ""
 

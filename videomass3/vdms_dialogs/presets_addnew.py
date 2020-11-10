@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: November.10.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -47,7 +47,9 @@ class MemPresets(wx.Dialog):
                "`ffmpeg -i filename`; do not end with "
                "`output-filename`"
                )
-    FORMAT = _("Supported Formats list (optional). Do not include the `.`")
+    SUPFORMAT = _("Supported Formats list (optional). Do not include the `.`")
+    OUTFORMAT = _("Output Format. Empty to copy format and codec. "
+                  "Do not include the `.`")
     # ------------------------------------------------------------------
 
     def __init__(self, parent, arg, filename, array, title):
@@ -75,18 +77,14 @@ class MemPresets(wx.Dialog):
                                                   _("Profile Name")),
                                      wx.VERTICAL)
         size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 10)
-        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    style=wx.TE_PROCESS_ENTER
-                                    )
+        self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "")
         box_name.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 15)
         box_descr = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    _("Description")),
                                       wx.VERTICAL
                                       )
         size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 10)
-        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "",
-                                        style=wx.TE_PROCESS_ENTER
-                                        )
+        self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
         box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 15)
         box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_1),
@@ -94,8 +92,7 @@ class MemPresets(wx.Dialog):
                                       )
         size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 10)
         self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                      style=wx.TE_PROCESS_ENTER |
-                                      wx.TE_MULTILINE
+                                      style=wx.TE_MULTILINE
                                       )
         box_pass1.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 15)
         box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
@@ -104,32 +101,26 @@ class MemPresets(wx.Dialog):
                                       )
         size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 10)
         self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                      style=wx.TE_PROCESS_ENTER |
-                                      wx.TE_MULTILINE
+                                      style=wx.TE_MULTILINE
                                       )
         box_pass2.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 15)
         size_formats = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(size_formats, 0, wx.ALL | wx.EXPAND, 0)
         box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                  MemPresets.FORMAT),
+                                                  MemPresets.SUPFORMAT),
                                      wx.VERTICAL
                                      )
         size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 10)
 
-        self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    style=wx.TE_PROCESS_ENTER
-                                    )
+        self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "")
         box_supp.Add(self.txt_supp, 0, wx.ALL | wx.EXPAND, 15)
         box_format = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
-                                                    _("Output Format. Do not "
-                                                      "include the `.`")),
+                                                    MemPresets.OUTFORMAT),
                                        wx.VERTICAL
                                        )
         size_formats.Add(box_format, 1, wx.ALL | wx.EXPAND, 10)
 
-        self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "",
-                                   style=wx.TE_PROCESS_ENTER
-                                   )
+        self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "")
         box_format.Add(self.txt_ext, 0, wx.ALL | wx.EXPAND, 15)
 
         grdBtn = wx.GridSizer(1, 2, 0, 0)
@@ -146,7 +137,9 @@ class MemPresets(wx.Dialog):
         grdBtn.Add(grdexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         size_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 5)
         # ------ set sizer
-        self.SetSizerAndFit(size_base)
+        self.SetMinSize((1000, 630))
+        self.SetSizer(size_base)
+        size_base.Fit(self)
         self.Layout()
 
         # ----------------------Set Properties----------------------#
@@ -162,18 +155,19 @@ class MemPresets(wx.Dialog):
             self.pass_2_cmd.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL,
                                             wx.NORMAL))
 
-        self.txt_name.SetToolTip(_('Assign a short name to the profile'))
-        self.txt_descript.SetToolTip(_('Assign a long description '
-                                       'to the profile'))
+        self.txt_name.SetToolTip(_('A short profile name'))
+        self.txt_descript.SetToolTip(_('A long description of the profile'))
         self.pass_1_cmd.SetToolTip(_('Reserved arguments for the first pass'))
         self.pass_2_cmd.SetToolTip(_('Reserved arguments for the second pass'))
-        self.txt_supp.SetToolTip(_('You can specify one or more '
-                                   'comma-separated format names to include '
-                                   'in the profile'))
-        self.txt_ext.SetToolTip(_("Type the output format extension here. "
-                                  "Leave blank to copy codec and format"))
+        self.txt_supp.SetToolTip(_('One or more comma-separated format names '
+                                   'to include in the profile'))
+        self.txt_ext.SetToolTip(_('Output format extension. Leave empty to '
+                                  'copy codec and format'))
 
         # ----------------------Binder (EVT)----------------------#
+        self.Bind(wx.EVT_TEXT, self.on_Name, self.txt_name)
+        self.Bind(wx.EVT_TEXT, self.on_Descript, self.txt_descript)
+        self.Bind(wx.EVT_TEXT, self.on_Pass1, self.pass_1_cmd)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_canc)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_apply, btn_save)
@@ -201,6 +195,27 @@ class MemPresets(wx.Dialog):
 
 # ---------------------Callback (event handler)----------------------#
 
+    def on_Name(self, event):
+        """Set default background"""
+        if self.txt_name.GetBackgroundColour() == (152, 131, 19, 255):
+            # html: ('#988313') == rgb: (152, 131, 19, 255) =
+            self.txt_name.SetBackgroundColour(wx.NullColour)
+    # ------------------------------------------------------------------#
+
+    def on_Descript(self, event):
+        """Set default background"""
+        if self.txt_descript.GetBackgroundColour() == (152, 131, 19, 255):
+            # html: ('#988313') == rgb: (152, 131, 19, 255) =
+            self.txt_descript.SetBackgroundColour(wx.NullColour)
+    # ------------------------------------------------------------------#
+
+    def on_Pass1(self, event):
+        """Set default background"""
+        if self.pass_1_cmd.GetBackgroundColour() == (152, 131, 19, 255):
+            # html: ('#988313') == rgb: (152, 131, 19, 255) =
+            self.pass_1_cmd.SetBackgroundColour(wx.NullColour)
+    # ------------------------------------------------------------------#
+
     def on_help(self, event):
         """
         """
@@ -215,9 +230,11 @@ class MemPresets(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_apply(self, event):
+        """
 
+        """
         name = self.txt_name.GetValue()
-        decript = self.txt_descript.GetValue()
+        descript = self.txt_descript.GetValue()
         pass_1 = self.pass_1_cmd.GetValue()
         pass_2 = self.pass_2_cmd.GetValue()
         file_support = self.txt_supp.GetValue().strip()
@@ -225,16 +242,23 @@ class MemPresets(wx.Dialog):
         extens = 'copy' if not extens else extens
 
         # ---------------------------------------------------------------
-        if [txt for txt in [name, decript, pass_1] if txt == '']:
+        if [txt for txt in [name, descript, pass_1] if txt.strip() == '']:
+            if not name.strip():
+                self.txt_name.SetBackgroundColour('#988313')
+            if not descript.strip():
+                self.txt_descript.SetBackgroundColour('#988313')
+            if not pass_1.strip():
+                self.pass_1_cmd.SetBackgroundColour('#988313')
+
             wx.MessageBox(_("Incomplete profile assignments"),
-                          "Videomass ", wx.ICON_INFORMATION, self)
+                          "Videomass ", wx.ICON_WARNING, self)
             return
 
         if len(file_support.split()) > 1:
             supp = ''.join(file_support.split())
             if [i for i in supp.split() if ',' not in i]:
                 wx.MessageBox(_("Formats must be comma-separated"),
-                              "Videomass ", wx.ICON_INFORMATION, self)
+                              "Videomass ", wx.ICON_WARNING, self)
                 return
 
         with open(self.path_prst, 'r', encoding='utf-8') as infile:
@@ -244,11 +268,11 @@ class MemPresets(wx.Dialog):
             for x in stored_data:
                 if x["Name"] == name:
                     wx.MessageBox(_("Profile already stored with same name"),
-                                  "Videomass ", wx.ICON_INFORMATION, self)
+                                  "Videomass", wx.ICON_WARNING, self)
                     return
 
             data = [{"Name": "%s" % name,
-                     "Description": "%s" % decript,
+                     "Description": "%s" % descript,
                      "First_pass": "%s" % pass_1,
                      "Second_pass": "%s" % pass_2,
                      "Supported_list": "%s" % file_support,
@@ -262,7 +286,7 @@ class MemPresets(wx.Dialog):
             for item in new_data:
                 if item["Name"] == self.array[0]:
                     item["Name"] = "%s" % name
-                    item["Description"] = "%s" % decript
+                    item["Description"] = "%s" % descript
                     item["First_pass"] = "%s" % pass_1
                     item["Second_pass"] = "%s" % pass_2
                     item["Supported_list"] = "%s" % file_support

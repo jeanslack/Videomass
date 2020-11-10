@@ -127,7 +127,6 @@ class Setup(wx.Dialog):
         sizerGeneral.Add(boxUserpath, 1, wx.ALL | wx.EXPAND, 15)
         sizeDirdest = wx.BoxSizer(wx.HORIZONTAL)
         boxUserpath.Add(sizeDirdest, 1, wx.ALL | wx.EXPAND, 15)
-
         self.btn_userpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
         sizeDirdest.Add(self.btn_userpath, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL |
@@ -153,7 +152,7 @@ class Setup(wx.Dialog):
                                              wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150,-1),
-                                       style=wx.TE_PROCESS_ENTER
+
                                        )
         sizeSamedest.Add(self.text_suffix, 0, wx.LEFT |
                                               wx.ALIGN_CENTER_VERTICAL, 5)
@@ -459,16 +458,17 @@ class Setup(wx.Dialog):
         if self.text_suffix.GetBackgroundColour() == (152, 131, 19, 255):
             # html: ('#988313') == rgb: (152, 131, 19, 255) =
             self.text_suffix.SetBackgroundColour(wx.NullColour)
+            self.text_suffix.Clear()
 
         if not suffix == '':
             for c in suffix:
                 if c not in ('_', '-'):
-                    if not c.isalnum():  # alphanumeric
+                    if not c.isalnum():  # is not alphanumeric
                         self.text_suffix.SetBackgroundColour('#988313')
                         wx.MessageBox(msg, 'WARNING', wx.ICON_WARNING)
                         self.full_list[self.rowsNum[18]] = 'none\n'
-                        self.text_suffix.Clear()
                         return
+
             self.full_list[self.rowsNum[18]] = '%s\n' % (suffix)
         else:
             self.full_list[self.rowsNum[18]] = 'none\n'
