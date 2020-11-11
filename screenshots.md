@@ -14,7 +14,7 @@ Presets Manager
 ![Image](/images/screenshots/Final-summary.png)
 Final summary before start conversion
 
-![Image](/images/screenshots/Progress-conversion.png)
+![Image](/images/screenshots/progress-conversion.png)
 File conversion progress
 
 ![Image](/images/screenshots/URLs_Panel.png)
