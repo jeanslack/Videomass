@@ -26,7 +26,7 @@
     - Download audio and video splitted.
     - Download Audio only (you can choose various formats).
     - Download videos and audio by 'format code' with audio merging.
-- View video information without downloading it (using youtube_dl library only).
+- Shows download statistics separately (using youtube_dl library only).
 - Ability to playback individual URLs with different qualities.
 - Ability to download all playlist.
 - Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
