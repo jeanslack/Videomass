@@ -62,8 +62,7 @@ Videomass AppImage for **GTK2** it has been successfully tested on the following
 
 ----
 
-- The installation of the `libsdl2-2.0-0` package is no longer required as it 
-was included in the appimage. 
+- The `libsdl2-2.0-0` package is no longer required as it was included in the appimage. 
 - Videomass AppImage do not include FFmpeg which must be installed separately.
 - For a full list of changes see the **[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**   
 

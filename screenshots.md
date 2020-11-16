@@ -8,7 +8,7 @@ Home Panel
 ![Image](/images/screenshots/fileDrop.png)
 Drag and drop files panel
 
-![Image](/images/screenshots/PresetsManager.png)
+![Image](/images/screenshots/Presets-Manager.gif)
 Presets Manager
 
 ![Image](/images/screenshots/Final-summary.png)
@@ -16,6 +16,9 @@ Final summary before start conversion
 
 ![Image](/images/screenshots/progress-conversion.png)
 File conversion progress
+
+![Image](/images/screenshots/AV-conversions.gif)
+Audio/Video conversion Panel
 
 ![Image](/images/screenshots/URLs_Panel.png)
 URL appending panel
@@ -28,8 +31,5 @@ Youtube-dl panel with format code settings
 
 ![Image](/images/screenshots/progress-download.png)
 During downloading progress
-
-![Image](/images/screenshots/AV-conversions.png)
-Audio/Video conversion Panel
 
 [Home](index.md)
