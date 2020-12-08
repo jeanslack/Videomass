@@ -81,10 +81,17 @@ class While_Playing(wx.MiniFrame):
 
         """
         # -------------------- widget --------------------------#
-        panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        panel_base = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+        #panel_base.SetBackgroundColour(wx.Colour('#008000'))
+        #panel_base.SetBackgroundColour(wx.Colour('#101212'))
+        panel = wx.Panel(panel_base, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        sizer_base.Add(panel, 0, wx.ALL | wx.EXPAND, 5)
+
+
         label1 = wx.StaticText(panel, wx.ID_ANY, While_Playing.KEYS)
         label2 = wx.StaticText(panel, wx.ID_ANY, While_Playing.EXPLAN)
-        self.button_close = wx.Button(self, wx.ID_CLOSE, "")
+        self.button_close = wx.Button(panel_base, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
         self.SetTitle(_("Shortcuts while playing with FFplay"))
 
@@ -101,17 +108,18 @@ class While_Playing(wx.MiniFrame):
 
         label1.SetForegroundColour(wx.Colour(While_Playing.DARK_GREEN))
         # ---------------------- Layout ----------------------#
-        s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
         gr_s1.Add(label1, 0, wx.ALL, 5)
         gr_s1.Add(label2, 0, wx.ALL, 5)
         btngrid = wx.FlexGridSizer(1, 1, 0, 0)
         btngrid.Add(self.button_close, 0, wx.ALL, 0)
         panel.SetSizer(gr_s1)
-        # s1.Add(panel, 1, wx.ALL | wx.EXPAND, 5)
-        s1.Add(panel, 1, wx.ALL, 5)
-        s1.Add(btngrid, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=5)
-        self.SetSizerAndFit(s1)
+        sizer_base.Add(btngrid, flag=wx.ALL |
+                       wx.ALIGN_RIGHT | wx.RIGHT, border=5)
+        panel_base.SetSizer(sizer_base)
+        sizer_base.Fit(self)
+        self.Layout()
+
         # binding
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)

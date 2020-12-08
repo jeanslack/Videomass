@@ -76,6 +76,7 @@ def to_bytes(string):
 def time_seconds(time):
     """
     convert time human to seconds e.g. time_seconds('00:02:00')
+    return int(seconds) object
     """
     if time == 'N/A':
         return int('0')
@@ -95,7 +96,7 @@ def time_human(seconds):
     """
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
-    return "%d:%02d:%02d" % (h, m, s)
+    return "%02d:%02d:%02d" % (h, m, s)
 # ------------------------------------------------------------------------
 
 

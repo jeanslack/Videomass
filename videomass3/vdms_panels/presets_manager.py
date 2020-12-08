@@ -198,7 +198,7 @@ class PrstPan(wx.Panel):
                                   )
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volumedected"), size=(-1, -1))
+                                     _("Volumedetect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(wx.Bitmap(iconpeaklevel), wx.LEFT)
         sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
@@ -381,7 +381,7 @@ class PrstPan(wx.Panel):
         Create and show a Context Menu on list_ctrl
         """
         # only do this part the first time so the events are only bound once
-        if not hasattr(self, "popupID5"):
+        if not hasattr(self, "popupID6"):
             self.popupID6 = wx.NewIdRef()
             self.popupID7 = wx.NewIdRef()
             self.popupID8 = wx.NewIdRef()
@@ -570,7 +570,7 @@ class PrstPan(wx.Panel):
 
     def enter_Amplitude(self, event):
         """
-        when spin_amplitude is changed enable 'Volumedected' to
+        when spin_amplitude is changed enable 'Volumedetect' to
         update new incomming
 
         """
@@ -580,7 +580,7 @@ class PrstPan(wx.Panel):
 
     def on_Analyzes(self, event):
         """
-        ** Volumedected button
+        ** Volumedetect button
         - normalizations based on PEAK Analyzes to get MAXIMUM peak levels
           data to calculates offset in dBFS need for audio normalization
           process.
@@ -1056,8 +1056,8 @@ class PrstPan(wx.Panel):
             clicked = file_sources[0]
 
         elif not self.parent.filedropselected:
-            wx.MessageBox(_("To export images, you need to select the "
-                            "desired file from the list of imported files"),
+            wx.MessageBox(_("A target file must be selected in the "
+                            "queued files"),
                           'Videomass', wx.ICON_INFORMATION, self)
             return
         else:

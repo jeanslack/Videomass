@@ -29,8 +29,12 @@ fi
 
 $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_dialogs/audiodialogs.py" \
-"../vdms_dialogs/video_filters.py" \
-"../vdms_dialogs/time_selection.py" \
+"../vdms_dialogs/filter_crop.py" \
+"../vdms_dialogs/filter_deinterlace.py" \
+"../vdms_dialogs/filter_denoisers.py" \
+"../vdms_dialogs/filter_scale.py" \
+"../vdms_dialogs/filter_transpose.py" \
+"../vdms_dialogs/timeline.py" \
 "../vdms_dialogs/first_time_start.py" \
 "../vdms_dialogs/infoprg.py" \
 "../vdms_dialogs/presets_addnew.py" \

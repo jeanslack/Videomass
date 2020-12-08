@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Dec.08.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,27 +26,61 @@
 #########################################################
 import wx
 import webbrowser
+from videomass3.vdms_utils.utils import time_human
 # import wx.lib.masked as masked # not work on macOSX
 
 
-class Time_Duration(wx.Dialog):
+class Timeline(wx.Dialog):
     """
-    This class show a simple dialog with a timer selection
-    to set duration.
+    This class show dialog box to set a time range selection and
+    get data in the FFmpeg syntax using this form :
+    "-ss 00:00:00 -t 00:00:00" .
+    The -ss flag is the initial start selection time; the -t flag
+    is the duration time amount starting from -ss. All this one is
+    specified by hours, minutes and seconds values.
+    See FFmpeg documents for more details.
+
     FIXME: replace spinctrl with a timer spin float ctrl if exist
     """
-    def __init__(self, parent, hasSet):
+    get = wx.GetApp()
+    OS = get.OS
+    RW = 600  # ruler width
+    RM = 0   # ruler margin
+    PW = 600  # panel width
+    PH = 50  # panel height
+
+    def __init__(self, parent, curset, duration):
         """
-        FFmpeg use this format to specifier a duration range:
-        "-ss 00:00:00 -t 00:00:00". The -ss flag is the initial
-        start selection time; the -t flag is the duration time amount
-        starting from -ss. All this one is specified by hours, minutes
-        and seconds values.
-        See FFmpeg documents for more details.
-        When this dialog is called, the values previously set are returned
-        for a complete reading (if there are preconfigured values)
+        If no file has a duration, the limit to the maximum time
+        selection is set (86400 sec. = 23:59:59), to allow for
+        example slideshows with images.
+
         """
-        if hasSet == '':
+        if not duration:
+            msg0 = _('The maximum time selection is set to 23:59:59, to '
+                     'allow make the slideshows')
+            self.seconds = Timeline.PW / 86400  # secs/px ratio
+            self.timeHum = time_human(86400)  # readable string i.e. 01:01:59
+            h_range, m_range, s_range = 23, 59, 59  # set max limit
+        else:
+            msg0 = _('The maximum time refers to the file with the longest '
+                     'duration')
+            self.seconds = Timeline.PW / duration  # secs/px ratio
+            # convert seconds to readable string i.e. 01:01:59
+            self.timeHum = time_human(duration)
+            h, m, s = self.timeHum.split(':')
+            # set max limit
+            h_range = 0 if h == '00' else int(h)
+            m_range = 0 if m == '00' else int(m) if h == '00' else 59
+            s_range = 0 if s == '00' else int(s) if m == '00' else 59
+            #print(h_range, m_range, s_range)
+
+        self.minutes = self.seconds * 60  # min/px ratio
+        self.hours = self.minutes * 60  # hours/px ratio
+        self.bar_w = 0  # width value for time bar selection
+        self.bar_x = 0  # x axis value for time bar selection
+
+        if curset == '':
             self.init_hour = '00'
             self.init_minute = '00'
             self.init_seconds = '00'
@@ -54,65 +88,91 @@ class Time_Duration(wx.Dialog):
             self.cut_minute = '00'
             self.cut_seconds = '00'
         else:  # return a previus settings:
-            self.init_hour = hasSet[4:6]
-            self.init_minute = hasSet[7:9]
-            self.init_seconds = hasSet[10:12]
-            self.cut_hour = hasSet[16:18]
-            self.cut_minute = hasSet[19:21]
-            self.cut_seconds = hasSet[22:24]
+            self.init_hour = curset[4:6]
+            self.init_minute = curset[7:9]
+            self.init_seconds = curset[10:12]
+            self.cut_hour = curset[16:18]
+            self.cut_minute = curset[19:21]
+            self.cut_seconds = curset[22:24]
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
+        #self.font = wx.Font(7, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
+                            #wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
+                            #)
+        sizer_base = wx.BoxSizer(wx.VERTICAL)
+
+        box_displ = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _(
+                                'Time selection display')), wx.VERTICAL)
+        sizer_base.Add(box_displ, 0, wx.ALL | wx.CENTRE, 10)
+        self.paneltime = wx.Panel(self, wx.ID_ANY,
+                                  size=(Timeline.PW, Timeline.PH)
+                                  )
+        box_displ.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 10)
+
+        label0 = wx.StaticText(self, wx.ID_ANY,(msg0))
+        box_displ.Add(label0, 0, wx.BOTTOM | wx.CENTRE, 5)
+
         self.start_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
-                  self.init_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
+                  self.init_hour), min=0, max=h_range, style=wx.TE_PROCESS_ENTER)
         lab1 = wx.StaticText(self, wx.ID_ANY, (":"))
         lab1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+
         self.start_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
-                self.init_minute), min=0, max=59, style=wx.TE_PROCESS_ENTER)
+                self.init_minute), min=0, max=m_range, style=wx.TE_PROCESS_ENTER)
         lab2 = wx.StaticText(self, wx.ID_ANY, (":"))
         lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+
         self.start_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
-               self.init_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
-        sizerbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Seeking - start point [h : m : s]"))), wx.VERTICAL)
+               self.init_seconds), min=0, max=s_range, style=wx.TE_PROCESS_ENTER)
+
+        msg1 = _("Seeking - [hours : minutes : seconds]")
+        boxSeek = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg1)),
+                                    wx.VERTICAL)
         self.stop_hour_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
-                   self.cut_hour), min=0, max=23, style=wx.TE_PROCESS_ENTER)
+                   self.cut_hour), min=0, max=h_range, style=wx.TE_PROCESS_ENTER)
         lab3 = wx.StaticText(self, wx.ID_ANY, (":"))
         lab3.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.stop_minute_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
-                 self.cut_minute), min=0, max=59, style=wx.TE_PROCESS_ENTER)
+                 self.cut_minute), min=0, max=m_range, style=wx.TE_PROCESS_ENTER)
         lab4 = wx.StaticText(self, wx.ID_ANY, (":"))
         lab4.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
         self.stop_second_ctrl = wx.SpinCtrl(self, wx.ID_ANY, "%s" % (
-                self.cut_seconds), min=0, max=59, style=wx.TE_PROCESS_ENTER)
-        sizer_2_staticbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                        _("Cut - end point [h : m : s]"))), wx.VERTICAL)
+                self.cut_seconds), min=0, max=s_range, style=wx.TE_PROCESS_ENTER)
+        msg2 = _("Cut - [hours : minutes : seconds]")
+        boxCut = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg2)),
+                                   wx.VERTICAL)
         btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        btn_ok = wx.Button(self, wx.ID_OK, "")
-        btn_reset = wx.Button(self, wx.ID_CLEAR, "")
+        btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
 
         # ----------------------Properties ----------------------#
-        self.SetTitle(_('duration and timeline'))
-        # self.start_hour_ctrl.SetMinSize((100,-1 ))
-        # self.start_minute_ctrl.SetMinSize((100, -1))
-        # self.start_second_ctrl.SetMinSize((100, -1))
-        self.start_hour_ctrl.SetToolTip(_("Hours time"))
-        self.start_minute_ctrl.SetToolTip(_("Minutes Time"))
-        self.start_second_ctrl.SetToolTip(_("Seconds time"))
-        # self.stop_hour_ctrl.SetMinSize((100, -1))
-        # self.stop_minute_ctrl.SetMinSize((100, -1))
-        # self.stop_second_ctrl.SetMinSize((100, -1))
-        self.stop_hour_ctrl.SetToolTip(_("Hours amount duration"))
-        self.stop_minute_ctrl.SetToolTip(_("Minutes amount duration"))
-        self.stop_second_ctrl.SetToolTip(_("Seconds amount duration"))
+        self.SetTitle(_('Timeline'))
+        self.paneltime.SetBackgroundColour(wx.Colour('#1b0413'))
+
+        self.start_hour_ctrl.SetToolTip(_("Seek to given time position "
+                                          "by hours"))
+        self.start_minute_ctrl.SetToolTip(_("Seek to given time position "
+                                            "by minutes"))
+        self.start_second_ctrl.SetToolTip(_("Seek to given time position "
+                                            "by seconds"))
+        self.stop_hour_ctrl.SetToolTip(_("Total amount duration by hours"))
+        self.stop_minute_ctrl.SetToolTip(_("Total amount duration by minutes"))
+        self.stop_second_ctrl.SetToolTip(_("Total amount duration by seconds"))
+
+        if Timeline.OS == 'Darwin':
+            label0.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+        else:
+            label0.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
         # ----------------------Layout----------------------#
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
+
+
         gridFlex1 = wx.FlexGridSizer(1, 5, 0, 0)
         gridFlex2 = wx.FlexGridSizer(1, 5, 0, 0)
 
-        sizer_base.Add(sizerbox, 0, wx.ALL | wx.EXPAND, 10)
-        sizerbox.Add(gridFlex1, 0, wx.ALL | wx.ALIGN_CENTER, 5)
+        sizer_base.Add(boxSeek, 0, wx.ALL | wx.EXPAND, 10)
+        boxSeek.Add(gridFlex1, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         gridFlex1.Add(self.start_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
@@ -124,8 +184,8 @@ class Time_Duration(wx.Dialog):
         gridFlex1.Add(self.start_second_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
-        sizer_base.Add(sizer_2_staticbox, 0, wx.ALL | wx.EXPAND, 10)
-        sizer_2_staticbox.Add(gridFlex2, 0, wx.ALL | wx.ALIGN_CENTER, 5)
+        sizer_base.Add(boxCut, 0, wx.ALL | wx.EXPAND, 10)
+        boxCut.Add(gridFlex2, 0, wx.ALL | wx.ALIGN_CENTER, 5)
         gridFlex2.Add(self.stop_hour_ctrl, 0, wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL, 5
                       )
@@ -158,6 +218,7 @@ class Time_Duration(wx.Dialog):
         sizer_base.Fit(self)
         self.Layout()
         # ----------------------Binding (EVT)----------------------#
+        self.paneltime.Bind(wx.EVT_PAINT, self.OnPaint)
         self.Bind(wx.EVT_SPINCTRL, self.start_hour, self.start_hour_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.start_minute, self.start_minute_ctrl)
         self.Bind(wx.EVT_SPINCTRL, self.start_second, self.start_second_ctrl)
@@ -171,40 +232,106 @@ class Time_Duration(wx.Dialog):
 
     # ----------------------Event handler (callback)----------------------#
 
+    def barval(self):
+        """
+        """
+        hw = int(self.stop_hour_ctrl.GetValue()) * self.hours
+        mw = int(self.stop_minute_ctrl.GetValue()) * self.minutes
+        sw = int(self.stop_second_ctrl.GetValue()) * self.seconds
+
+        hx = int(self.start_hour_ctrl.GetValue()) * self.hours
+        mx = int(self.start_minute_ctrl.GetValue()) * self.minutes
+        sx = int(self.start_second_ctrl.GetValue()) * self.seconds
+
+        self.bar_w = hw+mw+sw
+        self.bar_x = hx+mx+sx
+
+        self.onRedraw(self)
+    # ------------------------------------------------------------------#
+
+    def OnPaint(self, event):
+        """
+        """
+        dc = wx.PaintDC(self.paneltime)  ## draw window boundary
+        dc.Clear()
+        self.barval()
+    # ------------------------------------------------------------------#
+
+    def onRedraw(self, event):
+        """
+        Update Drawing: A transparent background rectangle in a bitmap
+        for selections
+
+        """
+        dc = wx.ClientDC(self.paneltime)
+        dc.Clear()
+        dc.SetPen(wx.Pen('#ea3535', 1, wx.PENSTYLE_SOLID))
+        r, g, b = (92, 21, 21)
+        dc.SetBrush(wx.Brush(wx.Colour(r, g, b, 240)))
+        dc.DrawRectangle(self.bar_x, -8,
+                         self.bar_w, 66)
+
+        #dc.SetFont(self.font)
+        dc.SetPen(wx.Pen('#F8FF25'))
+        dc.SetTextForeground('#F8FF25')
+
+        for i in range(Timeline.RW):
+
+            if not (i % 600):
+
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)
+                w, h = dc.GetTextExtent(str(i))
+                dc.DrawText('%02d:00:00' % i, i+Timeline.RM+3-w/2, 11)
+
+            elif not (i % 300):
+
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)
+
+            elif not (i % 75):
+
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 5)
+
+        dc.DrawLine(i, 0, i, 10)
+        w, h = dc.GetTextExtent(self.timeHum)
+        dc.DrawText(self.timeHum, i+1-w, 11)
+    # ------------------------------------------------------------------#
+
     def start_hour(self, event):
-        self.init_hour = '%s' % self.start_hour_ctrl.GetValue()
-        if len(self.init_hour) == 1:
-            self.init_hour = '0%s' % self.start_hour_ctrl.GetValue()
+        self.init_hour = '%02d' % int(self.start_hour_ctrl.GetValue())
+        self.barval()
+        #self.onRedraw(self)
     # ------------------------------------------------------------------#
 
     def start_minute(self, event):
-        self.init_minute = '%s' % self.start_minute_ctrl.GetValue()
-        if len(self.init_minute) == 1:
-            self.init_minute = '0%s' % self.start_minute_ctrl.GetValue()
+        self.init_minute = '%02d' % int(self.start_minute_ctrl.GetValue())
+        self.barval()
+        #self.onRedraw(self)
     # ------------------------------------------------------------------#
 
     def start_second(self, event):
-        self.init_seconds = '%s' % self.start_second_ctrl.GetValue()
-        if len(self.init_seconds) == 1:
-            self.init_seconds = '0%s' % self.start_second_ctrl.GetValue()
+        self.init_seconds = '%02d' % int(self.start_second_ctrl.GetValue())
+        self.barval()
+        #self.onRedraw(self)
     # ------------------------------------------------------------------#
 
     def stop_hour(self, event):
-        self.cut_hour = '%s' % self.stop_hour_ctrl.GetValue()
-        if len(self.cut_hour) == 1:
-            self.cut_hour = '0%s' % self.stop_hour_ctrl.GetValue()
+        self.cut_hour = '%02d' % int(self.stop_hour_ctrl.GetValue())
+        self.barval()
+        #self.onRedraw(self)
     # ------------------------------------------------------------------#
 
     def stop_minute(self, event):
-        self.cut_minute = '%s' % self.stop_minute_ctrl.GetValue()
-        if len(self.cut_minute) == 1:
-            self.cut_minute = '0%s' % self.stop_minute_ctrl.GetValue()
+
+        self.cut_minute = '%02d' % int(self.stop_minute_ctrl.GetValue())
+        self.barval()
+        #self.onRedraw(self)
     # ------------------------------------------------------------------#
 
     def stop_second(self, event):
-        self.cut_seconds = '%s' % self.stop_second_ctrl.GetValue()
-        if len(self.cut_seconds) == 1:
-            self.cut_seconds = '0%s' % self.stop_second_ctrl.GetValue()
+
+        self.cut_seconds = '%02d' % int(self.stop_second_ctrl.GetValue())
+        self.barval()
+        #self.onRedraw(self)
     # ------------------------------------------------------------------#
 
     def resetValues(self, event):
@@ -217,6 +344,8 @@ class Time_Duration(wx.Dialog):
         self.stop_minute_ctrl.SetValue(0), self.stop_second_ctrl.SetValue(0)
         self.init_hour, self.init_minute, self.init_seconds = '00', '00', '00'
         self.cut_hour, self.cut_minute, self.cut_seconds = '00', '00', '00'
+        self.bar_w, self.bar_x = 0, 0
+        self.barval()
     # ------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -242,16 +371,10 @@ class Time_Duration(wx.Dialog):
         """
         ss = "%s:%s:%s" % (self.init_hour, self.init_minute, self.init_seconds)
         t = "%s:%s:%s" % (self.cut_hour, self.cut_minute, self.cut_seconds)
+
         if ss != "00:00:00":
             if t == "00:00:00":
-                wx.MessageBox(_("Length of cut missing: "
-                                "Cut (end point) [hh,mm,ss]\n\n"
-                                "You should calculate the time amount between "
-                                "the Seeking (start point) and the cut point, "
-                                "then insert it in 'Cut (end point)'. Always "
-                                "consider the total duration of the flow in "
-                                "order to avoid entering incorrect values."),
-                              "Videomass",
+                wx.MessageBox(_("Length of cut missing"), "Videomass",
                               wx.ICON_INFORMATION, self
                               )
                 return

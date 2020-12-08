@@ -66,7 +66,8 @@ def info(parent, videomass_icon):
     info.AddDeveloper("%s <%s>" % (Author[0], Mail))
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
     info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it)")
-    #info.AddTranslator("Nestor Blanco <random@ES.pe> ES")
+    info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru)")
+    #info.AddTranslator("Nestor Blanco <random@mail.es> (es)")
     info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
                      'Breeze icons '
                      'https://github.com/KDE/breeze-icons',

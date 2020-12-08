@@ -29,7 +29,7 @@ import webbrowser
 from urllib.parse import urlparse
 import os
 import sys
-from videomass3.vdms_dialogs import time_selection
+from videomass3.vdms_dialogs import timeline
 from videomass3.vdms_dialogs import settings
 from videomass3.vdms_dialogs import infoprg
 from videomass3.vdms_frames import while_playing
@@ -265,6 +265,17 @@ class MainFrame(wx.Frame):
             self.ydlupdate.Enable(False)
         # else:
             # self.ydlupdate.Enable(False)
+    # ------------------------------------------------------------------#
+
+    def timeline_reset(self):
+        """
+        By adding or deleting files on file drop panel, cause reset
+        the timeline data (only if timeline state is True)
+        """
+        if self.toolbar.GetToolState(7):
+            self.time_seq = ''
+            self.time_read = {'start seek': ['', ''], 'time': ['', '']}
+            self.toolbar.ToggleTool(7, False)
 
     # ---------------------- Event handler (callback) ------------------#
     # This series of events are interceptions of the filedrop panel
@@ -275,10 +286,14 @@ class MainFrame(wx.Frame):
         Call dialog to Set a global time sequence on all imported
         media. Here set self.time_seq and self.time_read attributes
         """
+        if not self.duration:
+            maxdur = self.duration
+        else:
+            maxdur = max(self.duration)  # max val from list
         self.toolbar.ToggleTool(7, True)
         data = ''
 
-        dial = time_selection.Time_Duration(self, self.time_seq)
+        dial = timeline.Timeline(self, self.time_seq, maxdur)
         retcode = dial.ShowModal()
         if retcode == wx.ID_OK:
             data = dial.GetValue()
@@ -325,9 +340,8 @@ class MainFrame(wx.Frame):
         """
         if self.ytDownloader.IsShown():
             if self.ytDownloader.fcode.GetSelectedItemCount() == 0:
-                self.statusbar_msg(_('Before playing, click on one of '
-                                     'the items in the URLs checklist'),
-                                   MainFrame.YELLOW)
+                self.statusbar_msg(_('An item must be selected in the '
+                                     'URLs checklist'), MainFrame.YELLOW)
                 return
             else:
                 self.statusbar_msg(_('YouTube Downloader'), None)
@@ -1414,6 +1428,7 @@ class MainFrame(wx.Frame):
                              ]
             self.VconvPanel.normalize_default()
             self.PrstsPanel.normalization_default()
+            self.VconvPanel.on_FiltersClear(self)
         else:
             self.statusbar_msg(_('Ready'), None)
 

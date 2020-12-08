@@ -120,8 +120,8 @@ class Videomass(wx.App):
         self.TMP = os.path.join(self.CACHEdir, 'tmp')
         self.DARKicons = ('Breeze-Blues', 'Breeze-Dark', 'Papirus-Dark')
         self.THEME = setui[4][11]
-        self.SAMEdir = setui[4][17]
-        self.FILEsuffix = setui[4][18]
+        self.SAMEdir = setui[4][17]  # file save with same dest. as source
+        self.FILEsuffix = setui[4][18]  # add a suffix string to file name
 
         # ----- youtube-dl
         if self.OS == 'Windows':

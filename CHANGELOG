@@ -7,6 +7,29 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Dec 05, 2020 V.3.3.0
+
+  * Fixed panel base and sizer base on `while_playing.py` mini frame
+  * The Crop filter dialog now has the selection monitor and the ability
+    to load additional frames.
+  * The Transpose filter displaying the current position of the frame.
+  * Improved video scale dialog with new features.
+  * New files added cause all video filters to be reset
+  * Now the video filters preview will play the selected file in the queued
+    files panel
+  * Fixed some string translations.
+  * Added support for the Russian language (thanks to ChourS for the
+    translation)
+  * Fixed bug if an item is selected in the queued files but the user deletes it
+  * Added Play feature to item selected in the queued files panel.
+  * Improved Timeline with a time selection display to viewing the range
+    selection.
+  * Adding or removing files from Queued Files panel cause reset of the
+    Timeline selection.
+
+
+
++------------------------------------+
 Nov 09, 2020 V.3.2.6
 
   * Improved the dialog for creating and editing FFmpeg profiles

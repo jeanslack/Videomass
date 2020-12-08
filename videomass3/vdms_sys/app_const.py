@@ -2,6 +2,9 @@
 # Author:  Werner F. Bruhin
 # Purpose: Application constants
 # Created: 06/04/2012
+#
+# Edited by Gianluca (jeanslack) Pernigotto
+# Update: November 29 2020 (update with Russian language)
 
 import wx
 
@@ -14,4 +17,5 @@ supLang = {"en": wx.LANGUAGE_ENGLISH,
            "de": wx.LANGUAGE_GERMAN,
            "pl": wx.LANGUAGE_POLISH,
            "es": wx.LANGUAGE_SPANISH,
+           "ru": wx.LANGUAGE_RUSSIAN,
            }

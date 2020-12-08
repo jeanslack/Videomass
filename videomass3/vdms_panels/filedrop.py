@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: June.02.2020 *PEP8 compatible*
+# Rev: Dec.04.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -28,6 +28,7 @@ import wx
 import os
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import time_seconds
+from videomass3.vdms_io import IO_tools
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -100,6 +101,7 @@ class MyListCtrl(wx.ListCtrl):
             self.index += 1
             self.data.append(data)
             self.parent.statusbar_msg('', None)
+            self.parent.tr()
 
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
@@ -222,6 +224,14 @@ class FileDnD(wx.Panel):
 
     # ----------------------------------------------------------------------
 
+    def tr(self):
+        """
+        reset the timeline
+
+        """
+        self.parent.timeline_reset()
+    # ----------------------------------------------------------------------
+
     def which(self):
         """
         return topic name by choose_topic.py selection
@@ -237,12 +247,14 @@ class FileDnD(wx.Panel):
         # only do this part the first time so the events are only bound once
         if not hasattr(self, "popupID1"):
             self.popupID1 = wx.NewIdRef()
+            self.popupID2 = wx.NewIdRef()
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID1)
+            self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
         # build the menu
         menu = wx.Menu()
-        itemThree = menu.Append(self.popupID1,
-                                _("Remove the selected file")
+        itemOne = menu.Append(self.popupID2, _("Play")
                                 )
+        itemTwo = menu.Append(self.popupID1, _("Remove"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -256,8 +268,15 @@ class FileDnD(wx.Panel):
         itemId = event.GetId()
         menu = event.GetEventObject()
         menuItem = menu.FindItemById(itemId)
-        if menuItem.GetItemLabel() == _("Remove the selected file"):
+
+        if menuItem.GetItemLabel() == _("Play"):
+            index = self.flCtrl.GetFocusedItem()
+            item = self.flCtrl.GetItemText(index)
+            IO_tools.stream_play(item, '', '')
+
+        elif menuItem.GetItemLabel() == _("Remove"):
             self.delSelect(self)
+
     # ----------------------------------------------------------------------
 
     def delSelect(self, event):
@@ -275,7 +294,7 @@ class FileDnD(wx.Panel):
             else:
                 item = self.flCtrl.GetFocusedItem()
                 self.flCtrl.DeleteItem(item)
-                self.selected = None
+                self.on_deselect(self)
                 self.data.pop(item)
     # ----------------------------------------------------------------------
 
@@ -289,6 +308,7 @@ class FileDnD(wx.Panel):
         self.flCtrl.DeleteAllItems()
         del self.data[:]
         self.parent.filedropselected = None
+        self.tr()
         self.selected = None
     # ----------------------------------------------------------------------
 
@@ -299,6 +319,7 @@ class FileDnD(wx.Panel):
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index)
         self.parent.filedropselected = item
+        self.tr()
         self.selected = item
     # ----------------------------------------------------------------------
 

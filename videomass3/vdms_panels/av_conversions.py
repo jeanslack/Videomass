@@ -33,7 +33,11 @@ from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs.epilogue import Formula
 from videomass3.vdms_dialogs import audiodialogs
 from videomass3.vdms_dialogs import presets_addnew
-from videomass3.vdms_dialogs import video_filters
+from videomass3.vdms_dialogs.filter_crop import Crop
+from videomass3.vdms_dialogs.filter_transpose import Transpose
+from videomass3.vdms_dialogs.filter_denoisers import Denoisers
+from videomass3.vdms_dialogs.filter_deinterlace import Deinterlace
+from videomass3.vdms_dialogs.filter_scale import Scale
 from videomass3.vdms_frames import shownormlist
 from videomass3.vdms_utils import optimizations
 
@@ -666,7 +670,7 @@ class AV_Conv(wx.Panel):
         grid_vfilters.Add(self.btn_preview)
         # resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
         self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   _("Clear"), size=(-1, 50))
+                                   _(" Reset All"), size=(-1, 50))
         self.btn_reset.SetBitmap(wx.Bitmap(iconreset), wx.LEFT)
         grid_vfilters.Add(self.btn_reset)
         self.filterVpanel.SetSizer(grid_vfilters)  # set panel
@@ -697,7 +701,7 @@ class AV_Conv(wx.Panel):
         sizer_Anormalization.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 20)
         # analyzebmp = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volumedected"), size=(-1, -1))
+                                     _("Volumedetect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(wx.Bitmap(iconpeaklevel), wx.LEFT)
         sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         # peaklevelbmp = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
@@ -852,11 +856,11 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_CHECKBOX, self.on_WebOptimize, self.ckbx_web)
         self.Bind(wx.EVT_SPINCTRL, self.on_Vbitrate, self.spin_Vbrate)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Crf, self.slider_CRF)
-        self.Bind(wx.EVT_BUTTON, self.on_Enable_vsize, self.btn_videosize)
-        self.Bind(wx.EVT_BUTTON, self.on_Enable_crop, self.btn_crop)
-        self.Bind(wx.EVT_BUTTON, self.on_Enable_rotate, self.btn_rotate)
-        self.Bind(wx.EVT_BUTTON, self.on_Enable_lacing, self.btn_lacing)
-        self.Bind(wx.EVT_BUTTON, self.on_Enable_denoiser, self.btn_denois)
+        self.Bind(wx.EVT_BUTTON, self.on_Set_scale, self.btn_videosize)
+        self.Bind(wx.EVT_BUTTON, self.on_Set_crop, self.btn_crop)
+        self.Bind(wx.EVT_BUTTON, self.on_Set_transpose, self.btn_rotate)
+        self.Bind(wx.EVT_BUTTON, self.on_Set_deinterlace, self.btn_lacing)
+        self.Bind(wx.EVT_BUTTON, self.on_Set_denoiser, self.btn_denois)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmb_Vaspect)
@@ -1157,16 +1161,20 @@ class AV_Conv(wx.Panel):
 
     def on_FiltersPreview(self, event):
         """
-        Showing a preview with applied filters only and Only the first
-        file in the list `self.file_src` will be displayed
+        Showing selected video preview with applied filters
         """
         if not self.opt["VFilters"]:
             wx.MessageBox(_("No filter enabled"), "Videomass",
                           wx.ICON_INFORMATION)
             return
+
+        fget = self.file_selection()
+        if not fget:
+            return
+
         self.time_seq = self.parent.time_seq
 
-        stream_play(self.parent.file_src[0],
+        stream_play(self.parent.file_src[fget[1]],
                     self.time_seq, self.opt["VFilters"]
                     )
     # ------------------------------------------------------------------#
@@ -1175,11 +1183,7 @@ class AV_Conv(wx.Panel):
         """
         Reset all enabled filters
         """
-        if not self.opt["VFilters"]:
-            wx.MessageBox(_("No filter enabled"), "Videomass",
-                          wx.ICON_INFORMATION)
-            return
-        else:
+        if self.opt["VFilters"]:
             self.opt['Crop'], self.opt["Orientation"] = "", ["", ""]
             self.opt['Scale'], self.opt['Setdar'] = "", ""
             self.opt['Setsar'], self.opt['Deinterlace'] = "", ""
@@ -1190,6 +1194,53 @@ class AV_Conv(wx.Panel):
             self.btn_denois.SetBackgroundColour(wx.NullColour)
             self.btn_lacing.SetBackgroundColour(wx.NullColour)
             self.btn_rotate.SetBackgroundColour(wx.NullColour)
+    # ------------------------------------------------------------------#
+
+    def file_selection(self):
+        """
+        Gets the selected file on queued files and returns an object
+        of type list [str('selected file name'), int(index)].
+        Returns None if no files are selected.
+
+        """
+        if len(self.parent.file_src) == 1:
+            return (self.parent.file_src[0], 0)
+
+        elif not self.parent.filedropselected:
+            wx.MessageBox(_("A target file must be selected in the "
+                            "queued files"),
+                          'Videomass', wx.ICON_INFORMATION, self)
+            return
+
+        else:
+            clicked = self.parent.filedropselected
+            return (clicked, self.parent.file_src.index(clicked))
+     # ------------------------------------------------------------------#
+
+    def stream_datafilter(self):
+        """
+        Given a frame or a video file, it returns a tuple of data
+        containing information on the streams required by some video
+        filters.
+
+        """
+        fget = self.file_selection()
+        if not fget:
+            return
+
+        index = self.parent.data_files[fget[1]]
+
+        if 'video' in index.get('streams')[0]['codec_type']:
+            width = int(index['streams'][0]['width'])
+            height = int(index['streams'][0]['height'])
+            filename = index['format']['filename']
+            time = index['format'].get('time', '0:0:0')
+            return (width, height, filename, time)
+        else:
+            wx.MessageBox(_('The file is not a frame or a video file'),
+                          'Videomass', wx.ICON_INFORMATION)
+            self.on_FiltersClear(self)
+            return
     # ------------------------------------------------------------------#
 
     def video_filter_checker(self):
@@ -1240,15 +1291,22 @@ class AV_Conv(wx.Panel):
         # print (self.opt["VFilters"])
     # ------------------------------------------------------------------#
 
-    def on_Enable_vsize(self, event):
+    def on_Set_scale(self, event):
         """
-        Enable or disable video/image resolution functionalities
+        Enable or disable scale, setdar and setsar filters
+
         """
-        sizing = video_filters.VideoResolution(self,
-                                               self.opt["Scale"],
-                                               self.opt["Setdar"],
-                                               self.opt["Setsar"],
-                                               )
+        sdf = self.stream_datafilter()
+        if not sdf:
+            return
+
+        sizing = Scale(self,
+                       self.opt["Scale"],
+                       self.opt["Setdar"],
+                       self.opt["Setsar"],
+                       sdf[0],  # width
+                       sdf[1],  # height
+                       )
         retcode = sizing.ShowModal()
         if retcode == wx.ID_OK:
             data = sizing.GetValue()
@@ -1278,14 +1336,22 @@ class AV_Conv(wx.Panel):
             return
     # -----------------------------------------------------------------#
 
-    def on_Enable_rotate(self, event):
+    def on_Set_transpose(self, event):
         """
-        Show a setting dialog for video/image rotate
+        Enable or disable transpose filter for frame rotations
+
         """
-        rotate = video_filters.VideoRotate(self,
-                                           self.opt["Orientation"][0],
-                                           self.opt["Orientation"][1],
-                                           )
+        sdf = self.stream_datafilter()
+        if not sdf:
+            return
+
+        rotate = Transpose(self, self.opt["Orientation"][0],
+                           self.opt["Orientation"][1],
+                           sdf[0],  # width,
+                           sdf[1],  # height
+                           sdf[2],  # filename
+                           sdf[3],  # time
+                           )
         retcode = rotate.ShowModal()
         if retcode == wx.ID_OK:
             data = rotate.GetValue()
@@ -1294,19 +1360,23 @@ class AV_Conv(wx.Panel):
             if not data[0]:
                 self.btn_rotate.SetBackgroundColour(wx.NullColour)
             else:
-                self.btn_rotate.SetBackgroundColour(
-                                                wx.Colour(AV_Conv.VIOLET))
+                self.btn_rotate.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
             self.video_filter_checker()
         else:
             rotate.Destroy()
             return
     # ------------------------------------------------------------------#
 
-    def on_Enable_crop(self, event):
+    def on_Set_crop(self, event):
         """
-        Show a setting dialog for video crop functionalities
+        Enable or disable crop filter
+
         """
-        crop = video_filters.VideoCrop(self, self.opt["Crop"])
+        sdf = self.stream_datafilter()
+        if not sdf:
+            return
+
+        crop = Crop(self, self.opt["Crop"], sdf[0], sdf[1], sdf[2], sdf[3])
         retcode = crop.ShowModal()
         if retcode == wx.ID_OK:
             data = crop.GetValue()
@@ -1314,8 +1384,7 @@ class AV_Conv(wx.Panel):
                 self.btn_crop.SetBackgroundColour(wx.NullColour)
                 self.opt["Crop"] = ''
             else:
-                self.btn_crop.SetBackgroundColour(
-                                                wx.Colour(AV_Conv.VIOLET))
+                self.btn_crop.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
                 self.opt["Crop"] = 'crop=%s' % data
             self.video_filter_checker()
         else:
@@ -1323,14 +1392,15 @@ class AV_Conv(wx.Panel):
             return
     # ------------------------------------------------------------------#
 
-    def on_Enable_lacing(self, event):
+    def on_Set_deinterlace(self, event):
         """
-        Show a setting dialog for settings Deinterlace/Interlace filters
+        Enable or disable filter for deinterlacing (w3fdif and yadif) and
+        interlace filter.
         """
-        lacing = video_filters.Lacing(self,
-                                      self.opt["Deinterlace"],
-                                      self.opt["Interlace"],
-                                      )
+        lacing = Deinterlace(self,
+                             self.opt["Deinterlace"],
+                             self.opt["Interlace"],
+                             )
         retcode = lacing.ShowModal()
         if retcode == wx.ID_OK:
             data = lacing.GetValue()
@@ -1353,14 +1423,14 @@ class AV_Conv(wx.Panel):
             return
     # ------------------------------------------------------------------#
 
-    def on_Enable_denoiser(self, event):
+    def on_Set_denoiser(self, event):
         """
-        Enable filters denoiser useful in some case, example when apply
-        a deinterlace filter
+        Enable or disable denoiser filters (nlmeans and hqdn3d) useful
+        in some case, i.e. when apply a deinterlace filter.
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
         """
-        den = video_filters.Denoisers(self, self.opt["Denoiser"])
+        den = Denoisers(self, self.opt["Denoiser"])
         retcode = den.ShowModal()
         if retcode == wx.ID_OK:
             data = den.GetValue()
@@ -1668,7 +1738,7 @@ class AV_Conv(wx.Panel):
 
     def on_enter_Ampl(self, event):
         """
-        when spin_amplitude is changed enable 'Volumedected' to
+        when spin_amplitude is changed enable 'Volumedetect' to
         update new incomming
 
         """
