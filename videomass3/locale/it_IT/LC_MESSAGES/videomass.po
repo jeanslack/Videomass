@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:39+0100\n"
-"PO-Revision-Date: 2020-12-08 14:40+0100\n"
+"POT-Creation-Date: 2020-12-10 14:15+0100\n"
+"PO-Revision-Date: 2020-12-10 14:16+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -91,78 +91,66 @@ msgstr ""
 "I formati non PCM, come i formati di compressione con perdita, non hanno \n"
 "profondità di bit associate."
 
-#: ../vdms_dialogs/filter_crop.py:168
+#: ../vdms_dialogs/filter_crop.py:183
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Dimensione origine: {0} x {1} pixel"
 
-#: ../vdms_dialogs/filter_crop.py:173
-msgid ""
-"Search for a specific frame [hours : minutes : seconds], max duration {}:{}:"
-"{}"
-msgstr ""
-"Cerca un fotogramma specifico [ore : minuti : secondi], durata massima {}:{}:"
-"{}"
+#: ../vdms_dialogs/filter_crop.py:187
+msgid "Search for a specific frame, max duration {}:{}:{}"
+msgstr "Cerca un fotogramma specifico, durata massima {}:{}:{}"
 
-#: ../vdms_dialogs/filter_crop.py:193
+#: ../vdms_dialogs/filter_crop.py:200
 msgid "Load"
 msgstr "Carica"
 
-#: ../vdms_dialogs/filter_crop.py:196
+#: ../vdms_dialogs/filter_crop.py:203
 msgid "Area selection and position setting in pixels"
 msgstr "Selezione dell'area e impostazione della posizione in pixel"
 
-#: ../vdms_dialogs/filter_crop.py:201 ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_crop.py:208 ../vdms_dialogs/filter_scale.py:99
 msgid "Height"
 msgstr "Altezza"
 
-#: ../vdms_dialogs/filter_crop.py:227
+#: ../vdms_dialogs/filter_crop.py:234
 msgid "Center"
 msgstr "Centro"
 
-#: ../vdms_dialogs/filter_crop.py:238 ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_crop.py:245 ../vdms_dialogs/filter_scale.py:99
 msgid "Width"
 msgstr "Larghezza"
 
-#: ../vdms_dialogs/filter_crop.py:265 ../vdms_dialogs/filter_deinterlace.py:116
+#: ../vdms_dialogs/filter_crop.py:272 ../vdms_dialogs/filter_deinterlace.py:116
 #: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:178
-#: ../vdms_dialogs/filter_transpose.py:125 ../vdms_dialogs/timeline.py:147
+#: ../vdms_dialogs/filter_transpose.py:126 ../vdms_dialogs/timeline.py:122
 msgid "Apply"
 msgstr "Applica"
 
-#: ../vdms_dialogs/filter_crop.py:267 ../vdms_dialogs/filter_deinterlace.py:117
+#: ../vdms_dialogs/filter_crop.py:274 ../vdms_dialogs/filter_deinterlace.py:117
 #: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:180
-#: ../vdms_dialogs/filter_transpose.py:119 ../vdms_dialogs/timeline.py:148
+#: ../vdms_dialogs/filter_transpose.py:120 ../vdms_dialogs/timeline.py:123
 msgid "Reset"
 msgstr "Azzera"
 
-#: ../vdms_dialogs/filter_crop.py:283
+#: ../vdms_dialogs/filter_crop.py:290
 msgid "Crop Filter"
 msgstr "Filtro Ritaglia"
 
-#: ../vdms_dialogs/filter_crop.py:285
-msgid "Width crop setting"
-msgstr "Impostazione ritaglio della larghezza"
+#: ../vdms_dialogs/filter_crop.py:292
+msgid "Crop to width"
+msgstr "Ritaglia in larghezza"
 
-#: ../vdms_dialogs/filter_crop.py:287
-msgid ""
-"The vertical position of the top edge of the left corner. Set to -1 to "
-"center the vertical axis"
-msgstr ""
-"La posizione verticale del bordo superiore dell'angolo sinistro. Impostare "
-"su -1 per centrare l'asse verticale"
+#: ../vdms_dialogs/filter_crop.py:294
+msgid "Move vertically - set to -1 to center the vertical axis"
+msgstr "Spostati verticalmente - imposta su -1 per centrare l'asse verticale"
 
-#: ../vdms_dialogs/filter_crop.py:291
-msgid ""
-"The horizontal position of the left edge. Set to -1 to center the horizontal "
-"axis"
-msgstr ""
-"La posizione orizzontale del bordo sinistro. Impostare a -1 per centrare "
-"l'asse orizzontale"
+#: ../vdms_dialogs/filter_crop.py:297
+msgid "Move horizontally - set to -1 to center the horizontal axis"
+msgstr "Spostati verticalmente - imposta su -1 per centrare l'asse verticale"
 
-#: ../vdms_dialogs/filter_crop.py:295
-msgid "Height crop setting"
-msgstr "Impostazione del ritaglio in altezza"
+#: ../vdms_dialogs/filter_crop.py:300
+msgid "Crop to height"
+msgstr "Ritagliare all'altezza"
 
 #: ../vdms_dialogs/filter_deinterlace.py:52
 msgid "Advanced Options"
@@ -383,101 +371,73 @@ msgstr ""
 "Rapporto di aspetto campione (noto anche come pixel).\n"
 "Impostare a 0 per disabilitare."
 
-#: ../vdms_dialogs/filter_transpose.py:84
-#: ../vdms_dialogs/filter_transpose.py:291
+#: ../vdms_dialogs/filter_transpose.py:85
+#: ../vdms_dialogs/filter_transpose.py:294
 msgid "Default position"
 msgstr "Posizione di default"
 
-#: ../vdms_dialogs/filter_transpose.py:89
+#: ../vdms_dialogs/filter_transpose.py:90
 msgid "Load Frame"
 msgstr "Carica il Fotogramma"
 
-#: ../vdms_dialogs/filter_transpose.py:91
+#: ../vdms_dialogs/filter_transpose.py:92
 msgid "Rotation setting"
 msgstr "Impostazione della rotazione"
 
-#: ../vdms_dialogs/filter_transpose.py:99
+#: ../vdms_dialogs/filter_transpose.py:100
 msgid "90° (left)"
 msgstr "90° (sinistra)"
 
-#: ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_transpose.py:106
 msgid "90° (right)"
 msgstr "90° (destra)"
 
-#: ../vdms_dialogs/filter_transpose.py:112
+#: ../vdms_dialogs/filter_transpose.py:113
 msgid "180°"
 msgstr "180°"
 
-#: ../vdms_dialogs/filter_transpose.py:130
+#: ../vdms_dialogs/filter_transpose.py:131
 msgid "Transpose Filter"
 msgstr "Filtro Trasponi"
 
-#: ../vdms_dialogs/filter_transpose.py:230
+#: ../vdms_dialogs/filter_transpose.py:233
 msgid "Rotate 90 degrees right"
 msgstr "Ruota di 90 gradi a destra"
 
-#: ../vdms_dialogs/filter_transpose.py:251
+#: ../vdms_dialogs/filter_transpose.py:254
 msgid "Rotate 180 degrees"
 msgstr "Ruota di 180 gradi"
 
-#: ../vdms_dialogs/filter_transpose.py:271
+#: ../vdms_dialogs/filter_transpose.py:274
 msgid "Rotate 90 degrees left"
 msgstr "Ruota di 90 gradi a sinistra"
 
-#: ../vdms_dialogs/timeline.py:60
-msgid ""
-"The maximum time selection is set to 23:59:59, to allow make the slideshows"
-msgstr ""
-"Il tempo massimo di selezione è impostato su 23:59:59, per consentire la "
-"realizzazione delle presentazioni"
-
 #: ../vdms_dialogs/timeline.py:66
-msgid "The maximum time refers to the file with the longest duration"
-msgstr "Il tempo massimo si riferisce al file con la durata più lunga"
+msgid ""
+"The maximum time selection is set to 24:00:00, to allow make the slideshows"
+msgstr ""
+"La massima selezione è impostata su 24:00:00, per la realizzazione delle "
+"presentazioni"
 
-#: ../vdms_dialogs/timeline.py:106
+#: ../vdms_dialogs/timeline.py:70
+msgid "The maximum time refers to the file with the longest duration"
+msgstr "Il tempo massimo si riferisce al file con la durata maggiore"
+
+#: ../vdms_dialogs/timeline.py:98
 msgid "Time selection display"
 msgstr "Display selezione del tempo"
 
-#: ../vdms_dialogs/timeline.py:129
-msgid "Seeking - [hours : minutes : seconds]"
-msgstr "Cercare - [ore : minuti : secondi]"
-
-#: ../vdms_dialogs/timeline.py:142
-msgid "Cut - [hours : minutes : seconds]"
-msgstr "Tagliare - [ore : minuti : secondi]"
-
-#: ../vdms_dialogs/timeline.py:151 ../vdms_main/main_frame.py:1171
+#: ../vdms_dialogs/timeline.py:126 ../vdms_main/main_frame.py:1171
 msgid "Timeline"
 msgstr "Timeline"
 
-#: ../vdms_dialogs/timeline.py:154
-msgid "Seek to given time position by hours"
-msgstr "Cerca una data posizione temporale per ore"
+#: ../vdms_dialogs/timeline.py:128
+msgid "Seek to given time position"
+msgstr "Cerca una data posizione temporale"
 
-#: ../vdms_dialogs/timeline.py:156
-msgid "Seek to given time position by minutes"
-msgstr "Cerca una data posizione temporale per minuti"
-
-#: ../vdms_dialogs/timeline.py:158
-msgid "Seek to given time position by seconds"
-msgstr "Cerca una data posizione temporale per secondi"
-
-#: ../vdms_dialogs/timeline.py:160
-msgid "Total amount duration by hours"
-msgstr "Durata totale per ore"
-
-#: ../vdms_dialogs/timeline.py:161
-msgid "Total amount duration by minutes"
-msgstr "Durata totale per minuti"
-
-#: ../vdms_dialogs/timeline.py:162
-msgid "Total amount duration by seconds"
-msgstr "Durata totale per secondi"
-
-#: ../vdms_dialogs/timeline.py:377
-msgid "Length of cut missing"
-msgstr "Lunghezza di taglio mancante"
+#: ../vdms_dialogs/timeline.py:129
+msgid "Total amount duration"
+msgstr "Durata totale"
 
 #: ../vdms_dialogs/first_time_start.py:36
 msgid ""
@@ -2486,7 +2446,7 @@ msgid ""
 "Audio Rate\n"
 "Bit per Sample                        \n"
 "Audio Normalization\n"
-"Time selection                        \n"
+"Time                        \n"
 "Selected Input Audio index"
 msgstr ""
 "SOMMARIO\n"
@@ -2500,7 +2460,7 @@ msgstr ""
 "Frequenza Audio\n"
 "Bit per Campione                   \n"
 "Normalizzazione Audio\n"
-"Tempo impostato (durata)\n"
+"Tempo                        \n"
 "Indice Input Audio Selezionato"
 
 #: ../vdms_panels/av_conversions.py:2345
@@ -2522,7 +2482,7 @@ msgid ""
 "Selected Input Audio index\n"
 "Audio Output Map index                      \n"
 "Subtitle stream index\n"
-"Time selection"
+"Time"
 msgstr ""
 "SOMMARIO\n"
 "\n"
@@ -2541,7 +2501,7 @@ msgstr ""
 "Selezione Indice Audio in Input\n"
 "Mappatura Indice Audio in Output\n"
 "Indice Flusso Sottotitolo\n"
-"Tempo impostato (durata)"
+"Tempo"
 
 #: ../vdms_panels/av_conversions.py:2373
 msgid ""
@@ -2573,7 +2533,7 @@ msgid ""
 "Selected Input Audio index\n"
 "Audio Output Map index                      \n"
 "Subtitles streams index\n"
-"Time selection"
+"Time"
 msgstr ""
 "SOMMARIO:\n"
 "\n"
@@ -2603,7 +2563,7 @@ msgstr ""
 "Selezione Indice Audio in Input\n"
 "Mappatura Indice Audio in Output\n"
 "Indice Flusso Sottotitolo\n"
-"Tempo impostato (durata)"
+"Tempo"
 
 #: ../vdms_panels/av_conversions.py:2440
 msgid "Open a preset to store the new profile"
@@ -3265,7 +3225,7 @@ msgid ""
 "Pass Encoding                     \n"
 "Profile Used\n"
 "Output Format\n"
-"Time selection                     \n"
+"Time                     \n"
 "\n"
 "Automations Enabled:                     \n"
 "Audio Normalization\n"
@@ -3278,7 +3238,7 @@ msgstr ""
 "Passaggi di Codifica\n"
 "Profilo in Uso\n"
 "Formato in Uscita\n"
-"Tempo impostato (durata)\n"
+"Tempo\n"
 "\n"
 "Automazioni Abilitate:\n"
 "Normalizzazione Audio\n"
@@ -3338,6 +3298,36 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#, fuzzy
+#~ msgid "Cropping width setting"
+#~ msgstr "Impostazione della larghezza di ritaglio"
+
+#, fuzzy
+#~| msgid "Height crop setting"
+#~ msgid "Cropping height setting"
+#~ msgstr "Impostazione del ritaglio in altezza"
+
+#~ msgid "Seek - [hours : minutes : seconds]"
+#~ msgstr "Cercare - [ore : minuti : secondi]"
+
+#~ msgid "Cut - [hours : minutes : seconds]"
+#~ msgstr "Tagliare - [ore : minuti : secondi]"
+
+#~ msgid "Seek to given time position by minutes"
+#~ msgstr "Cerca una data posizione temporale per minuti"
+
+#~ msgid "Seek to given time position by seconds"
+#~ msgstr "Cerca una data posizione temporale per secondi"
+
+#~ msgid "Total amount duration by minutes"
+#~ msgstr "Durata totale per minuti"
+
+#~ msgid "Total amount duration by seconds"
+#~ msgstr "Durata totale per secondi"
+
+#~ msgid "Length of cut missing"
+#~ msgstr "Lunghezza di taglio mancante"
 
 #~ msgid "Flip over"
 #~ msgstr "Capovolgere sopra"

@@ -31,6 +31,8 @@ import wx.lib.statbmp
 import os
 import time
 from videomass3.vdms_threads.generic_task import FFmpegGenericTask
+from videomass3.vdms_utils.utils import time_seconds
+from videomass3.vdms_utils.utils import time_human
 
 
 class Actor(wx.lib.statbmp.GenStaticBitmap):
@@ -45,29 +47,29 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
                                                 bitmap, **kwargs)
-        self._parent = parent  ## if needed
+        self._parent = parent  # if needed
         self._original_bmp = self._current_bmp = bitmap
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
-
+    # ------------------------------------------------------------------#
 
     def OnPaint(self, evt=None):
         """
         """
-        dc = wx.PaintDC(self)  ## draw window boundary
+        dc = wx.PaintDC(self)  # draw window boundary
         dc.Clear()
         dc.DrawBitmap(self._current_bmp, 0, 0, True)
-
+    # ------------------------------------------------------------------#
 
     def onRedraw(self, x, y, width, height, w_ratio, h_ratio, pict):
         """
         Update Drawing: A transparent background rectangle in a bitmap
-        for selections
+        for crop selections
 
         """
         self._original_bmp = wx.Bitmap(pict)
         img = self._original_bmp.ConvertToImage()
-        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)  ## use original size
+        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)
         self._current_bmp = img.ConvertToBitmap()
         dc = wx.MemoryDC(self._current_bmp)
         dc.SetPen(wx.Pen('red', 1, wx.PENSTYLE_SOLID))
@@ -76,6 +78,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         dc.DrawRectangle(x, y, width, height)
         dc.SelectObject(wx.NullBitmap)
         self.Refresh(False)
+    # ------------------------------------------------------------------#
 
     def makeBox(w_ratio, h_ratio, pict):
         """
@@ -85,7 +88,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         """
         bitmap = wx.Bitmap(pict)
         img = bitmap.ConvertToImage()
-        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)  ## use original size
+        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)
         bmp = img.ConvertToBitmap()
         dc = wx.MemoryDC(bmp)
         dc.SelectObject(wx.NullBitmap)
@@ -94,8 +97,7 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
 
 class Crop(wx.Dialog):
     """
-    A dialog tool to get data filtergraph for cropping
-    videos or images with FFmpeg.
+    A dialog tool to get video crop values based on FFmpeg syntax.
 
     """
     get = wx.GetApp()
@@ -104,8 +106,7 @@ class Crop(wx.Dialog):
 
     if get.THEME == 'Breeze-Blues':
         # breeze-blues
-        #BACKGROUND = '#11303eff'  # solarized
-        BACKGROUND = '#1b0413'
+        BACKGROUND = '#11303eff'  # solarized
         PEN = 'green'
 
     elif get.THEME in get.DARKicons:
@@ -116,20 +117,30 @@ class Crop(wx.Dialog):
         # light
         BACKGROUND = '#e6e6faff'  # lavender
         PEN = 'green'
-
     # ------------------------------------------------------------------#
 
-    def __init__(self, parent, fcrop, v_width, v_height, fname, duration):
+    def __init__(self, parent, fcrop, v_width,
+                 v_height, fname, timeformat):
         """
-        self.panelrect is always set at height 360 px, in fact the width is
-        adjusted accordingly but preserving the video aspect ratio.
-        This fundamental ratio is given by the `self.h_ratio`
-        attribute where the cropping rectangle adjustment will always
-        be scaled to this constant. The values returned in the GetValue
-        callback are the actual values for cropping.
+        Attributes defined here:
+
+            self.width_dc   width size for DC (aka monitor width)
+            self.height_dc   height size for DC (aka monitor height)
+            self.x_dc       horizontal axis for DC
+            self.y_dc       vertical axis for DC
+            self.v_height   height of the source video
+            self.v_width    width of the source video
+            self.thr        threshold for set aspect ratio
+            self.h_ratio    height ratio
+            self.w_ratio    width ratio
+
+        The images (also the panel and the DC) are resized maintaining
+        the aspect ratio according to a threshold established at 360
+        pixels or at 180 pixels. 180 pixels are needed to avoid oversizing
+        when video height is greater than width.
 
         """
-        # virtual cropping values for monitor preview
+        # cropping values for monitor preview
         self.width_dc = 0
         self.height_dc = 0
         self.y_dc = 0
@@ -137,9 +148,11 @@ class Crop(wx.Dialog):
         # current video size
         self.v_width = v_width
         self.v_height = v_height
+
         # resizing values preserving aspect ratio for monitor
-        self.h_ratio = (self.v_height / self.v_width) * 360  # get height
-        self.w_ratio = (self.v_width / self.v_height) * self.h_ratio  #  get width
+        self.thr = 180 if self.v_height > self.v_width else 360
+        self.h_ratio = (self.v_height / self.v_width) * self.thr  # height
+        self.w_ratio = (self.v_width / self.v_height) * self.h_ratio  # width
 
         self.video = fname
         name = os.path.splitext(os.path.basename(self.video))[0]
@@ -149,10 +162,12 @@ class Crop(wx.Dialog):
             self.image = self.frame
         else:
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
-        t = duration.split(':')
-        h, m , s = ("%02d" % int(t[0]), "%02d" % int(t[1]),
-                    "%02d" % float(t[2]))
 
+        duration = time_seconds(timeformat)  # convert to seconds
+        t = timeformat.split(':')
+        h, m, s = ("%02d" % int(t[0]), "%02d" % int(t[1]),
+                   "%02d" % float(t[2])
+                   )
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
@@ -167,31 +182,23 @@ class Crop(wx.Dialog):
         sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 10)
         msg = _("Source size: {0} x {1} pixels").format(self.v_width,
                                                         self.v_height)
-        label1 = wx.StaticText(self, wx.ID_ANY,(msg))
+        label1 = wx.StaticText(self, wx.ID_ANY, msg)
         sizersize.Add(label1, 0, wx.CENTER, 10)
-
-        msg = _("Search for a specific frame [hours : minutes : seconds], max "
+        msg = _("Search for a specific frame, max "
                 "duration {}:{}:{}").format(h, m, s)
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTRE, 10)
-        self.hour = wx.SpinCtrl(self, wx.ID_ANY, '0', min=0, max=23,
-                                style=wx.TE_PROCESS_ENTER)
-        sizer_load.Add(self.hour, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-        lab1 = wx.StaticText(self, wx.ID_ANY, (":"))
-        lab1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        sizer_load.Add(lab1, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-        self.minute = wx.SpinCtrl(self, wx.ID_ANY, '0', min=0, max=59,
-                                  style=wx.TE_PROCESS_ENTER)
-        sizer_load.Add(self.minute, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-        lab2 = wx.StaticText(self, wx.ID_ANY, (":"))
-        lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-        sizer_load.Add(lab2, 0, wx.ALL | wx.ALIGN_CENTER, 5)
-        self.seconds = wx.SpinCtrl(self, wx.ID_ANY, '0', min=0, max=59,
-                                   style=wx.TE_PROCESS_ENTER)
-        sizer_load.Add(self.seconds, 0, wx.ALL | wx.ALIGN_CENTER, 5)
+
+        self.txttime = wx.StaticText(self, wx.ID_ANY, '00:00:00')
+        sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
+        self.slider = wx.Slider(self, wx.ID_ANY, 0, 0, duration,
+                                size=(300, -1), style=wx.SL_HORIZONTAL |
+                                wx.SL_AUTOTICKS
+                                )
+        sizer_load.Add(self.slider, 0, wx.ALL | wx.CENTER, 5)
         btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
-        sizer_load.Add(btn_load, 0, wx.ALL | wx.ALIGN_CENTER, 5)
+        sizer_load.Add(btn_load, 0, wx.ALL | wx.CENTER, 10)
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                         _("Area selection and position setting in pixels"))),
                                        wx.VERTICAL)
@@ -211,21 +218,21 @@ class Crop(wx.Dialog):
                     )
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
         boxctrl.Add(grid_sizerBase, 1, wx.EXPAND, 0)
-        label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
-        grid_sizerBase.Add(label_Y, 0, wx.ALL |
+        label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
+        grid_sizerBase.Add(label_X, 0, wx.ALL |
                            wx.ALIGN_CENTER_HORIZONTAL |
                            wx.ALIGN_CENTER_VERTICAL, 5
                            )
-        self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0",
-                                  min=-1, max=self.v_height, size=(-1, -1),
+        self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0",
+                                  min=-1, max=self.v_width, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   )
-        grid_sizerBase.Add(self.axis_Y, 0, wx.ALL |
+        grid_sizerBase.Add(self.axis_X, 0, wx.ALL |
                            wx.ALIGN_CENTER_HORIZONTAL |
                            wx.ALIGN_CENTER_VERTICAL, 5
                            )
         self.btn_centre = wx.Button(self, wx.ID_ANY, _("Center"))
-        grid_sizerBase.Add(self.btn_centre, 0, wx.ALL | wx.CENTRE , 35
+        grid_sizerBase.Add(self.btn_centre, 0, wx.ALL | wx.CENTRE, 35
                            )
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                       min=0,  max=self.v_width, size=(-1, -1),
@@ -240,16 +247,16 @@ class Crop(wx.Dialog):
                            wx.ALIGN_CENTER_HORIZONTAL |
                            wx.ALIGN_CENTER_VERTICAL, 5
                            )
-        self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0",
-                                  min=-1, max=self.v_width, size=(-1, -1),
+        self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0",
+                                  min=-1, max=self.v_height, size=(-1, -1),
                                   style=wx.TE_PROCESS_ENTER
                                   )
-        boxctrl.Add(self.axis_X, 0, wx.ALL |
+        boxctrl.Add(self.axis_Y, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL |
                     wx.ALIGN_CENTER_VERTICAL, 5
                     )
-        label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
-        boxctrl.Add(label_X, 0, wx.ALL |
+        label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
+        boxctrl.Add(label_Y, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL |
                     wx.ALIGN_CENTER_VERTICAL, 5
                     )
@@ -282,17 +289,15 @@ class Crop(wx.Dialog):
 
         self.SetTitle(_("Crop Filter"))
 
-        self.crop_width.SetToolTip(_('Width crop setting'))
+        self.crop_width.SetToolTip(_('Crop to width'))
 
-        self.axis_Y.SetToolTip(_('The vertical position of the top edge '
-                                 'of the left corner. Set to -1 to center '
+        self.axis_Y.SetToolTip(_('Move vertically - set to -1 to center '
                                  'the vertical axis'))
 
-        self.axis_X.SetToolTip(_('The horizontal position of the '
-                                 'left edge. Set to -1 to center '
+        self.axis_X.SetToolTip(_('Move horizontally - set to -1 to center '
                                  'the horizontal axis'))
 
-        self.crop_height.SetToolTip(_('Height crop setting'))
+        self.crop_height.SetToolTip(_('Crop to height'))
 
         # ----------------------Binding (EVT)------------------------#
         self.Bind(wx.EVT_SPINCTRL, self.onWidth, self.crop_width)
@@ -300,6 +305,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_SPINCTRL, self.onX, self.axis_X)
         self.Bind(wx.EVT_SPINCTRL, self.onY, self.axis_Y)
         self.Bind(wx.EVT_BUTTON, self.onCentre, self.btn_centre)
+        self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.slider)
         self.Bind(wx.EVT_BUTTON, self.onLoad, btn_load)
 
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
@@ -307,9 +313,8 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
-        if duration == '0:0:0':
-            self.hour.Disable(), self.minute.Disable(),
-            self.seconds.Disable(), btn_load.Disable()
+        if timeformat == '0:0:0':
+            self.slider.Disable(), btn_load.Disable()
             if not os.path.exists(self.frame):
                 self.onLoad(self)
 
@@ -344,7 +349,17 @@ class Crop(wx.Dialog):
             self.axis_Y.SetValue(-1)
 
         self.onWidth(self)  # set min/max horizontal axis
-        self.onHeight(self) # set min/max vertical axis
+        self.onHeight(self)  # set min/max vertical axis
+    # ------------------------------------------------------------------#
+
+    def on_Seek(self, event):
+        """
+        gets value from slider, converts it to human time format
+        e.g (00:00:00), and sets the label with the converted value.
+        """
+        seek = self.slider.GetValue()
+        time = time_human(seek)  # convert to time format
+        self.txttime.SetLabel(time)  # update StaticText
     # ------------------------------------------------------------------#
 
     def onLoad(self, event):
@@ -352,13 +367,10 @@ class Crop(wx.Dialog):
         Build FFmpeg argument to get a specific video frame for
         loading in a wx.dc (device context)
         """
-        h = '%02d' % int(self.hour.GetValue())
-        m = '%02d' % int(self.minute.GetValue())
-        s = '%02d' % int(self.seconds.GetValue())
-        arg = ('-ss %s:%s:%s -i "%s" -vframes 1 -y "%s"' % (h, m, s,
-                                                            self.video,
-                                                            self.frame
-                                                            ))
+        arg = ('-ss %s -i "%s" -vframes 1 -y "%s"' % (self.txttime.GetLabel(),
+                                                      self.video,
+                                                      self.frame
+                                                      ))
         thread = FFmpegGenericTask(arg)
         thread.join()  # wait end thread
         error = thread.status
@@ -377,18 +389,23 @@ class Crop(wx.Dialog):
         rectangle position of the bob actor
 
         """
-        self.height_dc = (self.crop_height.GetValue() / self.v_width) * 360
-        self.width_dc = (self.crop_width.GetValue() / self.v_height) * self.h_ratio
+        h_crop = self.crop_height.GetValue()
+        w_crop = self.crop_width.GetValue()
+        x_crop = self.axis_X.GetValue()
+        y_crop = self.axis_Y.GetValue()
 
-        if self.axis_Y.GetValue() == -1:
+        self.height_dc = (h_crop / self.v_width) * self.thr
+        self.width_dc = (w_crop / self.v_height) * self.h_ratio
+
+        if y_crop == -1:
             self.y_dc = (self.h_ratio / 2) - (self.height_dc / 2)
         else:
-            self.y_dc = (self.axis_Y.GetValue() / self.v_width) * 360
+            self.y_dc = (y_crop / self.v_width) * self.thr
 
-        if self.axis_X.GetValue() == -1:
-            self.x_dc = (360 / 2) - (self.width_dc / 2)
+        if x_crop == -1:
+            self.x_dc = (self.thr / 2) - (self.width_dc / 2)
         else:
-            self.x_dc = (self.axis_X.GetValue() / self.v_height) * self.h_ratio
+            self.x_dc = (x_crop / self.v_height) * self.h_ratio
 
         self.bob.onRedraw(self.x_dc,
                           self.y_dc,

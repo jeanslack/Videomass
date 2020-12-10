@@ -110,7 +110,7 @@ class MainFrame(wx.Frame):
         self.file_src = None  # input files list
         self.filedropselected = None  # selected name on file drop
         self.time_seq = ''  # ffmpeg format time specifier with flag -ss, -t
-        self.time_read = {'start seek': ['', ''], 'time': ['', '']}
+        self.time_read = {'start': ['', ''], 'duration': ['', '']}
         self.duration = []  # empty if not file imported
         self.topicname = None  # panel name shown
 
@@ -274,7 +274,7 @@ class MainFrame(wx.Frame):
         """
         if self.toolbar.GetToolState(7):
             self.time_seq = ''
-            self.time_read = {'start seek': ['', ''], 'time': ['', '']}
+            self.time_read = {'start': ['', ''], 'duration': ['', '']}
             self.toolbar.ToggleTool(7, False)
 
     # ---------------------- Event handler (callback) ------------------#
@@ -299,8 +299,8 @@ class MainFrame(wx.Frame):
             data = dial.GetValue()
             if data == '-ss 00:00:00 -t 00:00:00':
                 data = ''
-                self.time_read['start seek'] = ['', '']
-                self.time_read['time'] = ['', '']
+                self.time_read['start'] = ['', '']
+                self.time_read['duration'] = ['', '']
                 self.toolbar.ToggleTool(7, False)
             else:
                 # set a more readable time
@@ -310,13 +310,13 @@ class MainFrame(wx.Frame):
                 t = data.split()[3]  # the -t flag
                 h, m, s = t.split(':')
                 time = (int(h) * 3600 + int(m) * 60 + int(s))
-                self.time_read['start seek'] = [ss, start]
-                self.time_read['time'] = [t, time]
+                self.time_read['start'] = [ss, start]
+                self.time_read['duration'] = [t, time]
 
             self.time_seq = data
         else:
             dial.Destroy()
-            if self.time_read.get('time') == ['', '']:
+            if self.time_read.get('duration') == ['', '']:
                 self.toolbar.ToggleTool(7, False)
             return
     # ------------------------------ Menu  Streams -----------------------#
@@ -1522,7 +1522,7 @@ class MainFrame(wx.Frame):
         if self.time_seq:
             newDuration = []
             for n in self.duration:
-                newDuration.append(self.time_read['time'][1])
+                newDuration.append(self.time_read['duration'][1])
             duration = newDuration
         else:
             duration = self.duration

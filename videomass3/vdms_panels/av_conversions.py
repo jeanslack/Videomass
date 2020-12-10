@@ -2317,14 +2317,14 @@ class AV_Conv(wx.Panel):
             time = _('Off')
         else:
             t = list(self.parent.time_read.items())
-            time = '{0}: {1} | {2}: {3}'.format(t[0][0], t[0][1][0],
+            time = '{0} {1} | {2} {3}'.format(t[0][0], t[0][1][0],
                                                 t[1][0], t[1][1][0])
         # ------------------
         if self.cmb_Media.GetValue() == 'Audio':
             formula = (_("SUMMARY\n\nFile Queue\nOutput Format\
                         \nWeb Optimize\nAudio Codec\nAudio bit-rate\
                         \nAudio Channels\nAudio Rate\nBit per Sample\
-                        \nAudio Normalization\nTime selection\
+                        \nAudio Normalization\nTime\
                         \nSelected Input Audio index"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s"
                         "\n%s\n%s\n%s\n%s\n%s" % (numfile,
@@ -2347,7 +2347,7 @@ class AV_Conv(wx.Panel):
                       \nAudio Channels\nAudio Rate\nAudio bit-rate\
                       \nBit per Sample\nAudio Normalization\
                       \nSelected Input Audio index\nAudio Output Map index\
-                      \nSubtitle stream index\nTime selection"
+                      \nSubtitle stream index\nTime"
                       ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                          \n%s\n%s\n%s\n%s" % (numfile,
@@ -2378,7 +2378,7 @@ class AV_Conv(wx.Panel):
                       \nAudio Channels\nAudio Rate\nAudio bit-rate\
                       \nBit per Sample\nAudio Normalization\
                       \nSelected Input Audio index\nAudio Output Map index\
-                      \nSubtitles streams index\nTime selection"
+                      \nSubtitles streams index\nTime"
                       ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\

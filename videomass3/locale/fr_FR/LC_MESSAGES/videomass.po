@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:41+0100\n"
-"PO-Revision-Date: 2020-12-08 14:48+0100\n"
+"POT-Creation-Date: 2020-12-10 14:15+0100\n"
+"PO-Revision-Date: 2020-12-10 14:18+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -64,71 +64,65 @@ msgid ""
 "compression formats, do not have associated bit depths."
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:168
+#: ../vdms_dialogs/filter_crop.py:183
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:173
-msgid ""
-"Search for a specific frame [hours : minutes : seconds], max duration {}:{}:"
-"{}"
+#: ../vdms_dialogs/filter_crop.py:187
+msgid "Search for a specific frame, max duration {}:{}:{}"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:193
+#: ../vdms_dialogs/filter_crop.py:200
 msgid "Load"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:196
+#: ../vdms_dialogs/filter_crop.py:203
 msgid "Area selection and position setting in pixels"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:201 ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_crop.py:208 ../vdms_dialogs/filter_scale.py:99
 msgid "Height"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:227
+#: ../vdms_dialogs/filter_crop.py:234
 msgid "Center"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:238 ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_crop.py:245 ../vdms_dialogs/filter_scale.py:99
 msgid "Width"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:265 ../vdms_dialogs/filter_deinterlace.py:116
+#: ../vdms_dialogs/filter_crop.py:272 ../vdms_dialogs/filter_deinterlace.py:116
 #: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:178
-#: ../vdms_dialogs/filter_transpose.py:125 ../vdms_dialogs/timeline.py:147
+#: ../vdms_dialogs/filter_transpose.py:126 ../vdms_dialogs/timeline.py:122
 msgid "Apply"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:267 ../vdms_dialogs/filter_deinterlace.py:117
+#: ../vdms_dialogs/filter_crop.py:274 ../vdms_dialogs/filter_deinterlace.py:117
 #: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:180
-#: ../vdms_dialogs/filter_transpose.py:119 ../vdms_dialogs/timeline.py:148
+#: ../vdms_dialogs/filter_transpose.py:120 ../vdms_dialogs/timeline.py:123
 msgid "Reset"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:283
+#: ../vdms_dialogs/filter_crop.py:290
 msgid "Crop Filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:285
-msgid "Width crop setting"
+#: ../vdms_dialogs/filter_crop.py:292
+msgid "Crop to width"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:287
-msgid ""
-"The vertical position of the top edge of the left corner. Set to -1 to "
-"center the vertical axis"
+#: ../vdms_dialogs/filter_crop.py:294
+msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:291
-msgid ""
-"The horizontal position of the left edge. Set to -1 to center the horizontal "
-"axis"
+#: ../vdms_dialogs/filter_crop.py:297
+msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:295
-msgid "Height crop setting"
+#: ../vdms_dialogs/filter_crop.py:300
+msgid "Crop to height"
 msgstr ""
 
 #: ../vdms_dialogs/filter_deinterlace.py:52
@@ -316,98 +310,70 @@ msgid ""
 "Set to 0 to disabling."
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:84
-#: ../vdms_dialogs/filter_transpose.py:291
+#: ../vdms_dialogs/filter_transpose.py:85
+#: ../vdms_dialogs/filter_transpose.py:294
 msgid "Default position"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:89
+#: ../vdms_dialogs/filter_transpose.py:90
 msgid "Load Frame"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:91
+#: ../vdms_dialogs/filter_transpose.py:92
 msgid "Rotation setting"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:99
+#: ../vdms_dialogs/filter_transpose.py:100
 msgid "90° (left)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_transpose.py:106
 msgid "90° (right)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:112
+#: ../vdms_dialogs/filter_transpose.py:113
 msgid "180°"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:130
+#: ../vdms_dialogs/filter_transpose.py:131
 msgid "Transpose Filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:230
+#: ../vdms_dialogs/filter_transpose.py:233
 msgid "Rotate 90 degrees right"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:251
+#: ../vdms_dialogs/filter_transpose.py:254
 msgid "Rotate 180 degrees"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:271
+#: ../vdms_dialogs/filter_transpose.py:274
 msgid "Rotate 90 degrees left"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:60
+#: ../vdms_dialogs/timeline.py:66
 msgid ""
-"The maximum time selection is set to 23:59:59, to allow make the slideshows"
+"The maximum time selection is set to 24:00:00, to allow make the slideshows"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:66
+#: ../vdms_dialogs/timeline.py:70
 msgid "The maximum time refers to the file with the longest duration"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:106
+#: ../vdms_dialogs/timeline.py:98
 msgid "Time selection display"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:129
-msgid "Seeking - [hours : minutes : seconds]"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:142
-msgid "Cut - [hours : minutes : seconds]"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:151 ../vdms_main/main_frame.py:1171
+#: ../vdms_dialogs/timeline.py:126 ../vdms_main/main_frame.py:1171
 msgid "Timeline"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:154
-msgid "Seek to given time position by hours"
+#: ../vdms_dialogs/timeline.py:128
+msgid "Seek to given time position"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:156
-msgid "Seek to given time position by minutes"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:158
-msgid "Seek to given time position by seconds"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:160
-msgid "Total amount duration by hours"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:161
-msgid "Total amount duration by minutes"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:162
-msgid "Total amount duration by seconds"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:377
-msgid "Length of cut missing"
+#: ../vdms_dialogs/timeline.py:129
+msgid "Total amount duration"
 msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:36
@@ -2196,7 +2162,7 @@ msgid ""
 "Audio Rate\n"
 "Bit per Sample                        \n"
 "Audio Normalization\n"
-"Time selection                        \n"
+"Time                        \n"
 "Selected Input Audio index"
 msgstr ""
 
@@ -2219,7 +2185,7 @@ msgid ""
 "Selected Input Audio index\n"
 "Audio Output Map index                      \n"
 "Subtitle stream index\n"
-"Time selection"
+"Time"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:2373
@@ -2252,7 +2218,7 @@ msgid ""
 "Selected Input Audio index\n"
 "Audio Output Map index                      \n"
 "Subtitles streams index\n"
-"Time selection"
+"Time"
 msgstr ""
 
 #: ../vdms_panels/av_conversions.py:2440
@@ -2820,7 +2786,7 @@ msgid ""
 "Pass Encoding                     \n"
 "Profile Used\n"
 "Output Format\n"
-"Time selection                     \n"
+"Time                     \n"
 "\n"
 "Automations Enabled:                     \n"
 "Audio Normalization\n"

@@ -88,12 +88,12 @@ class Scale(wx.Dialog):
 
         label_msg = wx.StaticText(self, wx.ID_ANY, (msg))
         box_scale.Add(label_msg, 0, wx.ALL | wx.CENTER, 10)
-        #grid_opt = wx.FlexGridSizer(1, 3, 0, 0)
-        #box_scale.Add(grid_opt, 0, wx.ALL, 5)
+        # grid_opt = wx.FlexGridSizer(1, 3, 0, 0)
+        # box_scale.Add(grid_opt, 0, wx.ALL, 5)
         lab = _("Constrain proportions (keep aspect ratio)")
         self.ckbx_keep = wx.CheckBox(self, wx.ID_ANY, lab)
         box_scale.Add(self.ckbx_keep, 0, wx.CENTER, 5)
-        #grid_opt.Add((30, 0), 0, wx.ALL, 5)
+        # grid_opt.Add((30, 0), 0, wx.ALL, 5)
         self.rdb_scale = wx.RadioBox(self, wx.ID_ANY,
                                      (_("Which dimension adjust?")),
                                      choices=[_("Width"), _("Height")],

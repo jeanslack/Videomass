@@ -34,7 +34,7 @@ fi
 
 PYTHON_APPIMAGE=python3.8.6-cp38-cp38-manylinux1_x86_64.AppImage
 PYTHON_APPIMAGE_URL=https://github.com/niess/python-appimage/releases/download/python3.8/${PYTHON_APPIMAGE}
-WX_PYTHON_WHEEL=wxPython-4.1.0-cp38-cp38-linux_x86_64.whl
+WX_PYTHON_WHEEL=wxPython-4.1.1-cp38-cp38-linux_x86_64.whl
 WX_PYTHON_URL=https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04/${WX_PYTHON_WHEEL}
 
 BUILD_DIR=$(mktemp -d -p "$TEMP_BASE" videomass-AppImage-build-XXXXXX)
@@ -91,7 +91,11 @@ mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.4.0 \
 $APP_DIR/AppRun -m pip install -U pip
 
 # installing wxPython4.1 binary wheel (GTK2 porting)
-$APP_DIR/AppRun -m pip install -U -f ${WX_PYTHON_URL} wxPython
+if [ -f "$OLD_CWD/$WX_PYTHON_WHEEL" ]; then
+    $APP_DIR/AppRun -m pip install -U "$OLD_CWD/$WX_PYTHON_WHEEL"
+else
+    $APP_DIR/AppRun -m pip install -U -f ${WX_PYTHON_URL} wxPython
+fi
 
 # install videomass and its dependencies
 if [ -f $REPO_ROOT/dist/videomass-*.whl ]; then

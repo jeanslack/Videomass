@@ -34,8 +34,8 @@ from videomass3.vdms_threads.generic_task import FFmpegGenericTask
 
 class Transpose(wx.Dialog):
     """
-    A dialog tool to get data filtergraph for transpose
-    videos or images with FFmpeg.
+    A dialog tool to get video transpose data based on FFmpeg syntax
+    .
     """
     get = wx.GetApp()
     OS = get.OS
@@ -51,7 +51,8 @@ class Transpose(wx.Dialog):
         self.v_width = v_width
         self.v_height = v_height
         # resizing values preserving aspect ratio for pseudo-monitor
-        self.h_ratio = (self.v_height / self.v_width) * 270
+        self.thr = 135 if self.v_height > self.v_width else 270
+        self.h_ratio = (self.v_height / self.v_width) * self.thr
         self.w_ratio = (self.v_width / self.v_height) * self.h_ratio
         self.current_angle = 0
         self.center = ((self.w_ratio/2), (self.h_ratio/2))  # orignal center
@@ -74,16 +75,16 @@ class Transpose(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         self.panelimg = wx.Panel(self, wx.ID_ANY,
-                                 size=(self.w_ratio + 1, self.w_ratio + 1),
+                                 size=(270 + 1, 270 + 1),
                                  style=wx.BORDER_SUNKEN)  # + 1 is BOR. offset
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(self.panelimg, 0, wx.TOP | wx.ALIGN_CENTER, 15)
 
-        self.x = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.image)####
+        self.x = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.image)
         self.statictxt = wx.StaticText(self, wx.ID_ANY,
                                        label=_("Default position"),
                                        style=wx.ST_NO_AUTORESIZE |
-                                             wx.ALIGN_CENTRE_HORIZONTAL
+                                       wx.ALIGN_CENTRE_HORIZONTAL
                                        )
         sizerBase.Add(self.statictxt, 0, wx.CENTER)
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load Frame"))
@@ -170,9 +171,11 @@ class Transpose(wx.Dialog):
         """
         """
         self.current_angle += degrees
-        val = float(self.current_angle * -pi/180)       ## negative value rotates clockwise
+        val = float(self.current_angle * -pi/180)  # neg. value rot. clockwise
         image = self.image.ConvertToImage()
-        image = image.Scale(self.w_ratio, self.h_ratio, wx.IMAGE_QUALITY_NORMAL)
+        image = image.Scale(self.w_ratio, self.h_ratio,
+                            wx.IMAGE_QUALITY_NORMAL
+                            )
         image = image.Rotate(val, self.center)
         self.x.SetBitmap(wx.Bitmap(image))
         self.panelimg.Layout()
@@ -186,8 +189,8 @@ class Transpose(wx.Dialog):
 
         """
         t = self.duration.split(':')
-        h, m , s = (int(t[0]) / 2, int(t[1]) / 2, float(t[2]) / 2)
-        h, m , s = ("%02d" % h, "%02d" % m, "%02d" % s)
+        h, m, s = (int(t[0]) / 2, int(t[1]) / 2, float(t[2]) / 2)
+        h, m, s = ("%02d" % h, "%02d" % m, "%02d" % s)
         arg = ('-ss %s:%s:%s -i "%s" -vframes 1 -y "%s"' % (h, m, s,
                                                             self.video,
                                                             self.frame
@@ -245,7 +248,7 @@ class Transpose(wx.Dialog):
             return
 
         elif self.transpose['degrees'][1] == 270:
-           self.rotate90(270)
+            self.rotate90(270)
 
         self.transpose['degrees'] = ["transpose=2,transpose=2", 180]
         self.statictxt.SetLabel(_("Rotate 180 degrees"))
@@ -256,7 +259,7 @@ class Transpose(wx.Dialog):
         """
         """
         if self.transpose['degrees'][1] == 0:
-           self.rotate90(270)
+            self.rotate90(270)
 
         elif self.transpose['degrees'][1] == 90:
             self.rotate90(180)

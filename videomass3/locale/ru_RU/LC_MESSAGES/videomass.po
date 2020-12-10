@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-08 14:41+0100\n"
-"PO-Revision-Date: 2020-12-08 14:49+0100\n"
+"POT-Creation-Date: 2020-12-10 14:15+0100\n"
+"PO-Revision-Date: 2020-12-10 14:20+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -89,81 +89,73 @@ msgstr ""
 "сигнала PCM. Форматы без PCM, такие как форматы сжатия с потерями,\n"
 "не имеют связанной битовой глубины."
 
-#: ../vdms_dialogs/filter_crop.py:168
+#: ../vdms_dialogs/filter_crop.py:183
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:173
-msgid ""
-"Search for a specific frame [hours : minutes : seconds], max duration {}:{}:"
-"{}"
+#: ../vdms_dialogs/filter_crop.py:187
+msgid "Search for a specific frame, max duration {}:{}:{}"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:193
+#: ../vdms_dialogs/filter_crop.py:200
 msgid "Load"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:196
+#: ../vdms_dialogs/filter_crop.py:203
 msgid "Area selection and position setting in pixels"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:201 ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_crop.py:208 ../vdms_dialogs/filter_scale.py:99
 msgid "Height"
 msgstr "Высота"
 
-#: ../vdms_dialogs/filter_crop.py:227
+#: ../vdms_dialogs/filter_crop.py:234
 msgid "Center"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:238 ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_crop.py:245 ../vdms_dialogs/filter_scale.py:99
 msgid "Width"
 msgstr "Ширина"
 
-#: ../vdms_dialogs/filter_crop.py:265 ../vdms_dialogs/filter_deinterlace.py:116
+#: ../vdms_dialogs/filter_crop.py:272 ../vdms_dialogs/filter_deinterlace.py:116
 #: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:178
-#: ../vdms_dialogs/filter_transpose.py:125 ../vdms_dialogs/timeline.py:147
+#: ../vdms_dialogs/filter_transpose.py:126 ../vdms_dialogs/timeline.py:122
 msgid "Apply"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:267 ../vdms_dialogs/filter_deinterlace.py:117
+#: ../vdms_dialogs/filter_crop.py:274 ../vdms_dialogs/filter_deinterlace.py:117
 #: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:180
-#: ../vdms_dialogs/filter_transpose.py:119 ../vdms_dialogs/timeline.py:148
+#: ../vdms_dialogs/filter_transpose.py:120 ../vdms_dialogs/timeline.py:123
 #, fuzzy
 #| msgid "Preset"
 msgid "Reset"
 msgstr "Пресет"
 
-#: ../vdms_dialogs/filter_crop.py:283
+#: ../vdms_dialogs/filter_crop.py:290
 #, fuzzy
 #| msgid "Video Filters"
 msgid "Crop Filter"
 msgstr "Фильтры Видео"
 
-#: ../vdms_dialogs/filter_crop.py:285
-#, fuzzy
-#| msgid "Video cropping"
-msgid "Width crop setting"
-msgstr "Обрезка видео"
+#: ../vdms_dialogs/filter_crop.py:292
+msgid "Crop to width"
+msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:287
+#: ../vdms_dialogs/filter_crop.py:294
 #, fuzzy
 #| msgid "The vertical position of the top edge of the left corner."
-msgid ""
-"The vertical position of the top edge of the left corner. Set to -1 to "
-"center the vertical axis"
+msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr "Вертикальное положение верхнего левого угла."
 
-#: ../vdms_dialogs/filter_crop.py:291
+#: ../vdms_dialogs/filter_crop.py:297
 #, fuzzy
 #| msgid "The horizontal position of the left edge."
-msgid ""
-"The horizontal position of the left edge. Set to -1 to center the horizontal "
-"axis"
+msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr "Горизонтальное положение верхнего левого угла."
 
-#: ../vdms_dialogs/filter_crop.py:295
-msgid "Height crop setting"
+#: ../vdms_dialogs/filter_crop.py:300
+msgid "Crop to height"
 msgstr ""
 
 #: ../vdms_dialogs/filter_deinterlace.py:52
@@ -403,121 +395,87 @@ msgstr ""
 "Фильтр setsar устанавливает соотношение сторон образца (в пикселях).\n"
 "Установите 0, чтобы отключить."
 
-#: ../vdms_dialogs/filter_transpose.py:84
-#: ../vdms_dialogs/filter_transpose.py:291
+#: ../vdms_dialogs/filter_transpose.py:85
+#: ../vdms_dialogs/filter_transpose.py:294
 #, fuzzy
 #| msgid "Default configuration"
 msgid "Default position"
 msgstr "Configurazione predefinita"
 
-#: ../vdms_dialogs/filter_transpose.py:89
+#: ../vdms_dialogs/filter_transpose.py:90
 msgid "Load Frame"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:91
+#: ../vdms_dialogs/filter_transpose.py:92
 #, fuzzy
 #| msgid "Rotation"
 msgid "Rotation setting"
 msgstr "Вращение"
 
-#: ../vdms_dialogs/filter_transpose.py:99
+#: ../vdms_dialogs/filter_transpose.py:100
 msgid "90° (left)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_transpose.py:106
 #, fuzzy
 #| msgid "Rotate 90° Right"
 msgid "90° (right)"
 msgstr "Повернуть на 90° вправо"
 
-#: ../vdms_dialogs/filter_transpose.py:112
+#: ../vdms_dialogs/filter_transpose.py:113
 msgid "180°"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:130
+#: ../vdms_dialogs/filter_transpose.py:131
 #, fuzzy
 #| msgid "Denoisers filters"
 msgid "Transpose Filter"
 msgstr "Denoisers фильтры"
 
-#: ../vdms_dialogs/filter_transpose.py:230
+#: ../vdms_dialogs/filter_transpose.py:233
 #, fuzzy
 #| msgid "Rotate 90° Right"
 msgid "Rotate 90 degrees right"
 msgstr "Повернуть на 90° вправо"
 
-#: ../vdms_dialogs/filter_transpose.py:251
+#: ../vdms_dialogs/filter_transpose.py:254
 msgid "Rotate 180 degrees"
 msgstr ""
 
-#: ../vdms_dialogs/filter_transpose.py:271
+#: ../vdms_dialogs/filter_transpose.py:274
 #, fuzzy
 #| msgid "Rotate 90° Left"
 msgid "Rotate 90 degrees left"
 msgstr "Повернуть на 90° влево"
 
-#: ../vdms_dialogs/timeline.py:60
+#: ../vdms_dialogs/timeline.py:66
 msgid ""
-"The maximum time selection is set to 23:59:59, to allow make the slideshows"
+"The maximum time selection is set to 24:00:00, to allow make the slideshows"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:66
+#: ../vdms_dialogs/timeline.py:70
 msgid "The maximum time refers to the file with the longest duration"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:106
+#: ../vdms_dialogs/timeline.py:98
 #, fuzzy
 #| msgid "List selection profiles"
 msgid "Time selection display"
 msgstr "Lista profili di selezione"
 
-#: ../vdms_dialogs/timeline.py:129
-#, fuzzy
-#| msgid "Seeking - start point [h : m : s]"
-msgid "Seeking - [hours : minutes : seconds]"
-msgstr "Поиск - начальная точка [часы: минуты: секунды]"
-
-#: ../vdms_dialogs/timeline.py:142
-msgid "Cut - [hours : minutes : seconds]"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:151 ../vdms_main/main_frame.py:1171
+#: ../vdms_dialogs/timeline.py:126 ../vdms_main/main_frame.py:1171
 msgid "Timeline"
 msgstr "Временная шкала"
 
-#: ../vdms_dialogs/timeline.py:154
-msgid "Seek to given time position by hours"
+#: ../vdms_dialogs/timeline.py:128
+msgid "Seek to given time position"
 msgstr ""
 
-#: ../vdms_dialogs/timeline.py:156
-msgid "Seek to given time position by minutes"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:158
-msgid "Seek to given time position by seconds"
-msgstr ""
-
-#: ../vdms_dialogs/timeline.py:160
+#: ../vdms_dialogs/timeline.py:129
 #, fuzzy
 #| msgid "Hours amount duration"
-msgid "Total amount duration by hours"
+msgid "Total amount duration"
 msgstr "Продолжительность в часах с момента начала"
-
-#: ../vdms_dialogs/timeline.py:161
-#, fuzzy
-#| msgid "Hours amount duration"
-msgid "Total amount duration by minutes"
-msgstr "Продолжительность в часах с момента начала"
-
-#: ../vdms_dialogs/timeline.py:162
-#, fuzzy
-#| msgid "Hours amount duration"
-msgid "Total amount duration by seconds"
-msgstr "Продолжительность в часах с момента начала"
-
-#: ../vdms_dialogs/timeline.py:377
-msgid "Length of cut missing"
-msgstr ""
 
 #: ../vdms_dialogs/first_time_start.py:36
 msgid ""
@@ -2516,6 +2474,21 @@ msgid "Off"
 msgstr "Выключено"
 
 #: ../vdms_panels/av_conversions.py:2324
+#, fuzzy
+#| msgid ""
+#| "SUMMARY\n"
+#| "\n"
+#| "File Queue\n"
+#| "Output Format                        \n"
+#| "Web Optimize\n"
+#| "Audio Codec\n"
+#| "Audio bit-rate                        \n"
+#| "Audio Channels\n"
+#| "Audio Rate\n"
+#| "Bit per Sample                        \n"
+#| "Audio Normalization\n"
+#| "Time selection                        \n"
+#| "Selected Input Audio index"
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2528,7 +2501,7 @@ msgid ""
 "Audio Rate\n"
 "Bit per Sample                        \n"
 "Audio Normalization\n"
-"Time selection                        \n"
+"Time                        \n"
 "Selected Input Audio index"
 msgstr ""
 "РЕЗЮМЕ\n"
@@ -2546,6 +2519,26 @@ msgstr ""
 "Выбран индекс аудиовхода"
 
 #: ../vdms_panels/av_conversions.py:2345
+#, fuzzy
+#| msgid ""
+#| "SUMMARY\n"
+#| "\n"
+#| "File to Queue\n"
+#| "Web Optimize\n"
+#| "Output Format                      \n"
+#| "Video Codec\n"
+#| "Aspect Ratio\n"
+#| "FPS\n"
+#| "Audio Codec                      \n"
+#| "Audio Channels\n"
+#| "Audio Rate\n"
+#| "Audio bit-rate                      \n"
+#| "Bit per Sample\n"
+#| "Audio Normalization                      \n"
+#| "Selected Input Audio index\n"
+#| "Audio Output Map index                      \n"
+#| "Subtitle stream index\n"
+#| "Time selection"
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2564,7 +2557,7 @@ msgid ""
 "Selected Input Audio index\n"
 "Audio Output Map index                      \n"
 "Subtitle stream index\n"
-"Time selection"
+"Time"
 msgstr ""
 "РЕЗЮМЕ\n"
 "\n"
@@ -2646,7 +2639,7 @@ msgid ""
 "Selected Input Audio index\n"
 "Audio Output Map index                      \n"
 "Subtitles streams index\n"
-"Time selection"
+"Time"
 msgstr ""
 "РЕЗЮМЕ:\n"
 "\n"
@@ -3342,6 +3335,20 @@ msgid "Disable"
 msgstr "Отключить"
 
 #: ../vdms_panels/presets_manager.py:1128
+#, fuzzy
+#| msgid ""
+#| "SUMMARY\n"
+#| "\n"
+#| "File to Queue\n"
+#| "Pass Encoding                     \n"
+#| "Profile Used\n"
+#| "Output Format\n"
+#| "Time selection                     \n"
+#| "\n"
+#| "Automations Enabled:                     \n"
+#| "Audio Normalization\n"
+#| "Selected Input Audio index                     \n"
+#| "Audio Output Map index"
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3349,7 +3356,7 @@ msgid ""
 "Pass Encoding                     \n"
 "Profile Used\n"
 "Output Format\n"
-"Time selection                     \n"
+"Time                     \n"
 "\n"
 "Automations Enabled:                     \n"
 "Audio Normalization\n"
@@ -3422,6 +3429,26 @@ msgstr ""
 "Требуется MSVCR100.dll\n"
 "Для решения этой проблемы установите распространяемый пакет Microsoft Visual "
 "C ++ 2010 (x86)."
+
+#, fuzzy
+#~| msgid "Video cropping"
+#~ msgid "Width crop setting"
+#~ msgstr "Обрезка видео"
+
+#, fuzzy
+#~| msgid "Seeking - start point [h : m : s]"
+#~ msgid "Seek - [hours : minutes : seconds]"
+#~ msgstr "Поиск - начальная точка [часы: минуты: секунды]"
+
+#, fuzzy
+#~| msgid "Hours amount duration"
+#~ msgid "Total amount duration by minutes"
+#~ msgstr "Продолжительность в часах с момента начала"
+
+#, fuzzy
+#~| msgid "Hours amount duration"
+#~ msgid "Total amount duration by seconds"
+#~ msgstr "Продолжительность в часах с момента начала"
 
 #~ msgid "Clear"
 #~ msgstr "Очистить"
