@@ -134,7 +134,7 @@ class Crop(wx.Dialog):
             self.h_ratio    height ratio
             self.w_ratio    width ratio
 
-        The images (also the panel and the DC) are resized maintaining
+        The images (also the panel and the DC) are resized keeping
         the aspect ratio according to a threshold established at 360
         pixels or at 180 pixels. 180 pixels are needed to avoid oversizing
         when video height is greater than width.

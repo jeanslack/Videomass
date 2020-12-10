@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-10 14:15+0100\n"
-"PO-Revision-Date: 2020-12-10 14:16+0100\n"
+"PO-Revision-Date: 2020-12-10 19:07+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -146,7 +146,7 @@ msgstr "Spostati verticalmente - imposta su -1 per centrare l'asse verticale"
 
 #: ../vdms_dialogs/filter_crop.py:297
 msgid "Move horizontally - set to -1 to center the horizontal axis"
-msgstr "Spostati verticalmente - imposta su -1 per centrare l'asse verticale"
+msgstr "Sposta orizzontalmente - imposta su -1 per centrare l'asse orizzontale"
 
 #: ../vdms_dialogs/filter_crop.py:300
 msgid "Crop to height"
