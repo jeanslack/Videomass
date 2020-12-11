@@ -669,8 +669,8 @@ class AV_Conv(wx.Panel):
 
         grid_vfilters.Add(self.btn_preview)
         # resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
-        self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                   _(" Reset All"), size=(-1, 50))
+        self.btn_reset = wx.Button(self.filterVpanel, wx.ID_CLEAR,
+                                   _(" Clear"), size=(-1, 50))
         self.btn_reset.SetBitmap(wx.Bitmap(iconreset), wx.LEFT)
         grid_vfilters.Add(self.btn_reset)
         self.filterVpanel.SetSizer(grid_vfilters)  # set panel

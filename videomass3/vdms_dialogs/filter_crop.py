@@ -73,8 +73,9 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         self._current_bmp = img.ConvertToBitmap()
         dc = wx.MemoryDC(self._current_bmp)
         dc.SetPen(wx.Pen('red', 1, wx.PENSTYLE_SOLID))
-        r, g, b = (30,  30,  30)
-        dc.SetBrush(wx.Brush(wx.Colour(r, g, b, 128)))
+        #r, g, b = (30,  30,  30)
+        #dc.SetBrush(wx.Brush(wx.Colour(r, g, b, 128)))
+        dc.SetBrush(wx.Brush('green', wx.TRANSPARENT))
         dc.DrawRectangle(x, y, width, height)
         dc.SelectObject(wx.NullBitmap)
         self.Refresh(False)
@@ -193,8 +194,7 @@ class Crop(wx.Dialog):
         self.txttime = wx.StaticText(self, wx.ID_ANY, '00:00:00')
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
         self.slider = wx.Slider(self, wx.ID_ANY, 0, 0, duration,
-                                size=(300, -1), style=wx.SL_HORIZONTAL |
-                                wx.SL_AUTOTICKS
+                                size=(300, -1), style=wx.SL_HORIZONTAL
                                 )
         sizer_load.Add(self.slider, 0, wx.ALL | wx.CENTER, 5)
         btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
@@ -211,7 +211,8 @@ class Crop(wx.Dialog):
                     )
         self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                        min=0, max=self.v_height, size=(-1, -1),
-                                       style=wx.TE_PROCESS_ENTER
+                                       style=wx.TE_PROCESS_ENTER |
+                                       wx.SP_ARROW_KEYS
                                        )
         boxctrl.Add(self.crop_height, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL, 5
@@ -225,7 +226,8 @@ class Crop(wx.Dialog):
                            )
         self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                   min=-1, max=self.v_width, size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER
+                                  style=wx.TE_PROCESS_ENTER |
+                                  wx.SP_ARROW_KEYS
                                   )
         grid_sizerBase.Add(self.axis_X, 0, wx.ALL |
                            wx.ALIGN_CENTER_HORIZONTAL |
@@ -236,7 +238,8 @@ class Crop(wx.Dialog):
                            )
         self.crop_width = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                       min=0,  max=self.v_width, size=(-1, -1),
-                                      style=wx.TE_PROCESS_ENTER
+                                      style=wx.TE_PROCESS_ENTER |
+                                      wx.SP_ARROW_KEYS
                                       )
         grid_sizerBase.Add(self.crop_width, 0, wx.ALL |
                            wx.ALIGN_CENTER_HORIZONTAL |
@@ -249,7 +252,8 @@ class Crop(wx.Dialog):
                            )
         self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                   min=-1, max=self.v_height, size=(-1, -1),
-                                  style=wx.TE_PROCESS_ENTER
+                                  style=wx.TE_PROCESS_ENTER |
+                                  wx.SP_ARROW_KEYS
                                   )
         boxctrl.Add(self.axis_Y, 0, wx.ALL |
                     wx.ALIGN_CENTER_HORIZONTAL |

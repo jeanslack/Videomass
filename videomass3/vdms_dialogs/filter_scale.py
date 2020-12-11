@@ -64,8 +64,10 @@ class Scale(wx.Dialog):
         box_scale.Add(Flex_scale, 0, wx.ALL | wx.CENTER, 5)
         label_width = wx.StaticText(self, wx.ID_ANY, (_("Width:")))
         Flex_scale.Add(label_width, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                            max=9000, style=wx.TE_PROCESS_ENTER
+        self.spin_scale_width = wx.SpinCtrl(self, wx.ID_ANY, "0",
+                                            min=0, max=9000,
+                                            style=wx.TE_PROCESS_ENTER |
+                                            wx.SP_ARROW_KEYS
                                             )
         Flex_scale.Add(self.spin_scale_width, 0, wx.ALL |
                        wx.ALIGN_CENTER_VERTICAL, 5
@@ -74,7 +76,8 @@ class Scale(wx.Dialog):
         Flex_scale.Add(label_height, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_scale_height = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                              min=0, max=9000,
-                                             style=wx.TE_PROCESS_ENTER
+                                             style=wx.TE_PROCESS_ENTER |
+                                             wx.SP_ARROW_KEYS
                                              )
         Flex_scale.Add(self.spin_scale_height, 0, wx.ALL |
                        wx.ALIGN_CENTER_VERTICAL, 5
@@ -115,8 +118,8 @@ class Scale(wx.Dialog):
         self.label_num = wx.StaticText(self, wx.ID_ANY, (_("Num.")))
         Flex_dar.Add(self.label_num, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER,
-                                          size=(-1, -1)
+                                          max=99, style=wx.TE_PROCESS_ENTER |
+                                          wx.SP_ARROW_KEYS, size=(-1, -1)
                                           )
         Flex_dar.Add(self.spin_setdarNum, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5
@@ -127,8 +130,8 @@ class Scale(wx.Dialog):
         Flex_dar.Add(self.label_sepdar, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_setdarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER,
-                                          size=(-1, -1)
+                                          max=99, style=wx.TE_PROCESS_ENTER |
+                                          wx.SP_ARROW_KEYS, size=(-1, -1)
                                           )
         Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5
@@ -145,8 +148,8 @@ class Scale(wx.Dialog):
         self.label_num1 = wx.StaticText(self, wx.ID_ANY, (_("Num.")))
         Flex_sar.Add(self.label_num1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER,
-                                          size=(-1, -1)
+                                          max=99, style=wx.TE_PROCESS_ENTER |
+                                          wx.SP_ARROW_KEYS, size=(-1, -1)
                                           )
         Flex_sar.Add(self.spin_setsarNum, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5
@@ -157,8 +160,8 @@ class Scale(wx.Dialog):
         Flex_sar.Add(self.label_sepsar, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_setsarDen = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                          max=99, style=wx.TE_PROCESS_ENTER,
-                                          size=(-1, -1)
+                                          max=99, style=wx.TE_PROCESS_ENTER |
+                                          wx.SP_ARROW_KEYS, size=(-1, -1)
                                           )
         Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5

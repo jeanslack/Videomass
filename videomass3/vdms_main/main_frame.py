@@ -182,7 +182,7 @@ class MainFrame(wx.Frame):
         if MainFrame.OS == 'Darwin':
             self.SetSize((1050, 600))
         elif MainFrame.OS == 'Windows':
-            self.SetSize((1080, 700))
+            self.SetSize((1230, 700))
         else:
             #self.SetSize((1280, 800))
             self.SetSize((1150, 730))

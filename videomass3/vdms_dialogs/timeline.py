@@ -45,6 +45,12 @@ class Timeline(wx.Dialog):
     """
     get = wx.GetApp()
     OS = get.OS
+
+    BACKGROUND = '#294083'#'#262646'  # dark azure for panel bkgrd
+    SELECTION = '#3c5ec1'  # medium azure
+    GREEN = '#12ea0d'  # green for text and draw lines
+    REDLIGHT = '#ea3535'  # for margin selection
+
     RW = 600  # ruler width
     RM = 0  # ruler margin
     PW = 600  # panel width
@@ -105,15 +111,13 @@ class Timeline(wx.Dialog):
         label0 = wx.StaticText(self, wx.ID_ANY, msg0)
         box_displ.Add(label0, 0, wx.BOTTOM | wx.CENTRE, 5)
         self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.duration,
-                                 size=(300, -1), style=wx.SL_HORIZONTAL |
-                                 wx.SL_AUTOTICKS
+                                 size=(300, -1), style=wx.SL_HORIZONTAL
                                  )
         self.sldseek.Disable()
         self.txtseek = wx.StaticText(self, wx.ID_ANY, start_time)
 
         self.sldcut = wx.Slider(self, wx.ID_ANY, 0, 0, self.duration,
-                                size=(300, -1), style=wx.SL_HORIZONTAL |
-                                wx.SL_AUTOTICKS
+                                size=(300, -1), style=wx.SL_HORIZONTAL
                                 )
         self.txtcut = wx.StaticText(self, wx.ID_ANY, end_time)
 
@@ -124,7 +128,8 @@ class Timeline(wx.Dialog):
 
         # ----------------------Properties ----------------------#
         self.SetTitle(_('Timeline'))
-        self.paneltime.SetBackgroundColour(wx.Colour('#1b0413'))
+        #self.paneltime.SetBackgroundColour(wx.Colour('#1b0413'))
+        self.paneltime.SetBackgroundColour(wx.Colour(Timeline.BACKGROUND))
         self.sldseek.SetToolTip(_("Seek to given time position"))
         self.sldcut.SetToolTip(_("Total amount duration"))
 
@@ -234,13 +239,15 @@ class Timeline(wx.Dialog):
         """
         dc = wx.ClientDC(self.paneltime)
         dc.Clear()
-        dc.SetPen(wx.Pen('#ea3535', 1, wx.PENSTYLE_SOLID))
-        r, g, b = (92, 21, 21)
-        dc.SetBrush(wx.Brush(wx.Colour(r, g, b, 180)))
+        dc.SetPen(wx.Pen(Timeline.REDLIGHT, 1, wx.PENSTYLE_SOLID))
+        #r, g, b = (92, 21, 21)
+        #r, g, b = Timeline.SELECTION
+        #dc.SetBrush(wx.Brush(wx.Colour(r, g, b, 200)))
+        dc.SetBrush(wx.Brush(Timeline.SELECTION, wx.BRUSHSTYLE_SOLID))
         dc.DrawRectangle(self.bar_x, -8, self.bar_w, 66)
         # dc.SetFont(self.font)
-        dc.SetPen(wx.Pen('#12ea0d'))
-        dc.SetTextForeground('#12ea0d')
+        dc.SetPen(wx.Pen(Timeline.GREEN))
+        dc.SetTextForeground(Timeline.GREEN)
 
         for i in range(Timeline.RW):
 
