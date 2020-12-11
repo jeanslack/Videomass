@@ -171,8 +171,8 @@ class Crop(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
-                                  size=(self.w_ratio + 2, self.h_ratio + 2),
-                                  style=wx.BORDER_SUNKEN
+                                  size=(self.w_ratio, self.h_ratio),
+                                  #style=wx.BORDER_SUNKEN
                                   )  # + 2 is the BORDER_SUNKEN offset
         self.bob = Actor(self.panelrect, Actor.makeBox(self.w_ratio,
                                                        self.h_ratio,

@@ -51,7 +51,7 @@ class Transpose(wx.Dialog):
         self.v_width = v_width
         self.v_height = v_height
         # resizing values preserving aspect ratio for pseudo-monitor
-        self.thr = 135 if self.v_height > self.v_width else 270
+        self.thr = 150 if self.v_height > self.v_width else 270
         self.h_ratio = (self.v_height / self.v_width) * self.thr
         self.w_ratio = (self.v_width / self.v_height) * self.h_ratio
         self.current_angle = 0
@@ -75,8 +75,9 @@ class Transpose(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         self.panelimg = wx.Panel(self, wx.ID_ANY,
-                                 size=(270 + 1, 270 + 1),
-                                 style=wx.BORDER_SUNKEN)  # + 1 is BOR. offset
+                                 size=(270, 270),
+                                 #style=wx.BORDER_SUNKEN
+                                 )  # + 1 is BOR. offset
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(self.panelimg, 0, wx.TOP | wx.ALIGN_CENTER, 15)
 
