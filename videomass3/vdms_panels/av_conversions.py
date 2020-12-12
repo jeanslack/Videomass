@@ -208,7 +208,7 @@ class AV_Conv(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         # ------------ base
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        #notepos = wx.NB_TOP if self.oS == 'Windows' else wx.NB_LEFT
+        # notepos = wx.NB_TOP if self.oS == 'Windows' else wx.NB_LEFT
         self.notebook = wx.Notebook(self, wx.ID_ANY,
                                     style=wx.NB_NOPAGETHEME | wx.NB_TOP
                                     )
@@ -638,7 +638,7 @@ class AV_Conv(wx.Panel):
         grid_vfilters = wx.FlexGridSizer(3, 5, 20, 20)
         # resizebmp = wx.Bitmap(iconresize, wx.BITMAP_TYPE_ANY)
         self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                        _("Resizing"), size=(-1, -1))
+                                       _("Resizing"), size=(-1, -1))
         self.btn_videosize.SetBitmap(wx.Bitmap(iconresize), wx.LEFT)
         grid_vfilters.Add(self.btn_videosize)
         # cropbmp = wx.Bitmap(iconcrop, wx.BITMAP_TYPE_ANY)
@@ -669,8 +669,8 @@ class AV_Conv(wx.Panel):
 
         grid_vfilters.Add(self.btn_preview)
         # resetbmp = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
-        self.btn_reset = wx.Button(self.filterVpanel, wx.ID_CLEAR,
-                                   _(" Clear"), size=(-1, 50))
+        self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                   _("Reset"), size=(-1, 50))
         self.btn_reset.SetBitmap(wx.Bitmap(iconreset), wx.LEFT)
         grid_vfilters.Add(self.btn_reset)
         self.filterVpanel.SetSizer(grid_vfilters)  # set panel
@@ -1215,7 +1215,7 @@ class AV_Conv(wx.Panel):
         else:
             clicked = self.parent.filedropselected
             return (clicked, self.parent.file_src.index(clicked))
-     # ------------------------------------------------------------------#
+    # ------------------------------------------------------------------#
 
     def stream_datafilter(self):
         """
@@ -2318,7 +2318,7 @@ class AV_Conv(wx.Panel):
         else:
             t = list(self.parent.time_read.items())
             time = '{0} {1} | {2} {3}'.format(t[0][0], t[0][1][0],
-                                                t[1][0], t[1][1][0])
+                                              t[1][0], t[1][1][0])
         # ------------------
         if self.cmb_Media.GetValue() == 'Audio':
             formula = (_("SUMMARY\n\nFile Queue\nOutput Format\

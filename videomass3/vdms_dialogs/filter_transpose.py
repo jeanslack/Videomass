@@ -40,6 +40,7 @@ class Transpose(wx.Dialog):
     get = wx.GetApp()
     OS = get.OS
     TMP = get.TMP
+    BACKGROUND = '#1b0413'
 
     def __init__(self, parent, transpose, start_label,
                  v_width, v_height, fname, duration):
@@ -74,10 +75,7 @@ class Transpose(wx.Dialog):
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
-        self.panelimg = wx.Panel(self, wx.ID_ANY,
-                                 size=(270, 270),
-                                 #style=wx.BORDER_SUNKEN
-                                 )  # + 1 is BOR. offset
+        self.panelimg = wx.Panel(self, wx.ID_ANY, size=(270, 270),)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(self.panelimg, 0, wx.TOP | wx.ALIGN_CENTER, 15)
 
@@ -130,7 +128,7 @@ class Transpose(wx.Dialog):
         sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         # ----------------------Properties--------------------------------#
         self.SetTitle(_("Transpose Filter"))
-        self.panelimg.SetBackgroundColour(wx.Colour('#1b0413'))
+        self.panelimg.SetBackgroundColour(wx.Colour(Transpose.BACKGROUND))
         if Transpose.OS == 'Darwin':
             self.statictxt.SetFont(wx.Font(11, wx.SWISS, wx.ITALIC, wx.NORMAL))
         else:

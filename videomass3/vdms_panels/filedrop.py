@@ -252,8 +252,7 @@ class FileDnD(wx.Panel):
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID2)
         # build the menu
         menu = wx.Menu()
-        itemOne = menu.Append(self.popupID2, _("Play")
-                                )
+        itemOne = menu.Append(self.popupID2, _("Play"))
         itemTwo = menu.Append(self.popupID1, _("Remove"))
         # show the popup menu
         self.PopupMenu(menu)

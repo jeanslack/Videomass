@@ -118,12 +118,12 @@ class Logging_Console(wx.Panel):
     DEBUG = '#3298FB'  # AZURE for debug messages
     FAILED = '#D21814'  # RED_DEEP if failed
     ABORT = '#A41EA4'  # VIOLET if the user stops the processes
-    #YELLOW = '#C8B72F'  # for warning text messages
-    #RED = '#ff0000ff'
-    #ORANGE_DEEP = '#E92D15'
-    #GREEN = '#008000'
-    #DARK_GREEN = '#008000'
-    #BLACK = '#242424'
+    # YELLOW = '#C8B72F'  # for warning text messages
+    # RED = '#ff0000ff'
+    # ORANGE_DEEP = '#E92D15'
+    # GREEN = '#008000'
+    # DARK_GREEN = '#008000'
+    # BLACK = '#242424'
     # ------------------------------------------------------------------#
 
     def __init__(self, parent):

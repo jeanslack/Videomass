@@ -184,7 +184,6 @@ class MainFrame(wx.Frame):
         elif MainFrame.OS == 'Windows':
             self.SetSize((1230, 700))
         else:
-            #self.SetSize((1280, 800))
             self.SetSize((1150, 730))
         # self.CentreOnScreen() # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
@@ -715,8 +714,6 @@ class MainFrame(wx.Frame):
         call Pass to reset_list function for re-charging list
         """
         self.PrstsPanel.Refresh()
-        #if self.PrstsPanel.IsShown():
-            #self.PrstsPanel.Refresh()
 
     # --------- Menu  Preferences
 
@@ -949,7 +946,7 @@ class MainFrame(wx.Frame):
 
                 else:
                     wx.MessageBox(_('Failed! {}').format(upgrade),
-                                    'ERROR', wx.ICON_ERROR, self)
+                                  'ERROR', wx.ICON_ERROR, self)
                 return
 
         elif MainFrame.PYLIB_YDL is None:  # system installed
@@ -1196,9 +1193,9 @@ class MainFrame(wx.Frame):
         self.toolbar.AddSeparator()
         tip = _("Viewing log messages")
         self.btn_logs = self.toolbar.AddTool(15, _('Show Logs'),
-                                               wx.Bitmap(self.viewlog),
-                                               tip, wx.ITEM_NORMAL
-                                               )
+                                             wx.Bitmap(self.viewlog),
+                                             tip, wx.ITEM_NORMAL
+                                             )
         # self.toolbar.AddStretchableSpace()
         self.toolbar.AddSeparator()
         tip = _("Convert using FFmpeg")
@@ -1239,7 +1236,7 @@ class MainFrame(wx.Frame):
         """
         if not os.path.exists(MainFrame.LOGDIR):
             wx.MessageBox(_("The log directory has not yet been created."),
-                            "Videomass", wx.ICON_INFORMATION, None)
+                          "Videomass", wx.ICON_INFORMATION, None)
             return
 
         else:
@@ -1320,7 +1317,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, False)
         self.toolbar.EnableTool(13, False)
-        #self.toolbar.EnableTool(15, False)
+        # self.toolbar.EnableTool(15, False)
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -1355,7 +1352,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, False)
         self.toolbar.EnableTool(13, False)
-        #self.toolbar.EnableTool(15, False)
+        # self.toolbar.EnableTool(15, False)
         self.toolbar.Realize()
         self.Layout()
         self.statusbar_msg(_('Ready'), None)
@@ -1402,7 +1399,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, False)
         self.toolbar.EnableTool(13, True)
-        #self.toolbar.EnableTool(15, True)
+        # self.toolbar.EnableTool(15, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1450,7 +1447,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, False)
         self.toolbar.EnableTool(12, True)
         self.toolbar.EnableTool(13, False)
-        #self.toolbar.EnableTool(15, True)
+        # self.toolbar.EnableTool(15, True)
         self.Layout()
     # ------------------------------------------------------------------#
 
@@ -1501,7 +1498,7 @@ class MainFrame(wx.Frame):
         self.toolbar.EnableTool(11, True)
         self.toolbar.EnableTool(12, True)
         self.toolbar.EnableTool(13, False)
-        #self.toolbar.EnableTool(15, True)
+        # self.toolbar.EnableTool(15, True)
         self.Layout()
     # ------------------------------------------------------------------#
 

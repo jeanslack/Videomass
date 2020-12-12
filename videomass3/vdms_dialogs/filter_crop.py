@@ -45,54 +45,70 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
                  idNum,  imgFile, **kwargs):
         """
         """
+        self.h = 0  # height
+        self.w = 0  # width
+        self.x = 0  # x axis
+        self.y = 0  # y axis
+
         wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
                                                 bitmap, **kwargs)
         self._parent = parent  # if needed
-        self._original_bmp = self._current_bmp = bitmap
+        self._current_bmp = bitmap
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
     # ------------------------------------------------------------------#
 
     def OnPaint(self, evt=None):
         """
+        paint event
         """
         dc = wx.PaintDC(self)  # draw window boundary
-        dc.Clear()
         dc.DrawBitmap(self._current_bmp, 0, 0, True)
+        dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
+        dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
+        # dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 128)))
+        dc.DrawRectangle(self.x, self.y, self.w, self.h)
     # ------------------------------------------------------------------#
 
-    def onRedraw(self, x, y, width, height, w_ratio, h_ratio, pict):
+    def onRedraw(self, x, y, w, h):
         """
         Update Drawing: A transparent background rectangle in a bitmap
-        for crop selections
+        for crop selections.
+        x, y è aggiunto + 1 come offset per lo spessore PEN
 
         """
-        self._original_bmp = wx.Bitmap(pict)
-        img = self._original_bmp.ConvertToImage()
-        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        self._current_bmp = img.ConvertToBitmap()
-        dc = wx.MemoryDC(self._current_bmp)
-        dc.SetPen(wx.Pen('red', 1, wx.PENSTYLE_SOLID))
-        #r, g, b = (30,  30,  30)
-        #dc.SetBrush(wx.Brush(wx.Colour(r, g, b, 128)))
-        dc.SetBrush(wx.Brush('green', wx.TRANSPARENT))
-        dc.DrawRectangle(x, y, width, height)
-        dc.SelectObject(wx.NullBitmap)
-        self.Refresh(False)
+        self.h, self.w, self.x, self.y = h, w, x + 1, y + 1
+        dc = wx.ClientDC(self)
+        dc.Clear()  # need if image has trasparences
+        dc.DrawBitmap(self._current_bmp, 0, 0, True)
+        dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
+        dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
+        dc.DrawRectangle(self.x, self.y, self.w, self.h)
     # ------------------------------------------------------------------#
 
-    def makeBox(w_ratio, h_ratio, pict):
+    def newImage(self, w_ratio, h_ratio, pict):
         """
-        Create box with wx.dc (device context) and return a bitmap.
-        This function is called only once during the instance of this class
+        Set new bitmap
 
         """
         bitmap = wx.Bitmap(pict)
         img = bitmap.ConvertToImage()
         img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)
         bmp = img.ConvertToBitmap()
-        dc = wx.MemoryDC(bmp)
-        dc.SelectObject(wx.NullBitmap)
+        self._current_bmp = bmp
+    # ------------------------------------------------------------------#
+
+    def makeBox(w_ratio, h_ratio, pict):
+        """
+        Create box with wx.dc (device context) and return a
+        bitmap. This function is called only once during the
+        instance of this class.
+
+        """
+        bitmap = wx.Bitmap(pict)
+        img = bitmap.ConvertToImage()
+        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)
+        bmp = img.ConvertToBitmap()
         return wx.Bitmap(bmp)
 
 
@@ -104,20 +120,7 @@ class Crop(wx.Dialog):
     get = wx.GetApp()
     OS = get.OS
     TMP = get.TMP
-
-    if get.THEME == 'Breeze-Blues':
-        # breeze-blues
-        BACKGROUND = '#11303eff'  # solarized
-        PEN = 'green'
-
-    elif get.THEME in get.DARKicons:
-        # dark
-        BACKGROUND = '#0c1217'  # dark deep blue
-        PEN = 'green'
-    else:
-        # light
-        BACKGROUND = '#e6e6faff'  # lavender
-        PEN = 'green'
+    BACKGROUND = '#1b0413'
     # ------------------------------------------------------------------#
 
     def __init__(self, parent, fcrop, v_width,
@@ -155,9 +158,9 @@ class Crop(wx.Dialog):
         self.h_ratio = (self.v_height / self.v_width) * self.thr  # height
         self.w_ratio = (self.v_width / self.v_height) * self.h_ratio  # width
 
-        self.video = fname
+        self.video = fname  # selected filename on queued list
         name = os.path.splitext(os.path.basename(self.video))[0]
-        self.frame = os.path.join('%s' % Crop.TMP, '%s.png' % name)
+        self.frame = os.path.join('%s' % Crop.TMP, '%s.png' % name)  # image
 
         if os.path.exists(self.frame):
             self.image = self.frame
@@ -172,12 +175,12 @@ class Crop(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
-                                  size=(self.w_ratio, self.h_ratio),
-                                  #style=wx.BORDER_SUNKEN
-                                  )  # + 2 is the BORDER_SUNKEN offset
+                                  size=(self.w_ratio, self.h_ratio)
+                                  )
         self.bob = Actor(self.panelrect, Actor.makeBox(self.w_ratio,
                                                        self.h_ratio,
-                                                       self.image), 1, "")
+                                                       self.image
+                                                       ), 1, "")
         sizerBase.Add(self.panelrect, 0, wx.TOP | wx.CENTER, 10)
         sizersize = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 10)
@@ -384,10 +387,11 @@ class Crop(wx.Dialog):
 
         time.sleep(1.0)  # need to wait end task for saving
         self.image = self.frame  # update with new frame
-        self.onDrawing(self)
+        self.bob.newImage(self.w_ratio, self.h_ratio, self.image)
+        self.onDrawing()
     # ------------------------------------------------------------------#
 
-    def onDrawing(self, event, dc=None):
+    def onDrawing(self):
         """
         Updating computation and call onRedraw to update
         rectangle position of the bob actor
@@ -415,9 +419,6 @@ class Crop(wx.Dialog):
                           self.y_dc,
                           self.width_dc,
                           self.height_dc,
-                          self.w_ratio,
-                          self.h_ratio,
-                          self.image
                           )
     # ------------------------------------------------------------------#
 
@@ -439,7 +440,7 @@ class Crop(wx.Dialog):
             self.axis_X.SetMax(self.v_width - self.crop_width.GetValue())
             self.axis_X.SetMin(-1)
 
-        self.onDrawing(self)
+        self.onDrawing()
     # ------------------------------------------------------------------#
 
     def onHeight(self, event):
@@ -460,21 +461,21 @@ class Crop(wx.Dialog):
             self.axis_Y.SetMax(self.v_height - self.crop_height.GetValue())
             self.axis_Y.SetMin(-1)
 
-        self.onDrawing(self)
+        self.onDrawing()
     # ------------------------------------------------------------------#
 
     def onX(self, event):
         """
         self.axis_X callback
         """
-        self.onDrawing(self)
+        self.onDrawing()
 
     # ------------------------------------------------------------------#
     def onY(self, event):
         """
         self.axis_Y callback
         """
-        self.onDrawing(self)
+        self.onDrawing()
 
     # ------------------------------------------------------------------#
     def onCentre(self, event):
@@ -491,7 +492,7 @@ class Crop(wx.Dialog):
             self.axis_X.SetValue(-1)
 
         if self.axis_Y.GetMax() or self.axis_X.GetMax():
-            self.onDrawing(self)
+            self.onDrawing()
 
     # ------------------------------------------------------------------#
 
@@ -512,7 +513,7 @@ class Crop(wx.Dialog):
         self.axis_X.SetMin(-1), self.axis_X.SetMax(self.v_width)
         self.crop_width.SetValue(0), self.axis_X.SetValue(0)
         self.crop_height.SetValue(0), self.axis_Y.SetValue(0)
-        self.onDrawing(self)
+        self.onDrawing()
     # ------------------------------------------------------------------#
 
     def on_close(self, event):

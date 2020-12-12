@@ -46,10 +46,10 @@ class Timeline(wx.Dialog):
     get = wx.GetApp()
     OS = get.OS
 
-    BACKGROUND = '#294083'#'#262646'  # dark azure for panel bkgrd
-    SELECTION = '#3c5ec1'  # medium azure
-    GREEN = '#12ea0d'  # green for text and draw lines
-    REDLIGHT = '#ea3535'  # for margin selection
+    BACKGROUND = '#294083'  # dark azure for panel bkgrd
+    SELECTION = '#4368d3'  # medium azure
+    WHITE = '#ffffff'  # white for text and draw lines
+    GREEN = '#00fe00'  # for margin selection
 
     RW = 600  # ruler width
     RM = 0  # ruler margin
@@ -93,11 +93,11 @@ class Timeline(wx.Dialog):
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor """
-        '''
-        self.font = wx.Font(7, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
+
+        self.font = wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL,
                             wx.FONTWEIGHT_BOLD, False, 'Courier 10 Pitch'
                             )
-                            '''
+
         sizer_base = wx.BoxSizer(wx.VERTICAL)
 
         box_displ = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, _(
@@ -128,7 +128,6 @@ class Timeline(wx.Dialog):
 
         # ----------------------Properties ----------------------#
         self.SetTitle(_('Timeline'))
-        #self.paneltime.SetBackgroundColour(wx.Colour('#1b0413'))
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.BACKGROUND))
         self.sldseek.SetToolTip(_("Seek to given time position"))
         self.sldcut.SetToolTip(_("Total amount duration"))
@@ -183,7 +182,10 @@ class Timeline(wx.Dialog):
     # ----------------------Event handler (callback)----------------------#
 
     def on_Cut(self, event):
+        """
+        Get total duration event
 
+        """
         cut = self.sldcut.GetValue()
         if cut == 0:
             self.sldcut.SetValue(0), self.sldseek.Disable()
@@ -239,32 +241,33 @@ class Timeline(wx.Dialog):
         """
         dc = wx.ClientDC(self.paneltime)
         dc.Clear()
-        dc.SetPen(wx.Pen(Timeline.REDLIGHT, 1, wx.PENSTYLE_SOLID))
-        #r, g, b = (92, 21, 21)
-        #r, g, b = Timeline.SELECTION
-        #dc.SetBrush(wx.Brush(wx.Colour(r, g, b, 200)))
+        dc.SetPen(wx.Pen(Timeline.GREEN, 2, wx.PENSTYLE_SOLID))
+        # dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 200)))
         dc.SetBrush(wx.Brush(Timeline.SELECTION, wx.BRUSHSTYLE_SOLID))
-        dc.DrawRectangle(self.bar_x, -8, self.bar_w, 66)
-        # dc.SetFont(self.font)
-        dc.SetPen(wx.Pen(Timeline.GREEN))
-        dc.SetTextForeground(Timeline.GREEN)
+        dc.DrawRectangle(self.bar_x + 1, -8, self.bar_w, 66)
+        dc.SetFont(self.font)
+        dc.SetPen(wx.Pen(Timeline.WHITE))
+        dc.SetTextForeground(Timeline.WHITE)
 
         for i in range(Timeline.RW):
 
             if not (i % 600):
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)
                 w, h = dc.GetTextExtent(str(i))
-                dc.DrawText('%02d:00:00' % i, i+Timeline.RM+3-w/2, 11)
+                dc.DrawText('%02d:00:00' % i, i+Timeline.RM+3-w/2, 14)
 
             elif not (i % 300):
-                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 10)  # metà
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)  # metà
 
-            elif not (i % 50):
+            elif not (i % 150):
+                dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)  # ogni 5
+
+            elif not (i % 25):
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 5)
 
-        dc.DrawLine(i, 0, i, 10)
+        dc.DrawLine(i, 0, i, 12)
         w, h = dc.GetTextExtent(self.timeHum)
-        dc.DrawText(self.timeHum, i+1-w, 11)
+        dc.DrawText(self.timeHum, i+1-w, 14)
     # ------------------------------------------------------------------#
 
     def resetValues(self, event):

@@ -1121,7 +1121,7 @@ class PrstPan(wx.Panel):
         else:
             t = list(self.parent.time_read.items())
             time = '{0} {1} | {2} {3}'.format(t[0][0], t[0][1][0],
-                                                t[1][0], t[1][1][0])
+                                              t[1][0], t[1][1][0])
 
         numfile = "%s file in pending" % str(cntmax)
 
