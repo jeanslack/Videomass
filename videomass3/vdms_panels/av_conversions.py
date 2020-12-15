@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.02.2019, Sept.24.2019, Dic.04.2019
+# Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -1234,7 +1234,7 @@ class AV_Conv(wx.Panel):
             width = int(index['streams'][0]['width'])
             height = int(index['streams'][0]['height'])
             filename = index['format']['filename']
-            time = index['format'].get('time', '0:0:0')
+            time = index['format'].get('time', '00:00:00.000')
             return (width, height, filename, time)
         else:
             wx.MessageBox(_('The file is not a frame or a video file'),
@@ -2317,15 +2317,15 @@ class AV_Conv(wx.Panel):
             time = _('Off')
         else:
             t = list(self.parent.time_read.items())
-            time = '{0} {1} | {2} {3}'.format(t[0][0], t[0][1][0],
-                                              t[1][0], t[1][1][0])
+            time = '{0}  {1} | {2}  {3}'.format(t[0][0], t[0][1][0],
+                                                t[1][0], t[1][1][0])
         # ------------------
         if self.cmb_Media.GetValue() == 'Audio':
-            formula = (_("SUMMARY\n\nFile Queue\nOutput Format\
+            formula = (_("SUMMARY\n\nQueued File\nOutput Format\
                         \nWeb Optimize\nAudio Codec\nAudio bit-rate\
                         \nAudio Channels\nAudio Rate\nBit per Sample\
-                        \nAudio Normalization\nTime\
-                        \nSelected Input Audio index"))
+                        \nAudio Normalization\nTime Period\
+                        \nInput Audio Map"))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s"
                         "\n%s\n%s\n%s\n%s\n%s" % (numfile,
                                                   outputformat,
@@ -2342,12 +2342,12 @@ class AV_Conv(wx.Panel):
                         )
         elif prof[0] == "Copy":
             formula = (
-                    _("SUMMARY\n\nFile to Queue\nWeb Optimize\nOutput Format\
+                    _("SUMMARY\n\nQueued File\nWeb Optimize\nOutput Format\
                       \nVideo Codec\nAspect Ratio\nFPS\nAudio Codec\
                       \nAudio Channels\nAudio Rate\nAudio bit-rate\
                       \nBit per Sample\nAudio Normalization\
-                      \nSelected Input Audio index\nAudio Output Map index\
-                      \nSubtitle stream index\nTime"
+                      \nInput Audio Map\nOutput Audio Map\
+                      \nSubtitles Map\nTime Period"
                       ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                          \n%s\n%s\n%s\n%s" % (numfile,
@@ -2370,15 +2370,15 @@ class AV_Conv(wx.Panel):
         # --------------------
         else:
             formula = (
-                    _("SUMMARY\n\nFile to Queue\nWeb Optimize\nPass Encoding\
+                    _("SUMMARY\n\nQueued File\nWeb Optimize\nPass Encoding\
                       \nOutput Format\nVideo Codec\nVideo bit-rate\
                       \nCRF\nMin Rate\nMax Rate\nBuffer size\
                       \nVP8/VP9 Options\nVideo Filters\nAspect Ratio\nFPS\
                       \nPreset\nProfile\nTune\nAudio Codec\
                       \nAudio Channels\nAudio Rate\nAudio bit-rate\
                       \nBit per Sample\nAudio Normalization\
-                      \nSelected Input Audio index\nAudio Output Map index\
-                      \nSubtitles streams index\nTime"
+                      \nInput Audio Map\nOutput Audio Map\
+                      \nSubtitles Map\nTime Period"
                       ))
             dictions = ("\n\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\
                         \n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\

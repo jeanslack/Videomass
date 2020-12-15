@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.03.2020 *PEP8 compatible*
+# Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -45,6 +45,7 @@ from videomass3.vdms_panels.long_processing_task import Logging_Console
 from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
+from videomass3.vdms_utils.utils import time_seconds
 
 
 class MainFrame(wx.Frame):
@@ -284,9 +285,12 @@ class MainFrame(wx.Frame):
         """
         Call dialog to Set a global time sequence on all imported
         media. Here set self.time_seq and self.time_read attributes
+
         """
         if not self.duration:
             maxdur = self.duration
+        elif max(self.duration) < 100:  # if .jpeg
+            maxdur = []
         else:
             maxdur = max(self.duration)  # max val from list
         self.toolbar.ToggleTool(7, True)
@@ -296,7 +300,7 @@ class MainFrame(wx.Frame):
         retcode = dial.ShowModal()
         if retcode == wx.ID_OK:
             data = dial.GetValue()
-            if data == '-ss 00:00:00 -t 00:00:00':
+            if data == '-ss 00:00:00.000 -t 00:00:00.000':
                 data = ''
                 self.time_read['start'] = ['', '']
                 self.time_read['duration'] = ['', '']
@@ -304,14 +308,11 @@ class MainFrame(wx.Frame):
             else:
                 # set a more readable time
                 ss = data.split()[1]  # the -ss flag
-                h, m, s = ss.split(':')
-                start = (int(h) * 3600 + int(m) * 60 + int(s))
-                t = data.split()[3]  # the -t flag
-                h, m, s = t.split(':')
-                time = (int(h) * 3600 + int(m) * 60 + int(s))
+                start = time_seconds(ss)
                 self.time_read['start'] = [ss, start]
+                t = data.split()[3]  # the -t flag
+                time = time_seconds(t)
                 self.time_read['duration'] = [t, time]
-
             self.time_seq = data
         else:
             dial.Destroy()

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: November.18.2020 *PEP8 compatible*
+# Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -29,87 +29,90 @@ import webbrowser
 # import wx.lib.masked as masked  # not work on macOSX
 import wx.lib.statbmp
 import os
-import time
+from time import sleep
 from videomass3.vdms_threads.generic_task import FFmpegGenericTask
 from videomass3.vdms_utils.utils import time_seconds
 from videomass3.vdms_utils.utils import time_human
 
 
-class Actor(wx.lib.statbmp.GenStaticBitmap):
+def make_bitmap(width, height, image):
     """
-    inspired from Robin Dunn discussion
-    <https://discuss.wxpython.org/t/questions-about-rotation/34064>
+    Resize the image to the given size and convert it to a
+    bitmap object.
 
     """
-    def __init__(self, parent, bitmap,
-                 idNum,  imgFile, **kwargs):
+    bitmap = wx.Bitmap(image)
+    img = bitmap.ConvertToImage()
+    img = img.Scale(width, height, wx.IMAGE_QUALITY_NORMAL)
+    bmp = img.ConvertToBitmap()
+
+    return wx.Bitmap(bmp)
+
+
+class Actor(wx.lib.statbmp.GenStaticBitmap):
+    """
+    By an explanation by Robin Dunn, where he discusses
+    how to rotate images with DC:
+    <https://discuss.wxpython.org/t/questions-about-rotation/34064>
+
+    Actor uses the GenStaticBitmap which is a generic implementation
+    of wx.StaticBitmap, for display larger images portably.
+
+    This class is useful for drawing a selection rectangle on the image
+    given a position specified by the X and Y coordinates and the size
+    by the W (width) and H (height) lines.
+
+    """
+    def __init__(self, parent, bitmap, idNum,  imgFile, **kwargs):
         """
+        Attributes defines the rectangle dimensions and coordinates,
+        a parent and a current_bmp. First make sure you scale the
+        image to fit on parent, e.g. a panel.
         """
-        self.h = 0  # height
-        self.w = 0  # width
-        self.x = 0  # x axis
-        self.y = 0  # y axis
+        self.h = 0  # rectangle height
+        self.w = 0  # rectangle width
+        self.x = 0  # rectangle x axis
+        self.y = 0  # rectangle y axis
 
         wx.lib.statbmp.GenStaticBitmap.__init__(self, parent, -1,
                                                 bitmap, **kwargs)
-        self._parent = parent  # if needed
-        self._current_bmp = bitmap
+        self.parent = parent  # if needed
+        self.current_bmp = bitmap
 
         self.Bind(wx.EVT_PAINT, self.OnPaint)
     # ------------------------------------------------------------------#
 
     def OnPaint(self, evt=None):
         """
-        paint event
+        When instantiating the Actor class, this event is
+        executed last.
+
         """
         dc = wx.PaintDC(self)  # draw window boundary
-        dc.DrawBitmap(self._current_bmp, 0, 0, True)
+        dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        # dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 128)))
         dc.DrawRectangle(self.x, self.y, self.w, self.h)
     # ------------------------------------------------------------------#
 
     def onRedraw(self, x, y, w, h):
         """
         Update Drawing: A transparent background rectangle in a bitmap
-        for crop selections.
-        x, y è aggiunto + 1 come offset per lo spessore PEN
+        To compensate for the PEN thickness offset, the positions are
+        increased by 1 and the sizes decreased by 1 .
+
+        NOTE dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 128))) would set
+        a useful transparent gradation color but it doesn't work on windows
+        and gtk2.
 
         """
-        self.h, self.w, self.x, self.y = h, w, x + 1, y + 1
+        self.h, self.w, self.x, self.y = h - 1, w - 1, x + 1, y + 1
         dc = wx.ClientDC(self)
-        dc.Clear()  # need if image has trasparences
-        dc.DrawBitmap(self._current_bmp, 0, 0, True)
+        dc.Clear()  # needed if image has trasparences
+        dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
         dc.DrawRectangle(self.x, self.y, self.w, self.h)
-    # ------------------------------------------------------------------#
-
-    def newImage(self, w_ratio, h_ratio, pict):
-        """
-        Set new bitmap
-
-        """
-        bitmap = wx.Bitmap(pict)
-        img = bitmap.ConvertToImage()
-        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        bmp = img.ConvertToBitmap()
-        self._current_bmp = bmp
-    # ------------------------------------------------------------------#
-
-    def makeBox(w_ratio, h_ratio, pict):
-        """
-        Create box with wx.dc (device context) and return a
-        bitmap. This function is called only once during the
-        instance of this class.
-
-        """
-        bitmap = wx.Bitmap(pict)
-        img = bitmap.ConvertToImage()
-        img = img.Scale(w_ratio, h_ratio, wx.IMAGE_QUALITY_NORMAL)
-        bmp = img.ConvertToBitmap()
-        return wx.Bitmap(bmp)
 
 
 class Crop(wx.Dialog):
@@ -152,7 +155,6 @@ class Crop(wx.Dialog):
         # current video size
         self.v_width = v_width
         self.v_height = v_height
-
         # resizing values preserving aspect ratio for monitor
         self.thr = 180 if self.v_height > self.v_width else 360
         self.h_ratio = (self.v_height / self.v_width) * self.thr  # height
@@ -168,19 +170,15 @@ class Crop(wx.Dialog):
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
 
         duration = time_seconds(timeformat)  # convert to seconds
-        t = timeformat.split(':')
-        h, m, s = ("%02d" % int(t[0]), "%02d" % int(t[1]),
-                   "%02d" % float(t[2])
-                   )
+        hhmmss = time_human(duration)  # convert to timeformat
+
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
         self.panelrect = wx.Panel(self, wx.ID_ANY,
                                   size=(self.w_ratio, self.h_ratio)
                                   )
-        self.bob = Actor(self.panelrect, Actor.makeBox(self.w_ratio,
-                                                       self.h_ratio,
-                                                       self.image
-                                                       ), 1, "")
+        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
+        self.bob = Actor(self.panelrect, bmp, 1, "")
         sizerBase.Add(self.panelrect, 0, wx.TOP | wx.CENTER, 10)
         sizersize = wx.BoxSizer(wx.VERTICAL)
         sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 10)
@@ -189,12 +187,12 @@ class Crop(wx.Dialog):
         label1 = wx.StaticText(self, wx.ID_ANY, msg)
         sizersize.Add(label1, 0, wx.CENTER, 10)
         msg = _("Search for a specific frame, max "
-                "duration {}:{}:{}").format(h, m, s)
+                "duration {}").format(hhmmss)
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.CENTRE, 10)
 
-        self.txttime = wx.StaticText(self, wx.ID_ANY, '00:00:00')
+        self.txttime = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
         self.slider = wx.Slider(self, wx.ID_ANY, 0, 0, duration,
                                 size=(300, -1), style=wx.SL_HORIZONTAL
@@ -295,15 +293,11 @@ class Crop(wx.Dialog):
             label1.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         self.SetTitle(_("Crop Filter"))
-
         self.crop_width.SetToolTip(_('Crop to width'))
-
         self.axis_Y.SetToolTip(_('Move vertically - set to -1 to center '
                                  'the vertical axis'))
-
         self.axis_X.SetToolTip(_('Move horizontally - set to -1 to center '
                                  'the horizontal axis'))
-
         self.crop_height.SetToolTip(_('Crop to height'))
 
         # ----------------------Binding (EVT)------------------------#
@@ -320,7 +314,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
-        if timeformat == '0:0:0':
+        if timeformat == '00:00:00.000':
             self.slider.Disable(), btn_load.Disable()
             if not os.path.exists(self.frame):
                 self.onLoad(self)
@@ -365,8 +359,8 @@ class Crop(wx.Dialog):
         e.g (00:00:00), and sets the label with the converted value.
         """
         seek = self.slider.GetValue()
-        time = time_human(seek)  # convert to time format
-        self.txttime.SetLabel(time)  # update StaticText
+        t = time_human(seek)  # convert to time format
+        self.txttime.SetLabel(t)  # update StaticText
     # ------------------------------------------------------------------#
 
     def onLoad(self, event):
@@ -385,9 +379,10 @@ class Crop(wx.Dialog):
             wx.MessageBox('%s' % error, 'ERROR', wx.ICON_ERROR)
             return
 
-        time.sleep(1.0)  # need to wait end task for saving
+        sleep(1.0)  # need to wait end task for saving
         self.image = self.frame  # update with new frame
-        self.bob.newImage(self.w_ratio, self.h_ratio, self.image)
+        bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
+        self.bob.current_bmp = bmp
         self.onDrawing()
     # ------------------------------------------------------------------#
 

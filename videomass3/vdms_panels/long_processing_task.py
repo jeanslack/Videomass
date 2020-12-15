@@ -3,9 +3,9 @@
 # Porpose: Console to show logging messages during processing
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: May.26.2020 *PEP8 compatible*
+# Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -35,6 +35,7 @@ from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass3.vdms_utils.utils import time_human
+from videomass3.vdms_utils.utils import time_seconds
 
 
 def pairwise(iterable):
@@ -360,11 +361,10 @@ class Logging_Console(wx.Panel):
 
         if 'time=' in output:  # ...in processing
             i = output.index('time=')+5
-            pos = output[i:i+8].split(':')
-            hours, minutes, seconds = pos[0], pos[1], pos[2]
-            timesum = (int(hours) * 3600 + int(minutes)) * 60 + int(seconds)
+            pos = output[i:].split()[0]
+            timesum = time_seconds(pos)
             self.barProg.SetValue(timesum)
-            percentage = timesum / duration * 100
+            percentage = round((timesum / duration) * 100)
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
             for x, y in pairwise(out):
@@ -411,10 +411,6 @@ class Logging_Console(wx.Panel):
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.SUCCESS))
             self.OutText.AppendText(Logging_Console.MSG_done)
-            lab = "%s" % self.labPerc.GetLabel()
-            if lab.split('|')[0] == 'Processing... 99% ':
-                relab = lab.replace('Processing... 99%', 'Processing... 100%')
-                self.labPerc.SetLabel(relab)
             return
         # if STATUS_ERROR == 1:
         if end == 'error':

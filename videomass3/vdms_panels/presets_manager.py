@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: December.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -1120,16 +1120,15 @@ class PrstPan(wx.Panel):
             time = _('Disable')
         else:
             t = list(self.parent.time_read.items())
-            time = '{0} {1} | {2} {3}'.format(t[0][0], t[0][1][0],
-                                              t[1][0], t[1][1][0])
+            time = '{0}  {1} | {2}  {3}'.format(t[0][0], t[0][1][0],
+                                                t[1][0], t[1][1][0])
 
         numfile = "%s file in pending" % str(cntmax)
 
-        formula = (_("SUMMARY\n\nFile to Queue\nPass Encoding\
-                     \nProfile Used\nOutput Format\nTime\
-                     \n\nAutomations Enabled:\
-                     \nAudio Normalization\nSelected Input Audio index\
-                     \nAudio Output Map index"))
+        formula = (_("SUMMARY\n\nQueued File\nPass Encoding\
+                     \nProfile Used\nOutput Format\nTime Period\
+                     \n\nAutomations Enabled\nAudio Normalization\
+                     \nInput Audio Map\nOutput Audio Map"))
         dictions = ("\n\n%s\n%s\n%s\n%s\n"
                     "%s\n\n\n%s\n%s\n%s" % (numfile,
                                             passes,

@@ -17,6 +17,9 @@ URGENCY: high
 - Create the top timeline along the horizontal position of the main frame
   by replacing the current timeline dialog
 
+- make contest menu for streams analyzer for getting data by clicking
+  on parameters or references.
+
 
 
 -------------

@@ -88,7 +88,7 @@ class PicturesFromVideo(Thread):
         """
         self.stop_work_thread = False  # process terminate
         self.cmd = varargs[4]  # comand set on single pass
-        self.duration = duration[0]+10  # duration list
+        self.duration = duration[0]  # duration list
         self.time_seq = timeseq  # a time segment
         self.count = 0  # count first for loop
         self.logname = logname  # title name of file log

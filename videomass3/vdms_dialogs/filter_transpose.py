@@ -28,7 +28,7 @@ import wx
 import webbrowser
 from math import pi as pi
 import os
-import time
+from time import sleep
 from videomass3.vdms_threads.generic_task import FFmpegGenericTask
 
 
@@ -201,7 +201,7 @@ class Transpose(wx.Dialog):
             wx.MessageBox('%s' % error, 'ERROR', wx.ICON_ERROR)
             return
         else:
-            time.sleep(1.0)  # need to wait end task for saving
+            sleep(1.0)  # need to wait end task for saving
             bitmap = wx.Bitmap(self.frame)
             img = bitmap.ConvertToImage()
             img = img.Scale(self.w_ratio, self.h_ratio)

@@ -226,7 +226,8 @@ class FileDnD(wx.Panel):
 
     def tr(self):
         """
-        reset the timeline
+        Reset the timeline on main_frame. When you drop new files,
+        it is also required by the MyListCtrl class.
 
         """
         self.parent.timeline_reset()
@@ -271,7 +272,7 @@ class FileDnD(wx.Panel):
         if menuItem.GetItemLabel() == _("Play"):
             index = self.flCtrl.GetFocusedItem()
             item = self.flCtrl.GetItemText(index)
-            IO_tools.stream_play(item, '', '')
+            IO_tools.stream_play(item, self.parent.time_seq, '')
 
         elif menuItem.GetItemLabel() == _("Remove"):
             self.delSelect(self)
@@ -292,9 +293,10 @@ class FileDnD(wx.Panel):
                 self.deleteAll(self)
             else:
                 item = self.flCtrl.GetFocusedItem()
-                self.flCtrl.DeleteItem(item)
-                self.on_deselect(self)
-                self.data.pop(item)
+                self.flCtrl.DeleteItem(item)  # remove from listctrl
+                self.tr()  # delete parent.timeline
+                self.on_deselect(self)  # deselect removed file
+                self.data.pop(item)  # remove all data item
     # ----------------------------------------------------------------------
 
     def deleteAll(self, event):
@@ -318,7 +320,6 @@ class FileDnD(wx.Panel):
         index = self.flCtrl.GetFocusedItem()
         item = self.flCtrl.GetItemText(index)
         self.parent.filedropselected = item
-        self.tr()
         self.selected = item
     # ----------------------------------------------------------------------
 

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: December.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -56,7 +56,7 @@ def to_bytes(string):
     """
     Convert given size string to bytes, e.g.
     out = to_bytes('9.45MiB')
-    It return a number 'float'
+    It return a number 'float' object.
     """
     value = 0.0
     unit = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"]
@@ -73,30 +73,53 @@ def to_bytes(string):
 # ------------------------------------------------------------------------
 
 
-def time_seconds(time):
+def timehuman1(seconds):
     """
-    convert time human to seconds e.g. time_seconds('00:02:00')
-    return int(seconds) object
-    """
-    if time == 'N/A':
-        return int('0')
+    This is the old implementation to converting seconds to
+    time format. Accept integear only e.g timehuman(2300).
+    Returns a string object in time format i.e '00:38:20' .
 
-    pos = time.split(':')
-    h, m, s = pos[0], pos[1], pos[2]
-    duration = (int(h) * 3600 + int(m) * 60 + float(s))
-
-    return duration
-# ------------------------------------------------------------------------
-
-
-def time_human(seconds):
-    """
-    Convert from seconds to time human. Accept integear only e.g.
-    time_human(2300)
     """
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
     return "%02d:%02d:%02d" % (h, m, s)
+# ------------------------------------------------------------------------
+
+
+def time_seconds(timeformat):
+    """
+    Convert time format to milliseconds (duration). Accepts various
+    forms of time unit string, e.g. '30.5', '00:00:00', '0:00:00',
+    '0:0:0', '00:00.000', '00:00:00.000. The first line adds leading
+    zeros to fill up possibly non-existing fields.
+    Return an int object (milliseconds).
+
+    HACK add 'N/A' (no time) to parser?
+
+            if timeformat == 'N/A':
+                return int('0')
+    """
+    hours, minutes, seconds = (["0", "0"] + timeformat.split(":"))[-3:]
+    hours = int(hours)
+    minutes = int(minutes)
+    seconds = float(seconds)
+    milliseconds = int(hours * 3600000 + minutes * 60000 + seconds * 1000)
+    return milliseconds
+# ------------------------------------------------------------------------
+
+
+def time_human(ms):
+    """
+    Converts milliseconds (duration) to time units in sexagesimal
+    format (e.g. HOURS:MM:SS.MILLISECONDS, as in 01:23:45.678).
+    Accept an int object, such as 2000 or float, such as 2000.999.
+    Returns a string object in time format.
+
+    """
+    m, s = divmod(ms, 60000)
+    h, m = divmod(m, 60)
+    sec = float(s) / 1000
+    return "%02d:%02d:%06.3f" % (h, m, sec)
 # ------------------------------------------------------------------------
 
 

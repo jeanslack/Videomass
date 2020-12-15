@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: November.24.2020 *PEP8 compatible*
+# Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -115,7 +115,7 @@ class Scale(wx.Dialog):
         box_ar.Add(self.lab_dar, 0, wx.ALL | wx.CENTRE, 5)
         Flex_dar = wx.FlexGridSizer(1, 5, 0, 0)
         box_ar.Add(Flex_dar, 0, wx.ALL | wx.CENTRE, 5)
-        self.label_num = wx.StaticText(self, wx.ID_ANY, (_("Num.")))
+        self.label_num = wx.StaticText(self, wx.ID_ANY, (_("Numerator")))
         Flex_dar.Add(self.label_num, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_setdarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
                                           max=99, style=wx.TE_PROCESS_ENTER |
@@ -136,7 +136,7 @@ class Scale(wx.Dialog):
         Flex_dar.Add(self.spin_setdarDen, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5
                      )
-        self.label_den = wx.StaticText(self, wx.ID_ANY, (_("Den.")))
+        self.label_den = wx.StaticText(self, wx.ID_ANY, (_("Denominator")))
         Flex_dar.Add(self.label_den, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         # --- setsar section:
         box_ar.Add((15, 0), 0, wx.ALL, 5)
@@ -145,7 +145,7 @@ class Scale(wx.Dialog):
         box_ar.Add(self.lab_sar, 0, wx.ALL | wx.CENTRE, 5)
         Flex_sar = wx.FlexGridSizer(1, 5, 0, 0)
         box_ar.Add(Flex_sar, 0, wx.ALL | wx.CENTRE, 5)
-        self.label_num1 = wx.StaticText(self, wx.ID_ANY, (_("Num.")))
+        self.label_num1 = wx.StaticText(self, wx.ID_ANY, (_("Numerator")))
         Flex_sar.Add(self.label_num1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.spin_setsarNum = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
                                           max=99, style=wx.TE_PROCESS_ENTER |
@@ -166,7 +166,7 @@ class Scale(wx.Dialog):
         Flex_sar.Add(self.spin_setsarDen, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5
                      )
-        self.label_den1 = wx.StaticText(self, wx.ID_ANY, (_("Den.")))
+        self.label_den1 = wx.StaticText(self, wx.ID_ANY, (_("Denominator")))
         Flex_sar.Add(self.label_den1, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
 
         # --- confirm buttons section

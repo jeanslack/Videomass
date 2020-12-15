@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.10.2020 *PEP8 compatible*
+# Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -36,18 +36,22 @@ class Timeline(wx.Dialog):
     This class show dialog box to set a time range selection and
     get data in the FFmpeg syntax using this form :
 
-        `-ss 00:00:00 -t 00:00:00`
+        `-ss 00:00:00.000 -t 00:00:00.000`
 
-    The -ss flag indicates the start selection; the -t flag indicates
-    the  time amount (duration) starting from -ss. See FFmpeg documents
-    for details. <https://trac.ffmpeg.org/wiki/Seeking#Timeunitsyntax>
+    The -ss flag indicates the start selection; the -t flag
+    indicates the  time amount (duration) starting from -ss.
+    See FFmpeg documentation for details:
+
+        <https://ffmpeg.org/documentation.html>
+
+    or wiki page: <https://trac.ffmpeg.org/wiki/Seeking#Timeunitsyntax>
 
     """
     get = wx.GetApp()
     OS = get.OS
 
     BACKGROUND = '#294083'  # dark azure for panel bkgrd
-    SELECTION = '#4368d3'  # medium azure
+    SELECTION = '#4368d3'  # medium azure foe selection
     WHITE = '#ffffff'  # white for text and draw lines
     GREEN = '#00fe00'  # for margin selection
 
@@ -59,7 +63,7 @@ class Timeline(wx.Dialog):
     def __init__(self, parent, curset, duration):
         """
         If no file has a duration, the limit to the maximum time
-        selection is set (86400 sec. = 23:59:59), to allow for
+        selection is set (86399999 ms = 23:59:59.999), to allow for
         example slideshows with images.
 
         self.px: scale pixels to time seconds for ruler selection
@@ -71,7 +75,7 @@ class Timeline(wx.Dialog):
         if not duration:
             msg0 = _('The maximum time selection is set to 24:00:00, to '
                      'allow make the slideshows')
-            self.duration = 86400  # 23:59:59
+            self.duration = 86399999
         else:
             msg0 = _('The maximum time refers to the file with the longest '
                      'duration')
@@ -84,8 +88,8 @@ class Timeline(wx.Dialog):
         self.bar_x = 0
 
         if curset == '':
-            start_time = '00:00:00'
-            end_time = '00:00:00'
+            start_time = '00:00:00.000'
+            end_time = '00:00:00.000'
 
         else:  # return a previus settings:
             start_time = curset.split()[1]
@@ -173,7 +177,7 @@ class Timeline(wx.Dialog):
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Cut, self.sldcut)
         self.Bind(wx.EVT_COMMAND_SCROLL, self.on_Seek, self.sldseek)
 
-        if end_time != '00:00:00':
+        if end_time != '00:00:00.000':
             self.sldseek.SetValue(time_seconds(start_time))
             self.sldcut.SetValue(time_seconds(end_time))
             self.on_Cut(self)
@@ -254,7 +258,7 @@ class Timeline(wx.Dialog):
             if not (i % 600):
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)
                 w, h = dc.GetTextExtent(str(i))
-                dc.DrawText('%02d:00:00' % i, i+Timeline.RM+3-w/2, 14)
+                dc.DrawText('%02d:00:00.000' % i, i+Timeline.RM+3-w/2, 14)
 
             elif not (i % 300):
                 dc.DrawLine(i+Timeline.RM, 0, i+Timeline.RM, 12)  # metà
