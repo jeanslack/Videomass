@@ -4,7 +4,7 @@
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
 - Advanced log management.
-- Multi language (English and Italian Languages support for now).
+- Multi language support (en, it, ru)
 
 ## Features with FFmpeg
 - Drag and drop to add multiple files simultaneously.
@@ -13,10 +13,11 @@
 - Has useful presets to start with.
 - Supports all formats and codecs available with FFmpeg.
 - Displaying information from streams analyzer.
-- Video filters preview.
-- Three audio normalization modes: PEAK, RMS and EBU-R128.
+- Has useful tools to quickly get information about the FFmpeg used.
+- Advanced video filters with preview.
+- Audio filters have three modes of volume normalization: PEAK, RMS and EBU-R128.
 - Selectable audio indexing to apply audio normalization to videos with multiple audio streams.
-- Ability to set a time range and/or a specific duration.
+- Ability to set a time period with sliders and also view the time range selection.
 
 ## Features with youtube-dl
 - Add multiple URLs simultaneously.
@@ -32,5 +33,6 @@
 - Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
 - Add metadata to file.
 - Write subtitles to video.
+- Ability to keep youtube-dl backend updated.
 
 [Home](index.md)
