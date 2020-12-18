@@ -27,8 +27,8 @@ Currently two ports are released for GTK2 and GTK3. Please visit
 web page to find out which porting is compatible with your Linux distribution.
 
 ## MS Windows
-MS Windows users should use the installer available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) website.   
-The installer contains everything you need to run **Videomass**. 
+**New:** starting from Videomass v3.3.0 a portable version is also available.   
+Visit the [SourceForge](https://sourceforge.net/projects/videomass2/files/) web page and choose the one that works best for you!
 
 Minimum requirements:
 - Microsoft **Windows 7** to **Windows 10** (64-bit only)
