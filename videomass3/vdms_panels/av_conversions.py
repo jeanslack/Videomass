@@ -2,8 +2,8 @@
 # FileName: av_conversions.py
 # Porpose: audio/video conversions interface
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
@@ -352,7 +352,7 @@ class AV_Conv(wx.Panel):
                          wx.ALIGN_CENTER_VERTICAL, 5
                          )
         txtSubmap = wx.StaticText(self.codVpanel, wx.ID_ANY,
-                                  _('Subtitle Stream')
+                                  _('Subtitle Map')
                                   )
         grid_sx_Vcod.Add(txtSubmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmb_Submap = wx.ComboBox(self.codVpanel, wx.ID_ANY,
@@ -1173,10 +1173,12 @@ class AV_Conv(wx.Panel):
             return
 
         self.time_seq = self.parent.time_seq
+        if self.parent.checktimestamp:
+            flt = '%s,"%s"' % (self.opt["VFilters"], self.parent.cmdtimestamp)
+        else:
+            flt = self.opt["VFilters"]
 
-        stream_play(self.parent.file_src[fget[1]],
-                    self.time_seq, self.opt["VFilters"]
-                    )
+        stream_play(self.parent.file_src[fget[1]], self.time_seq, flt)
     # ------------------------------------------------------------------#
 
     def on_FiltersClear(self, event):
@@ -1956,7 +1958,7 @@ class AV_Conv(wx.Panel):
         self.update_allentries()  # update
 
         checking = check_files(self.parent.file_src,
-                               self.parent.file_destin,
+                               self.parent.outpath_ffmpeg,
                                self.parent.same_destin,
                                self.parent.suffix,
                                self.opt["OutputFormat"]
@@ -2313,12 +2315,11 @@ class AV_Conv(wx.Panel):
             outputformat = "Copy"
         else:
             outputformat = self.opt["OutputFormat"]
-        if not self.parent.time_seq:
-            time = _('Off')
+        if self.parent.time_seq == "-ss 00:00:00.000 -t 00:00:00.000":
+            time = _('Unset')
         else:
-            t = list(self.parent.time_read.items())
-            time = '{0}  {1} | {2}  {3}'.format(t[0][0], t[0][1][0],
-                                                t[1][0], t[1][1][0])
+            t = self.parent.time_seq.split()
+            time = _('start  {} | duration  {}').format(t[1], t[3])
         # ------------------
         if self.cmb_Media.GetValue() == 'Audio':
             formula = (_("SUMMARY\n\nQueued File\nOutput Format\
@@ -2456,4 +2457,4 @@ class AV_Conv(wx.Panel):
                                                )
         if prstdialog.ShowModal() == wx.ID_CANCEL:
             return
-        self.parent.Refresh(self)
+        self.parent.PrstsPanel.presets_Refresh(self)

@@ -2,8 +2,8 @@
 # Name: ffplay_file.py
 # Porpose: playback media file via ffplay
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -88,7 +88,7 @@ class File_Play(Thread):
         """
         Get and redirect output errors on p.returncode instance and on
         OSError exception. Otherwise the getted output as information
-        given by error [1]
+        given by error[1]
 
         """
         # time.sleep(.5)
@@ -96,7 +96,7 @@ class File_Play(Thread):
                                        self.time_seq,
                                        self.ffplay_loglev,
                                        self.filename,
-                                       self.param,
+                                       self.param
                                        )
         self.logWrite(cmd)
         if not platform.system() == 'Windows':
@@ -137,7 +137,7 @@ class File_Play(Thread):
                 pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
                 return
             else:
-                #Threads_Handling.stop_download(self, self.filename)
+                # Threads_Handling.stop_download(self, self.filename)
                 pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
                 return
 

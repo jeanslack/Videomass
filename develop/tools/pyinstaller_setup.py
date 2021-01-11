@@ -5,8 +5,8 @@
 # Name: pyinstaller_setup.py
 # Porpose: Wrap the videomass building with pyinstaller
 # Compatibility: Python3
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: June.18.2020
 #########################################################

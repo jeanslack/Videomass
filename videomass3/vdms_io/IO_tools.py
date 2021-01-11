@@ -2,10 +2,10 @@
 # Name: IO_tools.py
 # Porpose: input/output redirection to processes
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.03.2020 *PEP8 compatible*
+# Rev: Dec.28.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -75,15 +75,16 @@ def stream_info(title, filepath):
 # -----------------------------------------------------------------------#
 
 
-def stream_play(filepath, timeseq, param):
+def stream_play(filepath, tseq, param):
     """
-    Thread for media reproduction with ffplay
+    Call Thread for playback with ffplay
     """
     get = wx.GetApp()  # get data from bootstrap
+    tseq = tseq if tseq != "-ss 00:00:00.000 -t 00:00:00.000" else ''
     try:
         with open(filepath):
             thread = File_Play(filepath,
-                               timeseq,
+                               tseq,
                                param,
                                get.LOGdir,
                                get.FFPLAY_url,
@@ -98,7 +99,7 @@ def stream_play(filepath, timeseq, param):
 # -----------------------------------------------------------------------#
 
 
-def url_play(url, quality):
+def url_play(url, quality, timestamp):
     """
     directs to the corresponding thread for playing
     online media streams.
@@ -116,7 +117,7 @@ def url_play(url, quality):
     get = wx.GetApp()  # get data from bootstrap
     youtube_dl = get.pylibYdl
 
-    dowl = ffplay_url_exec.Exec_Streaming(url, quality)
+    dowl = ffplay_url_exec.Exec_Streaming(timestamp, url, quality)
     """
     if youtube_dl is not None:  # run youtube-dl executable
         dowl = ffplay_url_exec.Exec_Streaming(url, quality)
@@ -136,7 +137,7 @@ def probeInfo(filename):
     get = wx.GetApp()
     metadata = FFProbe(get.FFPROBE_url, filename, parse=False, writer='json')
 
-    if metadata.ERROR():  # first execute a control for errors:
+    if metadata.ERROR():  # first checks for errors:
         err = metadata.error
         return (None, err)
 
@@ -357,9 +358,10 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
         msg = _('\nWait....\nUpgrading {}\n').format(name)
     else:
         msg = _('\nWait....\nDownloading {}\n').format(name)
-
-    #url = ('https://github.com/ytdl-org/youtube-dl/releases/'
-           #'download/%s/%s' % (latest, name))
+    '''
+    url = ('https://github.com/ytdl-org/youtube-dl/releases/'
+           'download/%s/%s' % (latest, name))
+    '''
 
     if os.path.exists(executable):
         try:  # make back-up for outdated
@@ -475,6 +477,6 @@ def appimage_update_youtube_dl(appimage):
     ret = None
     with open(log, 'r') as f:
         for line in f:
-            if '**Sucesfully updated**\n' in line:
+            if '**Successfully updated**\n' in line:
                 ret = 'success'
     return 'success' if ret == 'success' else 'error'

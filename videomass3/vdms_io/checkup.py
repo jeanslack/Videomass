@@ -2,8 +2,8 @@
 # File Name: checkup.py
 # Porpose: input/output file check
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Nov.08.2020 *PEP8 compatible*
 #########################################################

@@ -2,8 +2,8 @@
 # Name: mpv_url.py
 # Porpose: playback URLs video via mpv
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: May.07.2020 *PEP8 compatible*
 # WARNING orphan, no longer used, only for reading

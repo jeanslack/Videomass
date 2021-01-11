@@ -2,10 +2,10 @@
 # Name: textdrop.py
 # Porpose: Allows you to add URLs to download media
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Dec.31.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -25,7 +25,6 @@
 
 #########################################################
 import wx
-import os
 
 
 class TextDnD(wx.Panel):
@@ -34,7 +33,7 @@ class TextDnD(wx.Panel):
 
     """
     get = wx.GetApp()
-    OUTSAVE = get.USERfilesave  # files destination folder
+    OUTSAVE = get.YDLoutdir  # files destination folder
     OS = get.OS
     # ----------------------------------------------------------------#
 
@@ -42,13 +41,12 @@ class TextDnD(wx.Panel):
         """
         """
         self.parent = parent  # parent is the MainFrame
-        dirname = os.path.expanduser('~')  # /home/user/
-        self.file_dest = dirname if not TextDnD.OUTSAVE else TextDnD.OUTSAVE
+        self.file_dest = TextDnD.OUTSAVE
 
         wx.Panel.__init__(self, parent=parent)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        infomsg = _("Add one or more URLs below")
+        infomsg = _("Enter URLs below")
         lbl_info = wx.StaticText(self, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL, 5)
         self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -87,7 +85,7 @@ class TextDnD(wx.Panel):
 
         # Tooltip
         btn_clear.SetToolTip(_('Delete all text from the list'))
-        tip = (_('Choose another output directory for files saving'))
+        tip = (_('Choose a temporary destination for the downloads'))
         self.btn_save.SetToolTip(tip)
 
         # Binding

@@ -2,8 +2,8 @@
 # Name: while_playing.py
 # Porpose: Show box with shortcuts keyboard when playback with FFplay
 # Compatibility: Python3, wxPython4
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -81,13 +81,13 @@ class While_Playing(wx.MiniFrame):
 
         """
         # -------------------- widget --------------------------#
-        panel_base = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        panel_base = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
+                              wx.BORDER_THEME)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        #panel_base.SetBackgroundColour(wx.Colour('#008000'))
-        #panel_base.SetBackgroundColour(wx.Colour('#101212'))
+        # panel_base.SetBackgroundColour(wx.Colour('#008000'))
+        # panel_base.SetBackgroundColour(wx.Colour('#101212'))
         panel = wx.Panel(panel_base, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
         sizer_base.Add(panel, 0, wx.ALL | wx.EXPAND, 5)
-
 
         label1 = wx.StaticText(panel, wx.ID_ANY, While_Playing.KEYS)
         label2 = wx.StaticText(panel, wx.ID_ANY, While_Playing.EXPLAN)
@@ -109,8 +109,8 @@ class While_Playing(wx.MiniFrame):
         label1.SetForegroundColour(wx.Colour(While_Playing.DARK_GREEN))
         # ---------------------- Layout ----------------------#
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
-        gr_s1.Add(label1, 0, wx.ALL, 5)
-        gr_s1.Add(label2, 0, wx.ALL, 5)
+        gr_s1.Add(label1, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        gr_s1.Add(label2, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         btngrid = wx.FlexGridSizer(1, 1, 0, 0)
         btngrid.Add(self.button_close, 0, wx.ALL, 0)
         panel.SetSizer(gr_s1)

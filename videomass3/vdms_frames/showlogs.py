@@ -2,8 +2,8 @@
 # Name: showlogs.py
 # Porpose: show logs data
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Oct.26.2020 *PEP8 compatible*
 #########################################################
@@ -42,7 +42,7 @@ class ShowLogs(wx.MiniFrame):
     HEAVENLY = '#87ceebff'
     # breeze-blues
     SOLARIZED = '#11303eff'
-    FOREST_GREEN = '#208320ff'
+    GREY = '#959595'
 
     # list of logs files to include
     LOGNAMES = ('volumedected.log', 'youtubedl_lib.log',
@@ -68,7 +68,8 @@ class ShowLogs(wx.MiniFrame):
                               )
 
         # ----------------------Layout----------------------#
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
+                              wx.BORDER_THEME)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         self.log_select = wx.ListCtrl(self.panel,
                                       wx.ID_ANY,
@@ -91,7 +92,7 @@ class ShowLogs(wx.MiniFrame):
 
         if get.THEME == 'Breeze-Blues':
             self.textdata.SetBackgroundColour(ShowLogs.SOLARIZED)
-            self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.FOREST_GREEN))
+            self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.GREY))
         elif get.THEME in get.DARKicons:
             self.textdata.SetBackgroundColour(ShowLogs.DARK_SLATE)
             self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.HEAVENLY))
@@ -111,8 +112,12 @@ class ShowLogs(wx.MiniFrame):
         grid_funcbtn = wx.BoxSizer(wx.HORIZONTAL)
         button_update = wx.Button(self.panel, wx.ID_REFRESH,
                                   _("Refresh log messages"))
-        grid_funcbtn.Add(button_update, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        button_clear = wx.Button(self.panel, wx.ID_CLEAR, _("Clear log messages"))
+        grid_funcbtn.Add(button_update, 0, wx.ALL |
+                         wx.ALIGN_CENTER_VERTICAL, 5
+                         )
+        button_clear = wx.Button(self.panel, wx.ID_CLEAR,
+                                 _("Clear log messages")
+                                 )
         grid_funcbtn.Add(button_clear, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grid_funcbtn)
         grdexit = wx.BoxSizer(wx.HORIZONTAL)
@@ -133,7 +138,8 @@ class ShowLogs(wx.MiniFrame):
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.log_select)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.log_select)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect,
+                  self.log_select)
         self.Bind(wx.EVT_BUTTON, self.on_update, button_update)
         self.Bind(wx.EVT_BUTTON, self.on_clear, button_clear)
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)

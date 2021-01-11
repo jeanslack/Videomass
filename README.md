@@ -6,15 +6,15 @@
 [![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
 Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
-enthusiasts who need to manage many profiles and automate some conversion 
-processes.   
+enthusiasts who need to manage several custom profiles to automate their 
+transcoding processes.   
 
 It is based on the advanced management of presets and profiles in order to use 
 [FFmpeg](https://www.ffmpeg.org/) without limits of formats, codecs and 
 commands.   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams and the video downloading.   
+streams and downloading videos.   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 
@@ -36,8 +36,8 @@ each operating system.
 - **[PyPubSub](https://pypi.org/project/PyPubSub/)**
 - **[pip](https://pypi.org/project/pip/)**
 - **[ffmpeg >=3.2](https://ffmpeg.org/)**
-- **[ffprobe](https://ffmpeg.org/ffprobe.html)**
-- **[ffplay](http://ffmpeg.org/ffplay.html)**
+- **[ffprobe](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)
+- **[ffplay](http://ffmpeg.org/ffplay.html)** (usually bundled with ffmpeg)
 - **[youtube-dl](https://pypi.org/project/youtube_dl/)**
 
 ### Optionals

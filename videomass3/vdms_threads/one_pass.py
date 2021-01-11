@@ -2,8 +2,8 @@
 # Name: one_pass.py
 # Porpose: FFmpeg long processing task on one pass conversion
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -126,17 +126,17 @@ class OnePass(Thread):
 
             cmd = ('%s %s %s -i "%s" %s %s %s '
                    '-y "%s/%s%s.%s"' % (OnePass.FFMPEG_URL,
-                                      self.time_seq,
-                                      OnePass.FFMPEG_LOGLEV,
-                                      files,
-                                      self.command,
-                                      volume,
-                                      OnePass.FF_THREADS,
-                                      folders,
-                                      filename,
-                                      OnePass.SUFFIX,
-                                      outext,
-                                      ))
+                                        self.time_seq,
+                                        OnePass.FFMPEG_LOGLEV,
+                                        files,
+                                        self.command,
+                                        volume,
+                                        OnePass.FF_THREADS,
+                                        folders,
+                                        filename,
+                                        OnePass.SUFFIX,
+                                        outext,
+                                        ))
             self.count += 1
             count = 'File %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)

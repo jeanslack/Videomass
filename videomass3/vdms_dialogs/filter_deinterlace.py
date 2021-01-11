@@ -2,8 +2,8 @@
 # Name: filter_deinterlace.py
 # Porpose: Show dialog to get deinterlace/interlace data based on FFmpeg syntax
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: November.24.2020 *PEP8 compatible*
 #########################################################

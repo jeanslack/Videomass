@@ -2,8 +2,8 @@
 # Name: youtubedlupdater.py
 # Porpose: update tasks
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Oct.03.2020 *PEP8 compatible*
 #########################################################

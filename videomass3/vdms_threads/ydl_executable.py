@@ -2,8 +2,8 @@
 # Name: Ydl_DL_Exec.py
 # Porpose: long processing task with youtube-dl executable
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.19.2020 *PEP8 compatible*
 #########################################################
@@ -71,8 +71,6 @@ class Ydl_DL_Exec(Thread):
                           'Package (x86)'))
         else:
             LINE_MSG = _('Unrecognized error')
-
-    EXECUTABLE_NOT_FOUND_MSG = _("Is 'youtube-dl' installed on your system?")
     # -----------------------------------------------------------------------#
 
     def __init__(self, varargs, logname):
@@ -195,7 +193,7 @@ class Ydl_DL_Exec(Thread):
                                      end='ok'
                                      )
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, Ydl_DL_Exec.EXECUTABLE_NOT_FOUND_MSG)
+                e = "%s" % err
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=e,
@@ -287,7 +285,8 @@ class Ydl_EI_Exec(Thread):
             self.status = ('%s' % oserr, 'error')
         else:
             if p.returncode:  # if returncode == 1
-                if not out[0] and not out[1] and platform.system() == 'Windows':
+                if (not out[0] and not out[1] and
+                        platform.system() == 'Windows'):
                     self.status = Ydl_EI_Exec.LINE_MSG, 'error'
                 else:
                     self.status = (out[0], 'error')

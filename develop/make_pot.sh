@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: June.30.2020
 #
@@ -34,10 +34,10 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_dialogs/filter_denoisers.py" \
 "../vdms_dialogs/filter_scale.py" \
 "../vdms_dialogs/filter_transpose.py" \
-"../vdms_dialogs/timeline.py" \
-"../vdms_dialogs/first_time_start.py" \
+"../vdms_dialogs/wizard_dlg.py" \
 "../vdms_dialogs/infoprg.py" \
 "../vdms_dialogs/presets_addnew.py" \
+"../vdms_dialogs/set_timestamp.py" \
 "../vdms_dialogs/settings.py" \
 "../vdms_frames/ffmpeg_conf.py" \
 "../vdms_frames/ffmpeg_codecs.py" \
@@ -59,6 +59,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_panels/long_processing_task.py" \
 "../vdms_panels/presets_manager.py" \
 "../vdms_panels/textdrop.py" \
+"../vdms_panels/timeline.py" \
 "../vdms_threads/ffplay_file.py" \
 "../vdms_threads/ffprobe_parser.py" \
 "../vdms_threads/mpv_url.py" \

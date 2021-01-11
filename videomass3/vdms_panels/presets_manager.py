@@ -2,8 +2,8 @@
 # Name: presets_manager.py
 # Porpose: ffmpeg's presets manager panel
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: December.14.2020 *PEP8 compatible*
 #########################################################
@@ -25,14 +25,15 @@
 
 #########################################################
 import wx
-import os
+import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
+import os
 from videomass3.vdms_io.presets_manager_properties import json_data
 from videomass3.vdms_io.presets_manager_properties import supported_formats
 from videomass3.vdms_io.presets_manager_properties import delete_profiles
 from videomass3.vdms_utils.utils import copy_restore
-from videomass3.vdms_utils.utils import copy_backup
 from videomass3.vdms_utils.utils import copy_on
+from videomass3.vdms_utils.utils import copydir_recursively
 from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs import presets_addnew
 from videomass3.vdms_dialogs.epilogue import Formula
@@ -93,63 +94,154 @@ class PrstPan(wx.Panel):
         wx.Panel.__init__(self, parent, -1)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
-                                     wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
-                                     )
-        sizer_base.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 15)
-        nb1 = wx.Notebook(self, wx.ID_ANY, style=0)
-        sizer_base.Add(nb1, 0, wx.ALL | wx.EXPAND, 15)
-        # ------- page presets
-        nb1_p1 = wx.Panel(nb1, wx.ID_ANY)
-        grd_prst = wx.GridSizer(2, 1, 0, 0)
-        lab_prfl = wx.StaticText(nb1_p1, wx.ID_ANY, _("Select a preset from "
-                                                      "the drop down:"))
-        grd_prst.Add(lab_prfl, 0, wx.ALIGN_CENTER_HORIZONTAL |
-                     wx.ALIGN_CENTER_VERTICAL, 0
-                     )
-        self.cmbx_prst = wx.ComboBox(nb1_p1, wx.ID_ANY,
+        sizer_div = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizer_div, 1, wx.EXPAND)
+        # ------- BOX PRESETS
+        boxpresets = wx.StaticBoxSizer(wx.StaticBox(
+            self, wx.ID_ANY, _('Presets')), wx.VERTICAL)
+        sizer_div.Add(boxpresets, 0, wx.ALL | wx.EXPAND, 5)
+        self.cmbx_prst = wx.ComboBox(self, wx.ID_ANY,
                                      choices=prst,
                                      size=(200, -1),
                                      style=wx.CB_DROPDOWN |
                                      wx.CB_READONLY
                                      )
-        grd_prst.Add(self.cmbx_prst, 0, wx.ALIGN_CENTER_HORIZONTAL, 0)
-        nb1_p1.SetSizer(grd_prst)
-        nb1.AddPage(nb1_p1, _("Presets"))
-        # ------- page commands
-        nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
+        boxpresets.Add(self.cmbx_prst, 0, wx.ALL | wx.EXPAND, 5)
+        boxpresets.Add((5, 5))
+        line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        boxpresets.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
+        boxpresets.Add((5, 5))
+        panelscr = scrolled.ScrolledPanel(self, -1, size=(200, 700),
+                                          style=wx.TAB_TRAVERSAL |
+                                          wx.BORDER_THEME, name="panelscroll")
+        fgs1 = wx.BoxSizer(wx.VERTICAL)
+        self.btn_newpreset = wx.Button(panelscr, wx.ID_ANY,
+                                       _("New"), size=(-1, -1))
+        fgs1.Add(self.btn_newpreset, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_delpreset = wx.Button(panelscr, wx.ID_ANY,
+                                       _("Remove"), size=(-1, -1))
+        fgs1.Add(self.btn_delpreset, 0, wx.ALL | wx.EXPAND, 5)
+        line1 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        fgs1.Add((5, 5))
+        fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
+        fgs1.Add((5, 5))
+        self.btn_savecopy = wx.Button(panelscr, wx.ID_ANY,
+                                      _("Export selected"), size=(-1, -1))
+        fgs1.Add(self.btn_savecopy, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_saveall = wx.Button(panelscr, wx.ID_ANY,
+                                     _("Export all..."), size=(-1, -1))
+        fgs1.Add(self.btn_saveall, 0, wx.ALL | wx.EXPAND, 5)
+
+        line2 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        fgs1.Add((5, 5))
+        fgs1.Add(line2, 0, wx.ALL | wx.EXPAND, 5)
+        fgs1.Add((5, 5))
+        self.btn_restore = wx.Button(panelscr, wx.ID_ANY,
+                                     _("Import preset"), size=(-1, -1))
+        fgs1.Add(self.btn_restore, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_restoreall = wx.Button(panelscr, wx.ID_ANY,
+                                        _("Import group"), size=(-1, -1))
+        fgs1.Add(self.btn_restoreall, 0, wx.ALL | wx.EXPAND, 5)
+
+        line3 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        fgs1.Add((5, 5))
+        fgs1.Add(line3, 0, wx.ALL | wx.EXPAND, 5)
+        fgs1.Add((5, 5))
+        self.btn_restoredef = wx.Button(panelscr, wx.ID_ANY,
+                                        _("Restore"), size=(-1, -1))
+        fgs1.Add(self.btn_restoredef, 0, wx.ALL | wx.EXPAND, 5)
+
+        self.btn_restorealldefault = wx.Button(panelscr, wx.ID_ANY,
+                                               _("Restore all..."),
+                                               size=(-1, -1)
+                                               )
+        fgs1.Add(self.btn_restorealldefault, 0, wx.ALL | wx.EXPAND, 5)
+        line4 = wx.StaticLine(panelscr, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        fgs1.Add((5, 5))
+        fgs1.Add(line4, 0, wx.ALL | wx.EXPAND, 5)
+        fgs1.Add((5, 5))
+        self.btn_refresh = wx.Button(panelscr, wx.ID_ANY,
+                                     _("Reload"), size=(-1, -1))
+        fgs1.Add(self.btn_refresh, 0, wx.ALL | wx.EXPAND, 5)
+        boxpresets.Add(panelscr, 0, wx.ALL | wx.CENTRE, 5)
+
+        panelscr.SetSizer(fgs1)
+        panelscr.SetAutoLayout(1)
+        panelscr.SetupScrolling()
+
+        # ------ BOX PROFILES
+        # --- listctrl
+        self.list_ctrl = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
+                                     wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
+                                     )
+        boxprofiles = wx.StaticBoxSizer(wx.StaticBox(
+            self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
+        boxprofiles.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 5)
+        # --- profile buttons
+        grid_profiles = wx.FlexGridSizer(0, 3, 0, 0)
+        self.btn_newprofile = wx.Button(self, wx.ID_ANY,
+                                        _("Add"), size=(-1, -1))
+        grid_profiles.Add(self.btn_newprofile, 0, wx.ALL, 5)
+        self.btn_delprofile = wx.Button(self, wx.ID_ANY,
+                                        _("Delete"), size=(-1, -1))
+        grid_profiles.Add(self.btn_delprofile, 0, wx.ALL, 5)
+        self.btn_editprofile = wx.Button(self, wx.ID_ANY,
+                                         _("Edit"), size=(-1, -1))
+        grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 5)
+        boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
+        sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
+        # ------- NOTEBOOK
+        nb1 = wx.Notebook(self, wx.ID_ANY, style=0)
+        sizer_base.Add(nb1, 0, wx.ALL | wx.EXPAND, 5)
+        # --- page commands
+        nb1_p1 = wx.Panel(nb1, wx.ID_ANY)
         grd_cmd = wx.GridSizer(1, 2, 0, 0)
-        box_cmd1 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY,
+        box_cmd1 = wx.StaticBoxSizer(wx.StaticBox(nb1_p1, wx.ID_ANY,
                                                   _("One-Pass")),
                                      wx.VERTICAL
                                      )
         grd_cmd.Add(box_cmd1, 0, wx.ALL | wx.EXPAND, 15
                     )
-        self.txt_1cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY, "",
+        self.txt_1cmd = wx.TextCtrl(nb1_p1, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
-        box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p2, wx.ID_ANY,
+        box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p1, wx.ID_ANY,
                                                   _("Two-Pass")), wx.VERTICAL
                                      )
         grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND, 15
                     )
-        self.txt_2cmd = wx.TextCtrl(nb1_p2, wx.ID_ANY, "",
+        self.txt_2cmd = wx.TextCtrl(nb1_p1, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
-        nb1_p2.SetSizer(grd_cmd)
-        nb1.AddPage(nb1_p2, (_("Command line FFmpeg")))
-        # ------- page Automations
-        self.nb1_p3 = wx.Panel(nb1, wx.ID_ANY)
+        nb1_p1.SetSizer(grd_cmd)
+        nb1.AddPage(nb1_p1, (_("Command line FFmpeg")))
+        # --- page automations
+        self.nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         size_auto = wx.BoxSizer(wx.HORIZONTAL)
         grd_autosx = wx.FlexGridSizer(2, 1, 5, 5)
         size_auto.Add(grd_autosx, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
-        self.rdbx_norm = wx.RadioBox(self.nb1_p3, wx.ID_ANY,
+        self.rdbx_norm = wx.RadioBox(self.nb1_p2, wx.ID_ANY,
                                      (_("Audio Normalization")),
                                      choices=[('Off'), ('PEAK'),
                                               ('RMS'), ('EBU R128'),
@@ -159,30 +251,30 @@ class PrstPan(wx.Panel):
                                      )
         grd_autosx.Add(self.rdbx_norm, 0, wx.ALL, 10)
 
-        boxamap = wx.StaticBoxSizer(wx.StaticBox(self.nb1_p3, wx.ID_ANY,
+        boxamap = wx.StaticBoxSizer(wx.StaticBox(self.nb1_p2, wx.ID_ANY,
                                                  _("Audio Streams Mapping")),
                                     wx.VERTICAL
                                     )
         grd_autosx.Add(boxamap, 0, wx.ALL | wx.EXPAND, 10)
         grd_map = wx.FlexGridSizer(2, 2, 0, 0)
         boxamap.Add(grd_map, 0, wx.ALL | wx.EXPAND, 5)
-        self.txtAinmap = wx.StaticText(self.nb1_p3, wx.ID_ANY,
+        self.txtAinmap = wx.StaticText(self.nb1_p2, wx.ID_ANY,
                                        _('Input Audio Index')
                                        )
         grd_map.Add(self.txtAinmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
-        self.cmb_A_inMap = wx.ComboBox(self.nb1_p3, wx.ID_ANY,
+        self.cmb_A_inMap = wx.ComboBox(self.nb1_p2, wx.ID_ANY,
                                        choices=['Auto', '1', '2', '3',
                                                 '4', '5', '6', '7', '8'],
                                        size=(160, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
         grd_map.Add(self.cmb_A_inMap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
-        self.txtAoutmap = wx.StaticText(self.nb1_p3, wx.ID_ANY,
+        self.txtAoutmap = wx.StaticText(self.nb1_p2, wx.ID_ANY,
                                         _('Output Audio Index')
                                         )
         grd_map.Add(self.txtAoutmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
 
-        self.cmb_A_outMap = wx.ComboBox(self.nb1_p3, wx.ID_ANY,
+        self.cmb_A_outMap = wx.ComboBox(self.nb1_p2, wx.ID_ANY,
                                         choices=['Auto', 'All', '1', '2', '3',
                                                  '4', '5', '6', '7', '8'],
                                         size=(160, -1), style=wx.CB_DROPDOWN |
@@ -193,7 +285,7 @@ class PrstPan(wx.Panel):
                     )
         size_panels = wx.BoxSizer(wx.VERTICAL)
         size_auto.Add(size_panels, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
-        self.peakpanel = wx.Panel(self.nb1_p3, wx.ID_ANY,
+        self.peakpanel = wx.Panel(self.nb1_p2, wx.ID_ANY,
                                   style=wx.TAB_TRAVERSAL
                                   )
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
@@ -219,7 +311,7 @@ class PrstPan(wx.Panel):
         self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
         size_panels.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 0)
         self.peakpanel.SetSizer(sizer_peak)  # set panel
-        self.ebupanel = wx.Panel(self.nb1_p3, wx.ID_ANY,
+        self.ebupanel = wx.Panel(self.nb1_p2, wx.ID_ANY,
                                  style=wx.TAB_TRAVERSAL
                                  )
         sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
@@ -257,8 +349,8 @@ class PrstPan(wx.Panel):
         sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
         size_panels.Add(self.ebupanel, 0, wx.ALL | wx.EXPAND, 0)
         self.ebupanel.SetSizer(sizer_ebu)  # set panel
-        self.nb1_p3.SetSizer(size_auto)
-        nb1.AddPage(self.nb1_p3, _("Automations"))
+        self.nb1_p2.SetSizer(size_auto)
+        nb1.AddPage(self.nb1_p2, _("Automations"))
 
         self.SetSizer(sizer_base)
         self.Layout()
@@ -270,41 +362,77 @@ class PrstPan(wx.Panel):
             self.txt_1cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
             self.txt_2cmd.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
 
-        # ------- tooltips
-        toolt = (_('First pass parameters of the selected profile'))
-        self.txt_1cmd.SetToolTip(toolt)
-        toolt = (_('Second pass parameters of the selected profile'))
-        self.txt_2cmd.SetToolTip(toolt)
-        toolt = (_('Gets maximum volume and average volume data in dBFS, then '
-                   'calculates the offset amount for audio normalization.'))
-        self.btn_voldect.SetToolTip(toolt)
-        toolt = (_('Limiter for the maximum peak level or the mean level '
-                   '(when switch to RMS) in dBFS. From -99.0 to +0.0; '
-                   'default for PEAK level is -1.0; default for RMS is -20.0'))
-        self.spin_target.SetToolTip(toolt)
-        toolt = (_('Integrated Loudness Target in LUFS. From -70.0 to '
-                   '-5.0, default is -24.0'))
-        self.spin_i.SetToolTip(toolt)
-        toolt = (_('Maximum True Peak in dBTP. From -9.0 to +0.0, '
-                   'default is -2.0'))
-        self.spin_tp.SetToolTip(toolt)
-        toolt = (_('Loudness Range Target in LUFS. From +1.0 to '
-                   '+20.0, default is +7.0'))
-        self.spin_lra.SetToolTip(toolt)
-        toolt = (_('Choose a specific audio stream to map from input file. If '
-                   'not more that one audio stream, leave to "Auto".'))
-        self.cmb_A_inMap.SetToolTip(toolt)
-        toolt = (_('Map on the output index. Keep same input map to preserve '
-                   'indexes; to save as audio file always select to "all" '
-                   'or "Auto"'))
-        self.cmb_A_outMap.SetToolTip(toolt)
+        # ------- tipips
+        self.cmbx_prst.SetToolTip(_("Choose a preset and view its profiles"))
+        tip = (_("Create a new profile and save it in the selected preset"))
+        self.btn_newprofile.SetToolTip(tip)
+        self.btn_delprofile.SetToolTip(_("Delete the selected profile"))
+        self.btn_editprofile.SetToolTip(_("Edit the selected profile"))
+        tip = (_("Create a new preset"))
+        self.btn_newpreset.SetToolTip(tip)
+        tip = (_("Remove the selected preset from the Presets Manager"))
+        self.btn_delpreset.SetToolTip(tip)
+        tip = (_("Export selected preset as copy to media"))
+        self.btn_savecopy.SetToolTip(tip)
+        tip = (_("Export entire presets directory as copy to media"))
+        self.btn_saveall.SetToolTip(tip)
+        tip = (_("Import a new preset"))
+        self.btn_restore.SetToolTip(tip)
+        tip = (_("Import a group of presets from a folder"))
+        self.btn_restoreall.SetToolTip(tip)
+        tip = (_("Replace the selected preset with the Videomass default one"))
+        self.btn_restoredef.SetToolTip(tip)
+        tip = (_("Retrieve all Videomass default presets"))
+        self.btn_restorealldefault.SetToolTip(tip)
+        self.btn_refresh.SetToolTip(_("Update the presets list"))
+        tip = (_('First pass parameters of the selected profile'))
+        self.txt_1cmd.SetToolTip(tip)
+        tip = (_('Second pass parameters of the selected profile'))
+        self.txt_2cmd.SetToolTip(tip)
+        tip = (_('Gets maximum volume and average volume data in dBFS, then '
+                 'calculates the offset amount for audio normalization.'))
+        self.btn_voldect.SetToolTip(tip)
+        tip = (_('Limiter for the maximum peak level or the mean level '
+                 '(when switch to RMS) in dBFS. From -99.0 to +0.0; '
+                 'default for PEAK level is -1.0; default for RMS is -20.0'))
+        self.spin_target.SetToolTip(tip)
+        tip = (_('Integrated Loudness Target in LUFS. From -70.0 to '
+                 '-5.0, default is -24.0'))
+        self.spin_i.SetToolTip(tip)
+        tip = (_('Maximum True Peak in dBTP. From -9.0 to +0.0, '
+                 'default is -2.0'))
+        self.spin_tp.SetToolTip(tip)
+        tip = (_('Loudness Range Target in LUFS. From +1.0 to '
+                 '+20.0, default is +7.0'))
+        self.spin_lra.SetToolTip(tip)
+        tip = (_('Choose a specific audio stream to map from input file. If '
+                 'not more that one audio stream, leave to "Auto".'))
+        self.cmb_A_inMap.SetToolTip(tip)
+        tip = (_('Map on the output index. Keep same input map to preserve '
+                 'indexes; to save as audio file always select to "all" '
+                 'or "Auto"'))
+        self.cmb_A_outMap.SetToolTip(tip)
+
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
+        self.Bind(wx.EVT_BUTTON, self.profile_Add, self.btn_newprofile)
+        self.Bind(wx.EVT_BUTTON, self.profile_Del, self.btn_delprofile)
+        self.Bind(wx.EVT_BUTTON, self.profile_Edit, self.btn_editprofile)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.click_start,
                   self.list_ctrl
                   )
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
+        self.Bind(wx.EVT_BUTTON, self.preset_New, self.btn_newpreset)
+        self.Bind(wx.EVT_BUTTON, self.preset_Del, self.btn_delpreset)
+        self.Bind(wx.EVT_BUTTON, self.preset_Export, self.btn_savecopy)
+        self.Bind(wx.EVT_BUTTON, self.preset_Export_all, self.btn_saveall)
+        self.Bind(wx.EVT_BUTTON, self.preset_Import, self.btn_restore)
+        self.Bind(wx.EVT_BUTTON, self.preset_Default, self.btn_restoredef)
+        self.Bind(wx.EVT_BUTTON, self.preset_Import_all, self.btn_restoreall)
+        self.Bind(wx.EVT_BUTTON, self.preset_Default_all,
+                  self.btn_restorealldefault)
+        self.Bind(wx.EVT_BUTTON, self.presets_Refresh, self.btn_refresh)
         self.Bind(wx.EVT_RADIOBOX, self.on_Enable_norm, self.rdbx_norm)
         self.Bind(wx.EVT_BUTTON, self.on_Analyzes, self.btn_voldect)
         self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
@@ -390,11 +518,10 @@ class PrstPan(wx.Panel):
             self.Bind(wx.EVT_MENU, self.onPopup, id=self.popupID8)
         # build the menu
         menu = wx.Menu()
-        itemOne = menu.Append(self.popupID6,  _("New profile"))
+        itemOne = menu.Append(self.popupID6,  _("Add"))
+        itemThree = menu.Append(self.popupID7, _("Edit"))
         menu.AppendSeparator()
-        itemThree = menu.Append(self.popupID7, _("Edit selected profile"))
-        menu.AppendSeparator()
-        itemTwo = menu.Append(self.popupID8, _("Delete selected profile"))
+        itemTwo = menu.Append(self.popupID8, _("Delete"))
         # show the popup menu
         self.PopupMenu(menu)
         menu.Destroy()
@@ -410,12 +537,12 @@ class PrstPan(wx.Panel):
         menuItem = menu.FindItemById(itemId)
         # item = self.list_ctrl.GetFocusedItem()
 
-        if menuItem.GetItemLabel() == _("New profile"):
-            self.Addprof()
-        elif menuItem.GetItemLabel() == _("Edit selected profile"):
-            self.Editprof(self)
-        elif menuItem.GetItemLabel() == _("Delete selected profile"):
-            self.Delprof()
+        if menuItem.GetItemLabel() == _("Add"):
+            self.profile_Add(self)
+        elif menuItem.GetItemLabel() == _("Edit"):
+            self.profile_Edit(self)
+        elif menuItem.GetItemLabel() == _("Delete"):
+            self.profile_Del(self)
     # ------------------------------------------------------------------#
 
     def reset_list(self, reset_cmbx=False):
@@ -444,10 +571,10 @@ class PrstPan(wx.Panel):
         Populates Presets list with JSON data from *.prst files.
         See presets_manager_properties.py
         """
-        self.list_ctrl.InsertColumn(0, _('Profile Name'), width=250)
+        self.list_ctrl.InsertColumn(0, _('Name'), width=250)
         self.list_ctrl.InsertColumn(1, _('Description'), width=350)
         self.list_ctrl.InsertColumn(2, _('Output Format'), width=200)
-        self.list_ctrl.InsertColumn(3, _('Supported Formats List'), width=220)
+        self.list_ctrl.InsertColumn(3, _('Supported Format List'), width=220)
 
         path = os.path.join('%s' % self.user_prst,
                             '%s.prst' % self.cmbx_prst.GetValue()
@@ -565,7 +692,7 @@ class PrstPan(wx.Panel):
 
         if self.btn_details.IsShown:
             self.btn_details.Hide()
-        self.nb1_p3.Layout()
+        self.nb1_p2.Layout()
     # ------------------------------------------------------------------#
 
     def enter_Amplitude(self, event):
@@ -659,7 +786,7 @@ class PrstPan(wx.Panel):
 
         self.btn_voldect.Disable()
         self.btn_details.Show()
-        self.nb1_p3.Layout()
+        self.nb1_p2.Layout()
     # ------------------------------------------------------------------#
 
     def on_Show_normlist(self, event):
@@ -677,7 +804,7 @@ class PrstPan(wx.Panel):
         audionormlist.Show()
     # ------------------------------------------------------------------#
 
-    def New_preset_prst(self):
+    def preset_New(self, event):
         """
         Create new empty preset '*.prst' on /presets path name
 
@@ -707,7 +834,7 @@ class PrstPan(wx.Panel):
             self.reset_list(True)
     # ------------------------------------------------------------------#
 
-    def Del_preset_prst(self):
+    def preset_Del(self, event):
         """
         Remove or delete a preset '*.prst' on /presets path name
         and move on Removals folder
@@ -724,117 +851,192 @@ class PrstPan(wx.Panel):
         path = os.path.join('%s' % self.user_prst,
                             '%s.prst' % self.cmbx_prst.GetValue()
                             )
-        try:  # if exist dir not exit OSError, go...
+        try:
             if not os.path.exists(os.path.join(self.user_prst, 'Removals')):
                 os.mkdir(os.path.join(self.user_prst, 'Removals'))
         except OSError as err:
-            wx.MessageBox(_("{}\n\nSorry, removal failed, I can't "
-                            "continue.").format(err),
+            wx.MessageBox(_("{}\n\nSorry, removal failed, cannot "
+                            "continue..").format(err),
                           "Videomass", wx.ICON_ERROR, self
                           )
             return
+
         s = os.path.join(self.user_prst, '%s.prst' % filename)
         d = os.path.join(self.user_prst, 'Removals', '%s.prst' % filename)
         os.replace(s, d)
-        self.reset_list(True)
 
+        wx.MessageBox(_('The preset "{0}" was successfully '
+                        'removed').format(filename), "Videomass",
+                      wx.ICON_ERROR, self
+                      )
+        self.reset_list(True)
     # ------------------------------------------------------------------#
-    def Saveme(self):
+
+    def preset_Export(self, event):
         """
-        save a file copy preset
+        save one preset on media
 
         """
         combvalue = self.cmbx_prst.GetValue()
         filedir = '%s/%s.prst' % (self.user_prst, combvalue)
-        filename = combvalue
 
-        dialsave = wx.DirDialog(self, _("Select a directory to save it"))
-        if dialsave.ShowModal() == wx.ID_OK:
-            dirname = dialsave.GetPath()
-            copy_backup(filedir, '%s/%s.prst' % (dirname, filename))
-            dialsave.Destroy()
-            wx.MessageBox(_("Successfully saved"), "Videomass", wx.OK, self)
+        dlg = wx.DirDialog(self, _("Choose a place to save the selected "
+                                   "preset"), "", style=wx.DD_DEFAULT_STYLE)
+        if dlg.ShowModal() == wx.ID_OK:
+            path = dlg.GetPath()
+            if os.path.exists(os.path.join(path, '%s.prst' % combvalue)):
+                if wx.MessageBox(_('This file already exists, do you want '
+                                   'to overwrite it?'), _('Please confirm'),
+                                 wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                    return
+
+            status = copy_restore(filedir,
+                                  os.path.join(path, '%s.prst' % combvalue))
+            dlg.Destroy()
+
+            if status:
+                wx.MessageBox('%s' % status, "Videomass", wx.ICON_ERROR, self)
+                return
+            else:
+                wx.MessageBox(_("The preset was exported successfully"),
+                              "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
-    def Restore(self):
+    def preset_Export_all(self, event):
         """
-        Replace preset by another
+        Save the presets directory on media
+
+        """
+        src = self.user_prst
+
+        dialsave = wx.DirDialog(self, _("Choose a place to export all "
+                                        "presets"), "", wx.DD_DEFAULT_STYLE)
+        if dialsave.ShowModal() == wx.ID_OK:
+            dest = dialsave.GetPath()
+            status = copydir_recursively(src, dest, 'Videomass-Presets-copy')
+            dialsave.Destroy()
+            if status:
+                wx.MessageBox("%s" % status, "Videomass",
+                              wx.ICON_ERROR, self)
+            else:
+                wx.MessageBox(_("All presets have been exported successfully"),
+                              "Videomass", wx.OK, self)
+    # ------------------------------------------------------------------#
+
+    def preset_Import(self, event):
+        """
+        Import a new preset. If the preset already exists you will
+        be asked to overwrite it or not.
 
         """
         wildcard = "Source (*.prst)|*.prst| All files (*.*)|*.*"
 
-        dialfile = wx.FileDialog(self, _("Videomass: Choose a videomass "
-                                         "preset to restore "), '', "",
-                                 wildcard, wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+        dialfile = wx.FileDialog(self, _("Import a new Videomass preset"), '',
+                                 "", wildcard, wx.FD_OPEN |
+                                 wx.FD_FILE_MUST_EXIST
                                  )
         if dialfile.ShowModal() == wx.ID_OK:
-            dirname = dialfile.GetPath()
-            tail = os.path.basename(dirname)
+            newincoming = dialfile.GetPath()
+            new = os.path.basename(newincoming)
             dialfile.Destroy()
+            if os.path.exists(os.path.join(self.user_prst, new)):
 
-            if wx.MessageBox(_("The following preset:\n\n"
-                               "'{0}'\n\n"
-                               "will be imported and will overwrite "
-                               "the one in use.\n"
-                               "Proceed ?").format(tail),
-                             _('Please confirm'),
+                if wx.MessageBox(_(
+                             'This preset already exists, do you want '
+                             'to overwrite it?'), _('Please confirm'),
                              wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                    return
+
+            status = copy_restore(newincoming,
+                                  os.path.join(self.user_prst, new))
+            if status:
+                wx.MessageBox('%s' % status, "Videomass", wx.ICON_ERROR, self)
                 return
 
-            copy_restore('%s' % (dirname), '%s/%s' % (self.user_prst, tail))
-
-            self.reset_list(True)  # re-charging functions
+            self.reset_list(True)  # reload presets
+            wx.MessageBox(_("A new preset was successfully imported"),
+                          "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
-    def Default(self):
+    def preset_Import_all(self, event):
+        """
+        Import all presets previously saved in a folder and replaces
+        the existing ones
+
+        """
+        if wx.MessageBox(_("This will replace all presets with the same name."
+                           "\n\nDo you want to continue?"), _("Notice"),
+                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+            return
+        dialsave = wx.DirDialog(self, _("Import a group of Videomass presets"),
+                                "", style=wx.DD_DEFAULT_STYLE
+                                )
+        if dialsave.ShowModal() == wx.ID_OK:
+            source = dialsave.GetPath()
+            dialsave.Destroy()
+            outerror = copy_on('prst', source, self.user_prst)
+            if outerror:
+                wx.MessageBox("%s" % outerror, "Videomass",
+                              wx.ICON_ERROR, self)
+            else:
+                wx.MessageBox(_("A new group of presets was successfully "
+                                "imported"), "Videomass", wx.OK, self)
+                self.reset_list(True)
+    # ------------------------------------------------------------------#
+
+    def preset_Default(self, event):
         """
         Replace the selected preset at default values.
 
         """
-        if wx.MessageBox(_("The selected preset will be overwritten with "
-                           "default profiles!\nproceed?"),
-                         _("Please confirm"),
+        if wx.MessageBox(_("The selected preset will be overwritten with the "
+                           "default one!\n\nDo you want to continue?"),
+                         _("Notice"),
                          wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
 
         filename = self.cmbx_prst.GetValue()
-        copy = copy_restore('%s/%s.prst' % (self.src_prst, filename),
-                            '%s/%s.prst' % (self.user_prst, filename)
-                            )
-        if copy:
+        status = copy_restore('%s/%s.prst' % (self.src_prst, filename),
+                              '%s/%s.prst' % (self.user_prst, filename)
+                              )
+        if status:
             wx.MessageBox(_('Sorry, this preset is not part '
                             'of default Videomass presets.'),
                           "Videomass", wx.ICON_ERROR, self
                           )
             return
 
-        self.reset_list()  # re-charging functions
+        wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
+        self.reset_list()  # reload presets
     # ------------------------------------------------------------------#
 
-    def Default_all(self):
+    def preset_Default_all(self, event):
         """
         restore all preset files directory
 
         """
-        if wx.MessageBox(_("WARNING: you are restoring all "
-                           "default presets!\nProceed?"),
-                         _("Please confirm"),
+        if wx.MessageBox(_("This will replace all presets with the same name."
+                           "\n\nDo you want to continue?"), _("Notice"),
                          wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
 
-        copy_on('prst', self.src_prst, self.user_prst)
-
-        self.reset_list(True)  # re-charging functions
+        outerror = copy_on('prst', self.src_prst, self.user_prst)
+        if outerror:
+            wx.MessageBox("%s" % outerror, "Videomass", wx.ICON_ERROR, self)
+        else:
+            wx.MessageBox(_("All the default presets have been successfully "
+                            "recovered"), "Videomass", wx.OK, self)
+            self.reset_list(True)
     # ------------------------------------------------------------------#
 
-    def Refresh(self):
+    def presets_Refresh(self, event):
         """
         Force to to re-charging
         """
         self.reset_list(True)
 
     # ------------------------------------------------------------------#
-    def Addprof(self):
+    def profile_Add(self, event):
         """
         Store new profiles in the selected preset
 
@@ -853,7 +1055,7 @@ class PrstPan(wx.Panel):
             self.reset_list()  # re-charging list_ctrl with newer
     # ------------------------------------------------------------------#
 
-    def Editprof(self, event):
+    def profile_Edit(self, event):
         """
         Edit an existing profile
 
@@ -876,7 +1078,7 @@ class PrstPan(wx.Panel):
                 self.reset_list()  # re-charging list_ctrl with newer
     # ------------------------------------------------------------------#
 
-    def Delprof(self):
+    def profile_Del(self, event):
         """
         Delete a selected profile
 
@@ -954,7 +1156,7 @@ class PrstPan(wx.Panel):
         extlst, outext = self.array[4], outext
         file_src = supported_formats(extlst, self.parent.file_src)
         checking = check_files(file_src,
-                               self.parent.file_destin,
+                               self.parent.outpath_ffmpeg,
                                self.parent.same_destin,
                                self.parent.suffix,
                                outext,
@@ -1116,12 +1318,11 @@ class PrstPan(wx.Panel):
             normalize = 'EBU R128'
         else:
             normalize = _('Off')
-        if not self.parent.time_seq:
-            time = _('Disable')
+        if self.parent.time_seq == "-ss 00:00:00.000 -t 00:00:00.000":
+            time = _('Unset')
         else:
-            t = list(self.parent.time_read.items())
-            time = '{0}  {1} | {2}  {3}'.format(t[0][0], t[0][1][0],
-                                                t[1][0], t[1][1][0])
+            t = self.parent.time_seq.split()
+            time = _('start  {} | duration  {}').format(t[1], t[3])
 
         numfile = "%s file in pending" % str(cntmax)
 

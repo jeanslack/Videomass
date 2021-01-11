@@ -2,8 +2,8 @@
 # Name: epilogue.py
 # Porpose: show dialog box before start process
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Aug.16.2020 *PEP8 compatible*
 #########################################################
@@ -76,8 +76,8 @@ class Formula(wx.Dialog):
         # ---------------------- Layout ----------------------#
         s1 = wx.BoxSizer(wx.VERTICAL)
         gr_s1 = wx.FlexGridSizer(1, 2, 0, 0)
-        gr_s1.Add(label1, 0, wx.ALL, 5)
-        gr_s1.Add(label2, 0, wx.ALL, 5)
+        gr_s1.Add(label1, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        gr_s1.Add(label2, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
         btngrid = wx.FlexGridSizer(1, 2, 0, 0)
         btngrid.Add(self.button_1, 0, wx.ALL, 5)
         btngrid.Add(self.button_2, 0, wx.ALL, 5)

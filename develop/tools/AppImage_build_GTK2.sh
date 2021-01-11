@@ -12,7 +12,8 @@
 # Ideally run this inside the manylinux Docker container
 # so that dependencies get bundled from that very container
 #
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
 # Update: Oct.12.2020
 ###################################################################

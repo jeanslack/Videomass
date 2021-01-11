@@ -2,10 +2,10 @@
 # Name: configurator.py
 # Porpose: Set Videomass configuration and appearance on startup
 # Compatibility: Python3
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.16.2020 *PEP8 compatible*
+# Rev: Dec.29.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -42,7 +42,7 @@ class Data_Source(object):
 
     # Establish the conventional paths based on OS
     if OS == 'Windows':
-        DIRPATH = "\\AppData\\Roaming\\videomass\\videomassWin32.conf"
+        DIRPATH = "\\AppData\\Roaming\\videomass\\videomass.conf"
         FILE_CONF = os.path.join(USER_NAME + DIRPATH)
         DIR_CONF = os.path.join(USER_NAME + "\\AppData\\Roaming\\videomass")
         LOG_DIR = os.path.join(DIR_CONF, 'log')  # logs
@@ -91,7 +91,6 @@ class Data_Source(object):
             print('frozen=%s meipass=%s launcher=%s' % (frozen, meipass,
                                                         launcher))
             self.videomass_icon = "%s/videomass.png" % self.icodir
-            self.wizard_icon = "%s/videomass_wizard.png" % self.icodir
 
         else:
             if Data_Source.OS == 'Windows':  # Installed with pip command
@@ -101,7 +100,6 @@ class Data_Source(object):
                 pythonpath = os.path.join(dirname, 'Script', 'videomass')
                 # self.icodir = dirname + '\\share\\videomass\\icons'
                 self.videomass_icon = self.icodir + "\\videomass.png"
-                self.wizard_icon = self.icodir + "\\videomass_wizard.png"
 
             elif '/tmp/.mount_' in sys.executable or \
                  os.path.exists(os.getcwd() + '/AppRun'):
@@ -110,8 +108,6 @@ class Data_Source(object):
                 userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
                 pixmaps = '/share/pixmaps/videomass.png'
                 self.videomass_icon = os.path.join(userbase + pixmaps)
-                self.wizard_icon = os.path.join(self.icodir +
-                                                "/videomass_wizard.png")
 
             else:
                 binarypath = shutil.which('videomass')
@@ -121,14 +117,12 @@ class Data_Source(object):
                     # pip as super user, usually Linux, MacOs, Unix
                     share = '/usr/local/share/pixmaps'
                     self.videomass_icon = share + '/videomass.png'
-                    self.wizard_icon = self.icodir + '/videomass_wizard.png'
 
                 elif binarypath == '/usr/bin/videomass':
                     print('executable=%s' % binarypath)
                     # installed via apt, rpm, etc, usually Linux
                     share = '/usr/share/pixmaps'
                     self.videomass_icon = share + "/videomass.png"
-                    self.wizard_icon = self.icodir + "/videomass_wizard.png"
 
                 else:
                     print('executable=%s' % binarypath)
@@ -136,8 +130,6 @@ class Data_Source(object):
                     userbase = os.path.dirname(os.path.dirname(binarypath))
                     pixmaps = '/share/pixmaps/videomass.png'
                     self.videomass_icon = os.path.join(userbase + pixmaps)
-                    self.wizard_icon = os.path.join(self.icodir +
-                                                    "/videomass_wizard.png")
     # ---------------------------------------------------------------------
 
     def parsing_fileconf(self):
@@ -179,19 +171,15 @@ class Data_Source(object):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 2.5:
+                if float(userconf[0]) != 2.6:
                     existfileconf = False
             else:
                 existfileconf = False
 
             if not existfileconf:
                 try:  # try to restore only videomass.conf
-                    if Data_Source.OS == ('Windows'):
-                        shutil.copyfile('%s/videomassWin32.conf' %
-                                        self.SRCpath, Data_Source.FILE_CONF)
-                    else:
-                        shutil.copyfile('%s/videomass.conf' % self.SRCpath,
-                                        Data_Source.FILE_CONF)
+                    shutil.copyfile('%s/videomass.conf' % self.SRCpath,
+                                    Data_Source.FILE_CONF)
                     userconf = self.parsing_fileconf()  # read again file conf
                 except IOError as e:
                     copyerr = e
@@ -237,47 +225,37 @@ class Data_Source(object):
         # Breeze for light themes
         if iconset == 'Breeze':  # default
             x48 = '%s/Sign_Icons/48x48_light' % self.icodir
-            x22 = '%s/Breeze/22x22' % self.icodir
             x16 = '%s/Breeze/16x16' % self.icodir
         # breeze for dark themes
         elif iconset == 'Breeze-Dark':
             x48 = '%s/Sign_Icons/48x48_dark' % self.icodir
-            x22 = '%s/Breeze-Dark/22x22' % self.icodir
             x16 = '%s/Breeze-Dark/16x16' % self.icodir
         # breeze custom icons colorized
         elif iconset == 'Breeze-Blues':
             x48 = '%s/Sign_Icons/48x48' % self.icodir
-            x22 = '%s/Breeze-Blues/22x22' % self.icodir
             x16 = '%s/Breeze-Blues/16x16' % self.icodir
         # papirus icons
         elif iconset == 'Papirus':
             x48 = '%s/Sign_Icons/48x48_light' % self.icodir
-            x22 = '%s/Papirus/22x22' % self.icodir
             x16 = '%s/Papirus/16x16' % self.icodir
         # papirus icons for dark themes
         elif iconset == 'Papirus-Dark':
             x48 = '%s/Sign_Icons/48x48_dark' % self.icodir
-            x22 = '%s/Papirus-Dark/22x22' % self.icodir
             x16 = '%s/Papirus-Dark/16x16' % self.icodir
 
         # choose topic icons 48x48:
         icon_switchvideomass = '%s/icon_videoconversions.png' % x48
         icon_youtube = '%s/icon_youtube.png' % x48
         icon_prst_mng = '%s/icon_prst_mng.png' % x48
-        # toolbar icons 22x22:
-        icon_process = '%s/convert.png' % x22
-        icon_toolback = '%s/back.png' % x22
-        icon_toolforward = '%s/forward.png' % x22
-        icon_ydl = '%s/download.png' % x22
-        icn_infosource = '%s/view-media.png' % x22
-        icn_preview = '%s/media-playback.png' % x22
-        icn_cut = '%s/timeline.png' % x22
-        icn_saveprf = '%s/save-as.png' % x22
-        icn_newprf = '%s/new.png' % x22
-        icn_delprf = '%s/delete.png' % x22
-        icn_editprf = '%s/edit.png' % x22
-        icn_viewstatistics = '%s/view-statistics.png' % x22
-        icn_viewlog = '%s/viewlog.png' % x22
+        # toolbar icons 16x16:
+        icon_process = '%s/convert.png' % x16
+        icon_toolback = '%s/go-previous.png' % x16
+        icon_toolforward = '%s/go-next.png' % x16
+        icon_ydl = '%s/download.png' % x16
+        icn_infosource = '%s/properties.png' % x16
+        icn_preview = '%s/media-playback.png' % x16
+        icn_saveprf = '%s/vdms-profile-append.png' % x16
+        icn_viewstatistics = '%s/statistics.png' % x16
         # button icons 16x16:
         icn_playfilters = '%s/view-preview.png' % x16
         icn_resetfilters = '%s/edit-clear.png' % x16
@@ -295,7 +273,7 @@ class Data_Source(object):
                                                 icon_process,  # 2
                                                 icn_infosource,  # 3
                                                 icn_preview,  # 4
-                                                icn_cut,  # 5
+                                                '',  # icn_cut,  # 5
                                                 icn_playfilters,  # 6
                                                 icn_resetfilters,   # 7
                                                 icn_saveprf,  # 8
@@ -306,16 +284,15 @@ class Data_Source(object):
                                                 ic_denoiser,  # 13
                                                 ic_analyzes,  # 14
                                                 ic_settings,  # 15
-                                                self.wizard_icon,  # 16
-                                                ic_peaklevel,  # 17
-                                                icon_youtube,  # 18
-                                                icon_prst_mng,  # 19
-                                                icn_newprf,  # 20
-                                                icn_delprf,  # 21
-                                                icn_editprf,  # 22
-                                                icon_toolback,  # 23
-                                                icon_toolforward,  # 24
-                                                icon_ydl,  # 25
-                                                icn_viewstatistics, # 26
-                                                icn_viewlog, # 27
+                                                ic_peaklevel,  # 16
+                                                icon_youtube,  # 17
+                                                icon_prst_mng,  # 18
+                                                '',  # icn_newprf,  # 19
+                                                '',  # icn_delprf,  # 20
+                                                '',  # icn_editprf,  # 21
+                                                icon_toolback,  # 22
+                                                icon_toolforward,  # 23
+                                                icon_ydl,  # 24
+                                                icn_viewstatistics,  # 25
+                                                '',  # icn_viewlog, # 26
                                                 ]]

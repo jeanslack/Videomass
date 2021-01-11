@@ -2,10 +2,10 @@
 # Name: filter_transpose.py
 # Porpose: Show dialog to get video transpose data based on FFmpeg syntax
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.04.2020 *PEP8 compatible*
+# Rev: Dec.16.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -34,8 +34,8 @@ from videomass3.vdms_threads.generic_task import FFmpegGenericTask
 
 class Transpose(wx.Dialog):
     """
-    A dialog tool to get video transpose data based on FFmpeg syntax
-    .
+    A dialog tool to get video transpose data based on FFmpeg syntax.
+
     """
     get = wx.GetApp()
     OS = get.OS
@@ -85,7 +85,7 @@ class Transpose(wx.Dialog):
                                        style=wx.ST_NO_AUTORESIZE |
                                        wx.ALIGN_CENTRE_HORIZONTAL
                                        )
-        sizerBase.Add(self.statictxt, 0, wx.CENTER)
+        sizerBase.Add(self.statictxt, 0, wx.CENTER | wx.EXPAND)
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load Frame"))
         sizerBase.Add(self.btn_load, 0, wx.ALL | wx.EXPAND, 10)
         msg = _("Rotation setting")

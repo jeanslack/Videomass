@@ -3,8 +3,8 @@
 # Name: Videomass3.py
 # Porpose: bootstrap for Videomass app.
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Nov.03.2020 *PEP8 compatible*
 #########################################################
@@ -58,7 +58,7 @@ class Videomass(wx.App):
         self.OS > operating system name
         self.pylibYdl > if None youtube-dl is used as library
         self.execYdl > if False is not used a local executable
-        self.USERfilesave > set user path folder for file destination
+        self.FFMPEGoutdir > set user path folder for FFmpeg file destination
 
         """
         self.DIRconf = None
@@ -70,11 +70,13 @@ class Videomass(wx.App):
         self.FFPROBE_url = None
         self.FFMPEG_loglev = None
         self.FFPLAY_loglev = None
-        self.pylibYdl = None
-        self.execYdl = False
-        self.USERfilesave = None
+        self.pylibYdl = None  # None if load as library else string
+        self.execYdl = False  # path to the executable
+        self.YDLsite = None  # path to youtube-dl sitepackage/distpackage
+        self.YDL_pref = None  # one of these: false, disabled, system, local
+        self.FFMPEGoutdir = None
+        self.YDLoutdir = None
         self.CLEARcache = None
-        self.WARNme = None
 
         wx.App.__init__(self, redirect, filename)  # constructor
     # -------------------------------------------------------------------
@@ -99,6 +101,7 @@ class Videomass(wx.App):
 
         pathicons = data.icons_set(setui[4][11])  # get paths icons data
 
+        dirname = os.path.expanduser('~')  # /home/user/
         self.OS = setui[0]
         self.FILEconf = setui[6]
         self.WORKdir = setui[7]
@@ -111,36 +114,43 @@ class Videomass(wx.App):
         self.MPV_check = setui[4][11]
         self.MPV_url = setui[4][12]
         self.FFthreads = setui[4][2]
-        self.USERfilesave = None if setui[4][1] == 'none' else setui[4][1]
+        self.FFMPEGoutdir = dirname if setui[4][1] == 'none' else setui[4][1]
         self.LOGdir = setui[9]  # dir for logging
         self.CACHEdir = setui[10]  # dir cache for updates
         self.FFMPEGlocaldir = setui[11]  # embed local executables ffmpeg
         self.CLEARcache = setui[4][15]  # set clear cache on exit
-        self.WARNme = setui[4][16]  # youtube-dl exec. is no longer in use
+        self.YDL_pref = setui[4][16]  # get youtube-dl preferences
         self.TMP = os.path.join(self.CACHEdir, 'tmp')
         self.DARKicons = ('Breeze-Blues', 'Breeze-Dark', 'Papirus-Dark')
         self.THEME = setui[4][11]
         self.SAMEdir = setui[4][17]  # file save with same dest. as source
         self.FILEsuffix = setui[4][18]  # add a suffix string to file name
+        self.YDLoutdir = dirname if setui[4][19] == 'none' else setui[4][19]
 
         # ----- youtube-dl
-        if self.OS == 'Windows':
-            try:
-                from youtube_dl import YoutubeDL
+        execname = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
 
-            except (ModuleNotFoundError, ImportError) as nomodule:
-                self.pylibYdl = nomodule
-                self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl.exe')
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            self.execYdl = os.path.join(self.CACHEdir, execname)
+            self.pylibYdl = 'no module loaded'
+            if self.YDL_pref != 'false':
+                self.YDL_pref = (setui[4][16] if setui[4][16] == 'disabled'
+                                 else 'local')
         else:
-            try:
-                from youtube_dl import YoutubeDL
 
-            except (ModuleNotFoundError, ImportError) as nomodule:
-                self.execYdl = os.path.join(self.CACHEdir, 'youtube-dl')
-                sys.path.append(self.execYdl)
+            if self.YDL_pref == 'disabled':
+                self.pylibYdl = 'no module loaded'
 
+            elif self.YDL_pref == 'local':
+                self.execYdl = os.path.join(self.CACHEdir, execname)
+                self.pylibYdl = 'no module loaded'
+
+            elif self.YDL_pref == 'system':
+                win, nix = '\\__init__.py', '/__init__.py'
+                sp = win if self.OS == 'Windows' else nix
                 try:
-                    from youtube_dl import YoutubeDL
+                    import youtube_dl
+                    self.YDLsite = youtube_dl.__file__.split(sp)[0]
 
                 except (ModuleNotFoundError, ImportError) as nomodule:
                     self.pylibYdl = nomodule
@@ -153,8 +163,8 @@ class Videomass(wx.App):
                 else:
                     binaries = False
                     break
-            if not binaries:
-                self.wizard(pathicons[16])
+            if not binaries or self.YDL_pref == 'false':
+                self.wizard(pathicons[0])
                 return True
             else:
                 self.FFMPEG_url = setui[4][6]
@@ -169,8 +179,8 @@ class Videomass(wx.App):
                 else:
                     binaries = False
                     break
-            if not binaries:
-                self.wizard(pathicons[16])
+            if not binaries or self.YDL_pref == 'false':
+                self.wizard(pathicons[0])
                 return True
             else:
                 self.FFMPEG_url = setui[4][6]
@@ -209,8 +219,8 @@ class Videomass(wx.App):
         Show a temporary dialog for setup during first start time
         of the Videomass application.
         """
-        from videomass3.vdms_dialogs.first_time_start import FirstStart
-        main_frame = FirstStart(wizardicon)
+        from videomass3.vdms_dialogs.wizard_dlg import Wizard
+        main_frame = Wizard(wizardicon)
         main_frame.Show()
         self.SetTopWindow(main_frame)
         return True

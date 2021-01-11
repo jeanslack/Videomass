@@ -2,8 +2,8 @@
 # Name: two_pass.py
 # Porpose: FFmpeg long processing task on 2 pass conversion
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -210,17 +210,17 @@ class TwoPass(Thread):
             # --------------- second pass ----------------#
             pass2 = ('%s %s %s -i "%s" %s %s %s '
                      '-y "%s/%s%s.%s"' % (TwoPass.FFMPEG_URL,
-                                        TwoPass.FFMPEG_LOGLEV,
-                                        self.time_seq,
-                                        files,
-                                        self.passList[1],
-                                        volume,
-                                        TwoPass.FF_THREADS,
-                                        folders,
-                                        filename,
-                                        TwoPass.SUFFIX,
-                                        outext,
-                                        ))
+                                          TwoPass.FFMPEG_LOGLEV,
+                                          self.time_seq,
+                                          files,
+                                          self.passList[1],
+                                          volume,
+                                          TwoPass.FF_THREADS,
+                                          folders,
+                                          filename,
+                                          TwoPass.SUFFIX,
+                                          outext,
+                                          ))
             count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             wx.CallAfter(pub.sendMessage,

@@ -2,10 +2,10 @@
 # Name: youtubedl_ui.py
 # Porpose: youtube-dl user interface
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.24.2020 *PEP8 compatible*
+# Rev: Dec.31.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,9 +26,10 @@
 #########################################################
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import format_bytes
-from videomass3.vdms_utils.utils import time_human
+from videomass3.vdms_utils.utils import timehuman
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
 import wx
+import wx.lib.scrolledpanel as scrolled
 
 if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
     import wx.lib.mixins.listctrl as listmix
@@ -136,82 +137,98 @@ class Downloader(wx.Panel):
         self.info = list()  # has data information for Show More button
         self.format_dict = dict()  # format codes order with URL matching
         self.oldwx = None  # test result of hasattr EVT_LIST_ITEM_CHECKED
-
-        wx.Panel.__init__(self, parent, -1)
+        '''
+        wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL |
+                          wx.BORDER_THEME)
+        '''
+        wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        #frame = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
-                                                #"")), wx.VERTICAL)
-        #sizer_base.Add(frame, 1, wx.ALL | wx.EXPAND, 5)
-        sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer_base.Add(sizer, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_div = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(sizer_div, 1, wx.EXPAND)
+        boxoptions = wx.StaticBoxSizer(wx.StaticBox(
+            self, wx.ID_ANY, _('Options')), wx.VERTICAL)
+        sizer_div.Add(boxoptions, 0, wx.ALL | wx.EXPAND, 5)
+        boxlistctrl = wx.StaticBoxSizer(wx.StaticBox(
+            self, wx.ID_ANY, ('')), wx.VERTICAL)
+        sizer_div.Add(boxlistctrl, 1, wx.ALL | wx.EXPAND, 5)
+
+        # ------------- choice and comboboxes
         self.choice = wx.Choice(self, wx.ID_ANY,
                                 choices=Downloader.CHOICE,
                                 size=(-1, -1),
                                 )
         self.choice.SetSelection(0)
-        # sizer.Add(self.choice, 0, wx.EXPAND | wx.ALL, 15)
-        grid_v = wx.FlexGridSizer(1, 4, 0, 0)
-        grid_v.Add(self.choice, 0, wx.ALL, 5)
-        sizer.Add(grid_v, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        boxoptions.Add(self.choice, 0, wx.ALL | wx.EXPAND, 5)
         f = [x for x in Downloader.VQUALITY.keys()]
-        self.cmbx_vq = wx.ComboBox(self, wx.ID_ANY, choices=f,
-                                   size=(200, -1), style=wx.CB_DROPDOWN |
+        boxoptions.Add((5, 5))
+        line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
+        boxoptions.Add((5, 5))
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 300),
+                                             style=wx.TAB_TRAVERSAL |
+                                             wx.BORDER_THEME, name="panelscr",
+                                             )
+        fgs1 = wx.BoxSizer(wx.VERTICAL)
+        # fgs1.Add((5, 5))
+        self.cmbx_vq = wx.ComboBox(panelscroll, wx.ID_ANY, choices=f,
+                                   size=(-1, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
                                    )
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
-        grid_v.Add(self.cmbx_vq, 0, wx.ALL, 5)
+        fgs1.Add(self.cmbx_vq, 0, wx.ALL | wx.EXPAND, 5)
         self.cmbx_aq = wx.ComboBox(
-                            self, wx.ID_ANY,
+                            panelscroll, wx.ID_ANY,
                             choices=[x for x in Downloader.AQUALITY.keys()],
-                            size=(200, -1), style=wx.CB_DROPDOWN |
+                            size=(-1, -1), style=wx.CB_DROPDOWN |
                             wx.CB_READONLY
                                    )
         self.cmbx_aq.SetSelection(0)
         self.cmbx_aq.Disable()
         # grid_v.Add((20, 20), 0,)
-        grid_v.Add(self.cmbx_aq, 0, wx.ALL, 5)
+        fgs1.Add(self.cmbx_aq, 0, wx.ALL | wx.EXPAND, 5)
         self.cmbx_af = wx.ComboBox(
-                            self, wx.ID_ANY,
+                            panelscroll, wx.ID_ANY,
                             choices=[x for x in Downloader.AFORMATS.keys()],
-                            size=(200, -1), style=wx.CB_DROPDOWN |
+                            size=(-1, -1), style=wx.CB_DROPDOWN |
                             wx.CB_READONLY
                                    )
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
-        grid_v.Add(self.cmbx_af, 0, wx.ALL, 5)
-
-        line = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
-                             size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
-                             name=wx.StaticLineNameStr
-                             )
-        sizer.Add(line, 0, wx.ALL | wx.EXPAND, 10)
-
-        # -------------opt
-        grid_opt = wx.FlexGridSizer(1, 4, 0, 0)
-        sizer.Add(grid_opt, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-        self.ckbx_pl = wx.CheckBox(self, wx.ID_ANY,
+        fgs1.Add(self.cmbx_af, 0, wx.ALL | wx.EXPAND, 5)
+        # ------------- checkboxes
+        line1 = wx.StaticLine(panelscroll, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
+        self.ckbx_pl = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Download all playlist'))
                                    )
-        grid_opt.Add(self.ckbx_pl, 0, wx.ALL, 5)
-        self.ckbx_thumb = wx.CheckBox(self, wx.ID_ANY,
+        fgs1.Add(self.ckbx_pl, 0, wx.ALL, 5)
+        self.ckbx_thumb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                       (_('Embed thumbnail in audio file'))
                                       )
-        grid_opt.Add(self.ckbx_thumb, 0, wx.ALL, 5)
-        self.ckbx_meta = wx.CheckBox(self, wx.ID_ANY,
+        fgs1.Add(self.ckbx_thumb, 0, wx.ALL, 5)
+        self.ckbx_meta = wx.CheckBox(panelscroll, wx.ID_ANY,
                                      (_('Add metadata to file'))
                                      )
-        grid_opt.Add(self.ckbx_meta, 0, wx.ALL, 5)
-        self.ckbx_sb = wx.CheckBox(self, wx.ID_ANY,
+        fgs1.Add(self.ckbx_meta, 0, wx.ALL, 5)
+        self.ckbx_sb = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Write subtitles to video'))
                                    )
-        grid_opt.Add(self.ckbx_sb, 0, wx.ALL, 5)
+        fgs1.Add(self.ckbx_sb, 0, wx.ALL, 5)
+        boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
+
+        panelscroll.SetSizer(fgs1)
+        panelscroll.SetAutoLayout(1)
+        panelscroll.SetupScrolling()
 
         # -------------listctrl
-        labcstr = _('URLs checklist')
-        self.labcode = wx.StaticText(self, label=labcstr)
-        sizer.Add(self.labcode, 0, wx.ALL, 5)
         if hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
             self.oldwx = False
             self.fcode = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT |
@@ -223,23 +240,25 @@ class Downloader(wx.Panel):
             self.fcode = TestListCtrl(self, tID, style=wx.LC_REPORT |
                                       wx.SUNKEN_BORDER | wx.LC_SINGLE_SEL
                                       )
-        sizer.Add(self.fcode, 1, wx.EXPAND, 10)
+        boxlistctrl.Add(self.fcode, 1, wx.ALL | wx.EXPAND, 5)
         # -------------textctrl
         labtstr = _('Help viewer')
         self.labtxt = wx.StaticText(self, label=labtstr)
-        sizer.Add(self.labtxt, 0, wx.ALL, 5)
+        sizer_base.Add(self.labtxt, 0, wx.LEFT, 10)
         self.codText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
                                    wx.TE_READONLY |
                                    wx.TE_RICH2,
-                                   size=(-1, 150)
+                                   size=(-1, 100)
                                    )
-        sizer.Add(self.codText, 0, wx.TOP | wx.EXPAND, 10)
+        sizer_base.Add(self.codText, 0, wx.ALL | wx.EXPAND, 10)
         # -----------------------
+        self.codText.Hide(), self.labtxt.Hide()
         self.SetSizer(sizer_base)
         self.Layout()
         # ----------------------- Properties
-        # WARNING do not append text on self.codText here, see `on_Choice meth.`
+        # WARNING do not append text on self.codText here,
+        # see `on_Choice meth.`
         if Downloader.get.THEME == 'Breeze-Blues':
             self.codText.SetBackgroundColour(Downloader.SOLARIZED)
         elif Downloader.get.THEME in Downloader.get.DARKicons:
@@ -248,7 +267,7 @@ class Downloader(wx.Panel):
             self.codText.SetBackgroundColour(Downloader.LAVENDER)
 
         if Downloader.OS != 'Darwin':
-            self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
+            # self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
             self.labtxt.SetLabelMarkup("<b>%s</b>" % labtstr)
 
         # ----------------------Binder (EVT)----------------------#
@@ -278,7 +297,8 @@ class Downloader(wx.Panel):
             num = self.fcode.GetItemCount()
             for idx in range(num):
                 if self.fcode.IsChecked(idx):
-                    self.codText.SetDefaultStyle(wx.TextAttr(Downloader.YELLOW))
+                    self.codText.SetDefaultStyle(
+                        wx.TextAttr(Downloader.YELLOW))
                     self.codText.AppendText('- %s\n' % (Downloader.MSG_2))
             return
 
@@ -427,7 +447,7 @@ class Downloader(wx.Panel):
                 if 'entries' in meta[0]:
                     meta[0]['entries'][0]  # not parse all playlist
                 if 'duration' in meta[0]:
-                    ftime = '%s (%s sec.)' % (time_human(meta[0]['duration']),
+                    ftime = '%s (%s sec.)' % (timehuman(meta[0]['duration']),
                                               meta[0]['duration'])
                 else:
                     ftime = 'N/A'
@@ -508,10 +528,10 @@ class Downloader(wx.Panel):
         self.fcode.ClearAll()
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
-        self.fcode.InsertColumn(0, (_('Item')), width=100)
+        self.fcode.InsertColumn(0, ('#'), width=30)
         self.fcode.InsertColumn(1, (_('Url')), width=500)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
-        self.fcode.InsertColumn(3, (_('Resolution note')), width=250)
+        self.fcode.InsertColumn(3, (_('Quality')), width=250)
 
         if self.parent.data_url:
             index = 0
@@ -565,38 +585,32 @@ class Downloader(wx.Panel):
         - Set media quality parameter for on_urls_list method
         """
         self.codText.Clear()
-        self.codText.SetDefaultStyle(wx.TextAttr(Downloader.RED_VIOLET))
-        self.codText.write(_('TIPS:\n\n'))
-        tip0 = _(
-            '-  Click on one of the items in the checklist and use the '
-            'preview button to play the video and evaluate the resolution '
-            'or quality based on the settings made.\n\n')
-        self.codText.AppendText(tip0)
-        tip3 = _(
-            '-  Check one or more boxes in the URLs checklist. Each URL '
-            '(green selection) can have multiple format codes that correspond '
-            'to different audio and video formats. Note that the audio and '
-            'video streams are always separated here; check the boxes of '
-            'a video format code and an audio format code of each URL to '
-            'merge them both into a single file.\n\n')
 
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_vq.Enable()
+            self.cmbx_vq.Enable(), self.codText.Hide()
+            self.labtxt.Hide()
+            self.Layout()
             self.on_urls_list(self.opt["V_QUALITY"][1])
 
         elif self.choice.GetSelection() == 1:
             self.cmbx_af.Disable(), self.cmbx_aq.Enable()
-            self.cmbx_vq.Enable()
+            self.cmbx_vq.Enable(), self.codText.Hide()
+            self.labtxt.Hide()
+            self.Layout()
             self.on_urls_list('%svideo+%saudio' % (self.opt["V_QUALITY"][1],
                                                    self.opt["A_QUALITY"][1]))
         elif self.choice.GetSelection() == 2:
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
-            self.cmbx_af.Enable()
+            self.cmbx_af.Enable(), self.codText.Hide()
+            self.labtxt.Hide()
+            self.Layout()
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
-            self.codText.AppendText(tip3)
+            # self.codText.AppendText(tip3)
+            self.labtxt.Show(), self.codText.Show()
+            self.Layout()
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
             self.cmbx_af.Disable()
             self.on_format_codes()
@@ -639,7 +653,8 @@ class Downloader(wx.Panel):
         Set audio qualities on 'best' or 'worst' during combobox event
         and self.choice selection == 1
         """
-        self.opt["A_QUALITY"] = Downloader.AQUALITY.get(self.cmbx_aq.GetValue())
+        self.opt["A_QUALITY"] = Downloader.AQUALITY.get(
+            self.cmbx_aq.GetValue())
         index = 0
         # set string to audio and video qualities independently for player
         q = '%svideo+%saudio' % (self.opt["V_QUALITY"][1],
@@ -815,7 +830,7 @@ class Downloader(wx.Panel):
             self.parent.switch_to_processing('youtube_dl python package',
                                              urls,
                                              '',
-                                             self.parent.file_destin,
+                                             self.parent.outpath_ydl,
                                              data,
                                              None,
                                              code,
@@ -872,7 +887,7 @@ class Downloader(wx.Panel):
             self.parent.switch_to_processing('youtube-dl executable',
                                              urls,
                                              '',
-                                             self.parent.file_destin,
+                                             self.parent.outpath_ydl,
                                              cmd,
                                              None,
                                              code,

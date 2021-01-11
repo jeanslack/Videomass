@@ -2,8 +2,8 @@
 # Name: ffmpeg_formats.py
 # Porpose: Show the available formats on the FFmpeg
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -47,7 +47,8 @@ class FFmpeg_formats(wx.MiniFrame):
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
                               )
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
+                              wx.BORDER_THEME)
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self.panel, wx.ID_ANY)
         sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)

@@ -3,10 +3,10 @@
 # Porpose: playback online media streams with ffplay player
 #          using youtube-dl as executable.
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: October.04.2020 *PEP8 compatible*
+# Rev: Jan.07.2020 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -36,6 +36,8 @@ import time
 from pubsub import pub
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
+if 'youtube_dl' in sys.modules:
+    import youtube_dl
 
 
 def msg_error(msg, title="Videomass"):
@@ -66,45 +68,42 @@ class Exec_Download_Stream(Thread):
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     FFMPEG_URL = get.FFMPEG_url
-    CACHEDIR = get.CACHEdir
     BINLOCAL = get.execYdl
     EXCEPTION = None
     TMP = get.TMP
     LOGDIR = get.LOGdir
+    YDL_PREF = get.YDL_pref
 
     if platform.system() == 'Windows':
-        if BINLOCAL:
-            EXECYDL = os.path.join(CACHEDIR, 'youtube-dl.exe')
-        else:
-            try:
-                import youtube_dl
-            except Exception as e:
-                EXCEPTION = e
-            else:
-                # see also inspect: `inspect.getfile(youtube_dl)`
-                # or the best: shutil.which('python')
-                pypath = youtube_dl.__file__.split('lib')[0]
-                EXECYDL = os.path.join(pypath, 'Scripts', 'youtube-dl.exe')
+        pyname = 'Scripts', 'youtube-dl.exe'
+    else:
+        pyname = 'bin', 'youtube-dl'
 
+    if YDL_PREF == 'disabled':
+        EXCEPTION = 'error: youtube-dl is disabled, check preferences.'
+        EXECYDL = BINLOCAL
+
+    elif YDL_PREF == 'local':
+        if BINLOCAL is not False:
+            EXECYDL = BINLOCAL
+        else:
+            EXCEPTION = 'Not found: %s' % BINLOCAL
+
+    elif YDL_PREF == 'system':
+        if 'youtube_dl' in sys.modules:
+            # see also inspect: `inspect.getfile(youtube_dl)`
+            # or the best: shutil.which('python')
+            pypath = youtube_dl.__file__.split('lib')[0]
+            EXECYDL = os.path.join(pypath, pyname[0], pyname[1])
+
+    if platform.system() == 'Windows':
         if os.path.isfile(EXECYDL):
             LINE_MSG = ('\nRequires MSVCR100.dll\nTo resolve this problem '
                         'install: Microsoft Visual C++ 2010 Redistributable '
                         'Package (x86)')
         else:
             LINE_MSG = ('Unrecognized error')
-
     else:
-        if BINLOCAL:
-            EXECYDL = os.path.join(CACHEDIR, 'youtube-dl')
-        else:
-            try:
-                import youtube_dl
-            except Exception as e:
-                EXCEPTION = e
-            else:   # see also inspect: `inspect.getfile(youtube_dl)`
-                pypath = youtube_dl.__file__.split('lib')[0]
-                EXECYDL = os.path.join(pypath, 'bin', 'youtube-dl')
-
         LINE_MSG = ('Unrecognized error')
     # -----------------------------------------------------------------------#
 
@@ -240,9 +239,10 @@ class Exec_Streaming(object):
 
     """
     DOWNLOAD = None  # set instance thread
+    TIMESTAMP = None
     # ---------------------------------------------------------------#
 
-    def __init__(self, url=None, quality=None):
+    def __init__(self, timestamp, url=None, quality=None):
         """
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
@@ -256,6 +256,7 @@ class Exec_Streaming(object):
         pub.subscribe(start_palying_listener, "START_FFPLAY_EVT")
 
         Exec_Streaming.DOWNLOAD = Exec_Download_Stream(url, quality)
+        Exec_Streaming.TIMESTAMP = timestamp
 
         self.start_download()
     # ----------------------------------------------------------------#
@@ -290,5 +291,5 @@ def start_palying_listener(output):
     ffplay in at a given time.
 
     """
-    IO_tools.stream_play(output, '', '')
+    IO_tools.stream_play(output, '', Exec_Streaming.TIMESTAMP)
     return

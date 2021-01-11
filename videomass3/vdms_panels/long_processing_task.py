@@ -2,8 +2,8 @@
 # Name: long_processing_task.py
 # Porpose: Console to show logging messages during processing
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
@@ -34,8 +34,8 @@ from videomass3.vdms_threads.one_pass import OnePass
 from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
-from videomass3.vdms_utils.utils import time_human
-from videomass3.vdms_utils.utils import time_seconds
+from videomass3.vdms_utils.utils import milliseconds2timeformat
+from videomass3.vdms_utils.utils import get_milliseconds
 
 
 def pairwise(iterable):
@@ -162,15 +162,15 @@ class Logging_Console(wx.Panel):
         self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         sizer = wx.BoxSizer(wx.VERTICAL)
-        grid = wx.GridSizer(1, 2, 5, 5)
+        grid = wx.GridSizer(1, 2, 0, 0)
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add(self.OutText, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
         sizer.Add(self.barProg, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.labPerc, 0, wx.ALL, 5)
-        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=5)
-        grid.Add(self.button_stop, 0, wx.ALL, 5)
-        grid.Add(self.button_close, 1, wx.ALL, 5)
+        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        grid.Add(self.button_stop, 0, wx.EXPAND | wx.ALL, 5)
+        grid.Add(self.button_close, 0, wx.EXPAND | wx.ALL, 5)
         # set_properties:
         self.OutText.SetBackgroundColour(Logging_Console.BACKGROUND)
         self.ckbx_text.SetToolTip(_('If activated, hides some '
@@ -362,15 +362,15 @@ class Logging_Console(wx.Panel):
         if 'time=' in output:  # ...in processing
             i = output.index('time=')+5
             pos = output[i:].split()[0]
-            timesum = time_seconds(pos)
-            self.barProg.SetValue(timesum)
-            percentage = round((timesum / duration) * 100)
+            ms = get_milliseconds(pos)
+            self.barProg.SetValue(ms)
+            percentage = round((ms / duration) * 100 if duration != 0 else 100)
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
             for x, y in pairwise(out):
                 ffprog.append("%s: %s | " % (x, y))
 
-            remaining = time_human(duration-timesum)
+            remaining = milliseconds2timeformat(duration - ms)
             self.labPerc.SetLabel("Processing... %s%% | %sTime Remaining: %s" %
                                   (str(int(percentage)), "".join(ffprog),
                                    remaining)

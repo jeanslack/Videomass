@@ -2,8 +2,8 @@
 # Name: shownormlist.py
 # Porpose: Show audio volume data list (PEAK/RMS only)
 # Compatibility: Python3, wxPython4
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -42,7 +42,8 @@ class NormalizationList(wx.MiniFrame):
                               wx.CLOSE_BOX | wx.SYSTEM_MENU
                               )
         """constructor"""
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
+                              wx.BORDER_THEME)
         normlist = wx.ListCtrl(self.panel,
                                wx.ID_ANY,
                                style=wx.LC_REPORT |

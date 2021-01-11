@@ -4,10 +4,10 @@
 # Porpose: script to setup Videomass.
 # Compatibility: Python3
 # Platform: all
-# Writer: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2014-2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.06.2020 *PEP8 compatible*
+# Rev: Dec.24.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -144,6 +144,7 @@ def source_build():
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
             'Natural Language :: English',
             'Natural Language :: Italian',
+            'Natural Language :: Russian',
             'Programming Language :: Python :: 3.7',
             "Programming Language :: Python :: 3.8",
             'Topic :: Multimedia :: Video :: Conversion',

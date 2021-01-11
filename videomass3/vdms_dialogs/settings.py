@@ -2,10 +2,10 @@
 # Name: settings.py
 # Porpose: videomass setup dialog
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: May.09.2020
+# Rev: Dec.31.2020
 #########################################################
 
 # This file is part of Videomass.
@@ -26,6 +26,7 @@
 #########################################################
 import wx
 import os
+import sys
 import webbrowser
 
 
@@ -47,17 +48,15 @@ class Setup(wx.Dialog):
     FFMPEG_CHECK = get.FFMPEG_check
     FFPROBE_CHECK = get.FFPROBE_check
     FFPLAY_CHECK = get.FFPLAY_check
-    OUTSAVE = get.USERfilesave
+    FF_OUTPATH = get.FFMPEGoutdir
+    YDL_OUTPATH = get.YDLoutdir
     SAMEDIR = get.SAMEdir
     FILESUFFIX = get.FILEsuffix
     CLEARCACHE = get.CLEARcache
-    WARNME = get.WARNme
+    YDL_PREF = get.YDL_pref
+    EXECYDL = get.execYdl
+    SITEPKGYDL = get.YDLsite
 
-
-    MSGLOG = _("The following settings affect output messages "
-               "and the log messages\nduring processes. "
-               "Change only if you know what you are doing."
-               )
     OPT_LOGLEV = [("quiet (Show nothing at all)"),
                   ("fatal (Only show fatal errors)"),
                   ("error (Show all errors)"),
@@ -99,7 +98,8 @@ class Setup(wx.Dialog):
         """
 
         dirname = os.path.expanduser('~')  # /home/user/
-        self.userpath = dirname if not Setup.OUTSAVE else Setup.OUTSAVE
+        self.pathFF = dirname if not Setup.FF_OUTPATH else Setup.FF_OUTPATH
+        self.pathYDL = dirname if not Setup.YDL_OUTPATH else Setup.YDL_OUTPATH
         self.iconset = iconset
         self.getfileconf = Setup.FILE_CONF
 
@@ -121,129 +121,206 @@ class Setup(wx.Dialog):
         # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGeneral = wx.BoxSizer(wx.VERTICAL)
-        msg = _("Where do you prefer to save all output files and downloads?")
-        boxUserpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
-                                                     (msg)), wx.VERTICAL)
-        sizerGeneral.Add(boxUserpath, 1, wx.ALL | wx.EXPAND, 15)
-        sizeDirdest = wx.BoxSizer(wx.HORIZONTAL)
-        boxUserpath.Add(sizeDirdest, 1, wx.ALL | wx.EXPAND, 15)
-        self.btn_userpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
-        sizeDirdest.Add(self.btn_userpath, 0, wx.ALL |
-                         wx.ALIGN_CENTER_VERTICAL |
-                         wx.ALIGN_CENTER_HORIZONTAL, 5
-                         )
-        self.txtctrl_userpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
-                                            style=wx.TE_READONLY
-                                            )
-        sizeDirdest.Add(self.txtctrl_userpath, 1, wx.ALL |
-                         wx.ALIGN_CENTER_VERTICAL |
-                         wx.ALIGN_CENTER_HORIZONTAL, 5
-                         )
-        self.txtctrl_userpath.AppendText(self.userpath)
-        descr = _("Save the FFmpeg output files in the same source folder")
+        msg = _("Where do you prefer to save the FFmpeg output files?")
+        boxFFmpegoutpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
+                                                          (msg)), wx.VERTICAL)
+        sizerGeneral.Add(boxFFmpegoutpath, 0, wx.ALL | wx.EXPAND, 15)
+        boxFFmpegoutpath.Add((0, 10))
+        sizeFFdirdest = wx.BoxSizer(wx.HORIZONTAL)
+        boxFFmpegoutpath.Add(sizeFFdirdest, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_FFpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
+        sizeFFdirdest.Add(self.btn_FFpath, 0, wx.ALL |
+                          wx.ALIGN_CENTER_VERTICAL |
+                          wx.ALIGN_CENTER_HORIZONTAL, 5
+                          )
+        self.txtctrl_FFpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        sizeFFdirdest.Add(self.txtctrl_FFpath, 1, wx.ALL |
+                          wx.ALIGN_CENTER_VERTICAL |
+                          wx.ALIGN_CENTER_HORIZONTAL, 5
+                          )
+        self.txtctrl_FFpath.AppendText(self.pathFF)
+        descr = _(" Save the FFmpeg output files in the same source folder")
         self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
-        boxUserpath.Add(self.ckbx_dir, 0, wx.LEFT, 15)
+        boxFFmpegoutpath.Add(self.ckbx_dir, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
-        boxUserpath.Add(sizeSamedest, 1, wx.ALL | wx.EXPAND, 15)
-
+        boxFFmpegoutpath.Add(sizeSamedest, 0, wx.EXPAND)
         descr = _("Optional suffix assignment (example, _convert):")
         self.lab_suffix = wx.StaticText(tabOne, wx.ID_ANY, (descr))
-        sizeSamedest.Add(self.lab_suffix, 0, wx.LEFT |
-                                             wx.ALIGN_CENTER_VERTICAL, 5)
+        sizeSamedest.Add(self.lab_suffix, 0, wx.ALL |
+                         wx.ALIGN_CENTER_VERTICAL, 10)
+        self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150, -1))
+        sizeSamedest.Add(self.text_suffix, 0, wx.ALL |
+                         wx.ALIGN_CENTER_VERTICAL, 5)
+        msg = _("Where do you prefer to save your downloads?")
+        boxYdloutpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
+                                                       (msg)), wx.VERTICAL)
+        sizerGeneral.Add(boxYdloutpath, 0, wx.ALL | wx.EXPAND, 15)
+        boxYdloutpath.Add((0, 10))
+        sizeYDLdirdest = wx.BoxSizer(wx.HORIZONTAL)
+        boxYdloutpath.Add(sizeYDLdirdest, 0, wx.ALL | wx.EXPAND, 5)
 
-        self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150,-1),
-
-                                       )
-        sizeSamedest.Add(self.text_suffix, 0, wx.LEFT |
-                                              wx.ALIGN_CENTER_VERTICAL, 5)
+        self.btn_YDLpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
+        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.ALL |
+                           wx.ALIGN_CENTER_VERTICAL |
+                           wx.ALIGN_CENTER_HORIZONTAL, 5
+                           )
+        self.txtctrl_YDLpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
+                                           style=wx.TE_READONLY
+                                           )
+        sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL |
+                           wx.ALIGN_CENTER_VERTICAL |
+                           wx.ALIGN_CENTER_HORIZONTAL, 5
+                           )
+        self.txtctrl_YDLpath.AppendText(self.pathYDL)
         boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
-                                    _("Cache Settings"))), wx.VERTICAL)
+                                        _("Cache Settings"))), wx.VERTICAL)
         sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 15)
         gridCache = wx.BoxSizer(wx.VERTICAL)
 
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
-                        _(" Clears temporary cached files during application "
-                          "exit")))
+                        _(" Clear the cache when exiting the application")))
         gridCache.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
-        self.checkbox_cacheydl = wx.CheckBox(tabOne, wx.ID_ANY, (
-                        _(" Don't warn me again when youtube-dl executable "
-                          "is not in use")))
-        gridCache.Add(self.checkbox_cacheydl, 0, wx.ALL, 5)
         boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 10)
-
         tabOne.SetSizer(sizerGeneral)
-        notebook.AddPage(tabOne, _("General"))
+        notebook.AddPage(tabOne, _("Files Preferences"))
         # -----tab 2
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
         sizerFFmpeg = wx.BoxSizer(wx.VERTICAL)
+        gridExec = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
+                                     _('Execution paths')), wx.VERTICAL)
+        sizerFFmpeg.Add(gridExec, 1, wx.ALL | wx.EXPAND, 15)
+        # ----
+        gridExec.Add((0, 10))
+        self.checkbox_exeFFmpeg = wx.CheckBox(tabTwo, wx.ID_ANY, (
+                                       _(" Use a custom path to run FFmpeg")))
+        self.btn_pathFFmpeg = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_ffmpeg = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.ALL, 5)
+        gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
+        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
+        gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ----
+        self.checkbox_exeFFprobe = wx.CheckBox(tabTwo, wx.ID_ANY, (
+                                       _(" Use a custom path to run FFprobe")))
+        self.btn_pathFFprobe = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_ffprobe = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
+                                           style=wx.TE_READONLY
+                                           )
+        gridExec.Add(self.checkbox_exeFFprobe, 0, wx.ALL, 5)
+        gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFprobe, 0, wx.ALL | wx.EXPAND, 5)
+        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
+        gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        # ----
+        self.checkbox_exeFFplay = wx.CheckBox(tabTwo, wx.ID_ANY, (
+                                       _(" Use a custom path to run FFplay")))
+        self.btn_pathFFplay = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
+        self.txtctrl_ffplay = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
+                                          style=wx.TE_READONLY
+                                          )
+        gridExec.Add(self.checkbox_exeFFplay, 0, wx.ALL, 5)
+        gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
+        gridExec.Add(gridFFplay, 0, wx.ALL | wx.EXPAND, 5)
+        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
+        gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALIGN_CENTER_VERTICAL, 5)
 
-        boxLabThreads = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY, (
-                                _("FFmpeg -threads option"))), wx.VERTICAL)
-        sizerFFmpeg.Add(boxLabThreads, 1, wx.ALL | wx.EXPAND, 15)
-        gridThreads = wx.BoxSizer(wx.VERTICAL)
-        boxLabThreads.Add(gridThreads, 1, wx.ALL | wx.EXPAND, 15)
-        lab1_pane2 = wx.StaticText(tabTwo, wx.ID_ANY,
-                                   (_("Sets threads used on some transcoding "
-                                      "(from 0 to 32)")))
-        gridThreads.Add(lab1_pane2, 0,
-                        wx.ALL |
-                        wx.ALIGN_CENTER_VERTICAL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 5
-                        )
+        gridFFopt = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
+                                                   _('Other options')),
+                                      wx.VERTICAL)
+        sizerFFmpeg.Add(gridFFopt, 0, wx.ALL | wx.EXPAND, 15)
+        gridSizopt = wx.FlexGridSizer(0, 2, 0, 0)
+        gridFFopt.Add(gridSizopt, 0, wx.ALL, 5)
+
+        labFFthreads = wx.StaticText(tabTwo, wx.ID_ANY,
+                                     (_("Threads used for transcoding "
+                                        "(from 0 to 32)")))
+        gridSizopt.Add(labFFthreads, 0,
+                       wx.ALL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 5
+                       )
         self.spinctrl_threads = wx.SpinCtrl(tabTwo, wx.ID_ANY,
                                             "%s" % Setup.FF_THREADS[9:],
                                             size=(-1, -1), min=0, max=32,
                                             style=wx.TE_PROCESS_ENTER
                                             )
-        gridThreads.Add(self.spinctrl_threads, 0, wx.ALL |
-                        wx.ALIGN_CENTER_VERTICAL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 5
-                        )
+        gridSizopt.Add(self.spinctrl_threads, 0, wx.ALL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 5
+                       )
+        # ----
         tabTwo.SetSizer(sizerFFmpeg)
         notebook.AddPage(tabTwo, _("FFmpeg"))
+
         # -----tab 3
-        tabThree = wx.Panel(notebook, wx.ID_ANY)
-        gridExec = wx.BoxSizer(wx.VERTICAL)
-        gridExec.Add((0, 25), 0,)
+        self.tabThree = wx.Panel(notebook, wx.ID_ANY)
+        sizerYdl = wx.BoxSizer(wx.VERTICAL)
+
+        gridYdldl = wx.StaticBoxSizer(wx.StaticBox(self.tabThree, wx.ID_ANY,
+                                      ''), wx.VERTICAL)
+        sizerYdl.Add(gridYdldl, 1, wx.ALL | wx.EXPAND, 15)
+        # if AppImage
+        if '/tmp/.mount_' in sys.executable or \
+           os.path.exists(os.getcwd() + '/AppRun'):
+            dldlist = [
+                _('Disable youtube-dl'),
+                _('Use the one included in the AppImage (recommended)'),
+                _('Use a local copy of youtube-dl')]
+            ydlmsg = _(
+                'Make sure you are using the latest available version of '
+                'youtube-dl.\nThis allows you to avoid download problems.')
+            labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
+            gridYdldl.Add(labydl0, 0, wx.TOP | wx.CENTRE, 5)
+        else:
+            dldlist = [
+                _('Disable youtube-dl'),
+                _('Use the one installed in your O.S. (recommended)'),
+                _('Use a local copy of youtube-dl updatable by Videomass')]
+            ydlmsg = _(
+                'Make sure you are using the latest available version of '
+                'youtube-dl.\nThis allows you to avoid download problems. '
+                'Note that the versions\ninstalled with the package '
+                'manager of your O.S. they may be out of\ndate and not '
+                'upgradeable. It is recommended to remove those versions\n'
+                'and update youtube-dl with pip3, e.g.')
+            labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
+            gridYdldl.Add(labydl0, 0, wx.TOP | wx.CENTRE, 5)
+            labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY,
+                                    ('pip3 install --user -U youtube-dl'))
+            gridYdldl.Add(labydl1, 0, wx.ALL | wx.CENTRE, 10)
+            if Setup.OS == 'Darwin':
+                labydl1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
+                                        wx.BOLD, 0, ""))
+            else:
+                labydl1.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL,
+                                        wx.BOLD, 0, ""))
+        self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
+                                         (_("Downloader preferences")),
+                                         choices=dldlist,
+                                         majorDimension=1,
+                                         style=wx.RA_SPECIFY_COLS
+                                         )
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            self.rdbDownloader.EnableItem(1, enable=False)
+        sizerYdl.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 15)
+
+        grdydlLoc = wx.BoxSizer(wx.HORIZONTAL)
+        sizerYdl.Add(grdydlLoc, 0, wx.ALL | wx.EXPAND, 10)
+        labydl2 = wx.StaticText(self.tabThree, wx.ID_ANY, _('Current path'))
+        grdydlLoc.Add(labydl2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
+
+        self.ydlPath = wx.TextCtrl(self.tabThree, wx.ID_ANY, "",
+                                   style=wx.TE_READONLY)
+        grdydlLoc.Add(self.ydlPath, 1, wx.ALL | wx.EXPAND, 5)
         # ----
-        self.checkbox_exeFFmpeg = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFmpeg")))
-        self.btn_pathFFmpeg = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
-        self.txtctrl_ffmpeg = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                          style=wx.TE_READONLY
-                                          )
-        gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.ALL, 15)
-        gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFmpeg, 0, wx.ALL | wx.EXPAND, 15)
-        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
-        gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALIGN_CENTER_VERTICAL, 5)
-        # ----
-        self.checkbox_exeFFprobe = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFprobe")))
-        self.btn_pathFFprobe = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
-        self.txtctrl_ffprobe = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                           style=wx.TE_READONLY
-                                           )
-        gridExec.Add(self.checkbox_exeFFprobe, 0, wx.ALL, 15)
-        gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFprobe, 0, wx.ALL | wx.EXPAND, 15)
-        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
-        gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALIGN_CENTER_VERTICAL, 5)
-        # ----
-        self.checkbox_exeFFplay = wx.CheckBox(tabThree, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFplay")))
-        self.btn_pathFFplay = wx.Button(tabThree, wx.ID_ANY, _("Browse.."))
-        self.txtctrl_ffplay = wx.TextCtrl(tabThree, wx.ID_ANY, "",
-                                          style=wx.TE_READONLY
-                                          )
-        gridExec.Add(self.checkbox_exeFFplay, 0, wx.ALL, 15)
-        gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFplay, 0, wx.ALL | wx.EXPAND, 15)
-        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
-        gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALIGN_CENTER_VERTICAL, 5)
-        # ----
-        tabThree.SetSizer(gridExec)
-        notebook.AddPage(tabThree, _("Executable paths"))
+        self.tabThree.SetSizer(sizerYdl)
+        notebook.AddPage(self.tabThree, _("youtube-dl"))
+
         # -----tab 4
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         gridappearance = wx.BoxSizer(wx.VERTICAL)
@@ -277,8 +354,14 @@ class Setup(wx.Dialog):
         # -----tab 5
         tabFive = wx.Panel(notebook, wx.ID_ANY)
         gridLog = wx.BoxSizer(wx.VERTICAL)
-        lab3_pane2 = wx.StaticText(tabFive, wx.ID_ANY, (Setup.MSGLOG))
-        gridLog.Add(lab3_pane2, 0, wx.ALL, 15)
+        msglog = _("The following settings affect output messages "
+                   "and the log messages\nduring processes. "
+                   "Change only if you know what you are doing.")
+        labLOGmsg = wx.StaticText(tabFive, wx.ID_ANY, (msglog))
+        gridLOGmsg = wx.StaticBoxSizer(wx.StaticBox(tabFive, wx.ID_ANY,
+                                       ''), wx.VERTICAL)
+        gridLog.Add(gridLOGmsg, 0, wx.ALL | wx.EXPAND, 15)
+        gridLOGmsg.Add(labLOGmsg, 0, wx.ALL | wx.CENTRE, 5)
         self.rdbFFmpeg = wx.RadioBox(
                                 tabFive, wx.ID_ANY,
                                 ("Set logging level flags used by FFmpeg"),
@@ -294,7 +377,7 @@ class Setup(wx.Dialog):
                                      )
         gridLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 15)
         tabFive.SetSizer(gridLog)
-        notebook.AddPage(tabFive, _("Logging levels"))
+        notebook.AddPage(tabFive, _("FFmpeg logging levels"))
         # ------ btns bottom
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
@@ -317,11 +400,6 @@ class Setup(wx.Dialog):
         self.SetTitle(_("Videomass Setup"))
         tip = (_("Assign an additional suffix to FFmpeg output files"))
         self.text_suffix.SetToolTip(tip)
-        tip = _("Enable custom paths for the executables. If the check boxes "
-                "are disabled or if the path field is empty, the search for "
-                "the executables is entrusted to the environment variables.")
-        tabThree.SetToolTip(tip)
-
         self.txtctrl_ffmpeg.SetMinSize((200, -1))
         self.txtctrl_ffprobe.SetMinSize((200, -1))
         self.txtctrl_ffplay.SetMinSize((200, -1))
@@ -330,7 +408,8 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
-        self.Bind(wx.EVT_BUTTON, self.set_Userpath, self.btn_userpath)
+        self.Bind(wx.EVT_BUTTON, self.on_ffmpegPath, self.btn_FFpath)
+        self.Bind(wx.EVT_BUTTON, self.on_downloadPath, self.btn_YDLpath)
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
@@ -344,7 +423,7 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
-        self.Bind(wx.EVT_CHECKBOX, self.warn_Ydl, self.checkbox_cacheydl)
+        self.Bind(wx.EVT_RADIOBOX, self.on_Ydl_preferences, self.rdbDownloader)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, btn_ok)
@@ -361,10 +440,21 @@ class Setup(wx.Dialog):
         else:
             self.checkbox_cacheclr.SetValue(True)
 
-        if Setup.WARNME == 'false':
-            self.checkbox_cacheydl.SetValue(False)
-        else:
-            self.checkbox_cacheydl.SetValue(True)
+        if Setup.YDL_PREF == 'disabled':
+            self.rdbDownloader.SetSelection(0)
+            self.ydlPath.WriteText(_('Disabled'))
+        elif Setup.YDL_PREF == 'system':
+            self.rdbDownloader.SetSelection(1)
+            if Setup.SITEPKGYDL is None:
+                self.ydlPath.WriteText(_('Not Installed'))
+            else:
+                self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
+        elif Setup.YDL_PREF == 'local':
+            self.rdbDownloader.SetSelection(2)
+            if os.path.exists(Setup.EXECYDL):
+                self.ydlPath.WriteText(str(Setup.EXECYDL))
+            else:
+                self.ydlPath.WriteText(_('Not found'))
 
         for s in range(self.rdbFFplay.GetCount()):
             if (Setup.FFPLAY_LOGLEVEL.split()[1] in
@@ -411,6 +501,7 @@ class Setup(wx.Dialog):
             self.lab_suffix.Enable()
             self.text_suffix.Enable()
             self.ckbx_dir.SetValue(True)
+            self.btn_FFpath.Disable(), self.txtctrl_FFpath.Disable()
             if not Setup.FILESUFFIX == 'none':
                 self.text_suffix.AppendText(Setup.FILESUFFIX)
     # --------------------------------------------------------------------#
@@ -421,15 +512,30 @@ class Setup(wx.Dialog):
         self.full_list[self.rowsNum[2]] = '-threads %s\n' % sett
     # ---------------------------------------------------------------------#
 
-    def set_Userpath(self, event):
-        """write a custom user path name where saving exported files"""
+    def on_downloadPath(self, event):
+        """set up a custom user path for file downloads"""
 
-        dlg = wx.DirDialog(self, _("Set a default directory to save files"),
-                           "", wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST
-                           )
+        dlg = wx.DirDialog(self, _("Set a persistent location to save the "
+                                   "file downloads"), "",
+                           wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+
         if dlg.ShowModal() == wx.ID_OK:
-            self.txtctrl_userpath.Clear()
-            self.txtctrl_userpath.AppendText(dlg.GetPath())
+            self.txtctrl_YDLpath.Clear()
+            self.txtctrl_YDLpath.AppendText(dlg.GetPath())
+            self.full_list[self.rowsNum[19]] = '%s\n' % (dlg.GetPath())
+            dlg.Destroy()
+    # ---------------------------------------------------------------------#
+
+    def on_ffmpegPath(self, event):
+        """set up a custom user path for file export"""
+
+        dlg = wx.DirDialog(self, _("Set a persistent location to save "
+                                   "exported files"), "",
+                           wx.DD_DEFAULT_STYLE | wx.DD_DIR_MUST_EXIST)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            self.txtctrl_FFpath.Clear()
+            self.txtctrl_FFpath.AppendText(dlg.GetPath())
             self.full_list[self.rowsNum[1]] = '%s\n' % (dlg.GetPath())
             dlg.Destroy()
     # --------------------------------------------------------------------#
@@ -437,13 +543,13 @@ class Setup(wx.Dialog):
     def set_Samedest(self, event):
         """Save the FFmpeg output files in the same source folder"""
         if self.ckbx_dir.IsChecked():
-            self.lab_suffix.Enable()
-            self.text_suffix.Enable()
+            self.lab_suffix.Enable(), self.text_suffix.Enable()
+            self.btn_FFpath.Disable(), self.txtctrl_FFpath.Disable()
             self.full_list[self.rowsNum[17]] = 'true\n'
         else:
             self.text_suffix.Clear()
-            self.lab_suffix.Disable()
-            self.text_suffix.Disable()
+            self.lab_suffix.Disable(), self.text_suffix.Disable()
+            self.btn_FFpath.Enable(), self.txtctrl_FFpath.Enable()
             self.full_list[self.rowsNum[17]] = 'false\n'
             self.full_list[self.rowsNum[18]] = 'none\n'
     # --------------------------------------------------------------------#
@@ -623,14 +729,16 @@ class Setup(wx.Dialog):
             self.full_list[self.rowsNum[15]] = 'false\n'
     # --------------------------------------------------------------------#
 
-    def warn_Ydl(self, event):
+    def on_Ydl_preferences(self, event):
         """
-        if checked, Notify when youtube-dl is not longer in use
+        set youtube-dl preferences
         """
-        if self.checkbox_cacheydl.IsChecked():
-            self.full_list[self.rowsNum[16]] = 'true\n'
-        else:
-            self.full_list[self.rowsNum[16]] = 'false\n'
+        if self.rdbDownloader.GetSelection() == 0:
+            self.full_list[self.rowsNum[16]] = 'disabled\n'
+        elif self.rdbDownloader.GetSelection() == 1:
+            self.full_list[self.rowsNum[16]] = 'system\n'
+        elif self.rdbDownloader.GetSelection() == 2:
+            self.full_list[self.rowsNum[16]] = 'local\n'
     # --------------------------------------------------------------------#
 
     def on_help(self, event):
@@ -641,7 +749,7 @@ class Setup(wx.Dialog):
     # --------------------------------------------------------------------#
 
     def okmsg(self):
-        wx.MessageBox(_("Changes will take affect once the program "
+        wx.MessageBox(_("Changes will take effect once the program "
                         "has been restarted"))
     # --------------------------------------------------------------------#
 

@@ -7,6 +7,43 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Gen 09, 2021 V.3.3.5
+
+  * Transpose Filter Dialog: Fixed `wx.StaticText` wrapping on Windows and
+    MacOs, where it would break the static text string.
+  * The timeline is now a pop-up panel in the main frame window, enabled from
+    the menu bar > View > Show Timeline.
+  * Fixed `ZeroDivisionError: division by zero` for file duration equal to 0 .
+  * If file duration equal to 0, the time key is also added to the ffprobe data.
+  * Fixed empty strings in timeline display when Courier font was not found
+    on some O.S. like Ubuntu 20.04 .
+  * The Streaming Media Analyzer now has selectable items that make it easier
+    to view tags and disposition parameters in text format.
+  * Fixed `wxAssertionError` in the queued files context menu, if no item is
+    selected and user click for playback.
+  * FFplay now has timestamp display during playback. However, this feature can
+    be disabled from the checkbox: menu bar > FFplay > View timestamp.
+  * Ability to customize the size and colors of the timestamp.
+  * The menu bar has been reorganized to contain other features.
+  * Some toolbar items have been removed and added to the menu bar.
+  * Improved wizard dialog box.
+  * A single configuration file for all Operating Systems.
+  * Improved layout on the Presets manager panel.
+  * Improved layout on the Youtube downloader panel.
+  * Improved toolbar buttons.
+  * Added BORDER_THEME to all mini frames for proper display.
+  * Added the ability to choose a local downloader or an installed one
+    (installer dependent).
+  * Adds open "My conversion" folder.
+  * Adds open "My downloads" folder.
+  * Added ability to set a temporary conversions folder.
+  * Added abilty to set a temporary downloads folder.
+  * Added ability to restore the default destination folders.
+  * Added some keyboard shortcuts for menu items
+  * Fixed minor bugs.
+
+
++------------------------------------+
 Dec 14, 2020 V.3.3.0
 
   * Fixed panel base and sizer base on `while_playing.py` mini frame.

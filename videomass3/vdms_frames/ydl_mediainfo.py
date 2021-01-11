@@ -2,8 +2,8 @@
 # Name: ydl_mediainfo.py
 # Porpose: show media streams information through youtube-dl.extract_info
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -33,14 +33,19 @@ class YDL_Mediainfo(wx.MiniFrame):
     Display streams information from youtube-dl data.
 
     """
-    # light
-    LAVENDER = '#e6e6faff'
-    # dark
-    DARK_SLATE = '#1c2027ff'
-    # breeze-blues
-    SOLARIZED = '#11303eff'
-    # all
-    RED_VIOLET = '#de2689ff'
+    get = wx.GetApp()  # get data from bootstrap
+
+    if get.THEME == 'Breeze-Blues':
+        BACKGROUND = '#11303eff'
+        FOREGROUND = '#959595'
+
+    elif get.THEME in get.DARKicons:
+        BACKGROUND = '#1c2027ff'
+        FOREGROUND = '#87ceebff'
+
+    else:
+        BACKGROUND = '#e6e6faff'
+        FOREGROUND = '#191970ff'
 
     def __init__(self, data, OS):
         """
@@ -48,7 +53,6 @@ class YDL_Mediainfo(wx.MiniFrame):
         With 'parent, -1' if close videomass also close mediainfo window
         """
         self.data = data
-        get = wx.GetApp()  # get data from bootstrap
 
         wx.MiniFrame.__init__(self, None, style=wx.CAPTION | wx.CLOSE_BOX |
                               wx.RESIZE_BORDER | wx.SYSTEM_MENU
@@ -56,7 +60,8 @@ class YDL_Mediainfo(wx.MiniFrame):
         '''constructor'''
 
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
+                              wx.BORDER_THEME)
         # Add widget controls
         self.url_select = wx.ListCtrl(self.panel,
                                       wx.ID_ANY,
@@ -67,17 +72,11 @@ class YDL_Mediainfo(wx.MiniFrame):
         self.textCtrl = wx.TextCtrl(self.panel,
                                     wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
-                                          wx.TE_READONLY |
-                                          wx.TE_RICH2
-                                          )
-        if get.THEME == 'Breeze-Blues':
-            self.textCtrl.SetBackgroundColour(YDL_Mediainfo.SOLARIZED)
-        elif get.THEME in get.DARKicons:
-            self.textCtrl.SetBackgroundColour(YDL_Mediainfo.DARK_SLATE)
-        else:
-            self.textCtrl.SetBackgroundColour(YDL_Mediainfo.LAVENDER)
-
-        self.textCtrl.SetDefaultStyle(wx.TextAttr(YDL_Mediainfo.RED_VIOLET))
+                                    wx.TE_READONLY |
+                                    wx.TE_RICH2
+                                    )
+        self.textCtrl.SetBackgroundColour(YDL_Mediainfo.BACKGROUND)
+        self.textCtrl.SetDefaultStyle(wx.TextAttr(YDL_Mediainfo.FOREGROUND))
         button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
 
         # ----------------------Properties----------------------#
@@ -88,7 +87,6 @@ class YDL_Mediainfo(wx.MiniFrame):
         self.url_select.InsertColumn(1, _('URL'), width=500)
         self.textCtrl.SetMinSize((640, 300))
 
-        # self.textCtrl.SetDefaultStyle(wx.TextAttr(wx.Colour(30, 62, 164)))
         if OS == 'Darwin':
             self.url_select.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL,
                                             wx.NORMAL))
@@ -123,7 +121,6 @@ class YDL_Mediainfo(wx.MiniFrame):
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.url_select)
         self.Bind(wx.EVT_BUTTON, self.on_close, button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)
-
 
         self.url_select.Focus(0)  # make first line the current line selected
         self.url_select.Select(0, on=1)  # default event selection

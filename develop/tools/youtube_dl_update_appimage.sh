@@ -18,7 +18,8 @@
 # please visit <https://misc.flogisoft.com/bash/tip_colors_and_formatting>
 # for colors code.
 #
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Update: Oct.03.2020
 
 set -e  # stop if error
@@ -74,6 +75,6 @@ export VERSION=$(cat $SITEPKG/videomass-*.dist-info/METADATA | \
 # move built AppImage back into original DIRNAME
 mv -f Videomass*x86_64.AppImage "$DIRNAME/"  # overwrites existent appimage
 
-echo '**Sucesfully updated**'  # keyword for a successful exit status
+echo '**Successfully updated**'  # keyword for a successful exit status
 # echo -e '\e[5m\e[92myoutube_dl has been successfully updated!\e[25m\e[39m'
 # echo -e '\e[1m\e[92m...Now close this terminal and restart Videomass.\e[21m\e[39m'

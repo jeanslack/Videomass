@@ -2,8 +2,8 @@
 # Name: ffmpeg_search.py
 # Porpose: Show a box to search FFmpeg topics
 # Compatibility: Python3, wxPython4
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Oct.04.2020 *PEP8 compatible*
 #########################################################
@@ -48,7 +48,7 @@ class FFmpeg_Search(wx.MiniFrame):
     HEAVENLY = '#87ceebff'
     # breeze-blues
     SOLARIZED = '#11303eff'
-    FOREST_GREEN = '#208320ff'
+    GREY = '#959595'
 
     def __init__(self, OS):
         """
@@ -73,7 +73,8 @@ class FFmpeg_Search(wx.MiniFrame):
 
         """
         # add panel
-        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL)
+        self.panel = wx.Panel(self, wx.ID_ANY, style=wx.TAB_TRAVERSAL |
+                              wx.BORDER_THEME)
         self.cmbx_choice = wx.ComboBox(self.panel, wx.ID_ANY, choices=[
                                 (_("Topic List...")),
                                 (_("print basic options")),
@@ -104,13 +105,14 @@ class FFmpeg_Search(wx.MiniFrame):
                                     )
         if get.THEME == 'Breeze-Blues':
             self.texthelp.SetBackgroundColour(FFmpeg_Search.SOLARIZED)
-            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.FOREST_GREEN))
+            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.GREY))
         elif get.THEME in get.DARKicons:
             self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_SLATE)
             self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.HEAVENLY))
         else:
             self.texthelp.SetBackgroundColour(FFmpeg_Search.LAVENDER)
-            self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.NIGHT_BLUE))
+            self.texthelp.SetDefaultStyle(
+                wx.TextAttr(FFmpeg_Search.NIGHT_BLUE))
 
         if OS == 'Darwin':
             self.texthelp.SetFont(wx.Font(12, wx.MODERN, wx.NORMAL, wx.NORMAL))

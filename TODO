@@ -14,13 +14,9 @@ URGENCY: high
 - Make combobox to choose other colors for the crop rectangle selection in
   the Crop dialog.
 
-- Create the top timeline along the horizontal position of the main frame
-  by replacing the current timeline dialog
+- Update .desktop file with Russian language
 
-- make contest menu for streams analyzer for getting data by clicking
-  on parameters or references.
-
-
+- Include LICENSE etc. in the Windows portable archive
 
 -------------
 URGENCY: low

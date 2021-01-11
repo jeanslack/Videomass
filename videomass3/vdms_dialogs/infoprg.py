@@ -2,8 +2,8 @@
 # Name: infoprog.py
 # Porpose: about videomass
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Sept.12.2020 *PEP8 compatible*
 #########################################################
@@ -67,11 +67,12 @@ def info(parent, videomass_icon):
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
     info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it)")
     info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru)")
-    #info.AddTranslator("Nestor Blanco <random@mail.es> (es)")
-    info.SetArtists(['Gianluca Pernigotto <jeanlucperni@gmail.com>',
-                     'Breeze icons '
-                     'https://github.com/KDE/breeze-icons',
-                     'Papirus icons '
-                     'https://github.com/PapirusDevelopmentTeam/papirus-icon-theme'])
+    # info.AddTranslator("Nestor Blanco <random@mail.es> (es)")
+    info.SetArtists(
+        ['Gianluca Pernigotto <jeanlucperni@gmail.com>',
+         'Breeze icons '
+         'https://github.com/KDE/breeze-icons',
+         'Papirus icons '
+         'https://github.com/PapirusDevelopmentTeam/papirus-icon-theme'])
     wx.adv.AboutBox(info)
     # event.Skip()

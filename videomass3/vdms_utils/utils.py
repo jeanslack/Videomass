@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
 # Name: utils.py
-# Porpose: Group the utilities needed for some requests
+# Porpose: It groups useful functions that are called several times
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: December.14.2020 *PEP8 compatible*
+# Rev: January.05.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -73,11 +73,27 @@ def to_bytes(string):
 # ------------------------------------------------------------------------
 
 
-def timehuman1(seconds):
+def get_seconds(timeformat):
+    """
+    This is the old implementation to get time human to seconds,
+    e.g. get_seconds('00:02:00'). Return int(seconds) object.
+    """
+    if timeformat == 'N/A':
+        return int('0')
+
+    pos = timeformat.split(':')
+    h, m, s = int(pos[0]), int(pos[1]), float(pos[2])
+
+    return (h * 3600 + m * 60 + s)
+# ------------------------------------------------------------------------
+
+
+def timehuman(seconds):
     """
     This is the old implementation to converting seconds to
     time format. Accept integear only e.g timehuman(2300).
-    Returns a string object in time format i.e '00:38:20' .
+    Useb by youtube-dl downloader, returns a string object
+    in time format i.e '00:38:20' .
 
     """
     m, s = divmod(seconds, 60)
@@ -86,7 +102,7 @@ def timehuman1(seconds):
 # ------------------------------------------------------------------------
 
 
-def time_seconds(timeformat):
+def get_milliseconds(timeformat):
     """
     Convert time format to milliseconds (duration). Accepts various
     forms of time unit string, e.g. '30.5', '00:00:00', '0:00:00',
@@ -103,20 +119,20 @@ def time_seconds(timeformat):
     hours = int(hours)
     minutes = int(minutes)
     seconds = float(seconds)
-    milliseconds = int(hours * 3600000 + minutes * 60000 + seconds * 1000)
-    return milliseconds
+
+    return int(hours * 3600000 + minutes * 60000 + seconds * 1000)
 # ------------------------------------------------------------------------
 
 
-def time_human(ms):
+def milliseconds2timeformat(milliseconds):
     """
     Converts milliseconds (duration) to time units in sexagesimal
-    format (e.g. HOURS:MM:SS.MILLISECONDS, as in 01:23:45.678).
+    format (e.g. HOURS:MM:SS.MILLISECONDS, as in 00:00:00.000).
     Accept an int object, such as 2000 or float, such as 2000.999.
     Returns a string object in time format.
 
     """
-    m, s = divmod(ms, 60000)
+    m, s = divmod(milliseconds, 60000)
     h, m = divmod(m, 60)
     sec = float(s) / 1000
     return "%02d:%02d:%06.3f" % (h, m, sec)
@@ -125,11 +141,12 @@ def time_human(ms):
 
 def copy_restore(src, dest):
     """
-    Restore file. File name is owner choice and can be an preset
-    or not. If file exist overwrite it.
+    copy a specific file from src to dest. If dest exists,
+    it will be overwritten with src without confirmation.
+    If src does not exists return FileNotFoundError.
     """
     try:
-        shutil.copyfile(src, '%s' % (dest))
+        shutil.copyfile(str(src), str(dest))
     except FileNotFoundError as err:
         return err
 
@@ -137,55 +154,44 @@ def copy_restore(src, dest):
 # ------------------------------------------------------------------#
 
 
-def copy_backup(src, dest):
+def copydir_recursively(source, destination, extraname=None):
     """
-    function for file backup. File name is owner choice.
-    """
-    shutil.copyfile('%s' % (src), dest)
-# ------------------------------------------------------------------#
+    recursively copies an entire directory tree rooted at source.
+    If you do not provide the extraname argument, the destination
+    will have the same name as the source, otherwise extraname is
+    assumed as the final name.
 
-
-def makedir_move(ext, name_dir):
     """
-    this function make directory and move-in file
-    (ext, name_dir: extension, directory name)
-    """
-    try:  # if exist dir not exit OSError, go...
-        os.mkdir("%s" % (name_dir))
-    except OSError as err:
+    if extraname:
+        dest = os.path.join(destination, extraname)
+    else:
+        dest = os.path.join(destination, os.path.basename(source))
+    try:
+        shutil.copytree(str(source), str(dest))
+    except Exception as err:
         return err
-    move_on(ext, name_dir)
+
+    return None
 # ------------------------------------------------------------------#
 
 
-def move_on(ext, name_dir):
+def copy_on(ext, source, destination):
     """
-    Cycling on name extension file and move-on in other directory
-    """
-    files = glob.glob("*%s" % (ext))
-    for sposta in files:
-        shutil.move(sposta, '%s' % (name_dir))
-        # print('%s   %s' % (sposta, name_dir))
-# ------------------------------------------------------------------#
+    Given a source (dirname), use glob for a given file extension (ext)
+    and iterate to move files to another directory (destination).
+    Returns None on success, otherwise returns the error.
 
-
-def copy_on(ext, name_dir, path_confdir):
-    """
-    Cycling on path and file extension name for copy files in other directory
     ARGUMENTS:
-    ext: files extension with no dot
-    name_dir: path name with no basename
+    ext: files extension without dot
+    source: path to the source directory
+    destination: path to the destination directory
     """
-    files = glob.glob("%s/*.%s" % (name_dir, ext))
-    for copia in files:
-        shutil.copy(copia, '%s' % (path_confdir))
-# ------------------------------------------------------------------#
-
-
-def delete(ext):
-    """
-    function for file group delete with same extension
-    """
-    files = glob.glob("*%s" % (ext))
-    for rimuovi in files:
-        os.remove(rimuovi)
+    files = glob.glob("%s/*.%s" % (source, ext))
+    if not files:
+        return 'Error: No such file with ".%s" format found' % ext
+    for f in files:
+        try:
+            shutil.copy(f, '%s' % (destination))
+        except Exception as error:
+            return error
+    return None

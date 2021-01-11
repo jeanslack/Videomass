@@ -2,8 +2,8 @@
 # Name: ydl_pylibdownloader.py
 # Porpose: long processing task with youtube_dl python library
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -30,10 +30,8 @@ import itertools
 from threading import Thread
 import time
 from pubsub import pub
-try:
+if 'youtube_dl' in sys.modules:
     import youtube_dl
-except (ModuleNotFoundError, ImportError) as nomodule:
-    pass
 
 
 def logWrite(cmd, sterr, logname, logdir):

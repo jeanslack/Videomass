@@ -2,8 +2,8 @@
 # Name: filedrop.py
 # Porpose: files drag n drop interface
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Dec.04.2020 *PEP8 compatible*
 #########################################################
@@ -27,8 +27,7 @@
 import wx
 import os
 from videomass3.vdms_io import IO_tools
-from videomass3.vdms_utils.utils import time_seconds
-from videomass3.vdms_io import IO_tools
+from videomass3.vdms_utils.utils import get_milliseconds
 
 
 class MyListCtrl(wx.ListCtrl):
@@ -83,15 +82,17 @@ class MyListCtrl(wx.ListCtrl):
 
             if 'duration' not in data['format'].keys():
                 self.SetItem(self.index, 1, 'N/A')
+                # NOTE these are my adds in ffprobe data
+                data['format']['time'] = '00:00:00.000'
                 data['format']['duration'] = 0
-            else:
 
+            else:
                 t = data['format']['duration'].split(':')
                 s, ms = t[2].split('.')[0], t[2].split('.')[1]
                 t = '%sh : %sm : %ss : %sms' % (t[0], t[1], s, ms)
                 self.SetItem(self.index, 1, t)
                 data.get('format')['time'] = data.get('format').pop('duration')
-                time = time_seconds(data.get('format')['time'])
+                time = get_milliseconds(data.get('format')['time'])
                 data['format']['duration'] = time
 
             media = data['streams'][0]['codec_type']
@@ -101,7 +102,7 @@ class MyListCtrl(wx.ListCtrl):
             self.index += 1
             self.data.append(data)
             self.parent.statusbar_msg('', None)
-            self.parent.tr()
+            self.parent.reset_tl()
 
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
@@ -141,7 +142,7 @@ class FileDnD(wx.Panel):
     """
     # CONSTANTS:
     get = wx.GetApp()
-    OUTSAVE = get.USERfilesave  # path to the configuration directory
+    OUTSAVE = get.FFMPEGoutdir  # files destination folder
     OS = get.OS
     SAMEDIR = get.SAMEdir
     SUFFIX = get.FILEsuffix
@@ -150,8 +151,7 @@ class FileDnD(wx.Panel):
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent  # parent is the MainFrame
         self.data = self.parent.data_files  # set items list data on parent
-        dirname = os.path.expanduser('~')  # /home/user/
-        self.file_dest = dirname if not self.OUTSAVE else self.OUTSAVE
+        self.file_dest = FileDnD.OUTSAVE
         self.selected = None  # tells if an imported file is selected or not
 
         wx.Panel.__init__(self, parent=parent)
@@ -212,7 +212,7 @@ class FileDnD(wx.Panel):
         # Tooltip
         btn_delsel.SetToolTip(_('Remove the selected file from the list'))
         btn_clear.SetToolTip(_('Delete all files from the list'))
-        tip = (_('Choose another output directory for files saving'))
+        tip = (_('Choose a temporary destination for conversions'))
         self.btn_save.SetToolTip(tip)
         # Binding (EVT)
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
@@ -224,13 +224,13 @@ class FileDnD(wx.Panel):
 
     # ----------------------------------------------------------------------
 
-    def tr(self):
+    def reset_tl(self):
         """
-        Reset the timeline on main_frame. When you drop new files,
-        it is also required by the MyListCtrl class.
+        When you drop new files resets the timeline on main_frame.
+        it is also needed by the MyListCtrl class.
 
         """
-        self.parent.timeline_reset()
+        self.parent.reset_Timeline()
     # ----------------------------------------------------------------------
 
     def which(self):
@@ -270,18 +270,34 @@ class FileDnD(wx.Panel):
         menuItem = menu.FindItemById(itemId)
 
         if menuItem.GetItemLabel() == _("Play"):
-            index = self.flCtrl.GetFocusedItem()
-            item = self.flCtrl.GetItemText(index)
-            IO_tools.stream_play(item, self.parent.time_seq, '')
+            self.playSelect()
 
         elif menuItem.GetItemLabel() == _("Remove"):
             self.delSelect(self)
 
     # ----------------------------------------------------------------------
 
+    def playSelect(self):
+        """
+        Playback the selected file
+
+        """
+        if not self.selected:
+            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD')
+        else:
+            self.parent.statusbar_msg(_('Add Files'), None)
+            index = self.flCtrl.GetFocusedItem()
+            item = self.flCtrl.GetItemText(index)
+            if self.parent.checktimestamp:
+                tstamp = '-vf "%s"' % (self.parent.cmdtimestamp)
+            else:
+                tstamp = ""
+            IO_tools.stream_play(item, self.parent.time_seq, tstamp)
+    # ----------------------------------------------------------------------
+
     def delSelect(self, event):
         """
-        Delete the file selected in the list
+        Delete the selected file
 
         """
         if not self.selected:
@@ -294,7 +310,7 @@ class FileDnD(wx.Panel):
             else:
                 item = self.flCtrl.GetFocusedItem()
                 self.flCtrl.DeleteItem(item)  # remove from listctrl
-                self.tr()  # delete parent.timeline
+                self.reset_tl()  # delete parent.timeline
                 self.on_deselect(self)  # deselect removed file
                 self.data.pop(item)  # remove all data item
     # ----------------------------------------------------------------------
@@ -309,7 +325,7 @@ class FileDnD(wx.Panel):
         self.flCtrl.DeleteAllItems()
         del self.data[:]
         self.parent.filedropselected = None
-        self.tr()
+        self.reset_tl()
         self.selected = None
     # ----------------------------------------------------------------------
 

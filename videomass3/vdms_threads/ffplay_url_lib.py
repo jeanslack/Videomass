@@ -3,8 +3,8 @@
 # Porpose: playback online media streams with ffplay player using
 #          youtube_dl embedding on code.
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: September.09.2020 *PEP8 compatible*
 #########################################################
@@ -30,11 +30,9 @@ import sys
 from threading import Thread
 import time
 from pubsub import pub
-try:
-    import youtube_dl
-except (ModuleNotFoundError, ImportError) as nomodule:
-    pass
 from videomass3.vdms_io import IO_tools
+if 'youtube_dl' in sys.modules:
+    import youtube_dl
 
 
 def msg_Error(msg):

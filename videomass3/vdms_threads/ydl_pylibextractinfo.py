@@ -2,8 +2,8 @@
 # Name: ydl_pylibextractinfo.py
 # Porpose: get informations data with youtube_dl
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2019/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -28,10 +28,8 @@ import sys
 import os
 from pubsub import pub
 from threading import Thread
-try:
+if 'youtube_dl' in sys.modules:
     import youtube_dl
-except (ModuleNotFoundError, ImportError) as nomodule:
-    pass
 
 
 class MyLogger(object):

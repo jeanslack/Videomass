@@ -2,8 +2,8 @@
 # Name: msg_info.py
 # Porpose: Gets Version, Copyright and program Description
 # Compatibility: Python3, Python2
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -35,9 +35,9 @@ def current_release():
     """
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
-    Version = '3.3.0'
-    Release = 'Dec 15 2020'
-    Copyright = '© 2013-2020'
+    Version = '3.3.5'
+    Release = 'Jan 09 2020'
+    Copyright = '© 2013-2021'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = ('Gianluca Pernigotto', '(aka jeanslack)')
     Mail = 'jeanlucperni@gmail.com'

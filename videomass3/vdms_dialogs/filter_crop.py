@@ -2,8 +2,8 @@
 # Name: filter_crop.py
 # Porpose: Show dialog to get video crop values based on FFmpeg syntax
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Dec.14.2020 *PEP8 compatible*
 #########################################################
@@ -31,14 +31,16 @@ import wx.lib.statbmp
 import os
 from time import sleep
 from videomass3.vdms_threads.generic_task import FFmpegGenericTask
-from videomass3.vdms_utils.utils import time_seconds
-from videomass3.vdms_utils.utils import time_human
+from videomass3.vdms_utils.utils import get_milliseconds
+from videomass3.vdms_utils.utils import milliseconds2timeformat
 
 
 def make_bitmap(width, height, image):
     """
     Resize the image to the given size and convert it to a
     bitmap object.
+
+    Returns a wx.Bitmap object
 
     """
     bitmap = wx.Bitmap(image)
@@ -98,8 +100,8 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
     def onRedraw(self, x, y, w, h):
         """
         Update Drawing: A transparent background rectangle in a bitmap
-        To compensate for the PEN thickness offset, the positions are
-        increased by 1 and the sizes decreased by 1 .
+        object. To compensate for the PEN thickness offset, the positions
+        are increased by 1 and the sizes decreased by 1 .
 
         NOTE dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 128))) would set
         a useful transparent gradation color but it doesn't work on windows
@@ -169,8 +171,8 @@ class Crop(wx.Dialog):
         else:
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
 
-        duration = time_seconds(timeformat)  # convert to seconds
-        hhmmss = time_human(duration)  # convert to timeformat
+        duration = get_milliseconds(timeformat)  # convert to ms
+        hhmmss = milliseconds2timeformat(duration)  # convert to timeformat
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -359,7 +361,7 @@ class Crop(wx.Dialog):
         e.g (00:00:00), and sets the label with the converted value.
         """
         seek = self.slider.GetValue()
-        t = time_human(seek)  # convert to time format
+        t = milliseconds2timeformat(seek)  # convert to time format
         self.txttime.SetLabel(t)  # update StaticText
     # ------------------------------------------------------------------#
 

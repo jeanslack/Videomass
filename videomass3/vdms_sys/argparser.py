@@ -2,8 +2,8 @@
 # Name: argparser.py
 # Porpose: Check for command line arguments before starting
 # Compatibility: Python3
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: September.11.2020 *PEP8 compatible*
 #########################################################
@@ -33,6 +33,9 @@ from videomass3.vdms_sys.msg_info import current_release
 def args():
     """
     Parser of the users inputs (positional/optional arguments)
+
+    USE:
+        videomass -h
     """
     parser = argparse.ArgumentParser(
                 description='GUI for FFmpeg and youtube-dl',)

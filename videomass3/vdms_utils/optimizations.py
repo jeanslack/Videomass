@@ -2,8 +2,8 @@
 # Name: optimizations.py
 # Porpose: contains the optimization presets for av_conversions.py
 # Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev December.12.2019
 #########################################################
@@ -160,7 +160,6 @@ def hevc_avc(prename):
                 self.cmb_Vcont.SetSelection(0), self.on_Container(self),
                 self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
                 self.cmb_Pixfrm.SetSelection(1),)'''
-
 
     elif prename == 'x265 ABR-VBV live streaming':
 

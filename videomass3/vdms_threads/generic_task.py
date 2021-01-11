@@ -2,8 +2,8 @@
 # Name: generic_task.py
 # Porpose: Execute a generic task with FFmpeg
 # Compatibility: Python3 (Unix, Windows)
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: Dec.03.2020 *PEP8 compatible*
 #########################################################
@@ -30,7 +30,6 @@ import platform
 if not platform.system() == 'Windows':
     import shlex
 from threading import Thread
-
 
 
 class FFmpegGenericTask(Thread):
@@ -66,7 +65,6 @@ class FFmpegGenericTask(Thread):
         """
         self.param = param
         self.status = None
-
 
         Thread.__init__(self)
         ''' constructor'''

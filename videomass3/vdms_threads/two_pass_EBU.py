@@ -2,8 +2,8 @@
 # Name: two_pass_EBU.py
 # Porpose: FFmpeg long processing task on 2 pass with EBU normalization
 # Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2020 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
 # Rev: April.06.2020 *PEP8 compatible*
 #########################################################
@@ -46,6 +46,7 @@ def logWrite(cmd, sterr, logname, logdir):
 
     with open(os.path.join(logdir, logname), "a") as log:
         log.write(apnd)
+
 
 # ------------------------------ THREADS -------------------------------#
 """
