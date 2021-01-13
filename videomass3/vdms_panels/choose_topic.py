@@ -143,7 +143,7 @@ class Choose_Topic(wx.Panel):
                                                'ones '))
         link = hpl.HyperLinkCtrl(self, -1, _("Additional Presets"),
                                  URL="https://github.com/jeanslack/"
-                                     "Videomass-presets")
+                                     "Videomass-presets/releases")
         sizer_hpl.Add(txt_link)
         sizer_hpl.Add(link)
         self.SetSizerAndFit(sizer_base)

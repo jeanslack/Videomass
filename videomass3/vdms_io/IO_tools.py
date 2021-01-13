@@ -29,11 +29,11 @@ import wx
 import os
 import shutil
 import stat
-import ssl
-import urllib.request
+import requests
 from videomass3.vdms_threads.ffplay_file import File_Play
 from videomass3.vdms_threads import (ffplay_url_exec,
                                      ffplay_url_lib,
+                                     generic_downloads,
                                      youtubedlupdater,
                                      )
 from videomass3.vdms_threads.ffprobe_parser import FFProbe
@@ -305,6 +305,7 @@ def youtube_getformatcode_exec(url):
 # --------------------------------------------------------------------------#
 
 
+'''
 def youtubedl_latest(url):
     """
     Call the thread to read the latest version of youtube-dl via the web.
@@ -319,7 +320,7 @@ def youtubedl_latest(url):
     latest = thread.data
     loadDlg.Destroy()
 
-    return latest
+    return latest'''
 # --------------------------------------------------------------------------#
 
 
@@ -374,7 +375,7 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
         except OSError as err:
             return None, err
 
-    thread = youtubedlupdater.Upgrade_Latest(url, executable)
+    thread = generic_downloads.File_Downloading(url, executable)
     loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
     loadDlg.ShowModal()
     # thread.join()
@@ -402,55 +403,48 @@ def youtubedl_upgrade(latest, executable, upgrade=False):
 # --------------------------------------------------------------------------#
 
 
-def check_videomass_releases(thisrel):
+def get_github_releases(url, keyname):
     """
-    Check for new version releases of Videomass on
-    <https://pypi.org/project/videomass/> web page.
+    Check for releases data on github page using github API:
+        https://developer.github.com/v3/repos/releases/#get-the-latest-release
 
-    FIXME : There are was some error regarding
-    [SSL: CERTIFICATE_VERIFY_FAILED]
-    see:
-    <https://stackoverflow.com/questions/27835619/urllib-and-ssl-
-    certificate-verify-failed-error>
-    <https://stackoverflow.com/questions/35569042/ssl-certificate-
-    verify-failed-with-python3>
+    see keyname examples here:
+    <https://api.github.com/repos/jeanslack/Videomass/releases>
 
     """
-    # HACK fix soon the ssl certificate
-    # ssl._create_default_https_context = ssl._create_unverified_context
-
-    url = 'https://pypi.org/project/videomass/'
-    context = ssl._create_unverified_context()
-
     try:
-        with urllib.request.urlopen(url, context=context) as f:
-            array = f.read().decode('UTF-8').strip().split()
+        response = requests.get(url)
+        not_found = None, None
 
-    except urllib.error.HTTPError as error:
-        return error, 'error'
-
-    except urllib.error.URLError as error:
-        return error, 'error'
+    except Exception as err:
+        not_found = 'request error:', err
 
     else:
-        version = None
-        for v in array:
-            if 'class="package-header__name">' in v:
-                indx = array.index(v) + 2
-                version = array[indx]
-                break
-        if version:
-            newmajor, newminor, newmicro = version.split('.')
-            new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
-            major, minor, micro = thisrel[2].split('.')
-            this_version = int('%s%s%s' % (major, minor, micro))
 
-            if new_version > this_version:
-                return version, None
-            else:
-                return None, None  # no new version
-        else:
-            return None, 'unrecognized error'  # unrecognized error
+        try:
+            version = response.json()["%s" % keyname]
+
+        except Exception as err:
+            not_found = 'response error:', err
+
+    if not_found[0]:
+        return not_found
+    else:
+        return version, None
+# --------------------------------------------------------------------------#
+
+
+def get_presets(url, dest, msg):
+    """
+    """
+    thread = generic_downloads.File_Downloading(url, dest)
+    loadDlg = PopupDialog(None, _("Videomass - Downloading..."), msg)
+    loadDlg.ShowModal()
+    # thread.join()
+    status = thread.data
+    loadDlg.Destroy()
+
+    return status
 # --------------------------------------------------------------------------#
 
 

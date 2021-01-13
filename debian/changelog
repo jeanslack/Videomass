@@ -31,9 +31,12 @@ videomass (3.3.5-1) UNRELEASED; urgency=medium
   * Added abilty to set a temporary downloads folder.
   * Added ability to restore the default destination folders.
   * Added some keyboard shortcuts for menu items
+  * Added the ability to check for new versions of presets.
+  * Added the ability to download the latest version of presets.
+  * Added `requests` package as new dependency.
   * Fixed minor bugs.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat,09 Jan 2020 20:29:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed,13 Jan 2020 15:13:00 +0200
 
 videomass (3.3.0-1) UNRELEASED; urgency=medium
 

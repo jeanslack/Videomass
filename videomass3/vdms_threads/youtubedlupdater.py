@@ -35,7 +35,7 @@ import wx
 from pubsub import pub
 from threading import Thread
 
-
+'''
 class CheckNewRelease(Thread):
     """
     Read the latest version of youtube-dl on github website (see url) .
@@ -75,6 +75,7 @@ class CheckNewRelease(Thread):
                      "RESULT_EVT",
                      status=''
                      )
+'''
 # -------------------------------------------------------------------------#
 
 

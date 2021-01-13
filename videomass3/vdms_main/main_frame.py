@@ -47,6 +47,7 @@ from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
 from videomass3.vdms_utils.utils import get_milliseconds
+from videomass3.vdms_utils.utils import copydir_recursively
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
@@ -63,6 +64,7 @@ class MainFrame(wx.Frame):
     DIR_CONF = get.DIRconf  # default configuration directory
     FILE_CONF = get.FILEconf  # pathname of the file configuration
     WORK_DIR = get.WORKdir  # pathname of the current work directory
+    SRC_PATH = get.SRCpath
     LOGDIR = get.LOGdir  # log directory pathname
     CACHEDIR = get.CACHEdir  # cache directory pathname
     FFMPEG_DEFAULTDEST = get.FFMPEGoutdir  # default file dest from conf.
@@ -426,13 +428,19 @@ class MainFrame(wx.Frame):
         dscrp = (_("Update youtube-dl"),
                  _("Update with latest version of youtube-dl"))
         self.ydlupdate = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        toolsButton.AppendSeparator()
+        dscrp = (_("Check for new presets"),
+                 _("Check new versions of Videomass presets from homepage"))
+        self.prstcheck = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Download the latest presets"),
+                 _("Download all Videomass presets locally from the homepage"))
+        self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         self.menuBar.Append(toolsButton, _("&Tools"))
 
         # ------------------ View menu
         viewButton = wx.Menu()
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
         viewButton.AppendSubMenu(ffmpegButton, "&FFmpeg")
-
         dscrp = (_("Show configuration"),
                  _("Show FFmpeg's built-in configuration capabilities"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -573,6 +581,8 @@ class MainFrame(wx.Frame):
         # ----TOOLS----
         self.Bind(wx.EVT_MENU, self.Search_topic, searchtopic)
         self.Bind(wx.EVT_MENU, self.youtubedl_uptodater, self.ydlupdate)
+        self.Bind(wx.EVT_MENU, self.prst_downloader, self.prstdownload)
+        self.Bind(wx.EVT_MENU, self.prst_checkversion, self.prstcheck)
         # ---- VIEW ----
         self.Bind(wx.EVT_MENU, self.Check_conf, checkconf)
         self.Bind(wx.EVT_MENU, self.Check_formats, ckformats)
@@ -669,11 +679,13 @@ class MainFrame(wx.Frame):
             check latest and installed versions of youtube-dl
             and return latest or None if error
             """
-            url = 'https://yt-dl.org/update/LATEST_VERSION'
-            latest = IO_tools.youtubedl_latest(url)
-            if latest[1]:  # failed
-                wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
-                              "Videomass", wx.ICON_ERROR, self)
+            url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
+                   "/releases/latest")
+            latest = IO_tools.get_github_releases(url, "tag_name")
+
+            if latest[0] in ['request error:', 'response error:']:
+                wx.MessageBox("%s %s" % (latest[0], latest[1]),
+                              "%s" % latest[0], wx.ICON_ERROR, self)
                 return None
 
             this = self.ydl_used(self, False)
@@ -769,7 +781,81 @@ class MainFrame(wx.Frame):
             wx.MessageBox(
                     _('It looks like you installed youtube-dl with a '
                       'package manager. Please use that to update.'),
-                    'Videomass', wx.ICON_INFORMATION)
+                    'Videomass', wx.ICON_INFORMATION, self)
+            return
+    # ------------------------------------------------------------------#
+
+    def prst_checkversion(self, event):
+        """
+        compare the installed version of the presets
+        with the latest release on the development page.
+        """
+        url = ("https://api.github.com/repos/jeanslack/"
+               "Videomass-presets/releases/latest")
+
+        presetsdir = os.path.join(MainFrame.DIR_CONF, 'presets',
+                                  'version', 'version.txt')
+        presetsrecovery = os.path.join(MainFrame.SRC_PATH, 'presets',
+                                       'version', 'version.txt')
+
+        if not os.path.isfile(presetsdir):
+            pcopy = copydir_recursively(
+                                os.path.dirname(presetsrecovery),
+                                os.path.dirname(os.path.dirname(presetsdir)))
+
+        with open(presetsdir, "r") as vers:
+            fread = vers.read().strip()
+
+        newversion = IO_tools.get_github_releases(url, "tag_name")
+
+        if newversion[0] in ['request error:', 'response error:']:
+            wx.MessageBox("%s %s" % (newversion[0], newversion[1]),
+                          "%s" % newversion[0], wx.ICON_ERROR, self)
+
+        elif float(newversion[0].split('v')[1]) > float(fread):
+            wx.MessageBox(_("There is a new version available "
+                          "{0}").format(newversion[0], "Videomass",
+                                        wx.ICON_INFORMATION, self))
+        else:
+            wx.MessageBox(_("No new version available"), "Videomass",
+                          wx.ICON_INFORMATION, self)
+        return
+    # ------------------------------------------------------------------#
+
+    def prst_downloader(self, event):
+        """
+        Ask the user where to download the new presets;
+        check tarball_url, then proceed to download.
+        """
+        url = ("https://api.github.com/repos/jeanslack/"
+               "Videomass-presets/releases/latest")
+
+        dialdir = wx.DirDialog(self, _("Choose a download folder"))
+        if dialdir.ShowModal() == wx.ID_OK:
+            path = dialdir.GetPath()
+            dialdir.Destroy()
+        else:
+            return
+
+        tarball = IO_tools.get_github_releases(url, "tarball_url")
+
+        if tarball[0] in ['request error:', 'response error:']:
+            wx.MessageBox("%s %s" % (tarbal[0], tarbal[1]),
+                          "%s" % tarbal[0], wx.ICON_ERROR, self)
+            return
+
+        name = 'Videomass-presets-%s.tar.gz' % tarball[0].split('/v')[-1]
+        pathname = os.path.join(path, name)
+        msg = _('\nWait....\nThe archive is being downloaded\n')
+        download = IO_tools.get_presets(tarball[0], pathname, msg)
+
+        if download[1]:
+            wx.MessageBox("%s" % download[1], 'ERROR', wx.ICON_ERROR, self)
+            return
+        else:
+            wx.MessageBox(_('Successfully downloaded to '
+                            '"{0}"').format(pathname), 'Videomass',
+                          wx.ICON_INFORMATION, self)
             return
     # ------------------------------------------------------------------#
     # --------- Menu View ###
@@ -824,7 +910,7 @@ class MainFrame(wx.Frame):
             this = youtube_dl.version.__version__
             if msgbox:
                 wx.MessageBox(_('You are using youtube-dl '
-                                'version {}').format(this), 'Videomass')
+                                'version {}').format(this), 'Videomass', self)
             return this
         else:
             if os.path.exists(MainFrame.EXEC_YDL):
@@ -838,14 +924,15 @@ class MainFrame(wx.Frame):
 
                 if msgbox:
                     wx.MessageBox(_('You are using youtube-dl '
-                                    'version {}').format(this[0]), 'Videomass')
+                                    'version {}').format(this[0]),
+                                  'Videomass', self)
                     return this[0]
 
                 return this[0].strip()
         if msgbox:
             wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
                             'installed yet.').format(MainFrame.PYLIB_YDL),
-                          'Videomass', wx.ICON_ERROR)
+                          'Videomass', wx.ICON_ERROR, self)
         return None
     # -----------------------------------------------------------------#
 
@@ -1045,7 +1132,7 @@ class MainFrame(wx.Frame):
         self.resetfolders_tmp.Enable(False)
 
         wx.MessageBox(_("Default destination folders successfully restored"),
-                        "Videomass", wx.ICON_INFORMATION, None)
+                      "Videomass", wx.ICON_INFORMATION, None)
     # ------------------------------------------------------------------#
 
     def Setup(self, event):
@@ -1097,40 +1184,43 @@ class MainFrame(wx.Frame):
 
     def CheckNewReleases(self, event):
         """
-        Check for new version releases of Videomass.
+        Compare the Videomass version with a given
+        new version found on github.
         """
-        cr = current_release()
-        check = IO_tools.check_videomass_releases(cr)
-        if check[1] == 'error':
-            wx.MessageBox("%s" % check[0], "Videomass",
-                          wx.ICON_ERROR
-                          )
+        this = current_release()  # this version
+        url = ("https://api.github.com/repos/jeanslack/"
+               "Videomass/releases/latest")
+        version = IO_tools.get_github_releases(url, "tag_name")
 
-        elif check[0] and check[1] is None:
-            wx.MessageBox(_(
+        if version[0] in ['request error:', 'response error:']:
+            wx.MessageBox("%s %s" % (version[0], version[1]),
+                          "%s" % version[0], wx.ICON_ERROR, self)
+            return
+
+        else:
+            version = version[0].split('v')[1]
+            newmajor, newminor, newmicro = version.split('.')
+            new_version = int('%s%s%s' % (newmajor, newminor, newmicro))
+            major, minor, micro = this[2].split('.')
+            this_version = int('%s%s%s' % (major, minor, micro))
+
+            if new_version > this_version:
+                wx.MessageBox(_(
                     '\n\nNew releases fix bugs and offer new features'
                     '\n\nThis is Videomass version {0}\n\n'
                     '<https://pypi.org/project/videomass/>\n\n'
-                    'The latest version {1} is available\n').format(cr[2],
+                    'The latest version {1} is available\n').format(this[2],
                                                                     check[0]),
                     _("Checking for newer version"),
-                    wx.ICON_INFORMATION | wx.CENTRE, None)
-
-        elif check[0] is None and check[1] is None:
-            wx.MessageBox(_(
-                '\n\nNew releases fix bugs and offer new features'
-                '\n\nThis is Videomass version {0}\n\n'
-                '<https://pypi.org/project/videomass/>\n\n'
-                'You are using the latest version\n').format(cr[2]),
-                _("Checking for newer version"),
-                wx.ICON_INFORMATION | wx.CENTRE, None)
-
-        elif check[1] == 'unrecognized error':
-            wx.MessageBox(_('An error was found in the search for '
-                            'the web page.\nSorry for this inconvenience.'),
-                          "Videomass",
-                          wx.ICON_EXCLAMATION | wx.CENTRE, None)
-            return
+                    wx.ICON_INFORMATION | wx.CENTRE, self)
+            else:
+                wx.MessageBox(_(
+                        '\n\nNew releases fix bugs and offer new features'
+                        '\n\nThis is Videomass version {0}\n\n'
+                        '<https://pypi.org/project/videomass/>\n\n'
+                        'You are using the latest version\n').format(this[2]),
+                        _("Checking for newer version"),
+                        wx.ICON_INFORMATION | wx.CENTRE, self)
     # -------------------------------------------------------------------#
 
     def Info(self, event):

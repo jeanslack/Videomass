@@ -7,6 +7,7 @@ BASE DEPENDENCIES
         - Python >=3.6.9
         - wxPython4 (Phoenix)
         - PyPubSub
+        - requests
         - pip (On Windows and MacOS it is included with Python3.7)
         - FFmpeg (with ffplay and ffprobe) >=4.1.4
         - youtube_dl

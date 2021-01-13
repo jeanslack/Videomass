@@ -108,8 +108,6 @@ class PageOne(wx.Panel):
         sizer_base.Add(lab1, 0, wx.CENTER)
         sizer_base.Add((0, 30), 0)
         sizer_base.Add(lab2, 0, wx.CENTER)
-        #sizer_base.Add((0, 30), 0)
-        #sizer_base.Add(lab4, 0, wx.CENTER)
         sizer_base.Add((0, 30), 0)
         sizer_base.Add(lab3, 0, wx.CENTER)
         sizer_base.Add((0, 80), 0)
@@ -132,7 +130,7 @@ class PageTwo(wx.Panel):
     MSG00 = (_('Videomass is an application based on FFmpeg'))
 
     MSG0 = (_('If FFmpeg is not on your computer, this application '
-               'is unusable'))
+              'is unusable'))
 
     MSG1 = (_('If you have already installed FFmpeg on your operating '
               'system, click\nthe "Auto-detection" button.'))
@@ -143,7 +141,6 @@ class PageTwo(wx.Panel):
 
     def __init__(self, parent):
         """
-
         """
         wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
         """constructor"""
@@ -255,7 +252,7 @@ class PageTwo(wx.Panel):
             self.parent.ffplay = list(executables.items())[2][1]
             self.parent.btnNext.Enable()
             self.browseBtn.Disable(), self.detectBtn.Enable()
-            self.labFFpath.SetLabel('%s' % path)
+            self.labFFpath.SetLabel('...Found: "%s"' % path)
             self.Layout()
     # -------------------------------------------------------------------#
 
@@ -344,7 +341,7 @@ class PageTwo(wx.Panel):
         self.parent.ffplay = ffplay
         self.parent.btnNext.Enable()
         self.detectBtn.Disable(), self.browseBtn.Enable()
-        self.labFFpath.SetLabel('%s' % os.path.dirname(ffmpeg))
+        self.labFFpath.SetLabel('...Found: "%s"' % os.path.dirname(ffmpeg))
         self.Layout()
 
 
@@ -434,8 +431,8 @@ class PageFour(wx.Panel):
              'file can be downloaded and updated\nby Videomass and will be '
              'placed locally on:')
 
-    MSG2 = _('Notice: This version of Videomass can only use youtube-dl\n'
-             'as local executable')
+    MSG2 = _('Notice: This version of Videomass can\n'
+             'only use youtube-dl as local executable')
     #  if AppImage
     if '/tmp/.mount_' in sys.executable or \
        os.path.exists(os.getcwd() + '/AppRun'):
@@ -485,9 +482,11 @@ class PageFour(wx.Panel):
         sizer_base.Add((0, 15), 0)
         #  if pyinstaller packages
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            lab2 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG2)
-            sizer_base.Add(lab2, 0, wx.CENTER)
+            lab2 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG2,
+                                 style=wx.ALIGN_CENTRE_HORIZONTAL)
             lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
+            sizer_base.Add(lab2, 0, wx.EXPAND)
+
             self.rdbDownloader.SetSelection(1)
             self.rdbDownloader.Disable()
 

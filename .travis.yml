@@ -17,6 +17,7 @@ before_install:
 # install dependencies via pip
 install:
     - pip install PyPubSub
+    - pip install requests
     - pip install youtube_dl
     - pip install -U -f https://extras.wxpython.org/wxPython4/extras/linux/gtk2/ubuntu-16.04 wxPython
 script:

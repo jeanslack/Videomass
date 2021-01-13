@@ -149,6 +149,8 @@ def copy_restore(src, dest):
         shutil.copyfile(str(src), str(dest))
     except FileNotFoundError as err:
         return err
+    except Exception as err:
+        return err
 
     return
 # ------------------------------------------------------------------#

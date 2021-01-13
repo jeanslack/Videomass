@@ -103,6 +103,7 @@ class Videomass(wx.App):
 
         dirname = os.path.expanduser('~')  # /home/user/
         self.OS = setui[0]
+        self.SRCpath = setui[1]  # backup data for recovery
         self.FILEconf = setui[6]
         self.WORKdir = setui[7]
         self.DIRconf = setui[8]

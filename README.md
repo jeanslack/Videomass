@@ -33,7 +33,8 @@ each operating system.
 ### Requirements
 - **[Python >= 3.6.9](https://www.python.org/)**
 - **[wxPython-Phoenix >= 4.0.3](https://wxpython.org/)**
-- **[PyPubSub](https://pypi.org/project/PyPubSub/)**
+- **[PyPubSub >= 4.0.3](https://pypi.org/project/PyPubSub/)**
+- **[requests >= 2.21.0](https://pypi.org/project/requests/)**
 - **[pip](https://pypi.org/project/pip/)**
 - **[ffmpeg >=3.2](https://ffmpeg.org/)**
 - **[ffprobe](https://ffmpeg.org/ffprobe.html)** (usually bundled with ffmpeg)

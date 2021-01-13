@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Gen 09, 2021 V.3.3.5
+Gen 13, 2021 V.3.3.5
 
   * Transpose Filter Dialog: Fixed `wx.StaticText` wrapping on Windows and
     MacOs, where it would break the static text string.
@@ -40,6 +40,9 @@ Gen 09, 2021 V.3.3.5
   * Added abilty to set a temporary downloads folder.
   * Added ability to restore the default destination folders.
   * Added some keyboard shortcuts for menu items
+  * Added the ability to check for new versions of presets.
+  * Added the ability to download the latest version of presets.
+  * Added `requests` package as new dependency.
   * Fixed minor bugs.
 
 

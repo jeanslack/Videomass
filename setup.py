@@ -7,7 +7,7 @@
 # Writer: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.24.2020 *PEP8 compatible*
+# Rev: Jan.13.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -64,6 +64,7 @@ def source_build():
                             "platform_system=='Darwin'",
                             "PyPubSub>=4.0.3",
                             "youtube_dl>=2020.1.1",
+                            "requests>=2.21.0",
                             ]
         SETUP_REQUIRES = ["setuptools>=47.1.1",
                           "wheel>=0.34.2",
@@ -76,6 +77,7 @@ def source_build():
         INSTALL_REQUIRES = ["wxpython>=4.0.3",
                             "PyPubSub>=4.0.3",
                             "youtube_dl",
+                            "requests>=2.21.0",
                             ]
         SETUP_REQUIRES = []
         long_description = LONG_DESCRIPTION

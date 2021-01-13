@@ -15,7 +15,8 @@ Depends: ${misc:Depends},
          ffmpeg,
          youtube-dl,
          python3-wxgtk4.0,
-         python3-pubsub
+         python3-pubsub,
+         python3-requests
 Suggests: atomicparsley
 Description: Videomass is a cross-platform GUI for FFmpeg and youtube-dl
  Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need

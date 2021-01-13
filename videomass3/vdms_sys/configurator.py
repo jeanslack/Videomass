@@ -27,6 +27,8 @@
 import os
 import sys
 import shutil
+from videomass3.vdms_utils.utils import copydir_recursively
+from videomass3.vdms_utils.utils import copy_restore
 import platform
 
 
@@ -176,30 +178,30 @@ class Data_Source(object):
             else:
                 existfileconf = False
 
-            if not existfileconf:
-                try:  # try to restore only videomass.conf
-                    shutil.copyfile('%s/videomass.conf' % self.SRCpath,
-                                    Data_Source.FILE_CONF)
+            if not existfileconf:  # try to restore only videomass.conf
+                fcopy = copy_restore('%s/videomass.conf' % self.SRCpath,
+                                     Data_Source.FILE_CONF)
+                if fcopy:
+                    copyerr, userconf = fcopy, None
+                else:
                     userconf = self.parsing_fileconf()  # read again file conf
-                except IOError as e:
-                    copyerr = e
-                    userconf = None
+
             if not os.path.exists(os.path.join(Data_Source.DIR_CONF,
                                                "presets")):
-                try:  # try to restoring presets directory on videomass dir
-                    shutil.copytree(os.path.join(self.SRCpath, "presets"),
-                                    os.path.join(Data_Source.DIR_CONF,
-                                                 "presets"))
-                except (OSError, IOError) as e:
-                    copyerr = e
-                    userconf = None
+                # try to restoring presets directory on videomass dir
+                drest = copydir_recursively(os.path.join(self.SRCpath,
+                                                         "presets"),
+                                            Data_Source.DIR_CONF)
+                if drest:
+                    copyerr, userconf = drest, None
+
         else:  # try to restore entire configuration directory
-            try:
-                shutil.copytree(self.SRCpath, Data_Source.DIR_CONF)
-                userconf = self.parsing_fileconf()  # read again file conf
-            except (OSError, IOError) as e:
-                copyerr = e
-                userconf = None
+            dconf = copydir_recursively(self.SRCpath,
+                                        os.path.dirname(Data_Source.DIR_CONF),
+                                        "videomass")
+            userconf = self.parsing_fileconf()  # read again file conf
+            if dconf:
+                copyerr, userconf = dconf, None
 
         return (Data_Source.OS,
                 self.SRCpath,

@@ -9,14 +9,7 @@ URGENCY: high
 
 - improve Automations on Presets Manager
 
-- check to update all default presets or add new ones
-
-- Make combobox to choose other colors for the crop rectangle selection in
-  the Crop dialog.
-
-- Update .desktop file with Russian language
-
-- Include LICENSE etc. in the Windows portable archive
+- Make combobox to choose other colors for the crop rectangle selection.
 
 -------------
 URGENCY: low
