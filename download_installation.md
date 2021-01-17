@@ -32,6 +32,9 @@ Visit the [SourceForge](https://sourceforge.net/projects/videomass2/files/) web 
 
 Minimum requirements:
 - Microsoft **Windows 7** to **Windows 10** (64-bit only)
+- If you use Videomass to download videos from YouTube.com and other video 
+sites, [Microsoft Visual C ++ 2010 Redistributable Package (x86)](https://www.microsoft.com/en-US/download/details.aspx?id=5555) 
+is required.
 
 ## MacOs
 MacOs users should use the disk image file (.**dmg**) available at [SourceForge](https://sourceforge.net/projects/videomass2/files/) website.   
