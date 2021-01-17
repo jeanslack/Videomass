@@ -29,17 +29,10 @@ To use new presets, follow the steps below.
 - On the left side of the Presets box, click on the "Import preset" button or the "Import group" button and follow the instructions that appear.
 - The new presets should appear in the drop-down menu.
 
-**WARNING**: If you confirm to update Videomass presets, all presets with the 
-same name will be overwritten. If you have saved new profiles and do not want 
-to lose them, it is strongly recommended to make a backup of the old version of 
-your presets and then reintegrate your profiles on the new version of the presets.
-To do this
+**WARNING**: Before importing new presets or updating existing ones, it is 
+strongly recommended to backup all presets. To do this
 
 - Go to the Presets Manager panel and click on the "Export all..." button.
-- import the new presets and confirm.
-- With a text editor, open each presets where you have stored your profiles.
-- In the profiles section of the the Presets Manager panel, click on the "Add" 
-button and create a new profile by copying the same entries you find in the text 
-editor, then save it.
+- Then import the new presets and confirm.
 
 [Home](index.md)
