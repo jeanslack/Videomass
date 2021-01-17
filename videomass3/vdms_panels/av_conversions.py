@@ -1841,6 +1841,9 @@ class AV_Conv(wx.Panel):
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
             title = _('RMS-based volume statistics')
 
+        if self.btn_voldect.IsEnabled():
+            self.on_Audio_analyzes(self)
+
         audionormlist = shownormlist.NormalizationList(title,
                                                        self.normdetails,
                                                        self.oS)
@@ -2438,11 +2441,12 @@ class AV_Conv(wx.Panel):
                 parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(
-                        None, _("Open a preset to store the new profile"),
+                        None, _("Write the new profile on..."),
                         defaultDir=os.path.join(AV_Conv.DIR_CONF, 'presets'),
                         wildcard="Videomass presets (*.prst;)|*.prst;",
                         style=wx.FD_OPEN |
                         wx.FD_FILE_MUST_EXIST) as fileDialog:
+
             if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
             filename = os.path.splitext(fileDialog.GetPath())[0]

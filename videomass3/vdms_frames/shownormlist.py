@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Jan.16.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -29,8 +29,8 @@ import wx
 
 class NormalizationList(wx.MiniFrame):
     """
-    Show FFmpeg volumedetect command data and report offset and gain
-    results need for normalization process.
+    Show FFmpeg volumedetect command data and report offset
+    and gain results need for normalization process.
 
     """
     def __init__(self, title, data, OS):
@@ -63,16 +63,19 @@ class NormalizationList(wx.MiniFrame):
                                  wx.ID_ANY,
                                  (_('Post-normalization references:')
                                   ))
-        red = wx.StaticText(self.panel, wx.ID_ANY, "\t\t")
-        red.SetBackgroundColour(wx.Colour(233, 80, 77))  # #e9504d
+        self.btnRed = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btnRed.SetBackgroundColour(wx.Colour(233, 80, 77))  # #e9504d
+        self.btnRed.SetForegroundColour(wx.Colour(0, 0, 0))
         txtred = wx.StaticText(self.panel, wx.ID_ANY, (_("=  Clipped peaks")))
 
-        grey = wx.StaticText(self.panel, wx.ID_ANY, "\t\t")
-        grey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
+        self.btnGrey = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btnGrey.SetBackgroundColour(wx.Colour(100, 100, 100))  # #646464
+        self.btnGrey.SetForegroundColour(wx.Colour(0, 0, 0))
         txtgrey = wx.StaticText(self.panel, wx.ID_ANY, (_("=  No changes")))
 
-        yell = wx.StaticText(self.panel, wx.ID_ANY, "\t\t")
-        yell.SetBackgroundColour(wx.Colour(198, 180, 38))  # #C6B426
+        self.btnYell = wx.Button(self.panel, wx.ID_ANY, ("?"), size=(30, -1))
+        self.btnYell.SetBackgroundColour(wx.Colour(198, 180, 38))  # #C6B426
+        self.btnYell.SetForegroundColour(wx.Colour(0, 0, 0))
         txtyell = wx.StaticText(self.panel,
                                 wx.ID_ANY, (_("=  Below max peak")))
 
@@ -82,19 +85,19 @@ class NormalizationList(wx.MiniFrame):
         sizer.Add(normlist, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(descript, 0, wx.ALL, 10)
         grid_list = wx.FlexGridSizer(1, 6, 0, 0)
-        grid_list.Add(red, 1, wx.ALL, 5)
+        grid_list.Add(self.btnRed, 1, wx.ALL, 5)
         grid_list.Add(txtred, 1,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
                       wx.ALIGN_CENTER_HORIZONTAL, 5
                       )
-        grid_list.Add(grey, 1, wx.ALL, 5)
+        grid_list.Add(self.btnGrey, 1, wx.ALL, 5)
         grid_list.Add(txtgrey, 1,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
                       wx.ALIGN_CENTER_HORIZONTAL, 5
                       )
-        grid_list.Add(yell, 1, wx.ALL, 5)
+        grid_list.Add(self.btnYell, 1, wx.ALL, 5)
         grid_list.Add(txtyell, 1,
                       wx.ALL |
                       wx.ALIGN_CENTER_VERTICAL |
@@ -122,6 +125,10 @@ class NormalizationList(wx.MiniFrame):
             txtgrey.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
             txtyell.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL))
 
+        # ----------------------Binding (EVT)------------------------#
+        self.Bind(wx.EVT_BUTTON, self.on_red, self.btnRed)
+        self.Bind(wx.EVT_BUTTON, self.on_grey, self.btnGrey)
+        self.Bind(wx.EVT_BUTTON, self.on_yellow, self.btnYell)
         self.Bind(wx.EVT_BUTTON, self.on_close, self.button_close)
         self.Bind(wx.EVT_CLOSE, self.on_close)  # controlla la chiusura (x)
 
@@ -164,6 +171,37 @@ class NormalizationList(wx.MiniFrame):
                     normlist.SetItem(index, 4, i[4])
                 else:
                     normlist.SetItem(index, 4, i[4])
+    # --------------------------------------------------------------#
+
+    def on_red(self, event):
+        """
+        event on button red
+        """
+        wx.MessageBox(_("...It means that the final result of the audio "
+                        "signal will be clipped, because it is higher than "
+                        "the maximum level of 0 db. This will result in loss "
+                        "of data in the audio signal and the sound may be "
+                        "distorted."),
+                      _("When it's red..."), wx.ICON_INFORMATION, self)
+    # --------------------------------------------------------------#
+
+    def on_grey(self, event):
+        """
+        event on button grey
+        """
+        wx.MessageBox(_("...It means that the final result of the audio "
+                        "signal will not change, because it is the same "
+                        "as the source one."),
+                      _("When it's grey..."), wx.ICON_INFORMATION, self)
+    # --------------------------------------------------------------#
+
+    def on_yellow(self, event):
+        """
+        event on button yellow
+        """
+        wx.MessageBox(_("...It means that an audio signal with a lower "
+                        "volume than the original one will be produced."),
+                      _("When it's yellow..."), wx.ICON_INFORMATION, self)
     # --------------------------------------------------------------#
 
     def on_close(self, event):

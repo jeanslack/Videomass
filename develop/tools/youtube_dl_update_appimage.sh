@@ -62,6 +62,9 @@ export PATH="$(pwd)/squashfs-root/usr/bin:$PATH"
 # update pip
 ./squashfs-root/opt/python3.8/bin/python3.8 -m pip install -U --target=$SITEPKG pip
 
+# update certifi
+./squashfs-root/opt/python3.8/bin/python3.8 -m pip install -U --target=$SITEPKG certifi
+
 # update youtube_dl package
 ./squashfs-root/opt/python3.8/bin/python3.8 -m pip install -U --target=$SITEPKG youtube_dl
 

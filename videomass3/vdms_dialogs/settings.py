@@ -28,6 +28,7 @@ import wx
 import os
 import sys
 import webbrowser
+from videomass3.vdms_utils.utils import detect_binaries
 
 
 class Setup(wx.Dialog):
@@ -48,6 +49,7 @@ class Setup(wx.Dialog):
     FFMPEG_CHECK = get.FFMPEG_check
     FFPROBE_CHECK = get.FFPROBE_check
     FFPLAY_CHECK = get.FFPLAY_check
+    FF_LOCALDIR = get.FFMPEGlocaldir
     FF_OUTPATH = get.FFMPEGoutdir
     YDL_OUTPATH = get.YDLoutdir
     SAMEDIR = get.SAMEdir
@@ -121,7 +123,7 @@ class Setup(wx.Dialog):
         # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGeneral = wx.BoxSizer(wx.VERTICAL)
-        msg = _("Where do you prefer to save the FFmpeg output files?")
+        msg = _("Where do you prefer to save your transcodes?")
         boxFFmpegoutpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
                                                           (msg)), wx.VERTICAL)
         sizerGeneral.Add(boxFFmpegoutpath, 0, wx.ALL | wx.EXPAND, 15)
@@ -141,7 +143,7 @@ class Setup(wx.Dialog):
                           wx.ALIGN_CENTER_HORIZONTAL, 5
                           )
         self.txtctrl_FFpath.AppendText(self.pathFF)
-        descr = _(" Save the FFmpeg output files in the same source folder")
+        descr = _(" Save to the same source folder")
         self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
         boxFFmpegoutpath.Add(self.ckbx_dir, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
@@ -189,12 +191,13 @@ class Setup(wx.Dialog):
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
         sizerFFmpeg = wx.BoxSizer(wx.VERTICAL)
         gridExec = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
-                                     _('Execution paths')), wx.VERTICAL)
+                                     _('Path to the executables')),
+                                     wx.VERTICAL)
         sizerFFmpeg.Add(gridExec, 1, wx.ALL | wx.EXPAND, 15)
         # ----
         gridExec.Add((0, 10))
         self.checkbox_exeFFmpeg = wx.CheckBox(tabTwo, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFmpeg")))
+                                _(" Enable another location to run FFmpeg")))
         self.btn_pathFFmpeg = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
         self.txtctrl_ffmpeg = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
@@ -203,10 +206,10 @@ class Setup(wx.Dialog):
         gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
         gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
-        gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALL, 5)
         # ----
         self.checkbox_exeFFprobe = wx.CheckBox(tabTwo, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFprobe")))
+                                _(" Enable another location to run FFprobe")))
         self.btn_pathFFprobe = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
         self.txtctrl_ffprobe = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
@@ -215,10 +218,10 @@ class Setup(wx.Dialog):
         gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFprobe, 0, wx.ALL | wx.EXPAND, 5)
         gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
-        gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALL, 5)
         # ----
         self.checkbox_exeFFplay = wx.CheckBox(tabTwo, wx.ID_ANY, (
-                                       _(" Use a custom path to run FFplay")))
+                                  _(" Enable another location to run FFplay")))
         self.btn_pathFFplay = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
         self.txtctrl_ffplay = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
@@ -227,7 +230,7 @@ class Setup(wx.Dialog):
         gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFplay, 0, wx.ALL | wx.EXPAND, 5)
         gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
-        gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALL, 5)
 
         gridFFopt = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
                                                    _('Other options')),
@@ -325,11 +328,10 @@ class Setup(wx.Dialog):
         tabFour = wx.Panel(notebook, wx.ID_ANY)
         gridappearance = wx.BoxSizer(wx.VERTICAL)
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
-                                        _("Set Icons"))), wx.VERTICAL)
+                                        _("Icon themes"))), wx.VERTICAL)
         gridappearance.Add(boxLabIcons, 1, wx.ALL | wx.EXPAND, 15)
-        msg = _("Note: setting the icons also the background and the\n"
-                "foreground of some text boxes will be set automatically\n"
-                "depending on whether the themes are light or dark.")
+        msg = _("setting the icons will also change the background\n"
+                "and foreground of some text fields.")
         lab_appearance = wx.StaticText(tabFour, wx.ID_ANY, (msg))
         boxLabIcons.Add(lab_appearance, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL,
                         15)
@@ -354,9 +356,9 @@ class Setup(wx.Dialog):
         # -----tab 5
         tabFive = wx.Panel(notebook, wx.ID_ANY)
         gridLog = wx.BoxSizer(wx.VERTICAL)
-        msglog = _("The following settings affect output messages "
-                   "and the log messages\nduring processes. "
-                   "Change only if you know what you are doing.")
+        msglog = _("The following settings affect output messages and\n"
+                   "the log messages during transcoding processes.\n"
+                   "Change only if you know what you are doing.\n")
         labLOGmsg = wx.StaticText(tabFive, wx.ID_ANY, (msglog))
         gridLOGmsg = wx.StaticBoxSizer(wx.StaticBox(tabFive, wx.ID_ANY,
                                        ''), wx.VERTICAL)
@@ -400,9 +402,6 @@ class Setup(wx.Dialog):
         self.SetTitle(_("Videomass Setup"))
         tip = (_("Assign an additional suffix to FFmpeg output files"))
         self.text_suffix.SetToolTip(tip)
-        self.txtctrl_ffmpeg.SetMinSize((200, -1))
-        self.txtctrl_ffprobe.SetMinSize((200, -1))
-        self.txtctrl_ffplay.SetMinSize((200, -1))
 
         # ----------------------Binding (EVT)----------------------#
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffplay, self.rdbFFplay)
@@ -414,13 +413,10 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
-        self.Bind(wx.EVT_TEXT_ENTER, self.txtffmpeg, self.txtctrl_ffmpeg)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFprobe, self.checkbox_exeFFprobe)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffprobe, self.btn_pathFFprobe)
-        self.Bind(wx.EVT_TEXT_ENTER, self.txtffprobe, self.txtctrl_ffprobe)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
-        self.Bind(wx.EVT_TEXT_ENTER, self.txtffplay, self.txtctrl_ffplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_RADIOBOX, self.on_Ydl_preferences, self.rdbDownloader)
@@ -469,7 +465,7 @@ class Setup(wx.Dialog):
         if Setup.FFMPEG_CHECK == 'false':
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
-            self.txtctrl_ffmpeg.SetValue("")
+            self.txtctrl_ffmpeg.AppendText(Setup.FFMPEG_LINK)
             self.checkbox_exeFFmpeg.SetValue(False)
         else:
             self.txtctrl_ffmpeg.AppendText(Setup.FFMPEG_LINK)
@@ -478,7 +474,7 @@ class Setup(wx.Dialog):
         if Setup.FFPROBE_CHECK == 'false':
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
-            self.txtctrl_ffprobe.SetValue("")
+            self.txtctrl_ffprobe.AppendText(Setup.FFPROBE_LINK)
             self.checkbox_exeFFprobe.SetValue(False)
         else:
             self.txtctrl_ffprobe.AppendText(Setup.FFPROBE_LINK)
@@ -487,7 +483,7 @@ class Setup(wx.Dialog):
         if Setup.FFPLAY_CHECK == 'false':
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
-            self.txtctrl_ffplay.SetValue("")
+            self.txtctrl_ffplay.AppendText(Setup.FFPLAY_LINK)
             self.checkbox_exeFFplay.SetValue(False)
         else:
             self.txtctrl_ffplay.AppendText(Setup.FFPLAY_LINK)
@@ -591,125 +587,123 @@ class Setup(wx.Dialog):
         s = self.rdbFFmpeg.GetStringSelection().split()[0]
         self.full_list[self.rowsNum[4]] = ('-loglevel %s -stats -hide_banner '
                                            '-nostdin\n' % s)
-
-    # ----------------------ffmpeg path checkbox--------------------------#
+    # --------------------------------------------------------------------#
 
     def exeFFmpeg(self, event):
-        """Enable or disable ffmpeg binary esecutable"""
+        """Enable or disable ffmpeg local binary"""
         if self.checkbox_exeFFmpeg.IsChecked():
             self.btn_pathFFmpeg.Enable()
             self.txtctrl_ffmpeg.Enable()
-            self.txtctrl_ffmpeg.SetValue("")
             self.full_list[self.rowsNum[5]] = 'true\n'
         else:
             self.btn_pathFFmpeg.Disable()
             self.txtctrl_ffmpeg.Disable()
-            self.txtctrl_ffmpeg.SetValue("")
             self.full_list[self.rowsNum[5]] = 'false\n'
-            self.full_list[self.rowsNum[6]] = '%s\n' % self.ffmpeg
 
-    # ----------------------ffmpeg path open dialog----------------------#
+            status = detect_binaries(Setup.OS, 'ffpl', Setup.FF_LOCALDIR)
+
+            if status[0] == 'not installed':
+                self.txtctrl_ffmpeg.Clear()
+                self.txtctrl_ffmpeg.write(status[0])
+                self.full_list[self.rowsNum[6]] = '%s\n' % 'none'
+            else:
+                self.txtctrl_ffmpeg.Clear()
+                self.txtctrl_ffmpeg.write(status[1])
+                self.full_list[self.rowsNum[6]] = '%s\n' % status[1]
+    # --------------------------------------------------------------------#
+
     def open_path_ffmpeg(self, event):
         """Indicates a new ffmpeg path-name"""
-        dialogfile = wx.FileDialog(self, _("Videomass: Where is the ffmpeg "
-                                           "executable located?"), "", "",
-                                   "ffmpeg binarys (*%s)|*%s| All files "
-                                   "(*.*)|*.*" % (self.ffmpeg, self.ffmpeg),
-                                   wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
-                                   )
+        with wx.FileDialog(self, _("Choose the ffmpeg executable "
+                                   "(e.g. a static build)"), "", "",
+                           "ffmpeg binarys (*%s)|*%s| All files "
+                           "(*.*)|*.*" % (self.ffmpeg, self.ffmpeg),
+                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
 
-        if dialogfile.ShowModal() == wx.ID_OK:
-            self.txtctrl_ffmpeg.SetValue("")
-            self.txtctrl_ffmpeg.AppendText(dialogfile.GetPath())
-            self.full_list[self.rowsNum[6]] = '%s\n' % (dialogfile.GetPath())
-            dialogfile.Destroy()
-    # ---------------------------------------------------------------------#
-
-    def txtffmpeg(self, event):
-        """write ffmpeg pathname"""
-        t = self.txtctrl_ffmpeg.GetValue()
-        self.full_list[self.rowsNum[6]] = '%s\n' % (t)
-
-    # ----------------------ffprobe path checkbox--------------------------#
+            if fd.ShowModal() == wx.ID_OK:
+                if os.path.basename(fd.GetPath()) == self.ffmpeg:
+                    self.txtctrl_ffmpeg.Clear()
+                    self.txtctrl_ffmpeg.write(fd.GetPath())
+                    self.full_list[self.rowsNum[6]] = '%s\n' % (fd.GetPath())
+    # --------------------------------------------------------------------#
 
     def exeFFprobe(self, event):
-        """Enable or disable ffprobe binary esecutable"""
+        """Enable or disable ffprobe local binary"""
         if self.checkbox_exeFFprobe.IsChecked():
             self.btn_pathFFprobe.Enable()
             self.txtctrl_ffprobe.Enable()
-            self.txtctrl_ffprobe.SetValue("")
             self.full_list[self.rowsNum[7]] = 'true\n'
 
         else:
             self.btn_pathFFprobe.Disable()
             self.txtctrl_ffprobe.Disable()
-            self.txtctrl_ffprobe.SetValue("")
             self.full_list[self.rowsNum[7]] = 'false\n'
-            self.full_list[self.rowsNum[8]] = '%s\n' % self.ffprobe
 
-    # ----------------------ffprobe path open dialog----------------------#
+            status = detect_binaries(Setup.OS, self.ffprobe, Setup.FF_LOCALDIR)
+
+            if status[0] == 'not installed':
+                self.txtctrl_ffprobe.Clear()
+                self.txtctrl_ffprobe.write(status[0])
+                self.full_list[self.rowsNum[8]] = '%s\n' % 'none'
+            else:
+                self.txtctrl_ffprobe.Clear()
+                self.txtctrl_ffprobe.write(status[1])
+                self.full_list[self.rowsNum[8]] = '%s\n' % status[1]
+    # --------------------------------------------------------------------#
 
     def open_path_ffprobe(self, event):
         """Indicates a new ffprobe path-name"""
-        dialfile = wx.FileDialog(self, _("Videomass: Where is the ffprobe "
-                                         "executable located?"), "", "",
-                                 "ffprobe binarys (*%s)|*%s| All files "
-                                 "(*.*)|*.*" % (self.ffprobe, self.ffprobe),
-                                 wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
-                                 )
-        if dialfile.ShowModal() == wx.ID_OK:
-            self.txtctrl_ffprobe.SetValue("")
-            self.txtctrl_ffprobe.AppendText(dialfile.GetPath())
-            self.full_list[self.rowsNum[8]] = '%s\n' % (dialfile.GetPath())
-            dialfile.Destroy()
-    # ---------------------------------------------------------------------#
+        with wx.FileDialog(self, _("Choose the ffprobe executable "
+                                   "(e.g. a static build)"), "", "",
+                           "ffprobe binarys (*%s)|*%s| All files "
+                           "(*.*)|*.*" % (self.ffprobe, self.ffprobe),
+                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
 
-    def txtffprobe(self, event):
-        """write ffprobe pathname"""
-        t = self.txtctrl_ffprobe.GetValue()
-        self.full_list[self.rowsNum[8]] = '%s\n' % (t)
-
-    # ----------------------ffplay path checkbox--------------------------#
+            if fd.ShowModal() == wx.ID_OK:
+                if os.path.basename(fd.GetPath()) == self.ffprobe:
+                    self.txtctrl_ffprobe.Clear()
+                    self.txtctrl_ffprobe.write(fd.GetPath())
+                    self.full_list[self.rowsNum[8]] = '%s\n' % (fd.GetPath())
+    # --------------------------------------------------------------------#
 
     def exeFFplay(self, event):
-        """Enable or disable ffplay binary esecutable"""
+        """Enable or disable ffplay local binary"""
         if self.checkbox_exeFFplay.IsChecked():
             self.btn_pathFFplay.Enable()
             self.txtctrl_ffplay.Enable()
-            self.txtctrl_ffplay.SetValue("")
             self.full_list[self.rowsNum[9]] = 'true\n'
 
         else:
             self.btn_pathFFplay.Disable()
             self.txtctrl_ffplay.Disable()
-            self.txtctrl_ffplay.SetValue("")
             self.full_list[self.rowsNum[9]] = 'false\n'
-            self.full_list[self.rowsNum[10]] = '%s\n' % self.ffplay
 
-    # ----------------------ffplay path open dialog----------------------#
+            status = detect_binaries(Setup.OS, self.ffplay, Setup.FF_LOCALDIR)
+
+            if status[0] == 'not installed':
+                self.txtctrl_ffplay.Clear()
+                self.txtctrl_ffplay.write(status[0])
+                self.full_list[self.rowsNum[10]] = '%s\n' % 'none'
+            else:
+                self.txtctrl_ffplay.Clear()
+                self.txtctrl_ffplay.write(status[1])
+                self.full_list[self.rowsNum[10]] = '%s\n' % status[1]
+    # --------------------------------------------------------------------#
 
     def open_path_ffplay(self, event):
         """Indicates a new ffplay path-name"""
-        dialfile = wx.FileDialog(self, _("Videomass: Where is the ffplay "
-                                         "executable located?"), "", "",
-                                 "ffplay binarys (*%s)|*%s| All files "
-                                 "(*.*)|*.*" % (self.ffplay, self.ffplay),
-                                 wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
-                                 )
+        with wx.FileDialog(self, _("Choose the ffplay executable "
+                                   "(e.g. a static build)"), "", "",
+                           "ffplay binarys (*%s)|*%s| All files "
+                           "(*.*)|*.*" % (self.ffplay, self.ffplay),
+                           wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
 
-        if dialfile.ShowModal() == wx.ID_OK:
-            self.txtctrl_ffplay.SetValue("")
-            self.txtctrl_ffplay.AppendText(dialfile.GetPath())
-            self.full_list[self.rowsNum[10]] = '%s\n' % (dialfile.GetPath())
-
-            dialfile.Destroy()
+            if fd.ShowModal() == wx.ID_OK:
+                if os.path.basename(fd.GetPath()) == self.ffprobe:
+                    self.txtctrl_ffplay.Clear()
+                    self.txtctrl_ffplay.write(fd.GetPath())
+                    self.full_list[self.rowsNum[10]] = '%s\n' % (fd.GetPath())
     # ---------------------------------------------------------------------#
-
-    def txtffplay(self, event):
-        """write ffplay pathname"""
-        t = self.txtctrl_ffplay.GetValue()
-        self.full_list[self.rowsNum[10]] = '%s\n' % (t)
-    # --------------------------------------------------------------------#
 
     def on_Iconthemes(self, event):
         """

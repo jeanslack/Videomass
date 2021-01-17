@@ -460,19 +460,19 @@ class MainFrame(wx.Frame):
                    "or previewing with ffplay"))
         playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton.AppendSeparator()
-        dscrp = (_("View timestamp"),
-                 _("View timestamp during playback whit ffplay"))
+        dscrp = (_("Displays timestamp"),
+                 _("Displays the timestamp when playing movies with ffplay"))
         self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                  kind=wx.ITEM_CHECK)
-        dscrp = (_("Customize..."),
-                 _("Timestamp settings"))
-        tscustomize = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         # show youtube-dl
         viewButton.AppendSeparator()
         ydlButton = wx.Menu()  # ydl sub menu
         dscrp = (_("Version in Use"),
                  _("Shows the version in use"))
         self.ydlused = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
+        dscrp = (_("Show the latest version..."),
+                 _("Shows the latest version available on github.com"))
+        self.ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         viewButton.AppendSubMenu(ydlButton, _("&Youtube-dl"))
         # timeline
         viewButton.AppendSeparator()
@@ -528,7 +528,6 @@ class MainFrame(wx.Frame):
         setconvers_tmp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         if self.same_destin:
             setconvers_tmp.Enable(False)
-        setupButton.AppendSeparator()
         dscrp = (_("Set up a temporary folder for downloads"),
                  _("Save all downloads to this temporary location"))
         setdownload_tmp = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -539,6 +538,10 @@ class MainFrame(wx.Frame):
         self.resetfolders_tmp = setupButton.Append(wx.ID_ANY, dscrp[0],
                                                    dscrp[1])
         self.resetfolders_tmp.Enable(False)
+        setupButton.AppendSeparator()
+        dscrp = (_("Setting timestamp"),
+                 _("Change the size and colors of the timestamp"))
+        tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
 
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
@@ -590,8 +593,8 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.Check_dec, ckdecoders)
         self.Bind(wx.EVT_MENU, self.durinPlayng, playing)
         self.Bind(wx.EVT_MENU, self.showTimestamp, self.viewtimestamp)
-        self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
         self.Bind(wx.EVT_MENU, self.ydl_used, self.ydlused)
+        self.Bind(wx.EVT_MENU, self.ydl_latest, self.ydllatest)
         self.Bind(wx.EVT_MENU, self.View_logs, viewlogs)
         self.Bind(wx.EVT_MENU, self.view_Timeline, self.viewtimeline)
         # ---- GO -----
@@ -607,6 +610,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_FFmpegfsave, setconvers_tmp)
         self.Bind(wx.EVT_MENU, self.on_Ytdlfsave, setdownload_tmp)
         self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
+        self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
@@ -719,7 +723,7 @@ class MainFrame(wx.Frame):
                 return
 
             wx.MessageBox(_('Successful! youtube-dl is up-to-date'),
-                          'Videomass', wx.ICON_INFORMATION)
+                          'Videomass', wx.ICON_INFORMATION, self)
             return
 
         elif '/tmp/.mount_' in sys.executable or \
@@ -910,7 +914,8 @@ class MainFrame(wx.Frame):
             this = youtube_dl.version.__version__
             if msgbox:
                 wx.MessageBox(_('You are using youtube-dl '
-                                'version {}').format(this), 'Videomass', self)
+                                'version {}').format(this),
+                              'Videomass', wx.ICON_INFORMATION, self)
             return this
         else:
             if os.path.exists(MainFrame.EXEC_YDL):
@@ -925,7 +930,7 @@ class MainFrame(wx.Frame):
                 if msgbox:
                     wx.MessageBox(_('You are using youtube-dl '
                                     'version {}').format(this[0]),
-                                  'Videomass', self)
+                                  'Videomass', wx.ICON_INFORMATION, self)
                     return this[0]
 
                 return this[0].strip()
@@ -934,6 +939,25 @@ class MainFrame(wx.Frame):
                             'installed yet.').format(MainFrame.PYLIB_YDL),
                           'Videomass', wx.ICON_ERROR, self)
         return None
+    # -----------------------------------------------------------------#
+
+    def ydl_latest(self, event):
+        """
+        check new version from github.com
+
+        """
+        url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
+               "/releases/latest")
+        latest = IO_tools.get_github_releases(url, "tag_name")
+
+        if latest[0] in ['request error:', 'response error:']:
+            wx.MessageBox("%s %s" % (latest[0], latest[1]),
+                          "%s" % latest[0], wx.ICON_ERROR, self)
+            return
+
+        else:
+            wx.MessageBox(_('Latest version available: {0}').format(latest[0]),
+                            "Videomass", wx.ICON_INFORMATION, self)
     # -----------------------------------------------------------------#
 
     def showTimestamp(self, event):
@@ -947,31 +971,13 @@ class MainFrame(wx.Frame):
             self.checktimestamp = False
     # ------------------------------------------------------------------#
 
-    def timestampCustomize(self, event):
-        """
-        FFplay submenu: customize the timestamp filter
-
-        """
-        dialog = set_timestamp.Set_Timestamp(self, self.cmdtimestamp)
-        retcode = dialog.ShowModal()
-        if retcode == wx.ID_OK:
-            data = dialog.GetValue()
-            if not data:
-                return
-            else:
-                self.cmdtimestamp = data
-        else:
-            dialog.Destroy()
-            return
-    # ------------------------------------------------------------------#
-
     def View_logs(self, event):
         """
         Show miniframe to view log files
         """
         if not os.path.exists(MainFrame.LOGDIR):
-            wx.MessageBox(_("The log directory has not yet been created."),
-                          "Videomass", wx.ICON_INFORMATION, None)
+            wx.MessageBox(_("There are no logs to show."),
+                          "Videomass", wx.ICON_INFORMATION, self)
             return
 
         else:
@@ -1045,8 +1051,8 @@ class MainFrame(wx.Frame):
 
         """
         if not os.path.exists(MainFrame.LOGDIR):
-            wx.MessageBox(_("The log directory has not yet been created."),
-                          "Videomass", wx.ICON_INFORMATION, None)
+            wx.MessageBox(_("There are no logs to show."),
+                          "Videomass", wx.ICON_INFORMATION, self)
             return
         IO_tools.openpath(MainFrame.LOGDIR)
     # ------------------------------------------------------------------#
@@ -1065,7 +1071,7 @@ class MainFrame(wx.Frame):
         """
         if not os.path.exists(MainFrame.CACHEDIR):
             wx.MessageBox(_("cache directory has not been created yet."),
-                          "Videomass", wx.ICON_INFORMATION, None)
+                          "Videomass", wx.ICON_INFORMATION, self)
             return
         IO_tools.openpath(MainFrame.CACHEDIR)
     # ------------------------------------------------------------------#
@@ -1132,7 +1138,25 @@ class MainFrame(wx.Frame):
         self.resetfolders_tmp.Enable(False)
 
         wx.MessageBox(_("Default destination folders successfully restored"),
-                      "Videomass", wx.ICON_INFORMATION, None)
+                      "Videomass", wx.ICON_INFORMATION, self)
+    # ------------------------------------------------------------------#
+
+    def timestampCustomize(self, event):
+        """
+        customize the timestamp filter
+
+        """
+        dialog = set_timestamp.Set_Timestamp(self, self.cmdtimestamp)
+        retcode = dialog.ShowModal()
+        if retcode == wx.ID_OK:
+            data = dialog.GetValue()
+            if not data:
+                return
+            else:
+                self.cmdtimestamp = data
+        else:
+            dialog.Destroy()
+            return
     # ------------------------------------------------------------------#
 
     def Setup(self, event):
@@ -1427,8 +1451,8 @@ class MainFrame(wx.Frame):
         """
         if not data == self.data_url:
             if self.data_url:
-                msg = (_('You just added new URLs. Please '
-                         'check your settings again.'), MainFrame.ORANGE)
+                msg = (_('URL list changed, please check the settings '
+                         'again.'), MainFrame.ORANGE)
                 self.statusbar_msg(msg[0], msg[1])
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
@@ -1472,8 +1496,8 @@ class MainFrame(wx.Frame):
                      ]
         if not filenames == self.file_src:  # only if file list changes
             if self.file_src:
-                msg = (_('You just added new files. Please '
-                         'check your settings again.'), MainFrame.ORANGE)
+                msg = (_('File list changed, please check the settings '
+                         'again.'), MainFrame.ORANGE)
                 self.statusbar_msg(msg[0], msg[1])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
@@ -1524,8 +1548,8 @@ class MainFrame(wx.Frame):
                      ]
         if not filenames == self.file_src:
             if self.file_src:
-                msg = (_('You just added new files. Please '
-                         'check your settings again.'), MainFrame.ORANGE)
+                msg = (_('File list changed, please check the settings '
+                         'again.'), MainFrame.ORANGE)
                 self.statusbar_msg(msg[0], msg[1])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in

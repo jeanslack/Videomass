@@ -36,13 +36,14 @@ def ydl_latest():
     """
     check for new releases of youtube-dl from
     """
-    url = 'https://yt-dl.org/update/LATEST_VERSION'
-    latest = IO_tools.youtubedl_latest(url)
+    url = ("https://api.github.com/repos/ytdl-org/youtube-dl"
+           "/releases/latest")
+    latest = IO_tools.get_github_releases(url, "tag_name")
 
-    if latest[1]:  # failed
-        wx.MessageBox("\n{0}\n\n{1}".format(url, latest[1]),
-                      "Videomass", wx.ICON_ERROR, self)
-        return latest
+    if latest[0] in ['request error:', 'response error:']:
+        wx.MessageBox("%s %s" % (latest[0], latest[1]),
+                      "%s" % latest[0], wx.ICON_ERROR, self)
+        return None
 
     return latest
 # -----------------------------------------------------------------#
@@ -232,7 +233,7 @@ class Choose_Topic(wx.Panel):
                     return
 
                 latest = ydl_latest()
-                if latest[1]:
+                if not latest:
                     return
                 else:
                     upgrade = IO_tools.youtubedl_upgrade(latest[0],
@@ -242,7 +243,9 @@ class Choose_Topic(wx.Panel):
                                   "Videomass", wx.ICON_ERROR, self)
                     return
                 else:
-                    wx.MessageBox(msg_ready, "Videomass",
-                                  wx.ICON_INFORMATION, self)
+                    wx.MessageBox(msg_ready, "Videomass", wx.ICON_INFORMATION,
+                                  self)
+                    self.parent.ydlused.Enable(True)
+                    self.parent.ydlupdate.Enable(True)
                     return
                 return

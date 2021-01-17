@@ -90,7 +90,7 @@ class Set_Timestamp(wx.Dialog):
         size = ['16', '20', '28', '32', '40', '48', '56', '64']
         self.cmbx_fontsize = wx.ComboBox(self, wx.ID_ANY,
                                          choices=size,
-                                         size=(-1, -1),
+                                         size=(90, -1),
                                          style=wx.CB_DROPDOWN |
                                          wx.CB_READONLY
                                          )

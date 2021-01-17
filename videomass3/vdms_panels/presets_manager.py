@@ -798,6 +798,9 @@ class PrstPan(wx.Panel):
         if self.rdbx_norm.GetSelection() == 2:  # rms
             title = _('RMS-based volume statistics')
 
+        if self.btn_voldect.IsEnabled():
+            self.on_Analyzes(self)
+
         audionormlist = shownormlist.NormalizationList(title,
                                                        self.normdetails,
                                                        self.oS)
@@ -828,7 +831,7 @@ class PrstPan(wx.Panel):
                 return
         if filename:
             wx.MessageBox(_("'Successful!\n\n"
-                            "A new preset has been created."),
+                            "A new empty preset has been created."),
                           "Videomass ", wx.ICON_INFORMATION, self)
 
             self.reset_list(True)
@@ -931,31 +934,31 @@ class PrstPan(wx.Panel):
         """
         wildcard = "Source (*.prst)|*.prst| All files (*.*)|*.*"
 
-        dialfile = wx.FileDialog(self, _("Import a new Videomass preset"), '',
-                                 "", wildcard, wx.FD_OPEN |
-                                 wx.FD_FILE_MUST_EXIST
-                                 )
-        if dialfile.ShowModal() == wx.ID_OK:
-            newincoming = dialfile.GetPath()
-            new = os.path.basename(newincoming)
-            dialfile.Destroy()
-            if os.path.exists(os.path.join(self.user_prst, new)):
+        with wx.FileDialog(self, _("Import a new Videomass preset"),
+                           "", "", wildcard, wx.FD_OPEN |
+                           wx.FD_FILE_MUST_EXIST) as filedlg:
 
-                if wx.MessageBox(_(
-                             'This preset already exists, do you want '
-                             'to overwrite it?'), _('Please confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-                    return
-
-            status = copy_restore(newincoming,
-                                  os.path.join(self.user_prst, new))
-            if status:
-                wx.MessageBox('%s' % status, "Videomass", wx.ICON_ERROR, self)
+            if filedlg.ShowModal() == wx.ID_CANCEL:
                 return
 
-            self.reset_list(True)  # reload presets
-            wx.MessageBox(_("A new preset was successfully imported"),
-                          "Videomass", wx.OK, self)
+            newincoming = filedlg.GetPath()
+            new = os.path.basename(newincoming)
+
+        if os.path.exists(os.path.join(self.user_prst, new)):
+
+            if wx.MessageBox(_('This preset already exists, do you want '
+                               'to overwrite it?'), _('Please confirm'),
+                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                return
+
+        status = copy_restore(newincoming, os.path.join(self.user_prst, new))
+        if status:
+            wx.MessageBox('%s' % status, "Videomass", wx.ICON_ERROR, self)
+            return
+
+        self.reset_list(True)  # reload presets
+        wx.MessageBox(_("A new preset was successfully imported"),
+                        "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
     def preset_Import_all(self, event):

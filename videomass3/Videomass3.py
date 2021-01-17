@@ -79,6 +79,7 @@ class Videomass(wx.App):
         self.CLEARcache = None
 
         wx.App.__init__(self, redirect, filename)  # constructor
+        wx.SystemOptions.SetOption("osx.openfiledialog.always-show-types","1")
     # -------------------------------------------------------------------
 
     def OnInit(self):
@@ -118,7 +119,7 @@ class Videomass(wx.App):
         self.FFMPEGoutdir = dirname if setui[4][1] == 'none' else setui[4][1]
         self.LOGdir = setui[9]  # dir for logging
         self.CACHEdir = setui[10]  # dir cache for updates
-        self.FFMPEGlocaldir = setui[11]  # embed local executables ffmpeg
+        self.FFMPEGlocaldir = setui[11]  # local path to FFMPEG on Videomass
         self.CLEARcache = setui[4][15]  # set clear cache on exit
         self.YDL_pref = setui[4][16]  # get youtube-dl preferences
         self.TMP = os.path.join(self.CACHEdir, 'tmp')
@@ -134,6 +135,7 @@ class Videomass(wx.App):
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             self.execYdl = os.path.join(self.CACHEdir, execname)
             self.pylibYdl = 'no module loaded'
+
             if self.YDL_pref != 'false':
                 self.YDL_pref = (setui[4][16] if setui[4][16] == 'disabled'
                                  else 'local')

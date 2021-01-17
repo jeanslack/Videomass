@@ -197,3 +197,72 @@ def copy_on(ext, source, destination):
         except Exception as error:
             return error
     return None
+# ------------------------------------------------------------------#
+
+
+def detect_binaries(platform, executable, additionaldir=None):
+    """
+    <https://stackoverflow.com/questions/11210104/check-if
+    -a-program-exists-from-a-python-script>
+
+    Given an executable name (binary), find it on the O.S.
+    via which function, if not found try to find it on the
+    optional `additionaldir` .
+
+        If both failed return ('not installed', None)
+        If found on the O.S. return (None, executable)
+        If found on the additionaldir return ('provided', executable).
+
+    platform = platform name get by `platform.system()`
+    executable = name of executable without extension
+    additionaldir = additional dirname to perform search
+
+    """
+    local = False
+
+    if shutil.which(executable):
+        installed = True
+
+    else:
+        if platform == 'Windows':
+            installed = False
+
+        elif platform == 'Darwin':
+
+            if os.path.isfile("/usr/local/bin/%s" % executable):
+                local = True
+                installed = True
+            else:
+                local = False
+                installed = False
+
+        else:  # Linux, FreeBSD, etc.
+            installed = False
+
+    if not installed:
+
+        if additionaldir:  # check onto additionaldir
+
+            if not os.path.isfile(os.path.join("%s" % additionaldir,
+                                                "bin", "%s" % executable)):
+                provided = False
+
+            else:
+                provided = True
+
+            if not provided:
+                return 'not installed', None
+
+            else:
+                # only if ffmpeg is not installed, offer it if found
+                return 'provided', os.path.join("%s" % additionaldir,
+                                                "bin", "%s" % executable)
+        else:
+            return 'not installed', None
+
+    else:  # only for MacOs
+        if local:
+            return None, "/usr/local/bin/%s" % executable
+
+        else:
+            return None, shutil.which(executable)
