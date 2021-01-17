@@ -5,7 +5,7 @@
 
 ## Getting started
 * [Download and installation](download_installation.md)
-* [How to update new presets versions](presets update.md)
+* [How to update new presets versions](presets_update.md)
 * [Wiki](https://github.com/jeanslack/Videomass/wiki)
 
 ## Get Help
