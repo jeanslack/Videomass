@@ -28,9 +28,11 @@ import wx
 import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
 import os
+import itertools
 from videomass3.vdms_io.presets_manager_properties import json_data
 from videomass3.vdms_io.presets_manager_properties import supported_formats
 from videomass3.vdms_io.presets_manager_properties import delete_profiles
+from videomass3.vdms_io.presets_manager_properties import preserve_old_profiles
 from videomass3.vdms_utils.utils import copy_restore
 from videomass3.vdms_utils.utils import copy_on
 from videomass3.vdms_utils.utils import copydir_recursively
@@ -376,9 +378,10 @@ class PrstPan(wx.Panel):
         self.btn_savecopy.SetToolTip(tip)
         tip = (_("Export entire presets directory as copy to media"))
         self.btn_saveall.SetToolTip(tip)
-        tip = (_("Import a new preset"))
+        tip = (_("Import a new preset or update an existing one"))
         self.btn_restore.SetToolTip(tip)
-        tip = (_("Import a group of presets from a folder"))
+        tip = (_("Import a group of presets from a folder and update "
+                 "existing ones"))
         self.btn_restoreall.SetToolTip(tip)
         tip = (_("Replace the selected preset with the Videomass default one"))
         self.btn_restoredef.SetToolTip(tip)
@@ -946,10 +949,15 @@ class PrstPan(wx.Panel):
 
         if os.path.exists(os.path.join(self.user_prst, new)):
 
-            if wx.MessageBox(_('This preset already exists, do you want '
-                               'to overwrite it?'), _('Please confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+            if wx.MessageBox(_("This preset already exists and is about to be "
+                               "updated. All your profiles will be kept.\n\n"
+                               "Do you want to continue?"),
+                             _('Please confirm'), wx.ICON_QUESTION |
+                             wx.YES_NO, self) == wx.NO:
                 return
+
+            prfbak = preserve_old_profiles(newincoming,
+                                           os.path.join(self.user_prst, new))
 
         status = copy_restore(newincoming, os.path.join(self.user_prst, new))
         if status:
@@ -958,7 +966,7 @@ class PrstPan(wx.Panel):
 
         self.reset_list(True)  # reload presets
         wx.MessageBox(_("A new preset was successfully imported"),
-                        "Videomass", wx.OK, self)
+                      "Videomass", wx.OK, self)
     # ------------------------------------------------------------------#
 
     def preset_Import_all(self, event):
@@ -967,24 +975,38 @@ class PrstPan(wx.Panel):
         the existing ones
 
         """
-        if wx.MessageBox(_("This will replace all presets with the same name."
-                           "\n\nDo you want to continue?"), _("Notice"),
+        if wx.MessageBox(_("This will update the profiles of all presets with "
+                           "the same name and add new ones. It will also keep "
+                           "all your profiles.\n\nDo you want to "
+                           "continue?"), _("Please confirm"),
                          wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
         dialsave = wx.DirDialog(self, _("Import a group of Videomass presets"),
                                 "", style=wx.DD_DEFAULT_STYLE
                                 )
-        if dialsave.ShowModal() == wx.ID_OK:
+        if dialsave.ShowModal() == wx.ID_CANCEL:
+            return
+        else:
             source = dialsave.GetPath()
             dialsave.Destroy()
-            outerror = copy_on('prst', source, self.user_prst)
-            if outerror:
-                wx.MessageBox("%s" % outerror, "Videomass",
-                              wx.ICON_ERROR, self)
-            else:
-                wx.MessageBox(_("A new group of presets was successfully "
-                                "imported"), "Videomass", wx.OK, self)
-                self.reset_list(True)
+
+        incoming = [n for n in os.listdir(source) if n.endswith('.prst')]
+        outcoming = [n for n in os.listdir(self.user_prst)
+                     if n.endswith('.prst')]
+
+        #  Return a new set with elements common to the set and all others.
+        for f in set(incoming).intersection(outcoming):
+            prfbak = preserve_old_profiles(os.path.join(source, f),
+                                           os.path.join(self.user_prst, f)
+                                           )
+        outerror = copy_on('prst', source, self.user_prst)
+
+        if outerror:
+            wx.MessageBox("%s" % outerror, "Videomass", wx.ICON_ERROR, self)
+        else:
+            wx.MessageBox(_("A new group of presets was successfully "
+                            "imported"), "Videomass", wx.OK, self)
+            self.reset_list(True)
     # ------------------------------------------------------------------#
 
     def preset_Default(self, event):
@@ -993,7 +1015,8 @@ class PrstPan(wx.Panel):
 
         """
         if wx.MessageBox(_("The selected preset will be overwritten with the "
-                           "default one!\n\nDo you want to continue?"),
+                           "default one. All your profiles may be deleted!"
+                           "\n\nDo you want to continue?"),
                          _("Notice"),
                          wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return
@@ -1018,7 +1041,8 @@ class PrstPan(wx.Panel):
         restore all preset files directory
 
         """
-        if wx.MessageBox(_("This will replace all presets with the same name."
+        if wx.MessageBox(_("This will replace all presets with the same "
+                           "name. All your profiles may be deleted!"
                            "\n\nDo you want to continue?"), _("Notice"),
                          wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
             return

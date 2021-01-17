@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Jan.17.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -55,15 +55,12 @@ def supported_formats(supp, file_sources):
                 return
 
     return (file_sources)
-
-########################################################################
-# PARSINGS XML FILES AND FUNCTION FOR DELETING
-########################################################################
+# ----------------------------------------------------------------------#
 
 
 def json_data(arg):
     """
-    Used by presets_mng_panel.py to get JSON data from `*.vip` files.
+    Used by presets_mng_panel.py to get JSON data from `*.prst` files.
     The `arg` parameter refer to each file name to parse. Return a list
     type object from getting data using `json` module in the following
     form:
@@ -120,3 +117,36 @@ def delete_profiles(path, name):
 
     with open(path, 'w', encoding='utf-8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
+# ------------------------------------------------------------------#
+
+
+def preserve_old_profiles(new, old):
+    """
+    Keep old profiles in the Presets manager panel when
+    replaced with new presets.
+
+    """
+    with open(new, 'r', encoding='utf-8') as f:
+        incoming = json.load(f)
+
+    with open(old, 'r', encoding='utf-8') as f:
+        outcoming = json.load(f)
+
+    items_new = {value["Name"]: value for value in incoming}
+    items_old = {value["Name"]: value for value in outcoming}
+
+    #  Return a new set with elements in either the set or other but not both.
+    diff_keys = set(items_new).symmetric_difference(items_old)
+
+    if not diff_keys:
+        return False
+
+    backup = [items_old[x] for x in diff_keys]
+
+    data = incoming + backup
+    data.sort(key=lambda s: s["Name"])  # make sorted by name
+
+    with open(new, 'w', encoding='utf-8') as outfile:
+        json.dump(data, outfile, ensure_ascii=False, indent=4)
+
+    return True

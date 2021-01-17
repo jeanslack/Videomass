@@ -27,17 +27,19 @@ videomass (3.3.5-1) UNRELEASED; urgency=medium
     (installer dependent).
   * Adds open "My conversion" folder.
   * Adds open "My downloads" folder.
-  * Added ability to set a temporary conversions folder.
-  * Added abilty to set a temporary downloads folder.
-  * Added ability to restore the default destination folders.
-  * Added some keyboard shortcuts for menu items
-  * Added the ability to check for new versions of presets.
-  * Added the ability to download the latest version of presets.
+  * Ability to set a temporary conversions folder.
+  * Abilty to set a temporary downloads folder.
+  * Ability to restore the default destination folders.
+  * Added some keyboard shortcuts for menu items.
+  * Ability to check for new versions of presets.
+  * Ability to download the latest version of presets.
+  * Ability to import existing presets while keeping your new profiles intact.
+  * Ability to update all presets while keeping your new profiles intact.
   * Added `requests` package as new dependency.
   * Improved ffmpeg setup on Setup dialog box.
   * Fixed minor bugs.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 17 Jan 2020 06:42:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 17 Jan 2020 18:09:00 +0200
 
 videomass (3.3.0-1) UNRELEASED; urgency=medium
 

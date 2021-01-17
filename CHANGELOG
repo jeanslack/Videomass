@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Gen 13, 2021 V.3.3.5
+Gen 17, 2021 V.3.3.5
 
   * Transpose Filter Dialog: Fixed `wx.StaticText` wrapping on Windows and
     MacOs, where it would break the static text string.
@@ -36,12 +36,14 @@ Gen 13, 2021 V.3.3.5
     (installer dependent).
   * Adds open "My conversion" folder.
   * Adds open "My downloads" folder.
-  * Added ability to set a temporary conversions folder.
-  * Added abilty to set a temporary downloads folder.
-  * Added ability to restore the default destination folders.
-  * Added some keyboard shortcuts for menu items
-  * Added the ability to check for new versions of presets.
-  * Added the ability to download the latest version of presets.
+  * Ability to set a temporary conversions folder.
+  * Abilty to set a temporary downloads folder.
+  * Ability to restore the default destination folders.
+  * Added some keyboard shortcuts for menu items.
+  * Ability to check for new versions of presets.
+  * Ability to download the latest version of presets.
+  * Ability to import existing presets while keeping your new profiles intact.
+  * Ability to update all presets while keeping your new profiles intact.
   * Added `requests` package as new dependency.
   * Improved ffmpeg setup on Setup dialog box.
   * Fixed minor bugs.
