@@ -194,7 +194,7 @@ class FFProbe(object):
         writer = '-of %s' % writer if writer else '-of default'
 
         if parse:
-            cmnd = ('%s -i "%s" -v error %s %s %s '
+            cmnd = ('"%s" -i "%s" -v error %s %s %s '
                     '-print_format default' % (FFPROBE_URL,
                                                filename,
                                                pretty,
@@ -202,7 +202,7 @@ class FFProbe(object):
                                                show_streams,)
                     )
         else:
-            cmnd = '%s -i "%s" -v error %s %s %s %s %s %s' % (FFPROBE_URL,
+            cmnd = '"%s" -i "%s" -v error %s %s %s %s %s %s' % (FFPROBE_URL,
                                                               filename,
                                                               pretty,
                                                               select,

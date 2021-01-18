@@ -1,3 +1,13 @@
+videomass (3.3.6-1) UNRELEASED; urgency=medium
+
+  * Fixed bug on MS-Windows when playing files or urls with ffplay executable.
+  * Fixed bug in the FFmpeg tab of the setup dialog, in which the executables
+    ffmpeg and ffplay could not be set correctly.
+  * Improved some MessageBox for confirmation.
+  * Improved some messages on MessageBox.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Jan 2020 09:49:00 +0200
+
 videomass (3.3.5-1) UNRELEASED; urgency=medium
 
   * Transpose Filter Dialog: Fixed `wx.StaticText` wrapping on Windows and

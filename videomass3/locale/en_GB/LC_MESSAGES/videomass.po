@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-17 18:11+0100\n"
-"PO-Revision-Date: 2021-01-17 18:23+0100\n"
+"POT-Creation-Date: 2021-01-18 12:57+0100\n"
+"PO-Revision-Date: 2021-01-18 12:59+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -2254,7 +2254,7 @@ msgstr ""
 msgid "No filter enabled"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1212 ../vdms_panels/presets_manager.py:1288
+#: ../vdms_panels/av_conversions.py:1212 ../vdms_panels/presets_manager.py:1298
 msgid "A target file must be selected in the queued files"
 msgstr ""
 
@@ -2319,15 +2319,15 @@ msgstr ""
 msgid "%s file in pending"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2316 ../vdms_panels/presets_manager.py:1347
+#: ../vdms_panels/av_conversions.py:2316 ../vdms_panels/presets_manager.py:1357
 msgid "Off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2322 ../vdms_panels/presets_manager.py:1349
+#: ../vdms_panels/av_conversions.py:2322 ../vdms_panels/presets_manager.py:1359
 msgid "Unset"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2325 ../vdms_panels/presets_manager.py:1352
+#: ../vdms_panels/av_conversions.py:2325 ../vdms_panels/presets_manager.py:1362
 msgid "start  {} | duration  {}"
 msgstr ""
 
@@ -2494,10 +2494,10 @@ msgstr ""
 #: ../vdms_panels/choose_topic.py:230
 #: ../vdms_panels/long_processing_task.py:483
 #: ../vdms_panels/presets_manager.py:853 ../vdms_panels/presets_manager.py:895
-#: ../vdms_panels/presets_manager.py:955 ../vdms_panels/presets_manager.py:981
-#: ../vdms_panels/presets_manager.py:1120
-#: ../vdms_panels/presets_manager.py:1166
-#: ../vdms_panels/presets_manager.py:1238
+#: ../vdms_panels/presets_manager.py:963 ../vdms_panels/presets_manager.py:989
+#: ../vdms_panels/presets_manager.py:1130
+#: ../vdms_panels/presets_manager.py:1176
+#: ../vdms_panels/presets_manager.py:1248
 msgid "Please confirm"
 msgstr ""
 
@@ -2943,119 +2943,125 @@ msgid "All presets have been exported successfully"
 msgstr ""
 
 #: ../vdms_panels/presets_manager.py:940
-msgid "Import a new Videomass preset"
+msgid "Import a new preset"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:952
+#: ../vdms_panels/presets_manager.py:951
+msgid "Error, invalid preset: \"{}\""
+msgstr ""
+
+#: ../vdms_panels/presets_manager.py:959
 msgid ""
-"This preset already exists and is about to be updated. All your profiles "
-"will be kept.\n"
+"This preset already exists and is about to be updated. Don't worry, it will "
+"keep all your saved profiles.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:968
+#: ../vdms_panels/presets_manager.py:976
 msgid "A new preset was successfully imported"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:978
+#: ../vdms_panels/presets_manager.py:986
 msgid ""
-"This will update the profiles of all presets with the same name and add new "
-"ones. It will also keep all your profiles.\n"
+"This will update the presets database. Don't worry, it will keep all your "
+"saved profiles.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:984
-msgid "Import a group of Videomass presets"
+#: ../vdms_panels/presets_manager.py:993
+msgid "Import a new presets folder"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1007
-msgid "A new group of presets was successfully imported"
+#: ../vdms_panels/presets_manager.py:1016
+msgid "The presets database has been successfully updated"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1017
+#: ../vdms_panels/presets_manager.py:1026
 msgid ""
-"The selected preset will be overwritten with the default one. All your "
+"Be careful! The selected preset will be overwritten with the default one. "
+"Your profiles may be deleted!\n"
+"\n"
+"Do you want to continue?"
+msgstr ""
+
+#: ../vdms_panels/presets_manager.py:1029
+#: ../vdms_panels/presets_manager.py:1055
+msgid "Notice"
+msgstr ""
+
+#: ../vdms_panels/presets_manager.py:1038
+msgid "Sorry, this preset is not part of default Videomass presets."
+msgstr ""
+
+#: ../vdms_panels/presets_manager.py:1044
+msgid "Successful recovery"
+msgstr ""
+
+#: ../vdms_panels/presets_manager.py:1053
+msgid ""
+"Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1020
-#: ../vdms_panels/presets_manager.py:1046
-msgid "Notice"
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:1029
-msgid "Sorry, this preset is not part of default Videomass presets."
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:1035
-msgid "Successful recovery"
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:1044
-msgid ""
-"This will replace all presets with the same name. All your profiles may be "
-"deleted!\n"
-"\n"
-"Do you want to continue?"
-msgstr ""
-
-#: ../vdms_panels/presets_manager.py:1054
+#: ../vdms_panels/presets_manager.py:1063
 msgid "All the default presets have been successfully recovered"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1072
+#: ../vdms_panels/presets_manager.py:1082
 #, python-format
 msgid "Create a new profile on \"%s\" preset"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1091
-#: ../vdms_panels/presets_manager.py:1114
-#: ../vdms_panels/presets_manager.py:1137
+#: ../vdms_panels/presets_manager.py:1101
+#: ../vdms_panels/presets_manager.py:1124
+#: ../vdms_panels/presets_manager.py:1147
 msgid "First select a profile in the list"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1096
+#: ../vdms_panels/presets_manager.py:1106
 #, python-format
 msgid "Edit profile of the \"%s\" preset: "
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1118
-msgid "Are you sure you want to delete the selected profile?"
+#: ../vdms_panels/presets_manager.py:1128
+msgid ""
+"Are you sure you want to delete the selected profile? It may no longer be "
+"possible to recover it."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1141
+#: ../vdms_panels/presets_manager.py:1151
 msgid ""
 "Invalid EBU normalization enabled for one-pass.\n"
 "Turn off EBU normalization or choose a two-pass profile."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1148
+#: ../vdms_panels/presets_manager.py:1158
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "data on the audio volume."
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1161
+#: ../vdms_panels/presets_manager.py:1171
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1170
+#: ../vdms_panels/presets_manager.py:1180
 msgid "Don't show this dialog again"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1210
-#: ../vdms_panels/presets_manager.py:1260
-#: ../vdms_panels/presets_manager.py:1296
+#: ../vdms_panels/presets_manager.py:1220
+#: ../vdms_panels/presets_manager.py:1270
+#: ../vdms_panels/presets_manager.py:1306
 msgid "Starts"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1234
+#: ../vdms_panels/presets_manager.py:1244
 msgid ""
 "EBU normalization is enabled twice in automation and command line. Command "
 "line has priority.\n"
@@ -3063,7 +3069,7 @@ msgid ""
 "Do you wish to continue?"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:1356
+#: ../vdms_panels/presets_manager.py:1366
 msgid ""
 "SUMMARY\n"
 "\n"

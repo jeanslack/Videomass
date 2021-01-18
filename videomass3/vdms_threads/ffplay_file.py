@@ -92,7 +92,7 @@ class File_Play(Thread):
 
         """
         # time.sleep(.5)
-        cmd = '%s %s %s -i "%s" %s' % (self.ffplay,
+        cmd = '"%s" %s %s -i "%s" %s' % (self.ffplay,
                                        self.time_seq,
                                        self.ffplay_loglev,
                                        self.filename,

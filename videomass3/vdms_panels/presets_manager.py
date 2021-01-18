@@ -937,7 +937,7 @@ class PrstPan(wx.Panel):
         """
         wildcard = "Source (*.prst)|*.prst| All files (*.*)|*.*"
 
-        with wx.FileDialog(self, _("Import a new Videomass preset"),
+        with wx.FileDialog(self, _("Import a new preset"),
                            "", "", wildcard, wx.FD_OPEN |
                            wx.FD_FILE_MUST_EXIST) as filedlg:
 
@@ -947,10 +947,18 @@ class PrstPan(wx.Panel):
             newincoming = filedlg.GetPath()
             new = os.path.basename(newincoming)
 
+        if not newincoming.endswith('.prst'):
+            wx.MessageBox(_('Error, invalid preset: "{}"').format(
+                                    os.path.basename(newincoming)),
+                          "Videomass", wx.ICON_ERROR, self
+                          )
+            return
+
         if os.path.exists(os.path.join(self.user_prst, new)):
 
             if wx.MessageBox(_("This preset already exists and is about to be "
-                               "updated. All your profiles will be kept.\n\n"
+                               "updated. Don't worry, it will keep all your "
+                               "saved profiles.\n\n"
                                "Do you want to continue?"),
                              _('Please confirm'), wx.ICON_QUESTION |
                              wx.YES_NO, self) == wx.NO:
@@ -975,13 +983,14 @@ class PrstPan(wx.Panel):
         the existing ones
 
         """
-        if wx.MessageBox(_("This will update the profiles of all presets with "
-                           "the same name and add new ones. It will also keep "
-                           "all your profiles.\n\nDo you want to "
-                           "continue?"), _("Please confirm"),
-                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+        if wx.MessageBox(_("This will update the presets database. "
+                           "Don't worry, it will keep all your saved "
+                           "profiles.\n\nDo you want to continue?"),
+                         _("Please confirm"), wx.ICON_QUESTION |
+                         wx.YES_NO, self) == wx.NO:
             return
-        dialsave = wx.DirDialog(self, _("Import a group of Videomass presets"),
+
+        dialsave = wx.DirDialog(self, _("Import a new presets folder"),
                                 "", style=wx.DD_DEFAULT_STYLE
                                 )
         if dialsave.ShowModal() == wx.ID_CANCEL:
@@ -1004,8 +1013,8 @@ class PrstPan(wx.Panel):
         if outerror:
             wx.MessageBox("%s" % outerror, "Videomass", wx.ICON_ERROR, self)
         else:
-            wx.MessageBox(_("A new group of presets was successfully "
-                            "imported"), "Videomass", wx.OK, self)
+            wx.MessageBox(_("The presets database has been successfully "
+                            "updated"), "Videomass", wx.OK, self)
             self.reset_list(True)
     # ------------------------------------------------------------------#
 
@@ -1014,26 +1023,26 @@ class PrstPan(wx.Panel):
         Replace the selected preset at default values.
 
         """
-        if wx.MessageBox(_("The selected preset will be overwritten with the "
-                           "default one. All your profiles may be deleted!"
-                           "\n\nDo you want to continue?"),
+        if wx.MessageBox(_("Be careful! The selected preset will be "
+                           "overwritten with the default one. Your profiles "
+                           "may be deleted!\n\nDo you want to continue?"),
                          _("Notice"),
-                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-            return
+                         wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
+                         self) == wx.YES:
 
-        filename = self.cmbx_prst.GetValue()
-        status = copy_restore('%s/%s.prst' % (self.src_prst, filename),
-                              '%s/%s.prst' % (self.user_prst, filename)
-                              )
-        if status:
-            wx.MessageBox(_('Sorry, this preset is not part '
-                            'of default Videomass presets.'),
-                          "Videomass", wx.ICON_ERROR, self
-                          )
-            return
+            filename = self.cmbx_prst.GetValue()
+            status = copy_restore('%s/%s.prst' % (self.src_prst, filename),
+                                '%s/%s.prst' % (self.user_prst, filename)
+                                )
+            if status:
+                wx.MessageBox(_('Sorry, this preset is not part '
+                                'of default Videomass presets.'),
+                            "Videomass", wx.ICON_ERROR, self
+                            )
+                return
 
-        wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
-        self.reset_list()  # reload presets
+            wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
+            self.reset_list()  # reload presets
     # ------------------------------------------------------------------#
 
     def preset_Default_all(self, event):
@@ -1041,19 +1050,20 @@ class PrstPan(wx.Panel):
         restore all preset files directory
 
         """
-        if wx.MessageBox(_("This will replace all presets with the same "
-                           "name. All your profiles may be deleted!"
+        if wx.MessageBox(_("Be careful! This action will restore all presets "
+                           "to default ones. Your profiles may be deleted!"
                            "\n\nDo you want to continue?"), _("Notice"),
-                         wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-            return
+                         wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
+                         self) == wx.YES:
 
-        outerror = copy_on('prst', self.src_prst, self.user_prst)
-        if outerror:
-            wx.MessageBox("%s" % outerror, "Videomass", wx.ICON_ERROR, self)
-        else:
-            wx.MessageBox(_("All the default presets have been successfully "
-                            "recovered"), "Videomass", wx.OK, self)
-            self.reset_list(True)
+            outerror = copy_on('prst', self.src_prst, self.user_prst)
+            if outerror:
+                wx.MessageBox("%s" % outerror, "Videomass", wx.ICON_ERROR, self)
+            else:
+                wx.MessageBox(_("All the default presets have been "
+                                "successfully recovered"),
+                              "Videomass", wx.OK, self)
+                self.reset_list(True)
     # ------------------------------------------------------------------#
 
     def presets_Refresh(self, event):
@@ -1116,16 +1126,16 @@ class PrstPan(wx.Panel):
         else:
             filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
-                               "selected profile?"),
-                             _("Please confirm"),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-                return
+                               "selected profile? It may no longer be "
+                               "possible to recover it."), _("Please confirm"),
+                             wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
+                             self) == wx.YES:
 
-            path = os.path.join('%s' % self.user_prst,
-                                '%s.prst' % self.cmbx_prst.GetValue()
-                                )
-            delete_profiles(path, self.array[0])
-            self.reset_list()
+                path = os.path.join('%s' % self.user_prst,
+                                    '%s.prst' % self.cmbx_prst.GetValue()
+                                    )
+                delete_profiles(path, self.array[0])
+                self.reset_list()
     # ------------------------------------------------------------------#
 
     def on_start(self):

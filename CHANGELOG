@@ -7,7 +7,17 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Gen 17, 2021 V.3.3.5
+Jan 18, 2021 V.3.3.6
+
+  * Fixed bug on MS-Windows when playing files or urls with ffplay executable.
+  * Fixed bug in the FFmpeg tab of the setup dialog, in which the executables
+    ffmpeg and ffplay could not be set correctly.
+  * Improved some MessageBox for confirmation.
+  * Improved some messages on MessageBox.
+
+
++------------------------------------+
+Jan 17, 2021 V.3.3.5
 
   * Transpose Filter Dialog: Fixed `wx.StaticText` wrapping on Windows and
     MacOs, where it would break the static text string.

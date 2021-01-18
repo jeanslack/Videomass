@@ -600,7 +600,7 @@ class Setup(wx.Dialog):
             self.txtctrl_ffmpeg.Disable()
             self.full_list[self.rowsNum[5]] = 'false\n'
 
-            status = detect_binaries(Setup.OS, 'ffpl', Setup.FF_LOCALDIR)
+            status = detect_binaries(Setup.OS, self.ffmpeg, Setup.FF_LOCALDIR)
 
             if status[0] == 'not installed':
                 self.txtctrl_ffmpeg.Clear()
@@ -699,7 +699,7 @@ class Setup(wx.Dialog):
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
 
             if fd.ShowModal() == wx.ID_OK:
-                if os.path.basename(fd.GetPath()) == self.ffprobe:
+                if os.path.basename(fd.GetPath()) == self.ffplay:
                     self.txtctrl_ffplay.Clear()
                     self.txtctrl_ffplay.write(fd.GetPath())
                     self.full_list[self.rowsNum[10]] = '%s\n' % (fd.GetPath())
