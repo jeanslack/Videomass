@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 22 22"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="convert.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1211"
+     inkscape:window-height="669"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="10.727273"
+     inkscape:cx="-16.080508"
+     inkscape:cy="11.932203"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg6" />
+  <defs
+     id="defs3051">
+    <style
+       type="text/css"
+       id="current-color-scheme">
+      .ColorScheme-Text {
+        color:#eff0f1;
+      }
+      </style>
+  </defs>
+  <path
+     style="fill:#008000;fill-opacity:1;stroke:none"
+     d="M 11 3 A 7.9999981 8.000001 0 0 0 3.2597656 9 L 4.2949219 9 A 7 7 0 0 1 11 4 A 7 7 0 0 1 17.308594 8 L 13.699219 8 L 13.699219 9 L 17.701172 9 L 18.699219 9 L 18.699219 8.8867188 L 18.699219 8 L 18.699219 4 L 17.699219 4 L 17.699219 6.65625 A 7.9999981 8.000001 0 0 0 11 3 z M 3.3007812 13 L 3.3007812 13.113281 L 3.3007812 14 L 3.3007812 18 L 4.3007812 18 L 4.3007812 15.34375 A 7.9999981 8.000001 0 0 0 11 19 A 7.9999981 8.000001 0 0 0 18.740234 13 L 17.705078 13 A 7 7 0 0 1 11 18 A 7 7 0 0 1 4.6914062 14 L 8.3007812 14 L 8.3007812 13 L 4.3007812 13 L 4.2988281 13 L 3.3007812 13 z "
+     class="ColorScheme-Text"
+     id="path4" />
+</svg>

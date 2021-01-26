@@ -103,10 +103,10 @@ class FFmpeg_Search(wx.MiniFrame):
                                     wx.TE_RICH2 |
                                     wx.HSCROLL
                                     )
-        if get.THEME == 'Breeze-Blues':
+        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
             self.texthelp.SetBackgroundColour(FFmpeg_Search.SOLARIZED)
             self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.GREY))
-        elif get.THEME in get.DARKicons:
+        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
             self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_SLATE)
             self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.HEAVENLY))
         else:

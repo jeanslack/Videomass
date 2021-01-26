@@ -50,13 +50,13 @@ class Timeline(wx.Panel):
     OS = get.OS
 
     # Theme Colors used in HTML
-    if get.THEME == 'Breeze-Blues':  # white theme or dark theme
+    if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):  # all themes
         RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
         SELECTION = '#4368d3'  # medium azure for selection
         DELIMITER_COLOR = '#da4453'  # red for margin selection
         TEXT_PEN_COLOR = '#00cc57'  # green for text and draw lines
 
-    elif get.THEME in get.DARKicons:  # dark theme
+    elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
         RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
         SELECTION = '#4368d3'  # medium azure for selection
         DELIMITER_COLOR = '#00FE00'  # green for margin selection

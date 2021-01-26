@@ -25,6 +25,7 @@
 
 #########################################################
 import wx
+from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 import wx.lib.agw.hyperlink as hpl
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
@@ -79,6 +80,15 @@ class Choose_Topic(wx.Panel):
                        'formats\n  and quality from YouTube, Facebook and '
                        'more sites. ')
 
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpAVconv = get_bmp(videoconv_icn, ((48, 48)))
+            bmpPrstmng = get_bmp(prstmng_icn, ((48, 48)))
+            bmpYdl = get_bmp(youtube_icn, ((48, 48)))
+        else:
+            bmpAVconv = wx.Bitmap(videoconv_icn, wx.BITMAP_TYPE_ANY)
+            bmpPrstmng = wx.Bitmap(prstmng_icn, wx.BITMAP_TYPE_ANY)
+            bmpYdl = wx.Bitmap(youtube_icn, wx.BITMAP_TYPE_ANY)
+
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
 
         welcome = wx.StaticText(self, wx.ID_ANY, (_("Welcome to Videomass")))
@@ -95,15 +105,15 @@ class Choose_Topic(wx.Panel):
         self.presets_mng = wx.Button(self, wx.ID_ANY, PRST_MNG, size=(-1, -1),
                                      style=style
                                      )
-        self.presets_mng.SetBitmap(wx.Bitmap(prstmng_icn), wx.LEFT)
+        self.presets_mng.SetBitmap(bmpPrstmng, wx.LEFT)
         self.avconv = wx.Button(self, wx.ID_ANY, AV_CONV,
                                 size=(-1, -1), style=style
                                 )
-        self.avconv.SetBitmap(wx.Bitmap(videoconv_icn), wx.LEFT)
+        self.avconv.SetBitmap(bmpAVconv, wx.LEFT)
         self.youtube = wx.Button(self, wx.ID_ANY, YOUTUBE_DL,
                                  size=(-1, -1), style=style
                                  )
-        self.youtube.SetBitmap(wx.Bitmap(youtube_icn), wx.LEFT)
+        self.youtube.SetBitmap(bmpYdl, wx.LEFT)
 
         grid_buttons.AddMany([(welcome, 0, wx.ALIGN_CENTER_VERTICAL |
                                wx.ALIGN_CENTER_HORIZONTAL, 0),

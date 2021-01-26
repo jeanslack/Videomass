@@ -26,6 +26,8 @@
 #########################################################
 import wx
 import os
+import sys
+from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import get_milliseconds
 
@@ -147,9 +149,13 @@ class FileDnD(wx.Panel):
     SAMEDIR = get.SAMEdir
     SUFFIX = get.FILEsuffix
 
-    def __init__(self, parent):
+    def __init__(self, parent, iconplay):
         """Constructor. This will initiate with an id and a title"""
         self.parent = parent  # parent is the MainFrame
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpplay = get_bmp(iconplay, ((16, 16)))
+        else:
+            bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.data = self.parent.data_files  # set items list data on parent
         self.file_dest = FileDnD.OUTSAVE
         self.selected = None  # tells if an imported file is selected or not
@@ -164,43 +170,48 @@ class FileDnD(wx.Panel):
         # create widgets
         sizer = wx.BoxSizer(wx.VERTICAL)
         infomsg = _("Drag one or more files below")
-        lbl_info = wx.StaticText(self, label=infomsg)
-        sizer.Add(lbl_info, 0, wx.ALL, 5)
+        lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
+        sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 5)
-        optionsmsg = _("Options")
-        lbl_options = wx.StaticText(self, label=optionsmsg)
-        sizer.Add(lbl_options, 0, wx.ALL, 5)
         sizer_media = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_media, 0, wx.EXPAND | wx.ALL, 5)
+        btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
+        btn_play.SetBitmap(bmpplay, wx.LEFT)
+        sizer_media.Add(btn_play, 1, wx.ALL | wx.EXPAND, 5)
         btn_delsel = wx.Button(self, wx.ID_REMOVE, "")
         sizer_media.Add(btn_delsel, 1, wx.ALL | wx.EXPAND, 5)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 5)
-        outdirmsg = _("Output Directory")
-        lbl_outdir = wx.StaticText(self, label=outdirmsg)
-        sizer.Add(lbl_outdir, 0, wx.ALL, 5)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_outdir, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1, -1))
-        sizer_outdir.Add(self.btn_save, 0, wx.ALL |
-                         wx.ALIGN_CENTER_HORIZONTAL |
-                         wx.ALIGN_CENTER_VERTICAL, 5
-                         )
+        outdirmsg = _("Destination folder:")
+        lbl_outdir = wx.StaticText(self, wx.ID_ANY, label=(outdirmsg),
+                                   style=wx.EXPAND)
+        sizer_outdir.Add(lbl_outdir, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(50, -1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
                                           wx.TE_READONLY
                                           )
         sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_outdir.Add(self.btn_save, 0, wx.ALL |
+                         wx.ALIGN_CENTER_HORIZONTAL |
+                         wx.ALIGN_CENTER_VERTICAL, 5
+                         )
         self.SetSizer(sizer)
         # properties
         self.flCtrl.InsertColumn(0, _('File Name'), width=550)
         self.flCtrl.InsertColumn(1, _('Duration'), width=230)
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('Size'), width=150)
-        if self.OS != 'Darwin':
-            lbl_info.SetLabelMarkup("<b>%s</b>" % infomsg)
-            lbl_options.SetLabelMarkup("<b>%s</b>" % optionsmsg)
-            lbl_outdir.SetLabelMarkup("<b>%s</b>" % outdirmsg)
+
+        if self.OS == 'Darwin':
+            lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lbl_outdir.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
+        else:
+            lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lbl_outdir.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+
         self.text_path_save.SetValue(self.file_dest)
 
         if FileDnD.SAMEDIR == 'true':
@@ -215,6 +226,7 @@ class FileDnD(wx.Panel):
         tip = (_('Choose a temporary destination for conversions'))
         self.btn_save.SetToolTip(tip)
         # Binding (EVT)
+        self.Bind(wx.EVT_BUTTON, self.playSelect, btn_play)
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
         self.Bind(wx.EVT_BUTTON, self.delSelect, btn_delsel)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
@@ -270,14 +282,14 @@ class FileDnD(wx.Panel):
         menuItem = menu.FindItemById(itemId)
 
         if menuItem.GetItemLabel() == _("Play"):
-            self.playSelect()
+            self.playSelect(self)
 
         elif menuItem.GetItemLabel() == _("Remove"):
             self.delSelect(self)
 
     # ----------------------------------------------------------------------
 
-    def playSelect(self):
+    def playSelect(self, event):
         """
         Playback the selected file
 

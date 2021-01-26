@@ -173,7 +173,7 @@ class Data_Source(object):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 2.7:
+                if float(userconf[0]) != 2.8:
                     existfileconf = False
             else:
                 existfileconf = False
@@ -224,51 +224,68 @@ class Data_Source(object):
         configuration file.
 
         """
+        if 'wx.svg' in sys.modules:
+            ext = 'svg'
+        else:
+            ext = 'png'
+        #  Videomass icons for light themes
+        if iconset == 'Videomass-Light':
+            x48 = '%s/Sign_Icons/48x48_light' % self.icodir
+            x16 = '%s/Videomass-Light/16x16' % self.icodir
+            x22 = '%s/Videomass-Light/24x24' % self.icodir
+        #  Videomass icons for dark themes
+        elif iconset == 'Videomass-Dark':
+            x48 = '%s/Sign_Icons/48x48_dark' % self.icodir
+            x16 = '%s/Videomass-Dark/16x16' % self.icodir
+            x22 = '%s/Videomass-Dark/24x24' % self.icodir
+        #  Videomass icons for all themes
+        elif iconset == 'Videomass-Colours':
+            x48 = '%s/Sign_Icons/48x48' % self.icodir
+            x16 = '%s/Videomass-Colours/16x16' % self.icodir
+            x22 = '%s/Videomass-Colours/24x24' % self.icodir
         # Breeze for light themes
-        if iconset == 'Breeze':  # default
+        elif iconset == 'Breeze':  # default
             x48 = '%s/Sign_Icons/48x48_light' % self.icodir
             x16 = '%s/Breeze/16x16' % self.icodir
+            x22 = '%s/Breeze/22x22' % self.icodir
         # breeze for dark themes
         elif iconset == 'Breeze-Dark':
             x48 = '%s/Sign_Icons/48x48_dark' % self.icodir
             x16 = '%s/Breeze-Dark/16x16' % self.icodir
-        # breeze custom icons colorized
+            x22 = '%s/Breeze-Dark/22x22' % self.icodir
+        # breeze custom icons colorized for all themes
         elif iconset == 'Breeze-Blues':
             x48 = '%s/Sign_Icons/48x48' % self.icodir
             x16 = '%s/Breeze-Blues/16x16' % self.icodir
-        # papirus icons
-        elif iconset == 'Papirus':
-            x48 = '%s/Sign_Icons/48x48_light' % self.icodir
-            x16 = '%s/Papirus/16x16' % self.icodir
-        # papirus icons for dark themes
-        elif iconset == 'Papirus-Dark':
-            x48 = '%s/Sign_Icons/48x48_dark' % self.icodir
-            x16 = '%s/Papirus-Dark/16x16' % self.icodir
+            x22 = '%s/Breeze-Blues/22x22' % self.icodir
 
         # choose topic icons 48x48:
-        icon_switchvideomass = '%s/icon_videoconversions.png' % x48
-        icon_youtube = '%s/icon_youtube.png' % x48
-        icon_prst_mng = '%s/icon_prst_mng.png' % x48
-        # toolbar icons 16x16:
-        icon_process = '%s/convert.png' % x16
-        icon_toolback = '%s/go-previous.png' % x16
-        icon_toolforward = '%s/go-next.png' % x16
-        icon_ydl = '%s/download.png' % x16
-        icn_infosource = '%s/properties.png' % x16
-        icn_preview = '%s/media-playback.png' % x16
-        icn_saveprf = '%s/vdms-profile-append.png' % x16
-        icn_viewstatistics = '%s/statistics.png' % x16
+        icon_switchvideomass = '%s/icon_videoconversions.%s' % (x48, ext)
+        icon_youtube = '%s/icon_youtube.%s' % (x48, ext)
+        icon_prst_mng = '%s/icon_prst_mng.%s' % (x48, ext)
+        # toolbar icons 22x22:
+        icon_process = '%s/convert.%s' % (x22, ext)
+        icon_toolback = '%s/go-previous.%s' % (x22, ext)
+        icon_toolforward = '%s/go-next.%s' % (x22, ext)
+        icon_ydl = '%s/download.%s' % (x22, ext)
+        icn_infosource = '%s/properties.%s' % (x22, ext)
+        icn_preview = '%s/media-playback.%s' % (x22, ext)
+        icn_saveprf = '%s/profile-append.%s' % (x22, ext)
+        icn_viewstatistics = '%s/statistics.%s' % (x22, ext)
         # button icons 16x16:
-        icn_playfilters = '%s/view-preview.png' % x16
-        icn_resetfilters = '%s/edit-clear.png' % x16
-        ic_resize = '%s/transform-scale.png' % x16
-        ic_crop = '%s/transform-crop.png' % x16
-        ic_rotate = '%s/transform-rotate.png' % x16
-        ic_deinterlace = '%s/deinterlace.png' % x16
-        ic_denoiser = '%s/denoise.png' % x16
-        ic_analyzes = '%s/statistics.png' % x16
-        ic_settings = '%s/configure.png' % x16
-        ic_peaklevel = '%s/player-volume.png' % x16
+        icn_playfilters = '%s/preview.%s' % (x16, ext)
+        icn_resetfilters = '%s/edit-clear.%s' % (x16, ext)
+        ic_resize = '%s/transform-scale.%s' % (x16, ext)
+        ic_crop = '%s/transform-crop.%s' % (x16, ext)
+        ic_rotate = '%s/transform-rotate.%s' % (x16, ext)
+        ic_deinterlace = '%s/deinterlace.%s' % (x16, ext)
+        ic_denoiser = '%s/denoise.%s' % (x16, ext)
+        ic_analyzes = '%s/statistics.%s' % (x16, ext)
+        ic_settings = '%s/configure.%s' % (x16, ext)
+        ic_peaklevel = '%s/player-volume.%s' % (x16, ext)
+        icn_newprf = '%s/newprf.%s' % (x16, ext)
+        icn_delprf = '%s/delprf.%s' % (x16, ext)
+        icn_editprf = '%s/editprf.%s' % (x16, ext)
 
         return [os.path.join(norm) for norm in [self.videomass_icon,  # 0
                                                 icon_switchvideomass,  # 1
@@ -289,9 +306,9 @@ class Data_Source(object):
                                                 ic_peaklevel,  # 16
                                                 icon_youtube,  # 17
                                                 icon_prst_mng,  # 18
-                                                '',  # icn_newprf,  # 19
-                                                '',  # icn_delprf,  # 20
-                                                '',  # icn_editprf,  # 21
+                                                icn_newprf,  # 19
+                                                icn_delprf,  # 20
+                                                icn_editprf,  # 21
                                                 icon_toolback,  # 22
                                                 icon_toolforward,  # 23
                                                 icon_ydl,  # 24

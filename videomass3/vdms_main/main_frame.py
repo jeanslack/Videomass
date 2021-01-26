@@ -25,6 +25,7 @@
 
 #########################################################
 import wx
+from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 import webbrowser
 from urllib.parse import urlparse
 import os
@@ -64,11 +65,14 @@ class MainFrame(wx.Frame):
     DIR_CONF = get.DIRconf  # default configuration directory
     FILE_CONF = get.FILEconf  # pathname of the file configuration
     WORK_DIR = get.WORKdir  # pathname of the current work directory
-    SRC_PATH = get.SRCpath
+    SRC_PATH = get.SRCpath  # pathname to the application directory
     LOGDIR = get.LOGdir  # log directory pathname
     CACHEDIR = get.CACHEdir  # cache directory pathname
     FFMPEG_DEFAULTDEST = get.FFMPEGoutdir  # default file dest from conf.
     YDL_DEFAULTDEST = get.YDLoutdir  # default download dest from conf.
+    TBSIZE = get.TBsize  # toolbar icons size
+    TBPOS = get.TBpos  # toolbar position
+    TBTEXT = get.TBtext  # toolbar show/hide text (str(true) or str(false))
     # colour rappresentetion in rgb
     AZURE_NEON = 158, 201, 232
     YELLOW_LMN = 255, 255, 0
@@ -103,9 +107,6 @@ class MainFrame(wx.Frame):
         self.icon_preview = pathicons[4]
         # self.icon_time = pathicons[5]
         self.icon_saveprf = pathicons[8]
-        # self.icon_newprf = pathicons[19]
-        # self.icon_delprf = pathicons[20]
-        # self.icon_editprf = pathicons[21]
         self.icon_viewstatistics = pathicons[25]
         # self.viewlog = pathicons[26]
 
@@ -165,7 +166,7 @@ class MainFrame(wx.Frame):
                                                  pathicons[16],  # peaklevel
                                                  pathicons[17],  # audiotr
                                                  )
-        self.fileDnDTarget = filedrop.FileDnD(self)
+        self.fileDnDTarget = filedrop.FileDnD(self, pathicons[6])
         self.textDnDTarget = textdrop.TextDnD(self)
         self.ProcessPanel = Logging_Console(self)
         self.PrstsPanel = presets_manager.PrstPan(self,
@@ -175,6 +176,9 @@ class MainFrame(wx.Frame):
                                                   MainFrame.OS,
                                                   pathicons[14],  # analyzes
                                                   pathicons[16],  # peaklevel
+                                                  pathicons[19],  # newprf
+                                                  pathicons[20],  # delprf
+                                                  pathicons[21],  # editprf
                                                   )
         # hide panels
         self.TimeLine.Hide()
@@ -207,11 +211,11 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if MainFrame.OS == 'Darwin':
-            self.SetSize((1100, 630))
+            self.SetSize((1100, 700))
         elif MainFrame.OS == 'Windows':
-            self.SetSize((1230, 700))
+            self.SetMinSize((1100, 700))
         else:
-            self.SetSize((1230, 800))
+            self.SetMinSize((1108, 760))
         # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
         # menu bar
@@ -396,10 +400,10 @@ class MainFrame(wx.Frame):
 
         # ----------------------- file menu
         fileButton = wx.Menu()
-        dscrp = (_("My conversions\tCtrl+C"),
+        dscrp = (_("Conversions folder\tCtrl+C"),
                  _("Open the default file conversions folder"))
         fold_convers = fileButton.Append(wx.ID_OPEN, dscrp[0], dscrp[1])
-        dscrp = (_("My downloads\tCtrl+D"),
+        dscrp = (_("Downloads folder\tCtrl+D"),
                  _("Open the default downloads folder"))
         fold_downloads = fileButton.Append(wx.ID_BOTTOM, dscrp[0], dscrp[1])
         fileButton.AppendSeparator()
@@ -421,7 +425,7 @@ class MainFrame(wx.Frame):
         # ------------------ tools menu
         toolsButton = wx.Menu()
         dscrp = (_("FFmpeg help topics"),
-                 _("An easy tool to search for FFmpeg help topics and "
+                 _("A useful tool to search for FFmpeg help topics and "
                    "options"))
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
@@ -611,6 +615,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_Ytdlfsave, setdownload_tmp)
         self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
         self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
+
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
         self.Bind(wx.EVT_MENU, self.Helpme, helpItem)
@@ -957,7 +962,7 @@ class MainFrame(wx.Frame):
 
         else:
             wx.MessageBox(_('Latest version available: {0}').format(latest[0]),
-                            "Videomass", wx.ICON_INFORMATION, self)
+                          "Videomass", wx.ICON_INFORMATION, self)
     # -----------------------------------------------------------------#
 
     def showTimestamp(self, event):
@@ -1257,69 +1262,119 @@ class MainFrame(wx.Frame):
 
     def videomass_tool_bar(self):
         """
-        Makes and attaches the toolsBtn bar
+        Makes and attaches the toolsBtn bar.
+        To enable or disable styles, use method `SetWindowStyleFlag`
+        e.g.
+
+            self.toolbar.SetWindowStyleFlag(wx.TB_NODIVIDER | wx.TB_FLAT)
 
         """
-        # -------- Properties
-        self.toolbar = self.CreateToolBar(style=(wx.TB_FLAT |
-                                                 wx.TB_TEXT |
-                                                 # wx.TB_HORZ_LAYOUT |
-                                                 wx.TB_NODIVIDER |
-                                                 wx.TB_HORIZONTAL
-                                                 ))
-        self.toolbar.SetToolBitmapSize((16, 16))
+        if MainFrame.TBPOS == '0':  # on top
+            if MainFrame.TBTEXT == 'show':  # show text
+                style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL)
+            else:
+                style = (wx.TB_DEFAULT_STYLE)
+
+        elif MainFrame.TBPOS == '1':  # on bottom
+            if MainFrame.TBTEXT == 'show':  # show text
+                style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM)
+            else:
+                style = (wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM)
+
+        elif MainFrame.TBPOS == '2':  # on right
+            if MainFrame.TBTEXT == 'show':  # show text
+                style = (wx.TB_TEXT | wx.TB_RIGHT)
+            else:
+                style = (wx.TB_DEFAULT_STYLE | wx.TB_RIGHT)
+
+        elif MainFrame.TBPOS == '3':
+            if MainFrame.TBTEXT == 'show':  # show text
+                style = (wx.TB_TEXT | wx.TB_LEFT)
+            else:
+                style = (wx.TB_DEFAULT_STYLE | wx.TB_LEFT)
+
+        self.toolbar = self.CreateToolBar(style=style)
+
+        bmp_size = (int(MainFrame.TBSIZE), int(MainFrame.TBSIZE))
+        self.toolbar.SetToolBitmapSize(bmp_size)
+
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+
+            bmpback = get_bmp(self.icon_mainback, bmp_size)
+            bmpnext = get_bmp(self.icon_mainforward, bmp_size)
+
+            bmpinfo = get_bmp(self.icon_info, bmp_size)
+            bmpstat = get_bmp(self.icon_viewstatistics, bmp_size)
+
+            bmpprev = get_bmp(self.icon_preview, bmp_size)
+            bmpsaveprf = get_bmp(self.icon_saveprf, bmp_size)
+
+            bmpconv = get_bmp(self.icon_runconv, bmp_size)
+            bmpydl = get_bmp(self.icon_ydl, bmp_size)
+
+        else:
+            bmpback = wx.Bitmap(self.icon_mainback, wx.BITMAP_TYPE_ANY)
+            bmpnext = wx.Bitmap(self.icon_mainforward, wx.BITMAP_TYPE_ANY)
+
+            bmpinfo = wx.Bitmap(self.icon_info, wx.BITMAP_TYPE_ANY)
+            bmpstat = wx.Bitmap(self.icon_viewstatistics, wx.BITMAP_TYPE_ANY)
+
+            bmpprev = wx.Bitmap(self.icon_preview, wx.BITMAP_TYPE_ANY)
+            bmpsaveprf = wx.Bitmap(self.icon_saveprf, wx.BITMAP_TYPE_ANY)
+
+            bmpconv = wx.Bitmap(self.icon_runconv, wx.BITMAP_TYPE_ANY)
+            bmpydl = wx.Bitmap(self.icon_ydl, wx.BITMAP_TYPE_ANY)
         '''
         self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
         '''
         tip = _("Go to the previous panel")
         back = self.toolbar.AddTool(3, _('Back'),
-                                    wx.Bitmap(self.icon_mainback),
+                                    bmpback,
                                     tip, wx.ITEM_NORMAL
                                     )
         tip = _("Go to the next panel")
         forward = self.toolbar.AddTool(4, _('Next'),
-                                       wx.Bitmap(self.icon_mainforward),
+                                       bmpnext,
                                        tip, wx.ITEM_NORMAL
                                        )
-        self.toolbar.AddSeparator()
+        # self.toolbar.AddSeparator()
         # self.toolbar.AddStretchableSpace()
         tip = _("Gathers information from multimedia streams")
         self.btn_metaI = self.toolbar.AddTool(5, _('Media Streams'),
-                                              wx.Bitmap(self.icon_info),
+                                              bmpinfo,
                                               tip, wx.ITEM_NORMAL
                                               )
         tip = _("Shows download statistics and information")
         self.btn_ydlstatistics = self.toolbar.AddTool(
                                     14, _('Statistics'),
-                                    wx.Bitmap(self.icon_viewstatistics),
+                                    bmpstat,
                                     tip, wx.ITEM_NORMAL
                                     )
         tip = _("Playing a media file or URL")
         self.btn_playO = self.toolbar.AddTool(6, _('Playback'),
-                                              wx.Bitmap(self.icon_preview),
+                                              bmpprev,
                                               tip, wx.ITEM_NORMAL,
                                               )
-        self.toolbar.AddSeparator()
-        tip = _("Append a new profile with these settings")
+        # self.toolbar.AddSeparator()
+        tip = _("Add a new profile from this panel with the current settings")
         self.btn_saveprf = self.toolbar.AddTool(8, _('Add Profile'),
-                                                wx.Bitmap(self.icon_saveprf),
+                                                bmpsaveprf,
                                                 tip, wx.ITEM_NORMAL,
                                                 )
         # self.toolbar.AddStretchableSpace()
-        self.toolbar.AddSeparator()
+        # self.toolbar.AddSeparator()
         tip = _("Convert using FFmpeg")
         self.run_coding = self.toolbar.AddTool(12, _('Convert'),
-                                               wx.Bitmap(self.icon_runconv),
+                                               bmpconv,
                                                tip, wx.ITEM_NORMAL
                                                )
         tip = _("Download files using youtube-dl")
         self.run_download = self.toolbar.AddTool(13, _('Download'),
-                                                 wx.Bitmap(self.icon_ydl),
+                                                 bmpydl,
                                                  tip, wx.ITEM_NORMAL
                                                  )
         # self.toolbar.AddStretchableSpace()
-
         # finally, create it
         self.toolbar.Realize()
 
@@ -1591,24 +1646,31 @@ class MainFrame(wx.Frame):
         time sequence has been set with the timeline tool, the total
         duration of each media file will be replaced with the set time
         sequence. Otherwise the duration of each media will be the one
-        originated from its real duration.
+        originated from its source duration.
 
     2) STARTING THE PROCESS
         Here the panel with the progress bar is instantiated which will
         assign a corresponding thread.
 
         """
-        if self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
-            ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
-            duration = list()
-            for n in self.duration:
-                duration.append(ms)
-        else:
-            duration = self.duration
         if varargs[0] == 'console view only':
             self.statusbar_msg(_('Last output status'), None)
-        else:
+            duration = self.duration
+
+        elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
+            ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
+            if [t for t in self.duration if ms > t]:  # if out time range
+                wx.MessageBox(_('Cannot continue: The duration in the '
+                                'timeline exceeds the duration of some queued '
+                                'files.'), 'Videomass', wx.ICON_ERROR, self)
+                return
+            duration = [ms for n in self.duration]
             self.statusbar_msg(_('Under processing...'), None)
+
+        else:
+            duration = self.duration
+            self.statusbar_msg(_('Under processing...'), None)
+
         self.SetTitle(_('Videomass - Output Monitor'))
         # Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),

@@ -25,9 +25,11 @@
 
 #########################################################
 import wx
+from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 import wx.lib.scrolledpanel as scrolled
 import wx.lib.agw.floatspin as FS
 import os
+import sys
 import itertools
 from videomass3.vdms_io.presets_manager_properties import json_data
 from videomass3.vdms_io.presets_manager_properties import supported_formats
@@ -62,7 +64,8 @@ class PrstPan(wx.Panel):
     # -----------------------------------------------------------------
 
     def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, OS, iconanalyzes, iconpeaklevel):
+                 PWD, OS, iconanalyzes, iconpeaklevel,
+                 iconnewprf, icondelprf, iconeditprf):
         """
         Each presets is a JSON file (Javascript object notation) which is
         a list object with a variable number of items (called profiles)
@@ -77,6 +80,19 @@ class PrstPan(wx.Panel):
         "Output_extension": "",
         }
         """
+        if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
+            bmpanalyzes = get_bmp(iconanalyzes, ((16, 16)))
+            bmppeaklevel = get_bmp(iconpeaklevel, ((16, 16)))
+            bmpnewprf = get_bmp(iconnewprf, ((16, 16)))
+            bmpeditprf = get_bmp(iconeditprf, ((16, 16)))
+            bmpdelprf = get_bmp(icondelprf, ((16, 16)))
+        else:
+            bmpanalyzes = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
+            bmppeaklevel = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
+            bmpnewprf = wx.Bitmap(iconnewprf, wx.BITMAP_TYPE_ANY)
+            bmpeditprf = wx.Bitmap(iconeditprf, wx.BITMAP_TYPE_ANY)
+            bmpdelprf = wx.Bitmap(icondelprf, wx.BITMAP_TYPE_ANY)
+
         self.array = []  # Parameters of the selected profile
         # default options:
         self.opt = {"PEAK": "", "RMS": "", "EBU": "",
@@ -198,12 +214,15 @@ class PrstPan(wx.Panel):
         grid_profiles = wx.FlexGridSizer(0, 3, 0, 0)
         self.btn_newprofile = wx.Button(self, wx.ID_ANY,
                                         _("Add"), size=(-1, -1))
+        self.btn_newprofile.SetBitmap(bmpnewprf, wx.LEFT)
         grid_profiles.Add(self.btn_newprofile, 0, wx.ALL, 5)
         self.btn_delprofile = wx.Button(self, wx.ID_ANY,
                                         _("Delete"), size=(-1, -1))
+        self.btn_delprofile.SetBitmap(bmpdelprf, wx.LEFT)
         grid_profiles.Add(self.btn_delprofile, 0, wx.ALL, 5)
         self.btn_editprofile = wx.Button(self, wx.ID_ANY,
                                          _("Edit"), size=(-1, -1))
+        self.btn_editprofile.SetBitmap(bmpeditprf, wx.LEFT)
         grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 5)
         boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
         sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
@@ -237,7 +256,7 @@ class PrstPan(wx.Panel):
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
         nb1_p1.SetSizer(grd_cmd)
-        nb1.AddPage(nb1_p1, (_("Command line FFmpeg")))
+        nb1.AddPage(nb1_p1, (_("Command line")))
         # --- page automations
         self.nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         size_auto = wx.BoxSizer(wx.HORIZONTAL)
@@ -293,11 +312,11 @@ class PrstPan(wx.Panel):
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
                                      _("Volumedetect"), size=(-1, -1))
-        self.btn_voldect.SetBitmap(wx.Bitmap(iconpeaklevel), wx.LEFT)
+        self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
         sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
                                      _("Volume Statistics"), size=(-1, -1))
-        self.btn_details.SetBitmap(wx.Bitmap(iconanalyzes), wx.LEFT)
+        self.btn_details.SetBitmap(bmpanalyzes, wx.LEFT)
         sizer_peak.Add(self.btn_details, 0, wx.ALIGN_CENTER_VERTICAL, 0)
 
         self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY,
@@ -388,9 +407,9 @@ class PrstPan(wx.Panel):
         tip = (_("Retrieve all Videomass default presets"))
         self.btn_restorealldefault.SetToolTip(tip)
         self.btn_refresh.SetToolTip(_("Update the presets list"))
-        tip = (_('First pass parameters of the selected profile'))
+        tip = (_('First pass of the selected profile'))
         self.txt_1cmd.SetToolTip(tip)
-        tip = (_('Second pass parameters of the selected profile'))
+        tip = (_('Second pass of the selected profile'))
         self.txt_2cmd.SetToolTip(tip)
         tip = (_('Gets maximum volume and average volume data in dBFS, then '
                  'calculates the offset amount for audio normalization.'))
@@ -1032,13 +1051,13 @@ class PrstPan(wx.Panel):
 
             filename = self.cmbx_prst.GetValue()
             status = copy_restore('%s/%s.prst' % (self.src_prst, filename),
-                                '%s/%s.prst' % (self.user_prst, filename)
-                                )
+                                  '%s/%s.prst' % (self.user_prst, filename)
+                                  )
             if status:
                 wx.MessageBox(_('Sorry, this preset is not part '
                                 'of default Videomass presets.'),
-                            "Videomass", wx.ICON_ERROR, self
-                            )
+                              "Videomass", wx.ICON_ERROR, self
+                              )
                 return
 
             wx.MessageBox(_("Successful recovery"), "Videomass", wx.OK, self)
@@ -1058,7 +1077,8 @@ class PrstPan(wx.Panel):
 
             outerror = copy_on('prst', self.src_prst, self.user_prst)
             if outerror:
-                wx.MessageBox("%s" % outerror, "Videomass", wx.ICON_ERROR, self)
+                wx.MessageBox("%s" % outerror, "Videomass",
+                              wx.ICON_ERROR, self)
             else:
                 wx.MessageBox(_("All the default presets have been "
                                 "successfully recovered"),

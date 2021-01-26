@@ -62,7 +62,7 @@ def args():
                    ]
         print('List of executables used by Videomass:')
         for required in listing:
-            if required == 'mpv' or required == 'atomicparsley':
+            if required == 'atomicparsley':
                 opt = '[Optional]'
             else:
                 opt = '[Required]'

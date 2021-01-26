@@ -81,7 +81,6 @@ class Downloader(wx.Panel):
               'URL selected in green.')
     MSG_2 = _('Function available only if you choose "Download by '
               'format code"')
-
     # light
     LAVENDER = '#e6e6faff'
     # dark
@@ -94,6 +93,15 @@ class Downloader(wx.Panel):
     RED = '#ff0000ff'
     GREEN = '#008000'
     YELLOW = '#bd9f00ff'
+
+    if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
+        BACKGRD = SOLARIZED
+
+    elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+        BACKGRD = DARK_SLATE
+
+    else:
+        BACKGRD = LAVENDER
 
     VQUALITY = {('Best quality video'): ['best', 'best'],
                 ('Worst quality video'): ['worst', 'worst']
@@ -259,12 +267,8 @@ class Downloader(wx.Panel):
         # ----------------------- Properties
         # WARNING do not append text on self.codText here,
         # see `on_Choice meth.`
-        if Downloader.get.THEME == 'Breeze-Blues':
-            self.codText.SetBackgroundColour(Downloader.SOLARIZED)
-        elif Downloader.get.THEME in Downloader.get.DARKicons:
-            self.codText.SetBackgroundColour(Downloader.DARK_SLATE)
-        else:
-            self.codText.SetBackgroundColour(Downloader.LAVENDER)
+
+        self.codText.SetBackgroundColour(Downloader.BACKGRD)
 
         if Downloader.OS != 'Darwin':
             # self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)

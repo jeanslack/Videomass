@@ -90,10 +90,10 @@ class ShowLogs(wx.MiniFrame):
                                     )
         self.textdata.SetMinSize((850, 400))
 
-        if get.THEME == 'Breeze-Blues':
+        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
             self.textdata.SetBackgroundColour(ShowLogs.SOLARIZED)
             self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.GREY))
-        elif get.THEME in get.DARKicons:
+        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
             self.textdata.SetBackgroundColour(ShowLogs.DARK_SLATE)
             self.textdata.SetDefaultStyle(wx.TextAttr(ShowLogs.HEAVENLY))
         else:

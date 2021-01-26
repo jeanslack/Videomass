@@ -35,11 +35,11 @@ class YDL_Mediainfo(wx.MiniFrame):
     """
     get = wx.GetApp()  # get data from bootstrap
 
-    if get.THEME == 'Breeze-Blues':
+    if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
         BACKGROUND = '#11303eff'
         FOREGROUND = '#959595'
 
-    elif get.THEME in get.DARKicons:
+    elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
         BACKGROUND = '#1c2027ff'
         FOREGROUND = '#87ceebff'
 

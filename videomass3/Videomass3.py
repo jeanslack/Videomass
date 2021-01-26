@@ -6,7 +6,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Nov.03.2020 *PEP8 compatible*
+# Rev: Jan.25.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,6 +26,10 @@
 
 #########################################################
 import wx
+try:
+    from wx.svg import SVGimage
+except ModuleNotFoundError:
+    pass
 import os
 import sys
 from shutil import which, rmtree
@@ -79,7 +83,7 @@ class Videomass(wx.App):
         self.CLEARcache = None
 
         wx.App.__init__(self, redirect, filename)  # constructor
-        wx.SystemOptions.SetOption("osx.openfiledialog.always-show-types","1")
+        wx.SystemOptions.SetOption("osx.openfiledialog.always-show-types", "1")
     # -------------------------------------------------------------------
 
     def OnInit(self):
@@ -113,18 +117,18 @@ class Videomass(wx.App):
         self.FFMPEG_check = setui[4][5]
         self.FFPROBE_check = setui[4][7]
         self.FFPLAY_check = setui[4][9]
-        self.MPV_check = setui[4][11]
-        self.MPV_url = setui[4][12]
         self.FFthreads = setui[4][2]
         self.FFMPEGoutdir = dirname if setui[4][1] == 'none' else setui[4][1]
         self.LOGdir = setui[9]  # dir for logging
         self.CACHEdir = setui[10]  # dir cache for updates
         self.FFMPEGlocaldir = setui[11]  # local path to FFMPEG on Videomass
+        self.TBsize = setui[4][12]  # toolbar icons size
+        self.TBpos = setui[4][13]  # toolbar position style
+        self.TBtext = setui[4][14]  # toolbar show/hide text along side
         self.CLEARcache = setui[4][15]  # set clear cache on exit
         self.YDL_pref = setui[4][16]  # get youtube-dl preferences
         self.TMP = os.path.join(self.CACHEdir, 'tmp')
-        self.DARKicons = ('Breeze-Blues', 'Breeze-Dark', 'Papirus-Dark')
-        self.THEME = setui[4][11]
+        self.THEME = setui[4][11]  # specifies which icon theme is used
         self.SAMEdir = setui[4][17]  # file save with same dest. as source
         self.FILEsuffix = setui[4][18]  # add a suffix string to file name
         self.YDLoutdir = dirname if setui[4][19] == 'none' else setui[4][19]

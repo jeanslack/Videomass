@@ -61,11 +61,11 @@ class Formula(wx.Dialog):
         # ----------------------Properties----------------------#
         self.SetTitle(title)
 
-        if get.THEME == 'Breeze-Blues':
+        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
             panel.SetBackgroundColour(Formula.SOLARIZED)
             label2.SetForegroundColour(Formula.LIGHT_GREY)
 
-        elif get.THEME in get.DARKicons:
+        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
             panel.SetBackgroundColour(Formula.DARK_SLATE)
             label2.SetForegroundColour(Formula.LIGHT_GREY)
         else:

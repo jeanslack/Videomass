@@ -364,8 +364,9 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffmpeg executable
         """
-        with wx.FileDialog(self, _("Choose the ffmpeg executable "
-                                   "(e.g. a static build)"), "", "",
+        with wx.FileDialog(self, _("Choose the ffmpeg executable (e.g. a "
+                                   "static build or a custom compiled "
+                                   "version or any)"), "", "",
                            "ffmpeg binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffmpeg, self.ffmpeg),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
@@ -380,8 +381,9 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffprobe executable
         """
-        with wx.FileDialog(self, _("Choose the ffprobe executable "
-                                   "(e.g. a static build)"), "", "",
+        with wx.FileDialog(self, _("Choose the ffprobe executable (e.g. a "
+                                   "static build or a custom compiled "
+                                   "version or any)"), "", "",
                            "ffprobe binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffprobe, self.ffprobe),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
@@ -396,8 +398,9 @@ class PageThree(wx.Panel):
         """
         Open filedialog to locate ffplay executable
         """
-        with wx.FileDialog(self, _("Choose the ffplay executable "
-                                   "(e.g. a static build)"), "", "",
+        with wx.FileDialog(self, _("Choose the ffplay executable (e.g. a "
+                                   "static build or a custom compiled "
+                                   "version or any)"), "", "",
                            "ffplay binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffplay, self.ffplay),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as dlgfile:
@@ -648,6 +651,7 @@ class Wizard(wx.Dialog):
     get = wx.GetApp()
     getfileconf = get.FILEconf
     YDLPREF = get.YDL_pref
+    OS = get.OS
 
     def __init__(self, icon_videomass):
         """
@@ -693,7 +697,10 @@ class Wizard(wx.Dialog):
         mainSizer.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         #  properties
         self.SetTitle(_("Videomass Wizard"))
-        self.SetMinSize((700, 500))
+        if Wizard.OS == 'Darwin':
+            self.SetSize((700, 500))  # does not fit SetMinSize on macos
+        else:
+            self.SetMinSize((700, 500))
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(icon_videomass, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)

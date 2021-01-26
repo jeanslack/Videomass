@@ -95,11 +95,11 @@ class While_Playing(wx.MiniFrame):
         # ----------------------Properties----------------------#
         self.SetTitle(_("Shortcuts while playing with FFplay"))
 
-        if get.THEME == 'Breeze-Blues':
+        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
             panel.SetBackgroundColour(wx.Colour(While_Playing.SOLARIZED))
             label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
 
-        elif get.THEME in get.DARKicons:
+        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
             panel.SetBackgroundColour(wx.Colour(While_Playing.DARK_SLATE))
             label2.SetForegroundColour(wx.Colour(While_Playing.LIGHT_GREY))
         else:

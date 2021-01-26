@@ -54,6 +54,9 @@ class Setup(wx.Dialog):
     YDL_OUTPATH = get.YDLoutdir
     SAMEDIR = get.SAMEdir
     FILESUFFIX = get.FILEsuffix
+    TBSIZE = get.TBsize
+    TBPOS = get.TBpos
+    TBTEXT = get.TBtext
     CLEARCACHE = get.CLEARcache
     YDL_PREF = get.YDL_pref
     EXECYDL = get.execYdl
@@ -294,7 +297,7 @@ class Setup(wx.Dialog):
             labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
             gridYdldl.Add(labydl0, 0, wx.TOP | wx.CENTRE, 5)
             labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY,
-                                    ('pip3 install --user -U youtube-dl'))
+                                    ('pip3 install -U youtube-dl'))
             gridYdldl.Add(labydl1, 0, wx.ALL | wx.CENTRE, 10)
             if Setup.OS == 'Darwin':
                 labydl1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
@@ -329,7 +332,7 @@ class Setup(wx.Dialog):
         gridappearance = wx.BoxSizer(wx.VERTICAL)
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
                                         _("Icon themes"))), wx.VERTICAL)
-        gridappearance.Add(boxLabIcons, 1, wx.ALL | wx.EXPAND, 15)
+        gridappearance.Add(boxLabIcons, 0, wx.ALL | wx.EXPAND, 15)
         msg = _("setting the icons will also change the background\n"
                 "and foreground of some text fields.")
         lab_appearance = wx.StaticText(tabFour, wx.ID_ANY, (msg))
@@ -337,11 +340,12 @@ class Setup(wx.Dialog):
                         15)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[
+                                          ("Videomass-Light"),
+                                          ("Videomass-Dark"),
+                                          ("Videomass-Colours"),
                                           ("Breeze"),
                                           ("Breeze-Dark"),
                                           ("Breeze-Blues"),
-                                          ("Papirus"),
-                                          ("Papirus-Dark"),
                                           ],
                                       size=(200, -1),
                                       style=wx.CB_DROPDOWN | wx.CB_READONLY
@@ -350,7 +354,43 @@ class Setup(wx.Dialog):
                         wx.ALL |
                         wx.ALIGN_CENTER_HORIZONTAL, 15
                         )
-        self.cmbx_icons.SetValue(self.iconset)
+        boxTB = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY,
+                                               (_("Toolbar customization"))),
+                                  wx.VERTICAL)
+        gridappearance.Add(boxTB, 1, wx.ALL | wx.EXPAND, 15)
+        tbchoice = [_('At the top of window (default)'),
+                    _('At the bottom of window'),
+                    _('At the right of window'),
+                    _('At the left of window')]
+        self.rdbTBpref = wx.RadioBox(tabFour, wx.ID_ANY,
+                                     (_("Place the toolbar")),
+                                     choices=tbchoice,
+                                     majorDimension=1,
+                                     style=wx.RA_SPECIFY_COLS
+                                     )
+        boxTB.Add(self.rdbTBpref, 0, wx.ALL | wx.EXPAND, 15)
+
+        gridTBsize = wx.FlexGridSizer(0, 2, 0, 5)
+        boxTB.Add(gridTBsize, 0, wx.ALL, 15)
+        lab1_appearance = wx.StaticText(tabFour, wx.ID_ANY,
+                                        _('Icon size:'))
+        gridTBsize.Add(lab1_appearance, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+
+        self.cmbx_iconsSize = wx.ComboBox(tabFour, wx.ID_ANY,
+                                          choices=[("16"), ("24"), ("32"),
+                                                   ("64")], size=(120, -1),
+                                          style=wx.CB_DROPDOWN | wx.CB_READONLY
+                                          )
+        gridTBsize.Add(self.cmbx_iconsSize, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+
+        if 'wx.svg' not in sys.modules:  # only in wx version 4.1 to up
+            self.cmbx_iconsSize.Disable()
+            lab1_appearance.Disable()
+
+        self.checkbox_tbtext = wx.CheckBox(tabFour, wx.ID_ANY, (
+                                _(" Shows the text in the toolbar buttons")))
+        boxTB.Add(self.checkbox_tbtext, 0, wx.ALL, 10)
+
         tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
         notebook.AddPage(tabFour, _("Appearance"))
         # -----tab 5
@@ -378,6 +418,7 @@ class Setup(wx.Dialog):
                                 style=wx.RA_SPECIFY_COLS
                                      )
         gridLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 15)
+
         tabFive.SetSizer(gridLog)
         notebook.AddPage(tabFive, _("FFmpeg logging levels"))
         # ------ btns bottom
@@ -418,6 +459,11 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_CHECKBOX, self.exeFFplay, self.checkbox_exeFFplay)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffplay, self.btn_pathFFplay)
         self.Bind(wx.EVT_COMBOBOX, self.on_Iconthemes, self.cmbx_icons)
+
+        self.Bind(wx.EVT_RADIOBOX, self.on_toolbarPos, self.rdbTBpref)
+        self.Bind(wx.EVT_COMBOBOX, self.on_toolbarSize, self.cmbx_iconsSize)
+        self.Bind(wx.EVT_CHECKBOX, self.on_toolbarText, self.checkbox_tbtext)
+
         self.Bind(wx.EVT_CHECKBOX, self.clear_Cache, self.checkbox_cacheclr)
         self.Bind(wx.EVT_RADIOBOX, self.on_Ydl_preferences, self.rdbDownloader)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
@@ -431,6 +477,10 @@ class Setup(wx.Dialog):
         Setting enable/disable in according to the configuration file
 
         """
+        self.cmbx_icons.SetValue(str(self.iconset))
+        self.cmbx_iconsSize.SetValue(str(Setup.TBSIZE))
+        self.rdbTBpref.SetSelection(int(Setup.TBPOS))
+
         if Setup.CLEARCACHE == 'false':
             self.checkbox_cacheclr.SetValue(False)
         else:
@@ -488,6 +538,11 @@ class Setup(wx.Dialog):
         else:
             self.txtctrl_ffplay.AppendText(Setup.FFPLAY_LINK)
             self.checkbox_exeFFplay.SetValue(True)
+
+        if Setup.TBTEXT == 'show':
+            self.checkbox_tbtext.SetValue(True)
+        else:
+            self.checkbox_tbtext.SetValue(False)
 
         if Setup.SAMEDIR == 'false':
             self.lab_suffix.Disable()
@@ -614,8 +669,9 @@ class Setup(wx.Dialog):
 
     def open_path_ffmpeg(self, event):
         """Indicates a new ffmpeg path-name"""
-        with wx.FileDialog(self, _("Choose the ffmpeg executable "
-                                   "(e.g. a static build)"), "", "",
+        with wx.FileDialog(self, _("Choose the ffmpeg executable (e.g. a "
+                                   "static build or a custom compiled "
+                                   "version or any)"), "", "",
                            "ffmpeg binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffmpeg, self.ffmpeg),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
@@ -653,8 +709,9 @@ class Setup(wx.Dialog):
 
     def open_path_ffprobe(self, event):
         """Indicates a new ffprobe path-name"""
-        with wx.FileDialog(self, _("Choose the ffprobe executable "
-                                   "(e.g. a static build)"), "", "",
+        with wx.FileDialog(self, _("Choose the ffprobe executable (e.g. a "
+                                   "static build or a custom compiled "
+                                   "version or any)"), "", "",
                            "ffprobe binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffprobe, self.ffprobe),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
@@ -692,8 +749,9 @@ class Setup(wx.Dialog):
 
     def open_path_ffplay(self, event):
         """Indicates a new ffplay path-name"""
-        with wx.FileDialog(self, _("Choose the ffplay executable "
-                                   "(e.g. a static build)"), "", "",
+        with wx.FileDialog(self, _("Choose the ffplay executable (e.g. a "
+                                   "static build or a custom compiled "
+                                   "version or any)"), "", "",
                            "ffplay binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffplay, self.ffplay),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
@@ -711,6 +769,32 @@ class Setup(wx.Dialog):
         """
         choice = "%s\n" % self.cmbx_icons.GetStringSelection()
         self.full_list[self.rowsNum[11]] = choice
+    # --------------------------------------------------------------------#
+
+    def on_toolbarSize(self, event):
+        """
+        Set the size of the toolbar buttons and the size of its icons
+        """
+        choice = "%s\n" % self.cmbx_iconsSize.GetStringSelection()
+        self.full_list[self.rowsNum[12]] = choice
+    # --------------------------------------------------------------------#
+
+    def on_toolbarPos(self, event):
+        """
+        Set toolbar position on main frame
+        """
+        pos = '%s\n' % self.rdbTBpref.GetSelection()
+        self.full_list[self.rowsNum[13]] = pos
+    # --------------------------------------------------------------------#
+
+    def on_toolbarText(self, event):
+        """
+        Show or hide text along toolbar buttons
+        """
+        if self.checkbox_tbtext.IsChecked():
+            self.full_list[self.rowsNum[14]] = 'show\n'
+        else:
+            self.full_list[self.rowsNum[14]] = 'hide\n'
     # --------------------------------------------------------------------#
 
     def clear_Cache(self, event):

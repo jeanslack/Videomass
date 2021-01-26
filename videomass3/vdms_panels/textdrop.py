@@ -47,40 +47,42 @@ class TextDnD(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         infomsg = _("Enter URLs below")
-        lbl_info = wx.StaticText(self, label=infomsg)
-        sizer.Add(lbl_info, 0, wx.ALL, 5)
+        lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
+        sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
         self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_DONTWRAP
                                     )
         sizer.Add(self.textCtrl, 1, wx.EXPAND | wx.ALL, 5)
-        optionsmsg = _("Options")
-        lbl_listdel = wx.StaticText(self, label=optionsmsg)
-        sizer.Add(lbl_listdel, 0, wx.ALL, 5)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 10)
-        outdirmsg = _("Output Directory")
-        lbl_dir = wx.StaticText(self, label=outdirmsg)
-        sizer.Add(lbl_dir, 0, wx.ALL, 5)
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(-1, -1))
-        sizer_ctrl.Add(self.btn_save, 0, wx.ALL |
-                       wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL, 5
-                       )
+        outdirmsg = _("Destination folder:")
+        lbl_dir = wx.StaticText(self, wx.ID_ANY, label=outdirmsg,
+                                style=wx.EXPAND)
+        sizer_ctrl.Add(lbl_dir, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
                                           wx.TE_READONLY
                                           )
         sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
+
+        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(60, -1))
+        sizer_ctrl.Add(self.btn_save, 0, wx.ALL |
+                       wx.ALIGN_CENTER_HORIZONTAL |
+                       wx.ALIGN_CENTER_VERTICAL, 5
+                       )
         self.SetSizer(sizer)
 
-        # properties
-        if TextDnD.OS != 'Darwin':
-            lbl_info.SetLabelMarkup("<b>%s</b>" % infomsg)
-            lbl_listdel.SetLabelMarkup("<b>%s</b>" % optionsmsg)
-            lbl_dir.SetLabelMarkup("<b>%s</b>" % outdirmsg)
+        if TextDnD.OS == 'Darwin':
+            lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lbl_dir.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
+        else:
+            lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lbl_dir.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+
         self.text_path_save.SetValue(self.file_dest)
 
         # Tooltip

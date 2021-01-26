@@ -88,7 +88,7 @@ class Logging_Console(wx.Panel):
                        'was successful.\n')
 
     # Colors used in HTML
-    if get.THEME == 'Breeze-Blues':
+    if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
         BACKGROUND = '#11303eff'  # SOLARIZED background color for blues icons
         NORM_TEXT = '#FFFFFF'  # WHITE for title or URL in progress
         TEXT_2 = '#959595'  # GREY for all other text messages
@@ -97,7 +97,7 @@ class Logging_Console(wx.Panel):
         ERROR_2 = '#EA312D'  # LIGHTRED for errors 2
         SUCCESS = '#1EA41E'  # GREEN when it is successful
 
-    elif get.THEME in get.DARKicons:
+    elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
         BACKGROUND = '#1c2027ff'  # DARK_SLATE background color for dark theme
         NORM_TEXT = '#FFFFFF'  # WHITE for title or URL in progress
         TEXT_2 = '#959595'  # GREY for all other text messages

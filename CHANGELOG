@@ -7,6 +7,22 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
+Jan 22, 2021 V.3.3.7
+
+  * Added new icon themes, for colorful themes, for dark themes and light themes.
+  * Removed Papirus icon theme.
+  * Ability to customize toolbar positioning (on preferences dialog box)
+  * Ability to show or hide text on toolbar buttons (on preferences dialog box)
+  * Enabled support to svg images for toolbar icons and some buttons (only with
+    wxPython version 4.1 to up)
+  * Ability to scales the toolbar icons (only with wxPython version 4.1 to up)
+  * Improved layout on the AV-conversions panel
+  * Fix `invalid values in gauge` on progress bar during transcoding processes
+    when timeline duration exceeds the time of some files.
+
+
+
++------------------------------------+
 Jan 18, 2021 V.3.3.6
 
   * Fixed bug on MS-Windows when playing files or urls with ffplay executable.
