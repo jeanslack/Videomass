@@ -97,6 +97,7 @@ class Choose_Topic(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         grid_buttons = wx.FlexGridSizer(5, 0, 20, 20)
         grid_base = wx.GridSizer(1, 1, 0, 0)
+
         if self.oS == 'Windows':
             style = wx.BU_LEFT | wx.BORDER_NONE
         else:

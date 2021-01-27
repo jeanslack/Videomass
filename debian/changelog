@@ -1,3 +1,22 @@
+videomass (3.3.7-1) UNRELEASED; urgency=medium
+
+  * Added new icon themes, for colorful themes, for dark themes and light themes.
+  * Removed Papirus icon theme.
+  * Ability to customize toolbar positioning (on preferences dialog box)
+  * Ability to show or hide text on toolbar buttons (on preferences dialog box)
+  * Enabled support to svg images for toolbar icons and some buttons (only with
+    wxPython version 4.1 to up)
+  * Ability to scales the toolbar icons (only with wxPython version 4.1 to up)
+  * Improved AV-conversions panel layout
+  * Fix `invalid values in gauge` on progress bar during transcoding processes
+    when timeline duration exceeds the time of some files.
+  * Update Russian translation (credits ChourS)
+  * Update Italian translation (me)
+  * Improved filter Crop layout
+  * Improved filter Transpose layout
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 27 Jan 2021 21:39:00 +0200
+
 videomass (3.3.6-1) UNRELEASED; urgency=medium
 
   * Fixed bug on MS-Windows when playing files or urls with ffplay executable.

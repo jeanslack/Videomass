@@ -669,9 +669,8 @@ class Setup(wx.Dialog):
 
     def open_path_ffmpeg(self, event):
         """Indicates a new ffmpeg path-name"""
-        with wx.FileDialog(self, _("Choose the ffmpeg executable (e.g. a "
-                                   "static build or a custom compiled "
-                                   "version or any)"), "", "",
+        with wx.FileDialog(self, _("Choose the {} "
+                                   "executable").format(self.ffmpeg), "", "",
                            "ffmpeg binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffmpeg, self.ffmpeg),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
@@ -709,9 +708,8 @@ class Setup(wx.Dialog):
 
     def open_path_ffprobe(self, event):
         """Indicates a new ffprobe path-name"""
-        with wx.FileDialog(self, _("Choose the ffprobe executable (e.g. a "
-                                   "static build or a custom compiled "
-                                   "version or any)"), "", "",
+        with wx.FileDialog(self, _("Choose the {} "
+                                   "executable").format(self.ffprobe), "", "",
                            "ffprobe binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffprobe, self.ffprobe),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:
@@ -749,9 +747,8 @@ class Setup(wx.Dialog):
 
     def open_path_ffplay(self, event):
         """Indicates a new ffplay path-name"""
-        with wx.FileDialog(self, _("Choose the ffplay executable (e.g. a "
-                                   "static build or a custom compiled "
-                                   "version or any)"), "", "",
+        with wx.FileDialog(self, _("Choose the {} "
+                                   "executable").format(self.ffmpeg), "", "",
                            "ffplay binarys (*%s)|*%s| All files "
                            "(*.*)|*.*" % (self.ffplay, self.ffplay),
                            wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fd:

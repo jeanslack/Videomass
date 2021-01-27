@@ -239,18 +239,18 @@ class AV_Conv(wx.Panel):
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         # ------------------ BEGIN BOX top
         box_AVformat = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(box_AVformat, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(box_AVformat, 0, wx.EXPAND)
         txtMedia = wx.StaticText(self, wx.ID_ANY, _('Media:'))
-        box_AVformat.Add(txtMedia, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 10)
+        box_AVformat.Add(txtMedia, 0, wx.LEFT | wx.CENTRE, 5)
         self.cmb_Media = wx.ComboBox(self, wx.ID_ANY,
                                      choices=['Video', 'Audio'],
                                      size=(-1, -1), style=wx.CB_DROPDOWN |
                                      wx.CB_READONLY
                                      )
-        box_AVformat.Add(self.cmb_Media, 1, wx.ALL | wx.EXPAND, 10)
+        box_AVformat.Add(self.cmb_Media, 1, wx.ALL | wx.EXPAND, 5)
         box_AVformat.Add((40, 5))
         txtFormat = wx.StaticText(self, wx.ID_ANY, _('Container:'))
-        box_AVformat.Add(txtFormat, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 10)
+        box_AVformat.Add(txtFormat, 0, wx.LEFT | wx.CENTRE, 5)
         self.cmb_Vcont = wx.ComboBox(
                         self, wx.ID_ANY,
                         choices=[f for f in
@@ -258,7 +258,7 @@ class AV_Conv(wx.Panel):
                         size=(-1, -1), style=wx.CB_DROPDOWN |
                         wx.CB_READONLY
                         )
-        box_AVformat.Add(self.cmb_Vcont, 1, wx.ALL | wx.EXPAND, 10)
+        box_AVformat.Add(self.cmb_Vcont, 1, wx.ALL | wx.EXPAND, 5)
         # END BOX top Media and Format
 
         # ------------------ BEGIN NOTEBOOK CONSTRUCTOR
@@ -722,7 +722,7 @@ class AV_Conv(wx.Panel):
         self.ebupanel = wx.Panel(self.nb_Audio,
                                  wx.ID_ANY, style=wx.TAB_TRAVERSAL
                                  )
-        grid_ebu = wx.BoxSizer(wx.HORIZONTAL)
+        grid_ebu = wx.FlexGridSizer(3, 2, 0, 0)
         sizer_Anormalization.Add(self.ebupanel, 0, wx.LEFT | wx.EXPAND, 20)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                              _("Set integrated loudness target:")))
@@ -734,7 +734,6 @@ class AV_Conv(wx.Panel):
                                    )
         self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
         grid_ebu.Add(self.spin_i, 0, wx.ALL, 5)
-        grid_ebu.Add((20, 5))
 
         self.lab_tp = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                                     _("Set maximum true peak:")))
@@ -746,7 +745,6 @@ class AV_Conv(wx.Panel):
                                     )
         self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
         grid_ebu.Add(self.spin_tp, 0, wx.ALL, 5)
-        grid_ebu.Add((20, 5))
 
         self.lab_lra = wx.StaticText(self.ebupanel, wx.ID_ANY, (
                                      _("Set loudness range target:")))

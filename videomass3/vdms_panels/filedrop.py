@@ -169,12 +169,12 @@ class FileDnD(wx.Panel):
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # create widgets
         sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add((0, 30))
         infomsg = _("Drag one or more files below")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 5)
         sizer_media = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_media, 0, wx.EXPAND | wx.ALL, 5)
         btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
         btn_play.SetBitmap(bmpplay, wx.LEFT)
         sizer_media.Add(btn_play, 1, wx.ALL | wx.EXPAND, 5)
@@ -182,12 +182,12 @@ class FileDnD(wx.Panel):
         sizer_media.Add(btn_delsel, 1, wx.ALL | wx.EXPAND, 5)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
         sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 5)
+        sizer.Add(sizer_media, 0, wx.EXPAND)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_outdir, 0, wx.ALL | wx.EXPAND, 5)
         outdirmsg = _("Destination folder:")
         lbl_outdir = wx.StaticText(self, wx.ID_ANY, label=(outdirmsg),
                                    style=wx.EXPAND)
-        sizer_outdir.Add(lbl_outdir, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        sizer_outdir.Add(lbl_outdir, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(50, -1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
@@ -198,19 +198,20 @@ class FileDnD(wx.Panel):
                          wx.ALIGN_CENTER_HORIZONTAL |
                          wx.ALIGN_CENTER_VERTICAL, 5
                          )
+        sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)
         # properties
-        self.flCtrl.InsertColumn(0, _('File Name'), width=550)
+        self.flCtrl.InsertColumn(0, _('File Name'), width=500)
         self.flCtrl.InsertColumn(1, _('Duration'), width=230)
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('Size'), width=150)
 
         if self.OS == 'Darwin':
-            lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
-            lbl_outdir.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            # lbl_outdir.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
-            lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
-            lbl_outdir.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+            lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            # lbl_outdir.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(self.file_dest)
 

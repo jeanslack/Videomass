@@ -337,7 +337,7 @@ class PrstPan(wx.Panel):
                                  )
         sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
         self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY,
-                                   _("Set integrated loudness target:  ")
+                                   _("Set integrated loudness target:")
                                    )
         sizer_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY,

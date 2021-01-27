@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Jan 22, 2021 V.3.3.7
+Jan 27, 2021 V.3.3.7
 
   * Added new icon themes, for colorful themes, for dark themes and light themes.
   * Removed Papirus icon theme.
@@ -16,11 +16,13 @@ Jan 22, 2021 V.3.3.7
   * Enabled support to svg images for toolbar icons and some buttons (only with
     wxPython version 4.1 to up)
   * Ability to scales the toolbar icons (only with wxPython version 4.1 to up)
-  * Improved layout on the AV-conversions panel
+  * Improved AV-conversions panel layout
   * Fix `invalid values in gauge` on progress bar during transcoding processes
     when timeline duration exceeds the time of some files.
-
-
+  * Update Russian translation (credits ChourS)
+  * Update Italian translation (me)
+  * Improved filter Crop layout
+  * Improved filter Transpose layout
 
 +------------------------------------+
 Jan 18, 2021 V.3.3.6
@@ -30,7 +32,6 @@ Jan 18, 2021 V.3.3.6
     ffmpeg and ffplay could not be set correctly.
   * Improved some MessageBox for confirmation.
   * Improved some messages on MessageBox.
-
 
 +------------------------------------+
 Jan 17, 2021 V.3.3.5

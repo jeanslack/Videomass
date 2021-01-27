@@ -46,6 +46,7 @@ class TextDnD(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add((0, 30))
         infomsg = _("Enter URLs below")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
@@ -61,7 +62,7 @@ class TextDnD(wx.Panel):
         outdirmsg = _("Destination folder:")
         lbl_dir = wx.StaticText(self, wx.ID_ANY, label=outdirmsg,
                                 style=wx.EXPAND)
-        sizer_ctrl.Add(lbl_dir, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 5)
+        sizer_ctrl.Add(lbl_dir, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
 
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
@@ -78,10 +79,10 @@ class TextDnD(wx.Panel):
 
         if TextDnD.OS == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
-            lbl_dir.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
+            # lbl_dir.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
-            lbl_dir.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
+            # lbl_dir.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(self.file_dest)
 

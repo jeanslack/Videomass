@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.16.2020 *PEP8 compatible*
+# Rev: Jan.27.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -93,26 +93,17 @@ class Transpose(wx.Dialog):
                                        wx.VERTICAL)
         sizerBase.Add(sizerLabel, 1, wx.ALL | wx.EXPAND, 10)
         boxctrl = wx.BoxSizer(wx.VERTICAL)
-        sizerLabel.Add(boxctrl, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 15)
+        sizerLabel.Add(boxctrl, 0, wx.ALL | wx.CENTRE, 5)
         grid_sizerBase = wx.GridSizer(1, 2, 0, 0)
         self.button_left = wx.Button(self, wx.ID_ANY,
                                      (_("90° (left)")))  # ruota sx
-        grid_sizerBase.Add(self.button_left, 0, wx.ALL |
-                           wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.ALIGN_CENTER_VERTICAL, 15
-                           )
-        self.button_right = wx.Button(self, wx.ID_ANY,
-                                      (_("90° (right)")))  # ruota a destra
-        grid_sizerBase.Add(self.button_right, 0, wx.ALL |
-                           wx.ALIGN_CENTER_HORIZONTAL |
-                           wx.ALIGN_CENTER_VERTICAL, 15
-                           )
-        boxctrl.Add(grid_sizerBase, 0, wx.EXPAND, 0)
+        grid_sizerBase.Add(self.button_left, 0, wx.ALL | wx.CENTRE, 5)
+        self.button_right = wx.Button(self, wx.ID_ANY, (_("90° (right)")))
+        grid_sizerBase.Add(self.button_right, 0, wx.ALL | wx.CENTRE, 5)
+        boxctrl.Add(grid_sizerBase, 0, wx.EXPAND)
         self.button_down = wx.Button(self, wx.ID_ANY,
                                      (_("180°")))  # capovolgi sotto
-        boxctrl.Add(self.button_down, 0, wx.ALL |
-                    wx.ALIGN_CENTER_HORIZONTAL, 15
-                    )
+        boxctrl.Add(self.button_down, 0, wx.ALL | wx.CENTRE, 5)
         # buttons bottom
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)

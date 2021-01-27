@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Sept.12.2020 *PEP8 compatible*
+# Rev: Jan.26.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -71,8 +71,6 @@ def info(parent, videomass_icon):
     info.SetArtists(
         ['Gianluca Pernigotto <jeanlucperni@gmail.com>',
          'Breeze icons '
-         'https://github.com/KDE/breeze-icons',
-         'Papirus icons '
-         'https://github.com/PapirusDevelopmentTeam/papirus-icon-theme'])
+         'https://github.com/KDE/breeze-icons',])
     wx.adv.AboutBox(info)
     # event.Skip()
