@@ -130,7 +130,6 @@ class ShowLogs(wx.MiniFrame):
         self.SetMinSize((700, 500))
         # ------ set sizer
         self.panel.SetSizer(sizer_base)
-        #sizer_base.Fit(self)
         self.Fit()
         self.Layout()
 

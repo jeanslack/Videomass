@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-30 09:39+0100\n"
-"PO-Revision-Date: 2021-01-30 09:40+0100\n"
+"POT-Creation-Date: 2021-01-30 11:14+0100\n"
+"PO-Revision-Date: 2021-01-30 11:19+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -95,58 +95,58 @@ msgid "Source size: {0} x {1} pixels"
 msgstr "Dimensione origine: {0} x {1} pixel"
 
 #: ../vdms_dialogs/filter_crop.py:191
-msgid "Search for a specific frame, max duration {}"
-msgstr "Cerca un fotogramma specifico, durata massima {}"
+msgid "Search for a specific frame"
+msgstr "Cerca un fotogramma specifico"
 
-#: ../vdms_dialogs/filter_crop.py:203
+#: ../vdms_dialogs/filter_crop.py:202
 msgid "Load"
 msgstr "Carica"
 
-#: ../vdms_dialogs/filter_crop.py:206
+#: ../vdms_dialogs/filter_crop.py:205
 msgid "Cropping area selection "
 msgstr "Selezione area di ritaglio "
 
-#: ../vdms_dialogs/filter_crop.py:211 ../vdms_dialogs/filter_scale.py:102
+#: ../vdms_dialogs/filter_crop.py:210 ../vdms_dialogs/filter_scale.py:102
 msgid "Height"
 msgstr "Altezza"
 
-#: ../vdms_dialogs/filter_crop.py:231
+#: ../vdms_dialogs/filter_crop.py:230
 msgid "Center"
 msgstr "Centro"
 
-#: ../vdms_dialogs/filter_crop.py:242 ../vdms_dialogs/filter_scale.py:102
+#: ../vdms_dialogs/filter_crop.py:241 ../vdms_dialogs/filter_scale.py:102
 msgid "Width"
 msgstr "Larghezza"
 
-#: ../vdms_dialogs/filter_crop.py:258 ../vdms_dialogs/filter_deinterlace.py:117
+#: ../vdms_dialogs/filter_crop.py:257 ../vdms_dialogs/filter_deinterlace.py:117
 #: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:183
 #: ../vdms_dialogs/filter_transpose.py:125 ../vdms_panels/av_conversions.py:568
 msgid "Reset"
 msgstr "Azzera"
 
-#: ../vdms_dialogs/filter_crop.py:262 ../vdms_dialogs/filter_deinterlace.py:116
+#: ../vdms_dialogs/filter_crop.py:261 ../vdms_dialogs/filter_deinterlace.py:116
 #: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:181
 #: ../vdms_dialogs/filter_transpose.py:129 ../vdms_dialogs/set_timestamp.py:153
 msgid "Apply"
 msgstr "Applica"
 
-#: ../vdms_dialogs/filter_crop.py:277
+#: ../vdms_dialogs/filter_crop.py:276
 msgid "Crop Filter"
 msgstr "Filtro Ritaglia"
 
-#: ../vdms_dialogs/filter_crop.py:278
+#: ../vdms_dialogs/filter_crop.py:277
 msgid "Crop to width"
 msgstr "Ritaglia in larghezza"
 
-#: ../vdms_dialogs/filter_crop.py:279
+#: ../vdms_dialogs/filter_crop.py:278
 msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr "Spostati verticalmente - imposta su -1 per centrare l'asse verticale"
 
-#: ../vdms_dialogs/filter_crop.py:281
+#: ../vdms_dialogs/filter_crop.py:280
 msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr "Sposta orizzontalmente - imposta su -1 per centrare l'asse orizzontale"
 
-#: ../vdms_dialogs/filter_crop.py:283
+#: ../vdms_dialogs/filter_crop.py:282
 msgid "Crop to height"
 msgstr "Ritagliare all'altezza"
 

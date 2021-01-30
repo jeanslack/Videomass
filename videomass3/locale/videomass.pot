@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-30 09:39+0100\n"
+"POT-Creation-Date: 2021-01-30 11:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,58 +70,58 @@ msgid "Source size: {0} x {1} pixels"
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:191
-msgid "Search for a specific frame, max duration {}"
+msgid "Search for a specific frame"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:203
+#: ../vdms_dialogs/filter_crop.py:202
 msgid "Load"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:206
+#: ../vdms_dialogs/filter_crop.py:205
 msgid "Cropping area selection "
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:211 ../vdms_dialogs/filter_scale.py:102
+#: ../vdms_dialogs/filter_crop.py:210 ../vdms_dialogs/filter_scale.py:102
 msgid "Height"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:231
+#: ../vdms_dialogs/filter_crop.py:230
 msgid "Center"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:242 ../vdms_dialogs/filter_scale.py:102
+#: ../vdms_dialogs/filter_crop.py:241 ../vdms_dialogs/filter_scale.py:102
 msgid "Width"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:258 ../vdms_dialogs/filter_deinterlace.py:117
+#: ../vdms_dialogs/filter_crop.py:257 ../vdms_dialogs/filter_deinterlace.py:117
 #: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:183
 #: ../vdms_dialogs/filter_transpose.py:125 ../vdms_panels/av_conversions.py:568
 msgid "Reset"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:262 ../vdms_dialogs/filter_deinterlace.py:116
+#: ../vdms_dialogs/filter_crop.py:261 ../vdms_dialogs/filter_deinterlace.py:116
 #: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:181
 #: ../vdms_dialogs/filter_transpose.py:129 ../vdms_dialogs/set_timestamp.py:153
 msgid "Apply"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:277
+#: ../vdms_dialogs/filter_crop.py:276
 msgid "Crop Filter"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:278
+#: ../vdms_dialogs/filter_crop.py:277
 msgid "Crop to width"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:279
+#: ../vdms_dialogs/filter_crop.py:278
 msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:281
+#: ../vdms_dialogs/filter_crop.py:280
 msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:283
+#: ../vdms_dialogs/filter_crop.py:282
 msgid "Crop to height"
 msgstr ""
 

@@ -19,10 +19,12 @@ Jan 27, 2021 V.3.3.7
   * Improved AV-conversions panel layout
   * Fix `invalid values in gauge` on progress bar during transcoding processes
     when timeline duration exceeds the time of some files.
-  * Update Russian translation (credits ChourS)
-  * Update Italian translation (me)
-  * Improved filter Crop layout
-  * Improved filter Transpose layout
+  * Update Russian translation (credits ChourS).
+  * Update Italian translation (credits me).
+  * Improved main frame size (tiny layout for smaller screens).
+  * Improved panels size (added scrolling panels).
+  * improved dialog boxes size.
+
 
 +------------------------------------+
 Jan 18, 2021 V.3.3.6

@@ -118,8 +118,6 @@ class Transpose(wx.Dialog):
         #gridBtn.Add(gridExit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         #sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
 
-
-
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))

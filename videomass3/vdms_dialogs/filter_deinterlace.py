@@ -151,7 +151,6 @@ class Deinterlace(wx.Dialog):
                         wx.ALIGN_CENTER_HORIZONTAL, 5)
         grid_w3fdif.Add(self.rdbx_w3fdif, 0, wx.ALL, 5)
         grid_w3fdif.Add(self.rdbx_w3fdif_d, 0, wx.ALL, 5)
-        #deint_grid.Add((5, 5), 0, wx.ALL, 5)
         grid_yadif = wx.FlexGridSizer(1, 4, 0, 0)
         zone1.Add(grid_yadif)
         grid_yadif.Add(self.ckbx_deintYadif, 0, wx.ALL |

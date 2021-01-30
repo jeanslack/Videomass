@@ -10,10 +10,11 @@ videomass (3.3.7-1) UNRELEASED; urgency=medium
   * Improved AV-conversions panel layout
   * Fix `invalid values in gauge` on progress bar during transcoding processes
     when timeline duration exceeds the time of some files.
-  * Update Russian translation (credits ChourS)
-  * Update Italian translation (me)
-  * Improved filter Crop layout
-  * Improved filter Transpose layout
+  * Update Russian translation (credits ChourS).
+  * Update Italian translation (credits me).
+  * Improved main frame size (tiny layout for smaller screens).
+  * Improved panels size (added scrolling panels).
+  * improved dialog boxes size.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 27 Jan 2021 21:39:00 +0200
 

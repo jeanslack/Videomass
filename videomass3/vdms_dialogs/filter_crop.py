@@ -172,7 +172,7 @@ class Crop(wx.Dialog):
             self.image = wx.Bitmap(self.w_ratio, self.h_ratio)  # make empty
 
         duration = get_milliseconds(timeformat)  # convert to ms
-        hhmmss = milliseconds2timeformat(duration)  # convert to timeformat
+        # hhmmss = milliseconds2timeformat(duration)  # convert to timeformat
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
@@ -188,8 +188,7 @@ class Crop(wx.Dialog):
                                                         self.v_height)
         label1 = wx.StaticText(self, wx.ID_ANY, msg)
         sizersize.Add(label1, 0, wx.CENTER, 10)
-        msg = _("Search for a specific frame, max "
-                "duration {}").format(hhmmss)
+        msg = _("Search for a specific frame")
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
         sizerBase.Add(sizer_load, 0, wx.ALL | wx.EXPAND, 5)
@@ -250,7 +249,6 @@ class Crop(wx.Dialog):
         boxctrl.Add(self.axis_Y, 0, wx.CENTRE)
         label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
         boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
-
 
         # bottom layout
         gridBtn = wx.GridSizer(1, 2, 0, 0)

@@ -145,10 +145,12 @@ class FFmpeg_Search(wx.MiniFrame):
         grid.Add(self.button_close, 1, wx.ALL, 5)
 
         self.SetTitle(_("FFmpeg help topics"))
-        self.SetSize((900, 600))
+        self.SetMinSize((900, 500))
         # set_properties:
         # self.panel.SetSizer(sizer)
-        self.panel.SetSizerAndFit(sizer)
+        self.panel.SetSizer(sizer)
+        self.Fit()
+        self.Layout()
 
         # EVT
         if not hasattr(wx, 'EVT_SEARCH'):

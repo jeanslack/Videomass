@@ -69,10 +69,8 @@ class Timeline(wx.Panel):
         TEXT_PEN_COLOR = '#020D0F'  # black for text and draw lines
 
     # ruler and panel specifications
-    #RW = 600  # ruler width
     RW = 450  # ruler width
     RM = 0  # ruler margin
-    #PW = 602  # panel width
     PW = 452  # panel width
     PH = 35  # panel height
 

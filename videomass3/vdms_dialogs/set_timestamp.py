@@ -118,11 +118,11 @@ class Set_Timestamp(wx.Dialog):
         stshadowcolor = wx.StaticText(self, label=_("Shadow Color"))
         grid1.Add(stshadowcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmbx_shadowcolor = wx.ComboBox(self, wx.ID_ANY,
-                                          choices=colours,
-                                          size=(-1, -1),
-                                          style=wx.CB_DROPDOWN |
-                                          wx.CB_READONLY
-                                          )
+                                            choices=colours,
+                                            size=(-1, -1),
+                                            style=wx.CB_DROPDOWN |
+                                            wx.CB_READONLY
+                                            )
         self.cmbx_shadowcolor.SetSelection(colours.index(self.shadowcolor))
         grid1.Add(self.cmbx_shadowcolor, 0, wx.ALL, 5)
         self.check_enablebox = wx.CheckBox(self, wx.ID_ANY,
@@ -130,8 +130,6 @@ class Set_Timestamp(wx.Dialog):
                                            )
         grid1.Add(self.check_enablebox, 0, wx.ALL, 5)
         grid1.Add((5, 5))
-        #grid2 = wx.FlexGridSizer(cols=2, rows=1, vgap=0, hgap=0)
-        #sbox.Add(grid1, 0)
         self.stboxcolor = wx.StaticText(self, label=_("Box Color"))
         grid1.Add(self.stboxcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.cmbx_boxcolor = wx.ComboBox(self, wx.ID_ANY,
@@ -143,12 +141,6 @@ class Set_Timestamp(wx.Dialog):
         self.cmbx_boxcolor.SetSelection(colours.index(self.boxcolor))
         grid1.Add(self.cmbx_boxcolor, 0, wx.ALL, 5)
         # confirm buttons:
-        #btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        #self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
-        #gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        #gridexit.Add(btn_close, 0, wx.ALL | wx.EXPAND, 5)
-        #gridexit.Add(self.btn_ok, 0, wx.ALL | wx.EXPAND, 5)
-        #sizer_base.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
