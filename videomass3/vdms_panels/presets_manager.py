@@ -224,7 +224,7 @@ class PrstPan(wx.Panel):
                                          _("Edit"), size=(-1, -1))
         self.btn_editprofile.SetBitmap(bmpeditprf, wx.LEFT)
         grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 5)
-        boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
+        boxprofiles.Add(grid_profiles, 0)
         sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
         # ------- NOTEBOOK
         nb1 = wx.Notebook(self, wx.ID_ANY, style=0)

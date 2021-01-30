@@ -181,13 +181,13 @@ class Crop(wx.Dialog):
                                   )
         bmp = make_bitmap(self.w_ratio, self.h_ratio, self.image)
         self.bob = Actor(self.panelrect, bmp, 1, "")
-        sizerBase.Add(self.panelrect, 0, wx.TOP | wx.CENTER, 10)
+        sizerBase.Add(self.panelrect, 0, wx.ALL | wx.CENTER, 5)
         sizersize = wx.BoxSizer(wx.VERTICAL)
-        sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 10)
+        sizerBase.Add(sizersize, 0, wx.ALL | wx.CENTER, 5)
         msg = _("Source size: {0} x {1} pixels").format(self.v_width,
                                                         self.v_height)
         label1 = wx.StaticText(self, wx.ID_ANY, msg)
-        sizersize.Add(label1, 0, wx.CENTER, 10)
+        sizersize.Add(label1, 0, wx.CENTER)
         msg = _("Search for a specific frame")
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
@@ -249,7 +249,6 @@ class Crop(wx.Dialog):
         boxctrl.Add(self.axis_Y, 0, wx.CENTRE)
         label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
         boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
-
         # bottom layout
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)

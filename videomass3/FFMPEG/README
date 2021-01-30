@@ -2,7 +2,7 @@
 Purpose of the FFMPEG directory
 ========================================
 
-This folder can optionally host static builds of ffmpeg, ffprobe and ffplay 
+This folder can optionally host static builds of ffmpeg, ffprobe and ffplay, 
 which will only be used if no FFmpeg is installed in the OS. While it is 
 generally not recommended to use this approach, it can be useful, for instance, 
 to make a Videomass bundle (e.g. via pyinstaller or AppImage, etc.) that can be 
@@ -13,22 +13,22 @@ In all other cases FFmpeg will be found in environment variables when
 installed in the OS or found by links setted by the user through the 
 Videomass setup dialog box.
 
-If you want to use this approach, be sure to make a `bin/` folder with ffmpeg, 
-ffprobe and ffplay binaries inside it, like this:
-
+If you want to use this approach, be sure to make a `bin/` folder within ffmpeg, 
+ffprobe and ffplay binaries, like this:   
+    
     |--------------------------|-------------------------|
     |   **Unix**               |       **Windows**       |
     |--------------------------|-------------------------|
-                               |
-         FFMPEG                |     FFMPEG
-         |__ bin               |     |__ bin
-         |   |__ ffmpeg        |     |   |__ ffmpeg.exe
-         |   |__ ffprobe       |     |   |__ ffprobe.exe
-         |   |__ ffplay        |     |   |__ ffplay.exe
-         |__ presets           |     |__ presets
-         |__ doc               |     |__ doc
-         |__ LICENSE.txt       |     |__ LICENSE.txt
-         |__ README.txt        |     |__ README.txt
+         videomass3 (pkg)      |     videomass3 (pkg)
+         |__ FFMPEG            |     |__ FFMPEG
+         |   |__ bin           |     |   |__ bin
+         |   |   |__ ffmpeg    |     |   |   |__ ffmpeg.exe
+         |   |   |__ ffprobe   |     |   |   |__ ffprobe.exe
+         |   |   |__ ffplay    |     |   |   |__ ffplay.exe
+         |   |__ presets       |     |   |__ presets
+         |   |__ doc           |     |   |__ doc
+         |   |__ LICENSE.txt   |     |   |__ LICENSE.txt
+         |   |__ README.txt    |     |   |__ README.txt
                                |
     |--------------------------|-------------------------|
 
@@ -40,8 +40,6 @@ MAcOS
 The static builds for MacOS with Intel 64bit can be downloaded at:
 
     - http://www.evermeet.cx/ffmpeg/
-or
-    - https://ffmpeg.zeranoe.com/builds/
 
 If you don't want to use statically compiled builds, leave this folder empty.
 You can later use Homebrew to install FFmpeg. Building options and steps can be
@@ -56,7 +54,7 @@ MS-Windows
 
 The static builds for MS Windows can be downloaded at:
 
-    https://ffmpeg.zeranoe.com/builds/
+    https://www.gyan.dev/ffmpeg/builds/
 
 Building options and steps can be found here:
 

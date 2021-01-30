@@ -212,7 +212,7 @@ class MainFrame(wx.Frame):
         if MainFrame.OS == 'Darwin':
             self.SetMinSize((980, 570))
         elif MainFrame.OS == 'Windows':
-            self.SetSize((1100, 700))
+            self.SetMinSize((920, 640))
         else:
             self.SetMinSize((900, 600))
         # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
