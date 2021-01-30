@@ -215,7 +215,8 @@ class Mediainfo(wx.MiniFrame):
         self.format_tags.SetMinSize((-1, 100))
 
         self.panel.SetSizer(self.sizerBase)
-        self.sizerBase.Fit(self)
+        #self.sizerBase.Fit(self)
+        self.Fit()
         self.Layout()
 
         flist = [x['format']['filename'] for x in self.data

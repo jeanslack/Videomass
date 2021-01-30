@@ -169,7 +169,7 @@ class FileDnD(wx.Panel):
         self.flCtrl.SetDropTarget(file_drop_target)  # Make drop target.
         # create widgets
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add((0, 30))
+        sizer.Add((0, 10))
         infomsg = _("Drag one or more files below")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
@@ -184,10 +184,6 @@ class FileDnD(wx.Panel):
         sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 5)
         sizer.Add(sizer_media, 0, wx.EXPAND)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
-        outdirmsg = _("Destination folder:")
-        lbl_outdir = wx.StaticText(self, wx.ID_ANY, label=(outdirmsg),
-                                   style=wx.EXPAND)
-        sizer_outdir.Add(lbl_outdir, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(50, -1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
@@ -201,17 +197,15 @@ class FileDnD(wx.Panel):
         sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)
         # properties
-        self.flCtrl.InsertColumn(0, _('File Name'), width=500)
+        self.flCtrl.InsertColumn(0, _('File Name'), width=350)
         self.flCtrl.InsertColumn(1, _('Duration'), width=230)
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('Size'), width=150)
 
         if self.OS == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            # lbl_outdir.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
-            # lbl_outdir.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(self.file_dest)
 
@@ -224,8 +218,9 @@ class FileDnD(wx.Panel):
         # Tooltip
         btn_delsel.SetToolTip(_('Remove the selected file from the list'))
         btn_clear.SetToolTip(_('Delete all files from the list'))
-        tip = (_('Choose a temporary destination for conversions'))
+        tip = (_("Set up a temporary folder for conversions"))
         self.btn_save.SetToolTip(tip)
+        self.text_path_save.SetToolTip(_("Destination folder:"))
         # Binding (EVT)
         self.Bind(wx.EVT_BUTTON, self.playSelect, btn_play)
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)

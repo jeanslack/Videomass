@@ -79,29 +79,29 @@ class Denoisers(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
         # ------ set Layout
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_base.Add(zone, 1, wx.ALL | wx.EXPAND, 5)
         grid_den = wx.FlexGridSizer(2, 2, 0, 0)
         zone.Add(grid_den)
         grid_den.Add(self.ckbx_nlmeans, 0,
                      wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL |
                      wx.ALIGN_CENTER_HORIZONTAL,
-                     15)
+                     5)
         grid_den.Add(self.rdb_nlmeans, 0,
                      wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL |
                      wx.ALIGN_CENTER_HORIZONTAL,
-                     15)
+                     5)
         grid_den.Add(self.ckbx_hqdn3d, 0,
                      wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL |
                      wx.ALIGN_CENTER_HORIZONTAL,
-                     15)
+                     5)
         grid_den.Add(self.rdb_hqdn3d, 0,
                      wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL |
                      wx.ALIGN_CENTER_HORIZONTAL,
-                     15)
+                     5)
         # confirm btn section:
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
@@ -113,7 +113,7 @@ class Denoisers(wx.Dialog):
         gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         # final settings:
-        sizer_base.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(gridBtn, 0, wx.EXPAND)
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()

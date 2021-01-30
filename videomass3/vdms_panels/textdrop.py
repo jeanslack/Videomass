@@ -46,7 +46,7 @@ class TextDnD(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add((0, 30))
+        sizer.Add((0, 10))
         infomsg = _("Enter URLs below")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
@@ -56,14 +56,9 @@ class TextDnD(wx.Panel):
                                     )
         sizer.Add(self.textCtrl, 1, wx.EXPAND | wx.ALL, 5)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 10)
+        sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 5)
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 5)
-        outdirmsg = _("Destination folder:")
-        lbl_dir = wx.StaticText(self, wx.ID_ANY, label=outdirmsg,
-                                style=wx.EXPAND)
-        sizer_ctrl.Add(lbl_dir, 0, wx.LEFT | wx.ALIGN_CENTRE_VERTICAL, 5)
-
+        sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 0)
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
                                           wx.TE_READONLY
@@ -79,17 +74,16 @@ class TextDnD(wx.Panel):
 
         if TextDnD.OS == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
-            # lbl_dir.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
-            # lbl_dir.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(self.file_dest)
 
         # Tooltip
         btn_clear.SetToolTip(_('Delete all text from the list'))
-        tip = (_('Choose a temporary destination for the downloads'))
+        tip = (_("Set up a temporary folder for downloads"))
         self.btn_save.SetToolTip(tip)
+        self.text_path_save.SetToolTip(_("Destination folder:"))
 
         # Binding
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)

@@ -77,7 +77,7 @@ class Transpose(wx.Dialog):
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         self.panelimg = wx.Panel(self, wx.ID_ANY, size=(270, 270),)
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-        sizerBase.Add(self.panelimg, 0, wx.TOP | wx.ALIGN_CENTER, 15)
+        sizerBase.Add(self.panelimg, 0, wx.TOP | wx.CENTER, 10)
 
         self.x = wx.StaticBitmap(self.panelimg, wx.ID_ANY, self.image)
         self.statictxt = wx.StaticText(self, wx.ID_ANY,
@@ -87,11 +87,11 @@ class Transpose(wx.Dialog):
                                        )
         sizerBase.Add(self.statictxt, 0, wx.CENTER | wx.EXPAND)
         self.btn_load = wx.Button(self, wx.ID_ANY, _("Load Frame"))
-        sizerBase.Add(self.btn_load, 0, wx.ALL | wx.EXPAND, 10)
+        sizerBase.Add(self.btn_load, 0, wx.ALL | wx.EXPAND, 5)
         msg = _("Rotation setting")
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.VERTICAL)
-        sizerBase.Add(sizerLabel, 1, wx.ALL | wx.EXPAND, 10)
+        sizerBase.Add(sizerLabel, 1, wx.ALL | wx.EXPAND, 5)
         boxctrl = wx.BoxSizer(wx.VERTICAL)
         sizerLabel.Add(boxctrl, 0, wx.ALL | wx.CENTRE, 5)
         grid_sizerBase = wx.GridSizer(1, 2, 0, 0)
@@ -105,18 +105,31 @@ class Transpose(wx.Dialog):
                                      (_("180°")))  # capovolgi sotto
         boxctrl.Add(self.button_down, 0, wx.ALL | wx.CENTRE, 5)
         # buttons bottom
+        #gridBtn = wx.GridSizer(1, 2, 0, 0)
+        #gridhelp = wx.GridSizer(1, 1, 0, 0)
+        #btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        #gridhelp.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        #gridBtn.Add(gridhelp)
+        #gridExit = wx.BoxSizer(wx.HORIZONTAL)
+        #btn_close = wx.Button(self, wx.ID_CANCEL, "")
+        #gridExit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        #self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        #gridExit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        #gridBtn.Add(gridExit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        #sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+
+
+
         gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridhelp = wx.GridSizer(1, 1, 0, 0)
+        gridexit = wx.BoxSizer(wx.HORIZONTAL)
         btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
-        gridhelp.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridhelp)
-        gridExit = wx.BoxSizer(wx.HORIZONTAL)
+        gridBtn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
-        gridExit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridexit.Add(btn_close, 0, wx.ALL, 5)
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
-        gridExit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridBtn.Add(gridExit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+        gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
+        gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        sizerBase.Add(gridBtn, 0, wx.EXPAND)
         # ----------------------Properties--------------------------------#
         self.SetTitle(_("Transpose Filter"))
         self.panelimg.SetBackgroundColour(wx.Colour(Transpose.BACKGROUND))

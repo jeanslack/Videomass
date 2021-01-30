@@ -79,37 +79,21 @@ class Set_Timestamp(wx.Dialog):
         sbox = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, ("")),
                                  wx.VERTICAL)
         sizer_base.Add(sbox, 1, wx.ALL | wx.EXPAND, 5)
-        grid1 = wx.FlexGridSizer(cols=3, vgap=0, hgap=0)
-        sbox.Add(grid1, 0, wx.ALL | wx.CENTER, 10)
-        stfont = wx.StaticText(self, label=_('Timestamp Size'))
-        grid1.Add(stfont, 0, wx.ALL |
-                  wx.ALIGN_CENTER_VERTICAL |
-                  wx.ALIGN_CENTER_HORIZONTAL,
-                  5)
-
+        grid1 = wx.FlexGridSizer(cols=2, rows=5, vgap=0, hgap=0)
+        sbox.Add(grid1, 0)
+        stfont = wx.StaticText(self, label=_('Font Size'))
+        grid1.Add(stfont, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         size = ['16', '20', '28', '32', '40', '48', '56', '64']
         self.cmbx_fontsize = wx.ComboBox(self, wx.ID_ANY,
                                          choices=size,
-                                         size=(90, -1),
+                                         size=(120, -1),
                                          style=wx.CB_DROPDOWN |
                                          wx.CB_READONLY
                                          )
         fsize = self.cmbx_fontsize.FindString(self.fontsize,
                                               caseSensitive=False)
         self.cmbx_fontsize.SetSelection(fsize)
-        grid1.Add(self.cmbx_fontsize, 0, wx.ALL |
-                  wx.ALIGN_CENTER_VERTICAL |
-                  wx.ALIGN_CENTER_HORIZONTAL,
-                  5)
-        self.check_enablebox = wx.CheckBox(self, wx.ID_ANY,
-                                           (_("Enable box around text"))
-                                           )
-        grid1.Add(self.check_enablebox, 0, wx.ALL |
-                  wx.ALIGN_CENTER_VERTICAL |
-                  wx.ALIGN_CENTER_HORIZONTAL,
-                  5)
-        grid2 = wx.FlexGridSizer(cols=3, vgap=0, hgap=20)
-        sbox.Add(grid2, 0, wx.ALL | wx.CENTER, 10)
+        grid1.Add(self.cmbx_fontsize, 0, wx.ALL, 5)
         colours = [("Azure"),
                    ("DeepPink"),
                    ("ForestGreen"),
@@ -121,38 +105,56 @@ class Set_Timestamp(wx.Dialog):
                    ("Black"),
                    ("Yellow"),
                    ]
-        sel = colours.index(self.fontcolor)
-        self.rdbx_fontcolor = wx.RadioBox(self, wx.ID_ANY, (_("Font Color")),
-                                          choices=colours, majorDimension=0,
-                                          style=wx.RA_SPECIFY_ROWS
+        stfontcolor = wx.StaticText(self, label=_("Font Color"))
+        grid1.Add(stfontcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmbx_fontcolor = wx.ComboBox(self, wx.ID_ANY,
+                                          choices=colours,
+                                          size=(-1, -1),
+                                          style=wx.CB_DROPDOWN |
+                                          wx.CB_READONLY
                                           )
-        self.rdbx_fontcolor.SetSelection(sel)
-        grid2.Add(self.rdbx_fontcolor, 0, wx.ALL | wx.CENTER, 5)
-
-        sel = colours.index(self.boxcolor)
-        self.rdbx_boxcolor = wx.RadioBox(self, wx.ID_ANY, (_("Box Color")),
-                                         choices=colours, majorDimension=0,
-                                         style=wx.RA_SPECIFY_ROWS
+        self.cmbx_fontcolor.SetSelection(colours.index(self.fontcolor))
+        grid1.Add(self.cmbx_fontcolor, 0, wx.ALL, 5)
+        stshadowcolor = wx.StaticText(self, label=_("Shadow Color"))
+        grid1.Add(stshadowcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmbx_shadowcolor = wx.ComboBox(self, wx.ID_ANY,
+                                          choices=colours,
+                                          size=(-1, -1),
+                                          style=wx.CB_DROPDOWN |
+                                          wx.CB_READONLY
+                                          )
+        self.cmbx_shadowcolor.SetSelection(colours.index(self.shadowcolor))
+        grid1.Add(self.cmbx_shadowcolor, 0, wx.ALL, 5)
+        self.check_enablebox = wx.CheckBox(self, wx.ID_ANY,
+                                           (_("Show text box"))
+                                           )
+        grid1.Add(self.check_enablebox, 0, wx.ALL, 5)
+        grid1.Add((5, 5))
+        #grid2 = wx.FlexGridSizer(cols=2, rows=1, vgap=0, hgap=0)
+        #sbox.Add(grid1, 0)
+        self.stboxcolor = wx.StaticText(self, label=_("Box Color"))
+        grid1.Add(self.stboxcolor, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        self.cmbx_boxcolor = wx.ComboBox(self, wx.ID_ANY,
+                                         choices=colours,
+                                         size=(-1, -1),
+                                         style=wx.CB_DROPDOWN |
+                                         wx.CB_READONLY
                                          )
-        self.rdbx_boxcolor.SetSelection(sel)
-        grid2.Add(self.rdbx_boxcolor, 0, wx.ALL | wx.CENTER, 5)
-
-        sel = colours.index(self.shadowcolor)
-        self.rdbx_shadowcolor = wx.RadioBox(self, wx.ID_ANY,
-                                            (_("Shadow Color")),
-                                            choices=colours, majorDimension=0,
-                                            style=wx.RA_SPECIFY_ROWS
-                                            )
-        self.rdbx_shadowcolor.SetSelection(sel)
-        grid2.Add(self.rdbx_shadowcolor, 0, wx.ALL | wx.CENTER, 5)
+        self.cmbx_boxcolor.SetSelection(colours.index(self.boxcolor))
+        grid1.Add(self.cmbx_boxcolor, 0, wx.ALL, 5)
         # confirm buttons:
+        #btn_close = wx.Button(self, wx.ID_CANCEL, "")
+        #self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
+        #gridexit = wx.BoxSizer(wx.HORIZONTAL)
+        #gridexit.Add(btn_close, 0, wx.ALL | wx.EXPAND, 5)
+        #gridexit.Add(self.btn_ok, 0, wx.ALL | wx.EXPAND, 5)
+        #sizer_base.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         gridexit.Add(btn_close, 0, wx.ALL | wx.EXPAND, 5)
-        gridexit.Add(self.btn_ok, 0, wx.ALL | wx.EXPAND, 5)
-        sizer_base.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-
+        gridexit.Add(self.btn_ok, 1, wx.ALL, 5)
+        sizer_base.Add(gridexit, 0, wx.EXPAND, 0)
         # tooltips:
         tip = _('The timestamp size does not auto-adjust to the video size, '
                 'you have to set the size here')
@@ -162,23 +164,22 @@ class Set_Timestamp(wx.Dialog):
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
         self.Layout()
-
         # ----------------------Binding (EVT)--------------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_Fontsize, self.cmbx_fontsize)
         self.Bind(wx.EVT_CHECKBOX, self.on_Box, self.check_enablebox)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Fontcolor, self.rdbx_fontcolor)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Shadowcolor, self.rdbx_shadowcolor)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Boxcolor, self.rdbx_boxcolor)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Fontcolor, self.cmbx_fontcolor)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Shadowcolor, self.cmbx_shadowcolor)
+        self.Bind(wx.EVT_COMBOBOX, self.on_Boxcolor, self.cmbx_boxcolor)
 
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
 
         if self.boxenabled == '1':
             self.check_enablebox.SetValue(True)
-            self.rdbx_boxcolor.Enable()
+            self.cmbx_boxcolor.Enable(), self.stboxcolor.Enable()
         else:
             self.check_enablebox.SetValue(False)
-            self.rdbx_boxcolor.Disable()
+            self.cmbx_boxcolor.Disable(), self.stboxcolor.Disable()
 
     # ----------------------Event handler (callback)----------------------#
 
@@ -197,10 +198,10 @@ class Set_Timestamp(wx.Dialog):
         disable = '0'
         """
         if self.check_enablebox.IsChecked():
-            self.rdbx_boxcolor.Enable()
+            self.cmbx_boxcolor.Enable(), self.stboxcolor.Enable()
             self.boxenabled = '1'
         else:
-            self.rdbx_boxcolor.Disable()
+            self.cmbx_boxcolor.Disable(), self.stboxcolor.Disable()
             self.boxenabled = '0'
     # ------------------------------------------------------------------#
 
@@ -208,21 +209,21 @@ class Set_Timestamp(wx.Dialog):
         """
         get font color
         """
-        self.fontcolor = self.rdbx_fontcolor.GetStringSelection()
+        self.fontcolor = self.cmbx_fontcolor.GetStringSelection()
     # ------------------------------------------------------------------#
 
     def on_Boxcolor(self, event):
         """
         Get box color
         """
-        self.boxcolor = self.rdbx_boxcolor.GetStringSelection()
+        self.boxcolor = self.cmbx_boxcolor.GetStringSelection()
     # ------------------------------------------------------------------#
 
     def on_Shadowcolor(self, event):
         """
         Get shadow color
         """
-        self.shadowcolor = self.rdbx_shadowcolor.GetStringSelection()
+        self.shadowcolor = self.cmbx_shadowcolor.GetStringSelection()
     # ------------------------------------------------------------------#
 
     def on_close(self, event):

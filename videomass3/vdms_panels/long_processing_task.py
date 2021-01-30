@@ -79,7 +79,7 @@ class Logging_Console(wx.Panel):
     LOGDIR = get.LOGdir
 
     # used msg on text
-    MSG_done = _('[Videomass]: DONE !\n')
+    MSG_done = _('[Videomass]: SUCCESS !\n')
     MSG_failed = _('[Videomass]: FAILED !\n')
     MSG_taskfailed = _('\n[Videomass]: Sorry, task failed !\n')
     MSG_interrupted = _('\n[Videomass]: Interrupted Process !\n')
@@ -146,7 +146,7 @@ class Logging_Console(wx.Panel):
         wx.Panel.__init__(self, parent=parent)
         """ Constructor """
 
-        infolbl = _("Output viewing console:")
+        infolbl = _("Process log:")
         lbl = wx.StaticText(self, label=infolbl)
         if Logging_Console.OS != 'Darwin':
             lbl.SetLabelMarkup("<b>%s</b>" % infolbl)
@@ -162,13 +162,15 @@ class Logging_Console(wx.Panel):
         self.button_stop = wx.Button(self, wx.ID_STOP, _("Abort"))
         self.button_close = wx.Button(self, wx.ID_CLOSE, "")
         sizer = wx.BoxSizer(wx.VERTICAL)
-        grid = wx.GridSizer(1, 2, 0, 0)
+        sizer.Add((0, 10))
         sizer.Add(lbl, 0, wx.ALL, 5)
         sizer.Add(self.OutText, 1, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.ckbx_text, 0, wx.ALL, 5)
         sizer.Add(self.barProg, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.labPerc, 0, wx.ALL, 5)
-        sizer.Add(grid, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
+        #grid = wx.GridSizer(1, 2, 0, 0)
+        grid = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(grid, 0, flag=wx.ALIGN_RIGHT | wx.RIGHT, border=0)
         grid.Add(self.button_stop, 0, wx.EXPAND | wx.ALL, 5)
         grid.Add(self.button_close, 0, wx.EXPAND | wx.ALL, 5)
         # set_properties:
@@ -200,7 +202,7 @@ class Logging_Console(wx.Panel):
         """
         self.previus = panel  # stores the panel from which it starts
 
-        if varargs[0] == 'console view only':
+        if varargs[0] == 'Viewing last log':
             self.button_stop.Enable(False)
             self.button_close.Enable(True)
             return

@@ -219,7 +219,7 @@ class PageTwo(wx.Panel):
         """
         self.parent.btnNext.Enable()
         self.locateBtn.Disable(), self.detectBtn.Enable()
-        self.labFFpath.SetLabel('')
+        self.labFFpath.SetLabel(_('Click the "Next" button'))
         self.Layout()
     # -------------------------------------------------------------------#
 
@@ -694,15 +694,12 @@ class Wizard(wx.Dialog):
         mainSizer.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         #  properties
         self.SetTitle(_("Videomass Wizard"))
-        if Wizard.OS == 'Darwin':
-            self.SetSize((700, 500))  # does not fit SetMinSize on macos
-        else:
-            self.SetMinSize((700, 500))
+        self.SetMinSize((700, 500))
         icon = wx.Icon()
         icon.CopyFromBitmap(wx.Bitmap(icon_videomass, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         self.SetSizer(mainSizer)
-        mainSizer.Fit(self)
+        self.Fit()
         self.Layout()
 
         #  bindings

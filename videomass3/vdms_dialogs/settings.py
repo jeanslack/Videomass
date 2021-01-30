@@ -122,14 +122,14 @@ class Setup(wx.Dialog):
         # ----------------------------set notebook
         sizer_base = wx.BoxSizer(wx.VERTICAL)
         notebook = wx.Notebook(self, wx.ID_ANY, style=0)
-        sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 10)
+        sizer_base.Add(notebook, 1, wx.ALL | wx.EXPAND, 5)
         # -----tab 1
         tabOne = wx.Panel(notebook, wx.ID_ANY)
         sizerGeneral = wx.BoxSizer(wx.VERTICAL)
         msg = _("Where do you prefer to save your transcodes?")
         boxFFmpegoutpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
                                                           (msg)), wx.VERTICAL)
-        sizerGeneral.Add(boxFFmpegoutpath, 0, wx.ALL | wx.EXPAND, 15)
+        sizerGeneral.Add(boxFFmpegoutpath, 0, wx.ALL | wx.EXPAND, 5)
         boxFFmpegoutpath.Add((0, 10))
         sizeFFdirdest = wx.BoxSizer(wx.HORIZONTAL)
         boxFFmpegoutpath.Add(sizeFFdirdest, 0, wx.ALL | wx.EXPAND, 5)
@@ -154,15 +154,15 @@ class Setup(wx.Dialog):
         descr = _("Optional suffix assignment (example, _convert):")
         self.lab_suffix = wx.StaticText(tabOne, wx.ID_ANY, (descr))
         sizeSamedest.Add(self.lab_suffix, 0, wx.ALL |
-                         wx.ALIGN_CENTER_VERTICAL, 10)
+                         wx.ALIGN_CENTER_VERTICAL, 5)
         self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150, -1))
         sizeSamedest.Add(self.text_suffix, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5)
         msg = _("Where do you prefer to save your downloads?")
         boxYdloutpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
                                                        (msg)), wx.VERTICAL)
-        sizerGeneral.Add(boxYdloutpath, 0, wx.ALL | wx.EXPAND, 15)
-        boxYdloutpath.Add((0, 10))
+        sizerGeneral.Add(boxYdloutpath, 0, wx.ALL | wx.EXPAND, 5)
+        boxYdloutpath.Add((0, 5))
         sizeYDLdirdest = wx.BoxSizer(wx.HORIZONTAL)
         boxYdloutpath.Add(sizeYDLdirdest, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -181,13 +181,13 @@ class Setup(wx.Dialog):
         self.txtctrl_YDLpath.AppendText(self.pathYDL)
         boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                         _("Cache Settings"))), wx.VERTICAL)
-        sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 15)
+        sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 5)
         gridCache = wx.BoxSizer(wx.VERTICAL)
 
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
                         _(" Clear the cache when exiting the application")))
         gridCache.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
-        boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 10)
+        boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 5)
         tabOne.SetSizer(sizerGeneral)
         notebook.AddPage(tabOne, _("Files Preferences"))
         # -----tab 2
@@ -196,9 +196,9 @@ class Setup(wx.Dialog):
         gridExec = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
                                      _('Path to the executables')),
                                      wx.VERTICAL)
-        sizerFFmpeg.Add(gridExec, 1, wx.ALL | wx.EXPAND, 15)
+        sizerFFmpeg.Add(gridExec, 1, wx.ALL | wx.EXPAND, 5)
         # ----
-        gridExec.Add((0, 10))
+        gridExec.Add((0, 5))
         self.checkbox_exeFFmpeg = wx.CheckBox(tabTwo, wx.ID_ANY, (
                                 _(" Enable another location to run FFmpeg")))
         self.btn_pathFFmpeg = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
@@ -238,7 +238,7 @@ class Setup(wx.Dialog):
         gridFFopt = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
                                                    _('Other options')),
                                       wx.VERTICAL)
-        sizerFFmpeg.Add(gridFFopt, 0, wx.ALL | wx.EXPAND, 15)
+        sizerFFmpeg.Add(gridFFopt, 0, wx.ALL | wx.EXPAND, 5)
         gridSizopt = wx.FlexGridSizer(0, 2, 0, 0)
         gridFFopt.Add(gridSizopt, 0, wx.ALL, 5)
 
@@ -269,7 +269,7 @@ class Setup(wx.Dialog):
 
         gridYdldl = wx.StaticBoxSizer(wx.StaticBox(self.tabThree, wx.ID_ANY,
                                       ''), wx.VERTICAL)
-        sizerYdl.Add(gridYdldl, 1, wx.ALL | wx.EXPAND, 15)
+        sizerYdl.Add(gridYdldl, 1, wx.ALL | wx.EXPAND, 5)
         # if AppImage
         if '/tmp/.mount_' in sys.executable or \
            os.path.exists(os.getcwd() + '/AppRun'):
@@ -298,7 +298,7 @@ class Setup(wx.Dialog):
             gridYdldl.Add(labydl0, 0, wx.TOP | wx.CENTRE, 5)
             labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY,
                                     ('pip3 install -U youtube-dl'))
-            gridYdldl.Add(labydl1, 0, wx.ALL | wx.CENTRE, 10)
+            gridYdldl.Add(labydl1, 0, wx.ALL | wx.CENTRE, 5)
             if Setup.OS == 'Darwin':
                 labydl1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,
                                         wx.BOLD, 0, ""))
@@ -313,10 +313,10 @@ class Setup(wx.Dialog):
                                          )
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             self.rdbDownloader.EnableItem(1, enable=False)
-        sizerYdl.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 15)
+        sizerYdl.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 5)
 
         grdydlLoc = wx.BoxSizer(wx.HORIZONTAL)
-        sizerYdl.Add(grdydlLoc, 0, wx.ALL | wx.EXPAND, 10)
+        sizerYdl.Add(grdydlLoc, 0, wx.ALL | wx.EXPAND, 5)
         labydl2 = wx.StaticText(self.tabThree, wx.ID_ANY, _('Current path'))
         grdydlLoc.Add(labydl2, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 0)
 
@@ -332,12 +332,12 @@ class Setup(wx.Dialog):
         gridappearance = wx.BoxSizer(wx.VERTICAL)
         boxLabIcons = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY, (
                                         _("Icon themes"))), wx.VERTICAL)
-        gridappearance.Add(boxLabIcons, 0, wx.ALL | wx.EXPAND, 15)
+        gridappearance.Add(boxLabIcons, 0, wx.ALL | wx.EXPAND, 5)
         msg = _("setting the icons will also change the background\n"
                 "and foreground of some text fields.")
         lab_appearance = wx.StaticText(tabFour, wx.ID_ANY, (msg))
-        boxLabIcons.Add(lab_appearance, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL,
-                        15)
+        boxLabIcons.Add(lab_appearance, 0, wx.TOP |
+                        wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.cmbx_icons = wx.ComboBox(tabFour, wx.ID_ANY,
                                       choices=[
                                           ("Videomass-Light"),
@@ -352,12 +352,12 @@ class Setup(wx.Dialog):
                                       )
         boxLabIcons.Add(self.cmbx_icons, 0,
                         wx.ALL |
-                        wx.ALIGN_CENTER_HORIZONTAL, 15
+                        wx.ALIGN_CENTER_HORIZONTAL, 5
                         )
         boxTB = wx.StaticBoxSizer(wx.StaticBox(tabFour, wx.ID_ANY,
                                                (_("Toolbar customization"))),
                                   wx.VERTICAL)
-        gridappearance.Add(boxTB, 1, wx.ALL | wx.EXPAND, 15)
+        gridappearance.Add(boxTB, 1, wx.ALL | wx.EXPAND, 5)
         tbchoice = [_('At the top of window (default)'),
                     _('At the bottom of window'),
                     _('At the right of window'),
@@ -368,10 +368,10 @@ class Setup(wx.Dialog):
                                      majorDimension=1,
                                      style=wx.RA_SPECIFY_COLS
                                      )
-        boxTB.Add(self.rdbTBpref, 0, wx.ALL | wx.EXPAND, 15)
+        boxTB.Add(self.rdbTBpref, 0, wx.ALL | wx.EXPAND, 5)
 
         gridTBsize = wx.FlexGridSizer(0, 2, 0, 5)
-        boxTB.Add(gridTBsize, 0, wx.ALL, 15)
+        boxTB.Add(gridTBsize, 0, wx.ALL, 5)
         lab1_appearance = wx.StaticText(tabFour, wx.ID_ANY,
                                         _('Icon size:'))
         gridTBsize.Add(lab1_appearance, 0, wx.ALIGN_CENTER_VERTICAL, 0)
@@ -402,7 +402,7 @@ class Setup(wx.Dialog):
         labLOGmsg = wx.StaticText(tabFive, wx.ID_ANY, (msglog))
         gridLOGmsg = wx.StaticBoxSizer(wx.StaticBox(tabFive, wx.ID_ANY,
                                        ''), wx.VERTICAL)
-        gridLog.Add(gridLOGmsg, 0, wx.ALL | wx.EXPAND, 15)
+        gridLog.Add(gridLOGmsg, 0, wx.ALL | wx.EXPAND, 5)
         gridLOGmsg.Add(labLOGmsg, 0, wx.ALL | wx.CENTRE, 5)
         self.rdbFFmpeg = wx.RadioBox(
                                 tabFive, wx.ID_ANY,
@@ -410,14 +410,14 @@ class Setup(wx.Dialog):
                                 choices=Setup.OPT_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
-        gridLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 15)
+        gridLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
         self.rdbFFplay = wx.RadioBox(
                                 tabFive, wx.ID_ANY,
                                 ("Set logging level flags used by FFplay"),
                                 choices=Setup.OPT_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
-        gridLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 15)
+        gridLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 5)
 
         tabFive.SetSizer(gridLog)
         notebook.AddPage(tabFive, _("FFmpeg logging levels"))
@@ -433,7 +433,7 @@ class Setup(wx.Dialog):
         btn_ok = wx.Button(self, wx.ID_OK, "")
         grdexit.Add(btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grdexit, flag=wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, border=0)
-        sizer_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_base.Add(grdBtn, 0, wx.EXPAND)
         # ------ set sizer
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)

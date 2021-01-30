@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.31.2020
+# Rev: Jan.28.2021
 #########################################################
 
 # This file is part of Videomass.
@@ -150,22 +150,38 @@ class Choose_Topic(wx.Panel):
                                       URL=lnk)
         sizer_trad.Add(txt_trad)
         sizer_trad.Add(link_trad)
-        txt_link = wx.StaticText(self, label=_('Download additional presets '
-                                               'or contribute to making new '
-                                               'ones '))
-        link = hpl.HyperLinkCtrl(self, -1, _("Additional Presets"),
-                                 URL="https://github.com/jeanslack/"
-                                     "Videomass-presets/releases")
-        sizer_hpl.Add(txt_link)
-        sizer_hpl.Add(link)
         self.SetSizerAndFit(sizer_base)
 
         if self.oS == 'Darwin':
-            welcome.SetFont(wx.Font(13, wx.SWISS, wx.NORMAL, wx.BOLD))
+            welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.BOLD))
             version.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            welcome.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            welcome.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
+
+
+        #if get.THEME == 'Videomass-Colours':
+            #self.SetBackgroundColour('#85d7a8')  # green marine medium
+            #welcome.SetForegroundColour('#ff3779')  # fuxia
+            #version.SetForegroundColour('#ff3779')  # fuxia
+            #txt_trad.SetForegroundColour('#ff3779')  # fuxia
+
+        #elif get.THEME == 'Breeze-Blues':
+            #self.SetBackgroundColour('#d8bfd8')  # cardo
+            #welcome.SetForegroundColour('#171b12')  # black
+            #version.SetForegroundColour('#171b12')  # black
+            #txt_trad.SetForegroundColour('#171b12')  # black
+
+        #elif get.THEME in ('Breeze-Dark', 'Videomass-Dark'):
+            #self.SetBackgroundColour('#00121f')  # dark blue
+            #welcome.SetForegroundColour('#b0e0e6')  # light
+            #version.SetForegroundColour('#b0e0e6')  # light
+            #txt_trad.SetForegroundColour('#b0e0e6')  # light
+        #else:
+            #self.SetBackgroundColour('#add8e6')  # light azure
+            #welcome.SetForegroundColour('#171b12')  # black
+            #version.SetForegroundColour('#171b12')  # black
+            #txt_trad.SetForegroundColour('#171b12')  # black
 
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)

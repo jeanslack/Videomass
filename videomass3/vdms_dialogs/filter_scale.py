@@ -58,7 +58,7 @@ class Scale(wx.Dialog):
         # --- Scale section:
         box_scale = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                       _("New size in pixels"))), wx.VERTICAL)
-        sizerBase.Add(box_scale, 0, wx.ALL | wx.EXPAND, 10)
+        sizerBase.Add(box_scale, 0, wx.ALL | wx.EXPAND, 5)
 
         Flex_scale = wx.FlexGridSizer(1, 4, 0, 0)
         box_scale.Add(Flex_scale, 0, wx.ALL | wx.CENTER, 5)
@@ -109,7 +109,7 @@ class Scale(wx.Dialog):
         sizerBase.Add((15, 0), 0, wx.ALL, 5)
         box_ar = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                    _("Aspect Ratio"))), wx.VERTICAL)
-        sizerBase.Add(box_ar, 1, wx.ALL | wx.EXPAND, 10)
+        sizerBase.Add(box_ar, 1, wx.ALL | wx.EXPAND, 5)
         lab1 = _("Setdar filter (display aspect ratio) example 16/9, 4/3 ")
         self.lab_dar = wx.StaticText(self, wx.ID_ANY, (lab1))
         box_ar.Add(self.lab_dar, 0, wx.ALL | wx.CENTRE, 5)
@@ -183,7 +183,7 @@ class Scale(wx.Dialog):
         btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))  # Reimposta
         gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+        sizerBase.Add(gridBtn, 0, wx.EXPAND)
         # final settings:
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)

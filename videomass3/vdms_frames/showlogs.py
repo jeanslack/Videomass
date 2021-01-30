@@ -77,7 +77,7 @@ class ShowLogs(wx.MiniFrame):
                                       wx.SUNKEN_BORDER |
                                       wx.LC_SINGLE_SEL
                                       )
-        self.log_select.SetMinSize((850, 200))
+        self.log_select.SetMinSize((700, 200))
         self.log_select.InsertColumn(0, _('Files'), width=500)
         sizer_base.Add(self.log_select, 0, wx.ALL | wx.EXPAND, 5)
         labtxt = wx.StaticText(self.panel, label=_('Log messages'))
@@ -88,7 +88,7 @@ class ShowLogs(wx.MiniFrame):
                                     wx.TE_READONLY |
                                     wx.TE_RICH2
                                     )
-        self.textdata.SetMinSize((850, 400))
+        self.textdata.SetMinSize((700, 300))
 
         if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
             self.textdata.SetBackgroundColour(ShowLogs.SOLARIZED)
@@ -127,10 +127,11 @@ class ShowLogs(wx.MiniFrame):
         sizer_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 0)
         # set caption and min size
         self.SetTitle(_('Showing log messages'))
-        self.SetMinSize((850, 650))
+        self.SetMinSize((700, 500))
         # ------ set sizer
         self.panel.SetSizer(sizer_base)
-        sizer_base.Fit(self)
+        #sizer_base.Fit(self)
+        self.Fit()
         self.Layout()
 
         # populate ListCtrl and set self.logdata dict

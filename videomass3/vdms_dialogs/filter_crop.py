@@ -192,12 +192,12 @@ class Crop(wx.Dialog):
                 "duration {}").format(hhmmss)
         sizer_load = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (msg)),
                                        wx.HORIZONTAL)
-        sizerBase.Add(sizer_load, 0, wx.ALL | wx.EXPAND, 10)
+        sizerBase.Add(sizer_load, 0, wx.ALL | wx.EXPAND, 5)
 
         self.txttime = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         sizer_load.Add(self.txttime, 0, wx.ALL | wx.CENTER, 10)
         self.slider = wx.Slider(self, wx.ID_ANY, 0, 0, duration,
-                                size=(300, -1), style=wx.SL_HORIZONTAL
+                                size=(150, -1), style=wx.SL_HORIZONTAL
                                 )
         sizer_load.Add(self.slider, 0, wx.ALL | wx.CENTER, 5)
         btn_load = wx.Button(self, wx.ID_ANY, _("Load"))
@@ -205,11 +205,11 @@ class Crop(wx.Dialog):
         sizerLabel = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                         _("Cropping area selection "))),
                                        wx.VERTICAL)
-        sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 10)
+        sizerBase.Add(sizerLabel, 0, wx.ALL | wx.EXPAND, 5)
         boxctrl = wx.BoxSizer(wx.VERTICAL)
         sizerLabel.Add(boxctrl, 0, wx.CENTRE)
         label_height = wx.StaticText(self, wx.ID_ANY, (_("Height")))
-        boxctrl.Add(label_height, 0, wx.ALL | wx.CENTRE, 5)
+        boxctrl.Add(label_height, 0, wx.ALL | wx.CENTRE, 0)
         self.crop_height = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                        min=0, max=self.v_height, size=(-1, -1),
                                        style=wx.TE_PROCESS_ENTER |
@@ -219,7 +219,7 @@ class Crop(wx.Dialog):
         grid_sizerBase = wx.FlexGridSizer(1, 5, 0, 0)
         boxctrl.Add(grid_sizerBase, 0, wx.CENTRE, 0)
         label_X = wx.StaticText(self, wx.ID_ANY, ("X"))
-        grid_sizerBase.Add(label_X, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
+        grid_sizerBase.Add(label_X, 0, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 5)
 
         self.axis_X = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                   min=-1, max=self.v_width, size=(-1, -1),
@@ -240,7 +240,7 @@ class Crop(wx.Dialog):
         grid_sizerBase.Add(self.crop_width, 0, wx.ALL | wx.CENTRE, 5)
 
         label_width = wx.StaticText(self, wx.ID_ANY, (_("Width")))
-        grid_sizerBase.Add(label_width, 0, wx.LEFT |
+        grid_sizerBase.Add(label_width, 0, wx.RIGHT |
                            wx.ALIGN_CENTER_VERTICAL, 5)
         self.axis_Y = wx.SpinCtrl(self, wx.ID_ANY, "0",
                                   min=-1, max=self.v_height, size=(-1, -1),
@@ -249,27 +249,24 @@ class Crop(wx.Dialog):
                                   )
         boxctrl.Add(self.axis_Y, 0, wx.CENTRE)
         label_Y = wx.StaticText(self, wx.ID_ANY, ("Y"))
-        boxctrl.Add(label_Y, 0, wx.ALL | wx.CENTRE, 5)
+        boxctrl.Add(label_Y, 0, wx.BOTTOM | wx.CENTRE, 5)
+
+
         # bottom layout
         gridBtn = wx.GridSizer(1, 2, 0, 0)
-        gridhelp = wx.GridSizer(1, 1, 0, 0)
-        gridBtn.Add(gridhelp)
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
-        btn_help = wx.Button(self, wx.ID_HELP, "")
-        gridhelp.Add(btn_help, 0, wx.ALL, 5)
+        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
+        gridBtn.Add(btn_reset, 0, wx.ALL, 5)
         btn_close = wx.Button(self, wx.ID_CANCEL, "")
         gridexit.Add(btn_close, 0, wx.ALL, 5)
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
         gridexit.Add(self.btn_ok, 0, wx.ALL, 5)
-        btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
-        gridexit.Add(btn_reset, 0, wx.ALL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
+        sizerBase.Add(gridBtn, 0, wx.EXPAND)
 
-        sizerBase.Add(gridBtn, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(sizerBase)
         sizerBase.Fit(self)
         self.Layout()
-
         # ----------------------Properties-----------------------#
         self.panelrect.SetBackgroundColour(wx.Colour(Crop.BACKGROUND))
         if Crop.OS == 'Darwin':
@@ -297,7 +294,7 @@ class Crop(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
+        # self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
         if timeformat == '00:00:00.000':
             self.slider.Disable(), btn_load.Disable()
@@ -475,7 +472,7 @@ class Crop(wx.Dialog):
             self.onDrawing()
 
     # ------------------------------------------------------------------#
-
+    '''
     def on_help(self, event):
         """
         Open default browser to official help page
@@ -483,6 +480,7 @@ class Crop(wx.Dialog):
         page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
                 'VideoConv_Panel/Filters/FilterCrop.html')
         webbrowser.open(page)
+    '''
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):

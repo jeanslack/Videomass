@@ -236,24 +236,24 @@ class PrstPan(wx.Panel):
                                                   _("One-Pass")),
                                      wx.VERTICAL
                                      )
-        grd_cmd.Add(box_cmd1, 0, wx.ALL | wx.EXPAND, 5
+        grd_cmd.Add(box_cmd1, 0, wx.ALL | wx.EXPAND, 15
                     )
         self.txt_1cmd = wx.TextCtrl(nb1_p1, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
-        box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5
+        box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
         box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p1, wx.ID_ANY,
                                                   _("Two-Pass")), wx.VERTICAL
                                      )
-        grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND, 5
+        grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND, 15
                     )
         self.txt_2cmd = wx.TextCtrl(nb1_p1, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
-        box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5
+        box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 15
                      )
         nb1_p1.SetSizer(grd_cmd)
         nb1.AddPage(nb1_p1, (_("Command line")))
@@ -261,7 +261,7 @@ class PrstPan(wx.Panel):
         self.nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         size_auto = wx.BoxSizer(wx.HORIZONTAL)
         grd_autosx = wx.FlexGridSizer(2, 1, 5, 5)
-        size_auto.Add(grd_autosx, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        size_auto.Add(grd_autosx, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
         self.rdbx_norm = wx.RadioBox(self.nb1_p2, wx.ID_ANY,
                                      (_("Audio Normalization")),
                                      choices=[('Off'), ('PEAK'),
@@ -270,30 +270,30 @@ class PrstPan(wx.Panel):
                                      majorDimension=1,
                                      style=wx.RA_SPECIFY_ROWS,
                                      )
-        grd_autosx.Add(self.rdbx_norm, 0, wx.ALL, 5)
+        grd_autosx.Add(self.rdbx_norm, 0, wx.ALL, 10)
 
         boxamap = wx.StaticBoxSizer(wx.StaticBox(self.nb1_p2, wx.ID_ANY,
                                                  _("Audio Streams Mapping")),
                                     wx.VERTICAL
                                     )
-        grd_autosx.Add(boxamap, 0, wx.ALL | wx.EXPAND, 5)
+        grd_autosx.Add(boxamap, 0, wx.ALL | wx.EXPAND, 10)
         grd_map = wx.FlexGridSizer(2, 2, 0, 0)
         boxamap.Add(grd_map, 0, wx.ALL | wx.EXPAND, 5)
         self.txtAinmap = wx.StaticText(self.nb1_p2, wx.ID_ANY,
-                                       _('Input index:')
+                                       _('Input Audio Index')
                                        )
-        grd_map.Add(self.txtAinmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grd_map.Add(self.txtAinmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
         self.cmb_A_inMap = wx.ComboBox(self.nb1_p2, wx.ID_ANY,
                                        choices=['Auto', '1', '2', '3',
                                                 '4', '5', '6', '7', '8'],
                                        size=(160, -1), style=wx.CB_DROPDOWN |
                                        wx.CB_READONLY
                                        )
-        grd_map.Add(self.cmb_A_inMap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grd_map.Add(self.cmb_A_inMap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
         self.txtAoutmap = wx.StaticText(self.nb1_p2, wx.ID_ANY,
-                                        _('Output index:')
+                                        _('Output Audio Index')
                                         )
-        grd_map.Add(self.txtAoutmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        grd_map.Add(self.txtAoutmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
 
         self.cmb_A_outMap = wx.ComboBox(self.nb1_p2, wx.ID_ANY,
                                         choices=['Auto', 'All', '1', '2', '3',
@@ -302,10 +302,10 @@ class PrstPan(wx.Panel):
                                         wx.CB_READONLY
                                         )
         grd_map.Add(self.cmb_A_outMap, 0, wx.ALL |
-                    wx.ALIGN_CENTER_VERTICAL, 5
+                    wx.ALIGN_CENTER_VERTICAL, 10
                     )
         size_panels = wx.BoxSizer(wx.VERTICAL)
-        size_auto.Add(size_panels, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        size_auto.Add(size_panels, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 10)
         self.peakpanel = wx.Panel(self.nb1_p2, wx.ID_ANY,
                                   style=wx.TAB_TRAVERSAL
                                   )

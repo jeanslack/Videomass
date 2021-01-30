@@ -142,26 +142,32 @@ class Deinterlace(wx.Dialog):
 
         # ------ set Layout
         self.sizer_base = wx.BoxSizer(wx.VERTICAL)
-        self.sizer_base.Add(self.enable_opt, 0, wx.ALL |
-                            wx.ALIGN_RIGHT, 10
-                            )
-        self.sizer_base.Add(zone1, 0, wx.ALL | wx.EXPAND, 10)
-        deint_grid = wx.FlexGridSizer(2, 4, 0, 0)
-        zone1.Add(deint_grid)
-        deint_grid.Add(self.ckbx_deintW3fdif, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_w3fdif, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_w3fdif_d, 0, wx.ALL, 15)
-        deint_grid.Add((20, 20), 0, wx.ALL, 15)
-        deint_grid.Add(self.ckbx_deintYadif, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 15)
-        deint_grid.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 15)
-        self.sizer_base.Add(zone2, 0, wx.ALL | wx.EXPAND, 10)
+        self.sizer_base.Add(self.enable_opt, 0, wx.ALL | wx.ALIGN_RIGHT, 5)
+        self.sizer_base.Add(zone1, 0, wx.ALL | wx.EXPAND, 5)
+        grid_w3fdif = wx.FlexGridSizer(1, 4, 0, 0)
+        zone1.Add(grid_w3fdif)
+        grid_w3fdif.Add(self.ckbx_deintW3fdif, 0, wx.ALL |
+                        wx.ALIGN_CENTER_VERTICAL |
+                        wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_w3fdif.Add(self.rdbx_w3fdif, 0, wx.ALL, 5)
+        grid_w3fdif.Add(self.rdbx_w3fdif_d, 0, wx.ALL, 5)
+        #deint_grid.Add((5, 5), 0, wx.ALL, 5)
+        grid_yadif = wx.FlexGridSizer(1, 4, 0, 0)
+        zone1.Add(grid_yadif)
+        grid_yadif.Add(self.ckbx_deintYadif, 0, wx.ALL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 5)
+        grid_yadif.Add(self.rdbx_Yadif_mode, 0, wx.ALL, 5)
+        grid_yadif.Add(self.rdbx_Yadif_parity, 0, wx.ALL, 5)
+        grid_yadif.Add(self.rdbx_Yadif_deint, 0, wx.ALL, 5)
+        self.sizer_base.Add(zone2, 0, wx.ALL | wx.EXPAND, 5)
         inter_grid = wx.FlexGridSizer(1, 3, 0, 0)
         zone2.Add(inter_grid)
-        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL, 15)
-        inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 15)
-        inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 15)
+        inter_grid.Add(self.ckbx_interlace, 0, wx.ALL |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 5)
+        inter_grid.Add(self.rdbx_inter_scan, 0, wx.ALL, 5)
+        inter_grid.Add(self.rdbx_inter_lowpass, 0, wx.ALL, 5)
 
         # confirm btn section:
         self.gridBtn = wx.GridSizer(1, 2, 0, 0)
@@ -177,7 +183,7 @@ class Deinterlace(wx.Dialog):
         self.gridBtn.Add(self.gridexit, 0, wx.ALL |
                          wx.ALIGN_RIGHT | wx.RIGHT, 0
                          )
-        self.sizer_base.Add(self.gridBtn, 0, wx.ALL | wx.EXPAND, 5)
+        self.sizer_base.Add(self.gridBtn, 0, wx.EXPAND)
         # final settings:
         self.SetSizer(self.sizer_base)
         self.sizer_base.Fit(self)

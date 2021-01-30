@@ -196,13 +196,13 @@ class MainFrame(wx.Frame):
 
         # Layout externals panels:
         self.mainSizer.Add(self.TimeLine, 0, wx.EXPAND)
-        self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND)
-        self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND)
-        self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND)
-        self.mainSizer.Add(self.ytDownloader, 1, wx.EXPAND)
-        self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND)
-        self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND)
-        self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND)
+        self.mainSizer.Add(self.ChooseTopic, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.fileDnDTarget, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.textDnDTarget, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.ytDownloader, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND | wx.ALL, 0)
+        self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND | wx.ALL, 0)
 
         # ----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
@@ -210,14 +210,13 @@ class MainFrame(wx.Frame):
         icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
         if MainFrame.OS == 'Darwin':
-            self.SetMinSize((980, 570))
+            self.SetSize((1100, 700))
         elif MainFrame.OS == 'Windows':
             self.SetSize((1100, 700))
         else:
-            self.SetMinSize((900, 600))
-        #self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
+            self.SetSize((990, 600))
+        # self.CentreOnScreen()  # se lo usi, usa CentreOnScreen anziche Centre
         self.SetSizer(self.mainSizer)
-        self.Fit()
 
         # menu bar
         self.videomass_menu_bar()
@@ -1048,7 +1047,7 @@ class MainFrame(wx.Frame):
         """
         view last log on console
         """
-        self.switch_to_processing('Viewing last log')
+        self.switch_to_processing('console view only')
     # ------------------------------------------------------------------#
 
     def openLog(self, event):
@@ -1654,8 +1653,8 @@ class MainFrame(wx.Frame):
         assign a corresponding thread.
 
         """
-        if varargs[0] == 'Viewing last log':
-            self.statusbar_msg(_('Viewing last log'), None)
+        if varargs[0] == 'console view only':
+            self.statusbar_msg(_('Last output status'), None)
             duration = self.duration
 
         elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
@@ -1666,11 +1665,11 @@ class MainFrame(wx.Frame):
                                 'files.'), 'Videomass', wx.ICON_ERROR, self)
                 return
             duration = [ms for n in self.duration]
-            self.statusbar_msg(_('Processing...'), None)
+            self.statusbar_msg(_('Under processing...'), None)
 
         else:
             duration = self.duration
-            self.statusbar_msg(_('Processing...'), None)
+            self.statusbar_msg(_('Under processing...'), None)
 
         self.SetTitle(_('Videomass - Output Monitor'))
         # Hide all others panels:

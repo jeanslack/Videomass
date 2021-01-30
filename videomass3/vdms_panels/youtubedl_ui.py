@@ -252,14 +252,14 @@ class Downloader(wx.Panel):
         # -------------textctrl
         labtstr = _('Help viewer')
         self.labtxt = wx.StaticText(self, label=labtstr)
-        sizer_base.Add(self.labtxt, 0, wx.LEFT, 10)
+        sizer_base.Add(self.labtxt, 0, wx.LEFT, 5)
         self.codText = wx.TextCtrl(self, wx.ID_ANY, "",
                                    style=wx.TE_MULTILINE |
                                    wx.TE_READONLY |
                                    wx.TE_RICH2,
                                    size=(-1, 100)
                                    )
-        sizer_base.Add(self.codText, 0, wx.ALL | wx.EXPAND, 10)
+        sizer_base.Add(self.codText, 0, wx.ALL | wx.EXPAND, 5)
         # -----------------------
         self.codText.Hide(), self.labtxt.Hide()
         self.SetSizer(sizer_base)

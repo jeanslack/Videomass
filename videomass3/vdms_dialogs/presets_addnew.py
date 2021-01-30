@@ -76,52 +76,52 @@ class MemPresets(wx.Dialog):
         box_name = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                   _("Profile Name")),
                                      wx.VERTICAL)
-        size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 10)
+        size_namedescr.Add(box_name, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_name = wx.TextCtrl(self, wx.ID_ANY, "")
-        box_name.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 15)
+        box_name.Add(self.txt_name, 0, wx.ALL | wx.EXPAND, 5)
         box_descr = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    _("Description")),
                                       wx.VERTICAL
                                       )
-        size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 10)
+        size_namedescr.Add(box_descr, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_descript = wx.TextCtrl(self, wx.ID_ANY, "")
-        box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 15)
+        box_descr.Add(self.txt_descript, 0, wx.ALL | wx.EXPAND, 5)
         box_pass1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_1),
                                       wx.VERTICAL
                                       )
-        size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 10)
+        size_base.Add(box_pass1, 1, wx.ALL | wx.EXPAND, 5)
         self.pass_1_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_MULTILINE
                                       )
-        box_pass1.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 15)
+        box_pass1.Add(self.pass_1_cmd, 1, wx.ALL | wx.EXPAND, 5)
         box_pass2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                    MemPresets.PASS_2),
                                       wx.VERTICAL
                                       )
-        size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 10)
+        size_base.Add(box_pass2, 1, wx.ALL | wx.EXPAND, 5)
         self.pass_2_cmd = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_MULTILINE
                                       )
-        box_pass2.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 15)
+        box_pass2.Add(self.pass_2_cmd, 1, wx.ALL | wx.EXPAND, 5)
         size_formats = wx.BoxSizer(wx.HORIZONTAL)
         size_base.Add(size_formats, 0, wx.ALL | wx.EXPAND, 0)
         box_supp = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                   MemPresets.SUPFORMAT),
                                      wx.VERTICAL
                                      )
-        size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 10)
+        size_formats.Add(box_supp, 1, wx.ALL | wx.EXPAND, 5)
 
         self.txt_supp = wx.TextCtrl(self, wx.ID_ANY, "")
-        box_supp.Add(self.txt_supp, 0, wx.ALL | wx.EXPAND, 15)
+        box_supp.Add(self.txt_supp, 0, wx.ALL | wx.EXPAND, 5)
         box_format = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                     MemPresets.OUTFORMAT),
                                        wx.VERTICAL
                                        )
-        size_formats.Add(box_format, 1, wx.ALL | wx.EXPAND, 10)
+        size_formats.Add(box_format, 1, wx.ALL | wx.EXPAND, 5)
 
         self.txt_ext = wx.TextCtrl(self, wx.ID_ANY, "")
-        box_format.Add(self.txt_ext, 0, wx.ALL | wx.EXPAND, 15)
+        box_format.Add(self.txt_ext, 0, wx.ALL | wx.EXPAND, 5)
 
         grdBtn = wx.GridSizer(1, 2, 0, 0)
         grdhelp = wx.GridSizer(1, 1, 0, 0)
@@ -135,11 +135,11 @@ class MemPresets(wx.Dialog):
         btn_save = wx.Button(self, wx.ID_OK, _("Save.."))
         grdexit.Add(btn_save, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         grdBtn.Add(grdexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
-        size_base.Add(grdBtn, 0, wx.ALL | wx.EXPAND, 5)
+        size_base.Add(grdBtn, 0, wx.EXPAND)
         # ------ set sizer
-        self.SetMinSize((1000, 630))
+        self.SetMinSize((950, 450))
         self.SetSizer(size_base)
-        size_base.Fit(self)
+        self.Fit()
         self.Layout()
 
         # ----------------------Set Properties----------------------#

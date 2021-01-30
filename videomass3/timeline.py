@@ -69,11 +69,9 @@ class Timeline(wx.Panel):
         TEXT_PEN_COLOR = '#020D0F'  # black for text and draw lines
 
     # ruler and panel specifications
-    #RW = 600  # ruler width
-    RW = 450  # ruler width
+    RW = 600  # ruler width
     RM = 0  # ruler margin
-    #PW = 602  # panel width
-    PW = 452  # panel width
+    PW = 602  # panel width
     PH = 35  # panel height
 
     def __init__(self, parent):
@@ -109,16 +107,16 @@ class Timeline(wx.Panel):
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
-        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 10)
         self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                 size=(200, -1), style=wx.SL_HORIZONTAL
+                                 size=(250, -1), style=wx.SL_HORIZONTAL
                                  )
         self.sldseek.Disable()
         self.txtseek = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticseek = wx.StaticText(self, wx.ID_ANY, _('Seek'))
 
         self.sldcut = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
-                                size=(200, -1), style=wx.SL_HORIZONTAL
+                                size=(250, -1), style=wx.SL_HORIZONTAL
                                 )
         self.txtcut = wx.StaticText(self, wx.ID_ANY, '00:00:00.000')
         txtstaticdur = wx.StaticText(self, wx.ID_ANY, _('Duration'))
@@ -137,7 +135,7 @@ class Timeline(wx.Panel):
         gridtime.Add(txtstaticdur, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
         gridtime.Add(self.sldcut, 0, wx.ALL | wx.CENTRE, 0)
         gridtime.Add(self.txtcut, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
-        sizer_base.Add(gridtime, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_base.Add(gridtime, 0, wx.ALL | wx.CENTRE, 10)
 
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
