@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-01 14:35+0100\n"
-"PO-Revision-Date: 2021-02-01 14:36+0100\n"
+"PO-Revision-Date: 2021-02-01 19:17+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -747,6 +747,8 @@ msgid ""
 "Save each file in the same\n"
 "folder as input file"
 msgstr ""
+"Сохраняйте каждый файл в той же\n"
+"папке, что и входной файл"
 
 #: ../vdms_dialogs/settings.py:154
 msgid "Optional suffix assignment (example, _convert):"
@@ -761,6 +763,8 @@ msgid ""
 "Auto-create subfolders\n"
 "when download playlists"
 msgstr ""
+"Автоматическое создание подпапок\n"
+"при загрузке плейлистов"
 
 #: ../vdms_dialogs/settings.py:185
 msgid "Cache Settings"
@@ -1623,10 +1627,8 @@ msgid "Close Videomass"
 msgstr "Закрыть Videomass"
 
 #: ../vdms_main/main_frame.py:424
-#, fuzzy
-#| msgid "Files"
 msgid "&File"
-msgstr "Файлы"
+msgstr "Файл"
 
 #: ../vdms_main/main_frame.py:429
 msgid "A useful tool to search for FFmpeg help topics and options"
@@ -2334,7 +2336,7 @@ msgstr "Фильтры Видео"
 
 #: ../vdms_panels/av_conversions.py:536
 msgid "Preview"
-msgstr "Предварительный просмотр"
+msgstr "Предпросмотр"
 
 #: ../vdms_panels/av_conversions.py:551
 msgid "Resizing"
@@ -2956,7 +2958,7 @@ msgstr "Напишите субтитры к видео"
 
 #: ../vdms_panels/youtubedl_ui.py:236
 msgid "Prevent overwriting files"
-msgstr ""
+msgstr "Предотвратить перезапись файлов"
 
 #: ../vdms_panels/youtubedl_ui.py:260
 msgid "Help viewer"
@@ -3018,11 +3020,12 @@ msgstr "Извините, эта функция отключена."
 
 #: ../vdms_panels/youtubedl_ui.py:624
 msgid "Unable to get format codes on playlists"
-msgstr ""
+msgstr "Невозможно получить коды формата в плейлистах"
 
 #: ../vdms_panels/youtubedl_ui.py:776
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
+"URL-адреса содержат списки воспроизведения. Вы уверены что хотите продолжить?"
 
 #: ../vdms_panels/filedrop.py:64
 msgid "Directories are not allowed, just add files, please."
