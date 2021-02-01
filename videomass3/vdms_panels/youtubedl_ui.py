@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.31.2020 *PEP8 compatible*
+# Rev: Jan.31.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -76,6 +76,7 @@ class Downloader(wx.Panel):
     get = wx.GetApp()  # get videomass wx.App attribute
     OS = get.OS
     PYLIB_YDL = get.pylibYdl
+    SUBFOLDER_PLAYLIST = get.PLAYLISTsubfolder
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
@@ -176,7 +177,7 @@ class Downloader(wx.Panel):
                               )
         boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxoptions.Add((5, 5))
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 300),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 350),
                                              style=wx.TAB_TRAVERSAL |
                                              wx.BORDER_THEME, name="panelscr",
                                              )
@@ -230,6 +231,12 @@ class Downloader(wx.Panel):
                                    (_('Write subtitles to video'))
                                    )
         fgs1.Add(self.ckbx_sb, 0, wx.ALL, 5)
+
+        self.ckbx_w = wx.CheckBox(panelscroll, wx.ID_ANY,
+                                  (_('Prevent overwriting files'))
+                                  )
+        fgs1.Add(self.ckbx_w, 0, wx.ALL, 5)
+
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
 
         panelscroll.SetSizer(fgs1)
@@ -533,7 +540,7 @@ class Downloader(wx.Panel):
         if self.oldwx is False:
             self.fcode.EnableCheckBoxes(enable=False)
         self.fcode.InsertColumn(0, ('#'), width=30)
-        self.fcode.InsertColumn(1, (_('Url')), width=500)
+        self.fcode.InsertColumn(1, (_('Url')), width=400)
         self.fcode.InsertColumn(2, (_('Title')), width=50)
         self.fcode.InsertColumn(3, (_('Quality')), width=250)
 
@@ -612,7 +619,12 @@ class Downloader(wx.Panel):
             self.on_urls_list('')
 
         elif self.choice.GetSelection() == 3:
-            # self.codText.AppendText(tip3)
+            for url in self.parent.data_url:
+                if 'playlist' in url:  # prevent KeyError: 'format_id'
+                    wx.MessageBox(_("Unable to get format codes on playlists"),
+                                  "Videomass", wx.ICON_ERROR, self)
+                    self.choice.SetSelection(0)
+                    return
             self.labtxt.Show(), self.codText.Show()
             self.Layout()
             self.cmbx_vq.Disable(), self.cmbx_aq.Disable()
@@ -697,6 +709,85 @@ class Downloader(wx.Panel):
             self.opt["SUBTITLES"] = [False, ""]
     # -----------------------------------------------------------------#
 
+    def getformatcode(self, urls):
+        """
+        Call by on on_Start. Return format code list
+
+        """
+        format_code = []
+
+        for url, key, val in zip(urls,
+                                 self.format_dict.keys(),
+                                 self.format_dict.values()
+                                 ):
+            if key == url:
+                video, audio = '', ''
+                if len(val) == 1:
+                    if val[0].startswith('Audio: '):
+                        audio = val[0].split('Audio: ')[1]
+                    elif val[0].startswith('Video: '):
+                        video = val[0].split('Video: ')[1]
+                    else:
+                        video = val[0].split('Video: ')[1]
+                else:
+                    index_1, index_2 = 0, 0
+                    for i in val:
+                        if i.startswith('Video: '):
+                            index_1 += 1
+                            if index_1 > 1:
+                                video += '/%s' % i.split('Video: ')[1]
+                            else:
+                                video = i.split('Video: ')[1]
+
+                        elif i.startswith('Audio: '):
+                            index_2 += 1
+                            if index_2 > 1:
+                                audio += '/%s' % i.split('Audio: ')[1]
+                            else:
+                                audio = i.split('Audio: ')[1]
+                        else:
+                            index_1 += 1
+                            if index_1 > 1:
+                                video += '/%s' % i.split('Video: ')[1]
+                            else:
+                                video = i.split('Video: ')[1]
+
+                if video and audio:
+                    format_code.append('%s+%s' % (video, audio))
+                elif video:
+                    format_code.append('%s' % video)
+                elif audio:
+                    format_code.append('%s' % audio)
+
+        if len(format_code) != len(urls):
+            return None
+        return format_code
+    # -----------------------------------------------------------------#
+
+    def check_start(self, urls):
+        """
+        Call by on on_Start
+        check urls before continue, then get playlist value
+        and return subfolder string
+        """
+        if not self.ckbx_pl.IsChecked():
+            for url in urls:
+                if 'playlist' in url:
+                    if wx.MessageBox(_('The URLs contain playlists. Are '
+                                       'you sure you want to continue?'),
+                                     _('Please confirm'), wx.ICON_QUESTION |
+                                     wx.YES_NO, self) == wx.NO:
+                        return False
+
+        if self.opt["NO_PLAYLIST"][1] == '--yes-playlist' and \
+           Downloader.SUBFOLDER_PLAYLIST == 'true':
+            subdir = '%(playlist_title)s/%(uploader)s/%(playlist_index)s - '
+        else:
+            subdir = ''
+
+        return subdir
+    # -----------------------------------------------------------------#
+
     def on_start(self):
         """
         Builds command string to use with an embed youtube_dl as
@@ -704,62 +795,16 @@ class Downloader(wx.Panel):
         with subprocess. This depends on some cases.
         """
         urls = self.parent.data_url
-
-        def _getformatcode():
-            """
-            return format code list
-            """
-            format_code = []
-
-            for url, key, val in zip(urls,
-                                     self.format_dict.keys(),
-                                     self.format_dict.values()):
-                if key == url:
-                    video, audio = '', ''
-                    if len(val) == 1:
-                        if val[0].startswith('Audio: '):
-                            audio = val[0].split('Audio: ')[1]
-                        elif val[0].startswith('Video: '):
-                            video = val[0].split('Video: ')[1]
-                        else:
-                            video = val[0].split('Video: ')[1]
-                    else:
-                        index_1, index_2 = 0, 0
-                        for i in val:
-                            if i.startswith('Video: '):
-                                index_1 += 1
-                                if index_1 > 1:
-                                    video += '/%s' % i.split('Video: ')[1]
-                                else:
-                                    video = i.split('Video: ')[1]
-
-                            elif i.startswith('Audio: '):
-                                index_2 += 1
-                                if index_2 > 1:
-                                    audio += '/%s' % i.split('Audio: ')[1]
-                                else:
-                                    audio = i.split('Audio: ')[1]
-                            else:
-                                index_1 += 1
-                                if index_1 > 1:
-                                    video += '/%s' % i.split('Video: ')[1]
-                                else:
-                                    video = i.split('Video: ')[1]
-
-                    if video and audio:
-                        format_code.append('%s+%s' % (video, audio))
-                    elif video:
-                        format_code.append('%s' % video)
-                    elif audio:
-                        format_code.append('%s' % audio)
-
-            if len(format_code) != len(urls):
-                return None
-            return format_code
+        subdir = self.check_start(urls)
+        if subdir is False:
+            return
 
         if Downloader.PYLIB_YDL is None:  # youtube-dl is used as library
+
             logname = 'youtubedl_lib.log'
+            nooverwrites = True if self.ckbx_w.IsChecked() else False
             postprocessors = []
+
             if self.choice.GetSelection() == 2:
                 postprocessors.append({'key': 'FFmpegExtractAudio',
                                        'preferredcodec':
@@ -779,8 +824,9 @@ class Downloader(wx.Panel):
                 code = []
                 data = {'format': self.opt["V_QUALITY"][0],
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -793,8 +839,9 @@ class Downloader(wx.Panel):
                 data = {'format': '%svideo,%saudio' %
                         (self.opt["V_QUALITY"][0], self.opt["A_QUALITY"][0]),
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.f%(format_id)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -806,8 +853,9 @@ class Downloader(wx.Panel):
                 code = []
                 data = {'format': 'best',
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.%(ext)s',
                         'extractaudio': True,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -816,14 +864,15 @@ class Downloader(wx.Panel):
                         'postprocessors': postprocessors
                         }
             if self.choice.GetSelection() == 3:  # format code
-                code = _getformatcode()
+                code = self.getformatcode(urls)
                 if not code:
                     self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED)
                     return
                 data = {'format': '',
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
+                        'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.f%(format_id)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -845,6 +894,7 @@ class Downloader(wx.Panel):
         else:  # ----------- with youtube-dl command line execution
 
             logname = 'youtubedl_exec.log'
+            nooverwrites = '--no-overwrites' if self.ckbx_w.IsChecked() else ''
 
             if self.choice.GetSelection() == 0:  # default
                 code = []
@@ -854,7 +904,8 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.%(ext)s')
+                       (subdir + '%(title)s.%(ext)s'),
+                       f'{nooverwrites}',
                        ]
 
             if self.choice.GetSelection() == 1:  # audio files + video files
@@ -866,8 +917,10 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.f%(format_id)s.%(ext)s')
+                       (subdir + '%(title)s.f%(format_id)s.%(ext)s'),
+                       f'{nooverwrites}',
                        ]
+
             elif self.choice.GetSelection() == 2:  # audio only
                 code = []
                 cmd = [(f'{self.opt["A_FORMAT"][1]} '
@@ -875,10 +928,12 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.%(ext)s')
+                       (subdir + '%(title)s.%(ext)s'),
+                       f'{nooverwrites}',
                        ]
+
             if self.choice.GetSelection() == 3:  # format code
-                code = _getformatcode()
+                code = self.getformatcode(urls)
                 if not code:
                     self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED)
                     return
@@ -886,7 +941,8 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.f%(format_id)s.%(ext)s')
+                       (subdir + '%(title)s.f%(format_id)s.%(ext)s'),
+                       f'{nooverwrites}',
                        ]
             self.parent.switch_to_processing('youtube-dl executable',
                                              urls,

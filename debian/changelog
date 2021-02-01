@@ -1,22 +1,31 @@
 videomass (3.3.7-1) UNRELEASED; urgency=medium
 
-  * Added new icon themes, for colorful themes, for dark themes and light themes.
+  * Added new icon themes, (colorful, dark and light).
   * Removed Papirus icon theme.
-  * Ability to customize toolbar positioning (on preferences dialog box)
-  * Ability to show or hide text on toolbar buttons (on preferences dialog box)
+  * Ability to customize toolbar positioning (on Setup dialog box)
+  * Ability to show or hide text on toolbar buttons (on Setup dialog box)
   * Enabled support to svg images for toolbar icons and some buttons (only with
     wxPython version 4.1 to up)
   * Ability to scales the toolbar icons (only with wxPython version 4.1 to up)
-  * Improved AV-conversions panel layout
+  * Improved AV-conversions panel layout.
   * Fix `invalid values in gauge` on progress bar during transcoding processes
     when timeline duration exceeds the time of some files.
   * Update Russian translation (credits ChourS).
   * Update Italian translation (credits me).
   * Improved main frame size (tiny layout for smaller screens).
-  * Improved panels size (added scrolling panels).
+  * Improved panels size with scrolling panels.
   * improved dialog boxes size.
+  * Fixed #11 (auto-create subfolders when download playlists and fix some
+    strings definition).
+  * Added new checkbox on Setup to auto-create subfolders when download
+    playlists.
+  * Prevent errors when URLs contain playlists and if the user chooses
+    Download by format code .
+  * If URLs contain playlists, warn you when the Download all playlists
+    checkbox is not selected.
+  * New configuration file version number 2.9 .
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 27 Jan 2021 21:39:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 31 Jan 2021 21:39:00 +0200
 
 videomass (3.3.6-1) UNRELEASED; urgency=medium
 

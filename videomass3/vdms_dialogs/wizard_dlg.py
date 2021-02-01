@@ -310,28 +310,28 @@ class PageThree(wx.Panel):
                              style=wx.ALIGN_CENTRE_HORIZONTAL)
         #  ffmpeg
         gridffmpeg = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffmpegBtn = wx.Button(self, wx.ID_ANY, "ffmpeg")
-        gridffmpeg.Add(self.ffmpegBtn, 0, wx.ALL, 5)
-
         self.ffmpegTxt = wx.TextCtrl(self, wx.ID_ANY, "",
                                      style=wx.TE_READONLY)
         gridffmpeg.Add(self.ffmpegTxt, 1, wx.ALL, 5)
+
+        self.ffmpegBtn = wx.Button(self, wx.ID_ANY, "ffmpeg")
+        gridffmpeg.Add(self.ffmpegBtn, 0, wx.ALL, 5)
         #  ffprobe
         gridffprobe = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffprobeBtn = wx.Button(self, wx.ID_ANY, "ffprobe")
-        gridffprobe.Add(self.ffprobeBtn, 0, wx.ALL, 5)
-
         self.ffprobeTxt = wx.TextCtrl(self, wx.ID_ANY, "",
                                       style=wx.TE_READONLY)
         gridffprobe.Add(self.ffprobeTxt, 1, wx.ALL, 5)
+
+        self.ffprobeBtn = wx.Button(self, wx.ID_ANY, "ffprobe")
+        gridffprobe.Add(self.ffprobeBtn, 0, wx.ALL, 5)
         #  ffplay
         gridffplay = wx.BoxSizer(wx.HORIZONTAL)
-        self.ffplayBtn = wx.Button(self, wx.ID_ANY, "ffplay")
-        gridffplay.Add(self.ffplayBtn, 0, wx.ALL, 5)
-
         self.ffplayTxt = wx.TextCtrl(self, wx.ID_ANY, "",
                                      style=wx.TE_READONLY)
         gridffplay.Add(self.ffplayTxt, 1, wx.ALL, 5)
+
+        self.ffplayBtn = wx.Button(self, wx.ID_ANY, "ffplay")
+        gridffplay.Add(self.ffplayBtn, 0, wx.ALL, 5)
 
         if PageThree.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))

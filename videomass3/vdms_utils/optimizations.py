@@ -45,7 +45,8 @@ def vp9(prename):
         return '''(
                 self.ckbx_web.SetValue(False), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(False), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('Vp9'), self.videoCodec(self),
+                self.cmb_Vcod.SetStringSelection('Vp9'),
+                self.videoCodec(self),
                 self.spin_Vbrate.SetValue(0), self.on_Vbitrate(self),
                 self.spinMinr.SetValue(0), self.spinMaxr.SetValue(0),
                 self.spinBufsize.SetValue(0),
@@ -61,7 +62,8 @@ def vp9(prename):
         return '''(
                 self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(False), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('Vp9'), self.videoCodec(self),
+                self.cmb_Vcod.SetStringSelection('Vp9'),
+                self.videoCodec(self),
                 self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
                 self.spinMinr.SetValue(1000), self.spinMaxr.SetValue(1000),
                 self.spinBufsize.SetValue(0),
@@ -73,7 +75,8 @@ def vp9(prename):
 
     elif prename == 'Vp9 Constrained ABR-VBV live streaming':
         return '''(
-                self.cmb_Vcod.SetStringSelection('Vp9'), self.videoCodec(self),
+                self.cmb_Vcod.SetStringSelection('Vp9'),
+                self.videoCodec(self),
                 self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(True), self.on_Pass(self),
                 self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
@@ -110,9 +113,9 @@ def hevc_avc(prename):
                 self.spinBufsize.SetValue(0),
                 self.ckbx_web.SetValue(False), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(False), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('x264'), self.videoCodec(self),
-                self.cmb_Vcont.SetSelection(0), self.on_Container(self),
-                self.cmb_Pixfrm.SetSelection(0),)'''
+                self.cmb_Vcod.SetStringSelection('x264'),
+                self.videoCodec(self), self.cmb_Vcont.SetSelection(0),
+                self.on_Container(self), self.cmb_Pixfrm.SetSelection(0),)'''
 
     elif prename == 'x265 best for Archive':
 
@@ -121,9 +124,9 @@ def hevc_avc(prename):
                 self.spinBufsize.SetValue(0),
                 self.ckbx_web.SetValue(False), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(False), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('x265'), self.videoCodec(self),
-                self.cmb_Vcont.SetSelection(0), self.on_Container(self),
-                self.cmb_Pixfrm.SetSelection(0),)'''
+                self.cmb_Vcod.SetStringSelection('x265'),
+                self.videoCodec(self), self.cmb_Vcont.SetSelection(0),
+                self.on_Container(self), self.cmb_Pixfrm.SetSelection(0),)'''
 
     elif prename == 'x264 ABR for devices':
 
@@ -132,7 +135,8 @@ def hevc_avc(prename):
                 self.spinBufsize.SetValue(0),
                 self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(True), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('x264'), self.videoCodec(self),
+                self.cmb_Vcod.SetStringSelection('x264'),
+                self.videoCodec(self),
                 self.cmb_Vcont.SetSelection(0), self.on_Container(self),
                 self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
                 self.cmb_Pixfrm.SetSelection(1),)'''
@@ -144,7 +148,8 @@ def hevc_avc(prename):
                 self.spinBufsize.SetValue(0),
                 self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(True), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('x265'), self.videoCodec(self),
+                self.cmb_Vcod.SetStringSelection('x265'),
+                self.videoCodec(self),
                 self.cmb_Vcont.SetSelection(0), self.on_Container(self),
                 self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
                 self.cmb_Pixfrm.SetSelection(1),)'''
@@ -156,7 +161,8 @@ def hevc_avc(prename):
                 self.spinBufsize.SetValue(2000),
                 self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(True), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('x264'), self.videoCodec(self),
+                self.cmb_Vcod.SetStringSelection('x264'),
+                self.videoCodec(self),
                 self.cmb_Vcont.SetSelection(0), self.on_Container(self),
                 self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
                 self.cmb_Pixfrm.SetSelection(1),)'''
@@ -168,7 +174,8 @@ def hevc_avc(prename):
                 self.spinBufsize.SetValue(2000),
                 self.ckbx_web.SetValue(True), self.on_WebOptimize(self),
                 self.ckbx_pass.SetValue(True), self.on_Pass(self),
-                self.cmb_Vcod.SetStringSelection('x265'), self.videoCodec(self),
+                self.cmb_Vcod.SetStringSelection('x265'),
+                self.videoCodec(self),
                 self.cmb_Vcont.SetSelection(0), self.on_Container(self),
                 self.spin_Vbrate.SetValue(1000), self.on_Vbitrate(self),
                 self.cmb_Pixfrm.SetSelection(1),)'''

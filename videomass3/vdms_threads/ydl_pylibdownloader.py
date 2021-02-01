@@ -199,6 +199,7 @@ class Ydl_DL_Pylib(Thread):
                     'no_warnings': False,
                     'writethumbnail': self.opt['writethumbnail'],
                     'noplaylist': self.opt['noplaylist'],
+                    'nooverwrites': self.opt['nooverwrites'],
                     'no_color': True,
                     'nocheckcertificate': self.nocheckcertificate,
                     'ffmpeg_location': '{}'.format(Ydl_DL_Pylib.FFMPEG_URL),

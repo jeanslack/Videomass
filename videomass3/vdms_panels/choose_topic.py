@@ -158,7 +158,7 @@ class Choose_Topic(wx.Panel):
         else:
             welcome.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
-
+        '''
         if get.THEME == 'Videomass-Colours':
             self.SetBackgroundColour('#85d7a8')  # green marine medium
             welcome.SetForegroundColour('#ff3779')  # fuxia
@@ -181,11 +181,11 @@ class Choose_Topic(wx.Panel):
             welcome.SetForegroundColour('#171b12')  # black
             version.SetForegroundColour('#171b12')  # black
             txt_trad.SetForegroundColour('#171b12')  # black
+        '''
 
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
-
     # ------------------------------------------------------------------#
 
     def on_Prst_mng(self, event):

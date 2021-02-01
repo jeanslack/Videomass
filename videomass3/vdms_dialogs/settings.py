@@ -52,6 +52,7 @@ class Setup(wx.Dialog):
     FF_LOCALDIR = get.FFMPEGlocaldir
     FF_OUTPATH = get.FFMPEGoutdir
     YDL_OUTPATH = get.YDLoutdir
+    YDL_SUBFOLD = get.PLAYLISTsubfolder
     SAMEDIR = get.SAMEdir
     FILESUFFIX = get.FILEsuffix
     TBSIZE = get.TBsize
@@ -92,7 +93,6 @@ class Setup(wx.Dialog):
             if not b.startswith('#'):
                 if not b == '\n':
                     self.rowsNum.append(a)
-
                     """
                     dic [a] = b.strip()# used for easy reading print debug
         #USEFUL FOR DEBUGGING (see Setup.__init__.__doc__)
@@ -101,7 +101,6 @@ class Setup(wx.Dialog):
         for n, k in enumerate(sorted(dic)):
             print(n, ' -------> ', k, ' --> ', dic[k])
         """
-
         dirname = os.path.expanduser('~')  # /home/user/
         self.pathFF = dirname if not Setup.FF_OUTPATH else Setup.FF_OUTPATH
         self.pathYDL = dirname if not Setup.YDL_OUTPATH else Setup.YDL_OUTPATH
@@ -132,12 +131,7 @@ class Setup(wx.Dialog):
         sizerGeneral.Add(boxFFmpegoutpath, 0, wx.ALL | wx.EXPAND, 5)
         boxFFmpegoutpath.Add((0, 10))
         sizeFFdirdest = wx.BoxSizer(wx.HORIZONTAL)
-        boxFFmpegoutpath.Add(sizeFFdirdest, 0, wx.ALL | wx.EXPAND, 5)
-        self.btn_FFpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
-        sizeFFdirdest.Add(self.btn_FFpath, 0, wx.ALL |
-                          wx.ALIGN_CENTER_VERTICAL |
-                          wx.ALIGN_CENTER_HORIZONTAL, 5
-                          )
+        boxFFmpegoutpath.Add(sizeFFdirdest, 0, wx.EXPAND)
         self.txtctrl_FFpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
@@ -146,7 +140,13 @@ class Setup(wx.Dialog):
                           wx.ALIGN_CENTER_HORIZONTAL, 5
                           )
         self.txtctrl_FFpath.AppendText(self.pathFF)
-        descr = _(" Save to the same source folder")
+
+        self.btn_FFpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
+        sizeFFdirdest.Add(self.btn_FFpath, 0, wx.ALL |
+                          wx.ALIGN_CENTER_VERTICAL |
+                          wx.ALIGN_CENTER_HORIZONTAL, 5
+                          )
+        descr = _("Save each file in the same\nfolder as input file")
         self.ckbx_dir = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
         boxFFmpegoutpath.Add(self.ckbx_dir, 0, wx.ALL, 5)
         sizeSamedest = wx.BoxSizer(wx.HORIZONTAL)
@@ -164,13 +164,7 @@ class Setup(wx.Dialog):
         sizerGeneral.Add(boxYdloutpath, 0, wx.ALL | wx.EXPAND, 5)
         boxYdloutpath.Add((0, 5))
         sizeYDLdirdest = wx.BoxSizer(wx.HORIZONTAL)
-        boxYdloutpath.Add(sizeYDLdirdest, 0, wx.ALL | wx.EXPAND, 5)
-
-        self.btn_YDLpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
-        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.ALL |
-                           wx.ALIGN_CENTER_VERTICAL |
-                           wx.ALIGN_CENTER_HORIZONTAL, 5
-                           )
+        boxYdloutpath.Add(sizeYDLdirdest, 0, wx.EXPAND)
         self.txtctrl_YDLpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
                                            )
@@ -179,14 +173,22 @@ class Setup(wx.Dialog):
                            wx.ALIGN_CENTER_HORIZONTAL, 5
                            )
         self.txtctrl_YDLpath.AppendText(self.pathYDL)
+        self.btn_YDLpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
+        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.ALL |
+                           wx.ALIGN_CENTER_VERTICAL |
+                           wx.ALIGN_CENTER_HORIZONTAL, 5
+                           )
+        descr = _("Auto-create subfolders\nwhen download playlists")
+        self.ckbx_playlist = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
+        boxYdloutpath.Add(self.ckbx_playlist, 0, wx.ALL, 5)
         boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                         _("Cache Settings"))), wx.VERTICAL)
         sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 5)
         gridCache = wx.BoxSizer(wx.VERTICAL)
 
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
-                        _(" Clear the cache when exiting the application")))
-        gridCache.Add(self.checkbox_cacheclr, 0, wx.ALL, 5)
+                        _("Clear the cache when exiting the application")))
+        gridCache.Add(self.checkbox_cacheclr, 0)
         boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 5)
         tabOne.SetSizer(sizerGeneral)
         notebook.AddPage(tabOne, _("Files Preferences"))
@@ -196,51 +198,51 @@ class Setup(wx.Dialog):
         gridExec = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
                                      _('Path to the executables')),
                                      wx.VERTICAL)
-        sizerFFmpeg.Add(gridExec, 1, wx.ALL | wx.EXPAND, 5)
+        sizerFFmpeg.Add(gridExec, 0, wx.ALL | wx.EXPAND, 5)
         # ----
         gridExec.Add((0, 5))
         self.checkbox_exeFFmpeg = wx.CheckBox(tabTwo, wx.ID_ANY, (
-                                _(" Enable another location to run FFmpeg")))
+                                _("Enable another location to run FFmpeg")))
         self.btn_pathFFmpeg = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
         self.txtctrl_ffmpeg = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
         gridExec.Add(self.checkbox_exeFFmpeg, 0, wx.ALL, 5)
         gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
-        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
+        gridExec.Add(gridFFmpeg, 0, wx.EXPAND)
         gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALL, 5)
+        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
         # ----
         self.checkbox_exeFFprobe = wx.CheckBox(tabTwo, wx.ID_ANY, (
-                                _(" Enable another location to run FFprobe")))
+                                _("Enable another location to run FFprobe")))
         self.btn_pathFFprobe = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
         self.txtctrl_ffprobe = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
                                            )
         gridExec.Add(self.checkbox_exeFFprobe, 0, wx.ALL, 5)
         gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFprobe, 0, wx.ALL | wx.EXPAND, 5)
-        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
+        gridExec.Add(gridFFprobe, 0, wx.EXPAND)
         gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALL, 5)
+        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
         # ----
         self.checkbox_exeFFplay = wx.CheckBox(tabTwo, wx.ID_ANY, (
-                                  _(" Enable another location to run FFplay")))
+                                  _("Enable another location to run FFplay")))
         self.btn_pathFFplay = wx.Button(tabTwo, wx.ID_ANY, _("Browse.."))
         self.txtctrl_ffplay = wx.TextCtrl(tabTwo, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
         gridExec.Add(self.checkbox_exeFFplay, 0, wx.ALL, 5)
         gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
-        gridExec.Add(gridFFplay, 0, wx.ALL | wx.EXPAND, 5)
-        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
+        gridExec.Add(gridFFplay, 0, wx.EXPAND)
         gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALL, 5)
+        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
 
         gridFFopt = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
                                                    _('Other options')),
                                       wx.VERTICAL)
-        sizerFFmpeg.Add(gridFFopt, 0, wx.ALL | wx.EXPAND, 5)
+        sizerFFmpeg.Add(gridFFopt, 1, wx.ALL | wx.EXPAND, 5)
         gridSizopt = wx.FlexGridSizer(0, 2, 0, 0)
-        gridFFopt.Add(gridSizopt, 0, wx.ALL, 5)
+        gridFFopt.Add(gridSizopt, 0,)
 
         labFFthreads = wx.StaticText(tabTwo, wx.ID_ANY,
                                      (_("Threads used for transcoding "
@@ -388,8 +390,8 @@ class Setup(wx.Dialog):
             lab1_appearance.Disable()
 
         self.checkbox_tbtext = wx.CheckBox(tabFour, wx.ID_ANY, (
-                                _(" Shows the text in the toolbar buttons")))
-        boxTB.Add(self.checkbox_tbtext, 0, wx.ALL, 10)
+                                _("Shows the text in the toolbar buttons")))
+        boxTB.Add(self.checkbox_tbtext, 0, wx.ALL, 5)
 
         tabFour.SetSizer(gridappearance)  # aggiungo il sizer su tab 4
         notebook.AddPage(tabFour, _("Appearance"))
@@ -449,9 +451,10 @@ class Setup(wx.Dialog):
         self.Bind(wx.EVT_RADIOBOX, self.logging_ffmpeg, self.rdbFFmpeg)
         self.Bind(wx.EVT_SPINCTRL, self.on_threads, self.spinctrl_threads)
         self.Bind(wx.EVT_BUTTON, self.on_ffmpegPath, self.btn_FFpath)
-        self.Bind(wx.EVT_BUTTON, self.on_downloadPath, self.btn_YDLpath)
         self.Bind(wx.EVT_CHECKBOX, self.set_Samedest, self.ckbx_dir)
         self.Bind(wx.EVT_TEXT, self.set_Suffix, self.text_suffix)
+        self.Bind(wx.EVT_BUTTON, self.on_downloadPath, self.btn_YDLpath)
+        self.Bind(wx.EVT_CHECKBOX, self.on_playlistFolder, self.ckbx_playlist)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFmpeg, self.checkbox_exeFFmpeg)
         self.Bind(wx.EVT_BUTTON, self.open_path_ffmpeg, self.btn_pathFFmpeg)
         self.Bind(wx.EVT_CHECKBOX, self.exeFFprobe, self.checkbox_exeFFprobe)
@@ -555,6 +558,11 @@ class Setup(wx.Dialog):
             self.btn_FFpath.Disable(), self.txtctrl_FFpath.Disable()
             if not Setup.FILESUFFIX == 'none':
                 self.text_suffix.AppendText(Setup.FILESUFFIX)
+
+        if Setup.YDL_SUBFOLD == 'false':
+            self.ckbx_playlist.SetValue(False)
+        else:
+            self.ckbx_playlist.SetValue(True)
     # --------------------------------------------------------------------#
 
     def on_threads(self, event):
@@ -575,6 +583,14 @@ class Setup(wx.Dialog):
             self.txtctrl_YDLpath.AppendText(dlg.GetPath())
             self.full_list[self.rowsNum[19]] = '%s\n' % (dlg.GetPath())
             dlg.Destroy()
+    # ---------------------------------------------------------------------#
+
+    def on_playlistFolder(self, event):
+        """auto-create subfolders when downloading playlists"""
+        if self.ckbx_playlist.IsChecked():
+            self.full_list[self.rowsNum[20]] = 'true\n'
+        else:
+            self.full_list[self.rowsNum[20]] = 'false\n'
     # ---------------------------------------------------------------------#
 
     def on_ffmpegPath(self, event):

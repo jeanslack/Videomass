@@ -65,7 +65,7 @@ class TextDnD(wx.Panel):
                                           )
         sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
 
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(60, -1))
+        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
         sizer_ctrl.Add(self.btn_save, 0, wx.ALL |
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL, 5
@@ -83,7 +83,7 @@ class TextDnD(wx.Panel):
         btn_clear.SetToolTip(_('Delete all text from the list'))
         tip = (_("Set up a temporary folder for downloads"))
         self.btn_save.SetToolTip(tip)
-        self.text_path_save.SetToolTip(_("Destination folder:"))
+        self.text_path_save.SetToolTip(_("Destination folder"))
 
         # Binding
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)

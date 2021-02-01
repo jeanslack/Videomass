@@ -421,7 +421,7 @@ class MainFrame(wx.Frame):
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"),
                                      _("Close Videomass"))
-        self.menuBar.Append(fileButton, "&File")
+        self.menuBar.Append(fileButton, _("&File"))
 
         # ------------------ tools menu
         toolsButton = wx.Menu()

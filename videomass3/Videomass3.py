@@ -132,6 +132,7 @@ class Videomass(wx.App):
         self.SAMEdir = setui[4][17]  # file save with same dest. as source
         self.FILEsuffix = setui[4][18]  # add a suffix string to file name
         self.YDLoutdir = dirname if setui[4][19] == 'none' else setui[4][19]
+        self.PLAYLISTsubfolder = setui[4][20]  # subfolder check on playlist
 
         # ----- youtube-dl
         execname = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'

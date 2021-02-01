@@ -93,11 +93,11 @@ class File_Play(Thread):
         """
         # time.sleep(.5)
         cmd = '"%s" %s %s -i "%s" %s' % (self.ffplay,
-                                       self.time_seq,
-                                       self.ffplay_loglev,
-                                       self.filename,
-                                       self.param
-                                       )
+                                         self.time_seq,
+                                         self.ffplay_loglev,
+                                         self.filename,
+                                         self.param
+                                         )
         self.logWrite(cmd)
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)

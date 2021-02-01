@@ -124,7 +124,7 @@ class Transpose(wx.Dialog):
             self.statictxt.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
         # ----------------------Set layout------------------------------#
         self.SetSizer(sizerBase)
-        #sizerBase.Fit(self)
+        # sizerBase.Fit(self)
         self.Fit()
         self.Layout()
 

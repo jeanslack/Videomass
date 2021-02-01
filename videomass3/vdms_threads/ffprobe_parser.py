@@ -203,14 +203,14 @@ class FFProbe(object):
                     )
         else:
             cmnd = '"%s" -i "%s" -v error %s %s %s %s %s %s' % (FFPROBE_URL,
-                                                              filename,
-                                                              pretty,
-                                                              select,
-                                                              entries,
-                                                              show_format,
-                                                              show_streams,
-                                                              writer
-                                                              )
+                                                                filename,
+                                                                pretty,
+                                                                select,
+                                                                entries,
+                                                                show_format,
+                                                                show_streams,
+                                                                writer
+                                                                )
         if not platform.system() == 'Windows':
             import shlex
             cmnd = shlex.split(cmnd)

@@ -244,7 +244,7 @@ def detect_binaries(platform, executable, additionaldir=None):
         if additionaldir:  # check onto additionaldir
 
             if not os.path.isfile(os.path.join("%s" % additionaldir,
-                                                "bin", "%s" % executable)):
+                                               "bin", "%s" % executable)):
                 provided = False
 
             else:

@@ -184,7 +184,7 @@ class FileDnD(wx.Panel):
         sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 5)
         sizer.Add(sizer_media, 0, wx.EXPAND)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
-        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(50, -1))
+        self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
                                           wx.TE_READONLY
@@ -220,7 +220,7 @@ class FileDnD(wx.Panel):
         btn_clear.SetToolTip(_('Delete all files from the list'))
         tip = (_("Set up a temporary folder for conversions"))
         self.btn_save.SetToolTip(tip)
-        self.text_path_save.SetToolTip(_("Destination folder:"))
+        self.text_path_save.SetToolTip(_("Destination folder"))
         # Binding (EVT)
         self.Bind(wx.EVT_BUTTON, self.playSelect, btn_play)
         self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)

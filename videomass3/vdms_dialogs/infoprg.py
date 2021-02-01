@@ -71,6 +71,6 @@ def info(parent, videomass_icon):
     info.SetArtists(
         ['Gianluca Pernigotto <jeanlucperni@gmail.com>',
          'Breeze icons '
-         'https://github.com/KDE/breeze-icons',])
+         'https://github.com/KDE/breeze-icons', ])
     wx.adv.AboutBox(info)
     # event.Skip()
