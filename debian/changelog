@@ -25,6 +25,9 @@ videomass (3.3.7-1) UNRELEASED; urgency=medium
     checkbox is not selected.
   * Added buttons for playback
   * New configuration file version number 2.9 .
+  * Fixed bug on timeline: the time selection string was included in the ffmpeg
+    command even when it was at "-ss 00:00:00.000 -t 00:00:00.00" resulting in
+    all empty files.
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 31 Jan 2021 21:39:00 +0200
 

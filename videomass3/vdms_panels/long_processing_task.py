@@ -209,7 +209,11 @@ class Logging_Console(wx.Panel):
 
         self.OutText.Clear(), self.labPerc.SetLabel('')
         self.logname = varargs[8]  # example: Videomass_VideoConversion.log
-        time_seq = self.parent.time_seq  # a time segment
+
+        if self.parent.time_seq ==  "-ss 00:00:00.000 -t 00:00:00.000":
+            time_seq = ''
+        else:
+            time_seq = self.parent.time_seq  # a time segment
 
         write_log(self.logname, Logging_Console.LOGDIR)  # set initial file LOG
 
