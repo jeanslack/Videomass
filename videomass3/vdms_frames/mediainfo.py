@@ -97,7 +97,7 @@ class Mediainfo(wx.MiniFrame):
         sizer_tab1 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab1.Add(self.format_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         sizer_tab1.Add(self.format_stxt, 0, wx.ALL, 5)
-        sizer_tab1.Add(self.format_tags, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_tab1.Add(self.format_tags, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_1.SetSizer(sizer_tab1)
         notebook.AddPage(nb_panel_1, (_("Data Format")))
         #  tab video
@@ -119,7 +119,7 @@ class Mediainfo(wx.MiniFrame):
         sizer_tab2 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab2.Add(self.video_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         sizer_tab2.Add(self.video_stxt, 0, wx.ALL, 5)
-        sizer_tab2.Add(self.video_tags, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_tab2.Add(self.video_tags, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_2.SetSizer(sizer_tab2)
         notebook.AddPage(nb_panel_2, (_("Video Stream")))
         #  tab audio
@@ -140,7 +140,7 @@ class Mediainfo(wx.MiniFrame):
         sizer_tab3 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab3.Add(self.audio_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         sizer_tab3.Add(self.audio_stxt, 0, wx.ALL, 5)
-        sizer_tab3.Add(self.audio_tags, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_tab3.Add(self.audio_tags, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_3.SetSizer(sizer_tab3)
         notebook.AddPage(nb_panel_3, (_("Audio Streams")))
         #  tab subtitle
@@ -161,7 +161,7 @@ class Mediainfo(wx.MiniFrame):
         sizer_tab4 = wx.BoxSizer(wx.VERTICAL)
         sizer_tab4.Add(self.subtitle_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         sizer_tab4.Add(self.sub_stxt, 0, wx.ALL, 5)
-        sizer_tab4.Add(self.sub_tags, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_tab4.Add(self.sub_tags, 0, wx.ALL | wx.EXPAND, 5)
         nb_panel_4.SetSizer(sizer_tab4)
         notebook.AddPage(nb_panel_4, (_("Subtitle Streams")))
         #  bottom
@@ -209,15 +209,21 @@ class Mediainfo(wx.MiniFrame):
 
         # set layout
         self.SetTitle(_('Multimedia streams analyzer'))
-        self.SetMinSize((700, 400))
+        self.SetMinSize((700, 500))
         self.file_select.SetMinSize((-1, 150))
-        self.format_ctrl.SetMinSize((-1, 250))
+        # self.format_ctrl.SetMinSize((-1, 300))
+        # self.format_tags.SetMinSize((-1, 100))
+
         self.format_tags.SetMinSize((-1, 100))
+        self.video_tags.SetMinSize((-1, 100))
+        self.audio_tags.SetMinSize((-1, 100))
+        self.sub_tags.SetMinSize((-1, 100))
 
         self.panel.SetSizer(self.sizerBase)
         # self.sizerBase.Fit(self)
         self.Fit()
         self.Layout()
+        self.CentreOnScreen()
 
         flist = [x['format']['filename'] for x in self.data
                  if x['format']['filename']]
@@ -269,6 +275,9 @@ class Mediainfo(wx.MiniFrame):
             self.sub_tags.Hide(), self.sub_stxt.Hide()
 
         self.format_tags.SetMinSize((-1, 100))
+        self.video_tags.SetMinSize((-1, 100))
+        self.audio_tags.SetMinSize((-1, 100))
+        self.sub_tags.SetMinSize((-1, 100))
         # self.panel.SetSizer(self.sizerBase)
         self.sizerBase.Fit(self)
         self.Layout()
