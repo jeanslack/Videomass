@@ -190,7 +190,7 @@ class FileDnD(wx.Panel):
                                           wx.TE_READONLY
                                           )
         sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_outdir.Add(self.btn_save, 0, wx.ALL |
+        sizer_outdir.Add(self.btn_save, 0, wx.RIGHT |
                          wx.ALIGN_CENTER_HORIZONTAL |
                          wx.ALIGN_CENTER_VERTICAL, 5
                          )

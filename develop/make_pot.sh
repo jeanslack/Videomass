@@ -62,7 +62,6 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_panels/timeline.py" \
 "../vdms_threads/ffplay_file.py" \
 "../vdms_threads/ffprobe_parser.py" \
-"../vdms_threads/mpv_url.py" \
 "../vdms_threads/one_pass.py" \
 "../vdms_threads/picture_exporting.py" \
 "../vdms_threads/two_pass_EBU.py" \

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Feb.02.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -136,6 +136,11 @@ class Ydl_DL_Pylib(Thread):
     LOGDIR = get.LOGdir
     FFMPEG_URL = get.FFMPEG_url
 
+    if get.PLAYLISTsubfolder == 'true':
+        SUBDIR = '%(playlist_title)s/%(uploader)s/%(playlist_index)s - '
+    else:
+        SUBDIR = ''
+
     def __init__(self, varargs, logname):
         """
         Attributes defined here:
@@ -173,6 +178,11 @@ class Ydl_DL_Pylib(Thread):
                                                self.code,
                                                fillvalue='',
                                                ):
+            if 'playlist' in url or not self.opt['noplaylist']:
+                outtmpl = Ydl_DL_Pylib.SUBDIR + self.opt['outtmpl']
+            else:
+                outtmpl = self.opt['outtmpl']
+
             format_code = code if code else self.opt['format']
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
@@ -190,8 +200,7 @@ class Ydl_DL_Pylib(Thread):
             ydl_opts = {
                     'format': format_code,
                     'extractaudio': self.opt['format'],
-                    'outtmpl': '{}/{}'.format(self.outputdir,
-                                              self.opt['outtmpl']),
+                    'outtmpl': '{}/{}'.format(self.outputdir, outtmpl),
                     'writesubtitles': self.opt['writesubtitles'],
                     'addmetadata': self.opt['addmetadata'],
                     'restrictfilenames': True,

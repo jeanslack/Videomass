@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.19.2020 *PEP8 compatible*
+# Rev: Feb.02.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -62,6 +62,11 @@ class Ydl_DL_Exec(Thread):
     FFMPEG_URL = get.FFMPEG_url
     EXECYDL = get.execYdl
 
+    if get.PLAYLISTsubfolder == 'true':
+        SUBDIR = '%(playlist_title)s/%(uploader)s/%(playlist_index)s - '
+    else:
+        SUBDIR = ''
+
     if not platform.system() == 'Windows':
         LINE_MSG = _('Unrecognized error')
     else:
@@ -116,6 +121,11 @@ class Ydl_DL_Exec(Thread):
                                                self.code,
                                                fillvalue='',
                                                ):
+            if 'playlist' in url or '--yes-playlist' in self.opt:
+                outtmpl = Ydl_DL_Exec.SUBDIR + self.outtmpl
+            else:
+                outtmpl = self.outtmpl
+
             format_code = '--format %s' % (code) if code else ''
             cmd = ('"{0}" {1} --newline --ignore-errors {8} -o '
                    '"{2}/{3}" {4} {5} --ignore-config --restrict-filenames '
@@ -123,7 +133,7 @@ class Ydl_DL_Exec(Thread):
                                                         Ydl_DL_Exec.EXECYDL,
                                                         self.ssl,
                                                         self.outputdir,
-                                                        self.outtmpl,
+                                                        outtmpl,
                                                         format_code,
                                                         self.opt,
                                                         url,

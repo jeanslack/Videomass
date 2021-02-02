@@ -23,6 +23,7 @@ videomass (3.3.7-1) UNRELEASED; urgency=medium
     Download by format code .
   * If URLs contain playlists, warn you when the Download all playlists
     checkbox is not selected.
+  * Added buttons for playback
   * New configuration file version number 2.9 .
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 31 Jan 2021 21:39:00 +0200

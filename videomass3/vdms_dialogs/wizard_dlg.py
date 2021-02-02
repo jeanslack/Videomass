@@ -315,7 +315,7 @@ class PageThree(wx.Panel):
         gridffmpeg.Add(self.ffmpegTxt, 1, wx.ALL, 5)
 
         self.ffmpegBtn = wx.Button(self, wx.ID_ANY, "ffmpeg")
-        gridffmpeg.Add(self.ffmpegBtn, 0, wx.ALL, 5)
+        gridffmpeg.Add(self.ffmpegBtn, 0, wx.RIGHT | wx.CENTER, 5)
         #  ffprobe
         gridffprobe = wx.BoxSizer(wx.HORIZONTAL)
         self.ffprobeTxt = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -323,7 +323,7 @@ class PageThree(wx.Panel):
         gridffprobe.Add(self.ffprobeTxt, 1, wx.ALL, 5)
 
         self.ffprobeBtn = wx.Button(self, wx.ID_ANY, "ffprobe")
-        gridffprobe.Add(self.ffprobeBtn, 0, wx.ALL, 5)
+        gridffprobe.Add(self.ffprobeBtn, 0, wx.RIGHT | wx.CENTER, 5)
         #  ffplay
         gridffplay = wx.BoxSizer(wx.HORIZONTAL)
         self.ffplayTxt = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -331,7 +331,7 @@ class PageThree(wx.Panel):
         gridffplay.Add(self.ffplayTxt, 1, wx.ALL, 5)
 
         self.ffplayBtn = wx.Button(self, wx.ID_ANY, "ffplay")
-        gridffplay.Add(self.ffplayBtn, 0, wx.ALL, 5)
+        gridffplay.Add(self.ffplayBtn, 0, wx.RIGHT | wx.CENTER, 5)
 
         if PageThree.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))

@@ -78,6 +78,7 @@ class Downloader(wx.Panel):
     get = wx.GetApp()  # get videomass wx.App attribute
     OS = get.OS
     PYLIB_YDL = get.pylibYdl
+    SUBFOLDER_PLAYLIST = get.PLAYLISTsubfolder
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
@@ -402,7 +403,7 @@ class Downloader(wx.Panel):
         Playback urls
         """
         tstamp = '-vf "%s"' % self.parent.cmdtimestamp if \
-                 self.parent.checktimestamp else ''
+           self.parent.checktimestamp else ''
 
         if self.fcode.GetSelectedItemCount() == 0:
             self.parent.statusbar_msg(_('An item must be selected in the '
@@ -806,13 +807,16 @@ class Downloader(wx.Panel):
         return format_code
     # -----------------------------------------------------------------#
 
-    def on_start(self):
+    def check_start(self, urls):
         """
-        Builds command string to use with an embed youtube_dl as
-        python library or using standard youtube-dl command line
-        with subprocess. This depends on some cases.
+        Call by on on_Start
+        check urls before continue, then get playlist value
+        and return subfolder string
         """
-        urls = self.parent.data_url
+        if Downloader.SUBFOLDER_PLAYLIST == 'true':
+            subdir = '%(playlist_title)s/%(uploader)s/%(playlist_index)s - '
+        else:
+            subdir = ''
 
         if not self.ckbx_pl.IsChecked():
             if [url for url in urls if 'playlist' in url]:
@@ -820,7 +824,26 @@ class Downloader(wx.Panel):
                                    'you sure you want to continue?'),
                                  _('Please confirm'), wx.ICON_QUESTION |
                                  wx.YES_NO, self) == wx.NO:
-                    return
+                    return False
+                return subdir
+
+            else:
+                return ''
+
+        elif self.opt["NO_PLAYLIST"][1] == '--yes-playlist':
+            return subdir
+    # -----------------------------------------------------------------#
+
+    def on_start(self):
+        """
+        Builds command string to use with an embed youtube_dl as
+        python library or using standard youtube-dl command line
+        with subprocess. This depends on some cases.
+        """
+        urls = self.parent.data_url
+        subdir = self.check_start(urls)
+        if subdir is False:
+            return
 
         if Downloader.PYLIB_YDL is None:  # youtube-dl is used as library
 
@@ -849,7 +872,7 @@ class Downloader(wx.Panel):
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -864,7 +887,7 @@ class Downloader(wx.Panel):
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.f%(format_id)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -878,7 +901,7 @@ class Downloader(wx.Panel):
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.%(ext)s',
                         'extractaudio': True,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -895,7 +918,7 @@ class Downloader(wx.Panel):
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
                         'nooverwrites': nooverwrites,
                         'writethumbnail': self.opt["THUMB"][0],
-                        'outtmpl': '%(title)s.f%(format_id)s.%(ext)s',
+                        'outtmpl': subdir + '%(title)s.f%(format_id)s.%(ext)s',
                         'extractaudio': False,
                         'addmetadata': self.opt["METADATA"][0],
                         'writesubtitles': self.opt["SUBTITLES"][0],
@@ -927,7 +950,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.%(ext)s'),
+                       (subdir + '%(title)s.%(ext)s'),
                        f'{nooverwrites}',
                        ]
 
@@ -940,7 +963,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.f%(format_id)s.%(ext)s'),
+                       (subdir + '%(title)s.f%(format_id)s.%(ext)s'),
                        f'{nooverwrites}',
                        ]
 
@@ -951,7 +974,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.%(ext)s'),
+                       (subdir + '%(title)s.%(ext)s'),
                        f'{nooverwrites}',
                        ]
 
@@ -964,7 +987,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('%(title)s.f%(format_id)s.%(ext)s'),
+                       (subdir + '%(title)s.f%(format_id)s.%(ext)s'),
                        f'{nooverwrites}',
                        ]
             self.parent.switch_to_processing('youtube-dl executable',

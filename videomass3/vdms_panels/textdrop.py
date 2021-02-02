@@ -66,7 +66,7 @@ class TextDnD(wx.Panel):
         sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
 
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
-        sizer_ctrl.Add(self.btn_save, 0, wx.ALL |
+        sizer_ctrl.Add(self.btn_save, 0, wx.RIGHT |
                        wx.ALIGN_CENTER_HORIZONTAL |
                        wx.ALIGN_CENTER_VERTICAL, 5
                        )

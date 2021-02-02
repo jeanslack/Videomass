@@ -135,14 +135,11 @@ class Setup(wx.Dialog):
         self.txtctrl_FFpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
                                           style=wx.TE_READONLY
                                           )
-        sizeFFdirdest.Add(self.txtctrl_FFpath, 1, wx.ALL |
-                          wx.ALIGN_CENTER_VERTICAL |
-                          wx.ALIGN_CENTER_HORIZONTAL, 5
-                          )
+        sizeFFdirdest.Add(self.txtctrl_FFpath, 1, wx.ALL, 5)
         self.txtctrl_FFpath.AppendText(self.pathFF)
 
         self.btn_FFpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
-        sizeFFdirdest.Add(self.btn_FFpath, 0, wx.ALL |
+        sizeFFdirdest.Add(self.btn_FFpath, 0, wx.RIGHT |
                           wx.ALIGN_CENTER_VERTICAL |
                           wx.ALIGN_CENTER_HORIZONTAL, 5
                           )
@@ -156,8 +153,7 @@ class Setup(wx.Dialog):
         sizeSamedest.Add(self.lab_suffix, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5)
         self.text_suffix = wx.TextCtrl(tabOne, wx.ID_ANY, "", size=(150, -1))
-        sizeSamedest.Add(self.text_suffix, 0, wx.ALL |
-                         wx.ALIGN_CENTER_VERTICAL, 5)
+        sizeSamedest.Add(self.text_suffix, 0, wx.ALL | wx.CENTER, 5)
         msg = _("Where do you prefer to save your downloads?")
         boxYdloutpath = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY,
                                                        (msg)), wx.VERTICAL)
@@ -168,13 +164,10 @@ class Setup(wx.Dialog):
         self.txtctrl_YDLpath = wx.TextCtrl(tabOne, wx.ID_ANY, "",
                                            style=wx.TE_READONLY
                                            )
-        sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL |
-                           wx.ALIGN_CENTER_VERTICAL |
-                           wx.ALIGN_CENTER_HORIZONTAL, 5
-                           )
+        sizeYDLdirdest.Add(self.txtctrl_YDLpath, 1, wx.ALL | wx.CENTER, 5)
         self.txtctrl_YDLpath.AppendText(self.pathYDL)
         self.btn_YDLpath = wx.Button(tabOne, wx.ID_ANY, _("Browse.."))
-        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.ALL |
+        sizeYDLdirdest.Add(self.btn_YDLpath, 0, wx.RIGHT |
                            wx.ALIGN_CENTER_VERTICAL |
                            wx.ALIGN_CENTER_HORIZONTAL, 5
                            )
@@ -211,7 +204,7 @@ class Setup(wx.Dialog):
         gridFFmpeg = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFmpeg, 0, wx.EXPAND)
         gridFFmpeg.Add(self.txtctrl_ffmpeg, 1, wx.ALL, 5)
-        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.ALL, 5)
+        gridFFmpeg.Add(self.btn_pathFFmpeg, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
         self.checkbox_exeFFprobe = wx.CheckBox(tabTwo, wx.ID_ANY, (
                                 _("Enable another location to run FFprobe")))
@@ -223,7 +216,7 @@ class Setup(wx.Dialog):
         gridFFprobe = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFprobe, 0, wx.EXPAND)
         gridFFprobe.Add(self.txtctrl_ffprobe, 1, wx.ALL, 5)
-        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.ALL, 5)
+        gridFFprobe.Add(self.btn_pathFFprobe, 0, wx.RIGHT | wx.CENTER, 5)
         # ----
         self.checkbox_exeFFplay = wx.CheckBox(tabTwo, wx.ID_ANY, (
                                   _("Enable another location to run FFplay")))
@@ -235,7 +228,7 @@ class Setup(wx.Dialog):
         gridFFplay = wx.BoxSizer(wx.HORIZONTAL)
         gridExec.Add(gridFFplay, 0, wx.EXPAND)
         gridFFplay.Add(self.txtctrl_ffplay, 1, wx.ALL, 5)
-        gridFFplay.Add(self.btn_pathFFplay, 0, wx.ALL, 5)
+        gridFFplay.Add(self.btn_pathFFplay, 0, wx.RIGHT | wx.CENTER, 5)
 
         gridFFopt = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
                                                    _('Other options')),

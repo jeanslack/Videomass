@@ -150,7 +150,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[17],
                                                      pathicons[18]
                                                      )
-        self.ytDownloader = youtubedl_ui.Downloader(self)
+        self.ytDownloader = youtubedl_ui.Downloader(self, pathicons[6])
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                  MainFrame.OS,
                                                  pathicons[6],  # playfilt
@@ -324,33 +324,17 @@ class MainFrame(wx.Frame):
         """
         tstamp = '-vf "%s"' % self.cmdtimestamp if self.checktimestamp else ''
 
-        if self.ytDownloader.IsShown():
-            if self.ytDownloader.fcode.GetSelectedItemCount() == 0:
-                self.statusbar_msg(_('An item must be selected in the '
-                                     'URLs checklist'), MainFrame.YELLOW)
+        with wx.FileDialog(self, _("Open a playable file with FFplay"),
+                           #defaultDir=self.outpath_ffmpeg,
+                           # wildcard="Audio source (%s)|%s" % (f, f),
+                           style=wx.FD_OPEN |
+                           wx.FD_FILE_MUST_EXIST) as fileDialog:
+
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
                 return
-            else:
-                self.statusbar_msg(_('YouTube Downloader'), None)
-                item = self.ytDownloader.fcode.GetFocusedItem()
-                url = self.ytDownloader.fcode.GetItemText(item, 1)
-                if self.ytDownloader.choice.GetSelection() in [0, 1, 2]:
-                    quality = self.ytDownloader.fcode.GetItemText(item, 3)
-                elif self.ytDownloader.choice.GetSelection() == 3:
-                    quality = self.ytDownloader.fcode.GetItemText(item, 0)
+            pathname = fileDialog.GetPath()
 
-                IO_tools.url_play(url, quality, tstamp)
-        else:
-            with wx.FileDialog(self, _("Open a playable file with FFplay"),
-                               defaultDir=self.outpath_ffmpeg,
-                               # wildcard="Audio source (%s)|%s" % (f, f),
-                               style=wx.FD_OPEN |
-                               wx.FD_FILE_MUST_EXIST) as fileDialog:
-
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return
-                pathname = fileDialog.GetPath()
-
-            IO_tools.stream_play(pathname, '', tstamp)
+        IO_tools.stream_play(pathname, '', tstamp)
     # ------------------------------------------------------------------#
 
     def Saveprofile(self, event):
@@ -1352,7 +1336,7 @@ class MainFrame(wx.Frame):
                                     bmpstat,
                                     tip, wx.ITEM_NORMAL
                                     )
-        tip = _("Playing a media file or URL")
+        tip = _("File playback")
         self.btn_playO = self.toolbar.AddTool(6, _('Playback'),
                                               bmpprev,
                                               tip, wx.ITEM_NORMAL,
