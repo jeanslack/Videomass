@@ -29,7 +29,7 @@ videomass (3.3.7-1) UNRELEASED; urgency=medium
     command even when it was at "-ss 00:00:00.000 -t 00:00:00.00" resulting in
     all empty files.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 31 Jan 2021 21:39:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 03 Feb 2021 11:20:00 +0200
 
 videomass (3.3.6-1) UNRELEASED; urgency=medium
 
