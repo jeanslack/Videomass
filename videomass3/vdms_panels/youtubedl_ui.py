@@ -223,7 +223,7 @@ class Downloader(wx.Panel):
                               )
         fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 10)
 
-        btn_play = wx.Button(panelscroll, wx.ID_ANY, _("Play"))
+        btn_play = wx.Button(panelscroll, wx.ID_ANY, _("Preview"))
         btn_play.SetBitmap(bmpplay, wx.LEFT)
         fgs1.Add(btn_play, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -292,6 +292,8 @@ class Downloader(wx.Panel):
         if Downloader.OS != 'Darwin':
             # self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
             self.labtxt.SetLabelMarkup("<b>%s</b>" % labtstr)
+        #  tooltips
+        btn_play.SetToolTip(_('Play selected url'))
 
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)

@@ -11,7 +11,7 @@
    viewBox="0 0 16 16"
    enable-background="new 0 0 48 48"
    id="svg12"
-   sodipodi:docname="view-preview.svg"
+   sodipodi:docname="preview.svg"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    width="16"
    height="16">
@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -61,7 +61,7 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="22.84"
-     inkscape:cx="7.7775832"
+     inkscape:cx="-1.6138354"
      inkscape:cy="7.5401166"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -73,7 +73,7 @@
   </sodipodi:namedview>
   <path
      sodipodi:type="star"
-     style="opacity:1;fill:#228b22;fill-opacity:1;stroke:none;stroke-width:1.27267075;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
+     style="opacity:1;fill:#73d216;fill-opacity:1;stroke:none;stroke-width:1.27267075;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal"
      id="path843"
      sodipodi:sides="3"
      sodipodi:cx="42.516647"
