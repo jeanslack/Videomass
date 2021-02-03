@@ -274,7 +274,7 @@ class Setup(wx.Dialog):
                 _('Use a local copy of youtube-dl')]
             ydlmsg = _(
                 'Make sure you are using the latest available version of '
-                'youtube-dl.\nThis allows you to avoid download problems.')
+                'youtube-dl.\nThis allows you to avoid download problems.\n')
             labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
             gridYdldl.Add(labydl0, 0, wx.TOP | wx.CENTRE, 5)
         else:
