@@ -325,7 +325,7 @@ class MainFrame(wx.Frame):
         tstamp = '-vf "%s"' % self.cmdtimestamp if self.checktimestamp else ''
 
         with wx.FileDialog(self, _("Open a playable file with FFplay"),
-                           #defaultDir=self.outpath_ffmpeg,
+                           # defaultDir=self.outpath_ffmpeg,
                            # wildcard="Audio source (%s)|%s" % (f, f),
                            style=wx.FD_OPEN |
                            wx.FD_FILE_MUST_EXIST) as fileDialog:
@@ -1641,9 +1641,11 @@ class MainFrame(wx.Frame):
         if varargs[0] == 'Viewing last log':
             self.statusbar_msg(_('Viewing last log'), None)
             duration = self.duration
+            time_seq = self.time_seq
 
         elif self.time_seq != "-ss 00:00:00.000 -t 00:00:00.000":
             ms = get_milliseconds(self.time_seq.split()[3])  # -t duration
+            time_seq = self.time_seq
             if [t for t in self.duration if ms > t]:  # if out time range
                 wx.MessageBox(_('Cannot continue: The duration in the '
                                 'timeline exceeds the duration of some queued '
@@ -1654,6 +1656,7 @@ class MainFrame(wx.Frame):
 
         else:
             duration = self.duration
+            time_seq = ''
             self.statusbar_msg(_('Processing...'), None)
 
         self.SetTitle(_('Videomass - Output Monitor'))
@@ -1667,7 +1670,8 @@ class MainFrame(wx.Frame):
         [self.menuBar.EnableTop(x, False) for x in range(0, 5)]
         # Hide the tool bar
         self.toolbar.Hide()
-        self.ProcessPanel.topic_thread(self.topicname, varargs, duration)
+        self.ProcessPanel.topic_thread(self.topicname, varargs,
+                                       duration, time_seq)
         self.Layout()
     # ------------------------------------------------------------------#
 

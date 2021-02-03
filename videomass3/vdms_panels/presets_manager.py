@@ -261,7 +261,7 @@ class PrstPan(wx.Panel):
         self.nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
         size_auto = wx.BoxSizer(wx.HORIZONTAL)
         grd_autosx = wx.FlexGridSizer(2, 1, 5, 5)
-        size_auto.Add(grd_autosx, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        size_auto.Add(grd_autosx, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.rdbx_norm = wx.RadioBox(self.nb1_p2, wx.ID_ANY,
                                      (_("Audio Normalization")),
                                      choices=[('Off'), ('PEAK'),
@@ -278,7 +278,7 @@ class PrstPan(wx.Panel):
                                     )
         grd_autosx.Add(boxamap, 0, wx.ALL | wx.EXPAND, 5)
         grd_map = wx.FlexGridSizer(2, 2, 0, 0)
-        boxamap.Add(grd_map, 0, wx.ALL | wx.EXPAND, 5)
+        boxamap.Add(grd_map, 0, wx.TOP | wx.EXPAND, 0)
         self.txtAinmap = wx.StaticText(self.nb1_p2, wx.ID_ANY,
                                        _('Input index:')
                                        )
@@ -1397,5 +1397,4 @@ class PrstPan(wx.Panel):
                                             self.cmb_A_inMap.GetValue(),
                                             self.cmb_A_outMap.GetValue(),
                                             ))
-
         return formula, dictions

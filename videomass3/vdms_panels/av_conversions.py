@@ -431,20 +431,20 @@ class AV_Conv(wx.Panel):
                                         majorDimension=0,
                                         style=wx.RA_SPECIFY_ROWS
                                         )
-        sizer_vp9panel.Add(self.rdb_deadline, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_vp9panel.Add(self.rdb_deadline, 0, wx.TOP | wx.CENTRE, 5)
         lab_cpu = wx.StaticText(self.vp9panel, wx.ID_ANY, (
                                         _("Quality/Speed\nratio modifier:")))
-        sizer_vp9panel.Add(lab_cpu, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
+        sizer_vp9panel.Add(lab_cpu, 0, wx.TOP | wx.ALIGN_CENTER_HORIZONTAL, 5)
         self.spin_cpu = wx.SpinCtrl(self.vp9panel, wx.ID_ANY, "0", min=-16,
                                     max=16, size=(-1, -1),
                                     style=wx.TE_PROCESS_ENTER
                                     )
-        sizer_vp9panel.Add(self.spin_cpu, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_vp9panel.Add(self.spin_cpu, 0, wx.TOP | wx.CENTRE, 5)
         self.ckbx_rowMt1 = wx.CheckBox(self.vp9panel,
                                        wx.ID_ANY,
                                        (_('Activates row-mt 1'))
                                        )
-        sizer_vp9panel.Add(self.ckbx_rowMt1, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_vp9panel.Add(self.ckbx_rowMt1, 0, wx.TOP | wx.CENTRE, 5)
 
         self.vp9panel.SetSizer(sizer_vp9panel)  # set panel
         self.vp9panel.SetAutoLayout(1)
@@ -457,9 +457,7 @@ class AV_Conv(wx.Panel):
                                                 wx.BORDER_NONE,
                                                 name="panelscroll"
                                                 )
-        self.box_opt.Add(self.h264panel, 0, wx.ALIGN_CENTER_HORIZONTAL |
-                         wx.ALIGN_CENTER_VERTICAL
-                         )
+        self.box_opt.Add(self.h264panel, 0, wx.CENTRE)
         sizer_h264panel = wx.BoxSizer(wx.VERTICAL)
         self.cmb_x26opti = wx.ComboBox(self.h264panel, wx.ID_ANY,
                                        choices=AV_Conv.OPTIMIZ_HEVC_AVC,
@@ -469,7 +467,7 @@ class AV_Conv(wx.Panel):
         sizer_h264panel.Add(self.cmb_x26opti, 0, wx.ALL | wx.CENTRE, 5)
         grid_h264panel = wx.FlexGridSizer(4, 2, 0, 0)
         sizer_h264panel.Add(grid_h264panel, 0, wx.ALL |
-                            wx.ALIGN_CENTER_HORIZONTAL, 5
+                            wx.ALIGN_CENTER_HORIZONTAL, 0
                             )
         txtpresets = wx.StaticText(self.h264panel, wx.ID_ANY, _('Preset'))
         grid_h264panel.Add(txtpresets, 0, wx.ALL |
@@ -546,7 +544,7 @@ class AV_Conv(wx.Panel):
                                 pos=wx.DefaultPosition, size=wx.DefaultSize,
                                 style=wx.LI_HORIZONTAL,
                                 name=wx.StaticLineNameStr)
-        sizer_Vfilter.Add(lineflt, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_Vfilter.Add(lineflt, 0, wx.ALL | wx.EXPAND, 10)
         self.btn_videosize = wx.Button(self.filterVpanel, wx.ID_ANY,
                                        _("Resizing"), size=(-1, -1))
         self.btn_videosize.SetBitmap(bmpresize, wx.LEFT)

@@ -107,7 +107,7 @@ class Timeline(wx.Panel):
         self.paneltime = wx.Panel(self, wx.ID_ANY,
                                   size=(Timeline.PW, Timeline.PH),
                                   style=wx.BORDER_SUNKEN)
-        sizer_base.Add(self.paneltime, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_base.Add(self.paneltime, 0, wx.LEFT | wx.RIGHT | wx.CENTRE, 5)
         self.sldseek = wx.Slider(self, wx.ID_ANY, 0, 0, self.milliseconds,
                                  size=(200, -1), style=wx.SL_HORIZONTAL
                                  )
@@ -129,13 +129,15 @@ class Timeline(wx.Panel):
         # ----------------------Layout----------------------#
 
         gridtime = wx.FlexGridSizer(2, 3, 0, 5)
-        gridtime.Add(txtstaticseek, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
+        gridtime.Add(txtstaticseek, 0, wx.LEFT | wx.RIGHT |
+                     wx.ALIGN_CENTRE_VERTICAL, 5)
         gridtime.Add(self.sldseek, 0, wx.ALL | wx.CENTRE, 0)
         gridtime.Add(self.txtseek, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
-        gridtime.Add(txtstaticdur, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
+        gridtime.Add(txtstaticdur, 0, wx.LEFT | wx.RIGHT |
+                     wx.ALIGN_CENTRE_VERTICAL, 5)
         gridtime.Add(self.sldcut, 0, wx.ALL | wx.CENTRE, 0)
         gridtime.Add(self.txtcut, 0, wx.ALL | wx.ALIGN_CENTRE_VERTICAL, 0)
-        sizer_base.Add(gridtime, 0, wx.ALL | wx.CENTRE, 5)
+        sizer_base.Add(gridtime, 0, wx.ALL | wx.CENTRE, 0)
 
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.14.2020 *PEP8 compatible*
+# Rev: Feb.03.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -194,11 +194,11 @@ class Logging_Console(wx.Panel):
         pub.subscribe(self.end_proc, "END_EVT")
     # ----------------------------------------------------------------------
 
-    def topic_thread(self, panel, varargs, duration):
+    def topic_thread(self, panel, varargs, duration, time_seq):
         """
         Thread redirection
         varargs: type tuple data object
-        duration: total duration or partial if set timeseq
+        duration: total duration or partial if set time_seq
         """
         self.previus = panel  # stores the panel from which it starts
 
@@ -209,11 +209,6 @@ class Logging_Console(wx.Panel):
 
         self.OutText.Clear(), self.labPerc.SetLabel('')
         self.logname = varargs[8]  # example: Videomass_VideoConversion.log
-
-        if self.parent.time_seq ==  "-ss 00:00:00.000 -t 00:00:00.000":
-            time_seq = ''
-        else:
-            time_seq = self.parent.time_seq  # a time segment
 
         write_log(self.logname, Logging_Console.LOGDIR)  # set initial file LOG
 

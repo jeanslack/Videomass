@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.22.2020 *PEP8 compatible*
+# Rev: Feb.03.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.

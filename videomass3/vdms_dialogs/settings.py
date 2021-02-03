@@ -176,13 +176,13 @@ class Setup(wx.Dialog):
         boxYdloutpath.Add(self.ckbx_playlist, 0, wx.ALL, 5)
         boxLabCache = wx.StaticBoxSizer(wx.StaticBox(tabOne, wx.ID_ANY, (
                                         _("Cache Settings"))), wx.VERTICAL)
-        sizerGeneral.Add(boxLabCache, 1, wx.ALL | wx.EXPAND, 5)
+        sizerGeneral.Add(boxLabCache, 0, wx.ALL | wx.EXPAND, 5)
         gridCache = wx.BoxSizer(wx.VERTICAL)
 
         self.checkbox_cacheclr = wx.CheckBox(tabOne, wx.ID_ANY, (
                         _("Clear the cache when exiting the application")))
         gridCache.Add(self.checkbox_cacheclr, 0)
-        boxLabCache.Add(gridCache, 1, wx.ALL | wx.EXPAND, 5)
+        boxLabCache.Add(gridCache, 0, wx.ALL | wx.EXPAND, 5)
         tabOne.SetSizer(sizerGeneral)
         notebook.AddPage(tabOne, _("Files Preferences"))
         # -----tab 2
@@ -233,7 +233,7 @@ class Setup(wx.Dialog):
         gridFFopt = wx.StaticBoxSizer(wx.StaticBox(tabTwo, wx.ID_ANY,
                                                    _('Other options')),
                                       wx.VERTICAL)
-        sizerFFmpeg.Add(gridFFopt, 1, wx.ALL | wx.EXPAND, 5)
+        sizerFFmpeg.Add(gridFFopt, 0, wx.ALL | wx.EXPAND, 5)
         gridSizopt = wx.FlexGridSizer(0, 2, 0, 0)
         gridFFopt.Add(gridSizopt, 0,)
 
@@ -264,7 +264,7 @@ class Setup(wx.Dialog):
 
         gridYdldl = wx.StaticBoxSizer(wx.StaticBox(self.tabThree, wx.ID_ANY,
                                       ''), wx.VERTICAL)
-        sizerYdl.Add(gridYdldl, 1, wx.ALL | wx.EXPAND, 5)
+        sizerYdl.Add(gridYdldl, 0, wx.ALL | wx.EXPAND, 5)
         # if AppImage
         if '/tmp/.mount_' in sys.executable or \
            os.path.exists(os.getcwd() + '/AppRun'):
@@ -292,7 +292,7 @@ class Setup(wx.Dialog):
             labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
             gridYdldl.Add(labydl0, 0, wx.TOP | wx.CENTRE, 5)
             labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY,
-                                    ('pip3 install -U youtube-dl'))
+                                    ('\npip3 install -U youtube-dl\n'))
             gridYdldl.Add(labydl1, 0, wx.ALL | wx.CENTRE, 5)
             if Setup.OS == 'Darwin':
                 labydl1.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL,

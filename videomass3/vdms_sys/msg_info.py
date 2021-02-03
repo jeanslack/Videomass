@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Feb.03.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -29,14 +29,15 @@
 def current_release():
     """
     General info strings
-    NOTE: number version > major number.minor number.micro number(patch number)
-    the sub release a=alpha release, b=beta release, c= candidate release
+    NOTE: number version > major number.minor number.micro
+    number(patch number) the sub release a=alpha release, b=beta
+    release, c= candidate release
     Example 19.1.1c1
     """
     Release_Name = 'Videomass'
     Program_Name = 'videomass'
     Version = '3.3.7'
-    Release = 'Jan 31 2021'
+    Release = 'February 03 2021'
     Copyright = '© 2013-2021'
     Website = 'http://jeanslack.github.io/Videomass/'
     Author = ('Gianluca Pernigotto', '(aka jeanslack)')
