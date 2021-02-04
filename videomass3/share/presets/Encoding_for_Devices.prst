@@ -1,0 +1,26 @@
+[
+    {
+        "Name": "ABR H.264",
+        "Description": "Reaching a certain target bitrate; encoding for devices",
+        "First_pass": "-an -sn -c:v libx264 -b:v 1M -pass 1 -pix_fmt yuv420p -f null",
+        "Second_pass": "-c:v libx264 -b:v 1M -pass 2 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "ABR H.265",
+        "Description": "Reaching a certain target bitrate; encoding for devices",
+        "First_pass": "-an -sn -c:v libx265 -b:v 1M -x265-params pass=1 -pix_fmt yuv420p -f null",
+        "Second_pass": "-c:v libx265 -b:v 1M -x265-params pass=2 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "ABR VP9",
+        "Description": "Reaching a certain target bitrate; encoding for devices",
+        "First_pass": "-an -sn -c:v libvpx-vp9 -b:v 1M -row-mt 1 -pass 1 -pix_fmt yuv420p -f null",
+        "Second_pass": "-c:v libvpx-vp9 -b:v 1M -row-mt 1 -pass 2 -map 0 -map_metadata 0 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "webm"
+    }
+]

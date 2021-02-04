@@ -1,0 +1,18 @@
+
+Update: Dec 30 2020
+-----------------------
+
+When you run the program for the first time, the contents of this folder will
+be copied to the user's Videomass configuration directory, according to the
+conventions of each operating system which are:
+
+        Linux:       '~/.config/videomass'
+        MacOs:       '~/Library/Application Support/videomass'
+        Windows:     'C:\Users\username\AppData\Roaming\videomass'
+
+`videomass.conf` is Videomass main configuration file and is used to store
+user preferences and to import essential data for the application.
+
+Furthermore, the Videomass configuration directory is also used to load
+the presets inside the 'presets/' folder. All presets files have the format
+extension `.prst` and contain text with JSON data structure.

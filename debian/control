@@ -1,0 +1,31 @@
+Source: videomass
+Maintainer: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Section: python
+Priority: optional
+Build-Depends: python3-setuptools, python3-all, debhelper (>=11~), dh-python
+Standards-Version: 4.1.4
+Homepage: https://github.com/jeanslack/Videomass
+X-Python3-Version: >= 3.6
+
+
+Package: python3-videomass
+Architecture: all
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+         ffmpeg,
+         youtube-dl,
+         python3-wxgtk4.0,
+         python3-pubsub,
+         python3-requests
+Suggests: atomicparsley
+Description: Videomass is a cross-platform GUI for FFmpeg and youtube-dl
+ Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need
+ to manage many profiles and automate some conversion processes.
+ .
+ It is based on the advanced management of presets and profiles in order to
+ use FFmpeg without limits of formats, codecs and commands.
+ .
+ It features graphical tools for viewing, analyzing and processing multimedia
+ streams and the video downloading.
+ .
+ Videomass is written in Python3 with the wxPython-Phoenix toolkit.

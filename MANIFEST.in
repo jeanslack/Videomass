@@ -1,8 +1,10 @@
 include launcher README.md AUTHORS BUGS CHANGELOG INSTALL COPYING TODO
-recursive-include videomass3 *
+include tests/*
+include bin/videomass
+recursive-include debian *
+recursive-include develop *
 recursive-include docs *
-recursive-include art *
-recursive-include share *
-recursive-include locale *
-recursive-include MAcOsxSetup *
-recursive-include Win32Setup *
+recursive-include videomass3/art *
+recursive-include videomass3/share *
+recursive-include videomass3/locale *
+recursive-include videomass3/FFMPEG *

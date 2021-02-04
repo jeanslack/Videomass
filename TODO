@@ -1,26 +1,27 @@
 
-This is a partial list of planned features that are yet to be implemented.
-
 --------------------
 URGENCY: to do soon
---------------------  
-- Main window to choose topic
+--------------------
+
 --------------
 URGENCY: high
 --------------
-        
+
+- improve Automations on Presets Manager
+
+- Make combobox to choose other colors for the crop rectangle selection.
+
 -------------
 URGENCY: low
-- Profile update:
-        1 profile to add audio tracks to a movie;
-        2 profile to add audio tracks on images.
-- also the presets can be added and deleted
-- Aplphanurical order profiles list
 -------------
 
 ---------------
 URGENCY: medium
 ----------------
-    
+
+
+
+
+
 
 

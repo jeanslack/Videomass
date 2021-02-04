@@ -1,0 +1,18 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Type=Application
+Name=Videomass
+Exec=videomass %U
+GenericName=Graphic interface for FFmpeg and youtube-dl
+GenericName[it]=Interfaccia grafica per FFmpeg e youtube-dl
+GenericName[ru]=Графический интерфейс для FFmpeg и youtube-dl
+GenericName[pl]=Interfejs graficzny dla FFmpeg i youtube-dl
+GenericName[de]=Grafische Oberfläche für FFmpeg und youtube-dl
+GenericName[es]=Interfaz gráfica para FFmpeg y youtube-dl
+GenericName[fr]=Interface graphique pour FFmpeg et youtube-dl
+GenericName[pt]=Interface gráfica para FFmpeg e youtube-dl
+GenericName[ar]=واجهة رسومية لـ FFmpeg و youtube-dl
+Icon=videomass
+Terminal=false
+Categories=AudioVideo;

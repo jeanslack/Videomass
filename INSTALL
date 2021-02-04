@@ -1,50 +1,83 @@
 Videomass Installation Instructions and buildings
 
+BASE DEPENDENCIES
+-----------------
 
-Note that installers for Windows x86_64 and MacOsX High Sierra x86_64 are 
-available at <https://sourceforge.net/projects/videomass2/>
-These installation programs contain everything needed to be used 
-in standalone mode, without the need for anything else. 
+    Required:
+        - Python >=3.6.9
+        - wxPython4 (Phoenix)
+        - PyPubSub
+        - requests
+        - pip (On Windows and MacOS it is included with Python3.7)
+        - FFmpeg (with ffplay and ffprobe) >=4.1.4
+        - youtube_dl
+
+    Optionals:
+        - atomicparsley (to embed thumbnail in audio file)
+
+Videomass can be run without installing by unpack the source package archive
+and executing the "launcher" script inside the root Videomass directory.
+
+    cd Videomass
+
+    python3 launcher
+
+Videomass can also be imported from the Python3 console (interactive mode):
+
+    >>> from videomass3 import Videomass3
+    >>> Videomass3.main()
+
 #--------------------------------------------------------------------------#
 
-Base Dependencies:
-    
-    - Python >=3.7
-    - wxPython4
-    - PyPubSub (install it with pip)
-    - pip (On Windows and MacOS it is included with Python3.7)
-    - FFmpeg (with ffplay and ffprobe)
+Installing with pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
 
-Videomass can be run without installing by un-tarring the source package and 
-executing the "launcher" script in the root of the un-tarred directory.
+    $ python3 -m pip install --user videomass
 
-    python launcher
+Upgrading with pip tool: (Linux, MacOs, FreeBSD, Windows, etc.)
 
-#--------------------------------------------------------------------------#
-Installing with pip tool: [Linux/Macintosh/Unix/Windows]
+    $ python3 -m pip install --user -U videomass
 
-    pip install videomass
-    
 - To uninstall:
 
-    pip uninstall videomass
-    
-Please, Visit the Wiki page for more info: 
-
-
-https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-tool
-#--------------------------------------------------------------------------#
-
-Build as wheel: [Linux/Macintosh/Unix/Windows]
-
-python3 setup.py sdist bdist_wheel
+    $ python3 -m pip uninstall videomass
 
 Please, Visit the Wiki page for more info:
 
-https://github.com/jeanslack/Videomass/wiki/Make-pure-Python-wheels
+<https://github.com/jeanslack/Videomass/wiki/Installing-from-PyPi-with-pip-command>
 
 #--------------------------------------------------------------------------#
 
+Build as wheel: (Linux, MacOs, FreeBSD, Windows, etc.)
 
+    $ python3 setup.py sdist bdist_wheel
 
+#--------------------------------------------------------------------------#
 
+Make a Debian source package from upstream source code:
+
+This will transform upstream source code into policy-compliant binary packages.
+
+Please, Visit the Videomass Wiki page for istructions:
+
+<https://github.com/jeanslack/Videomass/wiki/Packaging-for-Debian-and-derivatives>
+
+#--------------------------------------------------------------------------#
+
+Build as executable (Linux, Windows, MacOs)
+
+require: pyinstaller
+
+Use the 'develop/tools/pyinstaller_setup.py' script like this
+
+    $ python3 develop/tools/pyinstaller_setup.py -h
+
+Then choose the option you want.
+
+#--------------------------------------------------------------------------#
+
+Build as AppImage (only Linux)
+
+Use the 'develop/tools/AppImage_build_GTK2' script
+
+It will make a Videomass AppImage on current directory by installing the latest
+version on PYPI

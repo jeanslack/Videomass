@@ -1,14 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-#
 #########################################################
-# Name: videomass
+# Name: launcher.py
 # Porpose: main binary script of videomass for system installation
 # Compatibility: Python2, Python3
-# Author: Gianluca Pernigoto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2019 Gianluca Pernigoto <jeanlucperni@gmail.com>
+# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Gen 14-2019, Aug 14-2019, Sept.11.2019
+# Rev: April.06.2020 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -28,33 +27,7 @@
 
 #########################################################
 
-import sys
-import platform
-
 if __name__ == '__main__':
-    
-    if sys.version_info[0] == 3:
-        try:
-            import wx
-        
-        except ImportError:
-            sys.stderr.write("videomass: ERROR: 'wx' module is required; "
-                             "need wxPython4 (phoenix).\n"
-                             "Visit the wxPython web page for more info:\n"
-                             "<https://wxpython.org/>\n"
-                            )
-            if platform.system() not in ['Windows', 'Darwin']:
-                sys.stderr.write('Please, install wxPython4 with your package '
-                                 'manager.\n')
-            sys.exit(1)
-        
-        from videomass3 import Videomass3
-        Videomass3.main()
-    
-    else:
-        sys.stderr.write("videomass: ERROR: Not a supported Python version.\n"
-                         "Since version 1.6.1 Videomass is compatible only "
-                         "with Python3 .\nYou are using Python version %s\n" % 
-                         sys.version[0]
-                         )
-        sys.exit(1)
+    from videomass3 import Videomass3
+    Videomass3.main()
+

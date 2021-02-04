@@ -1,0 +1,40 @@
+Copyright Holders:
+
+    Copyright (C) 2014-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+
+License:
+
+    This package is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This package is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+
+On Debian systems, the complete text of the GNU General
+Public License can be found in `/usr/share/common-licenses/GPL-3'.
+
+-------------------------------------------
+
+The Debian packaging is Copyright (C) 2020, Gianluca Pernigoto <jeanlucperni@gmail.com>
+and is licensed under the GPL-3, see above.
+
+
+-------------------------------------------
+
+Icons under 'videomass3/art':
+
+    All *.svg and *.png icons in hicolor: GPL Version 3, 29 June 2007
+    Videomass icons in Sign_Icons: GPL Version 3, 29 June 2007 <http://www.gnu.org/licenses/>
+    Videomass icons in Videomass-Colours: GPL Version 3, 29 June 2007 <http://www.gnu.org/licenses/>
+    Videomass icons in Videomass-Dark: GPL Version 3, 29 June 2007 <http://www.gnu.org/licenses/>
+    Videomass icons in Videomass-Light: GPL Version 3, 29 June 2007 <http://www.gnu.org/licenses/>
+    The Breeze Icon Theme in Breeze: LGPL-3, 29 June 2007 <http://www.gnu.org/licenses/>
+    The Breeze Icon Theme in Breeze-Blues: LGPL-3, 29 June 2007 <http://www.gnu.org/licenses/>
+    The Breeze Icon Theme in Breeze-Dark: LGPL-3, 29 June 2007 <http://www.gnu.org/licenses/>

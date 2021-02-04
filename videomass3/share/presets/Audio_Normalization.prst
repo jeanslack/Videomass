@@ -1,0 +1,34 @@
+[
+    {
+        "Name": "PEAK/RMS normalization",
+        "Description": "Normalize any audio file by activate PEAK/RMS normalization automation",
+        "First_pass": "-vn -sn -map 0:0 -c:a pcm_s16le -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "EBU normalization",
+        "Description": "Normalize any audio file by activate EBU normalization automation",
+        "First_pass": "-vn -sn -map 0:0 -pass 1 -f null",
+        "Second_pass": "-vn -sn -map 0:0 -pass 2 -c:a: pcm_s16le -ar 44100 -map_metadata 0",
+        "Supported_list": "",
+        "Output_extension": "wav"
+    },
+    {
+        "Name": "PEAK/RMS normalization for Video",
+        "Description": "Example to ferform PEAK/RMS normalization on first audio stream",
+        "First_pass": "-c:v copy -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a:0 pcm_s16le -ar 44100 -map 0:a0? -map_metadata 0",
+        "Second_pass": "",
+        "Supported_list": "mkv,avi",
+        "Output_extension": "copy"
+    },
+    {
+        "Name": "EBU normalization for Video",
+        "Description": "Example to perform EBU normalization on second audio stream",
+        "First_pass": "-map 0:v? -map 0:2 -filter:a: loudnorm=I=-24.0:TP=-2.0:LRA=7.0:print_format=summary -vn -sn -pass 1 -f null",
+        "Second_pass": "-c:v copy -pass 2 -pix_fmt yuv420p -map 0:v? -map_chapters 0 -map 0:s? -c:a:1 pcm_s16le -ar 44100 -map 0:a1? -map_metadata 0",
+        "Supported_list": "mkv,avi",
+        "Output_extension": "copy"
+    }
+]

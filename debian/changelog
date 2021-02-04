@@ -1,0 +1,270 @@
+videomass (3.3.7-1) UNRELEASED; urgency=medium
+
+  * Added new icon themes, (colorful, dark and light).
+  * Removed Papirus icon theme.
+  * Ability to customize toolbar positioning (on Setup dialog box)
+  * Ability to show or hide text on toolbar buttons (on Setup dialog box)
+  * Enabled support to svg images for toolbar icons and some buttons (only with
+    wxPython version 4.1 to up)
+  * Ability to scales the toolbar icons (only with wxPython version 4.1 to up)
+  * Improved AV-conversions panel layout.
+  * Fix `invalid values in gauge` on progress bar during transcoding processes
+    when timeline duration exceeds the time of some files.
+  * Update Russian translation (credits ChourS).
+  * Update Italian translation (credits me).
+  * Improved main frame size (tiny layout for smaller screens).
+  * Improved panels size with scrolling panels.
+  * improved dialog boxes size.
+  * Fixed #11 (auto-create subfolders when download playlists and fix some
+    strings definition).
+  * Added new checkbox on Setup to auto-create subfolders when download
+    playlists.
+  * Prevent errors when URLs contain playlists and if the user chooses
+    Download by format code .
+  * If URLs contain playlists, warn you when the Download all playlists
+    checkbox is not selected.
+  * Added buttons for playback
+  * New configuration file version number 2.9 .
+  * Fixed bug on timeline: the time selection string was included in the ffmpeg
+    command even when it was at "-ss 00:00:00.000 -t 00:00:00.00" resulting in
+    all empty files.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 03 Feb 2021 11:20:00 +0200
+
+videomass (3.3.6-1) UNRELEASED; urgency=medium
+
+  * Fixed bug on MS-Windows when playing files or urls with ffplay executable.
+  * Fixed bug in the FFmpeg tab of the setup dialog, in which the executables
+    ffmpeg and ffplay could not be set correctly.
+  * Improved some MessageBox for confirmation.
+  * Improved some messages on MessageBox.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Jan 2020 09:49:00 +0200
+
+videomass (3.3.5-1) UNRELEASED; urgency=medium
+
+  * Transpose Filter Dialog: Fixed `wx.StaticText` wrapping on Windows and
+    MacOs, where it would break the static text string.
+  * The timeline is now a pop-up panel in the main frame window, enabled from
+    the menu bar > View > Show Timeline.
+  * Fixed `ZeroDivisionError: division by zero` for file duration equal to 0 .
+  * If file duration equal to 0, the time key is also added to the ffprobe data.
+  * Fixed empty strings in timeline display when Courier font was not found
+    on some O.S. like Ubuntu 20.04 .
+  * The Streaming Media Analyzer now has selectable items that make it easier
+    to view tags and disposition parameters in text format.
+  * Fixed `wxAssertionError` in the queued files context menu, if no item is
+    selected and user click for playback.
+  * FFplay now has timestamp display during playback. However, this feature can
+    be disabled from the checkbox: menu bar > FFplay > View timestamp.
+  * Ability to customize the size and colors of the timestamp.
+  * The menu bar has been reorganized to contain other features.
+  * Some toolbar items have been removed and added to the menu bar.
+  * Improved wizard dialog box.
+  * A single configuration file for all Operating Systems.
+  * Improved layout on the Presets manager panel.
+  * Improved layout on the Youtube downloader panel.
+  * Improved toolbar buttons.
+  * Added BORDER_THEME to all mini frames for proper display.
+  * Added the ability to choose a local downloader or an installed one
+    (installer dependent).
+  * Adds open "My conversion" folder.
+  * Adds open "My downloads" folder.
+  * Ability to set a temporary conversions folder.
+  * Abilty to set a temporary downloads folder.
+  * Ability to restore the default destination folders.
+  * Added some keyboard shortcuts for menu items.
+  * Ability to check for new versions of presets.
+  * Ability to download the latest version of presets.
+  * Ability to import existing presets while keeping your new profiles intact.
+  * Ability to update all presets while keeping your new profiles intact.
+  * Added `requests` package as new dependency.
+  * Improved ffmpeg setup on Setup dialog box.
+  * Fixed minor bugs.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 17 Jan 2020 18:09:00 +0200
+
+videomass (3.3.0-1) UNRELEASED; urgency=medium
+
+  * Fixed panel base and sizer base on `while_playing.py` mini frame.
+  * The Crop filter dialog now has the crop selection monitor and the ability
+    to load additional frames.
+  * The Transpose filter displaying the current position of the video frame.
+  * Improved video scale dialog.
+  * New files added cause all video filters to be reset.
+  * Now the video filters preview will play any selected file in the queued
+    files panel.
+  * Fixed some string translations.
+  * Added support for the Russian language (thanks to ChourS for the
+    translation and contribution).
+  * Fixed bug if an item is selected in the queued files but the user
+    deletes it.
+  * Added playback feature by right clicking in the queue file panel.
+  * The timeline setting affects playback in the queue file panel
+  * Completely redesigned timeline. There are the sliders for seek and
+    duration settings and a display to viewing the time range selection.
+  * Adding or removing files from Queued Files panel cause reset of the
+    Timeline selection.
+  * Made Videomass portable for MS-Windows
+  * Milliseconds have been added in the time calculation (duration).
+    This should improve accuracy for calculating bar progress values,
+    percentage label, and others display.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 15 Dec 2020 15:00:00 +0200
+
+videomass (3.2.6-1) UNRELEASED; urgency=high
+
+  * Improved the dialog for creating and editing FFmpeg profiles
+  * Fixed bug when "restore default settings" is used in the Setup dialog
+    box which did not allow to start Videomass.
+  * Fixed Automatic Refreshing of profile list on Presets Manager when you
+    save a profile from the AV-Conversions panel
+  * Fixed layout bug on some mini frames which did not fit in the sizer
+    especially on Mac-Os and MS-Windows
+  * Add new youtube_dl statistic icon toolbar to display download statistics
+  * Fix setup.py importings
+  * Fixed FFmpeg menu definition
+  * Made new tool to view and read log files more conveniently
+  * New names for log files with improved references
+  * All log files are now cumulative and the user is responsible for
+    their periodic cleaning
+  * The toggle buttons have been replaced with normal buttons
+  * The selected icon-set on Setup dialog box adjusts the background and
+    foreground colors on some text controls
+  * Temporarily fixed `HTTP Error 404: Unavailable for Legal reasons` during
+    installing or updating youtube-dl executable
+  * A new feature in the Setup dialog allows you to write files to the same
+    directory as the source with optional additional suffix
+  * New configuration file v2.5
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 09 Nov 2020 12:32:00 +0200
+
+videomass (3.2.0-1) UNRELEASED; urgency=medium
+
+  * New redesigned GUI
+  * New icons
+  * Improved toolbar
+  * New buttons on panels
+  * Fixed issue with close button position on wizzard
+  * Fixed title names in dialog boxes
+  * Fixed some name definitions on the interface
+  * fix translations
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Oct 2020 10:45:00 +0200
+
+videomass (3.1.3-1) UNRELEASED; urgency=medium
+
+  * Fix `ImportError: libSDL2-2.0.so.0` on appimage. This library will be
+    loaded if required.
+  * It is no longer required to pre-install the libsdl2-2.0-0 package to start
+    Videomass AppImage.
+  * The tools for creating the appimages have been redefined.
+  * Improved icons 32x32.
+  * Fix some translation.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 11 Oct 2020 11:45:00 +0200
+
+videomass (3.1.2-1) UNRELEASED; urgency=medium
+
+  * Redesigned the main videomass icon.
+  * Fixed 24x24 resetfilters.png.
+  * Improved icons 48x48
+  * Review debian/control and changelog format.
+  * [YOUTUBE DOWNLOADER] Improved related panel
+  * Improved `IO_tools > def check_videomass_releases` function.
+  * New tool for building videomass appimage.
+  * Update the .travis.yml file with a new test, wheel and AppImage creation.
+  * Improved `youtube_dl_update_appimage.sh`
+  * Fixing `FileNotFoundError:` when starting videomass AppImage from another
+    path and updating youtube-dl.
+  * Fixed application icon location on Linux.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 06 Oct 2020 13:26:00 +0200
+
+videomass (3.1.0-1) UNRELEASED; urgency=medium
+
+  * Overall improved string search on 'FFmpeg search topics' mini frame.
+  * Added some cosmetic and functional improvements.
+  * fixed some profile on presets file.
+  * Improved FFmpeg menu.
+  * Improved some contextual descriptions.
+  * 'Show More' mini frame, added first item auto selection to prevent empty
+    data view.
+  * New modules to playback online streams via youtube-dl and ffplay.
+  * The mpv player has been removed from optional dependencies, as it has
+    been replaced by ffplay to playback online streams.
+  * A tmp/ directory has been added in the cache/ directory for temporary
+    files downloaded for preview playback.
+  * Added new checkbox on Settings dialog box to clear or keep cached data.
+  * Added new checkbox on Settings dialog box to disable permanently warning
+    message if youtube-dl executable is no longer in use.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 19 Sep 2020 10:22:17 +0200
+
+videomass (3.0.6-1) UNRELEASED; urgency=medium
+
+  * New stable upstream release
+  * The directories `MAcOsxSetup/` and `Win32Setup/` are been unified to
+    `FFMPEG/` folder and added to package_data of the videomass3 package.
+  * On Linux it is now possible to include ffmpeg, ffprobe and ffplay
+    executables into FFMPEG folder. This could be useful, for instance, to make
+    an application bundle all-in-one of Videomass for Linux distros
+    without ffmpeg installed on (see videomass3/FFMPEG/README).
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 28 Aug 2020 15:15:35 +0200
+
+videomass (3.0.5-1) UNRELEASED; urgency=medium
+
+  * New stable upstream release
+  * [PRESETS MANAGER] fixed missing `EBU R128` string on summary dialog when
+    EBU automation is enabled.
+  * [PRESETS MANAGER] Added a warning message box when enabling EBU
+    normalization on one-pass conversions.
+  * [PRESETS MANAGER] adding more understandable information on the summary
+    dialog.
+  * The tooltip messages in the audio indexes mapping are now a little more
+    understandable (I suppose)
+  * "Check for new versions" has been restored from preferences menu to the
+    help menu.
+  * [STREAMS ANALYZER] Adding first item auto selection to prevent empty
+    data view.
+  * Improved some dialog boxes layout and colors.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 15 Aug 2020 10:50:52 +0200
+
+videomass (3.0.2-1) UNRELEASED; urgency=medium
+
+  * New stable upstream release
+  * Fixed 'page not found' on menu > Help > Translation...
+  * Fixed problem with youtube-dl self-update when user click on 'Update
+    youtube-dl'.
+  * 'Check for new versions' has been moved from the help menu to the
+    preferences menu.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 04 Aug 2020 18:10:00 +0200
+
+videomass (3.0.0-1) UNRELEASED; urgency=medium
+
+  * New stable upstream release
+  * Fixed "IndexError" when the file name has no format extension.
+  * Notify when the cached youtube-dl executable is no longer used to give
+    priority to the one installed on the system.
+  * Fixed "NameError: name 'OS' is not defined"  on two_pass.py thread (on
+    two pass conversions)
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 19 Jul 2020 11:00:00 +0200
+
+videomass (2.9.2-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+  * Improved graphic layout on all dialog boxes
+  * Dependency redefinition: `python3-pypubsub` becomes `python3-pubsub` on
+    control file.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 17 Jul 2020 13:40:00 +0200
+
+videomass (2.9.1-1) UNRELEASED; urgency=low
+
+  * Initial debian packaging
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 15 Jul 2020 13:45:06 +0200

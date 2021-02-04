@@ -1,0 +1,80 @@
+========================================
+Purpose of the FFMPEG directory
+========================================
+
+This folder can optionally host static builds of ffmpeg, ffprobe and ffplay, 
+which will only be used if no FFmpeg is installed in the OS. While it is 
+generally not recommended to use this approach, it can be useful, for instance, 
+to make a Videomass bundle (e.g. via pyinstaller or AppImage, etc.) that can be 
+run in standalone mode with embedding FFmpeg binaries without need to install 
+anything else.
+
+In all other cases FFmpeg will be found in environment variables when 
+installed in the OS or found by links setted by the user through the 
+Videomass setup dialog box.
+
+If you want to use this approach, be sure to make a `bin/` folder within ffmpeg, 
+ffprobe and ffplay binaries, like this:   
+    
+    |--------------------------|-------------------------|
+    |   **Unix**               |       **Windows**       |
+    |--------------------------|-------------------------|
+         videomass3 (pkg)      |     videomass3 (pkg)
+         |__ FFMPEG            |     |__ FFMPEG
+         |   |__ bin           |     |   |__ bin
+         |   |   |__ ffmpeg    |     |   |   |__ ffmpeg.exe
+         |   |   |__ ffprobe   |     |   |   |__ ffprobe.exe
+         |   |   |__ ffplay    |     |   |   |__ ffplay.exe
+         |   |__ presets       |     |   |__ presets
+         |   |__ doc           |     |   |__ doc
+         |   |__ LICENSE.txt   |     |   |__ LICENSE.txt
+         |   |__ README.txt    |     |   |__ README.txt
+                               |
+    |--------------------------|-------------------------|
+
+
+=======================================
+MAcOS
+=======================================
+
+The static builds for MacOS with Intel 64bit can be downloaded at:
+
+    - http://www.evermeet.cx/ffmpeg/
+
+If you don't want to use statically compiled builds, leave this folder empty.
+You can later use Homebrew to install FFmpeg. Building options and steps can be
+found here:
+
+    https://gist.github.com/clayton/6196167
+    https://trac.ffmpeg.org/wiki/CompilationGuide/MacOS
+
+=======================================
+MS-Windows
+=======================================
+
+The static builds for MS Windows can be downloaded at:
+
+    https://www.gyan.dev/ffmpeg/builds/
+
+Building options and steps can be found here:
+
+    https://trac.ffmpeg.org/wiki/CompilationGuide
+
+
+=============================================================================
+For legal reasons (for example: including FAAC for AAC support) it is illegal
+to distribute the FFmpeg binary compiled in some countries of the world, for 
+example, with the FAAC codec for AAC support. The distributable binary of FFmpeg 
+does not include faac support, which, however, can be obtained from compiling 
+the source code. If you need the faac codec (or other codecs with special 
+restrictions) in FFmpeg, you should compile yourself from the source with the 
+faac codec support.
+
+More Infos about the legal issues can be found here:
+
+    http://www.ffmpeg.org/legal.html
+
+Others resources:
+
+    http://www.ffmpeg.org/documentation.html
+

@@ -1,0 +1,26 @@
+[
+    {
+        "Name": "Add Padding",
+        "Description": "Add black borders to a file, e.g. 1920×800 input to 1920×1080:",
+        "First_pass": "-c:v libx264 -crf 23 -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0 -vf pad=512:368:(ow-iw)/2:(oh-ih)/2",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Video fading",
+        "Description": "Simple fade-in and fade-out at a specific time for a specific duration.",
+        "First_pass": "-c:v libx264 -crf 23 -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0 -vf fade=t=in:st=0:d=5,fade=t=out:st=30:d=5",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    },
+    {
+        "Name": "Drawing text",
+        "Description": "Complex system for printing text on video",
+        "First_pass": "-c:v libx264 -crf 23 -map 0:v? -map_chapters 0 -map 0:s? -map 0:a? -map_metadata 0 -vf drawtext=text='Add your text here':x=100:y=50:fontsize=24:fontcolor=yellow:box=1:boxcolor=red",
+        "Second_pass": "",
+        "Supported_list": "",
+        "Output_extension": "mkv"
+    }
+]

@@ -1,0 +1,3 @@
+- https://tech.ebu.ch/home 
+- https://tech.ebu.ch/publications/ebu_loudness_test_set
+- https://tech.ebu.ch/publications/r128
