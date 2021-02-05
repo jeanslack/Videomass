@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-03 11:07+0100\n"
-"PO-Revision-Date: 2021-02-03 11:08+0100\n"
+"POT-Creation-Date: 2021-02-04 10:38+0100\n"
+"PO-Revision-Date: 2021-02-05 19:24+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -496,8 +496,8 @@ msgstr ""
 "i campi di testo sottostanti cliccando sui rispettivi pulsanti."
 
 #: ../vdms_dialogs/wizard_dlg.py:367 ../vdms_dialogs/wizard_dlg.py:383
-#: ../vdms_dialogs/wizard_dlg.py:399 ../vdms_dialogs/settings.py:681
-#: ../vdms_dialogs/settings.py:720 ../vdms_dialogs/settings.py:759
+#: ../vdms_dialogs/wizard_dlg.py:399 ../vdms_dialogs/settings.py:688
+#: ../vdms_dialogs/settings.py:727 ../vdms_dialogs/settings.py:766
 msgid "Choose the {} executable"
 msgstr "Scegli l'eseguibile {}"
 
@@ -557,7 +557,7 @@ msgstr "Usa quello installato nel tuo sistema operativo (consigliato)"
 msgid "Use a local copy of youtube-dl updatable by Videomass"
 msgstr "Utilizza una copia locale di youtube-dl aggiornabile da Videomass"
 
-#: ../vdms_dialogs/wizard_dlg.py:528 ../vdms_dialogs/settings.py:304
+#: ../vdms_dialogs/wizard_dlg.py:528 ../vdms_dialogs/settings.py:308
 msgid "Downloader preferences"
 msgstr "Preferenze del downloader"
 
@@ -728,17 +728,17 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr "Impostazioni timestamp"
 
-#: ../vdms_dialogs/settings.py:128
+#: ../vdms_dialogs/settings.py:130
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Dove preferisci salvare le tue transcodifiche?"
 
-#: ../vdms_dialogs/settings.py:141 ../vdms_dialogs/settings.py:169
-#: ../vdms_dialogs/settings.py:199 ../vdms_dialogs/settings.py:211
-#: ../vdms_dialogs/settings.py:223
+#: ../vdms_dialogs/settings.py:142 ../vdms_dialogs/settings.py:171
+#: ../vdms_dialogs/settings.py:202 ../vdms_dialogs/settings.py:214
+#: ../vdms_dialogs/settings.py:226
 msgid "Browse.."
 msgstr "Sfoglia.."
 
-#: ../vdms_dialogs/settings.py:146
+#: ../vdms_dialogs/settings.py:147
 msgid ""
 "Save each file in the same\n"
 "folder as input file"
@@ -746,15 +746,15 @@ msgstr ""
 "Salva ogni file nella stessa\n"
 "cartella del file di input"
 
-#: ../vdms_dialogs/settings.py:151
-msgid "Optional suffix assignment (example, _convert):"
-msgstr "Assegnazione suffisso opzionale (esempio, _convert)"
+#: ../vdms_dialogs/settings.py:152
+msgid "Assign optional suffix to output file names:"
+msgstr "Assegna un suffisso aggiuntivo ai nomi dei file in uscita:"
 
-#: ../vdms_dialogs/settings.py:157
+#: ../vdms_dialogs/settings.py:160
 msgid "Where do you prefer to save your downloads?"
 msgstr "Dove desideri salvare i tuoi download?"
 
-#: ../vdms_dialogs/settings.py:174
+#: ../vdms_dialogs/settings.py:176
 msgid ""
 "Auto-create subfolders\n"
 "when download playlists"
@@ -762,43 +762,43 @@ msgstr ""
 "Crea automaticamente le sottocartelle\n"
 "durante il download delle playlist"
 
-#: ../vdms_dialogs/settings.py:178
+#: ../vdms_dialogs/settings.py:181
 msgid "Cache Settings"
 msgstr "Impostazioni della Cache"
 
-#: ../vdms_dialogs/settings.py:183
+#: ../vdms_dialogs/settings.py:186
 msgid "Clear the cache when exiting the application"
 msgstr "Svuota la cache quando esci dall'applicazione"
 
-#: ../vdms_dialogs/settings.py:187
+#: ../vdms_dialogs/settings.py:190
 msgid "Files Preferences"
 msgstr "Preferenze file"
 
-#: ../vdms_dialogs/settings.py:192
+#: ../vdms_dialogs/settings.py:196
 msgid "Path to the executables"
 msgstr "Percorso degli eseguibili"
 
-#: ../vdms_dialogs/settings.py:198
+#: ../vdms_dialogs/settings.py:201
 msgid "Enable another location to run FFmpeg"
 msgstr "Abilita un'altra posizione per eseguire FFmpeg"
 
-#: ../vdms_dialogs/settings.py:210
+#: ../vdms_dialogs/settings.py:213
 msgid "Enable another location to run FFprobe"
 msgstr "Abilita un'altra posizione per eseguire FFprobe"
 
-#: ../vdms_dialogs/settings.py:222
+#: ../vdms_dialogs/settings.py:225
 msgid "Enable another location to run FFplay"
 msgstr "Abilita un'altra posizione per eseguire FFplay"
 
-#: ../vdms_dialogs/settings.py:234
+#: ../vdms_dialogs/settings.py:237
 msgid "Other options"
 msgstr "Altre opzioni"
 
-#: ../vdms_dialogs/settings.py:241
-msgid "Threads used for transcoding (from 0 to 32)"
-msgstr "Thread utilizzati per la transcodifica (da 0 a 32)"
+#: ../vdms_dialogs/settings.py:244
+msgid "Threads used for transcoding (from 0 to 32):"
+msgstr "Thread utilizzati per la transcodifica (da 0 a 32):"
 
-#: ../vdms_dialogs/settings.py:259
+#: ../vdms_dialogs/settings.py:262
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
@@ -829,19 +829,19 @@ msgstr ""
 "aggiornate e non aggiornabili. Si consiglia di rimuovere tali versioni e\n"
 "aggiornare youtube-dl con pip3, ad es."
 
-#: ../vdms_dialogs/settings.py:315
-msgid "Current path"
-msgstr "Percorso attuale"
+#: ../vdms_dialogs/settings.py:319
+msgid "Current path:"
+msgstr "Percorso attuale:"
 
-#: ../vdms_dialogs/settings.py:323
+#: ../vdms_dialogs/settings.py:327
 msgid "youtube-dl"
 msgstr "youtube-dl"
 
-#: ../vdms_dialogs/settings.py:329
+#: ../vdms_dialogs/settings.py:333
 msgid "Icon themes"
 msgstr "Temi icona"
 
-#: ../vdms_dialogs/settings.py:331
+#: ../vdms_dialogs/settings.py:336
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
@@ -849,43 +849,43 @@ msgstr ""
 "l'impostazione delle icone cambierà anche lo sfondo\n"
 "e il primo piano di alcuni campi di testo."
 
-#: ../vdms_dialogs/settings.py:353
+#: ../vdms_dialogs/settings.py:359
 msgid "Toolbar customization"
 msgstr "Personalizzazione barra degli strumenti"
 
-#: ../vdms_dialogs/settings.py:356
+#: ../vdms_dialogs/settings.py:362
 msgid "At the top of window (default)"
 msgstr "Sopra alla finestra (default)"
 
-#: ../vdms_dialogs/settings.py:357
+#: ../vdms_dialogs/settings.py:363
 msgid "At the bottom of window"
 msgstr "Sotto alla finestra"
 
-#: ../vdms_dialogs/settings.py:358
+#: ../vdms_dialogs/settings.py:364
 msgid "At the right of window"
 msgstr "A destra della finestra"
 
-#: ../vdms_dialogs/settings.py:359
+#: ../vdms_dialogs/settings.py:365
 msgid "At the left of window"
 msgstr "A sinistra della finestra"
 
-#: ../vdms_dialogs/settings.py:361
+#: ../vdms_dialogs/settings.py:367
 msgid "Place the toolbar"
 msgstr "Posiziona la barra degli strumenti"
 
-#: ../vdms_dialogs/settings.py:371
+#: ../vdms_dialogs/settings.py:377
 msgid "Icon size:"
 msgstr "Dimensioni icona:"
 
-#: ../vdms_dialogs/settings.py:386
+#: ../vdms_dialogs/settings.py:392
 msgid "Shows the text in the toolbar buttons"
 msgstr "Mostra il testo nei pulsanti della barra degli strumenti"
 
-#: ../vdms_dialogs/settings.py:390
+#: ../vdms_dialogs/settings.py:396
 msgid "Appearance"
 msgstr "Aspetto"
 
-#: ../vdms_dialogs/settings.py:394
+#: ../vdms_dialogs/settings.py:403
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -895,39 +895,39 @@ msgstr ""
 "e i messaggi di log durante i processi di transcodifica.\n"
 "Modificale solo se sai cosa stai facendo.\n"
 
-#: ../vdms_dialogs/settings.py:418
+#: ../vdms_dialogs/settings.py:425
 msgid "FFmpeg logging levels"
 msgstr "Livelli logs FFmpeg"
 
-#: ../vdms_dialogs/settings.py:438
+#: ../vdms_dialogs/settings.py:445
 msgid "Videomass Setup"
 msgstr "Videomass Preferenze"
 
-#: ../vdms_dialogs/settings.py:439
+#: ../vdms_dialogs/settings.py:446
 msgid "Assign an additional suffix to FFmpeg output files"
-msgstr "Assegna un suffisso aggiuntivo ai file in uscita"
+msgstr "Assegna un suffisso aggiuntivo ai file di output FFmpeg"
 
-#: ../vdms_dialogs/settings.py:487 ../vdms_frames/ffmpeg_conf.py:216
+#: ../vdms_dialogs/settings.py:494 ../vdms_frames/ffmpeg_conf.py:216
 msgid "Disabled"
 msgstr "Disabilitato"
 
-#: ../vdms_dialogs/settings.py:491
+#: ../vdms_dialogs/settings.py:498
 msgid "Not Installed"
 msgstr "Non installato"
 
-#: ../vdms_dialogs/settings.py:499
+#: ../vdms_dialogs/settings.py:506
 msgid "Not found"
 msgstr "Non trovato"
 
-#: ../vdms_dialogs/settings.py:570
+#: ../vdms_dialogs/settings.py:577
 msgid "Set a persistent location to save the file downloads"
 msgstr "Imposta una posizione persistente per salvare i download dei file"
 
-#: ../vdms_dialogs/settings.py:592
+#: ../vdms_dialogs/settings.py:599
 msgid "Set a persistent location to save exported files"
 msgstr "Imposta una posizione persistente per salvare i file esportati"
 
-#: ../vdms_dialogs/settings.py:619
+#: ../vdms_dialogs/settings.py:626
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
@@ -935,7 +935,7 @@ msgstr ""
 "Immettere solo caratteri alfanumerici. È inoltre possibile utilizzare il "
 "trattino (\"-\") e il trattino basso (\"_\"). Non sono ammessi spazi vuoti."
 
-#: ../vdms_dialogs/settings.py:836
+#: ../vdms_dialogs/settings.py:843
 msgid "Changes will take effect once the program has been restarted"
 msgstr "Le modifiche avranno effetto una volta riavviato il programma"
 
@@ -2385,7 +2385,7 @@ msgstr "Normalizzazione"
 
 #: ../vdms_panels/av_conversions.py:674 ../vdms_panels/presets_manager.py:314
 msgid "Volumedetect"
-msgstr "Volumedected"
+msgstr "Volumedetect"
 
 #: ../vdms_panels/av_conversions.py:678 ../vdms_panels/presets_manager.py:318
 msgid "Volume Statistics"
@@ -2935,7 +2935,9 @@ msgstr "Scarica tutta la playlist"
 
 #: ../vdms_panels/youtubedl_ui.py:235
 msgid "Embed thumbnail in audio file"
-msgstr "Aggiungi miniatura nel file audio"
+msgstr ""
+"Aggiungi miniatura\n"
+"nel file audio"
 
 #: ../vdms_panels/youtubedl_ui.py:239
 msgid "Add metadata to file"
@@ -2947,7 +2949,9 @@ msgstr "Scrivi sottotitoli al video"
 
 #: ../vdms_panels/youtubedl_ui.py:248
 msgid "Prevent overwriting files"
-msgstr "Impedisci la sovrascrittura dei file"
+msgstr ""
+"Impedisci la sovrascrittura\n"
+"dei file"
 
 #: ../vdms_panels/youtubedl_ui.py:272
 msgid "Help viewer"
@@ -3645,6 +3649,9 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid "Optional suffix assignment (example, _convert):"
+#~ msgstr "Assegnazione suffisso opzionale:"
 
 #~ msgid "Playing a media file or URL"
 #~ msgstr "Riproduzione di un file multimediale o URL"

@@ -7,8 +7,9 @@ The following languages have not yet been translated:
 - es_ES   (Spanish)
 - fr_FR   (French)
 - pl_PL   (Polish)   
+- en_GB   (English)
 
-You can choose the language you prefer to translate.
+You can choose the language you prefer to translate (even those not yet existing).
 
 #### Requirements
 
@@ -61,7 +62,12 @@ I will be grateful!!
 
 At your disposal for clarification.
 
-### Start with a new translation
+### Start with a non-existent translation
+
+If you are not familiar with the command line and some applications described below, STOP! 
+Contact me and describe me in which language you want to translate Videomass. I will make 
+all the necessary preparations myself, so that you can only open the application to do 
+the translations and start your new translation. 
 
 #### Requirements
 - [GNU gettext](https://www.gnu.org/software/gettext) (To build `.pot` and the 

@@ -604,13 +604,13 @@ class AV_Conv(wx.Panel):
                                     _("Settings"), size=(-1, -1))
         self.btn_aparam.SetBitmap(bmpasettings, wx.LEFT)
         sizer_a_ctrl.Add(self.btn_aparam, 0, wx.ALL |
-                         wx.ALIGN_CENTER_VERTICAL, 5
+                         wx.ALIGN_CENTER_VERTICAL, 2
                          )
         self.txt_audio_options = wx.TextCtrl(self.nb_Audio, wx.ID_ANY,
                                              size=(-1, -1),
                                              style=wx.TE_READONLY
                                              )
-        sizer_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_a_ctrl.Add(self.txt_audio_options, 1, wx.ALL | wx.EXPAND, 2)
 
         # BOX stream mapping
         self.box_audioMap = wx.StaticBoxSizer(wx.StaticBox(self.nb_Audio,
@@ -668,7 +668,7 @@ class AV_Conv(wx.Panel):
         self.peakpanel = wx.Panel(self.nb_Audio, wx.ID_ANY,
                                   style=wx.TAB_TRAVERSAL
                                   )
-        grid_peak = wx.FlexGridSizer(1, 4, 15, 15)
+        grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
         sizer_Anormalization.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
                                      _("Volumedetect"), size=(-1, -1))
@@ -682,7 +682,8 @@ class AV_Conv(wx.Panel):
         self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY,
                                            (_("Target level:"))
                                            )
-        grid_peak.Add(self.lab_amplitude, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        grid_peak.Add(self.lab_amplitude, 0, wx.LEFT |
+                      wx.ALIGN_CENTER_VERTICAL, 10)
         self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY,
                                         min_val=-99.0, max_val=0.0,
                                         increment=0.5, value=-1.0,
@@ -1626,7 +1627,7 @@ class AV_Conv(wx.Panel):
     def on_audioINstream(self, event):
         """
         sets the specified audio input stream as index to process,
-        e.g. for filters volumedected and loudnorm will map 0:N
+        e.g. for filters volumedetect and loudnorm will map 0:N
         where N is digit from 0 to available audio index up to 8.
         See: http://ffmpeg.org/ffmpeg.html#Advanced-options
         When changes this feature affect audio filter peak and rms analyzers
@@ -1812,7 +1813,7 @@ class AV_Conv(wx.Panel):
 
     def on_Show_normlist(self, event):
         """
-        Show a wx.ListCtrl dialog with volumedected data
+        Show a wx.ListCtrl dialog with volumedetect data
         """
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             title = _('PEAK-based volume statistics')

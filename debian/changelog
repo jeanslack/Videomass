@@ -1,3 +1,11 @@
+videomass (3.3.8-1) UNRELEASED; urgency=medium
+
+  * Fixed some buttons spacings
+  * Improved Setup dialog layout
+  * update localization_guidelines.md
+  
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 05 Feb 2021 22:35:00 +0200
+
 videomass (3.3.7-1) UNRELEASED; urgency=medium
 
   * Added new icon themes, (colorful, dark and light).

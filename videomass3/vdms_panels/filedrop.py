@@ -173,15 +173,16 @@ class FileDnD(wx.Panel):
         infomsg = _("Drag one or more files below")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
         sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
-        sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
+        sizer.Add((0, 10))
         sizer_media = wx.BoxSizer(wx.HORIZONTAL)
         btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
         btn_play.SetBitmap(bmpplay, wx.LEFT)
-        sizer_media.Add(btn_play, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_media.Add(btn_play, 1, wx.ALL | wx.EXPAND, 2)
         btn_delsel = wx.Button(self, wx.ID_REMOVE, "")
-        sizer_media.Add(btn_delsel, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_media.Add(btn_delsel, 1, wx.ALL | wx.EXPAND, 2)
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 2)
         sizer.Add(sizer_media, 0, wx.EXPAND)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
@@ -189,10 +190,10 @@ class FileDnD(wx.Panel):
                                           style=wx.TE_PROCESS_ENTER |
                                           wx.TE_READONLY
                                           )
-        sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
-        sizer_outdir.Add(self.btn_save, 0, wx.RIGHT |
+        sizer_outdir.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 2)
+        sizer_outdir.Add(self.btn_save, 0, wx.ALL |
                          wx.ALIGN_CENTER_HORIZONTAL |
-                         wx.ALIGN_CENTER_VERTICAL, 5
+                         wx.ALIGN_CENTER_VERTICAL, 2
                          )
         sizer.Add(sizer_outdir, 0, wx.EXPAND)
         self.SetSizer(sizer)

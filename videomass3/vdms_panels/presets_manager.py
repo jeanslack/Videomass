@@ -211,20 +211,20 @@ class PrstPan(wx.Panel):
             self, wx.ID_ANY, _('Profiles')), wx.VERTICAL)
         boxprofiles.Add(self.list_ctrl, 1, wx.ALL | wx.EXPAND, 5)
         # --- profile buttons
-        grid_profiles = wx.FlexGridSizer(0, 3, 0, 0)
+        grid_profiles = wx.FlexGridSizer(0, 3, 0, 5)
         self.btn_newprofile = wx.Button(self, wx.ID_ANY,
                                         _("Add"), size=(-1, -1))
         self.btn_newprofile.SetBitmap(bmpnewprf, wx.LEFT)
-        grid_profiles.Add(self.btn_newprofile, 0, wx.ALL, 5)
+        grid_profiles.Add(self.btn_newprofile, 0, wx.ALL, 0)
         self.btn_delprofile = wx.Button(self, wx.ID_ANY,
                                         _("Delete"), size=(-1, -1))
         self.btn_delprofile.SetBitmap(bmpdelprf, wx.LEFT)
-        grid_profiles.Add(self.btn_delprofile, 0, wx.ALL, 5)
+        grid_profiles.Add(self.btn_delprofile, 0, wx.ALL, 0)
         self.btn_editprofile = wx.Button(self, wx.ID_ANY,
                                          _("Edit"), size=(-1, -1))
         self.btn_editprofile.SetBitmap(bmpeditprf, wx.LEFT)
-        grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 5)
-        boxprofiles.Add(grid_profiles, 0)
+        grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 0)
+        boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
         sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
         # ------- NOTEBOOK
         nb1 = wx.Notebook(self, wx.ID_ANY, style=0)
@@ -309,7 +309,7 @@ class PrstPan(wx.Panel):
         self.peakpanel = wx.Panel(self.nb1_p2, wx.ID_ANY,
                                   style=wx.TAB_TRAVERSAL
                                   )
-        sizer_peak = wx.FlexGridSizer(1, 4, 15, 15)
+        sizer_peak = wx.FlexGridSizer(1, 4, 15, 4)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
                                      _("Volumedetect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
@@ -322,7 +322,8 @@ class PrstPan(wx.Panel):
         self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY,
                                            (_("Target level:"))
                                            )
-        sizer_peak.Add(self.lab_amplitude, 0, wx.ALIGN_CENTER_VERTICAL, 0)
+        sizer_peak.Add(self.lab_amplitude, 0, wx.LEFT |
+                       wx.ALIGN_CENTER_VERTICAL, 10)
         self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY,
                                         min_val=-99.0, max_val=0.0,
                                         increment=0.5, value=-1.0,
@@ -487,7 +488,7 @@ class PrstPan(wx.Panel):
     def on_audioINstream(self, event):
         """
         sets the specified audio input stream as index to process e.g.
-        for filters volumedected and loudnorm will map 0:N where N is
+        for filters volumedetect and loudnorm will map 0:N where N is
         digit from 0 to available audio index up to 8.
         See: http://ffmpeg.org/ffmpeg.html#Advanced-options
         When changes this feature affect audio filter peak and rms analyzers
@@ -813,7 +814,7 @@ class PrstPan(wx.Panel):
 
     def on_Show_normlist(self, event):
         """
-        Show a wx.ListCtrl dialog with volumedected data
+        Show a wx.ListCtrl dialog with volumedetect data
         """
         if self.rdbx_norm.GetSelection() == 1:  # peak
             title = _('PEAK-based volume statistics')

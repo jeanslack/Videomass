@@ -550,7 +550,6 @@ class PageFive(wx.Panel):
                                  style=wx.ALIGN_CENTRE_HORIZONTAL)
             lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             sizer_base.Add(lab2, 0, wx.EXPAND)
-
             self.rdbDownloader.SetSelection(1)
             self.rdbDownloader.Disable()
 

@@ -49,26 +49,27 @@ class TextDnD(wx.Panel):
         sizer.Add((0, 10))
         infomsg = _("Enter URLs below")
         lbl_info = wx.StaticText(self, wx.ID_ANY, label=infomsg)
-        sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 5)
+        sizer.Add(lbl_info, 0, wx.ALL | wx.EXPAND, 2)
         self.textCtrl = wx.TextCtrl(self, wx.ID_ANY, "",
                                     style=wx.TE_MULTILINE |
                                     wx.TE_DONTWRAP
                                     )
-        sizer.Add(self.textCtrl, 1, wx.EXPAND | wx.ALL, 5)
+        sizer.Add(self.textCtrl, 1, wx.EXPAND | wx.ALL, 2)
+        sizer.Add((0, 10))
         btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 5)
+        sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 2)
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 0)
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
                                           style=wx.TE_PROCESS_ENTER |
                                           wx.TE_READONLY
                                           )
-        sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 5)
+        sizer_ctrl.Add(self.text_path_save, 1, wx.ALL | wx.EXPAND, 2)
 
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
-        sizer_ctrl.Add(self.btn_save, 0, wx.RIGHT |
+        sizer_ctrl.Add(self.btn_save, 0, wx.ALL |
                        wx.ALIGN_CENTER_HORIZONTAL |
-                       wx.ALIGN_CENTER_VERTICAL, 5
+                       wx.ALIGN_CENTER_VERTICAL, 2
                        )
         self.SetSizer(sizer)
 
