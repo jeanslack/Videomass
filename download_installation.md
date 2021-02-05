@@ -30,7 +30,8 @@ web page to find out which porting is compatible with your Linux distribution.
 ## MS Windows
 Installer available at:
 - [GitHub Releases](https://github.com/jeanslack/Videomass/releases) 
-- [SourceForge](https://sourceforge.net/projects/videomass2/files/) 
+- [SourceForge](https://sourceforge.net/projects/videomass2/files/)   
+
 **New:** starting from Videomass v3.3.0 a portable version is also available, 
 choose the one that works best for you!  
 
