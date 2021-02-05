@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 10:38+0100\n"
-"PO-Revision-Date: 2021-02-05 08:31+0100\n"
+"PO-Revision-Date: 2021-02-05 19:24+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -2385,7 +2385,7 @@ msgstr "Normalizzazione"
 
 #: ../vdms_panels/av_conversions.py:674 ../vdms_panels/presets_manager.py:314
 msgid "Volumedetect"
-msgstr "Volumedected"
+msgstr "Volumedetect"
 
 #: ../vdms_panels/av_conversions.py:678 ../vdms_panels/presets_manager.py:318
 msgid "Volume Statistics"

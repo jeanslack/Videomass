@@ -1627,7 +1627,7 @@ class AV_Conv(wx.Panel):
     def on_audioINstream(self, event):
         """
         sets the specified audio input stream as index to process,
-        e.g. for filters volumedected and loudnorm will map 0:N
+        e.g. for filters volumedetect and loudnorm will map 0:N
         where N is digit from 0 to available audio index up to 8.
         See: http://ffmpeg.org/ffmpeg.html#Advanced-options
         When changes this feature affect audio filter peak and rms analyzers
@@ -1813,7 +1813,7 @@ class AV_Conv(wx.Panel):
 
     def on_Show_normlist(self, event):
         """
-        Show a wx.ListCtrl dialog with volumedected data
+        Show a wx.ListCtrl dialog with volumedetect data
         """
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             title = _('PEAK-based volume statistics')

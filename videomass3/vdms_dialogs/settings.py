@@ -435,7 +435,7 @@ class Setup(wx.Dialog):
             labydl0.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
             labydl1.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.BOLD, 0, ""))
             labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labIcons.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
+            labIcons.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
             labTB.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
         else:
