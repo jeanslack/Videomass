@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-04 10:38+0100\n"
-"PO-Revision-Date: 2021-02-04 10:51+0100\n"
+"PO-Revision-Date: 2021-02-05 08:29+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -2939,19 +2939,27 @@ msgstr "Скачать весь плейлист"
 
 #: ../vdms_panels/youtubedl_ui.py:235
 msgid "Embed thumbnail in audio file"
-msgstr "Добавить миниатюру в аудиофайл"
+msgstr ""
+"Добавить миниатюру\n"
+"в аудиофайл"
 
 #: ../vdms_panels/youtubedl_ui.py:239
 msgid "Add metadata to file"
-msgstr "Добавьте метаданные в файл"
+msgstr ""
+"Добавьте метаданные\n"
+"в файл"
 
 #: ../vdms_panels/youtubedl_ui.py:243
 msgid "Write subtitles to video"
-msgstr "Напишите субтитры к видео"
+msgstr ""
+"Напишите субтитры\n"
+"к видео"
 
 #: ../vdms_panels/youtubedl_ui.py:248
 msgid "Prevent overwriting files"
-msgstr "Предотвратить перезапись файлов"
+msgstr ""
+"Предотвратить перезапись\n"
+"файлов"
 
 #: ../vdms_panels/youtubedl_ui.py:272
 msgid "Help viewer"

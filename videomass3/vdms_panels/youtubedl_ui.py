@@ -153,10 +153,7 @@ class Downloader(wx.Panel):
         self.info = list()  # has data information for Show More button
         self.format_dict = dict()  # format codes order with URL matching
         self.oldwx = None  # test result of hasattr EVT_LIST_ITEM_CHECKED
-        '''
-        wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL |
-                          wx.BORDER_THEME)
-        '''
+
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
         """constructor"""
         sizer_base = wx.BoxSizer(wx.VERTICAL)
