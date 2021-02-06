@@ -268,8 +268,8 @@ class Setup(wx.Dialog):
                 _('Use the one included in the AppImage (recommended)'),
                 _('Use a local copy of youtube-dl')]
             ydlmsg = _(
-                'Make sure you are using the latest available version of '
-                'youtube-dl.\nThis allows you to avoid download problems.\n')
+                'Make sure you are using the latest available version of\n'
+                'youtube-dl. This allows you to avoid download problems.\n')
             labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
             sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
         else:
@@ -278,12 +278,12 @@ class Setup(wx.Dialog):
                 _('Use the one installed in your O.S. (recommended)'),
                 _('Use a local copy of youtube-dl updatable by Videomass')]
             ydlmsg = _(
-                'Make sure you are using the latest available version of '
-                'youtube-dl.\nThis allows you to avoid download problems. '
-                'Note that the versions\ninstalled with the package '
-                'manager of your O.S. they may be out of\ndate and not '
-                'upgradeable. It is recommended to remove those versions\n'
-                'and update youtube-dl with pip3, e.g.')
+                'Make sure you are using the latest available version of\n'
+                'youtube-dl. This allows you to avoid download problems.\n'
+                'Note that the versions installed with the package manager\n'
+                'of your O.S. they may be out of date and not upgradeable.\n'
+                'It is recommended to remove those versions and update\n'
+                'youtube-dl with pip3, e.g.')
             labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
             sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
             labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY,
