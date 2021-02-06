@@ -7,11 +7,10 @@
 
 - If you are using an earlier version of FFmpeg equal to or less than 3.1.5, the
 _nlmeans_ filter it may not have been implemented yet, since it exists only in
-the most recent versions of FFmpeg. Instead, use _hqdn3d_ or set Videomass to a
-path with a newer version of FFmpeg.
+the most recent versions of FFmpeg. Instead, use _hqdn3d_ or get a newer version of FFmpeg.
 
-- FFmpeg version 3.1 or higher is required for the _loudnorm_ filter (on EBU audio 
-normalization). Versions earlier than ffmpeg 3.1 cause `No such filter: loudnorm` 
+- FFmpeg version 3.1 or higher is required for the _loudnorm_ filter for EBU audio 
+normalization. Versions earlier than ffmpeg 3.1 cause `No such filter: loudnorm` 
 error on the Videomass 'Log viewing console' and the conversion process will fail.
 
 - For VP9 encoder FFmpeg added support for row based multithreading in version
@@ -26,7 +25,7 @@ be disabled when using this encoder.
  
 ## Videomass AppImage for Linux
 
-Currently, two separate portings have been released for GTK2 and GTK3.   
+Currently, two portings are available for GTK2 and GTK3.   
 
 Videomass AppImage for **GTK3** it has been successfully tested on the following Linux distributions:   
 

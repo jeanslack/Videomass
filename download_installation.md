@@ -23,9 +23,9 @@ to your system:
 Minimum requirements:   
 - **Ubuntu 16.04 LTS** to up (64-bit only)
 
-Currently two ports are released for GTK2 and GTK3. Please visit 
-[Known Problems](https://jeanslack.github.io/Videomass/known_problems.html)
-web page to find out which porting is compatible with your Linux distribution.
+There are currently two ports available for GTK2 and GTK3 engines. 
+Find out [here](https://jeanslack.github.io/Videomass/known_problems.html) which 
+port is best suited to your Linux distribution.
 
 ## MS Windows
 Installer available at:
