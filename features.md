@@ -14,10 +14,10 @@
 - Supports all formats and codecs available with FFmpeg.
 - Displaying information from streams analyzer.
 - Has useful tools to quickly get information about the FFmpeg used.
-- Advanced dialog boxes to det video filters.
-- Audio filters have three modes of volume normalization: PEAK, RMS and EBU-R128.
-- Ability to apply volume normalization to certain audio streams via selectable indexing.
-- Time period: Duration and seek are set with the sliders when viewing the timeline
+- Advanced dialogs for setting video filters.
+- Advanced audio filters for volume normalization in PEAK, RMS and EBU-R128. 
+- Ability to analyze and apply volume normalization to certain audio streams via selectable indexing.
+- Timeline: duration and seek are set with the sliders.
 - The timeline has a display for viewing the time selection.
 
 ## Features with youtube-dl
@@ -34,6 +34,6 @@
 - Embed thumbnail in audio file (via [atomicparsley](http://atomicparsley.sourceforge.net/)).
 - Add metadata to file.
 - Write subtitles to video.
-- Ability to keep youtube-dl backend updated.
+- Ability to keep youtube-dl backend updated (depends by setting).
 
 [Home](index.md)
