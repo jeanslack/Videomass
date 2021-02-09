@@ -716,8 +716,10 @@ class MainFrame(wx.Frame):
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
-        elif '/tmp/.mount_' in sys.executable or \
-                os.path.exists(os.getcwd() + '/AppRun'):
+        elif ('/tmp/.mount_' in sys.executable or os.path.exists(
+              os.path.dirname(os.path.dirname(os.path.dirname(
+               sys.argv[0]))) + '/AppRun')):
+
             ck = _check()
             if not ck:
                 return

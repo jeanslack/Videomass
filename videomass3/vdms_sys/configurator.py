@@ -103,10 +103,17 @@ class Data_Source(object):
                 # self.icodir = dirname + '\\share\\videomass\\icons'
                 self.videomass_icon = self.icodir + "\\videomass.png"
 
-            elif '/tmp/.mount_' in sys.executable or \
-                 os.path.exists(os.getcwd() + '/AppRun'):
+            elif ('/tmp/.mount_' in sys.executable or os.path.exists(
+                  os.path.dirname(os.path.dirname(os.path.dirname(
+                   sys.argv[0]))) + '/AppRun')):
                 # embedded on python appimage
                 print('Embedded on python appimage')
+                userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
+                pixmaps = '/share/pixmaps/videomass.png'
+                self.videomass_icon = os.path.join(userbase + pixmaps)
+
+            elif 'usr/bin/videomass' in sys.argv[0]:
+                print('Embedded on python appimage externally')
                 userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
                 pixmaps = '/share/pixmaps/videomass.png'
                 self.videomass_icon = os.path.join(userbase + pixmaps)
@@ -145,8 +152,7 @@ class Data_Source(object):
         dataconf = [x for x in lst if x]  # list without empties values
         if not dataconf:
             return
-        else:
-            return dataconf
+        return dataconf
     # --------------------------------------------------------------------
 
     def get_fileconf(self):

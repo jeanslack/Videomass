@@ -102,9 +102,11 @@ class Ydl_DL_Exec(Thread):
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
-        if platform.system() == 'Windows' or '/tmp/.mount_' \
-           in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
+            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
             self.ssl = '--no-check-certificate'
+
         else:
             self.ssl = ''
 
@@ -258,8 +260,9 @@ class Ydl_EI_Exec(Thread):
         self.url = url
         self.status = None
         self.data = None
-        if platform.system() == 'Windows' or '/tmp/.mount_' \
-           in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
+            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
             self.ssl = '--no-check-certificate'
         else:
             self.ssl = ''

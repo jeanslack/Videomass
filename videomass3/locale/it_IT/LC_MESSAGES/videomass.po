@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-06 21:14+0100\n"
-"PO-Revision-Date: 2021-02-06 21:17+0100\n"
+"PO-Revision-Date: 2021-02-08 09:33+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -459,7 +459,7 @@ msgstr "Individua"
 
 #: ../vdms_dialogs/wizard_dlg.py:222
 msgid "Click the \"Next\" button"
-msgstr "Fare clic sul pulsante \"Avanti\""
+msgstr "Fare clic sul pulsante \"Successivo\""
 
 #: ../vdms_dialogs/wizard_dlg.py:243
 msgid ""

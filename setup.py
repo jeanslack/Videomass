@@ -76,7 +76,6 @@ def source_build():
     else:  # e.g. to make a Debian source package, include wxpython.
         INSTALL_REQUIRES = ["wxpython>=4.0.3",
                             "PyPubSub>=4.0.3",
-                            "youtube_dl",
                             "requests>=2.21.0",
                             ]
         SETUP_REQUIRES = []
@@ -96,7 +95,10 @@ def source_build():
                 ]
     else:
         DATA_FILES = [  # must be relative-path
-                ('share/applications', ['videomass3/art/videomass.desktop']),
+                ('share/applications',
+                 ['videomass3/art/io.github.jeanslack.videomass.desktop']),
+                ('share/metainfo',
+                 ['io.github.jeanslack.videomass.appdata.xml']),
                 ('share/pixmaps', ['videomass3/art/icons/videomass.png']),
                 ('share/icons/hicolor/48x48/apps',
                  ['videomass3/art/icons/hicolor/48x48/apps/videomass.png']),
@@ -134,19 +136,17 @@ def source_build():
           entry_points={'gui_scripts':
                         ['videomass = videomass3.Videomass3:main']},
           classifiers=[
-            'Environment :: MacOS X :: Cocoa',
-            'Environment :: Win32 (MS Windows)',
             'Environment :: X11 Applications :: GTK',
             'Development Status :: 5 - Production/Stable',
-            'Operating System :: MacOS :: MacOS X',
-            'Operating System :: Microsoft :: Windows :: Windows 7',
-            'Operating System :: Microsoft :: Windows :: Windows 10',
-            'Operating System :: POSIX',
+            'Operating System :: MacOS',
+            'Operating System :: Microsoft :: Windows',
+            'Operating System :: POSIX :: Linux',
             'Intended Audience :: End Users/Desktop',
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
             'Natural Language :: English',
             'Natural Language :: Italian',
             'Natural Language :: Russian',
+            'Programming Language :: Python :: 3 :: Only',
             'Programming Language :: Python :: 3.7',
             "Programming Language :: Python :: 3.8",
             'Topic :: Multimedia :: Video :: Conversion',

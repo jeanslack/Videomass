@@ -86,7 +86,7 @@ class Set_Timestamp(wx.Dialog):
         size = ['16', '20', '28', '32', '40', '48', '56', '64']
         self.cmbx_fontsize = wx.ComboBox(self, wx.ID_ANY,
                                          choices=size,
-                                         size=(120, -1),
+                                         size=(-1, -1),
                                          style=wx.CB_DROPDOWN |
                                          wx.CB_READONLY
                                          )
@@ -147,6 +147,8 @@ class Set_Timestamp(wx.Dialog):
         gridexit.Add(btn_close, 0, wx.ALL | wx.EXPAND, 5)
         gridexit.Add(self.btn_ok, 1, wx.ALL, 5)
         sizer_base.Add(gridexit, 0, wx.EXPAND, 0)
+
+        self.cmbx_fontsize.SetSize(self.cmbx_fontcolor.GetSize())
         # tooltips:
         tip = _('The timestamp size does not auto-adjust to the video size, '
                 'you have to set the size here')

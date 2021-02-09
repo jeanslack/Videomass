@@ -91,7 +91,7 @@ class Videomass(wx.App):
         Bootstrap interface.
 
         """
-        data = Data_Source()  # user-space and interface settings
+        data = Data_Source()  # user-space and UI settings
         setui = data.get_fileconf()  # get required data
         # locale
         lang = ''

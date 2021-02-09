@@ -260,44 +260,19 @@ class Setup(wx.Dialog):
         self.tabThree = wx.Panel(notebook, wx.ID_ANY)
         sizerYdl = wx.BoxSizer(wx.VERTICAL)
         sizerYdl.Add((0, 15))
-        # if AppImage
-        if '/tmp/.mount_' in sys.executable or \
-           os.path.exists(os.getcwd() + '/AppRun'):
-            dldlist = [
-                _('Disable youtube-dl'),
-                _('Use the one included in the AppImage (recommended)'),
-                _('Use a local copy of youtube-dl')]
-            ydlmsg = _(
-                'Make sure you are using the latest available version of\n'
-                'youtube-dl. This allows you to avoid download problems.\n')
-            labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
-            sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
-        else:
-            dldlist = [
-                _('Disable youtube-dl'),
-                _('Use the one installed in your O.S. (recommended)'),
-                _('Use a local copy of youtube-dl updatable by Videomass')]
-            ydlmsg = _(
-                'Make sure you are using the latest available version of\n'
-                'youtube-dl. This allows you to avoid download problems.\n'
-                'Note that the versions installed with the package manager\n'
-                'of your O.S. they may be out of date and not upgradeable.\n'
-                'It is recommended to remove those versions and update\n'
-                'youtube-dl with pip3, e.g.')
-            labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
-            sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
-            labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY,
-                                    ('\npip3 install -U youtube-dl\n'))
-            sizerYdl.Add(labydl1, 0, wx.ALL | wx.CENTRE, 5)
-
+        ydlmsg = _('Make sure you are using the latest available version of\n'
+                   'youtube-dl. This allows you to avoid download problems.')
+        labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
+        sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
+        self.labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
+        sizerYdl.Add(self.labydl1, 0, wx.ALL | wx.CENTRE, 5)
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
-                                         choices=dldlist,
+                                         choices=[_('Disable youtube-dl'),
+                                                  '', ''],
                                          majorDimension=1,
                                          style=wx.RA_SPECIFY_COLS
                                          )
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            self.rdbDownloader.EnableItem(1, enable=False)
         sizerYdl.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 5)
 
         grdydlLoc = wx.BoxSizer(wx.HORIZONTAL)
@@ -427,29 +402,29 @@ class Setup(wx.Dialog):
         self.SetTitle(_("Videomass Setup"))
         # set font
         if Setup.OS == 'Darwin':
-            labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labcache.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFopt.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labydl0.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labydl1.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.BOLD, 0, ""))
-            labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labIcons.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labTB.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
+            labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labcache.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFopt.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labydl0.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.labydl1.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.BOLD))
+            labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labIcons.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labTB.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            labfile.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labcache.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFopt.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labydl0.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labydl1.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD, 0, ""))
-            labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labIcons.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labTB.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
+            labfile.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labcache.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFopt.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labydl0.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.labydl1.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD))
+            labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labIcons.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labTB.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         #  tooltips
         tip = (_("By assigning an additional suffix you could avoid "
@@ -499,21 +474,52 @@ class Setup(wx.Dialog):
         else:
             self.checkbox_cacheclr.SetValue(True)
 
+        # ---- BEGIN set youtube-dl radiobox
+        if ('/tmp/.mount_' in sys.executable or os.path.exists(
+            os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
+
+            self.rdbDownloader.SetItemLabel(1, _('Use the one included in the '
+                                                 'AppImage (recommended)'))
+            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
+                                                 'youtube-dl'))
+            tip1 = _('\nmenu bar > Tools > Update youtube-dl\n')
+            tip2 = _('\nmenu bar > Tools > Update youtube-dl\n')
+
+        else:
+            self.rdbDownloader.SetItemLabel(1, _('Use the one installed in '
+                                                 'your O.S. (recommended)'))
+            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
+                                                 'youtube-dl updatable by '
+                                                 'Videomass'))
+            tip1 = _('\nmenu bar > Tools > Update youtube-dl\n')
+            tip2 = ('\npip3 install -U youtube-dl\n')
+
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            self.rdbDownloader.EnableItem(1, enable=False)
+            self.labydl1.SetLabel(tip1)
+
         if Setup.YDL_PREF == 'disabled':
             self.rdbDownloader.SetSelection(0)
             self.ydlPath.WriteText(_('Disabled'))
+            self.labydl1.SetLabel('')
+
         elif Setup.YDL_PREF == 'system':
             self.rdbDownloader.SetSelection(1)
+            self.labydl1.SetLabel(tip2)
             if Setup.SITEPKGYDL is None:
                 self.ydlPath.WriteText(_('Not Installed'))
             else:
                 self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
+
         elif Setup.YDL_PREF == 'local':
             self.rdbDownloader.SetSelection(2)
+            self.labydl1.SetLabel(tip1)
             if os.path.exists(Setup.EXECYDL):
                 self.ydlPath.WriteText(str(Setup.EXECYDL))
             else:
                 self.ydlPath.WriteText(_('Not found'))
+        # ---- END
 
         for s in range(self.rdbFFplay.GetCount()):
             if (Setup.FFPLAY_LOGLEVEL.split()[1] in

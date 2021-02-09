@@ -161,8 +161,9 @@ class Ydl_DL_Pylib(Thread):
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
-        if Ydl_DL_Pylib.OS == 'Windows' or '/tmp/.mount_' \
-           in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+        if (Ydl_DL_Pylib.OS == 'Windows' or '/tmp/.mount_' in sys.executable
+            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

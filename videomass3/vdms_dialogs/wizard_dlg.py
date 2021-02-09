@@ -96,7 +96,8 @@ class PageOne(wx.Panel):
                              style=wx.ST_ELLIPSIZE_END |
                              wx.ALIGN_CENTRE_HORIZONTAL
                              )
-        lab3 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG3)
+        lab3 = wx.StaticText(self, wx.ID_ANY, PageOne.MSG3,
+                             style=wx.ALIGN_CENTRE_HORIZONTAL)
 
         if PageOne.OS == 'Darwin':
             lab1.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
@@ -113,9 +114,9 @@ class PageOne(wx.Panel):
         sizer_base.Add((0, 30), 0)
         sizer_base.Add(lab1, 0, wx.CENTER)
         sizer_base.Add((0, 30), 0)
-        sizer_base.Add(lab2, 0, wx.CENTER)
+        sizer_base.Add(lab2, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 30), 0)
-        sizer_base.Add(lab3, 0, wx.CENTER)
+        sizer_base.Add(lab3, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 80), 0)
 
         self.SetSizer(sizer_base)
@@ -133,16 +134,16 @@ class PageTwo(wx.Panel):
     OS = get.OS
     FFMPEG_LOCALDIR = get.FFMPEGlocaldir
 
-    MSG00 = (_('Videomass is an application based on FFmpeg'))
+    MSG0 = (_('Videomass is an application based on FFmpeg'))
 
-    MSG0 = (_('If FFmpeg is not on your computer, this application '
+    MSG1 = (_('If FFmpeg is not on your computer, this application '
               'will be unusable'))
 
-    MSG1 = (_('If you have already installed FFmpeg on your operating '
-              'system, click\nthe "Auto-detection" button.'))
+    MSG2 = (_('If you have already installed FFmpeg on your operating\n'
+              'system, click the "Auto-detection" button.'))
 
-    MSG2 = (_('If you want to use a version of FFmpeg located on your '
-              'filesystem but\nnot installed on your operating system, '
+    MSG3 = (_('If you want to use a version of FFmpeg located on your\n'
+              'filesystem but not installed on your operating system,\n'
               'click the "Locate" button.'))
 
     def __init__(self, parent):
@@ -154,16 +155,15 @@ class PageTwo(wx.Panel):
         self.parent = parent
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG00,
+        sizerText = wx.BoxSizer(wx.VERTICAL)
+        lab0 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG0,
                              style=wx.ST_ELLIPSIZE_END |
                              wx.ALIGN_CENTRE_HORIZONTAL
                              )
-        lab01 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG0,
-                              style=wx.ALIGN_CENTRE_HORIZONTAL)
         lab1 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG1,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL)
-        lab2 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG2,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL)
+                              style=wx.ALIGN_CENTRE_HORIZONTAL)
+        lab2 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG2)
+        lab3 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG3)
         self.detectBtn = wx.Button(self, wx.ID_ANY, _("Auto-detection"),
                                    size=(250, -1))
         self.locateBtn = wx.Button(self, wx.ID_ANY, _("Locate"),
@@ -174,27 +174,28 @@ class PageTwo(wx.Panel):
                                        )
         if PageTwo.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab01.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+            lab1.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
             lab2.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+            lab3.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
             self.labFFpath.SetFont(wx.Font(13, wx.MODERN,
                                            wx.NORMAL, wx.BOLD, 0, ""))
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab01.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+            lab1.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
             lab2.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+            lab3.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
             self.labFFpath.SetFont(wx.Font(10, wx.MODERN,
                                            wx.NORMAL, wx.BOLD, 0, ""))
         # layout
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 5), 0)
-        sizer_base.Add(lab01, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 15), 0)
-        sizer_base.Add(lab2, 0, wx.CENTER | wx.EXPAND)
+        sizer_base.Add((0, 50), 0)
+        sizer_base.Add(sizerText, 0, wx.CENTER)
+        sizerText.Add(lab2, 0, wx.CENTER | wx.EXPAND)
+        sizerText.Add((0, 15), 0)
+        sizerText.Add(lab3, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(self.detectBtn, 0, wx.CENTER)
         sizer_base.Add((0, 5), 0)
@@ -279,7 +280,7 @@ class PageThree(wx.Panel):
     OS = get.OS
     FFMPEG_LOCALDIR = get.FFMPEGlocaldir
 
-    MSG00 = (_('Locating FFmpeg executables'))
+    MSG0 = (_('Locating FFmpeg executables'))
 
     MSG1 = (_('"ffmpeg", "ffprobe" and "ffplay" are required. Complete all\n'
               'the text boxes below by clicking on the respective buttons.'))
@@ -302,12 +303,12 @@ class PageThree(wx.Panel):
             self.ffplay = 'ffplay'
 
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG00,
+        sizerText = wx.BoxSizer(wx.VERTICAL)
+        lab0 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG0,
                              style=wx.ST_ELLIPSIZE_END |
                              wx.ALIGN_CENTRE_HORIZONTAL
                              )
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG1,
-                             style=wx.ALIGN_CENTRE_HORIZONTAL)
+        lab1 = wx.StaticText(self, wx.ID_ANY, PageThree.MSG1)
         #  ffmpeg
         gridffmpeg = wx.BoxSizer(wx.HORIZONTAL)
         self.ffmpegTxt = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -344,8 +345,9 @@ class PageThree(wx.Panel):
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 50), 0)
-        sizer_base.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 25), 0)
+        sizer_base.Add(sizerText, 0, wx.CENTER)
+        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
+        sizer_base.Add((0, 50), 0)
         sizer_base.Add(gridffmpeg, 0, wx.ALL | wx.EXPAND, 5)
         sizer_base.Add((0, 5), 0)
         sizer_base.Add(gridffprobe, 0, wx.ALL | wx.EXPAND, 5)
@@ -434,6 +436,8 @@ class PageFour(wx.Panel):
 
         self.parent = parent
         sizer_base = wx.BoxSizer(wx.VERTICAL)
+        sizerText = wx.BoxSizer(wx.VERTICAL)
+
         lab0 = wx.StaticText(self, wx.ID_ANY, PageFour.MSG0,
                              style=wx.ST_ELLIPSIZE_END |
                              wx.ALIGN_CENTRE_HORIZONTAL
@@ -453,10 +457,12 @@ class PageFour(wx.Panel):
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 50), 0)
-        sizer_base.Add(lab1, 0, wx.CENTER)
-        sizer_base.Add((0, 50), 0)
-        sizer_base.Add(self.ckbx_yn, 0, wx.CENTER | wx.ALL, 10)
-        sizer_base.Add((0, 50), 0)
+
+        sizer_base.Add(sizerText, 0, wx.CENTER)
+        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
+        sizerText.Add((0, 50), 0)
+        sizerText.Add(self.ckbx_yn, 0, wx.CENTER | wx.ALL, 10)
+        sizerText.Add((0, 50), 0)
 
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
@@ -490,16 +496,22 @@ class PageFive(wx.Panel):
 
     MSG0 = _('Choose how you want to use youtube-dl')
 
-    MSG1 = _('Videomass can use youtube-dl internally as a Python module '
-             '(recommended)\nor as an executable file. The executable '
-             'file can be downloaded and updated\nby Videomass and will be '
-             'placed locally on:')
+    #MSG1 = _('Videomass can use youtube-dl internally as a Python module\n'
+             #'(recommended) or as an executable file. The executable file\n'
+             #'can be downloaded and updated from Videomass and will be\n'
+             #'placed on:')
+
+    MSG1 = _('Videomass can use youtube-dl internally as a Python\n'
+             'module (recommended) or as an executable file. The\n'
+             'executable file can be downloaded and updated from\n'
+             'Videomass itself and will be placed on:')
 
     MSG2 = _('Notice: This version of Videomass can\n'
              'only use youtube-dl as local executable')
     #  if AppImage
-    if '/tmp/.mount_' in sys.executable or \
-       os.path.exists(os.getcwd() + '/AppRun'):
+    if ('/tmp/.mount_' in sys.executable or os.path.exists(
+        os.path.dirname(os.path.dirname(os.path.dirname(
+         sys.argv[0]))) + '/AppRun')):
 
         dldlist = [
                 _('Use the one included in the AppImage (recommended)'),
@@ -524,6 +536,7 @@ class PageFive(wx.Panel):
 
         self.parent = parent
         sizer_base = wx.BoxSizer(wx.VERTICAL)
+        sizerText = wx.BoxSizer(wx.VERTICAL)
         self.rdbDownloader = wx.RadioBox(self, wx.ID_ANY,
                                          (_("Downloader preferences")),
                                          choices=PageFive.dldlist,
@@ -538,9 +551,12 @@ class PageFive(wx.Panel):
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 50), 0)
         lab1 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG1)
-        sizer_base.Add(lab1, 0, wx.CENTER)
-        labpath = wx.StaticText(self, wx.ID_ANY, PageFive.CACHEDIR)
-        sizer_base.Add(labpath, 0, wx.CENTER | wx.ALL, 5)
+        sizer_base.Add(sizerText, 0, wx.CENTER)
+
+        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
+        labpath = wx.StaticText(self, wx.ID_ANY, PageFive.CACHEDIR,
+                                style=wx.ALIGN_CENTRE_HORIZONTAL)
+        sizer_base.Add(labpath, 0, wx.CENTER | wx.EXPAND, 5)
         sizer_base.Add((0, 15), 0)
         sizer_base.Add(self.rdbDownloader, 0, wx.CENTER | wx.ALL, 10)
         sizer_base.Add((0, 15), 0)
@@ -549,7 +565,7 @@ class PageFive(wx.Panel):
             lab2 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG2,
                                  style=wx.ALIGN_CENTRE_HORIZONTAL)
             lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            sizer_base.Add(lab2, 0, wx.EXPAND)
+            sizer_base.Add(lab2, 0, wx.CENTER | wx.EXPAND)
             self.rdbDownloader.SetSelection(1)
             self.rdbDownloader.Disable()
 
