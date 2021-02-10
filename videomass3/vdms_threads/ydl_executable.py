@@ -63,7 +63,7 @@ class Ydl_DL_Exec(Thread):
     EXECYDL = get.execYdl
 
     if get.PLAYLISTsubfolder == 'true':
-        SUBDIR = '%(playlist_title)s/%(uploader)s/%(playlist_index)s - '
+        SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
     else:
         SUBDIR = ''
 
