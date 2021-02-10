@@ -939,7 +939,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('{0}.%(ext)s'.format(_id),
+                       ('{0}.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
                        ]
 
@@ -963,7 +963,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["SUBTITLES"][1]} '
                         f'{self.opt["THUMB"][1]} '
                         f'{self.opt["NO_PLAYLIST"][1]}'),
-                       ('{0}.%(ext)s'.format(_id),
+                       ('{0}.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
                        ]
 
