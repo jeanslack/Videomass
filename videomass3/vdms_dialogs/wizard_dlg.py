@@ -102,11 +102,9 @@ class PageOne(wx.Panel):
         if PageOne.OS == 'Darwin':
             lab1.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             lab2.SetFont(wx.Font(13, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab3.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
         else:
             lab1.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             lab2.SetFont(wx.Font(11, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab3.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
 
         # layout
         sizer_base.Add((0, 80), 0)
@@ -134,7 +132,7 @@ class PageTwo(wx.Panel):
     OS = get.OS
     FFMPEG_LOCALDIR = get.FFMPEGlocaldir
 
-    MSG0 = (_('Videomass is an application based on FFmpeg'))
+    MSG0 = (_('Videomass is an application based on FFmpeg\n'))
 
     MSG1 = (_('If FFmpeg is not on your computer, this application '
               'will be unusable'))
@@ -175,28 +173,24 @@ class PageTwo(wx.Panel):
         if PageTwo.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
             lab1.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab2.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
-            lab3.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
             self.labFFpath.SetFont(wx.Font(13, wx.MODERN,
                                            wx.NORMAL, wx.BOLD, 0, ""))
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
             lab1.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab2.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
-            lab3.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
             self.labFFpath.SetFont(wx.Font(10, wx.MODERN,
                                            wx.NORMAL, wx.BOLD, 0, ""))
         # layout
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 5), 0)
+        #sizer_base.Add((0, 5), 0)
         sizer_base.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 50), 0)
+        sizer_base.Add((0, 40), 0)
         sizer_base.Add(sizerText, 0, wx.CENTER)
-        sizerText.Add(lab2, 0, wx.CENTER | wx.EXPAND)
+        sizerText.Add(lab2, 0, wx.EXPAND)
         sizerText.Add((0, 15), 0)
-        sizerText.Add(lab3, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 50), 0)
+        sizerText.Add(lab3, 0, wx.EXPAND)
+        sizer_base.Add((0, 40), 0)
         sizer_base.Add(self.detectBtn, 0, wx.CENTER)
         sizer_base.Add((0, 5), 0)
         sizer_base.Add(self.locateBtn, 0, wx.CENTER)
@@ -280,7 +274,7 @@ class PageThree(wx.Panel):
     OS = get.OS
     FFMPEG_LOCALDIR = get.FFMPEGlocaldir
 
-    MSG0 = (_('Locating FFmpeg executables'))
+    MSG0 = (_('Locating FFmpeg executables\n'))
 
     MSG1 = (_('"ffmpeg", "ffprobe" and "ffplay" are required. Complete all\n'
               'the text boxes below by clicking on the respective buttons.'))
@@ -336,15 +330,13 @@ class PageThree(wx.Panel):
 
         if PageThree.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
 
         # layout
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 50), 0)
+        sizer_base.Add((0, 40), 0)
         sizer_base.Add(sizerText, 0, wx.CENTER)
         sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 50), 0)
@@ -421,7 +413,7 @@ class PageFour(wx.Panel):
     get = wx.GetApp()
     OS = get.OS
 
-    MSG0 = _('Videomass has a simple graphical interface for youtube-dl')
+    MSG0 = _('Videomass has a simple graphical\ninterface for youtube-dl\n')
 
     MSG1 = _('This feature allows you to download video and audio from\n'
              'many sites, including YouTube.com and even Facebook.')
@@ -448,15 +440,14 @@ class PageFour(wx.Panel):
 
         if PageFour.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
 
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+
         # layout
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 50), 0)
+        sizer_base.Add((0, 40), 0)
 
         sizer_base.Add(sizerText, 0, wx.CENTER)
         sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
@@ -494,12 +485,7 @@ class PageFive(wx.Panel):
     OS = get.OS
     CACHEDIR = get.CACHEdir
 
-    MSG0 = _('Choose how you want to use youtube-dl')
-
-    #MSG1 = _('Videomass can use youtube-dl internally as a Python module\n'
-             #'(recommended) or as an executable file. The executable file\n'
-             #'can be downloaded and updated from Videomass and will be\n'
-             #'placed on:')
+    MSG0 = _('Choose how you want to use youtube-dl\n')
 
     MSG1 = _('Videomass can use youtube-dl internally as a Python\n'
              'module (recommended) or as an executable file. The\n'
@@ -549,13 +535,14 @@ class PageFive(wx.Panel):
                              wx.ALIGN_CENTRE_HORIZONTAL
                              )
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 50), 0)
+        sizer_base.Add((0, 40), 0)
         lab1 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG1)
         sizer_base.Add(sizerText, 0, wx.CENTER)
 
         sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
         labpath = wx.StaticText(self, wx.ID_ANY, PageFive.CACHEDIR,
                                 style=wx.ALIGN_CENTRE_HORIZONTAL)
+        sizer_base.Add((0, 15), 0)
         sizer_base.Add(labpath, 0, wx.CENTER | wx.EXPAND, 5)
         sizer_base.Add((0, 15), 0)
         sizer_base.Add(self.rdbDownloader, 0, wx.CENTER | wx.ALL, 10)
@@ -571,11 +558,9 @@ class PageFive(wx.Panel):
 
         if PageFive.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
 
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab1.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
 
         self.SetSizer(sizer_base)
         sizer_base.Fit(self)
@@ -603,7 +588,7 @@ class PageFinish(wx.Panel):
     """
     get = wx.GetApp()
     OS = get.OS
-    MSG0 = _("Wizard completed successfully!")
+    MSG0 = _("Wizard completed successfully!\n")
     MSG1 = (_("Remember that you can always change these settings "
               "later, through the Setup dialog."))
     MSG3 = _("Thank You!")
@@ -630,12 +615,10 @@ class PageFinish(wx.Panel):
         if PageFinish.OS == 'Darwin':
             lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             lab1.SetFont(wx.Font(10, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab2.SetFont(wx.Font(11, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
             lab3.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
         else:
             lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
             lab1.SetFont(wx.Font(8, wx.SWISS, wx.ITALIC, wx.NORMAL, 0, ""))
-            lab2.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
             lab3.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
 
         # layout

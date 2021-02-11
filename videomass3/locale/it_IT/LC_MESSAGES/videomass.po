@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 10:31+0100\n"
-"PO-Revision-Date: 2021-02-11 10:33+0100\n"
+"POT-Creation-Date: 2021-02-11 18:18+0100\n"
+"PO-Revision-Date: 2021-02-11 18:41+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -423,25 +423,25 @@ msgstr "Fare clic sul pulsante \"Successivo\" per iniziare"
 msgid "Welcome to Videomass Wizard!"
 msgstr "Benvenuti nell'assistente di Videomass!"
 
-#: ../vdms_dialogs/wizard_dlg.py:137
-msgid "Videomass is an application based on FFmpeg"
-msgstr "Videomass è un'applicazione basata su FFmpeg"
+#: ../vdms_dialogs/wizard_dlg.py:135
+msgid "Videomass is an application based on FFmpeg\n"
+msgstr "Videomass è un'applicazione basata su FFmpeg\n"
 
-#: ../vdms_dialogs/wizard_dlg.py:139
+#: ../vdms_dialogs/wizard_dlg.py:137
 msgid "If FFmpeg is not on your computer, this application will be unusable"
 msgstr ""
 "Se FFmpeg non si trova sul tuo computer, questa applicazione sarà "
 "inutilizzabile"
 
-#: ../vdms_dialogs/wizard_dlg.py:142
+#: ../vdms_dialogs/wizard_dlg.py:140
 msgid ""
 "If you have already installed FFmpeg on your operating\n"
 "system, click the \"Auto-detection\" button."
 msgstr ""
-"Se hai già installato FFmpeg sul tuo sistema operativo,\n"
-"fai clic sul pulsante \"Auto-rileva\"."
+"Se hai già installato FFmpeg sul tuo sistema operativo, fai click\n"
+"sul pulsante \"Auto-rileva\"."
 
-#: ../vdms_dialogs/wizard_dlg.py:145
+#: ../vdms_dialogs/wizard_dlg.py:143
 msgid ""
 "If you want to use a version of FFmpeg located on your\n"
 "filesystem but not installed on your operating system,\n"
@@ -451,19 +451,19 @@ msgstr ""
 "ma non installata sul tuo sistema operativo, fai clic sul pulsante\n"
 "\"Individua\"."
 
-#: ../vdms_dialogs/wizard_dlg.py:167
+#: ../vdms_dialogs/wizard_dlg.py:165
 msgid "Auto-detection"
 msgstr "Auto-rileva"
 
-#: ../vdms_dialogs/wizard_dlg.py:169
+#: ../vdms_dialogs/wizard_dlg.py:167
 msgid "Locate"
 msgstr "Individua"
 
-#: ../vdms_dialogs/wizard_dlg.py:223
+#: ../vdms_dialogs/wizard_dlg.py:217
 msgid "Click the \"Next\" button"
 msgstr "Fare clic sul pulsante \"Successivo\""
 
-#: ../vdms_dialogs/wizard_dlg.py:244
+#: ../vdms_dialogs/wizard_dlg.py:238
 msgid ""
 "'{}' is not installed on your computer. Install it or indicate another "
 "location by clicking the 'Locate' button."
@@ -471,7 +471,7 @@ msgstr ""
 "\"{}\" non è installato sul tuo computer. Installalo o indica un'altra "
 "posizione cliccando il pulsante \"Individua\"."
 
-#: ../vdms_dialogs/wizard_dlg.py:258
+#: ../vdms_dialogs/wizard_dlg.py:252
 msgid ""
 "Videomass already seems to include FFmpeg.\n"
 "\n"
@@ -481,15 +481,15 @@ msgstr ""
 "\n"
 "Vuoi usare quello?"
 
-#: ../vdms_dialogs/wizard_dlg.py:260
+#: ../vdms_dialogs/wizard_dlg.py:254
 msgid "Videomass: Please Confirm"
 msgstr "Videomass: Prego confermare"
 
-#: ../vdms_dialogs/wizard_dlg.py:283
-msgid "Locating FFmpeg executables"
-msgstr "Individuazione degli eseguibili FFmpeg"
+#: ../vdms_dialogs/wizard_dlg.py:277
+msgid "Locating FFmpeg executables\n"
+msgstr "Individuazione degli eseguibili FFmpeg\n"
 
-#: ../vdms_dialogs/wizard_dlg.py:285
+#: ../vdms_dialogs/wizard_dlg.py:279
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
@@ -497,17 +497,21 @@ msgstr ""
 "Sono richiesti \"ffmpeg\", \"ffprobe\" ed \" ffplay\". Completa tutti\n"
 "i campi di testo sottostanti cliccando sui rispettivi pulsanti."
 
-#: ../vdms_dialogs/wizard_dlg.py:369 ../vdms_dialogs/wizard_dlg.py:385
-#: ../vdms_dialogs/wizard_dlg.py:401 ../vdms_dialogs/settings.py:704
+#: ../vdms_dialogs/wizard_dlg.py:361 ../vdms_dialogs/wizard_dlg.py:377
+#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:704
 #: ../vdms_dialogs/settings.py:743 ../vdms_dialogs/settings.py:782
 msgid "Choose the {} executable"
 msgstr "Scegli l'eseguibile {}"
 
-#: ../vdms_dialogs/wizard_dlg.py:424
-msgid "Videomass has a simple graphical interface for youtube-dl"
-msgstr "Videomass dispone di una semplice interfaccia grafica per youtube-dl"
+#: ../vdms_dialogs/wizard_dlg.py:416
+msgid ""
+"Videomass has a simple graphical\n"
+"interface for youtube-dl\n"
+msgstr ""
+"Videomass dispone di una semplice\n"
+"interfaccia grafica per youtube-dl\n"
 
-#: ../vdms_dialogs/wizard_dlg.py:426
+#: ../vdms_dialogs/wizard_dlg.py:418
 msgid ""
 "This feature allows you to download video and audio from\n"
 "many sites, including YouTube.com and even Facebook."
@@ -515,15 +519,15 @@ msgstr ""
 "Questa funzione ti consente di scaricare video e audio da \n"
 "molti siti, inclusi YouTube.com e persino Facebook."
 
-#: ../vdms_dialogs/wizard_dlg.py:446
+#: ../vdms_dialogs/wizard_dlg.py:438
 msgid " Do you want to enable this feature?"
 msgstr " Vuoi abilitare questa funzione?"
 
-#: ../vdms_dialogs/wizard_dlg.py:497
-msgid "Choose how you want to use youtube-dl"
-msgstr "Scegli come vuoi utilizzare youtube-dl"
+#: ../vdms_dialogs/wizard_dlg.py:488
+msgid "Choose how you want to use youtube-dl\n"
+msgstr "Scegli come vuoi utilizzare youtube-dl\n"
 
-#: ../vdms_dialogs/wizard_dlg.py:504
+#: ../vdms_dialogs/wizard_dlg.py:490
 msgid ""
 "Videomass can use youtube-dl internally as a Python\n"
 "module (recommended) or as an executable file. The\n"
@@ -535,7 +539,7 @@ msgstr ""
 "eseguibile può essere scaricato e aggiornato da Videomass\n"
 "stesso e verrà posizionato localmente su:"
 
-#: ../vdms_dialogs/wizard_dlg.py:509
+#: ../vdms_dialogs/wizard_dlg.py:495
 msgid ""
 "Notice: This version of Videomass can\n"
 "only use youtube-dl as local executable"
@@ -543,31 +547,31 @@ msgstr ""
 "Avviso: questa versione di Videomass può \n"
 "utilizzare youtube-dl solo come eseguibile locale"
 
-#: ../vdms_dialogs/wizard_dlg.py:517 ../vdms_dialogs/settings.py:482
+#: ../vdms_dialogs/wizard_dlg.py:503 ../vdms_dialogs/settings.py:482
 msgid "Use the one included in the AppImage (recommended)"
 msgstr "Usa quello incluso nell'AppImage (consigliato)"
 
-#: ../vdms_dialogs/wizard_dlg.py:518 ../vdms_dialogs/settings.py:484
+#: ../vdms_dialogs/wizard_dlg.py:504 ../vdms_dialogs/settings.py:484
 msgid "Use a local copy of youtube-dl"
 msgstr "Usa una copia locale di youtube-dl"
 
-#: ../vdms_dialogs/wizard_dlg.py:521 ../vdms_dialogs/settings.py:490
+#: ../vdms_dialogs/wizard_dlg.py:507 ../vdms_dialogs/settings.py:490
 msgid "Use the one installed in your O.S. (recommended)"
 msgstr "Usa quello installato nel tuo sistema operativo (consigliato)"
 
-#: ../vdms_dialogs/wizard_dlg.py:522 ../vdms_dialogs/settings.py:492
+#: ../vdms_dialogs/wizard_dlg.py:508 ../vdms_dialogs/settings.py:492
 msgid "Use a local copy of youtube-dl updatable by Videomass"
 msgstr "Utilizza una copia locale di youtube-dl aggiornabile da Videomass"
 
-#: ../vdms_dialogs/wizard_dlg.py:541 ../vdms_dialogs/settings.py:270
+#: ../vdms_dialogs/wizard_dlg.py:527 ../vdms_dialogs/settings.py:270
 msgid "Downloader preferences"
 msgstr "Preferenze del downloader"
 
-#: ../vdms_dialogs/wizard_dlg.py:606
-msgid "Wizard completed successfully!"
-msgstr "Tutto completato con successo!"
+#: ../vdms_dialogs/wizard_dlg.py:591
+msgid "Wizard completed successfully!\n"
+msgstr "Tutto completato con successo!\n"
 
-#: ../vdms_dialogs/wizard_dlg.py:607
+#: ../vdms_dialogs/wizard_dlg.py:592
 msgid ""
 "Remember that you can always change these settings later, through the Setup "
 "dialog."
@@ -575,40 +579,40 @@ msgstr ""
 "Ricorda che puoi sempre modificare queste impostazioni con il dialogo di "
 "Setup."
 
-#: ../vdms_dialogs/wizard_dlg.py:609
+#: ../vdms_dialogs/wizard_dlg.py:594
 msgid "Thank You!"
 msgstr "Grazie!"
 
-#: ../vdms_dialogs/wizard_dlg.py:610
+#: ../vdms_dialogs/wizard_dlg.py:595
 msgid "To exit click the \"Finish\" button"
 msgstr "Per uscire fare clic sul pulsante \"Fine\""
 
-#: ../vdms_dialogs/wizard_dlg.py:703
+#: ../vdms_dialogs/wizard_dlg.py:686
 msgid "< Previous"
 msgstr "< Precedente"
 
-#: ../vdms_dialogs/wizard_dlg.py:706 ../vdms_dialogs/wizard_dlg.py:808
+#: ../vdms_dialogs/wizard_dlg.py:689 ../vdms_dialogs/wizard_dlg.py:791
 msgid "Next >"
 msgstr "Successivo >"
 
-#: ../vdms_dialogs/wizard_dlg.py:711
+#: ../vdms_dialogs/wizard_dlg.py:694
 msgid "Videomass Wizard"
 msgstr "Videomass Assistente"
 
-#: ../vdms_dialogs/wizard_dlg.py:740 ../vdms_dialogs/wizard_dlg.py:773
-#: ../vdms_dialogs/wizard_dlg.py:777
+#: ../vdms_dialogs/wizard_dlg.py:723 ../vdms_dialogs/wizard_dlg.py:756
+#: ../vdms_dialogs/wizard_dlg.py:760
 msgid "Finish"
 msgstr "Fine"
 
-#: ../vdms_dialogs/wizard_dlg.py:763
+#: ../vdms_dialogs/wizard_dlg.py:746
 msgid "Some text boxes are still incomplete"
 msgstr "Alcune caselle di testo sono ancora incomplete"
 
-#: ../vdms_dialogs/wizard_dlg.py:853
+#: ../vdms_dialogs/wizard_dlg.py:836
 msgid "Re-start is required"
 msgstr "È necessario riavviare"
 
-#: ../vdms_dialogs/wizard_dlg.py:854
+#: ../vdms_dialogs/wizard_dlg.py:837
 msgid "Done!"
 msgstr "Fatto!"
 
@@ -1560,7 +1564,7 @@ msgstr ""
 msgid "Ready"
 msgstr "Pronto"
 
-#: ../vdms_main/main_frame.py:275 ../vdms_panels/youtubedl_ui.py:426
+#: ../vdms_main/main_frame.py:275 ../vdms_panels/youtubedl_ui.py:427
 msgid "Videomass"
 msgstr "Videomass"
 
@@ -2885,7 +2889,7 @@ msgstr ""
 "\n"
 "youtube-dl non è installato, usa il tuo gestore di pacchetti per installarlo."
 
-#: ../vdms_panels/choose_topic.py:256 ../vdms_panels/youtubedl_ui.py:829
+#: ../vdms_panels/choose_topic.py:256 ../vdms_panels/youtubedl_ui.py:830
 #: ../vdms_panels/long_processing_task.py:484
 #: ../vdms_panels/presets_manager.py:873 ../vdms_panels/presets_manager.py:915
 #: ../vdms_panels/presets_manager.py:983 ../vdms_panels/presets_manager.py:1009
@@ -2958,83 +2962,83 @@ msgstr ""
 "Includi l'ID video nei\n"
 "nomi del file"
 
-#: ../vdms_panels/youtubedl_ui.py:278
+#: ../vdms_panels/youtubedl_ui.py:279
 msgid "Help viewer"
 msgstr "Visualizzatore di aiuto"
 
-#: ../vdms_panels/youtubedl_ui.py:302 ../vdms_panels/youtubedl_ui.py:388
-#: ../vdms_panels/youtubedl_ui.py:404
+#: ../vdms_panels/youtubedl_ui.py:303 ../vdms_panels/youtubedl_ui.py:389
+#: ../vdms_panels/youtubedl_ui.py:405
 msgid "Play selected url"
 msgstr "Riproduci l'URL selezionato"
 
-#: ../vdms_panels/youtubedl_ui.py:416
+#: ../vdms_panels/youtubedl_ui.py:417
 msgid "An item must be selected in the URLs checklist"
 msgstr ""
 "È necessario selezionare un elemento nell'elenco di controllo degli URL"
 
-#: ../vdms_panels/youtubedl_ui.py:420
+#: ../vdms_panels/youtubedl_ui.py:421
 msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
-#: ../vdms_panels/youtubedl_ui.py:425
+#: ../vdms_panels/youtubedl_ui.py:426
 msgid "Videomass cannot play playlists for now"
 msgstr "Videomass non può riprodurre playlist per ora"
 
-#: ../vdms_panels/youtubedl_ui.py:447 ../vdms_panels/youtubedl_ui.py:544
+#: ../vdms_panels/youtubedl_ui.py:448 ../vdms_panels/youtubedl_ui.py:545
 msgid "Format Code"
 msgstr "Codice Formato"
 
-#: ../vdms_panels/youtubedl_ui.py:448 ../vdms_panels/youtubedl_ui.py:545
-#: ../vdms_panels/youtubedl_ui.py:593
+#: ../vdms_panels/youtubedl_ui.py:449 ../vdms_panels/youtubedl_ui.py:546
+#: ../vdms_panels/youtubedl_ui.py:594
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:449 ../vdms_panels/youtubedl_ui.py:546
-#: ../vdms_panels/youtubedl_ui.py:594
+#: ../vdms_panels/youtubedl_ui.py:450 ../vdms_panels/youtubedl_ui.py:547
+#: ../vdms_panels/youtubedl_ui.py:595
 msgid "Title"
 msgstr "Titolo"
 
-#: ../vdms_panels/youtubedl_ui.py:450 ../vdms_panels/youtubedl_ui.py:547
+#: ../vdms_panels/youtubedl_ui.py:451 ../vdms_panels/youtubedl_ui.py:548
 msgid "Extension"
 msgstr "Estensione"
 
-#: ../vdms_panels/youtubedl_ui.py:451
+#: ../vdms_panels/youtubedl_ui.py:452
 msgid "Resolution"
 msgstr "Risoluzione"
 
-#: ../vdms_panels/youtubedl_ui.py:452
+#: ../vdms_panels/youtubedl_ui.py:453
 msgid "Video Codec"
 msgstr "Codec Video"
 
-#: ../vdms_panels/youtubedl_ui.py:453
+#: ../vdms_panels/youtubedl_ui.py:454
 msgid "fps"
 msgstr "fps"
 
-#: ../vdms_panels/youtubedl_ui.py:454
+#: ../vdms_panels/youtubedl_ui.py:455
 msgid "Audio Codec"
 msgstr "Codec Audio"
 
-#: ../vdms_panels/youtubedl_ui.py:455 ../vdms_panels/filedrop.py:204
+#: ../vdms_panels/youtubedl_ui.py:456 ../vdms_panels/filedrop.py:204
 msgid "Size"
 msgstr "Dimensione"
 
-#: ../vdms_panels/youtubedl_ui.py:548
+#: ../vdms_panels/youtubedl_ui.py:549
 msgid "Resolution note"
 msgstr "Note sulla risoluzione"
 
-#: ../vdms_panels/youtubedl_ui.py:595
+#: ../vdms_panels/youtubedl_ui.py:596
 msgid "Quality"
 msgstr "Qualità"
 
-#: ../vdms_panels/youtubedl_ui.py:613
+#: ../vdms_panels/youtubedl_ui.py:614
 msgid "Sorry, this feature is disabled."
 msgstr "Spiacenti, questa funzione è disabilitata."
 
-#: ../vdms_panels/youtubedl_ui.py:674
+#: ../vdms_panels/youtubedl_ui.py:675
 msgid "Unable to get format codes on playlists"
 msgstr "Impossibile ottenere i codici di formato nelle playlist"
 
-#: ../vdms_panels/youtubedl_ui.py:827
+#: ../vdms_panels/youtubedl_ui.py:828
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr "Gli URL contengono playlist. Sei sicuro di voler continuare?"
 
