@@ -145,7 +145,7 @@ class Choose_Topic(wx.Panel):
                                          'translators. If you are interested '
                                          'you could take a look at the '))
         lnk = ("https://github.com/jeanslack/Videomass/blob/"
-               "master/develop/localization_guidelines.md")
+               "master/docs/localization_guidelines.md")
         link_trad = hpl.HyperLinkCtrl(self, -1, _("Localization guidelines"),
                                       URL=lnk)
         sizer_trad.Add(txt_trad)

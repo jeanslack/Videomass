@@ -251,7 +251,8 @@ class Downloader(wx.Panel):
         fgs1.Add(self.ckbx_w, 0, wx.ALL, 5)
 
         self.ckbx_id = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                  (_('Include the video ID\nin the file name'))
+                                  (_('Include the video ID\n'
+                                     'in the file names'))
                                   )
         fgs1.Add(self.ckbx_id, 0, wx.ALL, 5)
 

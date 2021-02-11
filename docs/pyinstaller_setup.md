@@ -18,6 +18,8 @@ Packaging
 
 - Use `pip` to install PyPubSub
    - `python3 -m pip install --user PyPubSub`
+   
+   - `python3 -m pip install --user requests`
 
 - Install wxPython (see [Installing-and-Dependencies](https://github.com/jeanslack/Videomass/wiki/Installing-and-Dependencies) )
 for more details.
@@ -93,6 +95,8 @@ guides to doing this are as follows:
    - `python -m pip install --user wxPython`
    
    - `python -m pip install --user PyPubSub`
+   
+   - `python -m pip install --user requests`
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
 sources and extract the archive.
@@ -106,6 +110,8 @@ sources and extract the archive.
    - `python -m pip install wxPython`
 
    - `python -m pip install PyPubSub`
+   
+   - `python -m pip install requests`
 
 - Download the [Videomass](https://github.com/jeanslack/Videomass) TAR or ZIP
 sources and extract the archive.

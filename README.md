@@ -93,9 +93,8 @@ always within the same unpacked directory:
 
 # Resources
 
-* [Executables for Windows, MacOsX and Linux](https://sourceforge.net/projects/videomass2/)
 * [Support Page and Documentation](http://jeanslack.github.io/Videomass)
 * [Wiki page](https://github.com/jeanslack/Videomass/wiki)
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
-* [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
+* [Downloads](https://github.com/jeanslack/Videomass/releases)
