@@ -18,8 +18,9 @@ videomass (3.3.8-1) UNRELEASED; urgency=medium
   * Fixed playlist folder structure
   * Fixed #14
   * Updating videomass man page
+  * Added support for the Dutch language (to be translated)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 11 Feb 2021 22:42:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 12 Feb 2021 13:30:27 +0200
 
 videomass (3.3.7-1) UNRELEASED; urgency=medium
 

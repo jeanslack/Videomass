@@ -18,4 +18,5 @@ supLang = {"en": wx.LANGUAGE_ENGLISH,
            "pl": wx.LANGUAGE_POLISH,
            "es": wx.LANGUAGE_SPANISH,
            "ru": wx.LANGUAGE_RUSSIAN,
+           "nl": wx.LANGUAGE_DUTCH,
            }

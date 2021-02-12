@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-11 18:24+0100\n"
-"PO-Revision-Date: 2021-02-11 19:05+0100\n"
+"POT-Creation-Date: 2021-02-12 12:36+0100\n"
+"PO-Revision-Date: 2021-02-12 12:37+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -496,8 +496,8 @@ msgstr ""
 "текстовые поля ниже, нажав соответствующие кнопки."
 
 #: ../vdms_dialogs/wizard_dlg.py:361 ../vdms_dialogs/wizard_dlg.py:377
-#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:704
-#: ../vdms_dialogs/settings.py:743 ../vdms_dialogs/settings.py:782
+#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:706
+#: ../vdms_dialogs/settings.py:745 ../vdms_dialogs/settings.py:784
 msgid "Choose the {} executable"
 msgstr "Выберите исполняемый файл {}"
 
@@ -545,24 +545,24 @@ msgstr ""
 "Примечание: эта версия Videomass может использовать\n"
 "youtube-dl только как локальный исполняемый файл"
 
-#: ../vdms_dialogs/wizard_dlg.py:503 ../vdms_dialogs/settings.py:482
+#: ../vdms_dialogs/wizard_dlg.py:503 ../vdms_dialogs/settings.py:289
 msgid "Use the one included in the AppImage (recommended)"
 msgstr "Используйте тот, который включен в AppImage (рекомендуется)"
 
-#: ../vdms_dialogs/wizard_dlg.py:504 ../vdms_dialogs/settings.py:484
+#: ../vdms_dialogs/wizard_dlg.py:504 ../vdms_dialogs/settings.py:291
 msgid "Use a local copy of youtube-dl"
 msgstr "Используйте локальную копию youtube-dl"
 
-#: ../vdms_dialogs/wizard_dlg.py:507 ../vdms_dialogs/settings.py:490
+#: ../vdms_dialogs/wizard_dlg.py:507 ../vdms_dialogs/settings.py:297
 msgid "Use the one installed in your O.S. (recommended)"
 msgstr "Используйте тот, который установлен в вашем системе (рекомендуется)"
 
-#: ../vdms_dialogs/wizard_dlg.py:508 ../vdms_dialogs/settings.py:492
+#: ../vdms_dialogs/wizard_dlg.py:508 ../vdms_dialogs/settings.py:299
 msgid "Use a local copy of youtube-dl updatable by Videomass"
 msgstr ""
 "Используйте локальную копию youtube-dl, обновляемую с помощью Videomass"
 
-#: ../vdms_dialogs/wizard_dlg.py:527 ../vdms_dialogs/settings.py:270
+#: ../vdms_dialogs/wizard_dlg.py:527 ../vdms_dialogs/settings.py:267
 msgid "Downloader preferences"
 msgstr "Настройки загрузчика"
 
@@ -813,32 +813,51 @@ msgstr "Потоки, используемые для перекодирован
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/settings.py:263
-msgid ""
-"Make sure you are using the latest available version of\n"
-"youtube-dl. This allows you to avoid download problems."
-msgstr ""
-"Убедитесь, что вы используете последнюю доступную\n"
-"версию youtube-dl. Это позволяет избежать проблем с\n"
-"загрузкой."
-
-#: ../vdms_dialogs/settings.py:271
+#: ../vdms_dialogs/settings.py:268
 msgid "Disable youtube-dl"
 msgstr "Отключить youtube-dl"
 
-#: ../vdms_dialogs/settings.py:280
+#: ../vdms_dialogs/settings.py:277
 msgid "Current path:"
 msgstr "Текущий путь:"
 
-#: ../vdms_dialogs/settings.py:288
+#: ../vdms_dialogs/settings.py:293 ../vdms_dialogs/settings.py:294
+#: ../vdms_dialogs/settings.py:302
+#, fuzzy
+msgid "Menu bar > Tools > Update youtube-dl"
+msgstr "Меню> Инструменты> Обновить youtube-dl"
+
+#: ../vdms_dialogs/settings.py:305
+#, fuzzy
+msgid ""
+"Make sure you are using the latest available version of\n"
+"youtube-dl. This allows you to avoid download problems.\n"
+msgstr ""
+"Убедитесь, что вы используете последнюю доступную\n"
+"версию youtube-dl. Это позволяет избежать проблем с\n"
+"загрузкой.\n"
+
+#: ../vdms_dialogs/settings.py:315 ../vdms_frames/ffmpeg_conf.py:216
+msgid "Disabled"
+msgstr "Отключено"
+
+#: ../vdms_dialogs/settings.py:322
+msgid "Not Installed"
+msgstr "Не установлено"
+
+#: ../vdms_dialogs/settings.py:332
+msgid "Not found"
+msgstr "Не найдено"
+
+#: ../vdms_dialogs/settings.py:337
 msgid "youtube-dl"
 msgstr "youtube-dl"
 
-#: ../vdms_dialogs/settings.py:294
+#: ../vdms_dialogs/settings.py:343
 msgid "Icon themes"
 msgstr "Темы значков"
 
-#: ../vdms_dialogs/settings.py:296
+#: ../vdms_dialogs/settings.py:345
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
@@ -846,44 +865,44 @@ msgstr ""
 "установка значков также изменит фон и передний план\n"
 "некоторых текстовых полей."
 
-#: ../vdms_dialogs/settings.py:318
+#: ../vdms_dialogs/settings.py:367
 msgid "Toolbar customization"
 msgstr "Настройка панели инструментов"
 
-#: ../vdms_dialogs/settings.py:320
+#: ../vdms_dialogs/settings.py:369
 msgid "At the top of window (default)"
 msgstr "Вверху (по умолчанию)"
 
-#: ../vdms_dialogs/settings.py:321
+#: ../vdms_dialogs/settings.py:370
 msgid "At the bottom of window"
 msgstr "Внизу"
 
-#: ../vdms_dialogs/settings.py:322
+#: ../vdms_dialogs/settings.py:371
 msgid "At the right of window"
 msgstr "Справа"
 
 # слева от окна или в левой части окна?
-#: ../vdms_dialogs/settings.py:323
+#: ../vdms_dialogs/settings.py:372
 msgid "At the left of window"
 msgstr "Слева"
 
-#: ../vdms_dialogs/settings.py:325
+#: ../vdms_dialogs/settings.py:374
 msgid "Place the toolbar"
 msgstr "Разместите панель инструментов"
 
-#: ../vdms_dialogs/settings.py:335
+#: ../vdms_dialogs/settings.py:384
 msgid "Icon size:"
 msgstr "Размер значка:"
 
-#: ../vdms_dialogs/settings.py:350
+#: ../vdms_dialogs/settings.py:399
 msgid "Shows the text in the toolbar buttons"
 msgstr "Показывает текст на кнопках панели инструментов"
 
-#: ../vdms_dialogs/settings.py:354
+#: ../vdms_dialogs/settings.py:403
 msgid "Appearance"
 msgstr "Вид"
 
-#: ../vdms_dialogs/settings.py:361
+#: ../vdms_dialogs/settings.py:410
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -893,50 +912,29 @@ msgstr ""
 "сообщения журнала во время процессов перекодирования.\n"
 "Изменяйте, только если знаете, что делаете.\n"
 
-#: ../vdms_dialogs/settings.py:382
+#: ../vdms_dialogs/settings.py:431
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/settings.py:402
+#: ../vdms_dialogs/settings.py:451
 msgid "Videomass Setup"
 msgstr "Настройки Videomass"
 
-#: ../vdms_dialogs/settings.py:430
+#: ../vdms_dialogs/settings.py:479
 #, fuzzy
 #| msgid "Assign an additional suffix to FFmpeg output files"
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "Назначьте дополнительный суффикс выходным файлам FFmpeg"
 
-#: ../vdms_dialogs/settings.py:486 ../vdms_dialogs/settings.py:487
-#: ../vdms_dialogs/settings.py:495
-msgid ""
-"\n"
-"menu bar > Tools > Update youtube-dl\n"
-msgstr ""
-"\n"
-"Меню> Инструменты> Обновить youtube-dl.\n"
-
-#: ../vdms_dialogs/settings.py:504 ../vdms_frames/ffmpeg_conf.py:216
-msgid "Disabled"
-msgstr "Отключено"
-
-#: ../vdms_dialogs/settings.py:511
-msgid "Not Installed"
-msgstr "Не установлено"
-
-#: ../vdms_dialogs/settings.py:521
-msgid "Not found"
-msgstr "Не найдено"
-
-#: ../vdms_dialogs/settings.py:593
+#: ../vdms_dialogs/settings.py:595
 msgid "Set a persistent location to save the file downloads"
 msgstr "Установите постоянное место для сохранения скачанных файлов"
 
-#: ../vdms_dialogs/settings.py:615
+#: ../vdms_dialogs/settings.py:617
 msgid "Set a persistent location to save exported files"
 msgstr "Установите постоянное место для сохранения экспортированных файлов"
 
-#: ../vdms_dialogs/settings.py:642
+#: ../vdms_dialogs/settings.py:644
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
@@ -944,7 +942,7 @@ msgstr ""
 "Вводите только буквенно-цифровые символы. Вы также можете использовать дефис "
 "(\"-\") и подчеркивание (\"_\"). Пробелы не допускаются."
 
-#: ../vdms_dialogs/settings.py:859
+#: ../vdms_dialogs/settings.py:861
 msgid "Changes will take effect once the program has been restarted"
 msgstr "Изменения вступят в силу после перезапуска программы"
 

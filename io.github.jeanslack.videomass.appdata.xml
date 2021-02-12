@@ -42,8 +42,8 @@
   </screenshots>
 
   <url type="homepage">https://jeanslack.github.io/Videomass/</url>
-  <url type="bugtracker">https://github.com/jeanslack/Videomass</url>
-  <url type="translate">https://github.com/jeanslack/Videomass/blob/master/develop/localization_guidelines.md</url>
+  <url type="bugtracker">https://github.com/jeanslack/Videomass/issues</url>
+  <url type="translate">https://github.com/jeanslack/Videomass/tree/master/docs/localization_guidelines.md</url>
 
   <provides>
     <binary>videomass</binary>

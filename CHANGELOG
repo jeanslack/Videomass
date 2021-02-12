@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 11, 2021 V.3.3.8
+Feb 12, 2021 V.3.3.8
 
   * Fixed some buttons spacings.
   * Improved Setup dialog layout.
@@ -27,6 +27,7 @@ Feb 11, 2021 V.3.3.8
   * Fixed playlist folder structure
   * Fixed #14
   * Updating videomass man page
+  * Added support for the Dutch language (to be translated)
 
 +------------------------------------+
 Feb 3, 2021 V.3.3.7
