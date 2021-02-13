@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Feb 12, 2021 V.3.3.8
+Feb 13, 2021 V.3.3.8
 
   * Fixed some buttons spacings.
   * Improved Setup dialog layout.
@@ -17,17 +17,17 @@ Feb 12, 2021 V.3.3.8
     (the user can choose alternative installations of youtube-dl).
   * Fixed #14, bug showing truncated text in the wizard dialog (Xubuntu 20.04
     with XFCE the texts are longer and not completely visible)
-  * Update metadata for GUI applications via AppStream MetaInfo Creator
-  * Fixed videomass.appdata.xml on AppImage via AppStream MetaInfo Creator.
+  * New Linux appdata.xml for GUI applications via AppStream MetaInfo Creator.
+  * Fixed appdata.xml on AppImage via AppStream MetaInfo Creator.
   * Fixed videomass.desktop via AppStream MetaInfo Creator.
   * Fixed issue with running Videomass AppImage via Firejail.
   * Fixed issue with Setup dialog not showing on Videomass AppImage.
   * Improved youtube-dl tab on setup dialog.
-  * Youtube Downloader: Added checkbox to include the video ID in the file name
-  * Fixed playlist folder structure
+  * Youtube Downloader: Added checkbox to include the video ID in the file name.
+  * Fixed playlist folder structure.
   * Fixed #14
-  * Updating videomass man page
-  * Added support for the Dutch language (to be translated)
+  * Updating videomass man page.
+  * Added support for the Dutch language (to be translated).
 
 +------------------------------------+
 Feb 3, 2021 V.3.3.7

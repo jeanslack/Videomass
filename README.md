@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
 Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
-enthusiasts who need to manage custom profiles to automate transcoding 
+enthusiasts who need to manage custom profiles to automate conversion/transcoding 
 processes.   
 
 It is based on an advanced use of presets and profiles in order to use most of 
@@ -97,4 +97,5 @@ always within the same unpacked directory:
 * [Wiki page](https://github.com/jeanslack/Videomass/wiki)
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
-* [Downloads](https://github.com/jeanslack/Videomass/releases)
+* [Official download page](https://github.com/jeanslack/Videomass/releases)
+* [Alternative download page](https://sourceforge.net/projects/videomass2/)
