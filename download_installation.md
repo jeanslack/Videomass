@@ -6,7 +6,7 @@
 ## Linux
 
 ### Ubuntu PPA
-This PPA currently publishes packages for Ubuntu 20.04 Focal (for now)   
+This PPA currently publishes packages for Ubuntu 20.04 Focal and Ubuntu 20.10 Groovy (for now)   
 
 - To install Videomass add this [PPA](https://launchpad.net/~jeanslack/+archive/ubuntu/videomass) 
 to your system:   
@@ -17,8 +17,8 @@ to your system:
 
 ### AppImage
 [AppImages](https://appimage.org/) are available at: 
-- [GitHub Releases](https://github.com/jeanslack/Videomass/releases) 
-- [SourceForge](https://sourceforge.net/projects/videomass2/files/)  
+- [GitHub Releases](https://github.com/jeanslack/Videomass/releases) porting for GTK2   
+- [SourceForge web page](https://sourceforge.net/projects/videomass2/files/) porting for GTK3
 
 Minimum requirements:   
 - **Ubuntu 16.04 LTS** to up (64-bit only)
@@ -30,7 +30,7 @@ port is best suited to your Linux distribution.
 ## MS Windows
 Installer available at:
 - [GitHub Releases](https://github.com/jeanslack/Videomass/releases) 
-- [SourceForge](https://sourceforge.net/projects/videomass2/files/)   
+- [SourceForge web page](https://sourceforge.net/projects/videomass2/files/)   
 
 **New:** starting from Videomass v3.3.0 a portable version is also available, 
 choose the one that works best for you!  
@@ -44,7 +44,7 @@ is required.
 ## MacOs
 MacOs users should use the disk image file (.**dmg**) available at:
 - [GitHub Releases](https://github.com/jeanslack/Videomass/releases) 
-- [SourceForge](https://sourceforge.net/projects/videomass2/files/)     
+- [SourceForge web page](https://sourceforge.net/projects/videomass2/files/)     
 
 Minimum requirements:
 - MacOS **High Sierra** to up.

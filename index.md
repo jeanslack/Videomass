@@ -13,9 +13,6 @@
 <!--* [Tips and Tricks](tips_and_tricks.md)-->
 * [Known problems](known_problems.md)
 
-## Donation
-* [Donation](donation.md)
-
 Copyright © 2015 - 2021 Gianluca Pernigotto   
 Author and Developer: Gianluca Pernigotto (jeanslack)   
 Mail: <jeanlucperni@gmail.com>   

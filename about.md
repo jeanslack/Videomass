@@ -4,7 +4,7 @@
 ![Image](/images/videomass.png)
 
 Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
-enthusiasts who need to manage custom profiles to automate transcoding 
+enthusiasts who need to manage custom profiles to automate conversion/transcoding 
 processes.   
 
 It is based on an advanced use of presets and profiles in order to use most of 
