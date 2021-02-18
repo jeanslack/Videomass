@@ -124,7 +124,7 @@ class OnePass(Thread):
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
             outext = source_ext if not self.extoutput else self.extoutput
 
-            cmd = ('%s %s %s -i "%s" %s %s %s '
+            cmd = ('"%s" %s %s -i "%s" %s %s %s '
                    '-y "%s/%s%s.%s"' % (OnePass.FFMPEG_URL,
                                         self.time_seq,
                                         OnePass.FFMPEG_LOGLEV,

@@ -364,7 +364,12 @@ class Logging_Console(wx.Panel):
             i = output.index('time=')+5
             pos = output[i:].split()[0]
             ms = get_milliseconds(pos)
-            self.barProg.SetValue(ms)
+
+            if ms > duration:
+                self.barProg.SetValue(duration)
+            else:
+                self.barProg.SetValue(ms)
+
             percentage = round((ms / duration) * 100 if duration != 0 else 100)
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
@@ -412,6 +417,10 @@ class Logging_Console(wx.Panel):
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.SUCCESS))
             self.OutText.AppendText(Logging_Console.MSG_done)
+            if self.labPerc.GetLabel()[1] != '100%':
+                newlab = self.labPerc.GetLabel().split()
+                newlab[1] = '100%'
+                self.labPerc.SetLabel(" ".join(newlab))
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
@@ -419,8 +428,8 @@ class Logging_Console(wx.Panel):
             self.OutText.AppendText('\n%s\n' % (count))
             self.ERROR = True
         else:
-            self.barProg.SetRange(duration)  # set la durata complessiva
-            self.barProg.SetValue(0)  # resetto la prog bar
+            self.barProg.SetRange(duration)  # set overall duration range
+            self.barProg.SetValue(0)  # reset bar progress
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.NORM_TEXT))
             self.OutText.AppendText('\n%s : "%s"\n' % (count, fname))
 

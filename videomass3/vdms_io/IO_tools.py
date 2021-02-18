@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Name: IO_tools.py
-# Porpose: input/output redirection to processes
+# Porpose: input/output redirection to processes (aka threads)
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>

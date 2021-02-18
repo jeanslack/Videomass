@@ -1,3 +1,11 @@
+videomass (3.3.9-1) UNRELEASED; urgency=medium
+
+  * Update Russian translation
+  * Fixed gauge progress issues with some ffmpeg encoder.
+  * Fixed percentage progress issues with some ffmpeg encoder
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 18 Feb 2021 14:16:10 +0200
+
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 
   * Fixed some buttons spacings.
