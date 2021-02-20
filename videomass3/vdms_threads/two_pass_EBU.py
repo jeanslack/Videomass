@@ -122,7 +122,7 @@ class Loudnorm(Thread):
             outext = source_ext if not self.ext else self.ext
 
             # --------------- first pass
-            pass1 = ('{0} -nostdin -loglevel info -stats -hide_banner '
+            pass1 = ('"{0}" -nostdin -loglevel info -stats -hide_banner '
                      '{1} -i "{2}" {3} {4} -y {5}'.format(Loudnorm.FFMPEG_URL,
                                                           self.time_seq,
                                                           files,
@@ -225,7 +225,7 @@ class Loudnorm(Thread):
                        )
             time.sleep(.5)
 
-            pass2 = ('{0} -nostdin -loglevel info -stats -hide_banner '
+            pass2 = ('"{0}" -nostdin -loglevel info -stats -hide_banner '
                      '{1} -i "{2}" {3} -filter:a:{9} {4} {5} '
                      '-y "{6}/{7}{10}.{8}"'.format(Loudnorm.FFMPEG_URL,
                                                    self.time_seq,

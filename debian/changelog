@@ -3,8 +3,16 @@ videomass (3.3.9-1) UNRELEASED; urgency=medium
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
   * Fixed percentage progress issues with some ffmpeg encoder
+  * Fixed missing string to get exception 'FileNotFoundError' on MessageBox()
+    of `on_Audio_analyzes` function (av_conversions.py, presets_manager.py)
+  * Fixed missing double quotes on ffmpeg URL, giving `[Errno 2] file or
+    directory does not exist`, which occurred when the path has whitespace.
+  * Fixed exception not showing up when playing ffplay.
+  * Removed double-click on profile to start processing on Presets Manager.
+  * Fixed URLs for screenshots on appdata.xml
+  * New icon for previews
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 18 Feb 2021 14:16:10 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 20 Feb 2021 11:13:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

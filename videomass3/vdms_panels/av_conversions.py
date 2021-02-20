@@ -744,7 +744,7 @@ class AV_Conv(wx.Panel):
         self.SetSizer(sizer_base)
         self.Fit()
         self.Layout()
-        # ---------------------- Tooltip
+        # ---------------------- Tooltips
         tip = (_('Available video codecs. "Copy" is not a codec but indicate '
                  'that the video stream is not to be re-encoded and allows '
                  'changing the format or other parameters'))
@@ -780,7 +780,7 @@ class AV_Conv(wx.Panel):
         tip = (_('Constant rate factor. Lower values = higher quality and '
                  'a larger file size. Set -1 to disable this control.'))
         self.slider_CRF.SetToolTip(tip)
-        tip = (_('Preview video filters with FFplay'))
+        tip = (_('Preview video filters'))
         self.btn_preview.SetToolTip(tip)
         tip = (_("Clear all enabled filters "))
         self.btn_reset.SetToolTip(tip)
@@ -1754,7 +1754,7 @@ class AV_Conv(wx.Panel):
                                    self.opt["AudioInMap"][0]
                                    )
         if data[1]:
-            wx.MessageBox(data[1], "Videomass", wx.ICON_ERROR)
+            wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()

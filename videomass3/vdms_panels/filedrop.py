@@ -221,6 +221,7 @@ class FileDnD(wx.Panel):
         btn_clear.SetToolTip(_('Delete all files from the list'))
         tip = (_("Set up a temporary folder for conversions"))
         self.btn_save.SetToolTip(tip)
+        btn_play.SetToolTip(_("Play the selected files in the list"))
         self.text_path_save.SetToolTip(_("Destination folder"))
         # Binding (EVT)
         self.Bind(wx.EVT_BUTTON, self.playSelect, btn_play)

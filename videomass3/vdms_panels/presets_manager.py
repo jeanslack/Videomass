@@ -442,9 +442,12 @@ class PrstPan(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.profile_Del, self.btn_delprofile)
         self.Bind(wx.EVT_BUTTON, self.profile_Edit, self.btn_editprofile)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
+        '''
+        # by double clicking on the profile, processing starts.
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.click_start,
                   self.list_ctrl
                   )
+        '''
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         self.Bind(wx.EVT_BUTTON, self.preset_New, self.btn_newpreset)
         self.Bind(wx.EVT_BUTTON, self.preset_Del, self.btn_delpreset)
@@ -755,7 +758,7 @@ class PrstPan(wx.Panel):
                                    self.time_seq,
                                    self.opt["AudioInMap"][0])
         if data[1]:
-            wx.MessageBox(data[1], "Videomass", wx.ICON_ERROR)
+            wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()

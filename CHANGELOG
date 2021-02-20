@@ -12,6 +12,14 @@ Feb 18, 2021 V.3.3.9
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
   * Fixed percentage progress issues with some ffmpeg encoder
+  * Fixed missing string to get exception 'FileNotFoundError' on MessageBox()
+    of `on_Audio_analyzes` function (av_conversions.py, presets_manager.py)
+  * Fixed missing double quotes on ffmpeg URL, giving `[Errno 2] file or
+    directory does not exist`, which occurred when the path has whitespace.
+  * Fixed exception not showing up when playing ffplay.
+  * Removed double-click on profile to start processing on Presets Manager.
+  * Fixed URLs for screenshots on appdata.xml
+  * New icon for previews
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8

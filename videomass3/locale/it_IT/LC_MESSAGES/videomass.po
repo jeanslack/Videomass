@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-12 12:36+0100\n"
-"PO-Revision-Date: 2021-02-12 12:38+0100\n"
+"POT-Creation-Date: 2021-02-20 11:13+0100\n"
+"PO-Revision-Date: 2021-02-20 11:15+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -498,8 +498,8 @@ msgstr ""
 "i campi di testo sottostanti cliccando sui rispettivi pulsanti."
 
 #: ../vdms_dialogs/wizard_dlg.py:361 ../vdms_dialogs/wizard_dlg.py:377
-#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:706
-#: ../vdms_dialogs/settings.py:745 ../vdms_dialogs/settings.py:784
+#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:704
+#: ../vdms_dialogs/settings.py:743 ../vdms_dialogs/settings.py:782
 msgid "Choose the {} executable"
 msgstr "Scegli l'eseguibile {}"
 
@@ -649,7 +649,7 @@ msgstr ""
 msgid "Profile Name"
 msgstr "Nome Profilo"
 
-#: ../vdms_dialogs/presets_addnew.py:83 ../vdms_panels/presets_manager.py:598
+#: ../vdms_dialogs/presets_addnew.py:83 ../vdms_panels/presets_manager.py:601
 msgid "Description"
 msgstr "Descrizione"
 
@@ -911,20 +911,20 @@ msgstr "Livelli logs FFmpeg"
 msgid "Videomass Setup"
 msgstr "Videomass Preferenze"
 
-#: ../vdms_dialogs/settings.py:479
+#: ../vdms_dialogs/settings.py:477
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
 "Assegnando un suffisso aggiuntivo è possibile evitare di sovrascrivere i file"
 
-#: ../vdms_dialogs/settings.py:595
+#: ../vdms_dialogs/settings.py:593
 msgid "Set a persistent location to save the file downloads"
 msgstr "Imposta una posizione persistente per salvare i download dei file"
 
-#: ../vdms_dialogs/settings.py:617
+#: ../vdms_dialogs/settings.py:615
 msgid "Set a persistent location to save exported files"
 msgstr "Imposta una posizione persistente per salvare i file esportati"
 
-#: ../vdms_dialogs/settings.py:644
+#: ../vdms_dialogs/settings.py:642
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
@@ -932,7 +932,7 @@ msgstr ""
 "Immettere solo caratteri alfanumerici. È inoltre possibile utilizzare il "
 "trattino (\"-\") e il trattino basso (\"_\"). Non sono ammessi spazi vuoti."
 
-#: ../vdms_dialogs/settings.py:861
+#: ../vdms_dialogs/settings.py:859
 msgid "Changes will take effect once the program has been restarted"
 msgstr "Le modifiche avranno effetto una volta riavviato il programma"
 
@@ -1081,12 +1081,12 @@ msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
 #: ../vdms_frames/shownormlist.py:136 ../vdms_panels/av_conversions.py:1821
-#: ../vdms_panels/presets_manager.py:822
+#: ../vdms_panels/presets_manager.py:825
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
 #: ../vdms_frames/shownormlist.py:158 ../vdms_panels/av_conversions.py:1819
-#: ../vdms_panels/presets_manager.py:820
+#: ../vdms_panels/presets_manager.py:823
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
 
@@ -2491,8 +2491,8 @@ msgstr ""
 "dimensioni del file maggiori. Impostare -1 per disabilitare questo controllo."
 
 #: ../vdms_panels/av_conversions.py:783
-msgid "Preview video filters with FFplay"
-msgstr "Anteprima dei filtri video con FFplay"
+msgid "Preview video filters"
+msgstr "Anteprima dei filtri video"
 
 #: ../vdms_panels/av_conversions.py:785
 msgid "Clear all enabled filters "
@@ -2562,7 +2562,7 @@ msgstr ""
 msgid "No video filter enabled"
 msgstr "Nessun filtro video attivato"
 
-#: ../vdms_panels/av_conversions.py:1183 ../vdms_panels/presets_manager.py:1319
+#: ../vdms_panels/av_conversions.py:1183 ../vdms_panels/presets_manager.py:1322
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
@@ -2574,7 +2574,7 @@ msgstr "Il file non è un frame o un file video"
 msgid "No Audio"
 msgstr "No Audio"
 
-#: ../vdms_panels/av_conversions.py:1676 ../vdms_panels/presets_manager.py:681
+#: ../vdms_panels/av_conversions.py:1676 ../vdms_panels/presets_manager.py:684
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2582,7 +2582,7 @@ msgstr ""
 "Attiva la normalizzazione del livello di picco, la quale produrrà un livello "
 "di picco massimo pari al livello target impostato."
 
-#: ../vdms_panels/av_conversions.py:1679 ../vdms_panels/presets_manager.py:684
+#: ../vdms_panels/av_conversions.py:1679 ../vdms_panels/presets_manager.py:687
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2590,7 +2590,7 @@ msgstr ""
 "Attiva la normalizzazione basata su RMS, che in base al volume medio calcola "
 "la quantità di guadagno per raggiungere la stessa potenza media di segnale."
 
-#: ../vdms_panels/av_conversions.py:1683 ../vdms_panels/presets_manager.py:688
+#: ../vdms_panels/av_conversions.py:1683 ../vdms_panels/presets_manager.py:691
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
@@ -2598,15 +2598,15 @@ msgstr ""
 "Esegue la normalizzazione a due passate. Normalizza il volume percepito "
 "usando il filtro \"loudnorm\", che implementa l'algoritmo EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1706 ../vdms_panels/presets_manager.py:713
+#: ../vdms_panels/av_conversions.py:1706 ../vdms_panels/presets_manager.py:716
 msgid "Audio normalization off"
 msgstr "Normalizzazione Audio disattivata"
 
-#: ../vdms_panels/av_conversions.py:1742 ../vdms_panels/presets_manager.py:744
+#: ../vdms_panels/av_conversions.py:1742 ../vdms_panels/presets_manager.py:747
 msgid "Audio normalization is required only for some files"
 msgstr "La normalizzazione audio è richiesta solo per alcuni files"
 
-#: ../vdms_panels/av_conversions.py:1743 ../vdms_panels/presets_manager.py:745
+#: ../vdms_panels/av_conversions.py:1743 ../vdms_panels/presets_manager.py:748
 msgid "Audio normalization is not required based to set target level"
 msgstr ""
 "La normalizzazione audio non è richiesta in base al livello target impostato"
@@ -2636,15 +2636,15 @@ msgstr "Normalizzazione Audio EBU"
 msgid "%s file in pending"
 msgstr "%s file in attesa"
 
-#: ../vdms_panels/av_conversions.py:2295 ../vdms_panels/presets_manager.py:1378
+#: ../vdms_panels/av_conversions.py:2295 ../vdms_panels/presets_manager.py:1381
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2301 ../vdms_panels/presets_manager.py:1380
+#: ../vdms_panels/av_conversions.py:2301 ../vdms_panels/presets_manager.py:1383
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2304 ../vdms_panels/presets_manager.py:1383
+#: ../vdms_panels/av_conversions.py:2304 ../vdms_panels/presets_manager.py:1386
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
@@ -2886,12 +2886,12 @@ msgstr ""
 "youtube-dl non è installato, usa il tuo gestore di pacchetti per installarlo."
 
 #: ../vdms_panels/choose_topic.py:256 ../vdms_panels/youtubedl_ui.py:830
-#: ../vdms_panels/long_processing_task.py:484
-#: ../vdms_panels/presets_manager.py:873 ../vdms_panels/presets_manager.py:915
-#: ../vdms_panels/presets_manager.py:983 ../vdms_panels/presets_manager.py:1009
-#: ../vdms_panels/presets_manager.py:1151
-#: ../vdms_panels/presets_manager.py:1197
-#: ../vdms_panels/presets_manager.py:1269
+#: ../vdms_panels/long_processing_task.py:493
+#: ../vdms_panels/presets_manager.py:876 ../vdms_panels/presets_manager.py:918
+#: ../vdms_panels/presets_manager.py:986 ../vdms_panels/presets_manager.py:1012
+#: ../vdms_panels/presets_manager.py:1154
+#: ../vdms_panels/presets_manager.py:1200
+#: ../vdms_panels/presets_manager.py:1272
 msgid "Please confirm"
 msgstr "Prego confermare"
 
@@ -3059,8 +3059,8 @@ msgstr "I files duplicati sono rifiutati: > '%s'"
 msgid "Drag one or more files below"
 msgstr "Trascina uno o più file qui sotto"
 
-#: ../vdms_panels/filedrop.py:179 ../vdms_panels/filedrop.py:265
-#: ../vdms_panels/filedrop.py:281
+#: ../vdms_panels/filedrop.py:179 ../vdms_panels/filedrop.py:266
+#: ../vdms_panels/filedrop.py:282
 msgid "Play"
 msgstr "Riproduci"
 
@@ -3084,20 +3084,24 @@ msgstr "Rimuovi il file selezionato dall'elenco"
 msgid "Delete all files from the list"
 msgstr "Elimina tutti i file dall'elenco"
 
-#: ../vdms_panels/filedrop.py:224 ../vdms_panels/textdrop.py:87
+#: ../vdms_panels/filedrop.py:224
+msgid "Play the selected files in the list"
+msgstr "Riproduci i file selezionati nell'elenco"
+
+#: ../vdms_panels/filedrop.py:225 ../vdms_panels/textdrop.py:87
 msgid "Destination folder"
 msgstr "Cartella di destinazione"
 
-#: ../vdms_panels/filedrop.py:266 ../vdms_panels/filedrop.py:284
+#: ../vdms_panels/filedrop.py:267 ../vdms_panels/filedrop.py:285
 #: ../vdms_panels/presets_manager.py:143
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: ../vdms_panels/filedrop.py:295 ../vdms_panels/filedrop.py:313
+#: ../vdms_panels/filedrop.py:296 ../vdms_panels/filedrop.py:314
 msgid "No file selected"
 msgstr "Nessun file selezionato"
 
-#: ../vdms_panels/filedrop.py:297 ../vdms_panels/filedrop.py:315
+#: ../vdms_panels/filedrop.py:298 ../vdms_panels/filedrop.py:316
 msgid "Add Files"
 msgstr "Aggiungi Files"
 
@@ -3161,19 +3165,19 @@ msgstr "Se attivato, nasconde l'output di troppo."
 msgid "Stops current process"
 msgstr "Interrompe il processo corrente"
 
-#: ../vdms_panels/long_processing_task.py:447
+#: ../vdms_panels/long_processing_task.py:456
 msgid "...Finished"
 msgstr "...Terminato"
 
-#: ../vdms_panels/long_processing_task.py:461
+#: ../vdms_panels/long_processing_task.py:470
 msgid "wait... I'm aborting"
 msgstr "attendi... Sto interrompendo"
 
-#: ../vdms_panels/long_processing_task.py:463
+#: ../vdms_panels/long_processing_task.py:472
 msgid "...Interrupted"
 msgstr "...Interrotto"
 
-#: ../vdms_panels/long_processing_task.py:481
+#: ../vdms_panels/long_processing_task.py:490
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3225,18 +3229,18 @@ msgstr "Ricarica"
 msgid "Profiles"
 msgstr "Profili"
 
-#: ../vdms_panels/presets_manager.py:216 ../vdms_panels/presets_manager.py:544
-#: ../vdms_panels/presets_manager.py:563
+#: ../vdms_panels/presets_manager.py:216 ../vdms_panels/presets_manager.py:547
+#: ../vdms_panels/presets_manager.py:566
 msgid "Add"
 msgstr "Aggiungi"
 
-#: ../vdms_panels/presets_manager.py:220 ../vdms_panels/presets_manager.py:547
-#: ../vdms_panels/presets_manager.py:567
+#: ../vdms_panels/presets_manager.py:220 ../vdms_panels/presets_manager.py:550
+#: ../vdms_panels/presets_manager.py:570
 msgid "Delete"
 msgstr "Cancella"
 
-#: ../vdms_panels/presets_manager.py:224 ../vdms_panels/presets_manager.py:545
-#: ../vdms_panels/presets_manager.py:565
+#: ../vdms_panels/presets_manager.py:224 ../vdms_panels/presets_manager.py:548
+#: ../vdms_panels/presets_manager.py:568
 msgid "Edit"
 msgstr "Modifica"
 
@@ -3321,19 +3325,19 @@ msgstr "Primo passaggio del profilo selezionato"
 msgid "Second pass of the selected profile"
 msgstr "Secondo passaggio del profilo selezionato"
 
-#: ../vdms_panels/presets_manager.py:597
+#: ../vdms_panels/presets_manager.py:600
 msgid "Name"
 msgstr "Nome"
 
-#: ../vdms_panels/presets_manager.py:599
+#: ../vdms_panels/presets_manager.py:602
 msgid "Output Format"
 msgstr "Formato in Uscita"
 
-#: ../vdms_panels/presets_manager.py:600
+#: ../vdms_panels/presets_manager.py:603
 msgid "Supported Format List"
 msgstr "Elenco formati supportati"
 
-#: ../vdms_panels/presets_manager.py:618 ../vdms_panels/presets_manager.py:660
+#: ../vdms_panels/presets_manager.py:621 ../vdms_panels/presets_manager.py:663
 msgid ""
 "ERROR: Typing error on JSON keys: {}\n"
 "\n"
@@ -3345,15 +3349,15 @@ msgstr ""
 "File: \"{}\"\n"
 "Chiave malformata ?"
 
-#: ../vdms_panels/presets_manager.py:839
+#: ../vdms_panels/presets_manager.py:842
 msgid "Enter name for new preset"
 msgstr "Inserisci il nome per il nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:852
+#: ../vdms_panels/presets_manager.py:855
 msgid "Cannot save current data in file '{}'."
 msgstr "Impossibile salvare i dati correnti nel file '{}'."
 
-#: ../vdms_panels/presets_manager.py:856
+#: ../vdms_panels/presets_manager.py:859
 msgid ""
 "'Successful!\n"
 "\n"
@@ -3363,7 +3367,7 @@ msgstr ""
 "\n"
 "È stato creato un nuovo preset vuoto."
 
-#: ../vdms_panels/presets_manager.py:870
+#: ../vdms_panels/presets_manager.py:873
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3373,7 +3377,7 @@ msgstr ""
 "\n"
 "Sarà spostato nella cartella \"Removals\" nella directory dei presets"
 
-#: ../vdms_panels/presets_manager.py:884
+#: ../vdms_panels/presets_manager.py:887
 msgid ""
 "{}\n"
 "\n"
@@ -3383,40 +3387,40 @@ msgstr ""
 "\n"
 "Spiacenti, rimozione non riuscita, impossibile continuare.."
 
-#: ../vdms_panels/presets_manager.py:894
+#: ../vdms_panels/presets_manager.py:897
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
 msgstr "Il preset \"{0}\" è stato rimosso con successo"
 
-#: ../vdms_panels/presets_manager.py:909
+#: ../vdms_panels/presets_manager.py:912
 msgid "Choose a place to save the selected preset"
 msgstr "Scegli un posto in cui salvare il preset selezionato"
 
-#: ../vdms_panels/presets_manager.py:914
+#: ../vdms_panels/presets_manager.py:917
 msgid "This file already exists, do you want to overwrite it?"
 msgstr "Questo file esiste già, vuoi sovrascriverlo?"
 
-#: ../vdms_panels/presets_manager.py:927
+#: ../vdms_panels/presets_manager.py:930
 msgid "The preset was exported successfully"
 msgstr "Il preset è stato esportato con successo"
 
-#: ../vdms_panels/presets_manager.py:938
+#: ../vdms_panels/presets_manager.py:941
 msgid "Choose a place to export all presets"
 msgstr "Scegli un posto in cui esportare tutti i preset"
 
-#: ../vdms_panels/presets_manager.py:948
+#: ../vdms_panels/presets_manager.py:951
 msgid "All presets have been exported successfully"
 msgstr "Tutti i preset sono stati esportati correttamente"
 
-#: ../vdms_panels/presets_manager.py:960
+#: ../vdms_panels/presets_manager.py:963
 msgid "Import a new preset"
 msgstr "Importa un nuovo preset"
 
-#: ../vdms_panels/presets_manager.py:971
+#: ../vdms_panels/presets_manager.py:974
 msgid "Error, invalid preset: \"{}\""
 msgstr "Errore, preset non valido: \"{}\""
 
-#: ../vdms_panels/presets_manager.py:979
+#: ../vdms_panels/presets_manager.py:982
 msgid ""
 "This preset already exists and is about to be updated. Don't worry, it will "
 "keep all your saved profiles.\n"
@@ -3428,11 +3432,11 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:996
+#: ../vdms_panels/presets_manager.py:999
 msgid "A new preset was successfully imported"
 msgstr "Un nuovo preset è stato importato con successo"
 
-#: ../vdms_panels/presets_manager.py:1006
+#: ../vdms_panels/presets_manager.py:1009
 msgid ""
 "This will update the presets database. Don't worry, it will keep all your "
 "saved profiles.\n"
@@ -3444,15 +3448,15 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:1013
+#: ../vdms_panels/presets_manager.py:1016
 msgid "Import a new presets folder"
 msgstr "Importa una nuova cartella dei preset"
 
-#: ../vdms_panels/presets_manager.py:1036
+#: ../vdms_panels/presets_manager.py:1039
 msgid "The presets database has been successfully updated"
 msgstr "Il database dei preset è stato aggiornato con successo"
 
-#: ../vdms_panels/presets_manager.py:1046
+#: ../vdms_panels/presets_manager.py:1049
 msgid ""
 "Be careful! The selected preset will be overwritten with the default one. "
 "Your profiles may be deleted!\n"
@@ -3464,21 +3468,21 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:1049
-#: ../vdms_panels/presets_manager.py:1075
+#: ../vdms_panels/presets_manager.py:1052
+#: ../vdms_panels/presets_manager.py:1078
 msgid "Notice"
 msgstr "Avviso"
 
-#: ../vdms_panels/presets_manager.py:1058
+#: ../vdms_panels/presets_manager.py:1061
 msgid "Sorry, this preset is not part of default Videomass presets."
 msgstr ""
 "Spiacente, questo preset non fa parte dei presets predefiniti di Videomass."
 
-#: ../vdms_panels/presets_manager.py:1064
+#: ../vdms_panels/presets_manager.py:1067
 msgid "Successful recovery"
 msgstr "Ripristino riuscito"
 
-#: ../vdms_panels/presets_manager.py:1073
+#: ../vdms_panels/presets_manager.py:1076
 msgid ""
 "Be careful! This action will restore all presets to default ones. Your "
 "profiles may be deleted!\n"
@@ -3490,27 +3494,27 @@ msgstr ""
 "\n"
 "Vuoi continuare?"
 
-#: ../vdms_panels/presets_manager.py:1084
+#: ../vdms_panels/presets_manager.py:1087
 msgid "All the default presets have been successfully recovered"
 msgstr "Tutti i preset predefiniti sono stati ripristinati con successo"
 
-#: ../vdms_panels/presets_manager.py:1103
+#: ../vdms_panels/presets_manager.py:1106
 #, python-format
 msgid "Create a new profile on \"%s\" preset"
 msgstr "Crea un nuovo profilo sul preset \"%s\""
 
-#: ../vdms_panels/presets_manager.py:1122
-#: ../vdms_panels/presets_manager.py:1145
-#: ../vdms_panels/presets_manager.py:1168
+#: ../vdms_panels/presets_manager.py:1125
+#: ../vdms_panels/presets_manager.py:1148
+#: ../vdms_panels/presets_manager.py:1171
 msgid "First select a profile in the list"
 msgstr "Dovresti selezionare un profilo nella lista"
 
-#: ../vdms_panels/presets_manager.py:1127
+#: ../vdms_panels/presets_manager.py:1130
 #, python-format
 msgid "Edit profile of the \"%s\" preset: "
 msgstr "Modifica il profilo sul preset \"%s\": "
 
-#: ../vdms_panels/presets_manager.py:1149
+#: ../vdms_panels/presets_manager.py:1152
 msgid ""
 "Are you sure you want to delete the selected profile? It may no longer be "
 "possible to recover it."
@@ -3518,7 +3522,7 @@ msgstr ""
 "Sei sicuro di voler eliminare il profilo selezionato? Potrebbe non essere "
 "più possibile recuperarlo."
 
-#: ../vdms_panels/presets_manager.py:1172
+#: ../vdms_panels/presets_manager.py:1175
 msgid ""
 "Invalid EBU normalization enabled for one-pass.\n"
 "Turn off EBU normalization or choose a two-pass profile."
@@ -3526,7 +3530,7 @@ msgstr ""
 "La normalizzazione EBU non può essere validata per un passaggio.\n"
 "Disattiva la normalizzazione EBU o scegli un profilo a due passaggi."
 
-#: ../vdms_panels/presets_manager.py:1179
+#: ../vdms_panels/presets_manager.py:1182
 msgid ""
 "Undetected volume values! use the \"Volumedetect\" control button to analyze "
 "data on the audio volume."
@@ -3534,7 +3538,7 @@ msgstr ""
 "Valori del volume non rilevati! utilizzare il pulsante di controllo "
 "\"Volumedetect\" per analizzare i dati sul volume audio."
 
-#: ../vdms_panels/presets_manager.py:1192
+#: ../vdms_panels/presets_manager.py:1195
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
@@ -3542,17 +3546,17 @@ msgstr ""
 "Il comando del profilo selezionato è stato cambiato manualmente.\n"
 "Vuoi applicarlo durante il processo di conversione?"
 
-#: ../vdms_panels/presets_manager.py:1201
+#: ../vdms_panels/presets_manager.py:1204
 msgid "Don't show this dialog again"
 msgstr "Non mostrare ancora questo dialogo"
 
-#: ../vdms_panels/presets_manager.py:1241
-#: ../vdms_panels/presets_manager.py:1291
-#: ../vdms_panels/presets_manager.py:1327
+#: ../vdms_panels/presets_manager.py:1244
+#: ../vdms_panels/presets_manager.py:1294
+#: ../vdms_panels/presets_manager.py:1330
 msgid "Starts"
 msgstr "Avvio"
 
-#: ../vdms_panels/presets_manager.py:1265
+#: ../vdms_panels/presets_manager.py:1268
 msgid ""
 "EBU normalization is enabled twice in automation and command line. Command "
 "line has priority.\n"
@@ -3564,7 +3568,7 @@ msgstr ""
 "\n"
 "Desideri continuare?"
 
-#: ../vdms_panels/presets_manager.py:1387
+#: ../vdms_panels/presets_manager.py:1390
 msgid ""
 "SUMMARY\n"
 "\n"

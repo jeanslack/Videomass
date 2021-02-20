@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: Feb.19.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -39,20 +39,14 @@ def msg_Error(msg):
     """
     Receive error messages via wxCallafter
     """
-    wx.MessageBox("FFplay ERROR:  %s" % (msg),
-                  "Videomass",
-                  wx.ICON_ERROR
-                  )
+    wx.MessageBox("FFplay ERROR:  %s" % (msg), "Videomass", wx.ICON_ERROR)
 
 
 def msg_Info(msg):
     """
     Receive info messages via wxCallafter
     """
-    wx.MessageBox("FFplay INFORMATION:  %s" % (msg),
-                  "Videomass",
-                  wx.ICON_INFORMATION
-                  )
+    wx.MessageBox("FFplay:  %s" % (msg), "Videomass", wx.ICON_INFORMATION)
 
 
 class File_Play(Thread):
@@ -126,13 +120,8 @@ class File_Play(Thread):
             return
 
         else:
-            if p.returncode:  # ffplay error
-                if error[1]:
-                    msg = error[1]
-                else:
-                    msg = "Unrecognized error"
-
-                wx.CallAfter(msg_Error, error[1])
+            if error[1]:  # ffplay error
+                wx.CallAfter(msg_Info, error[1])
                 self.logError(error[1])  # append log error
                 pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
                 return
@@ -140,12 +129,6 @@ class File_Play(Thread):
                 # Threads_Handling.stop_download(self, self.filename)
                 pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
                 return
-
-        if error[1]:  # ffplay info
-            wx.CallAfter(msg_Info, error[1])
-            self.logWrite(error[1])  # append log info
-            pub.sendMessage("STOP_DOWNLOAD_EVT", filename=self.filename)
-            return
     # ----------------------------------------------------------------#
 
     def logWrite(self, cmd):
@@ -162,4 +145,4 @@ class File_Play(Thread):
         """
         with open(self.logf, "a") as logerr:
             logerr.write("\n[FFMPEG] FFplay "
-                         "ERRORS:\n%s\n" % (error))
+                         "OUTPUT:\n%s\n" % (error))
