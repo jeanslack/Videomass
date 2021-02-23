@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.3.8\n"
+"Project-Id-Version: Videomass 3.3.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-20 11:13+0100\n"
-"PO-Revision-Date: 2021-02-20 11:15+0100\n"
+"POT-Creation-Date: 2021-02-23 09:30+0100\n"
+"PO-Revision-Date: 2021-02-23 09:51+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -589,7 +589,7 @@ msgstr "Для выхода нажмите кнопку \"Завершено\""
 
 #: ../vdms_dialogs/wizard_dlg.py:686
 msgid "< Previous"
-msgstr "< Назад"
+msgstr "< Предыдущий"
 
 #: ../vdms_dialogs/wizard_dlg.py:689 ../vdms_dialogs/wizard_dlg.py:791
 msgid "Next >"
@@ -721,9 +721,11 @@ msgstr "Цвет тени"
 msgid "Show text box"
 msgstr "Показать текстовое поле"
 
+# изменено 21-2-2021
+# Field color
 #: ../vdms_dialogs/set_timestamp.py:133
 msgid "Box Color"
-msgstr "Цвет рамки"
+msgstr "Цвет поля"
 
 #: ../vdms_dialogs/set_timestamp.py:153
 msgid ""
@@ -1567,9 +1569,10 @@ msgstr "Готово"
 msgid "Videomass"
 msgstr "Videomass"
 
+# изменено 21-2-2021
 #: ../vdms_main/main_frame.py:327
 msgid "Open a playable file with FFplay"
-msgstr "Откройте воспроизводимый файл с помощью FFplay"
+msgstr "Открыть файл мультимедиа с помощью FFplay"
 
 #: ../vdms_main/main_frame.py:360
 msgid "Are you sure you want to exit?"
@@ -1842,10 +1845,10 @@ msgstr "Восстановить папки назначения по умолч
 msgid "Restore the default folders for file conversions and downloads"
 msgstr "Восстановить папки по умолчанию для конверсий и загрузки файлов"
 
-# изменён перевод
+# изменено 21-2-2021
 #: ../vdms_main/main_frame.py:531
 msgid "Setting timestamp"
-msgstr "Шкала отметки времени"
+msgstr "Настройки шкалы отметки времени"
 
 #: ../vdms_main/main_frame.py:532
 msgid "Change the size and colors of the timestamp"
@@ -2398,11 +2401,11 @@ msgstr "Установите целевое значение интегриро�
 
 #: ../vdms_panels/av_conversions.py:715 ../vdms_panels/presets_manager.py:353
 msgid "Set maximum true peak:"
-msgstr "Установите максимальный истинный пик:"
+msgstr "Set maximum true peak:"
 
 #: ../vdms_panels/av_conversions.py:726 ../vdms_panels/presets_manager.py:363
 msgid "Set loudness range target:"
-msgstr "Установите целевой диапазон громкости:"
+msgstr "Set loudness range target:"
 
 #: ../vdms_panels/av_conversions.py:748
 msgid ""
@@ -2488,11 +2491,12 @@ msgstr ""
 "Постоянный коэффициент скорости. Меньшие значения = более высокое качество и "
 "больший размер файла. Установите -1, чтобы отключить эту проверку."
 
+# изменено 21-2-2021
 #: ../vdms_panels/av_conversions.py:783
 #, fuzzy
 #| msgid "Preview video filters with FFplay"
 msgid "Preview video filters"
-msgstr "Предварительный просмотр видеофильтров с FFplay"
+msgstr "Предварительный просмотр с учётом фильтров FFplay"
 
 #: ../vdms_panels/av_conversions.py:785
 msgid "Clear all enabled filters "
@@ -2559,9 +2563,10 @@ msgstr "Максимальный истинный пик в dBTP. От -9,0 до
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
 msgstr "Целевой диапазон громкости в LUFS. От +1,0 до +20,0, по умолчанию +7,0"
 
+# изменено 21-2-2021
 #: ../vdms_panels/av_conversions.py:1138
 msgid "No video filter enabled"
-msgstr "Видео фильтр не включен"
+msgstr "Ни один видеофильтр не включен"
 
 #: ../vdms_panels/av_conversions.py:1183 ../vdms_panels/presets_manager.py:1322
 msgid "A target file must be selected in the queued files"
@@ -3096,9 +3101,8 @@ msgstr "Удалить все файлы из списка"
 
 #: ../vdms_panels/filedrop.py:224
 #, fuzzy
-#| msgid "Remove the selected file from the list"
 msgid "Play the selected files in the list"
-msgstr "Удалить выбранный файл из списка"
+msgstr "Воспроизвести выбранные файлы в списке"
 
 #: ../vdms_panels/filedrop.py:225 ../vdms_panels/textdrop.py:87
 msgid "Destination folder"
@@ -3619,16 +3623,10 @@ msgstr "Удалить весь текст из списка"
 msgid "Seek"
 msgstr "Поиск"
 
-# Изменил русский перевод на:
-# Start point of the selected section
-# как лучший по смыслу
 #: ../vdms_panels/timeline.py:126
 msgid "Seek to given time position"
 msgstr "Точка начала выбранного участка"
 
-# Измерил русский перевод на следующий:
-# Duration of the selected section
-# как лучший по смыслу
 #: ../vdms_panels/timeline.py:127
 msgid "Total amount duration"
 msgstr "Продолжительность выбранного участка"

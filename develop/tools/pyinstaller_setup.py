@@ -66,7 +66,7 @@ class Data(object):
     AUTH = os.path.join(here, 'AUTHORS')
     BUGS = os.path.join(here, 'BUGS')
     CHANGELOG = os.path.join(here, 'CHANGELOG')
-    COPYING = os.path.join(here, 'COPYING')
+    COPYING = os.path.join(here, 'LICENSE')
     INSTALL = os.path.join(here, 'INSTALL')
     README = os.path.join(here, 'README.md')
     TODO = os.path.join(here, 'TODO')
