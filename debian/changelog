@@ -8,11 +8,15 @@ videomass (3.3.9-1) UNRELEASED; urgency=medium
   * Fixed missing double quotes on ffmpeg URL, giving `[Errno 2] file or
     directory does not exist`, which occurred when the path has whitespace.
   * Fixed exception not showing up when playing ffplay.
-  * Removed double-click on profile to start processing on Presets Manager.
+  * Removed double-click on profile to start processing on Presets Manager,
+    which would cause the command to be reset when the user changes it.
   * Fixed URLs for screenshots on appdata.xml
   * New icon for previews
+  * Fixed final message not visible on Output Monitoring panel. Scrolling on
+    "[Videomass]: Successfully completed !"
+  * Crop Filter Dialog: Layout on small, low-resolution screens is now improved.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 20 Feb 2021 11:13:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 26 Feb 2021 10:23:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

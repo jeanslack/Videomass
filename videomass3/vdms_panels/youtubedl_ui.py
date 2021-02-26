@@ -229,7 +229,7 @@ class Downloader(wx.Panel):
         fgs1.Add(btn_play, 0, wx.ALL | wx.EXPAND, 5)
 
         self.ckbx_pl = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                   (_('Download all playlist'))
+                                   (_('Download all videos in playlist'))
                                    )
         fgs1.Add(self.ckbx_pl, 0, wx.ALL, 5)
         self.ckbx_thumb = wx.CheckBox(panelscroll, wx.ID_ANY,

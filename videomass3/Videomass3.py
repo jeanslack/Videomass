@@ -33,12 +33,12 @@ except ModuleNotFoundError:
 import os
 import sys
 from shutil import which, rmtree
-from videomass3.vdms_sys.argparser import args
-from videomass3.vdms_sys.configurator import Data_Source
-from videomass3.vdms_sys import app_const as appC
 # add translation macro to builtin similar to what gettext does
 import builtins
 builtins.__dict__['_'] = wx.GetTranslation
+from videomass3.vdms_sys.argparser import args
+from videomass3.vdms_sys.configurator import Data_Source
+from videomass3.vdms_sys import app_const as appC
 
 
 class Videomass(wx.App):
@@ -251,6 +251,7 @@ class Videomass(wx.App):
             selLang = appC.supLang[lang]
         else:
             selLang = wx.LANGUAGE_DEFAULT
+
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2
             del self.locale

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.3.7\n"
+"Project-Id-Version: Videomass 3.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-23 09:30+0100\n"
-"PO-Revision-Date: 2021-02-23 09:51+0100\n"
+"POT-Creation-Date: 2021-02-26 12:05+0100\n"
+"PO-Revision-Date: 2021-02-26 15:59+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -1559,9 +1559,9 @@ msgstr ""
 "пресеты\"."
 
 #: ../vdms_main/main_frame.py:228 ../vdms_main/main_frame.py:276
-#: ../vdms_main/main_frame.py:1453 ../vdms_main/main_frame.py:1485
-#: ../vdms_main/main_frame.py:1505 ../vdms_main/main_frame.py:1559
-#: ../vdms_main/main_frame.py:1610
+#: ../vdms_main/main_frame.py:1454 ../vdms_main/main_frame.py:1486
+#: ../vdms_main/main_frame.py:1506 ../vdms_main/main_frame.py:1560
+#: ../vdms_main/main_frame.py:1611
 msgid "Ready"
 msgstr "Готово"
 
@@ -1851,66 +1851,68 @@ msgid "Setting timestamp"
 msgstr "Настройки шкалы отметки времени"
 
 #: ../vdms_main/main_frame.py:532
-msgid "Change the size and colors of the timestamp"
+#, fuzzy
+#| msgid "Change the size and colors of the timestamp"
+msgid "Change the size and colors of the timestamp during playback"
 msgstr "Изменить размер и цвет отметки времени"
 
-#: ../vdms_main/main_frame.py:537
+#: ../vdms_main/main_frame.py:538
 msgid "&Preferences\tCtrl+P"
 msgstr "Основные настройки\tCtrl+P"
 
-#: ../vdms_main/main_frame.py:538
+#: ../vdms_main/main_frame.py:539
 msgid "Application preferences"
 msgstr "Настройки приложения"
 
-#: ../vdms_main/main_frame.py:539
+#: ../vdms_main/main_frame.py:540
 msgid "&Settings"
 msgstr "Настройки"
 
-#: ../vdms_main/main_frame.py:543
+#: ../vdms_main/main_frame.py:544
 msgid "User Guide"
 msgstr "Онлайн помощь"
 
-#: ../vdms_main/main_frame.py:544
+#: ../vdms_main/main_frame.py:545
 msgid "Wiki"
 msgstr "Wiki"
 
-#: ../vdms_main/main_frame.py:546
+#: ../vdms_main/main_frame.py:547
 msgid "Issue tracker"
 msgstr "Сообщить о проблеме"
 
-#: ../vdms_main/main_frame.py:548
+#: ../vdms_main/main_frame.py:549
 msgid "Translation..."
 msgstr "Перевод..."
 
-#: ../vdms_main/main_frame.py:550
+#: ../vdms_main/main_frame.py:551
 msgid "Donation"
 msgstr "Пожертвование"
 
-#: ../vdms_main/main_frame.py:552
+#: ../vdms_main/main_frame.py:553
 msgid "FFmpeg documentation"
 msgstr "Документация FFmpeg"
 
-#: ../vdms_main/main_frame.py:554
+#: ../vdms_main/main_frame.py:555
 msgid "Check for newer version"
 msgstr "Проверить последнюю версию"
 
-#: ../vdms_main/main_frame.py:555
+#: ../vdms_main/main_frame.py:556
 msgid "Check for the most latest version of Videomass on <https://pypi.org/>"
 msgstr "Проверьте наличие более новой версии Videomass на <https://pypi.org/>"
 
-#: ../vdms_main/main_frame.py:559
+#: ../vdms_main/main_frame.py:560
 msgid "About Videomass"
 msgstr "Информация об Videomass"
 
-#: ../vdms_main/main_frame.py:560
+#: ../vdms_main/main_frame.py:561
 msgid "&Help"
 msgstr "Помощь"
 
-#: ../vdms_main/main_frame.py:687
+#: ../vdms_main/main_frame.py:688
 msgid "youtube-dl is already up-to-date {}"
 msgstr "youtube-dl уже обновлен {}"
 
-#: ../vdms_main/main_frame.py:692
+#: ../vdms_main/main_frame.py:693
 #, python-brace-format
 msgid ""
 "youtube-dl version {0} is available and will replace the old version {1}\n"
@@ -1921,11 +1923,11 @@ msgstr ""
 "\n"
 "Вы хотите обновить сейчас?"
 
-#: ../vdms_main/main_frame.py:715
+#: ../vdms_main/main_frame.py:716
 msgid "Successful! youtube-dl is up-to-date"
 msgstr "Успешно! youtube-dl обновлен"
 
-#: ../vdms_main/main_frame.py:728
+#: ../vdms_main/main_frame.py:729
 msgid ""
 "Notice: To update youtube_dl it is necessary to rebuild the Videomass "
 "AppImage. This procedure will be completely automatic and will only require "
@@ -1939,11 +1941,11 @@ msgstr ""
 "\n"
 "Вы хотите продолжить?"
 
-#: ../vdms_main/main_frame.py:738
+#: ../vdms_main/main_frame.py:739
 msgid "Select the 'Videomass-{}-x86_64.AppImage' file to update"
 msgstr "Выберите файл 'Videomass-{}-x86_64.AppImage' для обновления"
 
-#: ../vdms_main/main_frame.py:756
+#: ../vdms_main/main_frame.py:757
 #, python-brace-format
 msgid ""
 "Successful! youtube-dl is up-to-date ({0})\n"
@@ -1954,7 +1956,7 @@ msgstr ""
 "\n"
 "Требуется перезагрузка. Вы хотите закрыть Videomass сейчас?"
 
-#: ../vdms_main/main_frame.py:766
+#: ../vdms_main/main_frame.py:767
 msgid ""
 "Failed! for more details consult:\n"
 "{}/youtube_dl-update-on-AppImage.log"
@@ -1962,11 +1964,11 @@ msgstr ""
 "Не удалось! для более подробной информации справтесь:\n"
 "{}/youtube_dl-update-on-AppImage.log"
 
-#: ../vdms_main/main_frame.py:772
+#: ../vdms_main/main_frame.py:773
 msgid "Failed! {}"
 msgstr "Не удалось! {}"
 
-#: ../vdms_main/main_frame.py:778
+#: ../vdms_main/main_frame.py:779
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
@@ -1974,20 +1976,20 @@ msgstr ""
 "Похоже, вы установили youtube-dl с помощью диспетчера пакетов. Пожалуйста, "
 "используйте его для обновления."
 
-#: ../vdms_main/main_frame.py:812
+#: ../vdms_main/main_frame.py:813
 #, python-brace-format
 msgid "There is a new version available {0}"
 msgstr "Доступна новая версия {0}"
 
-#: ../vdms_main/main_frame.py:816
+#: ../vdms_main/main_frame.py:817
 msgid "No new version available"
 msgstr "Нет новой версии"
 
-#: ../vdms_main/main_frame.py:829
+#: ../vdms_main/main_frame.py:830
 msgid "Choose a download folder"
 msgstr "Выберите папку для загрузки"
 
-#: ../vdms_main/main_frame.py:845
+#: ../vdms_main/main_frame.py:846
 msgid ""
 "\n"
 "Wait....\n"
@@ -1997,12 +1999,12 @@ msgstr ""
 "Подождите...\n"
 "Архив скачивается\n"
 
-#: ../vdms_main/main_frame.py:852
+#: ../vdms_main/main_frame.py:853
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
 msgstr "Успешно загружено в \"{0}\""
 
-#: ../vdms_main/main_frame.py:904
+#: ../vdms_main/main_frame.py:905
 msgid ""
 "\n"
 "Wait....\n"
@@ -2012,11 +2014,11 @@ msgstr ""
 "Пожалуйста, подождите....\n"
 "Проверить установленную версию\n"
 
-#: ../vdms_main/main_frame.py:908 ../vdms_main/main_frame.py:923
+#: ../vdms_main/main_frame.py:909 ../vdms_main/main_frame.py:924
 msgid "You are using youtube-dl version {}"
 msgstr "Вы используете версию youtube-dl {}"
 
-#: ../vdms_main/main_frame.py:930
+#: ../vdms_main/main_frame.py:931
 #, python-brace-format
 msgid ""
 "ERROR: {0}\n"
@@ -2027,40 +2029,40 @@ msgstr ""
 "\n"
 "youtube-dl еще не установлен."
 
-#: ../vdms_main/main_frame.py:951
+#: ../vdms_main/main_frame.py:952
 #, python-brace-format
 msgid "Latest version available: {0}"
 msgstr "Доступна последняя версия: {0}"
 
-#: ../vdms_main/main_frame.py:971 ../vdms_main/main_frame.py:1046
+#: ../vdms_main/main_frame.py:972 ../vdms_main/main_frame.py:1047
 msgid "There are no logs to show."
 msgstr "Нет log-журналов для просмотра."
 
-#: ../vdms_main/main_frame.py:1005 ../vdms_main/main_frame.py:1016
+#: ../vdms_main/main_frame.py:1006 ../vdms_main/main_frame.py:1017
 msgid "No files added yet"
 msgstr "Файлы еще не добавлены"
 
-#: ../vdms_main/main_frame.py:1027
+#: ../vdms_main/main_frame.py:1028
 msgid "No URLs added yet"
 msgstr "URL еще не добавлены"
 
-#: ../vdms_main/main_frame.py:1065
+#: ../vdms_main/main_frame.py:1066
 msgid "cache directory has not been created yet."
 msgstr "каталог кеша еще не создан."
 
-#: ../vdms_main/main_frame.py:1079
+#: ../vdms_main/main_frame.py:1080
 msgid "Choose a temporary destination for conversions"
 msgstr "Выберите временное место назначения для конверсий"
 
-#: ../vdms_main/main_frame.py:1099
+#: ../vdms_main/main_frame.py:1100
 msgid "Choose a temporary destination for the downloads"
 msgstr "Выберите временное место для загрузок"
 
-#: ../vdms_main/main_frame.py:1132
+#: ../vdms_main/main_frame.py:1133
 msgid "Default destination folders successfully restored"
 msgstr "Папки назначения по умолчанию успешно восстановлены"
 
-#: ../vdms_main/main_frame.py:1225
+#: ../vdms_main/main_frame.py:1226
 #, python-brace-format
 msgid ""
 "\n"
@@ -2083,11 +2085,11 @@ msgstr ""
 "\n"
 "Последняя версия {1} доступна\n"
 
-#: ../vdms_main/main_frame.py:1230 ../vdms_main/main_frame.py:1238
+#: ../vdms_main/main_frame.py:1231 ../vdms_main/main_frame.py:1239
 msgid "Checking for newer version"
 msgstr "Проверить последнюю версию"
 
-#: ../vdms_main/main_frame.py:1234
+#: ../vdms_main/main_frame.py:1235
 #, python-brace-format
 msgid ""
 "\n"
@@ -2111,115 +2113,115 @@ msgstr ""
 "Вы используете последнюю версию\n"
 "\n"
 
-#: ../vdms_main/main_frame.py:1318
+#: ../vdms_main/main_frame.py:1319
 msgid "Go to the previous panel"
 msgstr "Перейти к предыдущей панели"
 
-#: ../vdms_main/main_frame.py:1319
+#: ../vdms_main/main_frame.py:1320
 msgid "Back"
 msgstr "Назад"
 
-#: ../vdms_main/main_frame.py:1323
+#: ../vdms_main/main_frame.py:1324
 msgid "Go to the next panel"
 msgstr "Перейти к следующей панели"
 
-#: ../vdms_main/main_frame.py:1324
+#: ../vdms_main/main_frame.py:1325
 msgid "Next"
 msgstr "Вперед"
 
-#: ../vdms_main/main_frame.py:1330
+#: ../vdms_main/main_frame.py:1331
 msgid "Gathers information from multimedia streams"
 msgstr "Собирает информацию из мультимедийных потоков"
 
-#: ../vdms_main/main_frame.py:1331
+#: ../vdms_main/main_frame.py:1332
 msgid "Media Streams"
 msgstr "Мультимедийные потоки"
 
-#: ../vdms_main/main_frame.py:1335
+#: ../vdms_main/main_frame.py:1336
 msgid "Shows download statistics and information"
 msgstr "Показывает статистику и информацию о загрузке"
 
-#: ../vdms_main/main_frame.py:1337
+#: ../vdms_main/main_frame.py:1338
 msgid "Statistics"
 msgstr "Статистика"
 
-#: ../vdms_main/main_frame.py:1341
+#: ../vdms_main/main_frame.py:1342
 msgid "File playback"
 msgstr "Воспроизведение файлов"
 
-#: ../vdms_main/main_frame.py:1342
+#: ../vdms_main/main_frame.py:1343
 msgid "Playback"
 msgstr "Воспроизведение"
 
-#: ../vdms_main/main_frame.py:1347
+#: ../vdms_main/main_frame.py:1348
 msgid "Add a new profile from this panel with the current settings"
 msgstr "Добавить новый профиль из этой панели с текущими настройками"
 
-#: ../vdms_main/main_frame.py:1348
+#: ../vdms_main/main_frame.py:1349
 msgid "Add Profile"
 msgstr "Добавить Профиль"
 
-#: ../vdms_main/main_frame.py:1354
+#: ../vdms_main/main_frame.py:1355
 msgid "Convert using FFmpeg"
 msgstr "Конвертировать с помощью FFmpeg"
 
-#: ../vdms_main/main_frame.py:1355
+#: ../vdms_main/main_frame.py:1356
 msgid "Convert"
 msgstr "Конвертировать"
 
-#: ../vdms_main/main_frame.py:1359
+#: ../vdms_main/main_frame.py:1360
 msgid "Download files using youtube-dl"
 msgstr "Загрузите файлы с помощью youtube-dl"
 
-#: ../vdms_main/main_frame.py:1360
+#: ../vdms_main/main_frame.py:1361
 msgid "Download"
 msgstr "Скачать"
 
-#: ../vdms_main/main_frame.py:1398
+#: ../vdms_main/main_frame.py:1399
 msgid "Drag at least one file"
 msgstr "Перетащите хотя бы один файл"
 
-#: ../vdms_main/main_frame.py:1410
+#: ../vdms_main/main_frame.py:1411
 msgid "Append at least one URL"
 msgstr "Добавьте хотя бы один URL"
 
-#: ../vdms_main/main_frame.py:1417
+#: ../vdms_main/main_frame.py:1418
 msgid "Invalid URL: \"{}\""
 msgstr "Неправильный URL: \"{}\""
 
-#: ../vdms_main/main_frame.py:1454
+#: ../vdms_main/main_frame.py:1455
 msgid "Videomass - Queued Files"
 msgstr "Videomass - Файлы в очереди"
 
-#: ../vdms_main/main_frame.py:1486
+#: ../vdms_main/main_frame.py:1487
 msgid "Videomass - Queued URLs"
 msgstr "Videomass - URL в очереди"
 
-#: ../vdms_main/main_frame.py:1496
+#: ../vdms_main/main_frame.py:1497
 msgid "URL list changed, please check the settings again."
 msgstr "Список URL-адресов изменен, проверьте настройки еще раз."
 
-#: ../vdms_main/main_frame.py:1507
+#: ../vdms_main/main_frame.py:1508
 msgid "Videomass - YouTube Downloader"
 msgstr "Videomass - YouTube Downloader"
 
-#: ../vdms_main/main_frame.py:1541 ../vdms_main/main_frame.py:1593
+#: ../vdms_main/main_frame.py:1542 ../vdms_main/main_frame.py:1594
 msgid "File list changed, please check the settings again."
 msgstr "Список файлов изменен, проверьте настройки еще раз."
 
-#: ../vdms_main/main_frame.py:1561
+#: ../vdms_main/main_frame.py:1562
 msgid "Videomass - AV Conversions"
 msgstr "Videomass - AV-конвертация"
 
-#: ../vdms_main/main_frame.py:1612
+#: ../vdms_main/main_frame.py:1613
 msgid "Videomass - Presets Manager"
 msgstr "Videomass - Менеджер Пресетов"
 
-#: ../vdms_main/main_frame.py:1644
+#: ../vdms_main/main_frame.py:1645
 msgid "Viewing last log"
 msgstr "Просмотр последнего log-журнала"
 
-#: ../vdms_main/main_frame.py:1652
+#: ../vdms_main/main_frame.py:1653
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
@@ -2227,11 +2229,11 @@ msgstr ""
 "Невозможно продолжить: продолжительность на шкале времени превышает "
 "продолжительность некоторых файлов в очереди."
 
-#: ../vdms_main/main_frame.py:1657 ../vdms_main/main_frame.py:1662
+#: ../vdms_main/main_frame.py:1658 ../vdms_main/main_frame.py:1663
 msgid "Processing..."
 msgstr "Обработка ..."
 
-#: ../vdms_main/main_frame.py:1664
+#: ../vdms_main/main_frame.py:1665
 msgid "Videomass - Output Monitor"
 msgstr "Videomass - Выходной монитор"
 
@@ -2896,7 +2898,7 @@ msgstr ""
 "youtube-dl не установлен, установите его с помощью диспетчера пакетов."
 
 #: ../vdms_panels/choose_topic.py:256 ../vdms_panels/youtubedl_ui.py:830
-#: ../vdms_panels/long_processing_task.py:493
+#: ../vdms_panels/long_processing_task.py:494
 #: ../vdms_panels/presets_manager.py:876 ../vdms_panels/presets_manager.py:918
 #: ../vdms_panels/presets_manager.py:986 ../vdms_panels/presets_manager.py:1012
 #: ../vdms_panels/presets_manager.py:1154
@@ -2938,7 +2940,9 @@ msgid "Options"
 msgstr "Параметры"
 
 #: ../vdms_panels/youtubedl_ui.py:232
-msgid "Download all playlist"
+#, fuzzy
+#| msgid "Download all playlist"
+msgid "Download all videos in playlist"
 msgstr "Скачать весь плейлист"
 
 #: ../vdms_panels/youtubedl_ui.py:236
@@ -3083,7 +3087,7 @@ msgstr "Воспроизведение"
 msgid "File Name"
 msgstr "Имя Файла"
 
-#: ../vdms_panels/filedrop.py:202 ../vdms_panels/timeline.py:122
+#: ../vdms_panels/filedrop.py:202 ../vdms_panels/timeline.py:121
 msgid "Duration"
 msgstr "Продолжительность"
 
@@ -3185,15 +3189,15 @@ msgstr "Останавливает текущий процесс"
 msgid "...Finished"
 msgstr "...Завершено"
 
-#: ../vdms_panels/long_processing_task.py:470
+#: ../vdms_panels/long_processing_task.py:471
 msgid "wait... I'm aborting"
 msgstr "подождите ... я прерываю"
 
-#: ../vdms_panels/long_processing_task.py:472
+#: ../vdms_panels/long_processing_task.py:473
 msgid "...Interrupted"
 msgstr "...Прервано"
 
-#: ../vdms_panels/long_processing_task.py:490
+#: ../vdms_panels/long_processing_task.py:491
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3619,26 +3623,26 @@ msgstr "Введите URL-адреса ниже"
 msgid "Delete all text from the list"
 msgstr "Удалить весь текст из списка"
 
-#: ../vdms_panels/timeline.py:116
+#: ../vdms_panels/timeline.py:115
 msgid "Seek"
 msgstr "Поиск"
 
-#: ../vdms_panels/timeline.py:126
+#: ../vdms_panels/timeline.py:125
 msgid "Seek to given time position"
 msgstr "Точка начала выбранного участка"
 
-#: ../vdms_panels/timeline.py:127
+#: ../vdms_panels/timeline.py:126
 msgid "Total amount duration"
 msgstr "Продолжительность выбранного участка"
 
-#: ../vdms_panels/timeline.py:263
+#: ../vdms_panels/timeline.py:262
 msgid ""
 "The maximum time selection is set to 24:00:00, to allow make the slideshows"
 msgstr ""
 "Максимальный выбор времени установлен на 24:00:00, чтобы можно было делать "
 "слайд-шоу"
 
-#: ../vdms_panels/timeline.py:267
+#: ../vdms_panels/timeline.py:266
 msgid "The maximum time refers to the file with the longest duration"
 msgstr "Максимальное время относится к файлу с наибольшей продолжительностью"
 

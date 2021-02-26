@@ -25,7 +25,6 @@
 
 #########################################################
 import wx
-import webbrowser
 from videomass3.vdms_utils.utils import milliseconds2timeformat
 # import wx.lib.masked as masked # not work on macOSX
 

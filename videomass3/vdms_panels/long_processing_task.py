@@ -313,7 +313,7 @@ class Logging_Console(wx.Panel):
                     del output, duration
 
         else:  # append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():  # not print the output
+            if not self.ckbx_text.IsChecked():  # print the output
                 if '[info]' in output:
                     self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.INFO))
                     self.OutText.AppendText(' %s' % output)
@@ -440,11 +440,11 @@ class Logging_Console(wx.Panel):
         """
         if self.ERROR is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.ERROR_2))
-            self.OutText.AppendText(Logging_Console.MSG_taskfailed)
+            self.OutText.AppendText(Logging_Console.MSG_taskfailed + '\n')
 
         elif self.ABORT is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.ABORT))
-            self.OutText.AppendText(Logging_Console.MSG_interrupted)
+            self.OutText.AppendText(Logging_Console.MSG_interrupted + '\n')
 
         else:
             if not self.result:
@@ -454,9 +454,10 @@ class Logging_Console(wx.Panel):
                 endmsg = Logging_Console.MSG_unfinished
                 self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.WARN))
             self.parent.statusbar_msg(_('...Finished'), None)
-            self.OutText.AppendText(endmsg)
+            self.OutText.AppendText(endmsg + '\n')
             self.barProg.SetValue(0)
 
+        self.OutText.AppendText('\n')
         self.button_stop.Enable(False)
         self.button_close.Enable(True)
         self.PARENT_THREAD = None

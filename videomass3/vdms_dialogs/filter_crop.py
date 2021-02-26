@@ -158,7 +158,7 @@ class Crop(wx.Dialog):
         self.v_width = v_width
         self.v_height = v_height
         # resizing values preserving aspect ratio for monitor
-        self.thr = 180 if self.v_height > self.v_width else 360
+        self.thr = 180 #if self.v_height > self.v_width else 360
         self.h_ratio = (self.v_height / self.v_width) * self.thr  # height
         self.w_ratio = (self.v_width / self.v_height) * self.h_ratio  # width
 

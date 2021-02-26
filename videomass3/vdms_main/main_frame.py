@@ -529,7 +529,8 @@ class MainFrame(wx.Frame):
         self.resetfolders_tmp.Enable(False)
         setupButton.AppendSeparator()
         dscrp = (_("Setting timestamp"),
-                 _("Change the size and colors of the timestamp"))
+                 _("Change the size and colors of the timestamp "
+                   "during playback"))
         tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
 
