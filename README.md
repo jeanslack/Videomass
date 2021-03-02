@@ -58,7 +58,7 @@ each operating system.
 `python3 -m pip install videomass`   
 
 > This should also automatically install the remaining required dependencies 
-such as wxPython (only for Mac-Os and Windows), PyPubSub and youtube-dl.   
+such as wxPython (only for Mac-Os and Windows), PyPubSub, youtube-dl and requests.   
 >
 > On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   
