@@ -195,7 +195,7 @@ class Deinterlace(wx.Dialog):
         self.rdbx_w3fdif_d.SetToolTip(_('Specify which frames to '
                                         'deinterlace.'))
         toolt = _('Deinterlace the input video with `yadif` filter. '
-                  'For FFmpeg is the best and fastest choice ')
+                  'Using FFmpeg, this is the best and fastest choice')
         self.ckbx_deintYadif.SetToolTip(toolt)
         self.rdbx_Yadif_mode.SetToolTip(_('mode\n'
                                           'The interlacing mode to adopt.'))
@@ -210,7 +210,7 @@ class Deinterlace(wx.Dialog):
                   'taken from the even (tff - default) or odd (bff) '
                   'lines of the progressive frame.')
         self.rdbx_inter_scan.SetToolTip(toolt)
-        toolt = _('lowpas:\nEnable (default) or disable the vertical '
+        toolt = _('lowpass:\nEnable (default) or disable the vertical '
                   'lowpass filter to avoid twitter interlacing and reduce '
                   'moire patterns.\nDefault is no setting.')
         self.rdbx_inter_lowpass.SetToolTip(toolt)

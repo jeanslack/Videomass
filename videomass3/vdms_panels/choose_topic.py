@@ -158,12 +158,12 @@ class Choose_Topic(wx.Panel):
         else:
             welcome.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
-        '''
+
         if get.THEME == 'Videomass-Colours':
-            self.SetBackgroundColour('#85d7a8')  # green marine medium
-            welcome.SetForegroundColour('#ff3779')  # fuxia
-            version.SetForegroundColour('#ff3779')  # fuxia
-            txt_trad.SetForegroundColour('#ff3779')  # fuxia
+            self.SetBackgroundColour('#110807')  # red darkness
+            welcome.SetForegroundColour('#605a5c')  # grey
+            version.SetForegroundColour('#605a5c')  # grey
+            txt_trad.SetForegroundColour('#605a5c')  # grey
 
         elif get.THEME == 'Breeze-Blues':
             self.SetBackgroundColour('#d8bfd8')  # cardo
@@ -172,7 +172,7 @@ class Choose_Topic(wx.Panel):
             txt_trad.SetForegroundColour('#171b12')  # black
 
         elif get.THEME in ('Breeze-Dark', 'Videomass-Dark'):
-            self.SetBackgroundColour('#00121f')  # dark blue
+            self.SetBackgroundColour('#070b0e')  # blue darkness
             welcome.SetForegroundColour('#b0e0e6')  # light
             version.SetForegroundColour('#b0e0e6')  # light
             txt_trad.SetForegroundColour('#b0e0e6')  # light
@@ -181,7 +181,6 @@ class Choose_Topic(wx.Panel):
             welcome.SetForegroundColour('#171b12')  # black
             version.SetForegroundColour('#171b12')  # black
             txt_trad.SetForegroundColour('#171b12')  # black
-        '''
 
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)

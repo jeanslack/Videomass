@@ -85,8 +85,8 @@ class Scale(wx.Dialog):
         # --- options
         msg = _(
             'If you want to keep the aspect ratio, select "Constrain '
-            'proportions" below and\nspecify only one component, either '
-            'width or height, and set the other component\nto -1 or -2 '
+            'proportions" below and\nspecify only one dimension, either '
+            'width or height, and set the other dimension\nto -1 or -2 '
             '(some codecs require -2, so you should do some testing first).')
 
         label_msg = wx.StaticText(self, wx.ID_ANY, (msg))
@@ -98,7 +98,7 @@ class Scale(wx.Dialog):
         box_scale.Add(self.ckbx_keep, 0, wx.CENTER, 5)
         # grid_opt.Add((30, 0), 0, wx.ALL, 5)
         self.rdb_scale = wx.RadioBox(self, wx.ID_ANY,
-                                     (_("Which dimension adjust?")),
+                                     (_("Which dimension to adjust?")),
                                      choices=[_("Width"), _("Height")],
                                      majorDimension=1,
                                      style=wx.RA_SPECIFY_ROWS
@@ -191,14 +191,14 @@ class Scale(wx.Dialog):
 
         # Properties
         self.SetTitle(_("Resizing filters"))
-        scale_str = (_('Scale filter, for disabling set to 0'))
+        scale_str = (_('Scale filter, set to 0 to disable'))
         self.spin_scale_width.SetToolTip(scale_str)
         self.spin_scale_height.SetToolTip(scale_str)
-        setdar_str = (_('Display Aspect Ratio. Set to 0 to disabling.'))
+        setdar_str = (_('Display Aspect Ratio. Set to 0 to disable'))
         self.spin_setdarNum.SetToolTip(setdar_str)
         self.spin_setdarDen.SetToolTip(setdar_str)
         setsar_str = (_('Sample (aka Pixel) Aspect Ratio.\nSet to 0 '
-                        'to disabling.'))
+                        'to disable'))
         self.spin_setsarNum.SetToolTip(setsar_str)
         self.spin_setsarDen.SetToolTip(setsar_str)
 

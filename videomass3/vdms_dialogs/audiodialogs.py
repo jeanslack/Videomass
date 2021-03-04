@@ -244,21 +244,21 @@ class TypeAudioParameters(object):
     audio bitrates, sample rate, audio channels and bitdepth and also
     include messages tooltip.
     """
-    channel_tooltip = (_('Support to mono or stereo audio channels. If you '
-                         'are not sure set to "Auto" and source values '
+    channel_tooltip = (_('Videomass supports mono and stereo audio channels. '
+                         'If you are not sure set to "Auto" and source values '
                          'will be copied.'))
     sample_rate_tooltip = (_("""\
 The audio Rate (or sample-rate) is the sound sampling
-frequency and is measured in hertz. The higher the frequency,
-plus the audio signal will be true to the sound source, but
-the file will increase its size. For normal playback with
-audio CD set a sample rate of 44100kHz. If you are not sure
-set to "Auto" and source values will be copied.\
+frequency and is measured in Hertz. The higher the frequency,
+the more true it will be to the sound source and the more
+the file will increase in size. For audio CD playback, set a
+sampling frequency of 44100 kHz. If you are not sure, set to
+"Auto" and source values will be copied.\
 """))
     bitrate_tooltip = (_("""\
-The audio bitrate affects on file compression
-and on the quality of listening. The higher
-the value and more higher quality.\
+The audio bitrate affects the file compression
+and thus the quality of listening. The higher
+the value, the higher the quality.\
 """))
     bitdepth_tooltip = (_("""\
 bit depth is the number of bits of information in each

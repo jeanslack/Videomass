@@ -75,7 +75,7 @@ class PageOne(wx.Panel):
     """
     get = wx.GetApp()
     OS = get.OS
-    MSG2 = _("Please take a moments to set up the application")
+    MSG2 = _("Please take a moment to set up the application")
     MSG3 = (_('Click the "Next" button to get started'))
 
     def __init__(self, parent, icon):
