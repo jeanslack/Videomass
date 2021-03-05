@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.14.2020 *PEP8 compatible*
+# Rev: Mar.04.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -82,6 +82,9 @@ class Scale(wx.Dialog):
         Flex_scale.Add(self.spin_scale_height, 0, wx.ALL |
                        wx.ALIGN_CENTER_VERTICAL, 5
                        )
+        dim = _("Source size: {0} x {1} pixels").format(v_width, v_height)
+        label_sdim = wx.StaticText(self, wx.ID_ANY, dim)
+        box_scale.Add(label_sdim, 0, wx.BOTTOM | wx.CENTER, 10)
         # --- options
         msg = _(
             'If you want to keep the aspect ratio, select "Constrain '
@@ -203,8 +206,10 @@ class Scale(wx.Dialog):
         self.spin_setsarDen.SetToolTip(setsar_str)
 
         if Scale.OS == 'Darwin':
+            label_sdim.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             label_msg.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
+            label_sdim.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             label_msg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lab_dar.SetLabelMarkup("<b>%s</b>" % lab1)
             self.lab_sar.SetLabelMarkup("<b>%s</b>" % lab2)

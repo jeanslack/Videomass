@@ -15,8 +15,9 @@ videomass (3.3.9-1) UNRELEASED; urgency=medium
   * Fixed final message not visible on Output Monitoring panel. Scrolling on
     "[Videomass]: Successfully completed !"
   * Crop Filter Dialog: Layout on small, low-resolution screens is now improved.
+  * Resizing filters: added source size information
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 26 Feb 2021 10:23:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 5 Feb 2021 9:41:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

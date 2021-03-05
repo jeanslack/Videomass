@@ -94,7 +94,7 @@ class Videomass(wx.App):
         data = Data_Source()  # user-space and UI settings
         setui = data.get_fileconf()  # get required data
         # locale
-        lang = 'en'
+        lang = ''
         self.locale = None
         wx.Locale.AddCatalogLookupPathPrefix(setui[5])
         self.updateLanguage(lang)
