@@ -2,7 +2,9 @@
 
 _NOTE: some parts of these guides are taken from the [FFmpeg](https://ffmpeg.org/documentation.html) documentation_    
 
-## User Guide
+## Available languages of the User's Guide (pdf format)
+- [English](Pages/User-guide-languages/EN/Index_en.md)
+- [Russian](Pages/User-guide-languages/RU/Index_ru.md)
 - [Startup](Pages/Startup/Startup.md)
   * [Setup (preferences)](Pages/Startup/Setup.md)
   
