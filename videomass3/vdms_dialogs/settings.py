@@ -171,7 +171,7 @@ class Setup(wx.Dialog):
                            wx.ALIGN_CENTER_VERTICAL |
                            wx.ALIGN_CENTER_HORIZONTAL, 5
                            )
-        descr = _("Auto-create subfolders\nwhen download playlists")
+        descr = _("Auto-create subfolders\nwhen downloading playlists")
         self.ckbx_playlist = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_playlist, 0, wx.ALL, 5)
 

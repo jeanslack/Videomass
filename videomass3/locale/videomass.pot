@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-26 12:05+0100\n"
+"POT-Creation-Date: 2021-03-06 09:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,25 +34,25 @@ msgstr ""
 
 #: ../vdms_dialogs/audiodialogs.py:247
 msgid ""
-"Support to mono or stereo audio channels. If you are not sure set to \"Auto"
-"\" and source values will be copied."
+"Videomass supports mono and stereo audio channels. If you are not sure set "
+"to \"Auto\" and source values will be copied."
 msgstr ""
 
 #: ../vdms_dialogs/audiodialogs.py:250
 msgid ""
 "The audio Rate (or sample-rate) is the sound sampling\n"
-"frequency and is measured in hertz. The higher the frequency,\n"
-"plus the audio signal will be true to the sound source, but\n"
-"the file will increase its size. For normal playback with\n"
-"audio CD set a sample rate of 44100kHz. If you are not sure\n"
-"set to \"Auto\" and source values will be copied."
+"frequency and is measured in Hertz. The higher the frequency,\n"
+"the more true it will be to the sound source and the more\n"
+"the file will increase in size. For audio CD playback, set a\n"
+"sampling frequency of 44100 kHz. If you are not sure, set to\n"
+"\"Auto\" and source values will be copied."
 msgstr ""
 
 #: ../vdms_dialogs/audiodialogs.py:258
 msgid ""
-"The audio bitrate affects on file compression\n"
-"and on the quality of listening. The higher\n"
-"the value and more higher quality."
+"The audio bitrate affects the file compression\n"
+"and thus the quality of listening. The higher\n"
+"the value, the higher the quality."
 msgstr ""
 
 #: ../vdms_dialogs/audiodialogs.py:263
@@ -64,7 +64,7 @@ msgid ""
 "compression formats, do not have associated bit depths."
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:187
+#: ../vdms_dialogs/filter_crop.py:187 ../vdms_dialogs/filter_scale.py:85
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr ""
@@ -81,7 +81,7 @@ msgstr ""
 msgid "Cropping area selection "
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:210 ../vdms_dialogs/filter_scale.py:102
+#: ../vdms_dialogs/filter_crop.py:210 ../vdms_dialogs/filter_scale.py:105
 msgid "Height"
 msgstr ""
 
@@ -89,18 +89,18 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-#: ../vdms_dialogs/filter_crop.py:241 ../vdms_dialogs/filter_scale.py:102
+#: ../vdms_dialogs/filter_crop.py:241 ../vdms_dialogs/filter_scale.py:105
 msgid "Width"
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:255 ../vdms_dialogs/filter_deinterlace.py:117
-#: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:183
+#: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_transpose.py:110 ../vdms_panels/av_conversions.py:539
 msgid "Reset"
 msgstr ""
 
 #: ../vdms_dialogs/filter_crop.py:259 ../vdms_dialogs/filter_deinterlace.py:116
-#: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:181
+#: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:184
 #: ../vdms_dialogs/filter_transpose.py:114 ../vdms_dialogs/set_timestamp.py:145
 msgid "Apply"
 msgstr ""
@@ -168,8 +168,8 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_deinterlace.py:197
 msgid ""
-"Deinterlace the input video with `yadif` filter. For FFmpeg is the best and "
-"fastest choice "
+"Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the "
+"best and fastest choice"
 msgstr ""
 
 #: ../vdms_dialogs/filter_deinterlace.py:200
@@ -197,7 +197,7 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_deinterlace.py:213
 msgid ""
-"lowpas:\n"
+"lowpass:\n"
 "Enable (default) or disable the vertical lowpass filter to avoid twitter "
 "interlacing and reduce moire patterns.\n"
 "Default is no setting."
@@ -224,15 +224,15 @@ msgid "hqdn3d options"
 msgstr ""
 
 #: ../vdms_dialogs/filter_denoisers.py:121
-msgid "Denoisers filters"
+msgid "Denoiser filters"
 msgstr ""
 
 #: ../vdms_dialogs/filter_denoisers.py:122
 msgid ""
 "nlmeans:\n"
-"(Denoise frames using Non-Local Means algorithm is capable of restoring "
-"video sequences with even strong noise. It is ideal for enhancing the "
-"quality of old VHS tapes."
+"Denoise frames using Non-Local Means algorithm is capable of restoring video "
+"sequences with even strong noise. It is ideal for enhancing the quality of "
+"old VHS tapes."
 msgstr ""
 
 #: ../vdms_dialogs/filter_denoisers.py:127
@@ -255,63 +255,63 @@ msgstr ""
 msgid "Height:"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:87
+#: ../vdms_dialogs/filter_scale.py:90
 msgid ""
 "If you want to keep the aspect ratio, select \"Constrain proportions\" below "
 "and\n"
-"specify only one component, either width or height, and set the other "
-"component\n"
+"specify only one dimension, either width or height, and set the other "
+"dimension\n"
 "to -1 or -2 (some codecs require -2, so you should do some testing first)."
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:96
+#: ../vdms_dialogs/filter_scale.py:99
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:101
-msgid "Which dimension adjust?"
+#: ../vdms_dialogs/filter_scale.py:104
+msgid "Which dimension to adjust?"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:111 ../vdms_panels/av_conversions.py:343
+#: ../vdms_dialogs/filter_scale.py:114 ../vdms_panels/av_conversions.py:343
 msgid "Aspect Ratio"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:113
+#: ../vdms_dialogs/filter_scale.py:116
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:118 ../vdms_dialogs/filter_scale.py:148
+#: ../vdms_dialogs/filter_scale.py:121 ../vdms_dialogs/filter_scale.py:151
 msgid "Numerator"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:139 ../vdms_dialogs/filter_scale.py:169
+#: ../vdms_dialogs/filter_scale.py:142 ../vdms_dialogs/filter_scale.py:172
 msgid "Denominator"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:143
+#: ../vdms_dialogs/filter_scale.py:146
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:193
+#: ../vdms_dialogs/filter_scale.py:196
 msgid "Resizing filters"
 msgstr ""
 
-#: ../vdms_dialogs/filter_scale.py:194
-msgid "Scale filter, for disabling set to 0"
-msgstr ""
-
 #: ../vdms_dialogs/filter_scale.py:197
-msgid "Display Aspect Ratio. Set to 0 to disabling."
+msgid "Scale filter, set to 0 to disable"
 msgstr ""
 
 #: ../vdms_dialogs/filter_scale.py:200
+msgid "Display Aspect Ratio. Set to 0 to disable"
+msgstr ""
+
+#: ../vdms_dialogs/filter_scale.py:203
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
-"Set to 0 to disabling."
+"Set to 0 to disable"
 msgstr ""
 
 #: ../vdms_dialogs/filter_transpose.py:84
-#: ../vdms_dialogs/filter_transpose.py:283
+#: ../vdms_dialogs/filter_transpose.py:284
 msgid "Default position"
 msgstr ""
 
@@ -352,7 +352,7 @@ msgid "Rotate 90 degrees left"
 msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:78
-msgid "Please take a moments to set up the application"
+msgid "Please take a moment to set up the application"
 msgstr ""
 
 #: ../vdms_dialogs/wizard_dlg.py:79
@@ -667,7 +667,7 @@ msgstr ""
 #: ../vdms_dialogs/settings.py:174
 msgid ""
 "Auto-create subfolders\n"
-"when download playlists"
+"when downloading playlists"
 msgstr ""
 
 #: ../vdms_dialogs/settings.py:179
@@ -1340,19 +1340,20 @@ msgstr ""
 
 #: ../vdms_io/presets_manager_properties.py:82
 msgid ""
-"Is not a compatible Videomass presets. It is recommended removing it or "
-"rewrite it with a compatible JSON data structure.\n"
+"Invalid preset loaded.\n"
+"It is recommended to remove it or rewrite it in a JSON format compatible "
+"with Videomass.\n"
 "\n"
-"Possible solution: open Presets Manager panel, then use menu \"File\" > "
-"\"Reset all presets\" to safe repair all presets. Remember, those that are "
-"not compatible you have to manually remove them."
+"Possible solution: open the Presets Manager panel, go to the presets column "
+"and try to click on the \"Restore\" button"
 msgstr ""
 
-#: ../vdms_io/presets_manager_properties.py:96
+#: ../vdms_io/presets_manager_properties.py:93
 msgid ""
-"The presets folder is empty, or there are invalid files. Open the Presets "
-"Manager panel, then Perform a repair in the \"File\" > \"Reset all presets\" "
-"menu."
+"No presets found.\n"
+"\n"
+"Possible solution: open the Presets Manager panel, go to the presets column "
+"and try to click on the \"Restore all...\" button"
 msgstr ""
 
 #: ../vdms_main/main_frame.py:228 ../vdms_main/main_frame.py:276
@@ -2469,7 +2470,7 @@ msgstr ""
 msgid "Localization guidelines"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:214
+#: ../vdms_panels/choose_topic.py:213
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -2478,7 +2479,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:223
+#: ../vdms_panels/choose_topic.py:222
 msgid ""
 "To download videos from YouTube.com and other video sites, you need an "
 "updated version of youtube-dl.\n"
@@ -2486,7 +2487,7 @@ msgid ""
 "{}...Do you want to download youtube-dl locally now?"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:230
+#: ../vdms_panels/choose_topic.py:229
 msgid ""
 "Successful! \n"
 "\n"
@@ -2494,18 +2495,18 @@ msgid ""
 "version available: menu bar > Tools > Update youtube-dl."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:236
+#: ../vdms_panels/choose_topic.py:235
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:245
+#: ../vdms_panels/choose_topic.py:244
 msgid ""
 "ERROR: {}\n"
 "\n"
 "youtube-dl is not installed, use your package manager to install it."
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:256 ../vdms_panels/youtubedl_ui.py:830
+#: ../vdms_panels/choose_topic.py:255 ../vdms_panels/youtubedl_ui.py:830
 #: ../vdms_panels/long_processing_task.py:494
 #: ../vdms_panels/presets_manager.py:876 ../vdms_panels/presets_manager.py:918
 #: ../vdms_panels/presets_manager.py:986 ../vdms_panels/presets_manager.py:1012
