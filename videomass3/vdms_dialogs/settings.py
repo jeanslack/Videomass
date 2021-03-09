@@ -62,6 +62,8 @@ class Setup(wx.Dialog):
     YDL_PREF = get.YDL_pref
     EXECYDL = get.execYdl
     SITEPKGYDL = get.YDLsite
+    GET_LANG = get.GETlang
+    SUPPLANG = get.SUPP_langs
 
     OPT_LOGLEV = [("quiet (Show nothing at all)"),
                   ("fatal (Only show fatal errors)"),
@@ -851,7 +853,14 @@ class Setup(wx.Dialog):
     def on_help(self, event):
         """
         """
-        page = 'https://jeanslack.github.io/Videomass/Pages/Startup/Setup.html'
+        if Setup.GET_LANG in Setup.SUPPLANG:
+            lang = Setup.GET_LANG.split('_')[0]
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/%s/2-Startup_%s.pdf' % (lang, lang))
+        else:
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/en/2-Startup_en.pdf')
+
         webbrowser.open(page)
     # --------------------------------------------------------------------#
 

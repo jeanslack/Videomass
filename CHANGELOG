@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 05, 2021 V.3.3.9
+Mar 08, 2021 V.3.3.9
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
@@ -25,6 +25,10 @@ Mar 05, 2021 V.3.3.9
     "[Videomass]: Successfully completed !"
   * Crop Filter Dialog: Layout on small, low-resolution screens is now improved.
   * Resizing filters: added source size information
+  * Fixed foreground/background colors on status bar messages
+  * Fixed #19
+  * Added multilanguage support for user guide (English, Russian and Italian
+    for now)
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8

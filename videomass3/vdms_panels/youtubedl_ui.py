@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Feb.02.2021 *PEP8 compatible*
+# Rev: Mar.08.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -95,6 +95,8 @@ class Downloader(wx.Panel):
     RED = '#ff0000ff'
     GREEN = '#008000'
     YELLOW = '#bd9f00ff'
+    WHITE = '#fbf4f4'  # white for background status bar
+    BLACK = '#060505'  # black for background status bar
 
     if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
         BACKGRD = SOLARIZED
@@ -415,7 +417,8 @@ class Downloader(wx.Panel):
 
         if self.fcode.GetSelectedItemCount() == 0:
             self.parent.statusbar_msg(_('An item must be selected in the '
-                                        'URLs checklist'), Downloader.YELLOW)
+                                        'URLs checklist'), Downloader.YELLOW,
+                                      Downloader.BLACK)
             return
         else:
             self.parent.statusbar_msg(_('YouTube Downloader'), None)
@@ -831,9 +834,9 @@ class Downloader(wx.Panel):
                                  wx.YES_NO, self) == wx.NO:
                     return
         if self.ckbx_id.IsChecked():
-            _id = '%(title)s-%(id)s'
+            _id = '%(title).100s-%(id)s'
         else:
-            _id = '%(title)s'
+            _id = '%(title).100s'
 
         if Downloader.PYLIB_YDL is None:  # youtube-dl is used as library
 
@@ -902,7 +905,8 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = self.getformatcode(urls)
                 if not code:
-                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED)
+                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED,
+                                              Downloader.WHITE)
                     return
                 data = {'format': '',
                         'noplaylist': self.opt["NO_PLAYLIST"][0],
@@ -971,7 +975,8 @@ class Downloader(wx.Panel):
             if self.choice.GetSelection() == 3:  # format code
                 code = self.getformatcode(urls)
                 if not code:
-                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED)
+                    self.parent.statusbar_msg(Downloader.MSG_1, Downloader.RED,
+                                              Downloader.WHITE)
                     return
                 cmd = [(f'{self.opt["METADATA"][1]} '
                         f'{self.opt["SUBTITLES"][1]} '

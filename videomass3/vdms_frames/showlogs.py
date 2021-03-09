@@ -153,7 +153,7 @@ class ShowLogs(wx.MiniFrame):
 
         """
         if not self.selected:
-            wx.MessageBox(_('A log file must be selected'),
+            wx.MessageBox(_('Select a log file'),
                           'Videomass', wx.ICON_INFORMATION)
             return
 

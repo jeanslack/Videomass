@@ -80,9 +80,9 @@ def json_data(arg):
 
     except json.decoder.JSONDecodeError as err:
         msg = _('Invalid preset loaded.\nIt is recommended to remove it or '
-                'rewrite it in a JSON format compatible with Videomass.\n\n'
+                'rewrite it into a JSON format compatible with Videomass.\n\n'
                 'Possible solution: open the Presets Manager panel, go to '
-                'the presets column and try to click on the "Restore" button'
+                'the presets column and try to click the "Restore" button'
                 )
         wx.MessageBox('\nERROR: {1}\n\nFile: "{0}"\n{2}'.format(arg, err, msg),
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)
@@ -92,7 +92,7 @@ def json_data(arg):
     except FileNotFoundError as err:
         msg = _('No presets found.\n\nPossible solution: open the '
                 'Presets Manager panel, go to the presets column and try '
-                'to click on the "Restore all..." button'
+                'to click the "Restore all..." button'
                 )
         wx.MessageBox('\nERROR: {0}\n\n{1}'.format(err, msg),
                       ("Videomass"), wx.ICON_ERROR | wx.OK, None)

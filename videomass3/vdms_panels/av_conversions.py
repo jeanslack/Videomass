@@ -63,6 +63,8 @@ class AV_Conv(wx.Panel):
     VIOLET = '#D64E93'
     LIMEGREEN = '#87A615'
     TROPGREEN = '#15A660'
+    WHITE = '#fbf4f4'
+    BLACK = '#060505'
 
     # MUXERS dictionary:
     MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
@@ -1686,16 +1688,16 @@ class AV_Conv(wx.Panel):
                    ))
         if self.rdbx_normalize.GetSelection() == 1:  # is checked
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_1, AV_Conv.AZURE)
+            self.parent.statusbar_msg(msg_1, AV_Conv.AZURE, AV_Conv.BLACK)
             self.peakpanel.Show()
 
         elif self.rdbx_normalize.GetSelection() == 2:
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_2, AV_Conv.TROPGREEN)
+            self.parent.statusbar_msg(msg_2, AV_Conv.TROPGREEN, AV_Conv.BLACK)
             self.peakpanel.Show(), self.spin_target.SetValue(-20)
 
         elif self.rdbx_normalize.GetSelection() == 3:
-            self.parent.statusbar_msg(msg_3, AV_Conv.LIMEGREEN)
+            self.parent.statusbar_msg(msg_3, AV_Conv.LIMEGREEN, AV_Conv.BLACK)
             self.normalize_default(False)
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
@@ -1796,12 +1798,12 @@ class AV_Conv(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, AV_Conv.ORANGE)
+            self.parent.statusbar_msg(msg3, AV_Conv.ORANGE, AV_Conv.WHITE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, AV_Conv.YELLOW)
+                self.parent.statusbar_msg(msg2, AV_Conv.YELLOW, AV_Conv.WHITE)
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             self.opt["PEAK"] = volume
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS

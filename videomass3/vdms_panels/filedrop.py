@@ -42,6 +42,8 @@ class MyListCtrl(wx.ListCtrl):
     YELLOW = '#a29500'
     GREENOLIVE = '#6aaf23'
     ORANGE = '#f28924'
+    WHITE = '#fbf4f4'
+    BLACK = '#060505'
     # ----------------------------------------------------------------------
 
     def __init__(self, parent):
@@ -66,17 +68,20 @@ class MyListCtrl(wx.ListCtrl):
                       "appropriate extension to the file name, example "
                       "'.mkv', '.avi', '.mp3', etc.")
         if os.path.isdir(path):
-            self.parent.statusbar_msg(msg_dir, MyListCtrl.ORANGE)
+            self.parent.statusbar_msg(msg_dir, MyListCtrl.ORANGE,
+                                      MyListCtrl.WHITE)
             return
         elif os.path.splitext(os.path.basename(path))[1] == '':
-            self.parent.statusbar_msg(msg_noext, MyListCtrl.ORANGE)
+            self.parent.statusbar_msg(msg_noext, MyListCtrl.ORANGE,
+                                      MyListCtrl.WHITE)
             return
 
         if not [x for x in self.data if x['format']['filename'] == path]:
             data = IO_tools.probeInfo(path)
 
             if data[1]:
-                self.parent.statusbar_msg(data[1], MyListCtrl.RED)
+                self.parent.statusbar_msg(data[1], MyListCtrl.RED,
+                                          MyListCtrl.WHITE)
                 return
 
             data = eval(data[0])
@@ -108,7 +113,8 @@ class MyListCtrl(wx.ListCtrl):
 
         else:
             mess = _("Duplicate files are rejected: > '%s'") % path
-            self.parent.statusbar_msg(mess, MyListCtrl.YELLOW)
+            self.parent.statusbar_msg(mess, MyListCtrl.YELLOW,
+                                      MyListCtrl.WHITE)
     # ----------------------------------------------------------------------#
 
 
@@ -148,6 +154,8 @@ class FileDnD(wx.Panel):
     OS = get.OS
     SAMEDIR = get.SAMEdir
     SUFFIX = get.FILEsuffix
+    WHITE = '#fbf4f4'
+    BLACK = '#060505'
 
     def __init__(self, parent, iconplay):
         """Constructor. This will initiate with an id and a title"""
@@ -293,7 +301,8 @@ class FileDnD(wx.Panel):
 
         """
         if not self.selected:
-            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD')
+            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD',
+                                      FileDnD.WHITE)
         else:
             self.parent.statusbar_msg(_('Add Files'), None)
             index = self.flCtrl.GetFocusedItem()
@@ -311,7 +320,8 @@ class FileDnD(wx.Panel):
 
         """
         if not self.selected:
-            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD')
+            self.parent.statusbar_msg(_('No file selected'), 'GOLDENROD',
+                                      FileDnD.WHITE)
         else:
             self.parent.statusbar_msg(_('Add Files'), None)
 
@@ -376,8 +386,9 @@ class FileDnD(wx.Panel):
         self.file_dest = '%s' % (path)
     # -----------------------------------------------------------------------
 
-    def statusbar_msg(self, mess, color):
+    def statusbar_msg(self, mess, bcolor, fcolor=None):
         """
         Set a status bar message of the parent method.
+        bcolor: background, fcolor: foreground
         """
-        self.parent.statusbar_msg('%s' % mess, color)
+        self.parent.statusbar_msg('%s' % mess, bcolor, fcolor)

@@ -61,6 +61,8 @@ class PrstPan(wx.Panel):
     GREEN = '#268826'
     LIMEGREEN = '#87A615'
     TROPGREEN = '#15A660'
+    WHITE = '#fbf4f4'  # white for background status bar
+    BLACK = '#060505'  # black for background status bar
     # -----------------------------------------------------------------
 
     def __init__(self, parent, path_srcShare, path_confdir,
@@ -695,10 +697,11 @@ class PrstPan(wx.Panel):
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
 
             if self.rdbx_norm.GetSelection() == 1:
-                self.parent.statusbar_msg(msg_1, PrstPan.AZURE)
+                self.parent.statusbar_msg(msg_1, PrstPan.AZURE, PrstPan.BLACK)
                 self.spin_target.SetValue(-1.0)
             else:
-                self.parent.statusbar_msg(msg_2, PrstPan.TROPGREEN)
+                self.parent.statusbar_msg(msg_2, PrstPan.TROPGREEN,
+                                          PrstPan.BLACK)
                 self.spin_target.SetValue(-20.0)
 
             self.peakpanel.Show(), self.btn_voldect.Enable()
@@ -707,7 +710,7 @@ class PrstPan(wx.Panel):
             del self.normdetails[:]
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
-            self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN)
+            self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN, PrstPan.BLACK)
             self.peakpanel.Hide(), self.ebupanel.Show()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", "EBU"
             del self.normdetails[:]
@@ -799,12 +802,12 @@ class PrstPan(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, PrstPan.ORANGE)
+            self.parent.statusbar_msg(msg3, PrstPan.ORANGE, PrstPan.WHITE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, PrstPan.YELLOW)
+                self.parent.statusbar_msg(msg2, PrstPan.YELLOW, PrstPan.WHITE)
         if self.rdbx_norm.GetSelection() == 1:
             self.opt["PEAK"] = volume
         elif self.rdbx_norm.GetSelection() == 2:
@@ -1123,7 +1126,7 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW)
+                                      PrstPan.YELLOW, PrstPan.BLACK)
             return
         else:
             filename = self.cmbx_prst.GetValue()
@@ -1146,7 +1149,7 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW)
+                                      PrstPan.YELLOW, PrstPan.BLACK)
         else:
             filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
@@ -1169,7 +1172,7 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW)
+                                      PrstPan.YELLOW, PrstPan.BLACK)
             return
         if not self.array[3] and self.rdbx_norm.GetSelection() in [3]:
             wx.MessageBox(_('Invalid EBU normalization enabled for one-pass.\n'

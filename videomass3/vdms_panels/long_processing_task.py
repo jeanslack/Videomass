@@ -119,6 +119,8 @@ class Logging_Console(wx.Panel):
     DEBUG = '#3298FB'  # AZURE for debug messages
     FAILED = '#D21814'  # RED_DEEP if failed
     ABORT = '#A41EA4'  # VIOLET if the user stops the processes
+    WHITE = '#fbf4f4'  # white for background status bar
+    BLACK = '#060505'  # black for background status bar
     # YELLOW = '#C8B72F'  # for warning text messages
     # RED = '#ff0000ff'
     # ORANGE_DEEP = '#E92D15'
@@ -468,7 +470,8 @@ class Logging_Console(wx.Panel):
         The user change idea and was stop process
         """
         self.PARENT_THREAD.stop()
-        self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD')
+        self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD',
+                                  Logging_Console.WHITE)
         self.PARENT_THREAD.join()
         self.parent.statusbar_msg(_("...Interrupted"), None)
         self.ABORT = True

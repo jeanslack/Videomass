@@ -48,7 +48,7 @@ class While_Playing(wx.MiniFrame):
               "right mouse click\nleft mouse double-click"
               ))
     EXPLAN = (_(
-        "Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
+        "Quiet.\nToggle full screen.\nPause.\nToggle mute.\n"
         "Decrease and increase volume respectively.\n"
         "Decrease and increase volume respectively.\n"
         "Cycle audio channel in the current program.\n"
@@ -59,8 +59,8 @@ class While_Playing(wx.MiniFrame):
         "already paused, step to the next video frame, and pause.\n"
         "Seek backward/forward 10 seconds.\n"
         "Seek backward/forward 1 minute.\n"
-        "Seek to the previous/next chapter. Or if there are no \n"
-        "chapters Seek backward/forward 10 minutes.\n"
+        "Seek to the previous/next chapter. Or Seek backward/forward\n"
+        "10 minutes if there are no chapters.\n"
         "Seek to percentage in file corresponding to fraction of width.\n"
         "Toggle full screen."))
     # ----------------------------------------------------------------------
@@ -93,7 +93,7 @@ class While_Playing(wx.MiniFrame):
         label2 = wx.StaticText(panel, wx.ID_ANY, While_Playing.EXPLAN)
         self.button_close = wx.Button(panel_base, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Shortcuts while playing with FFplay"))
+        self.SetTitle(_("Shortcut keys while playing with FFplay"))
 
         if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
             panel.SetBackgroundColour(wx.Colour(While_Playing.SOLARIZED))

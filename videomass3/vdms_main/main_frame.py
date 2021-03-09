@@ -82,6 +82,8 @@ class MainFrame(wx.Frame):
     YELLOW = '#a29500'
     LIMEGREEN = '#87A615'
     DARK_BROWN = '#262222'
+    WHITE = '#fbf4f4'
+    BLACK = '#060505'
     # AZURE = '#d9ffff'  # rgb form (wx.Colour(217,255,255))
     # RED = '#ea312d'
     # GREENOLIVE = '#6aaf23'
@@ -239,14 +241,17 @@ class MainFrame(wx.Frame):
 
     # -------------------Status bar settings--------------------#
 
-    def statusbar_msg(self, msg, color):
+    def statusbar_msg(self, msg, bcolor, fcolor=None):
         """
         set the status-bar with messages and color types
+        bcolor: background, fcolor: foreground
         """
-        if color is None:
+        if bcolor is None:
             self.sb.SetBackgroundColour(wx.NullColour)
+            self.sb.SetForegroundColour(wx.NullColour)
         else:
-            self.sb.SetBackgroundColour(color)
+            self.sb.SetBackgroundColour(bcolor)
+            self.sb.SetForegroundColour(fcolor)
         self.sb.SetStatusText(msg)
         self.sb.Refresh()
     # ------------------------------------------------------------------#
@@ -415,7 +420,7 @@ class MainFrame(wx.Frame):
         searchtopic = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         dscrp = (_("Update youtube-dl"),
-                 _("Update with latest version of youtube-dl"))
+                 _("Update to latest youtube-dl version"))
         self.ydlupdate = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         toolsButton.AppendSeparator()
         dscrp = (_("Check for new presets"),
@@ -435,22 +440,22 @@ class MainFrame(wx.Frame):
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
         dscrp = (_("Muxers and Demuxers"),
-                 _("Muxers and demuxers available on FFmpeg in use."))
+                 _("Muxers and demuxers available for used FFmpeg."))
         ckformats = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
         ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"),
-                                       _("Shows available encoders on FFmpeg"))
-        dscrp = (_("Decoders"), _("Shows available decoders on FFmpeg"))
+                                    _("Shows available encoders for FFmpeg"))
+        dscrp = (_("Decoders"), _("Shows available decoders for FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
         viewButton.AppendSubMenu(ffplayButton, _("&FFplay"))
         dscrp = (_("While playing"),
-                 _("Show useful keyboard shortcuts when playing "
-                   "or previewing with ffplay"))
+                 _("Show useful shortcut keys when playing or previewing "
+                   "with FFplay"))
         playing = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton.AppendSeparator()
         dscrp = (_("Displays timestamp"),
-                 _("Displays the timestamp when playing movies with ffplay"))
+                 _("Displays timestamp when playing movies with FFplay"))
         self.viewtimestamp = ffplayButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                                  kind=wx.ITEM_CHECK)
         # show youtube-dl
@@ -486,7 +491,7 @@ class MainFrame(wx.Frame):
                                        _("Presets manager\tShift+P"),
                                        _("jump to the Presets Manager panel"))
         self.avpan = goButton.Append(wx.ID_ANY, _("A/V conversions\tShift+V"),
-                                     _("jump to the Audio/Video Conv. panel"))
+                                _("jump to the Audio/Video Conversion panel"))
         goButton.AppendSeparator()
         dscrp = (_("YouTube downloader\tShift+Y"),
                  _("jump to the YouTube Downloader panel"))
@@ -497,14 +502,14 @@ class MainFrame(wx.Frame):
         self.logpan = goButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSeparator()
         sysButton = wx.Menu()  # system sub menu
-        dscrp = (_("Configuration directory"),
-                 _("Opens the Videomass configuration directory"))
+        dscrp = (_("Configuration folder"),
+                 _("Opens the Videomass configuration folder"))
         openconfdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Log directory"),
-                 _("Opens the Videomass log directory if it exists"))
+        dscrp = (_("Log folder"),
+                 _("Opens the Videomass log folder, if it exists"))
         openlogdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        dscrp = (_("Cache directory"),
-                 _("Opens the Videomass cache directory if exists"))
+        dscrp = (_("Cache folder"),
+                 _("Opens the Videomass cache foder, if exists"))
         opencachedir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSubMenu(sysButton, _("&System"))
 
@@ -1495,8 +1500,8 @@ class MainFrame(wx.Frame):
         if not data == self.data_url:
             if self.data_url:
                 msg = (_('URL list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE)
-                self.statusbar_msg(msg[0], msg[1])
+                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
+                self.statusbar_msg(msg[0], msg[1], msg[2])
             self.data_url = data
             self.ytDownloader.choice.SetSelection(0)
             self.ytDownloader.on_Choice(self)
@@ -1540,8 +1545,8 @@ class MainFrame(wx.Frame):
         if not filenames == self.file_src:  # only if file list changes
             if self.file_src:
                 msg = (_('File list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE)
-                self.statusbar_msg(msg[0], msg[1])
+                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
+                self.statusbar_msg(msg[0], msg[1], msg[2])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files
@@ -1592,8 +1597,8 @@ class MainFrame(wx.Frame):
         if not filenames == self.file_src:
             if self.file_src:
                 msg = (_('File list changed, please check the settings '
-                         'again.'), MainFrame.ORANGE)
-                self.statusbar_msg(msg[0], msg[1])
+                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
+                self.statusbar_msg(msg[0], msg[1], msg[2])
             self.file_src = filenames
             self.duration = [f['format']['duration'] for f in
                              self.data_files

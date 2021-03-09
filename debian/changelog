@@ -16,8 +16,12 @@ videomass (3.3.9-1) UNRELEASED; urgency=medium
     "[Videomass]: Successfully completed !"
   * Crop Filter Dialog: Layout on small, low-resolution screens is now improved.
   * Resizing filters: added source size information
+  * Fixed foreground/background colors on status bar messages
+  * Fixed #19
+  * Added multilanguage support for user guide (English, Russian and Italian
+    for now)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 5 Feb 2021 9:41:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 09 Mar 2021 9:41:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

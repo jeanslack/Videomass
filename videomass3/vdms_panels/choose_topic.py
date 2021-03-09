@@ -161,9 +161,9 @@ class Choose_Topic(wx.Panel):
 
         if get.THEME == 'Videomass-Colours':
             self.SetBackgroundColour('#110807')  # red darkness
-            welcome.SetForegroundColour('#605a5c')  # grey
-            version.SetForegroundColour('#605a5c')  # grey
-            txt_trad.SetForegroundColour('#605a5c')  # grey
+            welcome.SetForegroundColour('#777072')  # grey
+            version.SetForegroundColour('#777072')  # grey
+            txt_trad.SetForegroundColour('#777072')  # grey
 
         elif get.THEME == 'Breeze-Blues':
             self.SetBackgroundColour('#d8bfd8')  # cardo

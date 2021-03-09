@@ -81,6 +81,8 @@ class Videomass(wx.App):
         self.FFMPEGoutdir = None
         self.YDLoutdir = None
         self.CLEARcache = None
+        self.GETlang = None  # current short name for the locale
+        self.SUPP_langs = ['it_IT', 'en_EN', 'ru_RU']  # supported langs
 
         wx.App.__init__(self, redirect, filename)  # constructor
         wx.SystemOptions.SetOption("osx.openfiledialog.always-show-types", "1")
@@ -98,6 +100,7 @@ class Videomass(wx.App):
         self.locale = None
         wx.Locale.AddCatalogLookupPathPrefix(setui[5])
         self.updateLanguage(lang)
+        self.GETlang = self.locale.GetName()
 
         if setui[2]:  # copyerr = True; the share folder is damaged
             wx.MessageBox(_('{0}\n\nSorry, cannot continue..'.format(
