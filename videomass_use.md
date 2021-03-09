@@ -1,9 +1,9 @@
 [Home](index.md)  
 
 ## Available languages of the User's Guide (pdf format)
-- [English](Pages/User-guide-languages/EN/Index_en.md)
-- [Russian](Pages/User-guide-languages/RU/Index_ru.md)
-- [Italian](Pages/User-guide-languages/IT/Index_it.md)
+- [English](Pages/User-guide-languages/en/Index_en.md)
+- [Russian](Pages/User-guide-languages/ru/Index_ru.md)
+- [Italian](Pages/User-guide-languages/it/Index_it.md)
 
 ## User Guide (old stuff)  
 - [Startup](Pages/Startup/Startup.md)
