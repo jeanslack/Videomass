@@ -136,6 +136,7 @@ class Videomass(wx.App):
         self.FILEsuffix = setui[4][18]  # add a suffix string to file name
         self.YDLoutdir = dirname if setui[4][19] == 'none' else setui[4][19]
         self.PLAYLISTsubfolder = setui[4][20]  # subfolder check on playlist
+        self.DISPLAY_size = wx.GetDisplaySize()  # get monitor resolution
 
         # ----- youtube-dl
         execname = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'

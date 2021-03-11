@@ -75,7 +75,7 @@ class PageOne(wx.Panel):
     """
     get = wx.GetApp()
     OS = get.OS
-    MSG2 = _("Please take a moment to set up the application")
+    MSG2 = (_("Please take a moment to set up the application"))
     MSG3 = (_('Click the "Next" button to get started'))
 
     def __init__(self, parent, icon):
@@ -639,8 +639,7 @@ class PageFinish(wx.Panel):
 class Wizard(wx.Dialog):
     """
     Provides a multi-panel dialog box (dynamic wizard)
-    for configuring Videomass during the first start of
-    the application.
+    for configuring Videomass during the startup.
 
     """
     get = wx.GetApp()
@@ -650,7 +649,7 @@ class Wizard(wx.Dialog):
 
     def __init__(self, icon_videomass):
         """
-        Note that the attributes of ffmpeg are set in the"PageTwo"
+        Note that the attributes of ffmpeg are set in the "PageTwo"
         and "PageThree" panels. The other values are obtained with
         the `wizard_Finish` method and not on the panels
 
@@ -706,7 +705,7 @@ class Wizard(wx.Dialog):
         self.Bind(wx.EVT_BUTTON, self.on_Next, self.btnNext)
         self.Bind(wx.EVT_CLOSE, self.On_close)  # controlla la chiusura (x)
 
-    # EVENTS:
+    # events:
     def On_close(self, event):
         """
         Destroy app

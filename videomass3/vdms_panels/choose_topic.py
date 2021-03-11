@@ -159,28 +159,18 @@ class Choose_Topic(wx.Panel):
             welcome.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.NORMAL))
             version.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.LIGHT))
 
-        if get.THEME == 'Videomass-Colours':
-            self.SetBackgroundColour('#110807')  # red darkness
-            welcome.SetForegroundColour('#777072')  # grey
-            version.SetForegroundColour('#777072')  # grey
-            txt_trad.SetForegroundColour('#777072')  # grey
-
-        elif get.THEME == 'Breeze-Blues':
-            self.SetBackgroundColour('#d8bfd8')  # cardo
-            welcome.SetForegroundColour('#171b12')  # black
-            version.SetForegroundColour('#171b12')  # black
-            txt_trad.SetForegroundColour('#171b12')  # black
-
-        elif get.THEME in ('Breeze-Dark', 'Videomass-Dark'):
-            self.SetBackgroundColour('#070b0e')  # blue darkness
-            welcome.SetForegroundColour('#b0e0e6')  # light
-            version.SetForegroundColour('#b0e0e6')  # light
-            txt_trad.SetForegroundColour('#b0e0e6')  # light
-        else:
-            self.SetBackgroundColour('#add8e6')  # light azure
-            welcome.SetForegroundColour('#171b12')  # black
-            version.SetForegroundColour('#171b12')  # black
-            txt_trad.SetForegroundColour('#171b12')  # black
+        if hasattr(wx.SystemSettings, 'GetAppearance'):
+            appear = wx.SystemSettings.GetAppearance()
+            if appear.IsDark():
+                self.SetBackgroundColour('#070b0e')  # blue darkness
+                welcome.SetForegroundColour('#777072')  # grey
+                version.SetForegroundColour('#777072')  # grey
+                txt_trad.SetForegroundColour('#777072')  # grey
+            else:
+                self.SetBackgroundColour('#f2efe6')  # light azure
+                welcome.SetForegroundColour('#171b12')  # black
+                version.SetForegroundColour('#171b12')  # black
+                txt_trad.SetForegroundColour('#171b12')  # black
 
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
