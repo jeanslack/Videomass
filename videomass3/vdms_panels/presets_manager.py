@@ -313,7 +313,7 @@ class PrstPan(wx.Panel):
                                   )
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 4)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volumedetect"), size=(-1, -1))
+                                     _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
         sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
@@ -434,7 +434,7 @@ class PrstPan(wx.Panel):
                  'not more that one audio stream, leave to "Auto".'))
         self.cmb_A_inMap.SetToolTip(tip)
         tip = (_('Map on the output index. Keep same input map to preserve '
-                 'indexes; to save as audio file always select to "all" '
+                 'indexes; to save as audio file always select "all" '
                  'or "Auto"'))
         self.cmb_A_outMap.SetToolTip(tip)
 
@@ -748,8 +748,8 @@ class PrstPan(wx.Panel):
 
         """
         msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_('Audio normalization is not required based to '
-                  'set target level'))
+        msg3 = (_("Audio normalization will not be applied because it's "
+                  "equal to the source"))
         if self.normdetails:
             del self.normdetails[:]
 
@@ -1182,9 +1182,9 @@ class PrstPan(wx.Panel):
         # check normalization data offset, if enable.
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
             if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! use the '
-                                '"Volumedetect" control button to analyze '
-                                'data on the audio volume.'),
+                wx.MessageBox(_('Undetected volume values! click the '
+                                '"Volume detect" button to analyze '
+                                'audio volume data.'),
                               "Videomass", wx.ICON_INFORMATION
                               )
                 return

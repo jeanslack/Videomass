@@ -673,7 +673,7 @@ class AV_Conv(wx.Panel):
         grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
         sizer_Anormalization.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volumedetect"), size=(-1, -1))
+                                     _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
         grid_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
@@ -751,7 +751,7 @@ class AV_Conv(wx.Panel):
                  'that the video stream is not to be re-encoded and allows '
                  'changing the format or other parameters'))
         self.cmb_Vcod.SetToolTip(tip)
-        tip = (_('Output format and file extension. the '
+        tip = (_('Output format and file extension. The '
                  'content may change based on the codec and media'))
         self.cmb_Vcont.SetToolTip(tip)
         tip = (_('"Video" to save the output file as a '
@@ -761,7 +761,7 @@ class AV_Conv(wx.Panel):
         self.ckbx_pass.SetToolTip(tip)
         tip = (_('Specifies a minimum tolerance to be used'))
         self.spinMinr.SetToolTip(tip)
-        tip = (_('Specifies a maximum tolerance. this is '
+        tip = (_('Specifies a maximum tolerance. This is '
                  'only used in conjunction with buffer size'))
         self.spinMaxr.SetToolTip(tip)
         tip = (_('Specifies the decoder buffer size, which determines the '
@@ -789,7 +789,8 @@ class AV_Conv(wx.Panel):
         tip = (_('Video width and video height ratio.'))
         self.cmb_Vaspect.SetToolTip(tip)
         tip = (_('Frames repeat a given number of times per second. In some '
-                 'countries are 30 NTSC, in PAL countries like Italy are 25.'))
+                 'countries this is 30 for NTSC, other countries (like '
+                 'Italy) use 25 for PAL'))
         self.cmb_Fps.SetToolTip(tip)
         tip = (_('Gets maximum volume and average volume data in dBFS, then '
                  'calculates the offset amount for audio normalization.'))
@@ -802,7 +803,7 @@ class AV_Conv(wx.Panel):
                  'not more that one audio stream, leave to "Auto".'))
         self.cmb_A_inMap.SetToolTip(tip)
         tip = (_('Map on the output index. Keep same input map to preserve '
-                 'indexes; to save as audio file always select to "all" '
+                 'indexes; to save as audio file always select "all" '
                  'or "Auto"'))
         self.cmb_A_outMap.SetToolTip(tip)
         tip = (_('Integrated Loudness Target in LUFS. '
@@ -1742,8 +1743,8 @@ class AV_Conv(wx.Panel):
 
         """
         msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_('Audio normalization is not required based to '
-                  'set target level'))
+        msg3 = (_("Audio normalization will not be applied because it's "
+                  "equal to the source"))
         if self.normdetails:
             del self.normdetails[:]
 
@@ -1932,9 +1933,9 @@ class AV_Conv(wx.Panel):
         # check normalization data offset, if enable
         if self.rdbx_normalize.GetSelection() in [1, 2]:
             if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! use the '
-                                '"Volumedetect" control button to analyze '
-                                'the data on the audio volume.'),
+                wx.MessageBox(_('Undetected volume values! click the '
+                                '"Volume detect" button to analyze '
+                                'audio volume data.'),
                               'Videomass', wx.ICON_INFORMATION
                               )
                 return

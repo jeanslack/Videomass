@@ -410,7 +410,7 @@ class MainFrame(wx.Frame):
         fileButton.AppendSeparator()
         exitItem = fileButton.Append(wx.ID_EXIT, _("Exit"),
                                      _("Close Videomass"))
-        self.menuBar.Append(fileButton, _("&File"))
+        self.menuBar.Append(fileButton, _("File"))
 
         # ------------------ tools menu
         toolsButton = wx.Menu()
@@ -429,12 +429,12 @@ class MainFrame(wx.Frame):
         dscrp = (_("Download the latest presets"),
                  _("Download all Videomass presets locally from the homepage"))
         self.prstdownload = toolsButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        self.menuBar.Append(toolsButton, _("&Tools"))
+        self.menuBar.Append(toolsButton, _("Tools"))
 
         # ------------------ View menu
         viewButton = wx.Menu()
         ffmpegButton = wx.Menu()  # ffmpeg sub menu
-        viewButton.AppendSubMenu(ffmpegButton, "&FFmpeg")
+        viewButton.AppendSubMenu(ffmpegButton, "FFmpeg")
         dscrp = (_("Show configuration"),
                  _("Show FFmpeg's built-in configuration capabilities"))
         checkconf = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
@@ -448,7 +448,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Decoders"), _("Shows available decoders for FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
-        viewButton.AppendSubMenu(ffplayButton, _("&FFplay"))
+        viewButton.AppendSubMenu(ffplayButton, _("FFplay"))
         dscrp = (_("While playing"),
                  _("Show useful shortcut keys when playing or previewing "
                    "with FFplay"))
@@ -467,7 +467,7 @@ class MainFrame(wx.Frame):
         dscrp = (_("Show the latest version..."),
                  _("Shows the latest version available on github.com"))
         self.ydllatest = ydlButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        viewButton.AppendSubMenu(ydlButton, _("&Youtube-dl"))
+        viewButton.AppendSubMenu(ydlButton, _("Youtube-dl"))
         # timeline
         viewButton.AppendSeparator()
         dscrp = (_("Show Logs\tCtrl+L"),
@@ -479,7 +479,7 @@ class MainFrame(wx.Frame):
                  _("Show panel for editing timeline (seek/duration)"))
         self.viewtimeline = viewButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
                                               kind=wx.ITEM_CHECK)
-        self.menuBar.Append(viewButton, _("&View"))
+        self.menuBar.Append(viewButton, _("View"))
         self.menuBar.Check(self.viewtimestamp.GetId(), True)
 
         # ------------------ Go menu
@@ -506,14 +506,14 @@ class MainFrame(wx.Frame):
                  _("Opens the Videomass configuration folder"))
         openconfdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Log folder"),
-                 _("Opens the Videomass log folder, if it exists"))
+                 _("Opens the Videomass log folder, if exists"))
         openlogdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Cache folder"),
                  _("Opens the Videomass cache foder, if exists"))
         opencachedir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        goButton.AppendSubMenu(sysButton, _("&System"))
+        goButton.AppendSubMenu(sysButton, _("System"))
 
-        self.menuBar.Append(goButton, _("&Goto"))
+        self.menuBar.Append(goButton, _("Goto"))
 
         # ------------------ setup menu
         setupButton = wx.Menu()
@@ -534,15 +534,15 @@ class MainFrame(wx.Frame):
         self.resetfolders_tmp.Enable(False)
         setupButton.AppendSeparator()
         dscrp = (_("Setting timestamp"),
-                 _("Change the size and colors of the timestamp "
+                 _("Change the size and color of the timestamp "
                    "during playback"))
         tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         setupButton.AppendSeparator()
 
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
-                                       _("&Preferences\tCtrl+P"),
+                                       _("Preferences\tCtrl+P"),
                                        _("Application preferences"))
-        self.menuBar.Append(setupButton, _("&Settings"))
+        self.menuBar.Append(setupButton, _("Settings"))
 
         # ------------------ help menu
         helpButton = wx.Menu()
@@ -558,12 +558,12 @@ class MainFrame(wx.Frame):
         docFFmpeg = helpButton.Append(wx.ID_ANY, _("FFmpeg documentation"), "")
         helpButton.AppendSeparator()
         dscrp = (_("Check for newer version"),
-                 _("Check for the most latest version of Videomass on "
-                   "<https://pypi.org/>"))
+                 _("Check for the latest Videomass version at "
+                   "<https://pypi.org/project/videomass/>"))
         checkItem = helpButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         helpButton.AppendSeparator()
         infoItem = helpButton.Append(wx.ID_ABOUT, _("About Videomass"), "")
-        self.menuBar.Append(helpButton, _("&Help"))
+        self.menuBar.Append(helpButton, _("Help"))
 
         self.SetMenuBar(self.menuBar)
 
@@ -696,7 +696,7 @@ class MainFrame(wx.Frame):
                 return None
             elif wx.MessageBox(_(
                     'youtube-dl version {0} is available and will replace the '
-                    'old version {1}\n\nDo you want to upgrade '
+                    'old version {1}\n\nDo you want to update '
                     'now?').format(latest[0].strip(), this),
                    "Videomass", wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return None
@@ -769,7 +769,7 @@ class MainFrame(wx.Frame):
                     self.on_Kill()
 
                 elif upgrade == 'error':
-                    msg = _('Failed! for more details consult:\n'
+                    msg = _('Failed! For details consult:\n'
                             '{}/youtube_dl-update-on-AppImage.log').format(
                                 MainFrame.LOGDIR)
                     wx.MessageBox(msg, 'ERROR', wx.ICON_ERROR, self)
@@ -1103,7 +1103,7 @@ class MainFrame(wx.Frame):
 
         """
         dialdir = wx.DirDialog(self, _("Choose a temporary destination for "
-                                       "the downloads"))
+                                       "downloads"))
         if dialdir.ShowModal() == wx.ID_OK:
             self.outpath_ydl = '%s' % (dialdir.GetPath())
             self.textDnDTarget.on_file_save(self.outpath_ydl)
@@ -1168,7 +1168,11 @@ class MainFrame(wx.Frame):
     # --------- Menu Help  ###
 
     def Helpme(self, event):
-        """Online User guide"""
+        """
+        Online User guide: Open default web browser via Python
+        Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
+        """
         page = 'https://jeanslack.github.io/Videomass/videomass_use.html'
         webbrowser.open(page)
     # ------------------------------------------------------------------#
@@ -1333,7 +1337,7 @@ class MainFrame(wx.Frame):
                                        )
         # self.toolbar.AddSeparator()
         # self.toolbar.AddStretchableSpace()
-        tip = _("Gathers information from multimedia streams")
+        tip = _("Gathers information of multimedia streams")
         self.btn_metaI = self.toolbar.AddTool(5, _('Media Streams'),
                                               bmpinfo,
                                               tip, wx.ITEM_NORMAL

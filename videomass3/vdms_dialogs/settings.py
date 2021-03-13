@@ -852,14 +852,16 @@ class Setup(wx.Dialog):
 
     def on_help(self, event):
         """
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
         """
         if Setup.GET_LANG in Setup.SUPPLANG:
             lang = Setup.GET_LANG.split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/2-Startup_%s.pdf' % (lang, lang))
+                    'languages/%s/2-Startup_and_Setup_%s.pdf' % (lang, lang))
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/2-Startup_en.pdf')
+                    'languages/en/2-Startup_and_Setup_en.pdf')
 
         webbrowser.open(page)
     # --------------------------------------------------------------------#
