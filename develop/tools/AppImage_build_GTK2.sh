@@ -91,7 +91,7 @@ mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.4.0 \
 # Update pip first
 $APP_DIR/AppRun -m pip install -U pip
 
-# installing wxPython4.1 binary wheel (GTK2 porting)
+# installing wxPython binary wheel (GTK2 porting)
 if [ -f "$OLD_CWD/$WX_PYTHON_WHEEL" ]; then
     $APP_DIR/AppRun -m pip install -U "$OLD_CWD/$WX_PYTHON_WHEEL"
 else
@@ -128,7 +128,7 @@ cp -f $REPO_ROOT/videomass3/art/io.github.jeanslack.videomass.desktop \
 # add pixmaps icon
 cp -r $APP_DIR/opt/python*/share/pixmaps/ $APP_DIR/usr/share/
 
-# download appimagetool and linuxdeploy
+# download appimagetool (for update) and linuxdeploy (for building now)
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage \
     https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
 

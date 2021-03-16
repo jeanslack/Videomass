@@ -14,7 +14,7 @@ the [FFmpeg](https://www.ffmpeg.org/) commands without limits of formats and
 codecs.   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading videos via youtube-dl.   
+streams and downloading videos via [youtube-dl](https://youtube-dl.org/).   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 

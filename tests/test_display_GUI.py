@@ -27,7 +27,7 @@ else:
 class GuiTestCase(unittest.TestCase):
     """
     Test case for Videomass GUI. It tests the bootstrap of
-    the wxPython module by start Videomass app.
+    the wxPython module by starting Videomass app.
     """
 
     def setUp(self):

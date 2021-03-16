@@ -123,7 +123,7 @@ class Timeline(wx.Panel):
         # ----------------------Properties ----------------------#
         self.paneltime.SetBackgroundColour(wx.Colour(Timeline.RULER_BKGRD))
         self.sldseek.SetToolTip(_("Seek to given time position"))
-        self.sldcut.SetToolTip(_("Total amount duration"))
+        self.sldcut.SetToolTip(_("Total duration"))
 
         # ----------------------Layout----------------------#
 
@@ -259,8 +259,8 @@ class Timeline(wx.Panel):
         of this class.
         """
         if not duration:
-            msg0 = _('The maximum time selection is set to 24:00:00, to '
-                     'allow make the slideshows')
+            msg0 = _('The maximum time selection is set to 24:00:00, '
+                     'allowing to make a slideshow')
             self.milliseconds = 86399999
         else:
             msg0 = _('The maximum time refers to the file with the longest '

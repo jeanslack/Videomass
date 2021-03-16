@@ -8,7 +8,6 @@ The following languages have not yet been translated:
 - es_ES   (Spanish)
 - fr_FR   (French)
 - pl_PL   (Polish)   
-- nl_NL   (Dutch)
 
 You can choose the language you prefer to translate (even those not yet existing).
 

@@ -7,8 +7,7 @@
 #
 # Make a new `videomass.po` file on '../../videomass3/locale'.
 # The previus videomass.po file will be overwrite with new one
-# incoming which will update with the current state of strings
-# to tralsated .
+# incoming which will update latest strings for traslation .
 
 PLATFORM=$(uname)  # command to show platform
 self="$(readlink -f -- $0)"  # this file

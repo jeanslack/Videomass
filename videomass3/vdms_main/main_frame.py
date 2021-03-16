@@ -731,7 +731,7 @@ class MainFrame(wx.Frame):
                 return
             else:
                 if wx.MessageBox(_(
-                            'Notice: To update youtube_dl it is necessary to '
+                            'To update youtube_dl it is necessary to '
                             'rebuild the Videomass AppImage. This procedure '
                             'will be completely automatic and will only '
                             'require you to select the location of the '
@@ -1068,7 +1068,7 @@ class MainFrame(wx.Frame):
         Open the cache dir with file manager if exists
         """
         if not os.path.exists(MainFrame.CACHEDIR):
-            wx.MessageBox(_("cache directory has not been created yet."),
+            wx.MessageBox(_("cache folder has not been created yet."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
         IO_tools.openpath(MainFrame.CACHEDIR)

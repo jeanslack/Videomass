@@ -146,6 +146,7 @@ def source_build():
             'Natural Language :: English',
             'Natural Language :: Italian',
             'Natural Language :: Russian',
+            'Natural Language :: Dutch',
             'Programming Language :: Python :: 3 :: Only',
             'Programming Language :: Python :: 3.7',
             "Programming Language :: Python :: 3.8",

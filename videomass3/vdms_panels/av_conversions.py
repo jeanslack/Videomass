@@ -1933,7 +1933,7 @@ class AV_Conv(wx.Panel):
         # check normalization data offset, if enable
         if self.rdbx_normalize.GetSelection() in [1, 2]:
             if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! click the '
+                wx.MessageBox(_('Undetected volume values! Click the '
                                 '"Volume detect" button to analyze '
                                 'audio volume data.'),
                               'Videomass', wx.ICON_INFORMATION
@@ -2287,7 +2287,7 @@ class AV_Conv(wx.Panel):
         """
         Update all settings before send to epilogue
         """
-        numfile = _("%s file in pending") % str(countmax)
+        numfile = _("%s file in queue") % str(countmax)
         if self.opt["PEAK"]:
             normalize = 'PEAK'
         elif self.opt["RMS"]:
@@ -2423,7 +2423,7 @@ class AV_Conv(wx.Panel):
                 parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(
-                        None, _("Write the new profile on..."),
+                        None, _("Save the new profile on..."),
                         defaultDir=os.path.join(AV_Conv.DIR_CONF, 'presets'),
                         wildcard="Videomass presets (*.prst;)|*.prst;",
                         style=wx.FD_OPEN |

@@ -21,6 +21,7 @@ videomass (3.3.9-1) UNRELEASED; urgency=medium
   * Added multilanguage support for user guide (English, Russian and Italian
     for now)
   * Fixed #17
+  * Translated into Dutch, thanks to Roelof Berkepeis
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Thu, 11 Mar 2021 22:02:00 +0200
 

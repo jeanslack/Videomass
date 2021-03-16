@@ -396,9 +396,9 @@ class PrstPan(wx.Panel):
         self.btn_newpreset.SetToolTip(tip)
         tip = (_("Remove the selected preset from the Presets Manager"))
         self.btn_delpreset.SetToolTip(tip)
-        tip = (_("Export selected preset as copy to media"))
+        tip = (_("Export selected preset as copy"))
         self.btn_savecopy.SetToolTip(tip)
-        tip = (_("Export entire presets directory as copy to media"))
+        tip = (_("Export entire presets folder as copy"))
         self.btn_saveall.SetToolTip(tip)
         tip = (_("Import a new preset or update an existing one"))
         self.btn_restore.SetToolTip(tip)
@@ -874,8 +874,8 @@ class PrstPan(wx.Panel):
         """
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
-                           'It will be moved to the "Removals" folder in the '
-                           'presets directory').format(filename),
+                           'It will be moved to the "Removals" '
+                           'folder.').format(filename),
                          _('Please confirm'), wx.ICON_QUESTION |
                          wx.YES_NO, self) == wx.NO:
             return
@@ -912,13 +912,14 @@ class PrstPan(wx.Panel):
         combvalue = self.cmbx_prst.GetValue()
         filedir = '%s/%s.prst' % (self.user_prst, combvalue)
 
-        dlg = wx.DirDialog(self, _("Choose a place to save the selected "
+        dlg = wx.DirDialog(self, _("Choose a folder to save the selected "
                                    "preset"), "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             if os.path.exists(os.path.join(path, '%s.prst' % combvalue)):
-                if wx.MessageBox(_('This file already exists, do you want '
-                                   'to overwrite it?'), _('Please confirm'),
+                if wx.MessageBox(_('A file with this name already exists, '
+                                   'do you want to overwrite it?'),
+                                 _('Please confirm'),
                                  wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                     return
 
@@ -941,7 +942,7 @@ class PrstPan(wx.Panel):
         """
         src = self.user_prst
 
-        dialsave = wx.DirDialog(self, _("Choose a place to export all "
+        dialsave = wx.DirDialog(self, _("Choose a folder to export all "
                                         "presets"), "", wx.DD_DEFAULT_STYLE)
         if dialsave.ShowModal() == wx.ID_OK:
             dest = dialsave.GetPath()
@@ -1052,7 +1053,7 @@ class PrstPan(wx.Panel):
         if wx.MessageBox(_("Be careful! The selected preset will be "
                            "overwritten with the default one. Your profiles "
                            "may be deleted!\n\nDo you want to continue?"),
-                         _("Notice"),
+                         _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
@@ -1078,7 +1079,7 @@ class PrstPan(wx.Panel):
         """
         if wx.MessageBox(_("Be careful! This action will restore all presets "
                            "to default ones. Your profiles may be deleted!"
-                           "\n\nDo you want to continue?"), _("Notice"),
+                           "\n\nDo you want to continue?"), _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
@@ -1087,7 +1088,7 @@ class PrstPan(wx.Panel):
                 wx.MessageBox("%s" % outerror, "Videomass",
                               wx.ICON_ERROR, self)
             else:
-                wx.MessageBox(_("All the default presets have been "
+                wx.MessageBox(_("All default presets have been "
                                 "successfully recovered"),
                               "Videomass", wx.OK, self)
                 self.reset_list(True)
@@ -1153,7 +1154,7 @@ class PrstPan(wx.Panel):
         else:
             filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
-                               "selected profile? It may no longer be "
+                               "selected profile? It will no longer be "
                                "possible to recover it."), _("Please confirm"),
                              wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                              self) == wx.YES:
@@ -1182,7 +1183,7 @@ class PrstPan(wx.Panel):
         # check normalization data offset, if enable.
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
             if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! click the '
+                wx.MessageBox(_('Undetected volume values! Click the '
                                 '"Volume detect" button to analyze '
                                 'audio volume data.'),
                               "Videomass", wx.ICON_INFORMATION
@@ -1388,7 +1389,7 @@ class PrstPan(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        numfile = "%s file in pending" % str(cntmax)
+        numfile = "%s file in queue" % str(cntmax)
 
         formula = (_("SUMMARY\n\nQueued File\nPass Encoding\
                      \nProfile Used\nOutput Format\nTime Period\
