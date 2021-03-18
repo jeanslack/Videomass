@@ -4,7 +4,7 @@
 - Multi-Platform, work on Linux, MacOs, Windows, FreeBsd.
 - Batch processing.
 - Advanced log management.
-- Multi language support (en, it, ru)
+- Multi language support (en, it, ru, nl)
 
 ## Features with FFmpeg
 - Drag and drop to add multiple files simultaneously.
