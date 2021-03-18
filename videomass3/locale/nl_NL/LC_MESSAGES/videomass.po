@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 06:19+0100\n"
-"PO-Revision-Date: 2021-03-16 06:35+0100\n"
+"POT-Creation-Date: 2021-03-18 21:11+0100\n"
+"PO-Revision-Date: 2021-03-18 21:12+0100\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: nl_NL\n"
@@ -39,7 +39,7 @@ msgstr ""
 "\n"
 "Controleer de uitvoeringsrechten."
 
-#: ../vdms_dialogs/audiodialogs.py:247
+#: ../vdms_dialogs/audiodialogs.py:237
 #, fuzzy
 #| msgid ""
 #| "Support to mono or stereo audio channels. If you are not sure set to "
@@ -51,7 +51,7 @@ msgstr ""
 "Ondersteuning van mono of stereo audiokanalen. Als u niet zeker bent, kies "
 "\"Auto\" en de bronwaarden worden gekopiëerd."
 
-#: ../vdms_dialogs/audiodialogs.py:250
+#: ../vdms_dialogs/audiodialogs.py:240
 #, fuzzy
 #| msgid ""
 #| "The audio Rate (or sample-rate) is the sound sampling\n"
@@ -75,7 +75,7 @@ msgstr ""
 "audio CD normaal af te spelen. Als u niet zeker bent,\n"
 "kies \"Auto\" en de bronwaarden worden gekopiëerd."
 
-#: ../vdms_dialogs/audiodialogs.py:258
+#: ../vdms_dialogs/audiodialogs.py:248
 #, fuzzy
 #| msgid ""
 #| "The audio bitrate affects on file compression\n"
@@ -90,7 +90,7 @@ msgstr ""
 "en de luisterkwaliteit. Hoe hoger de waarde,\n"
 "hoe hoger de kwaliteit."
 
-#: ../vdms_dialogs/audiodialogs.py:263
+#: ../vdms_dialogs/audiodialogs.py:253
 msgid ""
 "bit depth is the number of bits of information in each\n"
 "sample, and it directly corresponds to the resolution\n"
@@ -104,109 +104,109 @@ msgstr ""
 "signaal. Niet-PCM formaten, zoals lossy\n"
 "compressie formaten, hebben geen bit depth."
 
-#: ../vdms_dialogs/filter_crop.py:188 ../vdms_dialogs/filter_scale.py:85
+#: ../vdms_dialogs/filter_crop.py:187 ../vdms_dialogs/filter_scale.py:87
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Bron grootte: {0} x {1} pixels"
 
-#: ../vdms_dialogs/filter_crop.py:192
+#: ../vdms_dialogs/filter_crop.py:191
 msgid "Search for a specific frame"
 msgstr "Zoek naar een specifiek frame"
 
-#: ../vdms_dialogs/filter_crop.py:203
+#: ../vdms_dialogs/filter_crop.py:202
 msgid "Load"
 msgstr "Laad"
 
-#: ../vdms_dialogs/filter_crop.py:206
+#: ../vdms_dialogs/filter_crop.py:205
 msgid "Cropping area selection "
 msgstr "Gebied-selectie bijsnijden "
 
-#: ../vdms_dialogs/filter_crop.py:211 ../vdms_dialogs/filter_scale.py:105
+#: ../vdms_dialogs/filter_crop.py:210 ../vdms_dialogs/filter_scale.py:107
 msgid "Height"
 msgstr "Hoogte"
 
-#: ../vdms_dialogs/filter_crop.py:231
+#: ../vdms_dialogs/filter_crop.py:230
 msgid "Center"
 msgstr "Centrum"
 
-#: ../vdms_dialogs/filter_crop.py:242 ../vdms_dialogs/filter_scale.py:105
+#: ../vdms_dialogs/filter_crop.py:241 ../vdms_dialogs/filter_scale.py:107
 msgid "Width"
 msgstr "Breedte"
 
-#: ../vdms_dialogs/filter_crop.py:256 ../vdms_dialogs/filter_deinterlace.py:117
-#: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:186
-#: ../vdms_dialogs/filter_transpose.py:110 ../vdms_panels/av_conversions.py:541
+#: ../vdms_dialogs/filter_crop.py:255 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:188
+#: ../vdms_dialogs/filter_transpose.py:109 ../vdms_panels/av_conversions.py:541
 msgid "Reset"
 msgstr "Reset"
 
-#: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_deinterlace.py:116
-#: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:184
-#: ../vdms_dialogs/filter_transpose.py:114 ../vdms_dialogs/set_timestamp.py:145
+#: ../vdms_dialogs/filter_crop.py:259 ../vdms_dialogs/filter_deinterlace.py:119
+#: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:186
+#: ../vdms_dialogs/filter_transpose.py:113 ../vdms_dialogs/set_timestamp.py:145
 msgid "Apply"
 msgstr "Toepassen"
 
-#: ../vdms_dialogs/filter_crop.py:275
+#: ../vdms_dialogs/filter_crop.py:274
 msgid "Crop Filter"
 msgstr "Bijsnij Filter"
 
-#: ../vdms_dialogs/filter_crop.py:276
+#: ../vdms_dialogs/filter_crop.py:275
 msgid "Crop to width"
 msgstr "Snij breedte bij"
 
-#: ../vdms_dialogs/filter_crop.py:277
+#: ../vdms_dialogs/filter_crop.py:276
 msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr "Verplaats verticaal - zet op -1 om de verticale as te centreren"
 
-#: ../vdms_dialogs/filter_crop.py:279
+#: ../vdms_dialogs/filter_crop.py:278
 msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr "Verplaats horizontaal - zet op -1 om de horizontale as te centreren"
 
-#: ../vdms_dialogs/filter_crop.py:281
+#: ../vdms_dialogs/filter_crop.py:280
 msgid "Crop to height"
 msgstr "Snij hoogte bij"
 
-#: ../vdms_dialogs/filter_deinterlace.py:52
+#: ../vdms_dialogs/filter_deinterlace.py:55
 msgid "Advanced Options"
 msgstr "Geavanceerde Opties"
 
-#: ../vdms_dialogs/filter_deinterlace.py:54
+#: ../vdms_dialogs/filter_deinterlace.py:57
 msgid "Deinterlace"
 msgstr "Interlace ongedaan maken"
 
-#: ../vdms_dialogs/filter_deinterlace.py:56
+#: ../vdms_dialogs/filter_deinterlace.py:59
 msgid "Interlace"
 msgstr "Interlace"
 
-#: ../vdms_dialogs/filter_deinterlace.py:59
+#: ../vdms_dialogs/filter_deinterlace.py:62
 msgid "Deinterlaces with w3fdif filter"
 msgstr "Maakt interlace ongedaan met w3fdif filter"
 
-#: ../vdms_dialogs/filter_deinterlace.py:73
+#: ../vdms_dialogs/filter_deinterlace.py:76
 msgid "Deinterlaces with yadif filter"
 msgstr "Maakt interlace ongedaan met yadif filter"
 
-#: ../vdms_dialogs/filter_deinterlace.py:97
+#: ../vdms_dialogs/filter_deinterlace.py:100
 msgid "Interlaces with interlace filter"
 msgstr "Doet interlace met interlace filter"
 
-#: ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_deinterlace.py:123
 msgid "Deinterlacing and Interlacing"
 msgstr "Interlacen en ont-Interlacen"
 
-#: ../vdms_dialogs/filter_deinterlace.py:191
+#: ../vdms_dialogs/filter_deinterlace.py:194
 msgid "Deinterlace the input video with `w3fdif` filter"
 msgstr "Maak interlace van input video ongedaan met `w3fdif` filter"
 
-#: ../vdms_dialogs/filter_deinterlace.py:193
+#: ../vdms_dialogs/filter_deinterlace.py:196
 msgid "Set the interlacing filter coefficients."
 msgstr "Stel coëfficiënten van interlace filter in."
 
-#: ../vdms_dialogs/filter_deinterlace.py:195
-#: ../vdms_dialogs/filter_deinterlace.py:205
+#: ../vdms_dialogs/filter_deinterlace.py:198
+#: ../vdms_dialogs/filter_deinterlace.py:208
 msgid "Specify which frames to deinterlace."
 msgstr "Specificeer frames waarvan u interlace ongedaan wilt maken."
 
-#: ../vdms_dialogs/filter_deinterlace.py:197
+#: ../vdms_dialogs/filter_deinterlace.py:200
 msgid ""
 "Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the "
 "best and fastest choice"
@@ -214,7 +214,7 @@ msgstr ""
 "Maak interlace van input video ongedaan met `yadif` filter. Voor FFmpeg de "
 "beste en snelste keuze"
 
-#: ../vdms_dialogs/filter_deinterlace.py:200
+#: ../vdms_dialogs/filter_deinterlace.py:203
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
@@ -222,7 +222,7 @@ msgstr ""
 "modus\n"
 "De interlacing modus die overnomen wordt."
 
-#: ../vdms_dialogs/filter_deinterlace.py:202
+#: ../vdms_dialogs/filter_deinterlace.py:205
 msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
@@ -230,11 +230,11 @@ msgstr ""
 "pariteit\n"
 "De picture field parity voor de interlaced input video."
 
-#: ../vdms_dialogs/filter_deinterlace.py:207
+#: ../vdms_dialogs/filter_deinterlace.py:210
 msgid "Simple interlacing filter from progressive contents."
 msgstr "Simpel interlacing filter voor progressieve beelden."
 
-#: ../vdms_dialogs/filter_deinterlace.py:209
+#: ../vdms_dialogs/filter_deinterlace.py:212
 msgid ""
 "scan:\n"
 "determines whether the interlaced frame is taken from the even (tff - "
@@ -244,7 +244,7 @@ msgstr ""
 "bepaalt of de interlaced frame genomen wordt van de even (tff - standaard) "
 "of oneven (bff) lijnen van de progressieve frame."
 
-#: ../vdms_dialogs/filter_deinterlace.py:213
+#: ../vdms_dialogs/filter_deinterlace.py:216
 #, fuzzy
 #| msgid ""
 #| "lowpas:\n"
@@ -262,33 +262,33 @@ msgstr ""
 "twitter interlacing te voorkomen en moire patronen te verminderen.\n"
 "Geen instelling is standaard."
 
-#: ../vdms_dialogs/filter_denoisers.py:51
+#: ../vdms_dialogs/filter_denoisers.py:58
 msgid "Apply Denoisers Filters"
 msgstr "Pas Denoisers Filters toe"
 
-#: ../vdms_dialogs/filter_denoisers.py:54
+#: ../vdms_dialogs/filter_denoisers.py:61
 msgid "Enable nlmeans denoiser"
 msgstr "Zet nlmeans denoiser aan"
 
-#: ../vdms_dialogs/filter_denoisers.py:61
+#: ../vdms_dialogs/filter_denoisers.py:68
 msgid "nlmeans options"
 msgstr "nlmeans opties"
 
-#: ../vdms_dialogs/filter_denoisers.py:66
+#: ../vdms_dialogs/filter_denoisers.py:73
 msgid "Enable hqdn3d denoiser"
 msgstr "Zet hqdn3d denoiser aan"
 
-#: ../vdms_dialogs/filter_denoisers.py:71
+#: ../vdms_dialogs/filter_denoisers.py:78
 msgid "hqdn3d options"
 msgstr "hqdn3d opties"
 
-#: ../vdms_dialogs/filter_denoisers.py:121
+#: ../vdms_dialogs/filter_denoisers.py:128
 #, fuzzy
 #| msgid "Denoisers filters"
 msgid "Denoiser filters"
 msgstr "Denoiser filters"
 
-#: ../vdms_dialogs/filter_denoisers.py:122
+#: ../vdms_dialogs/filter_denoisers.py:129
 #, fuzzy
 #| msgid ""
 #| "nlmeans:\n"
@@ -306,7 +306,7 @@ msgstr ""
 "beeldenreeks herstellen, zelfs bij sterke ruis. Het is ideaal voor "
 "verbetering van de kwaliteit van oude VHS banden."
 
-#: ../vdms_dialogs/filter_denoisers.py:127
+#: ../vdms_dialogs/filter_denoisers.py:134
 msgid ""
 "hqdn3d:\n"
 "This is a high precision/quality 3d denoise filter. It aims to reduce image "
@@ -318,19 +318,19 @@ msgstr ""
 "beeldruis te verminderen, wat resulteert in vloeiende beelden, waarbij "
 "stilstaande beelden echt stil staan. Compressie zal hierdoor verbeteren."
 
-#: ../vdms_dialogs/filter_scale.py:60
+#: ../vdms_dialogs/filter_scale.py:62
 msgid "New size in pixels"
 msgstr "Nieuwe afmeting in pixels"
 
-#: ../vdms_dialogs/filter_scale.py:65
+#: ../vdms_dialogs/filter_scale.py:67
 msgid "Width:"
 msgstr "Breedte:"
 
-#: ../vdms_dialogs/filter_scale.py:75
+#: ../vdms_dialogs/filter_scale.py:77
 msgid "Height:"
 msgstr "Hoogte:"
 
-#: ../vdms_dialogs/filter_scale.py:90
+#: ../vdms_dialogs/filter_scale.py:92
 #, fuzzy
 #| msgid ""
 #| "If you want to keep the aspect ratio, select \"Constrain proportions\" "
@@ -351,51 +351,51 @@ msgstr ""
 "dimensie\n"
 "op -1 of -2 (sommige codecs vereisen -2, dus u zou dit eerst moeten testen)."
 
-#: ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_scale.py:101
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr "Beperk verhouding (behoud beeldverhouding)"
 
-#: ../vdms_dialogs/filter_scale.py:104
+#: ../vdms_dialogs/filter_scale.py:106
 #, fuzzy
 #| msgid "Which dimension adjust?"
 msgid "Which dimension to adjust?"
 msgstr "Welke dimensie aanpassen?"
 
-#: ../vdms_dialogs/filter_scale.py:114 ../vdms_panels/av_conversions.py:345
+#: ../vdms_dialogs/filter_scale.py:116 ../vdms_panels/av_conversions.py:345
 msgid "Aspect Ratio"
 msgstr "Beeldverhouding"
 
-#: ../vdms_dialogs/filter_scale.py:116
+#: ../vdms_dialogs/filter_scale.py:118
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr "Setdar filter (toon beeldverhouding) bijvoorbeeld 16/9, 4/3 "
 
-#: ../vdms_dialogs/filter_scale.py:121 ../vdms_dialogs/filter_scale.py:151
+#: ../vdms_dialogs/filter_scale.py:123 ../vdms_dialogs/filter_scale.py:153
 msgid "Numerator"
 msgstr "Teller"
 
-#: ../vdms_dialogs/filter_scale.py:142 ../vdms_dialogs/filter_scale.py:172
+#: ../vdms_dialogs/filter_scale.py:144 ../vdms_dialogs/filter_scale.py:174
 msgid "Denominator"
 msgstr "Noemer"
 
-#: ../vdms_dialogs/filter_scale.py:146
+#: ../vdms_dialogs/filter_scale.py:148
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr "Setsar filter (sample beeldverhouding) bijvoorbeeld 1/1"
 
-#: ../vdms_dialogs/filter_scale.py:196
+#: ../vdms_dialogs/filter_scale.py:198
 msgid "Resizing filters"
 msgstr "Herschaling filters"
 
-#: ../vdms_dialogs/filter_scale.py:197
+#: ../vdms_dialogs/filter_scale.py:199
 #, fuzzy
 #| msgid "Scale filter, for disabling set to 0"
 msgid "Scale filter, set to 0 to disable"
 msgstr "Schaling filter, zet uit door 0"
 
-#: ../vdms_dialogs/filter_scale.py:200
+#: ../vdms_dialogs/filter_scale.py:202
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr "Toon beeldverhouding. Zet uit door 0"
 
-#: ../vdms_dialogs/filter_scale.py:203
+#: ../vdms_dialogs/filter_scale.py:205
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
@@ -403,44 +403,44 @@ msgstr ""
 "Sample Beeldverhouding (of Pixel Beeldverhouding).\n"
 "Zet uit door 0"
 
-#: ../vdms_dialogs/filter_transpose.py:84
-#: ../vdms_dialogs/filter_transpose.py:284
+#: ../vdms_dialogs/filter_transpose.py:83
+#: ../vdms_dialogs/filter_transpose.py:283
 msgid "Default position"
 msgstr "Standaard positie"
 
-#: ../vdms_dialogs/filter_transpose.py:89
+#: ../vdms_dialogs/filter_transpose.py:88
 msgid "Load Frame"
 msgstr "Laad Frame"
 
-#: ../vdms_dialogs/filter_transpose.py:91
+#: ../vdms_dialogs/filter_transpose.py:90
 msgid "Rotation setting"
 msgstr "Rotatie instelling"
 
-#: ../vdms_dialogs/filter_transpose.py:99
+#: ../vdms_dialogs/filter_transpose.py:98
 msgid "90° (left)"
 msgstr "90° (naar links)"
 
-#: ../vdms_dialogs/filter_transpose.py:101
+#: ../vdms_dialogs/filter_transpose.py:100
 msgid "90° (right)"
 msgstr "90° (naar rechts)"
 
-#: ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_transpose.py:104
 msgid "180°"
 msgstr "180°"
 
-#: ../vdms_dialogs/filter_transpose.py:119
+#: ../vdms_dialogs/filter_transpose.py:118
 msgid "Transpose Filter"
 msgstr "Transponeer Filter"
 
-#: ../vdms_dialogs/filter_transpose.py:222
+#: ../vdms_dialogs/filter_transpose.py:221
 msgid "Rotate 90 degrees right"
 msgstr "Roteer 90 graden naar rechts"
 
-#: ../vdms_dialogs/filter_transpose.py:243
+#: ../vdms_dialogs/filter_transpose.py:242
 msgid "Rotate 180 degrees"
 msgstr "Roteer 180 graden"
 
-#: ../vdms_dialogs/filter_transpose.py:263
+#: ../vdms_dialogs/filter_transpose.py:262
 msgid "Rotate 90 degrees left"
 msgstr "Roteer 90 graden naar links"
 
@@ -819,7 +819,9 @@ msgid "Clear the cache when exiting the application"
 msgstr "Maak cache leeg als programma beëindigd wordt"
 
 #: ../vdms_dialogs/settings.py:189
-msgid "Files Preferences"
+#, fuzzy
+#| msgid "Files Preferences"
+msgid "File Preferences"
 msgstr "Bestands Voorkeuren"
 
 #: ../vdms_dialogs/settings.py:196

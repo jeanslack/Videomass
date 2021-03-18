@@ -30,8 +30,14 @@ import webbrowser
 
 class Denoisers(wx.Dialog):
     """
-    Show a dialog for set denoiser filter
+    A dialog tool to get video denoiser values
+    based on FFmpeg syntax.
+
     """
+    get = wx.GetApp()
+    GET_LANG = get.GETlang
+    SUPPLANG = get.SUPP_langs
+
     def __init__(self, parent, denoiser):
         """
         Make sure you use the clear button when you finish the task.
@@ -39,6 +45,7 @@ class Denoisers(wx.Dialog):
         a deinterlace filter
         <https://askubuntu.com/questions/866186/how-to-get-good-quality-when-
         converting-digital-video>
+
         """
         if denoiser:
             self.denoiser = denoiser
@@ -251,9 +258,17 @@ class Denoisers(wx.Dialog):
 
     def on_help(self, event):
         """
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
-                'VideoConv_Panel/Filters/Denoisers.html')
+        if Denoisers.GET_LANG in Denoisers.SUPPLANG:
+            lang = Denoisers.GET_LANG.split('_')[0]
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/%s/4-Video_Filters_%s.pdf' % (lang, lang))
+        else:
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/en/4-Video_Filters_en.pdf')
+
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 

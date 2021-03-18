@@ -186,7 +186,7 @@ class Setup(wx.Dialog):
         gridCache.Add(self.checkbox_cacheclr, 0, wx.ALL | wx.EXPAND, 5)
         sizerFiles.Add(gridCache, 0)
         tabOne.SetSizer(sizerFiles)
-        notebook.AddPage(tabOne, _("Files Preferences"))
+        notebook.AddPage(tabOne, _("File Preferences"))
 
         # -----tab 2
         tabTwo = wx.Panel(notebook, wx.ID_ANY)

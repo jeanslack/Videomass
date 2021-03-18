@@ -25,7 +25,6 @@
 
 #########################################################
 import wx
-import webbrowser
 # import wx.lib.masked as masked  # not work on macOSX
 import wx.lib.statbmp
 import os

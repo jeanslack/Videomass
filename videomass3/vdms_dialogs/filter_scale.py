@@ -37,6 +37,8 @@ class Scale(wx.Dialog):
     """
     get = wx.GetApp()
     OS = get.OS
+    GET_LANG = get.GETlang
+    SUPPLANG = get.SUPP_langs
 
     def __init__(self, parent, scale, dar, sar, v_width, v_height):
         """
@@ -313,10 +315,17 @@ class Scale(wx.Dialog):
 
     def on_help(self, event):
         """
-        Open default browser to official help page
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
-                'VideoConv_Panel/Filters/FilterScaling.html')
+        if Scale.GET_LANG in Scale.SUPPLANG:
+            lang = Scale.GET_LANG.split('_')[0]
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/%s/4-Video_Filters_%s.pdf' % (lang, lang))
+        else:
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/en/4-Video_Filters_en.pdf')
+
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 

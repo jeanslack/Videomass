@@ -25,7 +25,6 @@
 
 #########################################################
 import wx
-import webbrowser
 from math import pi as pi
 import os
 from time import sleep

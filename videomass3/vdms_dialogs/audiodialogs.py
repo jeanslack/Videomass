@@ -25,7 +25,6 @@
 
 #########################################################
 import wx
-import webbrowser
 
 
 class AudioSettings(wx.Dialog):
@@ -147,13 +146,12 @@ class AudioSettings(wx.Dialog):
 
         gridBtn = wx.GridSizer(1, 2, 0, 0)  # buttons
         gridhelp = wx.GridSizer(1, 1, 0, 0)  # buttons
-        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridhelp.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridhelp)
 
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         gridexit.Add(self.btn_cancel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
 
@@ -162,18 +160,10 @@ class AudioSettings(wx.Dialog):
         self.Layout()
 
         """--------------------Binders (EVT)----------------------"""
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, self.btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_apply, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
-    # ------------------------------------------------------------------#
-    def on_help(self, event):
-        """
-        """
-        page = ('https://jeanslack.github.io/Videomass/Pages/'
-                'Audio_Parameters/Audio_parameters.html')
-        webbrowser.open(page)
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):

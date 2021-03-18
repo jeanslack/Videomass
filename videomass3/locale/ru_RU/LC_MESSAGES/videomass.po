@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 06:19+0100\n"
-"PO-Revision-Date: 2021-03-16 06:44+0100\n"
+"POT-Creation-Date: 2021-03-18 21:11+0100\n"
+"PO-Revision-Date: 2021-03-18 21:12+0100\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -41,7 +41,7 @@ msgstr ""
 "\n"
 "Проверить разрешения на выполнение."
 
-#: ../vdms_dialogs/audiodialogs.py:247
+#: ../vdms_dialogs/audiodialogs.py:237
 #, fuzzy
 #| msgid ""
 #| "Support to mono or stereo audio channels. If you are not sure set to "
@@ -53,7 +53,7 @@ msgstr ""
 "Поддержка моно или стерео аудиоканалов. Если вы не уверены, что выберите "
 "\"Auto\", и исходные значения будут скопированы."
 
-#: ../vdms_dialogs/audiodialogs.py:250
+#: ../vdms_dialogs/audiodialogs.py:240
 #, fuzzy
 #| msgid ""
 #| "The audio Rate (or sample-rate) is the sound sampling\n"
@@ -77,7 +77,7 @@ msgstr ""
 "частоту дискретизации 44100 кГц. Если вы не уверены, что установлен\n"
 " \"Авто\" и исходные значения будут скопированы."
 
-#: ../vdms_dialogs/audiodialogs.py:258
+#: ../vdms_dialogs/audiodialogs.py:248
 #, fuzzy
 #| msgid ""
 #| "The audio bitrate affects on file compression\n"
@@ -92,7 +92,7 @@ msgstr ""
 "качество прослушивания. Чем выше значение,\n"
 "тем и выше качество."
 
-#: ../vdms_dialogs/audiodialogs.py:263
+#: ../vdms_dialogs/audiodialogs.py:253
 msgid ""
 "bit depth is the number of bits of information in each\n"
 "sample, and it directly corresponds to the resolution\n"
@@ -106,110 +106,110 @@ msgstr ""
 "сигнала PCM. Форматы без PCM, такие как форматы сжатия с потерями,\n"
 "не имеют связанной битовой глубины."
 
-#: ../vdms_dialogs/filter_crop.py:188 ../vdms_dialogs/filter_scale.py:85
+#: ../vdms_dialogs/filter_crop.py:187 ../vdms_dialogs/filter_scale.py:87
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
 msgstr "Размер источника: {0} x {1} пикселей"
 
-#: ../vdms_dialogs/filter_crop.py:192
+#: ../vdms_dialogs/filter_crop.py:191
 msgid "Search for a specific frame"
 msgstr "Поиск определенного кадра"
 
-#: ../vdms_dialogs/filter_crop.py:203
+#: ../vdms_dialogs/filter_crop.py:202
 msgid "Load"
 msgstr "Загрузить"
 
-#: ../vdms_dialogs/filter_crop.py:206
+#: ../vdms_dialogs/filter_crop.py:205
 msgid "Cropping area selection "
 msgstr "Выбор области обрезки "
 
-#: ../vdms_dialogs/filter_crop.py:211 ../vdms_dialogs/filter_scale.py:105
+#: ../vdms_dialogs/filter_crop.py:210 ../vdms_dialogs/filter_scale.py:107
 msgid "Height"
 msgstr "Высота"
 
-#: ../vdms_dialogs/filter_crop.py:231
+#: ../vdms_dialogs/filter_crop.py:230
 msgid "Center"
 msgstr "Центр"
 
-#: ../vdms_dialogs/filter_crop.py:242 ../vdms_dialogs/filter_scale.py:105
+#: ../vdms_dialogs/filter_crop.py:241 ../vdms_dialogs/filter_scale.py:107
 msgid "Width"
 msgstr "Ширина"
 
 # Перевод всех отмеченных изменений на значение по умолчанию
-#: ../vdms_dialogs/filter_crop.py:256 ../vdms_dialogs/filter_deinterlace.py:117
-#: ../vdms_dialogs/filter_denoisers.py:79 ../vdms_dialogs/filter_scale.py:186
-#: ../vdms_dialogs/filter_transpose.py:110 ../vdms_panels/av_conversions.py:541
+#: ../vdms_dialogs/filter_crop.py:255 ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:188
+#: ../vdms_dialogs/filter_transpose.py:109 ../vdms_panels/av_conversions.py:541
 msgid "Reset"
 msgstr "Сброс"
 
-#: ../vdms_dialogs/filter_crop.py:260 ../vdms_dialogs/filter_deinterlace.py:116
-#: ../vdms_dialogs/filter_denoisers.py:78 ../vdms_dialogs/filter_scale.py:184
-#: ../vdms_dialogs/filter_transpose.py:114 ../vdms_dialogs/set_timestamp.py:145
+#: ../vdms_dialogs/filter_crop.py:259 ../vdms_dialogs/filter_deinterlace.py:119
+#: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:186
+#: ../vdms_dialogs/filter_transpose.py:113 ../vdms_dialogs/set_timestamp.py:145
 msgid "Apply"
 msgstr "Применить"
 
-#: ../vdms_dialogs/filter_crop.py:275
+#: ../vdms_dialogs/filter_crop.py:274
 msgid "Crop Filter"
 msgstr "Фильтр Обрезка"
 
-#: ../vdms_dialogs/filter_crop.py:276
+#: ../vdms_dialogs/filter_crop.py:275
 msgid "Crop to width"
 msgstr "Обрезать по ширине"
 
-#: ../vdms_dialogs/filter_crop.py:277
+#: ../vdms_dialogs/filter_crop.py:276
 msgid "Move vertically - set to -1 to center the vertical axis"
 msgstr "Вертикальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:279
+#: ../vdms_dialogs/filter_crop.py:278
 msgid "Move horizontally - set to -1 to center the horizontal axis"
 msgstr "Горизонтальное положение верхнего левого угла"
 
-#: ../vdms_dialogs/filter_crop.py:281
+#: ../vdms_dialogs/filter_crop.py:280
 msgid "Crop to height"
 msgstr "Обрезать по высоте"
 
-#: ../vdms_dialogs/filter_deinterlace.py:52
+#: ../vdms_dialogs/filter_deinterlace.py:55
 msgid "Advanced Options"
 msgstr "Расширенные настройки"
 
-#: ../vdms_dialogs/filter_deinterlace.py:54
+#: ../vdms_dialogs/filter_deinterlace.py:57
 msgid "Deinterlace"
 msgstr "Деинтерлейсинг"
 
-#: ../vdms_dialogs/filter_deinterlace.py:56
+#: ../vdms_dialogs/filter_deinterlace.py:59
 msgid "Interlace"
 msgstr "Чересстрочная"
 
-#: ../vdms_dialogs/filter_deinterlace.py:59
+#: ../vdms_dialogs/filter_deinterlace.py:62
 msgid "Deinterlaces with w3fdif filter"
 msgstr "Деинтерлейсинг с фильтром w3fdif"
 
-#: ../vdms_dialogs/filter_deinterlace.py:73
+#: ../vdms_dialogs/filter_deinterlace.py:76
 msgid "Deinterlaces with yadif filter"
 msgstr "Деинтерлейсинг c фильтром 'yadif'"
 
-#: ../vdms_dialogs/filter_deinterlace.py:97
+#: ../vdms_dialogs/filter_deinterlace.py:100
 msgid "Interlaces with interlace filter"
 msgstr "Чересстрочная с фильтром 'interlace'"
 
-#: ../vdms_dialogs/filter_deinterlace.py:120
+#: ../vdms_dialogs/filter_deinterlace.py:123
 msgid "Deinterlacing and Interlacing"
 msgstr "Деинтерлейсинг(прогрессивная) и чересстрочная развёртка"
 
-#: ../vdms_dialogs/filter_deinterlace.py:191
+#: ../vdms_dialogs/filter_deinterlace.py:194
 msgid "Deinterlace the input video with `w3fdif` filter"
 msgstr "Деинтерлейсинг входного видео с помощью фильтра `w3fdif`"
 
-#: ../vdms_dialogs/filter_deinterlace.py:193
+#: ../vdms_dialogs/filter_deinterlace.py:196
 msgid "Set the interlacing filter coefficients."
 msgstr "Устанавливает коэффициенты чересстрочного фильтра."
 
-#: ../vdms_dialogs/filter_deinterlace.py:195
-#: ../vdms_dialogs/filter_deinterlace.py:205
+#: ../vdms_dialogs/filter_deinterlace.py:198
+#: ../vdms_dialogs/filter_deinterlace.py:208
 msgid "Specify which frames to deinterlace."
 msgstr "Укажите кадры для деинтерлейсинга."
 
-#: ../vdms_dialogs/filter_deinterlace.py:197
+#: ../vdms_dialogs/filter_deinterlace.py:200
 #, fuzzy
 #| msgid ""
 #| "Deinterlace the input video with `yadif` filter. For FFmpeg is the best "
@@ -221,7 +221,7 @@ msgstr ""
 "Деинтерлейсинг входящего видео с помощью фильтра `yadif`.\n"
 "Для FFmpeg это лучший и самый быстрый выбор "
 
-#: ../vdms_dialogs/filter_deinterlace.py:200
+#: ../vdms_dialogs/filter_deinterlace.py:203
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
@@ -229,7 +229,7 @@ msgstr ""
 "режим\n"
 "Используемый режим чересстрочной развертки."
 
-#: ../vdms_dialogs/filter_deinterlace.py:202
+#: ../vdms_dialogs/filter_deinterlace.py:205
 msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
@@ -237,12 +237,12 @@ msgstr ""
 "четность\n"
 "Предполагаемая четность поля изображения для входного чересстрочного видео."
 
-#: ../vdms_dialogs/filter_deinterlace.py:207
+#: ../vdms_dialogs/filter_deinterlace.py:210
 msgid "Simple interlacing filter from progressive contents."
 msgstr ""
 "Простой фильтр с чересстрочной разверткой из прогрессивного содержимого."
 
-#: ../vdms_dialogs/filter_deinterlace.py:209
+#: ../vdms_dialogs/filter_deinterlace.py:212
 msgid ""
 "scan:\n"
 "determines whether the interlaced frame is taken from the even (tff - "
@@ -252,7 +252,7 @@ msgstr ""
 "определяет, взят ли чересстрочный кадр из четных (tff - по умолчанию) или "
 "нечетных (bff) строк прогрессивного кадра."
 
-#: ../vdms_dialogs/filter_deinterlace.py:213
+#: ../vdms_dialogs/filter_deinterlace.py:216
 #, fuzzy
 #| msgid ""
 #| "lowpas:\n"
@@ -271,33 +271,33 @@ msgstr ""
 "муаровые узоры.\n"
 "Lowpass=1 по умолчанию."
 
-#: ../vdms_dialogs/filter_denoisers.py:51
+#: ../vdms_dialogs/filter_denoisers.py:58
 msgid "Apply Denoisers Filters"
 msgstr "Применить фильтры шумоподавления"
 
-#: ../vdms_dialogs/filter_denoisers.py:54
+#: ../vdms_dialogs/filter_denoisers.py:61
 msgid "Enable nlmeans denoiser"
 msgstr "Включить фильтр nlmeans"
 
-#: ../vdms_dialogs/filter_denoisers.py:61
+#: ../vdms_dialogs/filter_denoisers.py:68
 msgid "nlmeans options"
 msgstr "параметры фильтра nlmeans"
 
-#: ../vdms_dialogs/filter_denoisers.py:66
+#: ../vdms_dialogs/filter_denoisers.py:73
 msgid "Enable hqdn3d denoiser"
 msgstr "Включить фильтр hqdn3d"
 
-#: ../vdms_dialogs/filter_denoisers.py:71
+#: ../vdms_dialogs/filter_denoisers.py:78
 msgid "hqdn3d options"
 msgstr "параметры фильтра hqdn3d"
 
-#: ../vdms_dialogs/filter_denoisers.py:121
+#: ../vdms_dialogs/filter_denoisers.py:128
 #, fuzzy
 #| msgid "Denoisers filters"
 msgid "Denoiser filters"
 msgstr "Фильтры шумоподавления"
 
-#: ../vdms_dialogs/filter_denoisers.py:122
+#: ../vdms_dialogs/filter_denoisers.py:129
 #, fuzzy
 #| msgid ""
 #| "nlmeans:\n"
@@ -315,7 +315,7 @@ msgstr ""
 "реструктурировать видеопоследовательности даже с сильным шумом, идеально "
 "подходит для улучшения качества старых лент VHS."
 
-#: ../vdms_dialogs/filter_denoisers.py:127
+#: ../vdms_dialogs/filter_denoisers.py:134
 msgid ""
 "hqdn3d:\n"
 "This is a high precision/quality 3d denoise filter. It aims to reduce image "
@@ -328,19 +328,19 @@ msgstr ""
 "статическиеизображения неподвижными. Понятно, что это должно улучшить "
 "визуальное качество."
 
-#: ../vdms_dialogs/filter_scale.py:60
+#: ../vdms_dialogs/filter_scale.py:62
 msgid "New size in pixels"
 msgstr "Новый размер в пикселях"
 
-#: ../vdms_dialogs/filter_scale.py:65
+#: ../vdms_dialogs/filter_scale.py:67
 msgid "Width:"
 msgstr "Ширина:"
 
-#: ../vdms_dialogs/filter_scale.py:75
+#: ../vdms_dialogs/filter_scale.py:77
 msgid "Height:"
 msgstr "Высота:"
 
-#: ../vdms_dialogs/filter_scale.py:90
+#: ../vdms_dialogs/filter_scale.py:92
 #, fuzzy
 #| msgid ""
 #| "If you want to keep the aspect ratio, select \"Constrain proportions\" "
@@ -362,53 +362,53 @@ msgstr ""
 "(для некоторых кодеков требуется -2, поэтому вам следует сначала "
 "протестировать)."
 
-#: ../vdms_dialogs/filter_scale.py:99
+#: ../vdms_dialogs/filter_scale.py:101
 msgid "Constrain proportions (keep aspect ratio)"
 msgstr "Сохраните пропорции (сохраните соотношение сторон)"
 
-#: ../vdms_dialogs/filter_scale.py:104
+#: ../vdms_dialogs/filter_scale.py:106
 #, fuzzy
 #| msgid "Which dimension adjust?"
 msgid "Which dimension to adjust?"
 msgstr "Какой размер отрегулировать?"
 
-#: ../vdms_dialogs/filter_scale.py:114 ../vdms_panels/av_conversions.py:345
+#: ../vdms_dialogs/filter_scale.py:116 ../vdms_panels/av_conversions.py:345
 msgid "Aspect Ratio"
 msgstr "Пропорции"
 
-#: ../vdms_dialogs/filter_scale.py:116
+#: ../vdms_dialogs/filter_scale.py:118
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
 msgstr "Setdar (соотношение сторон экрана) "
 
-#: ../vdms_dialogs/filter_scale.py:121 ../vdms_dialogs/filter_scale.py:151
+#: ../vdms_dialogs/filter_scale.py:123 ../vdms_dialogs/filter_scale.py:153
 msgid "Numerator"
 msgstr "Числитель"
 
-#: ../vdms_dialogs/filter_scale.py:142 ../vdms_dialogs/filter_scale.py:172
+#: ../vdms_dialogs/filter_scale.py:144 ../vdms_dialogs/filter_scale.py:174
 msgid "Denominator"
 msgstr "Знаменатель"
 
-#: ../vdms_dialogs/filter_scale.py:146
+#: ../vdms_dialogs/filter_scale.py:148
 msgid "Setsar filter (sample aspect ratio) example 1/1"
 msgstr "SetSar(примерное соотношение сторон)"
 
-#: ../vdms_dialogs/filter_scale.py:196
+#: ../vdms_dialogs/filter_scale.py:198
 msgid "Resizing filters"
 msgstr "Фильтры изменения размеров"
 
-#: ../vdms_dialogs/filter_scale.py:197
+#: ../vdms_dialogs/filter_scale.py:199
 #, fuzzy
 #| msgid "Scale filter, for disabling set to 0"
 msgid "Scale filter, set to 0 to disable"
 msgstr "Фильтр масштаба, для отключения установите на 0"
 
-#: ../vdms_dialogs/filter_scale.py:200
+#: ../vdms_dialogs/filter_scale.py:202
 #, fuzzy
 #| msgid "Display Aspect Ratio. Set to 0 to disabling."
 msgid "Display Aspect Ratio. Set to 0 to disable"
 msgstr "Соотношение сторон дисплея. Выбрать 0 - для отключения."
 
-#: ../vdms_dialogs/filter_scale.py:203
+#: ../vdms_dialogs/filter_scale.py:205
 #, fuzzy
 #| msgid ""
 #| "Sample (aka Pixel) Aspect Ratio.\n"
@@ -420,44 +420,44 @@ msgstr ""
 "Типовое соотношения сторон(в пикселях).\n"
 "Выбрать 0 - для отключения."
 
-#: ../vdms_dialogs/filter_transpose.py:84
-#: ../vdms_dialogs/filter_transpose.py:284
+#: ../vdms_dialogs/filter_transpose.py:83
+#: ../vdms_dialogs/filter_transpose.py:283
 msgid "Default position"
 msgstr "Положение по умолчанию"
 
-#: ../vdms_dialogs/filter_transpose.py:89
+#: ../vdms_dialogs/filter_transpose.py:88
 msgid "Load Frame"
 msgstr "Загрузить фрейм"
 
-#: ../vdms_dialogs/filter_transpose.py:91
+#: ../vdms_dialogs/filter_transpose.py:90
 msgid "Rotation setting"
 msgstr "Настройка вращения"
 
-#: ../vdms_dialogs/filter_transpose.py:99
+#: ../vdms_dialogs/filter_transpose.py:98
 msgid "90° (left)"
 msgstr "90° (влево)"
 
-#: ../vdms_dialogs/filter_transpose.py:101
+#: ../vdms_dialogs/filter_transpose.py:100
 msgid "90° (right)"
 msgstr "90° (вправо)"
 
-#: ../vdms_dialogs/filter_transpose.py:105
+#: ../vdms_dialogs/filter_transpose.py:104
 msgid "180°"
 msgstr "180°"
 
-#: ../vdms_dialogs/filter_transpose.py:119
+#: ../vdms_dialogs/filter_transpose.py:118
 msgid "Transpose Filter"
 msgstr "Фильтр вращения"
 
-#: ../vdms_dialogs/filter_transpose.py:222
+#: ../vdms_dialogs/filter_transpose.py:221
 msgid "Rotate 90 degrees right"
 msgstr "Повернуть на 90 градусов вправо"
 
-#: ../vdms_dialogs/filter_transpose.py:243
+#: ../vdms_dialogs/filter_transpose.py:242
 msgid "Rotate 180 degrees"
 msgstr "Повернуть на 180 градусов"
 
-#: ../vdms_dialogs/filter_transpose.py:263
+#: ../vdms_dialogs/filter_transpose.py:262
 msgid "Rotate 90 degrees left"
 msgstr "Повернуть на 90 градусов влево"
 
@@ -841,7 +841,9 @@ msgid "Clear the cache when exiting the application"
 msgstr "Очистить кеш при выходе из приложения"
 
 #: ../vdms_dialogs/settings.py:189
-msgid "Files Preferences"
+#, fuzzy
+#| msgid "Files Preferences"
+msgid "File Preferences"
 msgstr "Файлы настроек"
 
 #: ../vdms_dialogs/settings.py:196
