@@ -37,7 +37,7 @@ def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
     """
     rowsNum = []  # rows number list
     dic = {}  # used for debug
-    with open(fileconf, 'r') as f:
+    with open(fileconf, 'r', encoding='utf8') as f:
         full_list = f.readlines()
     for a, b in enumerate(full_list):
         if not b.startswith('#'):
@@ -61,7 +61,7 @@ def write_changes(fileconf, ffmpeg, ffplay, ffprobe, youtubedl, binfound):
         full_list[rowsNum[10]] = '%s\n' % ffplay
         full_list[rowsNum[16]] = '%s\n' % youtubedl
 
-    with open(fileconf, 'w') as fileconf:
+    with open(fileconf, 'w', encoding='utf8') as fileconf:
         for i in full_list:
             fileconf.write('%s' % i)
 

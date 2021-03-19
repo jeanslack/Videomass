@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.3.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-18 21:11+0100\n"
-"PO-Revision-Date: 2021-03-18 21:12+0100\n"
+"POT-Creation-Date: 2021-03-19 18:54+0100\n"
+"PO-Revision-Date: 2021-03-19 19:15+0100\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: nl_NL\n"
@@ -1856,7 +1856,7 @@ msgstr "Cache folder"
 #: ../vdms_main/main_frame.py:512
 #, fuzzy
 #| msgid "Opens the Videomass cache directory if exists"
-msgid "Opens the Videomass cache foder, if exists"
+msgid "Opens the Videomass cache folder, if exists"
 msgstr "Opent de Videomass cache folder als deze bestaat"
 
 #: ../vdms_main/main_frame.py:514

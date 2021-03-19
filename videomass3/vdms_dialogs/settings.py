@@ -89,7 +89,7 @@ class Setup(wx.Dialog):
         # Make a items list of
         self.rowsNum = []  # rows number list
         dic = {}  # used for debug
-        with open(Setup.FILE_CONF, 'r') as f:
+        with open(Setup.FILE_CONF, 'r', encoding='utf8') as f:
             self.full_list = f.readlines()
         for a, b in enumerate(self.full_list):
             if not b.startswith('#'):
@@ -879,7 +879,7 @@ class Setup(wx.Dialog):
         """
         Applies all changes writing the new entries
         """
-        with open(self.getfileconf, 'w') as fconf:
+        with open(self.getfileconf, 'w', encoding='utf8') as fconf:
             for i in self.full_list:
                 fconf.write('%s' % i)
         # self.Destroy() # WARNING on mac not close corretly, on linux ok

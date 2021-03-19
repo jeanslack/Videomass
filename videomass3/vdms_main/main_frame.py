@@ -509,7 +509,7 @@ class MainFrame(wx.Frame):
                  _("Opens the Videomass log folder, if exists"))
         openlogdir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         dscrp = (_("Cache folder"),
-                 _("Opens the Videomass cache foder, if exists"))
+                 _("Opens the Videomass cache folder, if exists"))
         opencachedir = sysButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         goButton.AppendSubMenu(sysButton, _("System"))
 
@@ -622,7 +622,7 @@ class MainFrame(wx.Frame):
     # --------- Menu  Files
     def openMydownload(self, event):
         """
-        Open the configuration folder with file manager
+        Open the download folder with file manager
 
         """
         IO_tools.openpath(MainFrame.YDL_DEFAULTDEST)
@@ -630,7 +630,7 @@ class MainFrame(wx.Frame):
 
     def openMyconversions(self, event):
         """
-        Open the configuration folder with file manager
+        Open the conversions folder with file manager
 
         """
         IO_tools.openpath(MainFrame.FFMPEG_DEFAULTDEST)
@@ -638,7 +638,7 @@ class MainFrame(wx.Frame):
 
     def openMydownloads_tmp(self, event):
         """
-        Open the configuration folder with file manager
+        Open the temporary download folder with file manager
 
         """
         IO_tools.openpath(self.outpath_ydl)
@@ -646,7 +646,7 @@ class MainFrame(wx.Frame):
 
     def openMyconversions_tmp(self, event):
         """
-        Open the configuration folder with file manager
+        Open the temporary conversions folder with file manager
 
         """
         IO_tools.openpath(self.outpath_ffmpeg)

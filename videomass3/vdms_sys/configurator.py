@@ -146,7 +146,7 @@ class Data_Source(object):
         Make parsing of the configuration file and return
         object list with the current program settings data.
         """
-        with open(Data_Source.FILE_CONF, 'r') as f:
+        with open(Data_Source.FILE_CONF, 'r', encoding='utf8') as f:
             fconf = f.readlines()
         lst = [line.strip() for line in fconf if not line.startswith('#')]
         dataconf = [x for x in lst if x]  # list without empties values
