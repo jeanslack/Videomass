@@ -77,8 +77,9 @@ class Ydl_EI_Pylib(Thread):
         """
         self.url = url
         self.data = None
-        if Ydl_EI_Pylib.OS == 'Windows' or '/tmp/.mount_' \
-           in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+        if (Ydl_EI_Pylib.OS == 'Windows' or '/tmp/.mount_' in sys.executable
+            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

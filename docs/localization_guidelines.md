@@ -4,10 +4,10 @@
 ### Updates an existing translation
 The following languages have not yet been translated:   
 - de_DE   (German)
+- en_GB   (English)
 - es_ES   (Spanish)
 - fr_FR   (French)
 - pl_PL   (Polish)   
-- en_GB   (English)
 
 You can choose the language you prefer to translate (even those not yet existing).
 

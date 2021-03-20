@@ -15,7 +15,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Create: Oct.02.2020
-# Update: Oct.12.2020
+# Update: Feb.09.2021
 ###################################################################
 
 set -x  # Print commands and their arguments as they are executed.
@@ -91,7 +91,7 @@ mv $APP_DIR/usr/lib/x86_64-linux-gnu/libSDL2-2.0.so.0.4.0 \
 # Update pip first
 $APP_DIR/AppRun -m pip install -U pip
 
-# installing wxPython4.1 binary wheel (GTK2 porting)
+# installing wxPython binary wheel (GTK2 porting)
 if [ -f "$OLD_CWD/$WX_PYTHON_WHEEL" ]; then
     $APP_DIR/AppRun -m pip install -U "$OLD_CWD/$WX_PYTHON_WHEEL"
 else
@@ -105,29 +105,12 @@ else
     $APP_DIR/AppRun -m pip install videomass
 fi
 
-# set new metainfo
-cat <<EOF > $APP_DIR/usr/share/metainfo/python*.appdata.xml
-<?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop-application">
-    <id>videomass</id>
-    <metadata_license>MIT</metadata_license>
-    <project_license>Python-2.0</project_license>
-    <name>Videomass</name>
-    <summary>A Python 3.8 runtime with videomass, youtube_dl, PyPubSub
-    and wxPython GUI toolkit</summary>
-    <description>
-        <p>  A relocated Python 3.8 installation containing the videomass
-             packages suite (videomass, youtube_dl, PyPubSub and wxPython)
-             and running from an AppImage.
-        </p>
-    </description>
-    <launchable type="desktop-id">videomass.desktop</launchable>
-    <url type="homepage">http://jeanslack.github.io/Videomass</url>
-    <provides>
-    <binary>python3.8</binary>
-    </provides>
-</component>
-EOF
+# remove old appdata on metainfo dir
+rm $APP_DIR/usr/share/metainfo/python*.appdata.xml
+
+# copy new appdata file for Videomass
+cp -f $REPO_ROOT/io.github.jeanslack.videomass.appdata.xml \
+    $APP_DIR/usr/share/metainfo/io.github.jeanslack.videomass.appdata.xml
 
 # copy new AppRun for Videomass
 cp -f $REPO_ROOT/develop/tools/AppRun $APP_DIR/AppRun
@@ -135,25 +118,17 @@ cp -f $REPO_ROOT/develop/tools/AppRun $APP_DIR/AppRun
 # remove unused .png and .desktop files
 rm $APP_DIR/python.png \
     $APP_DIR/python*.desktop \
+     $APP_DIR/usr/share/applications/python*.desktop \
         $APP_DIR/usr/share/icons/hicolor/256x256/apps/python.png
 
-# Edit the .desktop file
-mv $APP_DIR/usr/share/applications/python*.desktop \
-    $APP_DIR/usr/share/applications/videomass.desktop
-
-# set new .desktop
-sed -i -e 's|^Name=.*|Name=Videomass|g' $APP_DIR/usr/share/applications/*.desktop
-sed -i -e 's|^Exec=.*|Exec=videomass|g' $APP_DIR/usr/share/applications/*.desktop
-sed -i -e 's|^Icon=.*|Icon=videomass|g' $APP_DIR/usr/share/applications/*.desktop
-sed -i -e 's|^Comment=.*|Comment=Graphical user interface for FFmpeg and youtube-dl|g' \
-    $APP_DIR/usr/share/applications/*.desktop
-sed -i -e 's|^Terminal=.*|Terminal=false|g' $APP_DIR/usr/share/applications/*.desktop
-sed -i -e 's|^Categories=.*|Categories=AudioVideo;|g' $APP_DIR/usr/share/applications/*.desktop
+# copy new .desktop file
+cp -f $REPO_ROOT/videomass3/art/io.github.jeanslack.videomass.desktop \
+    $APP_DIR/usr/share/applications/io.github.jeanslack.videomass.desktop
 
 # add pixmaps icon
 cp -r $APP_DIR/opt/python*/share/pixmaps/ $APP_DIR/usr/share/
 
-# download appimagetool and linuxdeploy
+# download appimagetool (for update) and linuxdeploy (for building now)
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage \
     https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
 
@@ -179,7 +154,7 @@ export VERSION=$(cat \
 # Now, build AppImage using linuxdeploy
 ./linuxdeploy-x86_64.AppImage --appdir $APP_DIR \
     --icon-file $APP_DIR/opt/python*/share/icons/hicolor/256x256/apps/videomass.png \
-        --desktop-file $APP_DIR/opt/python*/share/applications/videomass.desktop \
+        --desktop-file $APP_DIR/opt/python*/share/applications/io.github.jeanslack.videomass.desktop \
             --output appimage
 
 # move built AppImage back into original CWD

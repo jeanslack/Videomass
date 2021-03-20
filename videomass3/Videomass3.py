@@ -33,12 +33,12 @@ except ModuleNotFoundError:
 import os
 import sys
 from shutil import which, rmtree
-from videomass3.vdms_sys.argparser import args
-from videomass3.vdms_sys.configurator import Data_Source
-from videomass3.vdms_sys import app_const as appC
 # add translation macro to builtin similar to what gettext does
 import builtins
 builtins.__dict__['_'] = wx.GetTranslation
+from videomass3.vdms_sys.argparser import args
+from videomass3.vdms_sys.configurator import Data_Source
+from videomass3.vdms_sys import app_const as appC
 
 
 class Videomass(wx.App):
@@ -81,6 +81,8 @@ class Videomass(wx.App):
         self.FFMPEGoutdir = None
         self.YDLoutdir = None
         self.CLEARcache = None
+        self.GETlang = None  # current short name for the locale
+        self.SUPP_langs = ['it_IT', 'en_EN', 'ru_RU']  # supported langs
 
         wx.App.__init__(self, redirect, filename)  # constructor
         wx.SystemOptions.SetOption("osx.openfiledialog.always-show-types", "1")
@@ -91,13 +93,14 @@ class Videomass(wx.App):
         Bootstrap interface.
 
         """
-        data = Data_Source()  # user-space and interface settings
+        data = Data_Source()  # user-space and UI settings
         setui = data.get_fileconf()  # get required data
         # locale
         lang = ''
         self.locale = None
         wx.Locale.AddCatalogLookupPathPrefix(setui[5])
         self.updateLanguage(lang)
+        self.GETlang = self.locale.GetName()
 
         if setui[2]:  # copyerr = True; the share folder is damaged
             wx.MessageBox(_('{0}\n\nSorry, cannot continue..'.format(
@@ -133,6 +136,7 @@ class Videomass(wx.App):
         self.FILEsuffix = setui[4][18]  # add a suffix string to file name
         self.YDLoutdir = dirname if setui[4][19] == 'none' else setui[4][19]
         self.PLAYLISTsubfolder = setui[4][20]  # subfolder check on playlist
+        self.DISPLAY_size = wx.GetDisplaySize()  # get monitor resolution
 
         # ----- youtube-dl
         execname = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
@@ -251,6 +255,7 @@ class Videomass(wx.App):
             selLang = appC.supLang[lang]
         else:
             selLang = wx.LANGUAGE_DEFAULT
+
         if self.locale:
             assert sys.getrefcount(self.locale) <= 2
             del self.locale

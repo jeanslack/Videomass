@@ -128,8 +128,9 @@ class TextDnD(wx.Panel):
         self.file_dest = '%s' % (path)
     # ------------------------------------------------------------
 
-    def statusbar_msg(self, mess, color):
+    def statusbar_msg(self, mess, bcolor, fcolor=None):
         """
         Set a status bar message of the parent method.
+        bcolor: background, fcolor: foreground
         """
-        self.parent.statusbar_msg('%s' % mess, color)
+        self.parent.statusbar_msg('%s' % mess, bcolor, fcolor)

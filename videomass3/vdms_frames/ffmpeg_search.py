@@ -119,7 +119,7 @@ class FFmpeg_Search(wx.MiniFrame):
         else:
             self.texthelp.SetFont(wx.Font(9, wx.MODERN, wx.NORMAL, wx.NORMAL))
 
-        self.texthelp.AppendText(_("Choose one of the topics in the list"))
+        self.texthelp.AppendText(_("Choose a topic in the list"))
         self.search = wx.SearchCtrl(self.panel,
                                     wx.ID_ANY,
                                     size=(400, 30),
@@ -127,9 +127,9 @@ class FFmpeg_Search(wx.MiniFrame):
                                     )
         self.search.SetToolTip(_("The search function allows you to find "
                                  "entries in the current topic"))
-        self.case = wx.CheckBox(self.panel, wx.ID_ANY, (_("Ignore-case")))
-        self.case.SetToolTip(_("Ignore case distinctions, so that characters "
-                               "that differ only in case match each other."
+        self.case = wx.CheckBox(self.panel, wx.ID_ANY, (_("Ignore case")))
+        self.case.SetToolTip(_("Ignore case distinctions: characters with "
+                               "different case will match."
                                ))
         self.button_close = wx.Button(self.panel, wx.ID_CLOSE, "")
 
@@ -197,7 +197,8 @@ class FFmpeg_Search(wx.MiniFrame):
         if "None" in arg_opt[self.cmbx_choice.GetValue()]:
             self.row = None
             self.texthelp.Clear()  # reset textctrl
-            self.texthelp.AppendText(_("Choose one of the topics in the list"))
+            self.texthelp.AppendText(_("First, choose a topic in the "
+                                       "drop down list"))
         else:
             self.texthelp.Clear()  # reset textctrl
             topic = arg_opt[self.cmbx_choice.GetValue()]
@@ -256,7 +257,7 @@ class FFmpeg_Search(wx.MiniFrame):
         else:
             self.texthelp.Clear()  # reset textctrl
             self.texthelp.AppendText(_(
-                                "\nChoose a topic in the drop down first"))
+                            "\nFirst, choose a topic in the drop down list"))
     # --------------------------------------------------------------#
 
     def on_Ckbx(self, event):

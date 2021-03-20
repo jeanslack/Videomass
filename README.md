@@ -1,12 +1,12 @@
 # **Videomass** is a cross-platform GUI for FFmpeg and youtube-dl.
 [![Image](https://img.shields.io/static/v1?label=python&logo=python&message=3.7%20|%203.8&color=blue)](https://www.python.org/downloads/)
 [![image](https://img.shields.io/badge/wxpython-phoenix-green)](https://www.wxpython.org/)
-[![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/COPYING)
+[![Image](https://img.shields.io/badge/license-GPLv3-orange)](https://github.com/jeanslack/Videomass/blob/master/LICENSE)
 ![image](https://img.shields.io/badge/platform-linux%20|%20freebsd%20|%20macos%20|%20windows-brigthgreen)
 [![Build Status](https://travis-ci.org/jeanslack/Videomass.svg?branch=master)](https://travis-ci.org/jeanslack/Videomass)   
 
 Videomass is a cross-platform GUI designed for [FFmpeg](https://www.ffmpeg.org/) 
-enthusiasts who need to manage custom profiles to automate transcoding 
+enthusiasts who need to manage custom profiles to automate conversion/transcoding 
 processes.   
 
 It is based on an advanced use of presets and profiles in order to use most of 
@@ -14,7 +14,7 @@ the [FFmpeg](https://www.ffmpeg.org/) commands without limits of formats and
 codecs.   
 
 It features graphical tools for viewing, analyzing and processing multimedia 
-streams and downloading videos via youtube-dl.   
+streams and downloading videos via [youtube-dl](https://youtube-dl.org/).   
 
 Videomass is written in Python3 with the wxPython-Phoenix toolkit.   
 
@@ -58,7 +58,7 @@ each operating system.
 `python3 -m pip install videomass`   
 
 > This should also automatically install the remaining required dependencies 
-such as wxPython (only for Mac-Os and Windows), PyPubSub and youtube-dl.   
+such as wxPython (only for Mac-Os and Windows), PyPubSub, youtube-dl and requests.   
 >
 > On Linux and FreeBSD a launcher should be even created in the application 
 launcher of your desktop environment.   
@@ -93,9 +93,9 @@ always within the same unpacked directory:
 
 # Resources
 
-* [Executables for Windows, MacOsX and Linux](https://sourceforge.net/projects/videomass2/)
 * [Support Page and Documentation](http://jeanslack.github.io/Videomass)
 * [Wiki page](https://github.com/jeanslack/Videomass/wiki)
 * [Videomass on PyPi](https://pypi.org/project/videomass/)
 * [Development](https://github.com/jeanslack/Videomass)
-* [Downloads Source Code](https://github.com/jeanslack/Videomass/releases)
+* [Official download page](https://github.com/jeanslack/Videomass/releases)
+* [Alternative download page](https://sourceforge.net/projects/videomass2/)

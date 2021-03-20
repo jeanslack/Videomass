@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.jeanslack.videomass</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <name>Videomass</name>
+  <summary>GUI for FFmpeg and Youtube-dl</summary>
+  <icon type="remote">https://raw.githubusercontent.com/jeanslack/Videomass/master/videomass3/art/icons/hicolor/scalable/apps/videomass.svg</icon>
+  <categories>
+    <category>AudioVideo</category>
+  </categories>
+
+  <description>
+    <p>
+      Videomass is a cross-platform GUI designed for FFmpeg enthusiasts who need
+      to manage custom profiles to automate conversions/transcoding processes.
+    </p>
+    <p>
+      It is based on an advanced use of presets and profiles in order to use
+      most of the FFmpeg commands without limits of formats and codecs.
+    </p>
+    <p>
+      It features graphical tools for viewing, analyzing and processing
+      multimedia streams and downloading videos via youtube-dl.
+    </p>
+    <p>
+      Videomass is written in Python3 with the wxPython-Phoenix toolkit.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">io.github.jeanslack.videomass.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://jeanslack.github.io/Videomass/images/screenshots/HomePanel.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://jeanslack.github.io/Videomass/images/screenshots/crop-filter.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://jeanslack.github.io/Videomass/images/screenshots/download.png</image>
+    </screenshot>
+  </screenshots>
+
+  <url type="homepage">https://jeanslack.github.io/Videomass/</url>
+  <url type="bugtracker">https://github.com/jeanslack/Videomass/issues</url>
+  <url type="translate">https://github.com/jeanslack/Videomass/tree/master/docs/localization_guidelines.md</url>
+
+  <provides>
+    <binary>videomass</binary>
+  </provides>
+</component>

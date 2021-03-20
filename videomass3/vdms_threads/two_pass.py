@@ -122,7 +122,7 @@ class TwoPass(Thread):
             outext = source_ext if not self.extoutput else self.extoutput
 
             # --------------- first pass
-            pass1 = ('%s %s %s -i "%s" %s %s '
+            pass1 = ('"%s" %s %s -i "%s" %s %s '
                      '-y %s' % (TwoPass.FFMPEG_URL,
                                 TwoPass.FFMPEG_LOGLEV,
                                 self.time_seq,
@@ -208,7 +208,7 @@ class TwoPass(Thread):
                              end='ok'
                              )
             # --------------- second pass ----------------#
-            pass2 = ('%s %s %s -i "%s" %s %s %s '
+            pass2 = ('"%s" %s %s -i "%s" %s %s %s '
                      '-y "%s/%s%s.%s"' % (TwoPass.FFMPEG_URL,
                                           TwoPass.FFMPEG_LOGLEV,
                                           self.time_seq,

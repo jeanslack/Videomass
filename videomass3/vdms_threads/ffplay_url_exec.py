@@ -121,9 +121,13 @@ class Exec_Download_Stream(Thread):
         self.stop_work_thread = False  # process terminate value
         self.url = url
         self.quality = quality
-        if platform.system() == 'Windows' or '/tmp/.mount_' \
-           in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+
+        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
+            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
+
             self.ssl = '--no-check-certificate'
+
         else:
             self.ssl = ''
 

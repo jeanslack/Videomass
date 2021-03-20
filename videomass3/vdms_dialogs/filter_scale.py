@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.14.2020 *PEP8 compatible*
+# Rev: Mar.04.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -37,6 +37,8 @@ class Scale(wx.Dialog):
     """
     get = wx.GetApp()
     OS = get.OS
+    GET_LANG = get.GETlang
+    SUPPLANG = get.SUPP_langs
 
     def __init__(self, parent, scale, dar, sar, v_width, v_height):
         """
@@ -82,11 +84,14 @@ class Scale(wx.Dialog):
         Flex_scale.Add(self.spin_scale_height, 0, wx.ALL |
                        wx.ALIGN_CENTER_VERTICAL, 5
                        )
+        dim = _("Source size: {0} x {1} pixels").format(v_width, v_height)
+        label_sdim = wx.StaticText(self, wx.ID_ANY, dim)
+        box_scale.Add(label_sdim, 0, wx.BOTTOM | wx.CENTER, 10)
         # --- options
         msg = _(
             'If you want to keep the aspect ratio, select "Constrain '
-            'proportions" below and\nspecify only one component, either '
-            'width or height, and set the other component\nto -1 or -2 '
+            'proportions" below and\nspecify only one dimension, either '
+            'width or height, and set the other dimension\nto -1 or -2 '
             '(some codecs require -2, so you should do some testing first).')
 
         label_msg = wx.StaticText(self, wx.ID_ANY, (msg))
@@ -98,7 +103,7 @@ class Scale(wx.Dialog):
         box_scale.Add(self.ckbx_keep, 0, wx.CENTER, 5)
         # grid_opt.Add((30, 0), 0, wx.ALL, 5)
         self.rdb_scale = wx.RadioBox(self, wx.ID_ANY,
-                                     (_("Which dimension adjust?")),
+                                     (_("Which dimension to adjust?")),
                                      choices=[_("Width"), _("Height")],
                                      majorDimension=1,
                                      style=wx.RA_SPECIFY_ROWS
@@ -191,20 +196,22 @@ class Scale(wx.Dialog):
 
         # Properties
         self.SetTitle(_("Resizing filters"))
-        scale_str = (_('Scale filter, for disabling set to 0'))
+        scale_str = (_('Scale filter, set to 0 to disable'))
         self.spin_scale_width.SetToolTip(scale_str)
         self.spin_scale_height.SetToolTip(scale_str)
-        setdar_str = (_('Display Aspect Ratio. Set to 0 to disabling.'))
+        setdar_str = (_('Display Aspect Ratio. Set to 0 to disable'))
         self.spin_setdarNum.SetToolTip(setdar_str)
         self.spin_setdarDen.SetToolTip(setdar_str)
         setsar_str = (_('Sample (aka Pixel) Aspect Ratio.\nSet to 0 '
-                        'to disabling.'))
+                        'to disable'))
         self.spin_setsarNum.SetToolTip(setsar_str)
         self.spin_setsarDen.SetToolTip(setsar_str)
 
         if Scale.OS == 'Darwin':
+            label_sdim.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             label_msg.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
+            label_sdim.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             label_msg.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lab_dar.SetLabelMarkup("<b>%s</b>" % lab1)
             self.lab_sar.SetLabelMarkup("<b>%s</b>" % lab2)
@@ -308,10 +315,17 @@ class Scale(wx.Dialog):
 
     def on_help(self, event):
         """
-        Open default browser to official help page
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar/'
-                'VideoConv_Panel/Filters/FilterScaling.html')
+        if Scale.GET_LANG in Scale.SUPPLANG:
+            lang = Scale.GET_LANG.split('_')[0]
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/%s/4-Video_Filters_%s.pdf' % (lang, lang))
+        else:
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/en/4-Video_Filters_en.pdf')
+
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 

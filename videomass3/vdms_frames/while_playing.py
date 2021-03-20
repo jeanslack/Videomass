@@ -47,22 +47,23 @@ class While_Playing(wx.MiniFrame):
               "w\ns\n\nleft/right\ndown/up\npage down/page up\n\n"
               "right mouse click\nleft mouse double-click"
               ))
-    EXPLAN = (_(
-        "Quiet.\nTogle full screen.\nPause.\nTogle mute.\n"
+    EXPLAN = (
+        "Quiet.\nToggle full screen.\nPause.\nToggle mute.\n"
         "Decrease and increase volume respectively.\n"
         "Decrease and increase volume respectively.\n"
-        "Cycle audio channel in the current program.\n"
-        "Cycle video channel.\n"
-        "Cycle subtitle channel in the current program.\n"
-        "Cycle program.\nCycle video filters or show modes.\n"
+        "Cycle audio channel in the current program (see FFplay docs).\n"
+        "Cycle video channel (see FFplay docs).\n"
+        "Cycle subtitle channel in the current program (see FFplay docs).\n"
+        "Cycle program (see FFplay docs)."
+        "\nCycle video filters or show modes (see FFplay docs).\n"
         "Step to the next frame. Pause if the stream is not \n"
         "already paused, step to the next video frame, and pause.\n"
         "Seek backward/forward 10 seconds.\n"
         "Seek backward/forward 1 minute.\n"
-        "Seek to the previous/next chapter. Or if there are no \n"
-        "chapters Seek backward/forward 10 minutes.\n"
+        "Seek to the previous/next chapter. Or Seek backward/forward\n"
+        "10 minutes if there are no chapters.\n"
         "Seek to percentage in file corresponding to fraction of width.\n"
-        "Toggle full screen."))
+        "Toggle full screen.")
     # ----------------------------------------------------------------------
 
     def __init__(self, OS):
@@ -93,7 +94,7 @@ class While_Playing(wx.MiniFrame):
         label2 = wx.StaticText(panel, wx.ID_ANY, While_Playing.EXPLAN)
         self.button_close = wx.Button(panel_base, wx.ID_CLOSE, "")
         # ----------------------Properties----------------------#
-        self.SetTitle(_("Shortcuts while playing with FFplay"))
+        self.SetTitle(_("Shortcut keys while playing with FFplay"))
 
         if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
             panel.SetBackgroundColour(wx.Colour(While_Playing.SOLARIZED))

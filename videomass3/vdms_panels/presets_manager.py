@@ -61,6 +61,8 @@ class PrstPan(wx.Panel):
     GREEN = '#268826'
     LIMEGREEN = '#87A615'
     TROPGREEN = '#15A660'
+    WHITE = '#fbf4f4'  # white for background status bar
+    BLACK = '#060505'  # black for background status bar
     # -----------------------------------------------------------------
 
     def __init__(self, parent, path_srcShare, path_confdir,
@@ -311,7 +313,7 @@ class PrstPan(wx.Panel):
                                   )
         sizer_peak = wx.FlexGridSizer(1, 4, 15, 4)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volumedetect"), size=(-1, -1))
+                                     _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
         sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
@@ -394,9 +396,9 @@ class PrstPan(wx.Panel):
         self.btn_newpreset.SetToolTip(tip)
         tip = (_("Remove the selected preset from the Presets Manager"))
         self.btn_delpreset.SetToolTip(tip)
-        tip = (_("Export selected preset as copy to media"))
+        tip = (_("Export selected preset as copy"))
         self.btn_savecopy.SetToolTip(tip)
-        tip = (_("Export entire presets directory as copy to media"))
+        tip = (_("Export entire presets folder as copy"))
         self.btn_saveall.SetToolTip(tip)
         tip = (_("Import a new preset or update an existing one"))
         self.btn_restore.SetToolTip(tip)
@@ -432,7 +434,7 @@ class PrstPan(wx.Panel):
                  'not more that one audio stream, leave to "Auto".'))
         self.cmb_A_inMap.SetToolTip(tip)
         tip = (_('Map on the output index. Keep same input map to preserve '
-                 'indexes; to save as audio file always select to "all" '
+                 'indexes; to save as audio file always select "all" '
                  'or "Auto"'))
         self.cmb_A_outMap.SetToolTip(tip)
 
@@ -442,9 +444,12 @@ class PrstPan(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.profile_Del, self.btn_delprofile)
         self.Bind(wx.EVT_BUTTON, self.profile_Edit, self.btn_editprofile)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
+        '''
+        # by double clicking on the profile, processing starts.
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.click_start,
                   self.list_ctrl
                   )
+        '''
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         self.Bind(wx.EVT_BUTTON, self.preset_New, self.btn_newpreset)
         self.Bind(wx.EVT_BUTTON, self.preset_Del, self.btn_delpreset)
@@ -692,10 +697,11 @@ class PrstPan(wx.Panel):
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
 
             if self.rdbx_norm.GetSelection() == 1:
-                self.parent.statusbar_msg(msg_1, PrstPan.AZURE)
+                self.parent.statusbar_msg(msg_1, PrstPan.AZURE, PrstPan.BLACK)
                 self.spin_target.SetValue(-1.0)
             else:
-                self.parent.statusbar_msg(msg_2, PrstPan.TROPGREEN)
+                self.parent.statusbar_msg(msg_2, PrstPan.TROPGREEN,
+                                          PrstPan.BLACK)
                 self.spin_target.SetValue(-20.0)
 
             self.peakpanel.Show(), self.btn_voldect.Enable()
@@ -704,7 +710,7 @@ class PrstPan(wx.Panel):
             del self.normdetails[:]
 
         elif self.rdbx_norm.GetSelection() == 3:  # EBU
-            self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN)
+            self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN, PrstPan.BLACK)
             self.peakpanel.Hide(), self.ebupanel.Show()
             self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", "EBU"
             del self.normdetails[:]
@@ -742,8 +748,8 @@ class PrstPan(wx.Panel):
 
         """
         msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_('Audio normalization is not required based to '
-                  'set target level'))
+        msg3 = (_("Audio normalization will not be applied because it's "
+                  "equal to the source"))
         if self.normdetails:
             del self.normdetails[:]
 
@@ -755,7 +761,7 @@ class PrstPan(wx.Panel):
                                    self.time_seq,
                                    self.opt["AudioInMap"][0])
         if data[1]:
-            wx.MessageBox(data[1], "Videomass", wx.ICON_ERROR)
+            wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()
@@ -796,12 +802,12 @@ class PrstPan(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, PrstPan.ORANGE)
+            self.parent.statusbar_msg(msg3, PrstPan.ORANGE, PrstPan.WHITE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, PrstPan.YELLOW)
+                self.parent.statusbar_msg(msg2, PrstPan.YELLOW, PrstPan.WHITE)
         if self.rdbx_norm.GetSelection() == 1:
             self.opt["PEAK"] = volume
         elif self.rdbx_norm.GetSelection() == 2:
@@ -868,8 +874,8 @@ class PrstPan(wx.Panel):
         """
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
-                           'It will be moved to the "Removals" folder in the '
-                           'presets directory').format(filename),
+                           'It will be moved to the "Removals" '
+                           'folder.').format(filename),
                          _('Please confirm'), wx.ICON_QUESTION |
                          wx.YES_NO, self) == wx.NO:
             return
@@ -906,13 +912,14 @@ class PrstPan(wx.Panel):
         combvalue = self.cmbx_prst.GetValue()
         filedir = '%s/%s.prst' % (self.user_prst, combvalue)
 
-        dlg = wx.DirDialog(self, _("Choose a place to save the selected "
+        dlg = wx.DirDialog(self, _("Choose a folder to save the selected "
                                    "preset"), "", style=wx.DD_DEFAULT_STYLE)
         if dlg.ShowModal() == wx.ID_OK:
             path = dlg.GetPath()
             if os.path.exists(os.path.join(path, '%s.prst' % combvalue)):
-                if wx.MessageBox(_('This file already exists, do you want '
-                                   'to overwrite it?'), _('Please confirm'),
+                if wx.MessageBox(_('A file with this name already exists, '
+                                   'do you want to overwrite it?'),
+                                 _('Please confirm'),
                                  wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                     return
 
@@ -935,7 +942,7 @@ class PrstPan(wx.Panel):
         """
         src = self.user_prst
 
-        dialsave = wx.DirDialog(self, _("Choose a place to export all "
+        dialsave = wx.DirDialog(self, _("Choose a folder to export all "
                                         "presets"), "", wx.DD_DEFAULT_STYLE)
         if dialsave.ShowModal() == wx.ID_OK:
             dest = dialsave.GetPath()
@@ -1046,7 +1053,7 @@ class PrstPan(wx.Panel):
         if wx.MessageBox(_("Be careful! The selected preset will be "
                            "overwritten with the default one. Your profiles "
                            "may be deleted!\n\nDo you want to continue?"),
-                         _("Notice"),
+                         _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
@@ -1072,7 +1079,7 @@ class PrstPan(wx.Panel):
         """
         if wx.MessageBox(_("Be careful! This action will restore all presets "
                            "to default ones. Your profiles may be deleted!"
-                           "\n\nDo you want to continue?"), _("Notice"),
+                           "\n\nDo you want to continue?"), _("Warning"),
                          wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                          self) == wx.YES:
 
@@ -1081,7 +1088,7 @@ class PrstPan(wx.Panel):
                 wx.MessageBox("%s" % outerror, "Videomass",
                               wx.ICON_ERROR, self)
             else:
-                wx.MessageBox(_("All the default presets have been "
+                wx.MessageBox(_("All default presets have been "
                                 "successfully recovered"),
                               "Videomass", wx.OK, self)
                 self.reset_list(True)
@@ -1120,7 +1127,7 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW)
+                                      PrstPan.YELLOW, PrstPan.BLACK)
             return
         else:
             filename = self.cmbx_prst.GetValue()
@@ -1143,11 +1150,11 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW)
+                                      PrstPan.YELLOW, PrstPan.BLACK)
         else:
             filename = self.cmbx_prst.GetValue()
             if wx.MessageBox(_("Are you sure you want to delete the "
-                               "selected profile? It may no longer be "
+                               "selected profile? It will no longer be "
                                "possible to recover it."), _("Please confirm"),
                              wx.ICON_WARNING | wx.YES_NO | wx.CANCEL,
                              self) == wx.YES:
@@ -1166,7 +1173,7 @@ class PrstPan(wx.Panel):
         """
         if self.array == []:
             self.parent.statusbar_msg(_("First select a profile in the list"),
-                                      PrstPan.YELLOW)
+                                      PrstPan.YELLOW, PrstPan.BLACK)
             return
         if not self.array[3] and self.rdbx_norm.GetSelection() in [3]:
             wx.MessageBox(_('Invalid EBU normalization enabled for one-pass.\n'
@@ -1176,9 +1183,9 @@ class PrstPan(wx.Panel):
         # check normalization data offset, if enable.
         if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
             if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! use the '
-                                '"Volumedetect" control button to analyze '
-                                'data on the audio volume.'),
+                wx.MessageBox(_('Undetected volume values! Click the '
+                                '"Volume detect" button to analyze '
+                                'audio volume data.'),
                               "Videomass", wx.ICON_INFORMATION
                               )
                 return
@@ -1382,7 +1389,7 @@ class PrstPan(wx.Panel):
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
 
-        numfile = "%s file in pending" % str(cntmax)
+        numfile = "%s file in queue" % str(cntmax)
 
         formula = (_("SUMMARY\n\nQueued File\nPass Encoding\
                      \nProfile Used\nOutput Format\nTime Period\

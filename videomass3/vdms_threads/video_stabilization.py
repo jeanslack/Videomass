@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
-# Name: two_pass_EBU.py
-# Porpose: FFmpeg long processing task on 2 pass with EBU normalization
+# Name: video_stabilization.py
+# Porpose: FFmpeg long processing task 2 pass vidstab
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: March.20.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -64,36 +64,39 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 """
 
 
-class Loudnorm(Thread):
+class VidStab(Thread):
     """
-    Like `TwoPass_Thread` but execute -loudnorm parsing from first
-    pass and has definitions to apply on second pass.
+    This class represents a separate thread which need
+    to read the stdout/stderr in real time mode for
+    different tasks.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
+    get = wx.GetApp()  # get videomass wx.App attribute
     OS = get.OS
     LOGDIR = get.LOGdir
     FFMPEG_URL = get.FFMPEG_url
+    FFMPEG_LOGLEV = get.FFMPEG_loglev
     FF_THREADS = get.FFthreads
     SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
-    def __init__(self, var, duration, logname, timeseq):
+    def __init__(self, varargs, duration, logname, timeseq):
         """
+        The 'volume' attribute may have an empty value, but it will
+        have no influence on the type of conversion.
         """
         self.stop_work_thread = False  # process terminate
-        self.filelist = var[1]  # list of files (elements)
-        self.ext = var[2]
-        self.passList = var[5]  # comand list
-        self.audioOUTmap = var[6]  # map output list
-        self.outputdir = var[3]  # output path
+        self.filelist = varargs[1]  # list of files (elements)
+        self.passList = varargs[5]  # comand list set for double-pass
+        self.outputdir = varargs[3]  # output path
+        self.extoutput = varargs[2]  # format (extension)
         self.duration = duration  # duration list
         self.time_seq = timeseq  # a time segment
+        self.volume = varargs[7]  # volume compensation data
         self.count = 0  # count first for loop
-        self.countmax = len(var[1])  # length file list
+        self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
-        self.nul = 'NUL' if Loudnorm.OS == 'Windows' else '/dev/null'
+        self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
         Thread.__init__(self)
         """initialize"""
@@ -103,36 +106,32 @@ class Loudnorm(Thread):
         """
         Subprocess initialize thread.
         """
-        summary = {'Input Integrated:': None, 'Input True Peak:': None,
-                   'Input LRA:': None, 'Input Threshold:': None,
-                   'Output Integrated:': None, 'Output True Peak:': None,
-                   'Output LRA:': None, 'Output Threshold:': None,
-                   'Normalization Type:': None, 'Target Offset:': None
-                   }
         for (files,
              folders,
+             volume,
              duration) in itertools.zip_longest(self.filelist,
                                                 self.outputdir,
+                                                self.volume,
                                                 self.duration,
                                                 fillvalue='',
                                                 ):
-            basename = os.path.basename(files)  # name.ext
-            filename = os.path.splitext(basename)[0]  # name
+            basename = os.path.basename(files)  # nome file senza path
+            filename = os.path.splitext(basename)[0]  # nome senza ext
             source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext
-            outext = source_ext if not self.ext else self.ext
+            outext = source_ext if not self.extoutput else self.extoutput
 
             # --------------- first pass
-            pass1 = ('"{0}" -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {4} -y {5}'.format(Loudnorm.FFMPEG_URL,
-                                                          self.time_seq,
-                                                          files,
-                                                          self.passList[0],
-                                                          Loudnorm.FF_THREADS,
-                                                          self.nul,
-                                                          ))
+            pass1 = ('"%s" %s %s -i "%s" %s %s '
+                     '-y %s' % (VidStab.FFMPEG_URL,
+                                VidStab.FFMPEG_LOGLEV,
+                                self.time_seq,
+                                files,
+                                self.passList[0],
+                                VidStab.FF_THREADS,
+                                self.nul,
+                                ))
             self.count += 1
-            count = ('Loudnorm ebu: Getting statistics for measurements...\n  '
-                     'File %s/%s - Pass One' % (self.count, self.countmax,))
+            count = 'File %s/%s - Pass One' % (self.count, self.countmax)
             cmd = "%s\n%s" % (count, pass1)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
@@ -144,13 +143,13 @@ class Loudnorm(Thread):
             logWrite(cmd,
                      '',
                      self.logname,
-                     Loudnorm.LOGDIR
+                     VidStab.LOGDIR,
                      )  # write n/n + command only
 
-            if not Loudnorm.OS == 'Windows':
+            if not VidStab.OS == 'Windows':
                 pass1 = shlex.split(pass1)
                 info = None
-            else:   # Hide subprocess window on MS Windows
+            else:  # Hide subprocess window on MS Windows
                 info = subprocess.STARTUPINFO()
                 info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             try:
@@ -167,13 +166,9 @@ class Loudnorm(Thread):
                                      duration=duration,
                                      status=0
                                      )
-                        if self.stop_work_thread:  # break first 'for' loop
+                        if self.stop_work_thread:  # break second 'for' loop
                             p1.terminate()
                             break
-
-                        for k in summary.keys():
-                            if line.startswith(k):
-                                summary[k] = line.split(':')[1].split()[0]
 
                     if p1.wait():  # will add '..failed' to txtctrl
                         wx.CallAfter(pub.sendMessage,
@@ -185,18 +180,17 @@ class Loudnorm(Thread):
                         logWrite('',
                                  "Exit status: %s" % p1.wait(),
                                  self.logname,
-                                 Loudnorm.LOGDIR,
+                                 VidStab.LOGDIR
                                  )  # append exit error number
-                        break
 
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, Loudnorm.NOT_EXIST_MSG)
+                e = "%s\n  %s" % (err, VidStab.NOT_EXIST_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=e,
                              duration=0,
                              fname=files,
-                             end='error'
+                             end='error',
                              )
                 break
 
@@ -213,34 +207,20 @@ class Loudnorm(Thread):
                              end='ok'
                              )
             # --------------- second pass ----------------#
-            filters = ('%s:measured_I=%s:measured_LRA=%s:measured_TP=%s:'
-                       'measured_thresh=%s:offset=%s:linear=true:dual_mono='
-                       'true' % (self.passList[2],
-                                 summary["Input Integrated:"],
-                                 summary["Input LRA:"],
-                                 summary["Input True Peak:"],
-                                 summary["Input Threshold:"],
-                                 summary["Target Offset:"]
-                                 )
-                       )
-            time.sleep(.5)
-
-            pass2 = ('"{0}" -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} -filter:a:{9} {4} {5} '
-                     '-y "{6}/{7}{10}.{8}"'.format(Loudnorm.FFMPEG_URL,
-                                                   self.time_seq,
-                                                   files,
-                                                   self.passList[1],
-                                                   filters,
-                                                   Loudnorm.FF_THREADS,
-                                                   folders,
-                                                   filename,
-                                                   outext,
-                                                   self.audioOUTmap[1],
-                                                   Loudnorm.SUFFIX,
-                                                   ))
-            count = ('Loudnorm ebu: apply EBU R128...\n  '
-                     'File %s/%s - Pass Two' % (self.count, self.countmax,))
+            pass2 = ('"%s" %s %s -i "%s" %s %s %s '
+                     '-y "%s/%s%s.%s"' % (VidStab.FFMPEG_URL,
+                                          VidStab.FFMPEG_LOGLEV,
+                                          self.time_seq,
+                                          files,
+                                          self.passList[1],
+                                          volume,
+                                          VidStab.FF_THREADS,
+                                          folders,
+                                          filename,
+                                          VidStab.SUFFIX,
+                                          outext,
+                                          ))
+            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
             cmd = "%s\n%s" % (count, pass2)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
@@ -249,9 +229,9 @@ class Loudnorm(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname, Loudnorm.LOGDIR)
+            logWrite(cmd, '', self.logname, VidStab.LOGDIR)
 
-            if not Loudnorm.OS == 'Windows':
+            if not VidStab.OS == 'Windows':
                 pass2 = shlex.split(pass2)
                 info = None
             else:  # Hide subprocess window on MS Windows
@@ -270,7 +250,7 @@ class Loudnorm(Thread):
                                  duration=duration,
                                  status=0,
                                  )
-                    if self.stop_work_thread:  # break first 'for' loop
+                    if self.stop_work_thread:
                         p2.terminate()
                         break
 
@@ -284,7 +264,7 @@ class Loudnorm(Thread):
                     logWrite('',
                              "Exit status: %s" % p2.wait(),
                              self.logname,
-                             Loudnorm.LOGDIR,
+                             VidStab.LOGDIR,
                              )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop

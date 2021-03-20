@@ -25,7 +25,6 @@
 
 #########################################################
 import wx
-import webbrowser
 from math import pi as pi
 import os
 from time import sleep
@@ -266,6 +265,7 @@ class Transpose(wx.Dialog):
 
     def on_reset(self, event):
         """
+        Revert to default positioning
         """
         if self.transpose['degrees'][1] == 0:
             pass

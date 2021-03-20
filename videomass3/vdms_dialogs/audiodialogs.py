@@ -25,7 +25,6 @@
 
 #########################################################
 import wx
-import webbrowser
 
 
 class AudioSettings(wx.Dialog):
@@ -147,13 +146,12 @@ class AudioSettings(wx.Dialog):
 
         gridBtn = wx.GridSizer(1, 2, 0, 0)  # buttons
         gridhelp = wx.GridSizer(1, 1, 0, 0)  # buttons
-        gridhelp.Add(btn_help, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
+        gridhelp.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridhelp)
 
         gridexit = wx.BoxSizer(wx.HORIZONTAL)
         gridexit.Add(self.btn_cancel, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        gridexit.Add(btn_reset, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
         sizerBase.Add(gridBtn, 0, wx.EXPAND)
 
@@ -162,18 +160,10 @@ class AudioSettings(wx.Dialog):
         self.Layout()
 
         """--------------------Binders (EVT)----------------------"""
-        self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
         self.Bind(wx.EVT_BUTTON, self.on_cancel, self.btn_cancel)
         self.Bind(wx.EVT_BUTTON, self.on_apply, self.btn_ok)
         self.Bind(wx.EVT_BUTTON, self.on_reset, btn_reset)
 
-    # ------------------------------------------------------------------#
-    def on_help(self, event):
-        """
-        """
-        page = ('https://jeanslack.github.io/Videomass/Pages/'
-                'Audio_Parameters/Audio_parameters.html')
-        webbrowser.open(page)
     # ------------------------------------------------------------------#
 
     def on_reset(self, event):
@@ -244,21 +234,21 @@ class TypeAudioParameters(object):
     audio bitrates, sample rate, audio channels and bitdepth and also
     include messages tooltip.
     """
-    channel_tooltip = (_('Support to mono or stereo audio channels. If you '
-                         'are not sure set to "Auto" and source values '
+    channel_tooltip = (_('Videomass supports mono and stereo audio channels. '
+                         'If you are not sure set to "Auto" and source values '
                          'will be copied.'))
     sample_rate_tooltip = (_("""\
 The audio Rate (or sample-rate) is the sound sampling
-frequency and is measured in hertz. The higher the frequency,
-plus the audio signal will be true to the sound source, but
-the file will increase its size. For normal playback with
-audio CD set a sample rate of 44100kHz. If you are not sure
-set to "Auto" and source values will be copied.\
+frequency and is measured in Hertz. The higher the frequency,
+the more true it will be to the sound source and the more
+the file will increase in size. For audio CD playback, set a
+sampling frequency of 44100 kHz. If you are not sure, set to
+"Auto" and source values will be copied.\
 """))
     bitrate_tooltip = (_("""\
-The audio bitrate affects on file compression
-and on the quality of listening. The higher
-the value and more higher quality.\
+The audio bitrate affects the file compression
+and thus the quality of listening. The higher
+the value, the higher the quality.\
 """))
     bitdepth_tooltip = (_("""\
 bit depth is the number of bits of information in each

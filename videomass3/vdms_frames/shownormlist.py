@@ -177,11 +177,10 @@ class NormalizationList(wx.MiniFrame):
         """
         event on button red
         """
-        wx.MessageBox(_("...It means that the final result of the audio "
-                        "signal will be clipped, because it is higher than "
-                        "the maximum level of 0 db. This will result in loss "
-                        "of data in the audio signal and the sound may be "
-                        "distorted."),
+        wx.MessageBox(_("...It means the resulting audio will be clipped, "
+                        "because its volume is higher than the maximum 0 db "
+                        "level. This results in data loss and the audio may "
+                        "sound distorted."),
                       _("When it's red..."), wx.ICON_INFORMATION, self)
     # --------------------------------------------------------------#
 
@@ -189,9 +188,8 @@ class NormalizationList(wx.MiniFrame):
         """
         event on button grey
         """
-        wx.MessageBox(_("...It means that the final result of the audio "
-                        "signal will not change, because it is the same "
-                        "as the source one."),
+        wx.MessageBox(_("...It means the resulting audio will not change, "
+                        "because it's equal to the source."),
                       _("When it's grey..."), wx.ICON_INFORMATION, self)
     # --------------------------------------------------------------#
 
@@ -199,8 +197,8 @@ class NormalizationList(wx.MiniFrame):
         """
         event on button yellow
         """
-        wx.MessageBox(_("...It means that an audio signal with a lower "
-                        "volume than the original one will be produced."),
+        wx.MessageBox(_("...It means an audio signal will be produced with "
+                        "a lower volume than the original."),
                       _("When it's yellow..."), wx.ICON_INFORMATION, self)
     # --------------------------------------------------------------#
 

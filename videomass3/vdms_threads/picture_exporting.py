@@ -102,11 +102,11 @@ class PicturesFromVideo(Thread):
         """
         Subprocess initialize thread.
         """
-        cmd = ('%s %s %s -i "%s" %s ' % (PicturesFromVideo.FFMPEG_URL,
-                                         self.time_seq,
-                                         PicturesFromVideo.FFMPEG_LOGLEV,
-                                         self.fname,
-                                         self.cmd,
+        cmd = ('"%s" %s %s -i "%s" %s ' % (PicturesFromVideo.FFMPEG_URL,
+                                           self.time_seq,
+                                           PicturesFromVideo.FFMPEG_LOGLEV,
+                                           self.fname,
+                                           self.cmd,
                                          ))
         count = 'File %s/%s' % ('1', '1',)
         com = "%s\n%s" % (count, cmd)

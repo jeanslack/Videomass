@@ -7,8 +7,7 @@
 #
 # Make a new `videomass.po` file on '../../videomass3/locale'.
 # The previus videomass.po file will be overwrite with new one
-# incoming which will update with the current state of strings
-# to tralsated .
+# incoming which will update latest strings for traslation .
 
 PLATFORM=$(uname)  # command to show platform
 self="$(readlink -f -- $0)"  # this file
@@ -33,6 +32,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_dialogs/filter_deinterlace.py" \
 "../vdms_dialogs/filter_denoisers.py" \
 "../vdms_dialogs/filter_scale.py" \
+"../vdms_dialogs/filter_stab.py" \
 "../vdms_dialogs/filter_transpose.py" \
 "../vdms_dialogs/wizard_dlg.py" \
 "../vdms_dialogs/infoprg.py" \

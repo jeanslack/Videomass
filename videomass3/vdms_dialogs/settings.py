@@ -62,6 +62,8 @@ class Setup(wx.Dialog):
     YDL_PREF = get.YDL_pref
     EXECYDL = get.execYdl
     SITEPKGYDL = get.YDLsite
+    GET_LANG = get.GETlang
+    SUPPLANG = get.SUPP_langs
 
     OPT_LOGLEV = [("quiet (Show nothing at all)"),
                   ("fatal (Only show fatal errors)"),
@@ -87,7 +89,7 @@ class Setup(wx.Dialog):
         # Make a items list of
         self.rowsNum = []  # rows number list
         dic = {}  # used for debug
-        with open(Setup.FILE_CONF, 'r') as f:
+        with open(Setup.FILE_CONF, 'r', encoding='utf8') as f:
             self.full_list = f.readlines()
         for a, b in enumerate(self.full_list):
             if not b.startswith('#'):
@@ -171,7 +173,7 @@ class Setup(wx.Dialog):
                            wx.ALIGN_CENTER_VERTICAL |
                            wx.ALIGN_CENTER_HORIZONTAL, 5
                            )
-        descr = _("Auto-create subfolders\nwhen download playlists")
+        descr = _("Auto-create subfolders\nwhen downloading playlists")
         self.ckbx_playlist = wx.CheckBox(tabOne, wx.ID_ANY, (descr))
         sizerFiles.Add(self.ckbx_playlist, 0, wx.ALL, 5)
 
@@ -184,7 +186,7 @@ class Setup(wx.Dialog):
         gridCache.Add(self.checkbox_cacheclr, 0, wx.ALL | wx.EXPAND, 5)
         sizerFiles.Add(gridCache, 0)
         tabOne.SetSizer(sizerFiles)
-        notebook.AddPage(tabOne, _("Files Preferences"))
+        notebook.AddPage(tabOne, _("File Preferences"))
 
         # -----tab 2
         tabTwo = wx.Panel(notebook, wx.ID_ANY)
@@ -260,44 +262,16 @@ class Setup(wx.Dialog):
         self.tabThree = wx.Panel(notebook, wx.ID_ANY)
         sizerYdl = wx.BoxSizer(wx.VERTICAL)
         sizerYdl.Add((0, 15))
-        # if AppImage
-        if '/tmp/.mount_' in sys.executable or \
-           os.path.exists(os.getcwd() + '/AppRun'):
-            dldlist = [
-                _('Disable youtube-dl'),
-                _('Use the one included in the AppImage (recommended)'),
-                _('Use a local copy of youtube-dl')]
-            ydlmsg = _(
-                'Make sure you are using the latest available version of '
-                'youtube-dl.\nThis allows you to avoid download problems.\n')
-            labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
-            sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
-        else:
-            dldlist = [
-                _('Disable youtube-dl'),
-                _('Use the one installed in your O.S. (recommended)'),
-                _('Use a local copy of youtube-dl updatable by Videomass')]
-            ydlmsg = _(
-                'Make sure you are using the latest available version of '
-                'youtube-dl.\nThis allows you to avoid download problems. '
-                'Note that the versions\ninstalled with the package '
-                'manager of your O.S. they may be out of\ndate and not '
-                'upgradeable. It is recommended to remove those versions\n'
-                'and update youtube-dl with pip3, e.g.')
-            labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (ydlmsg))
-            sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
-            labydl1 = wx.StaticText(self.tabThree, wx.ID_ANY,
-                                    ('\npip3 install -U youtube-dl\n'))
-            sizerYdl.Add(labydl1, 0, wx.ALL | wx.CENTRE, 5)
-
+        labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
+        sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
+        sizerYdl.Add((0, 15))
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
-                                         choices=dldlist,
+                                         choices=[_('Disable youtube-dl'),
+                                                  '', ''],
                                          majorDimension=1,
                                          style=wx.RA_SPECIFY_COLS
                                          )
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            self.rdbDownloader.EnableItem(1, enable=False)
         sizerYdl.Add(self.rdbDownloader, 0, wx.ALL | wx.EXPAND, 5)
 
         grdydlLoc = wx.BoxSizer(wx.HORIZONTAL)
@@ -308,6 +282,58 @@ class Setup(wx.Dialog):
         self.ydlPath = wx.TextCtrl(self.tabThree, wx.ID_ANY, "",
                                    style=wx.TE_READONLY)
         grdydlLoc.Add(self.ydlPath, 1, wx.ALL | wx.EXPAND, 5)
+
+        # ---- BEGIN set youtube-dl radiobox
+        if ('/tmp/.mount_' in sys.executable or os.path.exists(
+            os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
+
+            self.rdbDownloader.SetItemLabel(1, _('Use the one included in the '
+                                                 'AppImage (recommended)'))
+            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
+                                                 'youtube-dl'))
+            tip1 = _('Menu bar > Tools > Update youtube-dl')
+            tip2 = _('Menu bar > Tools > Update youtube-dl')
+
+        else:
+            self.rdbDownloader.SetItemLabel(1, _('Use the one installed in '
+                                                 'your O.S. (recommended)'))
+            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
+                                                 'youtube-dl updatable by '
+                                                 'Videomass'))
+            tip1 = _('Menu bar > Tools > Update youtube-dl')
+            tip2 = ('\npip3 install -U youtube-dl\n')
+
+        ydlmsg = _('Make sure you are using the latest available version of\n'
+                   'youtube-dl. This allows you to avoid download problems.\n')
+
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            self.rdbDownloader.EnableItem(1, enable=False)
+            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+
+
+        if Setup.YDL_PREF == 'disabled':
+            self.rdbDownloader.SetSelection(0)
+            self.ydlPath.WriteText(_('Disabled'))
+            labydl0.SetLabel('%s' % (ydlmsg))
+
+        elif Setup.YDL_PREF == 'system':
+            self.rdbDownloader.SetSelection(1)
+            labydl0.SetLabel('%s%s' % (ydlmsg, tip2))
+            if Setup.SITEPKGYDL is None:
+                self.ydlPath.WriteText(_('Not Installed'))
+            else:
+                self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
+
+        elif Setup.YDL_PREF == 'local':
+            self.rdbDownloader.SetSelection(2)
+            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+            if os.path.exists(Setup.EXECYDL):
+                self.ydlPath.WriteText(str(Setup.EXECYDL))
+            else:
+                self.ydlPath.WriteText(_('Not found'))
+        # ---- END
+
         # ----
         self.tabThree.SetSizer(sizerYdl)
         notebook.AddPage(self.tabThree, _("youtube-dl"))
@@ -427,29 +453,27 @@ class Setup(wx.Dialog):
         self.SetTitle(_("Videomass Setup"))
         # set font
         if Setup.OS == 'Darwin':
-            labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labcache.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFopt.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labydl0.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labydl1.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.BOLD, 0, ""))
-            labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labIcons.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labTB.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
+            labfile.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labdown.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labcache.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFexec.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFopt.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labydl0.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labTheme.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labIcons.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labTB.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labLog.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
-            labfile.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labcache.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labFFopt.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labydl0.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labydl1.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.BOLD, 0, ""))
-            labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labIcons.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
-            labTB.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL, 0, ""))
+            labfile.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labdown.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labcache.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFexec.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labFFopt.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labydl0.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labTheme.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labIcons.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            labTB.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+            labLog.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
 
         #  tooltips
         tip = (_("By assigning an additional suffix you could avoid "
@@ -498,22 +522,6 @@ class Setup(wx.Dialog):
             self.checkbox_cacheclr.SetValue(False)
         else:
             self.checkbox_cacheclr.SetValue(True)
-
-        if Setup.YDL_PREF == 'disabled':
-            self.rdbDownloader.SetSelection(0)
-            self.ydlPath.WriteText(_('Disabled'))
-        elif Setup.YDL_PREF == 'system':
-            self.rdbDownloader.SetSelection(1)
-            if Setup.SITEPKGYDL is None:
-                self.ydlPath.WriteText(_('Not Installed'))
-            else:
-                self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
-        elif Setup.YDL_PREF == 'local':
-            self.rdbDownloader.SetSelection(2)
-            if os.path.exists(Setup.EXECYDL):
-                self.ydlPath.WriteText(str(Setup.EXECYDL))
-            else:
-                self.ydlPath.WriteText(_('Not found'))
 
         for s in range(self.rdbFFplay.GetCount()):
             if (Setup.FFPLAY_LOGLEVEL.split()[1] in
@@ -844,8 +852,17 @@ class Setup(wx.Dialog):
 
     def on_help(self, event):
         """
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = 'https://jeanslack.github.io/Videomass/Pages/Startup/Setup.html'
+        if Setup.GET_LANG in Setup.SUPPLANG:
+            lang = Setup.GET_LANG.split('_')[0]
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/%s/2-Startup_and_Setup_%s.pdf' % (lang, lang))
+        else:
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/en/2-Startup_and_Setup_en.pdf')
+
         webbrowser.open(page)
     # --------------------------------------------------------------------#
 
@@ -862,7 +879,7 @@ class Setup(wx.Dialog):
         """
         Applies all changes writing the new entries
         """
-        with open(self.getfileconf, 'w') as fconf:
+        with open(self.getfileconf, 'w', encoding='utf8') as fconf:
             for i in self.full_list:
                 fconf.write('%s' % i)
         # self.Destroy() # WARNING on mac not close corretly, on linux ok

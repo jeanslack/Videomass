@@ -84,7 +84,7 @@ class VolumeDetectThread(Thread):
         volume = list()
 
         for files in self.filelist:
-            cmd = ('{0} {1} -i "{2}" -hide_banner {3} -af volumedetect '
+            cmd = ('"{0}" {1} -i "{2}" -hide_banner {3} -af volumedetect '
                    '-vn -sn -dn -f null {4}').format(self.ffmpeg_url,
                                                      self.time_seq,
                                                      files,

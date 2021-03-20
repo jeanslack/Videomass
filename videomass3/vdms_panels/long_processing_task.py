@@ -34,6 +34,7 @@ from videomass3.vdms_threads.one_pass import OnePass
 from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
+from videomass3.vdms_threads.video_stabilization import VidStab
 from videomass3.vdms_utils.utils import milliseconds2timeformat
 from videomass3.vdms_utils.utils import get_milliseconds
 
@@ -119,6 +120,8 @@ class Logging_Console(wx.Panel):
     DEBUG = '#3298FB'  # AZURE for debug messages
     FAILED = '#D21814'  # RED_DEEP if failed
     ABORT = '#A41EA4'  # VIOLET if the user stops the processes
+    WHITE = '#fbf4f4'  # white for background status bar
+    BLACK = '#060505'  # black for background status bar
     # YELLOW = '#C8B72F'  # for warning text messages
     # RED = '#ff0000ff'
     # ORANGE_DEEP = '#E92D15'
@@ -228,6 +231,10 @@ class Logging_Console(wx.Panel):
             self.PARENT_THREAD = PicturesFromVideo(varargs, duration,
                                                    self.logname, time_seq
                                                    )
+        elif varargs[0] == 'libvidstab':  # from Audio/Video Conv.
+            self.PARENT_THREAD = VidStab(varargs, duration,
+                                         self.logname, time_seq
+                                         )
         elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
             self.PARENT_THREAD = Ydl_DL_Pylib(varargs, self.logname)
@@ -313,7 +320,7 @@ class Logging_Console(wx.Panel):
                     del output, duration
 
         else:  # append all others lines on the textctrl and log file
-            if not self.ckbx_text.IsChecked():  # not print the output
+            if not self.ckbx_text.IsChecked():  # print the output
                 if '[info]' in output:
                     self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.INFO))
                     self.OutText.AppendText(' %s' % output)
@@ -364,7 +371,12 @@ class Logging_Console(wx.Panel):
             i = output.index('time=')+5
             pos = output[i:].split()[0]
             ms = get_milliseconds(pos)
-            self.barProg.SetValue(ms)
+
+            if ms > duration:
+                self.barProg.SetValue(duration)
+            else:
+                self.barProg.SetValue(ms)
+
             percentage = round((ms / duration) * 100 if duration != 0 else 100)
             out = [a for a in "=".join(output.split()).split('=') if a]
             ffprog = []
@@ -412,6 +424,10 @@ class Logging_Console(wx.Panel):
         if end == 'ok':
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.SUCCESS))
             self.OutText.AppendText(Logging_Console.MSG_done)
+            if self.labPerc.GetLabel()[1] != '100%':
+                newlab = self.labPerc.GetLabel().split()
+                newlab[1] = '100%'
+                self.labPerc.SetLabel(" ".join(newlab))
             return
         # if STATUS_ERROR == 1:
         if end == 'error':
@@ -419,8 +435,8 @@ class Logging_Console(wx.Panel):
             self.OutText.AppendText('\n%s\n' % (count))
             self.ERROR = True
         else:
-            self.barProg.SetRange(duration)  # set la durata complessiva
-            self.barProg.SetValue(0)  # resetto la prog bar
+            self.barProg.SetRange(duration)  # set overall duration range
+            self.barProg.SetValue(0)  # reset bar progress
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.NORM_TEXT))
             self.OutText.AppendText('\n%s : "%s"\n' % (count, fname))
 
@@ -431,11 +447,11 @@ class Logging_Console(wx.Panel):
         """
         if self.ERROR is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.ERROR_2))
-            self.OutText.AppendText(Logging_Console.MSG_taskfailed)
+            self.OutText.AppendText(Logging_Console.MSG_taskfailed + '\n')
 
         elif self.ABORT is True:
             self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.ABORT))
-            self.OutText.AppendText(Logging_Console.MSG_interrupted)
+            self.OutText.AppendText(Logging_Console.MSG_interrupted + '\n')
 
         else:
             if not self.result:
@@ -445,9 +461,10 @@ class Logging_Console(wx.Panel):
                 endmsg = Logging_Console.MSG_unfinished
                 self.OutText.SetDefaultStyle(wx.TextAttr(Logging_Console.WARN))
             self.parent.statusbar_msg(_('...Finished'), None)
-            self.OutText.AppendText(endmsg)
+            self.OutText.AppendText(endmsg + '\n')
             self.barProg.SetValue(0)
 
+        self.OutText.AppendText('\n')
         self.button_stop.Enable(False)
         self.button_close.Enable(True)
         self.PARENT_THREAD = None
@@ -458,7 +475,8 @@ class Logging_Console(wx.Panel):
         The user change idea and was stop process
         """
         self.PARENT_THREAD.stop()
-        self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD')
+        self.parent.statusbar_msg(_("wait... I'm aborting"), 'GOLDENROD',
+                                  Logging_Console.WHITE)
         self.PARENT_THREAD.join()
         self.parent.statusbar_msg(_("...Interrupted"), None)
         self.ABORT = True

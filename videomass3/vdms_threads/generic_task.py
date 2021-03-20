@@ -77,10 +77,10 @@ class FFmpegGenericTask(Thread):
         OSError exception. Otherwise the getted output is None
 
         """
-        cmd = ('%s %s %s' % (FFmpegGenericTask.FFMPEG_URL,
-                             FFmpegGenericTask.FFMPEG_LOGLEV,
-                             self.param,
-                             ))
+        cmd = ('"%s" %s %s' % (FFmpegGenericTask.FFMPEG_URL,
+                               FFmpegGenericTask.FFMPEG_LOGLEV,
+                               self.param,
+                               ))
 
         if not platform.system() == 'Windows':
             command = shlex.split(cmd)

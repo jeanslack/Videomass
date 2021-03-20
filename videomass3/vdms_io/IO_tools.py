@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Name: IO_tools.py
-# Porpose: input/output redirection to processes
+# Porpose: input/output redirection to processes (aka threads)
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -70,7 +70,7 @@ def stream_info(title, filepath):
             miniframe.Show()
 
     except IOError:
-        wx.MessageBox(_("File does not exist or not a valid file:  %s") % (
+        wx.MessageBox(_("File does not exist or is invalid:  %s") % (
             filepath), "Videomass", wx.ICON_EXCLAMATION, None)
 # -----------------------------------------------------------------------#
 
@@ -93,7 +93,7 @@ def stream_play(filepath, tseq, param):
             # thread.join() > attende fine thread, se no ritorna subito
             # error = thread.data
     except IOError:
-        wx.MessageBox(_("File does not exist or not a valid file:  %s") % (
+        wx.MessageBox(_("File does not exist or is invalid:  %s") % (
             filepath), "Videomass", wx.ICON_EXCLAMATION, None)
         return
 # -----------------------------------------------------------------------#

@@ -119,9 +119,13 @@ class Download_Stream(Thread):
         self.quality = quality  # output quality e.g. worst, best, Format code
         self.outputdir = Download_Stream.TMP  # pathname destination
         self.outtmpl = '%(title)s_{}.%(ext)s'.format(self.quality)  # filename
-        if Download_Stream.OS == 'Windows' or '/tmp/.mount_' \
-           in sys.executable or os.path.exists(os.getcwd() + '/AppRun'):
+
+        if (Download_Stream.OS == 'Windows' or '/tmp/.mount_' in sys.executable
+            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
+             sys.argv[0]))) + '/AppRun')):
+
             self.nocheckcertificate = True
+
         else:
             self.nocheckcertificate = False
 

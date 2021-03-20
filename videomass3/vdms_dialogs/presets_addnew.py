@@ -38,6 +38,8 @@ class MemPresets(wx.Dialog):
     get = wx.GetApp()
     DIR_CONF = get.DIRconf
     OS = get.OS
+    GET_LANG = get.GETlang
+    SUPPLANG = get.SUPP_langs
 
     PASS_1 = _("One-Pass, Do not start with `ffmpeg "
                "-i filename`; do not end with "
@@ -218,9 +220,17 @@ class MemPresets(wx.Dialog):
 
     def on_help(self, event):
         """
+        Open default web browser via Python Web-browser controller.
+        see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        page = ('https://jeanslack.github.io/Videomass/Pages/Main_Toolbar'
-                '/PresetsManager_Panel/Presets_management.html')
+        if MemPresets.GET_LANG in MemPresets.SUPPLANG:
+            lang = MemPresets.GET_LANG.split('_')[0]
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/%s/3-Presets_Manager_%s.pdf' % (lang, lang))
+        else:
+            page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
+                    'languages/en/3-Presets_Manager_en.pdf')
+
         webbrowser.open(page)
     # ------------------------------------------------------------------#
 

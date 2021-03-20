@@ -41,6 +41,7 @@ from videomass3.vdms_dialogs.filter_transpose import Transpose
 from videomass3.vdms_dialogs.filter_denoisers import Denoisers
 from videomass3.vdms_dialogs.filter_deinterlace import Deinterlace
 from videomass3.vdms_dialogs.filter_scale import Scale
+from videomass3.vdms_dialogs.filter_stab import Vidstab
 from videomass3.vdms_frames import shownormlist
 from videomass3.vdms_utils import optimizations
 
@@ -63,6 +64,8 @@ class AV_Conv(wx.Panel):
     VIOLET = '#D64E93'
     LIMEGREEN = '#87A615'
     TROPGREEN = '#15A660'
+    WHITE = '#fbf4f4'
+    BLACK = '#060505'
 
     # MUXERS dictionary:
     MUXERS = {'mkv': 'matroska', 'avi': 'avi', 'flv': 'flv', 'mp4': 'mp4',
@@ -227,8 +230,9 @@ class AV_Conv(wx.Panel):
             "EBU": "", "RMS": "", "Deinterlace": "", "Interlace": "",
             "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
             "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "",
-            "VFilters": "", "PixFmt": "-pix_fmt yuv420p", "Deadline": "",
-            "CpuUsed": "", "RowMthreading": "",
+            "Vidstabtransform": "", "Vidstabdetect": "", "Unsharp": "",
+            "VFilters": "", "PixFmt": "-pix_fmt yuv420p",
+            "Deadline": "", "CpuUsed": "", "RowMthreading": "",
                      }
         self.parent = parent
         self.normdetails = []
@@ -567,6 +571,12 @@ class AV_Conv(wx.Panel):
         self.btn_denois.SetBitmap(bmpdenoiser, wx.LEFT)
         sizer_Vfilter.Add(self.btn_denois, 0, wx.ALL | wx.EXPAND, 5)
 
+
+        self.btn_vidstab = wx.Button(self.filterVpanel, wx.ID_ANY,
+                                     _("Video Stabilizer"), size=(-1, -1))
+        self.btn_vidstab.SetBitmap(bmpdenoiser, wx.LEFT)
+        sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
+
         self.box_Vfilters.Add(self.filterVpanel, 1, wx.EXPAND)
         self.filterVpanel.SetSizer(sizer_Vfilter)  # set panel
         self.filterVpanel.SetAutoLayout(1)
@@ -671,7 +681,7 @@ class AV_Conv(wx.Panel):
         grid_peak = wx.FlexGridSizer(1, 4, 15, 4)
         sizer_Anormalization.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volumedetect"), size=(-1, -1))
+                                     _("Volume detect"), size=(-1, -1))
         self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
         grid_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
         self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
@@ -744,12 +754,12 @@ class AV_Conv(wx.Panel):
         self.SetSizer(sizer_base)
         self.Fit()
         self.Layout()
-        # ---------------------- Tooltip
+        # ---------------------- Tooltips
         tip = (_('Available video codecs. "Copy" is not a codec but indicate '
                  'that the video stream is not to be re-encoded and allows '
                  'changing the format or other parameters'))
         self.cmb_Vcod.SetToolTip(tip)
-        tip = (_('Output format and file extension. the '
+        tip = (_('Output format and file extension. The '
                  'content may change based on the codec and media'))
         self.cmb_Vcont.SetToolTip(tip)
         tip = (_('"Video" to save the output file as a '
@@ -759,7 +769,7 @@ class AV_Conv(wx.Panel):
         self.ckbx_pass.SetToolTip(tip)
         tip = (_('Specifies a minimum tolerance to be used'))
         self.spinMinr.SetToolTip(tip)
-        tip = (_('Specifies a maximum tolerance. this is '
+        tip = (_('Specifies a maximum tolerance. This is '
                  'only used in conjunction with buffer size'))
         self.spinMaxr.SetToolTip(tip)
         tip = (_('Specifies the decoder buffer size, which determines the '
@@ -780,14 +790,15 @@ class AV_Conv(wx.Panel):
         tip = (_('Constant rate factor. Lower values = higher quality and '
                  'a larger file size. Set -1 to disable this control.'))
         self.slider_CRF.SetToolTip(tip)
-        tip = (_('Preview video filters with FFplay'))
+        tip = (_('Preview video filters'))
         self.btn_preview.SetToolTip(tip)
         tip = (_("Clear all enabled filters "))
         self.btn_reset.SetToolTip(tip)
         tip = (_('Video width and video height ratio.'))
         self.cmb_Vaspect.SetToolTip(tip)
         tip = (_('Frames repeat a given number of times per second. In some '
-                 'countries are 30 NTSC, in PAL countries like Italy are 25.'))
+                 'countries this is 30 for NTSC, other countries (like '
+                 'Italy) use 25 for PAL'))
         self.cmb_Fps.SetToolTip(tip)
         tip = (_('Gets maximum volume and average volume data in dBFS, then '
                  'calculates the offset amount for audio normalization.'))
@@ -800,7 +811,7 @@ class AV_Conv(wx.Panel):
                  'not more that one audio stream, leave to "Auto".'))
         self.cmb_A_inMap.SetToolTip(tip)
         tip = (_('Map on the output index. Keep same input map to preserve '
-                 'indexes; to save as audio file always select to "all" '
+                 'indexes; to save as audio file always select "all" '
                  'or "Auto"'))
         self.cmb_A_outMap.SetToolTip(tip)
         tip = (_('Integrated Loudness Target in LUFS. '
@@ -832,6 +843,7 @@ class AV_Conv(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_Set_transpose, self.btn_rotate)
         self.Bind(wx.EVT_BUTTON, self.on_Set_deinterlace, self.btn_lacing)
         self.Bind(wx.EVT_BUTTON, self.on_Set_denoiser, self.btn_denois)
+        self.Bind(wx.EVT_BUTTON, self.on_Set_stabilizer, self.btn_vidstab)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersPreview, self.btn_preview)
         self.Bind(wx.EVT_BUTTON, self.on_FiltersClear, self.btn_reset)
         self.Bind(wx.EVT_COMBOBOX, self.on_Vaspect, self.cmb_Vaspect)
@@ -1069,6 +1081,7 @@ class AV_Conv(wx.Panel):
             else:
                 self.slider_CRF.Disable()
                 self.spin_Vbrate.Enable()
+            self.on_FiltersClear(self, True)  # disable vidstab
         else:
             self.opt["Passing"] = "1 pass"
             if self.opt["VideoCodec"] in ["-c:v libx264", "-c:v libx265"]:
@@ -1139,34 +1152,54 @@ class AV_Conv(wx.Panel):
                           wx.ICON_INFORMATION)
             return
 
+        if self.opt["Vidstabdetect"]:
+            wx.MessageBox(_("The video stabilizer filter is not enabled "
+                            "during preview"), "Videomass",
+                          wx.ICON_INFORMATION)
+            filters = self.opt["VFilters"].split(',vidstabtransform')[0]
+        else:
+            filters = self.opt["VFilters"]
+
+
         fget = self.file_selection()
         if not fget:
             return
 
         self.time_seq = self.parent.time_seq
         if self.parent.checktimestamp:
-            flt = '%s,"%s"' % (self.opt["VFilters"], self.parent.cmdtimestamp)
+            flt = '%s,"%s"' % (filters, self.parent.cmdtimestamp)
         else:
-            flt = self.opt["VFilters"]
+            flt = filters
 
         stream_play(self.parent.file_src[fget[1]], self.time_seq, flt)
     # ------------------------------------------------------------------#
 
-    def on_FiltersClear(self, event):
+    def on_FiltersClear(self, event, disablevidstab=None):
         """
-        Reset all enabled filters
+        Reset all enabled filters. If disablevidstab, disable
+        only parameters of the vidstab filter.
         """
+        if disablevidstab:
+            self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
+            self.opt["Vidstabdetect"] = ""
+            self.video_filter_checker()
+            self.btn_vidstab.SetBackgroundColour(wx.NullColour)
+
+            return
+
         if self.opt["VFilters"]:
             self.opt['Crop'], self.opt["Orientation"] = "", ["", ""]
             self.opt['Scale'], self.opt['Setdar'] = "", ""
             self.opt['Setsar'], self.opt['Deinterlace'] = "", ""
             self.opt['Interlace'], self.opt['Denoiser'] = "", ""
-            self.opt["VFilters"] = ""
+            self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
+            self.opt["Vidstabdetect"], self.opt["VFilters"] = "", ""
             self.btn_videosize.SetBackgroundColour(wx.NullColour)
             self.btn_crop.SetBackgroundColour(wx.NullColour)
             self.btn_denois.SetBackgroundColour(wx.NullColour)
             self.btn_lacing.SetBackgroundColour(wx.NullColour)
             self.btn_rotate.SetBackgroundColour(wx.NullColour)
+            self.btn_vidstab.SetBackgroundColour(wx.NullColour)
     # ------------------------------------------------------------------#
 
     def file_selection(self):
@@ -1252,16 +1285,23 @@ class AV_Conv(wx.Panel):
             denoiser = '%s,' % self.opt['Denoiser']
         else:
             denoiser = ''
+        if self.opt["Vidstabtransform"]:
+            stab = '%s,' % self.opt['Vidstabtransform']
+        else:
+            stab = ''
+        if self.opt["Unsharp"]:
+            unsharp = '%s,' % self.opt['Unsharp']
+        else:
+            unsharp = ''
 
-        f = crop + size + dar + sar + rotate + lacing + denoiser
+        f = (crop + size + dar + sar + rotate + lacing +
+             denoiser + stab + unsharp)
         if f:
             lengh = len(f)
             filters = '%s' % f[:lengh - 1]
             self.opt["VFilters"] = "-vf %s" % filters
         else:
             self.opt["VFilters"] = ""
-
-        # print (self.opt["VFilters"])
     # ------------------------------------------------------------------#
 
     def on_Set_scale(self, event):
@@ -1425,6 +1465,52 @@ class AV_Conv(wx.Panel):
             self.video_filter_checker()
         else:
             den.Destroy()
+            return
+    # ------------------------------------------------------------------#
+
+    def on_Set_stabilizer(self, event):
+        """
+        Enable or disable libvidstab filter for video stabilizations.
+        This filter require a special compiled build of FFmpeg with
+        libvidstab option enabled. Note this filter is incompatible
+        with 2 pass encoding that including `-pass 1` and` -pass 2`
+        options.
+
+        """
+        sdf = self.stream_datafilter()
+        if not sdf:
+            return
+
+        if self.opt["Passing"] == "2 pass":
+            wx.MessageBox(_('This filter is incompatible with '
+                            '2-pass enabled'),
+                          'Videomass', wx.ICON_INFORMATION
+                          )
+            return
+
+
+        stab = Vidstab(self,
+                       self.opt["Vidstabdetect"],
+                       self.opt["Vidstabtransform"],
+                       self.opt["Unsharp"],
+                       )
+        retcode = stab.ShowModal()
+        if retcode == wx.ID_OK:
+            data = stab.GetValue()
+            if not data:
+                self.btn_vidstab.SetBackgroundColour(wx.NullColour)
+                self.opt["Vidstabdetect"] = ""
+                self.opt["Vidstabtransform"] = ""
+                self.opt["Unsharp"] = ""
+            else:
+                self.btn_vidstab.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
+                self.opt["Vidstabdetect"] = data[0]
+                self.opt['Vidstabtransform'] = data[1]
+                self.opt['Unsharp'] = data[2]
+
+            self.video_filter_checker()
+        else:
+            stab.Destroy()
             return
     # ------------------------------------------------------------------#
 
@@ -1686,16 +1772,16 @@ class AV_Conv(wx.Panel):
                    ))
         if self.rdbx_normalize.GetSelection() == 1:  # is checked
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_1, AV_Conv.AZURE)
+            self.parent.statusbar_msg(msg_1, AV_Conv.AZURE, AV_Conv.BLACK)
             self.peakpanel.Show()
 
         elif self.rdbx_normalize.GetSelection() == 2:
             self.normalize_default(False)
-            self.parent.statusbar_msg(msg_2, AV_Conv.TROPGREEN)
+            self.parent.statusbar_msg(msg_2, AV_Conv.TROPGREEN, AV_Conv.BLACK)
             self.peakpanel.Show(), self.spin_target.SetValue(-20)
 
         elif self.rdbx_normalize.GetSelection() == 3:
-            self.parent.statusbar_msg(msg_3, AV_Conv.LIMEGREEN)
+            self.parent.statusbar_msg(msg_3, AV_Conv.LIMEGREEN, AV_Conv.BLACK)
             self.normalize_default(False)
             self.ebupanel.Show()
             self.ckbx_pass.SetValue(True), self.ckbx_pass.Disable()
@@ -1740,8 +1826,8 @@ class AV_Conv(wx.Panel):
 
         """
         msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_('Audio normalization is not required based to '
-                  'set target level'))
+        msg3 = (_("Audio normalization will not be applied because it's "
+                  "equal to the source"))
         if self.normdetails:
             del self.normdetails[:]
 
@@ -1754,7 +1840,7 @@ class AV_Conv(wx.Panel):
                                    self.opt["AudioInMap"][0]
                                    )
         if data[1]:
-            wx.MessageBox(data[1], "Videomass", wx.ICON_ERROR)
+            wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
             return
         else:
             volume = list()
@@ -1796,12 +1882,12 @@ class AV_Conv(wx.Panel):
                                              str(result),
                                              ))
         if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, AV_Conv.ORANGE)
+            self.parent.statusbar_msg(msg3, AV_Conv.ORANGE, AV_Conv.WHITE)
         else:
             if len(volume) == 1 or '  ' not in volume:
                 pass
             else:
-                self.parent.statusbar_msg(msg2, AV_Conv.YELLOW)
+                self.parent.statusbar_msg(msg2, AV_Conv.YELLOW, AV_Conv.WHITE)
         if self.rdbx_normalize.GetSelection() == 1:  # PEAK
             self.opt["PEAK"] = volume
         elif self.rdbx_normalize.GetSelection() == 2:  # RMS
@@ -1930,9 +2016,9 @@ class AV_Conv(wx.Panel):
         # check normalization data offset, if enable
         if self.rdbx_normalize.GetSelection() in [1, 2]:
             if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! use the '
-                                '"Volumedetect" control button to analyze '
-                                'the data on the audio volume.'),
+                wx.MessageBox(_('Undetected volume values! Click the '
+                                '"Volume detect" button to analyze '
+                                'audio volume data.'),
                               'Videomass', wx.ICON_INFORMATION
                               )
                 return
@@ -1953,6 +2039,8 @@ class AV_Conv(wx.Panel):
         if self.cmb_Media.GetValue() == 'Video':  # CHECKING
             if self.rdbx_normalize.GetSelection() == 3:  # EBU
                 self.video_ebu_2pass(f_src, destin, countmax, logname)
+            elif self.opt["Vidstabdetect"]:
+                self.video_stabilizer(f_src, destin, countmax, logname)
             else:
                 self.video_stdProc(f_src, destin, countmax, logname)
 
@@ -1963,6 +2051,58 @@ class AV_Conv(wx.Panel):
                 self.audio_stdProc(f_src, destin, countmax, logname)
         return
     # ------------------------------------------------------------------#
+
+    def video_stabilizer(self, f_src, destin, countmax, logname):
+        """
+        Build ffmpeg command strings for two pass
+        video stabilizations process.
+
+        """
+        audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
+
+        cmd1 = (f'-an -sn {self.opt["PixFmt"]} -vf '
+                f'{self.opt["Vidstabdetect"]} -f null')
+        cmd2 = (
+                f'{self.opt["VideoCodec"]} {self.opt["VideoBitrate"]} '
+                f'{self.opt["MinRate"]} {self.opt["MaxRate"]} '
+                f'{self.opt["Bufsize"]} {self.opt["CRF"]} '
+                f'{self.opt["Deadline"]} {self.opt["CpuUsed"]} '
+                f'{self.opt["RowMthreading"]} {self.opt["Preset"]} '
+                f'{self.opt["Profile"]} {self.opt["Level"]} '
+                f'{self.opt["Tune"]} {self.opt["AspectRatio"]} '
+                f'{self.opt["FPS"]} {self.opt["VFilters"]} '
+                f'{self.opt["PixFmt"]} {self.opt["WebOptim"]} '
+                f'-map 0:v? -map_chapters 0 '
+                f'{self.opt["SubtitleMap"]} {self.opt["AudioCodec"][0]} '
+                f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
+                f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
+                f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
+                f'-map_metadata 0'
+                        )
+        pass1 = " ".join(cmd1.split())
+        pass2 = " ".join(cmd2.split())
+        if logname == 'save as profile':
+            return pass1, pass2, self.opt["OutputFormat"]
+        valupdate = self.update_dict(countmax, [''])
+        title = 'Two pass Video Stabilization'
+        ending = Formula(self, valupdate[0], valupdate[1], title)
+
+        if ending.ShowModal() == wx.ID_OK:
+            self.parent.switch_to_processing('libvidstab',
+                                             f_src,
+                                             self.opt["OutputFormat"],
+                                             destin,
+                                             None,
+                                             [pass1, pass2],
+                                             '',
+                                             audnorm,
+                                             logname,
+                                             countmax,
+                                             )
+        # ------------------------------------------------------------------#
+
+
+
 
     def video_stdProc(self, f_src, destin, countmax, logname):
         """
@@ -2284,7 +2424,7 @@ class AV_Conv(wx.Panel):
         """
         Update all settings before send to epilogue
         """
-        numfile = _("%s file in pending") % str(countmax)
+        numfile = _("%s file in queue") % str(countmax)
         if self.opt["PEAK"]:
             normalize = 'PEAK'
         elif self.opt["RMS"]:
@@ -2420,7 +2560,7 @@ class AV_Conv(wx.Panel):
                 parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(
-                        None, _("Write the new profile on..."),
+                        None, _("Save the new profile on..."),
                         defaultDir=os.path.join(AV_Conv.DIR_CONF, 'presets'),
                         wildcard="Videomass presets (*.prst;)|*.prst;",
                         style=wx.FD_OPEN |
