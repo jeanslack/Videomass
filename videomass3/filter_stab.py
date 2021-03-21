@@ -41,8 +41,7 @@ class Vidstab(wx.Dialog):
     GET_LANG = get.GETlang
     SUPPLANG = get.SUPP_langs
 
-    def __init__(self, parent, vidstabdetect,
-                 vidstabtransform, unsharp, makeduo):
+    def __init__(self, parent, vidstabdetect, vidstabtransform, unsharp):
         """
         vidstabdetect parameters for pass one.
         vidstabtransform parameters for pass two
@@ -52,25 +51,14 @@ class Vidstab(wx.Dialog):
         self.vidstabdetect = vidstabdetect
         self.vidstabtransform = vidstabtransform
         self.unsharp = unsharp
-        self.makeduo = makeduo
 
         wx.Dialog.__init__(self, parent, -1, style=wx.DEFAULT_DIALOG_STYLE)
         """constructor"""
         sizerBase = wx.BoxSizer(wx.VERTICAL)
-
-
-        flex_General = wx.BoxSizer(wx.HORIZONTAL)
-        sizerBase.Add(flex_General, 0, wx.CENTER, 5)
-        self.ckbx_enable = wx.CheckBox(self, wx.ID_ANY,
-                                       _('Enable video stabilizer'))
-        flex_General.Add(self.ckbx_enable, 0, wx.ALL | wx.CENTER, 2)
-        self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY,
-                                    _('Generates duo file for comparison'))
-        flex_General.Add(self.ckbx_duo, 0, wx.ALL | wx.CENTER, 2)
-        # Box detect
         box_detect = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                       _("Video Detect"))), wx.VERTICAL)
         sizerBase.Add(box_detect, 0, wx.ALL | wx.EXPAND, 5)
+
         Flex_detect1 = wx.FlexGridSizer(1, 6, 0, 0)
         box_detect.Add(Flex_detect1, 0, wx.ALL, 5)
         lab_shake = wx.StaticText(self, wx.ID_ANY, (_("Shakiness:")))
@@ -128,7 +116,7 @@ class Vidstab(wx.Dialog):
         Flex_detect2.Add(self.ckbx_tripod1, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5
                          )
-        # Box transform
+        # --- vidstabtransform section:
         sizerBase.Add((15, 0), 0, wx.ALL, 5)
         box_trans = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
                                    _("Video transform"))), wx.VERTICAL)
@@ -246,7 +234,7 @@ class Vidstab(wx.Dialog):
         flex_trans3.Add(self.txt_unsharp, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 5
                         )
-        # Confirm buttons
+        # --- confirm buttons section
         gridBtn = wx.GridSizer(1, 2, 0, 0)
         gridhelp = wx.GridSizer(1, 1, 0, 0)
         btn_help = wx.Button(self, wx.ID_HELP, "")
@@ -257,8 +245,8 @@ class Vidstab(wx.Dialog):
         gridexit.Add(btn_close, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
         self.btn_ok = wx.Button(self, wx.ID_OK, _("Apply"))
         gridexit.Add(self.btn_ok, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.btn_reset = wx.Button(self, wx.ID_CLEAR, _("Reset"))
-        gridexit.Add(self.btn_reset, 0, wx.ALL |
+        self.btn_activate = wx.ToggleButton(self, wx.ID_ANY, _("Diasbled"))
+        gridexit.Add(self.btn_activate, 0, wx.ALL |
                      wx.ALIGN_CENTER_VERTICAL, 5
                      )
         gridBtn.Add(gridexit, 0, wx.ALL | wx.ALIGN_RIGHT | wx.RIGHT, 0)
@@ -271,28 +259,30 @@ class Vidstab(wx.Dialog):
         # Properties
         self.SetTitle(_("Video stabilizer filter"))
 
+        ## Set previous changes
+        if vidstabdetect:
+            self.set_values()
+        else:
+            self.set_default()
+
         # ----------------------Binding (EVT)--------------------------#
-        self.Bind(wx.EVT_CHECKBOX, self.on_activate, self.ckbx_enable)
+
         self.Bind(wx.EVT_SPINCTRL, self.on_optzoom, self.spin_optzoom)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod1, self.ckbx_tripod1)
         self.Bind(wx.EVT_CHECKBOX, self.on_Tripod2, self.ckbx_tripod2)
         self.Bind(wx.EVT_BUTTON, self.on_close, btn_close)
         self.Bind(wx.EVT_BUTTON, self.on_ok, self.btn_ok)
-        self.Bind(wx.EVT_BUTTON, self.set_default, self.btn_reset)
+        self.Bind(wx.EVT_TOGGLEBUTTON, self.on_activate, self.btn_activate)
         self.Bind(wx.EVT_BUTTON, self.on_help, btn_help)
 
-        if vidstabdetect:
-            self.set_values()  # Set previous changes
-        else:
-            self.set_default(self)
-            self.on_activate(self)
-
     # ------------------------------------------------------------------#
-    def set_default(self, event):
+    def set_default(self):
         """
         Revert all control values to default
 
         """
+        self.btn_activate.SetLabel('Disabled')
+        self.btn_activate.SetValue(False)
         # vidstabdetect
         self.spin_shake.SetValue('5'),
         self.spin_accuracy.SetValue('15')
@@ -391,8 +381,7 @@ class Vidstab(wx.Dialog):
 
         self.txt_unsharp.Clear()
         self.txt_unsharp.write(self.unsharp)
-        self.ckbx_enable.SetValue(True)
-        self.ckbx_duo.SetValue(self.makeduo)
+        self.btn_activate.SetValue(True)
         self.on_activate(self)
 
     # ----------------------Event handler (callback)---------------------#
@@ -455,31 +444,11 @@ class Vidstab(wx.Dialog):
         Enable or disable vidstab filter
 
         """
-        if self.ckbx_enable.IsChecked():
-            self.spin_shake.Enable(), self.spin_accuracy.Enable()
-            self.spin_stepsize.Enable(), self.spin_mincontr.Enable()
-            self.ckbx_tripod1.Enable(), self.spin_smooth.Enable()
-            self.rdb_optalgo.Enable(), self.spin_maxangle.Enable()
-            self.rdb_crop.Enable(), self.ckbx_invert.Enable()
-            self.ckbx_relative.Enable(), self.spin_zoom.Enable()
-            self.spin_optzoom.Enable()
-            #self.spin_zoomspeed.Enable()
-            self.rdb_interpol.Enable()
-            #self.ckbx_tripod2.Enable()
-            self.txt_unsharp.Enable()
-            self.ckbx_duo.Enable()
+        if self.btn_activate.GetValue():
+            self.btn_activate.SetLabel('Enabled')
         else:
-            self.spin_shake.Disable(), self.spin_accuracy.Disable()
-            self.spin_stepsize.Disable(), self.spin_mincontr.Disable()
-            self.ckbx_tripod1.Disable(), self.spin_smooth.Disable()
-            self.rdb_optalgo.Disable(), self.spin_maxangle.Disable()
-            self.rdb_crop.Disable(), self.ckbx_invert.Disable()
-            self.ckbx_relative.Disable(), self.spin_zoom.Disable()
-            self.spin_optzoom.Disable(), self.spin_zoomspeed.Disable()
-            self.rdb_interpol.Disable(), self.ckbx_tripod2.Disable()
-            self.txt_unsharp.Disable()
-            # disable makeduo
-            self.ckbx_duo.SetValue(False), self.ckbx_duo.Disable()
+            self.set_default()
+
     # ------------------------------------------------------------------#
 
     def on_close(self, event):
@@ -506,7 +475,7 @@ class Vidstab(wx.Dialog):
         This method return values via the interface GetValue()
 
         """
-        if not self.ckbx_enable.IsChecked():
+        if not self.btn_activate.GetValue():
             return (None)
 
         # vidstabdetect
@@ -557,6 +526,5 @@ class Vidstab(wx.Dialog):
                                            tripod2)
                             )
         unsharp = self.txt_unsharp.GetValue()
-        makeduo = True if self.ckbx_duo.IsChecked() else False
 
-        return (vidstabdetect, vidstabtransform, unsharp, makeduo)
+        return (vidstabdetect, vidstabtransform, unsharp)

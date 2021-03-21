@@ -88,6 +88,7 @@ class VidStab(Thread):
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (elements)
         self.passList = varargs[5]  # comand list set for double-pass
+        self.makeduo = varargs[4]  # one more process for the duo file
         self.outputdir = varargs[3]  # output path
         self.extoutput = varargs[2]  # format (extension)
         self.duration = duration  # duration list
@@ -131,7 +132,8 @@ class VidStab(Thread):
                                 self.nul,
                                 ))
             self.count += 1
-            count = 'File %s/%s - Pass One' % (self.count, self.countmax)
+            count = ('File %s/%s - Pass One: Video stabilization detect' % (
+                     self.count, self.countmax))
             cmd = "%s\n%s" % (count, pass1)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
@@ -220,7 +222,8 @@ class VidStab(Thread):
                                           VidStab.SUFFIX,
                                           outext,
                                           ))
-            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
+            count = ('File %s/%s - Pass Two: Video transform' % (
+                     self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
@@ -279,6 +282,85 @@ class VidStab(Thread):
                              fname='',
                              end='ok'
                              )
+
+            # --------------- make duo ----------------#
+            if self.makeduo:
+                pass3 = ('"%s" %s %s -i "%s" -an -sn %s -vf "[in] pad=2*iw:ih '
+                        '[left]; movie="%s/%s%s.%s" [right]; [left][right] '
+                        'overlay=main_w/2:0 [out]" '
+                        '-y "%s/%s%s_DUO.%s"' % (VidStab.FFMPEG_URL,
+                                                 VidStab.FFMPEG_LOGLEV,
+                                                 self.time_seq,
+                                                 files,
+                                                 VidStab.FF_THREADS,
+                                                 folders,
+                                                 filename,
+                                                 VidStab.SUFFIX,
+                                                 outext,
+                                                 folders,
+                                                 filename,
+                                                 VidStab.SUFFIX,
+                                                 outext,
+                                                 ))
+                count = 'File %s/%s - Make duo' % (self.count, self.countmax,)
+                cmd = "%s\n%s" % (count, pass3)
+                wx.CallAfter(pub.sendMessage,
+                             "COUNT_EVT",
+                             count=count,
+                             duration=duration,
+                             fname=files,
+                             end='',
+                             )
+                logWrite(cmd, '', self.logname, VidStab.LOGDIR)
+
+                if not VidStab.OS == 'Windows':
+                    pass3 = shlex.split(pass3)
+                    info = None
+                else:  # Hide subprocess window on MS Windows
+                    info = subprocess.STARTUPINFO()
+                    info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                with subprocess.Popen(pass3,
+                                      stderr=subprocess.PIPE,
+                                      bufsize=1,
+                                      universal_newlines=True,
+                                      startupinfo=info,) as p3:
+
+                    for line3 in p3.stderr:
+                        wx.CallAfter(pub.sendMessage,
+                                     "UPDATE_EVT",
+                                     output=line3,
+                                     duration=duration,
+                                     status=0,
+                                     )
+                        if self.stop_work_thread:
+                            p3.terminate()
+                            break
+
+                    if p3.wait():  # will add '..failed' to txtctrl
+                        wx.CallAfter(pub.sendMessage,
+                                     "UPDATE_EVT",
+                                     output=line,
+                                     duration=duration,
+                                     status=p3.wait(),
+                                     )
+                        logWrite('',
+                                 "Exit status: %s" % p3.wait(),
+                                 self.logname,
+                                 VidStab.LOGDIR,
+                                 )  # append exit error number
+
+                if self.stop_work_thread:  # break first 'for' loop
+                    p3.terminate()
+                    break  # fermo il ciclo for, altrimenti passa avanti
+
+                if p3.wait() == 0:  # will add '..terminated' to txtctrl
+                    wx.CallAfter(pub.sendMessage,
+                                 "COUNT_EVT",
+                                 count='',
+                                 duration='',
+                                 fname='',
+                                 end='ok'
+                                 )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
     # --------------------------------------------------------------------#

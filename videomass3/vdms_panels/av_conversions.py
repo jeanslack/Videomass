@@ -185,7 +185,8 @@ class AV_Conv(wx.Panel):
 
     def __init__(self, parent, OS, iconplay, iconreset, iconresize,
                  iconcrop, iconrotate, icondeinterlace, icondenoiser,
-                 iconanalyzes, iconsettings, iconpeaklevel, iconatrack
+                 iconanalyzes, iconsettings, iconpeaklevel, iconatrack,
+                 iconvidstab,
                  ):
 
         # set attributes:
@@ -201,6 +202,7 @@ class AV_Conv(wx.Panel):
             bmpasettings = get_bmp(iconsettings, ((16, 16)))
             bmppeaklevel = get_bmp(iconpeaklevel, ((16, 16)))
             bmpatrack = get_bmp(iconatrack, ((16, 16)))
+            bmpstab = get_bmp(iconvidstab, ((16, 16)))
         else:
             bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
             bmpreset = wx.Bitmap(iconreset, wx.BITMAP_TYPE_ANY)
@@ -213,6 +215,7 @@ class AV_Conv(wx.Panel):
             bmpasettings = wx.Bitmap(iconsettings, wx.BITMAP_TYPE_ANY)
             bmppeaklevel = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
             bmpatrack = wx.Bitmap(iconatrack, wx.BITMAP_TYPE_ANY)
+            bmpstab = wx.Bitmap(iconvidstab, wx.BITMAP_TYPE_ANY)
 
         # Dictionary definition for command settings:
         self.opt = {
@@ -231,7 +234,7 @@ class AV_Conv(wx.Panel):
             "PixelFormat": "", "Orientation": ["", ""], "Crop": "",
             "Scale": "", "Setdar": "", "Setsar": "", "Denoiser": "",
             "Vidstabtransform": "", "Vidstabdetect": "", "Unsharp": "",
-            "VFilters": "", "PixFmt": "-pix_fmt yuv420p",
+            "Makeduo": False, "VFilters": "", "PixFmt": "-pix_fmt yuv420p",
             "Deadline": "", "CpuUsed": "", "RowMthreading": "",
                      }
         self.parent = parent
@@ -574,7 +577,7 @@ class AV_Conv(wx.Panel):
 
         self.btn_vidstab = wx.Button(self.filterVpanel, wx.ID_ANY,
                                      _("Video Stabilizer"), size=(-1, -1))
-        self.btn_vidstab.SetBitmap(bmpdenoiser, wx.LEFT)
+        self.btn_vidstab.SetBitmap(bmpstab, wx.LEFT)
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
 
         self.box_Vfilters.Add(self.filterVpanel, 1, wx.EXPAND)
@@ -1152,14 +1155,10 @@ class AV_Conv(wx.Panel):
                           wx.ICON_INFORMATION)
             return
 
-        if self.opt["Vidstabdetect"]:
-            wx.MessageBox(_("The video stabilizer filter is not enabled "
-                            "during preview"), "Videomass",
-                          wx.ICON_INFORMATION)
-            filters = self.opt["VFilters"].split(',vidstabtransform')[0]
-        else:
-            filters = self.opt["VFilters"]
-
+        if self.opt["Vidstabtransform"]:
+            wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
+                          "Videomass", wx.ICON_INFORMATION)
+            return
 
         fget = self.file_selection()
         if not fget:
@@ -1167,9 +1166,9 @@ class AV_Conv(wx.Panel):
 
         self.time_seq = self.parent.time_seq
         if self.parent.checktimestamp:
-            flt = '%s,"%s"' % (filters, self.parent.cmdtimestamp)
+            flt = '%s,"%s"' % (self.opt["VFilters"], self.parent.cmdtimestamp)
         else:
-            flt = filters
+            flt = self.opt["VFilters"]
 
         stream_play(self.parent.file_src[fget[1]], self.time_seq, flt)
     # ------------------------------------------------------------------#
@@ -1493,6 +1492,7 @@ class AV_Conv(wx.Panel):
                        self.opt["Vidstabdetect"],
                        self.opt["Vidstabtransform"],
                        self.opt["Unsharp"],
+                       self.opt["Makeduo"],
                        )
         retcode = stab.ShowModal()
         if retcode == wx.ID_OK:
@@ -1502,11 +1502,13 @@ class AV_Conv(wx.Panel):
                 self.opt["Vidstabdetect"] = ""
                 self.opt["Vidstabtransform"] = ""
                 self.opt["Unsharp"] = ""
+                self.opt["Makeduo"] = False
             else:
                 self.btn_vidstab.SetBackgroundColour(wx.Colour(AV_Conv.VIOLET))
                 self.opt["Vidstabdetect"] = data[0]
                 self.opt['Vidstabtransform'] = data[1]
                 self.opt['Unsharp'] = data[2]
+                self.opt["Makeduo"] = data[3]
 
             self.video_filter_checker()
         else:
@@ -2092,7 +2094,7 @@ class AV_Conv(wx.Panel):
                                              f_src,
                                              self.opt["OutputFormat"],
                                              destin,
-                                             None,
+                                             self.opt["Makeduo"],
                                              [pass1, pass2],
                                              '',
                                              audnorm,
@@ -2100,9 +2102,6 @@ class AV_Conv(wx.Panel):
                                              countmax,
                                              )
         # ------------------------------------------------------------------#
-
-
-
 
     def video_stdProc(self, f_src, destin, countmax, logname):
         """
@@ -2442,6 +2441,9 @@ class AV_Conv(wx.Panel):
         else:
             t = self.parent.time_seq.split()
             time = _('start  {} | duration  {}').format(t[1], t[3])
+
+        vfilter = _('Enabled') if self.opt["VFilters"] else _('Disabled')
+
         # ------------------
         if self.cmb_Media.GetValue() == 'Audio':
             formula = (_("SUMMARY\n\nQueued File\nOutput Format\
@@ -2519,7 +2521,7 @@ class AV_Conv(wx.Panel):
                                                    self.opt["CpuUsed"],
                                                    self.opt["RowMthreading"],
                                                    ),
-                                     self.opt["VFilters"],
+                                     vfilter,
                                      self.opt["AspectRatio"],
                                      self.opt["FPS"],
                                      self.opt["Preset"],
@@ -2550,6 +2552,9 @@ class AV_Conv(wx.Panel):
         if self.cmb_Media.GetValue() == 'Video':
             if self.rdbx_normalize.GetSelection() == 3:  # EBU
                 parameters = self.video_ebu_2pass([], [], 0, 'save as profile')
+            elif self.opt["Vidstabdetect"]:
+                parameters = self.video_stabilizer([], [], 0,
+                                                   'save as profile')
             else:
                 parameters = self.video_stdProc([], [], 0, 'save as profile')
 

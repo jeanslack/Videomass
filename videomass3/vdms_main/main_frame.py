@@ -166,6 +166,7 @@ class MainFrame(wx.Frame):
                                                  pathicons[15],  # settings
                                                  pathicons[16],  # peaklevel
                                                  pathicons[17],  # audiotr
+                                                 pathicons[26],  # stabilizer
                                                  )
         self.fileDnDTarget = filedrop.FileDnD(self, pathicons[6])
         self.textDnDTarget = textdrop.TextDnD(self)
