@@ -1293,8 +1293,8 @@ class AV_Conv(wx.Panel):
         else:
             unsharp = ''
 
-        f = (crop + size + dar + sar + rotate + lacing +
-             denoiser + stab + unsharp)
+        f = (stab + unsharp + size + crop + dar + sar + rotate + lacing +
+             denoiser)
         if f:
             lengh = len(f)
             filters = '%s' % f[:lengh - 1]
@@ -2079,10 +2079,16 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["AudioCodec"][1]} {self.opt["AudioBitrate"][1]} '
                 f'{self.opt["AudioRate"][1]} {self.opt["AudioChannel"][1]} '
                 f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
-                f'-map_metadata 0'
-                        )
+                f'-map_metadata 0')
+
+        #if len(self.opt["VFilters"].split(',')) > 2:
+            #addflt = '%s,' %  ','.join(self.opt["VFilters"].split(',')[2:])
+        #else:
+            #addflt = ''
+        #cmd3 = (f'-vf "[in] {addflt}pad=2*iw:ih [left]; movie=/home/gianluca/cv2.mkv [right]; [left][right] overlay=main_w/2:0 [out]"')
         pass1 = " ".join(cmd1.split())
         pass2 = " ".join(cmd2.split())
+
         if logname == 'save as profile':
             return pass1, pass2, self.opt["OutputFormat"]
         valupdate = self.update_dict(countmax, [''])
@@ -2096,7 +2102,7 @@ class AV_Conv(wx.Panel):
                                              destin,
                                              self.opt["Makeduo"],
                                              [pass1, pass2],
-                                             '',
+                                             self.opt["VFilters"],
                                              audnorm,
                                              logname,
                                              countmax,

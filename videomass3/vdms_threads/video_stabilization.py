@@ -99,6 +99,11 @@ class VidStab(Thread):
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
+        if len(varargs[6].split(',')) > 2:  # other filters enabled
+            self.addflt = '%s,' %  ','.join(varargs[6].split(',')[2:])
+        else:
+            self.addflt = ''
+
         Thread.__init__(self)
         """initialize"""
         self.start()  # start the thread (va in self.run())
@@ -211,17 +216,17 @@ class VidStab(Thread):
             # --------------- second pass ----------------#
             pass2 = ('"%s" %s %s -i "%s" %s %s %s '
                      '-y "%s/%s%s.%s"' % (VidStab.FFMPEG_URL,
-                                          VidStab.FFMPEG_LOGLEV,
-                                          self.time_seq,
-                                          files,
-                                          self.passList[1],
-                                          volume,
-                                          VidStab.FF_THREADS,
-                                          folders,
-                                          filename,
-                                          VidStab.SUFFIX,
-                                          outext,
-                                          ))
+                                                 VidStab.FFMPEG_LOGLEV,
+                                                 self.time_seq,
+                                                 files,
+                                                 self.passList[1],
+                                                 volume,
+                                                 VidStab.FF_THREADS,
+                                                 folders,
+                                                 filename,
+                                                 VidStab.SUFFIX,
+                                                 outext,
+                                                 ))
             count = ('File %s/%s - Pass Two: Video transform' % (
                      self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
@@ -285,14 +290,15 @@ class VidStab(Thread):
 
             # --------------- make duo ----------------#
             if self.makeduo:
-                pass3 = ('"%s" %s %s -i "%s" -an -sn %s -vf "[in] pad=2*iw:ih '
-                        '[left]; movie="%s/%s%s.%s" [right]; [left][right] '
-                        'overlay=main_w/2:0 [out]" '
+                pass3 = ('"%s" %s %s -i "%s" %s -vf "[in] %spad=2*iw:ih '
+                        '[left]; movie=%s/%s%s.%s [right]; '
+                        '[left][right] overlay=main_w/2:0 [out]" '
                         '-y "%s/%s%s_DUO.%s"' % (VidStab.FFMPEG_URL,
                                                  VidStab.FFMPEG_LOGLEV,
                                                  self.time_seq,
                                                  files,
                                                  VidStab.FF_THREADS,
+                                                 self.addflt,
                                                  folders,
                                                  filename,
                                                  VidStab.SUFFIX,
