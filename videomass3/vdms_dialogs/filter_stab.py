@@ -403,73 +403,62 @@ class Vidstab(wx.Dialog):
         set values previously confirmed
 
         """
-        dect = self.vidstabdetect.split(':')
+        k_v_detect = dict()
+        detect = self.vidstabdetect.split('vidstabdetect=')[1].split(':')
+        for x in detect:
+            k_v_detect[x.split('=')[0]] = x.split('=')[1]
 
-        for v in dect:
-            if 'shakiness=' in v:
-                self.spin_shake.SetValue(v.split('=')[2])
-            if 'accuracy' in v:
-                self.spin_accuracy.SetValue(v.split('=')[1])
-            if 'stepsize' in v:
-                self.spin_stepsize.SetValue(v.split('=')[1])
-            if 'mincontrast' in v:
-                self.spin_mincontr.SetValue(float(v.split('=')[1]))
-            if 'tripod' in v:
-                if v.split('=')[1] == '1':
-                    self.ckbx_tripod1.SetValue(True)
-                    self.ckbx_tripod2.SetValue(True)
-                    self.ckbx_tripod2.Enable()
-                else:
-                    self.ckbx_tripod1.SetValue(False)
-                    self.ckbx_tripod2.SetValue(False)
-                    self.ckbx_tripod2.Disable()
+        self.spin_shake.SetValue(k_v_detect['shakiness'])
+        self.spin_accuracy.SetValue(k_v_detect['accuracy'])
+        self.spin_stepsize.SetValue(k_v_detect['stepsize'])
+        self.spin_mincontr.SetValue(float(k_v_detect['mincontrast']))
+        if k_v_detect['tripod'] == '1':
+            self.ckbx_tripod1.SetValue(True)
+            self.ckbx_tripod2.SetValue(True)
+            self.ckbx_tripod2.Enable()
+        else:
+            self.ckbx_tripod1.SetValue(False)
+            self.ckbx_tripod2.SetValue(False)
+            self.ckbx_tripod2.Disable()
 
-        transf = self.vidstabtransform.split(':')
+        k_v_transf = dict()
+        transf = self.vidstabtransform.split('vidstabtransform=')[1].split(':')
+        for x in transf:
+            k_v_transf[x.split('=')[0]] = x.split('=')[1]
 
-        for v in transf:
-            if 'smoothing' in v:
-                self.spin_smooth.SetValue(v.split('=')[2])
-            if 'optalgo' in v:
-                if v.split('=')[1] == 'gauss':
-                    self.rdb_optalgo.SetSelection(0)
-                else:
-                    self.rdb_optalgo.SetSelection(1)
-            if 'maxangle' in v:
-                self.spin_maxangle.SetValue(v.split('=')[1])
-            if 'crop' in v:
-                if v.split('=')[1] == 'keep':
-                    self.rdb_crop.SetSelection(0)
-                else:
-                    self.rdb_crop.SetSelection(1)
-            if 'invert' in v:
-                if v.split('=')[1] == '1':
-                    self.ckbx_invert.SetValue(True)
-                else:
-                    self.ckbx_invert.SetValue(False)
-            if 'relative' in v:
-                if v.split('=')[1] == '1':
-                    self.ckbx_relative.SetValue(True)
-                else:
-                    self.ckbx_relative.SetValue(False)
-            if 'zoom' in v:
-                self.spin_zoom.SetValue(v.split('=')[1])
-            if 'optzoom' in v:
-                self.spin_optzoom.SetValue(v.split('=')[1])
-                if v.split('=')[1] == '2':
-                    self.spin_zoomspeed.Enable()
-                else:
-                    self.spin_zoomspeed.Disable()
-            if 'zoomspeed' in v:
-                self.spin_zoomspeed.SetValue(float(v.split('=')[1]))
-            if 'interpol' in v:
-                if v.split('=')[1] == 'no':
-                    self.rdb_interpol.SetSelection(0)
-                elif v.split('=')[1] == 'linear':
-                    self.rdb_interpol.SetSelection(1)
-                elif v.split('=')[1] == 'bilinear':
-                    self.rdb_interpol.SetSelection(2)
-                else:
-                    self.rdb_interpol.SetSelection(3)
+        self.spin_smooth.SetValue(k_v_transf['smoothing'])
+        if k_v_transf['optalgo'] == 'gauss':
+            self.rdb_optalgo.SetSelection(0)
+        else:
+            self.rdb_optalgo.SetSelection(1)
+        self.spin_maxangle.SetValue(k_v_transf['maxangle'])
+        if k_v_transf['crop'] == 'keep':
+            self.rdb_crop.SetSelection(0)
+        else:
+            self.rdb_crop.SetSelection(1)
+        if k_v_transf['invert'] == '1':
+            self.ckbx_invert.SetValue(True)
+        else:
+            self.ckbx_invert.SetValue(False)
+        if k_v_transf['relative'] == '1':
+            self.ckbx_relative.SetValue(True)
+        else:
+            self.ckbx_relative.SetValue(False)
+        self.spin_zoom.SetValue(k_v_transf['zoom'])
+        self.spin_optzoom.SetValue(k_v_transf['optzoom'])
+        if k_v_transf['optzoom'] == '2':
+            self.spin_zoomspeed.Enable()
+        else:
+            self.spin_zoomspeed.Disable()
+        self.spin_zoomspeed.SetValue(float(k_v_transf['zoomspeed']))
+        if k_v_transf['interpol'] == 'no':
+            self.rdb_interpol.SetSelection(0)
+        elif k_v_transf['interpol'] == 'linear':
+            self.rdb_interpol.SetSelection(1)
+        elif k_v_transf['interpol'] == 'bilinear':
+            self.rdb_interpol.SetSelection(2)
+        else:
+            self.rdb_interpol.SetSelection(3)
 
         self.txt_unsharp.Clear()
         self.txt_unsharp.write(self.unsharp)

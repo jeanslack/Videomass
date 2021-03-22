@@ -1148,7 +1148,10 @@ class AV_Conv(wx.Panel):
 
     def on_FiltersPreview(self, event):
         """
-        Showing selected video preview with applied filters
+        Showing selected video preview with applied filters.
+        Note that libstab filter has not preview, but the other
+        filters they are still reproduced.
+
         """
         if not self.opt["VFilters"]:
             wx.MessageBox(_("No video filter enabled"), "Videomass",
@@ -1158,7 +1161,14 @@ class AV_Conv(wx.Panel):
         if self.opt["Vidstabtransform"]:
             wx.MessageBox(_("Unable to preview Video Stabilizer filter"),
                           "Videomass", wx.ICON_INFORMATION)
-            return
+
+            if len(self.opt["VFilters"].split(',')) == 2:
+                return
+
+            flt = '-vf %s' %  ','.join(self.opt["VFilters"].split(',')[2:])
+
+        else:
+            flt = self.opt["VFilters"]
 
         fget = self.file_selection()
         if not fget:
@@ -1166,9 +1176,9 @@ class AV_Conv(wx.Panel):
 
         self.time_seq = self.parent.time_seq
         if self.parent.checktimestamp:
-            flt = '%s,"%s"' % (self.opt["VFilters"], self.parent.cmdtimestamp)
+            flt = '%s,"%s"' % (flt, self.parent.cmdtimestamp)
         else:
-            flt = self.opt["VFilters"]
+            flt = flt
 
         stream_play(self.parent.file_src[fget[1]], self.time_seq, flt)
     # ------------------------------------------------------------------#
@@ -1180,7 +1190,7 @@ class AV_Conv(wx.Panel):
         """
         if disablevidstab:
             self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
-            self.opt["Vidstabdetect"] = ""
+            self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
             self.video_filter_checker()
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
 
@@ -1192,7 +1202,9 @@ class AV_Conv(wx.Panel):
             self.opt['Setsar'], self.opt['Deinterlace'] = "", ""
             self.opt['Interlace'], self.opt['Denoiser'] = "", ""
             self.opt["Vidstabtransform"], self.opt["Unsharp"] = "", ""
-            self.opt["Vidstabdetect"], self.opt["VFilters"] = "", ""
+            self.opt["Vidstabdetect"], self.opt["Makeduo"] = "", False
+            self.opt["VFilters"] = "", ""
+
             self.btn_videosize.SetBackgroundColour(wx.NullColour)
             self.btn_crop.SetBackgroundColour(wx.NullColour)
             self.btn_denois.SetBackgroundColour(wx.NullColour)
@@ -2081,11 +2093,6 @@ class AV_Conv(wx.Panel):
                 f'{self.opt["AudioDepth"][1]} {self.opt["AudioOutMap"][0]} '
                 f'-map_metadata 0')
 
-        #if len(self.opt["VFilters"].split(',')) > 2:
-            #addflt = '%s,' %  ','.join(self.opt["VFilters"].split(',')[2:])
-        #else:
-            #addflt = ''
-        #cmd3 = (f'-vf "[in] {addflt}pad=2*iw:ih [left]; movie=/home/gianluca/cv2.mkv [right]; [left][right] overlay=main_w/2:0 [out]"')
         pass1 = " ".join(cmd1.split())
         pass2 = " ".join(cmd2.split())
 
