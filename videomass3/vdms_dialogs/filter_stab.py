@@ -403,10 +403,8 @@ class Vidstab(wx.Dialog):
         set values previously confirmed
 
         """
-        k_v_detect = dict()
-        detect = self.vidstabdetect.split('vidstabdetect=')[1].split(':')
-        for x in detect:
-            k_v_detect[x.split('=')[0]] = x.split('=')[1]
+        k_v_detect = dict(i.split('=') for i in self.vidstabdetect.split(
+                          'vidstabdetect=')[1].split(':'))
 
         self.spin_shake.SetValue(k_v_detect['shakiness'])
         self.spin_accuracy.SetValue(k_v_detect['accuracy'])
@@ -421,10 +419,8 @@ class Vidstab(wx.Dialog):
             self.ckbx_tripod2.SetValue(False)
             self.ckbx_tripod2.Disable()
 
-        k_v_transf = dict()
-        transf = self.vidstabtransform.split('vidstabtransform=')[1].split(':')
-        for x in transf:
-            k_v_transf[x.split('=')[0]] = x.split('=')[1]
+        k_v_transf = dict(i.split('=') for i in self.vidstabtransform.split(
+                          'vidstabtransform=')[1].split(':'))
 
         self.spin_smooth.SetValue(k_v_transf['smoothing'])
         if k_v_transf['optalgo'] == 'gauss':
@@ -513,10 +509,10 @@ class Vidstab(wx.Dialog):
         if Vidstab.GET_LANG in Vidstab.SUPPLANG:
             lang = Vidstab.GET_LANG.split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/4-Video_Filters_%s.pdf' % (lang, lang))
+                    'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/4-Video_Filters_en.pdf')
+                    'languages/en/4-Video_filters_en.pdf')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#

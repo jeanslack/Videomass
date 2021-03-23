@@ -321,10 +321,10 @@ class Scale(wx.Dialog):
         if Scale.GET_LANG in Scale.SUPPLANG:
             lang = Scale.GET_LANG.split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/4-Video_Filters_%s.pdf' % (lang, lang))
+                    'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/4-Video_Filters_en.pdf')
+                    'languages/en/4-Video_filters_en.pdf')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#

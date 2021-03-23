@@ -65,11 +65,17 @@ class Setup(wx.Dialog):
     GET_LANG = get.GETlang
     SUPPLANG = get.SUPP_langs
 
-    OPT_LOGLEV = [("quiet (Show nothing at all)"),
-                  ("fatal (Only show fatal errors)"),
-                  ("error (Show all errors)"),
-                  ("warning (Show all warnings and errors)"),
-                  ("info (Show informative messages during processing)")]
+    FFPLAY_LOGLEV = [("quiet (Show nothing at all)"),
+                     ("fatal (Only show fatal errors)"),
+                     ("error (Show all errors)"),
+                     ("warning (Show all warnings and errors)"),
+                     ("info (Show informative messages during processing)")]
+
+    FFMPEG_LOGLEV = [("error (Show all errors)"),
+                     ("warning (Show all warnings and errors)"),
+                     ("info (Show informative messages during processing)"),
+                     ("verbose (Same as `info`, except more verbose.)"),
+                     ("debug (Show everything, including debugging info.)")]
     # -----------------------------------------------------------------
 
     def __init__(self, parent, iconset):
@@ -417,14 +423,14 @@ class Setup(wx.Dialog):
         self.rdbFFmpeg = wx.RadioBox(
                                 tabFive, wx.ID_ANY,
                                 ("Set logging level flags used by FFmpeg"),
-                                choices=Setup.OPT_LOGLEV, majorDimension=1,
+                                choices=Setup.FFMPEG_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
         sizerLog.Add(self.rdbFFmpeg, 0, wx.ALL | wx.EXPAND, 5)
         self.rdbFFplay = wx.RadioBox(
                                 tabFive, wx.ID_ANY,
                                 ("Set logging level flags used by FFplay"),
-                                choices=Setup.OPT_LOGLEV, majorDimension=1,
+                                choices=Setup.FFPLAY_LOGLEV, majorDimension=1,
                                 style=wx.RA_SPECIFY_COLS
                                      )
         sizerLog.Add(self.rdbFFplay, 0, wx.ALL | wx.EXPAND, 5)
