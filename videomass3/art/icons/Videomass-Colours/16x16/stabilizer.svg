@@ -51,7 +51,7 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="32.300638"
-     inkscape:cx="2.0286701"
+     inkscape:cx="-4.6120656"
      inkscape:cy="7.5401166"
      inkscape:window-x="24"
      inkscape:window-y="41"
@@ -62,7 +62,7 @@
        id="grid4510" />
   </sodipodi:namedview>
   <rect
-     style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#73d216;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect823"
      width="12"
      height="1.3412796"
@@ -74,14 +74,14 @@
      height="1.3412796"
      width="12"
      id="rect825"
-     style="opacity:1;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     style="opacity:1;fill:#73d216;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
      id="path817"
      d="m 6.9999971,4.9783458 v 1 h 3.0000039 v 3 h 1 v -4 z"
-     style="opacity:1;fill:#00bfff;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     style="opacity:1;fill:#4682b4;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <path
-     style="opacity:1;fill:#00bfff;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="opacity:1;fill:#4682b4;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="m 5.0000011,6.9783476 h 1 V 9.978346 h 3 v 1 h -4 z"
      id="path819"
      inkscape:connector-curvature="0" />

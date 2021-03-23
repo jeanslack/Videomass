@@ -44,9 +44,11 @@ class Vidstab(wx.Dialog):
     def __init__(self, parent, vidstabdetect,
                  vidstabtransform, unsharp, makeduo):
         """
+        parameters defined here:
         vidstabdetect parameters for pass one.
         vidstabtransform parameters for pass two
         unsharp parameters for pass two
+        makeduo, to produce another video for comparison
 
         """
         self.vidstabdetect = vidstabdetect
@@ -72,7 +74,7 @@ class Vidstab(wx.Dialog):
         sizerBase.Add(box_detect, 0, wx.ALL | wx.EXPAND, 5)
         Flex_detect1 = wx.FlexGridSizer(1, 6, 0, 0)
         box_detect.Add(Flex_detect1, 0, wx.ALL, 5)
-        lab_shake = wx.StaticText(self, wx.ID_ANY, (_("Shakiness:")))
+        lab_shake = wx.StaticText(self, wx.ID_ANY, ("Shakiness:"))
         Flex_detect1.Add(lab_shake, 0, wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_shake = wx.SpinCtrl(self, wx.ID_ANY, "5",
                                       min=1, max=10,
@@ -82,19 +84,19 @@ class Vidstab(wx.Dialog):
         Flex_detect1.Add(self.spin_shake, 0, wx.RIGHT |
                          wx.ALIGN_CENTER_VERTICAL, 15
                          )
-        lab_accuracy = wx.StaticText(self, wx.ID_ANY, (_("Accuracy:")))
+        lab_accuracy = wx.StaticText(self, wx.ID_ANY, ("Accuracy:"))
         Flex_detect1.Add(lab_accuracy, 0, wx.RIGHT |
                          wx.ALIGN_CENTER_VERTICAL, 2
                          )
         self.spin_accuracy = wx.SpinCtrl(self, wx.ID_ANY, "15",
-                                             min=1, max=15,
-                                             style=wx.TE_PROCESS_ENTER |
-                                             wx.SP_ARROW_KEYS
-                                             )
+                                         min=1, max=15,
+                                         style=wx.TE_PROCESS_ENTER |
+                                         wx.SP_ARROW_KEYS
+                                         )
         Flex_detect1.Add(self.spin_accuracy, 0, wx.RIGHT |
                          wx.ALIGN_CENTER_VERTICAL, 15
                          )
-        lab_stepsize = wx.StaticText(self, wx.ID_ANY, (_("Stepsize:")))
+        lab_stepsize = wx.StaticText(self, wx.ID_ANY, ("Stepsize:"))
         Flex_detect1.Add(lab_stepsize, 0, wx.RIGHT |
                          wx.ALIGN_CENTER_VERTICAL, 2
                          )
@@ -108,7 +110,7 @@ class Vidstab(wx.Dialog):
                          )
         Flex_detect2 = wx.FlexGridSizer(1, 4, 0, 0)
         box_detect.Add(Flex_detect2, 0, wx.ALL, 5)
-        lab_mincontr = wx.StaticText(self, wx.ID_ANY, (_("Mincontrast:")))
+        lab_mincontr = wx.StaticText(self, wx.ID_ANY, ("Mincontrast:"))
         Flex_detect2.Add(lab_mincontr, 0, wx.RIGHT |
                          wx.ALIGN_CENTER_VERTICAL, 2)
         self.spin_mincontr = FS.FloatSpin(self, wx.ID_ANY,
@@ -134,7 +136,7 @@ class Vidstab(wx.Dialog):
         sizerBase.Add(box_trans, 1, wx.ALL | wx.EXPAND, 5)
         flex_trans1 = wx.FlexGridSizer(1, 5, 0, 0)
         box_trans.Add(flex_trans1, 0, wx.ALL, 5)
-        self.lab_smooth = wx.StaticText(self, wx.ID_ANY, (_("Smoothing:")))
+        self.lab_smooth = wx.StaticText(self, wx.ID_ANY, ("Smoothing:"))
         flex_trans1.Add(self.lab_smooth, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 2
                         )
@@ -148,14 +150,14 @@ class Vidstab(wx.Dialog):
         self.rdb_optalgo = wx.RadioBox(self, wx.ID_ANY,
                                        (_("optalgo: Set the camera path "
                                           "optimization algorithm ")),
-                                        choices=[("gauss"), ("avg")],
-                                        majorDimension=1,
-                                        style=wx.RA_SPECIFY_ROWS
-                                        )
+                                       choices=[("gauss"), ("avg")],
+                                       majorDimension=1,
+                                       style=wx.RA_SPECIFY_ROWS
+                                       )
         flex_trans1.Add(self.rdb_optalgo, 0, wx.RIGHT |
-                     wx.ALIGN_CENTER_VERTICAL, 15
-                     )
-        self.lab_maxangle = wx.StaticText(self, wx.ID_ANY, (_("Maxangle:")))
+                        wx.ALIGN_CENTER_VERTICAL, 15
+                        )
+        self.lab_maxangle = wx.StaticText(self, wx.ID_ANY, ("Maxangle:"))
         flex_trans1.Add(self.lab_maxangle, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 2
                         )
@@ -167,35 +169,35 @@ class Vidstab(wx.Dialog):
                         wx.ALIGN_CENTER_VERTICAL, 5
                         )
         self.rdb_crop = wx.RadioBox(self, wx.ID_ANY,
-                                    (_("Crop: Specify how to deal with borders "
-                                        "that may be visible due to movement "
-                                        "compensation ")),
-                                        choices=[("keep"), ("black")],
-                                        majorDimension=1,
-                                        style=wx.RA_SPECIFY_ROWS
-                                        )
+                                    (_("Crop: Specify how to deal with "
+                                       "borders that may be visible due "
+                                       "to movement compensation ")),
+                                    choices=[("keep"), ("black")],
+                                    majorDimension=1,
+                                    style=wx.RA_SPECIFY_ROWS
+                                    )
         box_trans.Add(self.rdb_crop, 0, wx.ALL, 5)
-        lab = _("Invert transforms if checked (set to 1)")
+        lab = _("invert: Invert transforms if checked")
         self.ckbx_invert = wx.CheckBox(self, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_invert, 0, wx.ALL, 5)
-        lab = _("Consider transforms as relative to previous frame if "
-                "checked (set to 1), absolute if unchecked (set to 0)")
+        lab = _("relative: Consider transforms as relative to previous "
+                "frame if checked, absolute if unchecked")
         self.ckbx_relative = wx.CheckBox(self, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_relative, 0, wx.ALL, 5)
         flex_trans2 = wx.FlexGridSizer(1, 6, 0, 0)
         box_trans.Add(flex_trans2, 0, wx.ALL, 5)
-        self.lab_zoom = wx.StaticText(self, wx.ID_ANY, (_("Zoom:")))
+        self.lab_zoom = wx.StaticText(self, wx.ID_ANY, ("Zoom:"))
         flex_trans2.Add(self.lab_zoom, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 2
                         )
         self.spin_zoom = wx.SpinCtrl(self, wx.ID_ANY, "0", min=0,
-                                       max=100, style=wx.TE_PROCESS_ENTER |
-                                       wx.SP_ARROW_KEYS, size=(-1, -1)
-                                       )
+                                     max=100, style=wx.TE_PROCESS_ENTER |
+                                     wx.SP_ARROW_KEYS, size=(-1, -1)
+                                     )
         flex_trans2.Add(self.spin_zoom, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 15
                         )
-        self.lab_optzoom = wx.StaticText(self, wx.ID_ANY, (_("OptZoom:")))
+        self.lab_optzoom = wx.StaticText(self, wx.ID_ANY, ("OptZoom:"))
         flex_trans2.Add(self.lab_optzoom, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 2
                         )
@@ -206,7 +208,7 @@ class Vidstab(wx.Dialog):
         flex_trans2.Add(self.spin_optzoom, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 15
                         )
-        self.lab_zoomspeed = wx.StaticText(self, wx.ID_ANY, (_("Zoom speed:")))
+        self.lab_zoomspeed = wx.StaticText(self, wx.ID_ANY, ("Zoom speed:"))
         flex_trans2.Add(self.lab_zoomspeed, 0, wx.RIGHT |
                         wx.ALIGN_CENTER_VERTICAL, 2
                         )
@@ -227,7 +229,7 @@ class Vidstab(wx.Dialog):
                                         )
         self.rdb_interpol.SetSelection(2)
         box_trans.Add(self.rdb_interpol, 0, wx.ALL, 5)
-        lab = _("Enable virtual tripod mode if checked (set to 1), which "
+        lab = _("Enable virtual tripod mode if checked, which "
                 "is equivalent to relative=0:smoothing=0")
         self.ckbx_tripod2 = wx.CheckBox(self, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_tripod2, 0, wx.ALL, 5)
@@ -270,8 +272,8 @@ class Vidstab(wx.Dialog):
         # ---------------------- Tooltips
         # vidstabdetect
         tip = _('Set how shaky the video is and how quick the camera is. A '
-                'value of 1 means little shakiness, a value of 10 means strong '
-                'shakiness. Default value is 5.')
+                'value of 1 means little shakiness, a value of 10 means '
+                'strong shakiness. Default value is 5.')
         self.spin_shake.SetToolTip(tip)
         tip = _('Set the accuracy of the detection process. A value of 1 '
                 'means low accuracy, a value of 15 means high accuracy. '
@@ -530,9 +532,9 @@ class Vidstab(wx.Dialog):
             self.rdb_crop.Enable(), self.ckbx_invert.Enable()
             self.ckbx_relative.Enable(), self.spin_zoom.Enable()
             self.spin_optzoom.Enable()
-            #self.spin_zoomspeed.Enable()
+            # self.spin_zoomspeed.Enable()
             self.rdb_interpol.Enable()
-            #self.ckbx_tripod2.Enable()
+            # self.ckbx_tripod2.Enable()
             self.txt_unsharp.Enable()
             self.ckbx_duo.Enable()
         else:
@@ -597,7 +599,7 @@ class Vidstab(wx.Dialog):
         zoom = self.spin_zoom.GetValue()
         optzoom = self.spin_optzoom.GetValue()
         zoomspeed = self.spin_zoomspeed.GetValue()
-        interpol = self.rdb_interpol.GetString(self.rdb_interpol.GetSelection())
+        interp = self.rdb_interpol.GetString(self.rdb_interpol.GetSelection())
 
         vidstabdetect = ('vidstabdetect=shakiness=%s:'
                          'accuracy=%s:'
@@ -620,7 +622,7 @@ class Vidstab(wx.Dialog):
                             'interpol=%s:'
                             'tripod=%s' % (smoothing, optalgo, maxangle,
                                            crop, invert, relative, zoom,
-                                           optzoom, zoomspeed, interpol,
+                                           optzoom, zoomspeed, interp,
                                            tripod2)
                             )
         unsharp = self.txt_unsharp.GetValue()

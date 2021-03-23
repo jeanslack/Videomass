@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Name: video_stabilization.py
-# Porpose: FFmpeg long processing task 2 pass vidstab
+# Porpose: FFmpeg long processing vidstab
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -100,7 +100,7 @@ class VidStab(Thread):
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
         if len(varargs[6].split(',')) > 2:  # other filters enabled
-            self.addflt = '%s,' %  ','.join(varargs[6].split(',')[2:])
+            self.addflt = '%s,' % (','.join(varargs[6].split(',')[2:]))
         else:
             self.addflt = ''
 
@@ -216,17 +216,17 @@ class VidStab(Thread):
             # --------------- second pass ----------------#
             pass2 = ('"%s" %s %s -i "%s" %s %s %s '
                      '-y "%s/%s%s.%s"' % (VidStab.FFMPEG_URL,
-                                                 VidStab.FFMPEG_LOGLEV,
-                                                 self.time_seq,
-                                                 files,
-                                                 self.passList[1],
-                                                 volume,
-                                                 VidStab.FF_THREADS,
-                                                 folders,
-                                                 filename,
-                                                 VidStab.SUFFIX,
-                                                 outext,
-                                                 ))
+                                          VidStab.FFMPEG_LOGLEV,
+                                          self.time_seq,
+                                          files,
+                                          self.passList[1],
+                                          volume,
+                                          VidStab.FF_THREADS,
+                                          folders,
+                                          filename,
+                                          VidStab.SUFFIX,
+                                          outext,
+                                          ))
             count = ('File %s/%s - Pass Two: Video transform' % (
                      self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
@@ -291,23 +291,23 @@ class VidStab(Thread):
             # --------------- make duo ----------------#
             if self.makeduo:
                 pass3 = ('"%s" %s %s -i "%s" %s -vf "[in] %spad=2*iw:ih '
-                        '[left]; movie=%s/%s%s.%s [right]; '
-                        '[left][right] overlay=main_w/2:0 [out]" '
-                        '-y "%s/%s%s_DUO.%s"' % (VidStab.FFMPEG_URL,
-                                                 VidStab.FFMPEG_LOGLEV,
-                                                 self.time_seq,
-                                                 files,
-                                                 VidStab.FF_THREADS,
-                                                 self.addflt,
-                                                 folders,
-                                                 filename,
-                                                 VidStab.SUFFIX,
-                                                 outext,
-                                                 folders,
-                                                 filename,
-                                                 VidStab.SUFFIX,
-                                                 outext,
-                                                 ))
+                         '[left]; movie=%s/%s%s.%s [right]; '
+                         '[left][right] overlay=main_w/2:0 [out]" '
+                         '-y "%s/%s%s_DUO.%s"' % (VidStab.FFMPEG_URL,
+                                                  VidStab.FFMPEG_LOGLEV,
+                                                  self.time_seq,
+                                                  files,
+                                                  VidStab.FF_THREADS,
+                                                  self.addflt,
+                                                  folders,
+                                                  filename,
+                                                  VidStab.SUFFIX,
+                                                  outext,
+                                                  folders,
+                                                  filename,
+                                                  VidStab.SUFFIX,
+                                                  outext,
+                                                  ))
                 count = 'File %s/%s - Make duo' % (self.count, self.countmax,)
                 cmd = "%s\n%s" % (count, pass3)
                 wx.CallAfter(pub.sendMessage,
