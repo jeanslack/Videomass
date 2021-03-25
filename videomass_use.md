@@ -8,6 +8,7 @@
 ## Video tutorials and screencasts
 
 <iframe width="358" height="201" src="https://www.youtube.com/embed/NlV3XuIlsn4" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="350" height="267" src="https://www.youtube.com/embed/1IRGWN7DQKE" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## User Guide (old stuff)  
 - [Startup](Pages/Startup/Startup.md)

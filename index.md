@@ -9,7 +9,7 @@
 * [Wiki](https://github.com/jeanslack/Videomass/wiki)
 
 ## Get Help
-* [User Guide (multi languages)](videomass_use.md)
+* [User guide, video examples and screencasts](videomass_use.md)
 <!--* [Tips and Tricks](tips_and_tricks.md)-->
 * [Known problems](known_problems.md)
 
