@@ -6,7 +6,8 @@
 - [Italian](Pages/User-guide-languages/it/Index_it.md)
 
 ## Video tutorials and screencasts
-- [![Test Videomass YouTube channel](https://img.youtube.com/vi/NlV3XuIlsn4/0.jpg)](https://www.youtube.com/watch?v=NlV3XuIlsn4)
+
+<iframe width="716" height="403" src="https://www.youtube.com/embed/NlV3XuIlsn4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## User Guide (old stuff)  
 - [Startup](Pages/Startup/Startup.md)
