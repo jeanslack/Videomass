@@ -5,6 +5,9 @@
 - [Russian](Pages/User-guide-languages/ru/Index_ru.md)
 - [Italian](Pages/User-guide-languages/it/Index_it.md)
 
+## Video tutorials and screencasts
+- [![Test Videomass YouTube channel](https://img.youtube.com/vi/NlV3XuIlsn4/0.jpg)](https://www.youtube.com/watch?v=NlV3XuIlsn4)
+
 ## User Guide (old stuff)  
 - [Startup](Pages/Startup/Startup.md)
   * [Setup (preferences)](Pages/Startup/Setup.md)
