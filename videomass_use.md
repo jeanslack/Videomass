@@ -8,10 +8,10 @@
 ## Demonstration videos and screencasts
 
 ### How to trim using the Timeline tool  
-<iframe width="350" height="267" src="https://www.youtube.com/embed/1IRGWN7DQKE" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="200" height="153" src="https://www.youtube.com/embed/1IRGWN7DQKE" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### How to trim without re-encoding (preserving the same quality)
-<iframe width="350" height="267" src="https://www.youtube.com/embed/ewi3uwRUgVI" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+<iframe width="200" height="153" src="https://www.youtube.com/embed/ewi3uwRUgVI" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
 
 
 ## User Guide (old stuff)  
