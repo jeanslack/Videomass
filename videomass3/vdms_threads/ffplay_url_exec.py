@@ -217,7 +217,7 @@ class Exec_Download_Stream(Thread):
         """
         write ffplay command log
         """
-        with open(self.logf, "a") as log:
+        with open(self.logf, "a", encoding='utf-8') as log:
             log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
@@ -225,7 +225,7 @@ class Exec_Download_Stream(Thread):
         """
         write ffplay errors
         """
-        with open(self.logf, "a") as logerr:
+        with open(self.logf, "a", encoding='utf-8') as logerr:
             logerr.write("\n[FFMPEG] FFplay "
                          "ERRORS:\n%s\n" % (error))
 # ------------------------------------------------------------------------#
@@ -244,9 +244,10 @@ class Exec_Streaming(object):
     """
     DOWNLOAD = None  # set instance thread
     TIMESTAMP = None
+    AUTOEXIT = None
     # ---------------------------------------------------------------#
 
-    def __init__(self, timestamp, url=None, quality=None):
+    def __init__(self, timestamp, autoexit, url=None, quality=None):
         """
         - Topic "START_FFPLAY_EVT" subscribes the start playing
           running ffplay at a certain time.
@@ -261,6 +262,7 @@ class Exec_Streaming(object):
 
         Exec_Streaming.DOWNLOAD = Exec_Download_Stream(url, quality)
         Exec_Streaming.TIMESTAMP = timestamp
+        Exec_Streaming.AUTOEXIT = autoexit
 
         self.start_download()
     # ----------------------------------------------------------------#
@@ -295,5 +297,6 @@ def start_palying_listener(output):
     ffplay in at a given time.
 
     """
-    IO_tools.stream_play(output, '', Exec_Streaming.TIMESTAMP)
+    IO_tools.stream_play(output, '', Exec_Streaming.TIMESTAMP,
+                         Exec_Streaming.AUTOEXIT)
     return

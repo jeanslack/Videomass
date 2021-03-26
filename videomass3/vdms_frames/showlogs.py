@@ -165,7 +165,8 @@ class ShowLogs(wx.MiniFrame):
                          wx.YES_NO, self) == wx.NO:
             return
 
-        with open(os.path.join(self.dirlog, name), 'w') as log:
+        with open(os.path.join(self.dirlog, name),
+                  'w', encoding='utf-8') as log:
             log.write('')
 
         self.on_update(self)
@@ -181,7 +182,8 @@ class ShowLogs(wx.MiniFrame):
         index = 0
         for f in os.listdir(self.dirlog):
             if os.path.basename(f) in ShowLogs.LOGNAMES:  # append listed only
-                with open(os.path.join(self.dirlog, f), 'r') as log:
+                with open(os.path.join(self.dirlog, f),
+                          'r', encoding='utf-8') as log:
                     self.logdata[f] = log.read()  # set value
                     self.log_select.InsertItem(index, f)
                 index += 1

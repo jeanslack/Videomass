@@ -96,11 +96,11 @@ class Videomass(wx.App):
         data = Data_Source()  # user-space and UI settings
         setui = data.get_fileconf()  # get required data
         # locale
-        lang = ''
+        lang = 'en'
         self.locale = None
         wx.Locale.AddCatalogLookupPathPrefix(setui[5])
         self.updateLanguage(lang)
-        self.GETlang = self.locale.GetName()
+        #self.GETlang = self.locale.GetName()
 
         if setui[2]:  # copyerr = True; the share folder is damaged
             wx.MessageBox(_('{0}\n\nSorry, cannot continue..'.format(

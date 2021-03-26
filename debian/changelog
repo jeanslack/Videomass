@@ -1,4 +1,4 @@
-videomass (3.3.9-1) UNRELEASED; urgency=medium
+videomass (3.4.0-1) UNRELEASED; urgency=medium
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
@@ -22,8 +22,10 @@ videomass (3.3.9-1) UNRELEASED; urgency=medium
     for now)
   * Fixed #17
   * Translated into Dutch, thanks to Roelof Berkepeis
+  * Reading and writing files now has encoding 'utf-8'
+  * AV-Conversions: new video stabilizer filter
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 17 Mar 2021 19:47:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 26 Mar 2021 16:40:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

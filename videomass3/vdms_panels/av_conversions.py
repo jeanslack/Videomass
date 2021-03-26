@@ -1178,7 +1178,9 @@ class AV_Conv(wx.Panel):
         else:
             flt = flt
 
-        stream_play(self.parent.file_src[fget[1]], self.time_seq, flt)
+        stream_play(self.parent.file_src[fget[1]], self.time_seq,
+                    flt, self.parent.autoexit
+                    )
     # ------------------------------------------------------------------#
 
     def on_FiltersClear(self, event, disablevidstab=None):

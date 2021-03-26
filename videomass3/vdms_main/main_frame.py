@@ -125,6 +125,7 @@ class MainFrame(wx.Frame):
         self.duration = []  # empty if not file imported
         self.topicname = None  # panel name shown
         self.checktimestamp = True  # show timestamp during playback
+        self.autoexit = True  # set autoexit during ffplay playback
         # set fontconfig for timestamp
         if MainFrame.OS == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
@@ -340,7 +341,7 @@ class MainFrame(wx.Frame):
                 return
             pathname = fileDialog.GetPath()
 
-        IO_tools.stream_play(pathname, '', tstamp)
+        IO_tools.stream_play(pathname, '', tstamp, self.autoexit)
     # ------------------------------------------------------------------#
 
     def Saveprofile(self, event):
@@ -538,12 +539,18 @@ class MainFrame(wx.Frame):
                  _("Change the size and color of the timestamp "
                    "during playback"))
         tscustomize = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
-        setupButton.AppendSeparator()
+        dscrp = (_("Auto-exit after playback"),
+                 _("If checked, the FFplay window will auto-close at the "
+                   "end of playback"))
+        self.exitplayback = setupButton.Append(wx.ID_ANY, dscrp[0], dscrp[1],
+                                               kind=wx.ITEM_CHECK)
 
+        setupButton.AppendSeparator()
         setupItem = setupButton.Append(wx.ID_PREFERENCES,
                                        _("Preferences\tCtrl+P"),
                                        _("Application preferences"))
         self.menuBar.Append(setupButton, _("Settings"))
+        self.menuBar.Check(self.exitplayback.GetId(), True)
 
         # ------------------ help menu
         helpButton = wx.Menu()
@@ -607,6 +614,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.on_Ytdlfsave, setdownload_tmp)
         self.Bind(wx.EVT_MENU, self.on_Resetfolders_tmp, self.resetfolders_tmp)
         self.Bind(wx.EVT_MENU, self.timestampCustomize, tscustomize)
+        self.Bind(wx.EVT_MENU, self.autoexitFFplay, self.exitplayback)
 
         self.Bind(wx.EVT_MENU, self.Setup, setupItem)
         # ----HELP----
@@ -806,7 +814,7 @@ class MainFrame(wx.Frame):
                                 os.path.dirname(presetsrecovery),
                                 os.path.dirname(os.path.dirname(presetsdir)))
 
-        with open(presetsdir, "r") as vers:
+        with open(presetsdir, "r", encoding='utf-8') as vers:
             fread = vers.read().strip()
 
         newversion = IO_tools.get_github_releases(url, "tag_name")
@@ -1156,6 +1164,15 @@ class MainFrame(wx.Frame):
         else:
             dialog.Destroy()
             return
+    # ------------------------------------------------------------------#
+
+    def autoexitFFplay(self, event):
+        """
+        set boolean value to self.autoexit attribute to allow
+        autoexit at the end of playback
+
+        """
+        self.autoexit = True if self.exitplayback.IsChecked() else False
     # ------------------------------------------------------------------#
 
     def Setup(self, event):

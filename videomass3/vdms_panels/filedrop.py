@@ -318,7 +318,9 @@ class FileDnD(wx.Panel):
                 tstamp = '-vf "%s"' % (self.parent.cmdtimestamp)
             else:
                 tstamp = ""
-            IO_tools.stream_play(item, self.parent.time_seq, tstamp)
+            IO_tools.stream_play(item, self.parent.time_seq,
+                                 tstamp, self.parent.autoexit
+                                 )
     # ----------------------------------------------------------------------
 
     def delSelect(self, event):

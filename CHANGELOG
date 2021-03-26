@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 17, 2021 V.3.3.9
+Mar 26, 2021 V.3.4.0
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
@@ -31,6 +31,8 @@ Mar 17, 2021 V.3.3.9
     for now)
   * Fixed #17
   * Translated into Dutch, thanks to Roelof Berkepeis
+  * Reading and writing files now has encoding 'utf-8'
+  * AV-Conversions: new video stabilizer filter
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8

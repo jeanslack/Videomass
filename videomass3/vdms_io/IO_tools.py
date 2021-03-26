@@ -75,7 +75,7 @@ def stream_info(title, filepath):
 # -----------------------------------------------------------------------#
 
 
-def stream_play(filepath, tseq, param):
+def stream_play(filepath, tseq, param, autoexit):
     """
     Call Thread for playback with ffplay
     """
@@ -88,7 +88,8 @@ def stream_play(filepath, tseq, param):
                                param,
                                get.LOGdir,
                                get.FFPLAY_url,
-                               get.FFPLAY_loglev
+                               get.FFPLAY_loglev,
+                               autoexit
                                )
             # thread.join() > attende fine thread, se no ritorna subito
             # error = thread.data
@@ -99,7 +100,7 @@ def stream_play(filepath, tseq, param):
 # -----------------------------------------------------------------------#
 
 
-def url_play(url, quality, timestamp):
+def url_play(url, quality, timestamp, autoexit):
     """
     directs to the corresponding thread for playing
     online media streams.
@@ -117,7 +118,7 @@ def url_play(url, quality, timestamp):
     get = wx.GetApp()  # get data from bootstrap
     youtube_dl = get.pylibYdl
 
-    dowl = ffplay_url_exec.Exec_Streaming(timestamp, url, quality)
+    dowl = ffplay_url_exec.Exec_Streaming(timestamp, autoexit, url, quality)
     """
     if youtube_dl is not None:  # run youtube-dl executable
         dowl = ffplay_url_exec.Exec_Streaming(url, quality)
@@ -469,7 +470,7 @@ def appimage_update_youtube_dl(appimage):
         return update
 
     ret = None
-    with open(log, 'r') as f:
+    with open(log, 'r', encoding='utf-8') as f:
         for line in f:
             if '**Successfully updated**\n' in line:
                 ret = 'success'

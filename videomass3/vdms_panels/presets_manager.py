@@ -852,7 +852,7 @@ class PrstPan(wx.Panel):
                 return
             filename = "%s.prst" % fileDialog.GetPath()
             try:
-                with open(filename, 'w') as file:
+                with open(filename, 'w', encoding='utf-8') as file:
                     file.write('[]')
             except IOError:
                 wx.LogError(_("Cannot save current "

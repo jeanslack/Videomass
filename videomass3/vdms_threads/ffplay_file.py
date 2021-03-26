@@ -56,7 +56,7 @@ class File_Play(Thread):
 
     """
     def __init__(self, filepath, timeseq, param, logdir,
-                 ffplay_url, ffplay_loglev):
+                 ffplay_url, ffplay_loglev, autoexit):
         """
         The self.FFPLAY_loglevel has flag 'error -hide_banner' by default,
         see videomass.conf for details.
@@ -69,6 +69,7 @@ class File_Play(Thread):
         logdir = logdir
         self.ffplay = ffplay_url
         self.ffplay_loglev = ffplay_loglev
+        self.autoexit = '-autoexit' if autoexit is True else ''
         self.logf = os.path.join(logdir, 'ffplay.log')
         write_log('ffplay.log', logdir)
         # set initial file LOG
@@ -86,9 +87,10 @@ class File_Play(Thread):
 
         """
         # time.sleep(.5)
-        cmd = '"%s" %s %s -i "%s" %s' % (self.ffplay,
+        cmd = '"%s" %s %s %s -i "%s" %s' % (self.ffplay,
                                          self.time_seq,
                                          self.ffplay_loglev,
+                                         self.autoexit,
                                          self.filename,
                                          self.param
                                          )
@@ -135,7 +137,7 @@ class File_Play(Thread):
         """
         write ffplay command log
         """
-        with open(self.logf, "a") as log:
+        with open(self.logf, "a", encoding='utf-8') as log:
             log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
@@ -143,6 +145,6 @@ class File_Play(Thread):
         """
         write ffplay errors
         """
-        with open(self.logf, "a") as logerr:
+        with open(self.logf, "a", encoding='utf-8') as logerr:
             logerr.write("\n[FFMPEG] FFplay "
                          "OUTPUT:\n%s\n" % (error))
