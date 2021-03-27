@@ -66,7 +66,7 @@ class Vidstab(wx.Dialog):
                                        _('Enable stabilizer'))
         flex_General.Add(self.ckbx_enable, 0, wx.ALL | wx.CENTER, 2)
         self.ckbx_duo = wx.CheckBox(self, wx.ID_ANY,
-                                    _('Generates duo file for comparison'))
+                                    _('Generates duo video for comparison'))
         flex_General.Add(self.ckbx_duo, 0, wx.ALL | wx.CENTER, 2)
         # Box detect
         box_detect = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, (
@@ -126,7 +126,7 @@ class Vidstab(wx.Dialog):
                          wx.ALIGN_CENTER_VERTICAL, 15
                          )
         Flex_detect2.Add((15, 0), 0, wx.ALL, 5)
-        lab = _("Set reference frame number for tripod mode")
+        lab = _("[TRIPOD] Enable tripod mode if checked")
         self.ckbx_tripod1 = wx.CheckBox(self, wx.ID_ANY, lab)
         Flex_detect2.Add(self.ckbx_tripod1, 0, wx.ALL |
                          wx.ALIGN_CENTER_VERTICAL, 5
@@ -150,8 +150,7 @@ class Vidstab(wx.Dialog):
                         wx.ALIGN_CENTER_VERTICAL, 15
                         )
         self.rdb_optalgo = wx.RadioBox(self, wx.ID_ANY,
-                                       (_("optalgo: Set the camera path "
-                                          "optimization algorithm ")),
+                                       (_("[OPTALGO] optimization algorithm")),
                                        choices=[("gauss"), ("avg")],
                                        majorDimension=1,
                                        style=wx.RA_SPECIFY_ROWS
@@ -171,18 +170,17 @@ class Vidstab(wx.Dialog):
                         wx.ALIGN_CENTER_VERTICAL, 5
                         )
         self.rdb_crop = wx.RadioBox(self, wx.ID_ANY,
-                                    (_("crop: Specify how to deal with "
-                                       "borders that may be visible due "
-                                       "to movement compensation ")),
+                                    (_("[CROP] Specify how to deal borders "
+                                        "at movement compensation")),
                                     choices=[("keep"), ("black")],
                                     majorDimension=1,
                                     style=wx.RA_SPECIFY_ROWS
                                     )
         box_trans.Add(self.rdb_crop, 0, wx.ALL, 5)
-        lab = _("invert: Invert transforms if checked")
+        lab = _("[INVERT] Invert transforms if checked")
         self.ckbx_invert = wx.CheckBox(self, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_invert, 0, wx.ALL, 5)
-        lab = _("relative: Consider transforms as relative to previous "
+        lab = _("[RELATIVE] Consider transforms as relative to previous "
                 "frame if checked, absolute if unchecked")
         self.ckbx_relative = wx.CheckBox(self, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_relative, 0, wx.ALL, 5)
@@ -223,7 +221,7 @@ class Vidstab(wx.Dialog):
         self.spin_zoomspeed.SetDigits(2)
         flex_trans2.Add(self.spin_zoomspeed, 0, wx.RIGHT, 5)
         self.rdb_interpol = wx.RadioBox(self, wx.ID_ANY,
-                                        (_("Specify type of interpolation ")),
+                                        (_("Specify type of interpolation")),
                                         choices=[("no"), ("linear"),
                                                  ("bilinear"), ("bicubic")],
                                         majorDimension=1,
@@ -231,8 +229,8 @@ class Vidstab(wx.Dialog):
                                         )
         self.rdb_interpol.SetSelection(2)
         box_trans.Add(self.rdb_interpol, 0, wx.ALL, 5)
-        lab = _("Enable virtual tripod mode if checked, which "
-                "is equivalent to relative=0:smoothing=0")
+        lab = _("[TRIPOD2] virtual tripod mode, equivalent to "
+                "relative=unchecked:smoothing=0")
         self.ckbx_tripod2 = wx.CheckBox(self, wx.ID_ANY, lab)
         box_trans.Add(self.ckbx_tripod2, 0, wx.ALL, 5)
         flex_trans3 = wx.FlexGridSizer(1, 2, 0, 0)
@@ -286,7 +284,7 @@ class Vidstab(wx.Dialog):
                 'is 6.')
         self.spin_stepsize.SetToolTip(tip)
         tip = _('Set minimum contrast. Below this value a local measurement '
-                'field is discarded. The range is 0-1. Default value is 0.3. ')
+                'field is discarded. The range is 0-1. Default value is 0.25. ')
         self.spin_mincontr.SetToolTip(tip)
         tip = _('Set reference frame number for tripod mode. If enabled, the '
                 'motion of the frames is compared to a reference frame in '
@@ -295,9 +293,6 @@ class Vidstab(wx.Dialog):
                 'static scene and keep the camera view absolutely still. '
                 'The frames are counted starting from 1.')
         self.ckbx_tripod1.SetToolTip(tip)
-        tip = _('Set how shaky the video is and how quick the camera is. A '
-                'value of 1 means little shakiness, a value of 10 means '
-                'strong shakiness. Default value is 5.')
 
         # vidstabtransform
         tip = _('Set the number of frames (value*2 + 1) used for lowpass '
@@ -317,7 +312,7 @@ class Vidstab(wx.Dialog):
         self.spin_maxangle.SetToolTip(tip)
         tip = _('Specify how to deal with borders that may be visible due to '
                 'movement compensation. Values are: ‘keep’ keep image '
-                'information from previous frame (default) ‘black’ fill the '
+                'information from previous frame (default), ‘black’ fill the '
                 'border black')
         self.rdb_crop.SetToolTip(tip)
         tip = _('Invert transforms if checked. Default is unchecked.')

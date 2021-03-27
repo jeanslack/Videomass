@@ -574,7 +574,7 @@ class AV_Conv(wx.Panel):
         self.btn_denois.SetBitmap(bmpdenoiser, wx.LEFT)
         sizer_Vfilter.Add(self.btn_denois, 0, wx.ALL | wx.EXPAND, 5)
         self.btn_vidstab = wx.Button(self.filterVpanel, wx.ID_ANY,
-                                     _("Stabilizer (anti-shaker)"), size=(-1, -1))
+                                     _("Stabilizer"), size=(-1, -1))
         self.btn_vidstab.SetBitmap(bmpstab, wx.LEFT)
         sizer_Vfilter.Add(self.btn_vidstab, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -1163,8 +1163,9 @@ class AV_Conv(wx.Panel):
             if len(self.opt["VFilters"].split(',')) == 2:
                 return
 
-            flt = '-vf %s' % (','.join(self.opt["VFilters"].split(',')[2:]))
-
+            flt = ','.join([x for x in self.opt["VFilters"].split(',') if
+                            'vidstabtransform' not in x and 'unsharp'
+                            not in x])
         else:
             flt = self.opt["VFilters"]
 
@@ -1305,8 +1306,8 @@ class AV_Conv(wx.Panel):
         else:
             unsharp = ''
 
-        f = (stab + unsharp + lacing + size + dar +
-             sar + crop + rotate + denoiser)
+        f = (lacing + denoiser + stab + unsharp + crop + size + dar +
+             sar + rotate)
         if f:
             lengh = len(f)
             filters = '%s' % f[:lengh - 1]

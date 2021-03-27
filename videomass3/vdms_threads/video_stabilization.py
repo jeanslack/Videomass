@@ -99,10 +99,11 @@ class VidStab(Thread):
         self.logname = logname  # title name of file log
         self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
 
-        if len(varargs[6].split(',')) > 2:  # other filters enabled
-            self.addflt = '%s,' % (','.join(varargs[6].split(',')[2:]))
-        else:
-            self.addflt = ''
+        spl = [s for s in varargs[6].split('-vf ')][1]
+        addspl = ','.join([x for x in spl.split(',') if '-vf' not
+                           in x and 'vidstabtransform' not in x and
+                           'unsharp' not in x])  # if other filters
+        self.addflt = '' if addspl == '' else '%s,' % (addspl)
 
         Thread.__init__(self)
         """initialize"""
@@ -273,7 +274,7 @@ class VidStab(Thread):
                              "Exit status: %s" % p2.wait(),
                              self.logname,
                              VidStab.LOGDIR,
-                             )  # append exit error number
+                             )  # append exit status error
 
             if self.stop_work_thread:  # break first 'for' loop
                 p2.terminate()

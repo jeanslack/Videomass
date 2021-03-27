@@ -32,7 +32,10 @@ Mar 26, 2021 V.3.4.0
   * Fixed #17
   * Translated into Dutch, thanks to Roelof Berkepeis
   * Reading and writing files now has encoding 'utf-8'
-  * AV-Conversions: new video stabilizer filter
+  * AV-Conversions: new video stabilizer filter GUI
+  * AV-Conversions: resizing filter, fixed some incorrect values on displays
+    after setting.
+  * AV-Conversions: filter chain order Re-defined
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8

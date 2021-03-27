@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-26 16:42+0100\n"
-"PO-Revision-Date: 2021-03-26 16:43+0100\n"
+"POT-Creation-Date: 2021-03-27 17:50+0100\n"
+"PO-Revision-Date: 2021-03-27 17:51+0100\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -120,14 +120,14 @@ msgstr "Larghezza"
 
 #: ../vdms_dialogs/filter_crop.py:255 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:188
-#: ../vdms_dialogs/filter_stab.py:263 ../vdms_dialogs/filter_transpose.py:109
+#: ../vdms_dialogs/filter_stab.py:261 ../vdms_dialogs/filter_transpose.py:109
 #: ../vdms_panels/av_conversions.py:546
 msgid "Reset"
 msgstr "Azzera"
 
 #: ../vdms_dialogs/filter_crop.py:259 ../vdms_dialogs/filter_deinterlace.py:119
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:186
-#: ../vdms_dialogs/filter_stab.py:261 ../vdms_dialogs/filter_transpose.py:113
+#: ../vdms_dialogs/filter_stab.py:259 ../vdms_dialogs/filter_transpose.py:113
 #: ../vdms_dialogs/set_timestamp.py:145
 msgid "Apply"
 msgstr "Applica"
@@ -376,80 +376,93 @@ msgid "Enable stabilizer"
 msgstr "Abilita lo stabilizzatore"
 
 #: ../vdms_dialogs/filter_stab.py:69
-msgid "Generates duo file for comparison"
-msgstr ""
+msgid "Generates duo video for comparison"
+msgstr "Genera un video duo per comparazione"
 
 #: ../vdms_dialogs/filter_stab.py:73
 msgid "Video Detect"
 msgstr "Rilevamento"
 
 #: ../vdms_dialogs/filter_stab.py:129
-msgid "Set reference frame number for tripod mode"
-msgstr ""
+msgid "[TRIPOD] Enable tripod mode if checked"
+msgstr "[TRIPOD] Abilita la modalità treppiede"
 
 #: ../vdms_dialogs/filter_stab.py:137
 msgid "Video transform"
 msgstr "Trasformazione"
 
 #: ../vdms_dialogs/filter_stab.py:153
-msgid "optalgo: Set the camera path optimization algorithm "
-msgstr ""
+msgid "[OPTALGO] optimization algorithm"
+msgstr "[OPTALGO] algoritmo di ottimizzazione"
 
-#: ../vdms_dialogs/filter_stab.py:174
+#: ../vdms_dialogs/filter_stab.py:173
+msgid "[CROP] Specify how to deal borders at movement compensation"
+msgstr ""
+"[CROP] Specificare come trattare i bordi alla compensazione del movimento"
+
+#: ../vdms_dialogs/filter_stab.py:180
+msgid "[INVERT] Invert transforms if checked"
+msgstr "[INVERT] Inverti trasformazioni se abilitato"
+
+#: ../vdms_dialogs/filter_stab.py:183
 msgid ""
-"crop: Specify how to deal with borders that may be visible due to movement "
-"compensation "
-msgstr ""
-
-#: ../vdms_dialogs/filter_stab.py:182
-msgid "invert: Invert transforms if checked"
-msgstr ""
-
-#: ../vdms_dialogs/filter_stab.py:185
-msgid ""
-"relative: Consider transforms as relative to previous frame if checked, "
+"[RELATIVE] Consider transforms as relative to previous frame if checked, "
 "absolute if unchecked"
 msgstr ""
+"[RELATIVE] Considera le trasformazioni come relative al frame precedente se "
+"abilitato, assoluto se disabilitato"
 
-#: ../vdms_dialogs/filter_stab.py:226
-msgid "Specify type of interpolation "
-msgstr ""
+#: ../vdms_dialogs/filter_stab.py:224
+msgid "Specify type of interpolation"
+msgstr "Specificare il tipo di interpolazione"
 
-#: ../vdms_dialogs/filter_stab.py:234
+#: ../vdms_dialogs/filter_stab.py:232
 msgid ""
-"Enable virtual tripod mode if checked, which is equivalent to relative=0:"
-"smoothing=0"
+"[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr ""
+"[TRIPOD2] modalità treppiede virtuale, equivale a relative=disabilitato: "
+"smoothing=0"
 
-#: ../vdms_dialogs/filter_stab.py:241
+#: ../vdms_dialogs/filter_stab.py:239
 msgid "Unsharp filter:"
 msgstr "Filtro unsharp:"
 
-#: ../vdms_dialogs/filter_stab.py:276 ../vdms_dialogs/filter_stab.py:298
+#: ../vdms_dialogs/filter_stab.py:274
 msgid ""
 "Set how shaky the video is and how quick the camera is. A value of 1 means "
 "little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
+"Imposta quanto è mosso il video e quanto è veloce la fotocamera. Un valore "
+"di 1 significa poco tremolio, un valore di 10 significa forte tremolio. Il "
+"valore predefinito è 5."
 
-#: ../vdms_dialogs/filter_stab.py:280
+#: ../vdms_dialogs/filter_stab.py:278
 msgid ""
 "Set the accuracy of the detection process. A value of 1 means low accuracy, "
 "a value of 15 means high accuracy. Default value is 15."
 msgstr ""
+"Imposta la precisione del processo di rilevamento. Un valore di 1 significa "
+"bassa precisione, un valore di 15 significa alta precisione. Il valore "
+"predefinito è 15."
 
-#: ../vdms_dialogs/filter_stab.py:284
+#: ../vdms_dialogs/filter_stab.py:282
 msgid ""
 "Set stepsize of the search process. The region around minimum is scanned "
 "with 1 pixel resolution. Default value is 6."
 msgstr ""
+"Imposta la dimensione del processo di ricerca. La regione intorno al minimo "
+"viene scansionata con una risoluzione di 1 pixel. Il valore predefinito è 6."
 
-#: ../vdms_dialogs/filter_stab.py:288
+#: ../vdms_dialogs/filter_stab.py:286
 msgid ""
 "Set minimum contrast. Below this value a local measurement field is "
-"discarded. The range is 0-1. Default value is 0.3. "
+"discarded. The range is 0-1. Default value is 0.25. "
 msgstr ""
+"Imposta il contrasto minimo. Al di sotto di questo valore viene scartato un "
+"campo di misurazione locale. L'intervallo è 0-1. Il valore predefinito è "
+"0.25. "
 
-#: ../vdms_dialogs/filter_stab.py:291
+#: ../vdms_dialogs/filter_stab.py:289
 msgid ""
 "Set reference frame number for tripod mode. If enabled, the motion of the "
 "frames is compared to a reference frame in the filtered stream, identified "
@@ -457,8 +470,14 @@ msgid ""
 "or-less static scene and keep the camera view absolutely still. The frames "
 "are counted starting from 1."
 msgstr ""
+"Imposta il numero del fotogramma di riferimento per la modalità treppiede. "
+"Se abilitato, il movimento dei frame viene confrontato con un frame di "
+"riferimento nello stream filtrato, identificato dal numero specificato. "
+"L'idea è di compensare tutti i movimenti in una scena più o meno statica e "
+"mantenere la visuale della telecamera assolutamente ferma. I frame vengono "
+"conteggiati a partire da 1."
 
-#: ../vdms_dialogs/filter_stab.py:303
+#: ../vdms_dialogs/filter_stab.py:298
 msgid ""
 "Set the number of frames (value*2 + 1) used for lowpass filtering the camera "
 "movements. Default value is 15. For example a number of 10 means that 21 "
@@ -467,44 +486,69 @@ msgid ""
 "acceleration of the camera (pan/tilt movements). 0 is a special case where a "
 "static camera is simulated."
 msgstr ""
+"Imposta il numero di fotogrammi (valore * 2 + 1) utilizzati per il "
+"filtraggio passa-basso dei movimenti della telecamera. Il valore predefinito "
+"è 15. Ad esempio, un numero di 10 significa che vengono utilizzati 21 "
+"fotogrammi (10 in passato e 10 in futuro) per rendere più uniforme il "
+"movimento nel video. Un valore maggiore porta a un video più fluido, ma "
+"limita l'accelerazione della telecamera (movimenti di panoramica / "
+"inclinazione). 0 è un caso speciale in cui viene simulata una telecamera "
+"statica."
 
-#: ../vdms_dialogs/filter_stab.py:311
+#: ../vdms_dialogs/filter_stab.py:306
 msgid ""
 "Set the camera path optimization algorithm. Values are: ‘gauss’: gaussian "
 "kernel low-pass filter on camera motion (default) ‘avg’ averaging on "
 "transformations"
 msgstr ""
+"Imposta l'algoritmo di ottimizzazione del percorso della fotocamera. I "
+"valori sono: \"gauss\": filtro passa-basso del kernel gaussiano sul "
+"movimento della fotocamera (impostazione predefinita) media \"avg\" sulle "
+"trasformazioni"
 
-#: ../vdms_dialogs/filter_stab.py:315
+#: ../vdms_dialogs/filter_stab.py:310
 msgid ""
 "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
 "is -1, meaning no limit."
 msgstr ""
+"Imposta l'angolo massimo in radianti (gradi * PI / 180) per ruotare i "
+"fotogrammi. Il valore predefinito è -1, ovvero nessun limite."
 
-#: ../vdms_dialogs/filter_stab.py:318
+#: ../vdms_dialogs/filter_stab.py:313
 msgid ""
 "Specify how to deal with borders that may be visible due to movement "
 "compensation. Values are: ‘keep’ keep image information from previous frame "
-"(default) ‘black’ fill the border black"
+"(default), ‘black’ fill the border black"
 msgstr ""
+"Specificare come trattare i bordi che possono essere visibili a causa della "
+"compensazione del movimento. I valori sono: \"conserva\" conserva le "
+"informazioni sull'immagine dal fotogramma precedente (impostazione "
+"predefinita), \"nero\" riempie il bordo nero"
 
-#: ../vdms_dialogs/filter_stab.py:323
+#: ../vdms_dialogs/filter_stab.py:318
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
+"Inverti le trasformazioni se abilitato. Per impostazione predefinita è "
+"disabilitato."
 
-#: ../vdms_dialogs/filter_stab.py:325
+#: ../vdms_dialogs/filter_stab.py:320
 msgid ""
 "Consider transforms as relative to previous frame if checked, absolute if "
 "unchecked. Default is checked."
 msgstr ""
+"Considera le trasformazioni come relative al frame precedente se abilitato, "
+"assoluto se disabilitato. Per impostazione predefinita è abilitato."
 
-#: ../vdms_dialogs/filter_stab.py:328
+#: ../vdms_dialogs/filter_stab.py:323
 msgid ""
 "Set percentage to zoom. A positive value will result in a zoom-in effect, a "
 "negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
+"Imposta la percentuale per lo zoom. Un valore positivo si tradurrà in un "
+"effetto di ingrandimento, un valore negativo in un effetto di riduzione. Il "
+"valore predefinito è 0 (senza zoom)."
 
-#: ../vdms_dialogs/filter_stab.py:332
+#: ../vdms_dialogs/filter_stab.py:327
 msgid ""
 "Set optimal zooming to avoid borders. Accepted values are: ‘0’ disabled, ‘1’ "
 "optimal static zoom value is determined (only very strong movements will "
@@ -512,33 +556,51 @@ msgid ""
 "determined (no borders will be visible), see zoomspeed. Note that the value "
 "given at zoom is added to the one calculated here."
 msgstr ""
+"Imposta lo zoom ottimale per evitare i bordi. I valori accettati sono: '0' "
+"disabilitato, il valore di zoom statico ottimale '1' è determinato (solo "
+"movimenti molto forti porteranno a bordi visibili) (impostazione "
+"predefinita), il valore di zoom adattivo ottimale '2' è determinato (nessun "
+"bordo sarà visibile) vedere zoomspeed. Notare che il valore fornito allo "
+"zoom viene aggiunto a quello calcolato qui."
 
-#: ../vdms_dialogs/filter_stab.py:339
+#: ../vdms_dialogs/filter_stab.py:334
 msgid ""
 "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
 "Range is from 0 to 5, default value is 0.25."
 msgstr ""
+"Imposta la percentuale per ingrandire al massimo ogni fotogramma (abilitato "
+"quando optzoom è impostato su 2). L'intervallo è compreso tra 0 e 5, il "
+"valore predefinito è 0,25."
 
-#: ../vdms_dialogs/filter_stab.py:343
+#: ../vdms_dialogs/filter_stab.py:338
 msgid ""
 "Specify type of interpolation. Available values are: ‘no’ no interpolation, "
 "‘linear’ linear only horizontal, ‘bilinear’ linear in both directions "
 "(default), ‘bicubic’ cubic in both directions (slow)"
 msgstr ""
+"Specificare il tipo di interpolazione. I valori disponibili sono: \"no\" "
+"nessuna interpolazione, \"linear\" lineare solo orizzontale, \"bilinear\" "
+"lineare in entrambe le direzioni (impostazione predefinita), \"bicubic\" "
+"cubica in entrambe le direzioni (lenta)"
 
-#: ../vdms_dialogs/filter_stab.py:348
+#: ../vdms_dialogs/filter_stab.py:343
 msgid ""
 "Enable virtual tripod mode if checked, which is equivalent to relative=0:"
 "smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
+"Abilita la modalità treppiede virtuale se selezionata, che è equivalente a "
+"relative=abilitato: smoothing=0. Per impostazione predefinita è "
+"disabilitato. Usa anche l'opzione treppiede di vidstabdetect."
 
-#: ../vdms_dialogs/filter_stab.py:353
+#: ../vdms_dialogs/filter_stab.py:348
 msgid ""
 "Sharpen or blur the input video. Note the use of the unsharp filter which is "
 "always recommended."
 msgstr ""
+"Rende più nitido o sfocato il video in ingresso. Nota che l'uso del filtro "
+"unsharp è sempre consigliato."
 
-#: ../vdms_dialogs/filter_stab.py:358
+#: ../vdms_dialogs/filter_stab.py:353
 msgid "Video stabilizer filter"
 msgstr "Filtro stabilizzatore video"
 
@@ -1003,7 +1065,7 @@ msgstr ""
 "Ciò ti consente di evitare problemi di download.\n"
 
 #: ../vdms_dialogs/settings.py:323 ../vdms_frames/ffmpeg_conf.py:216
-#: ../vdms_panels/av_conversions.py:2457
+#: ../vdms_panels/av_conversions.py:2458
 msgid "Disabled"
 msgstr "Disabilitato"
 
@@ -1155,7 +1217,7 @@ msgstr "FFplay   ...non trovato !"
 msgid "ENABLED:"
 msgstr "ABILITATO:"
 
-#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2457
+#: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2458
 msgid "Enabled"
 msgstr "Abilitato"
 
@@ -1254,12 +1316,12 @@ msgstr "=  Non cambia"
 msgid "=  Below max peak"
 msgstr "=  Sotto il picco max"
 
-#: ../vdms_frames/shownormlist.py:136 ../vdms_panels/av_conversions.py:1920
+#: ../vdms_frames/shownormlist.py:136 ../vdms_panels/av_conversions.py:1921
 #: ../vdms_panels/presets_manager.py:828
 msgid "RMS-based volume statistics"
 msgstr "Statistiche del volume basate su RMS"
 
-#: ../vdms_frames/shownormlist.py:158 ../vdms_panels/av_conversions.py:1918
+#: ../vdms_frames/shownormlist.py:158 ../vdms_panels/av_conversions.py:1919
 #: ../vdms_panels/presets_manager.py:826
 msgid "PEAK-based volume statistics"
 msgstr "Statistiche del volume basate sul PICCO"
@@ -1986,11 +2048,13 @@ msgstr ""
 
 #: ../vdms_main/main_frame.py:542
 msgid "Auto-exit after playback"
-msgstr ""
+msgstr "Uscita automatica dopo la riproduzione"
 
 #: ../vdms_main/main_frame.py:543
 msgid "If checked, the FFplay window will auto-close at the end of playback"
 msgstr ""
+"Se abilitato, la finestra FFplay si chiuderà automaticamente alla fine della "
+"riproduzione"
 
 #: ../vdms_main/main_frame.py:550
 msgid "Preferences\tCtrl+P"
@@ -2497,8 +2561,8 @@ msgid "Denoiser"
 msgstr "Denoiser"
 
 #: ../vdms_panels/av_conversions.py:577
-msgid "Stabilizer (anti-shaker)"
-msgstr "Stabilizzatore (anti-vibrazione)"
+msgid "Stabilizer"
+msgstr "Stabilizzatore"
 
 #: ../vdms_panels/av_conversions.py:596
 msgid "Audio Encoder"
@@ -2711,25 +2775,25 @@ msgstr "Nessun filtro video attivato"
 
 #: ../vdms_panels/av_conversions.py:1160
 msgid "Unable to preview Video Stabilizer filter"
-msgstr ""
+msgstr "Impossibile visualizzare in anteprima il filtro stabilizzatore video"
 
-#: ../vdms_panels/av_conversions.py:1227 ../vdms_panels/presets_manager.py:1326
+#: ../vdms_panels/av_conversions.py:1228 ../vdms_panels/presets_manager.py:1326
 msgid "A target file must be selected in the queued files"
 msgstr "È necessario selezionare un file di destinazione nei file in coda"
 
-#: ../vdms_panels/av_conversions.py:1257
+#: ../vdms_panels/av_conversions.py:1258
 msgid "The file is not a frame or a video file"
 msgstr "Il file non è un frame o un file video"
 
-#: ../vdms_panels/av_conversions.py:1496
+#: ../vdms_panels/av_conversions.py:1497
 msgid "This filter is incompatible with 2-pass enabled"
-msgstr ""
+msgstr "Questo filtro non è compatibile con 2-pass abilitato"
 
-#: ../vdms_panels/av_conversions.py:1629
+#: ../vdms_panels/av_conversions.py:1630
 msgid "No Audio"
 msgstr "No Audio"
 
-#: ../vdms_panels/av_conversions.py:1775 ../vdms_panels/presets_manager.py:686
+#: ../vdms_panels/av_conversions.py:1776 ../vdms_panels/presets_manager.py:686
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
@@ -2737,7 +2801,7 @@ msgstr ""
 "Attiva la normalizzazione del livello di picco, la quale produrrà un livello "
 "di picco massimo pari al livello target impostato."
 
-#: ../vdms_panels/av_conversions.py:1778 ../vdms_panels/presets_manager.py:689
+#: ../vdms_panels/av_conversions.py:1779 ../vdms_panels/presets_manager.py:689
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
@@ -2745,7 +2809,7 @@ msgstr ""
 "Attiva la normalizzazione basata su RMS, che in base al volume medio calcola "
 "la quantità di guadagno per raggiungere la stessa potenza media di segnale."
 
-#: ../vdms_panels/av_conversions.py:1782 ../vdms_panels/presets_manager.py:693
+#: ../vdms_panels/av_conversions.py:1783 ../vdms_panels/presets_manager.py:693
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
@@ -2753,21 +2817,21 @@ msgstr ""
 "Esegue la normalizzazione a due passate. Normalizza il volume percepito "
 "usando il filtro \"loudnorm\", che implementa l'algoritmo EBU R128."
 
-#: ../vdms_panels/av_conversions.py:1805 ../vdms_panels/presets_manager.py:719
+#: ../vdms_panels/av_conversions.py:1806 ../vdms_panels/presets_manager.py:719
 msgid "Audio normalization off"
 msgstr "Normalizzazione Audio disattivata"
 
-#: ../vdms_panels/av_conversions.py:1841 ../vdms_panels/presets_manager.py:750
+#: ../vdms_panels/av_conversions.py:1842 ../vdms_panels/presets_manager.py:750
 msgid "Audio normalization is required only for some files"
 msgstr "La normalizzazione audio è richiesta solo per alcuni files"
 
-#: ../vdms_panels/av_conversions.py:1842 ../vdms_panels/presets_manager.py:751
+#: ../vdms_panels/av_conversions.py:1843 ../vdms_panels/presets_manager.py:751
 msgid ""
 "Audio normalization will not be applied because it's equal to the source"
 msgstr ""
 "La normalizzazione audio non sarà applicata perchè uguale alla sorgente"
 
-#: ../vdms_panels/av_conversions.py:2032 ../vdms_panels/presets_manager.py:1186
+#: ../vdms_panels/av_conversions.py:2033 ../vdms_panels/presets_manager.py:1186
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
@@ -2775,36 +2839,36 @@ msgstr ""
 "Valori del volume non rilevati! Clicca sul pulsante \"Volume detect\" per "
 "analizzare i dati sul volume audio."
 
-#: ../vdms_panels/av_conversions.py:2255
+#: ../vdms_panels/av_conversions.py:2256
 msgid "Audio/Video EBU normalization"
 msgstr "Normalizzazione EBU Audio/Video"
 
-#: ../vdms_panels/av_conversions.py:2361
+#: ../vdms_panels/av_conversions.py:2362
 msgid "Audio conversions"
 msgstr "Conversioni Audio"
 
-#: ../vdms_panels/av_conversions.py:2402
+#: ../vdms_panels/av_conversions.py:2403
 msgid "Audio EBU normalization"
 msgstr "Normalizzazione Audio EBU"
 
-#: ../vdms_panels/av_conversions.py:2438
+#: ../vdms_panels/av_conversions.py:2439
 #, python-format
 msgid "%s file in queue"
 msgstr "%s file in coda"
 
-#: ../vdms_panels/av_conversions.py:2446 ../vdms_panels/presets_manager.py:1385
+#: ../vdms_panels/av_conversions.py:2447 ../vdms_panels/presets_manager.py:1385
 msgid "Off"
 msgstr "Spento"
 
-#: ../vdms_panels/av_conversions.py:2452 ../vdms_panels/presets_manager.py:1387
+#: ../vdms_panels/av_conversions.py:2453 ../vdms_panels/presets_manager.py:1387
 msgid "Unset"
 msgstr "Non settato"
 
-#: ../vdms_panels/av_conversions.py:2455 ../vdms_panels/presets_manager.py:1390
+#: ../vdms_panels/av_conversions.py:2456 ../vdms_panels/presets_manager.py:1390
 msgid "start  {} | duration  {}"
 msgstr "inizio  {} | durata  {}"
 
-#: ../vdms_panels/av_conversions.py:2461
+#: ../vdms_panels/av_conversions.py:2462
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2834,7 +2898,7 @@ msgstr ""
 "Segmento Tempo                        \n"
 "Mappa Audio in Ingresso"
 
-#: ../vdms_panels/av_conversions.py:2482
+#: ../vdms_panels/av_conversions.py:2483
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2874,7 +2938,7 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2510
+#: ../vdms_panels/av_conversions.py:2511
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2936,11 +3000,11 @@ msgstr ""
 "Mappa Sottotitoli\n"
 "Segmento Tempo"
 
-#: ../vdms_panels/av_conversions.py:2580
+#: ../vdms_panels/av_conversions.py:2581
 msgid "Save the new profile on..."
 msgstr "Salva il nuovo profilo su..."
 
-#: ../vdms_panels/av_conversions.py:2590
+#: ../vdms_panels/av_conversions.py:2591
 msgid "Create a new profile"
 msgstr "Crea un nuovo profilo"
 
@@ -3210,7 +3274,7 @@ msgstr ""
 
 #: ../vdms_panels/filedrop.py:70
 msgid "Invalid filename. Contains double quotes"
-msgstr ""
+msgstr "Nome del file non valido. Contiene virgolette doppie"
 
 #: ../vdms_panels/filedrop.py:122
 #, python-format
@@ -3813,8 +3877,17 @@ msgstr ""
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
 
-#~ msgid "Video Stabilizer"
-#~ msgstr "Stabilizzatore Video"
+#~ msgid "Set reference frame number for tripod mode"
+#~ msgstr ""
+#~ "Imposta il numero del fotogramma di riferimento per la modalità treppiede"
+
+#~ msgid "optalgo: Set the camera path optimization algorithm "
+#~ msgstr ""
+#~ "optalgo: Imposta l'algoritmo di ottimizzazione del percorso della "
+#~ "telecamera "
+
+#~ msgid "Stabilizer (anti-shaker)"
+#~ msgstr "Stabilizzatore (anti-vibrazione)"
 
 #~ msgid ""
 #~ "Quiet.\n"

@@ -133,7 +133,7 @@ class Deinterlace(wx.Dialog):
         self.ckbx_interlace.SetValue(False)
         self.rdbx_w3fdif.SetSelection(1)
         self.rdbx_w3fdif_d.SetSelection(0)
-        self.rdbx_Yadif_mode.SetSelection(1)
+        self.rdbx_Yadif_mode.SetSelection(0)
         self.rdbx_Yadif_parity.SetSelection(2)
         self.rdbx_Yadif_deint.SetSelection(0)
         self.rdbx_inter_scan.SetSelection(0)
@@ -250,10 +250,9 @@ class Deinterlace(wx.Dialog):
                 self.rdbx_Yadif_parity.Enable()
                 self.rdbx_Yadif_deint.Enable()
                 indx = self.cmd_opt["deinterlace"].split('=')[1].split(':')
-                if indx[1] == '-1':
-                    parity = 2
+                parity = 2 if indx[1] == '-1' else indx[1]
                 self.rdbx_Yadif_mode.SetSelection(int(indx[0]))
-                self.rdbx_Yadif_parity.SetSelection(parity)
+                self.rdbx_Yadif_parity.SetSelection(int(parity))
                 self.rdbx_Yadif_deint.SetSelection(int(indx[2]))
 
             elif self.cmd_opt["deinterlace"].startswith('w3fdif'):
@@ -335,7 +334,7 @@ class Deinterlace(wx.Dialog):
             self.ckbx_deintW3fdif.Disable(), self.rdbx_Yadif_mode.Enable(),
             self.rdbx_Yadif_parity.Enable(), self.rdbx_Yadif_deint.Enable(),
             self.ckbx_interlace.Disable(),
-            self.cmd_opt["deinterlace"] = "yadif=1:-1:0"
+            self.cmd_opt["deinterlace"] = "yadif=0:-1:0"
 
         elif not self.ckbx_deintYadif.IsChecked():
             self.ckbx_deintW3fdif.Enable(), self.rdbx_Yadif_mode.Disable(),
@@ -451,7 +450,7 @@ class Deinterlace(wx.Dialog):
         self.ckbx_interlace.Enable()
         self.rdbx_w3fdif.SetSelection(1)
         self.rdbx_w3fdif_d.SetSelection(0)
-        self.rdbx_Yadif_mode.SetSelection(1)
+        self.rdbx_Yadif_mode.SetSelection(0)
         self.rdbx_Yadif_parity.SetSelection(2)
         self.rdbx_Yadif_deint.SetSelection(0)
         self.rdbx_inter_scan.SetSelection(0)

@@ -23,7 +23,10 @@ videomass (3.4.0-1) UNRELEASED; urgency=medium
   * Fixed #17
   * Translated into Dutch, thanks to Roelof Berkepeis
   * Reading and writing files now has encoding 'utf-8'
-  * AV-Conversions: new video stabilizer filter
+  * AV-Conversions: new video stabilizer filter GUI
+  * AV-Conversions: resizing filter, fixed some incorrect values on displays
+    after setting.
+  * AV-Conversions: filter chain order Re-defined
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 26 Mar 2021 16:40:00 +0200
 
