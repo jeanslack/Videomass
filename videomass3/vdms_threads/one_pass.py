@@ -44,7 +44,7 @@ def logWrite(cmd, sterr, logname, logdir):
     else:
         apnd = "%s\n\n" % (cmd)
 
-    with open(os.path.join(logdir, logname), "a", encoding='utf-8') as log:
+    with open(os.path.join(logdir, logname), "a", encoding='utf8') as log:
         log.write(apnd)
 
 # ------------------------------ THREADS -------------------------------#

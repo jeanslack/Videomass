@@ -271,7 +271,7 @@ class MemPresets(wx.Dialog):
                               "Videomass ", wx.ICON_WARNING, self)
                 return
 
-        with open(self.path_prst, 'r', encoding='utf-8') as infile:
+        with open(self.path_prst, 'r', encoding='utf8') as infile:
             stored_data = json.load(infile)
 
         if self.arg == 'newprofile' or self.arg == 'addprofile':  # create new
@@ -303,7 +303,7 @@ class MemPresets(wx.Dialog):
                     item["Output_extension"] = "%s" % extens
 
         new_data.sort(key=lambda s: s["Name"])  # make sorted by name
-        with open(self.path_prst, 'w', encoding='utf-8') as outfile:
+        with open(self.path_prst, 'w', encoding='utf8') as outfile:
             json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 
         if self.arg in ['newprofile', 'addprofile']:

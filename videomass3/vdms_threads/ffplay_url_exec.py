@@ -217,7 +217,7 @@ class Exec_Download_Stream(Thread):
         """
         write ffplay command log
         """
-        with open(self.logf, "a", encoding='utf-8') as log:
+        with open(self.logf, "a", encoding='utf8') as log:
             log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
@@ -225,7 +225,7 @@ class Exec_Download_Stream(Thread):
         """
         write ffplay errors
         """
-        with open(self.logf, "a", encoding='utf-8') as logerr:
+        with open(self.logf, "a", encoding='utf8') as logerr:
             logerr.write("\n[FFMPEG] FFplay "
                          "ERRORS:\n%s\n" % (error))
 # ------------------------------------------------------------------------#

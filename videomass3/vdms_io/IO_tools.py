@@ -470,7 +470,7 @@ def appimage_update_youtube_dl(appimage):
         return update
 
     ret = None
-    with open(log, 'r', encoding='utf-8') as f:
+    with open(log, 'r', encoding='utf8') as f:
         for line in f:
             if '**Successfully updated**\n' in line:
                 ret = 'success'

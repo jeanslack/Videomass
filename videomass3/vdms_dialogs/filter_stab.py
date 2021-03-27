@@ -284,7 +284,7 @@ class Vidstab(wx.Dialog):
                 'is 6.')
         self.spin_stepsize.SetToolTip(tip)
         tip = _('Set minimum contrast. Below this value a local measurement '
-                'field is discarded. The range is 0-1. Default value is 0.25. ')
+                'field is discarded. The range is 0-1. Default value is 0.25.')
         self.spin_mincontr.SetToolTip(tip)
         tip = _('Set reference frame number for tripod mode. If enabled, the '
                 'motion of the frames is compared to a reference frame in '

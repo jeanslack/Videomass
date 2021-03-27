@@ -814,7 +814,7 @@ class MainFrame(wx.Frame):
                                 os.path.dirname(presetsrecovery),
                                 os.path.dirname(os.path.dirname(presetsdir)))
 
-        with open(presetsdir, "r", encoding='utf-8') as vers:
+        with open(presetsdir, "r", encoding='utf8') as vers:
             fread = vers.read().strip()
 
         newversion = IO_tools.get_github_releases(url, "tag_name")

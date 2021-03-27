@@ -141,7 +141,7 @@ class VolumeDetectThread(Thread):
         """
         write ffmpeg command log
         """
-        with open(self.logf, "a", encoding='utf-8') as log:
+        with open(self.logf, "a", encoding='utf8') as log:
             log.write("%s\n" % (cmd))
     # ----------------------------------------------------------------#
 
@@ -149,6 +149,6 @@ class VolumeDetectThread(Thread):
         """
         write ffmpeg volumedected errors
         """
-        with open(self.logf, "a", encoding='utf-8') as logerr:
+        with open(self.logf, "a", encoding='utf8') as logerr:
             logerr.write("\n[FFMPEG] volumedetect "
                          "ERRORS:\n%s\n" % (self.status))
