@@ -435,7 +435,7 @@ class Downloader(wx.Panel):
             elif self.choice.GetSelection() == 3:
                 quality = self.fcode.GetItemText(item, 0)
 
-            IO_tools.url_play(url, quality, tstamp)
+            IO_tools.url_play(url, quality, tstamp, self.parent.autoexit)
     # ----------------------------------------------------------------------
 
     def get_libraryformatcode(self):

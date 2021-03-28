@@ -1,11 +1,11 @@
 # -*- coding: UTF-8 -*-
-# Name: two_pass.py
-# Porpose: FFmpeg long processing task on 2 pass conversion
+# Name: video_stabilization.py
+# Porpose: FFmpeg long processing vidstab
 # Compatibility: Python3, wxPython4 Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: March.20.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -64,12 +64,11 @@ from-subprocess-popen-proc-stdout-readline-blocks-no-dat?rq=1
 """
 
 
-class TwoPass(Thread):
+class VidStab(Thread):
     """
-    This class represents a separate thread which need to read the
-    stdout/stderr in real time mode. The subprocess module is instantiated
-    twice for two different tasks: the process on the first video pass and
-    the process on the second video pass for video only.
+    This class represents a separate thread which need
+    to read the stdout/stderr in real time mode for
+    different tasks.
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
@@ -89,6 +88,7 @@ class TwoPass(Thread):
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (elements)
         self.passList = varargs[5]  # comand list set for double-pass
+        self.makeduo = varargs[4]  # one more process for the duo file
         self.outputdir = varargs[3]  # output path
         self.extoutput = varargs[2]  # format (extension)
         self.duration = duration  # duration list
@@ -97,7 +97,13 @@ class TwoPass(Thread):
         self.count = 0  # count first for loop
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
-        self.nul = 'NUL' if TwoPass.OS == 'Windows' else '/dev/null'
+        self.nul = 'NUL' if VidStab.OS == 'Windows' else '/dev/null'
+
+        spl = [s for s in varargs[6].split('-vf ')][1]
+        addspl = ','.join([x for x in spl.split(',') if '-vf' not
+                           in x and 'vidstabtransform' not in x and
+                           'unsharp' not in x])  # if other filters
+        self.addflt = '' if addspl == '' else '%s,' % (addspl)
 
         Thread.__init__(self)
         """initialize"""
@@ -123,16 +129,17 @@ class TwoPass(Thread):
 
             # --------------- first pass
             pass1 = ('"%s" %s %s -i "%s" %s %s '
-                     '-y %s' % (TwoPass.FFMPEG_URL,
-                                TwoPass.FFMPEG_LOGLEV,
+                     '-y %s' % (VidStab.FFMPEG_URL,
+                                VidStab.FFMPEG_LOGLEV,
                                 self.time_seq,
                                 files,
                                 self.passList[0],
-                                TwoPass.FF_THREADS,
+                                VidStab.FF_THREADS,
                                 self.nul,
                                 ))
             self.count += 1
-            count = 'File %s/%s - Pass One' % (self.count, self.countmax)
+            count = ('File %s/%s - Pass One: Video stabilization detect' % (
+                     self.count, self.countmax))
             cmd = "%s\n%s" % (count, pass1)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
@@ -144,10 +151,10 @@ class TwoPass(Thread):
             logWrite(cmd,
                      '',
                      self.logname,
-                     TwoPass.LOGDIR,
+                     VidStab.LOGDIR,
                      )  # write n/n + command only
 
-            if not TwoPass.OS == 'Windows':
+            if not VidStab.OS == 'Windows':
                 pass1 = shlex.split(pass1)
                 info = None
             else:  # Hide subprocess window on MS Windows
@@ -181,11 +188,11 @@ class TwoPass(Thread):
                         logWrite('',
                                  "Exit status: %s" % p1.wait(),
                                  self.logname,
-                                 TwoPass.LOGDIR
+                                 VidStab.LOGDIR
                                  )  # append exit error number
 
             except (OSError, FileNotFoundError) as err:
-                e = "%s\n  %s" % (err, TwoPass.NOT_EXIST_MSG)
+                e = "%s\n  %s" % (err, VidStab.NOT_EXIST_MSG)
                 wx.CallAfter(pub.sendMessage,
                              "COUNT_EVT",
                              count=e,
@@ -209,19 +216,20 @@ class TwoPass(Thread):
                              )
             # --------------- second pass ----------------#
             pass2 = ('"%s" %s %s -i "%s" %s %s %s '
-                     '-y "%s/%s%s.%s"' % (TwoPass.FFMPEG_URL,
-                                          TwoPass.FFMPEG_LOGLEV,
+                     '-y "%s/%s%s.%s"' % (VidStab.FFMPEG_URL,
+                                          VidStab.FFMPEG_LOGLEV,
                                           self.time_seq,
                                           files,
                                           self.passList[1],
                                           volume,
-                                          TwoPass.FF_THREADS,
+                                          VidStab.FF_THREADS,
                                           folders,
                                           filename,
-                                          TwoPass.SUFFIX,
+                                          VidStab.SUFFIX,
                                           outext,
                                           ))
-            count = 'File %s/%s - Pass Two' % (self.count, self.countmax,)
+            count = ('File %s/%s - Pass Two: Video transform' % (
+                     self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
             wx.CallAfter(pub.sendMessage,
                          "COUNT_EVT",
@@ -230,9 +238,9 @@ class TwoPass(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname, TwoPass.LOGDIR)
+            logWrite(cmd, '', self.logname, VidStab.LOGDIR)
 
-            if not TwoPass.OS == 'Windows':
+            if not VidStab.OS == 'Windows':
                 pass2 = shlex.split(pass2)
                 info = None
             else:  # Hide subprocess window on MS Windows
@@ -265,8 +273,8 @@ class TwoPass(Thread):
                     logWrite('',
                              "Exit status: %s" % p2.wait(),
                              self.logname,
-                             TwoPass.LOGDIR,
-                             )  # append exit error number
+                             VidStab.LOGDIR,
+                             )  # append exit status error
 
             if self.stop_work_thread:  # break first 'for' loop
                 p2.terminate()
@@ -280,6 +288,86 @@ class TwoPass(Thread):
                              fname='',
                              end='ok'
                              )
+
+            # --------------- make duo ----------------#
+            if self.makeduo:
+                pass3 = ('"%s" %s %s -i "%s" %s -vf "[in] %spad=2*iw:ih '
+                         '[left]; movie=%s/%s%s.%s [right]; '
+                         '[left][right] overlay=main_w/2:0 [out]" '
+                         '-y "%s/%s%s_DUO.%s"' % (VidStab.FFMPEG_URL,
+                                                  VidStab.FFMPEG_LOGLEV,
+                                                  self.time_seq,
+                                                  files,
+                                                  VidStab.FF_THREADS,
+                                                  self.addflt,
+                                                  folders,
+                                                  filename,
+                                                  VidStab.SUFFIX,
+                                                  outext,
+                                                  folders,
+                                                  filename,
+                                                  VidStab.SUFFIX,
+                                                  outext,
+                                                  ))
+                count = 'File %s/%s - Make duo' % (self.count, self.countmax,)
+                cmd = "%s\n%s" % (count, pass3)
+                wx.CallAfter(pub.sendMessage,
+                             "COUNT_EVT",
+                             count=count,
+                             duration=duration,
+                             fname=files,
+                             end='',
+                             )
+                logWrite(cmd, '', self.logname, VidStab.LOGDIR)
+
+                if not VidStab.OS == 'Windows':
+                    pass3 = shlex.split(pass3)
+                    info = None
+                else:  # Hide subprocess window on MS Windows
+                    info = subprocess.STARTUPINFO()
+                    info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                with subprocess.Popen(pass3,
+                                      stderr=subprocess.PIPE,
+                                      bufsize=1,
+                                      universal_newlines=True,
+                                      startupinfo=info,) as p3:
+
+                    for line3 in p3.stderr:
+                        wx.CallAfter(pub.sendMessage,
+                                     "UPDATE_EVT",
+                                     output=line3,
+                                     duration=duration,
+                                     status=0,
+                                     )
+                        if self.stop_work_thread:
+                            p3.terminate()
+                            break
+
+                    if p3.wait():  # will add '..failed' to txtctrl
+                        wx.CallAfter(pub.sendMessage,
+                                     "UPDATE_EVT",
+                                     output=line,
+                                     duration=duration,
+                                     status=p3.wait(),
+                                     )
+                        logWrite('',
+                                 "Exit status: %s" % p3.wait(),
+                                 self.logname,
+                                 VidStab.LOGDIR,
+                                 )  # append exit error number
+
+                if self.stop_work_thread:  # break first 'for' loop
+                    p3.terminate()
+                    break  # fermo il ciclo for, altrimenti passa avanti
+
+                if p3.wait() == 0:  # will add '..terminated' to txtctrl
+                    wx.CallAfter(pub.sendMessage,
+                                 "COUNT_EVT",
+                                 count='',
+                                 duration='',
+                                 fname='',
+                                 end='ok'
+                                 )
         time.sleep(.5)
         wx.CallAfter(pub.sendMessage, "END_EVT")
     # --------------------------------------------------------------------#

@@ -75,7 +75,7 @@ def json_data(arg):
 
     """
     try:
-        with open(arg, 'r', encoding='utf-8') as f:
+        with open(arg, 'r', encoding='utf8') as f:
             data = json.load(f)
 
     except json.decoder.JSONDecodeError as err:
@@ -107,12 +107,12 @@ def delete_profiles(path, name):
     """
     Profile deletion from Presets manager panel
     """
-    with open(path, 'r', encoding='utf-8') as f:
+    with open(path, 'r', encoding='utf8') as f:
         data = json.load(f)
 
     new_data = [obj for obj in data if not obj["Name"] == name]
 
-    with open(path, 'w', encoding='utf-8') as outfile:
+    with open(path, 'w', encoding='utf8') as outfile:
         json.dump(new_data, outfile, ensure_ascii=False, indent=4)
 # ------------------------------------------------------------------#
 
@@ -123,10 +123,10 @@ def preserve_old_profiles(new, old):
     replaced with new presets.
 
     """
-    with open(new, 'r', encoding='utf-8') as f:
+    with open(new, 'r', encoding='utf8') as f:
         incoming = json.load(f)
 
-    with open(old, 'r', encoding='utf-8') as f:
+    with open(old, 'r', encoding='utf8') as f:
         outcoming = json.load(f)
 
     items_new = {value["Name"]: value for value in incoming}
@@ -143,7 +143,7 @@ def preserve_old_profiles(new, old):
     data = incoming + backup
     data.sort(key=lambda s: s["Name"])  # make sorted by name
 
-    with open(new, 'w', encoding='utf-8') as outfile:
+    with open(new, 'w', encoding='utf8') as outfile:
         json.dump(data, outfile, ensure_ascii=False, indent=4)
 
     return True

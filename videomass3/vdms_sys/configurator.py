@@ -179,7 +179,7 @@ class Data_Source(object):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 2.9:
+                if float(userconf[0]) != 3.0:
                     existfileconf = False
             else:
                 existfileconf = False
@@ -292,6 +292,7 @@ class Data_Source(object):
         icn_newprf = '%s/newprf.%s' % (x16, ext)
         icn_delprf = '%s/delprf.%s' % (x16, ext)
         icn_editprf = '%s/editprf.%s' % (x16, ext)
+        icn_vidstab = '%s/stabilizer.%s' % (x16, ext)
 
         return [os.path.join(norm) for norm in [self.videomass_icon,  # 0
                                                 icon_switchvideomass,  # 1
@@ -319,5 +320,5 @@ class Data_Source(object):
                                                 icon_toolforward,  # 23
                                                 icon_ydl,  # 24
                                                 icn_viewstatistics,  # 25
-                                                '',  # icn_viewlog, # 26
+                                                icn_vidstab,  # 26
                                                 ]]

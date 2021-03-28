@@ -32,6 +32,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_dialogs/filter_deinterlace.py" \
 "../vdms_dialogs/filter_denoisers.py" \
 "../vdms_dialogs/filter_scale.py" \
+"../vdms_dialogs/filter_stab.py" \
 "../vdms_dialogs/filter_transpose.py" \
 "../vdms_dialogs/wizard_dlg.py" \
 "../vdms_dialogs/infoprg.py" \

@@ -47,7 +47,7 @@ def write_log(logfile, logdir):
     current_date = time.strftime("%c")  # date/time
     path = os.path.join(logdir, logfile)
 
-    with open(path, "a") as log:
+    with open(path, "a", encoding='utf8') as log:
         log.write("""
 [DATE]:
 %s

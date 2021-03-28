@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 17, 2021 V.3.3.9
+Mar 28, 2021 V.3.4.0
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
@@ -20,17 +20,22 @@ Mar 17, 2021 V.3.3.9
   * Removed double-click on profile to start processing on Presets Manager,
     which would cause the command to be reset when the user changes it.
   * Fixed URLs for screenshots on appdata.xml
-  * New icon for previews
+  * New icon for previews.
   * Fixed final message not visible on Output Monitoring panel. Scrolling on
     "[Videomass]: Successfully completed !"
   * Crop Filter Dialog: Layout on small, low-resolution screens is now improved.
-  * Resizing filters: added source size information
-  * Fixed foreground/background colors on status bar messages
+  * Resizing filters: added source size information.
+  * Fixed foreground/background colors on status bar messages.
   * Fixed #19
   * Added multilanguage support for user guide (English, Russian and Italian
-    for now)
+    for now).
   * Fixed #17
-  * Translated into Dutch, thanks to Roelof Berkepeis
+  * Translated into Dutch, thanks to Roelof Berkepeis.
+  * Reading and writing files now has encoding 'utf-8'.
+  * AV-Conversions: Added new GUI for video stabilizer filter.
+  * AV-Conversions: resizing filter, fixed some incorrect values on displays
+    after setting.
+  * AV-Conversions: improved order of applying video filters.
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8

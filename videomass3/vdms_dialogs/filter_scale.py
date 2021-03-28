@@ -227,8 +227,6 @@ class Scale(wx.Dialog):
         if scale:
             self.width = scale.split(':')[0][8:]
             self.height = scale.split(':')[1][2:]
-            self.spin_scale_width.SetValue(int(self.width))
-            self.spin_scale_height.SetValue(int(self.height))
 
             if self.width in ('-1', '-2'):
                 self.ckbx_keep.SetValue(True)
@@ -238,6 +236,10 @@ class Scale(wx.Dialog):
                 self.ckbx_keep.SetValue(True)
                 self.rdb_scale.Enable(), self.rdb_scale.SetSelection(0)
                 self.keep_aspect_ratio_ON(), self.on_Dimension(self)
+
+            self.spin_scale_width.SetValue(self.width)
+            self.spin_scale_height.SetValue(self.height)
+
         if dar:
             self.darNum = dar.split('/')[0][7:]
             self.darDen = dar.split('/')[1]
@@ -321,10 +323,10 @@ class Scale(wx.Dialog):
         if Scale.GET_LANG in Scale.SUPPLANG:
             lang = Scale.GET_LANG.split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/%s/4-Video_Filters_%s.pdf' % (lang, lang))
+                    'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
         else:
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
-                    'languages/en/4-Video_Filters_en.pdf')
+                    'languages/en/4-Video_filters_en.pdf')
 
         webbrowser.open(page)
     # ------------------------------------------------------------------#

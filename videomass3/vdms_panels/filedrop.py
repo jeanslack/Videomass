@@ -67,7 +67,14 @@ class MyListCtrl(wx.ListCtrl):
         msg_noext = _("File without format extension: please give an "
                       "appropriate extension to the file name, example "
                       "'.mkv', '.avi', '.mp3', etc.")
-        if os.path.isdir(path):
+        msg_badfn = _("Invalid filename. Contains double quotes")
+
+        if '"' in path:
+            self.parent.statusbar_msg(msg_badfn, MyListCtrl.ORANGE,
+                                      MyListCtrl.WHITE)
+            return
+
+        elif os.path.isdir(path):
             self.parent.statusbar_msg(msg_dir, MyListCtrl.ORANGE,
                                       MyListCtrl.WHITE)
             return
@@ -311,7 +318,9 @@ class FileDnD(wx.Panel):
                 tstamp = '-vf "%s"' % (self.parent.cmdtimestamp)
             else:
                 tstamp = ""
-            IO_tools.stream_play(item, self.parent.time_seq, tstamp)
+            IO_tools.stream_play(item, self.parent.time_seq,
+                                 tstamp, self.parent.autoexit
+                                 )
     # ----------------------------------------------------------------------
 
     def delSelect(self, event):
