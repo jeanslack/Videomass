@@ -27,8 +27,10 @@ videomass (3.4.0-1) UNRELEASED; urgency=medium
   * AV-Conversions: resizing filter, fixed some incorrect values on displays
     after setting.
   * AV-Conversions: improved order of applying video filters.
+  * Preview and playback now have auto-exit activation.
+  * Fixed #20
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 28 Mar 2021 07:32:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 29 Mar 2021 14:58:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

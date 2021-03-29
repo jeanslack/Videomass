@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-27 17:50+0100\n"
-"PO-Revision-Date: 2021-03-27 17:53+0100\n"
+"PO-Revision-Date: 2021-03-29 15:00+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -381,20 +381,16 @@ msgid "Generates duo video for comparison"
 msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:73
-#, fuzzy
-#| msgid "Video Codec"
 msgid "Video Detect"
-msgstr "Кодек видео"
+msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:129
 msgid "[TRIPOD] Enable tripod mode if checked"
 msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:137
-#, fuzzy
-#| msgid "Video Stream"
 msgid "Video transform"
-msgstr "Видео поток"
+msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:153
 msgid "[OPTALGO] optimization algorithm"
@@ -424,10 +420,8 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:239
-#, fuzzy
-#| msgid "Denoiser filters"
 msgid "Unsharp filter:"
-msgstr "Фильтры шумоподавления"
+msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:274
 msgid ""
@@ -543,10 +537,8 @@ msgid ""
 msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:353
-#, fuzzy
-#| msgid "Denoiser filters"
 msgid "Video stabilizer filter"
-msgstr "Фильтры шумоподавления"
+msgstr ""
 
 #: ../vdms_dialogs/filter_transpose.py:83
 #: ../vdms_dialogs/filter_transpose.py:283

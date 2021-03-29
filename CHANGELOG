@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 28, 2021 V.3.4.0
+Mar 29, 2021 V.3.4.0
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
@@ -36,6 +36,8 @@ Mar 28, 2021 V.3.4.0
   * AV-Conversions: resizing filter, fixed some incorrect values on displays
     after setting.
   * AV-Conversions: improved order of applying video filters.
+  * Preview and playback now have auto-exit activation.
+  * Fixed #20
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8
