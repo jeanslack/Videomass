@@ -62,27 +62,27 @@
        id="grid4510" />
   </sodipodi:namedview>
   <rect
-     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect823"
+     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:1.37325335;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect823-3"
      width="12"
-     height="1.3412796"
+     height="1.650871"
      x="2"
-     y="0.99927092" />
-  <rect
-     y="13.680373"
-     x="2"
-     height="1.3412796"
-     width="12"
-     id="rect825"
-     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     y="1" />
   <path
      inkscape:connector-curvature="0"
-     id="path817"
-     d="m 6.9999968,4.9999998 v 1 H 10 v 3 h 1 v -4 z"
-     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     id="path817-6"
+     d="m 6.666662,4.6199097 v 1.3333338 h 4.000006 v 4.0000011 h 1.333334 V 4.6199097 Z"
+     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:0.15866672;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <path
-     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     d="M 5,7.0000016 H 6 V 10 h 3.0000003 v 1 H 5 Z"
-     id="path819"
+     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:0.15866672;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 4,6.0482156 H 5.333334 V 10.048216 H 9.333335 V 11.38155 H 4 Z"
+     id="path819-7"
      inkscape:connector-curvature="0" />
+  <rect
+     y="13.371511"
+     x="2"
+     height="1.650871"
+     width="12"
+     id="rect4520"
+     style="opacity:1;fill:#dfdfdf;fill-opacity:1;stroke:none;stroke-width:1.37325335;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 </svg>

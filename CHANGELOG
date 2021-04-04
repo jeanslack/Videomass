@@ -27,8 +27,7 @@ Mar 29, 2021 V.3.4.0
   * Resizing filters: added source size information.
   * Fixed foreground/background colors on status bar messages.
   * Fixed #19
-  * Added multilanguage support for user guide (English, Russian and Italian
-    for now).
+  * New multi-language user guide (English, Russian and Italian for now).
   * Fixed #17
   * Translated into Dutch, thanks to Roelof Berkepeis.
   * Reading and writing files now has encoding 'utf-8'.
@@ -38,6 +37,11 @@ Mar 29, 2021 V.3.4.0
   * AV-Conversions: improved order of applying video filters.
   * Preview and playback now have auto-exit activation.
   * Fixed #20
+  * Translated into Brazilian Portuguese, thanks to Samuel.
+  * Improved accuracy of the crop filter selection.
+  * Play button removed on toolbar as confusing.
+  * Improved enabling and disabling of buttons during some actions.
+  * The Streams Info button is now also enabled on the queued files panel.
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8

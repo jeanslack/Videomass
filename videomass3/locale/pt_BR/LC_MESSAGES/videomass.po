@@ -1,22 +1,20 @@
-# Dutch translation for Videomass.
-# Copyright (c) 2021 Gianluca Pernigotto
-# This file is distributed under the same license as the Videomass package
-# FIRST AUTHOR Gianluca Pernigotto <jeanlucperni@gmail.com>, 2021
+# Portuguese (Brazil) (pt_BR) translation of videomass.pot
+# Generated 2021-03-31 23:51 using the Open Source Translation Database
+# http://littlesvr.ca/ostd/
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Videomass 3.3.9\n"
+"Project-Id-Version: Videomass 3.4.0 pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-27 17:50+0100\n"
-"PO-Revision-Date: 2021-04-04 08:54+0200\n"
-"Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
-"Language-Team: \n"
-"Language: nl_NL\n"
+"PO-Revision-Date: 2021-04-02 10:15+0200\n"
+"Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
+"Language-Team: Samuel / http://littlesvr.ca/ostd/\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.2.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../Videomass3.py:106
 #, python-brace-format
@@ -27,7 +25,7 @@ msgid ""
 msgstr ""
 "{0}\n"
 "\n"
-"Sorry, het proces kan niet verder gaan.."
+"Desculpe, é impossível prosseguir.."
 
 #: ../Videomass3.py:207
 msgid ""
@@ -35,31 +33,19 @@ msgid ""
 "\n"
 "Check execution permissions."
 msgstr ""
-"Toegang geweigerd: {}\n"
+"Permissão negada: {}\n"
 "\n"
-"Controleer de uitvoeringsrechten."
+"Verifique as permissões de execução."
 
 #: ../vdms_dialogs/audiodialogs.py:237
-#, fuzzy
-#| msgid ""
-#| "Support to mono or stereo audio channels. If you are not sure set to "
-#| "\"Auto\" and source values will be copied."
 msgid ""
 "Videomass supports mono and stereo audio channels. If you are not sure set "
 "to \"Auto\" and source values will be copied."
 msgstr ""
-"Ondersteuning van mono of stereo audiokanalen. Als u niet zeker bent, kies "
-"\"Auto\" en de bronwaarden worden gekopiëerd."
+"Videomass oferece suporte a canais de áudio mono e estéreo. Se você não "
+"tiver certeza, defina como \"Auto\" e os valores da fonte serão copiados."
 
 #: ../vdms_dialogs/audiodialogs.py:240
-#, fuzzy
-#| msgid ""
-#| "The audio Rate (or sample-rate) is the sound sampling\n"
-#| "frequency and is measured in hertz. The higher the frequency,\n"
-#| "plus the audio signal will be true to the sound source, but\n"
-#| "the file will increase its size. For normal playback with\n"
-#| "audio CD set a sample rate of 44100kHz. If you are not sure\n"
-#| "set to \"Auto\" and source values will be copied."
 msgid ""
 "The audio Rate (or sample-rate) is the sound sampling\n"
 "frequency and is measured in Hertz. The higher the frequency,\n"
@@ -68,27 +54,23 @@ msgid ""
 "sampling frequency of 44100 kHz. If you are not sure, set to\n"
 "\"Auto\" and source values will be copied."
 msgstr ""
-"De audio rate (of sample rate) is de geluidsampling\n"
-"frequentie, gemeten in Hertz. Wanneer het audiosignaal overeenkomt\n"
-"met de geluidsbron geldt: hoe hoger deze frequentie, hoe groter het bestand\n"
-"zal worden. Zet de sample rate op 44100 kHz om een\n"
-"audio CD normaal af te spelen. Als u niet zeker bent,\n"
-"kies \"Auto\" en de bronwaarden worden gekopiëerd."
+"A taxa de áudio (ou taxa de amostragem) é a amostragem de\n"
+"frequência de som e é medido em Hertz. Quanto maior a frequência,\n"
+"mais parecido será com a fonte do som e mais\n"
+"o arquivo aumentará de tamanho. Para reprodução de CD de áudio, defina uma\n"
+"frequência de amostragem de 44100 kHz. Se você não tiver certeza, defina "
+"como\n"
+"\"Auto\" e os valores da fonte serão copiados."
 
 #: ../vdms_dialogs/audiodialogs.py:248
-#, fuzzy
-#| msgid ""
-#| "The audio bitrate affects on file compression\n"
-#| "and on the quality of listening. The higher\n"
-#| "the value and more higher quality."
 msgid ""
 "The audio bitrate affects the file compression\n"
 "and thus the quality of listening. The higher\n"
 "the value, the higher the quality."
 msgstr ""
-"De audio bitrate beïnvloedt de bestandscompressie\n"
-"en de luisterkwaliteit. Hoe hoger de waarde,\n"
-"hoe hoger de kwaliteit."
+"A taxa de bits de áudio afeta a compressão do arquivo\n"
+"e, portanto, a qualidade da escuta. Quanto maior\n"
+"o valor, maior será a qualidade."
 
 #: ../vdms_dialogs/audiodialogs.py:253
 msgid ""
@@ -98,147 +80,144 @@ msgid ""
 "to a PCM digital signal. Non-PCM formats, such as lossy\n"
 "compression formats, do not have associated bit depths."
 msgstr ""
-"bit depth is het aantal informatie-bits in elke\n"
-"sample en heeft direct betrekking op de resolutie\n"
-"ervan. Bit depth is alleen relevant bij een digitaal PCM\n"
-"signaal. Niet-PCM formaten, zoals lossy\n"
-"compressie formaten, hebben geen bit depth."
+"profundidade de bits é o número de bits de informação em cada\n"
+"amostra, e corresponde diretamente à resolução\n"
+"de cada amostra. A profundidade de bits só é significativa na referência\n"
+"a um sinal digital PCM. Formatos não PCM, como com perdas\n"
+"formatos de compressão, não têm profundidades de bits associadas."
 
 #: ../vdms_dialogs/filter_crop.py:187 ../vdms_dialogs/filter_scale.py:87
 #, python-brace-format
 msgid "Source size: {0} x {1} pixels"
-msgstr "Bron grootte: {0} x {1} pixels"
+msgstr "Tamanho da fonte: {0} x {1} pixels"
 
 #: ../vdms_dialogs/filter_crop.py:191
 msgid "Search for a specific frame"
-msgstr "Zoek naar een specifiek frame"
+msgstr "Procure por um quadro específico"
 
 #: ../vdms_dialogs/filter_crop.py:202
 msgid "Load"
-msgstr "Laad"
+msgstr "Carregar"
 
 #: ../vdms_dialogs/filter_crop.py:205
 msgid "Cropping area selection "
-msgstr "Gebied-selectie bijsnijden "
+msgstr "Seleção da área de corte "
 
 #: ../vdms_dialogs/filter_crop.py:210 ../vdms_dialogs/filter_scale.py:107
 msgid "Height"
-msgstr "Hoogte"
+msgstr "Altura"
 
 #: ../vdms_dialogs/filter_crop.py:230
 msgid "Center"
-msgstr "Centrum"
+msgstr "Centralizar"
 
 #: ../vdms_dialogs/filter_crop.py:241 ../vdms_dialogs/filter_scale.py:107
 msgid "Width"
-msgstr "Breedte"
+msgstr "Largura"
 
 #: ../vdms_dialogs/filter_crop.py:255 ../vdms_dialogs/filter_deinterlace.py:120
 #: ../vdms_dialogs/filter_denoisers.py:86 ../vdms_dialogs/filter_scale.py:188
 #: ../vdms_dialogs/filter_stab.py:261 ../vdms_dialogs/filter_transpose.py:109
 #: ../vdms_panels/av_conversions.py:546
 msgid "Reset"
-msgstr "Reset"
+msgstr "Resetar"
 
 #: ../vdms_dialogs/filter_crop.py:259 ../vdms_dialogs/filter_deinterlace.py:119
 #: ../vdms_dialogs/filter_denoisers.py:85 ../vdms_dialogs/filter_scale.py:186
 #: ../vdms_dialogs/filter_stab.py:259 ../vdms_dialogs/filter_transpose.py:113
 #: ../vdms_dialogs/set_timestamp.py:145
 msgid "Apply"
-msgstr "Toepassen"
+msgstr "Aplicar"
 
 #: ../vdms_dialogs/filter_crop.py:274
 msgid "Crop Filter"
-msgstr "Bijsnij Filter"
+msgstr "Filtro de corte"
 
 #: ../vdms_dialogs/filter_crop.py:275
 msgid "Crop to width"
-msgstr "Snij breedte bij"
+msgstr "Cortar na largura"
 
 #: ../vdms_dialogs/filter_crop.py:276
 msgid "Move vertically - set to -1 to center the vertical axis"
-msgstr "Verplaats verticaal - zet op -1 om de verticale as te centreren"
+msgstr "Mover verticalmente - defina como -1 para centralizar o eixo vertical"
 
 #: ../vdms_dialogs/filter_crop.py:278
 msgid "Move horizontally - set to -1 to center the horizontal axis"
-msgstr "Verplaats horizontaal - zet op -1 om de horizontale as te centreren"
+msgstr ""
+"Mova horizontalmente - defina como -1 para centralizar o eixo horizontal"
 
 #: ../vdms_dialogs/filter_crop.py:280
 msgid "Crop to height"
-msgstr "Snij hoogte bij"
+msgstr "Cortar na altura"
 
 #: ../vdms_dialogs/filter_deinterlace.py:55
 msgid "Advanced Options"
-msgstr "Geavanceerde Opties"
+msgstr "Opções Avançadas"
 
 #: ../vdms_dialogs/filter_deinterlace.py:57
 msgid "Deinterlace"
-msgstr "Interlace ongedaan maken"
+msgstr "Desentrelaçar"
 
 #: ../vdms_dialogs/filter_deinterlace.py:59
 msgid "Interlace"
-msgstr "Interlace"
+msgstr "Entrelaçar"
 
 #: ../vdms_dialogs/filter_deinterlace.py:62
 msgid "Deinterlaces with w3fdif filter"
-msgstr "Maakt interlace ongedaan met w3fdif filter"
+msgstr "Desentrelaçar com filtro w3fdif"
 
 #: ../vdms_dialogs/filter_deinterlace.py:76
 msgid "Deinterlaces with yadif filter"
-msgstr "Maakt interlace ongedaan met yadif filter"
+msgstr "Desentrelaça com filtro yadif"
 
 #: ../vdms_dialogs/filter_deinterlace.py:100
 msgid "Interlaces with interlace filter"
-msgstr "Doet interlace met interlace filter"
+msgstr "Entrelaço com filtro de entrelaçamento"
 
 #: ../vdms_dialogs/filter_deinterlace.py:123
 msgid "Deinterlacing and Interlacing"
-msgstr "Interlacen en ont-Interlacen"
+msgstr "Desentrelaçamento e entrelaçamento"
 
 #: ../vdms_dialogs/filter_deinterlace.py:194
 msgid "Deinterlace the input video with `w3fdif` filter"
-msgstr "Maak interlace van input video ongedaan met `w3fdif` filter"
+msgstr "Desentrelaçar o vídeo de entrada com o filtro `w3fdif`"
 
 #: ../vdms_dialogs/filter_deinterlace.py:196
 msgid "Set the interlacing filter coefficients."
-msgstr "Stel coëfficiënten van interlace filter in."
+msgstr "Defina os coeficientes do filtro de entrelaçamento."
 
 #: ../vdms_dialogs/filter_deinterlace.py:198
 #: ../vdms_dialogs/filter_deinterlace.py:208
 msgid "Specify which frames to deinterlace."
-msgstr "Specificeer frames waarvan u interlace ongedaan wilt maken."
+msgstr "Especifique quais quadros serão desentrelaçados."
 
 #: ../vdms_dialogs/filter_deinterlace.py:200
-#, fuzzy
-#| msgid ""
-#| "Deinterlace the input video with `yadif` filter. For FFmpeg is the best "
-#| "and fastest choice "
 msgid ""
 "Deinterlace the input video with `yadif` filter. Using FFmpeg, this is the "
 "best and fastest choice"
 msgstr ""
-"Maak interlace van input video ongedaan met `yadif` filter. Voor FFmpeg de "
-"beste en snelste keuze "
+"Desentrelaçar o vídeo de entrada com o filtro `yadif`. Usando FFmpeg, esta é "
+"a melhor e mais rápida escolha"
 
 #: ../vdms_dialogs/filter_deinterlace.py:203
 msgid ""
 "mode\n"
 "The interlacing mode to adopt."
 msgstr ""
-"modus\n"
-"De interlacing modus die overnomen wordt."
+"modo\n"
+"O modo de entrelaçamento a ser adotado."
 
 #: ../vdms_dialogs/filter_deinterlace.py:205
 msgid ""
 "parity\n"
 "The picture field parity assumed for the input interlaced video."
 msgstr ""
-"pariteit\n"
-"De picture field parity voor de interlaced input video."
+"paridade\n"
+"A paridade do campo de imagem assumida para o vídeo entrelaçado de entrada."
 
 #: ../vdms_dialogs/filter_deinterlace.py:210
 msgid "Simple interlacing filter from progressive contents."
-msgstr "Simpel interlacing filter voor progressieve beelden."
+msgstr "Filtro de entrelaçamento simples de conteúdos progressivos."
 
 #: ../vdms_dialogs/filter_deinterlace.py:212
 msgid ""
@@ -246,61 +225,47 @@ msgid ""
 "determines whether the interlaced frame is taken from the even (tff - "
 "default) or odd (bff) lines of the progressive frame."
 msgstr ""
-"scan:\n"
-"bepaalt of de interlaced frame genomen wordt van de even (tff - standaard) "
-"of oneven (bff) lijnen van de progressieve frame."
+"varredura:\n"
+"determina se o quadro entrelaçado é obtido das linhas pares (tff - padrão) "
+"ou ímpares (bff) do quadro progressivo."
 
 #: ../vdms_dialogs/filter_deinterlace.py:216
-#, fuzzy
-#| msgid ""
-#| "lowpas:\n"
-#| "Enable (default) or disable the vertical lowpass filter to avoid twitter "
-#| "interlacing and reduce moire patterns.\n"
-#| "Default is no setting."
 msgid ""
 "lowpass:\n"
 "Enable (default) or disable the vertical lowpass filter to avoid twitter "
 "interlacing and reduce moire patterns.\n"
 "Default is no setting."
 msgstr ""
-"lowpass:\n"
-"Aanzetten (standaard) of uitzetten van het verticale lowpass filter om "
-"twitter interlacing te voorkomen en moire patronen te verminderen.\n"
-"Geen instelling is standaard."
+"passa-baixo:\n"
+"Ative (padrão) ou desative o filtro passa-baixo vertical para evitar o "
+"entrelaçamento do twitter e reduzir os padrões de moiré.\n"
+"O padrão é nenhuma configuração."
 
 #: ../vdms_dialogs/filter_denoisers.py:58
 msgid "Apply Denoisers Filters"
-msgstr "Pas Denoisers Filters toe"
+msgstr "Aplicar Filtros de redução de ruído"
 
 #: ../vdms_dialogs/filter_denoisers.py:61
 msgid "Enable nlmeans denoiser"
-msgstr "Zet nlmeans denoiser aan"
+msgstr "Habilitar redução de ruído nlmeans"
 
 #: ../vdms_dialogs/filter_denoisers.py:68
 msgid "nlmeans options"
-msgstr "nlmeans opties"
+msgstr "opções nlmeans"
 
 #: ../vdms_dialogs/filter_denoisers.py:73
 msgid "Enable hqdn3d denoiser"
-msgstr "Zet hqdn3d denoiser aan"
+msgstr "Habilitar redução de ruído hqdn3d"
 
 #: ../vdms_dialogs/filter_denoisers.py:78
 msgid "hqdn3d options"
-msgstr "hqdn3d opties"
+msgstr "opções hqdn3d"
 
 #: ../vdms_dialogs/filter_denoisers.py:128
-#, fuzzy
-#| msgid "Denoisers filters"
 msgid "Denoiser filters"
-msgstr "Denoiser filters"
+msgstr "Filtros de redução de ruído"
 
 #: ../vdms_dialogs/filter_denoisers.py:129
-#, fuzzy
-#| msgid ""
-#| "nlmeans:\n"
-#| "(Denoise frames using Non-Local Means algorithm is capable of restoring "
-#| "video sequences with even strong noise. It is ideal for enhancing the "
-#| "quality of old VHS tapes."
 msgid ""
 "nlmeans:\n"
 "Denoise frames using Non-Local Means algorithm is capable of restoring video "
@@ -308,9 +273,9 @@ msgid ""
 "old VHS tapes."
 msgstr ""
 "nlmeans:\n"
-"Ruis-reductie van frames door het Non-Local Means algoritme, kan een "
-"beeldenreeks herstellen, zelfs bij sterke ruis. Het is ideaal voor "
-"verbetering van de kwaliteit van oude VHS banden."
+"redução de ruído usando o algoritmo Non-Local Means é capaz de restaurar "
+"sequências de vídeo mesmo com ruído forte. É ideal para melhorar a qualidade "
+"de fitas VHS antigas. ."
 
 #: ../vdms_dialogs/filter_denoisers.py:134
 msgid ""
@@ -320,30 +285,24 @@ msgid ""
 "should enhance compressibility."
 msgstr ""
 "hqdn3d:\n"
-"Dit is een 3d denoise filter met hoge nauwkeurigheid / kwaliteit. Het beoogt "
-"beeldruis te verminderen, wat resulteert in vloeiende beelden, waarbij "
-"stilstaande beelden echt stil staan. Compressie zal hierdoor verbeteren."
+"Este é um filtro de redução de ruído 3D, de alta precisão / qualidade. Seu "
+"objetivo é reduzir o ruído da imagem, produzindo imagens suaves e tornando "
+"as imagens estáticas realmente estáticas. Isso deve aumentar a "
+"compressibilidade."
 
 #: ../vdms_dialogs/filter_scale.py:62
 msgid "New size in pixels"
-msgstr "Nieuwe afmeting in pixels"
+msgstr "Novo tamanho em pixels"
 
 #: ../vdms_dialogs/filter_scale.py:67
 msgid "Width:"
-msgstr "Breedte:"
+msgstr "Largura:"
 
 #: ../vdms_dialogs/filter_scale.py:77
 msgid "Height:"
-msgstr "Hoogte:"
+msgstr "Altura:"
 
 #: ../vdms_dialogs/filter_scale.py:92
-#, fuzzy
-#| msgid ""
-#| "If you want to keep the aspect ratio, select \"Constrain proportions\" "
-#| "below and\n"
-#| "specify only one component, either width or height, and set the other "
-#| "component\n"
-#| "to -1 or -2 (some codecs require -2, so you should do some testing first)."
 msgid ""
 "If you want to keep the aspect ratio, select \"Constrain proportions\" below "
 "and\n"
@@ -351,148 +310,149 @@ msgid ""
 "dimension\n"
 "to -1 or -2 (some codecs require -2, so you should do some testing first)."
 msgstr ""
-"Wanneer u de beeldverhouding wilt behouden, selecteer hieronder \"Beperk "
-"verhouding\" en\n"
-"geef slechts 1 dimensie aan, dus breedte of hoogte, en zet de andere "
-"dimensie\n"
-"op -1 of -2 (sommige codecs vereisen -2, dus u zou dit eerst moeten testen)."
+"Se você deseja manter a proporção, selecione \"Restringir proporções\" "
+"abaixo e\n"
+"especifique apenas uma dimensão, largura ou altura, e defina a outra "
+"dimensão\n"
+"para -1 ou -2 (alguns codecs exigem -2, então você deve fazer alguns testes "
+"primeiro)."
 
 #: ../vdms_dialogs/filter_scale.py:101
 msgid "Constrain proportions (keep aspect ratio)"
-msgstr "Beperk verhouding (behoud beeldverhouding)"
+msgstr "Restringir proporções (manter proporção)"
 
 #: ../vdms_dialogs/filter_scale.py:106
-#, fuzzy
-#| msgid "Which dimension adjust?"
 msgid "Which dimension to adjust?"
-msgstr "Welke dimensie aanpassen?"
+msgstr "Qual dimensão ajustar?"
 
 #: ../vdms_dialogs/filter_scale.py:116 ../vdms_panels/av_conversions.py:350
 msgid "Aspect Ratio"
-msgstr "Beeldverhouding"
+msgstr "Proporção da tela"
 
 #: ../vdms_dialogs/filter_scale.py:118
 msgid "Setdar filter (display aspect ratio) example 16/9, 4/3 "
-msgstr "Setdar filter (toon beeldverhouding) bijvoorbeeld 16/9, 4/3 "
+msgstr "Filtro Setdar (proporção de exibição), exemplo 16/9, 4/3 "
 
 #: ../vdms_dialogs/filter_scale.py:123 ../vdms_dialogs/filter_scale.py:153
 msgid "Numerator"
-msgstr "Teller"
+msgstr "Numerador"
 
 #: ../vdms_dialogs/filter_scale.py:144 ../vdms_dialogs/filter_scale.py:174
 msgid "Denominator"
-msgstr "Noemer"
+msgstr "Denominador"
 
 #: ../vdms_dialogs/filter_scale.py:148
 msgid "Setsar filter (sample aspect ratio) example 1/1"
-msgstr "Setsar filter (sample beeldverhouding) bijvoorbeeld 1/1"
+msgstr "Filtro Setsar (proporção da amostra), exemplo 1/1"
 
 #: ../vdms_dialogs/filter_scale.py:198
 msgid "Resizing filters"
-msgstr "Herschaling filters"
+msgstr "Filtros de redimensionamento"
 
 #: ../vdms_dialogs/filter_scale.py:199
-#, fuzzy
-#| msgid "Scale filter, for disabling set to 0"
 msgid "Scale filter, set to 0 to disable"
-msgstr "Schaling filter, zet uit door 0"
+msgstr "Filtro de escala, defina como 0 para desativar"
 
 #: ../vdms_dialogs/filter_scale.py:202
-#, fuzzy
-#| msgid "Display Aspect Ratio. Set to 0 to disabling."
 msgid "Display Aspect Ratio. Set to 0 to disable"
-msgstr "Toon beeldverhouding. Zet uit door 0."
+msgstr "Proporção da tela. Defina como 0 para desativar"
 
 #: ../vdms_dialogs/filter_scale.py:205
-#, fuzzy
-#| msgid ""
-#| "Sample (aka Pixel) Aspect Ratio.\n"
-#| "Set to 0 to disabling."
 msgid ""
 "Sample (aka Pixel) Aspect Ratio.\n"
 "Set to 0 to disable"
 msgstr ""
-"Sample Beeldverhouding (of Pixel Beeldverhouding).\n"
-"Zet uit door 0."
+"Proporção de amostra (também conhecida como Pixel).\n"
+"Defina como 0 para desativar"
 
 #: ../vdms_dialogs/filter_stab.py:66
 msgid "Enable stabilizer"
-msgstr ""
+msgstr "Ativar estabilizador"
 
 #: ../vdms_dialogs/filter_stab.py:69
 msgid "Generates duo video for comparison"
-msgstr ""
+msgstr "Gera vídeo duplo para comparação"
 
 #: ../vdms_dialogs/filter_stab.py:73
-#, fuzzy
-#| msgid "Video Codec"
 msgid "Video Detect"
-msgstr "Video Codec"
+msgstr "Detecção de vídeo"
 
 #: ../vdms_dialogs/filter_stab.py:129
 msgid "[TRIPOD] Enable tripod mode if checked"
-msgstr ""
+msgstr "[TRIPÉ] Ative o modo tripé se estiver marcado"
 
 #: ../vdms_dialogs/filter_stab.py:137
-#, fuzzy
-#| msgid "Video Stream"
 msgid "Video transform"
-msgstr "Video Stream"
+msgstr "Transformação de vídeo"
 
 #: ../vdms_dialogs/filter_stab.py:153
 msgid "[OPTALGO] optimization algorithm"
-msgstr ""
+msgstr "[OPTALGO] Algoritmo de otimização"
 
 #: ../vdms_dialogs/filter_stab.py:173
 msgid "[CROP] Specify how to deal borders at movement compensation"
 msgstr ""
+"[CORTAR] Especifique como lidar com as bordas na compensação de movimento"
 
 #: ../vdms_dialogs/filter_stab.py:180
 msgid "[INVERT] Invert transforms if checked"
-msgstr ""
+msgstr "[INVERTER] Inverter transformações se marcado"
 
 #: ../vdms_dialogs/filter_stab.py:183
 msgid ""
 "[RELATIVE] Consider transforms as relative to previous frame if checked, "
 "absolute if unchecked"
 msgstr ""
+"[RELATIVO] Considere as transformações como relativas ao quadro anterior se "
+"marcado, absoluto se não marcado"
 
 #: ../vdms_dialogs/filter_stab.py:224
 msgid "Specify type of interpolation"
-msgstr ""
+msgstr "Especifique o tipo de interpolação"
 
 #: ../vdms_dialogs/filter_stab.py:232
 msgid ""
 "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr ""
+"[TRIPÉ2]modo de tripé virtual, equivalente a relativo = desmarcado: "
+"suavização = 0"
 
 #: ../vdms_dialogs/filter_stab.py:239
 msgid "Unsharp filter:"
-msgstr ""
+msgstr "Filtro de nitidez:"
 
 #: ../vdms_dialogs/filter_stab.py:274
 msgid ""
 "Set how shaky the video is and how quick the camera is. A value of 1 means "
 "little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
+"Defina o quão trêmulo é o vídeo e a velocidade da câmera. Um valor de 1 "
+"significa pouca instabilidade, um valor de 10 significa instabilidade forte. "
+"O valor padrão é 5."
 
 #: ../vdms_dialogs/filter_stab.py:278
 msgid ""
 "Set the accuracy of the detection process. A value of 1 means low accuracy, "
 "a value of 15 means high accuracy. Default value is 15."
 msgstr ""
+"Defina a precisão do processo de detecção. Um valor de 1 significa baixa "
+"precisão, um valor de 15 significa alta precisão. O valor padrão é 15."
 
 #: ../vdms_dialogs/filter_stab.py:282
 msgid ""
 "Set stepsize of the search process. The region around minimum is scanned "
 "with 1 pixel resolution. Default value is 6."
 msgstr ""
+"Defina o tamanho da etapa do processo de pesquisa. A região em torno do "
+"mínimo é digitalizada com resolução de 1 pixel. O valor padrão é 6."
 
 #: ../vdms_dialogs/filter_stab.py:286
 msgid ""
 "Set minimum contrast. Below this value a local measurement field is "
 "discarded. The range is 0-1. Default value is 0.25. "
 msgstr ""
+"Defina o contraste mínimo. Abaixo desse valor, um campo de medição local é "
+"descartado. O intervalo é 0-1. O valor padrão é 0,25. "
 
 #: ../vdms_dialogs/filter_stab.py:289
 msgid ""
@@ -502,6 +462,11 @@ msgid ""
 "or-less static scene and keep the camera view absolutely still. The frames "
 "are counted starting from 1."
 msgstr ""
+"Defina o número do quadro de referência para o modo tripé. Se ativado, o "
+"movimento dos quadros é comparado a um quadro de referência no fluxo "
+"filtrado, identificado pelo número especificado. A ideia é compensar todos "
+"os movimentos em uma cena mais ou menos estática e manter a visão da câmera "
+"absolutamente imóvel. Os frames são contados a partir de 1."
 
 #: ../vdms_dialogs/filter_stab.py:298
 msgid ""
@@ -512,6 +477,12 @@ msgid ""
 "acceleration of the camera (pan/tilt movements). 0 is a special case where a "
 "static camera is simulated."
 msgstr ""
+"Defina o número de quadros (valor * 2 + 1) usado para filtrar em lowpass os "
+"movimentos da câmera. O valor padrão é 15. Por exemplo, um número de 10 "
+"significa que 21 quadros são usados (10 no passado e 10 no futuro) para "
+"suavizar o movimento no vídeo. Um valor maior leva a um vídeo mais uniforme, "
+"mas limita a aceleração da câmera (movimentos de panorâmica / inclinação). 0 "
+"é um caso especial em que uma câmera estática é simulada."
 
 #: ../vdms_dialogs/filter_stab.py:306
 msgid ""
@@ -519,12 +490,17 @@ msgid ""
 "kernel low-pass filter on camera motion (default) ‘avg’ averaging on "
 "transformations"
 msgstr ""
+"Defina o caminho do algoritmo de otimização da câmera. Os valores são: "
+"‘gauss’: filtro low-pass do kernel gaussiano no movimento da câmera (padrão) "
+"‘avg’ Média nas transformações"
 
 #: ../vdms_dialogs/filter_stab.py:310
 msgid ""
 "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
 "is -1, meaning no limit."
 msgstr ""
+"Defina o ângulo máximo em radianos (grau * PI / 180) para girar os quadros. "
+"O valor padrão é -1, o que significa sem limite."
 
 #: ../vdms_dialogs/filter_stab.py:313
 msgid ""
@@ -532,22 +508,30 @@ msgid ""
 "compensation. Values are: ‘keep’ keep image information from previous frame "
 "(default), ‘black’ fill the border black"
 msgstr ""
+"Especifique como lidar com bordas que podem ser visíveis devido à "
+"compensação de movimento. Os valores são: ‘manter’ manter as informações da "
+"imagem do quadro anterior (padrão), ‘preto’ preencher a borda preta"
 
 #: ../vdms_dialogs/filter_stab.py:318
 msgid "Invert transforms if checked. Default is unchecked."
-msgstr ""
+msgstr "Inverter transformações se marcado. O padrão é desmarcado."
 
 #: ../vdms_dialogs/filter_stab.py:320
 msgid ""
 "Consider transforms as relative to previous frame if checked, absolute if "
 "unchecked. Default is checked."
 msgstr ""
+"Considere as transformações como relativas ao quadro anterior se marcado, "
+"absoluto se desmarcado. O padrão é verificado."
 
 #: ../vdms_dialogs/filter_stab.py:323
 msgid ""
 "Set percentage to zoom. A positive value will result in a zoom-in effect, a "
 "negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
+"Defina a porcentagem para ampliar. Um valor positivo resultará em um efeito "
+"de mais zoom, um valor negativo em um efeito de menos zoom. O valor padrão é "
+"0 (sem zoom)."
 
 #: ../vdms_dialogs/filter_stab.py:327
 msgid ""
@@ -557,12 +541,20 @@ msgid ""
 "determined (no borders will be visible), see zoomspeed. Note that the value "
 "given at zoom is added to the one calculated here."
 msgstr ""
+"Defina o zoom ideal para evitar bordas. Os valores aceitos são: '0' "
+"desativado, o valor de zoom estático ideal '1' é determinado (apenas "
+"movimentos muito fortes levarão a bordas visíveis) (padrão), o valor de zoom "
+"adaptativo ideal '2' é determinado (nenhuma borda será visível), veja a "
+"velocidade do zoom. Observe que o valor fornecido no zoom é adicionado ao "
+"calculado aqui."
 
 #: ../vdms_dialogs/filter_stab.py:334
 msgid ""
 "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
 "Range is from 0 to 5, default value is 0.25."
 msgstr ""
+"Defina a porcentagem para aumentar ao máximo cada quadro (habilitado quando "
+"optzoom é definido como 2). O intervalo é de 0 a 5, o valor padrão é 0,25."
 
 #: ../vdms_dialogs/filter_stab.py:338
 msgid ""
@@ -570,45 +562,51 @@ msgid ""
 "‘linear’ linear only horizontal, ‘bilinear’ linear in both directions "
 "(default), ‘bicubic’ cubic in both directions (slow)"
 msgstr ""
+"Especifique o tipo de interpolação. Os valores disponíveis são: ‘não’ sem "
+"interpolação, ‘linear’ linear apenas horizontal, ‘bilinear’ linear em ambas "
+"as direções (padrão), ‘bicúbico’ cúbico em ambas as direções (lento)"
 
 #: ../vdms_dialogs/filter_stab.py:343
 msgid ""
 "Enable virtual tripod mode if checked, which is equivalent to relative=0:"
 "smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
+"Habilite o modo de tripé virtual se marcado, que é equivalente a relativo = "
+"0: suavização = 0. O padrão é desmarcado. Use também a opção de tripé do "
+"vidstabdetect."
 
 #: ../vdms_dialogs/filter_stab.py:348
 msgid ""
 "Sharpen or blur the input video. Note the use of the unsharp filter which is "
 "always recommended."
 msgstr ""
+"Tornar mais nítido ou mais desfocado o vídeo de entrada. Observe o uso do "
+"filtro unsharp que é sempre recomendado."
 
 #: ../vdms_dialogs/filter_stab.py:353
-#, fuzzy
-#| msgid "Video Filters"
 msgid "Video stabilizer filter"
-msgstr "Video Filters"
+msgstr "Filtro estabilizador de vídeo"
 
 #: ../vdms_dialogs/filter_transpose.py:83
 #: ../vdms_dialogs/filter_transpose.py:283
 msgid "Default position"
-msgstr "Standaard positie"
+msgstr "Posição padrão"
 
 #: ../vdms_dialogs/filter_transpose.py:88
 msgid "Load Frame"
-msgstr "Laad Frame"
+msgstr "Carregar quadro"
 
 #: ../vdms_dialogs/filter_transpose.py:90
 msgid "Rotation setting"
-msgstr "Rotatie instelling"
+msgstr "Configuração de rotação"
 
 #: ../vdms_dialogs/filter_transpose.py:98
 msgid "90° (left)"
-msgstr "90° (naar links)"
+msgstr "90 ° (esquerda)"
 
 #: ../vdms_dialogs/filter_transpose.py:100
 msgid "90° (right)"
-msgstr "90° (naar rechts)"
+msgstr "90 ° (direita)"
 
 #: ../vdms_dialogs/filter_transpose.py:104
 msgid "180°"
@@ -616,49 +614,49 @@ msgstr "180°"
 
 #: ../vdms_dialogs/filter_transpose.py:118
 msgid "Transpose Filter"
-msgstr "Transponeer Filter"
+msgstr "Filtro de transposição"
 
 #: ../vdms_dialogs/filter_transpose.py:221
 msgid "Rotate 90 degrees right"
-msgstr "Roteer 90 graden naar rechts"
+msgstr "Girar 90 graus para a direita"
 
 #: ../vdms_dialogs/filter_transpose.py:242
 msgid "Rotate 180 degrees"
-msgstr "Roteer 180 graden"
+msgstr "Girar 180 graus"
 
 #: ../vdms_dialogs/filter_transpose.py:262
 msgid "Rotate 90 degrees left"
-msgstr "Roteer 90 graden naar links"
+msgstr "Girar 90 graus para a esquerda"
 
 #: ../vdms_dialogs/wizard_dlg.py:78
-#, fuzzy
-#| msgid "Please take a moments to set up the application"
 msgid "Please take a moment to set up the application"
-msgstr "Neem even de tijd om het programma in te stellen"
+msgstr "Reserve um momento para configurar o aplicativo"
 
 #: ../vdms_dialogs/wizard_dlg.py:79
 msgid "Click the \"Next\" button to get started"
-msgstr "Druk de knop \"Volgende\" om te beginnen"
+msgstr "Clique no botão \"Avançar\" para começar"
 
 #: ../vdms_dialogs/wizard_dlg.py:94
 msgid "Welcome to Videomass Wizard!"
-msgstr "Welkom bij de Videomass Wizard!"
+msgstr "Bem-vindo ao Assistente do Videomass!"
 
 #: ../vdms_dialogs/wizard_dlg.py:135
 msgid "Videomass is an application based on FFmpeg\n"
-msgstr "Videomass is gebaseerd op FFmpeg\n"
+msgstr "Videomass é um aplicativo baseado em FFmpeg\n"
 
 #: ../vdms_dialogs/wizard_dlg.py:137
 msgid "If FFmpeg is not on your computer, this application will be unusable"
-msgstr "Zonder FFmpeg op uw computer zal dit programma onbruikbaar zijn"
+msgstr ""
+"Se o FFmpeg não estiver no seu computador, este aplicativo ficará "
+"inutilizável"
 
 #: ../vdms_dialogs/wizard_dlg.py:140
 msgid ""
 "If you have already installed FFmpeg on your operating\n"
 "system, click the \"Auto-detection\" button."
 msgstr ""
-"Wanneer FFmpeg al op uw besturingssysteem is\n"
-"geïnstalleerd, druk de \"Auto-detectie\" knop."
+"Se você já instalou o FFmpeg em seu sistema\n"
+"operacional, clique no botão \"Detecção automática\"."
 
 #: ../vdms_dialogs/wizard_dlg.py:143
 msgid ""
@@ -666,29 +664,29 @@ msgid ""
 "filesystem but not installed on your operating system,\n"
 "click the \"Locate\" button."
 msgstr ""
-"Wanneer u een FFmpeg versie wilt gebruiken die aanwezig is\n"
-"op uw bestandssysteem, maar niet is geïnstalleerd op uw besturingssysteem,\n"
-"druk de \"Lokaliseer\" knop."
+"Se você deseja usar uma versão do FFmpeg localizada em seu\n"
+"sistema de arquivos, mas não instalado em seu sistema operacional,\n"
+"clique no botão \"Localizar\"."
 
 #: ../vdms_dialogs/wizard_dlg.py:165
 msgid "Auto-detection"
-msgstr "Automatische detectie"
+msgstr "Detecção automática"
 
 #: ../vdms_dialogs/wizard_dlg.py:167
 msgid "Locate"
-msgstr "Lokaliseer"
+msgstr "Localizar"
 
 #: ../vdms_dialogs/wizard_dlg.py:217
 msgid "Click the \"Next\" button"
-msgstr "Druk de knop \"Volgende\""
+msgstr "Clique no botão \"Avançar\""
 
 #: ../vdms_dialogs/wizard_dlg.py:238
 msgid ""
 "'{}' is not installed on your computer. Install it or indicate another "
 "location by clicking the 'Locate' button."
 msgstr ""
-"'{}' is niet op uw computer geïnstalleerd.  Installeer het of geef een "
-"andere lokatie aan, door op de 'Lokaliseer' knop te drukken."
+"'{}' não está instalado no seu computador. Instale-o ou indique outro local "
+"clicando no botão 'Localizar'."
 
 #: ../vdms_dialogs/wizard_dlg.py:252
 msgid ""
@@ -696,55 +694,55 @@ msgid ""
 "\n"
 "Do you want to use that?"
 msgstr ""
-"Videomass blijkt reeds FFmpeg te bevatten.\n"
+"Videomass parece já incluir FFmpeg.\n"
 "\n"
-"Wilt u deze gebruiken?"
+"Você quer usá-lo?"
 
 #: ../vdms_dialogs/wizard_dlg.py:254
 msgid "Videomass: Please Confirm"
-msgstr "Videomass: bevestig aub"
+msgstr "Videomass: Por favor, confirme"
 
 #: ../vdms_dialogs/wizard_dlg.py:277
 msgid "Locating FFmpeg executables\n"
-msgstr "Bezig FFmpeg programmabestanden te lokaliseren\n"
+msgstr "Localizando executáveis FFmpeg\n"
 
 #: ../vdms_dialogs/wizard_dlg.py:279
 msgid ""
 "\"ffmpeg\", \"ffprobe\" and \"ffplay\" are required. Complete all\n"
 "the text boxes below by clicking on the respective buttons."
 msgstr ""
-"\"ffmpeg\", \"ffprobe\" en \"ffplay\" zijn vereist. Vul alle onderstaande\n"
-"tekstkaders in, door op de betreffende knoppen te drukken."
+"\"ffmpeg\", \"ffprobe\" e \"ffplay\" são obrigatórios. Complete tudo\n"
+"nas caixas de texto abaixo clicando nos respectivos botões."
 
 #: ../vdms_dialogs/wizard_dlg.py:361 ../vdms_dialogs/wizard_dlg.py:377
 #: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:712
 #: ../vdms_dialogs/settings.py:751 ../vdms_dialogs/settings.py:790
 msgid "Choose the {} executable"
-msgstr "Kies het {} programmabestand"
+msgstr "Escolha o {} executável"
 
 #: ../vdms_dialogs/wizard_dlg.py:416
 msgid ""
 "Videomass has a simple graphical\n"
 "interface for youtube-dl\n"
 msgstr ""
-"Videomass heeft een simpele grafische\n"
-"gebruikersomgeving voor youtube-dl\n"
+"Videomass tem uma interface gráfica\n"
+"simples para o youtube-dl\n"
 
 #: ../vdms_dialogs/wizard_dlg.py:418
 msgid ""
 "This feature allows you to download video and audio from\n"
 "many sites, including YouTube.com and even Facebook."
 msgstr ""
-"Dit geeft u de mogelijkheid om video en audio te downloaden\n"
-"van vele websites, inclusief YouTube en Facebook."
+"Este recurso permite que você baixe vídeo e áudio de\n"
+"muitos sites, incluindo YouTube.com e até Facebook."
 
 #: ../vdms_dialogs/wizard_dlg.py:438
 msgid " Do you want to enable this feature?"
-msgstr " Wilt u deze mogelijkheid activeren?"
+msgstr " Você quer habilitar este recurso?"
 
 #: ../vdms_dialogs/wizard_dlg.py:488
 msgid "Choose how you want to use youtube-dl\n"
-msgstr "Kies hoe u youtube-dl wilt gebruiken\n"
+msgstr "Escolha como deseja usar o youtube-dl\n"
 
 #: ../vdms_dialogs/wizard_dlg.py:490
 msgid ""
@@ -753,286 +751,276 @@ msgid ""
 "executable file can be downloaded and updated from\n"
 "Videomass itself and will be placed on:"
 msgstr ""
-"Videomass kan youtube-dl intern gebruiken als een Python\n"
-"module (aanbevolen) of als een programmabestand wat door\n"
-"Videomass zelf kan worden ge-download en ge-update\n"
-"en zal worden geplaatst op:"
+"Videomass pode usar o youtube-dl internamente como um módulo\n"
+"Python (recomendado) ou como um arquivo executável. O\n"
+"arquivo executável pode ser baixado e atualizado a partir do\n"
+"próprio Videomass e será colocado em:"
 
 #: ../vdms_dialogs/wizard_dlg.py:495
 msgid ""
 "Notice: This version of Videomass can\n"
 "only use youtube-dl as local executable"
 msgstr ""
-"Let op: deze Videomass versie kan youtube-dl\n"
-"alleen als lokaal programmabestand gebruiken"
+"Aviso: Esta versão do Videomass pode\n"
+"use apenas youtube-dl como executável local"
 
 #: ../vdms_dialogs/wizard_dlg.py:503 ../vdms_dialogs/settings.py:297
 msgid "Use the one included in the AppImage (recommended)"
-msgstr "Gebruik degene in de AppImage (aanbevolen)"
+msgstr "Use o incluído no AppImage (recomendado)"
 
 #: ../vdms_dialogs/wizard_dlg.py:504 ../vdms_dialogs/settings.py:299
 msgid "Use a local copy of youtube-dl"
-msgstr "Gebruik een lokaal exemplaar van youtube-dl"
+msgstr "Use uma cópia local do youtube-dl"
 
 #: ../vdms_dialogs/wizard_dlg.py:507 ../vdms_dialogs/settings.py:305
 msgid "Use the one installed in your O.S. (recommended)"
-msgstr "Gebruik het exemplaar van uw besturingssysteem (aanbevolen)"
+msgstr "Use o instalado em seu sistema. (recomendado)"
 
 #: ../vdms_dialogs/wizard_dlg.py:508 ../vdms_dialogs/settings.py:307
 msgid "Use a local copy of youtube-dl updatable by Videomass"
-msgstr ""
-"Gebruik een lokaal youtube-dl exemplaar wat door Videomass ge-update kan "
-"worden"
+msgstr "Use uma cópia local do youtube-dl atualizável pelo Videomass"
 
 #: ../vdms_dialogs/wizard_dlg.py:527 ../vdms_dialogs/settings.py:275
 msgid "Downloader preferences"
-msgstr "Downloader voorkeuren"
+msgstr "Preferências do download"
 
 #: ../vdms_dialogs/wizard_dlg.py:591
 msgid "Wizard completed successfully!\n"
-msgstr "Wizard succesvol afgerond!\n"
+msgstr "Assistente concluído com sucesso!\n"
 
 #: ../vdms_dialogs/wizard_dlg.py:592
 msgid ""
 "Remember that you can always change these settings later, through the Setup "
 "dialog."
 msgstr ""
-"Bedenk dat u deze instellingen later altijd kunt wijzigen door het "
-"Installatie dialoogvenster."
+"Lembre-se de que você sempre pode alterar essas configurações "
+"posteriormente, por meio da caixa de diálogo Configuração."
 
 #: ../vdms_dialogs/wizard_dlg.py:594
 msgid "Thank You!"
-msgstr "Dank U!"
+msgstr "Obrigado!"
 
 #: ../vdms_dialogs/wizard_dlg.py:595
 msgid "To exit click the \"Finish\" button"
-msgstr "Druk de knop \"Voltooi\" om af te sluiten"
+msgstr "Para sair, clique no botão \"Concluir\""
 
 #: ../vdms_dialogs/wizard_dlg.py:685
 msgid "< Previous"
-msgstr "< Vorige"
+msgstr "< Anterior"
 
 #: ../vdms_dialogs/wizard_dlg.py:688 ../vdms_dialogs/wizard_dlg.py:790
 msgid "Next >"
-msgstr "Volgende >"
+msgstr "Avançar >"
 
 #: ../vdms_dialogs/wizard_dlg.py:693
 msgid "Videomass Wizard"
-msgstr "Videomass Wizard"
+msgstr "Assistente do Videomass"
 
 #: ../vdms_dialogs/wizard_dlg.py:722 ../vdms_dialogs/wizard_dlg.py:755
 #: ../vdms_dialogs/wizard_dlg.py:759
 msgid "Finish"
-msgstr "Voltooi"
+msgstr "Concluir"
 
 #: ../vdms_dialogs/wizard_dlg.py:745
 msgid "Some text boxes are still incomplete"
-msgstr "Enkele tekstkaders zijn nog onvolledig"
+msgstr "Algumas caixas de texto ainda estão incompletas"
 
 #: ../vdms_dialogs/wizard_dlg.py:835
 msgid "Re-start is required"
-msgstr "Herstart is vereist"
+msgstr "É necessário Reiniciar"
 
 #: ../vdms_dialogs/wizard_dlg.py:836
 msgid "Done!"
-msgstr "Klaar!"
+msgstr "Concluído!"
 
 #: ../vdms_dialogs/infoprg.py:61
 msgid "Cross-platform graphical interface for FFmpeg and youtube-dl.\n"
-msgstr ""
-"Multiplatform grafische gebruikersomgeving voor FFmpeg en youtube-dl.\n"
+msgstr "Interface gráfica multiplataforma para FFmpeg e youtube-dl.\n"
 
 #: ../vdms_dialogs/presets_addnew.py:44
 msgid ""
 "One-Pass, Do not start with `ffmpeg -i filename`; do not end with `output-"
 "filename`"
 msgstr ""
-"One-Pass, begin niet met `ffmpeg -i filename`; eindig niet met `output-"
-"filename`"
+"Primeira passagem, não comece com `ffmpeg -i filename`; não termine com "
+"`output-filename"
 
 #: ../vdms_dialogs/presets_addnew.py:48
 msgid ""
 "Two-Pass (optional), Do not start with `ffmpeg -i filename`; do not end with "
 "`output-filename`"
 msgstr ""
-"Two-Pass (optioneel), begin niet met `ffmpeg -i filename`; eindig niet met "
-"`output-filename`"
+"Segunda passagem (opcional), não comece com `ffmpeg -i filename`; não "
+"termine com `output-filename"
 
 #: ../vdms_dialogs/presets_addnew.py:52
 msgid "Supported Formats list (optional). Do not include the `.`"
-msgstr "Lijst van ondersteunde formaten (optioneel). Laat de `.` achterwege"
+msgstr "Lista de formatos suportados (opcional). Não inclua o `.`"
 
 #: ../vdms_dialogs/presets_addnew.py:53
 msgid "Output Format. Empty to copy format and codec. Do not include the `.`"
 msgstr ""
-"Output formaat. Bij weglaten worden formaat en codec gekopieerd. Laat de `.` "
-"achterwege"
+"Formato de saída. Vazio para copiar o formato e o codec. Não inclua o `.`"
 
 #: ../vdms_dialogs/presets_addnew.py:79
 msgid "Profile Name"
-msgstr "Profiel Naam"
+msgstr "Nome do perfil"
 
 #: ../vdms_dialogs/presets_addnew.py:85 ../vdms_panels/presets_manager.py:603
 msgid "Description"
-msgstr "Beschrijving"
+msgstr "Descrição"
 
 #: ../vdms_dialogs/presets_addnew.py:137
 msgid "Save.."
-msgstr "Bewaar.."
+msgstr "Salvar.."
 
 #: ../vdms_dialogs/presets_addnew.py:160
 msgid "A short profile name"
-msgstr "Een korte profiel naam"
+msgstr "Um nome de perfil curto"
 
 #: ../vdms_dialogs/presets_addnew.py:161
 msgid "A long description of the profile"
-msgstr "Een uitgebreide beschrijving van het profiel"
+msgstr "Uma longa descrição do perfil"
 
 #: ../vdms_dialogs/presets_addnew.py:162
 msgid "Reserved arguments for the first pass"
-msgstr "Gereserveerde parameters voor de eerste 'pass'"
+msgstr "Argumentos reservados para a primeira passagem"
 
 #: ../vdms_dialogs/presets_addnew.py:163
 msgid "Reserved arguments for the second pass"
-msgstr "Gereserveerde parameters voor de tweede 'pass'"
+msgstr "Argumentos reservados para a segunda passagem"
 
 #: ../vdms_dialogs/presets_addnew.py:164
 msgid "One or more comma-separated format names to include in the profile"
-msgstr "Een of meerdere komma-gescheiden formaat namen voor het profiel"
+msgstr ""
+"Um ou mais nomes de formato separados por vírgula para incluir no perfil"
 
 #: ../vdms_dialogs/presets_addnew.py:166
 msgid "Output format extension. Leave empty to copy codec and format"
 msgstr ""
-"Bestandsextensie van output formaat. Laat leeg om codec en bestandsformaat "
-"te kopiëren"
+"Extensão do formato de saída. Deixe em branco para copiar o codec e formatar"
 
 #: ../vdms_dialogs/presets_addnew.py:263
 msgid "Incomplete profile assignments"
-msgstr "Onvolledige profiel-toewijzingen"
+msgstr "Atribuições de perfil incompletas"
 
 #: ../vdms_dialogs/presets_addnew.py:270
 msgid "Formats must be comma-separated"
-msgstr "Formaten moeten gescheiden zijn door komma's"
+msgstr "Os formatos devem ser separados por vírgulas"
 
 #: ../vdms_dialogs/presets_addnew.py:280
 msgid "Profile already stored with same name"
-msgstr "Profiel reeds opgeslagen onder dezelfde naam"
+msgstr "Perfil já armazenado com o mesmo nome"
 
 #: ../vdms_dialogs/presets_addnew.py:310
 msgid "Successful storing!"
-msgstr "Opslag was succesvol!"
+msgstr "Armazenamento bem-sucedido!"
 
 #: ../vdms_dialogs/presets_addnew.py:316
 msgid "Successful changes!"
-msgstr "Veranderingen waren succesvol!"
+msgstr "Mudanças bem-sucedidas!"
 
 #: ../vdms_dialogs/set_timestamp.py:84
 msgid "Font Size"
-msgstr "Lettertype grootte"
+msgstr "Tamanho da fonte"
 
 #: ../vdms_dialogs/set_timestamp.py:108
 msgid "Font Color"
-msgstr "Lettertype kleur"
+msgstr "Cor da fonte"
 
 #: ../vdms_dialogs/set_timestamp.py:118
 msgid "Shadow Color"
-msgstr "Schaduw kleur"
+msgstr "Cor da sombra"
 
 #: ../vdms_dialogs/set_timestamp.py:129
 msgid "Show text box"
-msgstr "Toon tekstkader"
+msgstr "Mostrar caixa de texto"
 
 #: ../vdms_dialogs/set_timestamp.py:133
 msgid "Box Color"
-msgstr "Kader kleur"
+msgstr "Cor da Caixa"
 
 #: ../vdms_dialogs/set_timestamp.py:153
 msgid ""
 "The timestamp size does not auto-adjust to the video size, you have to set "
 "the size here"
 msgstr ""
-"De tijdcode-grootte past zich niet automatisch aan bij de video-grootte, u "
-"moet het hier instellen"
+"O tamanho do registro de data / hora não se ajusta automaticamente ao "
+"tamanho do vídeo, você deve definir o tamanho aqui"
 
 #: ../vdms_dialogs/set_timestamp.py:157
 msgid "Timestamp settings"
-msgstr "Tijdcode instellingen"
+msgstr "Configurações de registro de data / hora"
 
 #: ../vdms_dialogs/settings.py:138
 msgid "Where do you prefer to save your transcodes?"
-msgstr "Waar wilt u transcoderingen bewaren?"
+msgstr "Onde você prefere salvar suas transcodificações?"
 
 #: ../vdms_dialogs/settings.py:149 ../vdms_dialogs/settings.py:177
 #: ../vdms_dialogs/settings.py:207 ../vdms_dialogs/settings.py:219
 #: ../vdms_dialogs/settings.py:231
 msgid "Browse.."
-msgstr "Blader.."
+msgstr "Navegar.."
 
 #: ../vdms_dialogs/settings.py:154
 msgid ""
 "Save each file in the same\n"
 "folder as input file"
 msgstr ""
-"Bewaar elk bestand in dezelfde\n"
-"map als input bestand"
+"Salve cada arquivo na mesmo\n"
+"pasta como um arquivo de entrada"
 
 #: ../vdms_dialogs/settings.py:159
 msgid "Assign optional suffix to output file names:"
-msgstr "Ken optioneel achtervoegsel toe aan output-bestandsnamen:"
+msgstr "Atribua um sufixo opcional para nomes de arquivo de saída:"
 
 #: ../vdms_dialogs/settings.py:167
 msgid "Where do you prefer to save your downloads?"
-msgstr "Waar wilt u gedownloade bestanden bewaren?"
+msgstr "Onde você prefere salvar seus Downloads?"
 
 #: ../vdms_dialogs/settings.py:182
-#, fuzzy
-#| msgid ""
-#| "Auto-create subfolders\n"
-#| "when download playlists"
 msgid ""
 "Auto-create subfolders\n"
 "when downloading playlists"
 msgstr ""
-"Maak automatisch sub-mappen\n"
-"bij downloaden van afspeellijsten"
+"Criar subpastas automaticamente\n"
+"ao baixar listas de reprodução"
 
 #: ../vdms_dialogs/settings.py:187
 msgid "Cache Settings"
-msgstr "Cache Instellingen"
+msgstr "Configurações de cache"
 
 #: ../vdms_dialogs/settings.py:191
 msgid "Clear the cache when exiting the application"
-msgstr "Maak cache leeg als programma beëindigd wordt"
+msgstr "Limpe o cache ao sair do aplicativo"
 
 #: ../vdms_dialogs/settings.py:195
-#, fuzzy
-#| msgid "Files Preferences"
 msgid "File Preferences"
-msgstr "Bestands Voorkeuren"
+msgstr "Preferências de arquivo"
 
 #: ../vdms_dialogs/settings.py:202
 msgid "Path to the executables"
-msgstr "Pad naar de programmabestanden"
+msgstr "Caminho para os executáveis"
 
 #: ../vdms_dialogs/settings.py:206
 msgid "Enable another location to run FFmpeg"
-msgstr "Activeer een andere lokatie om FFmpeg uit te voeren"
+msgstr "Habilite outro local para executar o FFmpeg"
 
 #: ../vdms_dialogs/settings.py:218
 msgid "Enable another location to run FFprobe"
-msgstr "Activeer een andere lokatie om FFprobe uit te voeren"
+msgstr "Habilite outro local para executar o FFprobe"
 
 #: ../vdms_dialogs/settings.py:230
 msgid "Enable another location to run FFplay"
-msgstr "Activeer een andere lokatie om FFplay uit te voeren"
+msgstr "Habilite outro local para executar o FFplay"
 
 #: ../vdms_dialogs/settings.py:241
 msgid "Other options"
-msgstr "Andere opties"
+msgstr "Outras opções"
 
 #: ../vdms_dialogs/settings.py:247
 msgid "Threads used for transcoding (from 0 to 32):"
-msgstr "Aantal threads voor transcoden (van 0 tot 32)"
+msgstr "Tópicos usados para transcodificação (de 0 a 32):"
 
 #: ../vdms_dialogs/settings.py:265
 msgid "FFmpeg"
@@ -1040,37 +1028,37 @@ msgstr "FFmpeg"
 
 #: ../vdms_dialogs/settings.py:276
 msgid "Disable youtube-dl"
-msgstr "Deactiveer youtube-dl"
+msgstr "Desativar youtube-dl"
 
 #: ../vdms_dialogs/settings.py:285
 msgid "Current path:"
-msgstr "Huidig pad:"
+msgstr "Caminho atual:"
 
 #: ../vdms_dialogs/settings.py:301 ../vdms_dialogs/settings.py:302
 #: ../vdms_dialogs/settings.py:310
 msgid "Menu bar > Tools > Update youtube-dl"
-msgstr "Menu balk > Gereedschappen > Update youtube-dl"
+msgstr "Barra de menu> Ferramentas> Atualizar youtube-dl"
 
 #: ../vdms_dialogs/settings.py:313
 msgid ""
 "Make sure you are using the latest available version of\n"
 "youtube-dl. This allows you to avoid download problems.\n"
 msgstr ""
-"Ga na of u de nieuwste youtube-dl versie gebruikt.\n"
-"Dit voorkomt download problemen.\n"
+"Certifique-se de que está usando a versão mais recente disponível do\n"
+"youtube-dl. Isso permite evitar problemas de download.\n"
 
 #: ../vdms_dialogs/settings.py:323 ../vdms_frames/ffmpeg_conf.py:216
 #: ../vdms_panels/av_conversions.py:2458
 msgid "Disabled"
-msgstr "Uitgezet"
+msgstr "Desabilitado"
 
 #: ../vdms_dialogs/settings.py:330
 msgid "Not Installed"
-msgstr "Niet geïnstalleerd"
+msgstr "Não Instalado"
 
 #: ../vdms_dialogs/settings.py:340
 msgid "Not found"
-msgstr "Niet gevonden"
+msgstr "Não encontrado"
 
 #: ../vdms_dialogs/settings.py:345
 msgid "youtube-dl"
@@ -1078,51 +1066,51 @@ msgstr "youtube-dl"
 
 #: ../vdms_dialogs/settings.py:351
 msgid "Icon themes"
-msgstr "Icoon thema's"
+msgstr "Tema de ícones"
 
 #: ../vdms_dialogs/settings.py:353
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
 msgstr ""
-"instellen van iconen zal ook de achtergrond\n"
-"en voorgrond wijzigen van bepaalde tekstvelden."
+"definir os ícones também mudará o fundo\n"
+"e primeiro plano de alguns campos de texto."
 
 #: ../vdms_dialogs/settings.py:375
 msgid "Toolbar customization"
-msgstr "Knoppenbalk aanpassing"
+msgstr "Personalização da barra de ferramentas"
 
 #: ../vdms_dialogs/settings.py:377
 msgid "At the top of window (default)"
-msgstr "Bovenaan venster (standaard)"
+msgstr "No topo da janela (padrão)"
 
 #: ../vdms_dialogs/settings.py:378
 msgid "At the bottom of window"
-msgstr "Onderaan venster"
+msgstr "Na parte inferior da janela"
 
 #: ../vdms_dialogs/settings.py:379
 msgid "At the right of window"
-msgstr "Rechts van venster"
+msgstr "À direita da janela"
 
 #: ../vdms_dialogs/settings.py:380
 msgid "At the left of window"
-msgstr "Links van venster"
+msgstr "À esquerda da janela"
 
 #: ../vdms_dialogs/settings.py:382
 msgid "Place the toolbar"
-msgstr "Plaats de knoppenbalk"
+msgstr "Coloque a barra de ferramentas"
 
 #: ../vdms_dialogs/settings.py:392
 msgid "Icon size:"
-msgstr "Icoon grootte:"
+msgstr "Tamanho dos ícones:"
 
 #: ../vdms_dialogs/settings.py:407
 msgid "Shows the text in the toolbar buttons"
-msgstr "Toont de tekst in de knoppenbalk knoppen"
+msgstr "Mostra o texto nos botões da barra de ferramentas"
 
 #: ../vdms_dialogs/settings.py:411
 msgid "Appearance"
-msgstr "Uiterlijk"
+msgstr "Aparência"
 
 #: ../vdms_dialogs/settings.py:418
 msgid ""
@@ -1130,72 +1118,71 @@ msgid ""
 "the log messages during transcoding processes.\n"
 "Change only if you know what you are doing.\n"
 msgstr ""
-"De volgende instellingen bepalen output-berichten\n"
-"en log-berichten tijdens transcode-processen.\n"
-"Wijzig alleen als u weet wat u doet.\n"
+"As configurações a seguir afetam as mensagens de saída e\n"
+"as mensagens de log durante os processos de transcodificação.\n"
+"Mude apenas se você souber o que está fazendo.\n"
 
 #: ../vdms_dialogs/settings.py:439
 msgid "FFmpeg logging levels"
-msgstr "FFmpeg log niveau's"
+msgstr "Níveis de registro FFmpeg"
 
 #: ../vdms_dialogs/settings.py:459
 msgid "Videomass Setup"
-msgstr "Videomass Installatie"
+msgstr "Configurações do Videomass"
 
 #: ../vdms_dialogs/settings.py:485
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
-"Door toewijzing van een achtervoegsel kunt u overschrijven van bestanden "
-"voorkomen"
+"Ao atribuir um sufixo adicional, você pode evitar a substituição de arquivos"
 
 #: ../vdms_dialogs/settings.py:601
 msgid "Set a persistent location to save the file downloads"
-msgstr "Geef een vaste lokatie waar u de download-bestanden wilt bewaren"
+msgstr "Defina um local persistente para salvar os downloads de arquivos"
 
 #: ../vdms_dialogs/settings.py:623
 msgid "Set a persistent location to save exported files"
-msgstr "Geef een vaste lokatie waar u export-bestanden wilt bewaren"
+msgstr "Defina um local persistente para salvar os arquivos exportados"
 
 #: ../vdms_dialogs/settings.py:650
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
 msgstr ""
-"Gebruik alleen alpha-numerieke tekens 0-9 A-Z. Het streepje (\"-\") en de "
-"underscore (\"_\") kunt u ook gebruiken. Spaties zijn niet toegestaan."
+"Insira apenas caracteres alfanuméricos. Você também pode usar o hífen (\"-"
+"\") e o sublinhado (\"_\"). Espaços em branco não são permitidos."
 
 #: ../vdms_dialogs/settings.py:876
 msgid "Changes will take effect once the program has been restarted"
-msgstr "Wijzigingen worden pas doorgevoerd na herstart van dit programma"
+msgstr "As alterações entrarão em vigor assim que o programa for reiniciado"
 
 #: ../vdms_frames/ffmpeg_conf.py:65
 msgid "Informations"
-msgstr "Informatie"
+msgstr "Informações"
 
 #: ../vdms_frames/ffmpeg_conf.py:76
 msgid "Flags settings"
-msgstr "Vlag instellingen"
+msgstr "Configurações de sinalizadores"
 
 #: ../vdms_frames/ffmpeg_conf.py:86
 msgid "Flags enabled"
-msgstr "Vlaggen geactiveerd"
+msgstr "Sinalizadores ativados"
 
 #: ../vdms_frames/ffmpeg_conf.py:96
 msgid "Flags disabled"
-msgstr "Vlaggen gedeactiveerd"
+msgstr "Sinalizadores desativados"
 
 #: ../vdms_frames/ffmpeg_conf.py:106
 msgid "FFmpeg configuration"
-msgstr "FFmpeg configuratie"
+msgstr "Configuração do FFmpeg"
 
 #: ../vdms_frames/ffmpeg_conf.py:114
 msgid "flags"
-msgstr "vlaggen"
+msgstr "sinalizadores"
 
 #: ../vdms_frames/ffmpeg_conf.py:115 ../vdms_frames/ffmpeg_conf.py:119
 #: ../vdms_frames/ffmpeg_conf.py:123
 msgid "options"
-msgstr "opties"
+msgstr "opções"
 
 #: ../vdms_frames/ffmpeg_conf.py:118 ../vdms_frames/ffmpeg_conf.py:122
 msgid "status"
@@ -1203,172 +1190,160 @@ msgstr "status"
 
 #: ../vdms_frames/ffmpeg_conf.py:157
 msgid "FFprobe   ...not found !"
-msgstr "FFprobe   ...niet gevonden !"
+msgstr "FFprobe ... não encontrado!"
 
 #: ../vdms_frames/ffmpeg_conf.py:165
 msgid "FFplay   ...not found !"
-msgstr "FFplay   ...niet gevonden !"
+msgstr "FFplay ... não encontrado!"
 
 #: ../vdms_frames/ffmpeg_conf.py:199
 msgid "ENABLED:"
-msgstr "GEACTIVEERD:"
+msgstr "ATIVADO:"
 
 #: ../vdms_frames/ffmpeg_conf.py:203 ../vdms_panels/av_conversions.py:2458
 msgid "Enabled"
-msgstr "Geactiveerd"
+msgstr "Ativado"
 
 #: ../vdms_frames/ffmpeg_conf.py:212
 msgid "DISABLED:"
-msgstr "GEDEACTIVEERD:"
+msgstr "DESABILITADO:"
 
 #: ../vdms_frames/ffmpeg_codecs.py:45
 msgid "CODING ABILITY"
-msgstr "MOGELIJKE CODERINGEN"
+msgstr "CAPACIDADE DE CODIFICAÇÃO"
 
 #: ../vdms_frames/ffmpeg_codecs.py:47
 msgid "FFmpeg encoders"
-msgstr "FFmpeg encoders"
+msgstr "Codificadores FFmpeg"
 
 #: ../vdms_frames/ffmpeg_codecs.py:49
 msgid "DECODING CAPABILITY"
-msgstr "MOGELIJKE DECODERINGEN"
+msgstr "CAPACIDADE DE DECODIFICAÇÃO"
 
 #: ../vdms_frames/ffmpeg_codecs.py:51
 msgid "FFmpeg decoders"
-msgstr "FFmpeg decoders"
+msgstr "Decodificadores FFmpeg"
 
 #: ../vdms_frames/ffmpeg_codecs.py:71 ../vdms_panels/av_conversions.py:587
 msgid "Video"
-msgstr "Video"
+msgstr "Vídeo"
 
 #: ../vdms_frames/ffmpeg_codecs.py:81 ../vdms_panels/av_conversions.py:752
 msgid "Audio"
-msgstr "Audio"
+msgstr "Áudio"
 
 #: ../vdms_frames/ffmpeg_codecs.py:91
 msgid "Subtitle"
-msgstr "Ondertitel"
+msgstr "Legenda"
 
 #: ../vdms_frames/ffmpeg_codecs.py:108 ../vdms_frames/ffmpeg_codecs.py:117
 #: ../vdms_frames/ffmpeg_codecs.py:126 ../vdms_frames/ffmpeg_formats.py:103
 #: ../vdms_frames/ffmpeg_formats.py:107 ../vdms_frames/ffmpeg_formats.py:111
 msgid "description"
-msgstr "beschrijving"
+msgstr "descrição"
 
 #: ../vdms_frames/ffmpeg_formats.py:65
 msgid "Demuxing only"
-msgstr "Alleen Demuxen"
+msgstr "Apenas demultiplexação"
 
 #: ../vdms_frames/ffmpeg_formats.py:76
 msgid "Muxing only"
-msgstr "Alleen Muxen"
+msgstr "Apenas multiplexação"
 
 #: ../vdms_frames/ffmpeg_formats.py:87
 msgid "Demuxing/Muxing support"
-msgstr "Demux/Mux ondersteuning"
+msgstr "Suporte para demultiplexação / multiplexação"
 
 #: ../vdms_frames/ffmpeg_formats.py:95
 msgid "FFmpeg file formats"
-msgstr "FFmpeg bestandsformaten"
+msgstr "Formatos de arquivo FFmpeg"
 
 #: ../vdms_frames/ffmpeg_formats.py:102 ../vdms_frames/ffmpeg_formats.py:106
 #: ../vdms_frames/ffmpeg_formats.py:110
 msgid "format"
-msgstr "formaat"
+msgstr "formato"
 
 #: ../vdms_frames/shownormlist.py:56
 msgid "File name"
-msgstr "Bestandsnaam"
+msgstr "Nome do Arquivo"
 
 #: ../vdms_frames/shownormlist.py:57
 msgid "Max volume dBFS"
-msgstr "Max volume dBFS"
+msgstr "Volume máximo dBFS"
 
 #: ../vdms_frames/shownormlist.py:58
 msgid "Mean volume dBFS"
-msgstr "Mean volume dBFS"
+msgstr "Volume médio dBFS"
 
 #: ../vdms_frames/shownormlist.py:59
 msgid "Offset dBFS"
-msgstr "Offset dBFS"
+msgstr "Desvio dBFS"
 
 #: ../vdms_frames/shownormlist.py:60
 msgid "Result dBFS"
-msgstr "Resultaat dBFS"
+msgstr "Resultado dBFS"
 
 #: ../vdms_frames/shownormlist.py:64
 msgid "Post-normalization references:"
-msgstr "Post-normalizatie referenties:"
+msgstr "Referências pós-normalização:"
 
 #: ../vdms_frames/shownormlist.py:69
 msgid "=  Clipped peaks"
-msgstr "=  Clipped peaks"
+msgstr "= Picos cortados"
 
 #: ../vdms_frames/shownormlist.py:74
 msgid "=  No changes"
-msgstr "=  Geen wijzigingen"
+msgstr "= Sem alterações"
 
 #: ../vdms_frames/shownormlist.py:80
 msgid "=  Below max peak"
-msgstr "=  Onder max peak"
+msgstr "= Abaixo da altura máxima"
 
 #: ../vdms_frames/shownormlist.py:136 ../vdms_panels/av_conversions.py:1921
 #: ../vdms_panels/presets_manager.py:828
 msgid "RMS-based volume statistics"
-msgstr "RMS-gebaseerde volume statistieken"
+msgstr "Estatísticas de volume baseadas em RMS"
 
 #: ../vdms_frames/shownormlist.py:158 ../vdms_panels/av_conversions.py:1919
 #: ../vdms_panels/presets_manager.py:826
 msgid "PEAK-based volume statistics"
-msgstr "PEAK-gebaseerde volume statistieken"
+msgstr "Estatísticas de volume baseadas em PEAK"
 
 #: ../vdms_frames/shownormlist.py:180
-#, fuzzy
-#| msgid ""
-#| "...It means that the final result of the audio signal will be clipped, "
-#| "because it is higher than the maximum level of 0 db. This will result in "
-#| "loss of data in the audio signal and the sound may be distorted."
 msgid ""
 "...It means the resulting audio will be clipped, because its volume is "
 "higher than the maximum 0 db level. This results in data loss and the audio "
 "may sound distorted."
 msgstr ""
-"...Dit betekent dat de audio ge-clip-t wordt, omdat het geluidsniveau hoger "
-"is dan het maximale 0 db. Dit dataverlies kan de audio vervormd doen klinken."
+"... Isso significa que o áudio resultante será cortado, porque seu volume é "
+"superior ao nível máximo de 0 db. Isso resulta em perda de dados e o áudio "
+"pode parecer distorcido."
 
 #: ../vdms_frames/shownormlist.py:184
 msgid "When it's red..."
-msgstr "Als het rood is..."
+msgstr "Quando é vermelho ..."
 
 #: ../vdms_frames/shownormlist.py:191
-#, fuzzy
-#| msgid ""
-#| "...It means that the final result of the audio signal will not change, "
-#| "because it is the same as the source one."
 msgid ""
 "...It means the resulting audio will not change, because it's equal to the "
 "source."
-msgstr ""
-"...Dit betekent dat de audio niet verandert, omdat ze gelijk is aan het "
-"bronsignaal."
+msgstr "... Significa que o áudio resultante não mudará, pois é igual à fonte."
 
 #: ../vdms_frames/shownormlist.py:193
 msgid "When it's grey..."
-msgstr "Als het grijs is..."
+msgstr "Quando está cinza ..."
 
 #: ../vdms_frames/shownormlist.py:200
-#, fuzzy
-#| msgid ""
-#| "...It means that an audio signal with a lower volume than the original "
-#| "one will be produced."
 msgid ""
 "...It means an audio signal will be produced with a lower volume than the "
 "original."
-msgstr "...Dit geeft een audio signaal met een lager volume dan het origineel."
+msgstr ""
+"... Isso significa que um sinal de áudio será produzido com um volume mais "
+"baixo do que o original."
 
 #: ../vdms_frames/shownormlist.py:202
 msgid "When it's yellow..."
-msgstr "Als het geel is..."
+msgstr "Quando é amarelo ..."
 
 #: ../vdms_frames/while_playing.py:46
 msgid ""
@@ -1405,116 +1380,103 @@ msgstr ""
 "w\n"
 "s\n"
 "\n"
-"links/rechts\n"
-"down/up\n"
-"page down/page up\n"
+"esquerda / direita\n"
+"baixo / cima\n"
+"page down / page up\n"
 "\n"
-"rechter muis klik\n"
-"linker muis dubbel-klik"
+"clique com o botão direito do mouse\n"
+"clique duplo esquerdo do mouse"
 
 #: ../vdms_frames/while_playing.py:97
-#, fuzzy
-#| msgid "Shortcuts while playing with FFplay"
 msgid "Shortcut keys while playing with FFplay"
-msgstr "Sneltoetsen bij afspelen met FFplay"
+msgstr "Teclas de atalho ao reproduzir com FFplay"
 
 #: ../vdms_frames/ffmpeg_search.py:79 ../vdms_frames/ffmpeg_search.py:182
 msgid "Topic List..."
-msgstr "Onderwerpenlijst..."
+msgstr "Lista de tópicos ..."
 
 #: ../vdms_frames/ffmpeg_search.py:80 ../vdms_frames/ffmpeg_search.py:183
 msgid "print basic options"
-msgstr "print basis opties"
+msgstr "mostrar opções básicas"
 
 #: ../vdms_frames/ffmpeg_search.py:81 ../vdms_frames/ffmpeg_search.py:184
 msgid "print more options"
-msgstr "print meer opties"
+msgstr "mostrar mais opções"
 
 #: ../vdms_frames/ffmpeg_search.py:82 ../vdms_frames/ffmpeg_search.py:185
 msgid "print all options (very long)"
-msgstr "print alle opties (erg lang)"
+msgstr "mostrar todas as opções (muito longo)"
 
 #: ../vdms_frames/ffmpeg_search.py:83 ../vdms_frames/ffmpeg_search.py:186
 msgid "show available devices"
-msgstr "toon beschikbare devices"
+msgstr "mostrar dispositivos disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:84 ../vdms_frames/ffmpeg_search.py:187
 msgid "show available bit stream filters"
-msgstr "toon beschikbare bit stream filters"
+msgstr "mostrar filtros de fluxo de bits disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:85 ../vdms_frames/ffmpeg_search.py:188
 msgid "show available protocols"
-msgstr "toon beschikbare protocollen"
+msgstr "mostrar protocolos disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:86 ../vdms_frames/ffmpeg_search.py:189
 msgid "show available filters"
-msgstr "toon beschikbare filters"
+msgstr "mostrar filtros disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:87 ../vdms_frames/ffmpeg_search.py:190
 msgid "show available pixel formats"
-msgstr "toon beschikbare pixel formaten"
+msgstr "mostrar formatos de pixel disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:88 ../vdms_frames/ffmpeg_search.py:191
 msgid "show available audio sample formats"
-msgstr "toon beschikbare audio sample formaten"
+msgstr "mostrar formatos de amostra de áudio disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:89 ../vdms_frames/ffmpeg_search.py:192
 msgid "show available color names"
-msgstr "toon beschikbare kleurnamen"
+msgstr "mostrar nomes de cores disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:90 ../vdms_frames/ffmpeg_search.py:193
 msgid "list sources of the input device"
-msgstr "geef lijst van sources voor het input device"
+msgstr "listar as fontes do dispositivo de entrada"
 
 #: ../vdms_frames/ffmpeg_search.py:91 ../vdms_frames/ffmpeg_search.py:194
 msgid "list sinks of the output device"
-msgstr "geef lijst van sinks voor het input device"
+msgstr "listar coletores do dispositivo de saída"
 
 #: ../vdms_frames/ffmpeg_search.py:92 ../vdms_frames/ffmpeg_search.py:195
 msgid "show available HW acceleration methods"
-msgstr "toon beschikbare HW acceleratie methodes"
+msgstr "mostrar métodos de aceleração HW disponíveis"
 
 #: ../vdms_frames/ffmpeg_search.py:97
 msgid "help topic list"
-msgstr "lijst help-onderwerpen"
+msgstr "lista de tópicos de ajuda"
 
 #: ../vdms_frames/ffmpeg_search.py:122
-#, fuzzy
-#| msgid "Choose one of the topics in the list"
 msgid "Choose a topic in the list"
-msgstr "Kies een onderwerp uit de lijst"
+msgstr "Escolha um tópico na lista"
 
 #: ../vdms_frames/ffmpeg_search.py:128
 msgid "The search function allows you to find entries in the current topic"
-msgstr "Met de zoekfunctie vind u items van het huidige onderwerp"
+msgstr ""
+"A função de pesquisa permite que você encontre entradas no tópico atual"
 
 #: ../vdms_frames/ffmpeg_search.py:130
-#, fuzzy
-#| msgid "Ignore-case"
 msgid "Ignore case"
-msgstr "Geen onderscheid hoofd-/kleine letters"
+msgstr "Ignorar maiúsculas / minúsculas"
 
 #: ../vdms_frames/ffmpeg_search.py:131
-#, fuzzy
-#| msgid ""
-#| "Ignore case distinctions, so that characters that differ only in case "
-#| "match each other."
 msgid "Ignore case distinctions: characters with different case will match."
-msgstr "Maak geen onderscheid tussen hoofd- en kleine letters."
+msgstr ""
+"Ignorar distinções de maiúsculas e minúsculas: os caracteres com maiúsculas "
+"e minúsculas serão iguais."
 
 #: ../vdms_frames/ffmpeg_search.py:147 ../vdms_main/main_frame.py:419
 msgid "FFmpeg help topics"
-msgstr "FFmpeg help-onderwerpen"
+msgstr "Tópicos de ajuda do FFmpeg"
 
 #: ../vdms_frames/ffmpeg_search.py:200
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Choose a topic in the drop down first"
 msgid "First, choose a topic in the drop down list"
-msgstr ""
-"\n"
-"Kies eerst een onderwerp uit de drop-down lijst"
+msgstr "Primeiro, escolha um tópico na lista suspensa"
 
 #: ../vdms_frames/ffmpeg_search.py:213
 msgid ""
@@ -1522,7 +1484,7 @@ msgid ""
 "  ..Nothing available"
 msgstr ""
 "\n"
-"  ..Niets beschikbaar"
+"..Nada disponível"
 
 #: ../vdms_frames/ffmpeg_search.py:253
 msgid ""
@@ -1530,101 +1492,97 @@ msgid ""
 "  ...Not found"
 msgstr ""
 "\n"
-"  ...Niet gevonden"
+"...Não encontrado"
 
 #: ../vdms_frames/ffmpeg_search.py:260
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "Choose a topic in the drop down first"
 msgid ""
 "\n"
 "First, choose a topic in the drop down list"
 msgstr ""
 "\n"
-"Kies eerst een onderwerp uit de drop-down lijst"
+"Primeiro, escolha um tópico na lista suspensa"
 
 #: ../vdms_frames/mediainfo.py:57
 msgid "Display of selected items in text format"
-msgstr "Toon geselecteerde items in tekstformaat"
+msgstr "Exibição de itens selecionados em formato de texto"
 
 #: ../vdms_frames/mediainfo.py:58
 msgid "Select items to view them in text format"
-msgstr "Selecteer items om in tekstformaat te tonen"
+msgstr "Selecione os itens para visualizá-los em formato de texto"
 
 #: ../vdms_frames/mediainfo.py:102
 msgid "Data Format"
-msgstr "Data formaat"
+msgstr "Formato de dados"
 
 #: ../vdms_frames/mediainfo.py:124
 msgid "Video Stream"
-msgstr "Video Stream"
+msgstr "Reprodução de Video"
 
 #: ../vdms_frames/mediainfo.py:145
 msgid "Audio Streams"
-msgstr "Audio Streams"
+msgstr "Reprodução de áudio"
 
 #: ../vdms_frames/mediainfo.py:166
 msgid "Subtitle Streams"
-msgstr "Ondertitel Streams"
+msgstr "Reprodução de Legenda"
 
 #: ../vdms_frames/mediainfo.py:170
 msgid "Enable text format"
-msgstr "Activeer tekstformaat"
+msgstr "Habilitar formato de texto"
 
 #: ../vdms_frames/mediainfo.py:182
 msgid "FILE SELECTION"
-msgstr "BESTAND SELECTIE"
+msgstr "SELEÇÃO DE ARQUIVOS"
 
 #: ../vdms_frames/mediainfo.py:184 ../vdms_frames/mediainfo.py:187
 #: ../vdms_frames/mediainfo.py:190 ../vdms_frames/mediainfo.py:193
 msgid "References"
-msgstr "Referenties"
+msgstr "Referencias"
 
 #: ../vdms_frames/mediainfo.py:185 ../vdms_frames/mediainfo.py:188
 #: ../vdms_frames/mediainfo.py:191 ../vdms_frames/mediainfo.py:194
 msgid "Parameters"
-msgstr "Parameters"
+msgstr "Parâmetros"
 
 #: ../vdms_frames/mediainfo.py:211
 msgid "Multimedia streams analyzer"
-msgstr "Multimedia streams analyzer"
+msgstr "Analisador de fluxos multimídia"
 
 #: ../vdms_frames/showlogs.py:81
 msgid "Files"
-msgstr "Bestanden"
+msgstr "Arquivos"
 
 #: ../vdms_frames/showlogs.py:83
 msgid "Log messages"
-msgstr "Log-berichten"
+msgstr "Mensagens de log"
 
 #: ../vdms_frames/showlogs.py:114
 msgid "Refresh log messages"
-msgstr "Ververs log-berichten"
+msgstr "Atualizar mensagens de log"
 
 #: ../vdms_frames/showlogs.py:119
 msgid "Clear log messages"
-msgstr "Wis log-berichten"
+msgstr "Limpar mensagens de log"
 
 #: ../vdms_frames/showlogs.py:129
 msgid "Showing log messages"
-msgstr "Log-berichten tonen"
+msgstr "Mostrando mensagens de log"
 
 #: ../vdms_frames/showlogs.py:156
 msgid "Select a log file"
-msgstr ""
+msgstr "Selecione um arquivo de log"
 
 #: ../vdms_frames/showlogs.py:163
 msgid "Are you sure you want to clear the selected log file?"
-msgstr "Wilt u echt dit log-bestand legen ?"
+msgstr "Tem certeza de que deseja limpar o arquivo de log selecionado?"
 
 #: ../vdms_frames/ydl_mediainfo.py:83
 msgid "Statistics viewer"
-msgstr "Statistieken viewer"
+msgstr "Visualizador de estatísticas"
 
 #: ../vdms_frames/ydl_mediainfo.py:86
 msgid "TITLE SELECTION"
-msgstr "TITEL SELECTIE"
+msgstr "SELEÇÃO DE TÍTULO"
 
 #: ../vdms_frames/ydl_mediainfo.py:87
 msgid "URL"
@@ -1639,15 +1597,15 @@ msgid ""
 "\n"
 "Do you want to overwrite? "
 msgstr ""
-"Bestaat reeds: \n"
+"Já existe:\n"
 "\n"
-"%s\n"
+"% s\n"
 "\n"
-"Overschrijven? "
+"Você deseja substituir? "
 
 #: ../vdms_io/checkup.py:86
 msgid "Please Confirm"
-msgstr "Bevestig aub"
+msgstr "Por favor confirme"
 
 #: ../vdms_io/checkup.py:94
 #, python-format
@@ -1656,9 +1614,9 @@ msgid ""
 "\n"
 "\"%s\"\n"
 msgstr ""
-"Bestand bestaat niet:\n"
+"Arquivo não existe:\n"
 "\n"
-"\"%s\"\n"
+"\"% s\"\n"
 
 #: ../vdms_io/checkup.py:101
 #, python-format
@@ -1667,20 +1625,19 @@ msgid ""
 "\n"
 "\"%s\"\n"
 msgstr ""
-"Output map bestaat niet:\n"
+"A pasta de saída não existe:\n"
 "\n"
-"\"%s\"\n"
+"\"% s\"\n"
 
 #: ../vdms_io/IO_tools.py:73 ../vdms_io/IO_tools.py:97
-#, fuzzy, python-format
-#| msgid "File does not exist or not a valid file:  %s"
+#, python-format
 msgid "File does not exist or is invalid:  %s"
-msgstr "Bestand bestaat niet of is ongeldig:  %s"
+msgstr "O arquivo não existe ou é inválido:% s"
 
 #: ../vdms_io/IO_tools.py:160 ../vdms_io/IO_tools.py:281
 #: ../vdms_io/IO_tools.py:299 ../vdms_io/IO_tools.py:337
 msgid "Videomass - Loading..."
-msgstr "Videomass - Laden..."
+msgstr "Videomass - Carregando ..."
 
 #: ../vdms_io/IO_tools.py:161
 msgid ""
@@ -1689,8 +1646,8 @@ msgid ""
 "Audio peak analysis.\n"
 msgstr ""
 "\n"
-"Wacht....\n"
-"Audio peak analyse.\n"
+"Aguarde....\n"
+"Análise de altura de áudio.\n"
 
 #: ../vdms_io/IO_tools.py:282 ../vdms_io/IO_tools.py:300
 msgid ""
@@ -1699,8 +1656,8 @@ msgid ""
 "Retrieving required data.\n"
 msgstr ""
 "\n"
-"Wacht....\n"
-"Vereiste data wordt opgehaald.\n"
+"Aguarde....\n"
+"Recuperando os dados necessários.\n"
 
 #: ../vdms_io/IO_tools.py:360
 msgid ""
@@ -1709,8 +1666,8 @@ msgid ""
 "Upgrading {}\n"
 msgstr ""
 "\n"
-"Wacht....\n"
-"Upgrade van {} bezig\n"
+"Aguarde....\n"
+"Atualizando {}\n"
 
 #: ../vdms_io/IO_tools.py:362
 msgid ""
@@ -1719,20 +1676,20 @@ msgid ""
 "Downloading {}\n"
 msgstr ""
 "\n"
-"Wacht....\n"
-"Download van {} bezig\n"
+"Aguarde....\n"
+"Baixando {}\n"
 
 #: ../vdms_io/IO_tools.py:380 ../vdms_io/IO_tools.py:442
 msgid "Videomass - Downloading..."
-msgstr "Videomass - Bezig met downloaden..."
+msgstr "Videomass - Baixando ..."
 
 #: ../vdms_io/IO_tools.py:461
 msgid "...Be patient, this can take a few minutes."
-msgstr "...Heb geduld, dit kan enige minuten duren."
+msgstr "... Seja paciente, isso pode levar alguns minutos."
 
 #: ../vdms_io/IO_tools.py:463
 msgid "Videomass - Updating..."
-msgstr "Videomass - Bezig met updaten..."
+msgstr "Videomass - Atualizando ..."
 
 #: ../vdms_io/presets_manager_properties.py:49
 #, python-format
@@ -1742,11 +1699,10 @@ msgid ""
 "%s\n"
 "\n"
 msgstr ""
-"Het geselecteerde profiel is ongeschikt voor omzetten van de volgende "
-"bestandsformaten:\n"
+"O perfil selecionado não é adequado para converter os seguintes formatos de "
+"arquivo:\n"
 "\n"
-"%s\n"
-"\n"
+"% s\n"
 
 #: ../vdms_io/presets_manager_properties.py:82
 msgid ""
@@ -1757,6 +1713,12 @@ msgid ""
 "Possible solution: open the Presets Manager panel, go to the presets column "
 "and try to click the \"Restore\" button"
 msgstr ""
+"Predefinição inválida carregada.\n"
+"Recomenda-se removê-lo ou regravá-lo em um formato JSON compatível com "
+"Videomass.\n"
+"\n"
+"Solução possível: abra o painel Gerenciador de Predefinições, vá para a "
+"coluna Predefinições e tente clicar no botão \"Restaurar\""
 
 #: ../vdms_io/presets_manager_properties.py:93
 msgid ""
@@ -1765,13 +1727,17 @@ msgid ""
 "Possible solution: open the Presets Manager panel, go to the presets column "
 "and try to click the \"Restore all...\" button"
 msgstr ""
+"Nenhuma predefinição encontrada.\n"
+"\n"
+"Solução possível: abra o painel Gerenciador de predefinições, vá para a "
+"coluna de predefinições e tente clicar no botão \"Restaurar tudo ...\""
 
 #: ../vdms_main/main_frame.py:232 ../vdms_main/main_frame.py:283
 #: ../vdms_main/main_frame.py:1481 ../vdms_main/main_frame.py:1513
 #: ../vdms_main/main_frame.py:1533 ../vdms_main/main_frame.py:1587
 #: ../vdms_main/main_frame.py:1638
 msgid "Ready"
-msgstr "Gereed"
+msgstr "Pronto"
 
 #: ../vdms_main/main_frame.py:282 ../vdms_panels/youtubedl_ui.py:430
 msgid "Videomass"
@@ -1779,352 +1745,311 @@ msgstr "Videomass"
 
 #: ../vdms_main/main_frame.py:334
 msgid "Open a playable file with FFplay"
-msgstr "Open een afspeelbaar bestand met FFplay"
+msgstr "Abra um arquivo reproduzível com FFplay"
 
 #: ../vdms_main/main_frame.py:367
 msgid "Are you sure you want to exit?"
-msgstr "Afsluiten : bent u zeker?"
+msgstr "Você tem certeza que deseja sair?"
 
 #: ../vdms_main/main_frame.py:367 ../vdms_main/main_frame.py:413
 msgid "Exit"
-msgstr "Afsluiten"
+msgstr "Sair"
 
 #: ../vdms_main/main_frame.py:395
 msgid "Conversions folder\tCtrl+C"
-msgstr "Conversie map\tCtrl+C"
+msgstr "Pasta de conversões\tCtrl + C"
 
 #: ../vdms_main/main_frame.py:396
 msgid "Open the default file conversions folder"
-msgstr "Open de standaard bestandsconversie map"
+msgstr "Abre a pasta padrão de conversões de arquivo"
 
 #: ../vdms_main/main_frame.py:398
 msgid "Downloads folder\tCtrl+D"
-msgstr "Downloads map\tCtrl+D"
+msgstr "Pasta de downloads\tCtrl+D"
 
 #: ../vdms_main/main_frame.py:399
 msgid "Open the default downloads folder"
-msgstr "Open de standaard downloads map"
+msgstr "Abre a pasta padrão de downloads"
 
 #: ../vdms_main/main_frame.py:402
 msgid "Open temporary conversions"
-msgstr "Open tijdelijke conversies"
+msgstr "Abre conversões temporárias"
 
 #: ../vdms_main/main_frame.py:403
 msgid "Open the temporary file conversions folder"
-msgstr "Open de tijdelijke bestandsconversie map"
+msgstr "Abre a pasta de conversões de arquivos temporários"
 
 #: ../vdms_main/main_frame.py:407
 msgid "Open temporary downloads"
-msgstr "Open tijdelijke downloads"
+msgstr "Abrir downloads temporários"
 
 #: ../vdms_main/main_frame.py:408
 msgid "Open the temporary downloads folder"
-msgstr "Open de tijdelijke downloads map"
+msgstr "Abre a pasta de downloads temporários"
 
 #: ../vdms_main/main_frame.py:414
 msgid "Close Videomass"
-msgstr "Sluit Videomass af"
+msgstr "Sair do Videomass"
 
 #: ../vdms_main/main_frame.py:415
-#, fuzzy
-#| msgid "Files"
 msgid "File"
-msgstr "Bestanden"
+msgstr "Arquivo"
 
 #: ../vdms_main/main_frame.py:420
 msgid "A useful tool to search for FFmpeg help topics and options"
-msgstr "Een nuttig gereedschap om FFmpeg help-onderwerpen en opties te zoeken"
+msgstr "Uma ferramenta útil para pesquisar tópicos de ajuda e opções do FFmpeg"
 
 #: ../vdms_main/main_frame.py:424
 msgid "Update youtube-dl"
-msgstr "Update youtube-dl"
+msgstr "Atualizar youtube-dl"
 
 #: ../vdms_main/main_frame.py:425
-#, fuzzy
-#| msgid "Update with latest version of youtube-dl"
 msgid "Update to latest youtube-dl version"
-msgstr "Update naar laatste youtube-dl versie"
+msgstr "Atualize para a versão mais recente do youtube-dl"
 
 #: ../vdms_main/main_frame.py:428
 msgid "Check for new presets"
-msgstr "Ga nieuwe presets na"
+msgstr "Verifique se há novas predefinições"
 
 #: ../vdms_main/main_frame.py:429
 msgid "Check new versions of Videomass presets from homepage"
-msgstr "Ga nieuwe Videomass presets na van homepage"
+msgstr "Verifique as novas versões das predefinições do Videomass"
 
 #: ../vdms_main/main_frame.py:431
 msgid "Download the latest presets"
-msgstr "Download de nieuwste presets"
+msgstr "Baixe as últimas predefinições"
 
 #: ../vdms_main/main_frame.py:432
 msgid "Download all Videomass presets locally from the homepage"
-msgstr "Download alle Videomass presets lokaal van de homepage"
+msgstr "Baixe localmente todas as predefinições do Videomass"
 
 #: ../vdms_main/main_frame.py:434
-#, fuzzy
-#| msgid "&Tools"
 msgid "Tools"
-msgstr "Tools"
+msgstr "Ferramentas"
 
 #: ../vdms_main/main_frame.py:440
 msgid "Show configuration"
-msgstr "Toon configuratie"
+msgstr "Exibir configuração"
 
 #: ../vdms_main/main_frame.py:441
 msgid "Show FFmpeg's built-in configuration capabilities"
-msgstr "Toon ingebouwde FFmpeg configuratie mogelijkheden"
+msgstr "Mostra as capacidades de configuração integradas do FFmpeg"
 
 #: ../vdms_main/main_frame.py:444
 msgid "Muxers and Demuxers"
-msgstr "Muxers en Demuxers"
+msgstr "Muxers e Demuxers"
 
 #: ../vdms_main/main_frame.py:445
-#, fuzzy
-#| msgid "Muxers and demuxers available on FFmpeg in use."
 msgid "Muxers and demuxers available for used FFmpeg."
-msgstr "Muxers en demuxers beschikbaar voor gebruikte FFmpeg."
+msgstr "Muxers e demuxers disponíveis para o FFmpeg usado."
 
 #: ../vdms_main/main_frame.py:448
 msgid "Encoders"
-msgstr "Encoders"
+msgstr "Codificadores"
 
 #: ../vdms_main/main_frame.py:449
-#, fuzzy
-#| msgid "Shows available encoders on FFmpeg"
 msgid "Shows available encoders for FFmpeg"
-msgstr "Toont beschikbare encoders voor FFmpeg"
+msgstr "Mostra os codificadores disponíveis para FFmpeg"
 
 #: ../vdms_main/main_frame.py:450
 msgid "Decoders"
-msgstr "Decoders"
+msgstr "Decodificadores"
 
 #: ../vdms_main/main_frame.py:450
-#, fuzzy
-#| msgid "Shows available decoders on FFmpeg"
 msgid "Shows available decoders for FFmpeg"
-msgstr "Toont beschikbare decoders voor FFmpeg"
+msgstr "Mostra os decodificadores disponíveis para FFmpeg"
 
 #: ../vdms_main/main_frame.py:453
-#, fuzzy
-#| msgid "&FFplay"
 msgid "FFplay"
 msgstr "FFplay"
 
 #: ../vdms_main/main_frame.py:454
 msgid "While playing"
-msgstr "Tijdens afspelen"
+msgstr "Enquanto reproduz"
 
 #: ../vdms_main/main_frame.py:455
-#, fuzzy
-#| msgid ""
-#| "Show useful keyboard shortcuts when playing or previewing with ffplay"
 msgid "Show useful shortcut keys when playing or previewing with FFplay"
-msgstr "Toon nuttige sneltoetsen bij afspelen en preview met FFplay"
+msgstr ""
+"Mostrar teclas de atalho úteis ao reproduzir ou pré-visualizar com FFplay"
 
 #: ../vdms_main/main_frame.py:459
 msgid "Displays timestamp"
-msgstr "Toont tijdcode"
+msgstr "Exibe registro de data / hora"
 
 #: ../vdms_main/main_frame.py:460
-#, fuzzy
-#| msgid "Displays the timestamp when playing movies with ffplay"
 msgid "Displays timestamp when playing movies with FFplay"
-msgstr "Toont tijdcode bij afspelen van films met FFplay"
+msgstr "Exibe registro de data / hora ao reproduzir filmes com FFplay"
 
 #: ../vdms_main/main_frame.py:466
 msgid "Version in Use"
-msgstr "Gebruikte versie"
+msgstr "Versão em uso"
 
 #: ../vdms_main/main_frame.py:467
 msgid "Shows the version in use"
-msgstr "Toont de gebruikte versie"
+msgstr "Mostrar a versão em uso"
 
 #: ../vdms_main/main_frame.py:469
 msgid "Show the latest version..."
-msgstr "Toon de laatste versie..."
+msgstr "Mostrar a última versão ..."
 
 #: ../vdms_main/main_frame.py:470
 msgid "Shows the latest version available on github.com"
-msgstr "Toont de laatst beschikbare versie op github.com"
+msgstr "Mostra a versão mais recente disponível em github.com"
 
 #: ../vdms_main/main_frame.py:472
-#, fuzzy
-#| msgid "&Youtube-dl"
 msgid "Youtube-dl"
 msgstr "Youtube-dl"
 
 #: ../vdms_main/main_frame.py:475
 msgid "Show Logs\tCtrl+L"
-msgstr "Toon Log-berichten\tCtrl+L"
+msgstr "Exibir Logs\tCtrl+L"
 
 #: ../vdms_main/main_frame.py:476
 msgid "Viewing log messages"
-msgstr "Log-berichten bekijken"
+msgstr "Ver mensagens de log"
 
 #: ../vdms_main/main_frame.py:480
 msgid "Show timeline\tCtrl+T"
-msgstr "Toon tijdslijn\tCtrl+T"
+msgstr "Mostrar linha do tempo\tCtrl+T"
 
 #: ../vdms_main/main_frame.py:481
 msgid "Show panel for editing timeline (seek/duration)"
-msgstr "Toon panel voor tijdslijn edit (zoek/duur)"
+msgstr "Mostrar painel para edição da linha do tempo (busca / duração)"
 
 #: ../vdms_main/main_frame.py:484
-#, fuzzy
-#| msgid "&View"
 msgid "View"
-msgstr "View"
+msgstr "Ver"
 
 #: ../vdms_main/main_frame.py:489
 msgid "Home panel\tShift+H"
-msgstr "Home panel\tShift+H"
+msgstr "Painel inicial\tShift+H"
 
 #: ../vdms_main/main_frame.py:490
 msgid "jump to the start panel"
-msgstr "spring naar het start panel"
+msgstr "ir para o painel inicial"
 
 #: ../vdms_main/main_frame.py:493
 msgid "Presets manager\tShift+P"
-msgstr "Presets manager\tShift+P"
+msgstr "Gerenciador de predefinições\tShift+P"
 
 #: ../vdms_main/main_frame.py:494
 msgid "jump to the Presets Manager panel"
-msgstr "spring naar het Presets Manager panel"
+msgstr "ir para o painel do gerenciador de predefinições"
 
 #: ../vdms_main/main_frame.py:495
 msgid "A/V conversions\tShift+V"
-msgstr "A/V conversies\tShift+V"
+msgstr "Conversões A/V\tShift+V"
 
 #: ../vdms_main/main_frame.py:496
-#, fuzzy
-#| msgid "jump to the Audio/Video Conv. panel"
 msgid "jump to the Audio/Video Conversion panel"
-msgstr "spring naar Audio/Video Conversie panel"
+msgstr "ir para o painel de conversão de áudio / vídeo"
 
 #: ../vdms_main/main_frame.py:498
 msgid "YouTube downloader\tShift+Y"
-msgstr "YouTube downloader\tShift+Y"
+msgstr "Baixar Vídeos\tShift+Y"
 
 #: ../vdms_main/main_frame.py:499
 msgid "jump to the YouTube Downloader panel"
-msgstr "spring naar het YouTube Downloader panel"
+msgstr "ir para o painel de download de vídeos"
 
 #: ../vdms_main/main_frame.py:502
 msgid "Output Monitor\tShift+O"
-msgstr "Output Monitor\tShift+O"
+msgstr "Monitor de saída\tShift+O"
 
 #: ../vdms_main/main_frame.py:503
 msgid "Keeps track of the output for debugging errors"
-msgstr "Inspecteert output voor debug-fouten"
+msgstr "Mantém o controle da saída para erros de depuração"
 
 #: ../vdms_main/main_frame.py:507
-#, fuzzy
-#| msgid "Configuration directory"
 msgid "Configuration folder"
-msgstr "Configuratie folder"
+msgstr "Pasta de configuração"
 
 #: ../vdms_main/main_frame.py:508
-#, fuzzy
-#| msgid "Opens the Videomass configuration directory"
 msgid "Opens the Videomass configuration folder"
-msgstr "Opent de Videomass configuratie folder"
+msgstr "Abre a pasta de configuração do Videomass"
 
 #: ../vdms_main/main_frame.py:510
-#, fuzzy
-#| msgid "Log directory"
 msgid "Log folder"
-msgstr "Log folder"
+msgstr "Pasta de log"
 
 #: ../vdms_main/main_frame.py:511
-#, fuzzy
-#| msgid "Opens the Videomass log directory if it exists"
 msgid "Opens the Videomass log folder, if exists"
-msgstr "Opent de Videomass log folder als deze bestaat"
+msgstr "Abre a pasta de log do Videomass, se houver"
 
 #: ../vdms_main/main_frame.py:513
-#, fuzzy
-#| msgid "Cache directory"
 msgid "Cache folder"
-msgstr "Cache folder"
+msgstr "Pasta de cache"
 
 #: ../vdms_main/main_frame.py:514
-#, fuzzy
-#| msgid "Opens the Videomass cache directory if exists"
 msgid "Opens the Videomass cache folder, if exists"
-msgstr "Opent de Videomass cache folder als deze bestaat"
+msgstr "Abre a pasta de cache do Videomass, se houver"
 
 #: ../vdms_main/main_frame.py:516
-#, fuzzy
-#| msgid "&System"
 msgid "System"
-msgstr "System"
+msgstr "Sistema"
 
 #: ../vdms_main/main_frame.py:518
-#, fuzzy
-#| msgid "&Goto"
 msgid "Goto"
-msgstr "Goto"
+msgstr "Ir para"
 
 #: ../vdms_main/main_frame.py:522 ../vdms_panels/filedrop.py:237
 msgid "Set up a temporary folder for conversions"
-msgstr "Stel een tijdelijke folder in voor conversies"
+msgstr "Configure uma pasta temporária para conversões"
 
 #: ../vdms_main/main_frame.py:523
 msgid "Use a temporary location to save conversions"
-msgstr "Gebruik een tijdelijke locatie om conversies te bewaren"
+msgstr "Use um local temporário para salvar conversões"
 
 #: ../vdms_main/main_frame.py:527 ../vdms_panels/textdrop.py:85
 msgid "Set up a temporary folder for downloads"
-msgstr "Stel een tijdelijke folder in voor downloads"
+msgstr "Configure uma pasta temporária para downloads"
 
 #: ../vdms_main/main_frame.py:528
 msgid "Save all downloads to this temporary location"
-msgstr "Bewaar alle downloads in deze tijdelijke locatie"
+msgstr "Salve todos os downloads neste local temporário"
 
 #: ../vdms_main/main_frame.py:531
 msgid "Restore the default destination folders"
-msgstr "Herstel de standaard bestemming-folders"
+msgstr "Restaurar as pastas de destino padrão"
 
 #: ../vdms_main/main_frame.py:532
 msgid "Restore the default folders for file conversions and downloads"
-msgstr "Herstel de standaard folders voor bestand-conversie en downloads"
+msgstr "Restaure as pastas padrão para conversões de arquivos e downloads"
 
 #: ../vdms_main/main_frame.py:538
 msgid "Setting timestamp"
-msgstr "Tijdcode instellen"
+msgstr "Definindo registro de data / hora"
 
 #: ../vdms_main/main_frame.py:539
-#, fuzzy
-#| msgid "Change the size and colors of the timestamp during playback"
 msgid "Change the size and color of the timestamp during playback"
-msgstr "Wijzig de grootte en kleur van de tijdcode tijdens afspelen"
+msgstr ""
+"Altere o tamanho e a cor do registro de data / hora durante a reprodução"
 
 #: ../vdms_main/main_frame.py:542
 msgid "Auto-exit after playback"
-msgstr ""
+msgstr "Sair automaticamente após a reprodução"
 
 #: ../vdms_main/main_frame.py:543
 msgid "If checked, the FFplay window will auto-close at the end of playback"
 msgstr ""
+"Se marcada, a janela FFplay será fechada automaticamente no final da "
+"reprodução"
 
 #: ../vdms_main/main_frame.py:550
-#, fuzzy
-#| msgid "&Preferences\tCtrl+P"
 msgid "Preferences\tCtrl+P"
-msgstr "Preferences\tCtrl+P"
+msgstr "Preferências\tCtrl+P"
 
 #: ../vdms_main/main_frame.py:551
 msgid "Application preferences"
-msgstr "Applicatie voorkeuren"
+msgstr "Preferências do aplicativo"
 
 #: ../vdms_main/main_frame.py:552 ../vdms_panels/av_conversions.py:615
 msgid "Settings"
-msgstr "Instellingen"
+msgstr "Configurações"
 
 #: ../vdms_main/main_frame.py:557
 msgid "User Guide"
-msgstr "Handleiding"
+msgstr "Manual"
 
 #: ../vdms_main/main_frame.py:558
 msgid "Wiki"
@@ -2132,74 +2057,61 @@ msgstr "Wiki"
 
 #: ../vdms_main/main_frame.py:560
 msgid "Issue tracker"
-msgstr "Issue tracker"
+msgstr "Rastreador de problemas"
 
 #: ../vdms_main/main_frame.py:562
 msgid "Translation..."
-msgstr "Vertaling..."
+msgstr "Tradução..."
 
 #: ../vdms_main/main_frame.py:564
 msgid "Donation"
-msgstr "Donatie"
+msgstr "Doação"
 
 #: ../vdms_main/main_frame.py:566
 msgid "FFmpeg documentation"
-msgstr "FFmpeg documentatie"
+msgstr "Documentação do FFmpeg"
 
 #: ../vdms_main/main_frame.py:568
 msgid "Check for newer version"
-msgstr "Ga nieuwere versie na"
+msgstr "Verifique se há uma versão mais recente"
 
 #: ../vdms_main/main_frame.py:569
-#, fuzzy
-#| msgid ""
-#| "Check for the most latest version of Videomass on <https://pypi.org/>"
 msgid ""
 "Check for the latest Videomass version at <https://pypi.org/project/"
 "videomass/>"
-msgstr "Ga de nieuwste Videomass versie na op <https://pypi.org>"
+msgstr ""
+"Verifique a versão mais recente do Videomass em <https://pypi.org/project/"
+"videomass/>"
 
 #: ../vdms_main/main_frame.py:573
 msgid "About Videomass"
-msgstr "Over Videomass"
+msgstr "Sobre o Videomass"
 
 #: ../vdms_main/main_frame.py:574
-#, fuzzy
-#| msgid "&Help"
 msgid "Help"
-msgstr "Help"
+msgstr "Ajuda"
 
 #: ../vdms_main/main_frame.py:702
 msgid "youtube-dl is already up-to-date {}"
-msgstr "youtube-dl is reeds up-to-date {}"
+msgstr "youtube-dl já está atualizado {}"
 
 #: ../vdms_main/main_frame.py:707
-#, fuzzy, python-brace-format
-#| msgid ""
-#| "youtube-dl version {0} is available and will replace the old version {1}\n"
-#| "\n"
-#| "Do you want to upgrade now?"
+#, python-brace-format
 msgid ""
 "youtube-dl version {0} is available and will replace the old version {1}\n"
 "\n"
 "Do you want to update now?"
 msgstr ""
-"youtube-dl versie {0} is beschikbaar en zal de oude versie {1} vervangen\n"
+"nova versão do youtube-dl {0} está disponível e substituirá a versão antiga "
+"{1}\n"
 "\n"
-"Wilt u nu upgraden?"
+"Você quer atualizar agora?"
 
 #: ../vdms_main/main_frame.py:730
 msgid "Successful! youtube-dl is up-to-date"
-msgstr "Succesvol! youtube-dl is up-to-date"
+msgstr "Bem sucedido! youtube-dl está atualizado"
 
 #: ../vdms_main/main_frame.py:743
-#, fuzzy
-#| msgid ""
-#| "Notice: To update youtube_dl it is necessary to rebuild the Videomass "
-#| "AppImage. This procedure will be completely automatic and will only "
-#| "require you to select the location of the AppImage.\n"
-#| "\n"
-#| "Do you want to continue?"
 msgid ""
 "To update youtube_dl it is necessary to rebuild the Videomass AppImage. This "
 "procedure will be completely automatic and will only require you to select "
@@ -2207,15 +2119,15 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Opmerking: Om youtube_dl te updaten is het nodig de Videomass AppImage "
-"opnieuw samen te stellen. Deze procedure zal volledig automatisch verlopen, "
-"u hoeft alleen de locatie van de AppImage te selecteren.\n"
+"Para atualizar youtube_dl, é necessário reconstruir o Videomass AppImage. "
+"Este procedimento será totalmente automático e exigirá apenas que você "
+"selecione o local do AppImage.\n"
 "\n"
-"Wilt u doorgaan?"
+"Você quer continuar?"
 
 #: ../vdms_main/main_frame.py:753
 msgid "Select the 'Videomass-{}-x86_64.AppImage' file to update"
-msgstr "Selecteer het 'Videomass-{}-x86_64.AppImage' bestand om te updaten"
+msgstr "Selecione o arquivo 'Videomass - {} - x86_64.AppImage' para atualizar"
 
 #: ../vdms_main/main_frame.py:771
 #, python-brace-format
@@ -2224,46 +2136,42 @@ msgid ""
 "\n"
 "Re-start is required. Do you want to close Videomass now?"
 msgstr ""
-"Successvol! youtube-dl is up-to-date ({0})\n"
+"Bem sucedido! youtube-dl está atualizado ({0})\n"
 "\n"
-"Herstart is nodig. Wilt u Videomass nu afsluiten?"
+"É necessário reiniciar. Você deseja fechar o Videomass agora?"
 
 #: ../vdms_main/main_frame.py:781
-#, fuzzy
-#| msgid ""
-#| "Failed! for more details consult:\n"
-#| "{}/youtube_dl-update-on-AppImage.log"
 msgid ""
 "Failed! For details consult:\n"
 "{}/youtube_dl-update-on-AppImage.log"
 msgstr ""
-"Gefaald! Voor details raadpleeg:\n"
-"{}/youtube_dl-update-on-AppImage.log"
+"Falhou! Para mais detalhes consulte:\n"
+"{} /youtube_dl-update-on-AppImage.log"
 
 #: ../vdms_main/main_frame.py:787
 msgid "Failed! {}"
-msgstr "Gefaald! {}"
+msgstr "Falhou! {}"
 
 #: ../vdms_main/main_frame.py:793
 msgid ""
 "It looks like you installed youtube-dl with a package manager. Please use "
 "that to update."
 msgstr ""
-"Het lijkt erop dat u youtube-dl geinstalleerd heeft met een package manager. "
-"Gebruik die a.u.b. voor update."
+"Parece que você instalou o youtube-dl com um gerenciador de pacotes. Use "
+"isso para atualizar."
 
 #: ../vdms_main/main_frame.py:827
 #, python-brace-format
 msgid "There is a new version available {0}"
-msgstr "Er is een nieuwe versie beschikbaar {0}"
+msgstr "Há uma nova versão disponível {0}"
 
 #: ../vdms_main/main_frame.py:831
 msgid "No new version available"
-msgstr "Geen nieuwe versie beschikbaar"
+msgstr "Nenhuma nova versão disponível"
 
 #: ../vdms_main/main_frame.py:844
 msgid "Choose a download folder"
-msgstr "Kies een download folder"
+msgstr "Escolha uma pasta de download"
 
 #: ../vdms_main/main_frame.py:860
 msgid ""
@@ -2272,13 +2180,13 @@ msgid ""
 "The archive is being downloaded\n"
 msgstr ""
 "\n"
-"Wacht....\n"
-"Het archief wordt gedownload\n"
+"Aguarde....\n"
+"O arquivo está sendo baixado\n"
 
 #: ../vdms_main/main_frame.py:867
 #, python-brace-format
 msgid "Successfully downloaded to \"{0}\""
-msgstr "Succesvol gedownload naar \"{0}\""
+msgstr "Download com sucesso para \"{0}\""
 
 #: ../vdms_main/main_frame.py:919
 msgid ""
@@ -2287,12 +2195,12 @@ msgid ""
 "Check installed version\n"
 msgstr ""
 "\n"
-"Wacht....\n"
-"Controleer geinstalleerde versie\n"
+"Aguarde....\n"
+"Verifique a versão instalada\n"
 
 #: ../vdms_main/main_frame.py:923 ../vdms_main/main_frame.py:938
 msgid "You are using youtube-dl version {}"
-msgstr "U gebruikt youtube-dl versie {}"
+msgstr "Você está usando a versão youtube-dl {}"
 
 #: ../vdms_main/main_frame.py:945
 #, python-brace-format
@@ -2301,46 +2209,42 @@ msgid ""
 "\n"
 "youtube-dl has not been installed yet."
 msgstr ""
-"ERROR: {0}\n"
+"ERRO: {0}\n"
 "\n"
-"youtube-dl is nog niet geinstalleerd."
+"youtube-dl ainda não foi instalado."
 
 #: ../vdms_main/main_frame.py:966
 #, python-brace-format
 msgid "Latest version available: {0}"
-msgstr "Laatst beschikbare versie: {0}"
+msgstr "Última versão disponível: {0}"
 
 #: ../vdms_main/main_frame.py:986 ../vdms_main/main_frame.py:1061
 msgid "There are no logs to show."
-msgstr "Er bestaan geen logs om te tonen."
+msgstr "Não há logs para mostrar."
 
 #: ../vdms_main/main_frame.py:1020 ../vdms_main/main_frame.py:1031
 msgid "No files added yet"
-msgstr "Nog geen bestanden toegevoegd"
+msgstr "Nenhum arquivo adicionado ainda"
 
 #: ../vdms_main/main_frame.py:1042
 msgid "No URLs added yet"
-msgstr "Nog geen URLs toegevoegd"
+msgstr "Nenhum URL adicionado ainda"
 
 #: ../vdms_main/main_frame.py:1080
-#, fuzzy
-#| msgid "cache directory has not been created yet."
 msgid "cache folder has not been created yet."
-msgstr "cache folder is nog niet gemaakt."
+msgstr "a pasta de cache ainda não foi criada."
 
 #: ../vdms_main/main_frame.py:1094
 msgid "Choose a temporary destination for conversions"
-msgstr "Kies een tijdelijke bestemming voor de conversies"
+msgstr "Escolha um destino temporário para conversões"
 
 #: ../vdms_main/main_frame.py:1114
-#, fuzzy
-#| msgid "Choose a temporary destination for the downloads"
 msgid "Choose a temporary destination for downloads"
-msgstr "Kies een tijdelijke bestemming voor de downloads"
+msgstr "Escolha um destino temporário para downloads"
 
 #: ../vdms_main/main_frame.py:1147
 msgid "Default destination folders successfully restored"
-msgstr "Standaard bestemming-folders succesvol hersteld"
+msgstr "Pastas de destino padrão restauradas com sucesso"
 
 #: ../vdms_main/main_frame.py:1253
 #, python-brace-format
@@ -2356,18 +2260,17 @@ msgid ""
 "The latest version {1} is available\n"
 msgstr ""
 "\n"
+"Novos lançamentos corrigem problemas e oferecem novos recursos\n"
 "\n"
-"Nieuwe uitgaven herstellen fouten en bieden nieuwe mogelijkheden\n"
-"\n"
-"Dit is Videomass versie {0}\n"
+"Esta é a versão do Videomass {0}\n"
 "\n"
 "<https://pypi.org/project/videomass/>\n"
 "\n"
-"De laatste versie {1} is beschikbaar\n"
+"A última versão {1} está disponível\n"
 
 #: ../vdms_main/main_frame.py:1258 ../vdms_main/main_frame.py:1266
 msgid "Checking for newer version"
-msgstr "Nieuwere versie wordt nagegaan"
+msgstr "Verificando se há uma versão mais recente"
 
 #: ../vdms_main/main_frame.py:1262
 #, python-brace-format
@@ -2383,76 +2286,74 @@ msgid ""
 "You are using the latest version\n"
 msgstr ""
 "\n"
+"Novos lançamentos corrigem problemas e oferecem novos recursos\n"
 "\n"
-"Nieuwe uitgaven herstellen fouten en bieden nieuwe mogelijkheden\n"
-"\n"
-"Dit is Videomass versie {0}\n"
+"Esta é a versão do Videomass {0}\n"
 "\n"
 "<https://pypi.org/project/videomass/>\n"
 "\n"
-"U gebruikt de laatste versie\n"
+"Você está usando a versão mais recente\n"
 
 #: ../vdms_main/main_frame.py:1346
 msgid "Go to the previous panel"
-msgstr "Ga naar vorig panel"
+msgstr "Vá para o painel anterior"
 
 #: ../vdms_main/main_frame.py:1347
 msgid "Back"
-msgstr "Terug"
+msgstr "Voltar"
 
 #: ../vdms_main/main_frame.py:1351
 msgid "Go to the next panel"
-msgstr "Ga naar volgende panel"
+msgstr "Vá para o próximo painel"
 
 #: ../vdms_main/main_frame.py:1352
 msgid "Next"
-msgstr "Volgende"
+msgstr "Avançar"
 
 #: ../vdms_main/main_frame.py:1358
-#, fuzzy
-#| msgid "Gathers information from multimedia streams"
 msgid "Gathers information of multimedia streams"
-msgstr "Wint informatie in over multimedia streams"
+msgstr "Reúne informações de fluxos de multimídia"
 
 #: ../vdms_main/main_frame.py:1359
 msgid "Media Streams"
-msgstr "Media Streams"
+msgstr "Reprodução de mídia"
 
 #: ../vdms_main/main_frame.py:1363
 msgid "Shows download statistics and information"
-msgstr "Toont download-statistieken en -informatie"
+msgstr "Mostra estatísticas de download e informações"
 
 #: ../vdms_main/main_frame.py:1365
 msgid "Statistics"
-msgstr "Statistieken"
+msgstr "Estatísticas"
 
 #: ../vdms_main/main_frame.py:1369
 msgid "File playback"
-msgstr "Bestand afspelen"
+msgstr "Reproduzir arquivo"
 
 #: ../vdms_main/main_frame.py:1370
 msgid "Playback"
-msgstr "Afspelen"
+msgstr "Reprodução"
 
 #: ../vdms_main/main_frame.py:1375
 msgid "Add a new profile from this panel with the current settings"
-msgstr "Voeg een nieuw profiel toe van dit panel met de huidige instellingen"
+msgstr ""
+"Adicione um novo perfil a partir deste painel com as configurações atuais"
 
 #: ../vdms_main/main_frame.py:1376
 msgid "Add Profile"
-msgstr "Voeg profiel toe"
+msgstr "Adicionar perfil"
 
 #: ../vdms_main/main_frame.py:1382
 msgid "Convert using FFmpeg"
-msgstr "Converteer met FFmpeg"
+msgstr "Converter usando FFmpeg"
 
 #: ../vdms_main/main_frame.py:1383
 msgid "Convert"
-msgstr "Converteer"
+msgstr "Converter"
 
 #: ../vdms_main/main_frame.py:1387
 msgid "Download files using youtube-dl"
-msgstr "Download bestanden met youtube-dl"
+msgstr "Baixe arquivos usando youtube-dl"
 
 #: ../vdms_main/main_frame.py:1388
 msgid "Download"
@@ -2460,75 +2361,75 @@ msgstr "Download"
 
 #: ../vdms_main/main_frame.py:1426
 msgid "Drag at least one file"
-msgstr "Sleep minstens een bestand"
+msgstr "Arraste pelo menos um arquivo"
 
 #: ../vdms_main/main_frame.py:1438
 msgid "Append at least one URL"
-msgstr "Voeg minstens een URL toe"
+msgstr "Anexe pelo menos um URL"
 
 #: ../vdms_main/main_frame.py:1445
 msgid "Invalid URL: \"{}\""
-msgstr "Ongeldige URL: \"{}\""
+msgstr "URL inválido: \"{}\""
 
 #: ../vdms_main/main_frame.py:1482
 msgid "Videomass - Queued Files"
-msgstr "Videomass - Wachtrij Bestanden"
+msgstr "Videomass - arquivos enfileirados"
 
 #: ../vdms_main/main_frame.py:1514
 msgid "Videomass - Queued URLs"
-msgstr "Videomass - Wachtrij URLs"
+msgstr "Videomass - URLs enfileirados"
 
 #: ../vdms_main/main_frame.py:1524
 msgid "URL list changed, please check the settings again."
-msgstr "URL lijst gewijzigd, ga a.u.b. de instellingen na."
+msgstr "Lista de URLs alterada, verifique as configurações novamente."
 
 #: ../vdms_main/main_frame.py:1535
 msgid "Videomass - YouTube Downloader"
-msgstr "Videomass - YouTube Downloader"
+msgstr "Videomass - Baixar Vídeos"
 
 #: ../vdms_main/main_frame.py:1569 ../vdms_main/main_frame.py:1621
 msgid "File list changed, please check the settings again."
-msgstr "Bestanden-lijst gewijzigd, ga a.u.b. de instellingen na."
+msgstr "Lista de arquivos alterada, verifique as configurações novamente."
 
 #: ../vdms_main/main_frame.py:1589
 msgid "Videomass - AV Conversions"
-msgstr "Videomass - AV Conversies"
+msgstr "Videomass - Conversões AV"
 
 #: ../vdms_main/main_frame.py:1640
 msgid "Videomass - Presets Manager"
-msgstr "Videomass - Presets Manager"
+msgstr "Videomass - Gerenciador de predefinições"
 
 #: ../vdms_main/main_frame.py:1672
 msgid "Viewing last log"
-msgstr "Laatste log-berichten bekijken"
+msgstr "Visualizando o último log"
 
 #: ../vdms_main/main_frame.py:1680
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
 msgstr ""
-"Doorgaan is onmogelijk: de duur op de tijdslijn overschrijdt de duur van "
-"enkele wachtrij bestanden."
+"Não é possível continuar: a duração na linha do tempo excede a duração de "
+"alguns arquivos enfileirados."
 
 #: ../vdms_main/main_frame.py:1685 ../vdms_main/main_frame.py:1690
 msgid "Processing..."
-msgstr "Uitvoering bezig..."
+msgstr "Processando..."
 
 #: ../vdms_main/main_frame.py:1692
 msgid "Videomass - Output Monitor"
-msgstr "Videomass - Output Monitor"
+msgstr "Videomass - Monitor de Saída"
 
 #: ../vdms_panels/av_conversions.py:250
 msgid "Media:"
-msgstr "Media:"
+msgstr "Mídia:"
 
 #: ../vdms_panels/av_conversions.py:259
 msgid "Container:"
-msgstr "Container:"
+msgstr "Contêiner:"
 
 #: ../vdms_panels/av_conversions.py:281
 msgid "Video Encoder"
-msgstr "Video Encoder"
+msgstr "Codificador de vídeo"
 
 #: ../vdms_panels/av_conversions.py:294
 msgid "Codec"
@@ -2536,7 +2437,7 @@ msgstr "Codec"
 
 #: ../vdms_panels/av_conversions.py:303
 msgid "Two passes"
-msgstr "Twee passes"
+msgstr "Duas passagens"
 
 #: ../vdms_panels/av_conversions.py:307
 msgid "CRF"
@@ -2544,153 +2445,151 @@ msgstr "CRF"
 
 #: ../vdms_panels/av_conversions.py:315
 msgid "Bit Rate (kb)"
-msgstr "Bit Rate (kb)"
+msgstr "Taxa de bits (kb)"
 
 #: ../vdms_panels/av_conversions.py:324
 msgid "Min Rate (kb)"
-msgstr "Minimale Rate (kb)"
+msgstr "Taxa mínima (kb)"
 
 #: ../vdms_panels/av_conversions.py:332
 msgid "Max Rate (kb)"
-msgstr "Maximale Rate (kb)"
+msgstr "Taxa máxima (kb)"
 
 #: ../vdms_panels/av_conversions.py:340
 msgid "Buffer Size (kb)"
-msgstr "Buffer Grootte (kb)"
+msgstr "Tamanho do buffer (kb)"
 
 #: ../vdms_panels/av_conversions.py:384
 msgid "Pixel Format"
-msgstr "Pixel Formaat"
+msgstr "Formato do pixel"
 
 #: ../vdms_panels/av_conversions.py:393
 msgid "Subtitle Map"
-msgstr "Ondertitel Map"
+msgstr "Mapa de Legendas"
 
 #: ../vdms_panels/av_conversions.py:409
 msgid "Optimizations"
-msgstr "Optimalisaties"
+msgstr "Otimizações"
 
 #: ../vdms_panels/av_conversions.py:415
 msgid "Use for Web"
-msgstr "Gebruik voor Web"
+msgstr "Use para a web"
 
 #: ../vdms_panels/av_conversions.py:435
 msgid "Deadline/Quality"
-msgstr "Deadline/Kwaliteit"
+msgstr "Tempo / Qualidade"
 
 #: ../vdms_panels/av_conversions.py:443
 msgid ""
 "Quality/Speed\n"
 "ratio modifier:"
 msgstr ""
-"Kwaliteit/Snelheid\n"
-"ratio modificator:"
+"Qualidade / Velocidade\n"
+"modificador de proporção:"
 
 #: ../vdms_panels/av_conversions.py:452
 msgid "Activates row-mt 1"
-msgstr "Activeert rij-mt 1"
+msgstr "Ativa o row-mt 1"
 
 #: ../vdms_panels/av_conversions.py:479
 msgid "Preset"
-msgstr "Preset"
+msgstr "Ajuste"
 
 #: ../vdms_panels/av_conversions.py:493
 msgid "Profile"
-msgstr "Profiel"
+msgstr "Perfil"
 
 #: ../vdms_panels/av_conversions.py:504
 msgid "Level"
-msgstr "Niveau"
+msgstr "Nível"
 
 #: ../vdms_panels/av_conversions.py:513
 msgid "Tune"
-msgstr "Afstemmen"
+msgstr "Ajustar"
 
 #: ../vdms_panels/av_conversions.py:529
 msgid "Video Filters"
-msgstr "Video Filters"
+msgstr "Filtros de Vídeo"
 
 #: ../vdms_panels/av_conversions.py:541 ../vdms_panels/youtubedl_ui.py:229
 msgid "Preview"
-msgstr "Voorvertoning"
+msgstr "Pré-visualizar"
 
 #: ../vdms_panels/av_conversions.py:556
 msgid "Resizing"
-msgstr "Herschalen bezig"
+msgstr "Redimensionamento"
 
 #: ../vdms_panels/av_conversions.py:560
 msgid "Cropping"
-msgstr "Bijsnijden bezig"
+msgstr "Recorte"
 
 #: ../vdms_panels/av_conversions.py:564
 msgid "Rotation"
-msgstr "Rotatie"
+msgstr "Rotação"
 
 #: ../vdms_panels/av_conversions.py:569
 msgid "Deinterlacing"
-msgstr "Ont-interlacen"
+msgstr "Desentrelaçamento"
 
 #: ../vdms_panels/av_conversions.py:573
 msgid "Denoiser"
-msgstr "Denoiser"
+msgstr "Redução de ruído"
 
 #: ../vdms_panels/av_conversions.py:577
 msgid "Stabilizer"
-msgstr ""
+msgstr "Estabilizador"
 
 #: ../vdms_panels/av_conversions.py:596
 msgid "Audio Encoder"
-msgstr "Audio Encoder"
+msgstr "Codificador de Áudio"
 
 #: ../vdms_panels/av_conversions.py:608
 msgid "Audio Properties"
-msgstr "Audio Eigenschappen"
+msgstr "Propriedades do Áudio"
 
 #: ../vdms_panels/av_conversions.py:629 ../vdms_panels/presets_manager.py:278
 msgid "Audio Streams Mapping"
-msgstr "Audio Streams Mapping"
+msgstr "Mapeamento de reprodução de áudio"
 
 #: ../vdms_panels/av_conversions.py:636 ../vdms_panels/presets_manager.py:285
 msgid "Input index:"
-msgstr "Input index:"
+msgstr "Índice de entrada:"
 
 #: ../vdms_panels/av_conversions.py:647 ../vdms_panels/presets_manager.py:296
 msgid "Output index:"
-msgstr "Output index:"
+msgstr "Índice de saída:"
 
 #: ../vdms_panels/av_conversions.py:660
 msgid "Audio Filters"
-msgstr "Audio Filters"
+msgstr "Filtros de Áudio"
 
 #: ../vdms_panels/av_conversions.py:667
 msgid "Normalization"
-msgstr "Normalisatie"
+msgstr "Normalização"
 
 #: ../vdms_panels/av_conversions.py:685 ../vdms_panels/presets_manager.py:316
-#, fuzzy
-#| msgid "Volumedetect"
 msgid "Volume detect"
-msgstr "Volume detectering"
+msgstr "Detecção de volume"
 
 #: ../vdms_panels/av_conversions.py:689 ../vdms_panels/presets_manager.py:320
 msgid "Volume Statistics"
-msgstr "Volume Statistieken"
+msgstr "Estatísticas de volume"
 
 #: ../vdms_panels/av_conversions.py:694 ../vdms_panels/presets_manager.py:325
 msgid "Target level:"
-msgstr "Doel niveau:"
+msgstr "Nível alvo:"
 
 #: ../vdms_panels/av_conversions.py:715 ../vdms_panels/presets_manager.py:343
 msgid "Set integrated loudness target:"
-msgstr "Stel geïntegreerde loudness doel in:"
+msgstr "Defina o volume de intensidade integrada:"
 
 #: ../vdms_panels/av_conversions.py:726 ../vdms_panels/presets_manager.py:355
 msgid "Set maximum true peak:"
-msgstr "Stel maximum ware peak:"
+msgstr "Defina a altura real máxima:"
 
 #: ../vdms_panels/av_conversions.py:737 ../vdms_panels/presets_manager.py:365
 msgid "Set loudness range target:"
-msgstr "Stel loudness range doel in:"
+msgstr "Defina o volume da faixa de intensidade:"
 
 #: ../vdms_panels/av_conversions.py:759
 msgid ""
@@ -2698,57 +2597,49 @@ msgid ""
 "stream is not to be re-encoded and allows changing the format or other "
 "parameters"
 msgstr ""
-"Beschikbare video codecs. \"Copy\" is geen codec maar geeft aan dat de video "
-"stream niet her-encoded dient te worden en staat toe het formaat of andere "
-"parameters te wijzigen"
+"Codecs de vídeo disponíveis. \"Copiar\" não é um codec, mas indica que a "
+"reprodução de vídeo não deve ser recodificada e permite alterar o formato ou "
+"outros parâmetros"
 
 #: ../vdms_panels/av_conversions.py:763
-#, fuzzy
-#| msgid ""
-#| "Output format and file extension. the content may change based on the "
-#| "codec and media"
 msgid ""
 "Output format and file extension. The content may change based on the codec "
 "and media"
 msgstr ""
-"Output formaat en bestands-extensie. De inhoud kan wijzigen naar aanleiding "
-"van de codec en media"
+"Formato de saída e extensão de arquivo. O conteúdo pode mudar com base no "
+"codec e na mídia"
 
 #: ../vdms_panels/av_conversions.py:766
 msgid ""
 "\"Video\" to save the output file as a video; \"Audio\" to save as an audio "
 "file only"
 msgstr ""
-"\"Video\" om het output-bestand te bewaren als video; \"Audio\" om te "
-"bewaren als een (alleen-)audio bestand"
+"\"Vídeo\" para salvar o arquivo de saída como um vídeo; \"Áudio\" para "
+"salvar apenas como um arquivo de áudio"
 
 #: ../vdms_panels/av_conversions.py:769
 msgid "It can reduce the file size, but takes longer."
-msgstr "Het kan de bestands-grootte reduceren, maar duurt langer."
+msgstr "Isso pode reduzir o tamanho do arquivo, mas leva mais tempo."
 
 #: ../vdms_panels/av_conversions.py:771
 msgid "Specifies a minimum tolerance to be used"
-msgstr "Specificeert een minimum tolerantie om te gebruiken"
+msgstr "Especifica uma tolerância mínima a ser usada"
 
 #: ../vdms_panels/av_conversions.py:773
-#, fuzzy
-#| msgid ""
-#| "Specifies a maximum tolerance. this is only used in conjunction with "
-#| "buffer size"
 msgid ""
 "Specifies a maximum tolerance. This is only used in conjunction with buffer "
 "size"
 msgstr ""
-"Specificeert een maximale tolerantie. Dit wordt alleen gebruikt samen met "
-"buffer-grootte"
+"Especifica uma tolerância máxima. Isso só é usado em conjunto com o tamanho "
+"do buffer"
 
 #: ../vdms_panels/av_conversions.py:776
 msgid ""
 "Specifies the decoder buffer size, which determines the variability of the "
 "output bitrate "
 msgstr ""
-"Specificeert de buffer-grootte van de decoder, welke de veranderlijkheid van "
-"de output bitrate bepaalt "
+"Especifica o tamanho do buffer do decodificador, que determina a "
+"variabilidade da taxa de bits de saída "
 
 #: ../vdms_panels/av_conversions.py:779
 msgid ""
@@ -2756,66 +2647,61 @@ msgid ""
 "recommended if you have lots of time and want the best compression "
 "efficiency; \"realtime\" is recommended for live/fast encoding"
 msgstr ""
-"\"goed\" is de standaard en aanbevolen voor de meeste applicaties; \"best\" "
-"is aanbevolen wanneer u geduld heeft en de beste compressie-efficiëntie "
-"wenst; \"realtime\" is aanbevolen voor live/snelle encoding"
+"\"bom\" é o padrão e recomendado para a maioria dos aplicativos; \"melhor\" "
+"é recomendado se você tiver muito tempo e quiser a melhor eficiência de "
+"compressão; \"tempo real\" é recomendado para codificação ao vivo / rápida"
 
 #: ../vdms_panels/av_conversions.py:784
 msgid ""
 "\"cpu-used\" sets how efficient the compression will be. The meaning depends "
 "on the mode above."
 msgstr ""
-"\"cpu-gebruikt\" stelt in hoe efficiënt de compressie zal zijn. De betekenis "
-"hangt af van de modus hierboven."
+"\"cpu-used\" define a eficiência da compactação. O significado depende do "
+"modo acima."
 
 #: ../vdms_panels/av_conversions.py:787
 msgid ""
 "specifies the target (average) bit rate for the encoder to use. Higher value "
 "= higher quality. Set -1 to disable this control."
 msgstr ""
-"specificeert de (gemiddelde) doel bit rate voor de te-gebruiken encoder. "
-"Hogere waarde = hogere kwaliteit. Zet op -1 om dit niet te gebruiken."
+"especifica a taxa de bits desejada (média) para o codificador usar. Maior "
+"valor = maior qualidade. Defina -1 para desativar este controle."
 
 #: ../vdms_panels/av_conversions.py:791
 msgid ""
 "Constant rate factor. Lower values = higher quality and a larger file size. "
 "Set -1 to disable this control."
 msgstr ""
-"Constante rate factor. Lagere waarden = hogere kwaliteit en een hogere "
-"bestands-grootte. Zet op -1 om dit niet te gebruiken."
+"Fator de taxa constante. Valores mais baixos = qualidade superior e um "
+"tamanho de arquivo maior. Defina -1 para desativar este controle."
 
 #: ../vdms_panels/av_conversions.py:794
 msgid "Preview video filters"
-msgstr "Voorvertoon video filters"
+msgstr "Filtros de pré-visualização de vídeo"
 
 #: ../vdms_panels/av_conversions.py:796
 msgid "Clear all enabled filters "
-msgstr "Maak alle aangezette filters leeg "
+msgstr "Limpar todos os filtros habilitados "
 
 #: ../vdms_panels/av_conversions.py:798
 msgid "Video width and video height ratio."
-msgstr "Video breedte en video hoogte ratio."
+msgstr "Largura do vídeo e proporção da altura do vídeo."
 
 #: ../vdms_panels/av_conversions.py:800
-#, fuzzy
-#| msgid ""
-#| "Frames repeat a given number of times per second. In some countries are "
-#| "30 NTSC, in PAL countries like Italy are 25."
 msgid ""
 "Frames repeat a given number of times per second. In some countries this is "
 "30 for NTSC, other countries (like Italy) use 25 for PAL"
 msgstr ""
-"Frames herhalen zich een opgegeven aantal maal per seconde. In sommige "
-"landen is dit 30 voor NTSC, andere landen (zoals Italië) gebruiken 25 voor "
-"PAL."
+"Os quadros se repetem um determinado número de vezes por segundo. Em alguns "
+"países, é 30 para NTSC, outros países (como a Itália) usam 25 para PAL"
 
 #: ../vdms_panels/av_conversions.py:804 ../vdms_panels/presets_manager.py:417
 msgid ""
 "Gets maximum volume and average volume data in dBFS, then calculates the "
 "offset amount for audio normalization."
 msgstr ""
-"Verkrijgt maximum volume en gemiddelde volume data in dBFS, en berekent "
-"vervolgens de hoeveelheid offset voor audio normalisatie."
+"Obtém o volume máximo e os dados de volume médio em dBFS e, a seguir, "
+"calcula o valor de deslocamento para a normalização de áudio."
 
 #: ../vdms_panels/av_conversions.py:807 ../vdms_panels/presets_manager.py:420
 msgid ""
@@ -2823,149 +2709,139 @@ msgid ""
 "dBFS. From -99.0 to +0.0; default for PEAK level is -1.0; default for RMS is "
 "-20.0"
 msgstr ""
-"Beperker voor het maximum peak level of het mean level (wanneer overgang "
-"naar RMS) in dBFS. Van -99.0 tot +0.0; standaard voor PEAK level is -1.0; "
-"standaard voor RMS is -20.0"
+"Limitador para o nível máximo de altura, ou o nível médio (quando alternar "
+"para RMS) em dBFS. De -99,0 a +0,0; o padrão para o nível PEAK é -1,0; o "
+"padrão para RMS é -20,0"
 
 #: ../vdms_panels/av_conversions.py:811 ../vdms_panels/presets_manager.py:433
 msgid ""
 "Choose a specific audio stream to map from input file. If not more that one "
 "audio stream, leave to \"Auto\"."
 msgstr ""
-"Kies een specifieke audio stream om van input bestand te map-pen. Wanneer "
-"niet meer dan 1 audio stream, laat staan op Auto\"."
+"Escolha um fluxo de áudio específico para mapear a partir do arquivo de "
+"entrada. Se não for mais de um fluxo de áudio, deixe em \"Auto\"."
 
 #: ../vdms_panels/av_conversions.py:814 ../vdms_panels/presets_manager.py:436
-#, fuzzy
-#| msgid ""
-#| "Map on the output index. Keep same input map to preserve indexes; to save "
-#| "as audio file always select to \"all\" or \"Auto\""
 msgid ""
 "Map on the output index. Keep same input map to preserve indexes; to save as "
 "audio file always select \"all\" or \"Auto\""
 msgstr ""
-"Map op de output index. Houdt dezelfde input map om indexen te behouden; "
-"selecteer steeds \"all\" of \"Auto\" om te bewaren als audio bestand"
+"Mapeie o índice de saída. Mantenha o mesmo mapa de entrada para preservar os "
+"índices; para salvar como arquivo de áudio sempre selecione \"todos\" ou "
+"\"Auto\""
 
 #: ../vdms_panels/av_conversions.py:818 ../vdms_panels/presets_manager.py:424
 msgid ""
 "Integrated Loudness Target in LUFS. From -70.0 to -5.0, default is -24.0"
 msgstr ""
-"Geïntegreerd Loudness Doel in LUFS. Van -70.0 tot -5.0, standaard is -24.0"
+"Ponto de intensidade integrada em LUFS. De -70,0 a -5,0, o padrão é -24,0"
 
 #: ../vdms_panels/av_conversions.py:821 ../vdms_panels/presets_manager.py:427
 msgid "Maximum True Peak in dBTP. From -9.0 to +0.0, default is -2.0"
-msgstr "Maximum Ware Peak in dBTP. Van -9.0 tot +0.0, standaard is -2.0"
+msgstr "Altura máxima real em dBTP. De -9,0 a +0,0, o padrão é -2,0"
 
 #: ../vdms_panels/av_conversions.py:824 ../vdms_panels/presets_manager.py:430
 msgid "Loudness Range Target in LUFS. From +1.0 to +20.0, default is +7.0"
-msgstr "Loudness Bereik Doel in LUFS. Van +1.0 tot +20.0, standaard is +7.0"
+msgstr ""
+"Ponto da faixa de intensidade em LUFS. De +1,0 a +20,0, o padrão é +7,0"
 
 #: ../vdms_panels/av_conversions.py:1155
 msgid "No video filter enabled"
-msgstr "Geen video filter geactiveerd"
+msgstr "Nenhum filtro de vídeo ativado"
 
 #: ../vdms_panels/av_conversions.py:1160
 msgid "Unable to preview Video Stabilizer filter"
-msgstr ""
+msgstr "Não é possível visualizar o filtro de estabilizador de vídeo"
 
 #: ../vdms_panels/av_conversions.py:1228 ../vdms_panels/presets_manager.py:1326
 msgid "A target file must be selected in the queued files"
-msgstr "Een doel-bestand moet geselecteerd zijn in de wachtrij-bestanden"
+msgstr "Um arquivo de destino deve ser selecionado nos arquivos em fila"
 
 #: ../vdms_panels/av_conversions.py:1258
 msgid "The file is not a frame or a video file"
-msgstr "Het bestand is geen frame en geen video bestand"
+msgstr "O arquivo não é um frame ou um arquivo de vídeo"
 
 #: ../vdms_panels/av_conversions.py:1497
 msgid "This filter is incompatible with 2-pass enabled"
-msgstr ""
+msgstr "Este filtro é incompatível com 2 passagens ativadas"
 
 #: ../vdms_panels/av_conversions.py:1630
 msgid "No Audio"
-msgstr "Geen Audio"
+msgstr "Sem áudio"
 
 #: ../vdms_panels/av_conversions.py:1776 ../vdms_panels/presets_manager.py:686
 msgid ""
 "Activate peak level normalization, which will produce a maximum peak level "
 "equal to the set target level."
 msgstr ""
-"Activeer peak level normalisatie, wat een maximum peak level zal geven "
-"gelijk aan het ingestelde doel-level."
+"Ative a normalização de nível de altura, que produzirá um nível de altura "
+"máximo igual ao nível de destino definido."
 
 #: ../vdms_panels/av_conversions.py:1779 ../vdms_panels/presets_manager.py:689
 msgid ""
 "Activate RMS-based normalization, which according to mean volume calculates "
 "the amount of gain to reach same average power signal."
 msgstr ""
-"Activeer op RMS gebaseerde normalisatie, welke volgens het mean volume de "
-"hoeveelheid gain berekent om dezelfde gemiddelde signaal-sterkte te bereiken."
+"Ative a normalização baseada em RMS, que de acordo com o volume médio "
+"calcula a quantidade de ganho para atingir o mesmo sinal de potência média."
 
 #: ../vdms_panels/av_conversions.py:1783 ../vdms_panels/presets_manager.py:693
 msgid ""
 "Activate two passes normalization. It Normalizes the perceived loudness "
 "using the \"​loudnorm\" filter, which implements the EBU R128 algorithm."
 msgstr ""
-"Activeer twee-pass normalisatie. Het normaliseert de ervaarde loudness door "
-"gebruikmaking van het \"​loudnorm\" filter, wat het EBU R128 algoritme "
-"toepast."
+"Ative a normalização de duas passagens. Ele normaliza o volume percebido "
+"usando o filtro \"loudnorm\", que implementa o algoritmo EBU R128."
 
 #: ../vdms_panels/av_conversions.py:1806 ../vdms_panels/presets_manager.py:719
 msgid "Audio normalization off"
-msgstr "Audio normalisatie uit"
+msgstr "Normalização de áudio desligada"
 
 #: ../vdms_panels/av_conversions.py:1842 ../vdms_panels/presets_manager.py:750
 msgid "Audio normalization is required only for some files"
-msgstr "Audio normalisatie is alleen vereist voor bepaalde bestanden"
+msgstr "A normalização de áudio é necessária apenas para alguns arquivos"
 
 #: ../vdms_panels/av_conversions.py:1843 ../vdms_panels/presets_manager.py:751
-#, fuzzy
-#| msgid "Audio normalization is not required based to set target level"
 msgid ""
 "Audio normalization will not be applied because it's equal to the source"
-msgstr ""
-"Audio normalisatie wordt niet toegepast omdat het bronsignaal gelijk is"
+msgstr "A normalização de áudio não será aplicada porque é igual à fonte"
 
 #: ../vdms_panels/av_conversions.py:2033 ../vdms_panels/presets_manager.py:1186
-#, fuzzy
-#| msgid ""
-#| "Undetected volume values! use the \"Volumedetect\" control button to "
-#| "analyze data on the audio volume."
 msgid ""
 "Undetected volume values! Click the \"Volume detect\" button to analyze "
 "audio volume data."
 msgstr ""
-"Volume waarden niet gedetecteerd! Gebruik de \"Volume detect\" knop om de "
-"audio volume data te laten analyseren."
+"Valores de volume não detectados! Clique no botão \"Detecção de volume\" "
+"para analisar os dados de volume do áudio."
 
 #: ../vdms_panels/av_conversions.py:2256
 msgid "Audio/Video EBU normalization"
-msgstr "Audio/Video EBU normalisatie"
+msgstr "Normalização EBU de áudio / vídeo"
 
 #: ../vdms_panels/av_conversions.py:2362
 msgid "Audio conversions"
-msgstr "Audio conversies"
+msgstr "Conversões de áudio"
 
 #: ../vdms_panels/av_conversions.py:2403
 msgid "Audio EBU normalization"
-msgstr "Audio EBU normalisatie"
+msgstr "Normalização EBU de áudio"
 
 #: ../vdms_panels/av_conversions.py:2439
-#, fuzzy, python-format
+#, python-format
 msgid "%s file in queue"
-msgstr "%s bestand in wachtrij"
+msgstr "% s arquivo na fila"
 
 #: ../vdms_panels/av_conversions.py:2447 ../vdms_panels/presets_manager.py:1385
 msgid "Off"
-msgstr "Uit"
+msgstr "Desligado"
 
 #: ../vdms_panels/av_conversions.py:2453 ../vdms_panels/presets_manager.py:1387
 msgid "Unset"
-msgstr "Uitgezet"
+msgstr "Não definido"
 
 #: ../vdms_panels/av_conversions.py:2456 ../vdms_panels/presets_manager.py:1390
 msgid "start  {} | duration  {}"
-msgstr "start  {} | duur  {}"
+msgstr "iniciar {} | duração {}"
 
 #: ../vdms_panels/av_conversions.py:2462
 msgid ""
@@ -2983,19 +2859,19 @@ msgid ""
 "Time Period                        \n"
 "Input Audio Map"
 msgstr ""
-"OVERZICHT\n"
+"RESUMO\n"
 "\n"
-"Wachtrij Bestand\n"
-"Output Formaat                        \n"
-"Web Optimalisatie\n"
-"Audio Codec\n"
-"Audio bit-rate                        \n"
-"Audio Kanelen\n"
-"Audio Rate\n"
-"Bit per Sample                        \n"
-"Audio Normalisatie\n"
-"Tijdsperiode                        \n"
-"Input Audio Map"
+"Arquivo Enfileirado\n"
+"Formato de saída\n"
+"Optimização Web\n"
+"Codec de áudio\n"
+"Taxa de bits do áudio\n"
+"Canais de Áudio\n"
+"Taxa de áudio\n"
+"Bit por amostra\n"
+"Normalização de Áudio\n"
+"Período de tempo\n"
+"Mapa de entrada de áudio"
 
 #: ../vdms_panels/av_conversions.py:2483
 msgid ""
@@ -3018,24 +2894,24 @@ msgid ""
 "Subtitles Map\n"
 "Time Period"
 msgstr ""
-"OVERZICHT\n"
+"RESUMO\n"
 "\n"
-"Wachtrij Bestand\n"
-"Web Optimalisatie\n"
-"Output Formaat                      \n"
-"Video Codec\n"
-"Aspect Ratio\n"
+"Arquivo Enfileirado\n"
+"Optimização Web\n"
+"Formato de saída\n"
+"Codec de Vídeo\n"
+"Proporção da tela\n"
 "FPS\n"
-"Audio Codec                      \n"
-"Audio Kanalen\n"
-"Audio Rate\n"
-"Audio bit-rate                      \n"
-"Bit per Sample\n"
-"Audio Normalisatie                      \n"
-"Input Audio Map\n"
-"Output Audio Map                      \n"
-"Ondertitels Map\n"
-"Tijdsperiode"
+"Codec de áudio\n"
+"Canais de Áudio\n"
+"Taxa de áudio\n"
+"Taxa de bits do áudio\n"
+"Bit por amostra\n"
+"Normalização de Áudio\n"
+"Mapa de entrada de áudio\n"
+"Mapa de saída de áudio\n"
+"Mapa de Legendas\n"
+"Período de tempo"
 
 #: ../vdms_panels/av_conversions.py:2511
 msgid ""
@@ -3069,52 +2945,51 @@ msgid ""
 "Subtitles Map\n"
 "Time Period"
 msgstr ""
-"OVERZICHT\n"
+"RESUMO\n"
 "\n"
-"Wachtrij Bestand\n"
-"Web Optimalisatie\n"
-"Pass Encoding                      \n"
-"Output Formaat\n"
-"Video Codec\n"
-"Video bit-rate                      \n"
+"Arquivo Enfileirado\n"
+"Optimização Web\n"
+"Codificação de passagem\n"
+"Formato de saída\n"
+"Codec de Vídeo\n"
+"Taxa de bits de vídeo\n"
 "CRF\n"
-"Min Rate\n"
-"Max Rate\n"
-"Buffer grootte                      \n"
-"VP8/VP9 Opties\n"
-"Video Filters\n"
-"Aspect Ratio\n"
-"FPS                      \n"
-"Preset\n"
-"Profiel\n"
-"Tune\n"
-"Audio Codec                      \n"
-"Audio Kanalen\n"
-"Audio Rate\n"
-"Audio bit-rate                      \n"
-"Bit per Sample\n"
-"Audio Normalisatie                      \n"
-"Input Audio Map\n"
-"Output Audio Map                      \n"
-"Ondertitels Map\n"
-"Tijdsperiode"
+"Taxa mínima\n"
+"Taxa máxima\n"
+"Tamanho do buffer\n"
+"Opções VP8 / VP9\n"
+"Filtros de Vídeo\n"
+"Proporção da tela\n"
+"FPS\n"
+"Predefinição.\n"
+"Perfil\n"
+"Afinação\n"
+"Codec de áudio\n"
+"Canais de Áudio\n"
+"Taxa de áudio\n"
+"Taxa de bits do áudio\n"
+"Bit por amostra\n"
+"Normalização de Áudio\n"
+"Mapa de entrada de áudio\n"
+"Mapa de saída de áudio\n"
+"Mapa de Legendas\n"
+"Período de tempo"
 
 #: ../vdms_panels/av_conversions.py:2581
-#, fuzzy
 msgid "Save the new profile on..."
-msgstr "Schrijf het nieuwe profiel op..."
+msgstr "Salve o novo perfil em ..."
 
 #: ../vdms_panels/av_conversions.py:2591
 msgid "Create a new profile"
-msgstr "Maak een nieuw profiel"
+msgstr "Criar um perfil novo"
 
 #: ../vdms_panels/choose_topic.py:71
 msgid ""
 "  Presets Manager - Create, edit and use quickly your favorite\n"
 "  FFmpeg presets and profiles with full formats support and codecs. "
 msgstr ""
-"  Presets Manager - Maak, edit en gebruik snel uw favoriete\n"
-"  FFmpeg presets en profielen met volledige ondersteuning van formaten en "
+" Gerenciador de predefinições - Crie, edite e use rapidamente suas\n"
+" predefinições favoritas e perfis FFmpeg com suporte completo de formatos e "
 "codecs. "
 
 #: ../vdms_panels/choose_topic.py:75
@@ -3122,36 +2997,36 @@ msgid ""
 "  A set of useful tools for audio and video conversions.\n"
 "  Save your profiles and reuse them with Presets Manager. "
 msgstr ""
-"  Een stel handige gereedschappen voor audio en video conversies.\n"
-"  Bewaar uw profielen en gebruik ze met Presets Manager. "
+" Um conjunto de ferramentas úteis para conversões de áudio e vídeo.\n"
+" Salve seus perfis e reutilize-os com o Gerenciador de predefinições. "
 
 #: ../vdms_panels/choose_topic.py:79
 msgid ""
 "  Easily download videos and audio in different formats\n"
 "  and quality from YouTube, Facebook and more sites. "
 msgstr ""
-"  Gemakkelijk downloaden van video en audio in diverse formaten\n"
-"  en kwaliteit van YouTube, Facebook en meer websites. "
+" Baixe facilmente vídeo e áudio em diferentes formatos\n"
+" e qualidades do YouTube, Facebook e mais sites. "
 
 #: ../vdms_panels/choose_topic.py:94
 msgid "Welcome to Videomass"
-msgstr "Welkom bij Videomass"
+msgstr "Bem-vindo ao Videomass"
 
 #: ../vdms_panels/choose_topic.py:95
 msgid "Version {}"
-msgstr "Versie {}"
+msgstr "Versão {}"
 
 #: ../vdms_panels/choose_topic.py:144
 msgid ""
 "Videomass would need volunteer translators. If you are interested you could "
 "take a look at the "
 msgstr ""
-"Videomass zoekt vrijwilligers voor vertalingen. Mocht u dit willen, bekijk "
-"dan eens de  "
+"Videomass precisa de tradutores voluntários. Se você estiver interessado, "
+"pode dar uma olhada nas "
 
 #: ../vdms_panels/choose_topic.py:149
 msgid "Localization guidelines"
-msgstr "Uitleg over Localisatie"
+msgstr "Diretrizes de localização"
 
 #: ../vdms_panels/choose_topic.py:203
 msgid ""
@@ -3161,11 +3036,10 @@ msgid ""
 "html>\n"
 "\n"
 msgstr ""
-"- Vereist: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
+"- Requer: Pacote Redistribuível do Microsoft Visual C ++ 2010 (x86)\n"
 "\n"
-"informatie vindt u hier: <http://ytdl-org.github.io/youtube-dl/download."
-"html>\n"
-"\n"
+"para maiores informações, visite: <http://ytdl-org.github.io/youtube-dl/"
+"download.html>\n"
 
 #: ../vdms_panels/choose_topic.py:212
 msgid ""
@@ -3174,10 +3048,10 @@ msgid ""
 "\n"
 "{}...Do you want to download youtube-dl locally now?"
 msgstr ""
-"Om videos te downloaden, van YouTube.com en andere video sites, is een ge-"
-"update versie van youtube-dl nodig.\n"
+"Para baixar vídeos do YouTube.com e de outros sites de vídeo, você precisa "
+"de uma versão atualizada do youtube-dl.\n"
 "\n"
-"{}...Wilt u youtube-dl nu downloaden?"
+"{} ... Deseja baixar o youtube-dl localmente agora?"
 
 #: ../vdms_panels/choose_topic.py:219
 msgid ""
@@ -3186,14 +3060,15 @@ msgid ""
 "youtube-dl is very often updated, make sure you always use the latest "
 "version available: menu bar > Tools > Update youtube-dl."
 msgstr ""
-"Successvol! \n"
+"Bem sucedido!\n"
 "\n"
-"youtube-dl wordt zeer vaak ge-update, zorg altijd dat u de laatste versie "
-"hebt: menu balk > Gereedschappen > Update youtube-dl."
+"O youtube-dl é atualizado com frequência, certifique-se de usar sempre a "
+"versão mais recente disponível: barra de menus> Ferramentas> Atualizar "
+"youtube-dl."
 
 #: ../vdms_panels/choose_topic.py:225
 msgid "youtube-dl is disabled. Check your preferences."
-msgstr "youtube-dl is uitgezet. Controleer uw voorkeuren."
+msgstr "youtube-dl está desativado. Verifique suas preferências."
 
 #: ../vdms_panels/choose_topic.py:234
 msgid ""
@@ -3203,8 +3078,8 @@ msgid ""
 msgstr ""
 "ERROR: {}\n"
 "\n"
-"youtube-dl is niet geinstalleerd, gebruik uw package manager om het te "
-"installeren."
+"youtube-dl não está instalado, use seu gerenciador de pacotes para instalá-"
+"lo."
 
 #: ../vdms_panels/choose_topic.py:245 ../vdms_panels/youtubedl_ui.py:833
 #: ../vdms_panels/long_processing_task.py:502
@@ -3214,91 +3089,92 @@ msgstr ""
 #: ../vdms_panels/presets_manager.py:1204
 #: ../vdms_panels/presets_manager.py:1276
 msgid "Please confirm"
-msgstr "Bevestig dit"
+msgstr "Por favor confirme"
 
 #: ../vdms_panels/youtubedl_ui.py:82
 msgid ""
 "At least one \"Format Code\" must be checked for each URL selected in green."
 msgstr ""
-"Minstens een \"Formaat Code\" moet gezet zijn voor elke URL, groen "
-"geselecteerd."
+"Pelo menos um \"Código de formato\" deve ser verificado para cada URL "
+"selecionado em verde."
 
 #: ../vdms_panels/youtubedl_ui.py:84
 msgid "Function available only if you choose \"Download by format code\""
-msgstr "Functie is alleen beschikbaar als u \"Download op formaat code\" kiest"
+msgstr ""
+"Função disponível apenas se você escolher \"Baixar por código de formato\""
 
 #: ../vdms_panels/youtubedl_ui.py:130
 msgid "Default"
-msgstr "Standaard"
+msgstr "Padrão"
 
 #: ../vdms_panels/youtubedl_ui.py:132
 msgid "Download audio and video splitted"
-msgstr "Download audio en video afzonderlijk"
+msgstr "Baixe áudio e vídeo separadamente"
 
 #: ../vdms_panels/youtubedl_ui.py:133
 msgid "Download Audio only"
-msgstr "Download alleen Audio"
+msgstr "Baixar apenas áudio"
 
 #: ../vdms_panels/youtubedl_ui.py:134
 msgid "Download by format code"
-msgstr "Download op formaat code"
+msgstr "Baixar por código de formato"
 
 #: ../vdms_panels/youtubedl_ui.py:169
 msgid "Options"
-msgstr "Opties"
+msgstr "Opções"
 
 #: ../vdms_panels/youtubedl_ui.py:234
 msgid "Download all videos in playlist"
-msgstr "Download alle videos in de playlist"
+msgstr "Baixe todos os vídeos na lista de reprodução"
 
 #: ../vdms_panels/youtubedl_ui.py:238
 msgid "Embed thumbnail in audio file"
-msgstr "Plaats thumbnail in audio bestand"
+msgstr "Incorporar miniatura no arquivo de áudio"
 
 #: ../vdms_panels/youtubedl_ui.py:242
 msgid "Add metadata to file"
-msgstr "Voeg metadata aan bestand toe"
+msgstr "Adicionar metadados ao arquivo"
 
 #: ../vdms_panels/youtubedl_ui.py:246
 msgid "Write subtitles to video"
-msgstr "Schrijf ondertitels naar video"
+msgstr "Baixar legendas para o vídeo"
 
 #: ../vdms_panels/youtubedl_ui.py:251
 msgid "Prevent overwriting files"
-msgstr "Voorkom overschrijven bestanden"
+msgstr "Impedir a substituição de arquivos"
 
 #: ../vdms_panels/youtubedl_ui.py:256
 msgid ""
 "Include the video ID\n"
 "in the file names"
 msgstr ""
-"Voeg de video ID toe\n"
-"aan de bestandsnamen"
+"Incluir o ID do vídeo\n"
+"nos nomes dos arquivos"
 
 #: ../vdms_panels/youtubedl_ui.py:281
 msgid "Help viewer"
-msgstr "Hulp viewer"
+msgstr "Visualizador de ajuda"
 
 #: ../vdms_panels/youtubedl_ui.py:305 ../vdms_panels/youtubedl_ui.py:391
 #: ../vdms_panels/youtubedl_ui.py:407
 msgid "Play selected url"
-msgstr "Speel geselecteerde url af"
+msgstr "Reproduzir url selecionado"
 
 #: ../vdms_panels/youtubedl_ui.py:419
 msgid "An item must be selected in the URLs checklist"
-msgstr "Een item moet geselecteerd zijn in de URL lijst"
+msgstr "Um item deve ser selecionado na lista de verificação de URLs"
 
 #: ../vdms_panels/youtubedl_ui.py:424
 msgid "YouTube Downloader"
-msgstr "YouTube Downloader"
+msgstr "Baixar Vídeos"
 
 #: ../vdms_panels/youtubedl_ui.py:429
 msgid "Videomass cannot play playlists for now"
-msgstr "Deze versie van Videomass kan geen playlist afspelen"
+msgstr "Videomass não pode reproduzir lista de reprodução por enquanto"
 
 #: ../vdms_panels/youtubedl_ui.py:451 ../vdms_panels/youtubedl_ui.py:548
 msgid "Format Code"
-msgstr "Formaat Code"
+msgstr "Código de Formato"
 
 #: ../vdms_panels/youtubedl_ui.py:452 ../vdms_panels/youtubedl_ui.py:549
 #: ../vdms_panels/youtubedl_ui.py:597
@@ -3308,130 +3184,131 @@ msgstr "Url"
 #: ../vdms_panels/youtubedl_ui.py:453 ../vdms_panels/youtubedl_ui.py:550
 #: ../vdms_panels/youtubedl_ui.py:598
 msgid "Title"
-msgstr "Titel"
+msgstr "Título"
 
 #: ../vdms_panels/youtubedl_ui.py:454 ../vdms_panels/youtubedl_ui.py:551
 msgid "Extension"
-msgstr "Extensie"
+msgstr "Extensão"
 
 #: ../vdms_panels/youtubedl_ui.py:455
 msgid "Resolution"
-msgstr "Resolutie"
+msgstr "Resolução"
 
 #: ../vdms_panels/youtubedl_ui.py:456
 msgid "Video Codec"
-msgstr "Video Codec"
+msgstr "Codec de vídeo"
 
 #: ../vdms_panels/youtubedl_ui.py:457
 msgid "fps"
-msgstr "fps"
+msgstr "quadros por segundo"
 
 #: ../vdms_panels/youtubedl_ui.py:458
 msgid "Audio Codec"
-msgstr "Audio Codec"
+msgstr "Codec de áudio"
 
 #: ../vdms_panels/youtubedl_ui.py:459 ../vdms_panels/filedrop.py:219
 msgid "Size"
-msgstr "Grootte"
+msgstr "Tamanho"
 
 #: ../vdms_panels/youtubedl_ui.py:552
 msgid "Resolution note"
-msgstr "Resolutie notitie"
+msgstr "Nota de resolução"
 
 #: ../vdms_panels/youtubedl_ui.py:599
 msgid "Quality"
-msgstr "Kwaliteit"
+msgstr "Qualidade"
 
 #: ../vdms_panels/youtubedl_ui.py:617
 msgid "Sorry, this feature is disabled."
-msgstr "Sorry, deze mogelijkheid is afgesloten."
+msgstr "Desculpe, este recurso está desativado."
 
 #: ../vdms_panels/youtubedl_ui.py:678
 msgid "Unable to get format codes on playlists"
-msgstr "Onmogelijk om playlist formaat codes te verkrijgen"
+msgstr "Não é possível obter códigos de formato nas listas de reprodução"
 
 #: ../vdms_panels/youtubedl_ui.py:831
 msgid "The URLs contain playlists. Are you sure you want to continue?"
-msgstr "De URLs bevatten playlists. Wilt u toch doorgaan?"
+msgstr ""
+"Os URLs contêm listas de reprodução. Você tem certeza que quer continuar?"
 
 #: ../vdms_panels/filedrop.py:66
 msgid "Directories are not allowed, just add files, please."
-msgstr "Folders zijn niet toegestaan, voeg alleen bestanden toe."
+msgstr "Diretórios não são permitidos, apenas adicione arquivos, por favor."
 
 #: ../vdms_panels/filedrop.py:67
 msgid ""
 "File without format extension: please give an appropriate extension to the "
 "file name, example '.mkv', '.avi', '.mp3', etc."
 msgstr ""
-"Bestand zonder formaat extensie: u dient een treffende extensie te geven aan "
-"de bestandsnaam, bijv. '.mkv', '.avi', '.mp3', etc."
+"Arquivo sem extensão de formato: forneça uma extensão apropriada para o nome "
+"do arquivo, por exemplo '.mkv', '.avi', '.mp3', etc."
 
 #: ../vdms_panels/filedrop.py:70
 msgid "Invalid filename. Contains double quotes"
-msgstr ""
+msgstr "Nome de arquivo inválido. Contém aspas duplas"
 
 #: ../vdms_panels/filedrop.py:122
 #, python-format
 msgid "Duplicate files are rejected: > '%s'"
-msgstr "Gelijke bestanden zijn overgeslagen: > '%s'"
+msgstr "Arquivos duplicados são rejeitados:> '% s'"
 
 #: ../vdms_panels/filedrop.py:188
 msgid "Drag one or more files below"
-msgstr "Sleep een of meer bestanden hieronder"
+msgstr "Arraste um ou mais arquivos abaixo"
 
 #: ../vdms_panels/filedrop.py:194 ../vdms_panels/filedrop.py:281
 #: ../vdms_panels/filedrop.py:297
 msgid "Play"
-msgstr "Speel"
+msgstr "Reproduzir"
 
 #: ../vdms_panels/filedrop.py:216
 msgid "File Name"
-msgstr "Bestandsnaam"
+msgstr "Nome do arquivo"
 
 #: ../vdms_panels/filedrop.py:217 ../vdms_panels/timeline.py:121
 msgid "Duration"
-msgstr "Duur"
+msgstr "Duração"
 
 #: ../vdms_panels/filedrop.py:218
 msgid "Media type"
-msgstr "Media type"
+msgstr "Tipo de mídia"
 
 #: ../vdms_panels/filedrop.py:235
 msgid "Remove the selected file from the list"
-msgstr "Verwijder het geselecteerde bestand uit de lijst"
+msgstr "Remova o arquivo selecionado da lista"
 
 #: ../vdms_panels/filedrop.py:236
 msgid "Delete all files from the list"
-msgstr "Verwijder alle bestanden uit de lijst"
+msgstr "Exclua todos os arquivos da lista"
 
 #: ../vdms_panels/filedrop.py:239
 msgid "Play the selected files in the list"
-msgstr "Speel de geselecteerde bestanden in de lijst af"
+msgstr "Reproduza os arquivos selecionados na lista"
 
 #: ../vdms_panels/filedrop.py:240 ../vdms_panels/textdrop.py:87
 msgid "Destination folder"
-msgstr "Bestemming folder"
+msgstr "Diretório de destino"
 
 #: ../vdms_panels/filedrop.py:282 ../vdms_panels/filedrop.py:300
 #: ../vdms_panels/presets_manager.py:145
 msgid "Remove"
-msgstr "Verwijder"
+msgstr "Remover"
 
 #: ../vdms_panels/filedrop.py:311 ../vdms_panels/filedrop.py:332
 msgid "No file selected"
-msgstr "Geen bestand geselecteerd"
+msgstr "Nenhum arquivo selecionado"
 
 #: ../vdms_panels/filedrop.py:314 ../vdms_panels/filedrop.py:335
 msgid "Add Files"
-msgstr "Voeg bestanden toe"
+msgstr "Adicionar arquivos"
 
 #: ../vdms_panels/long_processing_task.py:83
 msgid "[Videomass]: SUCCESS !\n"
-msgstr "[Videomass]: SUCCES !\n"
+msgstr "[Videomass]: SUCESSO!\n"
 
 #: ../vdms_panels/long_processing_task.py:84
 msgid "[Videomass]: FAILED !\n"
-msgstr "[Videomass]: GEFAALD !\n"
+msgstr "[Videomass]: FALHOU!\n"
 
 #: ../vdms_panels/long_processing_task.py:85
 msgid ""
@@ -3439,7 +3316,7 @@ msgid ""
 "[Videomass]: Sorry, task failed !\n"
 msgstr ""
 "\n"
-"[Videomass]: Sorry, opdracht gefaald !\n"
+"[Videomass]: Desculpe, a tarefa falhou!\n"
 
 #: ../vdms_panels/long_processing_task.py:86
 msgid ""
@@ -3447,7 +3324,7 @@ msgid ""
 "[Videomass]: Interrupted Process !\n"
 msgstr ""
 "\n"
-"[Videomass]: Proces Interrupt !\n"
+"[Videomass]: Desculpe, a tarefa falhou!\n"
 
 #: ../vdms_panels/long_processing_task.py:87
 msgid ""
@@ -3455,7 +3332,7 @@ msgid ""
 "[Videomass]: Successfully completed !\n"
 msgstr ""
 "\n"
-"[Videomass]: Succesvol afgerond !\n"
+"[Videomass]: Concluído com sucesso!\n"
 
 #: ../vdms_panels/long_processing_task.py:88
 msgid ""
@@ -3463,39 +3340,39 @@ msgid ""
 "[Videomass]: completed, but not everything was successful.\n"
 msgstr ""
 "\n"
-"[Videomass]: afgerond, maar niet alles was succesvol.\n"
+"[Videomass]: concluído, mas nem tudo foi bem-sucedido.\n"
 
 #: ../vdms_panels/long_processing_task.py:152
 msgid "Process log:"
-msgstr "Proces log:"
+msgstr "Log do processo:"
 
 #: ../vdms_panels/long_processing_task.py:161
 msgid "Suppress excess output"
-msgstr "Onderdruk overvloedige output"
+msgstr "Suprimir o excesso de resultados"
 
 #: ../vdms_panels/long_processing_task.py:165
 msgid "Abort"
-msgstr "Afbreken"
+msgstr "Cancelar"
 
 #: ../vdms_panels/long_processing_task.py:181
 msgid "If activated, hides some output messages."
-msgstr "Verbergt bepaalde output berichten."
+msgstr "Se ativado, oculta algumas mensagens de saída."
 
 #: ../vdms_panels/long_processing_task.py:183
 msgid "Stops current process"
-msgstr "Stopt huidige proces"
+msgstr "Para o processo atual"
 
 #: ../vdms_panels/long_processing_task.py:463
 msgid "...Finished"
-msgstr "...Afgerond"
+msgstr "...Finalizado"
 
 #: ../vdms_panels/long_processing_task.py:478
 msgid "wait... I'm aborting"
-msgstr "wacht... bezig met afbreken"
+msgstr "aguarde ... encerrando"
 
 #: ../vdms_panels/long_processing_task.py:481
 msgid "...Interrupted"
-msgstr "...Interrupt"
+msgstr "Interrompido"
 
 #: ../vdms_panels/long_processing_task.py:499
 msgid ""
@@ -3504,160 +3381,158 @@ msgid ""
 "\n"
 "Do you want to kill application?"
 msgstr ""
-"Er zijn nog processen bezig.. druk de knop \"Afbreken\" om deze te stoppen.\n"
+"Ainda há processos em execução .. se quiser pará-los, use o botão \"Encerrar"
+"\".\n"
 "\n"
-"Wilt u de applicatie afbreken?"
+"Você quer encerrar o aplicativo?"
 
 #: ../vdms_panels/presets_manager.py:121
 msgid "Presets"
-msgstr "Presets"
+msgstr "Ajustes"
 
 #: ../vdms_panels/presets_manager.py:142
 msgid "New"
-msgstr "Nieuw"
+msgstr "Novo"
 
 #: ../vdms_panels/presets_manager.py:155
 msgid "Export selected"
-msgstr "Exporteer geselecteerden"
+msgstr "Exportar selecionado"
 
 #: ../vdms_panels/presets_manager.py:158
 msgid "Export all..."
-msgstr "Exporteer allen..."
+msgstr "Exportar tudo ..."
 
 #: ../vdms_panels/presets_manager.py:169
 msgid "Import preset"
-msgstr "Importeer preset"
+msgstr "Importar predefinição"
 
 #: ../vdms_panels/presets_manager.py:172
 msgid "Import group"
-msgstr "Importeer groep"
+msgstr "Importar grupo"
 
 #: ../vdms_panels/presets_manager.py:183
 msgid "Restore"
-msgstr "Herstel"
+msgstr "Restaurar"
 
 #: ../vdms_panels/presets_manager.py:187
 msgid "Restore all..."
-msgstr "Herstel allen..."
+msgstr "Restaurar tudo..."
 
 #: ../vdms_panels/presets_manager.py:199
 msgid "Reload"
-msgstr "Herlaad"
+msgstr "Recarregar"
 
 #: ../vdms_panels/presets_manager.py:213
 msgid "Profiles"
-msgstr "Profielen"
+msgstr "Perfis"
 
 #: ../vdms_panels/presets_manager.py:218 ../vdms_panels/presets_manager.py:549
 #: ../vdms_panels/presets_manager.py:568
 msgid "Add"
-msgstr "Voeg toe"
+msgstr "Adicionar"
 
 #: ../vdms_panels/presets_manager.py:222 ../vdms_panels/presets_manager.py:552
 #: ../vdms_panels/presets_manager.py:572
 msgid "Delete"
-msgstr "Verwijder"
+msgstr "Excluir"
 
 #: ../vdms_panels/presets_manager.py:226 ../vdms_panels/presets_manager.py:550
 #: ../vdms_panels/presets_manager.py:570
 msgid "Edit"
-msgstr "Edit"
+msgstr "Editar"
 
 #: ../vdms_panels/presets_manager.py:238
 msgid "One-Pass"
-msgstr "Een-Pass"
+msgstr "Primeira passagem"
 
 #: ../vdms_panels/presets_manager.py:250
 msgid "Two-Pass"
-msgstr "Twee-Pass"
+msgstr "Segunda passagem"
 
 #: ../vdms_panels/presets_manager.py:261
 msgid "Command line"
-msgstr "Commandoregel"
+msgstr "Linha de comando"
 
 #: ../vdms_panels/presets_manager.py:268
 msgid "Audio Normalization"
-msgstr "Audio Normalisatie"
+msgstr "Normalização de Áudio"
 
 #: ../vdms_panels/presets_manager.py:377
 msgid "Automations"
-msgstr "Automaties"
+msgstr "Automações"
 
 #: ../vdms_panels/presets_manager.py:390
 msgid "Choose a preset and view its profiles"
-msgstr "Kies een preset en bekijk de profielen ervan"
+msgstr "Escolha uma predefinição e veja seus perfis"
 
 #: ../vdms_panels/presets_manager.py:391
 msgid "Create a new profile and save it in the selected preset"
-msgstr "Maak een nieuw profiel en bewaar het in de geselecteerde preset"
+msgstr "Crie um novo perfil e salve-o na predefinição selecionada"
 
 #: ../vdms_panels/presets_manager.py:393
 msgid "Delete the selected profile"
-msgstr "Verwijder het geselecteerde profiel"
+msgstr "Exclua o perfil selecionado"
 
 #: ../vdms_panels/presets_manager.py:394
 msgid "Edit the selected profile"
-msgstr "Edit het geselecteerde profiel"
+msgstr "Editar o perfil selecionado"
 
 #: ../vdms_panels/presets_manager.py:395
 msgid "Create a new preset"
-msgstr "Maak een nieuwe preset"
+msgstr "Crie uma nova predefinição"
 
 #: ../vdms_panels/presets_manager.py:397
 msgid "Remove the selected preset from the Presets Manager"
-msgstr "Verwijder de geselecteerde preset uit de Presets Manager"
+msgstr "Remova a predefinição selecionada do Gerenciador de Predefinições"
 
 #: ../vdms_panels/presets_manager.py:399
-#, fuzzy
-#| msgid "Export selected preset as copy to media"
 msgid "Export selected preset as copy"
-msgstr "Export geselecteerde preset als \"copy naar media\""
+msgstr "Exportar predefinição selecionada como cópia"
 
 #: ../vdms_panels/presets_manager.py:401
-#, fuzzy
-#| msgid "Export entire presets directory as copy to media"
 msgid "Export entire presets folder as copy"
-msgstr "Export gehele presets folder als \"copy naar media\""
+msgstr "Exportar pasta predefinida inteira como cópia"
 
 #: ../vdms_panels/presets_manager.py:403
 msgid "Import a new preset or update an existing one"
-msgstr "Importeer een nieuwe preset of update een bestaande"
+msgstr "Importe uma nova predefinição ou atualize uma existente"
 
 #: ../vdms_panels/presets_manager.py:405
 msgid "Import a group of presets from a folder and update existing ones"
-msgstr "Importeer een groep presets van een folder en update bestaanden"
+msgstr ""
+"Importe um grupo de predefinições de uma pasta e atualize as existentes"
 
 #: ../vdms_panels/presets_manager.py:408
 msgid "Replace the selected preset with the Videomass default one"
-msgstr "Vervang de geselecteerde preset met de Videomass standaard"
+msgstr "Substitua a predefinição selecionada pela padrão do Videomass"
 
 #: ../vdms_panels/presets_manager.py:410
 msgid "Retrieve all Videomass default presets"
-msgstr "Haal alle Videomass standaard presets op"
+msgstr "Recupere todas as predefinições padrão do Videomass"
 
 #: ../vdms_panels/presets_manager.py:412
 msgid "Update the presets list"
-msgstr "Update de presets lijst"
+msgstr "Atualize a lista de predefinições"
 
 #: ../vdms_panels/presets_manager.py:413
 msgid "First pass of the selected profile"
-msgstr "Eerste pass van het geselecteerde profiel"
+msgstr "Primeira passagem do perfil selecionado"
 
 #: ../vdms_panels/presets_manager.py:415
 msgid "Second pass of the selected profile"
-msgstr "Tweede pass van het geselecteerde profiel"
+msgstr "Segunda passagem do perfil selecionado"
 
 #: ../vdms_panels/presets_manager.py:602
 msgid "Name"
-msgstr "Naam"
+msgstr "Nome"
 
 #: ../vdms_panels/presets_manager.py:604
 msgid "Output Format"
-msgstr "Output Formaat"
+msgstr "Formato de saída"
 
 #: ../vdms_panels/presets_manager.py:605
 msgid "Supported Format List"
-msgstr "Lijst Ondersteunde Formaten"
+msgstr "Lista de formatos suportados"
 
 #: ../vdms_panels/presets_manager.py:623 ../vdms_panels/presets_manager.py:665
 msgid ""
@@ -3666,18 +3541,18 @@ msgid ""
 "File: \"{}\"\n"
 "key malformed ?"
 msgstr ""
-"ERROR: fout in JSON keys: {}\n"
+"ERROR: erro de digitação nas chaves JSON: {}\n"
 "\n"
-"Bestand: \"{}\"\n"
-"sleutel misvormd ?"
+"Arquivo: \"{}\"\n"
+"chave mal formada?"
 
 #: ../vdms_panels/presets_manager.py:845
 msgid "Enter name for new preset"
-msgstr "Voer naam in voor nieuwe preset"
+msgstr "Insira o nome para a nova predefinição"
 
 #: ../vdms_panels/presets_manager.py:858
 msgid "Cannot save current data in file '{}'."
-msgstr "Kan huidige data niet in bestand '{}' bewaren."
+msgstr "Não é possível salvar os dados atuais no arquivo '{}'."
 
 #: ../vdms_panels/presets_manager.py:862
 msgid ""
@@ -3685,24 +3560,19 @@ msgid ""
 "\n"
 "A new empty preset has been created."
 msgstr ""
-"'Succesvol!\n"
+"'Bem sucedido!\n"
 "\n"
-"Een nieuwe lege preset is gemaakt."
+"Uma nova predefinição vazia foi criada."
 
 #: ../vdms_panels/presets_manager.py:876
-#, fuzzy
-#| msgid ""
-#| "Are you sure you want to remove \"{}\" preset?\n"
-#| "\n"
-#| " It will be moved to the \"Removals\" folder in the presets directory"
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
 " It will be moved to the \"Removals\" folder."
 msgstr ""
-"Weet u zeker dat u preset \"{}\" wilt verwijderen?\n"
+"Tem certeza de que deseja remover a predefinição \"{}\"?\n"
 "\n"
-"Deze wordt verplaatst naar de \"Verwijderd\" subfolder in de presets folder"
+" Ela será movida para a pasta \"Remoções\"."
 
 #: ../vdms_panels/presets_manager.py:890
 msgid ""
@@ -3712,46 +3582,40 @@ msgid ""
 msgstr ""
 "{}\n"
 "\n"
-"Sorry, verwijdering mislukt, kan niet verder gaan.."
+"Desculpe, a remoção falhou, não é possível continuar .."
 
 #: ../vdms_panels/presets_manager.py:900
 #, python-brace-format
 msgid "The preset \"{0}\" was successfully removed"
-msgstr "De preset \"{0}\" was succesvol verwijderd"
+msgstr "A predefinição \"{0}\" foi removida com sucesso"
 
 #: ../vdms_panels/presets_manager.py:915
-#, fuzzy
-#| msgid "Choose a place to save the selected preset"
 msgid "Choose a folder to save the selected preset"
-msgstr "Kies een folder om de geselecteerde preset te bewaren"
+msgstr "Escolha uma pasta para salvar a predefinição selecionada"
 
 #: ../vdms_panels/presets_manager.py:920
-#, fuzzy
-#| msgid "This file already exists, do you want to overwrite it?"
 msgid "A file with this name already exists, do you want to overwrite it?"
-msgstr "Bestand met deze naam bestaat al, wilt u het overschrijven?"
+msgstr "Já existe um arquivo com este nome, deseja substituí-lo?"
 
 #: ../vdms_panels/presets_manager.py:934
 msgid "The preset was exported successfully"
-msgstr "De preset was succesvol geëxporteerd"
+msgstr "A predefinição foi exportada com sucesso"
 
 #: ../vdms_panels/presets_manager.py:945
-#, fuzzy
-#| msgid "Choose a place to export all presets"
 msgid "Choose a folder to export all presets"
-msgstr "Kies een folder om alle presets naar te exporteren"
+msgstr "Escolha uma pasta para exportar todas as predefinições"
 
 #: ../vdms_panels/presets_manager.py:955
 msgid "All presets have been exported successfully"
-msgstr "Alle presets zijn succesvol geëxporteerd"
+msgstr "Todas as predefinições foram exportadas com sucesso"
 
 #: ../vdms_panels/presets_manager.py:967
 msgid "Import a new preset"
-msgstr "Importeer een nieuwe preset"
+msgstr "Importar uma nova predefinição"
 
 #: ../vdms_panels/presets_manager.py:978
 msgid "Error, invalid preset: \"{}\""
-msgstr "Error, ongeldige preset: \"{}\""
+msgstr "Erro, predefinição inválida: \"{}\""
 
 #: ../vdms_panels/presets_manager.py:986
 msgid ""
@@ -3760,14 +3624,14 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Deze preset bestaat al en zal ge-update worden. Geen zorgen, alle bewaarde "
-"profielen zullen behouden blijven.\n"
+"Esta predefinição já existe e está prestes a ser atualizada. Não se "
+"preocupe, ele manterá todos os seus perfis salvos.\n"
 "\n"
-"Wilt u verder gaan?"
+"Você quer continuar?"
 
 #: ../vdms_panels/presets_manager.py:1003
 msgid "A new preset was successfully imported"
-msgstr "Een nieuwe preset is succesvol geïmporteerd"
+msgstr "Uma nova predefinição foi importada com sucesso"
 
 #: ../vdms_panels/presets_manager.py:1013
 msgid ""
@@ -3776,18 +3640,18 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Hierdoor zal de presets database worden ge-update. Geen zorgen, alle "
-"bewaarde profielen zullen behouden blijven.\n"
+"Isso atualizará o banco de dados de predefinições. Não se preocupe, ele "
+"manterá todos os seus perfis salvos.\n"
 "\n"
-"Wilt u verder gaan?"
+"Você quer continuar?"
 
 #: ../vdms_panels/presets_manager.py:1020
 msgid "Import a new presets folder"
-msgstr "Importeer een nieuwe preset folder"
+msgstr "Importar uma nova pasta de predefinições"
 
 #: ../vdms_panels/presets_manager.py:1043
 msgid "The presets database has been successfully updated"
-msgstr "De presets database is succesvol ge-update"
+msgstr "O banco de dados de predefinições foi atualizado com sucesso"
 
 #: ../vdms_panels/presets_manager.py:1053
 msgid ""
@@ -3796,23 +3660,25 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Voorzichtig! De geselecteerde preset zal overschreven worden door de "
-"standaard. Uw profielen zouden verwijderd kunnen worden!\n"
+"Tome cuidado! A predefinição selecionada será substituída pela padrão. Seus "
+"perfis podem ser excluídos!\n"
 "\n"
-"Wilt u verder gaan?"
+"Você quer continuar?"
 
 #: ../vdms_panels/presets_manager.py:1056
 #: ../vdms_panels/presets_manager.py:1082
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
 
 #: ../vdms_panels/presets_manager.py:1065
 msgid "Sorry, this preset is not part of default Videomass presets."
-msgstr "Sorry, deze preset hoort niet tot standaard Videomass presets."
+msgstr ""
+"Desculpe, esta predefinição não faz parte das predefinições padrão do "
+"Videomass."
 
 #: ../vdms_panels/presets_manager.py:1071
 msgid "Successful recovery"
-msgstr "Succesvol herstel"
+msgstr "Recuperação bem sucedida"
 
 #: ../vdms_panels/presets_manager.py:1080
 msgid ""
@@ -3821,69 +3687,64 @@ msgid ""
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Voorzichtig! Hierdoor zullen alle presets door standaard waarden vervangen "
-"worden. Uw profielen zouden verwijderd kunnen worden!\n"
+"Tome cuidado! Esta ação irá restaurar todas as predefinições para os "
+"padrões. Seus perfis podem ser excluídos!\n"
 "\n"
-"Wilt u verder gaan?"
+"Você quer continuar?"
 
 #: ../vdms_panels/presets_manager.py:1091
-#, fuzzy
-#| msgid "All the default presets have been successfully recovered"
 msgid "All default presets have been successfully recovered"
-msgstr "Alle standaard presets zijn succesvol hersteld"
+msgstr "Todas as predefinições padrão foram recuperadas com sucesso"
 
 #: ../vdms_panels/presets_manager.py:1110
 #, python-format
 msgid "Create a new profile on \"%s\" preset"
-msgstr "Maak een nieuw profiel op \"%s\" preset"
+msgstr "Crie um novo perfil na predefinição \"% s\""
 
 #: ../vdms_panels/presets_manager.py:1129
 #: ../vdms_panels/presets_manager.py:1152
 #: ../vdms_panels/presets_manager.py:1175
 msgid "First select a profile in the list"
-msgstr "Selecteer eerst een profiel in de lijst"
+msgstr "Primeiro selecione um perfil na lista"
 
 #: ../vdms_panels/presets_manager.py:1134
 #, python-format
 msgid "Edit profile of the \"%s\" preset: "
-msgstr "Edit profiel van de \"%s\" preset: "
+msgstr "Edite o perfil da predefinição \"% s\": "
 
 #: ../vdms_panels/presets_manager.py:1156
-#, fuzzy
-#| msgid ""
-#| "Are you sure you want to delete the selected profile? It may no longer be "
-#| "possible to recover it."
 msgid ""
 "Are you sure you want to delete the selected profile? It will no longer be "
 "possible to recover it."
 msgstr ""
-"Geselecteerde profiel verwijderen? Het zal niet meer hersteld kunnen worden."
+"Tem certeza de que deseja excluir o perfil selecionado? Não será mais "
+"possível recuperá-lo."
 
 #: ../vdms_panels/presets_manager.py:1179
 msgid ""
 "Invalid EBU normalization enabled for one-pass.\n"
 "Turn off EBU normalization or choose a two-pass profile."
 msgstr ""
-"Ongeldige EBU normalisatie geactiveerd voor een-pass.\n"
-"Zet de EBU normalisatie uit of kies een twee-pass profiel."
+"Normalização EBU inválida ativada para uma passagem.\n"
+"Desative a normalização EBU ou escolha um perfil de duas passagens."
 
 #: ../vdms_panels/presets_manager.py:1199
 msgid ""
 "The selected profile command has been changed manually.\n"
 "Do you want to apply it during the conversion process?"
 msgstr ""
-"Het geselecteerde profiel commando is handmatig gewijzigd.\n"
-"Wilt u dit toepassen voor het conversie proces?"
+"O comando de perfil selecionado foi alterado manualmente.\n"
+"Quer aplicá-lo durante o processo de conversão?"
 
 #: ../vdms_panels/presets_manager.py:1208
 msgid "Don't show this dialog again"
-msgstr "Toon dit dialoogscherm niet meer"
+msgstr "Não mostrar esta caixa de diálogo novamente"
 
 #: ../vdms_panels/presets_manager.py:1248
 #: ../vdms_panels/presets_manager.py:1298
 #: ../vdms_panels/presets_manager.py:1334
 msgid "Starts"
-msgstr "Start"
+msgstr "Inicia"
 
 #: ../vdms_panels/presets_manager.py:1272
 msgid ""
@@ -3892,10 +3753,10 @@ msgid ""
 "\n"
 "Do you wish to continue?"
 msgstr ""
-"EBU normalisatie is tweemaal geactiveerd in automatie en commandoregel. "
-"Commandoregel heeft prioriteit.\n"
+"A normalização EBU é habilitada duas vezes na automação e na linha de "
+"comando. A linha de comando tem prioridade.\n"
 "\n"
-"Wilt u verder gaan?"
+"Você deseja continuar?"
 
 #: ../vdms_panels/presets_manager.py:1394
 msgid ""
@@ -3912,60 +3773,59 @@ msgid ""
 "Input Audio Map\n"
 "Output Audio Map"
 msgstr ""
-"OVERZICHT\n"
+"RESUMO\n"
 "\n"
-"Wachtrij Bestand\n"
-"Pass Encoding                     \n"
-"Gebruikt Profiel\n"
-"Output Formaat\n"
-"Tijdsduur                   \n"
+"Arquivo Enfileirado\n"
+"Codificação de passagem\n"
+"Perfil Usado\n"
+"Formato de saída\n"
+"Período de tempo\n"
 "\n"
-"Automaties geactiveerd\n"
-"Audio Normalisatie                     \n"
-"Input Audio Map\n"
-"Output Audio Map"
+"Automação habilitada\n"
+"Normalização de Áudio\n"
+"Mapa de entrada de áudio\n"
+"Mapa de saída de áudio"
 
 #: ../vdms_panels/textdrop.py:50
 msgid "Enter URLs below"
-msgstr "Voeg URLs hieronder toe"
+msgstr "Insira os URLs abaixo"
 
 #: ../vdms_panels/textdrop.py:84
 msgid "Delete all text from the list"
-msgstr "Verwijder alle tekst uit de lijst"
+msgstr "Exclua todo o texto da lista"
 
 #: ../vdms_panels/timeline.py:115
 msgid "Seek"
-msgstr "Zoek"
+msgstr "Buscar"
 
 #: ../vdms_panels/timeline.py:125
 msgid "Seek to given time position"
-msgstr "Zoek tot opgegeven tijdpositie"
+msgstr "Buscar a posição de tempo dada"
 
 #: ../vdms_panels/timeline.py:126
-#, fuzzy
-#| msgid "Total amount duration"
 msgid "Total duration"
-msgstr "Totale duur"
+msgstr "Duração total"
 
 #: ../vdms_panels/timeline.py:262
-#, fuzzy
 msgid ""
 "The maximum time selection is set to 24:00:00, allowing to make a slideshow"
-msgstr "De maximum tijd-selectie is 24:00:00, om een slideshow te kunnen maken"
+msgstr ""
+"A seleção de tempo máximo é definida para 24:00:00, permitindo fazer uma "
+"apresentação de slides"
 
 #: ../vdms_panels/timeline.py:266
 msgid "The maximum time refers to the file with the longest duration"
-msgstr "De maximum tijd heeft betrekking op het bestand met de langste duur"
+msgstr "O tempo máximo refere-se ao arquivo com a maior duração"
 
 #: ../vdms_threads/one_pass.py:82 ../vdms_threads/picture_exporting.py:79
 #: ../vdms_threads/two_pass_EBU.py:80 ../vdms_threads/two_pass.py:82
 msgid "Is 'ffmpeg' installed on your system?"
-msgstr "Is 'ffmpeg' geïnstalleerd op uw systeem?"
+msgstr "O 'ffmpeg' está instalado em seu sistema?"
 
 #: ../vdms_threads/ydl_executable.py:71 ../vdms_threads/ydl_executable.py:78
 #: ../vdms_threads/ydl_executable.py:246 ../vdms_threads/ydl_executable.py:253
 msgid "Unrecognized error"
-msgstr "Onherkenbare error"
+msgstr "Erro desconhecido"
 
 #: ../vdms_threads/ydl_executable.py:74 ../vdms_threads/ydl_executable.py:249
 msgid ""
@@ -3975,8 +3835,8 @@ msgid ""
 "Package (x86)"
 msgstr ""
 "\n"
-"Vereist MSVCR100.dll\n"
-"Om dit probleem op te lossen installeer Microsoft Visual C++ 2010 "
+"Requer MSVCR100.dll\n"
+"Para resolver esse problema, instale: Microsoft Visual C ++ 2010 "
 "Redistributable Package (x86)"
 
 #: ../vdms_threads/youtubedlupdater.py:135
@@ -3985,91 +3845,6 @@ msgid ""
 "To resolve this problem install: Microsoft Visual C++ 2010 Redistributable "
 "Package (x86)"
 msgstr ""
-"Vereist MSVCR100.dll\n"
-"Om dit probleem op te lossen installeer Microsoft Visual C++ 2010 "
+"Requer MSVCR100.dll\n"
+"Para resolver esse problema, instale: Microsoft Visual C ++ 2010 "
 "Redistributable Package (x86)"
-
-#~ msgid ""
-#~ "Quiet.\n"
-#~ "Togle full screen.\n"
-#~ "Pause.\n"
-#~ "Togle mute.\n"
-#~ "Decrease and increase volume respectively.\n"
-#~ "Decrease and increase volume respectively.\n"
-#~ "Cycle audio channel in the current program.\n"
-#~ "Cycle video channel.\n"
-#~ "Cycle subtitle channel in the current program.\n"
-#~ "Cycle program.\n"
-#~ "Cycle video filters or show modes.\n"
-#~ "Step to the next frame. Pause if the stream is not \n"
-#~ "already paused, step to the next video frame, and pause.\n"
-#~ "Seek backward/forward 10 seconds.\n"
-#~ "Seek backward/forward 1 minute.\n"
-#~ "Seek to the previous/next chapter. Or if there are no \n"
-#~ "chapters Seek backward/forward 10 minutes.\n"
-#~ "Seek to percentage in file corresponding to fraction of width.\n"
-#~ "Toggle full screen."
-#~ msgstr ""
-#~ "Geluidloos.\n"
-#~ "Toggle volledig scherm.\n"
-#~ "Pauzeer.\n"
-#~ "Toggle demping.\n"
-#~ "Volume resp. afnemen / toenemen.\n"
-#~ "Volume resp. afnemen / toenemen.\n"
-#~ "Cycle audio channel in the current program.\n"
-#~ "Cycle video channel.\n"
-#~ "Cycle subtitle channel in the current program.\n"
-#~ "Cycle program.\n"
-#~ "Cycle video filters or show modes.\n"
-#~ "Stap naar volgende frame. Pauzeer als de stream niet reeds\n"
-#~ "gepauzeerd is, stap naar volgende video frame, en pauzeer.\n"
-#~ "Zoek terug/heen 10 seconden.\n"
-#~ "Zoek terug/heen 1 minuut.\n"
-#~ "Zoek tot vorige/volgende chapter. Of zoek 10 minuten\n"
-#~ "terug/heen als er geen chapters zijn.\n"
-#~ "Zoek tot percentage in bestand, overeenkomstig breedte-fractie.\n"
-#~ "Toggle volledig scherm."
-
-#~ msgid "A log file must be selected"
-#~ msgstr "Een log-bericht moet geselecteerd worden"
-
-#~ msgid ""
-#~ "Is not a compatible Videomass presets. It is recommended removing it or "
-#~ "rewrite it with a compatible JSON data structure.\n"
-#~ "\n"
-#~ "Possible solution: open Presets Manager panel, then use menu \"File\" > "
-#~ "\"Reset all presets\" to safe repair all presets. Remember, those that "
-#~ "are not compatible you have to manually remove them."
-#~ msgstr ""
-#~ "Is geen compatibele Videomass preset. Verwijdering ervan is aanbevolen, "
-#~ "of herschrijf het naar een compatibele JSON data-structuur.\n"
-#~ "\n"
-#~ "Mogelijke oplossing: open Presets Manager panel en kies menu \"Bestand\" "
-#~ "> \"Reset alle presets\" om veilig alle presets te herstellen. U zult "
-#~ "handmatig alle presets moeten verwijderen die niet compatibel zijn."
-
-#~ msgid ""
-#~ "The presets folder is empty, or there are invalid files. Open the Presets "
-#~ "Manager panel, then Perform a repair in the \"File\" > \"Reset all presets"
-#~ "\" menu."
-#~ msgstr ""
-#~ "De presets map is leeg, of er zijn ongeldige bestanden. Open de Presets "
-#~ "Manager panel en kies menu item \"Bestand\" > \"Reset alle presets\" om "
-#~ "te herstellen."
-
-#~ msgid "&File"
-#~ msgstr "File"
-
-#~ msgid "&Settings"
-#~ msgstr "Settings"
-
-#~ msgid ""
-#~ "Undetected volume values! use the \"Volumedetect\" control button to "
-#~ "analyze the data on the audio volume."
-#~ msgstr ""
-#~ "Volume waarden niet gedetecteerd! Gebruik de \"Volume detect\" knop om de "
-#~ "audio volume data te laten analyseren."
-
-#, fuzzy
-#~ msgid "Notice"
-#~ msgstr "Opmerking"

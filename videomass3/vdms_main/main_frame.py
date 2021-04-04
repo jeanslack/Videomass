@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.29.2020 *PEP8 compatible*
+# Rev: Apr.04.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -106,8 +106,6 @@ class MainFrame(wx.Frame):
         self.icon_mainback = pathicons[22]
         self.icon_mainforward = pathicons[23]
         self.icon_info = pathicons[3]
-        self.icon_preview = pathicons[4]
-        # self.icon_time = pathicons[5]
         self.icon_saveprf = pathicons[8]
         self.icon_viewstatistics = pathicons[25]
         # self.viewlog = pathicons[26]
@@ -153,7 +151,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[17],
                                                      pathicons[18]
                                                      )
-        self.ytDownloader = youtubedl_ui.Downloader(self, pathicons[6])
+        self.ytDownloader = youtubedl_ui.Downloader(self, pathicons[4])
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                  MainFrame.OS,
                                                  pathicons[6],  # playfilt
@@ -169,7 +167,7 @@ class MainFrame(wx.Frame):
                                                  pathicons[17],  # audiotr
                                                  pathicons[26],  # stabilizer
                                                  )
-        self.fileDnDTarget = filedrop.FileDnD(self, pathicons[6])
+        self.fileDnDTarget = filedrop.FileDnD(self, pathicons[4])
         self.textDnDTarget = textdrop.TextDnD(self)
         self.ProcessPanel = Logging_Console(self)
         self.PrstsPanel = presets_manager.PrstPan(self,
@@ -319,29 +317,14 @@ class MainFrame(wx.Frame):
         if self.topicname == 'Youtube Downloader':
             self.ytDownloader.on_show_statistics()
 
+        elif not self.data_files:
+            wx.MessageBox(_('Drag at least one file'),
+                          "Videomass", wx.ICON_INFORMATION, self)
+            return
+
         else:
             miniframe = Mediainfo(self.data_files, MainFrame.OS)
             miniframe.Show()
-    # ------------------------------------------------------------------#
-
-    def ExportPlay(self, event):
-        """
-        Playback file with FFplay
-
-        """
-        tstamp = '-vf "%s"' % self.cmdtimestamp if self.checktimestamp else ''
-
-        with wx.FileDialog(self, _("Open a playable file with FFplay"),
-                           # defaultDir=self.outpath_ffmpeg,
-                           # wildcard="Audio source (%s)|%s" % (f, f),
-                           style=wx.FD_OPEN |
-                           wx.FD_FILE_MUST_EXIST) as fileDialog:
-
-            if fileDialog.ShowModal() == wx.ID_CANCEL:
-                return
-            pathname = fileDialog.GetPath()
-
-        IO_tools.stream_play(pathname, '', tstamp, self.autoexit)
     # ------------------------------------------------------------------#
 
     def Saveprofile(self, event):
@@ -445,8 +428,8 @@ class MainFrame(wx.Frame):
                  _("Muxers and demuxers available for used FFmpeg."))
         ckformats = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
-        ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"),
-                                    _("Shows available encoders for FFmpeg"))
+        ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"), _("Shows "
+                                       "available encoders for FFmpeg"))
         dscrp = (_("Decoders"), _("Shows available decoders for FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
@@ -493,7 +476,8 @@ class MainFrame(wx.Frame):
                                        _("Presets manager\tShift+P"),
                                        _("jump to the Presets Manager panel"))
         self.avpan = goButton.Append(wx.ID_ANY, _("A/V conversions\tShift+V"),
-                                _("jump to the Audio/Video Conversion panel"))
+                                     _("jump to the Audio/Video Conversion "
+                                       "panel"))
         goButton.AppendSeparator()
         dscrp = (_("YouTube downloader\tShift+Y"),
                  _("jump to the YouTube Downloader panel"))
@@ -1321,7 +1305,6 @@ class MainFrame(wx.Frame):
             bmpinfo = get_bmp(self.icon_info, bmp_size)
             bmpstat = get_bmp(self.icon_viewstatistics, bmp_size)
 
-            bmpprev = get_bmp(self.icon_preview, bmp_size)
             bmpsaveprf = get_bmp(self.icon_saveprf, bmp_size)
 
             bmpconv = get_bmp(self.icon_runconv, bmp_size)
@@ -1334,7 +1317,6 @@ class MainFrame(wx.Frame):
             bmpinfo = wx.Bitmap(self.icon_info, wx.BITMAP_TYPE_ANY)
             bmpstat = wx.Bitmap(self.icon_viewstatistics, wx.BITMAP_TYPE_ANY)
 
-            bmpprev = wx.Bitmap(self.icon_preview, wx.BITMAP_TYPE_ANY)
             bmpsaveprf = wx.Bitmap(self.icon_saveprf, wx.BITMAP_TYPE_ANY)
 
             bmpconv = wx.Bitmap(self.icon_runconv, wx.BITMAP_TYPE_ANY)
@@ -1366,11 +1348,6 @@ class MainFrame(wx.Frame):
                                     bmpstat,
                                     tip, wx.ITEM_NORMAL
                                     )
-        tip = _("File playback")
-        self.btn_playO = self.toolbar.AddTool(6, _('Playback'),
-                                              bmpprev,
-                                              tip, wx.ITEM_NORMAL,
-                                              )
         # self.toolbar.AddSeparator()
         tip = _("Add a new profile from this panel with the current settings")
         self.btn_saveprf = self.toolbar.AddTool(8, _('Add Profile'),
@@ -1401,7 +1378,6 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.Saveprofile, self.btn_saveprf)
         self.Bind(wx.EVT_TOOL, self.ImportInfo, self.btn_metaI)
         self.Bind(wx.EVT_TOOL, self.ImportInfo, self.btn_ydlstatistics)
-        self.Bind(wx.EVT_TOOL, self.ExportPlay, self.btn_playO)
 
     # --------------- Tool Bar Callback (event handler) -----------------#
 
@@ -1470,7 +1446,7 @@ class MainFrame(wx.Frame):
         self.logpan.Enable(False)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, True)
-        self.toolbar.EnableTool(5, False)
+        self.toolbar.EnableTool(5, True)
         self.toolbar.EnableTool(14, False)
         self.toolbar.EnableTool(6, False)
         self.toolbar.EnableTool(8, False)

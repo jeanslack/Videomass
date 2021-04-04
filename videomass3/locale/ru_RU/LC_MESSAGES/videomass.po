@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-27 17:50+0100\n"
-"PO-Revision-Date: 2021-03-29 15:00+0200\n"
+"PO-Revision-Date: 2021-04-02 21:27+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -374,78 +374,91 @@ msgstr ""
 
 #: ../vdms_dialogs/filter_stab.py:66
 msgid "Enable stabilizer"
-msgstr ""
+msgstr "Включить stabilizer"
 
 #: ../vdms_dialogs/filter_stab.py:69
 msgid "Generates duo video for comparison"
-msgstr ""
+msgstr "Создает парное видео для сравнения"
 
 #: ../vdms_dialogs/filter_stab.py:73
 msgid "Video Detect"
-msgstr ""
+msgstr "Обнаружение видео"
 
 #: ../vdms_dialogs/filter_stab.py:129
 msgid "[TRIPOD] Enable tripod mode if checked"
-msgstr ""
+msgstr "[ШТАТИВ] Включите режим штатива, если установлен флажок"
 
 #: ../vdms_dialogs/filter_stab.py:137
 msgid "Video transform"
-msgstr ""
+msgstr "Преобразование видео"
 
 #: ../vdms_dialogs/filter_stab.py:153
 msgid "[OPTALGO] optimization algorithm"
-msgstr ""
+msgstr "[OPTALGO] алгоритм оптимизации"
 
 #: ../vdms_dialogs/filter_stab.py:173
 msgid "[CROP] Specify how to deal borders at movement compensation"
-msgstr ""
+msgstr "[ОБРЕЗАТЬ] Укажите, как работать с границами при компенсации движения"
 
 #: ../vdms_dialogs/filter_stab.py:180
 msgid "[INVERT] Invert transforms if checked"
-msgstr ""
+msgstr "[ИНВЕРТИРОВАТЬ] Инвертировать преобразования, если отмечено"
 
 #: ../vdms_dialogs/filter_stab.py:183
 msgid ""
 "[RELATIVE] Consider transforms as relative to previous frame if checked, "
 "absolute if unchecked"
 msgstr ""
+"[RELATIVE] Считать преобразования относительно предыдущего кадра, если "
+"отмечен; абсолютные, если не отмечен"
 
 #: ../vdms_dialogs/filter_stab.py:224
 msgid "Specify type of interpolation"
-msgstr ""
+msgstr "Укажите тип интерполяции"
 
 #: ../vdms_dialogs/filter_stab.py:232
 msgid ""
 "[TRIPOD2] virtual tripod mode, equivalent to relative=unchecked:smoothing=0"
 msgstr ""
+"[ШТАТИВ2] виртуальный режим штатива, эквивалентный relative=unchecked:"
+"smoothing=0"
 
 #: ../vdms_dialogs/filter_stab.py:239
 msgid "Unsharp filter:"
-msgstr ""
+msgstr "Фильтр Нерезкость:"
 
 #: ../vdms_dialogs/filter_stab.py:274
 msgid ""
 "Set how shaky the video is and how quick the camera is. A value of 1 means "
 "little shakiness, a value of 10 means strong shakiness. Default value is 5."
 msgstr ""
+"Установите, насколько тряским будет видео и насколько быстрая камера. "
+"Значение 1 означает небольшую неустойчивость, значение 10 означает сильную "
+"неустойчивость. Значение по умолчанию - 5."
 
 #: ../vdms_dialogs/filter_stab.py:278
 msgid ""
 "Set the accuracy of the detection process. A value of 1 means low accuracy, "
 "a value of 15 means high accuracy. Default value is 15."
 msgstr ""
+"Установите точность процесса обнаружения. Значение 1 означает низкую "
+"точность, значение 15 означает высокую точность. Значение по умолчанию - 15."
 
 #: ../vdms_dialogs/filter_stab.py:282
 msgid ""
 "Set stepsize of the search process. The region around minimum is scanned "
 "with 1 pixel resolution. Default value is 6."
 msgstr ""
+"Установите размер шага процесса поиска. Область около минимума сканируется с "
+"разрешением 1 пиксель. Значение по умолчанию - 6."
 
 #: ../vdms_dialogs/filter_stab.py:286
 msgid ""
 "Set minimum contrast. Below this value a local measurement field is "
 "discarded. The range is 0-1. Default value is 0.25. "
 msgstr ""
+"Установите минимальный контраст. Ниже этого значения локальное поле "
+"измерения отбрасывается. Диапазон 0-1. Значение по умолчанию - 0,25. "
 
 #: ../vdms_dialogs/filter_stab.py:289
 msgid ""
@@ -455,6 +468,11 @@ msgid ""
 "or-less static scene and keep the camera view absolutely still. The frames "
 "are counted starting from 1."
 msgstr ""
+"Установите номер опорного кадра для штатива режима. Если этот параметр "
+"включен, движение кадров сравнивается с опорным кадром в отфильтрованном "
+"потоке, идентифицируемым указанным номером. Идея состоит в том, чтобы "
+"компенсировать все движения в более или менее статичной сцене и сохранять "
+"неподвижность обзора камеры. Фреймы считаются начиная с 1."
 
 #: ../vdms_dialogs/filter_stab.py:298
 msgid ""
@@ -465,6 +483,12 @@ msgid ""
 "acceleration of the camera (pan/tilt movements). 0 is a special case where a "
 "static camera is simulated."
 msgstr ""
+"Установите количество кадров (значение * 2 + 1), используемых для фильтрации "
+"нижних частот движений камеры. Значение по умолчанию - 15. Например, число "
+"10 означает, что используется 21 кадр (10 в прошлом и 10 в будущем) для "
+"сглаживания движения в видео. Большее значение приводит к более плавному "
+"видео, но ограничивает ускорение камеры (движения панорамирования / "
+"наклона). 0 - это особый случай, когда моделируется статическая камера."
 
 #: ../vdms_dialogs/filter_stab.py:306
 msgid ""
@@ -472,12 +496,17 @@ msgid ""
 "kernel low-pass filter on camera motion (default) ‘avg’ averaging on "
 "transformations"
 msgstr ""
+"Установите алгоритм оптимизации пути камеры. Значения: ‘gauss’: фильтр "
+"нижних частот ядра Гаусса при движении камеры (по умолчанию) ‘avg’ "
+"усреднение при преобразованиях"
 
 #: ../vdms_dialogs/filter_stab.py:310
 msgid ""
 "Set maximal angle in radians (degree*PI/180) to rotate frames. Default value "
 "is -1, meaning no limit."
 msgstr ""
+"Установите максимальный угол в радианах (градусы * PI / 180) для поворота "
+"кадров. Значение по умолчанию -1, что означает отсутствие ограничений."
 
 #: ../vdms_dialogs/filter_stab.py:313
 msgid ""
@@ -485,22 +514,33 @@ msgid ""
 "compensation. Values are: ‘keep’ keep image information from previous frame "
 "(default), ‘black’ fill the border black"
 msgstr ""
+"Укажите, как работать с границами, которые могут быть видны из-за "
+"компенсации движения. Возможные значения: «сохранять» сохранить информацию "
+"об изображении из предыдущего кадра (по умолчанию), «чёрный» заполнить "
+"границу чёрным"
 
 #: ../vdms_dialogs/filter_stab.py:318
 msgid "Invert transforms if checked. Default is unchecked."
 msgstr ""
+"Инвертировать преобразования, если отмечено. По умолчанию флажок не "
+"установлен."
 
 #: ../vdms_dialogs/filter_stab.py:320
 msgid ""
 "Consider transforms as relative to previous frame if checked, absolute if "
 "unchecked. Default is checked."
 msgstr ""
+"Считайте преобразования относительно предыдущего кадра, если отмечен, и "
+"абсолютными, если не отмечен. По умолчанию отмечен."
 
 #: ../vdms_dialogs/filter_stab.py:323
 msgid ""
 "Set percentage to zoom. A positive value will result in a zoom-in effect, a "
 "negative value in a zoom-out effect. Default value is 0 (no zoom)."
 msgstr ""
+"Установите процент для увеличения. Положительное значение приведет к эффекту "
+"увеличения, отрицательное значение - к эффекту уменьшения. Значение по "
+"умолчанию - 0 (без увеличения)."
 
 #: ../vdms_dialogs/filter_stab.py:327
 msgid ""
@@ -510,12 +550,22 @@ msgid ""
 "determined (no borders will be visible), see zoomspeed. Note that the value "
 "given at zoom is added to the one calculated here."
 msgstr ""
+"Установите оптимальное масштабирование, чтобы избежать границ. Допустимые "
+"значения: ‘0’ отключено, ‘1’ определяется оптимальное значение статического "
+"масштабирования (только очень сильные движения приведут к видимым границам) "
+"(default), ‘2’ определяется оптимальное значение адаптивного масштабирования "
+"(границы не будут видны), смотреть zoomspeed. Обратите внимание, что "
+"значение, указанное при увеличении масштаба, добавляется к рассчитанному "
+"здесь."
 
 #: ../vdms_dialogs/filter_stab.py:334
 msgid ""
 "Set percent to zoom maximally each frame (enabled when optzoom is set to 2). "
 "Range is from 0 to 5, default value is 0.25."
 msgstr ""
+"Установите процент для максимального увеличения каждого кадра (активируется, "
+"когда для optzoom установлено значение 2). Диапазон от 0 до 5, значение по "
+"умолчанию - 0,25."
 
 #: ../vdms_dialogs/filter_stab.py:338
 msgid ""
@@ -523,22 +573,31 @@ msgid ""
 "‘linear’ linear only horizontal, ‘bilinear’ linear in both directions "
 "(default), ‘bicubic’ cubic in both directions (slow)"
 msgstr ""
+"Укажите тип интерполяции. Доступные значения: «нет» без интерполяции; "
+"«линейный», линейный, только горизонтальный; «билинейный», линейный в обоих "
+"направлениях (по умолчанию); «бикубический», кубический в обоих направлениях "
+"(медленно)."
 
 #: ../vdms_dialogs/filter_stab.py:343
 msgid ""
 "Enable virtual tripod mode if checked, which is equivalent to relative=0:"
 "smoothing=0. Default is unchecked. Use also tripod option of vidstabdetect."
 msgstr ""
+"Включите режим виртуального штатива, если этот флажок установлен, что "
+"эквивалентно relative=0:smoothing=0. По умолчанию флажок не установлен. "
+"Используйте также вариант штатива в vidstabdetect."
 
 #: ../vdms_dialogs/filter_stab.py:348
 msgid ""
 "Sharpen or blur the input video. Note the use of the unsharp filter which is "
 "always recommended."
 msgstr ""
+"Увеличьте резкость или размытие входного видео. Обратите внимание на "
+"использование нерезкого фильтра, который всегда рекомендуется."
 
 #: ../vdms_dialogs/filter_stab.py:353
 msgid "Video stabilizer filter"
-msgstr ""
+msgstr "Фильтр стабилизатора видео(stabilizer)"
 
 #: ../vdms_dialogs/filter_transpose.py:83
 #: ../vdms_dialogs/filter_transpose.py:283
@@ -1996,11 +2055,13 @@ msgstr "Изменение размера и цвета отметки врем�
 
 #: ../vdms_main/main_frame.py:542
 msgid "Auto-exit after playback"
-msgstr ""
+msgstr "Автоматический выход после воспроизведения"
 
 #: ../vdms_main/main_frame.py:543
 msgid "If checked, the FFplay window will auto-close at the end of playback"
 msgstr ""
+"Если этот флажок установлен, окно FFplay автоматически закроется в конце "
+"воспроизведения"
 
 #: ../vdms_main/main_frame.py:550
 msgid "Preferences\tCtrl+P"
@@ -2504,7 +2565,7 @@ msgstr "Шумоподавитель"
 
 #: ../vdms_panels/av_conversions.py:577
 msgid "Stabilizer"
-msgstr ""
+msgstr "Stabilizer"
 
 #: ../vdms_panels/av_conversions.py:596
 msgid "Audio Encoder"
@@ -2720,7 +2781,7 @@ msgstr "Ни один видеофильтр не включен"
 
 #: ../vdms_panels/av_conversions.py:1160
 msgid "Unable to preview Video Stabilizer filter"
-msgstr ""
+msgstr "Невозможно просмотреть Stabilizer видеофильтр"
 
 #: ../vdms_panels/av_conversions.py:1228 ../vdms_panels/presets_manager.py:1326
 msgid "A target file must be selected in the queued files"
@@ -2732,7 +2793,7 @@ msgstr "Файл не является кадром или видеофайло�
 
 #: ../vdms_panels/av_conversions.py:1497
 msgid "This filter is incompatible with 2-pass enabled"
-msgstr ""
+msgstr "Этот фильтр несовместим с включенным двухпроходным режимом"
 
 #: ../vdms_panels/av_conversions.py:1630
 msgid "No Audio"
@@ -3225,7 +3286,7 @@ msgstr ""
 
 #: ../vdms_panels/filedrop.py:70
 msgid "Invalid filename. Contains double quotes"
-msgstr ""
+msgstr "Неверное имя файла. Содержит двойные кавычки"
 
 #: ../vdms_panels/filedrop.py:122
 #, python-format

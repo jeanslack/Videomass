@@ -111,7 +111,6 @@ class AudioSettings(wx.Dialog):
         if self.rdb_sample_r.GetStringSelection() == 'not applicable ':
             self.rdb_sample_r.Disable()
 
-        btn_help = wx.Button(self, wx.ID_HELP, "", size=(-1, -1))
         self.btn_cancel = wx.Button(self, wx.ID_CANCEL, "")
         self.btn_ok = wx.Button(self, wx.ID_OK, "")
         btn_reset = wx.Button(self, wx.ID_CLEAR, "")

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.14.2020 *PEP8 compatible*
+# Rev: Apr.04.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -542,10 +542,12 @@ class AV_Conv(wx.Panel):
         self.btn_preview.SetBitmap(bmpplay, wx.LEFT)
 
         sizer_Vfilter.Add(self.btn_preview, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_preview.Disable()
         self.btn_reset = wx.Button(self.filterVpanel, wx.ID_ANY,
                                    _("Reset"), size=(-1, 40))
         self.btn_reset.SetBitmap(bmpreset, wx.LEFT)
         sizer_Vfilter.Add(self.btn_reset, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_reset.Disable()
 
         lineflt = wx.StaticLine(self.filterVpanel, wx.ID_ANY,
                                 pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -1152,8 +1154,6 @@ class AV_Conv(wx.Panel):
 
         """
         if not self.opt["VFilters"]:
-            wx.MessageBox(_("No video filter enabled"), "Videomass",
-                          wx.ICON_INFORMATION)
             return
 
         if self.opt["Vidstabtransform"]:
@@ -1212,6 +1212,7 @@ class AV_Conv(wx.Panel):
             self.btn_lacing.SetBackgroundColour(wx.NullColour)
             self.btn_rotate.SetBackgroundColour(wx.NullColour)
             self.btn_vidstab.SetBackgroundColour(wx.NullColour)
+            self.btn_preview.Disable(), self.btn_reset.Disable(),
     # ------------------------------------------------------------------#
 
     def file_selection(self):
@@ -1312,8 +1313,10 @@ class AV_Conv(wx.Panel):
             lengh = len(f)
             filters = '%s' % f[:lengh - 1]
             self.opt["VFilters"] = "-vf %s" % filters
+            self.btn_preview.Enable(), self.btn_reset.Enable()
         else:
             self.opt["VFilters"] = ""
+            self.btn_preview.Disable(), self.btn_reset.Disable()
     # ------------------------------------------------------------------#
 
     def on_Set_scale(self, event):

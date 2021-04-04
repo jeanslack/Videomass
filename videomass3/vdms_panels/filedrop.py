@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.04.2020 *PEP8 compatible*
+# Rev: Apr.04.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -191,13 +191,16 @@ class FileDnD(wx.Panel):
         sizer.Add(self.flCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
         sizer_media = wx.BoxSizer(wx.HORIZONTAL)
-        btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
-        btn_play.SetBitmap(bmpplay, wx.LEFT)
-        sizer_media.Add(btn_play, 1, wx.ALL | wx.EXPAND, 2)
-        btn_delsel = wx.Button(self, wx.ID_REMOVE, "")
-        sizer_media.Add(btn_delsel, 1, wx.ALL | wx.EXPAND, 2)
-        btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        sizer_media.Add(btn_clear, 1, wx.ALL | wx.EXPAND, 2)
+        self.btn_play = wx.Button(self, wx.ID_ANY, _("Play"))
+        self.btn_play.SetBitmap(bmpplay, wx.LEFT)
+        self.btn_play.Disable()
+        sizer_media.Add(self.btn_play, 1, wx.ALL | wx.EXPAND, 2)
+        self.btn_remove = wx.Button(self, wx.ID_REMOVE, "")
+        self.btn_remove.Disable()
+        sizer_media.Add(self.btn_remove, 1, wx.ALL | wx.EXPAND, 2)
+        self.btn_clear = wx.Button(self, wx.ID_CLEAR, "")
+        self.btn_clear.Disable()
+        sizer_media.Add(self.btn_clear, 1, wx.ALL | wx.EXPAND, 2)
         sizer.Add(sizer_media, 0, wx.EXPAND)
         sizer_outdir = wx.BoxSizer(wx.HORIZONTAL)
         self.btn_save = wx.Button(self, wx.ID_OPEN, "...", size=(35, -1))
@@ -232,16 +235,17 @@ class FileDnD(wx.Panel):
                 self.parent.suffix = FileDnD.SUFFIX
 
         # Tooltip
-        btn_delsel.SetToolTip(_('Remove the selected file from the list'))
-        btn_clear.SetToolTip(_('Delete all files from the list'))
+        self.btn_remove.SetToolTip(_('Remove the selected file from the list'))
+        self.btn_clear.SetToolTip(_('Delete all files from the list'))
         tip = (_("Set up a temporary folder for conversions"))
         self.btn_save.SetToolTip(tip)
-        btn_play.SetToolTip(_("Play the selected files in the list"))
+        self.btn_play.SetToolTip(_("Play the selected files in the list"))
         self.text_path_save.SetToolTip(_("Destination folder"))
+
         # Binding (EVT)
-        self.Bind(wx.EVT_BUTTON, self.playSelect, btn_play)
-        self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
-        self.Bind(wx.EVT_BUTTON, self.delSelect, btn_delsel)
+        self.Bind(wx.EVT_BUTTON, self.playSelect, self.btn_play)
+        self.Bind(wx.EVT_BUTTON, self.deleteAll, self.btn_clear)
+        self.Bind(wx.EVT_BUTTON, self.delSelect, self.btn_remove)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.flCtrl)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.on_doubleClick, self.flCtrl)
@@ -256,6 +260,8 @@ class FileDnD(wx.Panel):
 
         """
         self.parent.reset_Timeline()
+        if not self.btn_clear.IsEnabled():
+            self.btn_clear.Enable()
     # ----------------------------------------------------------------------
 
     def which(self):
@@ -356,6 +362,8 @@ class FileDnD(wx.Panel):
         self.parent.filedropselected = None
         self.reset_tl()
         self.selected = None
+        self.btn_play.Disable(), self.btn_remove.Disable()
+        self.btn_clear.Disable()
     # ----------------------------------------------------------------------
 
     def on_select(self, event):
@@ -366,6 +374,7 @@ class FileDnD(wx.Panel):
         item = self.flCtrl.GetItemText(index)
         self.parent.filedropselected = item
         self.selected = item
+        self.btn_play.Enable(), self.btn_remove.Enable()
     # ----------------------------------------------------------------------
 
     def on_doubleClick(self, row):
@@ -383,6 +392,7 @@ class FileDnD(wx.Panel):
         """
         self.parent.filedropselected = None
         self.selected = None
+        self.btn_play.Disable(), self.btn_remove.Disable()
     # ----------------------------------------------------------------------
 
     def on_file_save(self, path):

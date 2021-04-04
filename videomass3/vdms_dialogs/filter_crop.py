@@ -93,27 +93,28 @@ class Actor(wx.lib.statbmp.GenStaticBitmap):
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(self.x, self.y, self.w, self.h)
+        dc.DrawRectangle(self.x + 1, self.y + 1, self.w + 2, self.h + 2)
     # ------------------------------------------------------------------#
 
     def onRedraw(self, x, y, w, h):
         """
-        Update Drawing: A transparent background rectangle in a bitmap
-        object. To compensate for the PEN thickness offset, the positions
-        are increased by 1 and the sizes decreased by 1 .
+        Update Drawing: A transparent background rectangle in a
+        bitmap object. To compensate for the PEN thickness offset,
+        the sizes are increased by 2 and the positions decreased
+        by 1 (even on OnPaint)
 
         NOTE dc.SetBrush(wx.Brush(wx.Colour(30, 30, 30, 128))) would set
         a useful transparent gradation color but it doesn't work on windows
         and gtk2.
 
         """
-        self.h, self.w, self.x, self.y = h - 1, w - 1, x + 1, y + 1
+        self.h, self.w, self.x, self.y = h, w, x, y
         dc = wx.ClientDC(self)
         dc.Clear()  # needed if image has trasparences
         dc.DrawBitmap(self.current_bmp, 0, 0, True)
         dc.SetPen(wx.Pen('red', 2, wx.PENSTYLE_SOLID))
         dc.SetBrush(wx.Brush('green', wx.BRUSHSTYLE_TRANSPARENT))
-        dc.DrawRectangle(self.x, self.y, self.w, self.h)
+        dc.DrawRectangle(self.x + 1, self.y + 1, self.w + 2, self.h + 2)
 
 
 class Crop(wx.Dialog):
@@ -497,7 +498,8 @@ class Crop(wx.Dialog):
     # ------------------------------------------------------------------#
 
     def on_ok(self, event):
-        """
+        """22077??VvA
+
         if you enable self.Destroy(), it delete from memory all data
         event and no return correctly. It has the right behavior if not
         used here, because it is called in the main frame.

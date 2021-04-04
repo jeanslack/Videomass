@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.29.2020 *PEP8 compatible*
+# Rev: Apr.04.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -275,11 +275,11 @@ class Data_Source(object):
         icon_toolforward = '%s/go-next.%s' % (x22, ext)
         icon_ydl = '%s/download.%s' % (x22, ext)
         icn_infosource = '%s/properties.%s' % (x22, ext)
-        icn_preview = '%s/media-playback.%s' % (x22, ext)
         icn_saveprf = '%s/profile-append.%s' % (x22, ext)
         icn_viewstatistics = '%s/statistics.%s' % (x22, ext)
         # button icons 16x16:
-        icn_playfilters = '%s/preview.%s' % (x16, ext)
+        icn_playback = '%s/playback.%s' % (x16, ext)
+        icn_preview = '%s/preview.%s' % (x16, ext)
         icn_resetfilters = '%s/edit-clear.%s' % (x16, ext)
         ic_resize = '%s/transform-scale.%s' % (x16, ext)
         ic_crop = '%s/transform-crop.%s' % (x16, ext)
@@ -298,9 +298,9 @@ class Data_Source(object):
                                                 icon_switchvideomass,  # 1
                                                 icon_process,  # 2
                                                 icn_infosource,  # 3
-                                                icn_preview,  # 4
+                                                icn_playback,  # 4
                                                 '',  # icn_cut,  # 5
-                                                icn_playfilters,  # 6
+                                                icn_preview,  # 6
                                                 icn_resetfilters,   # 7
                                                 icn_saveprf,  # 8
                                                 ic_resize,  # 9

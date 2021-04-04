@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Name: wizard_dlg.py
-# Porpose: wizard settings dialog
+# Porpose: wizard setup dialog
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>

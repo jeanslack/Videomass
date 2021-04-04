@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-27 17:50+0100\n"
-"PO-Revision-Date: 2021-03-27 17:51+0100\n"
+"PO-Revision-Date: 2021-03-31 08:50+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -2044,7 +2044,7 @@ msgstr "Impostazione del timestamp"
 #: ../vdms_main/main_frame.py:539
 msgid "Change the size and color of the timestamp during playback"
 msgstr ""
-"Modifica le dimensioni e i lcolore del timestamp durante la riproduzione"
+"Modifica le dimensioni e il colore del timestamp durante la riproduzione"
 
 #: ../vdms_main/main_frame.py:542
 msgid "Auto-exit after playback"
@@ -3250,7 +3250,7 @@ msgstr "Qualità"
 
 #: ../vdms_panels/youtubedl_ui.py:617
 msgid "Sorry, this feature is disabled."
-msgstr "Spiacenti, questa funzione è disabilitata."
+msgstr "Spiacente, questa funzione è disabilitata."
 
 #: ../vdms_panels/youtubedl_ui.py:678
 msgid "Unable to get format codes on playlists"
@@ -3611,7 +3611,7 @@ msgid ""
 msgstr ""
 "{}\n"
 "\n"
-"Spiacenti, rimozione non riuscita, impossibile continuare.."
+"Spiacente, rimozione non riuscita, impossibile continuare.."
 
 #: ../vdms_panels/presets_manager.py:900
 #, python-brace-format
