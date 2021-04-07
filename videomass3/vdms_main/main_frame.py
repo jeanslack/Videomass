@@ -123,7 +123,7 @@ class MainFrame(wx.Frame):
         self.duration = []  # empty if not file imported
         self.topicname = None  # panel name shown
         self.checktimestamp = True  # show timestamp during playback
-        self.autoexit = True  # set autoexit during ffplay playback
+        self.autoexit = False  # set autoexit during ffplay playback
         # set fontconfig for timestamp
         if MainFrame.OS == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
@@ -534,7 +534,7 @@ class MainFrame(wx.Frame):
                                        _("Preferences\tCtrl+P"),
                                        _("Application preferences"))
         self.menuBar.Append(setupButton, _("Settings"))
-        self.menuBar.Check(self.exitplayback.GetId(), True)
+        self.menuBar.Check(self.exitplayback.GetId(), self.autoexit)
 
         # ------------------ help menu
         helpButton = wx.Menu()

@@ -874,8 +874,8 @@ class PrstPan(wx.Panel):
         """
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
-                           'It will be moved to the "Removals" subfolder '
-                           'of the presets folder.').format(filename),
+                           'It will be moved to the "Removals" '
+                           'folder.').format(filename),
                          _('Please confirm'), wx.ICON_QUESTION |
                          wx.YES_NO, self) == wx.NO:
             return
@@ -1230,13 +1230,10 @@ class PrstPan(wx.Panel):
             # not supported, missing files or user has changed his mind
             return
         fsrc, dirdest, cntmax = checking
-
         if self.array[5] in ['jpg', 'png', 'bmp']:
             self.savepictures(dirdest, fsrc)
-
         elif self.array[3]:  # has double pass
             self.two_Pass(fsrc, dirdest, cntmax, outext)
-
         else:
             self.one_Pass(fsrc, dirdest, cntmax, outext)
     # ----------------------------------------------------------------#

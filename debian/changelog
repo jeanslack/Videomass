@@ -34,7 +34,7 @@ videomass (3.4.0-1) UNRELEASED; urgency=medium
   * Improved enabling and disabling of buttons during some actions.
   * The Streams Info button is now also enabled on the queued files panel.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 29 Mar 2021 14:58:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 04 Apr 2021 14:58:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

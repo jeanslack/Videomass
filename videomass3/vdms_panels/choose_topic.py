@@ -68,18 +68,6 @@ class Choose_Topic(wx.Panel):
         self.EXEC_YDL = get.execYdl  # /path/youtube-dl if used else False
         self.YDL_PREF = get.YDL_pref
 
-        PRST_MNG = _('  Presets Manager - Create, edit and use quickly your '
-                     'favorite\n  FFmpeg presets and profiles with full '
-                     'formats support and codecs. ')
-
-        AV_CONV = _('  A set of useful tools for audio and video conversions.'
-                    '\n  Save your profiles and reuse them with Presets '
-                    'Manager. ')
-
-        YOUTUBE_DL = _('  Easily download videos and audio in different '
-                       'formats\n  and quality from YouTube, Facebook and '
-                       'more sites. ')
-
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpAVconv = get_bmp(videoconv_icn, ((48, 48)))
             bmpPrstmng = get_bmp(prstmng_icn, ((48, 48)))
@@ -103,15 +91,15 @@ class Choose_Topic(wx.Panel):
         else:
             style = wx.BU_LEFT
 
-        self.presets_mng = wx.Button(self, wx.ID_ANY, PRST_MNG, size=(-1, -1),
-                                     style=style
+        self.presets_mng = wx.Button(self, wx.ID_ANY, _('Presets Manager'),
+                                     size=(-1, -1), style=style
                                      )
         self.presets_mng.SetBitmap(bmpPrstmng, wx.LEFT)
-        self.avconv = wx.Button(self, wx.ID_ANY, AV_CONV,
+        self.avconv = wx.Button(self, wx.ID_ANY, _('AV-Conversions'),
                                 size=(-1, -1), style=style
                                 )
         self.avconv.SetBitmap(bmpAVconv, wx.LEFT)
-        self.youtube = wx.Button(self, wx.ID_ANY, YOUTUBE_DL,
+        self.youtube = wx.Button(self, wx.ID_ANY, _('YouTube Downloader'),
                                  size=(-1, -1), style=style
                                  )
         self.youtube.SetBitmap(bmpYdl, wx.LEFT)
@@ -151,6 +139,20 @@ class Choose_Topic(wx.Panel):
         sizer_trad.Add(txt_trad)
         sizer_trad.Add(link_trad)
         self.SetSizerAndFit(sizer_base)
+
+        # ---------------------- Tooltips
+        tip = (_('Create, edit and use quickly your favorite FFmpeg '
+                 'presets and profiles with full formats support and '
+                 'codecs.'))
+        self.presets_mng.SetToolTip(tip)
+        tip = (_('A set of useful tools for audio and video conversions. '
+                 'Save your profiles and reuse them with Presets '
+                 'Manager.'))
+        self.avconv.SetToolTip(tip)
+        tip = (_('Easily download videos and audio in different '
+                 'formats and quality from YouTube, Facebook and '
+                 'more sites.'))
+        self.youtube.SetToolTip(tip)
 
         if self.oS == 'Darwin':
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.BOLD))

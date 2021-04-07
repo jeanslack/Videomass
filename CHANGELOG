@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Mar 29, 2021 V.3.4.0
+Apr 04, 2021 V.3.4.0
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
