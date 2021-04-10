@@ -51,7 +51,7 @@
      id="namedview14"
      showgrid="true"
      inkscape:zoom="32.300638"
-     inkscape:cx="0.82414521"
+     inkscape:cx="-3.6471053"
      inkscape:cy="7.5401166"
      inkscape:window-x="24"
      inkscape:window-y="41"
@@ -62,27 +62,27 @@
        id="grid4510" />
   </sodipodi:namedview>
   <rect
-     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect823"
+     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:1.37325335;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="rect823-3"
      width="12"
-     height="1.3412796"
-     x="2"
-     y="0.99927098" />
-  <rect
-     y="13.680373"
-     x="2"
-     height="1.3412796"
-     width="12"
-     id="rect825"
-     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:1.2378093;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     height="1.650871"
+     x="2.0000002"
+     y="0.95178443" />
   <path
      inkscape:connector-curvature="0"
-     id="path817"
-     d="m 6.999997,4.9999999 v 1 H 10 v 3 h 1 v -4 z"
-     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     id="path817-6"
+     d="m 6.666662,4.5716941 v 1.3333338 h 4.000006 V 9.905029 h 1.333334 V 4.5716941 Z"
+     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.15866672;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <path
-     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.119;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     d="M 5,7.0000017 H 6 V 10 h 3 v 1 H 5 Z"
-     id="path819"
+     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:0.15866672;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 4,6 h 1.333334 v 4 h 4.000001 v 1.333334 H 4 Z"
+     id="path819-7"
      inkscape:connector-curvature="0" />
+  <rect
+     y="13.323296"
+     x="2.0000002"
+     height="1.650871"
+     width="12"
+     id="rect4520"
+     style="opacity:1;fill:#444444;fill-opacity:1;stroke:none;stroke-width:1.37325335;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 </svg>

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.31.2020 *PEP8 compatible*
+# Rev: Apr.04.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -56,8 +56,9 @@ class TextDnD(wx.Panel):
                                     )
         sizer.Add(self.textCtrl, 1, wx.EXPAND | wx.ALL, 2)
         sizer.Add((0, 10))
-        btn_clear = wx.Button(self, wx.ID_CLEAR, "")
-        sizer.Add(btn_clear, 0, wx.ALL | wx.EXPAND, 2)
+        self.btn_clear = wx.Button(self, wx.ID_CLEAR, "")
+        self.btn_clear.Disable()
+        sizer.Add(self.btn_clear, 0, wx.ALL | wx.EXPAND, 2)
         sizer_ctrl = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_ctrl, 0, wx.ALL | wx.EXPAND, 0)
         self.text_path_save = wx.TextCtrl(self, wx.ID_ANY, "",
@@ -81,13 +82,13 @@ class TextDnD(wx.Panel):
         self.text_path_save.SetValue(self.file_dest)
 
         # Tooltip
-        btn_clear.SetToolTip(_('Delete all text from the list'))
+        self.btn_clear.SetToolTip(_('Delete all text from the list'))
         tip = (_("Set up a temporary folder for downloads"))
         self.btn_save.SetToolTip(tip)
         self.text_path_save.SetToolTip(_("Destination folder"))
 
         # Binding
-        self.Bind(wx.EVT_BUTTON, self.deleteAll, btn_clear)
+        self.Bind(wx.EVT_BUTTON, self.deleteAll, self.btn_clear)
         self.Bind(wx.EVT_TEXT, self.on_emptyText, self.textCtrl)
     # ---------------------------------------------------------
 
@@ -97,6 +98,10 @@ class TextDnD(wx.Panel):
         """
         if not self.textCtrl.GetValue().strip():
             self.parent.data_url = None
+            self.btn_clear.Disable()
+        else:
+            if not self.btn_clear.IsEnabled():
+                self.btn_clear.Enable()
     # ----------------------------------------------------------
 
     def topic_Redirect(self):
@@ -116,6 +121,7 @@ class TextDnD(wx.Panel):
 
         """
         self.textCtrl.Clear()
+        self.btn_clear.Disable()
     # -----------------------------------------------------------
 
     def on_file_save(self, path):

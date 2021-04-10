@@ -54,6 +54,7 @@ $XGETTEXT -d videomass "../Videomass3.py" \
 "../vdms_main/main_frame.py" \
 "../vdms_panels/av_conversions.py" \
 "../vdms_panels/choose_topic.py" \
+"../vdms_panels/concatenate.py" \
 "../vdms_panels/youtubedl_ui.py" \
 "../vdms_panels/filedrop.py" \
 "../vdms_panels/long_processing_task.py" \

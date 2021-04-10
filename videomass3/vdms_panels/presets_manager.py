@@ -27,10 +27,8 @@
 import wx
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 import wx.lib.scrolledpanel as scrolled
-import wx.lib.agw.floatspin as FS
 import os
 import sys
-import itertools
 from videomass3.vdms_io.presets_manager_properties import json_data
 from videomass3.vdms_io.presets_manager_properties import supported_formats
 from videomass3.vdms_io.presets_manager_properties import delete_profiles
@@ -41,8 +39,6 @@ from videomass3.vdms_utils.utils import copydir_recursively
 from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs import presets_addnew
 from videomass3.vdms_dialogs.epilogue import Formula
-from videomass3.vdms_io.IO_tools import volumeDetectProcess
-from videomass3.vdms_frames import shownormlist
 
 
 class PrstPan(wx.Panel):
@@ -66,8 +62,7 @@ class PrstPan(wx.Panel):
     # -----------------------------------------------------------------
 
     def __init__(self, parent, path_srcShare, path_confdir,
-                 PWD, OS, iconanalyzes, iconpeaklevel,
-                 iconnewprf, icondelprf, iconeditprf):
+                 PWD, OS, iconnewprf, icondelprf, iconeditprf):
         """
         Each presets is a JSON file (Javascript object notation) which is
         a list object with a variable number of items (called profiles)
@@ -83,30 +78,22 @@ class PrstPan(wx.Panel):
         }
         """
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpanalyzes = get_bmp(iconanalyzes, ((16, 16)))
-            bmppeaklevel = get_bmp(iconpeaklevel, ((16, 16)))
             bmpnewprf = get_bmp(iconnewprf, ((16, 16)))
             bmpeditprf = get_bmp(iconeditprf, ((16, 16)))
             bmpdelprf = get_bmp(icondelprf, ((16, 16)))
         else:
-            bmpanalyzes = wx.Bitmap(iconanalyzes, wx.BITMAP_TYPE_ANY)
-            bmppeaklevel = wx.Bitmap(iconpeaklevel, wx.BITMAP_TYPE_ANY)
             bmpnewprf = wx.Bitmap(iconnewprf, wx.BITMAP_TYPE_ANY)
             bmpeditprf = wx.Bitmap(iconeditprf, wx.BITMAP_TYPE_ANY)
             bmpdelprf = wx.Bitmap(icondelprf, wx.BITMAP_TYPE_ANY)
 
         self.array = []  # Parameters of the selected profile
-        # default options:
-        self.opt = {"PEAK": "", "RMS": "", "EBU": "",
-                    "AudioInMap": ['', ''], "AudioOutMap": ['', '']
-                    }
         self.src_prst = os.path.join(path_srcShare, 'presets')  # origin/share
         self.user_prst = os.path.join(path_confdir, 'presets')  # conf dir
         self.PWD = PWD  # current work of videomass
         self.oS = OS
         self.parent = parent
         self.txtcmdedited = True  # show dlg if cmdline is edited
-        self.normdetails = []  # normalization parameters by analyzation vol.
+
         prst = sorted([os.path.splitext(x)[0] for x in
                        os.listdir(self.user_prst) if
                        os.path.splitext(x)[1] == '.prst'
@@ -134,7 +121,7 @@ class PrstPan(wx.Panel):
                               )
         boxpresets.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxpresets.Add((5, 5))
-        panelscr = scrolled.ScrolledPanel(self, -1, size=(200, 700),
+        panelscr = scrolled.ScrolledPanel(self, -1, size=(200, 500),
                                           style=wx.TAB_TRAVERSAL |
                                           wx.BORDER_THEME, name="panelscroll")
         fgs1 = wx.BoxSizer(wx.VERTICAL)
@@ -228,156 +215,33 @@ class PrstPan(wx.Panel):
         grid_profiles.Add(self.btn_editprofile, 0, wx.ALL, 0)
         boxprofiles.Add(grid_profiles, 0, wx.ALL, 5)
         sizer_div.Add(boxprofiles, 1, wx.ALL | wx.EXPAND, 5)
-        # ------- NOTEBOOK
-        nb1 = wx.Notebook(self, wx.ID_ANY, style=0)
-        sizer_base.Add(nb1, 0, wx.ALL | wx.EXPAND, 5)
-        # --- page commands
-        nb1_p1 = wx.Panel(nb1, wx.ID_ANY)
-        grd_cmd = wx.GridSizer(1, 2, 0, 0)
-        box_cmd1 = wx.StaticBoxSizer(wx.StaticBox(nb1_p1, wx.ID_ANY,
+
+        # ------- command line
+        grd_cmd = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_base.Add(grd_cmd, 0, wx.EXPAND)
+        box_cmd1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                   _("One-Pass")),
                                      wx.VERTICAL
                                      )
-        grd_cmd.Add(box_cmd1, 0, wx.ALL | wx.EXPAND, 5
-                    )
-        self.txt_1cmd = wx.TextCtrl(nb1_p1, wx.ID_ANY, "",
-                                    style=wx.TE_MULTILINE |
+        grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
+        self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
+                                    size=(-1, 100), style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
-        box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5
-                     )
-        box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(nb1_p1, wx.ID_ANY,
+        box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
+        box_cmd2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY,
                                                   _("Two-Pass")), wx.VERTICAL
                                      )
-        grd_cmd.Add(box_cmd2, 0, wx.ALL | wx.EXPAND, 5
-                    )
-        self.txt_2cmd = wx.TextCtrl(nb1_p1, wx.ID_ANY, "",
-                                    style=wx.TE_MULTILINE |
+        grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
+        self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
+                                    size=(-1, 100), style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
-        box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5
-                     )
-        nb1_p1.SetSizer(grd_cmd)
-        nb1.AddPage(nb1_p1, (_("Command line")))
-        # --- page automations
-        self.nb1_p2 = wx.Panel(nb1, wx.ID_ANY)
-        size_auto = wx.BoxSizer(wx.HORIZONTAL)
-        grd_autosx = wx.FlexGridSizer(2, 1, 5, 5)
-        size_auto.Add(grd_autosx, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.rdbx_norm = wx.RadioBox(self.nb1_p2, wx.ID_ANY,
-                                     (_("Audio Normalization")),
-                                     choices=[('Off'), ('PEAK'),
-                                              ('RMS'), ('EBU R128'),
-                                              ],
-                                     majorDimension=1,
-                                     style=wx.RA_SPECIFY_ROWS,
-                                     )
-        grd_autosx.Add(self.rdbx_norm, 0, wx.ALL, 5)
-
-        boxamap = wx.StaticBoxSizer(wx.StaticBox(self.nb1_p2, wx.ID_ANY,
-                                                 _("Audio Streams Mapping")),
-                                    wx.VERTICAL
-                                    )
-        grd_autosx.Add(boxamap, 0, wx.ALL | wx.EXPAND, 5)
-        grd_map = wx.FlexGridSizer(2, 2, 0, 0)
-        boxamap.Add(grd_map, 0, wx.TOP | wx.EXPAND, 0)
-        self.txtAinmap = wx.StaticText(self.nb1_p2, wx.ID_ANY,
-                                       _('Input index:')
-                                       )
-        grd_map.Add(self.txtAinmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.cmb_A_inMap = wx.ComboBox(self.nb1_p2, wx.ID_ANY,
-                                       choices=['Auto', '1', '2', '3',
-                                                '4', '5', '6', '7', '8'],
-                                       size=(160, -1), style=wx.CB_DROPDOWN |
-                                       wx.CB_READONLY
-                                       )
-        grd_map.Add(self.cmb_A_inMap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.txtAoutmap = wx.StaticText(self.nb1_p2, wx.ID_ANY,
-                                        _('Output index:')
-                                        )
-        grd_map.Add(self.txtAoutmap, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-
-        self.cmb_A_outMap = wx.ComboBox(self.nb1_p2, wx.ID_ANY,
-                                        choices=['Auto', 'All', '1', '2', '3',
-                                                 '4', '5', '6', '7', '8'],
-                                        size=(160, -1), style=wx.CB_DROPDOWN |
-                                        wx.CB_READONLY
-                                        )
-        grd_map.Add(self.cmb_A_outMap, 0, wx.ALL |
-                    wx.ALIGN_CENTER_VERTICAL, 5
-                    )
-        size_panels = wx.BoxSizer(wx.VERTICAL)
-        size_auto.Add(size_panels, 0, wx.ALL | wx.ALIGN_CENTER_VERTICAL, 5)
-        self.peakpanel = wx.Panel(self.nb1_p2, wx.ID_ANY,
-                                  style=wx.TAB_TRAVERSAL
-                                  )
-        sizer_peak = wx.FlexGridSizer(1, 4, 15, 4)
-        self.btn_voldect = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volume detect"), size=(-1, -1))
-        self.btn_voldect.SetBitmap(bmppeaklevel, wx.LEFT)
-        sizer_peak.Add(self.btn_voldect, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.btn_details = wx.Button(self.peakpanel, wx.ID_ANY,
-                                     _("Volume Statistics"), size=(-1, -1))
-        self.btn_details.SetBitmap(bmpanalyzes, wx.LEFT)
-        sizer_peak.Add(self.btn_details, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-
-        self.lab_amplitude = wx.StaticText(self.peakpanel, wx.ID_ANY,
-                                           (_("Target level:"))
-                                           )
-        sizer_peak.Add(self.lab_amplitude, 0, wx.LEFT |
-                       wx.ALIGN_CENTER_VERTICAL, 10)
-        self.spin_target = FS.FloatSpin(self.peakpanel, wx.ID_ANY,
-                                        min_val=-99.0, max_val=0.0,
-                                        increment=0.5, value=-1.0,
-                                        agwStyle=FS.FS_LEFT, size=(120, -1)
-                                        )
-        sizer_peak.Add(self.spin_target, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.spin_target.SetFormat("%f"), self.spin_target.SetDigits(1)
-        size_panels.Add(self.peakpanel, 0, wx.ALL | wx.EXPAND, 0)
-        self.peakpanel.SetSizer(sizer_peak)  # set panel
-        self.ebupanel = wx.Panel(self.nb1_p2, wx.ID_ANY,
-                                 style=wx.TAB_TRAVERSAL
-                                 )
-        sizer_ebu = wx.FlexGridSizer(3, 2, 5, 5)
-        self.lab_i = wx.StaticText(self.ebupanel, wx.ID_ANY,
-                                   _("Set integrated loudness target:")
-                                   )
-        sizer_ebu.Add(self.lab_i, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.spin_i = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
-                                   min_val=-70.0, max_val=-5.0,
-                                   increment=0.5, value=-24.0,
-                                   agwStyle=FS.FS_LEFT, size=(120, -1)
-                                   )
-        self.spin_i.SetFormat("%f"), self.spin_i.SetDigits(1)
-        sizer_ebu.Add(self.spin_i, 0, wx.ALL, 0)
-
-        self.lab_tp = wx.StaticText(self.ebupanel, wx.ID_ANY,
-                                    _("Set maximum true peak:"))
-        sizer_ebu.Add(self.lab_tp, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.spin_tp = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
-                                    min_val=-9.0, max_val=0.0,
-                                    increment=0.5, value=-2.0,
-                                    agwStyle=FS.FS_LEFT, size=(120, -1)
-                                    )
-        self.spin_tp.SetFormat("%f"), self.spin_tp.SetDigits(1)
-        sizer_ebu.Add(self.spin_tp, 0, wx.ALL, 0)
-        self.lab_lra = wx.StaticText(self.ebupanel, wx.ID_ANY,
-                                     _("Set loudness range target:"))
-        sizer_ebu.Add(self.lab_lra, 0, wx.ALIGN_CENTER_VERTICAL, 0)
-        self.spin_lra = FS.FloatSpin(self.ebupanel, wx.ID_ANY,
-                                     min_val=1.0, max_val=20.0,
-                                     increment=0.5, value=7.0,
-                                     agwStyle=FS.FS_LEFT, size=(120, -1)
-                                     )
-        self.spin_lra.SetFormat("%f"), self.spin_lra.SetDigits(1)
-        sizer_ebu.Add(self.spin_lra, 0, wx.ALL, 0)
-        size_panels.Add(self.ebupanel, 0, wx.ALL | wx.EXPAND, 0)
-        self.ebupanel.SetSizer(sizer_ebu)  # set panel
-        self.nb1_p2.SetSizer(size_auto)
-        nb1.AddPage(self.nb1_p2, _("Automations"))
+        box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)
 
         self.SetSizer(sizer_base)
         self.Layout()
+
         # ----------------------Set Properties----------------------#
         if OS == 'Darwin':
             self.txt_1cmd.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD))
@@ -414,29 +278,6 @@ class PrstPan(wx.Panel):
         self.txt_1cmd.SetToolTip(tip)
         tip = (_('Second pass of the selected profile'))
         self.txt_2cmd.SetToolTip(tip)
-        tip = (_('Gets maximum volume and average volume data in dBFS, then '
-                 'calculates the offset amount for audio normalization.'))
-        self.btn_voldect.SetToolTip(tip)
-        tip = (_('Limiter for the maximum peak level or the mean level '
-                 '(when switch to RMS) in dBFS. From -99.0 to +0.0; '
-                 'default for PEAK level is -1.0; default for RMS is -20.0'))
-        self.spin_target.SetToolTip(tip)
-        tip = (_('Integrated Loudness Target in LUFS. From -70.0 to '
-                 '-5.0, default is -24.0'))
-        self.spin_i.SetToolTip(tip)
-        tip = (_('Maximum True Peak in dBTP. From -9.0 to +0.0, '
-                 'default is -2.0'))
-        self.spin_tp.SetToolTip(tip)
-        tip = (_('Loudness Range Target in LUFS. From +1.0 to '
-                 '+20.0, default is +7.0'))
-        self.spin_lra.SetToolTip(tip)
-        tip = (_('Choose a specific audio stream to map from input file. If '
-                 'not more that one audio stream, leave to "Auto".'))
-        self.cmb_A_inMap.SetToolTip(tip)
-        tip = (_('Map on the output index. Keep same input map to preserve '
-                 'indexes; to save as audio file always select "all" '
-                 'or "Auto"'))
-        self.cmb_A_outMap.SetToolTip(tip)
 
         # ----------------------Binder (EVT)----------------------#
         self.Bind(wx.EVT_COMBOBOX, self.on_choice_profiles, self.cmbx_prst)
@@ -444,12 +285,6 @@ class PrstPan(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.profile_Del, self.btn_delprofile)
         self.Bind(wx.EVT_BUTTON, self.profile_Edit, self.btn_editprofile)
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.list_ctrl)
-        '''
-        # by double clicking on the profile, processing starts.
-        self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.parent.click_start,
-                  self.list_ctrl
-                  )
-        '''
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
         self.Bind(wx.EVT_BUTTON, self.preset_New, self.btn_newpreset)
         self.Bind(wx.EVT_BUTTON, self.preset_Del, self.btn_delpreset)
@@ -461,75 +296,10 @@ class PrstPan(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.preset_Default_all,
                   self.btn_restorealldefault)
         self.Bind(wx.EVT_BUTTON, self.presets_Refresh, self.btn_refresh)
-        self.Bind(wx.EVT_RADIOBOX, self.on_Enable_norm, self.rdbx_norm)
-        self.Bind(wx.EVT_BUTTON, self.on_Analyzes, self.btn_voldect)
-        self.Bind(wx.EVT_BUTTON, self.on_Show_normlist, self.btn_details)
-        self.Bind(wx.EVT_SPINCTRL, self.enter_Amplitude, self.spin_target)
-        self.Bind(wx.EVT_COMBOBOX, self.on_audioINstream, self.cmb_A_inMap)
-        self.Bind(wx.EVT_COMBOBOX, self.on_audioOUTstream, self.cmb_A_outMap)
 
         # ---------------------------- defaults
-        self.cmbx_prst.SetSelection(0), self.cmb_A_inMap.SetSelection(0)
-        self.cmb_A_outMap.SetSelection(1)
+        self.cmbx_prst.SetSelection(0),
         self.set_listctrl()
-        self.normalization_default()
-    # ------------------------------------------------------------------#
-
-    def normalization_default(self):
-        """
-        Set default normalization parameters. This method is called by
-        main_frame module on MainFrame.switch_audio_conv() during first
-        run and when there are changing on dragNdrop panel,
-        (like make a clear file list or append new file, etc)
-
-        """
-        self.rdbx_norm.SetSelection(0),
-        self.peakpanel.Hide(), self.ebupanel.Hide(), self.btn_details.Hide()
-        self.spin_target.SetValue(-1.0)
-        self.opt["PEAK"], self.opt["EBU"], self.opt["RMS"] = "", "", ""
-        del self.normdetails[:]
-    # ------------------------------------------------------------------#
-
-    def on_audioINstream(self, event):
-        """
-        sets the specified audio input stream as index to process e.g.
-        for filters volumedetect and loudnorm will map 0:N where N is
-        digit from 0 to available audio index up to 8.
-        See: http://ffmpeg.org/ffmpeg.html#Advanced-options
-        When changes this feature affect audio filter peak and rms analyzers
-        and then re-enable volume dected button .
-
-        """
-        sel = self.cmb_A_inMap.GetValue()
-        if sel == 'Auto':
-            self.opt["AudioInMap"] = ['', '']
-            self.cmb_A_outMap.SetSelection(1)
-            self.on_audioOUTstream(self)
-        else:
-            self.opt["AudioInMap"] = ['-map 0:%s' % sel, sel]
-            self.cmb_A_outMap.SetStringSelection(self.cmb_A_inMap.GetValue())
-            self.on_audioOUTstream(self)
-        if self.rdbx_norm.GetSelection() in [1, 2]:
-            if not self.btn_voldect.IsEnabled():
-                self.btn_voldect.Enable()
-    # -------------------------------------------------------------------#
-
-    def on_audioOUTstream(self, event):
-        """
-        Sets the audio stream index for the output file and sets
-        audio codec to specified map.
-
-        """
-        sel = self.cmb_A_outMap.GetValue()
-        if sel == 'Auto':
-            self.opt["AudioOutMap"] = ['', '']
-        elif sel == 'All':
-            self.opt["AudioOutMap"] = ['-map 0:a?', '']
-        else:
-            sel = int(sel) - 1
-            self.opt["AudioOutMap"] = ['-map 0:a%s?' % str(sel),
-                                       '%s' % str(sel)
-                                       ]
     # ----------------------------------------------------------------------
 
     def onContext(self, event):
@@ -676,164 +446,6 @@ class PrstPan(wx.Panel):
 
         sel = '{0} - {1}'.format(self.cmbx_prst.GetValue(), self.array[0])
         self.parent.statusbar_msg(sel, None)
-
-    # ------------------------------------------------------------------#
-    def on_Enable_norm(self, event):
-        """
-        Sets a corresponding choice for audio normalization
-
-        """
-        msg_1 = (_('Activate peak level normalization, which will produce '
-                   'a maximum peak level equal to the set target level.'
-                   ))
-        msg_2 = (_('Activate RMS-based normalization, which according to '
-                   'mean volume calculates the amount of gain to reach same '
-                   'average power signal.'
-                   ))
-        msg_3 = (_('Activate two passes normalization. It Normalizes the '
-                   'perceived loudness using the "​loudnorm" filter, which '
-                   'implements the EBU R128 algorithm.'
-                   ))
-        if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
-
-            if self.rdbx_norm.GetSelection() == 1:
-                self.parent.statusbar_msg(msg_1, PrstPan.AZURE, PrstPan.BLACK)
-                self.spin_target.SetValue(-1.0)
-            else:
-                self.parent.statusbar_msg(msg_2, PrstPan.TROPGREEN,
-                                          PrstPan.BLACK)
-                self.spin_target.SetValue(-20.0)
-
-            self.peakpanel.Show(), self.btn_voldect.Enable()
-            self.ebupanel.Hide()
-            self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", ""
-            del self.normdetails[:]
-
-        elif self.rdbx_norm.GetSelection() == 3:  # EBU
-            self.parent.statusbar_msg(msg_3, PrstPan.LIMEGREEN, PrstPan.BLACK)
-            self.peakpanel.Hide(), self.ebupanel.Show()
-            self.opt["PEAK"], self.opt["RMS"], self.opt["EBU"] = "", "", "EBU"
-            del self.normdetails[:]
-
-        else:  # usually it is 0
-            self.parent.statusbar_msg(_("Audio normalization off"), None)
-            self.normalization_default()
-
-        if self.btn_details.IsShown:
-            self.btn_details.Hide()
-        self.nb1_p2.Layout()
-    # ------------------------------------------------------------------#
-
-    def enter_Amplitude(self, event):
-        """
-        when spin_amplitude is changed enable 'Volumedetect' to
-        update new incomming
-
-        """
-        if not self.btn_voldect.IsEnabled():
-            self.btn_voldect.Enable()
-    # ------------------------------------------------------------------#
-
-    def on_Analyzes(self, event):
-        """
-        ** Volumedetect button
-        - normalizations based on PEAK Analyzes to get MAXIMUM peak levels
-          data to calculates offset in dBFS need for audio normalization
-          process.
-        - normalizations based on RMS Analyzes to get MEAN peak levels data to
-          calculates RMS offset in dBFS need for audio normalization process.
-
-        <https://superuser.com/questions/323119/how-can-i-normalize-audio-
-        using-ffmpeg?utm_medium=organic>
-
-        """
-        msg2 = (_('Audio normalization is required only for some files'))
-        msg3 = (_("Audio normalization will not be applied because it's "
-                  "equal to the source"))
-        if self.normdetails:
-            del self.normdetails[:]
-
-        self.parent.statusbar_msg("", None)
-        self.time_seq = self.parent.time_seq  # -ss to -t will be analyzed
-        target = self.spin_target.GetValue()
-
-        data = volumeDetectProcess(self.parent.file_src,
-                                   self.time_seq,
-                                   self.opt["AudioInMap"][0])
-        if data[1]:
-            wx.MessageBox("%s" % data[1], "Videomass", wx.ICON_ERROR)
-            return
-        else:
-            volume = list()
-            if self.rdbx_norm.GetSelection() == 1:  # peak Analyzes
-                for f, v in zip(self.parent.file_src, data[0]):
-                    maxvol = v[0].split(' ')[0]
-                    meanvol = v[1].split(' ')[0]
-                    offset = float(maxvol) - float(target)
-                    result = float(maxvol) - offset
-                    if float(maxvol) == float(target):
-                        volume.append('  ')
-                    else:
-                        volume.append("-filter:a:%s volume=%fdB" % (
-                                                    self.opt["AudioOutMap"][1],
-                                                    -offset))
-                    self.normdetails.append((f,
-                                             maxvol,
-                                             meanvol,
-                                             str(offset),
-                                             str(result),
-                                             ))
-            elif self.rdbx_norm.GetSelection() == 2:  # rms Analyzes
-                for f, v in zip(self.parent.file_src, data[0]):
-                    maxvol = v[0].split(' ')[0]
-                    meanvol = v[1].split(' ')[0]
-                    offset = float(meanvol) - float(target)
-                    result = float(maxvol) - offset
-                    if offset == 0.0:
-                        volume.append('  ')
-                    else:
-                        volume.append("-filter:a:%s volume=%fdB" % (
-                                                   self.opt["AudioOutMap"][1],
-                                                   -offset))
-                    self.normdetails.append((f,
-                                             maxvol,
-                                             meanvol,
-                                             str(offset),
-                                             str(result),
-                                             ))
-        if [a for a in volume if '  ' not in a] == []:
-            self.parent.statusbar_msg(msg3, PrstPan.ORANGE, PrstPan.WHITE)
-        else:
-            if len(volume) == 1 or '  ' not in volume:
-                pass
-            else:
-                self.parent.statusbar_msg(msg2, PrstPan.YELLOW, PrstPan.WHITE)
-        if self.rdbx_norm.GetSelection() == 1:
-            self.opt["PEAK"] = volume
-        elif self.rdbx_norm.GetSelection() == 2:
-            self.opt["RMS"] = volume
-
-        self.btn_voldect.Disable()
-        self.btn_details.Show()
-        self.nb1_p2.Layout()
-    # ------------------------------------------------------------------#
-
-    def on_Show_normlist(self, event):
-        """
-        Show a wx.ListCtrl dialog with volumedetect data
-        """
-        if self.rdbx_norm.GetSelection() == 1:  # peak
-            title = _('PEAK-based volume statistics')
-        if self.rdbx_norm.GetSelection() == 2:  # rms
-            title = _('RMS-based volume statistics')
-
-        if self.btn_voldect.IsEnabled():
-            self.on_Analyzes(self)
-
-        audionormlist = shownormlist.NormalizationList(title,
-                                                       self.normdetails,
-                                                       self.oS)
-        audionormlist.Show()
     # ------------------------------------------------------------------#
 
     def preset_New(self, event):
@@ -874,8 +486,8 @@ class PrstPan(wx.Panel):
         """
         filename = self.cmbx_prst.GetValue()
         if wx.MessageBox(_('Are you sure you want to remove "{}" preset?\n\n '
-                           'It will be moved to the "Removals" '
-                           'folder.').format(filename),
+                           'It will be moved to the "Removals" subfolder '
+                           'of the presets folder.').format(filename),
                          _('Please confirm'), wx.ICON_QUESTION |
                          wx.YES_NO, self) == wx.NO:
             return
@@ -1175,20 +787,7 @@ class PrstPan(wx.Panel):
             self.parent.statusbar_msg(_("First select a profile in the list"),
                                       PrstPan.YELLOW, PrstPan.BLACK)
             return
-        if not self.array[3] and self.rdbx_norm.GetSelection() in [3]:
-            wx.MessageBox(_('Invalid EBU normalization enabled for one-pass.\n'
-                            'Turn off EBU normalization or choose a two-pass '
-                            'profile.'), "Videomass", wx.ICON_INFORMATION)
-            return
-        # check normalization data offset, if enable.
-        if self.rdbx_norm.GetSelection() in [1, 2]:  # PEAK or RMS
-            if self.btn_voldect.IsEnabled():
-                wx.MessageBox(_('Undetected volume values! Click the '
-                                '"Volume detect" button to analyze '
-                                'audio volume data.'),
-                              "Videomass", wx.ICON_INFORMATION
-                              )
-                return
+
         self.time_seq = self.parent.time_seq  # update time_seq
         self.logname = 'presets_manager.log'  # used for file name log
 
@@ -1230,10 +829,13 @@ class PrstPan(wx.Panel):
             # not supported, missing files or user has changed his mind
             return
         fsrc, dirdest, cntmax = checking
+
         if self.array[5] in ['jpg', 'png', 'bmp']:
             self.savepictures(dirdest, fsrc)
+
         elif self.array[3]:  # has double pass
             self.two_Pass(fsrc, dirdest, cntmax, outext)
+
         else:
             self.one_Pass(fsrc, dirdest, cntmax, outext)
     # ----------------------------------------------------------------#
@@ -1242,7 +844,6 @@ class PrstPan(wx.Panel):
         """
 
         """
-        audnorm = self.opt["RMS"] if not self.opt["PEAK"] else self.opt["PEAK"]
         command = (self.txt_1cmd.GetValue())
         valupdate = self.update_dict(cntmax, 'One passes')
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
@@ -1254,7 +855,7 @@ class PrstPan(wx.Panel):
                                              command,
                                              None,
                                              '',
-                                             audnorm,
+                                             '',
                                              self.logname,
                                              cntmax,
                                              )
@@ -1268,44 +869,24 @@ class PrstPan(wx.Panel):
         pass2 = " ".join(self.txt_2cmd.GetValue().split())
 
         if 'loudnorm=' in pass1:
-            if self.rdbx_norm.GetSelection() == 3:
-                if wx.MessageBox(_('EBU normalization is enabled twice in '
-                                   'automation and command line. Command '
-                                   'line has priority.\n\nDo you wish to '
-                                   'continue?'),
-                                 _("Please confirm"),
-                                 wx.ICON_QUESTION |
-                                 wx.YES_NO, self) == wx.NO:
-                    return
-
-            typeproc, audnorm = 'two pass EBU', ''
+            typeproc = 'two pass EBU'
             loudnorm = [ebu for ebu in pass1.split() if 'loudnorm=' in ebu][0]
-
-        elif self.rdbx_norm.GetSelection() == 3:
-            loudnorm = ('loudnorm=I=%s:TP=%s:LRA=%s:print_format=summary' % (
-                                            str(self.spin_i.GetValue()),
-                                            str(self.spin_tp.GetValue()),
-                                            str(self.spin_lra.GetValue())))
-            pass1 = '-filter:a: %s ' % loudnorm + '%s' % pass1
-            typeproc, audnorm = 'two pass EBU', ''
 
         else:  # two-pass std
             typeproc, loudnorm = 'twopass', ''
-            audnorm = (self.opt["RMS"] if not self.opt["PEAK"]
-                       else self.opt["PEAK"]
-                       )
+
         valupdate = self.update_dict(cntmax, typeproc)
         ending = Formula(self, valupdate[0], valupdate[1], _('Starts'))
-        if ending.ShowModal() == wx.ID_OK:
 
+        if ending.ShowModal() == wx.ID_OK:
             self.parent.switch_to_processing(typeproc,
                                              filesrc,
                                              outext,
                                              destdir,
                                              None,
                                              [pass1, pass2, loudnorm],
-                                             self.opt["AudioOutMap"],
-                                             audnorm,
+                                             '',
+                                             '',
                                              self.logname,
                                              cntmax,
                                              )
@@ -1375,14 +956,6 @@ class PrstPan(wx.Panel):
         Update information before send to epilogue
 
         """
-        if self.opt["PEAK"]:
-            normalize = 'PEAK'
-        elif self.opt["RMS"]:
-            normalize = 'RMS'
-        elif self.opt["EBU"]:
-            normalize = 'EBU R128'
-        else:
-            normalize = _('Off')
         if self.parent.time_seq == "-ss 00:00:00.000 -t 00:00:00.000":
             time = _('Unset')
         else:
@@ -1392,17 +965,11 @@ class PrstPan(wx.Panel):
         numfile = "%s file in queue" % str(cntmax)
 
         formula = (_("SUMMARY\n\nQueued File\nPass Encoding\
-                     \nProfile Used\nOutput Format\nTime Period\
-                     \n\nAutomations Enabled\nAudio Normalization\
-                     \nInput Audio Map\nOutput Audio Map"))
-        dictions = ("\n\n%s\n%s\n%s\n%s\n"
-                    "%s\n\n\n%s\n%s\n%s" % (numfile,
-                                            passes,
-                                            self.array[0],
-                                            self.array[5],
-                                            time,
-                                            normalize,
-                                            self.cmb_A_inMap.GetValue(),
-                                            self.cmb_A_outMap.GetValue(),
-                                            ))
+                     \nProfile Used\nOutput Format\nTime Period"))
+        dictions = ("\n\n%s\n%s\n%s\n%s\n%s" % (numfile,
+                                                passes,
+                                                self.array[0],
+                                                self.array[5],
+                                                time,
+                                                ))
         return formula, dictions

@@ -82,7 +82,7 @@ class Videomass(wx.App):
         self.YDLoutdir = None
         self.CLEARcache = None
         self.GETlang = None  # current short name for the locale
-        self.SUPP_langs = ['it_IT', 'en_EN', 'ru_RU']  # supported langs
+        self.SUPP_langs = ['it_IT', 'en_EN', 'ru_RU']  # supported help langs
 
         wx.App.__init__(self, redirect, filename)  # constructor
         wx.SystemOptions.SetOption("osx.openfiledialog.always-show-types", "1")

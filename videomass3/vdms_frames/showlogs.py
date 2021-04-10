@@ -45,10 +45,15 @@ class ShowLogs(wx.MiniFrame):
     GREY = '#959595'
 
     # list of logs files to include
-    LOGNAMES = ('volumedected.log', 'youtubedl_lib.log',
-                'youtubedl_exec.log', 'AV_conversions.log',
-                'presets_manager.log', 'ffplay.log',
-                'youtube_dl-update-on-AppImage.log')
+    LOGNAMES = ('volumedected.log',
+                'youtubedl_lib.log',
+                'youtubedl_exec.log',
+                'AV_conversions.log',
+                'presets_manager.log',
+                'ffplay.log',
+                'youtube_dl-update-on-AppImage.log',
+                'concatenate_demuxer.log',
+                )
 
     def __init__(self, parent, dirlog, OS):
         """

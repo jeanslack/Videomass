@@ -35,6 +35,7 @@ from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass3.vdms_threads.video_stabilization import VidStab
+from videomass3.vdms_threads.concat_demuxer import Concat_Demuxer
 from videomass3.vdms_utils.utils import milliseconds2timeformat
 from videomass3.vdms_utils.utils import get_milliseconds
 
@@ -235,6 +236,10 @@ class Logging_Console(wx.Panel):
             self.PARENT_THREAD = VidStab(varargs, duration,
                                          self.logname, time_seq
                                          )
+        elif varargs[0] == 'concat_demuxer':  # from Concatenation Demuxer
+            self.PARENT_THREAD = Concat_Demuxer(varargs, duration,
+                                                self.logname, time_seq
+                                                )
         elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
             self.PARENT_THREAD = Ydl_DL_Pylib(varargs, self.logname)

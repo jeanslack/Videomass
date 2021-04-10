@@ -7,10 +7,10 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   viewBox="0 0 22 22"
+   viewBox="0 0 16 16"
    version="1.1"
    id="svg5"
-   sodipodi:docname="media-playback.svg"
+   sodipodi:docname="preview.svg"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
   <metadata
      id="metadata11">
@@ -38,9 +38,9 @@
      inkscape:window-height="480"
      id="namedview7"
      showgrid="false"
-     inkscape:zoom="10.727273"
-     inkscape:cx="0.74576271"
-     inkscape:cy="11"
+     inkscape:zoom="14.75"
+     inkscape:cx="6.8729353"
+     inkscape:cy="8.6779661"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -53,7 +53,7 @@
         }
     </style>
   <path
-     d="m3 3v16l16-8z"
+     d="m2 2v12l12-6z"
      class="ColorScheme-Text"
      fill="currentColor"
      id="path3"
