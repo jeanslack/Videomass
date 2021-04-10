@@ -269,6 +269,7 @@ class Data_Source(object):
         icon_switchvideomass = '%s/icon_videoconversions.%s' % (x48, ext)
         icon_youtube = '%s/icon_youtube.%s' % (x48, ext)
         icon_prst_mng = '%s/icon_prst_mng.%s' % (x48, ext)
+        icon_concat = '%s/icon_concat.%s' % (x48, ext)
         # toolbar icons 22x22:
         icon_process = '%s/convert.%s' % (x22, ext)
         icon_toolback = '%s/go-previous.%s' % (x22, ext)
@@ -299,7 +300,7 @@ class Data_Source(object):
                                                 icon_process,  # 2
                                                 icn_infosource,  # 3
                                                 icn_playback,  # 4
-                                                '',  # icn_cut,  # 5
+                                                icon_concat,  # 5
                                                 icn_preview,  # 6
                                                 icn_resetfilters,   # 7
                                                 icn_saveprf,  # 8

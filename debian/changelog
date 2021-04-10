@@ -1,4 +1,4 @@
-videomass (3.4.0-1) UNRELEASED; urgency=medium
+videomass (3.4.1-1) UNRELEASED; urgency=medium
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
@@ -33,8 +33,10 @@ videomass (3.4.0-1) UNRELEASED; urgency=medium
   * Play button removed on toolbar as confusing.
   * Improved enabling and disabling of buttons during some actions.
   * The Streams Info button is now also enabled on the queued files panel.
+  * Removed automations on Presets manager as confusing.
+  * Added useful panel for media concatenation (concat demuxer)
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 04 Apr 2021 14:58:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 10 Apr 2021 11:26:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

@@ -35,7 +35,7 @@ from videomass3.vdms_threads.two_pass import TwoPass
 from videomass3.vdms_threads.two_pass_EBU import Loudnorm
 from videomass3.vdms_threads.picture_exporting import PicturesFromVideo
 from videomass3.vdms_threads.video_stabilization import VidStab
-from videomass3.vdms_utils.utils import milliseconds2timeformat
+from videomass3.vdms_threads.concat_demuxer import Concat_Demuxer
 from videomass3.vdms_utils.utils import get_milliseconds
 
 
@@ -235,6 +235,10 @@ class Logging_Console(wx.Panel):
             self.PARENT_THREAD = VidStab(varargs, duration,
                                          self.logname, time_seq
                                          )
+        elif varargs[0] == 'concat_demuxer':  # from Concatenation Demuxer
+            self.PARENT_THREAD = Concat_Demuxer(varargs, duration,
+                                                self.logname, time_seq
+                                                )
         elif varargs[0] == 'youtube_dl python package':  # as import youtube_dl
             self.ckbx_text.Hide()
             self.PARENT_THREAD = Ydl_DL_Pylib(varargs, self.logname)
@@ -382,12 +386,8 @@ class Logging_Console(wx.Panel):
             ffprog = []
             for x, y in pairwise(out):
                 ffprog.append("%s: %s | " % (x, y))
-
-            remaining = milliseconds2timeformat(duration - ms)
-            self.labPerc.SetLabel("Processing... %s%% | %sTime Remaining: %s" %
-                                  (str(int(percentage)), "".join(ffprog),
-                                   remaining)
-                                  )
+            self.labPerc.SetLabel("Processing... %s%% | %s" %
+                                  (str(int(percentage)), "".join(ffprog)))
             del output, duration
 
         else:  # append all others lines on the textctrl and log file

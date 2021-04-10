@@ -43,6 +43,7 @@ from videomass3.vdms_panels import filedrop
 from videomass3.vdms_panels import textdrop
 from videomass3.vdms_panels import youtubedl_ui
 from videomass3.vdms_panels import av_conversions
+from videomass3.vdms_panels import concatenate
 from videomass3.vdms_panels.long_processing_task import Logging_Console
 from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
@@ -149,7 +150,8 @@ class MainFrame(wx.Frame):
                                                      MainFrame.OS,
                                                      pathicons[1],
                                                      pathicons[17],
-                                                     pathicons[18]
+                                                     pathicons[18],
+                                                     pathicons[5],
                                                      )
         self.ytDownloader = youtubedl_ui.Downloader(self, pathicons[4])
         self.VconvPanel = av_conversions.AV_Conv(self,
@@ -175,12 +177,11 @@ class MainFrame(wx.Frame):
                                                   MainFrame.DIR_CONF,
                                                   MainFrame.WORK_DIR,
                                                   MainFrame.OS,
-                                                  pathicons[14],  # analyzes
-                                                  pathicons[16],  # peaklevel
                                                   pathicons[19],  # newprf
                                                   pathicons[20],  # delprf
                                                   pathicons[21],  # editprf
                                                   )
+        self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
         # hide panels
         self.TimeLine.Hide()
         self.fileDnDTarget.Hide()
@@ -189,6 +190,7 @@ class MainFrame(wx.Frame):
         self.VconvPanel.Hide()
         self.ProcessPanel.Hide()
         self.PrstsPanel.Hide()
+        self.ConcatDemuxer.Hide()
         # Layout toolbar buttons:
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)  # sizer base global
         # grid_pan = wx.BoxSizer(wx.HORIZONTAL)
@@ -205,6 +207,7 @@ class MainFrame(wx.Frame):
         self.mainSizer.Add(self.VconvPanel, 1, wx.EXPAND)
         self.mainSizer.Add(self.ProcessPanel, 1, wx.EXPAND)
         self.mainSizer.Add(self.PrstsPanel, 1, wx.EXPAND)
+        self.mainSizer.Add(self.ConcatDemuxer, 1, wx.EXPAND)
 
         # ----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
@@ -272,11 +275,14 @@ class MainFrame(wx.Frame):
         elif self.PrstsPanel.IsShown():
             self.PrstsPanel.Hide()
 
+        elif self.ConcatDemuxer.IsShown():
+            self.ConcatDemuxer.Hide()
+
         self.ChooseTopic.Show()
         self.toolbar.Hide(), self.avpan.Enable(False)
-        self.prstpan.Enable(False), self.ydlpan.Enable(False)
-        self.startpan.Enable(False), self.logpan.Enable(False)
-        self.viewtimeline.Enable(False)
+        self.prstpan.Enable(False), self.concpan.Enable(False)
+        self.ydlpan.Enable(False), self.startpan.Enable(False)
+        self.logpan.Enable(False), self.viewtimeline.Enable(False)
         self.SetTitle(_('Videomass'))
         self.statusbar_msg(_('Ready'), None)
         self.Layout()
@@ -288,8 +294,9 @@ class MainFrame(wx.Frame):
         """
         if self.ChooseTopic.IsShown() is True:
             self.avpan.Enable(False), self.prstpan.Enable(False),
-            self.ydlpan.Enable(False), self.startpan.Enable(False)
-            self.viewtimeline.Enable(False), self.logpan.Enable(False)
+            self.concpan.Enable(False), self.ydlpan.Enable(False),
+            self.startpan.Enable(False), self.viewtimeline.Enable(False),
+            self.logpan.Enable(False)
         if MainFrame.PYLIB_YDL is not None:  # no used as module
             if MainFrame.EXEC_YDL:
                 if os.path.isfile(MainFrame.EXEC_YDL):
@@ -478,6 +485,10 @@ class MainFrame(wx.Frame):
         self.avpan = goButton.Append(wx.ID_ANY, _("A/V conversions\tShift+V"),
                                      _("jump to the Audio/Video Conversion "
                                        "panel"))
+        self.concpan = goButton.Append(wx.ID_ANY,
+                                       _("Concatenate Demuxer\tShift+D"),
+                                       _("jump to the Concatenate Demuxer "
+                                         "panel"))
         goButton.AppendSeparator()
         dscrp = (_("YouTube downloader\tShift+Y"),
                  _("jump to the YouTube Downloader panel"))
@@ -588,6 +599,7 @@ class MainFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.startPan, self.startpan)
         self.Bind(wx.EVT_MENU, self.prstPan, self.prstpan)
         self.Bind(wx.EVT_MENU, self.avPan, self.avpan)
+        self.Bind(wx.EVT_MENU, self.concPan, self.concpan)
         self.Bind(wx.EVT_MENU, self.ydlPan, self.ydlpan)
         self.Bind(wx.EVT_MENU, self.logPan, self.logpan)
         self.Bind(wx.EVT_MENU, self.openLog, openlogdir)
@@ -1029,6 +1041,17 @@ class MainFrame(wx.Frame):
             self.on_Forward(self)
     # ------------------------------------------------------------------#
 
+    def concPan(self, event):
+        """
+        jumpe on Concatenate Demuxer
+        """
+        if not self.data_files:
+            self.statusbar_msg(_('No files added yet'), MainFrame.YELLOW)
+        else:
+            self.topicname = 'Concatenate Demuxer'
+            self.on_Forward(self)
+    # ------------------------------------------------------------------#
+
     def logPan(self, event):
         """
         view last log on console
@@ -1387,7 +1410,9 @@ class MainFrame(wx.Frame):
         """
         if self.textDnDTarget.IsShown() or self.fileDnDTarget.IsShown():
             self.choosetopicRetrieve()
-        elif self.topicname in ('Audio/Video Conversions', 'Presets Manager'):
+        elif self.topicname in ('Audio/Video Conversions',
+                                'Presets Manager',
+                                'Concatenate Demuxer'):
             self.switch_file_import(self, self.topicname)
         elif self.topicname == 'Youtube Downloader':
             self.switch_text_import(self, self.topicname)
@@ -1397,7 +1422,9 @@ class MainFrame(wx.Frame):
         """
         redirect on corresponding panel
         """
-        if self.topicname in ['Audio/Video Conversions', 'Presets Manager']:
+        if self.topicname in ('Audio/Video Conversions',
+                              'Presets Manager',
+                              'Concatenate Demuxer',):
             if not self.data_files:
                 wx.MessageBox(_('Drag at least one file'), "Videomass",
                               wx.ICON_INFORMATION, self)
@@ -1405,6 +1432,10 @@ class MainFrame(wx.Frame):
 
             if self.topicname == 'Audio/Video Conversions':
                 self.switch_av_conversions(self)
+
+            elif self.topicname == 'Concatenate Demuxer':
+                self.switch_concat_demuxer(self)
+
             else:
                 self.switch_presets_manager(self)
 
@@ -1434,14 +1465,14 @@ class MainFrame(wx.Frame):
         self.textDnDTarget.Hide(), self.ytDownloader.Hide()
         self.VconvPanel.Hide(), self.ChooseTopic.Hide()
         self.PrstsPanel.Hide(), self.TimeLine.Hide()
-        self.fileDnDTarget.Show()
+        self.ConcatDemuxer.Hide(), self.fileDnDTarget.Show()
         if self.outpath_ffmpeg:
             self.fileDnDTarget.text_path_save.SetValue("")
             self.fileDnDTarget.text_path_save.AppendText(self.outpath_ffmpeg)
         self.menu_items()  # disable some menu items
         self.avpan.Enable(False), self.prstpan.Enable(False),
         self.ydlpan.Enable(False), self.startpan.Enable(True)
-        self.viewtimeline.Enable(False)
+        self.viewtimeline.Enable(False), self.concpan.Enable(False)
         self.toolbar.Show()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(3, True)
@@ -1466,14 +1497,14 @@ class MainFrame(wx.Frame):
         self.fileDnDTarget.Hide(), self.ytDownloader.Hide()
         self.VconvPanel.Hide(), self.ChooseTopic.Hide()
         self.PrstsPanel.Hide(), self.TimeLine.Hide()
-        self.textDnDTarget.Show()
+        self.ConcatDemuxer.Hide(), self.textDnDTarget.Show()
         if self.outpath_ydl:
             self.textDnDTarget.text_path_save.SetValue("")
             self.textDnDTarget.text_path_save.AppendText(self.outpath_ydl)
         self.menu_items()  # disable some menu items
         self.avpan.Enable(False), self.prstpan.Enable(False),
         self.ydlpan.Enable(False), self.startpan.Enable(True)
-        self.viewtimeline.Enable(False)
+        self.viewtimeline.Enable(False), self.concpan.Enable(False)
         self.toolbar.Show()
         self.logpan.Enable(False)
         self.toolbar.EnableTool(3, True)
@@ -1512,12 +1543,14 @@ class MainFrame(wx.Frame):
         self.outpath_ydl = self.textDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.VconvPanel.Hide(), self.PrstsPanel.Hide()
-        self.TimeLine.Hide(), self.ytDownloader.Show()
+        self.TimeLine.Hide(), self.ConcatDemuxer.Hide()
+        self.ytDownloader.Show()
         self.toolbar.Show()
         self.menu_items()  # disable some menu items
         self.avpan.Enable(True), self.prstpan.Enable(True)
         self.ydlpan.Enable(False), self.startpan.Enable(True)
         self.viewtimeline.Enable(False), self.logpan.Enable(True)
+        self.concpan.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, False)
@@ -1536,7 +1569,7 @@ class MainFrame(wx.Frame):
         self.outpath_ffmpeg = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide()
         self.ytDownloader.Hide(), self.PrstsPanel.Hide()
-        self.VconvPanel.Show()
+        self.ConcatDemuxer.Hide(), self.VconvPanel.Show()
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
@@ -1557,7 +1590,6 @@ class MainFrame(wx.Frame):
                 self.TimeLine.set_values(max(self.duration))
 
             self.VconvPanel.normalize_default()
-            self.PrstsPanel.normalization_default()
             self.VconvPanel.on_FiltersClear(self)
         else:
             self.statusbar_msg(_('Ready'), None)
@@ -1569,6 +1601,7 @@ class MainFrame(wx.Frame):
         self.avpan.Enable(False), self.prstpan.Enable(True)
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.viewtimeline.Enable(True), self.logpan.Enable(True)
+        self.concpan.Enable(True)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
@@ -1588,7 +1621,7 @@ class MainFrame(wx.Frame):
         self.outpath_ffmpeg = self.fileDnDTarget.file_dest
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.PrstsPanel.Show()
+        self.ConcatDemuxer.Hide(), self.PrstsPanel.Show()
         filenames = [f['format']['filename'] for f in
                      self.data_files if f['format']['filename']
                      ]
@@ -1608,7 +1641,6 @@ class MainFrame(wx.Frame):
             else:  # max val from list
                 self.TimeLine.set_values(max(self.duration))
 
-            self.PrstsPanel.normalization_default()
             self.VconvPanel.normalize_default()
         else:
             self.statusbar_msg(_('Ready'), None)
@@ -1619,6 +1651,59 @@ class MainFrame(wx.Frame):
         self.avpan.Enable(True), self.prstpan.Enable(False),
         self.ydlpan.Enable(True), self.startpan.Enable(True)
         self.viewtimeline.Enable(True), self.logpan.Enable(True)
+        self.concpan.Enable(True)
+        self.toolbar.EnableTool(3, True)
+        self.toolbar.EnableTool(4, False)
+        self.toolbar.EnableTool(5, True)
+        self.toolbar.EnableTool(14, False)
+        self.toolbar.EnableTool(6, True)
+        self.toolbar.EnableTool(8, False)
+        self.toolbar.EnableTool(12, True)
+        self.toolbar.EnableTool(13, False)
+        self.Layout()
+    # ------------------------------------------------------------------#
+
+    def switch_concat_demuxer(self, event):
+        """
+        Show concat demuxer panel
+
+        """
+        self.outpath_ffmpeg = self.fileDnDTarget.file_dest
+        self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
+        self.ytDownloader.Hide(), self.VconvPanel.Hide(),
+        self.PrstsPanel.Hide(), self.ConcatDemuxer.Show()
+        self.TimeLine.Hide()
+
+        filenames = [f['format']['filename'] for f in
+                     self.data_files if f['format']['filename']
+                     ]
+        if not filenames == self.file_src:
+            if self.file_src:
+                msg = (_('File list changed, please check the settings '
+                         'again.'), MainFrame.ORANGE, MainFrame.WHITE)
+                self.statusbar_msg(msg[0], msg[1], msg[2])
+            self.file_src = filenames
+            self.duration = [f['format']['duration'] for f in
+                             self.data_files
+                             ]
+            if not self.duration:
+                self.TimeLine.set_values(self.duration)
+            elif max(self.duration) < 100:  # if .jpeg
+                self.TimeLine.set_values([])
+            else:  # max val from list
+                self.TimeLine.set_values(max(self.duration))
+
+            self.VconvPanel.normalize_default()
+        else:
+            self.statusbar_msg(_('Ready'), None)
+
+        self.SetTitle(_('Videomass - Concatenate Demuxer'))
+        #self.view_Timeline(self)  # set timeline status
+        self.toolbar.Show()
+        self.avpan.Enable(True), self.prstpan.Enable(True),
+        self.ydlpan.Enable(True), self.startpan.Enable(True)
+        self.viewtimeline.Enable(False), self.logpan.Enable(True)
+        self.concpan.Enable(False)
         self.toolbar.EnableTool(3, True)
         self.toolbar.EnableTool(4, False)
         self.toolbar.EnableTool(5, True)
@@ -1669,7 +1754,8 @@ class MainFrame(wx.Frame):
         # Hide all others panels:
         self.fileDnDTarget.Hide(), self.textDnDTarget.Hide(),
         self.ytDownloader.Hide(), self.VconvPanel.Hide(),
-        self.PrstsPanel.Hide(), self.TimeLine.Hide()
+        self.PrstsPanel.Hide(), self.TimeLine.Hide(),
+        self.ConcatDemuxer.Hide()
         # Show the panel:
         self.ProcessPanel.Show()
         # self.SetTitle('Videomass')
@@ -1701,6 +1787,12 @@ class MainFrame(wx.Frame):
                              self.data_files if f['format']['filename']
                              ]
             self.PrstsPanel.on_start()
+
+        elif self.ConcatDemuxer.IsShown():
+            self.file_src = [f['format']['filename'] for f in
+                             self.data_files if f['format']['filename']
+                             ]
+            self.ConcatDemuxer.on_start()
     # ------------------------------------------------------------------#
 
     def panelShown(self, panelshown):
@@ -1712,12 +1804,19 @@ class MainFrame(wx.Frame):
         if panelshown == 'Audio/Video Conversions':
             self.ProcessPanel.Hide()
             self.switch_av_conversions(self)
+
         elif panelshown == 'Youtube Downloader':
             self.ProcessPanel.Hide()
             self.switch_youtube_downloader(self, self.data_url)
+
         elif panelshown == 'Presets Manager':
             self.ProcessPanel.Hide()
             self.switch_presets_manager(self)
+
+        elif panelshown == 'Concatenate Demuxer':
+            self.ProcessPanel.Hide()
+            self.switch_concat_demuxer(self)
+
         # Enable all top menu bar:
         [self.menuBar.EnableTop(x, True) for x in range(0, 5)]
         # show buttons bar if the user has shown it:

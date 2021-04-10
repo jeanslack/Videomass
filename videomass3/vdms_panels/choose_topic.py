@@ -54,7 +54,8 @@ class Choose_Topic(wx.Panel):
     """
     Helps to choose a topic.
     """
-    def __init__(self, parent, OS, videoconv_icn, youtube_icn, prstmng_icn):
+    def __init__(self, parent, OS, videoconv_icn,
+                 youtube_icn, prstmng_icn, concat_icn):
         """
         This is a home panel shown when start Videomass to choose the
         appropriate contextual panel.
@@ -72,10 +73,12 @@ class Choose_Topic(wx.Panel):
             bmpAVconv = get_bmp(videoconv_icn, ((48, 48)))
             bmpPrstmng = get_bmp(prstmng_icn, ((48, 48)))
             bmpYdl = get_bmp(youtube_icn, ((48, 48)))
+            bmpConcat = get_bmp(concat_icn, ((48, 48)))
         else:
             bmpAVconv = wx.Bitmap(videoconv_icn, wx.BITMAP_TYPE_ANY)
             bmpPrstmng = wx.Bitmap(prstmng_icn, wx.BITMAP_TYPE_ANY)
             bmpYdl = wx.Bitmap(youtube_icn, wx.BITMAP_TYPE_ANY)
+            bmpConcat = wx.Bitmap(concat_icn, wx.BITMAP_TYPE_ANY)
 
         wx.Panel.__init__(self, parent, -1, style=wx.TAB_TRAVERSAL)
 
@@ -83,8 +86,16 @@ class Choose_Topic(wx.Panel):
         version = wx.StaticText(self, wx.ID_ANY, (_('Version {}'
                                                     ).format(version[2])))
         sizer_base = wx.BoxSizer(wx.VERTICAL)
-        grid_buttons = wx.FlexGridSizer(5, 0, 20, 20)
-        grid_base = wx.GridSizer(1, 1, 0, 0)
+
+        sizer_base.Add(120, 120)
+        sizer_base.Add(welcome, 0, wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 0
+                       )
+        sizer_base.Add(20, 20)
+        sizer_base.Add(version, 0, wx.BOTTOM |
+                       wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 0
+                       )
 
         if self.oS == 'Windows':
             style = wx.BU_LEFT | wx.BORDER_NONE
@@ -92,42 +103,36 @@ class Choose_Topic(wx.Panel):
             style = wx.BU_LEFT
 
         self.presets_mng = wx.Button(self, wx.ID_ANY, _('Presets Manager'),
-                                     size=(-1, -1), style=style
-                                     )
+                                     size=(300, -1), style=style)
         self.presets_mng.SetBitmap(bmpPrstmng, wx.LEFT)
+
         self.avconv = wx.Button(self, wx.ID_ANY, _('AV-Conversions'),
-                                size=(-1, -1), style=style
-                                )
+                                size=(300, -1), style=style)
         self.avconv.SetBitmap(bmpAVconv, wx.LEFT)
+
+        self.conc = wx.Button(self, wx.ID_ANY, _('Concatenate media files'),
+                              size=(300, -1), style=style)
+        self.conc.SetBitmap(bmpConcat, wx.LEFT)
+
         self.youtube = wx.Button(self, wx.ID_ANY, _('YouTube Downloader'),
-                                 size=(-1, -1), style=style
-                                 )
+                                 size=(300, -1), style=style)
         self.youtube.SetBitmap(bmpYdl, wx.LEFT)
 
-        grid_buttons.AddMany([(welcome, 0, wx.ALIGN_CENTER_VERTICAL |
-                               wx.ALIGN_CENTER_HORIZONTAL, 0),
-                              (version, 0, wx.BOTTOM |
-                               wx.ALIGN_CENTER_VERTICAL |
-                               wx.ALIGN_CENTER_HORIZONTAL, 20),
-                              (self.presets_mng, 0, wx.EXPAND, 5),
+        grid_buttons = wx.FlexGridSizer(2, 2, 20, 20)
+        grid_buttons.AddMany([(self.presets_mng, 0, wx.EXPAND, 5),
                               (self.avconv, 0, wx.EXPAND, 5),
+                              (self.conc, 0, wx.EXPAND, 5),
                               (self.youtube, 0, wx.EXPAND, 5),
                               ])
-        grid_base.Add(grid_buttons, 0, wx.ALIGN_CENTER_VERTICAL |
-                      wx.ALIGN_CENTER_HORIZONTAL, 5
-                      )
-        sizer_base.Add(grid_base, 1, wx.EXPAND, 5)
-        sizer_hpl = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_hpl, 0, wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 15
+        sizer_base.Add(80, 80)
+        sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL |
+                       wx.ALIGN_CENTER_HORIZONTAL, 5
                        )
         sizer_trad = wx.BoxSizer(wx.HORIZONTAL)
         sizer_base.Add(sizer_trad, 0, wx.ALL |
                        wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 15
                        )
-
         txt_trad = wx.StaticText(self,
                                  label=_('Videomass would need volunteer '
                                          'translators. If you are interested '
@@ -153,6 +158,9 @@ class Choose_Topic(wx.Panel):
                  'formats and quality from YouTube, Facebook and '
                  'more sites.'))
         self.youtube.SetToolTip(tip)
+        tip = (_('Concatenate multiple media files based on import '
+                 'order without re-encoding'))
+        self.conc.SetToolTip(tip)
 
         if self.oS == 'Darwin':
             welcome.SetFont(wx.Font(14, wx.SWISS, wx.NORMAL, wx.BOLD))
@@ -176,6 +184,7 @@ class Choose_Topic(wx.Panel):
 
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
+        self.Bind(wx.EVT_BUTTON, self.on_Conc, self.conc)
         self.Bind(wx.EVT_BUTTON, self.on_YoutubeDL, self.youtube)
     # ------------------------------------------------------------------#
 
@@ -191,6 +200,13 @@ class Choose_Topic(wx.Panel):
         Open drag N drop interface to switch on AVconversions panel
         """
         self.parent.switch_file_import(self, 'Audio/Video Conversions')
+    # ------------------------------------------------------------------#
+
+    def on_Conc(self, event):
+        """
+        Open drag N drop interface to switch on Concatenate panel
+        """
+        self.parent.switch_file_import(self, 'Concatenate Demuxer')
     # ------------------------------------------------------------------#
 
     def on_YoutubeDL(self, event):
