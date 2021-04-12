@@ -28,7 +28,6 @@ import subprocess
 import platform
 if not platform.system() == 'Windows':
     import shlex
-import itertools
 import os
 from threading import Thread
 import time
@@ -86,10 +85,7 @@ class Concat_Demuxer(Thread):
     def __init__(self, varargs, duration, logname, timeseq):
         """
         Some attribute can be empty, this depend from conversion type.
-        If the format/container is not changed on a conversion, the
-        'extoutput' attribute will have an empty value.
-        The 'volume' attribute may also have an empty value, but it will
-        have no influence on the type of conversion.
+
         """
         self.stop_work_thread = False  # process terminate
         self.filelist = varargs[1]  # list of files (items)
@@ -106,14 +102,14 @@ class Concat_Demuxer(Thread):
             txt.write('\n'.join(["file '%s'" % x for x in escaped]))
 
         Thread.__init__(self)
-        """initialize"""
-        self.start()  # start the thread (va in self.run())
+
+        self.start()
 
     def run(self):
         """
         Subprocess initialize thread.
-        """
 
+        """
         basename = os.path.basename(self.filelist[0])  # nome file senza path
         filename = os.path.splitext(basename)[0]  # nome senza estensione
         source_ext = os.path.splitext(basename)[1].split('.')[1]  # ext

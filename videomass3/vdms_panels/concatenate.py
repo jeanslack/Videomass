@@ -26,6 +26,7 @@
 #########################################################
 import wx
 import os
+from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs.epilogue import Formula
 
 
@@ -38,9 +39,9 @@ class Conc_Demuxer(wx.Panel):
     OS = get.OS
 
     MSG_1 = _("NOTE:\n\n- The order of concatenation depends on the order in "
-              "which the files were added.\n\n- The output file name will have "
-              "the same name as the first file added (also depends\n  on the "
-              "settings made in the preferences dialog).")
+              "which the files were added.\n\n- The output file name will "
+              "have the same name as the first file added (also depends\n "
+              " on the settings made in the preferences dialog).")
 
     CONCVID = _("Make sure the files imported are all Video files and have "
                 "exactly the same streams,\nsame codecs and same dimensions, "
@@ -48,8 +49,8 @@ class Conc_Demuxer(wx.Panel):
     CONCAUDIO = _("Make sure the files imported are all audio files and have "
                   "the same formats and codecs.")
 
-    formats_vid = ('avi', 'flv', 'mp4', 'm4v', 'mkv', 'webm', 'ogv')
-    formats_aud = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac', 'opus')
+    formats_video = ('avi', 'flv', 'mp4', 'm4v', 'mkv', 'webm', 'ogv')
+    formats_audio = ('wav', 'mp3', 'ac3', 'ogg', 'flac', 'm4a', 'aac', 'opus')
     # ----------------------------------------------------------------#
 
     def __init__(self, parent):
@@ -62,13 +63,24 @@ class Conc_Demuxer(wx.Panel):
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((50, 50))
+        line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizer.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         self.lbl_msg1 = wx.StaticText(self, wx.ID_ANY,
                                       label=Conc_Demuxer.MSG_1
                                       )
         sizer.Add(self.lbl_msg1, 0, wx.ALL | wx.EXPAND, 5)
+        line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
+                              size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
+                              name=wx.StaticLineNameStr
+                              )
+        sizer.Add(line1, 0, wx.ALL | wx.EXPAND, 5)
         tbchoice = [_('Audio files (tracks)'),
                     _('Video files'),
-                    _('Only Audio streams from Videos'),]
+                    _('Only Audio streams from Videos'),
+                    ]
         self.rdbOpt = wx.RadioBox(self, wx.ID_ANY,
                                   (_("Which files do you want to "
                                      "concatenate?")),
@@ -90,7 +102,7 @@ class Conc_Demuxer(wx.Panel):
         self.lbl_f = wx.StaticText(self, wx.ID_ANY, label=_('Output format:'))
         sizFormat.Add(self.lbl_f, 0, wx.LEFT | wx.CENTER, 5)
         self.cmb_format = wx.ComboBox(self, wx.ID_ANY,
-                                      choices=Conc_Demuxer.formats_vid,
+                                      choices=Conc_Demuxer.formats_video,
                                       size=(200, -1), style=wx.CB_DROPDOWN |
                                       wx.CB_READONLY
                                       )
@@ -119,21 +131,21 @@ class Conc_Demuxer(wx.Panel):
         """
         if self.rdbOpt.GetSelection() == 0:
             self.cmb_format.Clear()
-            self.cmb_format.Append(Conc_Demuxer.formats_aud)
+            self.cmb_format.Append(Conc_Demuxer.formats_audio)
             self.cmb_format.SetSelection(1)
             self.lbl_info.SetLabel(Conc_Demuxer.CONCAUDIO)
             self.command = ''
 
         elif self.rdbOpt.GetSelection() == 1:
             self.cmb_format.Clear()
-            self.cmb_format.Append(Conc_Demuxer.formats_vid)
+            self.cmb_format.Append(Conc_Demuxer.formats_video)
             self.cmb_format.SetSelection(4)
             self.lbl_info.SetLabel(Conc_Demuxer.CONCVID)
             self.command = ''
 
         elif self.rdbOpt.GetSelection() == 2:
             self.cmb_format.Clear()
-            self.cmb_format.Append(Conc_Demuxer.formats_aud)
+            self.cmb_format.Append(Conc_Demuxer.formats_audio)
             self.cmb_format.SetSelection(1)
             self.lbl_info.SetLabel(Conc_Demuxer.CONCVID)
             self.command = '-vn'
@@ -152,36 +164,23 @@ class Conc_Demuxer(wx.Panel):
 
         if len(fsource) < 2:
             wx.MessageBox(_('At least two files are required to perform '
-                          'concatenation.'), _('ERROR'), wx.ICON_ERROR)
+                          'concatenation.'), _('ERROR'), wx.ICON_ERROR, self)
             return
 
-        existing = False
+        checking = check_files((fsource[0],),
+                               self.parent.outpath_ffmpeg,
+                               self.parent.same_destin,
+                               self.parent.suffix,
+                               ext
+                               )
+        if not checking[0]:  # User changing idea or not such files exist
+            return
 
-        if self.parent.same_destin:
-            newfile = '%s%s.%s' % (fname, self.parent.suffix, ext)
-            dirname = os.path.dirname(fsource[0])
-            for f in os.listdir(dirname):
-                if f == '%s%s.%s' % (fname, self.parent.suffix, ext):
-                    existing = True
-                    break
-        else:
-            newfile = '%s.%s' % (fname, ext)
-            dirname = self.parent.outpath_ffmpeg
-            for f in os.listdir(dirname):
-                if f == '%s.%s' % (fname, ext):
-                    existing = True
-                    break
-
-        if existing:
-            if wx.MessageBox(_('Already exist: \n\n%s\n\n'
-                               'Do you want to overwrite? ')
-                             % os.path.join(dirname, newfile),
-                             _('Please Confirm'),
-                             wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
-                return
+        f_src, destin, countmax = checking
+        newfile = '%s%s.%s' % (fname, self.parent.suffix, ext)
 
         self.concat_demuxer(self.parent.file_src, newfile,
-                            dirname, ext, logname)
+                            destin[0], ext, logname)
     # -----------------------------------------------------------
 
     def concat_demuxer(self, filesrc, newfile, destdir, outext, logname):

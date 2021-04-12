@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-10 11:13+0200\n"
+"POT-Creation-Date: 2021-04-12 09:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1397,7 +1397,7 @@ msgstr ""
 msgid "URL"
 msgstr ""
 
-#: ../vdms_io/checkup.py:83 ../vdms_panels/concatenate.py:176
+#: ../vdms_io/checkup.py:83
 #, python-format
 msgid ""
 "Already exist: \n"
@@ -1407,7 +1407,7 @@ msgid ""
 "Do you want to overwrite? "
 msgstr ""
 
-#: ../vdms_io/checkup.py:86 ../vdms_panels/concatenate.py:179
+#: ../vdms_io/checkup.py:86
 msgid "Please Confirm"
 msgstr ""
 
@@ -2125,21 +2125,21 @@ msgstr ""
 msgid "Videomass - Concatenate Demuxer"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1733
+#: ../vdms_main/main_frame.py:1732
 msgid "Viewing last log"
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1741
+#: ../vdms_main/main_frame.py:1740
 msgid ""
 "Cannot continue: The duration in the timeline exceeds the duration of some "
 "queued files."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1746 ../vdms_main/main_frame.py:1751
+#: ../vdms_main/main_frame.py:1745 ../vdms_main/main_frame.py:1750
 msgid "Processing..."
 msgstr ""
 
-#: ../vdms_main/main_frame.py:1753
+#: ../vdms_main/main_frame.py:1752
 msgid "Videomass - Output Monitor"
 msgstr ""
 
@@ -2437,7 +2437,7 @@ msgstr ""
 msgid "Unable to preview Video Stabilizer filter"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:1229 ../vdms_panels/presets_manager.py:907
+#: ../vdms_panels/av_conversions.py:1229 ../vdms_panels/presets_manager.py:900
 msgid "A target file must be selected in the queued files"
 msgstr ""
 
@@ -2511,11 +2511,11 @@ msgstr ""
 msgid "Off"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2456 ../vdms_panels/presets_manager.py:960
+#: ../vdms_panels/av_conversions.py:2456 ../vdms_panels/presets_manager.py:953
 msgid "Unset"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2459 ../vdms_panels/presets_manager.py:963
+#: ../vdms_panels/av_conversions.py:2459 ../vdms_panels/presets_manager.py:956
 msgid "start  {} | duration  {}"
 msgstr ""
 
@@ -2591,11 +2591,15 @@ msgid ""
 "Time Period"
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2584
+#: ../vdms_panels/av_conversions.py:2568
+msgid "Audio normalization processes cannot be saved on the Presets Manager."
+msgstr ""
+
+#: ../vdms_panels/av_conversions.py:2586
 msgid "Save the new profile on..."
 msgstr ""
 
-#: ../vdms_panels/av_conversions.py:2594
+#: ../vdms_panels/av_conversions.py:2596
 msgid "Create a new profile"
 msgstr ""
 
@@ -2693,14 +2697,14 @@ msgid ""
 msgstr ""
 
 #: ../vdms_panels/choose_topic.py:263 ../vdms_panels/youtubedl_ui.py:833
-#: ../vdms_panels/long_processing_task.py:507
+#: ../vdms_panels/long_processing_task.py:502
 #: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
 #: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
 #: ../vdms_panels/presets_manager.py:770 ../vdms_panels/presets_manager.py:803
 msgid "Please confirm"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:40
+#: ../vdms_panels/concatenate.py:41
 msgid ""
 "NOTE:\n"
 "\n"
@@ -2712,7 +2716,7 @@ msgid ""
 "  on the settings made in the preferences dialog)."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:45
+#: ../vdms_panels/concatenate.py:46
 msgid ""
 "Make sure the files imported are all Video files and have exactly the same "
 "streams,\n"
@@ -2720,46 +2724,46 @@ msgid ""
 "formats."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:48
+#: ../vdms_panels/concatenate.py:49
 msgid ""
 "Make sure the files imported are all audio files and have the same formats "
 "and codecs."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:69
+#: ../vdms_panels/concatenate.py:80
 msgid "Audio files (tracks)"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:70
+#: ../vdms_panels/concatenate.py:81
 msgid "Video files"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:71
+#: ../vdms_panels/concatenate.py:82
 msgid "Only Audio streams from Videos"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:73
+#: ../vdms_panels/concatenate.py:85
 msgid "Which files do you want to concatenate?"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:90
+#: ../vdms_panels/concatenate.py:102
 msgid "Output format:"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:154
+#: ../vdms_panels/concatenate.py:166
 msgid "At least two files are required to perform concatenation."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:155
+#: ../vdms_panels/concatenate.py:167
 msgid "ERROR"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:193 ../vdms_panels/presets_manager.py:849
-#: ../vdms_panels/presets_manager.py:879 ../vdms_panels/presets_manager.py:915
+#: ../vdms_panels/concatenate.py:192 ../vdms_panels/presets_manager.py:849
+#: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
 msgid "Starts"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:216
+#: ../vdms_panels/concatenate.py:215
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -2969,71 +2973,71 @@ msgstr ""
 msgid "Add Files"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:84
+#: ../vdms_panels/long_processing_task.py:83
 msgid "[Videomass]: SUCCESS !\n"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:85
+#: ../vdms_panels/long_processing_task.py:84
 msgid "[Videomass]: FAILED !\n"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:86
+#: ../vdms_panels/long_processing_task.py:85
 msgid ""
 "\n"
 "[Videomass]: Sorry, task failed !\n"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:87
+#: ../vdms_panels/long_processing_task.py:86
 msgid ""
 "\n"
 "[Videomass]: Interrupted Process !\n"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:88
+#: ../vdms_panels/long_processing_task.py:87
 msgid ""
 "\n"
 "[Videomass]: Successfully completed !\n"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:89
+#: ../vdms_panels/long_processing_task.py:88
 msgid ""
 "\n"
 "[Videomass]: completed, but not everything was successful.\n"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:153
+#: ../vdms_panels/long_processing_task.py:152
 msgid "Process log:"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:162
+#: ../vdms_panels/long_processing_task.py:161
 msgid "Suppress excess output"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:166
+#: ../vdms_panels/long_processing_task.py:165
 msgid "Abort"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:182
+#: ../vdms_panels/long_processing_task.py:181
 msgid "If activated, hides some output messages."
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:184
+#: ../vdms_panels/long_processing_task.py:183
 msgid "Stops current process"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:468
+#: ../vdms_panels/long_processing_task.py:463
 msgid "...Finished"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:483
+#: ../vdms_panels/long_processing_task.py:478
 msgid "wait... I'm aborting"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:486
+#: ../vdms_panels/long_processing_task.py:481
 msgid "...Interrupted"
 msgstr ""
 
-#: ../vdms_panels/long_processing_task.py:504
+#: ../vdms_panels/long_processing_task.py:499
 msgid ""
 "There are still processes running.. if you want to stop them, use the \"Abort"
 "\" button.\n"
@@ -3337,7 +3341,7 @@ msgstr ""
 msgid "Don't show this dialog again"
 msgstr ""
 
-#: ../vdms_panels/presets_manager.py:967
+#: ../vdms_panels/presets_manager.py:960
 msgid ""
 "SUMMARY\n"
 "\n"

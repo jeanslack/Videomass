@@ -225,7 +225,7 @@ class PrstPan(wx.Panel):
                                      )
         grd_cmd.Add(box_cmd1, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_1cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    size=(-1, 100), style=wx.TE_MULTILINE |
+                                    size=(-1, 120), style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd1.Add(self.txt_1cmd, 1, wx.ALL | wx.EXPAND, 5)
@@ -234,7 +234,7 @@ class PrstPan(wx.Panel):
                                      )
         grd_cmd.Add(box_cmd2, 1, wx.ALL | wx.EXPAND, 5)
         self.txt_2cmd = wx.TextCtrl(self, wx.ID_ANY, "",
-                                    size=(-1, 100), style=wx.TE_MULTILINE |
+                                    size=(-1, 120), style=wx.TE_MULTILINE |
                                     wx.TE_PROCESS_ENTER
                                     )
         box_cmd2.Add(self.txt_2cmd, 1, wx.ALL | wx.EXPAND, 5)

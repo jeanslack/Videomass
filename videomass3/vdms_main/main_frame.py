@@ -1698,7 +1698,6 @@ class MainFrame(wx.Frame):
             self.statusbar_msg(_('Ready'), None)
 
         self.SetTitle(_('Videomass - Concatenate Demuxer'))
-        #self.view_Timeline(self)  # set timeline status
         self.toolbar.Show()
         self.avpan.Enable(True), self.prstpan.Enable(True),
         self.ydlpan.Enable(True), self.startpan.Enable(True)

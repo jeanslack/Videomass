@@ -31,8 +31,8 @@ import os
 
 def check_files(file_sources, dir_destin, same_destin, suffix, extout):
     """
-    check for overwriting and verify the existence of files
-    and directories.
+    check for overwriting and the existence of
+    files and directories.
 
     return following values:
 
@@ -84,8 +84,8 @@ def check_files(file_sources, dir_destin, same_destin, suffix, extout):
                            'Do you want to overwrite? ') %
                          ('\n'.join(exclude)),
                          _('Please Confirm'),
-                         wx.ICON_QUESTION | wx.YES_NO,
-                         None) == wx.NO:
+                         wx.ICON_QUESTION | wx.YES_NO, None) == wx.NO:
+
             return (False, None, None, None, None)
 
     # --------------- CHECK EXISTING FILES AND DIRECTORIES:

@@ -2564,21 +2564,23 @@ class AV_Conv(wx.Panel):
         Save current setting as profile for the Presets Manager panel
 
         """
+        if self.rdbx_normalize.GetSelection() in (1, 2, 3):  # EBU
+            wx.MessageBox(_('Audio normalization processes cannot '
+                            'be saved on the Presets Manager.'),
+                            'Videomass', wx.ICON_INFORMATION, self)
+            return
+
         self.update_allentries()
+
         if self.cmb_Media.GetValue() == 'Video':
-            if self.rdbx_normalize.GetSelection() == 3:  # EBU
-                parameters = self.video_ebu_2pass([], [], 0, 'save as profile')
-            elif self.opt["Vidstabdetect"]:
+            if self.opt["Vidstabdetect"]:
                 parameters = self.video_stabilizer([], [], 0,
                                                    'save as profile')
             else:
                 parameters = self.video_stdProc([], [], 0, 'save as profile')
 
         elif self.cmb_Media.GetValue() == 'Audio':
-            if self.rdbx_normalize.GetSelection() == 3:  # EBU
-                parameters = self.audio_ebu_2pass([], [], 0, 'save as profile')
-            else:
-                parameters = self.audio_stdProc([], [], 0, 'save as profile')
+            parameters = self.audio_stdProc([], [], 0, 'save as profile')
 
         with wx.FileDialog(
                         None, _("Save the new profile on..."),
@@ -2597,7 +2599,7 @@ class AV_Conv(wx.Panel):
                                                'addprofile',
                                                os.path.basename(filename),
                                                parameters,
-                                               t
+                                               t,
                                                )
         if prstdialog.ShowModal() == wx.ID_CANCEL:
             return
