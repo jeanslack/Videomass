@@ -107,9 +107,6 @@ class Downloader(wx.Panel):
     else:
         BACKGRD = LAVENDER
 
-    #VQUALITY = {('Best quality video'): ['best', 'best'],
-                #('Worst quality video'): ['worst', 'worst']
-                #}
     VQUALITY = {('Best quality video'): ['', ''],
                 ('Worst quality video'): ['worst', 'worst']
                 }
@@ -128,7 +125,6 @@ class Downloader(wx.Panel):
                 ('Worst quality audio'): ['worst', 'worst']}
 
     CHOICE = [_('Default'),
-              #_('Customized'),
               _('Download audio and video splitted'),
               _('Download Audio only'),
               _('Download by format code')
@@ -253,9 +249,9 @@ class Downloader(wx.Panel):
         fgs1.Add(self.ckbx_w, 0, wx.ALL, 5)
 
         self.ckbx_id = wx.CheckBox(panelscroll, wx.ID_ANY,
-                                  (_('Include the video ID\n'
-                                     'in the file names'))
-                                  )
+                                   (_('Include the video ID\n'
+                                      'in the file names'))
+                                   )
         fgs1.Add(self.ckbx_id, 0, wx.ALL, 5)
 
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)

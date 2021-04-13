@@ -30,6 +30,37 @@ from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs.epilogue import Formula
 
 
+def compare_media_param(data):
+    """
+    Compare video codec types, audio codec types and dimensions
+    (width and height). Returns True if differences are found
+    between them, otherwise it returns False.
+    """
+    vcodec = list()  # video codec
+    acodec = list()  # audio codec
+    ahz = list()  # audio sample rate
+    size = list()  # width x height (frame dimensions if video)
+
+    for s in data:
+        for i in s.get('streams'):
+            if i.get('codec_type') == 'video':
+                vcodec.append(i.get('codec_name'))
+                size.append('%sx%s' % (i.get('width'), i.get('height')))
+            if i.get('codec_type') == 'audio':
+                acodec.append(i.get('codec_name'))
+                ahz.append(i.get('sample_rate'))
+
+    for compare in (vcodec, acodec, ahz, size):
+        if len(compare) == 1:
+            return True
+
+        if all(items == compare[0] for items in compare) is False:
+            return True
+
+    return False
+# -------------------------------------------------------------------------
+
+
 class Conc_Demuxer(wx.Panel):
     """
     A simple panel to set media files concatenation
@@ -59,7 +90,7 @@ class Conc_Demuxer(wx.Panel):
         self.parent = parent  # parent is the MainFrame
         self.command = ''
 
-        wx.Panel.__init__(self, parent=parent)
+        wx.Panel.__init__(self, parent=parent, style=wx.BORDER_THEME)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add((50, 50))
@@ -118,8 +149,6 @@ class Conc_Demuxer(wx.Panel):
             self.lbl_info.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg1.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
 
-        self.lbl_msg1.SetForegroundColour((3, 152, 252, 255))
-
         # Binding
         self.Bind(wx.EVT_RADIOBOX, self.on_Radio, self.rdbOpt)
     # ---------------------------------------------------------
@@ -164,7 +193,9 @@ class Conc_Demuxer(wx.Panel):
 
         if len(fsource) < 2:
             wx.MessageBox(_('At least two files are required to perform '
-                          'concatenation.'), _('ERROR'), wx.ICON_ERROR, self)
+                            'concatenation.'), _('ERROR'),
+                          wx.ICON_ERROR, self
+                          )
             return
 
         checking = check_files((fsource[0],),
@@ -174,6 +205,14 @@ class Conc_Demuxer(wx.Panel):
                                ext
                                )
         if not checking[0]:  # User changing idea or not such files exist
+            return
+
+        diff = compare_media_param(self.parent.data_files)
+        if diff is True:
+            wx.MessageBox(_('The files do not have the same "codec_types", '
+                            'same "sample_rate" or same "width" or "height". '
+                            'Unable to proceed without same parameters.'),
+                          _('ERROR'), wx.ICON_ERROR, self)
             return
 
         f_src, destin, countmax = checking

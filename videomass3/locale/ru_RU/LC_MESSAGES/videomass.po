@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 09:30+0200\n"
-"PO-Revision-Date: 2021-04-12 09:57+0200\n"
+"POT-Creation-Date: 2021-04-13 09:14+0200\n"
+"PO-Revision-Date: 2021-04-13 09:18+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -1304,7 +1304,7 @@ msgstr "Результат DBFS"
 
 #: ../vdms_frames/shownormlist.py:64
 msgid "Post-normalization references:"
-msgstr "Рекомендации после нормализации:"
+msgstr "Ссылки после нормализации:"
 
 #: ../vdms_frames/shownormlist.py:69
 msgid "=  Clipped peaks"
@@ -1965,11 +1965,11 @@ msgstr "перейти на панель Аудио / Видео Конверс�
 
 #: ../vdms_main/main_frame.py:489
 msgid "Concatenate Demuxer\tShift+D"
-msgstr ""
+msgstr "Concatenate Demuxer\tShift+D"
 
 #: ../vdms_main/main_frame.py:490
 msgid "jump to the Concatenate Demuxer panel"
-msgstr ""
+msgstr "перейти на панель Concatenate Demuxer"
 
 #: ../vdms_main/main_frame.py:493
 msgid "YouTube downloader\tShift+Y"
@@ -2424,7 +2424,7 @@ msgstr "Videomass - Менеджер Пресетов"
 
 #: ../vdms_main/main_frame.py:1700
 msgid "Videomass - Concatenate Demuxer"
-msgstr ""
+msgstr "Videomass - Concatenate Demuxer"
 
 #: ../vdms_main/main_frame.py:1732
 msgid "Viewing last log"
@@ -3004,6 +3004,7 @@ msgstr ""
 #: ../vdms_panels/av_conversions.py:2568
 msgid "Audio normalization processes cannot be saved on the Presets Manager."
 msgstr ""
+"Процессы нормализации звука не могут быть сохранены в Менеджере Пресетов."
 
 #: ../vdms_panels/av_conversions.py:2586
 msgid "Save the new profile on..."
@@ -3031,7 +3032,7 @@ msgstr "AV-конвертация"
 
 #: ../vdms_panels/choose_topic.py:113
 msgid "Concatenate media files"
-msgstr ""
+msgstr "Объединить медиафайлы"
 
 #: ../vdms_panels/choose_topic.py:117 ../vdms_panels/youtubedl_ui.py:424
 msgid "YouTube Downloader"
@@ -3077,6 +3078,8 @@ msgstr ""
 msgid ""
 "Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
+"Объединение нескольких медиафайлов в соответствии с порядком импорта без "
+"перекодирования"
 
 #: ../vdms_panels/choose_topic.py:221
 msgid ""
@@ -3138,7 +3141,7 @@ msgstr ""
 msgid "Please confirm"
 msgstr "Пожалуйста, подтвердите"
 
-#: ../vdms_panels/concatenate.py:41
+#: ../vdms_panels/concatenate.py:73
 msgid ""
 "NOTE:\n"
 "\n"
@@ -3149,55 +3152,80 @@ msgid ""
 "depends\n"
 "  on the settings made in the preferences dialog)."
 msgstr ""
+"ПРИМЕЧАНИЕ:\n"
+"\n"
+"- Порядок объединения зависит от того, в каком порядке были добавлены "
+"файлы..\n"
+"\n"
+"- Имя выходного файла будет таким же, как имя первого добавленного файла "
+"(также зависит\n"
+"  от настроек, сделанных в диалоговом окне настроек)."
 
-#: ../vdms_panels/concatenate.py:46
+# Длинные строки в русском
+# возможен вариант:
+# Убедитесь, что все импортированные файлы являются видеофайлами и имеют\n
+# одинаковые потоки, одинаковые кодеки и одинаковые размеры,\n
+# но могут быть упакованы в разные форматы контейнеров.
+#: ../vdms_panels/concatenate.py:78
 msgid ""
 "Make sure the files imported are all Video files and have exactly the same "
 "streams,\n"
 "same codecs and same dimensions, but can be wrapped in different container "
 "formats."
 msgstr ""
+"Убедитесь, что все импортированные файлы являются видеофайлами и имеют "
+"одинаковые потоки,\n"
+"одинаковые кодеки и одинаковые размеры, но могут быть упакованы в разные "
+"форматы контейнеров."
 
-#: ../vdms_panels/concatenate.py:49
+#: ../vdms_panels/concatenate.py:81
 msgid ""
 "Make sure the files imported are all audio files and have the same formats "
 "and codecs."
 msgstr ""
+"Убедитесь, что все импортированные файлы являются аудиофайлами и имеют "
+"одинаковые форматы и кодеки."
 
-#: ../vdms_panels/concatenate.py:80
+#: ../vdms_panels/concatenate.py:112
 msgid "Audio files (tracks)"
-msgstr ""
+msgstr "Аудио файлы (треки)"
 
-#: ../vdms_panels/concatenate.py:81
+#: ../vdms_panels/concatenate.py:113
 msgid "Video files"
-msgstr ""
+msgstr "Видео файлы"
 
-#: ../vdms_panels/concatenate.py:82
+#: ../vdms_panels/concatenate.py:114
 msgid "Only Audio streams from Videos"
-msgstr ""
+msgstr "Только аудиопотоки из видео"
 
-#: ../vdms_panels/concatenate.py:85
+#: ../vdms_panels/concatenate.py:117
 msgid "Which files do you want to concatenate?"
-msgstr ""
+msgstr "Какие файлы вы хотите объединить?"
 
-#: ../vdms_panels/concatenate.py:102
+#: ../vdms_panels/concatenate.py:134
 msgid "Output format:"
 msgstr "Выходной формат:"
 
-#: ../vdms_panels/concatenate.py:166
+#: ../vdms_panels/concatenate.py:196
 msgid "At least two files are required to perform concatenation."
-msgstr ""
+msgstr "Для объединения требуются как минимум два файла."
 
-#: ../vdms_panels/concatenate.py:167
+#: ../vdms_panels/concatenate.py:197 ../vdms_panels/concatenate.py:216
 msgid "ERROR"
+msgstr "ОШИБКА"
+
+#: ../vdms_panels/concatenate.py:213
+msgid ""
+"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
+"\"width\" or \"height\". Unable to proceed without same parameters."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:192 ../vdms_panels/presets_manager.py:849
+#: ../vdms_panels/concatenate.py:232 ../vdms_panels/presets_manager.py:849
 #: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
 msgid "Starts"
 msgstr "Начало"
 
-#: ../vdms_panels/concatenate.py:215
+#: ../vdms_panels/concatenate.py:255
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3207,6 +3235,13 @@ msgid ""
 "Output Format\n"
 "Time Period"
 msgstr ""
+"РЕЗЮМЕ\n"
+"\n"
+"Файл для объединения\n"
+"Имя выходного файла                      \n"
+"Папка назначения\n"
+"Выходной формат\n"
+"Временной период"
 
 #: ../vdms_panels/youtubedl_ui.py:82
 msgid ""
@@ -3673,11 +3708,6 @@ msgstr ""
 "Создана новый пустой пресет."
 
 #: ../vdms_panels/presets_manager.py:488
-#, fuzzy
-#| msgid ""
-#| "Are you sure you want to remove \"{}\" preset?\n"
-#| "\n"
-#| " It will be moved to the \"Removals\" folder."
 msgid ""
 "Are you sure you want to remove \"{}\" preset?\n"
 "\n"
@@ -3685,7 +3715,7 @@ msgid ""
 msgstr ""
 "Вы уверены, что хотите удалить пресет \"{}\" ?\n"
 "\n"
-"Он будет перемещен в папку «Удаление»."
+"Он будет перемещен в подпапку «Удалённые» папки пресетов."
 
 #: ../vdms_panels/presets_manager.py:502
 msgid ""

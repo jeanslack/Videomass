@@ -2567,7 +2567,7 @@ class AV_Conv(wx.Panel):
         if self.rdbx_normalize.GetSelection() in (1, 2, 3):  # EBU
             wx.MessageBox(_('Audio normalization processes cannot '
                             'be saved on the Presets Manager.'),
-                            'Videomass', wx.ICON_INFORMATION, self)
+                          'Videomass', wx.ICON_INFORMATION, self)
             return
 
         self.update_allentries()

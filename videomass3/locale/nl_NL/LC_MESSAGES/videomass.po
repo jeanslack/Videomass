@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-12 09:30+0200\n"
-"PO-Revision-Date: 2021-04-12 09:35+0200\n"
+"POT-Creation-Date: 2021-04-13 09:14+0200\n"
+"PO-Revision-Date: 2021-04-13 09:16+0200\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -3218,7 +3218,7 @@ msgstr ""
 msgid "Please confirm"
 msgstr "Bevestig dit"
 
-#: ../vdms_panels/concatenate.py:41
+#: ../vdms_panels/concatenate.py:73
 msgid ""
 "NOTE:\n"
 "\n"
@@ -3230,7 +3230,7 @@ msgid ""
 "  on the settings made in the preferences dialog)."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:46
+#: ../vdms_panels/concatenate.py:78
 msgid ""
 "Make sure the files imported are all Video files and have exactly the same "
 "streams,\n"
@@ -3238,54 +3238,56 @@ msgid ""
 "formats."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:49
+#: ../vdms_panels/concatenate.py:81
 msgid ""
 "Make sure the files imported are all audio files and have the same formats "
 "and codecs."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:80
+#: ../vdms_panels/concatenate.py:112
 #, fuzzy
 #| msgid "Audio Filters"
 msgid "Audio files (tracks)"
 msgstr "Audio Filters"
 
-#: ../vdms_panels/concatenate.py:81
+#: ../vdms_panels/concatenate.py:113
 #, fuzzy
 #| msgid "Video Filters"
 msgid "Video files"
 msgstr "Video Filters"
 
-#: ../vdms_panels/concatenate.py:82
+#: ../vdms_panels/concatenate.py:114
 msgid "Only Audio streams from Videos"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:85
-#, fuzzy
-#| msgid " Do you want to enable this feature?"
+#: ../vdms_panels/concatenate.py:117
 msgid "Which files do you want to concatenate?"
-msgstr " Wilt u deze mogelijkheid activeren?"
+msgstr ""
 
-#: ../vdms_panels/concatenate.py:102
-#, fuzzy
-#| msgid "Output Format"
+#: ../vdms_panels/concatenate.py:134
 msgid "Output format:"
-msgstr "Output Formaat"
+msgstr "Output Formaat:"
 
-#: ../vdms_panels/concatenate.py:166
+#: ../vdms_panels/concatenate.py:196
 msgid "At least two files are required to perform concatenation."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:167
+#: ../vdms_panels/concatenate.py:197 ../vdms_panels/concatenate.py:216
 msgid "ERROR"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:192 ../vdms_panels/presets_manager.py:849
+#: ../vdms_panels/concatenate.py:213
+msgid ""
+"The files do not have the same \"codec_types\", same \"sample_rate\" or same "
+"\"width\" or \"height\". Unable to proceed without same parameters."
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:232 ../vdms_panels/presets_manager.py:849
 #: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
 msgid "Starts"
 msgstr "Start"
 
-#: ../vdms_panels/concatenate.py:215
+#: ../vdms_panels/concatenate.py:255
 msgid ""
 "SUMMARY\n"
 "\n"
