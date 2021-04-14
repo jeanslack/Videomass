@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # Name: concatenate.py
-# Porpose: join media files interface
+# Porpose: A simple concat demuxer UI
 # Compatibility: Python3, wxPython Phoenix
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
@@ -32,9 +32,12 @@ from videomass3.vdms_dialogs.epilogue import Formula
 
 def compare_media_param(data):
     """
-    Compare video codec types, audio codec types and dimensions
-    (width and height). Returns True if differences are found
-    between them, otherwise it returns False.
+    Compare video codec types, audio codec types with sample_rate,
+    dimensions (width and height).
+
+    Returns True if differences are found between them,
+    otherwise it returns False.
+
     """
     vcodec = list()  # video codec
     acodec = list()  # audio codec
@@ -63,7 +66,8 @@ def compare_media_param(data):
 
 class Conc_Demuxer(wx.Panel):
     """
-    A simple panel to set media files concatenation
+    A simple concat demuxer UI to set media files concatenation using
+    concat demuxer, see <https://ffmpeg.org/ffmpeg-formats.html#concat>
 
     """
     get = wx.GetApp()
@@ -86,6 +90,10 @@ class Conc_Demuxer(wx.Panel):
 
     def __init__(self, parent):
         """
+        self.Command attribute is an empty string when radiobox is
+        set to 0 - 1 Selections, otherwise a '-vn' parameter is
+        added.
+        .
         """
         self.parent = parent  # parent is the MainFrame
         self.command = ''

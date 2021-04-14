@@ -35,8 +35,10 @@ videomass (3.4.1-1) UNRELEASED; urgency=medium
   * The Streams Info button is now also enabled on the queued files panel.
   * Removed automations on Presets manager as confusing.
   * Added useful panel for media concatenation (concat demuxer)
+  * Setup dialog: added pip3 command on text control to facilitate
+    copy and paste.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Mon, 12 Apr 2021 09:26:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 14 Apr 2021 16:06:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

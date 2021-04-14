@@ -127,7 +127,7 @@ class Concat_Demuxer(Thread):
                                  Concat_Demuxer.SUFFIX,
                                  outext,
                                  ))
-        count = 'Concatenate %s File' % (self.countmax,)
+        count = '%s files to concat' % (self.countmax,)
         com = "%s\n%s" % (count, cmd)
         wx.CallAfter(pub.sendMessage,
                         "COUNT_EVT",

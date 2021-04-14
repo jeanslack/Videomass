@@ -270,10 +270,6 @@ class Setup(wx.Dialog):
         sizerYdl.Add((0, 15))
         labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
         sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
-        txtctrl_clipboard = wx.TextCtrl(self.tabThree, wx.ID_ANY, "",
-                                        style=wx.TE_READONLY, size=(200, -1),
-                                        )
-        sizerYdl.Add(txtctrl_clipboard, 0, wx.ALL | wx.CENTRE, 5)
         sizerYdl.Add((0, 15))
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
@@ -312,38 +308,30 @@ class Setup(wx.Dialog):
                                                  'youtube-dl updatable by '
                                                  'Videomass'))
             tip1 = _('Menu bar > Tools > Update youtube-dl')
-            tip2 = ('pip3 install -U youtube-dl')
+            tip2 = ('\npip3 install -U youtube-dl\n')
 
         ydlmsg = _('Make sure you are using the latest available version of\n'
                    'youtube-dl. This allows you to avoid download problems.\n')
 
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            txtctrl_clipboard.Hide()
             self.rdbDownloader.EnableItem(1, enable=False)
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
+
         if Setup.YDL_PREF == 'disabled':
-            txtctrl_clipboard.Hide()
             self.rdbDownloader.SetSelection(0)
             self.ydlPath.WriteText(_('Disabled'))
             labydl0.SetLabel('%s' % (ydlmsg))
 
         elif Setup.YDL_PREF == 'system':
             self.rdbDownloader.SetSelection(1)
-            if tip2 == 'pip3 install -U youtube-dl':
-                labydl0.SetLabel('%s' % (ydlmsg))
-                txtctrl_clipboard.write(tip2)
-            else:
-                txtctrl_clipboard.Hide()
-                labydl0.SetLabel('%s%s' % (ydlmsg, tip2))
-
+            labydl0.SetLabel('%s%s' % (ydlmsg, tip2))
             if Setup.SITEPKGYDL is None:
                 self.ydlPath.WriteText(_('Not Installed'))
             else:
                 self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
 
         elif Setup.YDL_PREF == 'local':
-            txtctrl_clipboard.Hide()
             self.rdbDownloader.SetSelection(2)
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
             if os.path.exists(Setup.EXECYDL):

@@ -46,7 +46,8 @@ import argparse
 import sys
 
 
-def svg2png(delete, paths, parameters, outputdir, recursive: bool=False):
+def svg2png(delete, paths, parameters,
+            outputdir, recursive: bool=False):
     """
     Iterates on a generator given from `glob.iglob` method.
     glob treats filenames beginning with a dot (.) as special cases,

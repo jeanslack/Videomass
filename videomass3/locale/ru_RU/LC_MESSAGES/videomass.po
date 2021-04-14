@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.4.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-13 09:14+0200\n"
-"PO-Revision-Date: 2021-04-13 09:18+0200\n"
+"PO-Revision-Date: 2021-04-13 14:27+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -3219,6 +3219,8 @@ msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed without same parameters."
 msgstr ""
+"Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых "
+"«ширины» или «высоты». Невозможно продолжить без тех же параметров."
 
 #: ../vdms_panels/concatenate.py:232 ../vdms_panels/presets_manager.py:849
 #: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908

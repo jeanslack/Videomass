@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Apr 12, 2021 V.3.4.1
+Apr 14, 2021 V.3.4.1
 
   * Update Russian translation
   * Fixed gauge progress issues with some ffmpeg encoder.
@@ -44,6 +44,8 @@ Apr 12, 2021 V.3.4.1
   * The Streams Info button is now also enabled on the queued files panel.
   * Removed automations on Presets manager as confusing.
   * Added useful panel for media concatenation (concat demuxer)
+  * Setup dialog: added pip3 command on text control to facilitate
+    copy and paste.
 
 +------------------------------------+
 Feb 13, 2021 V.3.3.8
