@@ -5,7 +5,7 @@
 - [Russian](Pages/User-guide-languages/ru/Index_ru.md)
 - [Italian](Pages/User-guide-languages/it/Index_it.md)
 
-## Demonstration videos and screencasts
+## Demo videos and screencasts
 
 ### How to trim using the Timeline tool  
 <iframe width="200" height="153" src="https://www.youtube.com/embed/1IRGWN7DQKE" title="YouTube video player" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
