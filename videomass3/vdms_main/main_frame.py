@@ -153,7 +153,7 @@ class MainFrame(wx.Frame):
                                                      pathicons[18],
                                                      pathicons[5],
                                                      )
-        self.ytDownloader = youtubedl_ui.Downloader(self, pathicons[4])
+        self.ytDownloader = youtubedl_ui.Downloader(self, pathicons[6])
         self.VconvPanel = av_conversions.AV_Conv(self,
                                                  MainFrame.OS,
                                                  pathicons[6],  # playfilt

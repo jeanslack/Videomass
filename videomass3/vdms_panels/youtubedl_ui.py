@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Mar.08.2021 *PEP8 compatible*
+# Rev: April.16.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -222,9 +222,10 @@ class Downloader(wx.Panel):
                               )
         fgs1.Add(line1, 0, wx.ALL | wx.EXPAND, 10)
 
-        btn_play = wx.Button(panelscroll, wx.ID_ANY, _("Preview"))
-        btn_play.SetBitmap(bmpplay, wx.LEFT)
-        fgs1.Add(btn_play, 0, wx.ALL | wx.EXPAND, 5)
+        self.btn_play = wx.Button(panelscroll, wx.ID_ANY, _("Preview"))
+        self.btn_play.SetBitmap(bmpplay, wx.LEFT)
+        self.btn_play.Disable()
+        fgs1.Add(self.btn_play, 0, wx.ALL | wx.EXPAND, 5)
 
         self.ckbx_pl = wx.CheckBox(panelscroll, wx.ID_ANY,
                                    (_('Download all videos in playlist'))
@@ -298,23 +299,39 @@ class Downloader(wx.Panel):
             # self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
             self.labtxt.SetLabelMarkup("<b>%s</b>" % labtstr)
         #  tooltips
-        btn_play.SetToolTip(_('Play selected url'))
+        self.btn_play.SetToolTip(_('Play selected url'))
 
         # ----------------------Binder (EVT)----------------------#
         self.choice.Bind(wx.EVT_CHOICE, self.on_Choice)
         self.cmbx_vq.Bind(wx.EVT_COMBOBOX, self.on_Vq)
         self.cmbx_af.Bind(wx.EVT_COMBOBOX, self.on_Af)
         self.cmbx_aq.Bind(wx.EVT_COMBOBOX, self.on_Aq)
-        self.Bind(wx.EVT_BUTTON, self.playSelurl, btn_play)
+        self.Bind(wx.EVT_BUTTON, self.playSelurl, self.btn_play)
         self.ckbx_pl.Bind(wx.EVT_CHECKBOX, self.on_Playlist)
         self.ckbx_thumb.Bind(wx.EVT_CHECKBOX, self.on_Thumbnails)
         self.ckbx_meta.Bind(wx.EVT_CHECKBOX, self.on_Metadata)
         self.ckbx_sb.Bind(wx.EVT_CHECKBOX, self.on_Subtitles)
         self.fcode.Bind(wx.EVT_CONTEXT_MENU, self.onContext)
+        self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.on_select, self.fcode)
+        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.on_deselect, self.fcode)
         if self.oldwx is False:
             self.fcode.Bind(wx.EVT_LIST_ITEM_CHECKED, self.onCheck)
             self.fcode.Bind(wx.EVT_LIST_ITEM_UNCHECKED, self.onCheck)
     # -----------------------------------------------------------------#
+
+    def on_select(self, event):
+        """
+        self.fcod selection event that enables btn_play
+        """
+        self.btn_play.Enable()
+    # ----------------------------------------------------------------------
+
+    def on_deselect(self, event):
+        """
+        self.fcod de-selection event that disables btn_play
+        """
+        self.btn_play.Disable()
+    # ----------------------------------------------------------------------
 
     def onCheck(self, event):
         """
@@ -646,6 +663,7 @@ class Downloader(wx.Panel):
         - Set media quality parameter for on_urls_list method
         """
         self.codText.Clear()
+        self.btn_play.Disable()
 
         if self.choice.GetSelection() == 0:
             self.cmbx_af.Disable(), self.cmbx_aq.Disable()

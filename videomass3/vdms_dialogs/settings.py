@@ -271,8 +271,10 @@ class Setup(wx.Dialog):
         labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
         sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
         txtctrl_clipboard = wx.TextCtrl(self.tabThree, wx.ID_ANY, "",
-                                        style=wx.TE_READONLY, size=(200, -1),
+                                        style=wx.TE_READONLY, size=(300, -1),
                                         )
+        txtctrl_clipboard.SetBackgroundColour('#444444')
+        txtctrl_clipboard.SetForegroundColour('#86d02b')
         sizerYdl.Add(txtctrl_clipboard, 0, wx.ALL | wx.CENTRE, 5)
         sizerYdl.Add((0, 15))
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
@@ -312,7 +314,7 @@ class Setup(wx.Dialog):
                                                  'youtube-dl updatable by '
                                                  'Videomass'))
             tip1 = _('Menu bar > Tools > Update youtube-dl')
-            tip2 = ('pip3 install -U youtube-dl')
+            tip2 = ('python3 -m pip install -U youtube-dl')
 
         ydlmsg = _('Make sure you are using the latest available version of\n'
                    'youtube-dl. This allows you to avoid download problems.\n')
@@ -330,7 +332,7 @@ class Setup(wx.Dialog):
 
         elif Setup.YDL_PREF == 'system':
             self.rdbDownloader.SetSelection(1)
-            if tip2 == 'pip3 install -U youtube-dl':
+            if tip2 == 'python3 -m pip install -U youtube-dl':
                 labydl0.SetLabel('%s' % (ydlmsg))
                 txtctrl_clipboard.write(tip2)
             else:
