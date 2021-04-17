@@ -625,8 +625,9 @@ class Downloader(wx.Panel):
         """
         show URL data information. This method is called by
         main frame when the 'Show More' button is pressed.
+
         """
-        if Downloader.PYLIB_YDL is not None:  # YuotubeDL is not used as module
+        if Downloader.PYLIB_YDL is not None:  # YuotubeDL not used as module
             wx.MessageBox(_('Sorry, this feature is disabled.'),
                           'Videomass', wx.ICON_INFORMATION)
             return

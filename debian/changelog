@@ -38,7 +38,7 @@ videomass (3.4.1-1) UNRELEASED; urgency=medium
   * Setup dialog: added pip3 command on text control to facilitate
     copy and paste.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Wed, 14 Apr 2021 16:06:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 16 Apr 2021 16:06:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 

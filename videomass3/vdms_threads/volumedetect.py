@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: April.17.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -57,7 +57,8 @@ class VolumeDetectThread(Thread):
                    ([[maxvol, medvol], [etc,etc]], None or "str errors")
         """
         self.filelist = filelist
-        self.time_seq = timeseq
+        empty = "-ss 00:00:00.000 -t 00:00:00.000"
+        self.time_seq = '' if timeseq == empty else timeseq
         self.audiomap = audiomap
         logdir = logdir
         self.ffmpeg_url = ffmpeg_url
