@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: April.18.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -34,25 +34,31 @@ def browse(OS, pathname):
 
     """
     status = 'Unrecognized error'
+
     if OS == 'Windows':
-        #cmd = ' '.join(['cmd', '/c', 'start', pathname])
-        cmd = r'cmd /c start "%s"' % pathname
-        info = subprocess.STARTUPINFO()
-        info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        try:
+            os.startfile(os.path.realpath(pathname))
+
+        except FileNotFoundError as pathnotfound:
+            return '%s' % pathnotfound
+
+        except Exception as anyerr:
+            return '%s' % anyerr
+
+        return None
 
     elif OS == 'Darwin':
         cmd = ['open', pathname]
-        info = None
+
 
     else:  # xdg-open *should* be supported by recent Gnome, KDE, Xfce
         cmd = ['xdg-open', pathname]
-        info = None
+
     try:
         p = subprocess.Popen(cmd,
                              stdout=subprocess.PIPE,
                              stderr=subprocess.STDOUT,
                              universal_newlines=True,  # mod text
-                             startupinfo=info,
                              )
         out = p.communicate()
 

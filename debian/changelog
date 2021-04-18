@@ -1,3 +1,9 @@
+videomass (3.4.2-1) UNRELEASED; urgency=medium
+
+  * MS-Windows: Fixed issue with opening Explorer.
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Apr 2021 22:16:00 +0200
+
 videomass (3.4.1-1) UNRELEASED; urgency=medium
 
   * Update Russian translation
