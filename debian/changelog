@@ -4,7 +4,7 @@ videomass (3.4.1-1) UNRELEASED; urgency=medium
   * Fixed gauge progress issues with some ffmpeg encoder.
   * Fixed percentage progress issues with some ffmpeg encoder
   * Fixed missing string to get exception 'FileNotFoundError' on MessageBox()
-    of `on_Audio_analyzes` function (av_conversions.py, presets_manager.py)
+    of `on_Audio_analyzes` function (av_conversions.py)
   * Fixed missing double quotes on ffmpeg URL, giving `[Errno 2] file or
     directory does not exist`, which occurred when the path has whitespace.
   * Fixed exception not showing up when playing ffplay.
@@ -26,10 +26,10 @@ videomass (3.4.1-1) UNRELEASED; urgency=medium
   * AV-Conversions: resizing filter, fixed some incorrect values on displays
     after setting.
   * AV-Conversions: improved order of applying video filters.
-  * Preview and playback now have auto-exit activation.
+  * Preview and playback: added auto-exit checkbox on Settings menu.
   * Fixed #20
-  * Translated into Brazilian Portuguese, thanks to Samuel.
-  * Improved accuracy of the crop filter selection.
+  * Translated into Portuguese (Brazilian), thanks to Samuel.
+  * Improved accuracy of the crop filter on the area selection.
   * Play button removed on toolbar as confusing.
   * Improved enabling and disabling of buttons during some actions.
   * The Streams Info button is now also enabled on the queued files panel.
@@ -38,7 +38,7 @@ videomass (3.4.1-1) UNRELEASED; urgency=medium
   * Setup dialog: added pip3 command on text control to facilitate
     copy and paste.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 16 Apr 2021 16:06:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Apr 2021 09:46:00 +0200
 
 videomass (3.3.8-1) UNRELEASED; urgency=medium
 
