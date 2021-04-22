@@ -80,7 +80,7 @@ class Conc_Demuxer(wx.Panel):
               "(also depends\n "
               " on the settings made in the preferences dialog).\n\n"
               "- Video files must have exactly same streams, same codecs "
-              "and same\n  dimensions, but can be wrapped in "
+              "and same\n  width/height, but can be wrapped in "
               "different container formats.\n\n"
               "- Audio files must have exactly the same formats and "
               "codecs.")

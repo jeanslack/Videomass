@@ -281,8 +281,7 @@ class Choose_Topic(wx.Panel):
             else:
                 if self.APPTYPE ==  'appimage':
                     wx.MessageBox(_("ERROR: {}\n\nyoutube-dl is not embedded "
-                                    "on AppImage. Please, install "
-                                    "it.").format(self.PYLIB_YDL),
+                                    "on AppImage.").format(self.PYLIB_YDL),
                                   "Videomass", wx.ICON_ERROR, self)
                     return
                 else:

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-13 09:14+0200\n"
-"PO-Revision-Date: 2021-04-13 14:27+0200\n"
+"POT-Creation-Date: 2021-04-22 11:17+0200\n"
+"PO-Revision-Date: 2021-04-22 11:25+0200\n"
 "Last-Translator: ChourS <chours2008@yandex.ru>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: ru_RU\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: ../Videomass3.py:106
+#: ../Videomass3.py:107
 #, python-brace-format
 msgid ""
 "{0}\n"
@@ -31,7 +31,7 @@ msgstr ""
 "\n"
 "Извините, не могу продолжить.."
 
-#: ../Videomass3.py:207
+#: ../Videomass3.py:202
 msgid ""
 "Permission denied: {}\n"
 "\n"
@@ -727,12 +727,12 @@ msgstr ""
 "текстовые поля ниже, нажав соответствующие кнопки."
 
 #: ../vdms_dialogs/wizard_dlg.py:361 ../vdms_dialogs/wizard_dlg.py:377
-#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:712
-#: ../vdms_dialogs/settings.py:751 ../vdms_dialogs/settings.py:790
+#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:718
+#: ../vdms_dialogs/settings.py:757 ../vdms_dialogs/settings.py:796
 msgid "Choose the {} executable"
 msgstr "Выберите исполняемый файл {}"
 
-#: ../vdms_dialogs/wizard_dlg.py:416
+#: ../vdms_dialogs/wizard_dlg.py:415
 msgid ""
 "Videomass has a simple graphical\n"
 "interface for youtube-dl\n"
@@ -740,7 +740,7 @@ msgstr ""
 "Videomass имеет простой графический\n"
 "интерфейс для youtube-dl\n"
 
-#: ../vdms_dialogs/wizard_dlg.py:418
+#: ../vdms_dialogs/wizard_dlg.py:417
 msgid ""
 "This feature allows you to download video and audio from\n"
 "many sites, including YouTube.com and even Facebook."
@@ -748,60 +748,15 @@ msgstr ""
 "Эта функция позволяет загружать видео и аудио из\n"
 "многих сайтов, включая YouTube.com и даже Facebook."
 
-#: ../vdms_dialogs/wizard_dlg.py:438
+#: ../vdms_dialogs/wizard_dlg.py:437
 msgid " Do you want to enable this feature?"
 msgstr " Вы хотите включить эту функцию?"
 
-#: ../vdms_dialogs/wizard_dlg.py:488
-msgid "Choose how you want to use youtube-dl\n"
-msgstr "Выберите, как вы хотите использовать youtube-dl\n"
-
-#: ../vdms_dialogs/wizard_dlg.py:490
-msgid ""
-"Videomass can use youtube-dl internally as a Python\n"
-"module (recommended) or as an executable file. The\n"
-"executable file can be downloaded and updated from\n"
-"Videomass itself and will be placed on:"
-msgstr ""
-"Videomass может использовать youtube-dl внутри как модуль\n"
-"Python (рекомендуется) или как исполняемый файл.\n"
-"Исполняемый файл может быть загружен и обновлен\n"
-"с помощью Videomass и будет размещен локально:"
-
-#: ../vdms_dialogs/wizard_dlg.py:495
-msgid ""
-"Notice: This version of Videomass can\n"
-"only use youtube-dl as local executable"
-msgstr ""
-"Примечание: эта версия Videomass может использовать\n"
-"youtube-dl только как локальный исполняемый файл"
-
-#: ../vdms_dialogs/wizard_dlg.py:503 ../vdms_dialogs/settings.py:297
-msgid "Use the one included in the AppImage (recommended)"
-msgstr "Используйте тот, который включен в AppImage (рекомендуется)"
-
-#: ../vdms_dialogs/wizard_dlg.py:504 ../vdms_dialogs/settings.py:299
-msgid "Use a local copy of youtube-dl"
-msgstr "Используйте локальную копию youtube-dl"
-
-#: ../vdms_dialogs/wizard_dlg.py:507 ../vdms_dialogs/settings.py:305
-msgid "Use the one installed in your O.S. (recommended)"
-msgstr "Используйте тот, который установлен в вашем системе (рекомендуется)"
-
-#: ../vdms_dialogs/wizard_dlg.py:508 ../vdms_dialogs/settings.py:307
-msgid "Use a local copy of youtube-dl updatable by Videomass"
-msgstr ""
-"Используйте локальную копию youtube-dl, обновляемую с помощью Videomass"
-
-#: ../vdms_dialogs/wizard_dlg.py:527 ../vdms_dialogs/settings.py:275
-msgid "Downloader preferences"
-msgstr "Настройки загрузчика"
-
-#: ../vdms_dialogs/wizard_dlg.py:591
+#: ../vdms_dialogs/wizard_dlg.py:483
 msgid "Wizard completed successfully!\n"
 msgstr "Помощник успешно завершен!\n"
 
-#: ../vdms_dialogs/wizard_dlg.py:592
+#: ../vdms_dialogs/wizard_dlg.py:484
 msgid ""
 "Remember that you can always change these settings later, through the Setup "
 "dialog."
@@ -809,41 +764,40 @@ msgstr ""
 "Помните, что вы всегда можете изменить эти настройки позже в диалоговом окне "
 "'Настройка'."
 
-#: ../vdms_dialogs/wizard_dlg.py:594
+#: ../vdms_dialogs/wizard_dlg.py:486
 msgid "Thank You!"
 msgstr "Благодарю вас!"
 
 # сделал одинарные кавычки
-#: ../vdms_dialogs/wizard_dlg.py:595
+#: ../vdms_dialogs/wizard_dlg.py:487
 msgid "To exit click the \"Finish\" button"
 msgstr "Для выхода нажмите кнопку \"Завершено\""
 
-#: ../vdms_dialogs/wizard_dlg.py:685
+#: ../vdms_dialogs/wizard_dlg.py:575
 msgid "< Previous"
 msgstr "< Предыдущий"
 
-#: ../vdms_dialogs/wizard_dlg.py:688 ../vdms_dialogs/wizard_dlg.py:790
+#: ../vdms_dialogs/wizard_dlg.py:578 ../vdms_dialogs/wizard_dlg.py:670
 msgid "Next >"
 msgstr "Следующий >"
 
-#: ../vdms_dialogs/wizard_dlg.py:693
+#: ../vdms_dialogs/wizard_dlg.py:583
 msgid "Videomass Wizard"
 msgstr "Videomass Помощник"
 
-#: ../vdms_dialogs/wizard_dlg.py:722 ../vdms_dialogs/wizard_dlg.py:755
-#: ../vdms_dialogs/wizard_dlg.py:759
+#: ../vdms_dialogs/wizard_dlg.py:612 ../vdms_dialogs/wizard_dlg.py:641
 msgid "Finish"
 msgstr "Завершено"
 
-#: ../vdms_dialogs/wizard_dlg.py:745
+#: ../vdms_dialogs/wizard_dlg.py:635
 msgid "Some text boxes are still incomplete"
 msgstr "Некоторые текстовые поля все еще не заполнены"
 
-#: ../vdms_dialogs/wizard_dlg.py:835
+#: ../vdms_dialogs/wizard_dlg.py:703
 msgid "Re-start is required"
 msgstr "Требуется перезапуск"
 
-#: ../vdms_dialogs/wizard_dlg.py:836
+#: ../vdms_dialogs/wizard_dlg.py:704
 msgid "Done!"
 msgstr "Выполнено!"
 
@@ -971,17 +925,17 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr "Настройки отметки времени"
 
-#: ../vdms_dialogs/settings.py:138
+#: ../vdms_dialogs/settings.py:139
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Где вы предпочитаете сохранять перекодировки?"
 
-#: ../vdms_dialogs/settings.py:149 ../vdms_dialogs/settings.py:177
-#: ../vdms_dialogs/settings.py:207 ../vdms_dialogs/settings.py:219
-#: ../vdms_dialogs/settings.py:231
+#: ../vdms_dialogs/settings.py:150 ../vdms_dialogs/settings.py:178
+#: ../vdms_dialogs/settings.py:208 ../vdms_dialogs/settings.py:220
+#: ../vdms_dialogs/settings.py:232
 msgid "Browse.."
 msgstr "Обзор.."
 
-#: ../vdms_dialogs/settings.py:154
+#: ../vdms_dialogs/settings.py:155
 msgid ""
 "Save each file in the same\n"
 "folder as input file"
@@ -989,15 +943,15 @@ msgstr ""
 "Сохраняйте каждый файл в той же\n"
 "папке, что и входной файл"
 
-#: ../vdms_dialogs/settings.py:159
+#: ../vdms_dialogs/settings.py:160
 msgid "Assign optional suffix to output file names:"
 msgstr "Добавить необязательный суффикс к именам выходных файлов:"
 
-#: ../vdms_dialogs/settings.py:167
+#: ../vdms_dialogs/settings.py:168
 msgid "Where do you prefer to save your downloads?"
 msgstr "Где вы предпочитаете сохранять загрузки?"
 
-#: ../vdms_dialogs/settings.py:182
+#: ../vdms_dialogs/settings.py:183
 msgid ""
 "Auto-create subfolders\n"
 "when downloading playlists"
@@ -1005,60 +959,63 @@ msgstr ""
 "Автоматически создавать подпапки\n"
 "при загрузке плейлистов"
 
-#: ../vdms_dialogs/settings.py:187
+#: ../vdms_dialogs/settings.py:188
 msgid "Cache Settings"
 msgstr "Настройки кеша"
 
-#: ../vdms_dialogs/settings.py:191
+#: ../vdms_dialogs/settings.py:192
 msgid "Clear the cache when exiting the application"
 msgstr "Очистить кеш при выходе из приложения"
 
-#: ../vdms_dialogs/settings.py:195
+#: ../vdms_dialogs/settings.py:196
 msgid "File Preferences"
 msgstr "Файл настроек"
 
-#: ../vdms_dialogs/settings.py:202
+#: ../vdms_dialogs/settings.py:203
 msgid "Path to the executables"
 msgstr "Путь к исполняемым файлам"
 
-#: ../vdms_dialogs/settings.py:206
+#: ../vdms_dialogs/settings.py:207
 msgid "Enable another location to run FFmpeg"
 msgstr "Включить другое место для запуска FFmpeg"
 
-#: ../vdms_dialogs/settings.py:218
+#: ../vdms_dialogs/settings.py:219
 msgid "Enable another location to run FFprobe"
 msgstr "Включить другое место для запуска FFprobe"
 
-#: ../vdms_dialogs/settings.py:230
+#: ../vdms_dialogs/settings.py:231
 msgid "Enable another location to run FFplay"
 msgstr "Включить другое место для запуска FFplay"
 
-#: ../vdms_dialogs/settings.py:241
+#: ../vdms_dialogs/settings.py:242
 msgid "Other options"
 msgstr "Другие опции"
 
-#: ../vdms_dialogs/settings.py:247
+#: ../vdms_dialogs/settings.py:248
 msgid "Threads used for transcoding (from 0 to 32):"
 msgstr "Потоки, используемые для перекодирования (от 0 до 32):"
 
-#: ../vdms_dialogs/settings.py:265
+#: ../vdms_dialogs/settings.py:266
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/settings.py:276
+#: ../vdms_dialogs/settings.py:282
+msgid "Downloader preferences"
+msgstr "Настройки загрузчика"
+
+#: ../vdms_dialogs/settings.py:283
 msgid "Disable youtube-dl"
 msgstr "Отключить youtube-dl"
 
-#: ../vdms_dialogs/settings.py:285
+#: ../vdms_dialogs/settings.py:284
+msgid "Enable youtube-dl"
+msgstr "Включить youtube-dl"
+
+#: ../vdms_dialogs/settings.py:292
 msgid "Current path:"
 msgstr "Текущий путь:"
 
-#: ../vdms_dialogs/settings.py:301 ../vdms_dialogs/settings.py:302
-#: ../vdms_dialogs/settings.py:310
-msgid "Menu bar > Tools > Update youtube-dl"
-msgstr "Меню>Инструменты>Обновить youtube-dl"
-
-#: ../vdms_dialogs/settings.py:313
+#: ../vdms_dialogs/settings.py:300
 msgid ""
 "Make sure you are using the latest available version of\n"
 "youtube-dl. This allows you to avoid download problems.\n"
@@ -1066,28 +1023,33 @@ msgstr ""
 "Убедитесь, что вы используете последнюю доступную версию youtube-dl.\n"
 "Это позволяет избежать проблем с загрузкой.\n"
 
-#: ../vdms_dialogs/settings.py:323 ../vdms_frames/ffmpeg_conf.py:216
+#: ../vdms_dialogs/settings.py:305 ../vdms_dialogs/settings.py:320
+msgid "Menu bar > Tools > Update youtube-dl"
+msgstr "Меню>Инструменты>Обновить youtube-dl"
+
+#: ../vdms_dialogs/settings.py:310 ../vdms_dialogs/settings.py:325
+#: ../vdms_dialogs/settings.py:340 ../vdms_frames/ffmpeg_conf.py:216
 #: ../vdms_panels/av_conversions.py:2461
 msgid "Disabled"
 msgstr "Отключено"
 
-#: ../vdms_dialogs/settings.py:330
-msgid "Not Installed"
-msgstr "Не установлено"
-
-#: ../vdms_dialogs/settings.py:340
+#: ../vdms_dialogs/settings.py:316
 msgid "Not found"
 msgstr "Не найдено"
 
-#: ../vdms_dialogs/settings.py:345
+#: ../vdms_dialogs/settings.py:329 ../vdms_dialogs/settings.py:344
+msgid "Not Installed"
+msgstr "Не установлено"
+
+#: ../vdms_dialogs/settings.py:351
 msgid "youtube-dl"
 msgstr "youtube-dl"
 
-#: ../vdms_dialogs/settings.py:351
+#: ../vdms_dialogs/settings.py:357
 msgid "Icon themes"
 msgstr "Темы значков"
 
-#: ../vdms_dialogs/settings.py:353
+#: ../vdms_dialogs/settings.py:359
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
@@ -1095,44 +1057,44 @@ msgstr ""
 "установка значков также изменит фон и передний план\n"
 "некоторых текстовых полей."
 
-#: ../vdms_dialogs/settings.py:375
+#: ../vdms_dialogs/settings.py:381
 msgid "Toolbar customization"
 msgstr "Настройка панели инструментов"
 
-#: ../vdms_dialogs/settings.py:377
+#: ../vdms_dialogs/settings.py:383
 msgid "At the top of window (default)"
 msgstr "Вверху (по умолчанию)"
 
-#: ../vdms_dialogs/settings.py:378
+#: ../vdms_dialogs/settings.py:384
 msgid "At the bottom of window"
 msgstr "Внизу"
 
-#: ../vdms_dialogs/settings.py:379
+#: ../vdms_dialogs/settings.py:385
 msgid "At the right of window"
 msgstr "Справа"
 
 # слева от окна или в левой части окна?
-#: ../vdms_dialogs/settings.py:380
+#: ../vdms_dialogs/settings.py:386
 msgid "At the left of window"
 msgstr "Слева"
 
-#: ../vdms_dialogs/settings.py:382
+#: ../vdms_dialogs/settings.py:388
 msgid "Place the toolbar"
 msgstr "Разместите панель инструментов"
 
-#: ../vdms_dialogs/settings.py:392
+#: ../vdms_dialogs/settings.py:398
 msgid "Icon size:"
 msgstr "Размер значка:"
 
-#: ../vdms_dialogs/settings.py:407
+#: ../vdms_dialogs/settings.py:413
 msgid "Shows the text in the toolbar buttons"
 msgstr "Показывает текст на кнопках панели инструментов"
 
-#: ../vdms_dialogs/settings.py:411
+#: ../vdms_dialogs/settings.py:417
 msgid "Appearance"
 msgstr "Вид"
 
-#: ../vdms_dialogs/settings.py:418
+#: ../vdms_dialogs/settings.py:424
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -1142,27 +1104,27 @@ msgstr ""
 "сообщения журнала во время процессов перекодирования.\n"
 "Изменяйте, только если знаете, что делаете.\n"
 
-#: ../vdms_dialogs/settings.py:439
+#: ../vdms_dialogs/settings.py:445
 msgid "FFmpeg logging levels"
 msgstr "Комплект log-журналов FFmpeg"
 
-#: ../vdms_dialogs/settings.py:459
+#: ../vdms_dialogs/settings.py:465
 msgid "Videomass Setup"
 msgstr "Настройки Videomass"
 
-#: ../vdms_dialogs/settings.py:485
+#: ../vdms_dialogs/settings.py:491
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr "Назначив дополнительный суффикс, вы можете избежать перезаписи файлов"
 
-#: ../vdms_dialogs/settings.py:601
+#: ../vdms_dialogs/settings.py:607
 msgid "Set a persistent location to save the file downloads"
 msgstr "Установите постоянное место для сохранения скачанных файлов"
 
-#: ../vdms_dialogs/settings.py:623
+#: ../vdms_dialogs/settings.py:629
 msgid "Set a persistent location to save exported files"
 msgstr "Установите постоянное место для сохранения экспортированных файлов"
 
-#: ../vdms_dialogs/settings.py:650
+#: ../vdms_dialogs/settings.py:656
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
@@ -1170,7 +1132,7 @@ msgstr ""
 "Вводите только буквенно-цифровые символы. Вы также можете использовать дефис "
 "(\"-\") и подчеркивание (\"_\"). Пробелы не допускаются."
 
-#: ../vdms_dialogs/settings.py:876
+#: ../vdms_dialogs/settings.py:880
 msgid "Changes will take effect once the program has been restarted"
 msgstr "Изменения вступят в силу после перезапуска программы"
 
@@ -1488,7 +1450,7 @@ msgstr ""
 "Не обращайте внимания на различие в регистре: символы с другим регистром "
 "будут совпадать."
 
-#: ../vdms_frames/ffmpeg_search.py:147 ../vdms_main/main_frame.py:409
+#: ../vdms_frames/ffmpeg_search.py:147 ../vdms_main/main_frame.py:411
 msgid "FFmpeg help topics"
 msgstr "Разделы справки FFmpeg"
 
@@ -1750,260 +1712,260 @@ msgstr ""
 "Возможное решение: откройте панель Менеджер Пресетов, перейдите в столбец "
 "пресеты и попробуйте нажать кнопку «Восстановить все ...»"
 
-#: ../vdms_main/main_frame.py:233 ../vdms_main/main_frame.py:287
+#: ../vdms_main/main_frame.py:234 ../vdms_main/main_frame.py:288
 #: ../vdms_main/main_frame.py:1488 ../vdms_main/main_frame.py:1520
 #: ../vdms_main/main_frame.py:1540 ../vdms_main/main_frame.py:1595
 #: ../vdms_main/main_frame.py:1646 ../vdms_main/main_frame.py:1698
 msgid "Ready"
 msgstr "Готово"
 
-#: ../vdms_main/main_frame.py:286 ../vdms_panels/youtubedl_ui.py:430
+#: ../vdms_main/main_frame.py:287 ../vdms_panels/youtubedl_ui.py:443
 msgid "Videomass"
 msgstr "Videomass"
 
-#: ../vdms_main/main_frame.py:328 ../vdms_main/main_frame.py:1429
+#: ../vdms_main/main_frame.py:330 ../vdms_main/main_frame.py:1429
 msgid "Drag at least one file"
 msgstr "Перетащите хотя бы один файл"
 
-#: ../vdms_main/main_frame.py:357
+#: ../vdms_main/main_frame.py:359
 msgid "Are you sure you want to exit?"
 msgstr "Вы уверены, что хотите выйти из приложения?"
 
-#: ../vdms_main/main_frame.py:357 ../vdms_main/main_frame.py:403
+#: ../vdms_main/main_frame.py:359 ../vdms_main/main_frame.py:405
 msgid "Exit"
 msgstr "Выход"
 
-#: ../vdms_main/main_frame.py:385
+#: ../vdms_main/main_frame.py:387
 msgid "Conversions folder\tCtrl+C"
 msgstr "Папка конверсий\tCtrl+C"
 
-#: ../vdms_main/main_frame.py:386
+#: ../vdms_main/main_frame.py:388
 msgid "Open the default file conversions folder"
 msgstr "Открыть папку по умолчанию для конверсий файлов"
 
-#: ../vdms_main/main_frame.py:388
+#: ../vdms_main/main_frame.py:390
 msgid "Downloads folder\tCtrl+D"
 msgstr "Папка загрузок\tCtrl+D"
 
-#: ../vdms_main/main_frame.py:389
+#: ../vdms_main/main_frame.py:391
 msgid "Open the default downloads folder"
 msgstr "Открыть папку загрузок по умолчанию"
 
-#: ../vdms_main/main_frame.py:392
+#: ../vdms_main/main_frame.py:394
 msgid "Open temporary conversions"
 msgstr "Открыть временные конверсии"
 
-#: ../vdms_main/main_frame.py:393
+#: ../vdms_main/main_frame.py:395
 msgid "Open the temporary file conversions folder"
 msgstr "Открыть временную папку конверсионных файлов"
 
-#: ../vdms_main/main_frame.py:397
+#: ../vdms_main/main_frame.py:399
 msgid "Open temporary downloads"
 msgstr "Открыть временные загрузки"
 
-#: ../vdms_main/main_frame.py:398
+#: ../vdms_main/main_frame.py:400
 msgid "Open the temporary downloads folder"
 msgstr "Открыть папку временных загрузок"
 
-#: ../vdms_main/main_frame.py:404
+#: ../vdms_main/main_frame.py:406
 msgid "Close Videomass"
 msgstr "Закрыть Videomass"
 
-#: ../vdms_main/main_frame.py:405
+#: ../vdms_main/main_frame.py:407
 msgid "File"
 msgstr "Файл"
 
-#: ../vdms_main/main_frame.py:410
+#: ../vdms_main/main_frame.py:412
 msgid "A useful tool to search for FFmpeg help topics and options"
 msgstr "Полезный инструмент для поиска тем справки FFmpeg и опций"
 
-#: ../vdms_main/main_frame.py:414
+#: ../vdms_main/main_frame.py:416
 msgid "Update youtube-dl"
 msgstr "Обновить youtube-dl"
 
-#: ../vdms_main/main_frame.py:415
+#: ../vdms_main/main_frame.py:417
 msgid "Update to latest youtube-dl version"
 msgstr "Обновите до последней версии youtube-dl"
 
-#: ../vdms_main/main_frame.py:418
+#: ../vdms_main/main_frame.py:420
 msgid "Check for new presets"
 msgstr "Проверить наличие новых пресетов"
 
-#: ../vdms_main/main_frame.py:419
+#: ../vdms_main/main_frame.py:421
 msgid "Check new versions of Videomass presets from homepage"
 msgstr "Проверяйте новые версии пресетов Videomass с домашней страницы"
 
-#: ../vdms_main/main_frame.py:421
+#: ../vdms_main/main_frame.py:423
 msgid "Download the latest presets"
 msgstr "Загрузите последние пресеты"
 
-#: ../vdms_main/main_frame.py:422
+#: ../vdms_main/main_frame.py:424
 msgid "Download all Videomass presets locally from the homepage"
 msgstr "Загрузите все пресеты Videomass локально с домашней страницы"
 
-#: ../vdms_main/main_frame.py:424
+#: ../vdms_main/main_frame.py:426
 msgid "Tools"
 msgstr "Инструменты"
 
-#: ../vdms_main/main_frame.py:430
+#: ../vdms_main/main_frame.py:432
 msgid "Show configuration"
 msgstr "Показать конфигурацию"
 
-#: ../vdms_main/main_frame.py:431
+#: ../vdms_main/main_frame.py:433
 msgid "Show FFmpeg's built-in configuration capabilities"
 msgstr "Показать встроенные возможности настройки FFmpeg"
 
-#: ../vdms_main/main_frame.py:434
+#: ../vdms_main/main_frame.py:436
 msgid "Muxers and Demuxers"
 msgstr "Мультиплексоры и Демультиплексоры"
 
-#: ../vdms_main/main_frame.py:435
+#: ../vdms_main/main_frame.py:437
 msgid "Muxers and demuxers available for used FFmpeg."
 msgstr "Доступны мультиплексоры и демультиплексоры для используемого FFmpeg."
 
-#: ../vdms_main/main_frame.py:438
+#: ../vdms_main/main_frame.py:440
 msgid "Encoders"
 msgstr "Кодеры"
 
-#: ../vdms_main/main_frame.py:438
+#: ../vdms_main/main_frame.py:440
 msgid "Shows available encoders for FFmpeg"
 msgstr "Показывает доступные кодировщики для FFmpeg"
 
-#: ../vdms_main/main_frame.py:440
+#: ../vdms_main/main_frame.py:442
 msgid "Decoders"
 msgstr "Декодеры"
 
-#: ../vdms_main/main_frame.py:440
+#: ../vdms_main/main_frame.py:442
 msgid "Shows available decoders for FFmpeg"
 msgstr "Показывает доступные декодеры для FFmpeg"
 
-#: ../vdms_main/main_frame.py:443
+#: ../vdms_main/main_frame.py:445
 msgid "FFplay"
 msgstr "FFplay"
 
-#: ../vdms_main/main_frame.py:444
+#: ../vdms_main/main_frame.py:446
 msgid "While playing"
 msgstr "Клавиши воспроизведения"
 
-#: ../vdms_main/main_frame.py:445
+#: ../vdms_main/main_frame.py:447
 msgid "Show useful shortcut keys when playing or previewing with FFplay"
 msgstr ""
 "Показывать полезные сочетания клавиш при воспроизведении или предварительном "
 "просмотре с FFplay"
 
-#: ../vdms_main/main_frame.py:449
+#: ../vdms_main/main_frame.py:451
 msgid "Displays timestamp"
 msgstr "Отображать отметку времени"
 
-#: ../vdms_main/main_frame.py:450
+#: ../vdms_main/main_frame.py:452
 msgid "Displays timestamp when playing movies with FFplay"
 msgstr "Отображает временную метку при воспроизведении фильмов с FFplay"
 
-#: ../vdms_main/main_frame.py:456
+#: ../vdms_main/main_frame.py:458
 msgid "Version in Use"
 msgstr "Используемая версия"
 
-#: ../vdms_main/main_frame.py:457
+#: ../vdms_main/main_frame.py:459
 msgid "Shows the version in use"
 msgstr "Показывает используемую версию"
 
-#: ../vdms_main/main_frame.py:459
+#: ../vdms_main/main_frame.py:461
 msgid "Show the latest version..."
 msgstr "Показать последнюю версию..."
 
-#: ../vdms_main/main_frame.py:460
+#: ../vdms_main/main_frame.py:462
 msgid "Shows the latest version available on github.com"
 msgstr "Показывает последнюю версию, доступную на github.com"
 
-#: ../vdms_main/main_frame.py:462
+#: ../vdms_main/main_frame.py:464
 msgid "Youtube-dl"
 msgstr "Youtube-dl"
 
-#: ../vdms_main/main_frame.py:465
+#: ../vdms_main/main_frame.py:467
 msgid "Show Logs\tCtrl+L"
 msgstr "Показать log-журналы\tCtrl+L"
 
-#: ../vdms_main/main_frame.py:466
+#: ../vdms_main/main_frame.py:468
 msgid "Viewing log messages"
 msgstr "Просмотр сообщений log-журнала"
 
-#: ../vdms_main/main_frame.py:470
+#: ../vdms_main/main_frame.py:472
 msgid "Show timeline\tCtrl+T"
 msgstr "Показать шкалу времени\tCtrl+T"
 
-#: ../vdms_main/main_frame.py:471
+#: ../vdms_main/main_frame.py:473
 msgid "Show panel for editing timeline (seek/duration)"
 msgstr "Показать панель редактирования шкалы времени (поиск/длительность)"
 
-#: ../vdms_main/main_frame.py:474
+#: ../vdms_main/main_frame.py:476
 msgid "View"
 msgstr "Посмотр"
 
-#: ../vdms_main/main_frame.py:479
+#: ../vdms_main/main_frame.py:481
 msgid "Home panel\tShift+H"
 msgstr "Начальная панель\tShift+H"
 
-#: ../vdms_main/main_frame.py:480
+#: ../vdms_main/main_frame.py:482
 msgid "jump to the start panel"
 msgstr "перейти к стартовой панели"
 
-#: ../vdms_main/main_frame.py:483
+#: ../vdms_main/main_frame.py:485
 msgid "Presets manager\tShift+P"
 msgstr "Менеджер Пресетов\tShift+P"
 
-#: ../vdms_main/main_frame.py:484
+#: ../vdms_main/main_frame.py:486
 msgid "jump to the Presets Manager panel"
 msgstr "перейти на панель управления Пресетами"
 
-#: ../vdms_main/main_frame.py:485
+#: ../vdms_main/main_frame.py:487
 msgid "A/V conversions\tShift+V"
 msgstr "Конвертация A/V\tShift+V"
 
-#: ../vdms_main/main_frame.py:486
+#: ../vdms_main/main_frame.py:488
 msgid "jump to the Audio/Video Conversion panel"
 msgstr "перейти на панель Аудио / Видео Конверсий"
 
-#: ../vdms_main/main_frame.py:489
+#: ../vdms_main/main_frame.py:491
 msgid "Concatenate Demuxer\tShift+D"
 msgstr "Concatenate Demuxer\tShift+D"
 
-#: ../vdms_main/main_frame.py:490
+#: ../vdms_main/main_frame.py:492
 msgid "jump to the Concatenate Demuxer panel"
 msgstr "перейти на панель Concatenate Demuxer"
 
-#: ../vdms_main/main_frame.py:493
+#: ../vdms_main/main_frame.py:495
 msgid "YouTube downloader\tShift+Y"
 msgstr "YouTube downloader\tShift+Y"
 
-#: ../vdms_main/main_frame.py:494
+#: ../vdms_main/main_frame.py:496
 msgid "jump to the YouTube Downloader panel"
 msgstr "перейти к панели YouTube Downloader"
 
-#: ../vdms_main/main_frame.py:497
+#: ../vdms_main/main_frame.py:499
 msgid "Output Monitor\tShift+O"
 msgstr "Выходной экран\tShift+O"
 
-#: ../vdms_main/main_frame.py:498
+#: ../vdms_main/main_frame.py:500
 msgid "Keeps track of the output for debugging errors"
 msgstr "Отслеживает вывод для ошибок отладки"
 
-#: ../vdms_main/main_frame.py:502
+#: ../vdms_main/main_frame.py:504
 msgid "Configuration folder"
 msgstr "Папка конфигурации"
 
-#: ../vdms_main/main_frame.py:503
+#: ../vdms_main/main_frame.py:505
 msgid "Opens the Videomass configuration folder"
 msgstr "Открывает папку конфигурации Videomass"
 
-#: ../vdms_main/main_frame.py:505
+#: ../vdms_main/main_frame.py:507
 msgid "Log folder"
 msgstr "Папка log-журналов"
 
-#: ../vdms_main/main_frame.py:506
+#: ../vdms_main/main_frame.py:508
 msgid "Opens the Videomass log folder, if exists"
 msgstr "Открывает папку журнала Videomass, если она существует"
 
-#: ../vdms_main/main_frame.py:508
+#: ../vdms_main/main_frame.py:510
 msgid "Cache folder"
 msgstr "Папка кеша"
 
@@ -2012,122 +1974,122 @@ msgstr "Папка кеша"
 # надо: folder
 # Thanks for remark, I solved.
 # Gianluca
-#: ../vdms_main/main_frame.py:509
+#: ../vdms_main/main_frame.py:511
 msgid "Opens the Videomass cache folder, if exists"
 msgstr "Открывает папку кэша Videomass, если она существует"
 
-#: ../vdms_main/main_frame.py:511
+#: ../vdms_main/main_frame.py:513
 msgid "System"
 msgstr "Система"
 
 # посмотреть в программе
-#: ../vdms_main/main_frame.py:513
+#: ../vdms_main/main_frame.py:515
 msgid "Goto"
 msgstr "Перейти"
 
-#: ../vdms_main/main_frame.py:517 ../vdms_panels/filedrop.py:240
+#: ../vdms_main/main_frame.py:519 ../vdms_panels/filedrop.py:240
 msgid "Set up a temporary folder for conversions"
 msgstr "Настройте временную папку для конверсий"
 
-#: ../vdms_main/main_frame.py:518
+#: ../vdms_main/main_frame.py:520
 msgid "Use a temporary location to save conversions"
 msgstr "Используйте временное местоположение для сохранения конверсий"
 
-#: ../vdms_main/main_frame.py:522 ../vdms_panels/textdrop.py:86
+#: ../vdms_main/main_frame.py:524 ../vdms_panels/textdrop.py:86
 msgid "Set up a temporary folder for downloads"
 msgstr "Настройте временную папку для загрузок"
 
-#: ../vdms_main/main_frame.py:523
+#: ../vdms_main/main_frame.py:525
 msgid "Save all downloads to this temporary location"
 msgstr "Сохраните все загрузки во временной папке"
 
-#: ../vdms_main/main_frame.py:526
+#: ../vdms_main/main_frame.py:528
 msgid "Restore the default destination folders"
 msgstr "Восстановить папки назначения по умолчанию"
 
-#: ../vdms_main/main_frame.py:527
+#: ../vdms_main/main_frame.py:529
 msgid "Restore the default folders for file conversions and downloads"
 msgstr "Восстановить папки по умолчанию для конверсий и загрузки файлов"
 
 # изменено 21-2-2021
-#: ../vdms_main/main_frame.py:533
+#: ../vdms_main/main_frame.py:535
 msgid "Setting timestamp"
 msgstr "Настройки шкалы отметки времени"
 
-#: ../vdms_main/main_frame.py:534
+#: ../vdms_main/main_frame.py:536
 msgid "Change the size and color of the timestamp during playback"
 msgstr "Изменение размера и цвета отметки времени во время воспроизведения"
 
-#: ../vdms_main/main_frame.py:537
+#: ../vdms_main/main_frame.py:539
 msgid "Auto-exit after playback"
 msgstr "Автоматический выход после воспроизведения"
 
-#: ../vdms_main/main_frame.py:538
+#: ../vdms_main/main_frame.py:540
 msgid "If checked, the FFplay window will auto-close at the end of playback"
 msgstr ""
 "Если этот флажок установлен, окно FFplay автоматически закроется в конце "
 "воспроизведения"
 
-#: ../vdms_main/main_frame.py:545
+#: ../vdms_main/main_frame.py:547
 msgid "Preferences\tCtrl+P"
 msgstr "Основные настройки\tCtrl+P"
 
-#: ../vdms_main/main_frame.py:546
+#: ../vdms_main/main_frame.py:548
 msgid "Application preferences"
 msgstr "Настройки приложения"
 
-#: ../vdms_main/main_frame.py:547 ../vdms_panels/av_conversions.py:617
+#: ../vdms_main/main_frame.py:549 ../vdms_panels/av_conversions.py:617
 msgid "Settings"
 msgstr "Настройки"
 
-#: ../vdms_main/main_frame.py:552
+#: ../vdms_main/main_frame.py:554
 msgid "User Guide"
 msgstr "Онлайн помощь"
 
-#: ../vdms_main/main_frame.py:553
+#: ../vdms_main/main_frame.py:555
 msgid "Wiki"
 msgstr "Wiki"
 
-#: ../vdms_main/main_frame.py:555
+#: ../vdms_main/main_frame.py:557
 msgid "Issue tracker"
 msgstr "Сообщить о проблеме"
 
-#: ../vdms_main/main_frame.py:557
+#: ../vdms_main/main_frame.py:559
 msgid "Translation..."
 msgstr "Перевод..."
 
-#: ../vdms_main/main_frame.py:559
+#: ../vdms_main/main_frame.py:561
 msgid "Donation"
 msgstr "Пожертвование"
 
-#: ../vdms_main/main_frame.py:561
+#: ../vdms_main/main_frame.py:563
 msgid "FFmpeg documentation"
 msgstr "Документация FFmpeg"
 
-#: ../vdms_main/main_frame.py:563
+#: ../vdms_main/main_frame.py:565
 msgid "Check for newer version"
 msgstr "Проверить последнюю версию"
 
-#: ../vdms_main/main_frame.py:564
+#: ../vdms_main/main_frame.py:566
 msgid ""
 "Check for the latest Videomass version at <https://pypi.org/project/"
 "videomass/>"
 msgstr ""
 "Проверьте последнюю версию Videomass на <https://pypi.org/project/videomass/>"
 
-#: ../vdms_main/main_frame.py:568
+#: ../vdms_main/main_frame.py:570
 msgid "About Videomass"
 msgstr "Информация об Videomass"
 
-#: ../vdms_main/main_frame.py:569
+#: ../vdms_main/main_frame.py:571
 msgid "Help"
 msgstr "Помощь"
 
-#: ../vdms_main/main_frame.py:698
+#: ../vdms_main/main_frame.py:700
 msgid "youtube-dl is already up-to-date {}"
 msgstr "youtube-dl уже обновлен {}"
 
-#: ../vdms_main/main_frame.py:703
+#: ../vdms_main/main_frame.py:705
 #, python-brace-format
 msgid ""
 "youtube-dl version {0} is available and will replace the old version {1}\n"
@@ -2138,7 +2100,7 @@ msgstr ""
 "\n"
 "Вы хотите обновить сейчас?"
 
-#: ../vdms_main/main_frame.py:726
+#: ../vdms_main/main_frame.py:728
 msgid "Successful! youtube-dl is up-to-date"
 msgstr "Успешно! youtube-dl обновлен"
 
@@ -2538,7 +2500,7 @@ msgstr "Звук"
 msgid "Video Filters"
 msgstr "Фильтры Видео"
 
-#: ../vdms_panels/av_conversions.py:541 ../vdms_panels/youtubedl_ui.py:229
+#: ../vdms_panels/av_conversions.py:541 ../vdms_panels/youtubedl_ui.py:225
 msgid "Preview"
 msgstr "Предпросмотр"
 
@@ -3014,31 +2976,31 @@ msgstr "Сохраните новый профиль в ..."
 msgid "Create a new profile"
 msgstr "Создать новый профиль"
 
-#: ../vdms_panels/choose_topic.py:85
+#: ../vdms_panels/choose_topic.py:86
 msgid "Welcome to Videomass"
 msgstr "Добро пожаловать в Videomass"
 
-#: ../vdms_panels/choose_topic.py:86
+#: ../vdms_panels/choose_topic.py:87
 msgid "Version {}"
 msgstr "Версия {}"
 
-#: ../vdms_panels/choose_topic.py:105
+#: ../vdms_panels/choose_topic.py:106
 msgid "Presets Manager"
 msgstr "Менеджер Пресетов"
 
-#: ../vdms_panels/choose_topic.py:109
+#: ../vdms_panels/choose_topic.py:110
 msgid "AV-Conversions"
 msgstr "AV-конвертация"
 
-#: ../vdms_panels/choose_topic.py:113
+#: ../vdms_panels/choose_topic.py:114
 msgid "Concatenate media files"
 msgstr "Объединить медиафайлы"
 
-#: ../vdms_panels/choose_topic.py:117 ../vdms_panels/youtubedl_ui.py:424
+#: ../vdms_panels/choose_topic.py:118 ../vdms_panels/youtubedl_ui.py:437
 msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
-#: ../vdms_panels/choose_topic.py:137
+#: ../vdms_panels/choose_topic.py:138
 msgid ""
 "Videomass would need volunteer translators. If you are interested you could "
 "take a look at the "
@@ -3046,11 +3008,11 @@ msgstr ""
 "Videomass потребуются переводчики-добровольцы. Если вам интересно, вы можете "
 "взглянуть на "
 
-#: ../vdms_panels/choose_topic.py:142
+#: ../vdms_panels/choose_topic.py:143
 msgid "Localization guidelines"
 msgstr "Рекомендации по локализации"
 
-#: ../vdms_panels/choose_topic.py:149
+#: ../vdms_panels/choose_topic.py:150
 msgid ""
 "Create, edit and use quickly your favorite FFmpeg presets and profiles with "
 "full formats support and codecs."
@@ -3058,7 +3020,7 @@ msgstr ""
 "Cоздавайте, редактируйте или используйте свои любимые пресеты и профили "
 "прямо сейчас с полной поддержкой форматов и кодеков FFmpeg."
 
-#: ../vdms_panels/choose_topic.py:153
+#: ../vdms_panels/choose_topic.py:154
 msgid ""
 "A set of useful tools for audio and video conversions. Save your profiles "
 "and reuse them with Presets Manager."
@@ -3066,7 +3028,7 @@ msgstr ""
 "Набор полезных инструментов для преобразования аудио и видео. Сохраните свои "
 "профили и повторно используйте их с помощью Менеджера Пресетов."
 
-#: ../vdms_panels/choose_topic.py:157
+#: ../vdms_panels/choose_topic.py:158
 msgid ""
 "Easily download videos and audio in different formats and quality from "
 "YouTube, Facebook and more sites."
@@ -3074,14 +3036,14 @@ msgstr ""
 "Легко загружайте видео и аудио в различном формате и качестве с YouTube, "
 "Facebook и других сайтов."
 
-#: ../vdms_panels/choose_topic.py:161
+#: ../vdms_panels/choose_topic.py:162
 msgid ""
 "Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
 "Объединение нескольких медиафайлов в соответствии с порядком импорта без "
 "перекодирования"
 
-#: ../vdms_panels/choose_topic.py:221
+#: ../vdms_panels/choose_topic.py:222
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -3095,7 +3057,7 @@ msgstr ""
 "download.html>\n"
 "\n"
 
-#: ../vdms_panels/choose_topic.py:230
+#: ../vdms_panels/choose_topic.py:231
 msgid ""
 "To download videos from YouTube.com and other video sites, you need an "
 "updated version of youtube-dl.\n"
@@ -3107,7 +3069,7 @@ msgstr ""
 "\n"
 "{}...Вы хотите загрузить youtube-dl прямо сейчас?"
 
-#: ../vdms_panels/choose_topic.py:237
+#: ../vdms_panels/choose_topic.py:238
 msgid ""
 "Successful! \n"
 "\n"
@@ -3119,11 +3081,26 @@ msgstr ""
 "youtube-dl очень часто обновляется, убедитесь, что вы всегда используете "
 "последнюю доступную версию: Меню> Инструменты> Обновить youtube-dl."
 
-#: ../vdms_panels/choose_topic.py:243
+#: ../vdms_panels/choose_topic.py:245
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl отключен. Проверьте свои настройки."
 
-#: ../vdms_panels/choose_topic.py:252
+#: ../vdms_panels/choose_topic.py:254 ../vdms_panels/youtubedl_ui.py:848
+#: ../vdms_panels/long_processing_task.py:502
+#: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
+#: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
+#: ../vdms_panels/presets_manager.py:770 ../vdms_panels/presets_manager.py:803
+msgid "Please confirm"
+msgstr "Пожалуйста, подтвердите"
+
+#: ../vdms_panels/choose_topic.py:283
+msgid ""
+"ERROR: {}\n"
+"\n"
+"youtube-dl is not embedded on AppImage."
+msgstr ""
+
+#: ../vdms_panels/choose_topic.py:288
 msgid ""
 "ERROR: {}\n"
 "\n"
@@ -3133,24 +3110,33 @@ msgstr ""
 "\n"
 "youtube-dl не установлен, установите его с помощью диспетчера пакетов."
 
-#: ../vdms_panels/choose_topic.py:263 ../vdms_panels/youtubedl_ui.py:833
-#: ../vdms_panels/long_processing_task.py:502
-#: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
-#: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
-#: ../vdms_panels/presets_manager.py:770 ../vdms_panels/presets_manager.py:803
-msgid "Please confirm"
-msgstr "Пожалуйста, подтвердите"
-
-#: ../vdms_panels/concatenate.py:73
+#: ../vdms_panels/concatenate.py:76
+#, fuzzy
+#| msgid ""
+#| "NOTE:\n"
+#| "\n"
+#| "- The order of concatenation depends on the order in which the files were "
+#| "added.\n"
+#| "\n"
+#| "- The output file name will have the same name as the first file added "
+#| "(also depends\n"
+#| "  on the settings made in the preferences dialog)."
 msgid ""
 "NOTE:\n"
+"\n"
+"- The concatenation function is performed only on Audio or Video files.\n"
 "\n"
 "- The order of concatenation depends on the order in which the files were "
 "added.\n"
 "\n"
 "- The output file name will have the same name as the first file added (also "
 "depends\n"
-"  on the settings made in the preferences dialog)."
+"  on the settings made in the preferences dialog).\n"
+"\n"
+"- Video files must have exactly same streams, same codecs and same\n"
+"  width/height, but can be wrapped in different container formats.\n"
+"\n"
+"- Audio files must have exactly the same formats and codecs."
 msgstr ""
 "ПРИМЕЧАНИЕ:\n"
 "\n"
@@ -3161,73 +3147,32 @@ msgstr ""
 "(также зависит\n"
 "  от настроек, сделанных в диалоговом окне настроек)."
 
-# Длинные строки в русском
-# возможен вариант:
-# Убедитесь, что все импортированные файлы являются видеофайлами и имеют\n
-# одинаковые потоки, одинаковые кодеки и одинаковые размеры,\n
-# но могут быть упакованы в разные форматы контейнеров.
-#: ../vdms_panels/concatenate.py:78
-msgid ""
-"Make sure the files imported are all Video files and have exactly the same "
-"streams,\n"
-"same codecs and same dimensions, but can be wrapped in different container "
-"formats."
-msgstr ""
-"Убедитесь, что все импортированные файлы являются видеофайлами и имеют "
-"одинаковые потоки,\n"
-"одинаковые кодеки и одинаковые размеры, но могут быть упакованы в разные "
-"форматы контейнеров."
-
-#: ../vdms_panels/concatenate.py:81
-msgid ""
-"Make sure the files imported are all audio files and have the same formats "
-"and codecs."
-msgstr ""
-"Убедитесь, что все импортированные файлы являются аудиофайлами и имеют "
-"одинаковые форматы и кодеки."
-
-#: ../vdms_panels/concatenate.py:112
-msgid "Audio files (tracks)"
-msgstr "Аудио файлы (треки)"
-
-#: ../vdms_panels/concatenate.py:113
-msgid "Video files"
-msgstr "Видео файлы"
-
-#: ../vdms_panels/concatenate.py:114
-msgid "Only Audio streams from Videos"
-msgstr "Только аудиопотоки из видео"
-
-#: ../vdms_panels/concatenate.py:117
-msgid "Which files do you want to concatenate?"
-msgstr "Какие файлы вы хотите объединить?"
-
-#: ../vdms_panels/concatenate.py:134
-msgid "Output format:"
-msgstr "Выходной формат:"
-
-#: ../vdms_panels/concatenate.py:196
+#: ../vdms_panels/concatenate.py:139
 msgid "At least two files are required to perform concatenation."
 msgstr "Для объединения требуются как минимум два файла."
 
-#: ../vdms_panels/concatenate.py:197 ../vdms_panels/concatenate.py:216
+#: ../vdms_panels/concatenate.py:140 ../vdms_panels/concatenate.py:152
 msgid "ERROR"
 msgstr "ОШИБКА"
 
-#: ../vdms_panels/concatenate.py:213
+#: ../vdms_panels/concatenate.py:149
+#, fuzzy
+#| msgid ""
+#| "The files do not have the same \"codec_types\", same \"sample_rate\" or "
+#| "same \"width\" or \"height\". Unable to proceed without same parameters."
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
-"\"width\" or \"height\". Unable to proceed without same parameters."
+"\"width\" or \"height\". Unable to proceed."
 msgstr ""
 "Файлы не имеют одинаковых «codec_types», «sample_rate» или одинаковых "
 "«ширины» или «высоты». Невозможно продолжить без тех же параметров."
 
-#: ../vdms_panels/concatenate.py:232 ../vdms_panels/presets_manager.py:849
+#: ../vdms_panels/concatenate.py:178 ../vdms_panels/presets_manager.py:849
 #: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
 msgid "Starts"
 msgstr "Начало"
 
-#: ../vdms_panels/concatenate.py:255
+#: ../vdms_panels/concatenate.py:201
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3257,55 +3202,55 @@ msgid "Function available only if you choose \"Download by format code\""
 msgstr ""
 "Функция доступна, только если вы выбрали \" Загрузить по коду формата \""
 
-#: ../vdms_panels/youtubedl_ui.py:130
+#: ../vdms_panels/youtubedl_ui.py:127
 msgid "Default"
 msgstr "По умолчанию"
 
-#: ../vdms_panels/youtubedl_ui.py:132
+#: ../vdms_panels/youtubedl_ui.py:128
 msgid "Download audio and video splitted"
 msgstr "Скачать аудио и видео раздельно"
 
-#: ../vdms_panels/youtubedl_ui.py:133
+#: ../vdms_panels/youtubedl_ui.py:129
 msgid "Download Audio only"
 msgstr "Загрузить только аудиофайл"
 
-#: ../vdms_panels/youtubedl_ui.py:134
+#: ../vdms_panels/youtubedl_ui.py:130
 msgid "Download by format code"
 msgstr "Скачать код формата"
 
-#: ../vdms_panels/youtubedl_ui.py:169
+#: ../vdms_panels/youtubedl_ui.py:165
 msgid "Options"
 msgstr "Параметры"
 
-#: ../vdms_panels/youtubedl_ui.py:234
+#: ../vdms_panels/youtubedl_ui.py:231
 msgid "Download all videos in playlist"
 msgstr "Скачать все видео в плейлисте"
 
-#: ../vdms_panels/youtubedl_ui.py:238
+#: ../vdms_panels/youtubedl_ui.py:235
 msgid "Embed thumbnail in audio file"
 msgstr ""
 "Добавить миниатюру\n"
 "в аудиофайл"
 
-#: ../vdms_panels/youtubedl_ui.py:242
+#: ../vdms_panels/youtubedl_ui.py:239
 msgid "Add metadata to file"
 msgstr ""
 "Добавьте метаданные\n"
 "в файл"
 
-#: ../vdms_panels/youtubedl_ui.py:246
+#: ../vdms_panels/youtubedl_ui.py:243
 msgid "Write subtitles to video"
 msgstr ""
 "Напишите субтитры\n"
 "к видео"
 
-#: ../vdms_panels/youtubedl_ui.py:251
+#: ../vdms_panels/youtubedl_ui.py:248
 msgid "Prevent overwriting files"
 msgstr ""
 "Предотвратить перезапись\n"
 "файлов"
 
-#: ../vdms_panels/youtubedl_ui.py:256
+#: ../vdms_panels/youtubedl_ui.py:253
 msgid ""
 "Include the video ID\n"
 "in the file names"
@@ -3313,78 +3258,78 @@ msgstr ""
 "Включите идентификатор видео\n"
 "в имена файлов"
 
-#: ../vdms_panels/youtubedl_ui.py:281
+#: ../vdms_panels/youtubedl_ui.py:278
 msgid "Help viewer"
 msgstr "Программа просмотра справки"
 
-#: ../vdms_panels/youtubedl_ui.py:305 ../vdms_panels/youtubedl_ui.py:391
-#: ../vdms_panels/youtubedl_ui.py:407
+#: ../vdms_panels/youtubedl_ui.py:302 ../vdms_panels/youtubedl_ui.py:404
+#: ../vdms_panels/youtubedl_ui.py:420
 msgid "Play selected url"
 msgstr "Воспроизвести выбранный URL"
 
-#: ../vdms_panels/youtubedl_ui.py:419
+#: ../vdms_panels/youtubedl_ui.py:432
 msgid "An item must be selected in the URLs checklist"
 msgstr "Элемент должен быть выбран в контрольном списке URL-адресов"
 
-#: ../vdms_panels/youtubedl_ui.py:429
+#: ../vdms_panels/youtubedl_ui.py:442
 msgid "Videomass cannot play playlists for now"
 msgstr "Videomass пока не может воспроизводить плейлисты"
 
-#: ../vdms_panels/youtubedl_ui.py:451 ../vdms_panels/youtubedl_ui.py:548
+#: ../vdms_panels/youtubedl_ui.py:464 ../vdms_panels/youtubedl_ui.py:561
 msgid "Format Code"
 msgstr "Код формата"
 
-#: ../vdms_panels/youtubedl_ui.py:452 ../vdms_panels/youtubedl_ui.py:549
-#: ../vdms_panels/youtubedl_ui.py:597
+#: ../vdms_panels/youtubedl_ui.py:465 ../vdms_panels/youtubedl_ui.py:562
+#: ../vdms_panels/youtubedl_ui.py:610
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:453 ../vdms_panels/youtubedl_ui.py:550
-#: ../vdms_panels/youtubedl_ui.py:598
+#: ../vdms_panels/youtubedl_ui.py:466 ../vdms_panels/youtubedl_ui.py:563
+#: ../vdms_panels/youtubedl_ui.py:611
 msgid "Title"
 msgstr "Заглавие"
 
-#: ../vdms_panels/youtubedl_ui.py:454 ../vdms_panels/youtubedl_ui.py:551
+#: ../vdms_panels/youtubedl_ui.py:467 ../vdms_panels/youtubedl_ui.py:564
 msgid "Extension"
 msgstr "Расширение"
 
-#: ../vdms_panels/youtubedl_ui.py:455
+#: ../vdms_panels/youtubedl_ui.py:468
 msgid "Resolution"
 msgstr "Разрешение"
 
-#: ../vdms_panels/youtubedl_ui.py:456
+#: ../vdms_panels/youtubedl_ui.py:469
 msgid "Video Codec"
 msgstr "Кодек видео"
 
-#: ../vdms_panels/youtubedl_ui.py:457
+#: ../vdms_panels/youtubedl_ui.py:470
 msgid "fps"
 msgstr "fps"
 
-#: ../vdms_panels/youtubedl_ui.py:458
+#: ../vdms_panels/youtubedl_ui.py:471
 msgid "Audio Codec"
 msgstr "Кодек аудио"
 
-#: ../vdms_panels/youtubedl_ui.py:459 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:472 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Размер"
 
-#: ../vdms_panels/youtubedl_ui.py:552
+#: ../vdms_panels/youtubedl_ui.py:565
 msgid "Resolution note"
 msgstr "Примечания к разрешению"
 
-#: ../vdms_panels/youtubedl_ui.py:599
+#: ../vdms_panels/youtubedl_ui.py:612
 msgid "Quality"
 msgstr "Качество"
 
-#: ../vdms_panels/youtubedl_ui.py:617
+#: ../vdms_panels/youtubedl_ui.py:631
 msgid "Sorry, this feature is disabled."
 msgstr "Извините, эта функция отключена."
 
-#: ../vdms_panels/youtubedl_ui.py:678
+#: ../vdms_panels/youtubedl_ui.py:693
 msgid "Unable to get format codes on playlists"
 msgstr "Невозможно получить коды формата в плейлистах"
 
-#: ../vdms_panels/youtubedl_ui.py:831
+#: ../vdms_panels/youtubedl_ui.py:846
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 "URL-адреса содержат списки воспроизведения. Вы уверены что хотите продолжить?"
@@ -3928,12 +3873,12 @@ msgstr "Максимальное время относится к файлу с 
 msgid "Is 'ffmpeg' installed on your system?"
 msgstr "'ffmpeg' установлен в вашей системе?"
 
-#: ../vdms_threads/ydl_executable.py:71 ../vdms_threads/ydl_executable.py:78
-#: ../vdms_threads/ydl_executable.py:246 ../vdms_threads/ydl_executable.py:253
+#: ../vdms_threads/ydl_executable.py:72 ../vdms_threads/ydl_executable.py:79
+#: ../vdms_threads/ydl_executable.py:249 ../vdms_threads/ydl_executable.py:256
 msgid "Unrecognized error"
 msgstr "Неизвестная ошибка"
 
-#: ../vdms_threads/ydl_executable.py:74 ../vdms_threads/ydl_executable.py:249
+#: ../vdms_threads/ydl_executable.py:75 ../vdms_threads/ydl_executable.py:252
 msgid ""
 "\n"
 "Requires MSVCR100.dll\n"
@@ -3954,6 +3899,78 @@ msgstr ""
 "Требуется MSVCR100.dll\n"
 "Для решения этой проблемы установите распространяемый пакет Microsoft Visual "
 "C ++ 2010 (x86)."
+
+#~ msgid "Choose how you want to use youtube-dl\n"
+#~ msgstr "Выберите, как вы хотите использовать youtube-dl\n"
+
+#~ msgid ""
+#~ "Videomass can use youtube-dl internally as a Python\n"
+#~ "module (recommended) or as an executable file. The\n"
+#~ "executable file can be downloaded and updated from\n"
+#~ "Videomass itself and will be placed on:"
+#~ msgstr ""
+#~ "Videomass может использовать youtube-dl внутри как модуль\n"
+#~ "Python (рекомендуется) или как исполняемый файл.\n"
+#~ "Исполняемый файл может быть загружен и обновлен\n"
+#~ "с помощью Videomass и будет размещен локально:"
+
+#~ msgid ""
+#~ "Notice: This version of Videomass can\n"
+#~ "only use youtube-dl as local executable"
+#~ msgstr ""
+#~ "Примечание: эта версия Videomass может использовать\n"
+#~ "youtube-dl только как локальный исполняемый файл"
+
+#~ msgid "Use the one included in the AppImage (recommended)"
+#~ msgstr "Используйте тот, который включен в AppImage (рекомендуется)"
+
+#~ msgid "Use a local copy of youtube-dl"
+#~ msgstr "Используйте локальную копию youtube-dl"
+
+#~ msgid "Use the one installed in your O.S. (recommended)"
+#~ msgstr "Используйте тот, который установлен в вашем системе (рекомендуется)"
+
+#~ msgid "Use a local copy of youtube-dl updatable by Videomass"
+#~ msgstr ""
+#~ "Используйте локальную копию youtube-dl, обновляемую с помощью Videomass"
+
+# Длинные строки в русском
+# возможен вариант:
+# Убедитесь, что все импортированные файлы являются видеофайлами и имеют\n
+# одинаковые потоки, одинаковые кодеки и одинаковые размеры,\n
+# но могут быть упакованы в разные форматы контейнеров.
+#~ msgid ""
+#~ "Make sure the files imported are all Video files and have exactly the "
+#~ "same streams,\n"
+#~ "same codecs and same dimensions, but can be wrapped in different "
+#~ "container formats."
+#~ msgstr ""
+#~ "Убедитесь, что все импортированные файлы являются видеофайлами и имеют "
+#~ "одинаковые потоки,\n"
+#~ "одинаковые кодеки и одинаковые размеры, но могут быть упакованы в разные "
+#~ "форматы контейнеров."
+
+#~ msgid ""
+#~ "Make sure the files imported are all audio files and have the same "
+#~ "formats and codecs."
+#~ msgstr ""
+#~ "Убедитесь, что все импортированные файлы являются аудиофайлами и имеют "
+#~ "одинаковые форматы и кодеки."
+
+#~ msgid "Audio files (tracks)"
+#~ msgstr "Аудио файлы (треки)"
+
+#~ msgid "Video files"
+#~ msgstr "Видео файлы"
+
+#~ msgid "Only Audio streams from Videos"
+#~ msgstr "Только аудиопотоки из видео"
+
+#~ msgid "Which files do you want to concatenate?"
+#~ msgstr "Какие файлы вы хотите объединить?"
+
+#~ msgid "Output format:"
+#~ msgstr "Выходной формат:"
 
 #~ msgid "Command line"
 #~ msgstr "Командная строка"
