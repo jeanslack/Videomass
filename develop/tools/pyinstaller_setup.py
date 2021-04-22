@@ -245,7 +245,7 @@ class MakePyinstallerBuild(Data):
     """
     def check(self):
         """
-        Check some integrity of sources
+        Check for required sources
 
         """
         if not os.path.exists(os.path.join(self.here, 'videomass')):  # binary
@@ -261,16 +261,20 @@ class MakePyinstallerBuild(Data):
 
     def genspec(self, build=False):
         """
-        Generate a videomass.spec file on the specified platform.
-        The valid platforms to work are only Windows and MacOs and Linux.
+        Generate a videomass.spec file for the specified platform.
+        Support for the following platforms is expected:
+                                            [Windows / MacOs / Linux]
+
         The videomass.spec file will be saved in the root directory
         of the videomass sources.
         To running videomass.spec is required ``pyinstaller``.
+
         To use videomass.spec type:
 
             `pyinstaller videomass.spec`
 
         or use option -gb to generate and start with building too.
+
         """
         if platform.system() == 'Windows':
             contents = self.WIN32_TEMPL
@@ -305,7 +309,9 @@ class MakePyinstallerBuild(Data):
         """
         Run pyinstaller from Python code starting to build a
         videomass bundle and videomass.spec too.
+
         To use this function is required ``pyinstaller``.
+
         """
         try:
             import PyInstaller.__main__

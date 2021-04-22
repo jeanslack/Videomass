@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Apr.04.2021 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -72,11 +72,15 @@ class Data_Source(object):
         `self.icodir` and a folder for the locale > `self.localepath`),
         it performs the initialization described in Data_Source.
         """
+        self.apptype = None  # appimage, pyinstaller on None
+
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             print('getattr frozen, hasattr _MEIPASS')
+            self.apptype = 'pyinstaller'
             frozen, meipass = True, True
             path = getattr(sys, '_MEIPASS',  os.path.abspath(__file__))
             data_location = path
+
         else:
             frozen, meipass = False, False
             path = os.path.realpath(os.path.abspath(__file__))
@@ -90,8 +94,10 @@ class Data_Source(object):
         launcher = os.path.isfile('%s/launcher' % self.WORKdir)
 
         if frozen and meipass or launcher:
-            print('frozen=%s meipass=%s launcher=%s' % (frozen, meipass,
-                                                        launcher))
+            print('frozen=%s meipass=%s launcher=%s' % (frozen,
+                                                        meipass,
+                                                        launcher
+                                                        ))
             self.videomass_icon = "%s/videomass.png" % self.icodir
 
         else:
@@ -108,12 +114,14 @@ class Data_Source(object):
                    sys.argv[0]))) + '/AppRun')):
                 # embedded on python appimage
                 print('Embedded on python appimage')
+                self.apptype = 'appimage'
                 userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
                 pixmaps = '/share/pixmaps/videomass.png'
                 self.videomass_icon = os.path.join(userbase + pixmaps)
 
             elif 'usr/bin/videomass' in sys.argv[0]:
                 print('Embedded on python appimage externally')
+                self.apptype = 'appimage'
                 userbase = os.path.dirname(os.path.dirname(sys.argv[0]))
                 pixmaps = '/share/pixmaps/videomass.png'
                 self.videomass_icon = os.path.join(userbase + pixmaps)
@@ -179,7 +187,7 @@ class Data_Source(object):
                 userconf = self.parsing_fileconf()  # fileconf data
                 if not userconf:
                     existfileconf = False
-                if float(userconf[0]) != 3.0:
+                if float(userconf[0]) != 3.1:
                     existfileconf = False
             else:
                 existfileconf = False
@@ -221,6 +229,7 @@ class Data_Source(object):
                 Data_Source.LOG_DIR,
                 Data_Source.CACHE_DIR,
                 self.FFmpeglocaldir,
+                self.apptype,
                 )
     # --------------------------------------------------------------------
 

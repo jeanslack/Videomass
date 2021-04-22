@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Feb.02.2021 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -61,6 +61,7 @@ class Ydl_DL_Exec(Thread):
     LOGDIR = get.LOGdir
     FFMPEG_URL = get.FFMPEG_url
     EXECYDL = get.execYdl
+    APPTYPE = get.APP_type
 
     if get.PLAYLISTsubfolder == 'true':
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
@@ -102,9 +103,9 @@ class Ydl_DL_Exec(Thread):
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
-        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+
+        if (platform.system() == 'Windows' or
+             Ydl_DL_Exec.APPTYPE == 'appimage'):
             self.ssl = '--no-check-certificate'
 
         else:
@@ -242,6 +243,8 @@ class Ydl_EI_Exec(Thread):
     """
     get = wx.GetApp()  # get videomass wx.App attribute
     EXECYDL = get.execYdl
+    APPTYPE = get.APP_type
+
     if not platform.system() == 'Windows':
         LINE_MSG = _('Unrecognized error')
     else:
@@ -260,9 +263,9 @@ class Ydl_EI_Exec(Thread):
         self.url = url
         self.status = None
         self.data = None
-        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+
+        if (platform.system() == 'Windows' or
+             Ydl_EI_Exec.APPTYPE == 'appimage'):
             self.ssl = '--no-check-certificate'
         else:
             self.ssl = ''

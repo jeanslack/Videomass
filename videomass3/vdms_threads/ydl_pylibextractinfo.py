@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -68,6 +68,7 @@ class Ydl_EI_Pylib(Thread):
     """
     get = wx.GetApp()  # get data from bootstrap
     OS = get.OS
+    APPTYPE = get.APP_type
 
     def __init__(self, url):
         """
@@ -77,9 +78,8 @@ class Ydl_EI_Pylib(Thread):
         """
         self.url = url
         self.data = None
-        if (Ydl_EI_Pylib.OS == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+        if (Ydl_EI_Pylib.OS == 'Windows' or
+             Ydl_EI_Pylib.APPTYPE == 'appimage'):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Apr.04.2021 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -62,6 +62,7 @@ class MainFrame(wx.Frame):
     get = wx.GetApp()
     PYLIB_YDL = get.pylibYdl  # youtube_dl library with None is in use
     EXEC_YDL = get.execYdl  # youtube-dl executable with False do not exist
+    APPTYPE = get.APP_type  # pyinstaller, appimage or None
     OS = get.OS  # ID of the operative system:
     DIR_CONF = get.DIRconf  # default configuration directory
     FILE_CONF = get.FILEconf  # pathname of the file configuration
@@ -297,6 +298,7 @@ class MainFrame(wx.Frame):
             self.concpan.Enable(False), self.ydlpan.Enable(False),
             self.startpan.Enable(False), self.viewtimeline.Enable(False),
             self.logpan.Enable(False)
+
         if MainFrame.PYLIB_YDL is not None:  # no used as module
             if MainFrame.EXEC_YDL:
                 if os.path.isfile(MainFrame.EXEC_YDL):
@@ -727,9 +729,7 @@ class MainFrame(wx.Frame):
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
-        elif ('/tmp/.mount_' in sys.executable or os.path.exists(
-              os.path.dirname(os.path.dirname(os.path.dirname(
-               sys.argv[0]))) + '/AppRun')):
+        elif MainFrame.APPTYPE == 'appimage':
 
             ck = _check()
             if not ck:

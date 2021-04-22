@@ -6,7 +6,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Jan.25.2021 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -78,7 +78,7 @@ class Videomass(wx.App):
         self.pylibYdl = None  # None if load as library else string
         self.execYdl = False  # path to the executable
         self.YDLsite = None  # path to youtube-dl sitepackage/distpackage
-        self.YDL_pref = None  # one of these: false, disabled, system, local
+        self.YDL_pref = None  # one of these: false, disabled, enabled
         self.FFMPEGoutdir = None
         self.YDLoutdir = None
         self.CLEARcache = None
@@ -126,6 +126,7 @@ class Videomass(wx.App):
         self.LOGdir = setui[9]  # dir for logging
         self.CACHEdir = setui[10]  # dir cache for updates
         self.FFMPEGlocaldir = setui[11]  # local path to FFMPEG on Videomass
+        self.APP_type = setui[12]  # appimage, pyinstaller or None
         self.TBsize = setui[4][12]  # toolbar icons size
         self.TBpos = setui[4][13]  # toolbar position style
         self.TBtext = setui[4][14]  # toolbar show/hide text along side
@@ -142,23 +143,16 @@ class Videomass(wx.App):
         # ----- youtube-dl
         execname = 'youtube-dl.exe' if self.OS == 'Windows' else 'youtube-dl'
 
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+        if self.APP_type == 'pyinstaller':
             self.execYdl = os.path.join(self.CACHEdir, execname)
             self.pylibYdl = 'no module loaded'
 
-            if self.YDL_pref != 'false':
-                self.YDL_pref = (setui[4][16] if setui[4][16] == 'disabled'
-                                 else 'local')
         else:
 
             if self.YDL_pref == 'disabled':
                 self.pylibYdl = 'no module loaded'
 
-            elif self.YDL_pref == 'local':
-                self.execYdl = os.path.join(self.CACHEdir, execname)
-                self.pylibYdl = 'no module loaded'
-
-            elif self.YDL_pref == 'system':
+            elif self.YDL_pref == 'enabled':
                 win, nix = '\\__init__.py', '/__init__.py'
                 sp = win if self.OS == 'Windows' else nix
                 try:

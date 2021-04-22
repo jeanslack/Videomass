@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Dec.31.2020
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -38,6 +38,7 @@ class Setup(wx.Dialog):
     # get videomass wx.App attribute
     get = wx.GetApp()
     OS = get.OS
+    APPTYPE = get.APP_type
     FF_THREADS = get.FFthreads
     PWD = get.WORKdir
     FILE_CONF = get.FILEconf
@@ -280,7 +281,7 @@ class Setup(wx.Dialog):
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
                                          choices=[_('Disable youtube-dl'),
-                                                  '', ''],
+                                                  _('Enable youtube-dl')],
                                          majorDimension=1,
                                          style=wx.RA_SPECIFY_COLS
                                          )
@@ -296,62 +297,53 @@ class Setup(wx.Dialog):
         grdydlLoc.Add(self.ydlPath, 1, wx.ALL | wx.EXPAND, 5)
 
         # ---- BEGIN set youtube-dl radiobox
-        if ('/tmp/.mount_' in sys.executable or os.path.exists(
-            os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
-
-            self.rdbDownloader.SetItemLabel(1, _('Use the one included in the '
-                                                 'AppImage (recommended)'))
-            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
-                                                 'youtube-dl'))
-            tip1 = _('Menu bar > Tools > Update youtube-dl')
-            tip2 = _('Menu bar > Tools > Update youtube-dl')
-
-        else:
-            self.rdbDownloader.SetItemLabel(1, _('Use the one installed in '
-                                                 'your O.S. (recommended)'))
-            self.rdbDownloader.SetItemLabel(2, _('Use a local copy of '
-                                                 'youtube-dl updatable by '
-                                                 'Videomass'))
-            tip1 = _('Menu bar > Tools > Update youtube-dl')
-            tip2 = ('python3 -m pip install -U youtube-dl')
-
         ydlmsg = _('Make sure you are using the latest available version of\n'
                    'youtube-dl. This allows you to avoid download problems.\n')
 
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+        if Setup.APPTYPE == 'pyinstaller':
             txtctrl_clipboard.Hide()
-            self.rdbDownloader.EnableItem(1, enable=False)
+            tip1 = _('Menu bar > Tools > Update youtube-dl')
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
-        if Setup.YDL_PREF == 'disabled':
+            if Setup.YDL_PREF == 'disabled':
+                self.rdbDownloader.SetSelection(0)
+                self.ydlPath.WriteText(_('Disabled'))
+            else:
+                self.rdbDownloader.SetSelection(1)
+                if os.path.exists(Setup.EXECYDL):
+                    self.ydlPath.WriteText(str(Setup.EXECYDL))
+                else:
+                    self.ydlPath.WriteText(_('Not found'))
+
+        elif Setup.APPTYPE == 'appimage':
             txtctrl_clipboard.Hide()
-            self.rdbDownloader.SetSelection(0)
-            self.ydlPath.WriteText(_('Disabled'))
+            tip1 = _('Menu bar > Tools > Update youtube-dl')
+            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
+
+            if Setup.YDL_PREF == 'disabled':
+                self.rdbDownloader.SetSelection(0)
+                self.ydlPath.WriteText(_('Disabled'))
+            else:
+                self.rdbDownloader.SetSelection(1)
+                if Setup.SITEPKGYDL is None:
+                    self.ydlPath.WriteText(_('Not Installed'))
+                else:
+                    self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
+
+        else:
+            tip1 = ('python3 -m pip install -U youtube-dl')
             labydl0.SetLabel('%s' % (ydlmsg))
+            txtctrl_clipboard.write(tip1)
 
-        elif Setup.YDL_PREF == 'system':
-            self.rdbDownloader.SetSelection(1)
-            if tip2 == 'python3 -m pip install -U youtube-dl':
-                labydl0.SetLabel('%s' % (ydlmsg))
-                txtctrl_clipboard.write(tip2)
+            if Setup.YDL_PREF == 'disabled':
+                self.rdbDownloader.SetSelection(0)
+                self.ydlPath.WriteText(_('Disabled'))
             else:
-                txtctrl_clipboard.Hide()
-                labydl0.SetLabel('%s%s' % (ydlmsg, tip2))
-
-            if Setup.SITEPKGYDL is None:
-                self.ydlPath.WriteText(_('Not Installed'))
-            else:
-                self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
-
-        elif Setup.YDL_PREF == 'local':
-            txtctrl_clipboard.Hide()
-            self.rdbDownloader.SetSelection(2)
-            labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
-            if os.path.exists(Setup.EXECYDL):
-                self.ydlPath.WriteText(str(Setup.EXECYDL))
-            else:
-                self.ydlPath.WriteText(_('Not found'))
+                self.rdbDownloader.SetSelection(1)
+                if Setup.SITEPKGYDL is None:
+                    self.ydlPath.WriteText(_('Not Installed'))
+                else:
+                    self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
         # ---- END
 
         # ----
@@ -865,9 +857,7 @@ class Setup(wx.Dialog):
         if self.rdbDownloader.GetSelection() == 0:
             self.full_list[self.rowsNum[16]] = 'disabled\n'
         elif self.rdbDownloader.GetSelection() == 1:
-            self.full_list[self.rowsNum[16]] = 'system\n'
-        elif self.rdbDownloader.GetSelection() == 2:
-            self.full_list[self.rowsNum[16]] = 'local\n'
+            self.full_list[self.rowsNum[16]] = 'enabled\n'
     # --------------------------------------------------------------------#
 
     def on_help(self, event):

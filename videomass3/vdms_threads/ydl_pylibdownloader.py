@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Feb.02.2021 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -135,6 +135,7 @@ class Ydl_DL_Pylib(Thread):
     OS = get.OS
     LOGDIR = get.LOGdir
     FFMPEG_URL = get.FFMPEG_url
+    APPTYPE = get.APP_type
 
     if get.PLAYLISTsubfolder == 'true':
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
@@ -161,9 +162,9 @@ class Ydl_DL_Pylib(Thread):
         self.count = 0
         self.countmax = len(varargs[1])
         self.logname = logname
-        if (Ydl_DL_Pylib.OS == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+
+        if (Ydl_DL_Pylib.OS == 'Windows' or
+             Ydl_DL_Pylib.APPTYPE == 'appimage'):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

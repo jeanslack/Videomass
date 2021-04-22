@@ -1,6 +1,8 @@
 videomass (3.4.2-1) UNRELEASED; urgency=medium
 
-  * MS-Windows: Fixed issue with opening Explorer.
+  * MS-Windows: Fixed issue with opening Explorer file browser.
+  * youtube-dl: can only be enabled or disabled
+  * Concat demuxer: fixed inconsistencies on UI
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Apr 2021 22:16:00 +0200
 

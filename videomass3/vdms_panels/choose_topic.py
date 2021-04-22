@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Jan.28.2021
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -68,6 +68,7 @@ class Choose_Topic(wx.Panel):
         self.PYLIB_YDL = get.pylibYdl  # None if used else 'string error'
         self.EXEC_YDL = get.execYdl  # /path/youtube-dl if used else False
         self.YDL_PREF = get.YDL_pref
+        self.APPTYPE = get.APP_type
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpAVconv = get_bmp(videoconv_icn, ((48, 48)))
@@ -239,23 +240,13 @@ class Choose_Topic(wx.Panel):
                     'use the latest version available: menu bar > Tools > '
                     'Update youtube-dl.'
                     ))
+
         if self.YDL_PREF == 'disabled':
             wx.MessageBox(_("youtube-dl is disabled. Check your preferences."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
-        elif self.YDL_PREF == 'system':
-            if self.PYLIB_YDL is None:
-                self.parent.switch_text_import(self, 'Youtube Downloader')
-                return
-            else:
-                wx.MessageBox(_("ERROR: {}\n\nyoutube-dl is not installed, "
-                                "use your package manager to install "
-                                "it.").format(self.PYLIB_YDL),
-                              "Videomass", wx.ICON_ERROR, self)
-                return
-
-        elif self.YDL_PREF == 'local':
+        elif self.APPTYPE ==  'pyinstaller':
             if os.path.isfile(self.EXEC_YDL):
                 self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
@@ -282,3 +273,21 @@ class Choose_Topic(wx.Panel):
                     self.parent.ydlupdate.Enable(True)
                     return
                 return
+
+        else:
+            if self.PYLIB_YDL is None:
+                self.parent.switch_text_import(self, 'Youtube Downloader')
+                return
+            else:
+                if self.APPTYPE ==  'appimage':
+                    wx.MessageBox(_("ERROR: {}\n\nyoutube-dl is not embedded "
+                                    "on AppImage. Please, install "
+                                    "it.").format(self.PYLIB_YDL),
+                                  "Videomass", wx.ICON_ERROR, self)
+                    return
+                else:
+                    wx.MessageBox(_("ERROR: {}\n\nyoutube-dl is not "
+                                    "installed, use your package manager "
+                                    "to install it.").format(self.PYLIB_YDL),
+                                  "Videomass", wx.ICON_ERROR, self)
+                    return

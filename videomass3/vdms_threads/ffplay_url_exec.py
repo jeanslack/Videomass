@@ -6,7 +6,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Jan.07.2020 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 # This file is part of Videomass.
 
@@ -73,6 +73,7 @@ class Exec_Download_Stream(Thread):
     TMP = get.TMP
     LOGDIR = get.LOGdir
     YDL_PREF = get.YDL_pref
+    APPTYPE = get.APP_type
 
     if platform.system() == 'Windows':
         pyname = 'Scripts', 'youtube-dl.exe'
@@ -83,13 +84,13 @@ class Exec_Download_Stream(Thread):
         EXCEPTION = 'error: youtube-dl is disabled, check preferences.'
         EXECYDL = BINLOCAL
 
-    elif YDL_PREF == 'local':
+    elif APPTYPE == 'pyinstaller':
         if BINLOCAL is not False:
             EXECYDL = BINLOCAL
         else:
             EXCEPTION = 'Not found: %s' % BINLOCAL
 
-    elif YDL_PREF == 'system':
+    else:
         if 'youtube_dl' in sys.modules:
             # see also inspect: `inspect.getfile(youtube_dl)`
             # or the best: shutil.which('python')
@@ -122,9 +123,8 @@ class Exec_Download_Stream(Thread):
         self.url = url
         self.quality = quality
 
-        if (platform.system() == 'Windows' or '/tmp/.mount_' in sys.executable
-            or os.path.exists(os.path.dirname(os.path.dirname(os.path.dirname(
-             sys.argv[0]))) + '/AppRun')):
+        if (platform.system() == 'Windows' or
+             Exec_Download_Stream.APPTYPE == 'appimage'):
 
             self.ssl = '--no-check-certificate'
 

@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Jan.09.2020 *PEP8 compatible*
+# Rev: April.21.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -405,9 +405,8 @@ class PageThree(wx.Panel):
 
 class PageFour(wx.Panel):
     """
-    The PageFour panel asks the user if they want to enable
-    youtube-dl. This panel determines whether the PageFive
-    panel is displayed or not.
+    The PageFour panel asks the user if they want
+    to enable youtube-dl.
 
     """
     get = wx.GetApp()
@@ -470,114 +469,7 @@ class PageFour(wx.Panel):
         if self.ckbx_yn.IsChecked() is False:
             self.parent.youtubedl = 'disabled'
         else:
-            self.parent.youtubedl = None
-        '''
-
-
-class PageFive(wx.Panel):
-    """
-    Shows a wizard panel to set downloader preferences aka youtube-dl.
-    The display of this panel depends on the PageFour panel settings;
-    if the PageFour panel checkbox is True then this panel is shown.
-
-    """
-    get = wx.GetApp()
-    OS = get.OS
-    CACHEDIR = get.CACHEdir
-
-    MSG0 = _('Choose how you want to use youtube-dl\n')
-
-    MSG1 = _('Videomass can use youtube-dl internally as a Python\n'
-             'module (recommended) or as an executable file. The\n'
-             'executable file can be downloaded and updated from\n'
-             'Videomass itself and will be placed on:')
-
-    MSG2 = _('Notice: This version of Videomass can\n'
-             'only use youtube-dl as local executable')
-    #  if AppImage
-    if ('/tmp/.mount_' in sys.executable or os.path.exists(
-        os.path.dirname(os.path.dirname(os.path.dirname(
-         sys.argv[0]))) + '/AppRun')):
-
-        dldlist = [
-                _('Use the one included in the AppImage (recommended)'),
-                _('Use a local copy of youtube-dl')]
-    else:
-        dldlist = [
-                _('Use the one installed in your O.S. (recommended)'),
-                _('Use a local copy of youtube-dl updatable by Videomass')]
-
-    def __init__(self, parent):
-        """
-        The display of information messages may vary depending
-        on the type of installer or type of embedding (usually
-        on AppImage and pyinstaller packages)
-
-        NOTE: note the pass statement on `choose_Youtubedl`
-        the values of this panel are get by Wizard.wizard_Finish method
-
-        """
-        wx.Panel.__init__(self, parent, -1, style=wx.BORDER_THEME)
-        """constructor"""
-
-        self.parent = parent
-        sizer_base = wx.BoxSizer(wx.VERTICAL)
-        sizerText = wx.BoxSizer(wx.VERTICAL)
-        self.rdbDownloader = wx.RadioBox(self, wx.ID_ANY,
-                                         (_("Downloader preferences")),
-                                         choices=PageFive.dldlist,
-                                         majorDimension=1,
-                                         style=wx.RA_SPECIFY_COLS
-                                         )
-        sizer_base.Add((0, 50), 0)
-        lab0 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG0,
-                             style=wx.ST_ELLIPSIZE_END |
-                             wx.ALIGN_CENTRE_HORIZONTAL
-                             )
-        sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        sizer_base.Add((0, 40), 0)
-        lab1 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG1)
-        sizer_base.Add(sizerText, 0, wx.CENTER)
-
-        sizerText.Add(lab1, 0, wx.CENTER | wx.EXPAND)
-        labpath = wx.StaticText(self, wx.ID_ANY, PageFive.CACHEDIR,
-                                style=wx.ALIGN_CENTRE_HORIZONTAL)
-        sizer_base.Add((0, 15), 0)
-        sizer_base.Add(labpath, 0, wx.CENTER | wx.EXPAND, 5)
-        sizer_base.Add((0, 15), 0)
-        sizer_base.Add(self.rdbDownloader, 0, wx.CENTER | wx.ALL, 10)
-        sizer_base.Add((0, 15), 0)
-        #  if pyinstaller packages
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            lab2 = wx.StaticText(self, wx.ID_ANY, PageFive.MSG2,
-                                 style=wx.ALIGN_CENTRE_HORIZONTAL)
-            lab2.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
-            sizer_base.Add(lab2, 0, wx.CENTER | wx.EXPAND)
-            self.rdbDownloader.SetSelection(1)
-            self.rdbDownloader.Disable()
-
-        if PageFive.OS == 'Darwin':
-            lab0.SetFont(wx.Font(14, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-
-        else:
-            lab0.SetFont(wx.Font(12, wx.DEFAULT, wx.ITALIC, wx.NORMAL, 0, ""))
-
-        self.SetSizer(sizer_base)
-        sizer_base.Fit(self)
-        self.Layout()
-
-        self.Bind(wx.EVT_RADIOBOX, self.choose_Youtubedl, self.rdbDownloader)
-
-    def choose_Youtubedl(self, event):
-        """
-        the values are get on Wizard.wizard_Finish method
-        """
-        pass
-        '''
-        if self.rdbDownloader.GetSelection() == 0:
-            self.parent.youtubedl = 'system'
-        elif self.rdbDownloader.GetSelection() == 1:
-            self.parent.youtubedl = 'local'
+            self.parent.youtubedl = 'enable'
         '''
 
 
@@ -664,18 +556,16 @@ class Wizard(wx.Dialog):
         self.pageOne = PageOne(self, icon_videomass)  # start...
         self.pageTwo = PageTwo(self)  # choose ffmpeg modality
         self.pageThree = PageThree(self)  # browse for ffmpeg binaries
-        self.pageFour = PageFour(self)  # choose youtube-dl modality
-        self.pageFive = PageFive(self)  # choose youtube-dl binaries
+        self.pageFour = PageFour(self)  # enable or disable youtube-dl
         self.pageFinish = PageFinish(self)  # ...end
         #  hide panels
-        self.pageTwo.Hide(), self.pageThree.Hide(), self.pageFour.Hide()
-        self.pageFive.Hide(), self.pageFinish.Hide()
+        self.pageTwo.Hide(), self.pageThree.Hide()
+        self.pageFour.Hide(), self.pageFinish.Hide()
         #  adds panels to sizer
         mainSizer.Add(self.pageOne, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageTwo, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageThree, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageFour, 1, wx.ALL | wx.EXPAND, 5)
-        mainSizer.Add(self.pageFive, 1, wx.ALL | wx.EXPAND, 5)
         mainSizer.Add(self.pageFinish, 1, wx.ALL | wx.EXPAND, 5)
         # bottom side layout
         gridBtn = wx.GridSizer(1, 2, 0, 0)
@@ -746,17 +636,10 @@ class Wizard(wx.Dialog):
                               ("Videomass"), wx.ICON_INFORMATION, self)
 
         elif self.pageFour.IsShown():
-            self.pageOne.Hide(), self.pageTwo.Hide(), self.pageFour.Hide()
-
-            if self.pageFour.ckbx_yn.IsChecked():
-                self.pageFive.Show()
-            else:
-                self.pageFinish.Show()
-                self.btnNext.SetLabel(_('Finish'))
-
-        elif self.pageFive.IsShown():
-            self.pageFive.Hide(), self.pageFinish.Show()
+            self.pageOne.Hide(), self.pageTwo.Hide()
+            self.pageFour.Hide(), self.pageFinish.Show()
             self.btnNext.SetLabel(_('Finish'))
+
 
         self.Layout()
     # -------------------------------------------------------------------#
@@ -783,38 +666,23 @@ class Wizard(wx.Dialog):
             else:
                 self.pageFour.Hide(), self.pageThree.Show()
 
-        elif self.pageFive.IsShown():
-            self.pageFive.Hide(), self.pageFour.Show()
-
         elif self.pageFinish.IsShown():
             self.btnNext.SetLabel(_('Next >'))
             self.pageFinish.Hide()
-            if self.pageFour.ckbx_yn.IsChecked():
-                self.pageFive.Show()
-            else:
-                self.pageFour.Show()
+            self.pageFour.Show()
 
         self.Layout()
     # -------------------------------------------------------------------#
 
     def wizard_Finish(self):
         """
-        Get all settings and call `write_changes` to applies changes.
-        If `rdbDownloader` is disabled means that use Videomass with
-        pyinstaller (pyinstaller does not allow to update easily
-        youtube-dl package, only uses youtube-dl executable).
+        Get all settings and call `write_changes`
+        to applies changes.
 
         """
         if self.pageFour.ckbx_yn.IsChecked():
+            youtubedl = 'enabled'
 
-            if not self.pageFive.rdbDownloader.IsEnabled():
-                youtubedl = 'local'  # usually pyinstaller packages
-
-            elif self.pageFive.rdbDownloader.GetSelection() == 0:
-                youtubedl = 'system'
-
-            elif self.pageFive.rdbDownloader.GetSelection() == 1:
-                youtubedl = 'local'
         else:
             youtubedl = 'disabled'
 
