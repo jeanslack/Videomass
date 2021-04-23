@@ -9,8 +9,15 @@ Change Log:
 +------------------------------------+
 Apr 22, 2021 V.3.4.2
 
-  * MS-Windows: Fixed issue with opening Explorer file browser.
-  * youtube-dl: can only be enabled or disabled
+  * MS-Windows: Fixed issue with opening the Explorer file browser on default
+    folders.
+  * youtube-dl: Removed some choice options. Now there is only the option to
+    enable or disable it.
+  * youtube-dl: only packages built with pyinstaller use a local copy of
+    the youtube-dl executable. Otherwise youtube-dl will always be used as
+    a Python module, if enabled.
+  * Fixed wizard dialog.
+  * Fixed setup dialog.
   * Concat demuxer: fixed inconsistencies on UI
 
 +------------------------------------+

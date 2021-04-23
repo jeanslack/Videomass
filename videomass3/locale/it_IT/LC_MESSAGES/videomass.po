@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-22 11:17+0200\n"
-"PO-Revision-Date: 2021-04-22 11:18+0200\n"
+"POT-Creation-Date: 2021-04-23 13:49+0200\n"
+"PO-Revision-Date: 2021-04-23 13:59+0200\n"
 "Last-Translator: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language-Team: Gianluca (jeanslack) Pernigotto <jeanlucperni@gmail.com>\n"
 "Language: it_IT\n"
@@ -2973,43 +2973,31 @@ msgstr "Salva il nuovo profilo su..."
 msgid "Create a new profile"
 msgstr "Crea un nuovo profilo"
 
-#: ../vdms_panels/choose_topic.py:86
+#: ../vdms_panels/choose_topic.py:85
 msgid "Welcome to Videomass"
 msgstr "Benvenuti in Videomass"
 
-#: ../vdms_panels/choose_topic.py:87
+#: ../vdms_panels/choose_topic.py:86
 msgid "Version {}"
 msgstr "Versione {}"
 
-#: ../vdms_panels/choose_topic.py:106
+#: ../vdms_panels/choose_topic.py:105
 msgid "Presets Manager"
 msgstr "Gestionale Predefiniti"
 
-#: ../vdms_panels/choose_topic.py:110
+#: ../vdms_panels/choose_topic.py:109
 msgid "AV-Conversions"
 msgstr "Conversioni-A/V"
 
-#: ../vdms_panels/choose_topic.py:114
+#: ../vdms_panels/choose_topic.py:113
 msgid "Concatenate media files"
 msgstr "Concatenare file multimediali"
 
-#: ../vdms_panels/choose_topic.py:118 ../vdms_panels/youtubedl_ui.py:437
+#: ../vdms_panels/choose_topic.py:117 ../vdms_panels/youtubedl_ui.py:437
 msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
-#: ../vdms_panels/choose_topic.py:138
-msgid ""
-"Videomass would need volunteer translators. If you are interested you could "
-"take a look at the "
-msgstr ""
-"Videomass avrebbe bisogno di traduttori volontari. Se sei interessato "
-"potresti dare un'occhiata alle "
-
-#: ../vdms_panels/choose_topic.py:143
-msgid "Localization guidelines"
-msgstr "Linee guida per la localizzazione"
-
-#: ../vdms_panels/choose_topic.py:150
+#: ../vdms_panels/choose_topic.py:134
 msgid ""
 "Create, edit and use quickly your favorite FFmpeg presets and profiles with "
 "full formats support and codecs."
@@ -3017,7 +3005,7 @@ msgstr ""
 "Crea, modifica o usa subito i tuoi presets e profili favoriti con supporto "
 "completo ai formati e codecs di FFmpeg."
 
-#: ../vdms_panels/choose_topic.py:154
+#: ../vdms_panels/choose_topic.py:138
 msgid ""
 "A set of useful tools for audio and video conversions. Save your profiles "
 "and reuse them with Presets Manager."
@@ -3025,7 +3013,7 @@ msgstr ""
 "Un set di strumenti utili per le conversioni audio e video. Salva i tuoi "
 "profili e riusali con il Gestionale Predefiniti."
 
-#: ../vdms_panels/choose_topic.py:158
+#: ../vdms_panels/choose_topic.py:142
 msgid ""
 "Easily download videos and audio in different formats and quality from "
 "YouTube, Facebook and more sites."
@@ -3033,14 +3021,14 @@ msgstr ""
 "Scarica facilmente video e audio con formato e qualità diversi da  YouTube, "
 "Facebook e altri siti."
 
-#: ../vdms_panels/choose_topic.py:162
+#: ../vdms_panels/choose_topic.py:146
 msgid ""
 "Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
 "Concatena più file multimediali in base all'ordine di importazione senza "
 "ricodificarli"
 
-#: ../vdms_panels/choose_topic.py:222
+#: ../vdms_panels/choose_topic.py:204
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -3054,7 +3042,7 @@ msgstr ""
 "download.html>\n"
 "\n"
 
-#: ../vdms_panels/choose_topic.py:231
+#: ../vdms_panels/choose_topic.py:213
 msgid ""
 "To download videos from YouTube.com and other video sites, you need an "
 "updated version of youtube-dl.\n"
@@ -3066,7 +3054,7 @@ msgstr ""
 "\n"
 "{}...Vuoi scaricare localmente youtube-dl ora?"
 
-#: ../vdms_panels/choose_topic.py:238
+#: ../vdms_panels/choose_topic.py:220
 msgid ""
 "Successful! \n"
 "\n"
@@ -3079,11 +3067,11 @@ msgstr ""
 "l'ultima versione disponibile. Barra dei menu > Strumenti > Aggiorna youtube-"
 "dl ."
 
-#: ../vdms_panels/choose_topic.py:245
+#: ../vdms_panels/choose_topic.py:227
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl è disabilitato. Controlla le tue preferenze."
 
-#: ../vdms_panels/choose_topic.py:254 ../vdms_panels/youtubedl_ui.py:848
+#: ../vdms_panels/choose_topic.py:236 ../vdms_panels/youtubedl_ui.py:848
 #: ../vdms_panels/long_processing_task.py:502
 #: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
 #: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
@@ -3091,7 +3079,7 @@ msgstr "youtube-dl è disabilitato. Controlla le tue preferenze."
 msgid "Please confirm"
 msgstr "Prego confermare"
 
-#: ../vdms_panels/choose_topic.py:283
+#: ../vdms_panels/choose_topic.py:265
 msgid ""
 "ERROR: {}\n"
 "\n"
@@ -3101,7 +3089,7 @@ msgstr ""
 "\n"
 "youtube-dl non è stato incorporato sull'AppImage."
 
-#: ../vdms_panels/choose_topic.py:288
+#: ../vdms_panels/choose_topic.py:270
 msgid ""
 "ERROR: {}\n"
 "\n"
@@ -3111,11 +3099,12 @@ msgstr ""
 "\n"
 "youtube-dl non è installato, usa il tuo gestore di pacchetti per installarlo."
 
-#: ../vdms_panels/concatenate.py:76
+#: ../vdms_panels/concatenate.py:79
 msgid ""
 "NOTE:\n"
 "\n"
-"- The concatenation function is performed only on Audio or Video files.\n"
+"- The concatenation function is performed only with Audio files or only with "
+"Video files.\n"
 "\n"
 "- The order of concatenation depends on the order in which the files were "
 "added.\n"
@@ -3127,12 +3116,13 @@ msgid ""
 "- Video files must have exactly same streams, same codecs and same\n"
 "  width/height, but can be wrapped in different container formats.\n"
 "\n"
-"- Audio files must have exactly the same formats and codecs."
+"- Audio files must have exactly the same formats, same codecs and same "
+"sample rate."
 msgstr ""
 "NOTA:\n"
 "\n"
-"- La funzione di concatenazione viene effettuata solo con file Audio o "
-"Video.\n"
+"- La funzione di concatenazione viene effettuata solo con file Audio o solo "
+"con file Video.\n"
 "\n"
 "- L'ordine di concatenazione dipende dall'ordine in cui i file sono stati "
 "aggiunti.\n"
@@ -3147,17 +3137,31 @@ msgstr ""
 "  e la stessa larghezza/altezza, ma possono avere formati o contenitori "
 "diversi.\n"
 "\n"
-"- I file audio devono avere esattamente gli stessi formati e codec."
+"- I file audio devono avere esattamente gli stessi formati, la stessa "
+"frequenza di\n"
+"  campionamento e gli stessi codec."
 
-#: ../vdms_panels/concatenate.py:139
+#: ../vdms_panels/concatenate.py:120
+msgid "For more details, see the Videomass User Guide:"
+msgstr "Per maggiori dettagli, consultare la Guida Utente Videomass:"
+
+#: ../vdms_panels/concatenate.py:133
+msgid "1.4 Concatenate media files (demuxer)"
+msgstr "1.4 Concatenare file multimediali (demuxer)"
+
+#: ../vdms_panels/concatenate.py:140
+msgid "For more information, visit the official FFmpeg documentation:"
+msgstr "For more information, visit the official FFmpeg documentation:"
+
+#: ../vdms_panels/concatenate.py:179
 msgid "At least two files are required to perform concatenation."
 msgstr "Sono necessari almeno due file per eseguire la concatenazione."
 
-#: ../vdms_panels/concatenate.py:140 ../vdms_panels/concatenate.py:152
+#: ../vdms_panels/concatenate.py:180 ../vdms_panels/concatenate.py:192
 msgid "ERROR"
 msgstr "ERRORE"
 
-#: ../vdms_panels/concatenate.py:149
+#: ../vdms_panels/concatenate.py:189
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
@@ -3165,12 +3169,12 @@ msgstr ""
 "I file non hanno gli stessi parametri come \"codec_types\", \"sample_rate"
 "\" , \"larghezza\" o \"altezza\". Impossibile procedere."
 
-#: ../vdms_panels/concatenate.py:178 ../vdms_panels/presets_manager.py:849
+#: ../vdms_panels/concatenate.py:218 ../vdms_panels/presets_manager.py:849
 #: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
 msgid "Starts"
 msgstr "Avvio"
 
-#: ../vdms_panels/concatenate.py:201
+#: ../vdms_panels/concatenate.py:241
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3895,6 +3899,19 @@ msgstr ""
 "Richiede MSVCR100.dll\n"
 "Per risolvere il problema installare: Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid "webpage documentation"
+#~ msgstr "Documentazione ufficiale"
+
+#~ msgid ""
+#~ "Videomass would need volunteer translators. If you are interested you "
+#~ "could take a look at the "
+#~ msgstr ""
+#~ "Videomass avrebbe bisogno di traduttori volontari. Se sei interessato "
+#~ "potresti dare un'occhiata alle "
+
+#~ msgid "Localization guidelines"
+#~ msgstr "Linee guida per la localizzazione"
 
 #~ msgid "Choose how you want to use youtube-dl\n"
 #~ msgstr "Scegli come vuoi utilizzare youtube-dl\n"

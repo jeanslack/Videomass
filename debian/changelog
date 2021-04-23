@@ -1,10 +1,17 @@
 videomass (3.4.2-1) UNRELEASED; urgency=medium
 
-  * MS-Windows: Fixed issue with opening Explorer file browser.
-  * youtube-dl: can only be enabled or disabled
+  * MS-Windows: Fixed issue with opening the Explorer file browser on default
+    folders.
+  * youtube-dl: Removed some choice options. Now there is only the option to
+    enable or disable it.
+  * youtube-dl: only packages built with pyinstaller use a local copy of
+    the youtube-dl executable. Otherwise youtube-dl will always be used as
+    a Python module, if enabled.
+  * Fixed wizard dialog.
+  * Fixed setup dialog.
   * Concat demuxer: fixed inconsistencies on UI
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 18 Apr 2021 22:16:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 23 Apr 2021 16:24:00 +0200
 
 videomass (3.4.1-1) UNRELEASED; urgency=medium
 

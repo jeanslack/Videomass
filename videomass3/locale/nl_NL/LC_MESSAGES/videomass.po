@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-22 11:17+0200\n"
-"PO-Revision-Date: 2021-04-22 11:18+0200\n"
+"POT-Creation-Date: 2021-04-23 13:49+0200\n"
+"PO-Revision-Date: 2021-04-23 13:50+0200\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -3051,45 +3051,33 @@ msgstr "Schrijf het nieuwe profiel op..."
 msgid "Create a new profile"
 msgstr "Maak een nieuw profiel"
 
-#: ../vdms_panels/choose_topic.py:86
+#: ../vdms_panels/choose_topic.py:85
 msgid "Welcome to Videomass"
 msgstr "Welkom bij Videomass"
 
-#: ../vdms_panels/choose_topic.py:87
+#: ../vdms_panels/choose_topic.py:86
 msgid "Version {}"
 msgstr "Versie {}"
 
-#: ../vdms_panels/choose_topic.py:106
+#: ../vdms_panels/choose_topic.py:105
 #, fuzzy
 #| msgid "Presets manager\tShift+P"
 msgid "Presets Manager"
 msgstr "Presets manager\tShift+P"
 
-#: ../vdms_panels/choose_topic.py:110
+#: ../vdms_panels/choose_topic.py:109
 msgid "AV-Conversions"
 msgstr "AV-Conversies"
 
-#: ../vdms_panels/choose_topic.py:114
+#: ../vdms_panels/choose_topic.py:113
 msgid "Concatenate media files"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:118 ../vdms_panels/youtubedl_ui.py:437
+#: ../vdms_panels/choose_topic.py:117 ../vdms_panels/youtubedl_ui.py:437
 msgid "YouTube Downloader"
 msgstr "YouTube Downloader"
 
-#: ../vdms_panels/choose_topic.py:138
-msgid ""
-"Videomass would need volunteer translators. If you are interested you could "
-"take a look at the "
-msgstr ""
-"Videomass zoekt vrijwilligers voor vertalingen. Mocht u dit willen, bekijk "
-"dan eens de  "
-
-#: ../vdms_panels/choose_topic.py:143
-msgid "Localization guidelines"
-msgstr "Uitleg over Localisatie"
-
-#: ../vdms_panels/choose_topic.py:150
+#: ../vdms_panels/choose_topic.py:134
 msgid ""
 "Create, edit and use quickly your favorite FFmpeg presets and profiles with "
 "full formats support and codecs."
@@ -3097,7 +3085,7 @@ msgstr ""
 "Maak, edit en gebruik snel uw favoriete FFmpeg presets en profielen met "
 "volledige ondersteuning van formaten en codecs."
 
-#: ../vdms_panels/choose_topic.py:154
+#: ../vdms_panels/choose_topic.py:138
 msgid ""
 "A set of useful tools for audio and video conversions. Save your profiles "
 "and reuse them with Presets Manager."
@@ -3105,7 +3093,7 @@ msgstr ""
 "Een stel handige gereedschappen voor audio en video conversies. Bewaar uw "
 "profielen en gebruik ze met Presets Manager."
 
-#: ../vdms_panels/choose_topic.py:158
+#: ../vdms_panels/choose_topic.py:142
 msgid ""
 "Easily download videos and audio in different formats and quality from "
 "YouTube, Facebook and more sites."
@@ -3113,12 +3101,12 @@ msgstr ""
 "Gemakkelijk downloaden van video en audio in diverse formaten en kwaliteit "
 "van YouTube, Facebook en meer websites."
 
-#: ../vdms_panels/choose_topic.py:162
+#: ../vdms_panels/choose_topic.py:146
 msgid ""
 "Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
 
-#: ../vdms_panels/choose_topic.py:222
+#: ../vdms_panels/choose_topic.py:204
 msgid ""
 "- Requires: Microsoft Visual C++ 2010 Redistributable Package (x86)\n"
 "\n"
@@ -3132,7 +3120,7 @@ msgstr ""
 "html>\n"
 "\n"
 
-#: ../vdms_panels/choose_topic.py:231
+#: ../vdms_panels/choose_topic.py:213
 msgid ""
 "To download videos from YouTube.com and other video sites, you need an "
 "updated version of youtube-dl.\n"
@@ -3144,7 +3132,7 @@ msgstr ""
 "\n"
 "{}...Wilt u youtube-dl nu downloaden?"
 
-#: ../vdms_panels/choose_topic.py:238
+#: ../vdms_panels/choose_topic.py:220
 msgid ""
 "Successful! \n"
 "\n"
@@ -3156,11 +3144,11 @@ msgstr ""
 "youtube-dl wordt zeer vaak ge-update, zorg altijd dat u de laatste versie "
 "hebt: menu balk > Gereedschappen > Update youtube-dl."
 
-#: ../vdms_panels/choose_topic.py:245
+#: ../vdms_panels/choose_topic.py:227
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl is uitgezet. Controleer uw voorkeuren."
 
-#: ../vdms_panels/choose_topic.py:254 ../vdms_panels/youtubedl_ui.py:848
+#: ../vdms_panels/choose_topic.py:236 ../vdms_panels/youtubedl_ui.py:848
 #: ../vdms_panels/long_processing_task.py:502
 #: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
 #: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
@@ -3168,7 +3156,7 @@ msgstr "youtube-dl is uitgezet. Controleer uw voorkeuren."
 msgid "Please confirm"
 msgstr "Bevestig dit"
 
-#: ../vdms_panels/choose_topic.py:283
+#: ../vdms_panels/choose_topic.py:265
 #, fuzzy
 #| msgid ""
 #| "ERROR: {}\n"
@@ -3184,7 +3172,7 @@ msgstr ""
 "youtube-dl is niet geinstalleerd, gebruik uw package manager om het te "
 "installeren."
 
-#: ../vdms_panels/choose_topic.py:288
+#: ../vdms_panels/choose_topic.py:270
 msgid ""
 "ERROR: {}\n"
 "\n"
@@ -3195,11 +3183,12 @@ msgstr ""
 "youtube-dl is niet geinstalleerd, gebruik uw package manager om het te "
 "installeren."
 
-#: ../vdms_panels/concatenate.py:76
+#: ../vdms_panels/concatenate.py:79
 msgid ""
 "NOTE:\n"
 "\n"
-"- The concatenation function is performed only on Audio or Video files.\n"
+"- The concatenation function is performed only with Audio files or only with "
+"Video files.\n"
 "\n"
 "- The order of concatenation depends on the order in which the files were "
 "added.\n"
@@ -3211,29 +3200,42 @@ msgid ""
 "- Video files must have exactly same streams, same codecs and same\n"
 "  width/height, but can be wrapped in different container formats.\n"
 "\n"
-"- Audio files must have exactly the same formats and codecs."
+"- Audio files must have exactly the same formats, same codecs and same "
+"sample rate."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:139
+#: ../vdms_panels/concatenate.py:120
+msgid "For more details, see the Videomass User Guide:"
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:133
+msgid "1.4 Concatenate media files (demuxer)"
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:140
+msgid "For more information, visit the official FFmpeg documentation:"
+msgstr ""
+
+#: ../vdms_panels/concatenate.py:179
 msgid "At least two files are required to perform concatenation."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:140 ../vdms_panels/concatenate.py:152
+#: ../vdms_panels/concatenate.py:180 ../vdms_panels/concatenate.py:192
 msgid "ERROR"
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:149
+#: ../vdms_panels/concatenate.py:189
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
 msgstr ""
 
-#: ../vdms_panels/concatenate.py:178 ../vdms_panels/presets_manager.py:849
+#: ../vdms_panels/concatenate.py:218 ../vdms_panels/presets_manager.py:849
 #: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
 msgid "Starts"
 msgstr "Start"
 
-#: ../vdms_panels/concatenate.py:201
+#: ../vdms_panels/concatenate.py:241
 msgid ""
 "SUMMARY\n"
 "\n"
@@ -3976,6 +3978,16 @@ msgstr ""
 "Vereist MSVCR100.dll\n"
 "Om dit probleem op te lossen installeer Microsoft Visual C++ 2010 "
 "Redistributable Package (x86)"
+
+#~ msgid ""
+#~ "Videomass would need volunteer translators. If you are interested you "
+#~ "could take a look at the "
+#~ msgstr ""
+#~ "Videomass zoekt vrijwilligers voor vertalingen. Mocht u dit willen, "
+#~ "bekijk dan eens de  "
+
+#~ msgid "Localization guidelines"
+#~ msgstr "Uitleg over Localisatie"
 
 #~ msgid "Choose how you want to use youtube-dl\n"
 #~ msgstr "Kies hoe u youtube-dl wilt gebruiken\n"

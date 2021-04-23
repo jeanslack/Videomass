@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Apr.09.2021 *PEP8 compatible*
+# Rev: Apr.23.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -28,6 +28,7 @@ import wx
 import os
 from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs.epilogue import Formula
+import wx.lib.agw.hyperlink as hpl
 
 
 def compare_media_param(data):
@@ -72,18 +73,21 @@ class Conc_Demuxer(wx.Panel):
     """
     get = wx.GetApp()
     OS = get.OS
+    GET_LANG = get.GETlang
+    SUPPLANG = get.SUPP_langs
 
-    MSG_1 = _("NOTE:\n\n- The concatenation function is performed only on "
-              "Audio or Video files.\n\n- The order of concatenation depends "
-              "on the order in which the files were added.\n\n- The output "
-              "file name will have the same name as the first file added "
-              "(also depends\n "
-              " on the settings made in the preferences dialog).\n\n"
-              "- Video files must have exactly same streams, same codecs "
-              "and same\n  width/height, but can be wrapped in "
-              "different container formats.\n\n"
-              "- Audio files must have exactly the same formats and "
-              "codecs.")
+    MSG_1 = _("NOTE:\n\n- The concatenation function is performed only with "
+              "Audio files or only with Video files."
+              "\n\n- The order of concatenation depends on the order in "
+              "which the files were added."
+              "\n\n- The output file name will have the same name as the "
+              "first file added (also depends\n"
+              "  on the settings made in the preferences dialog)."
+              "\n\n- Video files must have exactly same streams, same "
+              "codecs and same\n  width/height, but can be wrapped in "
+              "different container formats."
+              "\n\n- Audio files must have exactly the same formats, "
+              "same codecs and same sample rate.")
 
     # ----------------------------------------------------------------#
 
@@ -110,6 +114,38 @@ class Conc_Demuxer(wx.Panel):
                                       label=Conc_Demuxer.MSG_1
                                       )
         sizer.Add(self.lbl_msg1, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_link2 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_link2)
+        self.lbl_msg3 = wx.StaticText(self, wx.ID_ANY,
+                                      label=_("For more details, see the "
+                                              "Videomass User Guide:")
+                                      )
+        if Conc_Demuxer.GET_LANG in Conc_Demuxer.SUPPLANG:
+            lang = Conc_Demuxer.GET_LANG.split('_')[0]
+            page = ("https://jeanslack.github.io/Videomass/"
+                    "Pages/User-guide-languages/%s/1-User_"
+                    "Interface_Overview_%s.pdf" % (lang, lang))
+        else:
+            page = ("https://jeanslack.github.io/Videomass/"
+                    "Pages/User-guide-languages/en/1-User_"
+                    "Interface_Overview_en.pdf"
+                    )
+        link2 = hpl.HyperLinkCtrl(self, -1, _("1.4 Concatenate media files "
+                                              "(demuxer)"), URL=page)
+        sizer_link2.Add(self.lbl_msg3, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_link2.Add(link2)
+        sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer.Add(sizer_link1)
+        self.lbl_msg2 = wx.StaticText(self, wx.ID_ANY,
+                                      label=_("For more information, "
+                                              "visit the official FFmpeg "
+                                              "documentation:"))
+        link1 = hpl.HyperLinkCtrl(self, -1, "3.4 concat",
+                                  URL="https://ffmpeg.org/ffmpeg-formats."
+                                      "html#concat"
+                                  )
+        sizer_link1.Add(self.lbl_msg2, 0, wx.ALL | wx.EXPAND, 5)
+        sizer_link1.Add(link1)
         line1 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
                               name=wx.StaticLineNameStr
@@ -122,8 +158,12 @@ class Conc_Demuxer(wx.Panel):
 
         if Conc_Demuxer.OS == 'Darwin':
             self.lbl_msg1.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
+            self.lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.lbl_msg3.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
             self.lbl_msg1.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))
+            self.lbl_msg2.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
+            self.lbl_msg3.SetFont(wx.Font(8, wx.SWISS, wx.NORMAL, wx.NORMAL))
     # ---------------------------------------------------------
 
     def on_start(self):

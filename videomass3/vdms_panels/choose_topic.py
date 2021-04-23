@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: April.21.2021 *PEP8 compatible*
+# Rev: April.23.2021 *PEP8 compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -26,7 +26,6 @@
 #########################################################
 import wx
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
-import wx.lib.agw.hyperlink as hpl
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
 import os
@@ -129,21 +128,6 @@ class Choose_Topic(wx.Panel):
         sizer_base.Add(grid_buttons, 1, wx.ALIGN_CENTER_VERTICAL |
                        wx.ALIGN_CENTER_HORIZONTAL, 5
                        )
-        sizer_trad = wx.BoxSizer(wx.HORIZONTAL)
-        sizer_base.Add(sizer_trad, 0, wx.ALL |
-                       wx.ALIGN_CENTER_VERTICAL |
-                       wx.ALIGN_CENTER_HORIZONTAL, 15
-                       )
-        txt_trad = wx.StaticText(self,
-                                 label=_('Videomass would need volunteer '
-                                         'translators. If you are interested '
-                                         'you could take a look at the '))
-        lnk = ("https://github.com/jeanslack/Videomass/blob/"
-               "master/docs/localization_guidelines.md")
-        link_trad = hpl.HyperLinkCtrl(self, -1, _("Localization guidelines"),
-                                      URL=lnk)
-        sizer_trad.Add(txt_trad)
-        sizer_trad.Add(link_trad)
         self.SetSizerAndFit(sizer_base)
 
         # ---------------------- Tooltips
@@ -176,12 +160,10 @@ class Choose_Topic(wx.Panel):
                 self.SetBackgroundColour('#070b0e')  # blue darkness
                 welcome.SetForegroundColour('#777072')  # grey
                 version.SetForegroundColour('#777072')  # grey
-                txt_trad.SetForegroundColour('#777072')  # grey
             else:
                 self.SetBackgroundColour('#f2efe6')  # light azure
                 welcome.SetForegroundColour('#171b12')  # black
                 version.SetForegroundColour('#171b12')  # black
-                txt_trad.SetForegroundColour('#171b12')  # black
 
         self.Bind(wx.EVT_BUTTON, self.on_Video, self.avconv)
         self.Bind(wx.EVT_BUTTON, self.on_Prst_mng, self.presets_mng)
