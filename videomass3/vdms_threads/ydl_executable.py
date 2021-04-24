@@ -105,7 +105,7 @@ class Ydl_DL_Exec(Thread):
         self.logname = logname
 
         if (platform.system() == 'Windows' or
-             Ydl_DL_Exec.APPTYPE == 'appimage'):
+                Ydl_DL_Exec.APPTYPE == 'appimage'):
             self.ssl = '--no-check-certificate'
 
         else:
@@ -265,7 +265,7 @@ class Ydl_EI_Exec(Thread):
         self.data = None
 
         if (platform.system() == 'Windows' or
-             Ydl_EI_Exec.APPTYPE == 'appimage'):
+                Ydl_EI_Exec.APPTYPE == 'appimage'):
             self.ssl = '--no-check-certificate'
         else:
             self.ssl = ''

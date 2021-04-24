@@ -126,7 +126,7 @@ class Exec_Download_Stream(Thread):
         self.quality = quality
 
         if (platform.system() == 'Windows' or
-             Exec_Download_Stream.APPTYPE == 'appimage'):
+                Exec_Download_Stream.APPTYPE == 'appimage'):
 
             self.ssl = '--no-check-certificate'
 

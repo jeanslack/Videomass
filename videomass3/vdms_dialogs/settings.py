@@ -273,7 +273,7 @@ class Setup(wx.Dialog):
         labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
         sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
 
-        if not Setup.APPTYPE in ('pyinstaller', 'appimage'):
+        if Setup.APPTYPE not in ('pyinstaller', 'appimage'):
             url = ('https://packaging.python.org/tutorials/'
                    'installing-packages/#upgrading-packages')
             static0 = _("How to upgrade a Python package")
@@ -288,8 +288,8 @@ class Setup(wx.Dialog):
             MSVCR = hpl.HyperLinkCtrl(self.tabThree, -1, static1, URL=url)
             sizerYdl.Add(MSVCR, 0, wx.ALL | wx.CENTRE, 2)
 
-        elif (Setup.OS == 'Linux' and not
-               Setup.APPTYPE in ('pyinstaller', 'appimage')):
+        elif (Setup.OS == 'Linux' and
+              Setup.APPTYPE not in ('pyinstaller', 'appimage')):
             url = ('https://packaging.python.org/guides/'
                    'installing-using-linux-tools/')
             static2 = _("How to install pip on your Linux distribution")

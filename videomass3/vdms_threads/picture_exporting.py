@@ -107,7 +107,7 @@ class PicturesFromVideo(Thread):
                                            PicturesFromVideo.FFMPEG_LOGLEV,
                                            self.fname,
                                            self.cmd,
-                                         ))
+                                           ))
         count = 'File %s/%s' % ('1', '1',)
         com = "%s\n%s" % (count, cmd)
 

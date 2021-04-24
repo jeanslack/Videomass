@@ -96,7 +96,7 @@ class Concat_Demuxer(Thread):
         self.countmax = len(varargs[1])  # length file list
         self.logname = logname  # title name of file log
         # need to escaping some chars
-        self.ftext = os.path.join(Concat_Demuxer.CACHEDIR, 'tmp','flist.txt')
+        self.ftext = os.path.join(Concat_Demuxer.CACHEDIR, 'tmp', 'flist.txt')
         escaped = [e.replace(r"'", r"'\'") for e in self.filelist]
         with open(self.ftext, 'w', encoding='utf8') as txt:
             txt.write('\n'.join(["file '%s'" % x for x in escaped]))
@@ -130,17 +130,17 @@ class Concat_Demuxer(Thread):
         count = '%s files to concat' % (self.countmax,)
         com = "%s\n%s" % (count, cmd)
         wx.CallAfter(pub.sendMessage,
-                        "COUNT_EVT",
-                        count=count,
-                        duration=self.duration,
-                        fname=", ".join(self.filelist),
-                        end='',
-                        )
+                     "COUNT_EVT",
+                     count=count,
+                     duration=self.duration,
+                     fname=", ".join(self.filelist),
+                     end='',
+                     )
         logWrite(com,
-                    '',
-                    self.logname,
-                    Concat_Demuxer.LOGDIR,
-                    )  # write n/n + command only
+                 '',
+                 self.logname,
+                 Concat_Demuxer.LOGDIR,
+                 )  # write n/n + command only
 
         if not platform.system() == 'Windows':
             cmd = shlex.split(cmd)
@@ -150,50 +150,50 @@ class Concat_Demuxer(Thread):
             info.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         try:
             with subprocess.Popen(cmd,
-                                    stderr=subprocess.PIPE,
-                                    bufsize=1,
-                                    universal_newlines=True,
-                                    startupinfo=info,) as p:
+                                  stderr=subprocess.PIPE,
+                                  bufsize=1,
+                                  universal_newlines=True,
+                                  startupinfo=info,) as p:
                 for line in p.stderr:
                     wx.CallAfter(pub.sendMessage,
-                                    "UPDATE_EVT",
-                                    output=line,
-                                    duration=self.duration,
-                                    status=0,
-                                    )
+                                 "UPDATE_EVT",
+                                 output=line,
+                                 duration=self.duration,
+                                 status=0,
+                                 )
                     if self.stop_work_thread:
                         p.terminate()
                         break  # break second 'for' loop
 
                 if p.wait():  # error
                     wx.CallAfter(pub.sendMessage,
-                                    "UPDATE_EVT",
-                                    output=line,
-                                    duration=self.duration,
-                                    status=p.wait(),
-                                    )
+                                 "UPDATE_EVT",
+                                 output=line,
+                                 duration=self.duration,
+                                 status=p.wait(),
+                                 )
                     logWrite('',
-                                "Exit status: %s" % p.wait(),
-                                self.logname,
-                                Concat_Demuxer.LOGDIR,
-                                )  # append exit error number
+                             "Exit status: %s" % p.wait(),
+                             self.logname,
+                             Concat_Demuxer.LOGDIR,
+                             )  # append exit error number
                 else:  # ok
                     wx.CallAfter(pub.sendMessage,
-                                    "COUNT_EVT",
-                                    count='',
-                                    duration='',
-                                    fname='',
-                                    end='ok'
-                                    )
+                                 "COUNT_EVT",
+                                 count='',
+                                 duration='',
+                                 fname='',
+                                 end='ok'
+                                 )
         except (OSError, FileNotFoundError) as err:
             e = "%s\n  %s" % (err, Concat_Demuxer.NOT_EXIST_MSG)
             wx.CallAfter(pub.sendMessage,
-                            "COUNT_EVT",
-                            count=e,
-                            duration=0,
-                            fname=", ".join(self.filelist),
-                            end='error',
-                            )
+                         "COUNT_EVT",
+                         count=e,
+                         duration=0,
+                         fname=", ".join(self.filelist),
+                         end='error',
+                         )
 
         if self.stop_work_thread:
             p.terminate()

@@ -164,7 +164,7 @@ class Ydl_DL_Pylib(Thread):
         self.logname = logname
 
         if (Ydl_DL_Pylib.OS == 'Windows' or
-             Ydl_DL_Pylib.APPTYPE == 'appimage'):
+                Ydl_DL_Pylib.APPTYPE == 'appimage'):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

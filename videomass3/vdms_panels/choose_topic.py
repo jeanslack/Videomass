@@ -228,7 +228,7 @@ class Choose_Topic(wx.Panel):
                           "Videomass", wx.ICON_INFORMATION, self)
             return
 
-        elif self.APPTYPE ==  'pyinstaller':
+        elif self.APPTYPE == 'pyinstaller':
             if os.path.isfile(self.EXEC_YDL):
                 self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
@@ -261,7 +261,7 @@ class Choose_Topic(wx.Panel):
                 self.parent.switch_text_import(self, 'Youtube Downloader')
                 return
             else:
-                if self.APPTYPE ==  'appimage':
+                if self.APPTYPE == 'appimage':
                     wx.MessageBox(_("ERROR: {}\n\nyoutube-dl is not embedded "
                                     "on AppImage.").format(self.PYLIB_YDL),
                                   "Videomass", wx.ICON_ERROR, self)

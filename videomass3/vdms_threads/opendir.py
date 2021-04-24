@@ -50,7 +50,6 @@ def browse(OS, pathname):
     elif OS == 'Darwin':
         cmd = ['open', pathname]
 
-
     else:  # xdg-open *should* be supported by recent Gnome, KDE, Xfce
         cmd = ['xdg-open', pathname]
 

@@ -79,7 +79,7 @@ class Ydl_EI_Pylib(Thread):
         self.url = url
         self.data = None
         if (Ydl_EI_Pylib.OS == 'Windows' or
-             Ydl_EI_Pylib.APPTYPE == 'appimage'):
+                Ydl_EI_Pylib.APPTYPE == 'appimage'):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

@@ -159,7 +159,7 @@ class PageTwo(wx.Panel):
                              wx.ALIGN_CENTRE_HORIZONTAL
                              )
         lab1 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG1,
-                              style=wx.ALIGN_CENTRE_HORIZONTAL)
+                             style=wx.ALIGN_CENTRE_HORIZONTAL)
         lab2 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG2)
         lab3 = wx.StaticText(self, wx.ID_ANY, PageTwo.MSG3)
         self.detectBtn = wx.Button(self, wx.ID_ANY, _("Auto-detection"),
@@ -183,7 +183,7 @@ class PageTwo(wx.Panel):
         # layout
         sizer_base.Add((0, 50), 0)
         sizer_base.Add(lab0, 0, wx.CENTER | wx.EXPAND)
-        #sizer_base.Add((0, 5), 0)
+        # sizer_base.Add((0, 5), 0)
         sizer_base.Add(lab1, 0, wx.CENTER | wx.EXPAND)
         sizer_base.Add((0, 40), 0)
         sizer_base.Add(sizerText, 0, wx.CENTER)
@@ -639,7 +639,6 @@ class Wizard(wx.Dialog):
             self.pageOne.Hide(), self.pageTwo.Hide()
             self.pageFour.Hide(), self.pageFinish.Show()
             self.btnNext.SetLabel(_('Finish'))
-
 
         self.Layout()
     # -------------------------------------------------------------------#
