@@ -96,6 +96,8 @@ class Exec_Download_Stream(Thread):
             # or the best: shutil.which('python')
             pypath = youtube_dl.__file__.split('lib')[0]
             EXECYDL = os.path.join(pypath, pyname[0], pyname[1])
+        else:
+            EXECYDL = False
 
     if platform.system() == 'Windows':
         if os.path.isfile(EXECYDL):

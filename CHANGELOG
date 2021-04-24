@@ -7,7 +7,7 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Apr 22, 2021 V.3.4.2
+Apr 24, 2021 V.3.4.2
 
   * MS-Windows: Fixed issue with opening the Explorer file browser on default
     folders.
@@ -19,6 +19,9 @@ Apr 22, 2021 V.3.4.2
   * Fixed wizard dialog.
   * Fixed setup dialog.
   * Concat demuxer: fixed inconsistencies on UI
+  * Fix `NameError: name EXECYDL is not defined`. This occurred running
+    Videomass on MS-Windows and youtube-dl python module was not installed.
+  * Improved youtube-dl tab on Setup dialog.
 
 +------------------------------------+
 Apr 18, 2021 V.3.4.1

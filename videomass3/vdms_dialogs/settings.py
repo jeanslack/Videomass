@@ -25,6 +25,7 @@
 
 #########################################################
 import wx
+import wx.lib.agw.hyperlink as hpl
 import os
 import sys
 import webbrowser
@@ -271,13 +272,31 @@ class Setup(wx.Dialog):
         sizerYdl.Add((0, 15))
         labydl0 = wx.StaticText(self.tabThree, wx.ID_ANY, (''))
         sizerYdl.Add(labydl0, 0, wx.ALL | wx.CENTRE, 5)
-        txtctrl_clipboard = wx.TextCtrl(self.tabThree, wx.ID_ANY, "",
-                                        style=wx.TE_READONLY, size=(300, -1),
-                                        )
-        txtctrl_clipboard.SetBackgroundColour('#444444')
-        txtctrl_clipboard.SetForegroundColour('#86d02b')
-        sizerYdl.Add(txtctrl_clipboard, 0, wx.ALL | wx.CENTRE, 5)
+
+        if not Setup.APPTYPE in ('pyinstaller', 'appimage'):
+            url = ('https://packaging.python.org/tutorials/'
+                   'installing-packages/#upgrading-packages')
+            static0 = _("How to upgrade a Python package")
+            instpkg = hpl.HyperLinkCtrl(self.tabThree, -1, static0, URL=url)
+            sizerYdl.Add(instpkg, 0, wx.ALL | wx.CENTRE, 2)
+
+        if Setup.OS == 'Windows':
+            url = ('https://www.microsoft.com/en-US/download/'
+                   'details.aspx?id=5555')
+            static1 = _("Required: Microsoft Visual C++ 2010 Redistributable "
+                        "Package (x86)")
+            MSVCR = hpl.HyperLinkCtrl(self.tabThree, -1, static1, URL=url)
+            sizerYdl.Add(MSVCR, 0, wx.ALL | wx.CENTRE, 2)
+
+        elif (Setup.OS == 'Linux' and not
+               Setup.APPTYPE in ('pyinstaller', 'appimage')):
+            url = ('https://packaging.python.org/guides/'
+                   'installing-using-linux-tools/')
+            static2 = _("How to install pip on your Linux distribution")
+            instpip = hpl.HyperLinkCtrl(self.tabThree, -1, static2, URL=url)
+            sizerYdl.Add(instpip, 0, wx.ALL | wx.CENTRE, 2)
         sizerYdl.Add((0, 15))
+
         self.rdbDownloader = wx.RadioBox(self.tabThree, wx.ID_ANY,
                                          (_("Downloader preferences")),
                                          choices=[_('Disable youtube-dl'),
@@ -301,7 +320,6 @@ class Setup(wx.Dialog):
                    'youtube-dl. This allows you to avoid download problems.\n')
 
         if Setup.APPTYPE == 'pyinstaller':
-            txtctrl_clipboard.Hide()
             tip1 = _('Menu bar > Tools > Update youtube-dl')
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
@@ -316,7 +334,6 @@ class Setup(wx.Dialog):
                     self.ydlPath.WriteText(_('Not found'))
 
         elif Setup.APPTYPE == 'appimage':
-            txtctrl_clipboard.Hide()
             tip1 = _('Menu bar > Tools > Update youtube-dl')
             labydl0.SetLabel('%s%s' % (ydlmsg, tip1))
 
@@ -331,9 +348,7 @@ class Setup(wx.Dialog):
                     self.ydlPath.WriteText(str(Setup.SITEPKGYDL))
 
         else:
-            tip1 = ('python3 -m pip install -U youtube-dl')
             labydl0.SetLabel('%s' % (ydlmsg))
-            txtctrl_clipboard.write(tip1)
 
             if Setup.YDL_PREF == 'disabled':
                 self.rdbDownloader.SetSelection(0)

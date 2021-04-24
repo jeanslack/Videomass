@@ -10,8 +10,11 @@ videomass (3.4.2-1) UNRELEASED; urgency=medium
   * Fixed wizard dialog.
   * Fixed setup dialog.
   * Concat demuxer: fixed inconsistencies on UI
+  * Fix `NameError: name EXECYDL is not defined`. This occurred running
+    Videomass on MS-Windows and youtube-dl python module was not installed.
+  * Improved youtube-dl tab on Setup dialog.
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Fri, 23 Apr 2021 16:24:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sat, 24 Apr 2021 09:22:00 +0200
 
 videomass (3.4.1-1) UNRELEASED; urgency=medium
 

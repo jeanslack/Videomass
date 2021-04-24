@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-23 13:49+0200\n"
-"PO-Revision-Date: 2021-04-23 13:50+0200\n"
+"POT-Creation-Date: 2021-04-24 09:26+0200\n"
+"PO-Revision-Date: 2021-04-24 09:32+0200\n"
 "Last-Translator: Roelof Berkepeis <roelof@imoma.eu>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -707,8 +707,8 @@ msgstr ""
 "tekstkaders in, door op de betreffende knoppen te drukken."
 
 #: ../vdms_dialogs/wizard_dlg.py:361 ../vdms_dialogs/wizard_dlg.py:377
-#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:718
-#: ../vdms_dialogs/settings.py:757 ../vdms_dialogs/settings.py:796
+#: ../vdms_dialogs/wizard_dlg.py:393 ../vdms_dialogs/settings.py:733
+#: ../vdms_dialogs/settings.py:772 ../vdms_dialogs/settings.py:811
 msgid "Choose the {} executable"
 msgstr "Kies het {} programmabestand"
 
@@ -901,17 +901,17 @@ msgstr ""
 msgid "Timestamp settings"
 msgstr "Tijdcode instellingen"
 
-#: ../vdms_dialogs/settings.py:139
+#: ../vdms_dialogs/settings.py:140
 msgid "Where do you prefer to save your transcodes?"
 msgstr "Waar wilt u transcoderingen bewaren?"
 
-#: ../vdms_dialogs/settings.py:150 ../vdms_dialogs/settings.py:178
-#: ../vdms_dialogs/settings.py:208 ../vdms_dialogs/settings.py:220
-#: ../vdms_dialogs/settings.py:232
+#: ../vdms_dialogs/settings.py:151 ../vdms_dialogs/settings.py:179
+#: ../vdms_dialogs/settings.py:209 ../vdms_dialogs/settings.py:221
+#: ../vdms_dialogs/settings.py:233
 msgid "Browse.."
 msgstr "Blader.."
 
-#: ../vdms_dialogs/settings.py:155
+#: ../vdms_dialogs/settings.py:156
 msgid ""
 "Save each file in the same\n"
 "folder as input file"
@@ -919,15 +919,15 @@ msgstr ""
 "Bewaar elk bestand in dezelfde\n"
 "map als input bestand"
 
-#: ../vdms_dialogs/settings.py:160
+#: ../vdms_dialogs/settings.py:161
 msgid "Assign optional suffix to output file names:"
 msgstr "Ken optioneel achtervoegsel toe aan output-bestandsnamen:"
 
-#: ../vdms_dialogs/settings.py:168
+#: ../vdms_dialogs/settings.py:169
 msgid "Where do you prefer to save your downloads?"
 msgstr "Waar wilt u gedownloade bestanden bewaren?"
 
-#: ../vdms_dialogs/settings.py:183
+#: ../vdms_dialogs/settings.py:184
 #, fuzzy
 #| msgid ""
 #| "Auto-create subfolders\n"
@@ -939,65 +939,77 @@ msgstr ""
 "Maak automatisch sub-mappen\n"
 "bij downloaden van afspeellijsten"
 
-#: ../vdms_dialogs/settings.py:188
+#: ../vdms_dialogs/settings.py:189
 msgid "Cache Settings"
 msgstr "Cache Instellingen"
 
-#: ../vdms_dialogs/settings.py:192
+#: ../vdms_dialogs/settings.py:193
 msgid "Clear the cache when exiting the application"
 msgstr "Maak cache leeg als programma beëindigd wordt"
 
-#: ../vdms_dialogs/settings.py:196
+#: ../vdms_dialogs/settings.py:197
 #, fuzzy
 #| msgid "Files Preferences"
 msgid "File Preferences"
 msgstr "Bestands Voorkeuren"
 
-#: ../vdms_dialogs/settings.py:203
+#: ../vdms_dialogs/settings.py:204
 msgid "Path to the executables"
 msgstr "Pad naar de programmabestanden"
 
-#: ../vdms_dialogs/settings.py:207
+#: ../vdms_dialogs/settings.py:208
 msgid "Enable another location to run FFmpeg"
 msgstr "Activeer een andere lokatie om FFmpeg uit te voeren"
 
-#: ../vdms_dialogs/settings.py:219
+#: ../vdms_dialogs/settings.py:220
 msgid "Enable another location to run FFprobe"
 msgstr "Activeer een andere lokatie om FFprobe uit te voeren"
 
-#: ../vdms_dialogs/settings.py:231
+#: ../vdms_dialogs/settings.py:232
 msgid "Enable another location to run FFplay"
 msgstr "Activeer een andere lokatie om FFplay uit te voeren"
 
-#: ../vdms_dialogs/settings.py:242
+#: ../vdms_dialogs/settings.py:243
 msgid "Other options"
 msgstr "Andere opties"
 
-#: ../vdms_dialogs/settings.py:248
+#: ../vdms_dialogs/settings.py:249
 msgid "Threads used for transcoding (from 0 to 32):"
 msgstr "Aantal threads voor transcoden (van 0 tot 32)"
 
-#: ../vdms_dialogs/settings.py:266
+#: ../vdms_dialogs/settings.py:267
 msgid "FFmpeg"
 msgstr "FFmpeg"
 
-#: ../vdms_dialogs/settings.py:282
+#: ../vdms_dialogs/settings.py:279
+msgid "How to upgrade a Python package"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:286
+msgid "Required: Microsoft Visual C++ 2010 Redistributable Package (x86)"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:295
+msgid "How to install pip on your Linux distribution"
+msgstr ""
+
+#: ../vdms_dialogs/settings.py:301
 msgid "Downloader preferences"
 msgstr "Downloader voorkeuren"
 
-#: ../vdms_dialogs/settings.py:283
+#: ../vdms_dialogs/settings.py:302
 msgid "Disable youtube-dl"
 msgstr "Deactiveer youtube-dl"
 
-#: ../vdms_dialogs/settings.py:284
+#: ../vdms_dialogs/settings.py:303
 msgid "Enable youtube-dl"
 msgstr "Activeer youtube-dl"
 
-#: ../vdms_dialogs/settings.py:292
+#: ../vdms_dialogs/settings.py:311
 msgid "Current path:"
 msgstr "Huidig pad:"
 
-#: ../vdms_dialogs/settings.py:300
+#: ../vdms_dialogs/settings.py:319
 msgid ""
 "Make sure you are using the latest available version of\n"
 "youtube-dl. This allows you to avoid download problems.\n"
@@ -1005,33 +1017,33 @@ msgstr ""
 "Ga na of u de nieuwste youtube-dl versie gebruikt.\n"
 "Dit voorkomt download problemen.\n"
 
-#: ../vdms_dialogs/settings.py:305 ../vdms_dialogs/settings.py:320
+#: ../vdms_dialogs/settings.py:323 ../vdms_dialogs/settings.py:337
 msgid "Menu bar > Tools > Update youtube-dl"
 msgstr "Menu balk > Gereedschappen > Update youtube-dl"
 
-#: ../vdms_dialogs/settings.py:310 ../vdms_dialogs/settings.py:325
-#: ../vdms_dialogs/settings.py:340 ../vdms_frames/ffmpeg_conf.py:216
+#: ../vdms_dialogs/settings.py:328 ../vdms_dialogs/settings.py:342
+#: ../vdms_dialogs/settings.py:355 ../vdms_frames/ffmpeg_conf.py:216
 #: ../vdms_panels/av_conversions.py:2461
 msgid "Disabled"
 msgstr "Uitgezet"
 
-#: ../vdms_dialogs/settings.py:316
+#: ../vdms_dialogs/settings.py:334
 msgid "Not found"
 msgstr "Niet gevonden"
 
-#: ../vdms_dialogs/settings.py:329 ../vdms_dialogs/settings.py:344
+#: ../vdms_dialogs/settings.py:346 ../vdms_dialogs/settings.py:359
 msgid "Not Installed"
 msgstr "Niet geïnstalleerd"
 
-#: ../vdms_dialogs/settings.py:351
+#: ../vdms_dialogs/settings.py:366
 msgid "youtube-dl"
 msgstr "youtube-dl"
 
-#: ../vdms_dialogs/settings.py:357
+#: ../vdms_dialogs/settings.py:372
 msgid "Icon themes"
 msgstr "Icoon thema's"
 
-#: ../vdms_dialogs/settings.py:359
+#: ../vdms_dialogs/settings.py:374
 msgid ""
 "setting the icons will also change the background\n"
 "and foreground of some text fields."
@@ -1039,43 +1051,43 @@ msgstr ""
 "instellen van iconen zal ook de achtergrond\n"
 "en voorgrond wijzigen van bepaalde tekstvelden."
 
-#: ../vdms_dialogs/settings.py:381
+#: ../vdms_dialogs/settings.py:396
 msgid "Toolbar customization"
 msgstr "Knoppenbalk aanpassing"
 
-#: ../vdms_dialogs/settings.py:383
+#: ../vdms_dialogs/settings.py:398
 msgid "At the top of window (default)"
 msgstr "Bovenaan venster (standaard)"
 
-#: ../vdms_dialogs/settings.py:384
+#: ../vdms_dialogs/settings.py:399
 msgid "At the bottom of window"
 msgstr "Onderaan venster"
 
-#: ../vdms_dialogs/settings.py:385
+#: ../vdms_dialogs/settings.py:400
 msgid "At the right of window"
 msgstr "Rechts van venster"
 
-#: ../vdms_dialogs/settings.py:386
+#: ../vdms_dialogs/settings.py:401
 msgid "At the left of window"
 msgstr "Links van venster"
 
-#: ../vdms_dialogs/settings.py:388
+#: ../vdms_dialogs/settings.py:403
 msgid "Place the toolbar"
 msgstr "Plaats de knoppenbalk"
 
-#: ../vdms_dialogs/settings.py:398
+#: ../vdms_dialogs/settings.py:413
 msgid "Icon size:"
 msgstr "Icoon grootte:"
 
-#: ../vdms_dialogs/settings.py:413
+#: ../vdms_dialogs/settings.py:428
 msgid "Shows the text in the toolbar buttons"
 msgstr "Toont de tekst in de knoppenbalk knoppen"
 
-#: ../vdms_dialogs/settings.py:417
+#: ../vdms_dialogs/settings.py:432
 msgid "Appearance"
 msgstr "Uiterlijk"
 
-#: ../vdms_dialogs/settings.py:424
+#: ../vdms_dialogs/settings.py:439
 msgid ""
 "The following settings affect output messages and\n"
 "the log messages during transcoding processes.\n"
@@ -1085,29 +1097,29 @@ msgstr ""
 "en log-berichten tijdens transcode-processen.\n"
 "Wijzig alleen als u weet wat u doet.\n"
 
-#: ../vdms_dialogs/settings.py:445
+#: ../vdms_dialogs/settings.py:460
 msgid "FFmpeg logging levels"
 msgstr "FFmpeg log niveau's"
 
-#: ../vdms_dialogs/settings.py:465
+#: ../vdms_dialogs/settings.py:480
 msgid "Videomass Setup"
 msgstr "Videomass Installatie"
 
-#: ../vdms_dialogs/settings.py:491
+#: ../vdms_dialogs/settings.py:506
 msgid "By assigning an additional suffix you could avoid overwriting files"
 msgstr ""
 "Door toewijzing van een achtervoegsel kunt u overschrijven van bestanden "
 "voorkomen"
 
-#: ../vdms_dialogs/settings.py:607
+#: ../vdms_dialogs/settings.py:622
 msgid "Set a persistent location to save the file downloads"
 msgstr "Geef een vaste lokatie waar u de download-bestanden wilt bewaren"
 
-#: ../vdms_dialogs/settings.py:629
+#: ../vdms_dialogs/settings.py:644
 msgid "Set a persistent location to save exported files"
 msgstr "Geef een vaste lokatie waar u export-bestanden wilt bewaren"
 
-#: ../vdms_dialogs/settings.py:656
+#: ../vdms_dialogs/settings.py:671
 msgid ""
 "Enter only alphanumeric characters. You can also use the hyphen (\"-\") and "
 "the underscore (\"_\"). Blank spaces are not allowed."
@@ -1115,7 +1127,7 @@ msgstr ""
 "Gebruik alleen alpha-numerieke tekens 0-9 A-Z. Het streepje (\"-\") en de "
 "underscore (\"_\") kunt u ook gebruiken. Spaties zijn niet toegestaan."
 
-#: ../vdms_dialogs/settings.py:880
+#: ../vdms_dialogs/settings.py:895
 msgid "Changes will take effect once the program has been restarted"
 msgstr "Wijzigingen worden pas doorgevoerd na herstart van dit programma"
 
