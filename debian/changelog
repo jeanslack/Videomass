@@ -1,3 +1,9 @@
+videomass (3.4.3-1) UNRELEASED; urgency=medium
+
+  * Update Portuguese (BR) translation (thanks to Samuel)
+
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Sun, 25 Apr 2021 16:20:00 +0200
+
 videomass (3.4.2-1) UNRELEASED; urgency=medium
 
   * MS-Windows: Fixed issue with opening the Explorer file browser on default

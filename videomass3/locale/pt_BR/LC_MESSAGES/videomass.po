@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Videomass 3.4.1 pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-24 09:26+0200\n"
-"PO-Revision-Date: 2021-04-24 09:33+0200\n"
+"PO-Revision-Date: 2021-04-25 16:18+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Samuel / http://littlesvr.ca/ostd/\n"
 "Language: pt_BR\n"
@@ -983,15 +983,15 @@ msgstr "FFmpeg"
 
 #: ../vdms_dialogs/settings.py:279
 msgid "How to upgrade a Python package"
-msgstr ""
+msgstr "Como atualizar um pacote Python"
 
 #: ../vdms_dialogs/settings.py:286
 msgid "Required: Microsoft Visual C++ 2010 Redistributable Package (x86)"
-msgstr ""
+msgstr "Obrigatório: Pacote Redistribuível do Microsoft Visual C ++ 2010 (x86)"
 
 #: ../vdms_dialogs/settings.py:295
 msgid "How to install pip on your Linux distribution"
-msgstr ""
+msgstr "Como instalar o pip na sua distribuição Linux"
 
 #: ../vdms_dialogs/settings.py:301
 msgid "Downloader preferences"
@@ -1927,7 +1927,7 @@ msgstr "ir para o painel Concatenate Demuxer"
 
 #: ../vdms_main/main_frame.py:495
 msgid "YouTube downloader\tShift+Y"
-msgstr "Baixar Vídeos\tShift+Y"
+msgstr "Baixar vídeos\tShift+Y"
 
 #: ../vdms_main/main_frame.py:496
 msgid "jump to the YouTube Downloader panel"
@@ -2355,7 +2355,7 @@ msgstr "Lista de URLs alterada, verifique as configurações novamente."
 
 #: ../vdms_main/main_frame.py:1542
 msgid "Videomass - YouTube Downloader"
-msgstr "Videomass - Baixar Vídeos"
+msgstr "Videomass - Baixar vídeos"
 
 #: ../vdms_main/main_frame.py:1578 ../vdms_main/main_frame.py:1630
 #: ../vdms_main/main_frame.py:1682
@@ -2949,6 +2949,8 @@ msgstr ""
 #: ../vdms_panels/av_conversions.py:2568
 msgid "Audio normalization processes cannot be saved on the Presets Manager."
 msgstr ""
+"Os processos de normalização de áudio não podem ser salvos no Gerenciador de "
+"Predefinições."
 
 #: ../vdms_panels/av_conversions.py:2586
 msgid "Save the new profile on..."
@@ -2976,11 +2978,11 @@ msgstr "Conversões A/V"
 
 #: ../vdms_panels/choose_topic.py:113
 msgid "Concatenate media files"
-msgstr ""
+msgstr "Unir arquivos de mídia"
 
 #: ../vdms_panels/choose_topic.py:117 ../vdms_panels/youtubedl_ui.py:437
 msgid "YouTube Downloader"
-msgstr "Baixar Vídeos"
+msgstr "Baixar vídeos"
 
 #: ../vdms_panels/choose_topic.py:134
 msgid ""
@@ -3010,6 +3012,7 @@ msgstr ""
 msgid ""
 "Concatenate multiple media files based on import order without re-encoding"
 msgstr ""
+"Unir vários arquivos de mídia com base na ordem de importação sem recodificar"
 
 #: ../vdms_panels/choose_topic.py:204
 msgid ""
@@ -3067,6 +3070,9 @@ msgid ""
 "\n"
 "youtube-dl is not embedded on AppImage."
 msgstr ""
+"ERRO: {0}\n"
+"\n"
+"youtube-dl não está incorporado no AppImage."
 
 #: ../vdms_panels/choose_topic.py:270
 msgid ""
@@ -3099,32 +3105,51 @@ msgid ""
 "- Audio files must have exactly the same formats, same codecs and same "
 "sample rate."
 msgstr ""
+"NOTA:\n"
+"\n"
+"- A função de junção é executada apenas com arquivos de áudio ou apenas com "
+"arquivos de vídeo.\n"
+"\n"
+"- A ordem de junção depende da ordem em que os arquivos foram adicionados.\n"
+"\n"
+"- O nome do arquivo de saída terá o mesmo nome do primeiro arquivo "
+"adicionado (também depende\n"
+"   nas configurações feitas na caixa de diálogo de preferências).\n"
+"\n"
+"- Os arquivos de vídeo devem ter exatamente os mesmos streams, os mesmos "
+"codecs e as mesmas\n"
+"   largura / altura, mas podem ter diferentes formatos de contêiner.\n"
+"\n"
+"- Os arquivos de áudio devem ter exatamente os mesmos formatos, mesmos "
+"codecs e mesma taxa de amostragem."
 
 #: ../vdms_panels/concatenate.py:120
 msgid "For more details, see the Videomass User Guide:"
-msgstr ""
+msgstr "Para obter mais detalhes, consulte o Guia de usuário Videomass:"
 
 #: ../vdms_panels/concatenate.py:133
 msgid "1.4 Concatenate media files (demuxer)"
-msgstr ""
+msgstr "1.4 Unir arquivos de mídia (demuxer)"
 
 #: ../vdms_panels/concatenate.py:140
 msgid "For more information, visit the official FFmpeg documentation:"
-msgstr ""
+msgstr "Para obter mais informações, visite a documentação oficial do FFmpeg:"
 
 #: ../vdms_panels/concatenate.py:179
 msgid "At least two files are required to perform concatenation."
-msgstr ""
+msgstr "São necessários pelo menos dois arquivos para realizar a concatenação."
 
 #: ../vdms_panels/concatenate.py:180 ../vdms_panels/concatenate.py:192
 msgid "ERROR"
-msgstr ""
+msgstr "ERRO"
 
 #: ../vdms_panels/concatenate.py:189
 msgid ""
 "The files do not have the same \"codec_types\", same \"sample_rate\" or same "
 "\"width\" or \"height\". Unable to proceed."
 msgstr ""
+"Os arquivos não possuem os mesmos \"tipos de codec\", mesma \"taxa de "
+"amostragem\" ou mesma \"largura\" ou \"altura\". Incapaz de prosseguir."
 
 #: ../vdms_panels/concatenate.py:218 ../vdms_panels/presets_manager.py:849
 #: ../vdms_panels/presets_manager.py:872 ../vdms_panels/presets_manager.py:908
@@ -3141,6 +3166,13 @@ msgid ""
 "Output Format\n"
 "Time Period"
 msgstr ""
+"RESUMO\n"
+"\n"
+"Arquivo para unir\n"
+"Nome do arquivo de saída\n"
+"Destino\n"
+"Formato de saída\n"
+"Período de tempo"
 
 #: ../vdms_panels/youtubedl_ui.py:82
 msgid ""
@@ -3889,14 +3921,35 @@ msgstr ""
 #~ msgid "Use a local copy of youtube-dl updatable by Videomass"
 #~ msgstr "Use uma cópia local do youtube-dl atualizável pelo Videomass"
 
+#~ msgid ""
+#~ "Make sure the files imported are all Video files and have exactly the "
+#~ "same streams,\n"
+#~ "same codecs and same dimensions, but can be wrapped in different "
+#~ "container formats."
+#~ msgstr ""
+#~ "Certifique-se de que os arquivos importados sejam todos arquivos de vídeo "
+#~ "e tenham exatamente os mesmos streams,\n"
+#~ "mesmos codecs e mesmas dimensões, mas podem ser agrupados em diferentes "
+#~ "formatos de contêiner."
+
+#~ msgid ""
+#~ "Make sure the files imported are all audio files and have the same "
+#~ "formats and codecs."
+#~ msgstr ""
+#~ "Certifique-se de que os arquivos importados sejam todos arquivos de áudio "
+#~ "e tenham os mesmos formatos e codecs."
+
 #~ msgid "Audio files (tracks)"
 #~ msgstr "Arquivos de áudio (faixas)"
 
 #~ msgid "Video files"
 #~ msgstr "Arquivos de vídeo"
 
+#~ msgid "Only Audio streams from Videos"
+#~ msgstr "Apenas fluxos de áudio dos vídeos"
+
 #~ msgid "Which files do you want to concatenate?"
-#~ msgstr "Quais arquivos você deseja concatenar?"
+#~ msgstr "Quais arquivos você deseja unir?"
 
 #~ msgid "Output format:"
 #~ msgstr "Formato de saída:"
