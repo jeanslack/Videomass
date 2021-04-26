@@ -22,7 +22,7 @@ installed separately.
 
 Find out below which port is best suited to your Linux distribution.     
  
-- [Videomass for GTK2](https://github.com/jeanslack/Videomass/releases)   
+[Videomass for GTK2](https://github.com/jeanslack/Videomass/releases)   
 
 Successfully tested on the following Linux distributions:   
 * Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
@@ -39,10 +39,10 @@ Successfully tested on the following Linux distributions:
 * ~~Fedora 32 (Workstation Edition) x86_64~~ NOT WORK
 * Manjaro Linux 20.0.3 (Lysia) x86_64
 
-Minimum requirements:   
+Minimum requirements:
 - **Ubuntu 16.04 LTS x86_64** to up   
  
-- [Videomass for GTK3](https://sourceforge.net/projects/videomass2/files/)   
+[Videomass for GTK3](https://sourceforge.net/projects/videomass2/files/)   
 
 Successfully tested on the following Linux distributions:   
 * ~~Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)~~ NOT WORK
@@ -59,13 +59,12 @@ Successfully tested on the following Linux distributions:
 * Fedora 32 (Workstation Edition) x86_64
 * Manjaro Linux 20.0.3 (Lysia) x86_64
 
-Minimum requirements:   
+Minimum requirements:
 - **Debian 9 stretch x86_64** to up   
 
 ## MS Windows
 Installer available at:
-- [GitHub Releases](https://github.com/jeanslack/Videomass/releases) 
-- [SourceForge web page](https://sourceforge.net/projects/videomass2/files/)   
+- [GitHub Releases](https://github.com/jeanslack/Videomass/releases)    
 
 **New:** starting from Videomass v3.3.0 a portable version is also available, 
 choose the one that works best for you!  
@@ -78,8 +77,7 @@ is required.
 
 ## MacOs
 MacOs users should use the disk image file (.**dmg**) available at:
-- [GitHub Releases](https://github.com/jeanslack/Videomass/releases) 
-- [SourceForge web page](https://sourceforge.net/projects/videomass2/files/)     
+- [GitHub Releases](https://github.com/jeanslack/Videomass/releases)   
 
 Minimum requirements:
 - MacOS **High Sierra** to up.
