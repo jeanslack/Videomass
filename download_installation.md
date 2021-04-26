@@ -16,16 +16,51 @@ to your system:
     `$ sudo apt install python3-videomass` 
 
 ### AppImage
-[AppImages](https://appimage.org/) are available at: 
-- [GitHub Releases](https://github.com/jeanslack/Videomass/releases) porting for GTK2   
-- [SourceForge web page](https://sourceforge.net/projects/videomass2/files/) porting for GTK3
+There are currently two ports for GTK2 and GTK3 engines, which only support 
+64-bit architectures. Videomass AppImages do not include FFmpeg which must be 
+installed separately.   
+
+Find out below which port is best suited to your Linux distribution.     
+ 
+- [Videomass for GTK2](https://github.com/jeanslack/Videomass/releases)   
+
+Successfully tested on the following Linux distributions:   
+* Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
+* Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
+* Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
+* Ubuntu 20.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
+* Linux Mint 19.3 x86_64 Cinnamon
+* Debian 9 stretch x86_64
+* Debian 10 buster x86_64
+* SparkyLinux 5.11 lxqt x86_64 (stable edition)
+* Sparkylinux 2020.06 xfce x86_64 (rolling edition)
+* AV-Linux 2019.4.10 x86_64
+* AV-Linux 2020.4.10 x86_64
+* ~~Fedora 32 (Workstation Edition) x86_64~~ NOT WORK
+* Manjaro Linux 20.0.3 (Lysia) x86_64
 
 Minimum requirements:   
-- **Ubuntu 16.04 LTS** to up (64-bit only)
+- **Ubuntu 16.04 LTS x86_64** to up   
+ 
+- [Videomass for GTK3](https://sourceforge.net/projects/videomass2/files/)   
 
-There are currently two ports available for GTK2 and GTK3 engines. 
-Find out [here](https://jeanslack.github.io/Videomass/known_problems.html) which 
-port is best suited to your Linux distribution.
+Successfully tested on the following Linux distributions:   
+* ~~Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)~~ NOT WORK
+* Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
+* Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
+* Ubuntu 20.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
+* Linux Mint 19.3 x86_64 Cinnamon
+* Debian 9 stretch x86_64
+* Debian 10 buster x86_64
+* SparkyLinux 5.11 lxqt x86_64 (stable edition)
+* Sparkylinux 2020.06 xfce x86_64 (rolling edition)
+* AV-Linux 2019.4.10 x86_64
+* AV-Linux 2020.4.10 x86_64
+* Fedora 32 (Workstation Edition) x86_64
+* Manjaro Linux 20.0.3 (Lysia) x86_64
+
+Minimum requirements:   
+- **Debian 9 stretch x86_64** to up   
 
 ## MS Windows
 Installer available at:

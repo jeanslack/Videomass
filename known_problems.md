@@ -20,49 +20,6 @@ activated with the `-row-mt 1` switch. Note that this feature is not available
 if you are using an older version of the FFmpeg (eg Version 3.1.5) and should
 be disabled when using this encoder.
 
-- [Other issues](https://github.com/jeanslack/Videomass/issues)
-  
- 
-## Videomass AppImage for Linux
-
-Currently, two portings are available for GTK2 and GTK3.   
-
-Videomass AppImage for **GTK3** it has been successfully tested on the following Linux distributions:   
-
-* ~~Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)~~ NOT WORK
-* Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
-* Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
-* Ubuntu 20.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
-* Linux Mint 19.3 x86_64 Cinnamon
-* Debian 9 stretch x86_64
-* Debian 10 buster x86_64
-* SparkyLinux 5.11 lxqt x86_64 (stable edition)
-* Sparkylinux 2020.06 xfce x86_64 (rolling edition)
-* AV-Linux 2019.4.10 x86_64
-* AV-Linux 2020.4.10 x86_64
-* Fedora 32 (Workstation Edition) x86_64
-* Manjaro Linux 20.0.3 (Lysia) x86_64
-
-Videomass AppImage for **GTK2** it has been successfully tested on the following Linux distributions:   
-
-* Ubuntu 16.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
-* Ubuntu 18.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
-* Xubuntu 18.04 x86_64 (by installing libsdl2 or ffmpeg first)
-* Ubuntu 20.04 LTS x86_64 (by installing libsdl2 or ffmpeg first)
-* Linux Mint 19.3 x86_64 Cinnamon
-* Debian 9 stretch x86_64
-* Debian 10 buster x86_64
-* SparkyLinux 5.11 lxqt x86_64 (stable edition)
-* Sparkylinux 2020.06 xfce x86_64 (rolling edition)
-* AV-Linux 2019.4.10 x86_64
-* AV-Linux 2020.4.10 x86_64
-* ~~Fedora 32 (Workstation Edition) x86_64~~ NOT WORK
-* Manjaro Linux 20.0.3 (Lysia) x86_64
-
-----
-
-- The `libsdl2-2.0-0` package is no longer required as it was included in the appimage. 
-- Videomass AppImage do not include FFmpeg which must be installed separately.
-- For a full list of changes see the **[Changelog](https://github.com/jeanslack/Videomass/blob/master/CHANGELOG)**   
+- [Other issues](https://github.com/jeanslack/Videomass/issues)     
 
 [Home](index.md)
