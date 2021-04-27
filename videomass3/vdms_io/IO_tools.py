@@ -52,6 +52,7 @@ from videomass3.vdms_frames import (ffmpeg_conf,
                                     ffmpeg_codecs,
                                     )
 from videomass3.vdms_dialogs.popup import PopupDialog
+from videomass3.vdms_io.make_filelog import write_log  # write initial log
 
 
 def stream_info(title, filepath):
@@ -455,7 +456,10 @@ def appimage_update_youtube_dl(appimage):
     package inside Videomass AppImage.
     """
     get = wx.GetApp()  # get data from bootstrap
-    log = os.path.join(get.LOGdir, 'youtube_dl-update-on-AppImage.log')
+    logname = 'youtube_dl-update-on-AppImage.log'
+    log = os.path.join(get.LOGdir, logname)
+    logfile = write_log(logname, get.LOGdir)  # write log file first
+
     thread = youtubedlupdater.Update_Youtube_dl_Appimage(log, appimage)
 
     waitmsg = _('...Be patient, this can take a few minutes.')

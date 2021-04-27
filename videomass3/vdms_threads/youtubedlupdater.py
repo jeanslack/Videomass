@@ -241,6 +241,7 @@ class Update_Youtube_dl_Appimage(Thread):
                         "youtube_dl package on %s' -e '%s %s "
                         "2>&1 | tee %s'" % (name, exe, appimage, log)
                         )
+
         Thread.__init__(self)
         """initialize"""
 
