@@ -65,11 +65,11 @@ def info(parent, videomass_icon):
     info.SetLicence(Long_Lic)
     info.AddDeveloper("%s <%s>" % (Author[0], Mail))
     info.AddDocWriter("Gianluca Pernigotto <jeanlucperni@gmail.com>")
-    info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it)")
-    info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru)")
-    info.AddTranslator("Roelof Berkepeis <roelof@imoma.eu> (nl)")
-    info.AddTranslator("Samuel (pt-brazilian)")
-    # info.AddTranslator("Nestor Blanco <random@mail.es> (es)")
+    info.AddTranslator("Gianluca Pernigotto <jeanlucperni@gmail.com> (it_IT)")
+    info.AddTranslator("ChourS <ChourS2008@yandex.ru> (ru_RU)")
+    info.AddTranslator("Roelof Berkepeis <roelof@imoma.eu> (nl_NL)")
+    info.AddTranslator("Samuel (pt_BR)")
+    # info.AddTranslator("Nestor Blanco <random@mail.es> (es_ES)")
     info.SetArtists(
         ['Gianluca Pernigotto <jeanlucperni@gmail.com>',
          'Breeze icons '
