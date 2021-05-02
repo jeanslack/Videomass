@@ -3,8 +3,10 @@ videomass (3.4.3-1) UNRELEASED; urgency=medium
   * Update Portuguese (BR) translation (thanks to Samuel)
   * Fixed `FileNotFoundError` traceback during youtube-dl update on AppImage.
     This occured when the log directory has not yet created.
+  * YouTube Downloader: added a new checkbox to restrict filenames (see #21)
+  * Fixed #21
 
- -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 27 Apr 2021 11:20:00 +0200
+ -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 02 May 2021 20:49:00 +0200
 
 videomass (3.4.2-1) UNRELEASED; urgency=medium
 

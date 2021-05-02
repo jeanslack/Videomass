@@ -98,6 +98,7 @@ class Ydl_DL_Exec(Thread):
         self.opt = varargs[4][0]
         self.outtmpl = varargs[4][1]
         self.nooverwrites = varargs[4][2]
+        self.restrictfn = varargs[4][3]
         self.code = varargs[6]
         self.outputdir = varargs[3]
         self.count = 0
@@ -131,18 +132,18 @@ class Ydl_DL_Exec(Thread):
 
             format_code = '--format %s' % (code) if code else ''
             cmd = ('"{0}" {1} --newline --ignore-errors {8} -o '
-                   '"{2}/{3}" {4} {5} --ignore-config --restrict-filenames '
-                   '"{6}" --ffmpeg-location "{7}"'.format(
-                                                        Ydl_DL_Exec.EXECYDL,
-                                                        self.ssl,
-                                                        self.outputdir,
-                                                        outtmpl,
-                                                        format_code,
-                                                        self.opt,
-                                                        url,
-                                                        Ydl_DL_Exec.FFMPEG_URL,
-                                                        self.nooverwrites,
-                                                        ))
+                   '"{2}/{3}" {4} {5} --ignore-config {9} "{6}" '
+                   '--ffmpeg-location "{7}"'.format(Ydl_DL_Exec.EXECYDL,
+                                                    self.ssl,
+                                                    self.outputdir,
+                                                    outtmpl,
+                                                    format_code,
+                                                    self.opt,
+                                                    url,
+                                                    Ydl_DL_Exec.FFMPEG_URL,
+                                                    self.nooverwrites,
+                                                    self.restrictfn,
+                                                    ))
             self.count += 1
             count = 'URL %s/%s' % (self.count, self.countmax,)
             com = "%s\n%s" % (count, cmd)

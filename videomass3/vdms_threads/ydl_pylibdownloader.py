@@ -205,7 +205,7 @@ class Ydl_DL_Pylib(Thread):
                     'outtmpl': '{}/{}'.format(self.outputdir, outtmpl),
                     'writesubtitles': self.opt['writesubtitles'],
                     'addmetadata': self.opt['addmetadata'],
-                    'restrictfilenames': True,
+                    'restrictfilenames': self.opt['restrictfilenames'],
                     'ignoreerrors': True,
                     'no_warnings': False,
                     'writethumbnail': self.opt['writethumbnail'],

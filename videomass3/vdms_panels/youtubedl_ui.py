@@ -183,7 +183,7 @@ class Downloader(wx.Panel):
                               )
         boxoptions.Add(line0, 0, wx.ALL | wx.EXPAND, 5)
         boxoptions.Add((5, 5))
-        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 400),
+        panelscroll = scrolled.ScrolledPanel(self, -1, size=(260, 500),
                                              style=wx.TAB_TRAVERSAL |
                                              wx.BORDER_THEME, name="panelscr",
                                              )
@@ -254,6 +254,11 @@ class Downloader(wx.Panel):
                                       'in the file names'))
                                    )
         fgs1.Add(self.ckbx_id, 0, wx.ALL, 5)
+
+        self.ckbx_restrictFN = wx.CheckBox(panelscroll, wx.ID_ANY,
+                                           (_('Restrict file names'))
+                                   )
+        fgs1.Add(self.ckbx_restrictFN, 0, wx.ALL, 5)
 
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
 
@@ -848,6 +853,7 @@ class Downloader(wx.Panel):
                                  _('Please confirm'), wx.ICON_QUESTION |
                                  wx.YES_NO, self) == wx.NO:
                     return
+
         if self.ckbx_id.IsChecked():
             _id = '%(title).100s-%(id)s'
         else:
@@ -857,6 +863,7 @@ class Downloader(wx.Panel):
 
             logname = 'youtubedl_lib.log'
             nooverwrites = True if self.ckbx_w.IsChecked() else False
+            restrictfn = True if self.ckbx_restrictFN.IsChecked() else False
             postprocessors = []
 
             if self.choice.GetSelection() == 2:
@@ -886,7 +893,8 @@ class Downloader(wx.Panel):
                         'writesubtitles': self.opt["SUBTITLES"][0],
                         'writeautomaticsub': self.opt["SUBTITLES"][0],
                         'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors
+                        'postprocessors': postprocessors,
+                        'restrictfilenames': restrictfn,
                         }
             if self.choice.GetSelection() == 1:  # audio files and video files
                 code = []
@@ -901,7 +909,8 @@ class Downloader(wx.Panel):
                         'writesubtitles': self.opt["SUBTITLES"][0],
                         'writeautomaticsub': self.opt["SUBTITLES"][0],
                         'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors
+                        'postprocessors': postprocessors,
+                        'restrictfilenames': restrictfn,
                         }
             elif self.choice.GetSelection() == 2:  # audio only
                 code = []
@@ -915,7 +924,8 @@ class Downloader(wx.Panel):
                         'writesubtitles': self.opt["SUBTITLES"][0],
                         'writeautomaticsub': self.opt["SUBTITLES"][0],
                         'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors
+                        'postprocessors': postprocessors,
+                        'restrictfilenames': restrictfn,
                         }
             if self.choice.GetSelection() == 3:  # format code
                 code = self.getformatcode(urls)
@@ -933,7 +943,8 @@ class Downloader(wx.Panel):
                         'writesubtitles': self.opt["SUBTITLES"][0],
                         'writeautomaticsub': self.opt["SUBTITLES"][0],
                         'allsubtitles': self.opt["SUBTITLES"][0],
-                        'postprocessors': postprocessors
+                        'postprocessors': postprocessors,
+                        'restrictfilenames': restrictfn,
                         }
             self.parent.switch_to_processing('youtube_dl python package',
                                              urls,
@@ -950,6 +961,11 @@ class Downloader(wx.Panel):
 
             logname = 'youtubedl_exec.log'
             nooverwrites = '--no-overwrites' if self.ckbx_w.IsChecked() else ''
+            if self.ckbx_restrictFN.IsChecked():
+                restrictfn = '--restrict-filenames'
+            else:
+                restrictfn = ''
+
 
             if self.choice.GetSelection() == 0:  # default
                 code = []
@@ -961,6 +977,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["NO_PLAYLIST"][1]}'),
                        ('{0}.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
+                       f'{restrictfn}',
                        ]
 
             if self.choice.GetSelection() == 1:  # audio files + video files
@@ -974,6 +991,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["NO_PLAYLIST"][1]}'),
                        ('{0}.f%(format_id)s.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
+                       f'{restrictfn}',
                        ]
 
             elif self.choice.GetSelection() == 2:  # audio only
@@ -985,6 +1003,7 @@ class Downloader(wx.Panel):
                         f'{self.opt["NO_PLAYLIST"][1]}'),
                        ('{0}.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
+                       f'{restrictfn}',
                        ]
 
             if self.choice.GetSelection() == 3:  # format code
@@ -999,7 +1018,10 @@ class Downloader(wx.Panel):
                         f'{self.opt["NO_PLAYLIST"][1]}'),
                        ('{0}.f%(format_id)s.%(ext)s'.format(_id)),
                        f'{nooverwrites}',
+                       f'{restrictfn}',
                        ]
+            print('PRIMO >>>> ', cmd)
+
             self.parent.switch_to_processing('youtube-dl executable',
                                              urls,
                                              '',

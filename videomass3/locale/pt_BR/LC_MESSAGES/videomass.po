@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Videomass 3.4.1 pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-24 09:26+0200\n"
-"PO-Revision-Date: 2021-04-25 16:18+0200\n"
+"POT-Creation-Date: 2021-05-02 20:37+0200\n"
+"PO-Revision-Date: 2021-05-02 20:44+0200\n"
 "Last-Translator: Samuel / http://littlesvr.ca/ostd/\n"
 "Language-Team: Samuel / http://littlesvr.ca/ostd/\n"
 "Language: pt_BR\n"
@@ -764,7 +764,7 @@ msgstr "Para sair, clique no botão \"Concluir\""
 msgid "< Previous"
 msgstr "< Anterior"
 
-#: ../vdms_dialogs/wizard_dlg.py:578 ../vdms_dialogs/wizard_dlg.py:670
+#: ../vdms_dialogs/wizard_dlg.py:578 ../vdms_dialogs/wizard_dlg.py:669
 msgid "Next >"
 msgstr "Avançar >"
 
@@ -780,11 +780,11 @@ msgstr "Concluir"
 msgid "Some text boxes are still incomplete"
 msgstr "Algumas caixas de texto ainda estão incompletas"
 
-#: ../vdms_dialogs/wizard_dlg.py:703
+#: ../vdms_dialogs/wizard_dlg.py:702
 msgid "Re-start is required"
 msgstr "É necessário Reiniciar"
 
-#: ../vdms_dialogs/wizard_dlg.py:704
+#: ../vdms_dialogs/wizard_dlg.py:703
 msgid "Done!"
 msgstr "Concluído!"
 
@@ -1602,17 +1602,17 @@ msgstr ""
 "\n"
 "\"% s\"\n"
 
-#: ../vdms_io/IO_tools.py:73 ../vdms_io/IO_tools.py:97
+#: ../vdms_io/IO_tools.py:74 ../vdms_io/IO_tools.py:98
 #, python-format
 msgid "File does not exist or is invalid:  %s"
 msgstr "O arquivo não existe ou é inválido:% s"
 
-#: ../vdms_io/IO_tools.py:160 ../vdms_io/IO_tools.py:281
-#: ../vdms_io/IO_tools.py:299 ../vdms_io/IO_tools.py:337
+#: ../vdms_io/IO_tools.py:161 ../vdms_io/IO_tools.py:282
+#: ../vdms_io/IO_tools.py:300 ../vdms_io/IO_tools.py:338
 msgid "Videomass - Loading..."
 msgstr "Videomass - Carregando ..."
 
-#: ../vdms_io/IO_tools.py:161
+#: ../vdms_io/IO_tools.py:162
 msgid ""
 "\n"
 "Wait....\n"
@@ -1622,7 +1622,7 @@ msgstr ""
 "Aguarde....\n"
 "Análise de altura de áudio.\n"
 
-#: ../vdms_io/IO_tools.py:282 ../vdms_io/IO_tools.py:300
+#: ../vdms_io/IO_tools.py:283 ../vdms_io/IO_tools.py:301
 msgid ""
 "\n"
 "Wait....\n"
@@ -1632,7 +1632,7 @@ msgstr ""
 "Aguarde....\n"
 "Recuperando os dados necessários.\n"
 
-#: ../vdms_io/IO_tools.py:360
+#: ../vdms_io/IO_tools.py:361
 msgid ""
 "\n"
 "Wait....\n"
@@ -1642,7 +1642,7 @@ msgstr ""
 "Aguarde....\n"
 "Atualizando {}\n"
 
-#: ../vdms_io/IO_tools.py:362
+#: ../vdms_io/IO_tools.py:363
 msgid ""
 "\n"
 "Wait....\n"
@@ -1652,15 +1652,15 @@ msgstr ""
 "Aguarde....\n"
 "Baixando {}\n"
 
-#: ../vdms_io/IO_tools.py:380 ../vdms_io/IO_tools.py:442
+#: ../vdms_io/IO_tools.py:381 ../vdms_io/IO_tools.py:443
 msgid "Videomass - Downloading..."
 msgstr "Videomass - Baixando ..."
 
-#: ../vdms_io/IO_tools.py:461
+#: ../vdms_io/IO_tools.py:465
 msgid "...Be patient, this can take a few minutes."
 msgstr "... Seja paciente, isso pode levar alguns minutos."
 
-#: ../vdms_io/IO_tools.py:463
+#: ../vdms_io/IO_tools.py:467
 msgid "Videomass - Updating..."
 msgstr "Videomass - Atualizando ..."
 
@@ -1712,7 +1712,7 @@ msgstr ""
 msgid "Ready"
 msgstr "Pronto"
 
-#: ../vdms_main/main_frame.py:287 ../vdms_panels/youtubedl_ui.py:443
+#: ../vdms_main/main_frame.py:287 ../vdms_panels/youtubedl_ui.py:448
 msgid "Videomass"
 msgstr "Videomass"
 
@@ -2980,7 +2980,7 @@ msgstr "Conversões A/V"
 msgid "Concatenate media files"
 msgstr "Unir arquivos de mídia"
 
-#: ../vdms_panels/choose_topic.py:117 ../vdms_panels/youtubedl_ui.py:437
+#: ../vdms_panels/choose_topic.py:117 ../vdms_panels/youtubedl_ui.py:442
 msgid "YouTube Downloader"
 msgstr "Baixar vídeos"
 
@@ -3056,7 +3056,7 @@ msgstr ""
 msgid "youtube-dl is disabled. Check your preferences."
 msgstr "youtube-dl está desativado. Verifique suas preferências."
 
-#: ../vdms_panels/choose_topic.py:236 ../vdms_panels/youtubedl_ui.py:848
+#: ../vdms_panels/choose_topic.py:236 ../vdms_panels/youtubedl_ui.py:853
 #: ../vdms_panels/long_processing_task.py:502
 #: ../vdms_panels/presets_manager.py:491 ../vdms_panels/presets_manager.py:534
 #: ../vdms_panels/presets_manager.py:602 ../vdms_panels/presets_manager.py:628
@@ -3234,78 +3234,82 @@ msgstr ""
 "Incluir o ID do vídeo\n"
 "nos nomes dos arquivos"
 
-#: ../vdms_panels/youtubedl_ui.py:278
+#: ../vdms_panels/youtubedl_ui.py:259
+msgid "Restrict file names"
+msgstr "Restringir nomes de arquivos"
+
+#: ../vdms_panels/youtubedl_ui.py:283
 msgid "Help viewer"
 msgstr "Visualizador de ajuda"
 
-#: ../vdms_panels/youtubedl_ui.py:302 ../vdms_panels/youtubedl_ui.py:404
-#: ../vdms_panels/youtubedl_ui.py:420
+#: ../vdms_panels/youtubedl_ui.py:307 ../vdms_panels/youtubedl_ui.py:409
+#: ../vdms_panels/youtubedl_ui.py:425
 msgid "Play selected url"
 msgstr "Reproduzir url selecionado"
 
-#: ../vdms_panels/youtubedl_ui.py:432
+#: ../vdms_panels/youtubedl_ui.py:437
 msgid "An item must be selected in the URLs checklist"
 msgstr "Um item deve ser selecionado na lista de verificação de URLs"
 
-#: ../vdms_panels/youtubedl_ui.py:442
+#: ../vdms_panels/youtubedl_ui.py:447
 msgid "Videomass cannot play playlists for now"
 msgstr "Videomass não pode reproduzir lista de reprodução por enquanto"
 
-#: ../vdms_panels/youtubedl_ui.py:464 ../vdms_panels/youtubedl_ui.py:561
+#: ../vdms_panels/youtubedl_ui.py:469 ../vdms_panels/youtubedl_ui.py:566
 msgid "Format Code"
 msgstr "Código de Formato"
 
-#: ../vdms_panels/youtubedl_ui.py:465 ../vdms_panels/youtubedl_ui.py:562
-#: ../vdms_panels/youtubedl_ui.py:610
+#: ../vdms_panels/youtubedl_ui.py:470 ../vdms_panels/youtubedl_ui.py:567
+#: ../vdms_panels/youtubedl_ui.py:615
 msgid "Url"
 msgstr "Url"
 
-#: ../vdms_panels/youtubedl_ui.py:466 ../vdms_panels/youtubedl_ui.py:563
-#: ../vdms_panels/youtubedl_ui.py:611
+#: ../vdms_panels/youtubedl_ui.py:471 ../vdms_panels/youtubedl_ui.py:568
+#: ../vdms_panels/youtubedl_ui.py:616
 msgid "Title"
 msgstr "Título"
 
-#: ../vdms_panels/youtubedl_ui.py:467 ../vdms_panels/youtubedl_ui.py:564
+#: ../vdms_panels/youtubedl_ui.py:472 ../vdms_panels/youtubedl_ui.py:569
 msgid "Extension"
 msgstr "Extensão"
 
-#: ../vdms_panels/youtubedl_ui.py:468
+#: ../vdms_panels/youtubedl_ui.py:473
 msgid "Resolution"
 msgstr "Resolução"
 
-#: ../vdms_panels/youtubedl_ui.py:469
+#: ../vdms_panels/youtubedl_ui.py:474
 msgid "Video Codec"
 msgstr "Codec de vídeo"
 
-#: ../vdms_panels/youtubedl_ui.py:470
+#: ../vdms_panels/youtubedl_ui.py:475
 msgid "fps"
 msgstr "quadros por segundo"
 
-#: ../vdms_panels/youtubedl_ui.py:471
+#: ../vdms_panels/youtubedl_ui.py:476
 msgid "Audio Codec"
 msgstr "Codec de áudio"
 
-#: ../vdms_panels/youtubedl_ui.py:472 ../vdms_panels/filedrop.py:222
+#: ../vdms_panels/youtubedl_ui.py:477 ../vdms_panels/filedrop.py:222
 msgid "Size"
 msgstr "Tamanho"
 
-#: ../vdms_panels/youtubedl_ui.py:565
+#: ../vdms_panels/youtubedl_ui.py:570
 msgid "Resolution note"
 msgstr "Nota de resolução"
 
-#: ../vdms_panels/youtubedl_ui.py:612
+#: ../vdms_panels/youtubedl_ui.py:617
 msgid "Quality"
 msgstr "Qualidade"
 
-#: ../vdms_panels/youtubedl_ui.py:631
+#: ../vdms_panels/youtubedl_ui.py:636
 msgid "Sorry, this feature is disabled."
 msgstr "Desculpe, este recurso está desativado."
 
-#: ../vdms_panels/youtubedl_ui.py:693
+#: ../vdms_panels/youtubedl_ui.py:698
 msgid "Unable to get format codes on playlists"
 msgstr "Não é possível obter códigos de formato nas listas de reprodução"
 
-#: ../vdms_panels/youtubedl_ui.py:846
+#: ../vdms_panels/youtubedl_ui.py:851
 msgid "The URLs contain playlists. Are you sure you want to continue?"
 msgstr ""
 "Os URLs contêm listas de reprodução. Você tem certeza que quer continuar?"
@@ -3852,11 +3856,11 @@ msgid "Is 'ffmpeg' installed on your system?"
 msgstr "O 'ffmpeg' está instalado em seu sistema?"
 
 #: ../vdms_threads/ydl_executable.py:72 ../vdms_threads/ydl_executable.py:79
-#: ../vdms_threads/ydl_executable.py:249 ../vdms_threads/ydl_executable.py:256
+#: ../vdms_threads/ydl_executable.py:250 ../vdms_threads/ydl_executable.py:257
 msgid "Unrecognized error"
 msgstr "Erro desconhecido"
 
-#: ../vdms_threads/ydl_executable.py:75 ../vdms_threads/ydl_executable.py:252
+#: ../vdms_threads/ydl_executable.py:75 ../vdms_threads/ydl_executable.py:253
 msgid ""
 "\n"
 "Requires MSVCR100.dll\n"

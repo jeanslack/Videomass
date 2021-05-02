@@ -7,11 +7,13 @@ License: GPL3
 Change Log:
 
 +------------------------------------+
-Apr 27, 2021 V.3.4.3
+May 02, 2021 V.3.4.3
 
   * Update Portuguese (BR) translation (thanks to Samuel)
   * Fixed `FileNotFoundError` traceback during youtube-dl update on AppImage.
     This occured when the log directory has not yet created.
+  * YouTube Downloader: added a new checkbox to restrict filenames (see #21)
+  * Fixed #21
 
 +------------------------------------+
 Apr 24, 2021 V.3.4.2
