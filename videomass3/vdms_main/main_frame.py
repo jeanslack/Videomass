@@ -1,35 +1,35 @@
 # -*- coding: UTF-8 -*-
-# Name: main_frame.py
-# Porpose: top window main frame
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.21.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: main_frame.py
+Porpose: top window main frame
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
-from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
-import webbrowser
-from urllib.parse import urlparse
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
+from urllib.parse import urlparse
+import webbrowser
+import wx
+from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass3.vdms_dialogs import settings
 from videomass3.vdms_dialogs import set_timestamp
 from videomass3.vdms_dialogs import infoprg
@@ -44,7 +44,7 @@ from videomass3.vdms_panels import textdrop
 from videomass3.vdms_panels import youtubedl_ui
 from videomass3.vdms_panels import av_conversions
 from videomass3.vdms_panels import concatenate
-from videomass3.vdms_panels.long_processing_task import Logging_Console
+from videomass3.vdms_panels.long_processing_task import LogOut
 from videomass3.vdms_panels import presets_manager
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_sys.msg_info import current_release
@@ -58,23 +58,6 @@ class MainFrame(wx.Frame):
     """
     This is the main frame top window for panels implementation.
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    PYLIB_YDL = get.pylibYdl  # youtube_dl library with None is in use
-    EXEC_YDL = get.execYdl  # youtube-dl executable with False do not exist
-    APPTYPE = get.APP_type  # pyinstaller, appimage or None
-    OS = get.OS  # ID of the operative system:
-    DIR_CONF = get.DIRconf  # default configuration directory
-    FILE_CONF = get.FILEconf  # pathname of the file configuration
-    WORK_DIR = get.WORKdir  # pathname of the current work directory
-    SRC_PATH = get.SRCpath  # pathname to the application directory
-    LOGDIR = get.LOGdir  # log directory pathname
-    CACHEDIR = get.CACHEdir  # cache directory pathname
-    FFMPEG_DEFAULTDEST = get.FFMPEGoutdir  # default file dest from conf.
-    YDL_DEFAULTDEST = get.YDLoutdir  # default download dest from conf.
-    TBSIZE = get.TBsize  # toolbar icons size
-    TBPOS = get.TBpos  # toolbar position
-    TBTEXT = get.TBtext  # toolbar show/hide text (str(true) or str(false))
     # colour rappresentetion in rgb
     AZURE_NEON = 158, 201, 232
     YELLOW_LMN = 255, 255, 0
@@ -92,26 +75,12 @@ class MainFrame(wx.Frame):
     # GREEN = '#268826'
     # -------------------------------------------------------------#
 
-    def __init__(self, setui, pathicons):
+    def __init__(self):
         """
-        NOTE: 'SRCpath' is a current work directory of Videomass
-               program. How it can be localized depend if Videomass is
-               run as portable program or installated program.
-
         """
-        SRCpath = setui[1]  # share dir (are where the source files?):
-        # ---------------------------#
-        self.iconset = setui[4][11]
-        self.videomass_icon = pathicons[0]
-        self.icon_runconv = pathicons[2]
-        self.icon_ydl = pathicons[24]
-        self.icon_mainback = pathicons[22]
-        self.icon_mainforward = pathicons[23]
-        self.icon_info = pathicons[3]
-        self.icon_saveprf = pathicons[8]
-        self.icon_viewstatistics = pathicons[25]
-        # self.viewlog = pathicons[26]
-
+        get = wx.GetApp()
+        self.appdata = get.appset
+        self.icons = get.iconset
         # -------------------------------#
         self.data_files = []  # list of items in list control
         self.data_url = None  # list of urls in text box
@@ -127,9 +96,9 @@ class MainFrame(wx.Frame):
         self.checktimestamp = True  # show timestamp during playback
         self.autoexit = False  # set autoexit during ffplay playback
         # set fontconfig for timestamp
-        if MainFrame.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             tsfont = '/Library/Fonts/Arial.ttf'
-        elif MainFrame.OS == 'Windows':
+        elif self.appdata['ostype'] == 'Windows':
             tsfont = 'C:\\Windows\\Fonts\\Arial.ttf'
         else:
             tsfont = 'Arial'
@@ -148,39 +117,24 @@ class MainFrame(wx.Frame):
         # ---------- others panel instances:
         self.TimeLine = timeline.Timeline(self)
         self.ChooseTopic = choose_topic.Choose_Topic(self,
-                                                     MainFrame.OS,
-                                                     pathicons[1],
-                                                     pathicons[17],
-                                                     pathicons[18],
-                                                     pathicons[5],
+                                                     self.appdata['ostype'],
                                                      )
-        self.ytDownloader = youtubedl_ui.Downloader(self, pathicons[6])
+        self.ytDownloader = youtubedl_ui.Downloader(self)
         self.VconvPanel = av_conversions.AV_Conv(self,
-                                                 MainFrame.OS,
-                                                 pathicons[6],  # playfilt
-                                                 pathicons[7],  # resetfilt
-                                                 pathicons[9],  # resize
-                                                 pathicons[10],  # crop
-                                                 pathicons[11],  # rotate
-                                                 pathicons[12],  # deinter
-                                                 pathicons[13],  # ic_denoi
-                                                 pathicons[14],  # analyzes
-                                                 pathicons[15],  # settings
-                                                 pathicons[16],  # peaklevel
-                                                 pathicons[17],  # audiotr
-                                                 pathicons[26],  # stabilizer
+                                                 self.appdata,
+                                                 self.icons,
                                                  )
-        self.fileDnDTarget = filedrop.FileDnD(self, pathicons[4])
+        self.fileDnDTarget = filedrop.FileDnD(self, self.icons['playback'])
         self.textDnDTarget = textdrop.TextDnD(self)
-        self.ProcessPanel = Logging_Console(self)
+        self.ProcessPanel = LogOut(self)
         self.PrstsPanel = presets_manager.PrstPan(self,
-                                                  SRCpath,
-                                                  MainFrame.DIR_CONF,
-                                                  MainFrame.WORK_DIR,
-                                                  MainFrame.OS,
-                                                  pathicons[19],  # newprf
-                                                  pathicons[20],  # delprf
-                                                  pathicons[21],  # editprf
+                                                  self.appdata['srcpath'],
+                                                  self.appdata['confdir'],
+                                                  self.appdata['workdir'],
+                                                  self.appdata['ostype'],
+                                                  self.icons['profile_add'],
+                                                  self.icons['profile_del'],
+                                                  self.icons['profile_edit']
                                                   )
         self.ConcatDemuxer = concatenate.Conc_Demuxer(self,)
         # hide panels
@@ -213,11 +167,12 @@ class MainFrame(wx.Frame):
         # ----------------------Set Properties----------------------#
         self.SetTitle("Videomass")
         icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap(self.videomass_icon, wx.BITMAP_TYPE_ANY))
+        icon.CopyFromBitmap(wx.Bitmap(self.icons['videomass'],
+                                      wx.BITMAP_TYPE_ANY))
         self.SetIcon(icon)
-        if MainFrame.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             self.SetMinSize((980, 570))
-        elif MainFrame.OS == 'Windows':
+        elif self.appdata['ostype'] == 'Windows':
             self.SetMinSize((920, 640))
         else:
             self.SetMinSize((900, 600))
@@ -299,9 +254,9 @@ class MainFrame(wx.Frame):
             self.startpan.Enable(False), self.viewtimeline.Enable(False),
             self.logpan.Enable(False)
 
-        if MainFrame.PYLIB_YDL is not None:  # no used as module
-            if MainFrame.EXEC_YDL:
-                if os.path.isfile(MainFrame.EXEC_YDL):
+        if self.appdata['PYLIBYDL'] is not None:  # no used as module
+            if self.appdata['EXECYDL']:
+                if os.path.isfile(self.appdata['EXECYDL']):
                     return
             self.ydlused.Enable(False)
             self.ydlupdate.Enable(False)
@@ -332,7 +287,7 @@ class MainFrame(wx.Frame):
             return
 
         else:
-            miniframe = Mediainfo(self.data_files, MainFrame.OS)
+            miniframe = Mediainfo(self.data_files, self.appdata['ostype'])
             miniframe.Show()
     # ------------------------------------------------------------------#
 
@@ -438,7 +393,7 @@ class MainFrame(wx.Frame):
         ckformats = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffmpegButton.AppendSeparator()
         ckcoders = ffmpegButton.Append(wx.ID_ANY, _("Encoders"), _("Shows "
-                                       "available encoders for FFmpeg"))
+                                                                   "available encoders for FFmpeg"))
         dscrp = (_("Decoders"), _("Shows available decoders for FFmpeg"))
         ckdecoders = ffmpegButton.Append(wx.ID_ANY, dscrp[0], dscrp[1])
         ffplayButton = wx.Menu()  # ffplay sub menu
@@ -632,7 +587,7 @@ class MainFrame(wx.Frame):
         Open the download folder with file manager
 
         """
-        IO_tools.openpath(MainFrame.YDL_DEFAULTDEST)
+        IO_tools.openpath(self.appdata['outputdownload'])
     # -------------------------------------------------------------------#
 
     def openMyconversions(self, event):
@@ -640,7 +595,7 @@ class MainFrame(wx.Frame):
         Open the conversions folder with file manager
 
         """
-        IO_tools.openpath(MainFrame.FFMPEG_DEFAULTDEST)
+        IO_tools.openpath(self.appdata['outputfile'])
     # -------------------------------------------------------------------#
 
     def openMydownloads_tmp(self, event):
@@ -672,7 +627,7 @@ class MainFrame(wx.Frame):
         Show a dialog box to help you find FFmpeg topics
 
         """
-        dlg = ffmpeg_search.FFmpeg_Search(MainFrame.OS)
+        dlg = ffmpeg_search.FFmpeg_Search(self.appdata['ostype'])
         dlg.Show()
     # -------------------------------------------------------------------#
 
@@ -701,25 +656,25 @@ class MainFrame(wx.Frame):
                                 'up-to-date {}').format(this),
                               "Videomass", wx.ICON_INFORMATION, self)
                 return None
+
             elif wx.MessageBox(_(
-                    'youtube-dl version {0} is available and will replace the '
-                    'old version {1}\n\nDo you want to update '
-                    'now?').format(latest[0].strip(), this),
-                   "Videomass", wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
+                'youtube-dl version {0} is available and will replace the '
+                'old version {1}\n\nDo you want to update '
+                'now?').format(latest[0].strip(), this),
+                    "Videomass", wx.ICON_QUESTION | wx.YES_NO, self) == wx.NO:
                 return None
             return latest
         # ----------------------------------------------------------
 
-        if (MainFrame.EXEC_YDL is not False and
-                os.path.isfile(MainFrame.EXEC_YDL)):
+        if (self.appdata['EXECYDL'] is not False and
+                os.path.isfile(self.appdata['EXECYDL'])):
             ck = _check()
             if not ck:
                 return
             else:
                 upgrade = IO_tools.youtubedl_upgrade(ck[0],
-                                                     MainFrame.EXEC_YDL,
+                                                     self.appdata['EXECYDL'],
                                                      upgrade=True)
-
             if upgrade[1]:  # failed
                 wx.MessageBox("%s" % (upgrade[1]), "Videomass",
                               wx.ICON_ERROR, self)
@@ -729,19 +684,18 @@ class MainFrame(wx.Frame):
                           'Videomass', wx.ICON_INFORMATION, self)
             return
 
-        elif MainFrame.APPTYPE == 'appimage':
-
+        elif self.appdata['app'] == 'appimage':
             ck = _check()
             if not ck:
                 return
             else:
                 if wx.MessageBox(_(
-                            'To update youtube_dl it is necessary to '
-                            'rebuild the Videomass AppImage. This procedure '
-                            'will be completely automatic and will only '
-                            'require you to select the location of the '
-                            'AppImage.'
-                            '\n\nDo you want to continue?'),
+                    'To update youtube_dl it is necessary to '
+                    'rebuild the Videomass AppImage. This procedure '
+                    'will be completely automatic and will only '
+                    'require you to select the location of the '
+                    'AppImage.'
+                    '\n\nDo you want to continue?'),
                         "Videomass", wx.ICON_QUESTION |
                         wx.YES_NO, self) == wx.NO:
                     return
@@ -784,11 +738,11 @@ class MainFrame(wx.Frame):
                                   'ERROR', wx.ICON_ERROR, self)
                 return
 
-        elif MainFrame.PYLIB_YDL is None:  # system installed
+        elif self.appdata['PYLIBYDL'] is None:  # system installed
             wx.MessageBox(
-                    _('It looks like you installed youtube-dl with a '
-                      'package manager. Please use that to update.'),
-                    'Videomass', wx.ICON_INFORMATION, self)
+                _('It looks like you installed youtube-dl with a '
+                  'package manager. Please use that to update.'),
+                'Videomass', wx.ICON_INFORMATION, self)
             return
     # ------------------------------------------------------------------#
 
@@ -800,15 +754,15 @@ class MainFrame(wx.Frame):
         url = ("https://api.github.com/repos/jeanslack/"
                "Videomass-presets/releases/latest")
 
-        presetsdir = os.path.join(MainFrame.DIR_CONF, 'presets',
+        presetsdir = os.path.join(self.appdata['confdir'], 'presets',
                                   'version', 'version.txt')
-        presetsrecovery = os.path.join(MainFrame.SRC_PATH, 'presets',
+        presetsrecovery = os.path.join(self.appdata['srcpath'], 'presets',
                                        'version', 'version.txt')
 
         if not os.path.isfile(presetsdir):
             pcopy = copydir_recursively(
-                                os.path.dirname(presetsrecovery),
-                                os.path.dirname(os.path.dirname(presetsdir)))
+                os.path.dirname(presetsrecovery),
+                os.path.dirname(os.path.dirname(presetsdir)))
 
         with open(presetsdir, "r", encoding='utf8') as vers:
             fread = vers.read().strip()
@@ -821,8 +775,8 @@ class MainFrame(wx.Frame):
 
         elif float(newversion[0].split('v')[1]) > float(fread):
             wx.MessageBox(_("There is a new version available "
-                          "{0}").format(newversion[0], "Videomass",
-                                        wx.ICON_INFORMATION, self))
+                            "{0}").format(newversion[0], "Videomass",
+                                          wx.ICON_INFORMATION, self))
         else:
             wx.MessageBox(_("No new version available"), "Videomass",
                           wx.ICON_INFORMATION, self)
@@ -904,7 +858,7 @@ class MainFrame(wx.Frame):
         FFplay submenu: show dialog with shortcuts keyboard for FFplay
 
         """
-        dlg = while_playing.While_Playing(MainFrame.OS)
+        dlg = while_playing.While_Playing(self.appdata['ostype'])
         dlg.Show()
     # ------------------------------------------------------------------#
 
@@ -913,7 +867,7 @@ class MainFrame(wx.Frame):
         check version of youtube-dl used from 'Version in Use' bar menu
         """
         waitmsg = _('\nWait....\nCheck installed version\n')
-        if MainFrame.PYLIB_YDL is None:  # youtube-dl library
+        if self.appdata['PYLIBYDL'] is None:  # youtube-dl library
             this = youtube_dl.version.__version__
             if msgbox:
                 wx.MessageBox(_('You are using youtube-dl '
@@ -921,8 +875,8 @@ class MainFrame(wx.Frame):
                               'Videomass', wx.ICON_INFORMATION, self)
             return this
         else:
-            if os.path.exists(MainFrame.EXEC_YDL):
-                this = IO_tools.youtubedl_update([MainFrame.EXEC_YDL,
+            if os.path.exists(self.appdata['EXECYDL']):
+                this = IO_tools.youtubedl_update([self.appdata['EXECYDL'],
                                                   '--version'],
                                                  waitmsg)
                 if this[1]:  # failed
@@ -939,7 +893,7 @@ class MainFrame(wx.Frame):
                 return this[0].strip()
         if msgbox:
             wx.MessageBox(_('ERROR: {0}\n\nyoutube-dl has not been '
-                            'installed yet.').format(MainFrame.PYLIB_YDL),
+                            'installed yet.').format(self.appdata['PYLIBYDL']),
                           'Videomass', wx.ICON_ERROR, self)
         return None
     # -----------------------------------------------------------------#
@@ -984,7 +938,7 @@ class MainFrame(wx.Frame):
             return
 
         else:
-            mf = ShowLogs(self, MainFrame.LOGDIR, MainFrame.OS)
+            mf = ShowLogs(self, MainFrame.LOGDIR, self.appdata['ostype'])
             mf.Show()
     # ------------------------------------------------------------------#
 
@@ -1076,18 +1030,18 @@ class MainFrame(wx.Frame):
         Open the configuration folder with file manager
 
         """
-        IO_tools.openpath(MainFrame.DIR_CONF)
+        IO_tools.openpath(self.appdata['confdir'])
     # -------------------------------------------------------------------#
 
     def openCache(self, event):
         """
         Open the cache dir with file manager if exists
         """
-        if not os.path.exists(MainFrame.CACHEDIR):
+        if not os.path.exists(self.appdata['cachedir']):
             wx.MessageBox(_("cache folder has not been created yet."),
                           "Videomass", wx.ICON_INFORMATION, self)
             return
-        IO_tools.openpath(MainFrame.CACHEDIR)
+        IO_tools.openpath(self.appdata['cachedir'])
     # ------------------------------------------------------------------#
     # --------- Menu  Preferences  ###
 
@@ -1139,14 +1093,14 @@ class MainFrame(wx.Frame):
 
         """
         if not self.same_destin:
-            self.outpath_ffmpeg = MainFrame.FFMPEG_DEFAULTDEST
-            self.fileDnDTarget.on_file_save(MainFrame.FFMPEG_DEFAULTDEST)
-            self.fileDnDTarget.file_dest = MainFrame.FFMPEG_DEFAULTDEST
+            self.outpath_ffmpeg = self.appdata['outputfile']
+            self.fileDnDTarget.on_file_save(self.appdata['outputfile'])
+            self.fileDnDTarget.file_dest = self.appdata['outputfile']
             self.fold_convers_tmp.Enable(False)
 
-        self.outpath_ydl = MainFrame.YDL_DEFAULTDEST
-        self.textDnDTarget.on_file_save(MainFrame.YDL_DEFAULTDEST)
-        self.textDnDTarget.file_dest = MainFrame.YDL_DEFAULTDEST
+        self.outpath_ydl = self.appdata['outputdownload']
+        self.textDnDTarget.on_file_save(self.appdata['outputdownload'])
+        self.textDnDTarget.file_dest = self.appdata['outputdownload']
         self.fold_downloads_tmp.Enable(False)
 
         self.resetfolders_tmp.Enable(False)
@@ -1187,7 +1141,7 @@ class MainFrame(wx.Frame):
         Call the module setup for setting preferences
         """
         # self.parent.Setup(self)
-        setup_dlg = settings.Setup(self, self.iconset)
+        setup_dlg = settings.Setup(self)
         setup_dlg.ShowModal()
     # ------------------------------------------------------------------#
     # --------- Menu Help  ###
@@ -1266,19 +1220,19 @@ class MainFrame(wx.Frame):
                     wx.ICON_INFORMATION | wx.CENTRE, self)
             else:
                 wx.MessageBox(_(
-                        '\n\nNew releases fix bugs and offer new features'
-                        '\n\nThis is Videomass version {0}\n\n'
-                        '<https://pypi.org/project/videomass/>\n\n'
-                        'You are using the latest version\n').format(this[2]),
-                        _("Checking for newer version"),
-                        wx.ICON_INFORMATION | wx.CENTRE, self)
+                    '\n\nNew releases fix bugs and offer new features'
+                    '\n\nThis is Videomass version {0}\n\n'
+                    '<https://pypi.org/project/videomass/>\n\n'
+                    'You are using the latest version\n').format(this[2]),
+                    _("Checking for newer version"),
+                    wx.ICON_INFORMATION | wx.CENTRE, self)
     # -------------------------------------------------------------------#
 
     def Info(self, event):
         """
         Display the program informations and developpers
         """
-        infoprg.info(self, self.videomass_icon)
+        infoprg.info(self, self.icons['videomass'])
 
     # -----------------  BUILD THE TOOL BAR  --------------------###
 
@@ -1291,59 +1245,63 @@ class MainFrame(wx.Frame):
             self.toolbar.SetWindowStyleFlag(wx.TB_NODIVIDER | wx.TB_FLAT)
 
         """
-        if MainFrame.TBPOS == '0':  # on top
-            if MainFrame.TBTEXT == 'show':  # show text
+        if self.appdata['toolbarpos'] == '0':  # on top
+            if self.appdata['toolbartext'] == 'show':  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_HORIZONTAL)
             else:
                 style = (wx.TB_DEFAULT_STYLE)
 
-        elif MainFrame.TBPOS == '1':  # on bottom
-            if MainFrame.TBTEXT == 'show':  # show text
+        elif self.appdata['toolbarpos'] == '1':  # on bottom
+            if self.appdata['toolbartext'] == 'show':  # show text
                 style = (wx.TB_TEXT | wx.TB_HORZ_LAYOUT | wx.TB_BOTTOM)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_BOTTOM)
 
-        elif MainFrame.TBPOS == '2':  # on right
-            if MainFrame.TBTEXT == 'show':  # show text
+        elif self.appdata['toolbarpos'] == '2':  # on right
+            if self.appdata['toolbartext'] == 'show':  # show text
                 style = (wx.TB_TEXT | wx.TB_RIGHT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_RIGHT)
 
-        elif MainFrame.TBPOS == '3':
-            if MainFrame.TBTEXT == 'show':  # show text
+        elif self.appdata['toolbarpos'] == '3':
+            if self.appdata['toolbartext'] == 'show':  # show text
                 style = (wx.TB_TEXT | wx.TB_LEFT)
             else:
                 style = (wx.TB_DEFAULT_STYLE | wx.TB_LEFT)
 
         self.toolbar = self.CreateToolBar(style=style)
 
-        bmp_size = (int(MainFrame.TBSIZE), int(MainFrame.TBSIZE))
+        bmp_size = (int(self.appdata['toolbarsize']),
+                    int(self.appdata['toolbarsize']))
         self.toolbar.SetToolBitmapSize(bmp_size)
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
 
-            bmpback = get_bmp(self.icon_mainback, bmp_size)
-            bmpnext = get_bmp(self.icon_mainforward, bmp_size)
+            bmpback = get_bmp(self.icons['previous'], bmp_size)
+            bmpnext = get_bmp(self.icons['next'], bmp_size)
 
-            bmpinfo = get_bmp(self.icon_info, bmp_size)
-            bmpstat = get_bmp(self.icon_viewstatistics, bmp_size)
+            bmpinfo = get_bmp(self.icons['fileproperties'], bmp_size)
+            bmpstat = get_bmp(self.icons['download_properties'], bmp_size)
 
-            bmpsaveprf = get_bmp(self.icon_saveprf, bmp_size)
+            bmpsaveprf = get_bmp(self.icons['profile_append'], bmp_size)
 
-            bmpconv = get_bmp(self.icon_runconv, bmp_size)
-            bmpydl = get_bmp(self.icon_ydl, bmp_size)
+            bmpconv = get_bmp(self.icons['startconv'], bmp_size)
+            bmpydl = get_bmp(self.icons['startdownload'], bmp_size)
 
         else:
-            bmpback = wx.Bitmap(self.icon_mainback, wx.BITMAP_TYPE_ANY)
-            bmpnext = wx.Bitmap(self.icon_mainforward, wx.BITMAP_TYPE_ANY)
+            bmpback = wx.Bitmap(self.icons['previous'], wx.BITMAP_TYPE_ANY)
+            bmpnext = wx.Bitmap(self.icons['next'], wx.BITMAP_TYPE_ANY)
 
-            bmpinfo = wx.Bitmap(self.icon_info, wx.BITMAP_TYPE_ANY)
-            bmpstat = wx.Bitmap(self.icon_viewstatistics, wx.BITMAP_TYPE_ANY)
+            bmpinfo = wx.Bitmap(self.icons['fileproperties'],
+                                wx.BITMAP_TYPE_ANY)
+            bmpstat = wx.Bitmap(self.icons['download_properties'],
+                                wx.BITMAP_TYPE_ANY)
 
-            bmpsaveprf = wx.Bitmap(self.icon_saveprf, wx.BITMAP_TYPE_ANY)
+            bmpsaveprf = wx.Bitmap(self.icons['profile_append'],
+                                   wx.BITMAP_TYPE_ANY)
 
-            bmpconv = wx.Bitmap(self.icon_runconv, wx.BITMAP_TYPE_ANY)
-            bmpydl = wx.Bitmap(self.icon_ydl, wx.BITMAP_TYPE_ANY)
+            bmpconv = wx.Bitmap(self.icons['startconv'], wx.BITMAP_TYPE_ANY)
+            bmpydl = wx.Bitmap(self.icons['startdownload'], wx.BITMAP_TYPE_ANY)
         '''
         self.toolbar.SetFont(wx.Font(8, wx.DEFAULT, wx.NORMAL,
                                      wx.NORMAL, 0, ""))
@@ -1366,11 +1324,10 @@ class MainFrame(wx.Frame):
                                               tip, wx.ITEM_NORMAL
                                               )
         tip = _("Shows download statistics and information")
-        self.btn_ydlstatistics = self.toolbar.AddTool(
-                                    14, _('Statistics'),
-                                    bmpstat,
-                                    tip, wx.ITEM_NORMAL
-                                    )
+        self.btn_ydlstatistics = self.toolbar.AddTool(14, _('Statistics'),
+                                                      bmpstat,
+                                                      tip, wx.ITEM_NORMAL
+                                                      )
         # self.toolbar.AddSeparator()
         tip = _("Add a new profile from this panel with the current settings")
         self.btn_saveprf = self.toolbar.AddTool(8, _('Add Profile'),

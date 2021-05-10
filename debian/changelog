@@ -5,6 +5,7 @@ videomass (3.4.3-1) UNRELEASED; urgency=medium
     This occured when the log directory has not yet created.
   * YouTube Downloader: added a new checkbox to restrict filenames (see #21)
   * Fixed #21
+  * some code refactor (pylint)
 
  -- Gianluca Pernigotto <jeanlucperni@gmail.com>  Tue, 02 May 2021 20:49:00 +0200
 

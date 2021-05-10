@@ -1,37 +1,37 @@
 # -*- coding: UTF-8 -*-
-# Name: pictures_exporting.py
-# Porpose: FFmpeg long processing task on save as pictures
-# Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: pictures_exporting.py
+Porpose: FFmpeg long processing task on save as pictures
+Compatibility: Python3, wxPython4 Phoenix (OS Unix-like only)
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
+import os
 import subprocess
 import platform
 if not platform.system() == 'Windows':
     import shlex
-import os
-from threading import Thread
 import time
 from pubsub import pub
+from threading import Thread
+import wx
 
 
 def logWrite(cmd, sterr, logname, logdir):
@@ -70,12 +70,8 @@ class PicturesFromVideo(Thread):
     single processes to save video sequences as pictures.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    OS = get.OS
-    LOGDIR = get.LOGdir
-    FFMPEG_URL = get.FFMPEG_url
-    FFMPEG_LOGLEV = get.FFMPEG_loglev
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ------------------------------------------------------
 
@@ -102,12 +98,13 @@ class PicturesFromVideo(Thread):
         """
         Subprocess initialize thread.
         """
-        cmd = ('"%s" %s %s -i "%s" %s ' % (PicturesFromVideo.FFMPEG_URL,
-                                           self.time_seq,
-                                           PicturesFromVideo.FFMPEG_LOGLEV,
-                                           self.fname,
-                                           self.cmd,
-                                           ))
+        cmd = ('"%s" %s %s -i '
+               '"%s" %s ' % (PicturesFromVideo.appdata['ffmpeg_bin'],
+                             self.time_seq,
+                             PicturesFromVideo.appdata['ffmpegloglev'],
+                             self.fname,
+                             self.cmd,
+                             ))
         count = 'File %s/%s' % ('1', '1',)
         com = "%s\n%s" % (count, cmd)
 
@@ -121,10 +118,10 @@ class PicturesFromVideo(Thread):
         logWrite(com,
                  '',
                  self.logname,
-                 PicturesFromVideo.LOGDIR,
+                 PicturesFromVideo.appdata['logdir'],
                  )  # write n/n + command only
 
-        if not PicturesFromVideo.OS == 'Windows':
+        if not PicturesFromVideo.appdata['ostype'] == 'Windows':
             cmd = shlex.split(cmd)
             info = None
         else:  # Hide subprocess window on MS Windows
@@ -157,7 +154,7 @@ class PicturesFromVideo(Thread):
                     logWrite('',
                              "Exit status: %s" % p.wait(),
                              self.logname,
-                             PicturesFromVideo.LOGDIR,
+                             PicturesFromVideo.appdata['logdir'],
                              )  # append exit error number
 
                 else:  # status ok

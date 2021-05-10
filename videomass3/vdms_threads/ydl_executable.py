@@ -1,39 +1,39 @@
 # -*- coding: UTF-8 -*-
-# Name: Ydl_DL_Exec.py
-# Porpose: long processing task with youtube-dl executable
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.21.2021 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: Ydl_DL_Exec.py
+Porpose: long processing task with youtube-dl executable
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
+import os
+import sys
+import itertools
+import time
 import subprocess
 import platform
 if not platform.system() == 'Windows':
     import shlex
-import itertools
-import os
-import sys
-from threading import Thread
-import time
 from pubsub import pub
+from threading import Thread
+import wx
 
 
 def logWrite(cmd, sterr, logname, logdir):
@@ -58,12 +58,12 @@ class Ydl_DL_Exec(Thread):
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    LOGDIR = get.LOGdir
-    FFMPEG_URL = get.FFMPEG_url
-    EXECYDL = get.execYdl
-    APPTYPE = get.APP_type
+    LOGDIR = get.appset['logdir']
+    FFMPEG_URL = get.appset['ffmpeg_bin']
+    EXECYDL = get.appset['EXECYDL']
+    APPTYPE = get.appset['app']
 
-    if get.PLAYLISTsubfolder == 'true':
+    if get.appset['playlistsubfolder'] == 'true':
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
     else:
         SUBDIR = ''
@@ -243,8 +243,8 @@ class Ydl_EI_Exec(Thread):
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    EXECYDL = get.execYdl
-    APPTYPE = get.APP_type
+    EXECYDL = get.appset['EXECYDL']
+    APPTYPE = get.appset['app']
 
     if not platform.system() == 'Windows':
         LINE_MSG = _('Unrecognized error')

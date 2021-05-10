@@ -1,33 +1,34 @@
 # -*- coding: UTF-8 -*-
-# Name: ydl_pylibextractinfo.py
-# Porpose: get informations data with youtube_dl
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.21.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: ydl_pylibextractinfo.py
+Porpose: get informations data with youtube_dl
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-#########################################################
-import wx
-import sys
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
+import sys
 from pubsub import pub
 from threading import Thread
+import wx
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
@@ -66,20 +67,17 @@ class Ydl_EI_Pylib(Thread):
     to get output during process (see help(youtube_dl.YoutubeDL) ) .
 
     """
-    get = wx.GetApp()  # get data from bootstrap
-    OS = get.OS
-    APPTYPE = get.APP_type
-
     def __init__(self, url):
         """
         Attributes defined here:
         self.url  str('url')
         self.data  tupla(None, None)
         """
+        get = wx.GetApp()  # get videomass wx.App attribute
+        self.appdata = get.appset
         self.url = url
         self.data = None
-        if (Ydl_EI_Pylib.OS == 'Windows' or
-                Ydl_EI_Pylib.APPTYPE == 'appimage'):
+        if self.appdata['ostype'] in ('appimage', 'Windows'):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False

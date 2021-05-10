@@ -1,37 +1,37 @@
 # -*- coding: UTF-8 -*-
-# Name: one_pass.py
-# Porpose: FFmpeg long processing task on one pass conversion
-# Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: one_pass.py
+Porpose: FFmpeg long processing task on one pass conversion
+Compatibility: Python3, wxPython4 Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
+import os
 import subprocess
 import platform
 if not platform.system() == 'Windows':
     import shlex
-import os
-from threading import Thread
 import time
 from pubsub import pub
+from threading import Thread
+import wx
 
 
 def logWrite(cmd, sterr, logname, logdir):
@@ -71,14 +71,10 @@ class Concat_Demuxer(Thread):
     which need to read the stdout/stderr in real time.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    LOGDIR = get.LOGdir
-    CACHEDIR = get.CACHEdir
-    FFMPEG_URL = get.FFMPEG_url
-    FFMPEG_LOGLEV = get.FFMPEG_loglev
-    FF_THREADS = get.FFthreads
-    SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
+    CACHEDIR = appdata['cachedir']
+    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
@@ -117,11 +113,11 @@ class Concat_Demuxer(Thread):
 
         cmd = ('"%s" %s -f concat -safe 0 -i "%s" -map 0:v? -map_chapters 0 '
                '-map 0:s? -map 0:a? -map_metadata 0 %s -c copy %s -y '
-               '"%s/%s%s.%s"' % (Concat_Demuxer.FFMPEG_URL,
-                                 Concat_Demuxer.FFMPEG_LOGLEV,
+               '"%s/%s%s.%s"' % (Concat_Demuxer.appdata['ffmpeg_bin'],
+                                 Concat_Demuxer.appdata['ffmpegloglev'],
                                  self.ftext,
                                  self.command,
-                                 Concat_Demuxer.FF_THREADS,
+                                 Concat_Demuxer.appdata['ffthreads'],
                                  self.outputdir,
                                  filename,
                                  Concat_Demuxer.SUFFIX,
@@ -139,7 +135,7 @@ class Concat_Demuxer(Thread):
         logWrite(com,
                  '',
                  self.logname,
-                 Concat_Demuxer.LOGDIR,
+                 Concat_Demuxer.appdata['logdir'],
                  )  # write n/n + command only
 
         if not platform.system() == 'Windows':
@@ -175,7 +171,7 @@ class Concat_Demuxer(Thread):
                     logWrite('',
                              "Exit status: %s" % p.wait(),
                              self.logname,
-                             Concat_Demuxer.LOGDIR,
+                             Concat_Demuxer.appdata['logdir'],
                              )  # append exit error number
                 else:  # ok
                     wx.CallAfter(pub.sendMessage,

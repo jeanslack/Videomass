@@ -1,38 +1,38 @@
 # -*- coding: UTF-8 -*-
-# Name: two_pass_EBU.py
-# Porpose: FFmpeg long processing task on 2 pass with EBU normalization
-# Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: two_pass_EBU.py
+Porpose: FFmpeg long processing task on 2 pass with EBU normalization
+Compatibility: Python3, wxPython4 Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
+import itertools
+import os
 import subprocess
 import platform
 if not platform.system() == 'Windows':
     import shlex
-import itertools
-import os
-from threading import Thread
 import time
 from pubsub import pub
+from threading import Thread
+import wx
 
 
 def logWrite(cmd, sterr, logname, logdir):
@@ -70,13 +70,10 @@ class Loudnorm(Thread):
     pass and has definitions to apply on second pass.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    OS = get.OS
-    LOGDIR = get.LOGdir
-    FFMPEG_URL = get.FFMPEG_url
-    FF_THREADS = get.FFthreads
-    SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
+    OS = appdata['ostype']
+    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
 
     def __init__(self, var, duration, logname, timeseq):
@@ -122,14 +119,15 @@ class Loudnorm(Thread):
             outext = source_ext if not self.ext else self.ext
 
             # --------------- first pass
-            pass1 = ('"{0}" -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} {4} -y {5}'.format(Loudnorm.FFMPEG_URL,
-                                                          self.time_seq,
-                                                          files,
-                                                          self.passList[0],
-                                                          Loudnorm.FF_THREADS,
-                                                          self.nul,
-                                                          ))
+            pass1 = ('"{0}" -nostdin -loglevel info -stats '
+                     '-hide_banner {1} -i "{2}" {3} {4} -y '
+                     '{5}'.format(Loudnorm.appdata['ffmpeg_bin'],
+                                  self.time_seq,
+                                  files,
+                                  self.passList[0],
+                                  Loudnorm.appdata['ffthreads'],
+                                  self.nul,
+                                  ))
             self.count += 1
             count = ('Loudnorm ebu: Getting statistics for measurements...\n  '
                      'File %s/%s - Pass One' % (self.count, self.countmax,))
@@ -144,7 +142,7 @@ class Loudnorm(Thread):
             logWrite(cmd,
                      '',
                      self.logname,
-                     Loudnorm.LOGDIR
+                     Loudnorm.appdata['logdir']
                      )  # write n/n + command only
 
             if not Loudnorm.OS == 'Windows':
@@ -185,7 +183,7 @@ class Loudnorm(Thread):
                         logWrite('',
                                  "Exit status: %s" % p1.wait(),
                                  self.logname,
-                                 Loudnorm.LOGDIR,
+                                 Loudnorm.appdata['logdir'],
                                  )  # append exit error number
                         break
 
@@ -225,20 +223,20 @@ class Loudnorm(Thread):
                        )
             time.sleep(.5)
 
-            pass2 = ('"{0}" -nostdin -loglevel info -stats -hide_banner '
-                     '{1} -i "{2}" {3} -filter:a:{9} {4} {5} '
-                     '-y "{6}/{7}{10}.{8}"'.format(Loudnorm.FFMPEG_URL,
-                                                   self.time_seq,
-                                                   files,
-                                                   self.passList[1],
-                                                   filters,
-                                                   Loudnorm.FF_THREADS,
-                                                   folders,
-                                                   filename,
-                                                   outext,
-                                                   self.audioOUTmap[1],
-                                                   Loudnorm.SUFFIX,
-                                                   ))
+            pass2 = ('"{0}" -nostdin -loglevel info -stats -hide_banner {1} '
+                     '-i "{2}" {3} -filter:a:{9} {4} {5} -y "{6}/{7}{10}.{8}" '
+                     ''.format(Loudnorm.appdata['ffmpeg_bin'],
+                               self.time_seq,
+                               files,
+                               self.passList[1],
+                               filters,
+                               Loudnorm.appdata['ffthreads'],
+                               folders,
+                               filename,
+                               outext,
+                               self.audioOUTmap[1],
+                               Loudnorm.SUFFIX,
+                               ))
             count = ('Loudnorm ebu: apply EBU R128...\n  '
                      'File %s/%s - Pass Two' % (self.count, self.countmax,))
             cmd = "%s\n%s" % (count, pass2)
@@ -249,7 +247,7 @@ class Loudnorm(Thread):
                          fname=files,
                          end='',
                          )
-            logWrite(cmd, '', self.logname, Loudnorm.LOGDIR)
+            logWrite(cmd, '', self.logname, Loudnorm.appdata['logdir'])
 
             if not Loudnorm.OS == 'Windows':
                 pass2 = shlex.split(pass2)
@@ -284,7 +282,7 @@ class Loudnorm(Thread):
                     logWrite('',
                              "Exit status: %s" % p2.wait(),
                              self.logname,
-                             Loudnorm.LOGDIR,
+                             Loudnorm.appdata['logdir'],
                              )  # append exit error number
 
             if self.stop_work_thread:  # break first 'for' loop

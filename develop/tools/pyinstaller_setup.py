@@ -1,32 +1,30 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
+"""
+Name: pyinstaller_setup.py
+Porpose: Wrap the videomass building with pyinstaller
+Compatibility: Python3
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: June.18.2020
+########################################################
 
-#########################################################
-# Name: pyinstaller_setup.py
-# Porpose: Wrap the videomass building with pyinstaller
-# Compatibility: Python3
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2020-2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: June.18.2020
-#########################################################
+This file is part of Videomass.
 
-# This file is part of Videomass.
+    Videomass is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+    Videomass is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+    You should have received a copy of the GNU General Public License
+    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
 import shutil
@@ -34,7 +32,7 @@ import platform
 import argparse
 
 
-class Data(object):
+class Data():
     """
     Get data from current sources code directory
 
@@ -243,6 +241,7 @@ class MakePyinstallerBuild(Data):
     Wrap the pyinstaller building for Videomass
 
     """
+
     def check(self):
         """
         Check for required sources
@@ -320,69 +319,69 @@ class MakePyinstallerBuild(Data):
 
         if platform.system() == 'Windows':
             PyInstaller.__main__.run([
-                                '--name=Videomass',
-                                '--windowed',
-                                '--add-data=%s;art' % self.ART,
-                                '--add-data=%s;locale' % self.LOCALE,
-                                '--add-data=%s;share' % self.SHARE,
-                                '--add-data=%s;FFMPEG' % self.FFMPEG,
-                                '--add-data=%s;DOC' % self.NOTICE,
-                                # doc
-                                '--add-data=%s;DOC' % self.AUTH,
-                                '--add-data=%s;DOC' % self.BUGS,
-                                '--add-data=%s;DOC' % self.CHANGELOG,
-                                '--add-data=%s;DOC' % self.COPYING,
-                                '--add-data=%s;DOC' % self.INSTALL,
-                                '--add-data=%s;DOC' % self.README,
-                                '--add-data=%s;DOC' % self.TODO,
-                                '--exclude-module=youtube_dl',
-                                '--icon=%s' % self.ICO,
-                                'videomass',
-                                ])
+                '--name=Videomass',
+                '--windowed',
+                '--add-data=%s;art' % self.ART,
+                '--add-data=%s;locale' % self.LOCALE,
+                '--add-data=%s;share' % self.SHARE,
+                '--add-data=%s;FFMPEG' % self.FFMPEG,
+                '--add-data=%s;DOC' % self.NOTICE,
+                # doc
+                '--add-data=%s;DOC' % self.AUTH,
+                '--add-data=%s;DOC' % self.BUGS,
+                '--add-data=%s;DOC' % self.CHANGELOG,
+                '--add-data=%s;DOC' % self.COPYING,
+                '--add-data=%s;DOC' % self.INSTALL,
+                '--add-data=%s;DOC' % self.README,
+                '--add-data=%s;DOC' % self.TODO,
+                '--exclude-module=youtube_dl',
+                '--icon=%s' % self.ICO,
+                'videomass',
+            ])
 
         elif platform.system() == 'Darwin':
             PyInstaller.__main__.run([
-                            '--name=Videomass',
-                            '--windowed',
-                            # '--onefile',
-                            '--osx-bundle-identifier=com.jeanslack.videomass',
-                            '--add-data=%s:art' % self.ART,
-                            '--add-data=%s:locale' % self.LOCALE,
-                            '--add-data=%s:share' % self.SHARE,
-                            '--add-data=%s:FFMPEG' % self.FFMPEG,
-                            # doc
-                            '--add-data=%s:DOC' % self.AUTH,
-                            '--add-data=%s:DOC' % self.BUGS,
-                            '--add-data=%s:DOC' % self.CHANGELOG,
-                            '--add-data=%s:DOC' % self.COPYING,
-                            '--add-data=%s:DOC' % self.INSTALL,
-                            '--add-data=%s:DOC' % self.README,
-                            '--add-data=%s:DOC' % self.TODO,
-                            '--exclude-module=youtube_dl',
-                            '--icon=%s' % self.ICNS,
-                            'videomass',
-                            ])
+                '--name=Videomass',
+                '--windowed',
+                # '--onefile',
+                '--osx-bundle-identifier=com.jeanslack.videomass',
+                '--add-data=%s:art' % self.ART,
+                '--add-data=%s:locale' % self.LOCALE,
+                '--add-data=%s:share' % self.SHARE,
+                '--add-data=%s:FFMPEG' % self.FFMPEG,
+                # doc
+                '--add-data=%s:DOC' % self.AUTH,
+                '--add-data=%s:DOC' % self.BUGS,
+                '--add-data=%s:DOC' % self.CHANGELOG,
+                '--add-data=%s:DOC' % self.COPYING,
+                '--add-data=%s:DOC' % self.INSTALL,
+                '--add-data=%s:DOC' % self.README,
+                '--add-data=%s:DOC' % self.TODO,
+                '--exclude-module=youtube_dl',
+                '--icon=%s' % self.ICNS,
+                'videomass',
+            ])
 
         elif platform.system() in ('Linux', 'FreeBSD'):
             PyInstaller.__main__.run([
-                                '--name=videomass',
-                                '--windowed',  # console=False
-                                '--onefile',
-                                '--add-data=%s:art' % self.ART,
-                                '--add-data=%s:locale' % self.LOCALE,
-                                '--add-data=%s:share' % self.SHARE,
-                                '--add-data=%s:FFMPEG' % self.FFMPEG,
-                                # doc
-                                '--add-data=%s:DOC' % self.AUTH,
-                                '--add-data=%s:DOC' % self.BUGS,
-                                '--add-data=%s:DOC' % self.CHANGELOG,
-                                '--add-data=%s:DOC' % self.COPYING,
-                                '--add-data=%s:DOC' % self.INSTALL,
-                                '--add-data=%s:DOC' % self.README,
-                                '--add-data=%s:DOC' % self.TODO,
-                                '--exclude-module=youtube_dl',
-                                'videomass',
-                                ])
+                '--name=videomass',
+                '--windowed',  # console=False
+                '--onefile',
+                '--add-data=%s:art' % self.ART,
+                '--add-data=%s:locale' % self.LOCALE,
+                '--add-data=%s:share' % self.SHARE,
+                '--add-data=%s:FFMPEG' % self.FFMPEG,
+                # doc
+                '--add-data=%s:DOC' % self.AUTH,
+                '--add-data=%s:DOC' % self.BUGS,
+                '--add-data=%s:DOC' % self.CHANGELOG,
+                '--add-data=%s:DOC' % self.COPYING,
+                '--add-data=%s:DOC' % self.INSTALL,
+                '--add-data=%s:DOC' % self.README,
+                '--add-data=%s:DOC' % self.TODO,
+                '--exclude-module=youtube_dl',
+                'videomass',
+            ])
 
 
 def main():
@@ -390,33 +389,33 @@ def main():
     Users inputs parser (positional/optional arguments)
     """
     parser = argparse.ArgumentParser(
-                description='Wrap the pyinstaller setup for Videomass',)
+        description='Wrap the pyinstaller setup for Videomass',)
     parser.add_argument(
-                '-g', '--gen_spec',
-                help="Generate a videomass.spec file to start building with, "
-                     "but NOT start to building the bundle",
-                action="store_true",
-                       )
+        '-g', '--gen_spec',
+        help="Generate a videomass.spec file to start building with, "
+        "but NOT start to building the bundle",
+        action="store_true",
+    )
 
     parser.add_argument(
-                '-m', '--use_module',
-                help=("Start building by import PyInstaller.__main__ module\n"
-                      "Warning: using this option pyinstaller will "
-                      "overwrite the previously generated .spec file "
-                      "each time"),
-                action="store_true",
-                       )
+        '-m', '--use_module',
+        help=("Start building by import PyInstaller.__main__ module\n"
+              "Warning: using this option pyinstaller will "
+              "overwrite the previously generated .spec file "
+              "each time"),
+        action="store_true",
+    )
     parser.add_argument(
-                '-gb', '--genspec_build',
-                help="Generate a videomass.spec file and start directly "
-                     "with building. Warning: same as the -m option",
-                action="store_true",
-                       )
+        '-gb', '--genspec_build',
+        help="Generate a videomass.spec file and start directly "
+        "with building. Warning: same as the -m option",
+        action="store_true",
+    )
     parser.add_argument(
-                '-s', '--start_build',
-                help="Start the building by an existing videomass.spec file",
-                action="store_true",
-                       )
+        '-s', '--start_build',
+        help="Start the building by an existing videomass.spec file",
+        action="store_true",
+    )
     args = parser.parse_args()
 
     if args.gen_spec:

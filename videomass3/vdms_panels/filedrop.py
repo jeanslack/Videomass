@@ -1,32 +1,32 @@
 # -*- coding: UTF-8 -*-
-# Name: filedrop.py
-# Porpose: files drag n drop interface
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Apr.04.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: filedrop.py
+Porpose: files drag n drop interface
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
+import wx
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import get_milliseconds
@@ -156,23 +156,20 @@ class FileDnD(wx.Panel):
     Panel for dragNdrop files queue. Accept one or more files.
     """
     # CONSTANTS:
-    get = wx.GetApp()
-    OUTSAVE = get.FFMPEGoutdir  # files destination folder
-    OS = get.OS
-    SAMEDIR = get.SAMEdir
-    SUFFIX = get.FILEsuffix
     WHITE = '#fbf4f4'
     BLACK = '#060505'
 
     def __init__(self, parent, iconplay):
         """Constructor. This will initiate with an id and a title"""
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.parent = parent  # parent is the MainFrame
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
             bmpplay = get_bmp(iconplay, ((16, 16)))
         else:
             bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
         self.data = self.parent.data_files  # set items list data on parent
-        self.file_dest = FileDnD.OUTSAVE
+        self.file_dest = self.appdata['outputfile']
         self.selected = None  # tells if an imported file is selected or not
 
         wx.Panel.__init__(self, parent=parent)
@@ -221,18 +218,19 @@ class FileDnD(wx.Panel):
         self.flCtrl.InsertColumn(2, _('Media type'), width=200)
         self.flCtrl.InsertColumn(3, _('Size'), width=150)
 
-        if self.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.DEFAULT, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.DEFAULT, wx.NORMAL, wx.BOLD))
 
         self.text_path_save.SetValue(self.file_dest)
 
-        if FileDnD.SAMEDIR == 'true':
+        if self.appdata['outputfile_samedir'] == 'true':
             self.btn_save.Disable(), self.text_path_save.Disable()
             self.parent.same_destin = True
-            if not FileDnD.SUFFIX == 'none':  # otherwise must be '' on parent
-                self.parent.suffix = FileDnD.SUFFIX
+            if not self.appdata['filesuffix'] == 'none':
+                # otherwise must be '' on parent
+                self.parent.suffix = self.appdata['filesuffix']
 
         # Tooltip
         self.btn_remove.SetToolTip(_('Remove the selected file from the list'))

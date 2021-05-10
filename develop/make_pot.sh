@@ -26,7 +26,7 @@ elif [ "$PLATFORM" = "Linux" ]; then
     XGETTEXT="xgettext"
 fi
 
-$XGETTEXT -d videomass "../Videomass3.py" \
+$XGETTEXT -d videomass "../vdms3.py" \
 "../vdms_dialogs/audiodialogs.py" \
 "../vdms_dialogs/filter_crop.py" \
 "../vdms_dialogs/filter_deinterlace.py" \

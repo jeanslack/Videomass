@@ -1,35 +1,35 @@
 # -*- coding: UTF-8 -*-
-# Name: generic_task.py
-# Porpose: Execute a generic task with FFmpeg
-# Compatibility: Python3 (Unix, Windows)
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Dec.03.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: generic_task.py
+Porpose: Execute a generic task with FFmpeg
+Compatibility: Python3 (Unix, Windows)
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2020 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
-import subprocess
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import platform
+import subprocess
 if not platform.system() == 'Windows':
     import shlex
 from threading import Thread
+import wx
 
 
 class FFmpegGenericTask(Thread):
@@ -48,8 +48,7 @@ class FFmpegGenericTask(Thread):
 
     """
     get = wx.GetApp()
-    FFMPEG_URL = get.FFMPEG_url
-    FFMPEG_LOGLEV = get.FFMPEG_loglev
+    appdata = get.appset
 
     def __init__(self, param):
         """
@@ -77,8 +76,8 @@ class FFmpegGenericTask(Thread):
         OSError exception. Otherwise the getted output is None
 
         """
-        cmd = ('"%s" %s %s' % (FFmpegGenericTask.FFMPEG_URL,
-                               FFmpegGenericTask.FFMPEG_LOGLEV,
+        cmd = ('"%s" %s %s' % (FFmpegGenericTask.appdata['ffmpeg_bin'],
+                               FFmpegGenericTask.appdata['ffmpegloglevel'],
                                self.param,
                                ))
 

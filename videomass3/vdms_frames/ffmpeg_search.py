@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Oct.04.2020 *PEP8 compatible*
+# Rev: Oct.04.2020 *-pycodestyle- compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -103,10 +103,12 @@ class FFmpeg_Search(wx.MiniFrame):
                                     wx.TE_RICH2 |
                                     wx.HSCROLL
                                     )
-        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
+        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
             self.texthelp.SetBackgroundColour(FFmpeg_Search.SOLARIZED)
             self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.GREY))
-        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+        elif get.appset['icontheme'] in ('Breeze-Blues',
+                                         'Breeze-Dark',
+                                         'Videomass-Dark'):
             self.texthelp.SetBackgroundColour(FFmpeg_Search.DARK_SLATE)
             self.texthelp.SetDefaultStyle(wx.TextAttr(FFmpeg_Search.HEAVENLY))
         else:

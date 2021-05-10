@@ -1,39 +1,39 @@
 # -*- coding: UTF-8 -*-
-# Name: ffplay_url_exec.py
-# Porpose: playback online media streams with ffplay player
-#          using youtube-dl as executable.
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.21.2021 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: ffplay_url_exec.py
+Porpose: playback online media streams with ffplay player
+         using youtube-dl as executable.
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
-import subprocess
-import platform
-if not platform.system() == 'Windows':
-    import shlex
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
+import platform
+import subprocess
+if not platform.system() == 'Windows':
+    import shlex
 from threading import Thread
 import time
 from pubsub import pub
+import wx
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_io.make_filelog import write_log  # write initial log
 if 'youtube_dl' in sys.modules:
@@ -66,29 +66,24 @@ class Exec_Download_Stream(Thread):
     NOTE see also ffplay_url_lib.py on sources directory.
 
     """
-    get = wx.GetApp()  # get videomass wx.App attribute
-    FFMPEG_URL = get.FFMPEG_url
-    BINLOCAL = get.execYdl
     EXCEPTION = None
-    TMP = get.TMP
-    LOGDIR = get.LOGdir
-    YDL_PREF = get.YDL_pref
-    APPTYPE = get.APP_type
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
 
     if platform.system() == 'Windows':
         pyname = 'Scripts', 'youtube-dl.exe'
     else:
         pyname = 'bin', 'youtube-dl'
 
-    if YDL_PREF == 'disabled':
+    if appdata['enable_youtubedl'] == 'disabled':
         EXCEPTION = 'error: youtube-dl is disabled, check preferences.'
-        EXECYDL = BINLOCAL
+        EXECYDL = appdata['EXECYDL']
 
-    elif APPTYPE == 'pyinstaller':
-        if BINLOCAL is not False:
-            EXECYDL = BINLOCAL
+    elif appdata['app'] == 'pyinstaller':
+        if appdata['EXECYDL'] is not False:
+            EXECYDL = appdata['EXECYDL']
         else:
-            EXCEPTION = 'Not found: %s' % BINLOCAL
+            EXCEPTION = 'Not found: %s' % appdata['EXECYDL']
 
     else:
         if 'youtube_dl' in sys.modules:
@@ -120,20 +115,23 @@ class Exec_Download_Stream(Thread):
             obtained typing `youtube-dl -F <link>`
 
         """
-        self.logf = os.path.join(Exec_Download_Stream.LOGDIR, 'ffplay.log')
+        self.tmp = os.path.join(Exec_Download_Stream.appdata['cachedir'],
+                                'tmp')
+        self.logf = os.path.join(Exec_Download_Stream.appdata['logdir'],
+                                 'ffplay.log')
         self.stop_work_thread = False  # process terminate value
         self.url = url
         self.quality = quality
 
         if (platform.system() == 'Windows' or
-                Exec_Download_Stream.APPTYPE == 'appimage'):
+                Exec_Download_Stream.appdata['app'] == 'appimage'):
 
             self.ssl = '--no-check-certificate'
 
         else:
             self.ssl = ''
 
-        write_log('ffplay.log', Exec_Download_Stream.LOGDIR)
+        write_log('ffplay.log', Exec_Download_Stream.appdata['logdir'])
 
         if Exec_Download_Stream.EXCEPTION:
             wx.CallAfter(msg_error, Exec_Download_Stream.EXCEPTION)
@@ -154,10 +152,10 @@ class Exec_Download_Stream(Thread):
                '--restrict-filenames "{4}" --ffmpeg-location '
                '"{5}"'.format(Exec_Download_Stream.EXECYDL,
                               self.ssl,
-                              Exec_Download_Stream.TMP,
+                              self.tmp,
                               self.quality,
                               self.url,
-                              Exec_Download_Stream.FFMPEG_URL,
+                              Exec_Download_Stream.appdata['ffmpeg_bin'],
                               ))
         self.logWrite(cmd)  # append log cmd
         if not platform.system() == 'Windows':

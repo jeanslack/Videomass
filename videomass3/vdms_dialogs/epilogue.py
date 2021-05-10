@@ -5,7 +5,7 @@
 # Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
 # Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
 # license: GPL3
-# Rev: Aug.16.2020 *PEP8 compatible*
+# Rev: Aug.16.2020 *-pycodestyle- compatible*
 #########################################################
 
 # This file is part of Videomass.
@@ -61,11 +61,13 @@ class Formula(wx.Dialog):
         # ----------------------Properties----------------------#
         self.SetTitle(title)
 
-        if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
+        if get.appset['icontheme'] in ('Breeze-Blues', 'Videomass-Colours'):
             panel.SetBackgroundColour(Formula.SOLARIZED)
             label2.SetForegroundColour(Formula.LIGHT_GREY)
 
-        elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+        elif get.appset['icontheme'] in ('Breeze-Blues',
+                                         'Breeze-Dark',
+                                         'Videomass-Dark'):
             panel.SetBackgroundColour(Formula.DARK_SLATE)
             label2.SetForegroundColour(Formula.LIGHT_GREY)
         else:

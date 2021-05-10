@@ -87,8 +87,8 @@ Videomass can also be run in interactive mode with the Python interpreter,
 always within the same unpacked directory:   
 
 ```Python
->>> from videomass3 import Videomass3
->>> Videomass3.main()
+>>> from videomass3 import vdms3
+>>> vdms3.main()
 ```
 
 # Resources

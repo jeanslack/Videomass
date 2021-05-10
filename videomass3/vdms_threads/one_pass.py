@@ -1,38 +1,39 @@
 # -*- coding: UTF-8 -*-
-# Name: one_pass.py
-# Porpose: FFmpeg long processing task on one pass conversion
-# Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.06.2020 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: one_pass.py
+Porpose: FFmpeg long processing task on one pass conversion
+Compatibility: Python3, wxPython4 Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2020 *-pycodestyle- compatible*
+########################################################
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+This file is part of Videomass.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
+import itertools
+import os
 import subprocess
 import platform
 if not platform.system() == 'Windows':
     import shlex
-import itertools
-import os
-from threading import Thread
 import time
 from pubsub import pub
+from threading import Thread
+import wx
 
 
 def logWrite(cmd, sterr, logname, logdir):
@@ -72,13 +73,9 @@ class OnePass(Thread):
     which need to read the stdout/stderr in real time.
 
     """
-    # get videomass wx.App attribute
-    get = wx.GetApp()
-    LOGDIR = get.LOGdir
-    FFMPEG_URL = get.FFMPEG_url
-    FFMPEG_LOGLEV = get.FFMPEG_loglev
-    FF_THREADS = get.FFthreads
-    SUFFIX = '' if get.FILEsuffix == 'none' else get.FILEsuffix
+    get = wx.GetApp()  # get videomass wx.App attribute
+    appdata = get.appset
+    SUFFIX = '' if appdata['filesuffix'] == 'none' else appdata['filesuffix']
     NOT_EXIST_MSG = _("Is 'ffmpeg' installed on your system?")
     # ---------------------------------------------------------------
 
@@ -125,13 +122,13 @@ class OnePass(Thread):
             outext = source_ext if not self.extoutput else self.extoutput
 
             cmd = ('"%s" %s %s -i "%s" %s %s %s '
-                   '-y "%s/%s%s.%s"' % (OnePass.FFMPEG_URL,
+                   '-y "%s/%s%s.%s"' % (OnePass.appdata['ffmpeg_bin'],
                                         self.time_seq,
-                                        OnePass.FFMPEG_LOGLEV,
+                                        OnePass.appdata['ffmpegloglev'],
                                         files,
                                         self.command,
                                         volume,
-                                        OnePass.FF_THREADS,
+                                        OnePass.appdata['ffthreads'],
                                         folders,
                                         filename,
                                         OnePass.SUFFIX,
@@ -150,7 +147,7 @@ class OnePass(Thread):
             logWrite(com,
                      '',
                      self.logname,
-                     OnePass.LOGDIR,
+                     OnePass.appdata['logdir'],
                      )  # write n/n + command only
 
             if not platform.system() == 'Windows':
@@ -186,7 +183,7 @@ class OnePass(Thread):
                         logWrite('',
                                  "Exit status: %s" % p.wait(),
                                  self.logname,
-                                 OnePass.LOGDIR,
+                                 OnePass.appdata['logdir'],
                                  )  # append exit error number
                     else:  # ok
                         wx.CallAfter(pub.sendMessage,

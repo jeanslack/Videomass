@@ -1,31 +1,31 @@
 # -*- coding: UTF-8 -*-
-# Name: filter_scale.py
-# Porpose: Show dialog to get scale data based on FFmpeg syntax
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Mar.04.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: filter_scale.py
+Porpose: Show dialog to get scale data based on FFmpeg syntax
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: Mar.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import webbrowser
+import wx
 # import wx.lib.masked as masked # not work on macOSX
 
 
@@ -36,9 +36,7 @@ class Scale(wx.Dialog):
 
     """
     get = wx.GetApp()
-    OS = get.OS
-    GET_LANG = get.GETlang
-    SUPPLANG = get.SUPP_langs
+    appdata = get.appset
 
     def __init__(self, parent, scale, dar, sar, v_width, v_height):
         """
@@ -207,7 +205,7 @@ class Scale(wx.Dialog):
         self.spin_setsarNum.SetToolTip(setsar_str)
         self.spin_setsarDen.SetToolTip(setsar_str)
 
-        if Scale.OS == 'Darwin':
+        if Scale.appdata['ostype'] == 'Darwin':
             label_sdim.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             label_msg.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
         else:
@@ -320,8 +318,8 @@ class Scale(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if Scale.GET_LANG in Scale.SUPPLANG:
-            lang = Scale.GET_LANG.split('_')[0]
+        if Scale.appdata['GETLANG'] in Scale.appdata['SUPP_LANGs']:
+            lang = Scale.appdata['GETLANG'].split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/%s/4-Video_filters_%s.pdf' % (lang, lang))
         else:

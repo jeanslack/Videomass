@@ -1,32 +1,32 @@
 # -*- coding: UTF-8 -*-
-# Name: wizard_dlg.py
-# Porpose: wizard setup dialog
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.21.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: wizard_dlg.py
+Porpose: wizard setup dialog
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
+import wx
 from videomass3.vdms_utils.utils import detect_binaries
 
 
@@ -74,7 +74,7 @@ class PageOne(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
+    OS = get.appset['ostype']
     MSG2 = (_("Please take a moment to set up the application"))
     MSG3 = (_('Click the "Next" button to get started'))
 
@@ -129,8 +129,8 @@ class PageTwo(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
-    FFMPEG_LOCALDIR = get.FFMPEGlocaldir
+    OS = get.appset['ostype']
+    FFMPEG_LOCALDIR = get.appset['FFMPEG_videomass_pkg']
 
     MSG0 = (_('Videomass is an application based on FFmpeg\n'))
 
@@ -271,8 +271,7 @@ class PageThree(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
-    FFMPEG_LOCALDIR = get.FFMPEGlocaldir
+    OS = get.appset['ostype']
 
     MSG0 = (_('Locating FFmpeg executables\n'))
 
@@ -410,7 +409,7 @@ class PageFour(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
+    OS = get.appset['ostype']
 
     MSG0 = _('Videomass has a simple graphical\ninterface for youtube-dl\n')
 
@@ -479,7 +478,7 @@ class PageFinish(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
+    OS = get.appset['ostype']
     MSG0 = _("Wizard completed successfully!\n")
     MSG1 = (_("Remember that you can always change these settings "
               "later, through the Setup dialog."))
@@ -535,9 +534,8 @@ class Wizard(wx.Dialog):
 
     """
     get = wx.GetApp()
-    getfileconf = get.FILEconf
-    YDLPREF = get.YDL_pref
-    OS = get.OS
+    getfileconf = get.appset['fileconfpath']
+    OS = get.appset['ostype']
 
     def __init__(self, icon_videomass):
         """

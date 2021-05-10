@@ -1,29 +1,29 @@
 # -*- coding: UTF-8 -*-
-# Name: textdrop.py
-# Porpose: Allows you to add URLs to download media
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Apr.04.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: textdrop.py
+Porpose: Allows you to add URLs to download media
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import wx
 
 
@@ -32,16 +32,16 @@ class TextDnD(wx.Panel):
     Accept one or more urls separated by a white space or newline.
 
     """
-    get = wx.GetApp()
-    OUTSAVE = get.YDLoutdir  # files destination folder
-    OS = get.OS
     # ----------------------------------------------------------------#
 
     def __init__(self, parent):
         """
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
+
         self.parent = parent  # parent is the MainFrame
-        self.file_dest = TextDnD.OUTSAVE
+        self.file_dest = self.appdata['outputdownload']
 
         wx.Panel.__init__(self, parent=parent)
 
@@ -74,7 +74,7 @@ class TextDnD(wx.Panel):
                        )
         self.SetSizer(sizer)
 
-        if TextDnD.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             lbl_info.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
         else:
             lbl_info.SetFont(wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD))

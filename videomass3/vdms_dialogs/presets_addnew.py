@@ -1,33 +1,33 @@
 # -*- coding: UTF-8 -*-
-# Name: presets_addnew.py
-# Porpose: profiles storing and profiles editing dialog
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: November.10.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: presets_addnew.py
+Porpose: profiles storing and profiles editing dialog
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import webbrowser
 import json
+import wx
 
 
 class MemPresets(wx.Dialog):
@@ -35,12 +35,6 @@ class MemPresets(wx.Dialog):
     Show dialog to store and edit profiles of a selected preset.
 
     """
-    get = wx.GetApp()
-    DIR_CONF = get.DIRconf
-    OS = get.OS
-    GET_LANG = get.GETlang
-    SUPPLANG = get.SUPP_langs
-
     PASS_1 = _("One-Pass, Do not start with `ffmpeg "
                "-i filename`; do not end with "
                "`output-filename`"
@@ -63,7 +57,9 @@ class MemPresets(wx.Dialog):
         arg = 'addprofile' from video and audio conversions
 
         """
-        self.path_prst = os.path.join(MemPresets.DIR_CONF, 'presets',
+        get = wx.GetApp()
+        self.appdata = get.appset
+        self.path_prst = os.path.join(self.appdata['confdir'], 'presets',
                                       '%s.prst' % filename
                                       )
         self.arg = arg  # evaluate if 'edit', 'newprofile', 'addprofile'
@@ -146,7 +142,7 @@ class MemPresets(wx.Dialog):
 
         # ----------------------Set Properties----------------------#
         # set_properties:
-        if MemPresets.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             self.pass_1_cmd.SetFont(wx.Font(12, wx.MODERN,
                                             wx.NORMAL, wx.NORMAL))
             self.pass_2_cmd.SetFont(wx.Font(12, wx.MODERN,
@@ -223,8 +219,8 @@ class MemPresets(wx.Dialog):
         Open default web browser via Python Web-browser controller.
         see <https://docs.python.org/3.8/library/webbrowser.html>
         """
-        if MemPresets.GET_LANG in MemPresets.SUPPLANG:
-            lang = MemPresets.GET_LANG.split('_')[0]
+        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
+            lang = self.appdata['GETLANG'].split('_')[0]
             page = ('https://jeanslack.github.io/Videomass/Pages/User-guide-'
                     'languages/%s/3-Presets_Manager_%s.pdf' % (lang, lang))
         else:

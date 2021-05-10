@@ -1,36 +1,36 @@
 # -*- coding: UTF-8 -*-
-# Name: youtubedl_ui.py
-# Porpose: youtube-dl user interface
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.16.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: youtubedl_ui.py
+Porpose: youtube-dl user interface
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
+import sys
+import wx
+import wx.lib.scrolledpanel as scrolled
 from videomass3.vdms_io import IO_tools
 from videomass3.vdms_utils.utils import format_bytes
 from videomass3.vdms_utils.utils import timehuman
 from videomass3.vdms_frames.ydl_mediainfo import YDL_Mediainfo
-import wx
-import wx.lib.scrolledpanel as scrolled
-import sys
 from videomass3.vdms_utils.get_bmpfromsvg import get_bmp
 
 if not hasattr(wx, 'EVT_LIST_ITEM_CHECKED'):
@@ -76,8 +76,8 @@ class Downloader(wx.Panel):
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    OS = get.OS
-    PYLIB_YDL = get.pylibYdl
+    appdata = get.appset
+    icons = get.iconset
 
     MSG_1 = _('At least one "Format Code" must be checked for each '
               'URL selected in green.')
@@ -98,10 +98,13 @@ class Downloader(wx.Panel):
     WHITE = '#fbf4f4'  # white for background status bar
     BLACK = '#060505'  # black for background status bar
 
-    if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
+    if appdata['icontheme'] in ('Breeze-Blues',
+                                'Videomass-Colours'):
         BACKGRD = SOLARIZED
 
-    elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+    elif appdata['icontheme'] in ('Breeze-Blues',
+                                  'Breeze-Dark',
+                                  'Videomass-Dark'):
         BACKGRD = DARK_SLATE
 
     else:
@@ -131,7 +134,7 @@ class Downloader(wx.Panel):
               ]
     # -----------------------------------------------------------------#
 
-    def __init__(self, parent, iconplay):
+    def __init__(self, parent):
         """
         The first item of the self.info is a complete list of all
         informations getting by extract_info method from youtube_dl
@@ -140,9 +143,10 @@ class Downloader(wx.Panel):
         self.parent = parent
 
         if 'wx.svg' in sys.modules:  # available only in wx version 4.1 to up
-            bmpplay = get_bmp(iconplay, ((16, 16)))
+            bmpplay = get_bmp(Downloader.icons['preview'], ((16, 16)))
         else:
-            bmpplay = wx.Bitmap(iconplay, wx.BITMAP_TYPE_ANY)
+            bmpplay = wx.Bitmap(Downloader.icons['preview'],
+                                wx.BITMAP_TYPE_ANY)
 
         self.opt = {("NO_PLAYLIST"): [True, "--no-playlist"],
                     ("THUMB"): [False, ""],
@@ -175,7 +179,6 @@ class Downloader(wx.Panel):
                                 )
         self.choice.SetSelection(0)
         boxoptions.Add(self.choice, 0, wx.ALL | wx.EXPAND, 5)
-        f = [x for x in Downloader.VQUALITY.keys()]
         boxoptions.Add((5, 5))
         line0 = wx.StaticLine(self, wx.ID_ANY, pos=wx.DefaultPosition,
                               size=wx.DefaultSize, style=wx.LI_HORIZONTAL,
@@ -189,28 +192,27 @@ class Downloader(wx.Panel):
                                              )
         fgs1 = wx.BoxSizer(wx.VERTICAL)
         # fgs1.Add((5, 5))
-        self.cmbx_vq = wx.ComboBox(panelscroll, wx.ID_ANY, choices=f,
+        self.cmbx_vq = wx.ComboBox(panelscroll, wx.ID_ANY,
+                                   choices=list(Downloader.VQUALITY.keys()),
                                    size=(-1, -1), style=wx.CB_DROPDOWN |
                                    wx.CB_READONLY
                                    )
         self.cmbx_vq.SetSelection(0)
         # grid_v.Add((20, 20), 0,)
         fgs1.Add(self.cmbx_vq, 0, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_aq = wx.ComboBox(
-                            panelscroll, wx.ID_ANY,
-                            choices=[x for x in Downloader.AQUALITY.keys()],
-                            size=(-1, -1), style=wx.CB_DROPDOWN |
-                            wx.CB_READONLY
+        self.cmbx_aq = wx.ComboBox(panelscroll, wx.ID_ANY,
+                                   choices=list(Downloader.AQUALITY.keys()),
+                                   size=(-1, -1),
+                                   style=wx.CB_DROPDOWN | wx.CB_READONLY
                                    )
         self.cmbx_aq.SetSelection(0)
         self.cmbx_aq.Disable()
         # grid_v.Add((20, 20), 0,)
         fgs1.Add(self.cmbx_aq, 0, wx.ALL | wx.EXPAND, 5)
-        self.cmbx_af = wx.ComboBox(
-                            panelscroll, wx.ID_ANY,
-                            choices=[x for x in Downloader.AFORMATS.keys()],
-                            size=(-1, -1), style=wx.CB_DROPDOWN |
-                            wx.CB_READONLY
+        self.cmbx_af = wx.ComboBox(panelscroll, wx.ID_ANY,
+                                   choices=list(Downloader.AFORMATS.keys()),
+                                   size=(-1, -1),
+                                   style=wx.CB_DROPDOWN | wx.CB_READONLY
                                    )
         self.cmbx_af.Disable()
         self.cmbx_af.SetSelection(0)
@@ -257,7 +259,7 @@ class Downloader(wx.Panel):
 
         self.ckbx_restrictFN = wx.CheckBox(panelscroll, wx.ID_ANY,
                                            (_('Restrict file names'))
-                                   )
+                                           )
         fgs1.Add(self.ckbx_restrictFN, 0, wx.ALL, 5)
 
         boxoptions.Add(panelscroll, 0, wx.ALL | wx.CENTRE, 0)
@@ -300,7 +302,7 @@ class Downloader(wx.Panel):
 
         self.codText.SetBackgroundColour(Downloader.BACKGRD)
 
-        if Downloader.OS != 'Darwin':
+        if Downloader.appdata['ostype'] != 'Darwin':
             # self.labcode.SetLabelMarkup("<b>%s</b>" % labcstr)
             self.labtxt.SetLabelMarkup("<b>%s</b>" % labtstr)
         #  tooltips
@@ -358,7 +360,7 @@ class Downloader(wx.Panel):
         if not self.parent.sb.GetStatusText() == 'Youtube Downloader':
             self.parent.statusbar_msg('Youtube Downloader', None)
 
-        if Downloader.PYLIB_YDL is not None:  # YuotubeDL isn't used as module
+        if Downloader.appdata['PYLIBYDL'] is not None:  # isn't used as module
             viddisp, auddisp = 'video ', 'audio '
         else:
             viddisp, auddisp = 'video', 'audio only'
@@ -632,7 +634,8 @@ class Downloader(wx.Panel):
         main frame when the 'Show More' button is pressed.
 
         """
-        if Downloader.PYLIB_YDL is not None:  # YuotubeDL not used as module
+        if Downloader.appdata['PYLIBYDL'] is not None:
+            # YuotubeDL not used as module
             wx.MessageBox(_('Sorry, this feature is disabled.'),
                           'Videomass', wx.ICON_INFORMATION)
             return
@@ -642,7 +645,7 @@ class Downloader(wx.Panel):
             if ret:
                 return
 
-        miniframe = YDL_Mediainfo(self.info, Downloader.OS)
+        miniframe = YDL_Mediainfo(self.info, Downloader.appdata['ostype'])
         miniframe.Show()
     # -----------------------------------------------------------------#
 
@@ -651,7 +654,8 @@ class Downloader(wx.Panel):
         Evaluate which method to call to enable download from "Format Code"
 
         """
-        if Downloader.PYLIB_YDL is not None:  # YuotubeDL isn't used as module
+        if Downloader.appdata['PYLIBYDL'] is not None:
+            # YuotubeDL isn't used as module
             ret = self.get_executableformatcode()
             if ret:
                 return  # do not enable fcode
@@ -859,7 +863,7 @@ class Downloader(wx.Panel):
         else:
             _id = '%(title).100s'
 
-        if Downloader.PYLIB_YDL is None:  # youtube-dl is used as library
+        if Downloader.appdata['PYLIBYDL'] is None:  # is used as library
 
             logname = 'youtubedl_lib.log'
             nooverwrites = True if self.ckbx_w.IsChecked() else False
@@ -965,7 +969,6 @@ class Downloader(wx.Panel):
                 restrictfn = '--restrict-filenames'
             else:
                 restrictfn = ''
-
 
             if self.choice.GetSelection() == 0:  # default
                 code = []

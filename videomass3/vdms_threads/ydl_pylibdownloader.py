@@ -1,35 +1,35 @@
 # -*- coding: UTF-8 -*-
-# Name: ydl_pylibdownloader.py
-# Porpose: long processing task with youtube_dl python library
-# Compatibility: Python3, wxPython4 Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: April.21.2021 *PEP8 compatible*
-#########################################################
-# This file is part of Videomass.
+"""
+Name: ydl_pylibdownloader.py
+Porpose: long processing task with youtube_dl python library
+Compatibility: Python3, wxPython4 Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import sys
 import itertools
-from threading import Thread
 import time
 from pubsub import pub
+from threading import Thread
+import wx
 if 'youtube_dl' in sys.modules:
     import youtube_dl
 
@@ -132,12 +132,10 @@ class Ydl_DL_Pylib(Thread):
 
     """
     get = wx.GetApp()  # get videomass wx.App attribute
-    OS = get.OS
-    LOGDIR = get.LOGdir
-    FFMPEG_URL = get.FFMPEG_url
-    APPTYPE = get.APP_type
+    appdata = get.appset
+    FFMPEG_URL = appdata['ffmpeg_bin']
 
-    if get.PLAYLISTsubfolder == 'true':
+    if appdata['playlistsubfolder'] == 'true':
         SUBDIR = '%(uploader)s/%(playlist_title)s/%(playlist_index)s - '
     else:
         SUBDIR = ''
@@ -163,8 +161,7 @@ class Ydl_DL_Pylib(Thread):
         self.countmax = len(varargs[1])
         self.logname = logname
 
-        if (Ydl_DL_Pylib.OS == 'Windows' or
-                Ydl_DL_Pylib.APPTYPE == 'appimage'):
+        if Ydl_DL_Pylib.appdata['ostype'] in ('Windows' 'appimage'):
             self.nocheckcertificate = True
         else:
             self.nocheckcertificate = False
@@ -222,7 +219,7 @@ class Ydl_DL_Pylib(Thread):
             logWrite(ydl_opts,
                      '',
                      self.logname,
-                     Ydl_DL_Pylib.LOGDIR,
+                     Ydl_DL_Pylib.appdata['logdir'],
                      )  # write n/n + command only
 
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:

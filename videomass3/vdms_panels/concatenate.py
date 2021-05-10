@@ -1,31 +1,31 @@
 # -*- coding: UTF-8 -*-
-# Name: concatenate.py
-# Porpose: A simple concat demuxer UI
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Apr.23.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: concatenate.py
+Porpose: A simple concat demuxer UI
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
+import wx
 from videomass3.vdms_io.checkup import check_files
 from videomass3.vdms_dialogs.epilogue import Formula
 import wx.lib.agw.hyperlink as hpl
@@ -71,11 +71,6 @@ class Conc_Demuxer(wx.Panel):
     concat demuxer, see <https://ffmpeg.org/ffmpeg-formats.html#concat>
 
     """
-    get = wx.GetApp()
-    OS = get.OS
-    GET_LANG = get.GETlang
-    SUPPLANG = get.SUPP_langs
-
     MSG_1 = _("NOTE:\n\n- The concatenation function is performed only with "
               "Audio files or only with Video files."
               "\n\n- The order of concatenation depends on the order in "
@@ -98,6 +93,8 @@ class Conc_Demuxer(wx.Panel):
         added.
         .
         """
+        get = wx.GetApp()
+        self.appdata = get.appset
         self.parent = parent  # parent is the MainFrame
         self.command = ''
 
@@ -120,8 +117,8 @@ class Conc_Demuxer(wx.Panel):
                                       label=_("For more details, see the "
                                               "Videomass User Guide:")
                                       )
-        if Conc_Demuxer.GET_LANG in Conc_Demuxer.SUPPLANG:
-            lang = Conc_Demuxer.GET_LANG.split('_')[0]
+        if self.appdata['GETLANG'] in self.appdata['SUPP_LANGs']:
+            lang = self.appdata['GETLANG'].split('_')[0]
             page = ("https://jeanslack.github.io/Videomass/"
                     "Pages/User-guide-languages/%s/1-User_"
                     "Interface_Overview_%s.pdf" % (lang, lang))
@@ -137,9 +134,10 @@ class Conc_Demuxer(wx.Panel):
         sizer_link1 = wx.BoxSizer(wx.HORIZONTAL)
         sizer.Add(sizer_link1)
         self.lbl_msg2 = wx.StaticText(self, wx.ID_ANY,
-                                      label=_("For more information, "
-                                              "visit the official FFmpeg "
-                                              "documentation:"))
+                                      label=(_("For more information, "
+                                               "visit the official FFmpeg "
+                                               "documentation:"))
+                                      )
         link1 = hpl.HyperLinkCtrl(self, -1, "3.4 concat",
                                   URL="https://ffmpeg.org/ffmpeg-formats."
                                       "html#concat"
@@ -156,7 +154,7 @@ class Conc_Demuxer(wx.Panel):
 
         self.SetSizer(sizer)
 
-        if Conc_Demuxer.OS == 'Darwin':
+        if self.appdata['ostype'] == 'Darwin':
             self.lbl_msg1.SetFont(wx.Font(12, wx.SWISS, wx.NORMAL, wx.BOLD))
             self.lbl_msg2.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))
             self.lbl_msg3.SetFont(wx.Font(11, wx.SWISS, wx.NORMAL, wx.NORMAL))

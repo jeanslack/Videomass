@@ -1,29 +1,29 @@
 # -*- coding: UTF-8 -*-
-# Name: time_selection.py
-# Porpose: show panel to set duration and time sequences
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Dec.21.2020 *PEP8 compatible*
-#########################################################
+"""
+Name: time_selection.py
+Porpose: show panel to set duration and time sequences
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import wx
 from videomass3.vdms_utils.utils import milliseconds2timeformat
 # import wx.lib.masked as masked # not work on macOSX
@@ -46,16 +46,18 @@ class Timeline(wx.Panel):
 
     """
     get = wx.GetApp()
-    OS = get.OS
 
     # Theme Colors used in HTML
-    if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):  # all themes
+    if get.appset['icontheme'] in ('Breeze-Blues',
+                                   'Videomass-Colours'):  # all themes
         RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
         SELECTION = '#4368d3'  # medium azure for selection
         DELIMITER_COLOR = '#da4453'  # red for margin selection
         TEXT_PEN_COLOR = '#00cc57'  # green for text and draw lines
 
-    elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+    elif get.appset['icontheme'] in ('Breeze-Blues',
+                                     'Breeze-Dark',
+                                     'Videomass-Dark'):
         RULER_BKGRD = '#294083'  # dark blue for panel bkgrd
         SELECTION = '#4368d3'  # medium azure for selection
         DELIMITER_COLOR = '#00FE00'  # green for margin selection

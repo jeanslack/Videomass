@@ -21,7 +21,7 @@ except ImportError as error:
     sys.exit(error)
 
 else:
-    from videomass3 import Videomass3
+    from videomass3 import vdms3
 
 
 class GuiTestCase(unittest.TestCase):

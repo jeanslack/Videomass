@@ -1,32 +1,32 @@
 # -*- coding: UTF-8 -*-
-# Name: mediainfo.py
-# Porpose: show media streams information through ffprobe
-# Compatibility: Python3, wxPython Phoenix
-# Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
-# Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
-# license: GPL3
-# Rev: Feb.03.2021 *PEP8 compatible*
-#########################################################
+"""
+Name: mediainfo.py
+Porpose: show media streams information through ffprobe
+Compatibility: Python3, wxPython Phoenix
+Author: Gianluca Pernigotto <jeanlucperni@gmail.com>
+Copyright: (c) 2018/2021 Gianluca Pernigotto <jeanlucperni@gmail.com>
+license: GPL3
+Rev: May.09.2021 *-pycodestyle- compatible*
+########################################################
 
-# This file is part of Videomass.
+This file is part of Videomass.
 
-#    Videomass is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+   Videomass is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-#    Videomass is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+   Videomass is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-#    You should have received a copy of the GNU General Public License
-#    along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
-
-#########################################################
-import wx
+   You should have received a copy of the GNU General Public License
+   along with Videomass.  If not, see <http://www.gnu.org/licenses/>.
+"""
 import os
 import webbrowser
+import wx
 
 
 class Mediainfo(wx.MiniFrame):
@@ -35,11 +35,14 @@ class Mediainfo(wx.MiniFrame):
     """
     get = wx.GetApp()  # get data from bootstrap
 
-    if get.THEME in ('Breeze-Blues', 'Videomass-Colours'):
+    if get.appset['icontheme'] in ('Breeze-Blues',
+                                   'Videomass-Colours'):
         BACKGROUND = '#11303eff'
         FOREGROUND = '#959595'
 
-    elif get.THEME in ('Breeze-Blues', 'Breeze-Dark', 'Videomass-Dark'):
+    elif get.appset['icontheme'] in ('Breeze-Blues',
+                                     'Breeze-Dark',
+                                     'Videomass-Dark'):
         BACKGROUND = '#1c2027ff'
         FOREGROUND = '#87ceebff'
 
